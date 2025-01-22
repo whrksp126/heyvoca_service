@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"  # Flask 애플리케이션이 5000번 포트에서 실행
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=${FLASK_ENV} 
