@@ -9,7 +9,6 @@ class Config:
 
 class DevelopmentConfig(Config):
   DEBUG = True
-  print('@@@@@@',os.environ.get('DEV_DATABASE_URL'))
   SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase'
 
 class StagingConfig(Config):
