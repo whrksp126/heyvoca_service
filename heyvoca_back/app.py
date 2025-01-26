@@ -1,19 +1,7 @@
-from flask import Flask
-import logging
+from app import create_app, db
+from flask_login import LoginManager
+from flask_cors import CORS
 
-app = Flask(__name__)
-logging.basicConfig(level=logging.INFO)
-
-@app.route('/')
-def index():
-  return "Hello, World"
-
-
-@app.route('/print')
-def print_hello():
-  print("Hello, World!")
-
-  return ""
-
+app = create_app()
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+  app.run(host='0.0.0.0', port=5000, debug=True)

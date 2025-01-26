@@ -4,7 +4,7 @@ FROM ubuntu:20.04
 # 필수 패키지 설치 및 시간대 설정
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    apt-get install -y python3-pip python3-dev nginx tzdata && \
+    apt-get install -y python3-pip python3-dev nginx tzdata tesseract-ocr && \
     ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
     apt-get clean

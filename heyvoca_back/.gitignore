@@ -5,10 +5,12 @@ __pycache__/
 *.pyd
 *.db
 *.sqlite3
+*.pyc
 
 # 환경 변수 파일
 .env
 .env.dev
+.env.stg
 .env.prod
 
 # Docker 관련
