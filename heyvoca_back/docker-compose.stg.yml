@@ -1,10 +1,12 @@
+version: '3.8'
+
 services:
   web:
     build: .
-    ports:
-      - "5000:5000"
     volumes:
-      - .:/app
+      - /var/www/heyvoca_back/${SOCKET_NAME}.sock:/app/${SOCKET_NAME}.sock  # 유닉스 소켓 파일 연결
+      - .:/app  # 로컬 파일 연결
     env_file:
       - .env
       - .env.stg
+    restart: always
