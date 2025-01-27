@@ -17,11 +17,6 @@ config.py
 
 # Docker 관련
 *.log
-docker-compose.yml
-docker-compose.override.yml
-docker-compose.prod.yml
-docker-compose.stg.yml
-docker-compose.dev.yml
 
 # IDE 관련
 .vscode/
