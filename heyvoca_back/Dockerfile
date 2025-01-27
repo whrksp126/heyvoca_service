@@ -12,6 +12,9 @@ RUN apt-get update && \
 # 작업 디렉토리 설정
 WORKDIR /app
 
+# 소켓 파일 디렉토리 생성
+RUN mkdir -p /app && chmod 777 /app
+
 # requirements.txt 복사 및 패키지 설치
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
