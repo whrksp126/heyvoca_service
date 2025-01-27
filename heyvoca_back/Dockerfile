@@ -20,4 +20,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY app.py .
 
 # CMD 명령: Flask 앱 실행
-CMD ["sh", "-c", "flask run --host=0.0.0.0 --port=$FLASK_RUN_PORT"]
+CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:${FLASK_RUN_PORT}", "app:app"]
+
+# CMD ["sh", "-c", "flask run --host=0.0.0.0 --port=$FLASK_RUN_PORT"]
