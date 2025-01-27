@@ -7,19 +7,16 @@ services:
       - "5003:5003"
     volumes:
       - /var/www/heyvoca_back/prod:/app
-    env_file:
-      - .env.prod
     environment:
-      - FLASK_RUN_PORT=${FLASK_RUN_PORT}
-      - FLASK_ENV=${FLASK_ENV}
-      - FLASK_CONFIG=${FLASK_CONFIG}
-      - FLASK_RUN_PORT=${FLASK_RUN_PORT}
-      - FLASK_APP=${FLASK_APP}
+      - FLASK_RUN_PORT: 5003
+      - FLASK_ENV: production
+      - FLASK_CONFIG: production
+      - FLASK_APP: app.py
+      - SECRET_KEY: GhHomeHeyVocaTokenSecretKey
+      - PROD_DATABASE_URL: "mysql+pymysql://voca:voca%21%4034@192.168.35.5:3306/vocaandgo"
+      - OAUTH_CLIENT_ID: 'REDACTED_OAUTH_CLIENT_ID'
+      - OAUTH_CLIENT_SECRET: 'REDACTED_OAUTH_CLIENT_SECRET'
+      - OAUTH_REDIRECT_URI: 'https://vocaandgo.ghmate.com/login/login_google/callback'
+      - FCM_API_KEY: "BLZU6AG9inR6Q_aNw4G-fNrH0eHfDn_YvpEMM0FzvkZ1hwNQfB0uoXy7EFq-AC749ZFRqKiWu91CyP_RCGBMQn8"
 
-      - SECRET_KEY=${SECRET_KEY}
-      - PROD_DATABASE_URL=${PROD_DATABASE_URL}
-      - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
-      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
-      - OAUTH_REDIRECT_URI=${OAUTH_REDIRECT_URI}
-      - FCM_API_KEY=${FCM_API_KEY}
     restart: always
