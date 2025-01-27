@@ -24,5 +24,5 @@ COPY app.py .
 
 # CMD 명령: SOCKET_NAME 환경 변수를 사용하여 Gunicorn 실행
 ENTRYPOINT ["sh", "-c"]
-CMD ["sh", "-c", "gunicorn --workers 3 --bind unix:/app/${SOCKET_NAME} app:app"]
+CMD ["rm -f /app/${SOCKET_NAME} && gunicorn --workers 3 --bind unix:/app/${SOCKET_NAME} app:app"]
 
