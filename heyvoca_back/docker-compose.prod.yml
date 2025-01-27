@@ -4,7 +4,7 @@ services:
   web:
     build: .
     volumes:
-      - /var/www/heyvoca_back/prod_heyvoca.sock:/app/prod_heyvoca.sock
+      - /var/www/heyvoca_back/prod.sock:/app/prod.sock
       - .:/app
     env_file:
       - .env.prod

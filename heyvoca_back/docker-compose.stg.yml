@@ -4,7 +4,7 @@ services:
   web:
     build: .
     volumes:
-      - /var/www/heyvoca_back/stg_heyvoca.sock:/app/stg_heyvoca.sock
+      - /var/www/heyvoca_back/stg.sock:/app/stg.sock
       - .:/app
     env_file:
       - .env.stg
