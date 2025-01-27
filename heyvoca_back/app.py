@@ -1,7 +1,5 @@
 import os
-from app import create_app, db
-from flask_login import LoginManager
-from flask_cors import CORS
+from app import create_app
 
 app = create_app()
 if __name__ == '__main__':
