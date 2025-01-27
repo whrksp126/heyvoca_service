@@ -23,4 +23,4 @@ COPY app.py .
 RUN rm -rf /app/prod.sock
 
 # CMD 명령: SOCKET_NAME 환경 변수를 사용하여 Gunicorn 실행
-CMD ["gunicorn", "--workers", "3", "--bind", "unix:/app/prod.sock", "app:app"]
+CMD ["sh", "-c", "rm -f /app/prod.sock && gunicorn --workers 3 --bind unix:/app/prod.sock app:app"]

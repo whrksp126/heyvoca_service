@@ -4,7 +4,8 @@ services:
   web:
     build: .
     volumes:
-      - /var/www/heyvoca_back:/app
+      - /var/www/heyvoca_back/prod.sock:/app/prod.sock
+      - ./app:/app/app  # 필요한 파일만 명시적으로 마운트
     env_file:
       - .env.prod
     restart: always
