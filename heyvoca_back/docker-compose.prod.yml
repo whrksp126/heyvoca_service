@@ -9,4 +9,6 @@ services:
       - /var/www/heyvoca_back/prod:/app
     env_file:
       - .env.prod
+    environment:
+      - FLASK_RUN_PORT=${FLASK_RUN_PORT}
     restart: always
