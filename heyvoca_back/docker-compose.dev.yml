@@ -7,3 +7,9 @@ services:
       - "5002:5000"
     env_file:
       - .env.dev
+    networks:
+      - heyvoca_back_dev_network
+
+networks:
+  heyvoca_back_dev_network:
+    name: heyvoca_back_dev_network

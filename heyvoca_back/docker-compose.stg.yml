@@ -7,3 +7,9 @@ services:
       - "5001:5000"
     env_file:
       - .env.stg
+    networks:
+      - heyvoca_back_stg_network
+
+networks:
+  heyvoca_back_stg_network:
+    name: heyvoca_back_stg_network

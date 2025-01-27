@@ -55,3 +55,23 @@
    ```
 
 이 README 파일을 프로젝트 루트 디렉토리에 `README.md`라는 이름으로 저장하면 됩니다. 추가적인 내용이나 수정이 필요하면 말씀해 주세요!
+
+
+
+
+빌드
+docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.stg.yml build
+
+시작
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.stg.yml up -d
+
+종료
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose.stg.yml down
+
+systemd 
+sudo systemctl restart heyvoca_back.service
+sudo systemctl restart heyvoca_back_stg.service
+sudo systemctl restart heyvoca_back_dev.service
