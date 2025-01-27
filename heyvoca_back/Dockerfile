@@ -19,8 +19,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Flask 애플리케이션 복사
 COPY app.py .
 
-# 소켓 파일 생성 전 확인 및 삭제
-RUN rm -rf /app/prod.sock
-
-# CMD 명령: SOCKET_NAME 환경 변수를 사용하여 Gunicorn 실행
-CMD ["sh", "-c", "rm -f /app/prod.sock && gunicorn --workers 3 --bind unix:/app/prod.sock app:app"]
+# CMD 명령: Flask 앱 실행
+CMD ["sh", "-c", "flask run --host=0.0.0.0 --port=$FLASK_RUN_PORT"]
