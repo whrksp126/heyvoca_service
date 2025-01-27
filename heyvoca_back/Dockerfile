@@ -12,9 +12,6 @@ RUN apt-get update && \
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# 소켓 파일 디렉토리 생성
-RUN mkdir -p /app && chmod 777 /app
-
 # requirements.txt 복사 및 패키지 설치
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
@@ -22,7 +19,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Flask 애플리케이션 복사
 COPY app.py .
 
+# 소켓 파일 생성 전 확인 및 삭제
+RUN rm -rf /app/prod.sock
+
 # CMD 명령: SOCKET_NAME 환경 변수를 사용하여 Gunicorn 실행
 CMD ["gunicorn", "--workers", "3", "--bind", "unix:/app/prod.sock", "app:app"]
-
-

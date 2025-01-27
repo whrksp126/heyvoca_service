@@ -4,8 +4,7 @@ services:
   web:
     build: .
     volumes:
-      - /var/www/heyvoca_back/dev.sock:/app/dev.sock
-      - .:/app
+      - /var/www/heyvoca_back:/app
     env_file:
       - .env.dev
     restart: always
