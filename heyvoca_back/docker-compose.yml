@@ -5,7 +5,5 @@ services:
     build: .
     ports:
       - "5000:5000"
-    volumes:
-      - /var/www/heyvoca_back:/app
     env_file:
       - .env
