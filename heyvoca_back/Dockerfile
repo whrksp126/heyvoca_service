@@ -23,7 +23,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY app.py .
 
 # CMD 명령: SOCKET_NAME 환경 변수를 사용하여 Gunicorn 실행
-ENTRYPOINT ["sh", "-c"]
 CMD ["gunicorn", "--workers", "3", "--bind", "unix:/app/prod.sock", "app:app"]
 
 
