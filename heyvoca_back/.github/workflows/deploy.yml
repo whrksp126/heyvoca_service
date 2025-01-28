@@ -45,15 +45,15 @@ jobs:
           echo "Deploying for branch: $BRANCH_NAME"
 
           if [ "$BRANCH_NAME" == "main" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back
+            sudo systemctl stop heyvoca_back
             sudo docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back
+            sudo systemctl start heyvoca_back
           elif [ "$BRANCH_NAME" == "staging" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_stg
+            sudo systemctl stop heyvoca_back_stg
             sudo docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_stg
+            sudo systemctl start heyvoca_back_stg
           elif [ "$BRANCH_NAME" == "dev" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_dev
+            sudo systemctl stop heyvoca_back_dev
             sudo docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_dev
+            sudo systemctl start heyvoca_back_dev
           fi
