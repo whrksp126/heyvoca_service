@@ -16,27 +16,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. 환경에 따라 적절한 .env 파일 생성
-    - name: Set up environment file
-      run: |
-        if [[ "${{ github.ref_name }}" == "dev" ]]; then
-          echo "${{ secrets.ENV_DEV }}" > .env.dev
-        elif [[ "${{ github.ref_name }}" == "staging" ]]; then
-          echo "${{ secrets.ENV_STG }}" > .env.stg
-        elif [[ "${{ github.ref_name }}" == "main" ]]; then
-          echo "${{ secrets.ENV }}" > .env
-        fi
-        echo "Generated .env file:"
-        cat .env*
-
-    # 3. Docker Hub 로그인
+    # 2. Docker Hub 로그인
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # 4. Docker 이미지 빌드 및 푸시
+    # 3. Docker 이미지 빌드 및 푸시
     - name: Build and push Docker image
       run: |
         IMAGE_TAG=${{ github.ref_name }}
@@ -45,31 +32,30 @@ jobs:
         docker push whrksp126/heyvoca_back:latest
         docker push whrksp126/heyvoca_back:$IMAGE_TAG
 
-    # 5. 서버에 SSH 접속 후 적절한 docker-compose 실행
-    - name: Deploy to server
-      uses: appleboy/ssh-action@v0.1.6
+    # 4. SSH 키 설정
+    - name: Setup SSH Key
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          BRANCH_NAME="${{ github.ref_name }}"
-          echo "Deploying for branch: $BRANCH_NAME"
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          cd ~/heyvoca_back  # 서버에 프로젝트 경로로 이동
-          
-          # 실행 중인 컨테이너 중지
-          if [ "$BRANCH_NAME" == "main" ]; then
-            docker compose -f docker-compose.yml down
-            docker pull whrksp126/heyvoca_back:latest
-            docker compose -f docker-compose.yml up -d
-          elif [ "$BRANCH_NAME" == "staging" ]; then
-            docker compose -f docker-compose.stg.yml down
-            docker pull whrksp126/heyvoca_back:latest
-            docker compose -f docker-compose.stg.yml up -d
-          elif [ "$BRANCH_NAME" == "dev" ]; then
-            docker compose -f docker-compose.dev.yml down
-            docker pull whrksp126/heyvoca_back:latest
-            docker compose -f docker-compose.dev.yml up -d
-          fi
+    # 5. 서버에 접속하여 컨테이너 재시작
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -t << 'EOF'
+        BRANCH_NAME="${{ github.ref_name }}"
+        echo "Deploying for branch: $BRANCH_NAME"
+
+        if [ "$BRANCH_NAME" == "main" ]; then
+          sudo systemctl stop heyvoca_back
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back
+        elif [ "$BRANCH_NAME" == "staging" ]; then
+          sudo systemctl stop heyvoca_back_stg
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back_stg
+        elif [ "$BRANCH_NAME" == "dev" ]; then
+          sudo systemctl stop heyvoca_back_dev
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back_dev
+        fi
+        EOF
