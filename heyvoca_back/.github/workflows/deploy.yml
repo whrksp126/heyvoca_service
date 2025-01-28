@@ -39,6 +39,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }} 
         script: |
           BRANCH_NAME="${{ github.ref_name }}"
           echo "Deploying for branch: $BRANCH_NAME"
