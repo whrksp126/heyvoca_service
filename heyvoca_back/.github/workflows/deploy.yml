@@ -27,9 +27,7 @@ jobs:
     - name: Build and push Docker image
       run: |
         IMAGE_TAG=${{ github.ref_name }}
-        docker build -t whrksp126/heyvoca_back:latest .
         docker build -t whrksp126/heyvoca_back:$IMAGE_TAG .
-        docker push whrksp126/heyvoca_back:latest
         docker push whrksp126/heyvoca_back:$IMAGE_TAG
 
     # 4. SSH 키 설정
@@ -47,15 +45,15 @@ jobs:
 
         if [ "$BRANCH_NAME" == "main" ]; then
           sudo systemctl stop heyvoca_back
-          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo docker pull whrksp126/heyvoca_back:main
           sudo systemctl start heyvoca_back
         elif [ "$BRANCH_NAME" == "staging" ]; then
           sudo systemctl stop heyvoca_back_stg
-          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo docker pull whrksp126/heyvoca_back:staging
           sudo systemctl start heyvoca_back_stg
         elif [ "$BRANCH_NAME" == "dev" ]; then
           sudo systemctl stop heyvoca_back_dev
-          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo docker pull whrksp126/heyvoca_back:dev
           sudo systemctl start heyvoca_back_dev
         fi
         EOF
