@@ -32,29 +32,30 @@ jobs:
         docker push whrksp126/heyvoca_back:latest
         docker push whrksp126/heyvoca_back:$IMAGE_TAG
 
-    # 4. 서버에 SSH 접속 후 컨테이너 재시작
-    - name: Deploy to server
-      uses: appleboy/ssh-action@v0.1.6
+    # 4. SSH 키 설정
+    - name: Setup SSH Key
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          BRANCH_NAME="${{ github.ref_name }}"
-          echo "Deploying for branch: $BRANCH_NAME"
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          if [ "$BRANCH_NAME" == "main" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back
-          elif [ "$BRANCH_NAME" == "staging" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_stg
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_stg
-          elif [ "$BRANCH_NAME" == "dev" ]; then
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_dev
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
-            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_dev
-          fi
+    # 5. 서버에 접속하여 컨테이너 재시작
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+        BRANCH_NAME="${{ github.ref_name }}"
+        echo "Deploying for branch: $BRANCH_NAME"
 
+        if [ "$BRANCH_NAME" == "main" ]; then
+          sudo systemctl stop heyvoca_back
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back
+        elif [ "$BRANCH_NAME" == "staging" ]; then
+          sudo systemctl stop heyvoca_back_stg
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back_stg
+        elif [ "$BRANCH_NAME" == "dev" ]; then
+          sudo systemctl stop heyvoca_back_dev
+          sudo docker pull whrksp126/heyvoca_back:latest
+          sudo systemctl start heyvoca_back_dev
+        fi
+        EOF
