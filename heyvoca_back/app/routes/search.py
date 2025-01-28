@@ -70,8 +70,7 @@ def search_voca_word_en():
 
     for word_data in word_meaning_map.values():
         data.append(word_data)
-    return jsonify({'code': 200, 'data': "GitHub Actions 성공"}), 200
-    # return jsonify({'code': 200, 'data': data}), 200
+    return jsonify({'code': 200, 'data': data}), 200
 
 ## 영어(단어) 부분 검색
 # @login_required
