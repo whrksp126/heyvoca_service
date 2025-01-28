@@ -41,7 +41,7 @@ jobs:
     # 5. 서버에 접속하여 컨테이너 재시작
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -t << 'EOF'
         BRANCH_NAME="${{ github.ref_name }}"
         echo "Deploying for branch: $BRANCH_NAME"
 
