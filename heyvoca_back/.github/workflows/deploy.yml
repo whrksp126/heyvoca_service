@@ -44,17 +44,16 @@ jobs:
           BRANCH_NAME="${{ github.ref_name }}"
           echo "Deploying for branch: $BRANCH_NAME"
 
-
           if [ "$BRANCH_NAME" == "main" ]; then
-            sudo systemctl stop heyvoca_back
-            sudo docker pull whrksp126/heyvoca_back:latest
-            sudo systemctl start heyvoca_back
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back
           elif [ "$BRANCH_NAME" == "staging" ]; then
-            sudo systemctl stop heyvoca_back_stg
-            sudo docker pull whrksp126/heyvoca_back:latest
-            sudo systemctl start heyvoca_back_stg
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_stg
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_stg
           elif [ "$BRANCH_NAME" == "dev" ]; then
-            sudo systemctl stop heyvoca_back_dev
-            sudo docker pull whrksp126/heyvoca_back:latest
-            sudo systemctl start heyvoca_back_dev
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl stop heyvoca_back_dev
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_dev
           fi
