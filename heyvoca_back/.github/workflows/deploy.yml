@@ -3,9 +3,9 @@ name: Deploy HeyVoca Backend
 on:
   push:
     branches:
-      - dev       # Development 환경
-      - staging   # Staging 환경
-      - main      # Production 환경
+      - dev        # Development 환경
+      - staging    # Staging 환경
+      - main       # Production 환경
 
 jobs:
   build-and-deploy:
@@ -26,11 +26,17 @@ jobs:
     # 3. Docker 이미지 빌드 및 푸시
     - name: Build and push Docker image
       run: |
+        # Git 브랜치명을 Docker 태그로 사용
         IMAGE_TAG=${{ github.ref_name }}
+        echo "Using Docker tag: $IMAGE_TAG"
+
+        # Docker 이미지 빌드
         docker build -t whrksp126/heyvoca_back:$IMAGE_TAG .
+
+        # Docker Hub에 푸시
         docker push whrksp126/heyvoca_back:$IMAGE_TAG
 
-    # 4. SSH 키 설정
+    # 4. SSH 키 설정 (서버 접속용)
     - name: Setup SSH Key
       uses: webfactory/ssh-agent@v0.5.3
       with:
@@ -39,7 +45,7 @@ jobs:
     # 5. 서버에 접속하여 컨테이너 재시작
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -t << 'EOF'
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
         BRANCH_NAME="${{ github.ref_name }}"
         echo "Deploying for branch: $BRANCH_NAME"
 
