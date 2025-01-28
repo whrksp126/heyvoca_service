@@ -44,6 +44,7 @@ jobs:
           BRANCH_NAME="${{ github.ref_name }}"
           echo "Deploying for branch: $BRANCH_NAME"
 
+
           if [ "$BRANCH_NAME" == "main" ]; then
             sudo systemctl stop heyvoca_back
             sudo docker pull whrksp126/heyvoca_back:latest
