@@ -74,7 +74,7 @@ def search_voca_word_en():
 
     
     # return jsonify({'code': 200, 'data': data}), 200
-    return jsonify({'code': 200, 'data': word}), 200
+    return jsonify({'code': 200}), 200
 
 ## 영어(단어) 부분 검색
 # @login_required
