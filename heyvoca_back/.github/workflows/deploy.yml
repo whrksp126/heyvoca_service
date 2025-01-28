@@ -57,3 +57,4 @@ jobs:
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker pull whrksp126/heyvoca_back:latest
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S systemctl start heyvoca_back_dev
           fi
+
