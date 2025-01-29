@@ -75,3 +75,19 @@ systemd
 sudo systemctl restart heyvoca_back.service
 sudo systemctl restart heyvoca_back_stg.service
 sudo systemctl restart heyvoca_back_dev.service
+
+
+
+
+▶️ 컨테이너 실행
+docker-compose -f docker-compose.local.yml up --build -d
+▶️ 컨테이너 로그 확인
+docker logs -f heyvoca_back_local
+🛑 컨테이너 정지 (삭제 X)	
+docker-compose -f docker-compose.local.yml stop
+❌ 컨테이너 종료 (삭제 O)	
+docker-compose -f docker-compose.local.yml down
+▶️ 컨테이너 재시작	
+docker-compose -f docker-compose.local.yml restart
+🔄 완전히 종료 후 새로 실행	
+docker-compose -f docker-compose.local.yml down && docker-compose -f docker-compose.local.yml up --build -d

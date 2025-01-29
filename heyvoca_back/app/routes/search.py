@@ -71,7 +71,7 @@ def search_voca_word_en():
 
     for word_data in word_meaning_map.values():
         data.append(word_data)
-
+    
     
     return jsonify({'code': 200, 'data': data}), 200
 

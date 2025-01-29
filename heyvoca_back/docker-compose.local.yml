@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: heyvoca_back_local
+    ports:
+      - "5003:5000"
+    env_file:
+      - .env.local
+    networks:
+      - heyvoca_back_local_network
+    volumes:
+      - .:/app 
+    working_dir: /app
+    command: gunicorn --reload -w 3 -b 0.0.0.0:5000 run:app
+    restart: always
+
+networks:
+  heyvoca_back_local_network:
+    name: heyvoca_back_local_network
