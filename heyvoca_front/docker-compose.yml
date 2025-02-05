@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  front-end:
+    image: whrksp126/heyvoca_front:main
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - heyvoca_front_prod_network
+    restart: unless-stopped
+
+networks:
+  heyvoca_front_prod_network:
+    driver: bridge

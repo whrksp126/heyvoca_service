@@ -38,7 +38,7 @@ const Main = () => {
           text-2xl font-bold text-cyan-900 text-center
           select-none
         ">
-          영어 단어장으로 시작하는 새로운 영어 공부!
+          영어 단어장으로 시작하는 새로운 영어 공부
         </h1>
         <div className="flex flex-col gap-3">
           <Btn color="white" text="로그인" onClick={handleLoginClick} />

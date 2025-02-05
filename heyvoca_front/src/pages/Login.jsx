@@ -1,27 +1,8 @@
-// import React from 'react';
-// import Main from '../components/login/Main';
-
-// const Login = () => {
-//   return (
-//     <div 
-//       className="
-//         flex flex-col items-center justify-center 
-//         h-screen 
-//         mx-auto
-//       "
-//     >
-//       <Main />
-//     </div>
-//   );
-// };
-
-// export default Login; 
-
 
 import React, { useEffect } from 'react';
 import lottie from 'lottie-web';
 import Main from '../components/login/Main';
-import "../Login.css";
+import "../login.css";
 
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';

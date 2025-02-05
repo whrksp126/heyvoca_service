@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  front-end:
+    image: whrksp126/heyvoca_front:staging
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env.stg
+    networks:
+      - heyvoca_front_stg_network
+    restart: unless-stopped
+
+networks:
+  heyvoca_front_stg_network:
+    driver: bridge

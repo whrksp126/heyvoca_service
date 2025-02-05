@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: heyvoca_front_local
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env.local
+    networks:
+      - heyvoca_front_local_network
+    restart: unless-stopped
+
+networks:
+  heyvoca_front_local_network:
+    driver: bridge
