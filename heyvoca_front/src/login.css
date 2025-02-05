@@ -1,0 +1,52 @@
+.background {
+    background: #FFEFFA;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .background .logo{
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    width: 240px;
+    /* height: 95px; */
+    transform: translate(-50%, 0);
+  }
+  .background .buttons{
+    position: absolute;
+    left: 50%;
+    bottom: 140px;
+    width: 300px;
+    transform: translate(-50%, 0);
+  }
+  .background .buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13.5px 20px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .background .buttons .google_btn{
+    width: 100%;
+    background: #fff;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    color: #000;
+  }
+  .background .buttons .google_btn img{
+    height: 18px;
+  }
+  .background .buttons .google_btn span{
+  
+  }
+  .background .buttons .non_members {
+    font-size: 12px;
+    color: #111;
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+  }
