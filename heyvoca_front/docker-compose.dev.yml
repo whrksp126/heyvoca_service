@@ -4,7 +4,7 @@ services:
   front-end:
     image: whrksp126/heyvoca_front:dev
     ports:
-      - "3001:3000"
+      - "3002:3000"
     env_file:
       - .env.dev
     networks:
