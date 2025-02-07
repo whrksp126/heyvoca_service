@@ -2,7 +2,11 @@ version: '3.8'
 
 services:
   front-end:
-    image: whrksp126/heyvoca_front:main
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
     ports:
       - "3000:3000"
     env_file:

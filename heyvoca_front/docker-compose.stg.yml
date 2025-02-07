@@ -2,9 +2,14 @@ version: '3.8'
 
 services:
   front-end:
-    image: whrksp126/heyvoca_front:staging
+    container_name: heyvoca_front_stg
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: staging
     ports:
-      - "3001:3000"
+      - "3001:80"
     env_file:
       - .env.stg
     networks:

@@ -2,11 +2,18 @@ version: '3.8'
 
 services:
   front-end:
-    image: whrksp126/heyvoca_front:dev
+    container_name: heyvoca_front_dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: development
     ports:
       - "3002:3000"
     env_file:
       - .env.dev
+    environment:
+      - VITE_ALLOWED_HOSTS=dev.heyvoca_front.ghmate.com
     networks:
       - heyvoca_front_dev_network
     restart: unless-stopped
