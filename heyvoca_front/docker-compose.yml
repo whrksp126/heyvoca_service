@@ -2,19 +2,22 @@ version: '3.8'
 
 services:
   front-end:
+    container_name: heyvoca_front
+    image: whrksp126/heyvoca_front:main
     build:
       context: .
       dockerfile: Dockerfile
+      target: production
       args:
-        NODE_ENV: production
+        - NODE_ENV=staging
     ports:
-      - "3000:3000"
+      - "3000:80"
     env_file:
       - .env
     networks:
-      - heyvoca_front_prod_network
+      - heyvoca_front_network
     restart: unless-stopped
 
 networks:
-  heyvoca_front_prod_network:
+  heyvoca_front_network:
     driver: bridge
