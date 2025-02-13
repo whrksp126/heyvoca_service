@@ -1,0 +1,117 @@
+:root {
+  --111-color: #111;
+  --fff-color: #fff;
+}
+
+.mypage-container {
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+}
+
+header .container h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--111-color);
+}
+
+main {
+  flex-grow: 1;
+}
+
+main ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+main ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.left .icon {
+  font-size: 20px;
+  color: #FF8DD4;
+}
+
+.left span {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--111-color);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.right span {
+  font-size: 12px;
+  font-weight: 400;
+  color: #999;
+}
+
+.right .icon {
+  font-size: 20px;
+  color: var(--111-color);
+}
+
+/* 푸터 스타일 */
+footer {
+  background: var(--fff-color);
+  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer nav ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  margin: 0;
+  list-style: none;
+}
+
+footer nav ul li {
+  text-align: center;
+  cursor: pointer;
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--111-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer nav ul li .icon {
+  font-size: 20px;
+}
+
+footer nav ul li.active {
+  color: #FF8DD4;
+  font-weight: 700;
+}
