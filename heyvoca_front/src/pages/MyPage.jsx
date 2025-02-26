@@ -1,105 +1,6 @@
-/*
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { removeToken } from '../utils/auth';
-import Btn from '../components/component/Btn';
-
-const MyPage = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    removeToken();
-    navigate('/');
-  };
-
-  return (
-    <div 
-      className="
-        flex flex-col items-center 
-        min-h-screen 
-        mx-auto
-        bg-gray-50
-        pb-20
-      "
-    >
-      <div className="w-full max-w-md p-4">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">마이페이지</h2>
-        <div className="bg-white rounded-lg shadow p-6 mb-4">
-          <div className="flex items-center mb-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold">테스트 계정</h3>
-              <p className="text-gray-500">test@example.com</p>
-            </div>
-          </div>
-          <Btn text="로그아웃" color="red" onClick={handleLogout} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default MyPage; 
-*/
-
-
-/*
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { removeToken } from '../utils/auth';
-import Btn from '../components/component/Btn';
-
-const MyPage = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    removeToken();
-    navigate('/');
-  };
-
-  return (
-    <div 
-      className="
-        flex flex-col items-center 
-        min-h-screen 
-        mx-auto
-        bg-gray-50
-        pb-20
-      "
-    >
-      <div className="w-full max-w-md p-4">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">마이페이지</h2>
-        <div className="bg-white rounded-lg shadow p-6 mb-4">
-          <div className="flex items-center mb-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold">테스트 계정</h3>
-              <p className="text-gray-500">test@example.com</p>
-            </div>
-          </div>
-          <Btn text="로그아웃" color="red" onClick={handleLogout} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default MyPage; 
-*/
-
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../myPage.css';
-import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight, Notepad, Storefront, Exam, User } from "@phosphor-icons/react";
+import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight, Notepad, Storefront, Exam, User, UserCirclePlus } from "@phosphor-icons/react";
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -115,83 +16,89 @@ const Mypage = () => {
   }, []);
 
   return (
-    <div className="mypage-container">
-      <header>
-        <div className="container">
-          <h2>마이페이지</h2>
+    <div className="flex flex-col w-full h-screen bg-white">
+      <header className="border-b border-[#ddd] px-4 pt-5 pb-3.5">
+        <div>
+          <h2 className="text-[18px] font-bold text-[#111]">마이페이지</h2>
         </div>
       </header>
-      <main>
-        <ul>
-          <li onClick={() => navigate('/account')}>
-            <div className="left">
-              <UserCircle className="icon" />
-              <span>계정</span>
+      
+      <main className="flex-grow">
+        <ul className="w-full m-0 p-0 list-none">
+          <li onClick={() => navigate('/account')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+            <div className="flex items-center gap-2">
+              <UserCircle weight="fill" className="text-[20px] text-[#FF8DD4]" />
+              <span className="text-[16px] font-bold text-[#111]">계정</span>
             </div>
-            <div className="right">
-              <span className="user_email">{user?.email || "로그인 필요"}</span>
-              <CaretRight className="icon" />
-            </div>
-          </li>
-          <li onClick={() => setTheme(theme === "라이트" ? "다크" : "라이트") }>
-            <div className="left">
-              <SunDim className="icon" />
-              <span>테마</span>
-            </div>
-            <div className="right">
-              <span>{theme}</span>
-              <CaretRight className="icon" />
+            <div className="flex items-center gap-1.5">
+              <span className="text-[12px] font-normal text-[#999]">{user?.email || "로그인 필요"}</span>
+              <CaretRight className="text-[20px] text-[#111]" />
             </div>
           </li>
-          <li onClick={() => navigate('/example_settings')}>
-            <div className="left">
-              <TextAlignJustify className="icon" />
-              <span>예문 설정</span>
+
+          <li onClick={() => setTheme(theme === "라이트" ? "다크" : "라이트")} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+            <div className="flex items-center gap-2">
+              <SunDim weight="fill" className="text-[20px] text-[#FF8DD4]" />
+              <span className="text-[16px] font-bold text-[#111]">테마</span>
             </div>
-            <div className="right">
-              <span>항상 보기</span>
-              <CaretRight className="icon" />
-            </div>
-          </li>
-          <li onClick={() => navigate('/vocabulary_backup')}>
-            <div className="left">
-              <HardDrives className="icon" />
-              <span>단어장 백업</span>
-            </div>
-            <div className="right">
-              <CaretRight className="icon" />
+            <div className="flex items-center gap-1.5">
+              <span className="text-[12px] font-normal text-[#999]">{theme}</span>
+              <CaretRight className="text-[20px] text-[#111]" />
             </div>
           </li>
-          <li onClick={() => setNotifications(notifications === "on" ? "off" : "on") }>
-            <div className="left">
-              <Bell className="icon" />
-              <span>푸시 알림</span>
+
+          <li onClick={() => navigate('/example_settings')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+            <div className="flex items-center gap-2">
+              <TextAlignJustify weight="fill" className="text-[20px] text-[#FF8DD4]" />
+              <span className="text-[16px] font-bold text-[#111]">예문 설정</span>
             </div>
-            <div className="right">
-              <span>{notifications}</span>
-              <CaretRight className="icon" />
+            <div className="flex items-center gap-1.5">
+              <span className="text-[12px] font-normal text-[#999]">항상 보기</span>
+              <CaretRight className="text-[20px] text-[#111]" />
+            </div>
+          </li>
+
+          <li onClick={() => navigate('/vocabulary_backup')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+            <div className="flex items-center gap-2">
+              <HardDrives weight="fill" className="text-[20px] text-[#FF8DD4]" />
+              <span className="text-[16px] font-bold text-[#111]">단어장 백업</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <CaretRight className="text-[20px] text-[#111]" />
+            </div>
+          </li>
+
+          <li onClick={() => setNotifications(notifications === "on" ? "off" : "on")} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+            <div className="flex items-center gap-2">
+              <Bell weight="fill" className="text-[20px] text-[#FF8DD4]" />
+              <span className="text-[16px] font-bold text-[#111]">푸시 알림</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[12px] font-normal text-[#999]">{notifications}</span>
+              <CaretRight className="text-[20px] text-[#111]" />
             </div>
           </li>
         </ul>
       </main>
-      <footer>
+
+      <footer className="fixed bottom-0 w-full bg-white border-t border-[#ddd]">
         <nav>
-          <ul>
-            <li onClick={() => navigate('/vocabulary_list')}>
-              <Notepad className="icon" />
-              <span>단어장</span>
+          <ul className="flex justify-around pt-2.5 pb-5 m-0 list-none">
+            <li onClick={() => navigate('/vocabulary_list')} className="flex flex-col items-center flex-1 text-[16px] font-bold text-[#ccc] cursor-pointer">
+              <Notepad weight="fill" size={24} className="text-[#ccc]" />
+              <span className="text-[10px]">단어장</span>
             </li>
-            <li onClick={() => navigate('/vocabulary_store')}>
-              <Storefront className="icon" />
-              <span>서점</span>
+            <li onClick={() => navigate('/vocabulary_store')} className="flex flex-col items-center flex-1 text-[16px] font-bold text-[#ccc] cursor-pointer">
+              <Storefront weight="fill" size={24} className="text-[#ccc]" />
+              <span className="text-[10px]">서점</span>
             </li>
-            <li onClick={() => navigate('/test')}>
-              <Exam className="icon" />
-              <span>테스트</span>
+            <li onClick={() => navigate('/test')} className="flex flex-col items-center flex-1 text-[16px] font-bold text-[#ccc] cursor-pointer">
+              <Exam weight="fill" size={24} className="text-[#ccc]" />
+              <span className="text-[10px]">테스트</span>
             </li>
-            <li className="active">
-              <User className="icon" />
-              <span>마이페이지</span>
+            <li className="flex flex-col items-center flex-1 text-[#FF8DD4] text-[16px] font-bold cursor-pointer">
+              <User weight="fill" size={24} className="text-[#FF8DD4]" />
+              <span className="text-[10px]">마이페이지</span>
             </li>
           </ul>
         </nav>
