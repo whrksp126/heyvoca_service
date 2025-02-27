@@ -21,7 +21,7 @@ HeyVoca의 프론트엔드 프로젝트입니다. React와 Vite를 기반으로 
 
 1. 프로젝트 클론
 ```bash
-git clone [repository-url]
+git clone [repository-url] 
 cd heyvoca_front
 ```
 

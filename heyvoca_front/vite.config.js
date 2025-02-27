@@ -17,7 +17,7 @@ if (NODE_ENV === 'development') {
 
 export default defineConfig({
   plugins: [react()],
-  base: NODE_ENV === 'production' ? '/' : '/', 
+  base: NODE_ENV === 'production' ? '/' : '/',
   server: {
     watch: {
       usePolling: true,
@@ -31,5 +31,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-  }
+  },
+  css: {
+    postcss: './postcss.config.cjs'
+  },
 });

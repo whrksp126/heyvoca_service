@@ -1,35 +1,12 @@
-
 import React, { useEffect } from 'react';
 import lottie from 'lottie-web';
-import Main from '../components/login/Main';
-import "../login.css";
-
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
+import '../index.css';
 
 const Login = () => {
-  // useEffect(() => {
-  //   // 로컬 스토리지에서 유저 정보 확인
-  //   const userData = JSON.parse(localStorage.getItem("user"));
-  //   if (!userData) {
-  //     localStorage.setItem(
-  //       "user",
-  //       JSON.stringify({
-  //         google_id: null,
-  //         name: null,
-  //         email: null,
-  //         status: "logout",
-  //       })
-  //     );
-  //   }
-  //   if (userData?.status === "login") {
-  //     window.location.href = "/vocabulary_list";
-  //   }
-  // }, []);
-
   useEffect(() => {
     const container = document.getElementById("lottie-container");
-
     if (container) {
       const anim = lottie.loadAnimation({
         container,
@@ -38,10 +15,7 @@ const Login = () => {
         autoplay: true,
         animationData,
       });
-
-      return () => {
-        anim.destroy(); // 언마운트 시 애니메이션 제거
-      };
+      return () => anim.destroy();
     }
   }, []);
 
@@ -63,14 +37,24 @@ const Login = () => {
   };
 
   return (
-    <div className="background">
-      <div id="lottie-container" className="logo"></div>
-      <div className="buttons">
-        <button className="google_btn" onClick={clickGoogleLogin}>
-          <img src={googleLogo} alt="" />
+    <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+      <div
+        id="lottie-container"
+        className="w-[240px] absolute top-[150px] left-1/2 transform -translate-x-1/2"
+      ></div>
+      <div className="absolute bottom-[140px] w-[300px] left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+        <button
+          className="flex items-center justify-center w-full bg-white border border-[#CCCCCC] rounded-md py-[13.5px] px-5 text-black text-[15px] font-medium gap-2"
+          onClick={clickGoogleLogin}
+        >
+          <img src={googleLogo} alt="Google Logo" className="h-[18px]" />
           <span>Google 로그인</span>
         </button>
-        <a className="non_members" href="#" onClick={clickNonMembers}>
+        <a
+          className="text-[#111111] text-[12px] text-center mt-2"
+          href="#"
+          onClick={clickNonMembers}
+        >
           비회원 이용하기
         </a>
       </div>
@@ -78,4 +62,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;
