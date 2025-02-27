@@ -36,6 +36,19 @@ VITE_BACKEND_URL=http://localhost:3000
 ```bash
 # 도커 이미지 빌드 및 컨테이너 실행
 docker compose -f docker-compose.local.yml up --build
+
+
+# 컨테이너 실행 (백그라운드 모드)
+docker compose -f docker-compose.local.yml up -d
+
+# 컨테이너 중지
+docker compose -f docker-compose.local.yml down
+
+# 로그 보기
+docker compose -f docker-compose.local.yml logs -f
+
+# 컨테이너 재시작
+docker compose -f docker-compose.local.yml restart
 ```
 
 4. 브라우저에서 확인
