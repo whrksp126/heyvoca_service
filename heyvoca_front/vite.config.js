@@ -8,11 +8,11 @@ const NODE_ENV = process.env.NODE_ENV || 'local';
 const allowedHosts = ['localhost'];
 
 if (NODE_ENV === 'development') {
-  allowedHosts.push('dev.heyvoca_front.ghmate.com');
+  allowedHosts.push('dev-heyvoca-front.ghmate.com');
 } else if (NODE_ENV === 'staging') {
-  allowedHosts.push('stg.heyvoca_front.ghmate.com');
+  allowedHosts.push('stg-heyvoca-front.ghmate.com');
 } else if (NODE_ENV === 'production') {
-  allowedHosts.push('heyvoca_front.ghmate.com');
+  allowedHosts.push('heyvoca-front.ghmate.com');
 }
 
 export default defineConfig({
