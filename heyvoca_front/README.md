@@ -36,6 +36,19 @@ VITE_BACKEND_URL=http://localhost:3000
 ```bash
 # 도커 이미지 빌드 및 컨테이너 실행
 docker compose -f docker-compose.local.yml up --build
+
+
+# 컨테이너 실행 (백그라운드 모드)
+docker compose -f docker-compose.local.yml up -d
+
+# 컨테이너 중지
+docker compose -f docker-compose.local.yml down
+
+# 로그 보기
+docker compose -f docker-compose.local.yml logs -f
+
+# 컨테이너 재시작
+docker compose -f docker-compose.local.yml restart
 ```
 
 4. 브라우저에서 확인
@@ -113,4 +126,26 @@ docker exec -it heyvoca_front_local sh
 
 # 사용하지 않는 도커 리소스 정리
 docker system prune
+```
+
+```
+ 개발 도중 패키지를 업데이트해야 할 경우
+# 1️⃣ 컨테이너 내부에서 패키지 설치
+docker-compose exec front-end npm install some-package
+
+# 2️⃣ 변경된 package.json & package-lock.json을 Git에 반영
+git add package.json package-lock.json
+git commit -m "Add some-package"
+git push origin local
+
+# 3️⃣ Docker Hub에 최신 node_modules 포함된 이미지 푸시
+docker commit heyvoca_front_local whrksp126/heyvoca_front:local
+docker push whrksp126/heyvoca_front:local
+```
+
+```
+다른 개발자가 최신 패키지를 반영하는 방법
+git pull
+docker pull whrksp126/heyvoca_front:local
+docker-compose -f docker-compose.local.yml up -d
 ```

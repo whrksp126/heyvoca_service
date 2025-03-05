@@ -12,8 +12,6 @@ services:
       - "3002:3000"
     env_file:
       - .env.dev
-    environment:
-      - VITE_ALLOWED_HOSTS=dev.heyvoca_front.ghmate.com
     networks:
       - heyvoca_front_dev_network
     restart: unless-stopped
