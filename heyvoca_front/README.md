@@ -132,6 +132,7 @@ docker system prune
  개발 도중 패키지를 업데이트해야 할 경우
 # 1️⃣ 컨테이너 내부에서 패키지 설치
 docker-compose exec front-end npm install some-package
+(docker-compose -f docker-compose.local.yml exec front-end npm install some-package)
 
 # 2️⃣ 변경된 package.json & package-lock.json을 Git에 반영
 git add package.json package-lock.json
