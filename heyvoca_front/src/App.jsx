@@ -8,9 +8,15 @@ import Login from './pages/Login';
 import Vocabulary from './pages/Vocabulary';
 import Store from './pages/Store';
 import Class from './pages/Class';
-import MyPage from './pages/MyPage';
+
+import MyPage from './pages/mypage/MyPage';
+import Account from './pages/mypage/Account';
+import Theme from './pages/mypage/Theme';
+
 import Header from './components/component/Header';
 import BottomNav from './components/component/BottomNav';
+import { ThemeProvider } from './context/ThemeContext';
+import Layout from './components/Layout';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -29,6 +35,8 @@ const AppLayout = () => {
           <Route path="/store" element={<Store />} />
           <Route path="/class" element={<Class />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/account" element={<Account />} />
+          <Route path="/mypage/theme" element={<Theme />} />
         </Routes>
       </main>
       {needsBottomNav && <BottomNav />}
@@ -38,9 +46,13 @@ const AppLayout = () => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppLayout />
-    </BrowserRouter>
+    <ThemeProvider>
+      <Layout>
+        <BrowserRouter>
+          <AppLayout />
+        </BrowserRouter>
+      </Layout>
+    </ThemeProvider>
   );
 }
 

@@ -4,6 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  header {
+    @apply border-b border-border dark:border-border-dark 
+           bg-background dark:bg-background-dark 
+           px-4 pt-5 pb-3.5;
+  }
+  
+  header h2 {
+    @apply text-[18px] font-bold 
+           text-primary dark:text-primary-dark;
+  }
+
+  /* 메인 영역의 리스트 제목 스타일 */
+  main ul li h2 {
+    @apply text-[16px] font-bold text-[#111] mb-2;
+  }
+}
+/* 
 :root {
   font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   font-synthesis: none;
@@ -67,4 +85,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

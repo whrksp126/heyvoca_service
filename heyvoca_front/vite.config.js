@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // 환경 변수 설정 (production, staging, development, local)
 const NODE_ENV = process.env.NODE_ENV || 'local';
@@ -17,6 +18,11 @@ if (NODE_ENV === 'development') {
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   base: NODE_ENV === 'production' ? '/' : '/',
   server: {
     watch: {
