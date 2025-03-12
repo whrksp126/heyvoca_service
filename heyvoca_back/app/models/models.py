@@ -97,6 +97,7 @@ class Voca(db.Model):
     id = Column(Integer, primary_key=True)
     word = Column(String(255), nullable=False)
     pronunciation = Column(String(100), nullable=True)
+    verb_forms = Column(Text, nullable=True)
 
     # 관계 정의
     voca_books = relationship("VocaBookMap", back_populates="voca")
