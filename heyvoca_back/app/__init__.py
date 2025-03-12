@@ -43,7 +43,6 @@ def create_app():
   from app.routes.fcm import fcm_bp
   from app.routes.drive import drive_bp
   from app.routes.mainpage import mainpage_bp
-  from app.routes.check import check_bp
   
   app.register_blueprint(login_bp)
   app.register_blueprint(search_bp)
@@ -51,6 +50,5 @@ def create_app():
   app.register_blueprint(fcm_bp)
   app.register_blueprint(drive_bp)
   app.register_blueprint(mainpage_bp)
-  app.register_blueprint(check_bp)
   
   return app
