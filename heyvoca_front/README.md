@@ -150,3 +150,78 @@ git pull
 docker pull whrksp126/heyvoca_front:local
 docker-compose -f docker-compose.local.yml up -d
 ```
+
+
+
+
+✅ 1️⃣ 로컬 (local) 개발 환경
+개발자가 자신의 PC에서 실행하여 테스트하는 환경
+Vite 개발 서버 실행 (npm run dev)
+docker-compose.local.yml 사용
+# 로컬 개발 환경 실행 (핫 리로드 지원)
+docker compose -f docker-compose.local.yml up --build -d
+
+# 현재 실행 중인 컨테이너 확인
+docker ps
+
+# 실행된 이미지 확인
+docker images | grep heyvoca_front
+
+# 개발이 끝나면, 도커 허브에 local 태그로 푸쉬
+docker push whrksp126/heyvoca_front:local
+✅ 로컬에서 개발 후, 필요하면 Docker Hub에 올려서 공유 가능!
+
+✅ 2️⃣ 개발 (dev) 서버 배포
+최신 코드 기반으로 Docker Hub에 푸쉬
+docker-compose.dev.yml 사용
+# dev 환경 빌드 및 실행
+docker compose -f docker-compose.dev.yml up --build -d
+
+# dev 환경의 이미지 확인
+docker images | grep heyvoca_front
+
+# dev 태그로 Docker Hub에 푸쉬
+docker push whrksp126/heyvoca_front:dev
+
+# dev 서버에서 최신 이미지 다운로드 및 실행
+docker pull whrksp126/heyvoca_front:dev
+docker run -d --name heyvoca_front_dev -p 3002:3000 whrksp126/heyvoca_front:dev
+sudo systemctl restart heyvoca_front_dev
+✅ 개발 서버 (http://dev-heyvoca-front.ghmate.com)에서 정상 동작 확인!
+
+✅ 3️⃣ 스테이징 (stg) 서버 배포
+운영과 동일한 방식으로 배포 (Nginx)
+docker-compose.stg.yml 사용
+3001 포트로 실행
+# stg 환경 빌드 및 실행
+docker compose -f docker-compose.stg.yml up --build -d
+
+# stg 환경의 이미지 확인
+docker images | grep heyvoca_front
+
+# stg 태그로 Docker Hub에 푸쉬
+docker push whrksp126/heyvoca_front:staging
+
+# stg 서버에서 최신 이미지 다운로드 및 실행
+docker pull whrksp126/heyvoca_front:staging
+docker run -d --name heyvoca_front_stg -p 3001:80 whrksp126/heyvoca_front:staging
+sudo systemctl restart heyvoca_front_stg
+✅ 스테이징 서버 (https://stg-heyvoca-front.ghmate.com)에서 정상 동작 확인!
+
+✅ 4️⃣ 운영 (main) 서버 배포
+실제 서비스가 운영되는 프로덕션 서버 (heyvoca.ghmate.com)
+docker-compose.yml 사용
+80 포트로 실행
+# main 환경 빌드 및 실행
+docker compose -f docker-compose.yml up --build -d
+
+# main 환경의 이미지 확인
+docker images | grep heyvoca_front
+
+# main 태그로 Docker Hub에 푸쉬
+docker push whrksp126/heyvoca_front:main
+
+# main 서버에서 최신 이미지 다운로드 및 실행
+docker pull whrksp126/heyvoca_front:main
+sudo systemctl restart heyvoca_front
+✅ 운영 서버 (https://heyvoca-front.ghmate.com)에서 정상 동작 확인!
