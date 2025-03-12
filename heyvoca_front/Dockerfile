@@ -34,5 +34,5 @@ CMD ["nginx", "-g", "daemon off;"]
 # Development & Local → 개발 서버 실행
 FROM builder AS development
 EXPOSE 3000
-# CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
-ENTRYPOINT ["sh", "-c", "npm ci && npm run dev -- --host 0.0.0.0"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# ENTRYPOINT ["sh", "-c", "npm ci && npm run dev -- --host 0.0.0.0"]
