@@ -5,9 +5,11 @@ WORKDIR /app
 # npm 기본 레지스트리 설정
 RUN npm config set registry https://registry.npmjs.org/
 
-# package.json만 복사해서 캐싱 최적화
+# package.json과 package-lock.json 복사 (package-lock.json 강제 적용)
 COPY package.json package-lock.json ./
-RUN npm install --legacy-peer-deps
+
+# 동일한 패키지를 설치하도록 강제 (버전 차이 방지)
+RUN npm ci
 
 # 소스 코드 복사
 COPY . .
@@ -32,4 +34,5 @@ CMD ["nginx", "-g", "daemon off;"]
 # Development & Local → 개발 서버 실행
 FROM builder AS development
 EXPOSE 3000
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+ENTRYPOINT ["sh", "-c", "npm ci && npm run dev -- --host 0.0.0.0"]
