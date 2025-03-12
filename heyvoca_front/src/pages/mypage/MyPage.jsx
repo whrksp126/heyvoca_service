@@ -7,7 +7,7 @@ const Mypage = () => {
   const navigate = useNavigate();
   const { isDark } = useTheme();
   const [user, setUser] = useState(null);
-  const [notifications, setNotifications] = useState("on");
+  // const [notifications, setNotifications] = useState("on");
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -71,13 +71,13 @@ const Mypage = () => {
             </div>
           </li>
 
-          <li onClick={() => setNotifications(notifications === "on" ? "off" : "on")} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+          <li onClick={() => navigate('/push_notifications')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
             <div className="flex items-center gap-2">
               <Bell weight="fill" className="text-[20px] text-[#FF8DD4]" />
               <span className="text-[16px] font-bold text-primary dark:text-primary-dark">푸시 알림</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-normal text-[#999]">{notifications}</span>
+              <span className="text-[12px] font-normal text-[#999]">on</span> {/* TODO: 알림 상태 표시 */}
               <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
             </div>
           </li>

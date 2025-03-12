@@ -78,7 +78,7 @@ const Main = () => {
 
   return (
     <div className="w-full max-w-2xl p-4 pb-24">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">서점</h2>
+      <h2>서점</h2>
       <div className="grid grid-cols-2 gap-4">
         {books.map((book, index) => (
           <BookCard key={index} {...book} />

@@ -12,6 +12,9 @@ import Class from './pages/Class';
 import MyPage from './pages/mypage/MyPage';
 import Account from './pages/mypage/Account';
 import Theme from './pages/mypage/Theme';
+import ExampleSettings from './pages/mypage/ExampleSettings';
+import PushNotifications from './pages/mypage/PushNotifications';
+import VocabularyBackup from './pages/mypage/VocabularyBackup';
 
 import Header from './components/component/Header';
 import BottomNav from './components/component/BottomNav';
@@ -37,6 +40,9 @@ const AppLayout = () => {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/account" element={<Account />} />
           <Route path="/mypage/theme" element={<Theme />} />
+          <Route path="/example_settings" element={<ExampleSettings />} />
+          <Route path="/push_notifications" element={<PushNotifications />} />
+          <Route path="/vocabulary_backup" element={<VocabularyBackup />} />
         </Routes>
       </main>
       {needsBottomNav && <BottomNav />}

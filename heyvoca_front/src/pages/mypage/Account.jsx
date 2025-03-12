@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CaretLeft, SignOut } from "@phosphor-icons/react";
 import googleLogo from '../../assets/images/google_logo.png';
 import { useTheme } from '../../context/ThemeContext';
+import Modal from '../../components/common/Modal';
 
 const Account = () => {
   const navigate = useNavigate();
-  const { theme } = useTheme();
+  const { isDark } = useTheme();
+  const [showModal, setShowModal] = useState(false);
 
   const handleLogout = () => {
-    console.log("로그아웃 처리");
+    setShowModal(true);
+  };
+
+  const handleModalLogout = () => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    localStorage.setItem('user', JSON.stringify({
+      token: userData.token,
+      email: userData.email,
+      name: userData.name,
+      state: "logout"
+    }));
+    navigate('/login');
   };
 
   return (
@@ -53,10 +66,33 @@ const Account = () => {
             onClick={handleLogout}
           >
             <h2 className="text-[#111] dark:text-white">로그아웃</h2>
-            <SignOut className="w-4 h-4" color={theme === "라이트" ? "#111" : "#fff"} />
+            <SignOut className="w-4 h-4" color={isDark ? "#fff" : "#111"} />
           </li>
         </ul>
       </main>
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <h3 className="text-lg font-bold text-primary dark:text-primary-dark mb-2">
+          정말 로그아웃 하시겠어요?
+        </h3>
+        <p className="text-[#666] dark:text-[#999] mb-6">
+          로그아웃 시에는 일부 기능을 사용할 수 없어요 🥺
+        </p>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowModal(false)}
+            className="flex-1 py-2 px-4 rounded-lg bg-[#f5f5f5] dark:bg-[#333] text-[#666] dark:text-[#999]"
+          >
+            취소
+          </button>
+          <button
+            onClick={handleModalLogout}
+            className="flex-1 py-2 px-4 rounded-lg bg-heyvocaPink text-white"
+          >
+            로그아웃
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
