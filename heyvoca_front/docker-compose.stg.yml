@@ -6,8 +6,7 @@ services:
     image: whrksp126/heyvoca_front:staging
     build:
       context: .
-      dockerfile: Dockerfile
-      target: production
+      dockerfile: Dockerfile.stg
       args:
         - NODE_ENV=staging
     ports:
