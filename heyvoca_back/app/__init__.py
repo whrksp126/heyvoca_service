@@ -43,12 +43,13 @@ def create_app():
   from app.routes.fcm import fcm_bp
   from app.routes.drive import drive_bp
   from app.routes.mainpage import mainpage_bp
-  
+  from app.routes.version import version_bp
   app.register_blueprint(login_bp)
   app.register_blueprint(search_bp)
   app.register_blueprint(tts_bp)
   app.register_blueprint(fcm_bp)
   app.register_blueprint(drive_bp)
   app.register_blueprint(mainpage_bp)
+  app.register_blueprint(version_bp)
   
   return app
