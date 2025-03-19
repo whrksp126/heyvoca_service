@@ -6,8 +6,7 @@ services:
     image: whrksp126/heyvoca_front:dev
     build:
       context: .
-      dockerfile: Dockerfile
-      target: development
+      dockerfile: Dockerfile.dev
     ports:
       - "3002:3000"
     env_file:
