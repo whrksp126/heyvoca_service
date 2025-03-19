@@ -33,7 +33,7 @@ const BottomNav = () => {
             <span className={`text-[10px] mt-1 ${
               location.pathname === '/store' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
             }`}>
-              스토어
+              서점
             </span>
           </button>
         </li>
