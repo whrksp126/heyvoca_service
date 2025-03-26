@@ -7,7 +7,8 @@ from app.routes import version_bp
 def get_version():
   """현재 앱 및 웹의 버전 정보를 반환합니다."""
   version_info = {
-      "app_version": "1.0.0",  # 앱 버전
+      "app_android_version": "1.1.14",  # 앱 안드로이드 버전
+      "app_ios_version": "1.0.0",  # 앱 아이폰 버전
       "web_version": "1.0.0",  # 웹 버전
       "release_date": datetime.now().isoformat(),
       "api_status": "stable",
