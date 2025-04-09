@@ -1,76 +1,209 @@
-import React from 'react';
+import { PencilSimple, Trash } from '@phosphor-icons/react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Btn from '../component/Btn';
-
-const ProgressBar = ({ value, max, color, label, emoji }) => (
-  <div className="mb-4 bg-white p-4 rounded-xl shadow-sm">
-    <div className="flex justify-between mb-2">
-      <span className="text-gray-700">{label} {emoji}</span>
-      <span className="text-gray-500">{value}/{max}</span>
-    </div>
-    <div className="w-full bg-gray-100 rounded-full h-4">
-      <div 
-        className={`h-full rounded-full ${color}`}
-        style={{ width: `${(value / max) * 100}%` }}
-      />
-    </div>
-  </div>
-);
 
 const Main = () => {
-  const today = new Date().toLocaleDateString('ko-KR', { weekday: 'long' });
+  const navigate = useNavigate();
+  
+  const data = {
+    today_sentence: {
+      title: "오늘의 문장 💬",
+      sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
+      translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
+    },
+    
+    vocabulary: [
+      {
+        id : 1,
+        title : "고등 수능 영단어",
+        total : 500,
+        memorized : 100,
+        color : {
+          main : "#CD8DFF",
+          sub : "#CD8DFF4d",
+          background : "#F6EFFF"
+        }
+      },
+      {
+        id : 2,
+        title : "고등 내신 영단어",
+        total : 250,
+        memorized : 150,
+        color : {
+          main : "#FF8DD4",
+          sub : "#FF8DD44d",
+          background : "#FFEFFA"
+        }
+      },
+      {
+        id : 3,
+        title : "고등 기초 영단어",
+        total : 300,
+        memorized : 3,
+        color : {
+          main : "#74D5FF",
+          sub : "#74D5FF4d",
+          background : "#EAF6FF"
+        }
+      },
+      {
+        id : 4,
+        title : "고등 심화 영단어",
+        total : 220,
+        memorized : 120,
+        color : {
+          main : "#FF8DD4",
+          sub : "#FF8DD44d",
+          background : "#FFEFFA"
+        }
+      },
+    ]
+  }
 
+  const handleCardClick = (id) => {
+    console.log(`단어장 클릭 함`);
+  };
+  
   return (
-    <div className="w-full max-w-md p-4">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">단어장</h2>
-      <div className="bg-pink-50 rounded-xl p-6 mb-4">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">{today}의 문장 ✨</h2>
-          <div className="flex gap-2">
-            <button className="text-pink-400">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-            </button>
-            <button className="text-pink-400">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </button>
-          </div>
+    <div 
+      className="
+        flex flex-col 
+        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav))]
+        px-[16px] py-[10px]
+        overflow-y-auto
+      "
+    >
+      <div className="
+        top 
+        relative
+        flex flex-col gap-[15px]
+        pt-[30px] px-[20px] pb-[20px]
+        mb-[15px]
+        rounded-[12px]
+        bg-[#FFEFFA]
+      ">
+        <div 
+          className="
+            absolute top-[0] left-[0]
+            flex items-center justify-between
+            w-full
+            px-[14px]
+            translate-y-[-20%]
+          ">
+          {[0,1,2,3,4,5,6,7,8,9].map((item) => (
+            <img 
+              key={item} 
+              src="/src/assets/images/note_ring.png" 
+              alt="노트 위 고리 이미지" 
+              className="
+                note_ring
+                w-[12px] h-[24px]
+              " 
+            />
+          ))}
+
         </div>
-        <p className="text-gray-700 mb-2">Could you recommend a dish that's not too spicy but still flavorful?</p>
-        <p className="text-gray-500 text-sm">너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?</p>
+        <h2 className="text-[16px] font-[700]">{data.today_sentence.title}</h2>
+        <div className="flex flex-col gap-[10px]">
+          <span className="text-[14px] font-[600]">
+            {data.today_sentence.sentence}
+          </span>
+          <p className="text-[12px] font-[400]">
+            {data.today_sentence.translation}
+          </p>
+        </div>
       </div>
-      
-      <ProgressBar 
-        label="토익 준비용" 
-        emoji="🔥" 
-        value={100} 
-        max={500} 
-        color="bg-pink-300"
-      />
-      <ProgressBar 
-        label="고등 수능 영단어" 
-        emoji="👀" 
-        value={150} 
-        max={300} 
-        color="bg-purple-300"
-      />
-      <ProgressBar 
-        label="30일 완성 TEPS" 
-        emoji="👍" 
-        value={150} 
-        max={300} 
-        color="bg-blue-300"
-      />
-      <ProgressBar 
-        label="직장인 만남의 영단어" 
-        emoji="🌟" 
-        value={275} 
-        max={500} 
-        color="bg-green-300"
-      />
+
+
+
+      <div className="middle">
+        <ul className="flex flex-col gap-[15px]">
+          {data.vocabulary.map((item) => {
+            const progress = Math.round((item.memorized/item.total) * 100);
+            return (
+              <motion.li
+                key={item.id}
+                style={{ backgroundColor: item.color.background }}
+                className="
+                  flex flex-col gap-[15px]
+                  p-[20px]
+                  rounded-[12px]
+                  cursor-pointer
+                "
+                onClick={() => handleCardClick(item.id)}
+                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <div 
+                className="
+                  top
+                  flex items-center justify-between
+                  w-full
+                  
+                "
+              >
+                <h3 className="text-[16px] font-[700]">{item.title} 👀</h3>
+                <span className="text-[10px] font-[400]">{item.memorized}/{item.total}</span>
+              </div>
+  
+              <div 
+                className="
+                  middle
+                  hidden
+                "
+              >
+                <div className="btns">
+                  <button>
+                    <PencilSimple  />
+                  </button>
+                  <button>
+                    <Trash/>
+                  </button>
+                </div>
+              </div>
+  
+  
+  
+              <div className="bottom">
+                <div 
+                  style={{ backgroundColor: item.color.sub }}
+                  className="
+                    w-[100%] h-[16px]
+                    rounded-[16px]
+                    overflow-hidden
+                  "
+                  
+                >
+                  <div 
+                    style={{ 
+                      width: `${progress}%`,
+                      backgroundColor: item.color.main
+                    }}
+                    className="
+                      relative
+                      h-[100%]
+                      rounded-[16px]
+                    "
+                  >
+                    <span 
+                      style={{
+                        transform : `translateY(-50%) translateX(${progress > 10 ? '0' : '30px'})`
+                      }}
+                      className="
+                        absolute top-[50%] right-[8px]
+                        text-[10px] font-[600] text-[#fff]
+                      ">
+                      {progress}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.li>
+          )})}
+        </ul>
+      </div>
+
     </div>
   );
 };

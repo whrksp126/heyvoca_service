@@ -4,6 +4,14 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'], // TailwindCSS 적용 경로 지정
   theme: {
     extend: {
+      spacing: {
+        'header': '55px',
+        'bottom-nav': '70px',
+      },
+      height: {
+        'header': '55px',
+        'bottom-nav': '70px',
+      },
       colors: {
         heyvocaPink: '#FF8DD4',
         primary: {

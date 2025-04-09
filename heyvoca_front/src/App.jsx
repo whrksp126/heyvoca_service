@@ -1,9 +1,9 @@
 // src/App.jsx
 
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Index from './pages/Index';
 import Home from './pages/Home';
-import Register from './pages/Register';
 import Login from './pages/Login';
 import Vocabulary from './pages/Vocabulary';
 import Store from './pages/Store';
@@ -16,37 +16,30 @@ import ExampleSettings from './pages/mypage/ExampleSettings';
 import PushNotifications from './pages/mypage/PushNotifications';
 import VocabularyBackup from './pages/mypage/VocabularyBackup';
 
-import Header from './components/component/Header';
-import BottomNav from './components/component/BottomNav';
 import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 
 const AppLayout = () => {
-  const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
-  const needsBottomNav = ['/vocabulary', '/store', '/class', '/mypage'].includes(location.pathname);
-
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {isAuthPage && <Header />}
-      <main className={`flex-1 ${isAuthPage ? 'pt-[70px]' : ''}`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/vocabulary" element={<Vocabulary />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/class" element={<Class />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/account" element={<Account />} />
-          <Route path="/mypage/theme" element={<Theme />} />
-          <Route path="/example_settings" element={<ExampleSettings />} />
-          <Route path="/push_notifications" element={<PushNotifications />} />
-          <Route path="/vocabulary_backup" element={<VocabularyBackup />} />
-        </Routes>
-      </main>
-      {needsBottomNav && <BottomNav />}
-    </div>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/login" element={<Login />} />
+
+      <Route path="/home" element={<Home />} />
+      <Route path="/vocabulary" element={<Vocabulary />} />
+      <Route path="/store" element={<Store />} />
+      <Route path="/class" element={<Class />} />
+      
+      
+      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/mypage/account" element={<Account />} />
+      <Route path="/mypage/theme" element={<Theme />} />
+      <Route path="/mypage/example_settings" element={<ExampleSettings />} />
+      <Route path="/mypage/push_notifications" element={<PushNotifications />} />
+      <Route path="/mypage/vocabulary_backup" element={<VocabularyBackup />} />
+
+
+    </Routes>
   );
 };
 
