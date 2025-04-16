@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const navigate = useNavigate();
-  
+
+
   const data = {
     today_sentence: {
       title: "오늘의 문장 💬",

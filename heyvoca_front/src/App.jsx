@@ -17,6 +17,7 @@ import PushNotifications from './pages/mypage/PushNotifications';
 import VocabularyBackup from './pages/mypage/VocabularyBackup';
 
 import { ThemeProvider } from './context/ThemeContext';
+import { BottomSheetProvider } from './context/BottomSheetContext';
 import Layout from './components/Layout';
 
 const AppLayout = () => {
@@ -47,9 +48,11 @@ function App() {
   return (
     <ThemeProvider>
       <Layout>
-        <BrowserRouter>
-          <AppLayout />
-        </BrowserRouter>
+        <BottomSheetProvider>
+          <BrowserRouter>
+            <AppLayout />
+          </BrowserRouter>
+        </BottomSheetProvider>
       </Layout>
     </ThemeProvider>
   );

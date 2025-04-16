@@ -1,8 +1,10 @@
 import React from 'react';
 import { Plus, PencilSimple } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
+import { useBottomSheet } from '../../context/BottomSheetContext';
 
 const Header = () => {
+  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
   const buttonVariants = {
     tap: { 
       scale: 0.85,
@@ -23,7 +25,17 @@ const Header = () => {
 
   const handleAddClick = () => {
     console.log('추가 버튼 클릭');
-    // TODO: 새 단어 추가 모달 또는 페이지로 이동 로직 추가
+    showBottomSheet(
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold">제목</h2>
+        <p>내용이 여기에 들어갑니다.</p>
+        <button onClick={hideBottomSheet}>닫기</button>
+      </div>,
+      {
+        isBackdropClickClosable: false,
+        isDragToCloseEnabled: true
+      }
+    );
   };
 
   return (
