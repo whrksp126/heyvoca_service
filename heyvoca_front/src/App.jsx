@@ -19,6 +19,7 @@ import VocabularyBackup from './pages/mypage/VocabularyBackup';
 import { ThemeProvider } from './context/ThemeContext';
 import { BottomSheetProvider } from './context/BottomSheetContext';
 import Layout from './components/Layout';
+import { VocabularyProvider } from './context/VocabularyContext';
 
 const AppLayout = () => {
   return (
@@ -46,15 +47,17 @@ const AppLayout = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <Layout>
-        <BottomSheetProvider>
-          <BrowserRouter>
-            <AppLayout />
-          </BrowserRouter>
-        </BottomSheetProvider>
-      </Layout>
-    </ThemeProvider>
+    <VocabularyProvider>
+      <ThemeProvider>
+        <Layout>
+          <BottomSheetProvider>
+            <BrowserRouter>
+              <AppLayout />
+            </BrowserRouter>
+          </BottomSheetProvider>
+        </Layout>
+      </ThemeProvider>
+    </VocabularyProvider>
   );
 }
 

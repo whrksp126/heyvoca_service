@@ -1,70 +1,30 @@
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useVocabulary } from '../../context/VocabularyContext';
 
 const Main = () => {
   const navigate = useNavigate();
+  const { vocabularySheets, isLoading } = useVocabulary();
 
-
-  const data = {
-    today_sentence: {
-      title: "오늘의 문장 💬",
-      sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
-      translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
-    },
-    
-    vocabulary: [
-      {
-        id : 1,
-        title : "고등 수능 영단어",
-        total : 500,
-        memorized : 100,
-        color : {
-          main : "#CD8DFF",
-          sub : "#CD8DFF4d",
-          background : "#F6EFFF"
-        }
-      },
-      {
-        id : 2,
-        title : "고등 내신 영단어",
-        total : 250,
-        memorized : 150,
-        color : {
-          main : "#FF8DD4",
-          sub : "#FF8DD44d",
-          background : "#FFEFFA"
-        }
-      },
-      {
-        id : 3,
-        title : "고등 기초 영단어",
-        total : 300,
-        memorized : 3,
-        color : {
-          main : "#74D5FF",
-          sub : "#74D5FF4d",
-          background : "#EAF6FF"
-        }
-      },
-      {
-        id : 4,
-        title : "고등 심화 영단어",
-        total : 220,
-        memorized : 120,
-        color : {
-          main : "#FF8DD4",
-          sub : "#FF8DD44d",
-          background : "#FFEFFA"
-        }
-      },
-    ]
-  }
+  const today_sentence = {
+    title: "오늘의 문장 💬",
+    sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
+    translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
+  };
 
   const handleCardClick = (id) => {
     console.log(`단어장 클릭 함`);
   };
   
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p>로딩 중...</p>
+      </div>
+    );
+  }
+
   return (
     <div 
       className="
@@ -102,24 +62,21 @@ const Main = () => {
               " 
             />
           ))}
-
         </div>
-        <h2 className="text-[16px] font-[700]">{data.today_sentence.title}</h2>
+        <h2 className="text-[16px] font-[700]">{today_sentence.title}</h2>
         <div className="flex flex-col gap-[10px]">
           <span className="text-[14px] font-[600]">
-            {data.today_sentence.sentence}
+            {today_sentence.sentence}
           </span>
           <p className="text-[12px] font-[400]">
-            {data.today_sentence.translation}
+            {today_sentence.translation}
           </p>
         </div>
       </div>
 
-
-
       <div className="middle">
         <ul className="flex flex-col gap-[15px]">
-          {data.vocabulary.map((item) => {
+          {vocabularySheets.map((item) => {
             const progress = Math.round((item.memorized/item.total) * 100);
             return (
               <motion.li
@@ -141,7 +98,6 @@ const Main = () => {
                   top
                   flex items-center justify-between
                   w-full
-                  
                 "
               >
                 <h3 className="text-[16px] font-[700]">{item.title} 👀</h3>
@@ -164,8 +120,6 @@ const Main = () => {
                 </div>
               </div>
   
-  
-  
               <div className="bottom">
                 <div 
                   style={{ backgroundColor: item.color.sub }}
@@ -174,7 +128,6 @@ const Main = () => {
                     rounded-[16px]
                     overflow-hidden
                   "
-                  
                 >
                   <div 
                     style={{ 
@@ -204,7 +157,6 @@ const Main = () => {
           )})}
         </ul>
       </div>
-
     </div>
   );
 };

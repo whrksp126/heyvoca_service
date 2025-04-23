@@ -42,7 +42,7 @@ const BottomSheet = ({
             dragElastic={0.4}
             onDragEnd={handleDragEnd}
           >
-            <div className="p-5">
+            <div className="">
               {children}
             </div>
           </motion.div>
