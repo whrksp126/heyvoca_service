@@ -3,20 +3,16 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 
-const Main = () => {
+const Main = ({ onCardClick }) => {
   const navigate = useNavigate();
   const { vocabularySheets, isLoading } = useVocabulary();
-
+  
   const today_sentence = {
     title: "오늘의 문장 💬",
     sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
     translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
   };
 
-  const handleCardClick = (id) => {
-    console.log(`단어장 클릭 함`);
-  };
-  
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -24,6 +20,11 @@ const Main = () => {
       </div>
     );
   }
+
+  // updatedAt 기준으로 정렬된 단어장 목록
+  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
+    new Date(b.updatedAt) - new Date(a.updatedAt)
+  );
 
   return (
     <div 
@@ -76,8 +77,8 @@ const Main = () => {
 
       <div className="middle">
         <ul className="flex flex-col gap-[15px]">
-          {vocabularySheets.map((item) => {
-            const progress = Math.round((item.memorized/item.total) * 100);
+          {sortedVocabularySheets.map((item) => {
+            const progress = item.total === 0 ? 0 : Math.round((item.memorized/item.total) * 100);
             return (
               <motion.li
                 key={item.id}

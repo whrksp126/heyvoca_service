@@ -5,10 +5,10 @@ import Header from '../components/vocabulary/Header';
 
 const Vocabulary = () => {
   return (
-    <div >
+    <div>
       <Header />
       <Main />
-      <BottomNav />      
+      <BottomNav />
     </div>
   );
 };

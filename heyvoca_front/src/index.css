@@ -7,3 +7,27 @@
 @layer base {
 
 }
+
+:root {
+  touch-action: pan-x pan-y;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  touch-action: pan-x pan-y;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 입력 요소는 선택 가능하도록 예외 처리 */
+input, textarea {
+  touch-action: auto;
+  -webkit-touch-callout: auto;
+  -webkit-user-select: text;
+  user-select: text;
+}

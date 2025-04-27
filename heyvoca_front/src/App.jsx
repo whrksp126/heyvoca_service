@@ -18,6 +18,7 @@ import VocabularyBackup from './pages/mypage/VocabularyBackup';
 
 import { ThemeProvider } from './context/ThemeContext';
 import { BottomSheetProvider } from './context/BottomSheetContext';
+import { FullSheetProvider } from './context/FullSheetContext';
 import Layout from './components/Layout';
 import { VocabularyProvider } from './context/VocabularyContext';
 
@@ -51,9 +52,11 @@ function App() {
       <ThemeProvider>
         <Layout>
           <BottomSheetProvider>
-            <BrowserRouter>
-              <AppLayout />
-            </BrowserRouter>
+            <FullSheetProvider>
+              <BrowserRouter>
+                <AppLayout />
+              </BrowserRouter>
+            </FullSheetProvider>
           </BottomSheetProvider>
         </Layout>
       </ThemeProvider>
