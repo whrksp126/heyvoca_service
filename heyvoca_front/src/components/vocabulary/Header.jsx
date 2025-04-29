@@ -4,12 +4,10 @@ import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useFullSheet } from '../../context/FullSheetContext';
 import VocabularyListView from './VocabularyListView';
-import { useVocabulary } from '../../context/VocabularyContext';
 
 const Header = () => {
   const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
-  const { push } = useFullSheet();
-  const { vocabularySheets } = useVocabulary();
+  const { pushFullSheet } = useFullSheet();
   
   const buttonVariants = {
     tap: { 
@@ -25,14 +23,12 @@ const Header = () => {
   };
 
   const handleAddClick = () => {
-    console.log('추가 버튼 클릭');
     showVocabularySetBottomSheet();
   };
 
   const handleEditClick = () => {
-    push({
-      component: <VocabularyListView list={{ vocabularyItems: vocabularySheets }} />,
-      title: "단어장 편집"
+    pushFullSheet({
+      component: <VocabularyListView />
     });
   };
 

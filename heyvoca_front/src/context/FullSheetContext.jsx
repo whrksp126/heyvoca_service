@@ -1,56 +1,30 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import FullSheet from '../components/common/FullSheet';
 
 const FullSheetContext = createContext();
 
 export const FullSheetProvider = ({ children }) => {
-  const [stack, setStack] = useState([]);
+  const [currentScreen, setCurrentScreen] = useState(null);
 
-  useEffect(() => {
-    if (stack.length > 0) {
-      window.history.pushState({ type: 'fullSheet' }, '');
-    }
-
-    const handlePopState = (event) => {
-      if (event.state?.type === 'fullSheet') {
-        handleBack();
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [stack]);
-
-  const push = (screen) => {
-    setStack(prev => [...prev, screen]);
+  const pushFullSheet = (screen) => {
+    setCurrentScreen(screen);
   };
 
   const handleBack = () => {
-    if (stack.length > 0) {
-      setStack(prev => prev.slice(0, -1));
-      if (stack.length === 1) {
-        window.history.back();
-      }
-    }
+    setCurrentScreen(null);
   };
 
   const reset = () => {
-    setStack([]);
-    if (stack.length > 0) {
-      window.history.back();
-    }
+    setCurrentScreen(null);
   };
 
-  const currentScreen = stack[stack.length - 1];
-
   return (
-    <FullSheetContext.Provider value={{ push, handleBack, reset }}>
+    <FullSheetContext.Provider value={{ pushFullSheet, handleBack, reset }}>
       {children}
       <FullSheet
-        isOpen={stack.length > 0}
+        isOpen={!!currentScreen}
         onClose={handleBack}
-        title={currentScreen?.title || ''}
-        showBackButton={stack.length > 0}
+        showBackButton={false}
       >
         {currentScreen?.component}
       </FullSheet>

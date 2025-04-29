@@ -48,32 +48,30 @@ const getColorSet = (mainColor) => {
 };
 
 export const useVocabularySetBottomSheet = () => {
-  const [selectedColor, setSelectedColor] = useState(VOCABULARY_COLORS[0].value);
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
-  const { addVocabularySheet } = useVocabulary();
+  const { addVocabularySheet, updateVocabularySheet, deleteVocabularySheet, vocabularySheets } = useVocabulary();
+
+  // 모든 상태를 추적하기 위한 ref
+  const currentStateRef = useRef({
+    mode: 'add',
+    vocabularyId: null,
+    vocabularyTitle: "",
+    selectedColor: VOCABULARY_COLORS[0].value
+  });
 
   const handleClose = useCallback(() => {
     hideBottomSheet();
+    currentStateRef.current = {
+      mode: 'add',
+      vocabularyId: null,
+      vocabularyTitle: "",
+      selectedColor: VOCABULARY_COLORS[0].value
+    };
   }, [hideBottomSheet]);
-
-  const handleColorChange = useCallback((newColor) => {
-    setSelectedColor(newColor);
-    showBottomSheet(
-      <AddVocabularySheet 
-        selectedColor={newColor}
-        setSelectedColor={handleColorChange}
-        onCancel={handleClose}
-        onAdd={handleAdd}
-      />,
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
-      }
-    );
-  }, [showBottomSheet, handleClose]);
 
   const handleAdd = useCallback(async (data) => {
     try {
+      console.log("handleAdd data:", data);
       const newVocabularySheet = {
         title: data.name,
         color: getColorSet(data.color),
@@ -86,37 +84,113 @@ export const useVocabularySetBottomSheet = () => {
       handleClose();
     } catch (error) {
       console.error('단어장 추가 실패:', error);
-      // TODO: 에러 처리
     }
   }, [handleClose, addVocabularySheet]);
 
-  const showVocabularySetBottomSheet = useCallback(() => {
+  const handleEdit = useCallback(async (data) => {
+    try {
+      const vocabularyId = currentStateRef.current.vocabularyId;
+      const vocabularyTitle = data.name;
+      const vocabularyColor = data.color;
+
+      await updateVocabularySheet(vocabularyId, {
+        title: vocabularyTitle,
+        color: getColorSet(vocabularyColor),
+      });
+      handleClose();
+    } catch (error) {
+      console.error('단어장 수정 실패:', error);
+    }
+  }, [handleClose, updateVocabularySheet]);
+
+  const handleDelete = useCallback(async () => {
+    try {
+      const vocabularyId = currentStateRef.current.vocabularyId;
+      await deleteVocabularySheet(vocabularyId);
+      handleClose();
+    } catch (error) {
+      console.error('단어장 삭제 실패:', error);
+    }
+  }, [handleClose, deleteVocabularySheet]);
+
+  const handleColorChange = useCallback((newColor) => {
+    currentStateRef.current.selectedColor = newColor;
+    
     showBottomSheet(
       <AddVocabularySheet 
-        selectedColor={selectedColor}
+        id={currentStateRef.current.vocabularyId}
+        title={currentStateRef.current.vocabularyTitle}
+        selectedColor={newColor}
         setSelectedColor={handleColorChange}
         onCancel={handleClose}
-        onAdd={handleAdd}
+        onSet={currentStateRef.current.mode === 'add' ? handleAdd : handleEdit}
       />,
       {
         isBackdropClickClosable: false,
         isDragToCloseEnabled: true
       }
     );
-  }, [selectedColor, handleColorChange, handleClose, handleAdd, showBottomSheet]);
+  }, [showBottomSheet, handleClose, handleAdd, handleEdit]);
+
+  const showVocabularySetBottomSheet = useCallback((id=null) => {
+    let newMode = 'add';
+    let newTitle = "";
+    let newColor = VOCABULARY_COLORS[0].value;
+
+    if (id) {
+      const vocabularySheet = vocabularySheets.find(sheet => sheet.id === id);
+      if (vocabularySheet) {
+        newMode = 'edit';
+        newTitle = vocabularySheet.title;
+        newColor = vocabularySheet.color.main;
+      }
+    }
+    
+    // ref 업데이트
+    currentStateRef.current = {
+      mode: newMode,
+      vocabularyId: id,
+      vocabularyTitle: newTitle,
+      selectedColor: newColor
+    };
+
+    showBottomSheet(
+      <AddVocabularySheet 
+        id={id}
+        title={newTitle}
+        selectedColor={newColor}
+        setSelectedColor={handleColorChange}
+        onCancel={handleClose}
+        onSet={newMode === 'add' ? handleAdd : handleEdit}
+      />,
+      {
+        isBackdropClickClosable: false,
+        isDragToCloseEnabled: true
+      }
+    );
+  }, [handleColorChange, handleClose, handleAdd, handleEdit, vocabularySheets]);
+
+  const showVocabularyDeleteBottomSheet = useCallback((id) => {
+    currentStateRef.current.vocabularyId = id;
+    showBottomSheet(
+      <DeleteVocabularySheet id={id} onCancel={handleClose} onDelete={handleDelete} />,
+      { isBackdropClickClosable: false, isDragToCloseEnabled: true }
+    );
+  }, [handleClose, showBottomSheet]);
 
   return {
     showVocabularySetBottomSheet,
-    selectedColor
+    showVocabularyDeleteBottomSheet,
+    selectedColor: currentStateRef.current.selectedColor
   };
 };
 
-const AddVocabularySheet = ({ selectedColor, setSelectedColor, onCancel, onAdd }) => {
+const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
   const nameInputRef = useRef(null);
 
   const handleSubmit = () => {
     const vocabularyName = nameInputRef.current?.value || '';
-    onAdd({ name: vocabularyName, color: selectedColor });
+    onSet({ id: id, name: vocabularyName, color: selectedColor });
   };
 
   return (
@@ -151,6 +225,7 @@ const AddVocabularySheet = ({ selectedColor, setSelectedColor, onCancel, onAdd }
           <div>
             <input 
               ref={nameInputRef}
+              defaultValue={title}
               type="text" 
               placeholder="단어장 이름을 입력하세요"
               className="
@@ -257,3 +332,51 @@ const AddVocabularySheet = ({ selectedColor, setSelectedColor, onCancel, onAdd }
     </div>
   );
 }; 
+
+const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
+  return (
+    <div className="">
+      <div className="
+        flex flex-col gap-[15px] items-center justify-center 
+        pt-[40px] px-[20px] pb-[10px]
+      ">
+        <h3 className="text-[18px] font-[700]">단어장을 정말 삭제하시겠어요?</h3>
+        <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
+      </div>
+      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#ccc]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={onCancel}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >취소</motion.button>
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#FF8DD4]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={onDelete}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >삭제</motion.button>
+      </div>
+    </div>
+  );
+};
