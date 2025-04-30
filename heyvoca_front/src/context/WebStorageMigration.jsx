@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import * as common from '../utils/common';
+import { backendUrl, fetchDataAsync } from '../utils/common';
 
 // 백엔드 version 조회 API 주소
-const CHECK_VERSION_URL = `${common.backendUrl}/version/get_version`;
+const CHECK_VERSION_URL = `${backendUrl}/version/get_version`;
 
 async function checkAndMigrateStorage() {
   try {
-    const response = await fetch(CHECK_VERSION_URL);
-    const result = await response.json();
+    const url = `${CHECK_VERSION_URL}`;
+    const method = 'GET';
+    const fetchData = {};
+    const result = await fetchDataAsync(url, method, fetchData);
     if(result.code != 200){
       console.error("웹 버전 체크 실패:", result.message);
       return;

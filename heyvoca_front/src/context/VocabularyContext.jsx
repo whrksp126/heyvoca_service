@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-
+import { backendUrl, fetchDataAsync } from '../utils/common';
 // 나중에 API 호출 함수들을 여기로 이동
 const mockVocabularyData = [
   {
@@ -127,9 +127,12 @@ export const VocabularyProvider = ({ children }) => {
   const fetchVocabularySheets = useCallback(async () => {
     try {
       setIsLoading(true);
-      // TODO: API 호출로 변경
-      const data = mockVocabularyData;
-      setVocabularySheets(data);
+      const url = `${backendUrl}/user_voca_book/list`;
+      const method = 'GET';
+      const fetchData = {};
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
+      setVocabularySheets(result.data);
       setError(null);
     } catch (err) {
       setError('단어장 데이터를 불러오는데 실패했습니다.');
@@ -140,19 +143,23 @@ export const VocabularyProvider = ({ children }) => {
   }, []);
 
   // 단어장 추가
-  const addVocabularySheet = useCallback(async (newSheet) => {
+  const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
-      // TODO: API 호출로 변경
-      const newSheetWithId = {
-        ...newSheet,
-        id: Date.now().toString(),
+      const url = `${backendUrl}/user_voca_book/create`;
+      const method = 'POST';
+      const fetchData = {
+        ...newVocabulary,
         words: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        total: 0,
+        memorized: 0,
       };
-      
-      setVocabularySheets(prev => [...prev, newSheetWithId]);
-      return newSheetWithId;
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('단어장 추가에 실패했습니다.');
+      fetchData.id = result.data.id
+      fetchData.createdAt = result.data.createdAt
+      fetchData.updatedAt = result.data.updatedAt
+      setVocabularySheets(prev => [...prev, fetchData]);
+      return fetchData;
     } catch (err) {
       setError('단어장 추가에 실패했습니다.');
       throw err;
@@ -162,14 +169,21 @@ export const VocabularyProvider = ({ children }) => {
   // 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
     try {
-      // TODO: API 호출로 변경
+      const url = `${backendUrl}/user_voca_book/update`;
+      const method = 'PATCH';
+      const fetchData = {
+        ...updates,
+        id: id,
+      };
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
       setVocabularySheets(prev => 
         prev.map(sheet => 
           sheet.id === id 
             ? { 
                 ...sheet, 
                 ...updates, 
-                updatedAt: new Date().toISOString() 
+                updatedAt: result.data.updatedAt 
               }
             : sheet
         )
@@ -183,7 +197,13 @@ export const VocabularyProvider = ({ children }) => {
   // 단어장 삭제
   const deleteVocabularySheet = useCallback(async (id) => {
     try {
-      // TODO: API 호출로 변경
+      const url = `${backendUrl}/user_voca_book/delete`;
+      const method = 'DELETE';
+      const fetchData = {
+        id: id,
+      };
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('단어장 삭제에 실패했습니다.');
       setVocabularySheets(prev => prev.filter(sheet => sheet.id !== id));
     } catch (err) {
       setError('단어장 삭제에 실패했습니다.');

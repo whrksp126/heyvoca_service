@@ -1,10 +1,72 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
 import '../index.css';
+import { backendUrl, fetchDataAsync, getValueFromURL } from '../utils/common';
+
+
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user_data = JSON.parse(localStorage.getItem('user'));
+    if(!user_data){
+      localStorage.setItem('user', JSON.stringify({
+        google_id : null,
+        name : null,
+        email : null,
+        status : "logout",
+      }))
+    }
+    if(user_data?.state == "login"){
+      navigate('/home');
+    }
+    const handleLogin = async () => {
+      const google_id = getValueFromURL('googleId');
+      if (!google_id) return;
+      const access_token = getValueFromURL('accessToken');
+      const refresh_token = getValueFromURL('refreshToken');
+      const email = getValueFromURL('email');
+      const name = getValueFromURL('name');
+      const status = getValueFromURL('status');
+      const type = getValueFromURL('type');
+      const user = {
+        google_id: google_id,
+        name: name,
+        email: email,
+        status: 'login',
+      };
+      if (type === 'app') {
+        const url = `${backendUrl}/login/login_google/callback/app`;
+        const method = 'POST';
+        const fetchData = {
+          google_id: google_id,
+          access_token: access_token,
+          refresh_token: refresh_token,
+          email: email,
+          name: name
+        };
+        try {
+          const result = await fetchDataAsync(url, method, fetchData);
+          if (result.code !== 200) {
+            alert('로그인 중 오류가 발생하였습니다.');
+            return;
+          }
+        } catch (error) {
+          alert(JSON.stringify(error));
+          return;
+        }
+      }
+      localStorage.setItem('user', JSON.stringify(user));
+      navigate('/home');
+    };
+
+    handleLogin();
+  }, [navigate]);
+
   useEffect(() => {
     const container = document.getElementById("lottie-container");
     if (container) {
@@ -20,20 +82,7 @@ const Login = () => {
   }, []);
 
   const clickGoogleLogin = () => {
-    window.location.href = "https://vocaandgo.ghmate.com/login/google?device_type=web";
-  };
-
-  const clickNonMembers = () => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        token: 1,
-        email: "guest@heyvoca.com",
-        name: "비회원",
-        status: "login",
-      })
-    );
-    window.location.href = "/vocabulary_list";
+    window.location.href = "http://localhost:5003/login/google?device_type=web";
   };
 
   return (
@@ -50,13 +99,6 @@ const Login = () => {
           <img src={googleLogo} alt="Google Logo" className="h-[18px]" />
           <span>Google 로그인</span>
         </button>
-        <a
-          className="text-[#111111] text-[12px] text-center mt-2"
-          href="#"
-          onClick={clickNonMembers}
-        >
-          비회원 이용하기
-        </a>
       </div>
     </div>
   );

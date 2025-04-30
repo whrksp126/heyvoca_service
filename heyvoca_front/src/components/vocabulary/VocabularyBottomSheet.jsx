@@ -75,9 +75,6 @@ export const useVocabularySetBottomSheet = () => {
       const newVocabularySheet = {
         title: data.name,
         color: getColorSet(data.color),
-        total: 0,
-        memorized: 0,
-        words: []
       };
       
       await addVocabularySheet(newVocabularySheet);
@@ -201,7 +198,7 @@ const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCance
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어장 추가</h1>
+          <h1 className="text-[18px] font-[700]">단어장 {id ? "수정" : "추가"}</h1>
         </div>
         <div className="right"></div>
       </div>
