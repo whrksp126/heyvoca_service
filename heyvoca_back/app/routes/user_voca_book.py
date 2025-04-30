@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify
 from sqlalchemy import text, select
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import user_voca_book_bp
-from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, Color
+from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
 
 from flask_login import current_user, login_required, login_user
 
