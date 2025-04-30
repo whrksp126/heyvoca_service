@@ -12,6 +12,12 @@ import json
 
 from app.login_manager import load_user, unauthorized_callback
 
+# 로컬 테스트 전용
+env_file = os.environ.get('FLASK_ENV_FILE')
+if env_file == 'local':
+  os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 

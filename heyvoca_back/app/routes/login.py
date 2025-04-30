@@ -38,6 +38,7 @@ def login_google():
     device_type = request.args.get('device_type', 'web')
     session['device_type'] = device_type
     # OAuth2Session 생성
+    
     oauth = OAuth2Session(OAUTH_CLIENT_ID, redirect_uri=OAUTH_REDIRECT_URI, 
                           scope=[
                               'https://www.googleapis.com/auth/userinfo.profile', 
@@ -112,7 +113,8 @@ def authorize_google():
     login_user(user)
 
     # 리다이렉트 URL 생성
-    front_end_url = 'https://voca.ghmate.com/html/login.html'
+    # front_end_url = 'https://voca.ghmate.com/html/login.html'
+    front_end_url = 'http://localhost:3000/login'
     query_params = {
         'googleId': user.id,
         'email': user.email,
