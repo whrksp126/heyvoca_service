@@ -9,9 +9,7 @@ from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, Voca
 
 from flask_login import current_user, login_required, login_user
 
-
-
-# @login_required
+@login_required
 @user_voca_book_bp.route('/list', methods=['GET'])
 def get_user_voca_book_list():
     user_id = current_user.id
@@ -34,7 +32,7 @@ def get_user_voca_book_list():
     return jsonify({'code': 200, 'data': data}), 200
 
 
-# @login_required
+@login_required
 @user_voca_book_bp.route('/create', methods=['POST'])
 def create_user_voca_book():
     data = request.get_json()
@@ -57,6 +55,7 @@ def create_user_voca_book():
     db.session.commit()
 
     data = {
+        'id': user_voca_book.id,
         'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
         'updatedAt': user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None
     }

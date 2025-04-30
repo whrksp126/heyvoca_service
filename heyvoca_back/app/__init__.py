@@ -50,6 +50,8 @@ def create_app():
   from app.routes.drive import drive_bp
   from app.routes.mainpage import mainpage_bp
   from app.routes.version import version_bp
+  from app.routes.user_voca_book import user_voca_book_bp
+  
   app.register_blueprint(login_bp)
   app.register_blueprint(search_bp)
   app.register_blueprint(tts_bp)
@@ -57,5 +59,6 @@ def create_app():
   app.register_blueprint(drive_bp)
   app.register_blueprint(mainpage_bp)
   app.register_blueprint(version_bp)
-  
+  app.register_blueprint(user_voca_book_bp)
+
   return app
