@@ -38,17 +38,31 @@ class User(db.Model):
     email = Column(String(128), nullable=False) 
     google_id = Column(String(128), nullable=False)
     name = Column(String(32), nullable=False)
+    username = Column(String(36), nullable=True, default=None)
     phone = Column(String(16), nullable=True)
+    code = Column(String(36), nullable=False)
+    book_cnt = Column(Integer, nullable=False, default=3)
+    gem_cnt = Column(Integer, nullable=False, default=0)
+    set_goal_cnt = Column(Integer, nullable=False, default=3)
+    refresh_token = Column(String(512), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     last_logged_at = Column(DateTime, nullable=True, default=None)
-    refresh_token = Column(String(512), nullable=True)
 
-    def __init__(self, email, google_id, name, phone, refresh_token=None):
+    def __init__(self, email, google_id, username, name, phone,
+                last_logged_at, refresh_token, code,
+                 book_cnt, gem_cnt, set_goal_cnt):
         self.email = email
         self.google_id = google_id
+        self.username = username
         self.name = name
         self.phone = phone
         self.refresh_token = refresh_token
+        self.code = code
+        self.book_cnt = book_cnt
+        self.gem_cnt = gem_cnt
+        self.set_goal_cnt = set_goal_cnt
+        self.last_logged_at = last_logged_at
+
     
     def is_active(self):
         return True
@@ -188,40 +202,6 @@ class DailySentence(db.Model):
     date = Column(Date, nullable=False, primary_key=True)
     sentence = Column(String(200), nullable=False, primary_key=True)
     meaning = Column(String(200), nullable=False)
-
-
-
-# ### new db ###
-class User_new(db.Model):
-    __tablename__ = 'user_new'
-    id = Column(BinaryUUID, primary_key=True, nullable=False)
-    email = Column(String(36), nullable=False, unique=True)
-    google_id = Column(String(36), nullable=False, unique=True)
-    username = Column(String(36), nullable=True, default=None)
-    name = Column(String(36), nullable=False)
-    phone = Column(String(36), nullable=True, default=None)
-    refresh_token = Column(String(36), nullable=False)
-    code = Column(String(36), nullable=False)
-    book_cnt = Column(Integer, nullable=False, default=3)
-    gem_cnt = Column(Integer, nullable=False, default=0)
-    set_goal_cnt = Column(Integer, nullable=False, default=3)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    last_logged_at = Column(DateTime, nullable=True, default=0)
-
-    def __init__(self, email, google_id, username, name, phone,
-                last_logged_at, refresh_token, code,
-                 book_cnt, gem_cnt, set_goal_cnt):
-        self.email = email
-        self.google_id = google_id
-        self.username = username
-        self.name = name
-        self.phone = phone
-        self.refresh_token = refresh_token
-        self.code = code
-        self.book_cnt = book_cnt
-        self.gem_cnt = gem_cnt
-        self.set_goal_cnt = set_goal_cnt
-        self.last_logged_at = last_logged_at
 
 
 class UserVocaBook(db.Model):

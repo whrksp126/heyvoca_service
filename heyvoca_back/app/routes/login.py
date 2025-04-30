@@ -98,8 +98,14 @@ def authorize_google():
             email=userinfo['email'],
             google_id=userinfo['id'],
             name=userinfo.get('name', ''),
+            username=None,
             phone=None,
             refresh_token=token['refresh_token'],
+            code=None,
+            book_cnt=3,
+            gem_cnt=0,
+            set_goal_cnt=3,
+            last_logged_at=None
         )
         db.session.add(user)
     else:
@@ -142,9 +148,15 @@ def login_google_app():
         user = User(
             email = email,
             google_id = google_id,
+            username = None,
             name = name,
             phone = None,
-            refresh_token = refresh_token
+            refresh_token = refresh_token,
+            code = None,
+            book_cnt = 3,
+            gem_cnt = 0,
+            set_goal_cnt = 3,
+            last_logged_at = None
         )
         db.session.add(user)
     else:
