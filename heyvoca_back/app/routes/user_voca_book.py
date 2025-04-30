@@ -26,10 +26,10 @@ def get_user_voca_book_list():
         vocabook_dict['title'] = user_voca_book.name
         vocabook_dict['words'] = json.loads(user_voca_book.voca_list) if user_voca_book.voca_list else None
         vocabook_dict['color'] = json.loads(user_voca_book.color)
-        vocabook_dict['total'] = None
-        vocabook_dict['memorized'] = None
+        vocabook_dict['total'] = user_voca_book.total_word_cnt
+        vocabook_dict['memorized'] = None       # TODO
         vocabook_dict['createdAt'] = user_voca_book.created_at
-        vocabook_dict['updatedAt'] = user_voca_book.updated_at
+        vocabook_dict['updatedAt'] = user_voca_book.updated_at if user_voca_book.updated_at else None
 
     return jsonify({'code': 200, 'data': data}), 200
 
