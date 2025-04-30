@@ -2,7 +2,7 @@ from app import db
 
 from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date
+from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT
 
 from sqlalchemy.dialects.mysql import BINARY
 from sqlalchemy.types import TypeDecorator
@@ -188,3 +188,126 @@ class DailySentence(db.Model):
     date = Column(Date, nullable=False, primary_key=True)
     sentence = Column(String(200), nullable=False, primary_key=True)
     meaning = Column(String(200), nullable=False)
+
+
+
+# ### new db ###
+class User_new(db.Model):
+    __tablename__ = 'user_new'
+    id = Column(BinaryUUID, primary_key=True, nullable=False)
+    email = Column(String(36), nullable=False, unique=True)
+    google_id = Column(String(36), nullable=False, unique=True)
+    username = Column(String(36), nullable=True, default=None)
+    name = Column(String(36), nullable=False)
+    phone = Column(String(36), nullable=True, default=None)
+    refresh_token = Column(String(36), nullable=False)
+    code = Column(String(36), nullable=False)
+    book_cnt = Column(Integer, nullable=False, default=3)
+    gem_cnt = Column(Integer, nullable=False, default=0)
+    set_goal_cnt = Column(Integer, nullable=False, default=3)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    last_logged_at = Column(DateTime, nullable=True, default=0)
+
+    def __init__(self, email, google_id, username, name, phone,
+                last_logged_at, refresh_token, code,
+                 book_cnt, gem_cnt, set_goal_cnt):
+        self.email = email
+        self.google_id = google_id
+        self.username = username
+        self.name = name
+        self.phone = phone
+        self.refresh_token = refresh_token
+        self.code = code
+        self.book_cnt = book_cnt
+        self.gem_cnt = gem_cnt
+        self.set_goal_cnt = set_goal_cnt
+        self.last_logged_at = last_logged_at
+
+
+class UserVocaBook(db.Model):
+    __tablename__ = 'user_voca_book'
+    id = Column(BinaryUUID, primary_key=True, nullable=False)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    vocabook_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
+    color = Column(String(256), nullable=False)
+    name = Column(String(36), nullable=False)
+    total_word_cnt = Column(Integer, nullable=False, default=0)
+    voca_list = Column(TEXT, nullable=True, default=None)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None)
+
+    def __init__(self, user_id, voca_bookcode, color, name, total_word_cnt, voca_list, updated_at):
+        self.user_id = user_id
+        self.voca_bookcode = voca_bookcode
+        self.color = color
+        self.name = name
+        self.total_word_cnt = total_word_cnt
+        self.voca_list = voca_list
+        self.updated_at = updated_at
+
+
+class CheckIn(db.Model):
+    __tablename__ = 'check_in'
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    attendence_check = Column(String(20), primary_key=True, nullable=False)
+    today_study_complete = Column(String(20), nullable=False)
+
+    def __init__(self, user_id, attendence_check, today_study_complete):
+        self.user_id = user_id
+        self.attendence_check = attendence_check
+        self.today_study_complete = today_study_complete
+
+
+class UserRecentStudy(db.Model):
+    __tablename__ = 'user_recent_study'
+    id = Column(BinaryUUID, primary_key=True, nullable=False)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    study_data = Column(String(36), nullable=False)
+    status = Column(String(36), nullable=False)
+    progress_index = Column(Integer, nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None)
+
+    def __init__(self, user_id, study_data, progress_index, status, updated_at):
+        self.user_id = user_id
+        self.study_data = study_data
+        self.progress_index = progress_index
+        self.status = status
+        self.updated_at = updated_at
+
+
+class UserGoals(db.Model):
+    __tablename__ = 'user_goals'
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    goal_id = Column(Integer, ForeignKey('goals.id'), primary_key=True, nullable=False)
+    current_value = Column(Integer, nullable=False)
+    status = Column(String(50), nullable=False)
+    completed_at = Column(DateTime, nullable=False)
+
+    def __init__(self, user_id, goal_id, current_value, status, completed_at):
+        self.user_id = user_id
+        self.goal_id = goal_id
+        self.current_value = current_value
+        self.status = status
+        self.completed_at = completed_at
+
+
+class Goals(db.Model):
+    __tablename__ = 'goals'
+    id = Column(Integer, primary_key=True, nullable=False)
+    type = Column(String(36), nullable=False)
+    title = Column(String(36), nullable=False)
+    reward_value = Column(Integer, nullable=False)
+    reward_type = Column(String(36), nullable=False)
+    reward = Column(Integer, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, type, title, reward_value, reward_type, reward):
+        self.type = type
+        self.title = title
+        self.reward_value = reward_value
+        self.reward_type = reward_type
+        self.reward = reward
+
+
+

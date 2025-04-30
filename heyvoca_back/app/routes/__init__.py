@@ -7,7 +7,7 @@ fcm_bp = Blueprint('fcm', __name__, url_prefix='/fcm')
 drive_bp = Blueprint('drive', __name__, url_prefix='/drive')
 mainpage_bp = Blueprint('mainpage', __name__, url_prefix='/mainpage')
 version_bp = Blueprint('version', __name__, url_prefix='/version')
-
+user_voca_book_bp = Blueprint('user_voca_book', __name__, url_prefix='/user_voca_book')
 
 from app.routes import login
 from app.routes import search
@@ -16,3 +16,4 @@ from app.routes import fcm
 from app.routes import drive
 from app.routes import mainpage
 from app.routes import version
+from app.routes import user_voca_book
