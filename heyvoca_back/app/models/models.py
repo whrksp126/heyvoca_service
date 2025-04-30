@@ -236,9 +236,9 @@ class UserVocaBook(db.Model):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, user_id, voca_bookcode, color, name, total_word_cnt, voca_list, updated_at):
+    def __init__(self, user_id, vocabook_id, color, name, total_word_cnt, voca_list, updated_at):
         self.user_id = user_id
-        self.voca_bookcode = voca_bookcode
+        self.vocabook_id = vocabook_id
         self.color = color
         self.name = name
         self.total_word_cnt = total_word_cnt

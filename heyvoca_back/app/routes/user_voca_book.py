@@ -38,12 +38,14 @@ def get_user_voca_book_list():
 @user_voca_book_bp.route('/create', methods=['POST'])
 def create_user_voca_book():
     data = request.get_json()
+    vocabook_id = data['vocabook_id']
     name = data['title']
     color = data['color']
     user_id = current_user.id
 
     user_voca_book = UserVocaBook(
         user_id=user_id,
+        vocabook_id=vocabook_id,
         color=json.dumps(color),
         name=name,
         total_word_cnt=0,
