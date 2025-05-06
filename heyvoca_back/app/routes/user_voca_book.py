@@ -57,7 +57,6 @@ def create_user_voca_book():
     data = {
         'id': user_voca_book.id,
         'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
-        'updatedAt': user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None
     }
 
     return jsonify({'code': 200, 'data': data}), 200
