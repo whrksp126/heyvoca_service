@@ -2,9 +2,13 @@ import { PencilSimple, Trash } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useFullSheet } from '../../context/FullSheetContext';
+import VocabularyDetail from './VocabularyDetail';
 
-const Main = ({ onCardClick }) => {
+const Main = () => {
+
   const navigate = useNavigate();
+  const { pushFullSheet } = useFullSheet();
   const { vocabularySheets, isLoading } = useVocabulary();
   
   const today_sentence = {
@@ -25,6 +29,13 @@ const Main = ({ onCardClick }) => {
   const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
     new Date(b.updatedAt) - new Date(a.updatedAt)
   );
+
+  const handleCardClick = (id) => {
+    // navigate(`/vocabulary/${id}`);
+    pushFullSheet({
+      component: <VocabularyDetail id={id} />
+    });
+  };
 
   return (
     <div 
@@ -102,7 +113,7 @@ const Main = ({ onCardClick }) => {
                 "
               >
                 <h3 className="text-[16px] font-[700]">{item.title}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.memorized}/{item.total}</span>
+                <span className="text-[10px] font-[400] text-[#999]">{item.memorized||0}/{item.total}</span>
               </div>
   
               <div 

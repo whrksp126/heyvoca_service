@@ -152,6 +152,11 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 모든 단어장 조회
+  const getVocabularySheets = useCallback(() => {
+    return vocabularySheets;
+  }, [vocabularySheets]);
+
   // 단어장 추가
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
@@ -221,32 +226,43 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 특정 단어장 조회
+  const getVocabularySheet = useCallback((id) => {
+    return vocabularySheets.find(sheet => sheet.id === id);
+  }, [vocabularySheets]);
+
   // 단어 추가
-  const addWord = useCallback(async (sheetId, newWord) => {
+  const addWord = useCallback(async (sheetId, word) => {
     try {
-      // TODO: API 호출로 변경
-      const wordWithId = {
-        ...newWord,
+      const newWordData = {
+        ...word,
         id: Date.now().toString(),
+        ef: 2.5,
+        repetition: 0,
+        interval: 0,
+        next_review: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
 
-      setVocabularySheets(prev => 
-        prev.map(sheet => 
-          sheet.id === sheetId 
-            ? {
-                ...sheet,
-                words: [...sheet.words, wordWithId],
-                updatedAt: new Date().toISOString()
-              }
-            : sheet
-        )
-      );
-      return wordWithId;
+      const vocabularySheet = getVocabularySheet(sheetId);
+
+      try {
+        await updateVocabularySheet(sheetId, {
+          total: vocabularySheet.words.length + 1,
+          words: [...vocabularySheet.words, newWordData],
+        });
+        return newWordData;
+      } catch (err) {
+        setError('단어 추가에 실패했습니다.');
+        throw err;
+      }
+
     } catch (err) {
       setError('단어 추가에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [vocabularySheets]);
 
   // 단어 수정
   const updateWord = useCallback(async (sheetId, wordId, updates) => {
@@ -293,6 +309,11 @@ export const VocabularyProvider = ({ children }) => {
       throw err;
     }
   }, []);
+
+  // 특정 단어장 단어 조회
+  const getWord = useCallback((sheetId, wordId) => {
+    return vocabularySheets.find(sheet => sheet.id === sheetId).words.find(word => word.id === wordId);
+  }, [vocabularySheets]);
 
   // 필터링된 단어장 목록 가져오기
   const getFilteredVocabularySheets = useCallback((filterOptions = {}) => {
@@ -345,9 +366,12 @@ export const VocabularyProvider = ({ children }) => {
     isLoading,
     error,
     statistics,
+    getVocabularySheets,
+    getVocabularySheet,
     addVocabularySheet,
     updateVocabularySheet,
     deleteVocabularySheet,
+    getWord,
     addWord,
     updateWord,
     deleteWord,

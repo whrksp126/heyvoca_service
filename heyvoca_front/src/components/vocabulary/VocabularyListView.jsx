@@ -116,7 +116,7 @@ const VocabularyListView = () => {
               "
             >
               <h3 className="text-[16px] font-[700]">{item.title}</h3>
-              <span className="text-[10px] font-[400] text-[#999]">{item.memorized}/{item.total}</span>
+              <span className="text-[10px] font-[400] text-[#999]">{item.memorized||0}/{item.total}</span>
             </div>
 
             <div className="flex items-center gap-[8px]">

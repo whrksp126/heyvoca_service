@@ -30,6 +30,7 @@ const AppLayout = () => {
 
       <Route path="/home" element={<Home />} />
       <Route path="/vocabulary" element={<Vocabulary />} />
+      <Route path="/vocabulary/:id" element={<Vocabulary />} />
       <Route path="/store" element={<Store />} />
       <Route path="/class" element={<Class />} />
       
