@@ -47,6 +47,7 @@ def create_user_voca_book():
         color=json.dumps(color),
         name=name,
         total_word_cnt=0,
+        memorized_word_cnt=0,
         voca_list=None,
         updated_at=None
     )

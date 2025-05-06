@@ -212,16 +212,18 @@ class UserVocaBook(db.Model):
     color = Column(String(256), nullable=False)
     name = Column(String(36), nullable=False)
     total_word_cnt = Column(Integer, nullable=False, default=0)
+    memorized_word_cnt = Column(Integer, nullable=False, default=0)
     voca_list = Column(TEXT, nullable=True, default=None)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, user_id, vocabook_id, color, name, total_word_cnt, voca_list, updated_at):
+    def __init__(self, user_id, vocabook_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
         self.user_id = user_id
         self.vocabook_id = vocabook_id
         self.color = color
         self.name = name
         self.total_word_cnt = total_word_cnt
+        self.memorized_word_cnt = memorized_word_cnt
         self.voca_list = voca_list
         self.updated_at = updated_at
 
