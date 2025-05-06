@@ -240,6 +240,7 @@ def get_unicode_range_for_initial(char):
 ## 서점 검색 ##
 ##############
 
+
 ## 서점 데이터 API
 # bookstore, voca, voca_meaning, voca_example 테이블의 모든 데이터를 가져옴
 # @login_required
@@ -316,6 +317,44 @@ def search_bookstore_all():
     #print(f"API 실행 시간: {execution_time:.3f}초")
 
     return jsonify({'code': 200, 'data': final_results}), 200
+
+
+
+## 서점 데이터 API
+# bookstore, voca, voca_meaning, voca_example 테이블의 모든 데이터를 가져옴
+# @login_required
+# @cache.cached(timeout=600, query_string=True)  # 60초 캐싱
+@search_bp.route('/bookstore2', methods=['GET'])
+def search_bookstore_all2():
+    from sqlalchemy import func, select
+    from sqlalchemy.orm import aliased
+
+
+    # 결과 가공
+    final_results = []
+    for row in rows:
+        words = json.loads(row.words) if row.words else []
+        
+        final_results.append({
+            "id": row.bookstore_id,
+            "name": row.bookstore_name,
+            "downloads": row.downloads,
+            "category": row.category,
+            "color": json.loads(row.color) if row.color else {},
+            "hide": row.hide,
+            "words": words
+        })
+    #temp = final_results[0]
+
+    # 실행 시간 측정
+    #end_time = time.time()
+    #execution_time = end_time - start_time
+    #print(f"API 실행 시간: {execution_time:.3f}초")
+
+    return jsonify({'code': 200, 'data': final_results}), 200
+
+
+
 
 # 서점 다운로드 수 증가
 @search_bp.route('/bookstore/download', methods=['POST'])

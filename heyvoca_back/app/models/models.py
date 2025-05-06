@@ -206,7 +206,7 @@ class DailySentence(db.Model):
 
 class UserVocaBook(db.Model):
     __tablename__ = 'user_voca_book'
-    id = Column(BinaryUUID, primary_key=True, nullable=False)
+    id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
     vocabook_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
     color = Column(String(256), nullable=False)
@@ -230,7 +230,7 @@ class UserVocaBook(db.Model):
 
 class CheckIn(db.Model):
     __tablename__ = 'check_in'
-    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False, default=uuid4)
     attendence_check = Column(String(20), primary_key=True, nullable=False)
     today_study_complete = Column(String(20), nullable=False)
 
@@ -242,7 +242,7 @@ class CheckIn(db.Model):
 
 class UserRecentStudy(db.Model):
     __tablename__ = 'user_recent_study'
-    id = Column(BinaryUUID, primary_key=True, nullable=False)
+    id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
     study_data = Column(String(36), nullable=False)
     status = Column(String(36), nullable=False)
