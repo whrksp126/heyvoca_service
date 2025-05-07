@@ -132,7 +132,6 @@ const VocabularyDetail = ({ id }) => {
       {/* Content */}
       <div className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
         {vocabularySheet.words.map((item, index) => {
-          console.log("item:", item)
           return (
             <li
               key={item.id}

@@ -65,15 +65,14 @@ export const useWordSetBottomSheet = () => {
 
   const showWordSetBottomSheet = useCallback(({vocabularyId=null, dictionaryId=null, id=null}) => {
     let newMode = 'add';
-    let newOrigin = "";
-    let newMeanings = [];
-    let newExamples = [];
+    let newOrigin = currentStateRef.current.origin || "";
+    let newMeanings = currentStateRef.current.meanings || [];
+    let newExamples = currentStateRef.current.examples || [];
 
     if (id) {
       const word = getWord(vocabularyId, id);
       if (word) {
         newMode = 'edit';
-
         newOrigin = word.origin;
         newMeanings = word.meanings;
         newExamples = word.examples;
@@ -84,8 +83,8 @@ export const useWordSetBottomSheet = () => {
     currentStateRef.current = {
       mode: newMode,
       id: id,
-      vocabularyId: vocabularyId,
-      dictionaryId: dictionaryId,
+      vocabularyId: vocabularyId || currentStateRef.current.vocabularyId,
+      dictionaryId: dictionaryId || currentStateRef.current.dictionaryId,
       origin: newOrigin,
       meanings: newMeanings,
       examples: newExamples,
@@ -94,8 +93,8 @@ export const useWordSetBottomSheet = () => {
     showBottomSheet(
       <AddWordSheet 
         id={id}
-        vocabularyId={vocabularyId}
-        dictionaryId={dictionaryId}
+        vocabularyId={vocabularyId || currentStateRef.current.vocabularyId}
+        dictionaryId={dictionaryId || currentStateRef.current.dictionaryId}
         origin={newOrigin}
         meanings={newMeanings}
         examples={newExamples}
@@ -103,25 +102,40 @@ export const useWordSetBottomSheet = () => {
         onSet={newMode === 'add' ? handleAdd : handleEdit}
       />,
       {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: false
       }
     );
   }, [handleClose, handleAdd, handleEdit]);
-
+  
   return {
     showWordSetBottomSheet,
+    currentStateRef
   };
 };
 
 const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, examples, onCancel, onSet }) => {
-  const wordInputRef = useRef(origin || '');
+  const [wordData, setWordData] = useState({
+    id: id,
+    vocabularyId: vocabularyId,
+    dictionaryId: dictionaryId,
+    origin: origin || '',
+    meanings: meanings || '',
+    examples: examples || [],
+  });
+  const [exampleSetType, setExampleSetType] = useState({
+    isExampleSet: false,  
+    setType: "add",
+    exampleIndex: 1,
+  });
+  const wordInputRef = useRef(wordData.origin || '');
   const [wordSearchResults, setWordSearchResults] = useState(null);
   const [isWordSearching, setIsWordSearching] = useState(false);
-  const meaningsInputRef = useRef(meanings.join(', ') || '');
-  const [examplesState, setExamplesState] = useState(examples || []);
+  const meaningsInputRef = useRef(wordData.meanings.join(', ') || '');
+  const [examplesState, setExamplesState] = useState(wordData.examples || []);
+  const exampleOriginInputRef = useRef(wordData.examples[exampleSetType.exampleIndex - 1]?.exam_en || '');
+  const exampleMeaningInputRef = useRef(wordData.examples[exampleSetType.exampleIndex - 1]?.exam_ko || '');
   const { vocabularySheets } = useVocabulary();
-  
 
   // 단어 검색 함수
   const searchWord = async (word) => {
@@ -149,15 +163,17 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
 
   const handleWordSelect = ({word, meanings, examples}) => {
     setWordSearchResults(null);
-    wordInputRef.current = word;
-    meaningsInputRef.current = meanings.join(', ');
-    document.querySelector('input[placeholder="단어를 입력하세요"]').value = word;
-    document.querySelector('input[placeholder="의미를 입력하세요"]').value = meanings.join(', ');
+    wordInputRef.current.value = word;
+    meaningsInputRef.current.value = meanings.join(', ');
+
+    // document.querySelector('input[placeholder="단어를 입력하세요"]').value = word;
+    // document.querySelector('input[placeholder="의미를 입력하세요"]').value = meanings.join(', ');
     setExamplesState(examples);
   };
 
   return (
-    <div className="">
+    !exampleSetType.isExampleSet ? (
+    <div className="relative h-full">
       <div>
         <div className="left"></div>
         <div className="
@@ -170,7 +186,9 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
       </div>
       <div className="
         flex flex-col gap-[15px]
-        p-[20px]
+        max-h-[calc(90vh-47px)] h-full
+        p-[20px] pb-[105px]
+        overflow-y-auto
       ">
         <div 
           className="
@@ -235,9 +253,9 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
           <div className="relative">
             <input 
               ref={wordInputRef}
-              defaultValue={origin || ''}
+              defaultValue={wordData.origin || ''}
               onChange={(e) => {
-                wordInputRef.current = e.target.value;
+                wordInputRef.current.value = e.target.value;
                 searchWord(e.target.value);
               }}
               type="text" 
@@ -268,7 +286,7 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
                 >
                   <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
                     {word.split('').map((char, i) => {
-                      const searchWord = wordInputRef.current.toLowerCase();
+                      const searchWord = wordInputRef.current.value.toLowerCase();
                       const currentWord = word.toLowerCase();
                       const startIndex = currentWord.indexOf(searchWord);
                       const isHighlighted = startIndex !== -1 && 
@@ -301,8 +319,14 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
           <div>
             <input 
               ref={meaningsInputRef}
-              defaultValue={meanings.join(', ') || ''}
-              onChange={e => meaningsInputRef.current = e.target.value}
+              defaultValue={wordData.meanings.join(', ') || ''}
+              onChange={e => {
+                meaningsInputRef.current.value = e.target.value;
+                setWordData({
+                  ...wordData,
+                  meanings: e.target.value.split(',').map(meaning => meaning.trim())
+                });
+              }}
               type="text" 
               placeholder="의미를 입력하세요"
               className="
@@ -331,7 +355,22 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
             >
               예문
             </h3>
-            <button className="text-[18px] text-[#FF8DD4]">
+            <button 
+              className="text-[18px] text-[#FF8DD4]"
+              onClick={()=>{
+                setWordData({
+                  ...wordData,
+                  origin : wordInputRef.current.value,
+                  meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+                  examples : examplesState
+                })
+                setExampleSetType({
+                  isExampleSet: true,
+                  setType: "add",
+                  exampleIndex: examplesState.length + 1,
+                })}
+              }
+            >
               <Plus />
             </button>
           </div>
@@ -353,10 +392,25 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
                   flex items-center gap-[8px]
                   text-[18px]
                 ">
-                  <button className="text-[#FF8DD4]">
+                  <button className="text-[#FF8DD4]" onClick={() => {
+                    setWordData({
+                      ...wordData,
+                      origin : wordInputRef.current.value,
+                      meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+                      examples : examplesState
+                    })
+                    setExampleSetType({
+                      isExampleSet: true,
+                      setType: "edit",
+                      exampleIndex: index + 1,
+                    })}
+                  }
+                  >
                     <Pencil />
                   </button>
-                  <button className="text-[red]">
+                  <button className="text-[red]" onClick={() => {
+                    setExamplesState(examplesState.filter(example => example.id !== id));
+                  }}>
                     <Trash />
                   </button>
                 </div>
@@ -364,13 +418,14 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
               <div>
                 <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
                   <span>
-                  {exam_en.split(wordInputRef.current).map((part, i, arr) => (
-                    i < arr.length - 1 ? (
-                      <React.Fragment key={i}>
-                        {part}<strong>{wordInputRef.current}</strong>
-                      </React.Fragment>
-                    ) : part
-                  ))}
+                  {exam_en && wordInputRef.current ? 
+                    exam_en.split(wordInputRef.current).map((part, i, arr) => (
+                      i < arr.length - 1 ? (
+                        <React.Fragment key={i}>
+                          {part}<strong>{wordInputRef.current}</strong>
+                        </React.Fragment>
+                      ) : part
+                    )) : exam_en}
                   </span>
                   <br />
                   <span>
@@ -383,7 +438,11 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
           </ul>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+      <div className="
+        absolute bottom-0 left-0 right-0
+        flex items-center justify-between gap-[15px] 
+        p-[20px]
+      ">
         <motion.button 
           className="
             flex-1
@@ -409,10 +468,9 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => onSet({
-
             id, vocabularyId, dictionaryId,
-            origin: wordInputRef.current,
-            meanings: meaningsInputRef.current.split(',').map(meaning => meaning.trim()),
+            origin: wordInputRef.current.value,
+            meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
             examples: examplesState.map(example => ({
               origin: example.exam_en,
               meaning: example.exam_ko
@@ -427,5 +485,146 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
         >추가</motion.button>
       </div>
     </div>
+    ) : (
+    <div className="relative h-full">
+      <div>
+        <div className="left"></div>
+        <div className="
+          flex items-center justify-center
+          p-[20px] pb-[0px]
+          ">
+          <h1 className="text-[18px] font-[700]">예문 {exampleSetType.setType === "add" ? "추가" : "수정"}</h1>
+        </div>
+        <div className="right"></div>
+      </div>
+      <div className="
+        flex flex-col gap-[15px]
+        max-h-[calc(90vh-47px)] h-full
+        p-[20px] pb-[105px]
+        overflow-y-auto
+      ">
+        <div 
+          className="
+            flex justify-between flex-col gap-[8px]
+          "
+        >
+          <h3 
+            className="
+              text-[14px] font-[700] text-[#111] 
+            dark:text-[#fff]
+            "
+          >
+            {exampleSetType.exampleIndex}.
+          </h3>
+          <div>
+            <textarea 
+              ref={exampleOriginInputRef}
+              defaultValue={exampleSetType.setType === "add" ? '' : examplesState[exampleSetType.exampleIndex - 1]?.exam_en}
+              onChange={e => {
+                e.target.style.height = '45px';
+                e.target.style.height = `${Math.max(45, e.target.scrollHeight)}px`;
+                exampleOriginInputRef.current.value = e.target.value;
+              }}
+              placeholder="예문을 입력하세요"
+              className="
+                w-full h-[45px] min-h-[45px] max-h-[135px]
+                px-[15px] py-[10px]
+                border-[1px] border-[#ccc] rounded-[8px]
+                font-[400] text-[16px] text-[#111]
+                outline-none
+                focus:border-[#FF8DD4]
+                transition-colors
+                resize-none overflow-hidden
+              "
+            />
+            <textarea 
+              ref={exampleMeaningInputRef}
+              defaultValue={exampleSetType.setType === "add" ? '' : examplesState[exampleSetType.exampleIndex - 1]?.exam_ko}
+              onChange={e => {
+                e.target.style.height = '45px';
+                e.target.style.height = `${Math.max(45, e.target.scrollHeight)}px`;
+                exampleMeaningInputRef.current.value = e.target.value;
+              }}
+              placeholder="의미를 입력하세요"
+              className="
+                w-full h-[45px] min-h-[45px] max-h-[135px]
+                px-[15px] py-[10px]
+                border-[1px] border-[#ccc] rounded-[8px]
+                font-[400] text-[16px] text-[#111]
+                outline-none
+                focus:border-[#FF8DD4]
+                transition-colors
+                resize-none overflow-hidden
+              "
+            />
+
+          </div>
+        </div>
+      </div>
+      <div className="
+        absolute bottom-0 left-0 right-0
+        flex items-center justify-between gap-[15px] 
+        p-[20px]
+      ">
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#ccc]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={() => setExampleSetType({
+            isExampleSet: false,
+            setType: "add",
+            exampleIndex: examplesState.length,
+          })}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >취소</motion.button>
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#FF8DD4]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={() => {
+            if(exampleSetType.setType === "add") {
+              setExamplesState([...examplesState, { 
+                exam_en: exampleOriginInputRef.current.value,
+                exam_ko: exampleMeaningInputRef.current.value
+              }]);
+            } else {
+              setExamplesState(examplesState.map((example, index) => 
+                index === exampleSetType.exampleIndex - 1 ? {
+                  ...example,
+                  exam_en: exampleOriginInputRef.current.value,
+                  exam_ko: exampleMeaningInputRef.current.value
+                } : example
+              ));
+            }
+            setExampleSetType({
+              isExampleSet: false,
+              setType: "add",
+              exampleIndex: examplesState.length,
+            });
+          }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >{exampleSetType.setType === "add" ? "추가" : "수정"}</motion.button>
+      </div>
+    </div>
+    )
+    
   );
 }; 

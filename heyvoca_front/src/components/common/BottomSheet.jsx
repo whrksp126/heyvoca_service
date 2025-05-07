@@ -32,12 +32,22 @@ const BottomSheet = ({
             onClick={handleBackdropClick}
           />
           <motion.div 
-            className="fixed left-0 right-0 bottom-0 bg-white rounded-t-2xl z-[1001] after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-100vh] after:h-[101vh] after:bg-white"
+            className="
+              left-0 right-0 bottom-0 z-[1001] 
+              fixed 
+              max-h-[90vh]
+              rounded-t-2xl 
+              bg-white 
+              after:content-[''] 
+              after:absolute after:left-0 after:right-0 after:bottom-[-100vh] 
+              after:h-[101vh] 
+              after:bg-white
+            "
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            drag="y"
+            drag={isDragToCloseEnabled ? "y" : false}
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={0.4}
             onDragEnd={handleDragEnd}
