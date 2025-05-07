@@ -1,5 +1,6 @@
-import React from 'react';
-import { PencilSimple, CaretLeft, Plus } from '@phosphor-icons/react';
+import React, { useState } from 'react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh } from '@phosphor-icons/react';
+
 import { useFullSheet } from '../../context/FullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
@@ -7,6 +8,7 @@ import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useWordSetBottomSheet } from './WordBottomSheet';
 
 const VocabularyDetail = ({ id }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
   const { handleBack } = useFullSheet();
   const { isLoading, getVocabularySheet } = useVocabulary();
   const { showWordSetBottomSheet } = useWordSetBottomSheet();
@@ -136,20 +138,40 @@ const VocabularyDetail = ({ id }) => {
             <li
               key={item.id}
               className="
-                flex gap-[15px] items-start
+                flex gap-[10px] items-start
                 p-[20px]
                 rounded-[12px]
+                bg-[#F5F5F5]
               "
             >
+              
               <div 
                 className="
-                  top
-                  flex flex-col 
+                  flex flex-col gap-[10px]
                   w-full
                 "
               >
-                <h3 className="text-[16px] font-[700]">{item.origin}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.meanings.join(", ")}</span>
+                <h3 className="text-[16px] font-[700] text-[#111]">{item.origin}</h3>
+                <span className="text-[12px] font-[400] text-[#111]">{item.meanings.join(", ")}</span>
+              </div>
+              <div className="
+                flex gap-[8px]
+              text-[#FF8DD4] text-[20px]
+              ">
+                {isEditMode ? (
+                <>
+                <button>
+                  <PencilSimple/>
+                </button>
+                <button>
+                  <Trash/>
+                </button>
+                </>
+                ) : (
+                <button>
+                  <SpeakerHigh weight="fill" />
+                </button>
+                )}
               </div>
             </li>
           )
