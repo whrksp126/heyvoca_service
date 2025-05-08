@@ -55,7 +55,7 @@ def search_voca_word_en():
         for example_map in db.session.query(VocaExampleMap).filter_by(voca_id=word.id).all():
             example = db.session.query(VocaExample).filter_by(id=example_map.example_id).first()
             if example:
-                example_data.append({"id": example.id, "exam_en": example.exam_en, "exam_ko": example.exam_ko})
+                example_data.append({"id": example.id, "origin": example.exam_en, "meaning": example.exam_ko})
 
         # 단어 및 뜻 데이터 처리
         if word.id not in word_meaning_map:
@@ -125,7 +125,7 @@ def search_word_en():
 
     # 예문 추가
     for voca_id, example_id, exam_en, exam_ko in examples:
-        example_data = {"id": example_id, "exam_en": exam_en, "exam_ko": exam_ko}
+        example_data = {"id": example_id, "origin": exam_en, "meaning": exam_ko}
         if example_data not in word_map[voca_id]['examples']:
             word_map[voca_id]['examples'].append(example_data)
 
@@ -192,7 +192,7 @@ def search_word_korean():
         examples = db.session.query(VocaExample).filter(VocaExample.id.in_(example_ids)).all()
         
         for example in examples:
-            example_data.append({"id": example.id, "exam_en": example.exam_en, "exam_ko": example.exam_ko})
+            example_data.append({"id": example.id, "origin": example.exam_en, "meaning": example.exam_ko})
 
         result_data = {
             'word': voca.word,
