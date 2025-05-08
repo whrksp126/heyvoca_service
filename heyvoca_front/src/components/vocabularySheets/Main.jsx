@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useFullSheet } from '../../context/FullSheetContext';
-import VocabularyDetail from './VocabularyDetail';
+import VocabularyWords from './VocabularyWords';
 
 const Main = () => {
 
@@ -31,9 +31,8 @@ const Main = () => {
   );
 
   const handleCardClick = (id) => {
-    // navigate(`/vocabulary/${id}`);
     pushFullSheet({
-      component: <VocabularyDetail id={id} />
+      component: <VocabularyWords id={id} />
     });
   };
 

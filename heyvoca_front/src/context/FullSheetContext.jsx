@@ -4,30 +4,40 @@ import FullSheet from '../components/common/FullSheet';
 const FullSheetContext = createContext();
 
 export const FullSheetProvider = ({ children }) => {
-  const [currentScreen, setCurrentScreen] = useState(null);
+  const [screenStack, setScreenStack] = useState([]);
+  const [isClosing, setIsClosing] = useState(false);
 
   const pushFullSheet = (screen) => {
-    setCurrentScreen(screen);
+    setScreenStack(prev => [...prev, screen]);
   };
 
   const handleBack = () => {
-    setCurrentScreen(null);
+    setIsClosing(true);
+  };
+
+  const handleExitComplete = () => {
+    setScreenStack(prev => prev.slice(0, -1));
+    setIsClosing(false);
   };
 
   const reset = () => {
-    setCurrentScreen(null);
+    setScreenStack([]);
   };
 
   return (
     <FullSheetContext.Provider value={{ pushFullSheet, handleBack, reset }}>
       {children}
-      <FullSheet
-        isOpen={!!currentScreen}
-        onClose={handleBack}
-        showBackButton={false}
-      >
-        {currentScreen?.component}
-      </FullSheet>
+      {screenStack.map((screen, index) => (
+        <FullSheet
+          key={index}
+          isOpen={!isClosing || index < screenStack.length - 1}
+          onClose={handleExitComplete}
+          showBackButton={index > 0}
+          style={{ zIndex: 1000 + index }}
+        >
+          {screen.component}
+        </FullSheet>
+      ))}
     </FullSheetContext.Provider>
   );
 };

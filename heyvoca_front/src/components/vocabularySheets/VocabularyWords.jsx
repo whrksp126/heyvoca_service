@@ -6,12 +6,14 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useWordSetBottomSheet } from './WordBottomSheet';
+import { getTextSound } from '../../utils/common';
+import UpdateVocabularyWords from './UpdateVocabularyWords';
+const VocabularyWords = ({ id }) => {
 
-const VocabularyDetail = ({ id }) => {
-  const [isEditMode, setIsEditMode] = useState(false);
   const { handleBack } = useFullSheet();
   const { isLoading, getVocabularySheet } = useVocabulary();
   const { showWordSetBottomSheet } = useWordSetBottomSheet();
+  const { pushFullSheet } = useFullSheet();
 
   const vocabularySheet = getVocabularySheet(id);
 
@@ -36,17 +38,18 @@ const VocabularyDetail = ({ id }) => {
     );
   }
 
-  // // updatedAt 기준으로 정렬된 단어장 목록
-  // const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
-  //   new Date(b.updatedAt) - new Date(a.updatedAt)
-  // );
-
-  const handleEditClick = (id) => {
-    showWordSetBottomSheet({vocabularyId: vocabularySheet.id, id: id});
+  const handleEditClick = () => {
+    pushFullSheet({
+      component: <UpdateVocabularyWords id={id} />
+    });
   };
 
   const handleAddClick = () => {
     showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
+  };
+
+  const handleCardClick = (id) => {
+    
   };
 
   return (
@@ -151,27 +154,108 @@ const VocabularyDetail = ({ id }) => {
                   w-full
                 "
               >
-                <h3 className="text-[16px] font-[700] text-[#111]">{item.origin}</h3>
-                <span className="text-[12px] font-[400] text-[#111]">{item.meanings.join(", ")}</span>
+                <div className="flex flex-wrap">
+                  <motion.h3
+                    onClick={() => {
+                      getTextSound(item.origin, "en");
+                      const spans = document.querySelectorAll(`#word-${item.id} span`);
+                      spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
+                      spans.forEach((span, index) => {
+                        span.animate(
+                          [
+                            { color: "#111", offset: 0 },
+                            { color: "#FFFFFF", offset: 0.5 },
+                            { color: "#111", offset: 1 }
+                          ],
+                          { 
+                            duration: 1000, 
+                            delay: index * 50,
+                            easing: "cubic-bezier(0.4, 0, 0.2, 1)"
+                          }
+                        );
+                      });
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="
+                      text-[16px] font-[700] text-[#111]
+                      cursor-pointer relative
+                      overflow-hidden
+                      break-words 
+                    "
+                    id={`word-${item.id}`}
+                  >
+                    {item.origin.split('').map((char, index) => (
+                      <motion.span
+                        key={index}
+                        initial={{ color: "#111" }}
+                        className="inline-block"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </motion.h3>
+                </div>
+                <div className="flex flex-wrap">
+                  <motion.span
+                    onClick={() => {
+                      getTextSound(item.meanings.join(", "), "ko");
+                      const spans = document.querySelectorAll(`#meaning-${item.id} span`);
+                      spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
+                      spans.forEach((span, index) => {
+                        span.animate(
+                          [
+                            { color: "#111", offset: 0 },
+                            { color: "#FFFFFF", offset: 0.5 },
+                            { color: "#111", offset: 1 }
+                          ],
+                          { 
+                            duration: 1000, 
+                            delay: index * 50,
+                            easing: "cubic-bezier(0.4, 0, 0.2, 1)"
+                          }
+                        );
+                      });
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring", 
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="
+                      text-[12px] font-[400] text-[#111]
+                      cursor-pointer relative
+                      overflow-hidden
+                      break-words
+                    "
+                    id={`meaning-${item.id}`}
+                  >
+                    {item.meanings.join(", ").split('').map((char, index) => (
+                      <motion.span
+                        key={index}
+                        initial={{ color: "#111" }}
+                        className="inline-block"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </motion.span>
+                </div>
               </div>
               <div className="
                 flex gap-[8px]
               text-[#FF8DD4] text-[20px]
               ">
-                {isEditMode ? (
-                <>
-                <button>
-                  <PencilSimple/>
-                </button>
-                <button>
-                  <Trash/>
-                </button>
-                </>
-                ) : (
-                <button>
+                <button onClick={() => getTextSound(item.origin, "en")}>
                   <SpeakerHigh weight="fill" />
                 </button>
-                )}
               </div>
             </li>
           )
@@ -239,4 +323,4 @@ const VocabularyDetail = ({ id }) => {
   );
 };
 
-export default VocabularyDetail;   
+export default VocabularyWords;   

@@ -5,7 +5,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 
-const VocabularyListView = () => {
+const UpdateVocabularySheet = () => {
   const { handleBack } = useFullSheet();
   const { vocabularySheets, isLoading } = useVocabulary();
   const { showVocabularySetBottomSheet, showVocabularyDeleteBottomSheet } = useVocabularySetBottomSheet();
@@ -156,4 +156,4 @@ const VocabularyListView = () => {
   );
 };
 
-export default VocabularyListView; 
+export default UpdateVocabularySheet; 

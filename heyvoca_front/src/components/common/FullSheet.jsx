@@ -7,7 +7,7 @@ const FullSheet = ({
   children 
 }) => {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" onExitComplete={onClose}>
       {isOpen && (
         <motion.div
           initial={{ x: "100%" }}

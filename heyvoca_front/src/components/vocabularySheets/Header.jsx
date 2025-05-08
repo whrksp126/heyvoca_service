@@ -3,7 +3,7 @@ import { Plus, PencilSimple } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useFullSheet } from '../../context/FullSheetContext';
-import VocabularyListView from './VocabularyListView';
+import UpdateVocabularySheet from './UpdateVocabularySheet';
 
 const Header = () => {
   const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
@@ -28,7 +28,7 @@ const Header = () => {
 
   const handleEditClick = () => {
     pushFullSheet({
-      component: <VocabularyListView />
+      component: <UpdateVocabularySheet />
     });
   };
 

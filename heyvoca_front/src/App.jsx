@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Vocabulary from './pages/Vocabulary';
+import VocabularySheets from './pages/VocabularySheets';
 import Store from './pages/Store';
 import Class from './pages/Class';
 
@@ -29,8 +29,8 @@ const AppLayout = () => {
       <Route path="/login" element={<Login />} />
 
       <Route path="/home" element={<Home />} />
-      <Route path="/vocabulary" element={<Vocabulary />} />
-      <Route path="/vocabulary/:id" element={<Vocabulary />} />
+      <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
+      <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
       <Route path="/store" element={<Store />} />
       <Route path="/class" element={<Class />} />
       

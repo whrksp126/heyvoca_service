@@ -33,14 +33,14 @@ const BottomNav = () => {
           </button>
         </li>
         <li>
-          <button onClick={() => navigate('/vocabulary')} 
+          <button onClick={() => navigate('/vocabulary-sheets')} 
                   className="flex flex-col items-center bg-background dark:bg-background-dark">
             <Notepad 
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/vocabulary' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`} 
+              className={`w-6 h-6 ${location.pathname === '/vocabulary-sheets' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`} 
             />
             <span className={`text-[10px] mt-1 ${
-              location.pathname === '/vocabulary' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+              location.pathname === '/vocabulary-sheets' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
             }`}>
               단어장
             </span>

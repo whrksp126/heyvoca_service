@@ -56,6 +56,45 @@ export const getValueFromURL = (param) => {
   return urlParams.get(param);
 };
 
+let currentTTSAudio = null;
+let currentAudioUrl = null;
+
+export const getTextSound = async (text, lang) => {
+  // Stop and cleanup current audio if playing
+  if (currentTTSAudio) {
+    currentTTSAudio.pause();
+    currentTTSAudio.src = ''; // Clear source
+    currentTTSAudio = null;
+  }
+
+  // Revoke previous blob URL to prevent memory leak
+  if (currentAudioUrl) {
+    URL.revokeObjectURL(currentAudioUrl);
+    currentAudioUrl = null;
+  }
+
+  const url = `${backendUrl}/tts/output`;
+  const method = 'GET';
+  const fetchData = {
+    text : text,
+    language : lang
+  }
+  const audioBlob = await fetchDataAsync(url, method, fetchData);
+  const audioUrl = URL.createObjectURL(audioBlob);
+  currentAudioUrl = audioUrl;
+  
+  const audio = new Audio(audioUrl);
+  currentTTSAudio = audio;
+  
+  // Add ended event handler to cleanup
+  audio.addEventListener('ended', () => {
+    URL.revokeObjectURL(audioUrl);
+    currentAudioUrl = null;
+    currentTTSAudio = null;
+  });
+
+  audio.play();
+}
 
 /**
  * SM-2 망각곡선 알고리즘

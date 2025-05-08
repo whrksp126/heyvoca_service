@@ -244,20 +244,12 @@ export const VocabularyProvider = ({ children }) => {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
-
       const vocabularySheet = getVocabularySheet(sheetId);
-
-      try {
-        await updateVocabularySheet(sheetId, {
-          total: vocabularySheet.words.length + 1,
-          words: [...vocabularySheet.words, newWordData],
-        });
-        return newWordData;
-      } catch (err) {
-        setError('단어 추가에 실패했습니다.');
-        throw err;
-      }
-
+      await updateVocabularySheet(sheetId, {
+        total: vocabularySheet.words.length + 1,
+        words: [...vocabularySheet.words, newWordData],
+      });
+      return newWordData;
     } catch (err) {
       setError('단어 추가에 실패했습니다.');
       throw err;
@@ -267,22 +259,28 @@ export const VocabularyProvider = ({ children }) => {
   // 단어 수정
   const updateWord = useCallback(async (sheetId, wordId, updates) => {
     try {
-      // TODO: API 호출로 변경
-      setVocabularySheets(prev => 
-        prev.map(sheet => 
-          sheet.id === sheetId 
-            ? {
-                ...sheet,
-                words: sheet.words.map(word =>
-                  word.id === wordId 
-                    ? { ...word, ...updates }
-                    : word
-                ),
-                updatedAt: new Date().toISOString()
-              }
-            : sheet
-        )
+      const copyVocabularySheet = getVocabularySheet(sheetId);
+      console.log("copyVocabularySheet: ", copyVocabularySheet);
+      const copyWords = copyVocabularySheet.words.map(word => 
+        word.id === wordId ? { ...word, ...updates, updatedAt: new Date().toISOString() } : word
       );
+      await updateVocabularySheet(sheetId, {words: copyWords});
+      // setVocabularySheets(prev => 
+      //   prev.map(sheet => 
+      //     sheet.id === sheetId 
+      //       ? {
+      //           ...sheet,
+      //           words: sheet.words.map(word =>
+      //             word.id === wordId 
+      //               ? { ...word, ...updates }
+      //               : word
+      //           ),
+      //           updatedAt: new Date().toISOString()
+      //         }
+      //       : sheet
+      //   )
+      // );
+      return newWordData;
     } catch (err) {
       setError('단어 수정에 실패했습니다.');
       throw err;
