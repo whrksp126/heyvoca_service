@@ -22,8 +22,8 @@ const mockVocabularyData = [
           origin: 'I eat an apple every day.', // 학습할 단어의 예시
           meaning: '나는 매일 사과를 먹는다.' // 학습할 단어의 예시의 뜻
         }],
-        created_at: new Date('2024-01-01').toISOString(), // 단어 등록 일자
-        updated_at: new Date('2024-01-01').toISOString(), // 단어 수정 일자
+        createdAt: new Date('2024-01-01').toISOString(), // 단어 등록 일자
+        updatedAt: new Date('2024-01-01').toISOString(), // 단어 수정 일자
       },
     ],
     createdAt: new Date('2024-01-01').toISOString(),
@@ -235,14 +235,14 @@ export const VocabularyProvider = ({ children }) => {
   const addWord = useCallback(async (sheetId, word) => {
     try {
       const newWordData = {
-        ...word,
         id: Date.now().toString(),
         ef: 2.5,
         repetition: 0,
         interval: 0,
-        next_review: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        nextReview: null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        ...word,
       };
       const vocabularySheet = getVocabularySheet(sheetId);
       await updateVocabularySheet(sheetId, {
@@ -260,53 +260,27 @@ export const VocabularyProvider = ({ children }) => {
   const updateWord = useCallback(async (sheetId, wordId, updates) => {
     try {
       const copyVocabularySheet = getVocabularySheet(sheetId);
-      console.log("copyVocabularySheet: ", copyVocabularySheet);
-      const copyWords = copyVocabularySheet.words.map(word => 
-        word.id === wordId ? { ...word, ...updates, updatedAt: new Date().toISOString() } : word
-      );
+      const updatedWord = { ...copyVocabularySheet.words.find(word => word.id === wordId), ...updates, updatedAt: new Date().toISOString() };
+      const copyWords = copyVocabularySheet.words.map(word => word.id === wordId ? updatedWord : word);
       await updateVocabularySheet(sheetId, {words: copyWords});
-      // setVocabularySheets(prev => 
-      //   prev.map(sheet => 
-      //     sheet.id === sheetId 
-      //       ? {
-      //           ...sheet,
-      //           words: sheet.words.map(word =>
-      //             word.id === wordId 
-      //               ? { ...word, ...updates }
-      //               : word
-      //           ),
-      //           updatedAt: new Date().toISOString()
-      //         }
-      //       : sheet
-      //   )
-      // );
-      return newWordData;
+      return updatedWord;
     } catch (err) {
       setError('단어 수정에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [vocabularySheets]);
 
   // 단어 삭제
   const deleteWord = useCallback(async (sheetId, wordId) => {
     try {
-      // TODO: API 호출로 변경
-      setVocabularySheets(prev => 
-        prev.map(sheet => 
-          sheet.id === sheetId 
-            ? {
-                ...sheet,
-                words: sheet.words.filter(word => word.id !== wordId),
-                updatedAt: new Date().toISOString()
-              }
-            : sheet
-        )
-      );
+      const copyVocabularySheet = getVocabularySheet(sheetId);
+      const copyWords = copyVocabularySheet.words.filter(word => word.id !== wordId);
+      await updateVocabularySheet(sheetId, {total: copyWords.length, words: copyWords});
     } catch (err) {
       setError('단어 삭제에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [vocabularySheets]);
 
   // 특정 단어장 단어 조회
   const getWord = useCallback((sheetId, wordId) => {

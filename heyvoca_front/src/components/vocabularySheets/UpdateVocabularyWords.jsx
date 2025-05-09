@@ -11,8 +11,8 @@ import { getTextSound } from '../../utils/common';
 const UpdateVocabularyWords = ({ id }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const { handleBack } = useFullSheet();
-  const { isLoading, getVocabularySheet } = useVocabulary();
-  const { showWordSetBottomSheet } = useWordSetBottomSheet();
+  const { isLoading, getVocabularySheet, deleteWord } = useVocabulary();
+  const { showWordSetBottomSheet, showWordDeleteBottomSheet } = useWordSetBottomSheet();
 
   const vocabularySheet = getVocabularySheet(id);
 
@@ -48,8 +48,8 @@ const UpdateVocabularyWords = ({ id }) => {
     showWordSetBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
   };
 
-  const handleDeleteClick = (id) => {
-    console.log("handleDeleteClick: ", id);
+  const handleDeleteClick = async (word_id) => {
+    showWordDeleteBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
   };
 
   const handleAddClick = () => {
@@ -273,7 +273,7 @@ const UpdateVocabularyWords = ({ id }) => {
                   stiffness: 500, 
                   damping: 15
                 }}
-                onClick={handleDeleteClick}
+                onClick={() => handleDeleteClick(item.id)}
                 aria-label="단어 삭제"
                 >
                   <Trash/>

@@ -8,7 +8,7 @@ import './WordBottomSheet.css';
 
 export const useWordSetBottomSheet = () => {
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
-  const { addWord, updateWord, getWord } = useVocabulary();
+  const { addWord, updateWord, getWord, deleteWord } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
   const currentStateRef = useRef({
@@ -48,22 +48,30 @@ export const useWordSetBottomSheet = () => {
   }, [handleClose, addWord]);
 
   const handleEdit = useCallback(async (data) => {
-    console.log("data: ", data);
-    // TODO : 단어 수정 시 저장 세팅해야함
-    // try {
-    //   const newWord = {
-    //     vocabularyId: data.vocabularyId,
-    //     origin: data.origin,
-    //     meanings: data.meanings,
-    //     examples: data.examples
-    //   }
+    try {
       
-    //   await updateWord(newWord.vocabularyId, newWord.id, newWord);
-    //   handleClose();
-    // } catch (error) {
-    //   console.error('단어장 수정 실패:', error);
-    // }
+      if(currentStateRef.current.vocabularyId !== data.vocabularyId) {
+        const word = getWord(currentStateRef.current.vocabularyId, data.id);
+        await addWord(data.vocabularyId, word);
+        await deleteWord(currentStateRef.current.vocabularyId, data.id);
+      }else{ 
+        const updates = {
+          origin: data.origin,
+          meanings: data.meanings,
+          examples: data.examples
+        }
+        await updateWord(data.vocabularyId, data.id, updates);
+      }
+      handleClose();
+    } catch (error) {
+      console.error('단어장 수정 실패:', error);
+    }
   }, [handleClose, updateWord]);
+
+  const handleDelete = useCallback(async (data) => {
+    await deleteWord(data.vocabularyId, data.id);
+    handleClose();
+  }, [handleClose, deleteWord]);
 
   const showWordSetBottomSheet = useCallback(({vocabularyId=null, dictionaryId=null, id=null}) => {
     let newMode = 'add';
@@ -73,6 +81,7 @@ export const useWordSetBottomSheet = () => {
 
     if (id) {
       const word = getWord(vocabularyId, id);
+      console.log("word: ", word);
       if (word) {
         newMode = 'edit';
         newOrigin = word.origin;
@@ -110,8 +119,21 @@ export const useWordSetBottomSheet = () => {
     );
   }, [handleClose, handleAdd, handleEdit]);
   
+  const showWordDeleteBottomSheet = useCallback(({vocabularyId=null, id=null}) => {
+    
+    showBottomSheet(
+      <DeleteWordSheet 
+        vocabularyId={vocabularyId}
+        id={id}
+        onCancel={handleClose}
+        onDelete={handleDelete}
+      />
+    );
+  }, [handleClose, showBottomSheet]);
+
   return {
     showWordSetBottomSheet,
+    showWordDeleteBottomSheet,
     currentStateRef
   };
 };
@@ -210,14 +232,13 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
             <div className="relative">
               <select 
                 disabled={id ? false : true}
-                value={vocabularyId || ''}
+                value={wordData.vocabularyId || ''}
                 onChange={(e) => {
-                  if (!id) {
-                    setWordData({
-                      ...wordData,
-                      vocabularyId: e.target.value
-                    });
-                  }
+                  console.log("e.target.value: ", e.target.value);
+                  setWordData({
+                    ...wordData,
+                    vocabularyId: e.target.value
+                  });
                 }}
                 className={`
                   w-full h-[45px]
@@ -479,7 +500,9 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => onSet({
-            id, vocabularyId, dictionaryId,
+            id, 
+            vocabularyId : wordData.vocabularyId,
+            dictionaryId,
             origin: wordInputRef.current.value,
             meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
             examples: examplesState.map(example => ({
@@ -639,3 +662,51 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
     
   );
 }; 
+
+const DeleteWordSheet = ({ vocabularyId, id, onCancel, onDelete }) => {
+  return (
+    <div className="">
+      <div className="
+        flex flex-col gap-[15px] items-center justify-center 
+        pt-[40px] px-[20px] pb-[10px]
+      ">
+        <h3 className="text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
+        <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
+      </div>
+      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#ccc]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={onCancel}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >취소</motion.button>
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#FF8DD4]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={() => onDelete({vocabularyId, id})}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >삭제</motion.button>
+      </div>
+    </div>
+  );
+};
