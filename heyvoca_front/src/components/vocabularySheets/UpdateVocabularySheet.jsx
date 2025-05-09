@@ -7,7 +7,7 @@ import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 
 const UpdateVocabularySheet = () => {
   const { handleBack } = useFullSheet();
-  const { vocabularySheets, isLoading } = useVocabulary();
+  const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { showVocabularySetBottomSheet, showVocabularyDeleteBottomSheet } = useVocabularySetBottomSheet();
 
   const getButtonVariants = (color) => ({
@@ -23,7 +23,7 @@ const UpdateVocabularySheet = () => {
     }
   });
 
-  if (isLoading) {
+  if (isVocabularySheetsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>로딩 중...</p>

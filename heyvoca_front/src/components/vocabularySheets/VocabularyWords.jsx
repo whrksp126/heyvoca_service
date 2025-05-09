@@ -11,7 +11,7 @@ import UpdateVocabularyWords from './UpdateVocabularyWords';
 const VocabularyWords = ({ id }) => {
 
   const { handleBack } = useFullSheet();
-  const { isLoading, getVocabularySheet } = useVocabulary();
+  const { isVocabularySheetsLoading, getVocabularySheet } = useVocabulary();
   const { showWordSetBottomSheet } = useWordSetBottomSheet();
   const { pushFullSheet } = useFullSheet();
 
@@ -30,7 +30,7 @@ const VocabularyWords = ({ id }) => {
     }
   };
 
-  if (isLoading) {
+  if (isVocabularySheetsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>로딩 중...</p>

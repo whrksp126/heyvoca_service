@@ -9,7 +9,7 @@ const Main = () => {
 
   const navigate = useNavigate();
   const { pushFullSheet } = useFullSheet();
-  const { vocabularySheets, isLoading } = useVocabulary();
+  const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   
   const today_sentence = {
     title: "오늘의 문장 💬",
@@ -17,7 +17,7 @@ const Main = () => {
     translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
   };
 
-  if (isLoading) {
+  if (isVocabularySheetsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>로딩 중...</p>
@@ -37,13 +37,16 @@ const Main = () => {
   };
 
   return (
-    <div 
+    <motion.div 
       className="
         flex flex-col 
         h-[calc(100vh-theme(height.header)-theme(height.bottom-nav))]
         px-[16px] py-[10px]
         overflow-y-auto
       "
+      initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
+      exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
       <div className="
         top 
@@ -86,7 +89,9 @@ const Main = () => {
       </div>
 
       <div className="middle">
-        <ul className="flex flex-col gap-[15px]">
+        <ul 
+          className="flex flex-col gap-[15px]"
+        >
           {sortedVocabularySheets.map((item) => {
             const progress = item.total === 0 ? 0 : Math.round((item.memorized/item.total) * 100);
             return (
@@ -100,8 +105,8 @@ const Main = () => {
                   cursor-pointer
                 "
                 onClick={() => handleCardClick(item.id)}
-                whileTap={{ scale: 0.98 }}
-                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96}}
+                whileHover={{ scale: 1.04}}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <div 
@@ -168,7 +173,7 @@ const Main = () => {
           )})}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -6,7 +6,7 @@ import Index from './pages/Index';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import VocabularySheets from './pages/VocabularySheets';
-import Store from './pages/Store';
+import BookStore from './pages/BookStore';
 import Class from './pages/Class';
 
 import MyPage from './pages/mypage/MyPage';
@@ -31,7 +31,7 @@ const AppLayout = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
       <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
-      <Route path="/store" element={<Store />} />
+      <Route path="/book-store" element={<BookStore />} />
       <Route path="/class" element={<Class />} />
       
       

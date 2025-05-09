@@ -1,8 +1,8 @@
 import React from 'react';
-import Main from '../components/store/Main';
+import Main from '../components/bookStore/Main';
 import BottomNav from '../components/component/BottomNav';
-import Header from '../components/store/Header';
-const Store = () => {
+import Header from '../components/bookStore/Header';
+const BookStore = () => {
   return (
     <div>
       <Header />
@@ -12,4 +12,4 @@ const Store = () => {
   );
 };
 
-export default Store; 
+export default BookStore; 

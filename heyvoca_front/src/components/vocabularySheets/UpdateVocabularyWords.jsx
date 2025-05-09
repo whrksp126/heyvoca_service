@@ -11,7 +11,7 @@ import { getTextSound } from '../../utils/common';
 const UpdateVocabularyWords = ({ id }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const { handleBack } = useFullSheet();
-  const { isLoading, getVocabularySheet, deleteWord } = useVocabulary();
+  const { isVocabularySheetsLoading, getVocabularySheet, deleteWord } = useVocabulary();
   const { showWordSetBottomSheet, showWordDeleteBottomSheet } = useWordSetBottomSheet();
 
   const vocabularySheet = getVocabularySheet(id);
@@ -29,7 +29,7 @@ const UpdateVocabularyWords = ({ id }) => {
     }
   };
 
-  if (isLoading) {
+  if (isVocabularySheetsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>로딩 중...</p>

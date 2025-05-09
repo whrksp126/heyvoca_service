@@ -47,14 +47,14 @@ const BottomNav = () => {
           </button>
         </li>
         <li>
-          <button onClick={() => navigate('/store')} 
+          <button onClick={() => navigate('/book-store')} 
                   className="flex flex-col items-center bg-background dark:bg-background-dark">
             <Storefront 
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/store' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`} 
+              className={`w-6 h-6 ${location.pathname === '/book-store' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`} 
             />
             <span className={`text-[10px] mt-1 ${
-              location.pathname === '/store' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+              location.pathname === '/book-store' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
             }`}>
               서점
             </span>

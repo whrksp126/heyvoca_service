@@ -15,7 +15,7 @@ const mockVocabularyData = [
     words: [
       { 
         id: '1', // 사용자 단어장 데이터 기준 단어 ID,
-        dictionary_id : 1, // 헤이보카 사전의 단어 ID, 없으면 null
+        dictionaryId : 1, // 헤이보카 사전의 단어 ID, 없으면 null
         origin: 'apple', // 학습할 단어
         meanings: ['사과', '빨간 사과', '빨간 비닐봉지 안에 있는 사과'], // 학습할 단어의 뜻
         examples: [{ // 학습할 단어의 예시 리스트
@@ -91,8 +91,11 @@ const VocabularyContext = createContext(null);
 
 export const VocabularyProvider = ({ children }) => {
   const [vocabularySheets, setVocabularySheets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
+  const [errorVocabularySheets, setErrorVocabularySheets] = useState(null);
+  const [bookStore, setBookStore] = useState([]);
+  const [isBookStoreLoading, setIsBookStoreLoading] = useState(true);
+  const [errorBookStore, setErrorBookStore] = useState(null);
 
   // 전체 통계 계산
   const statistics = useMemo(() => {
@@ -136,19 +139,19 @@ export const VocabularyProvider = ({ children }) => {
   // 모든 단어장 데이터 불러오기
   const fetchVocabularySheets = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsVocabularySheetsLoading(true);
       const url = `${backendUrl}/user_voca_book/list`;
       const method = 'GET';
       const fetchData = {};
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
       setVocabularySheets(result.data);
-      setError(null);
+      setErrorVocabularySheets(null);
     } catch (err) {
-      setError('단어장 데이터를 불러오는데 실패했습니다.');
+      setErrorVocabularySheets('단어장 데이터를 불러오는데 실패했습니다.');
       console.error('Failed to fetch vocabulary sheets:', err);
     } finally {
-      setIsLoading(false);
+      setIsVocabularySheetsLoading(false);
     }
   }, []);
 
@@ -176,7 +179,7 @@ export const VocabularyProvider = ({ children }) => {
       setVocabularySheets(prev => [...prev, fetchData]);
       return fetchData;
     } catch (err) {
-      setError('단어장 추가에 실패했습니다.');
+      setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
   }, []);
@@ -204,7 +207,7 @@ export const VocabularyProvider = ({ children }) => {
         )
       );
     } catch (err) {
-      setError('단어장 수정에 실패했습니다.');
+      setErrorVocabularySheets('단어장 수정에 실패했습니다.');
       throw err;
     }
   }, []);
@@ -221,7 +224,7 @@ export const VocabularyProvider = ({ children }) => {
       if(result.code != 200) return alert('단어장 삭제에 실패했습니다.');
       setVocabularySheets(prev => prev.filter(sheet => sheet.id !== id));
     } catch (err) {
-      setError('단어장 삭제에 실패했습니다.');
+      setErrorVocabularySheets('단어장 삭제에 실패했습니다.');
       throw err;
     }
   }, []);
@@ -251,7 +254,7 @@ export const VocabularyProvider = ({ children }) => {
       });
       return newWordData;
     } catch (err) {
-      setError('단어 추가에 실패했습니다.');
+      setErrorVocabularySheets('단어 추가에 실패했습니다.');
       throw err;
     }
   }, [vocabularySheets]);
@@ -265,7 +268,7 @@ export const VocabularyProvider = ({ children }) => {
       await updateVocabularySheet(sheetId, {words: copyWords});
       return updatedWord;
     } catch (err) {
-      setError('단어 수정에 실패했습니다.');
+      setErrorVocabularySheets('단어 수정에 실패했습니다.');
       throw err;
     }
   }, [vocabularySheets]);
@@ -277,7 +280,7 @@ export const VocabularyProvider = ({ children }) => {
       const copyWords = copyVocabularySheet.words.filter(word => word.id !== wordId);
       await updateVocabularySheet(sheetId, {total: copyWords.length, words: copyWords});
     } catch (err) {
-      setError('단어 삭제에 실패했습니다.');
+      setErrorVocabularySheets('단어 삭제에 실패했습니다.');
       throw err;
     }
   }, [vocabularySheets]);
@@ -328,15 +331,36 @@ export const VocabularyProvider = ({ children }) => {
     return filtered;
   }, [vocabularySheets]);
 
+  const fetchBookStore = useCallback(async () => {
+    try {
+      setIsBookStoreLoading(true);
+      const url = `${backendUrl}/search/bookstore`;
+      const method = 'GET';
+      const fetchData = {};
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
+      setBookStore(result.data);
+      setErrorBookStore(null);
+    } catch (err) {
+      setErrorBookStore('서점 데이터를 불러오는데 실패했습니다.');
+      console.error('Failed to fetch book store:', err);
+    } finally {
+      setIsBookStoreLoading(false);
+    }
+  }, []);
+
+
+
   // 앱 시작시 데이터 로드
   useEffect(() => {
     fetchVocabularySheets();
-  }, [fetchVocabularySheets]);
+    fetchBookStore();
+  }, [fetchVocabularySheets, fetchBookStore]);
 
   const value = {
     vocabularySheets,
-    isLoading,
-    error,
+    isVocabularySheetsLoading,
+    errorVocabularySheets,
     statistics,
     getVocabularySheets,
     getVocabularySheet,
@@ -351,7 +375,12 @@ export const VocabularyProvider = ({ children }) => {
     getRecentVocabularySheets,
     getProgressSortedSheets,
     getNeedsReviewSheets,
-    refreshData: fetchVocabularySheets,
+    fetchVocabularySheets,
+
+    bookStore,
+    isBookStoreLoading,
+    errorBookStore,
+    fetchBookStore,
   };
 
   return (
