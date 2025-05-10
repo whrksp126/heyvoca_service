@@ -4,34 +4,55 @@ import BottomSheet from '../components/common/BottomSheet';
 const BottomSheetContext = createContext();
 
 export const BottomSheetProvider = ({ children }) => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [bottomSheetContent, setBottomSheetContent] = useState(null);
-  const [isBackdropClickClosable, setIsBackdropClickClosable] = useState(true);
-  const [isDragToCloseEnabled, setIsDragToCloseEnabled] = useState(true);
+  const [screenStack, setScreenStack] = useState([]);
+  const [isClosing, setIsClosing] = useState(false);
 
   const showBottomSheet = (content, options = {}) => {
-    setBottomSheetContent(content);
-    setIsBackdropClickClosable(options.isBackdropClickClosable ?? true);
-    setIsDragToCloseEnabled(options.isDragToCloseEnabled ?? true);
-    setIsBottomSheetOpen(true);
+    setScreenStack(prev => [...prev, { 
+      content, 
+      options,
+      parentId: options.parentId || null
+    }]);
   };
 
-  const hideBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-    setBottomSheetContent(null);
+  const handleBack = () => {
+    setIsClosing(true);
+  };
+
+  const handleExitComplete = () => {
+    setScreenStack(prev => {
+      const lastSheet = prev[prev.length - 1];
+      if (lastSheet.parentId) {
+        // 부모 바텀시트도 함께 닫기
+        return prev.filter(sheet => 
+          sheet.content.props.id !== lastSheet.parentId && 
+          sheet.content.props.id !== lastSheet.content.props.id
+        );
+      }
+      return prev.slice(0, -1);
+    });
+    setIsClosing(false);
+  };
+
+  const reset = () => {
+    setScreenStack([]);
   };
 
   return (
-    <BottomSheetContext.Provider value={{ showBottomSheet, hideBottomSheet }}>
+    <BottomSheetContext.Provider value={{ showBottomSheet, handleBack, reset }}>
       {children}
-      <BottomSheet 
-        isOpen={isBottomSheetOpen} 
-        onClose={hideBottomSheet}
-        isBackdropClickClosable={isBackdropClickClosable}
-        isDragToCloseEnabled={isDragToCloseEnabled}
-      >
-        {bottomSheetContent}
-      </BottomSheet>
+      {screenStack.map((screen, index) => (
+        <BottomSheet
+          key={index}
+          isOpen={!isClosing || index < screenStack.length - 1}
+          onClose={handleExitComplete}
+          isBackdropClickClosable={screen.options?.isBackdropClickClosable ?? true}
+          isDragToCloseEnabled={screen.options?.isDragToCloseEnabled ?? true}
+          style={{ zIndex: 1000 + index }}
+        >
+          {screen.content}
+        </BottomSheet>
+      ))}
     </BottomSheetContext.Provider>
   );
 };

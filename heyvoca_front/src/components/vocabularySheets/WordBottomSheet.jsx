@@ -7,7 +7,7 @@ import { backendUrl, fetchDataAsync } from '../../utils/common';
 import './WordBottomSheet.css';
 
 export const useWordSetBottomSheet = () => {
-  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const { showBottomSheet, handleBack } = useBottomSheet();
   const { addWord, updateWord, getWord, deleteWord } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
@@ -21,7 +21,7 @@ export const useWordSetBottomSheet = () => {
   });
 
   const handleClose = useCallback(() => {
-    hideBottomSheet();
+    handleBack();
     currentStateRef.current = {
       mode: 'add',
       vocabularyId: null,
@@ -30,7 +30,7 @@ export const useWordSetBottomSheet = () => {
       meanings: [],
       examples: [],
     };
-  }, [hideBottomSheet]);
+  }, [handleBack]);
 
   const handleAdd = useCallback(async (data) => {
     try {

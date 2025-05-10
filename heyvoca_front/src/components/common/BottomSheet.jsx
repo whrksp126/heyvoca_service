@@ -21,9 +21,9 @@ const BottomSheet = ({
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait" onExitComplete={onClose}>
       {isOpen && (
-        <>
+        <div>
           <motion.div 
             className="fixed inset-0 bg-black/50 z-[1000]"
             initial={{ opacity: 0 }}
@@ -56,7 +56,7 @@ const BottomSheet = ({
               {children}
             </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

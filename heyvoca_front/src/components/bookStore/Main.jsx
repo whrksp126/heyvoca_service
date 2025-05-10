@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useFullSheet } from '../../context/FullSheetContext';
 import { BoxArrowDown, Plus } from "@phosphor-icons/react";
-
+import { useBookStoreBottomSheet } from "./BookStoreBottomSheet";
 const Main = () => {
   const { pushFullSheet } = useFullSheet();
   const { isBookStoreLoading, bookStore } = useVocabulary();
-  const [pressedIndex, setPressedIndex] = useState(null);
-  console.log(bookStore);
+  const { showBookStorePreviewBottomSheet } = useBookStoreBottomSheet();
+  
   if (isBookStoreLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -16,6 +16,10 @@ const Main = () => {
       </div>
     );
   }
+
+  const handleBookStoreClick = (id) => {
+    showBookStorePreviewBottomSheet(id);
+  };
 
   return (
     <motion.div 
@@ -47,6 +51,9 @@ const Main = () => {
                 whileTap={{ scale: 0.96}}
                 whileHover={{ scale: 1.04}}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                onClick={() => {
+                  handleBookStoreClick(item.id)
+                }}
               >
                 <div className="flex flex-col gap-[5px]">
                   {item.category && (

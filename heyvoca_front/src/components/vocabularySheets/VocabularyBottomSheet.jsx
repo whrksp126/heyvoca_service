@@ -48,7 +48,7 @@ const getColorSet = (mainColor) => {
 };
 
 export const useVocabularySetBottomSheet = () => {
-  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const { showBottomSheet, handleBack } = useBottomSheet();
   const { addVocabularySheet, updateVocabularySheet, deleteVocabularySheet, vocabularySheets } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
@@ -60,14 +60,14 @@ export const useVocabularySetBottomSheet = () => {
   });
 
   const handleClose = useCallback(() => {
-    hideBottomSheet();
+    handleBack();
     currentStateRef.current = {
       mode: 'add',
       vocabularyId: null,
       vocabularyTitle: "",
       selectedColor: VOCABULARY_COLORS[0].value
     };
-  }, [hideBottomSheet]);
+  }, [handleBack]);
 
   const handleAdd = useCallback(async (data) => {
     try {
