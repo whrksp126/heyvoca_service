@@ -73,22 +73,26 @@ export const VocabularyProvider = ({ children }) => {
     return vocabularySheets;
   }, [vocabularySheets]);
 
+
+  
+
+
   // 단어장 추가
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
       const url = `${backendUrl}/user_voca_book/create`;
       const method = 'POST';
       const fetchData = {
-        ...newVocabulary,
         words: [],
         total: 0,
         memorized: 0,
+        ...newVocabulary,
       };
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('단어장 추가에 실패했습니다.');
       fetchData.id = result.data.id
       fetchData.createdAt = result.data.createdAt
-      fetchData.updatedAt = result.data.updatedAt
+      fetchData.updatedAt = result.data.createdAt
       setVocabularySheets(prev => [...prev, fetchData]);
       return fetchData;
     } catch (err) {
@@ -99,6 +103,7 @@ export const VocabularyProvider = ({ children }) => {
 
   // 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
+    console.log("updateVocabularySheet", id, updates)
     try {
       const url = `${backendUrl}/user_voca_book/update`;
       const method = 'PATCH';
@@ -151,7 +156,7 @@ export const VocabularyProvider = ({ children }) => {
   const addWord = useCallback(async (sheetId, word) => {
     try {
       const newWordData = {
-        id: Date.now().toString(),
+        id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`,
         ef: 2.5,
         repetition: 0,
         interval: 0,
@@ -245,15 +250,18 @@ export const VocabularyProvider = ({ children }) => {
   }, [vocabularySheets]);
 
 
+  // 서점 데이터 조회
   const getBookStore = useCallback(() => {
     return bookStore;
   }, [bookStore]);
 
+  // 서점 특정 단어장 조회
   const getBookStoreVocabularySheet = useCallback((bookStoreId) => {
     console.log("bookStore", bookStore)
     return bookStore.find(book => book.id === bookStoreId);
   }, [bookStore]);
 
+  // 서점 데이터 불러오기
   const fetchBookStore = useCallback(async () => {
     try {
       setIsBookStoreLoading(true);
@@ -269,6 +277,40 @@ export const VocabularyProvider = ({ children }) => {
       console.error('Failed to fetch book store:', err);
     } finally {
       setIsBookStoreLoading(false);
+    }
+  }, []);
+
+  // 서점의 단어장 내 단어장에 추가
+  const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
+    try {
+      const newVocabularySheet = await addVocabularySheet({
+        bookStoreId : vocabularySheet.id,
+        title : vocabularySheet.name,
+        color : vocabularySheet.color,
+      });
+      console.log("newVocabularySheet", newVocabularySheet)
+      await updateVocabularySheet(newVocabularySheet.id, {
+        total : vocabularySheet.words.length,
+        words: vocabularySheet.words.map((word, index)=>{
+          return {
+            id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+            dictionaryId : word.id,
+            origin : word.origin,
+            meanings : word.meanings,
+            examples : word.examples,
+            pronunciation : word.pronunciation,
+            ef : 2.5,
+            repetition : 0,
+            interval : 0,
+            nextReview : null,
+            createdAt : new Date().toISOString(),
+            updatedAt : new Date().toISOString(),
+          }
+        }),
+      })
+    } catch (err) {
+      setErrorVocabularySheets('단어장 추가에 실패했습니다.');
+      throw err;
     }
   }, []);
 
@@ -307,6 +349,7 @@ export const VocabularyProvider = ({ children }) => {
     fetchBookStore,
     getBookStore,
     getBookStoreVocabularySheet,
+    addBookStoreVocabularySheet,
   };
 
   return (

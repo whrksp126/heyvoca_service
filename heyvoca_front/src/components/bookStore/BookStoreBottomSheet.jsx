@@ -1,46 +1,43 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Check, SpeakerHigh } from '@phosphor-icons/react';
+import React, { useState, useCallback } from 'react';
+import { SpeakerHigh } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { getTextSound } from '../../utils/common';
 
 export const useBookStoreBottomSheet = () => {
-  const { pushBottomSheet, handleBack } = useBottomSheet();
-  const { getBookStoreVocabularySheet, bookStore } = useVocabulary();
-  const [bookStoreVocabularySheetId, setBookStoreVocabularySheetId] = useState(null);
+  const { pushBottomSheet, handleBack, reset } = useBottomSheet();
+  const { getBookStoreVocabularySheet, bookStore, addBookStoreVocabularySheet } = useVocabulary();
 
   const handleClose = useCallback(() => {
     handleBack();
   }, [handleBack]);
 
-  const handleAdd = useCallback(async () => {
+  const handleAdd = useCallback(async (bookStoreVocabularySheetId) => {
     try {
-      // handleClose();
+      const bookStoreVocabularySheet = getBookStoreVocabularySheet(bookStoreVocabularySheetId);  
+      await addBookStoreVocabularySheet(bookStoreVocabularySheet);
+      reset();
     } catch (error) {
       console.error('단어장 추가 실패:', error);
     }
-  }, [handleClose]);
+  }, [handleClose, getBookStoreVocabularySheet, bookStore]);
 
-  const showBookStoreAddBottomSheet = useCallback(() => {
-    console.log("bookStoreVocabularySheetId", bookStoreVocabularySheetId)
-  
+  const showBookStoreAddBottomSheet = useCallback((bookStoreVocabularySheetId) => {
     const bookStoreVocabularySheet = getBookStoreVocabularySheet(bookStoreVocabularySheetId);
     pushBottomSheet(
-      <AddBookStore name={bookStoreVocabularySheet.name} onCancel={handleClose} onSet={handleAdd} />,
+      <AddBookStore name={bookStoreVocabularySheet.name} onCancel={handleClose} onSet={() => handleAdd(bookStoreVocabularySheetId)} />,
       { isBackdropClickClosable: false, isDragToCloseEnabled: true }
     );
-  }, [bookStore, bookStoreVocabularySheetId, pushBottomSheet, handleClose]);
+  }, [bookStore, pushBottomSheet, handleClose]);
 
   const showBookStorePreviewBottomSheet = useCallback((BookStoreVocabularySheetId) => {
-    console.log("BookStoreVocabularySheetId", BookStoreVocabularySheetId)
-    setBookStoreVocabularySheetId(BookStoreVocabularySheetId);
     const bookStoreVocabularySheet = getBookStoreVocabularySheet(BookStoreVocabularySheetId);
     pushBottomSheet(
       <PreviewBookStore 
         bookStoreVocabularySheet={bookStoreVocabularySheet}
         onCancel={handleClose}
-        onSet={showBookStoreAddBottomSheet}
+        onSet={() => showBookStoreAddBottomSheet(BookStoreVocabularySheetId)}
       />,
       {
         isBackdropClickClosable: true,
@@ -370,9 +367,7 @@ const AddBookStore = ({ name, onCancel, onSet }) => {
           text-[18px] font-[700] text-center
           whitespace-normal
           break-words
-        ">
-          '{name}'을 내 단어장에 추가하시겠어요?
-        </h3>
+        ">{name}을 내 단어장에 추가하시겠어요?</h3>
         <p className="text-[14px] font-[400] text-[#111]">
         추가 후에는 내 단어장에서 수정 가능해요 😉
         </p>
@@ -409,7 +404,7 @@ const AddBookStore = ({ name, onCancel, onSet }) => {
             stiffness: 500, 
             damping: 15
           }}
-        >삭제</motion.button>
+        >추가가</motion.button>
       </div>
     </div>
   );
