@@ -263,9 +263,9 @@ def search_bookstore_all():
             COALESCE(JSON_ARRAYAGG(
                 JSON_OBJECT(
                     'id', v.id,
-                    'word', v.word,
+                    'origin', v.word,
                     'pronunciation', v.pronunciation,
-                    'meaning', (
+                    'meanings', (
                         SELECT JSON_ARRAYAGG(vm.meaning) 
                         FROM voca_meaning_map vmm 
                         JOIN voca_meaning vm ON vmm.meaning_id = vm.id 
