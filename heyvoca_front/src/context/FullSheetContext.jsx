@@ -32,8 +32,6 @@ export const FullSheetProvider = ({ children }) => {
           key={index}
           isOpen={!isClosing || index < screenStack.length - 1}
           onClose={handleExitComplete}
-          showBackButton={index > 0}
-          style={{ zIndex: 1000 + index }}
         >
           {screen.component}
         </FullSheet>

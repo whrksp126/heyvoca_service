@@ -48,7 +48,7 @@ const getColorSet = (mainColor) => {
 };
 
 export const useVocabularySetBottomSheet = () => {
-  const { showBottomSheet, handleBack } = useBottomSheet();
+  const { pushBottomSheet, handleBack } = useBottomSheet();
   const { addVocabularySheet, updateVocabularySheet, deleteVocabularySheet, vocabularySheets } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
@@ -113,7 +113,7 @@ export const useVocabularySetBottomSheet = () => {
   const handleColorChange = useCallback((newColor) => {
     currentStateRef.current.selectedColor = newColor;
     
-    showBottomSheet(
+    pushBottomSheet( 
       <AddVocabularySheet 
         id={currentStateRef.current.vocabularyId}
         title={currentStateRef.current.vocabularyTitle}
@@ -127,7 +127,7 @@ export const useVocabularySetBottomSheet = () => {
         isDragToCloseEnabled: true
       }
     );
-  }, [showBottomSheet, handleClose, handleAdd, handleEdit]);
+  }, [pushBottomSheet, handleClose, handleAdd, handleEdit]);
 
   const showVocabularySetBottomSheet = useCallback((id=null) => {
     let newMode = 'add';
@@ -151,7 +151,7 @@ export const useVocabularySetBottomSheet = () => {
       selectedColor: newColor
     };
 
-    showBottomSheet(
+    pushBottomSheet(
       <AddVocabularySheet 
         id={id}
         title={newTitle}
@@ -169,11 +169,11 @@ export const useVocabularySetBottomSheet = () => {
 
   const showVocabularyDeleteBottomSheet = useCallback((id) => {
     currentStateRef.current.vocabularyId = id;
-    showBottomSheet(
+    pushBottomSheet(
       <DeleteVocabularySheet id={id} onCancel={handleClose} onDelete={handleDelete} />,
       { isBackdropClickClosable: false, isDragToCloseEnabled: true }
     );
-  }, [handleClose, showBottomSheet]);
+  }, [handleClose, pushBottomSheet]);
 
   return {
     showVocabularySetBottomSheet,

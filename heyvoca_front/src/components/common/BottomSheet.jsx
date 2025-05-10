@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const BottomSheet = ({ 
   isOpen, 
-  onClose, 
+  onClose,
+  isExitComplete,
+  onExitComplete,
   children, 
   isBackdropClickClosable = true,
   isDragToCloseEnabled = true 
@@ -21,9 +23,11 @@ const BottomSheet = ({
   };
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={onClose}>
+    <AnimatePresence mode="wait" onExitComplete={()=>{
+      if(isExitComplete) onExitComplete()
+    }}>
       {isOpen && (
-        <div>
+        <>
           <motion.div 
             className="fixed inset-0 bg-black/50 z-[1000]"
             initial={{ opacity: 0 }}
@@ -56,7 +60,7 @@ const BottomSheet = ({
               {children}
             </div>
           </motion.div>
-        </div>
+        </>
       )}
     </AnimatePresence>
   );

@@ -1,94 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { backendUrl, fetchDataAsync } from '../utils/common';
-// 나중에 API 호출 함수들을 여기로 이동
-const mockVocabularyData = [
-  {
-    id: '1',
-    title: '영어 단어장',
-    color: {
-      main : "#FF8DD4",
-      sub : "#FF8DD44d",
-      background : "#FFEFFA"
-    },
-    total : 500,
-    memorized : 100,
-    words: [
-      { 
-        id: '1', // 사용자 단어장 데이터 기준 단어 ID,
-        dictionaryId : 1, // 헤이보카 사전의 단어 ID, 없으면 null
-        origin: 'apple', // 학습할 단어
-        meanings: ['사과', '빨간 사과', '빨간 비닐봉지 안에 있는 사과'], // 학습할 단어의 뜻
-        examples: [{ // 학습할 단어의 예시 리스트
-          origin: 'I eat an apple every day.', // 학습할 단어의 예시
-          meaning: '나는 매일 사과를 먹는다.' // 학습할 단어의 예시의 뜻
-        }],
-        createdAt: new Date('2024-01-01').toISOString(), // 단어 등록 일자
-        updatedAt: new Date('2024-01-01').toISOString(), // 단어 수정 일자
-      },
-    ],
-    createdAt: new Date('2024-01-01').toISOString(),
-    updatedAt: new Date('2024-01-01').toISOString(),
-  },
-  {
-    id: '2',
-    title: '일본어 단어장',
-    color: {
-      main : "#74D5FF",
-      sub : "#74D5FF4d",
-      background : "#EAF6FF"
-    },
-    total : 500,
-    memorized : 100,
-    words: [],
-    createdAt: new Date('2024-01-02').toISOString(),
-    updatedAt: new Date('2024-01-02').toISOString(),
-  },
-  {
-    id: '3',
-    title: '중국어 단어장',
-    color: {
-      main : "#42F98B",
-      sub : "#42F98B4d",
-      background : "#E6FFE9"
-    },
-    total : 500,
-    memorized : 100,
-    words: [],
-    createdAt: new Date('2024-01-03').toISOString(),
-    updatedAt: new Date('2024-01-03').toISOString(),
-  },
-  {
-    id: '4',
-    title: '한국어 단어장',
-    color: {
-      main : "#FFBD3C",
-      sub : "#FFBD3C4d",
-      background : "#FFF8E6"
-    },
-    total : 500,
-    memorized : 100,
-    words: [],
-    createdAt: new Date('2024-01-04').toISOString(),
-    updatedAt: new Date('2024-01-04').toISOString(),
-  },
-  {
-    id: '5',
-    title: '프랑스어 단어장',
-    color: {
-      main : "#CD8DFF",
-      sub : "#CD8DFF4d",
-      background : "#F8E6FF"
-    },
-    total : 500,
-    memorized : 100,
-    words: [],
-    createdAt: new Date('2024-01-05').toISOString(),  
-    updatedAt: new Date('2024-01-05').toISOString(),
-  }
-];
 
 const VocabularyContext = createContext(null);
-
 export const VocabularyProvider = ({ children }) => {
   const [vocabularySheets, setVocabularySheets] = useState([]);
   const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
@@ -331,6 +244,16 @@ export const VocabularyProvider = ({ children }) => {
     return filtered;
   }, [vocabularySheets]);
 
+
+  const getBookStore = useCallback(() => {
+    return bookStore;
+  }, [bookStore]);
+
+  const getBookStoreVocabularySheet = useCallback((bookStoreId) => {
+    console.log("bookStore", bookStore)
+    return bookStore.find(book => book.id === bookStoreId);
+  }, [bookStore]);
+
   const fetchBookStore = useCallback(async () => {
     try {
       setIsBookStoreLoading(true);
@@ -348,6 +271,7 @@ export const VocabularyProvider = ({ children }) => {
       setIsBookStoreLoading(false);
     }
   }, []);
+
 
 
 
@@ -381,6 +305,8 @@ export const VocabularyProvider = ({ children }) => {
     isBookStoreLoading,
     errorBookStore,
     fetchBookStore,
+    getBookStore,
+    getBookStoreVocabularySheet,
   };
 
   return (

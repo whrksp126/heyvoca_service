@@ -6,32 +6,29 @@ const BottomSheetContext = createContext();
 export const BottomSheetProvider = ({ children }) => {
   const [screenStack, setScreenStack] = useState([]);
   const [isClosing, setIsClosing] = useState(false);
+  const [isExitComplete, setIsExitComplete] = useState(false);
 
-  const showBottomSheet = (content, options = {}) => {
-    setScreenStack(prev => [...prev, { 
-      content, 
-      options,
-      parentId: options.parentId || null
-    }]);
+  const pushBottomSheet = (content, options = {}) => {
+    setScreenStack(prevStack => {
+      const newStack = [...prevStack, { content, options }];
+      return newStack;
+    });
   };
 
   const handleBack = () => {
-    setIsClosing(true);
+    setScreenStack(prevStack => {
+      if(prevStack.length !== 1){
+        return prevStack.slice(0, -1);
+      }else{
+        setIsExitComplete(true);
+        return prevStack;
+      }
+    });
   };
 
   const handleExitComplete = () => {
-    setScreenStack(prev => {
-      const lastSheet = prev[prev.length - 1];
-      if (lastSheet.parentId) {
-        // 부모 바텀시트도 함께 닫기
-        return prev.filter(sheet => 
-          sheet.content.props.id !== lastSheet.parentId && 
-          sheet.content.props.id !== lastSheet.content.props.id
-        );
-      }
-      return prev.slice(0, -1);
-    });
-    setIsClosing(false);
+    setScreenStack(prevStack => prevStack.slice(0, -1));
+    setIsExitComplete(false);
   };
 
   const reset = () => {
@@ -39,16 +36,17 @@ export const BottomSheetProvider = ({ children }) => {
   };
 
   return (
-    <BottomSheetContext.Provider value={{ showBottomSheet, handleBack, reset }}>
+    <BottomSheetContext.Provider value={{ pushBottomSheet, handleBack, handleExitComplete, reset }}>
       {children}
       {screenStack.map((screen, index) => (
         <BottomSheet
           key={index}
-          isOpen={!isClosing || index < screenStack.length - 1}
-          onClose={handleExitComplete}
+          isOpen={!isExitComplete && index === screenStack.length - 1}
+          isExitComplete={isExitComplete}
+          onClose={handleBack}
+          onExitComplete={handleExitComplete}
           isBackdropClickClosable={screen.options?.isBackdropClickClosable ?? true}
           isDragToCloseEnabled={screen.options?.isDragToCloseEnabled ?? true}
-          style={{ zIndex: 1000 + index }}
         >
           {screen.content}
         </BottomSheet>

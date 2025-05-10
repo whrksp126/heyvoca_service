@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useFullSheet } from '../../context/FullSheetContext';
 import { BoxArrowDown, Plus } from "@phosphor-icons/react";
 import { useBookStoreBottomSheet } from "./BookStoreBottomSheet";
 const Main = () => {
-  const { pushFullSheet } = useFullSheet();
   const { isBookStoreLoading, bookStore } = useVocabulary();
   const { showBookStorePreviewBottomSheet } = useBookStoreBottomSheet();
   
