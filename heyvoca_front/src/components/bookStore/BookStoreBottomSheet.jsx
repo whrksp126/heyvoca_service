@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
@@ -77,18 +77,20 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
             flex items-center gap-[5px]
             text-[16px] font-[700] text-[#111]
           ">
-            <div 
-              style={{
-                backgroundColor: bookStoreVocabularySheet.color.main
-              }}
+            {bookStoreVocabularySheet.category && (
+              <div 
+                style={{
+                  backgroundColor: bookStoreVocabularySheet.color.main
+                }}
               className="
                 py-[3px] px-[6px]
                 rounded-[50px]
                 text-[8px] font-[700] text-[#fff]
               "
             >
-              {bookStoreVocabularySheet.category} 
-            </div>
+                {bookStoreVocabularySheet.category} 
+              </div>
+            )}
             {bookStoreVocabularySheet.name}
           </div>
           <div className="text-[12px] font-[400] text-[#111]">
@@ -96,14 +98,17 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
           </div>
         </div>
         <div className="flex flex-col gap-[10px] flex-1">
-          {bookStoreVocabularySheet.words.map((item, word_index) => {return (
+          {bookStoreVocabularySheet.words.map((item, word_index) => {
+          return item.meanings === null || item.origin === null ? null : (
           <li
             key={item.id}
+            style={{
+              backgroundColor: bookStoreVocabularySheet.color.background
+            }}
             className="
               flex gap-[10px] items-start
               p-[20px]
               rounded-[12px]
-              bg-[#F5F5F5]
             "
           >
             
@@ -117,19 +122,6 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                 <motion.h3
                   onClick={() => {
                     getTextSound(item.origin, "en");
-                    const scanElement = document.querySelector(`#scan-${item.id}`);
-                    const textLength = item.origin.length;
-                    const duration = Math.max(1000, Math.min(3000, textLength * 50)); // Adjust duration based on text length
-                    scanElement.animate(
-                      [
-                        { left: '-100%' },
-                        { left: '100%' }
-                      ],
-                      {
-                        duration: duration,
-                        easing: "linear"
-                      }
-                    );
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -140,40 +132,18 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                   }}
                   className="
                     text-[16px] font-[700] text-[#111]
-                    cursor-pointer relative
-                    overflow-hidden
+                    cursor-pointer
                     break-words 
                   "
                   id={`word-${item.id}`}
                 >
                   {item.origin}
-                  <span
-                    id={`scan-${item.id}`}
-                    className="
-                      absolute top-[5%] bottom-[5%] left-[-100%] w-full
-                      bg-gradient-to-r from-transparent via-white to-transparent
-                      pointer-events-none
-                    "
-                  />
                 </motion.h3>
               </div>
               <div className="flex flex-wrap">
                 <motion.span
                   onClick={() => {
                     getTextSound(item.meanings.join(", "), "ko");
-                    const scanElement = document.querySelector(`#meaning-scan-${item.id}`);
-                    const textLength = item.meanings.join(", ").length;
-                    const duration = Math.max(1000, Math.min(3000, textLength * 50)); // Adjust duration based on text length
-                    scanElement.animate(
-                      [
-                        { left: '-100%' },
-                        { left: '100%' }
-                      ],
-                      {
-                        duration: duration,
-                        easing: "linear"
-                      }
-                    );
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -184,21 +154,12 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                   }}
                   className="
                     text-[12px] font-[400] text-[#111]
-                    cursor-pointer relative
-                    overflow-hidden
+                    cursor-pointer
                     break-words
                   "
                   id={`meaning-${item.id}`}
                 >
                   {item.meanings.join(", ")}
-                  <span
-                    id={`meaning-scan-${item.id}`}
-                    className="
-                      absolute top-[5%] bottom-[5%] left-[-100%] w-full
-                      bg-gradient-to-r from-transparent via-white to-transparent
-                      pointer-events-none
-                    "
-                  />
                 </motion.span>
               </div>
               {item?.examples?.map((example, example_index) => (
@@ -207,19 +168,6 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                   <motion.p
                     onClick={() => {
                       getTextSound(example.origin, "en");
-                      const scanElement = document.querySelector(`#example-scan-${word_index}-${example_index}`);
-                      const textLength = example.origin.length;
-                      const duration = Math.max(1000, Math.min(3000, textLength * 50)); // Adjust duration based on text length
-                      scanElement.animate(
-                        [
-                          { left: '-100%' },
-                          { left: '100%' }
-                        ],
-                        {
-                          duration: duration,
-                          easing: "linear"
-                        }
-                      );
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -230,46 +178,18 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                     }}
                     className="
                       text-[12px] font-[400] text-[#111]
-                      cursor-pointer relative
-                      overflow-hidden
+                      cursor-pointer
                       break-words
                     "
                     id={`example-${word_index}-${example_index}`}
                   >
-                    {example.origin.split(' ').map((word, wordIndex) => (
-                      <span key={wordIndex} style={{ 
-                        fontWeight: word.toLowerCase() === item.origin.toLowerCase() ? '700' : '400'
-                      }}>
-                        {word}{' '}
-                      </span>
-                    ))}
-                    <span
-                      id={`example-scan-${word_index}-${example_index}`}
-                      className="
-                        absolute top-[5%] bottom-[5%] left-[-100%] w-full
-                        bg-gradient-to-r from-transparent via-white to-transparent
-                        pointer-events-none
-                      "
-                    />
+                    {example.origin}
                   </motion.p>
                 </div>
                 <div className="flex flex-wrap">
                   <motion.p
                     onClick={() => {
                       getTextSound(example.meaning, "ko");
-                      const scanElement = document.querySelector(`#example-meaning-scan-${word_index}-${example_index}`);
-                      const textLength = example.meaning.length;
-                      const duration = Math.max(1000, Math.min(3000, textLength * 50)); // Adjust duration based on text length
-                      scanElement.animate(
-                        [
-                          { left: '-100%' },
-                          { left: '100%' }
-                        ],
-                        {
-                          duration: duration,
-                          easing: "linear"
-                        }
-                      );
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -280,30 +200,25 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                     }}
                     className="
                       text-[12px] font-[400] text-[#111]
-                      cursor-pointer relative
-                      overflow-hidden
+                      cursor-pointer
                       break-words
                     "
                     id={`example-${word_index}-${example_index}-meaning`}
                   >
                     {example.meaning}
-                    <span
-                      id={`example-meaning-scan-${word_index}-${example_index}`}
-                      className="
-                        absolute top-[5%] bottom-[5%] left-[-100%] w-full
-                        bg-gradient-to-r from-transparent via-white to-transparent
-                        pointer-events-none
-                      "
-                    />
                   </motion.p>
                 </div>
               </div>
               ))}
             </div>
-            <div className="
-              flex gap-[8px]
-            text-[#FF8DD4] text-[20px]
-            ">
+            <div 
+              style={{
+                color: bookStoreVocabularySheet.color.main
+              }}
+              className="
+                flex gap-[8px]
+                text-[20px]
+              ">
               <button onClick={() => getTextSound(item.origin, "en")}>
                 <SpeakerHigh weight="fill" />
               </button>
@@ -334,11 +249,13 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
           }}
         >취소</motion.button>
         <motion.button 
+          style={{
+            backgroundColor: bookStoreVocabularySheet.color.main
+          }}
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
           onClick={onSet}
