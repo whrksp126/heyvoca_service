@@ -1,28 +1,41 @@
 import React, { useState, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useFullSheet } from '../../context/FullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
-export const useTestSetupBottomSheet = () => {
-  const { pushBottomSheet, handleBack } = useBottomSheet();
-  const { vocabularySheets } = useVocabulary();
 
+export const useTestSetupBottomSheet = () => {
+  const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
+  const { handleReset: handleFullSheetReset } = useFullSheet();
+  const navigate = useNavigate();
+  const { vocabularySheets } = useVocabulary();
+  const [questionType, setQuestionType] = useState('multipleChoice');
+  const [vocabularySheetId, setVocabularySheetId] = useState(null);
   const handleClose = useCallback(() => {
     handleBack();
   }, [handleBack]);
 
-  const handleSet = useCallback((type) => {
-    console.log("handleSet", type);
-  }, []);
+  const handleStartTest = useCallback((data) => {
+    handleBottomSheetReset();
+    handleFullSheetReset();
+    navigate('/take-test', { state: { data } });
+  }, [questionType, vocabularySheetId, handleBack, navigate]);
 
-  const showTestSetupBottomSheet = useCallback(({type, vocabularySheetId, maxVocabularyCount}) => {
-    console.log("maxVocabularyCount,",maxVocabularyCount);
+  const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
+    setQuestionType(questionType);
+    setVocabularySheetId(vocabularySheetId);
     pushBottomSheet(
       <TestSetupBottomSheet 
         maxVocabularyCount={maxVocabularyCount}
         onCancel={handleClose}
-        onSet={handleSet}
+        onSet={(data) => handleStartTest({
+          ...data,
+          questionType,
+          vocabularySheetId 
+        })}
       />,
       {
         isBackdropClickClosable: false,
@@ -36,11 +49,12 @@ export const useTestSetupBottomSheet = () => {
   };
 };
 
-function getProblemTypeLabel(type) {
+
+function getInitialViewTypeLabel(type) {
   switch (type) {
-    case 'word':
+    case 'origin':
       return '단어';
-    case 'meaning':
+    case 'meanings':
       return '의미';
     case 'cross':
       return '교차';
@@ -51,7 +65,7 @@ function getProblemTypeLabel(type) {
   }
 }
 
-function getWordTypeLabel(type) {
+function getOriginFilterTypeLabel(type) {
   switch (type) {
     case 'all':
       return '전체';
@@ -63,23 +77,36 @@ function getWordTypeLabel(type) {
 }
 
 const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
-  const problemCountRef = useRef(null);
-  const [selectedProblemType, setSelectedProblemType] = useState('word');
-  const [selectedWordType, setSelectedWordType] = useState('all');
-  const [problemCount, setProblemCount] = useState(maxVocabularyCount > 12 ? 12 : maxVocabularyCount);
-  const inputRefs = useRef([]);
-  const handleChangeProblemCount = useCallback((count) => {
-    if (count > maxVocabularyCount) return;
-    if (count < MIN_TEST_VOCABULARY_COUNT) return;
-    setProblemCount(count);
+  const [initialViewType, setInitialViewType] = useState('origin');
+  const [originFilterType, setOriginFilterType] = useState('all');
+  const [count, setCount] = useState(maxVocabularyCount > 12 ? 12 : maxVocabularyCount);
+  const inputRefs = useRef({
+    initialViewType: [],
+    originFilterType: [],
+    count: []
+  });
+
+  const setCountFun = useCallback((value) => {
+    if(value < MIN_TEST_VOCABULARY_COUNT){
+      inputRefs.current['count'].value = MIN_TEST_VOCABULARY_COUNT;
+      setCount(MIN_TEST_VOCABULARY_COUNT);
+    }else if(value > maxVocabularyCount){
+      inputRefs.current['count'].value = maxVocabularyCount;
+      setCount(maxVocabularyCount);
+    }else{
+      inputRefs.current['count'].value = value;
+      setCount(value);
+    }
   }, [maxVocabularyCount]);
 
-  const handleSetProblemCount = useCallback((count) => {
-    if (count > maxVocabularyCount) return;
-    if (count < MIN_TEST_VOCABULARY_COUNT) return;
-    setProblemCount(count);
-  }, [maxVocabularyCount]);
-
+  const getTestSetupData = useCallback(() => {
+    return {
+      initialViewType: initialViewType,
+      originFilterType: originFilterType,
+      count: count
+    }
+  }, [initialViewType, originFilterType, count]);
+  
   return (
     <div className="">
       <div>
@@ -110,7 +137,7 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
             문제 유형
           </h3>
           <div className="grid grid-cols-2 gap-[10px]">
-            {['word', 'meaning', 'cross', 'random'].map((type, index) => (
+            {['origin', 'meanings', 'cross', 'random'].map((type, index) => (
               <label 
                 key={type}
                 htmlFor={type}
@@ -119,25 +146,24 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
                   h-[45px]
                   px-[15px]
                   border-[1px] rounded-[8px]
-                  ${selectedProblemType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                  ${initialViewType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
                 `}
                 onClick={() => {
-                  setSelectedProblemType(type);
-                  inputRefs.current[index]?.focus();
+                  inputRefs.current[`initialViewType`][index]?.focus();
                 }}
               >
                 <input 
                   id={type} 
                   type="radio" 
-                  name="testType" 
-                  checked={selectedProblemType === type}
-                  onChange={() => setSelectedProblemType(type)}
-                  ref={el => inputRefs.current[index] = el}
+                  name="initialViewType" 
+                  checked={initialViewType === type}
+                  onChange={() => setInitialViewType(type)}
+                  ref={el => inputRefs.current[`initialViewType`][index] = el}
                   hidden 
                 />
-                {selectedProblemType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                <span className={`text-[16px] font-[700] ${selectedProblemType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
-                  {getProblemTypeLabel(type)}
+                {initialViewType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
+                <span className={`text-[16px] font-[700] ${initialViewType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+                  {getInitialViewTypeLabel(type)}
                 </span>
               </label>
             ))}
@@ -166,25 +192,22 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
                   h-[45px]
                   px-[15px]
                   border-[1px] rounded-[8px]
-                  ${selectedWordType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                  ${originFilterType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
                 `}
-                onClick={() => {
-                  setSelectedWordType(type);
-                  inputRefs.current[index]?.focus();
-                }}
+                onClick={() => inputRefs.current[`originFilterType`][index]?.focus()}
               >
                 <input 
                   id={type} 
                   type="radio" 
-                  name="wordType" 
-                  checked={selectedWordType === type}
-                  onChange={() => setSelectedWordType(type)}
-                  ref={el => inputRefs.current[index] = el}
+                  name="originFilterType" 
+                  checked={originFilterType === type}
+                  onChange={() => setOriginFilterType(type)}
+                  ref={el => inputRefs.current[`originFilterType`][index] = el}
                   hidden 
                 />
-                {selectedWordType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                <span className={`text-[16px] font-[700] ${selectedWordType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
-                  {getWordTypeLabel(type)}
+                {originFilterType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
+                <span className={`text-[16px] font-[700] ${originFilterType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+                  {getOriginFilterTypeLabel(type)}
                 </span>
               </label>
             ))}
@@ -209,37 +232,31 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
-                ${problemCount <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+                ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onClick={() => setProblemCount(problemCount - 1)}
-              disabled={problemCount <= MIN_TEST_VOCABULARY_COUNT}
+              onClick={() => setCountFun(count - 1)}
+              disabled={count <= MIN_TEST_VOCABULARY_COUNT}
             >
               <Minus size={18} />
             </button>
             <input 
               type="number" 
-              ref={problemCountRef}
+              ref={el => inputRefs.current['count'] = el}
               min={MIN_TEST_VOCABULARY_COUNT}
               max={maxVocabularyCount}
               className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-[#FF8DD4] text-center outline-none focus:border-[#FF8DD4] transition-colors"
-              onChange={e => {
-                let value = Number(e.target.value);
-                if (isNaN(value)) value = MIN_TEST_VOCABULARY_COUNT;
-                if (value > maxVocabularyCount) value = maxVocabularyCount;
-                if (value < MIN_TEST_VOCABULARY_COUNT) value = MIN_TEST_VOCABULARY_COUNT;
-                setProblemCount(value);
-              }}
-              value={problemCount}
+              onChange={e => setCountFun(Number(e.target.value))}
+              value={count}
             />
             <button 
               className={`
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
-                ${problemCount >= maxVocabularyCount ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+                ${count >= maxVocabularyCount ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onClick={() => setProblemCount(problemCount + 1)}
-              disabled={problemCount >= maxVocabularyCount}
+              onClick={() => setCountFun(count + 1)}
+              disabled={count >= maxVocabularyCount}
             >
               <Plus size={18} />
             </button>
@@ -271,7 +288,7 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onSet}
+          onClick={() => onSet(getTestSetupData())}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -31,12 +31,12 @@ export const BottomSheetProvider = ({ children }) => {
     setIsExitComplete(false);
   };
 
-  const reset = () => {
+  const handleReset = () => {
     setScreenStack([]);
   };
 
   return (
-    <BottomSheetContext.Provider value={{ pushBottomSheet, handleBack, handleExitComplete, reset }}>
+    <BottomSheetContext.Provider value={{ pushBottomSheet, handleBack, handleExitComplete, handleReset }}>
       {children}
       {screenStack.map((screen, index) => (
         <BottomSheet

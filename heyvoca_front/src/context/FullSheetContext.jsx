@@ -20,12 +20,12 @@ export const FullSheetProvider = ({ children }) => {
     setIsClosing(false);
   };
 
-  const reset = () => {
+  const handleReset = () => {
     setScreenStack([]);
   };
 
   return (
-    <FullSheetContext.Provider value={{ pushFullSheet, handleBack, reset }}>
+    <FullSheetContext.Provider value={{ pushFullSheet, handleBack, handleReset }}>
       {children}
       {screenStack.map((screen, index) => (
         <FullSheet

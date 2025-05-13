@@ -5,7 +5,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 import { useTestSetupBottomSheet } from './TestSetupBottomSheet';
 
-const TEST_TYPES_MAP = {
+const QUESTION_TYPE_MAP = {
   MULTIPLE_CHOICE: 'multipleChoice', // 사지 선다
   FILL_IN_THE_BLANK: 'fillInTheBlank', // 빈칸 채우기
   TRUE_OR_FALSE: 'trueOrFalse', // 참 거짓
@@ -17,6 +17,7 @@ const TEST_TYPES_MAP = {
 };
 
 const TestSetup = ({ vocabularySheetId, maxVocabularyCount }) => {
+  // console.log("vocabularySheetId", vocabularySheetId);
   const { handleBack } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { showTestSetupBottomSheet } = useTestSetupBottomSheet();
@@ -28,8 +29,8 @@ const TestSetup = ({ vocabularySheetId, maxVocabularyCount }) => {
     );
   }
 
-  const handleCardClick = (type) => {
-    showTestSetupBottomSheet({type, vocabularySheetId, maxVocabularyCount});
+  const handleCardClick = (questionType) => {
+    showTestSetupBottomSheet({questionType, vocabularySheetId, maxVocabularyCount});
   };
 
   return (
@@ -98,7 +99,7 @@ const TestSetup = ({ vocabularySheetId, maxVocabularyCount }) => {
           whileTap={{
             scale: 0.95,
           }}
-          onClick={() => handleCardClick(TEST_TYPES_MAP.MULTIPLE_CHOICE)}
+          onClick={() => handleCardClick(QUESTION_TYPE_MAP.MULTIPLE_CHOICE)}
         >
           <Cards size={32} weight="fill" className="text-[#FF8DD4]" />
           <h2 className="
