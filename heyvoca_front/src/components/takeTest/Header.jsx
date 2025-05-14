@@ -1,20 +1,55 @@
 import React from 'react';
+import { CaretLeft } from '@phosphor-icons/react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    if (window.confirm('학습을 종료하시겠습니까?')) {
+      navigate(-1);
+    }
+  };
 
   return (
     <div className='
-      flex items-center justify-between
+      relative
+      flex items-end justify-center
       w-full h-[55px]
       px-[16px] py-[14px]
       bg-[#fff] 
       dark:bg-[#111]
     '>
-      <div className="left">
-        
+      <div className="
+        absolute left-[10px] bottom-[13px]
+        flex items-center justify-center
+      ">
+        <motion.button
+          onClick={handleBackClick}
+          className="
+            text-[#CCC] dark:text-[#fff]
+            rounded-[8px]
+          "
+          whileHover={{ 
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+            scale: 1.05
+          }}
+          whileTap={{ 
+            scale: 0.95,
+            backgroundColor: 'rgba(0, 0, 0, 0.1)'
+          }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 400, 
+            damping: 17
+          }}
+        >
+          <CaretLeft size={24} />
+        </motion.button>
       </div>
       <div className="center">
-        <h2 className='text-[16px] font-[700]'>
+        <h2 className='text-[18px] font-[700] leading-[21px]'>
           테스트
         </h2>
       </div>

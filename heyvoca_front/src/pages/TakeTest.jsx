@@ -8,6 +8,7 @@ const TakeTest = () => {
   const { vocabularySheets } = useVocabulary();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
+  const [progressIndex, setProgressIndex] = useState(0);
   useEffect(() => {
     if(vocabularySheets){
       let testQuestions = [];
@@ -30,7 +31,8 @@ const TakeTest = () => {
                 ...word,
                 initialViewType: state.data.initialViewType,
                 options: shuffledOptions,
-                resultIndex
+                resultIndex,
+                questionType: state.data.questionType
               };
             });
         }
@@ -50,7 +52,8 @@ const TakeTest = () => {
               ...word,
               initialViewType: state.data.initialViewType,
               options: shuffledOptions,
-              resultIndex
+              resultIndex,
+              questionType: state.data.questionType
             };
           });
       }
@@ -72,7 +75,7 @@ const TakeTest = () => {
   return (
     <div>
       <Header />
-      <Main />
+      <Main testQuestions={testQuestions} progressIndex={progressIndex} setProgressIndex={setProgressIndex} />
     </div>
   );
 };
