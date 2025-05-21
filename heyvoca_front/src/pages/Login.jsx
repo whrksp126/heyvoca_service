@@ -5,24 +5,24 @@ import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
 import '../index.css';
 import { backendUrl, fetchDataAsync, getValueFromURL } from '../utils/common';
-
+import { useUser } from '../context/UserContext';
 
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const { userStorageData, setUserStorageData } = useUser();
   useEffect(() => {
-    const user_data = JSON.parse(localStorage.getItem('user'));
-    if(!user_data){
-      localStorage.setItem('user', JSON.stringify({
+    if(!userStorageData){
+      setUserStorageData({
         google_id : null,
         name : null,
         email : null,
         status : "logout",
-      }))
+      })
     }
-    if(user_data?.state == "login"){
-      navigate('/home');
+    console.log(userStorageData);
+    if(userStorageData?.status == "login"){
+      navigate('/');
     }
     const handleLogin = async () => {
       const google_id = getValueFromURL('googleId');
@@ -58,10 +58,10 @@ const Login = () => {
         } catch (error) {
           alert(JSON.stringify(error));
           return;
-        }
+        } 
       }
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate('/home');
+      setUserStorageData(user);
+      navigate('/');
     };
 
     handleLogin();
