@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import login_bp
-from app.models.models import User
+from app.models.models import User, BookStore
 
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
@@ -230,3 +230,49 @@ def update_user_info():
     user_item.username = username
     db.session.commit()
     return jsonify({'code':200, 'status': 'success'})
+
+
+@login_bp.route('/level_book_list')
+@login_required
+def level_voca_list():
+    data = request.json
+    level = data.get('level')
+    # voca_list = db.session.query(BookStore)\
+    #                 .filter(BookStore.level == level)\
+    #                 .filter(BookStore.hide != 'N')\
+    #                 .limit(4)\
+    #                 .all()
+    
+    # data = []
+    # for voca in voca_list:
+    #     data.append({
+    #         'id' : voca.id,
+    #         'name' : voca.name,
+    #         'color' : voca.color,
+    #     })
+    data = [
+        {
+            'id' : 1,
+            'name' : '영단어 알아보기',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+        },
+        {
+            'id' : 2,
+            'name' : '영단어 알아보기',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+        },
+        {
+            'id' : 3,
+            'name' : '영단어 알아보기',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+        },
+        {
+            'id' : 4,
+            'name' : '영단어 알아보기',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+        }
+    ]
+    
+    return jsonify({'code':200, 'data': data})
+
+
