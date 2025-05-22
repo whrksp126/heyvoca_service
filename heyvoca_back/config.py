@@ -20,15 +20,15 @@ class Config:
 
 class DevelopmentConfig(Config):
   DEBUG = True
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
 
 class StagingConfig(Config):
   DEBUG = False
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
 
 class ProductionConfig(Config):
   DEBUG = False
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
 
 
 # Google OAuth2 정보 설정

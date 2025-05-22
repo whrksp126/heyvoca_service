@@ -32,9 +32,23 @@ class BinaryUUID(TypeDecorator):
             return UUID(bytes=value)
 
 
+class Level(db.Model):
+    __tablename__ = 'level'
+    id = Column(Integer, primary_key=True, nullable=False)
+    level = Column(Integer, nullable=False)
+    level_name = Column(String(36), nullable=False)
+    level_description = Column(String(256), nullable=False)
+    
+    def __init__(self, level, level_name, level_description):
+        self.level = level
+        self.level_name = level_name
+        self.level_description = level_description
+
+
 class User(db.Model):
     __tablename__ = 'user'
     id = Column(BinaryUUID, primary_key=True, default=uuid4)
+    level_id = Column(Integer, ForeignKey('level.id'), nullable=True)
     email = Column(String(128), nullable=False) 
     google_id = Column(String(128), nullable=False)
     name = Column(String(32), nullable=False)
@@ -48,9 +62,10 @@ class User(db.Model):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     last_logged_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, email, google_id, username, name, phone,
+    def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
                  book_cnt, gem_cnt, set_goal_cnt):
+        self.level_id = level_id
         self.email = email
         self.google_id = google_id
         self.username = username

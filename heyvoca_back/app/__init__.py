@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, text
 from flask_cors import CORS
+from flask_caching import Cache
 import json
 
 from app.login_manager import load_user, unauthorized_callback
@@ -20,6 +21,7 @@ if env_file == 'local':
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+cache = Cache()
 
 def create_app():
   app = Flask(__name__, static_folder='static', static_url_path='')
@@ -33,9 +35,16 @@ def create_app():
   else:
     app.config.from_object(DevelopmentConfig) 
 
+  # Redis 캐시 설정
+  app.config['CACHE_TYPE'] = 'redis'
+  app.config['CACHE_REDIS_HOST'] = os.getenv('REDIS_HOST', 'redis')
+  app.config['CACHE_REDIS_PORT'] = int(os.getenv('REDIS_PORT', 6379))
+  app.config['CACHE_REDIS_DB'] = 0
+
   # 추가적인 초기화 코드 (블루프린트 등록 등)
   db.init_app(app)
   login_manager.init_app(app)
+  cache.init_app(app)
   # login_manager.login_view = "main_login.html"
 
   login_manager.user_loader(load_user)

@@ -16,6 +16,23 @@ services:
     command: gunicorn --reload -w 3 -b 0.0.0.0:5000 run:app
     restart: always
 
+
+
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: heyvoca_redis_local
+    ports:
+      - "6379:6379"
+    networks:
+      - heyvoca_back_local_network
+    restart: always
+
+
+
+
 networks:
   heyvoca_back_local_network:
     name: heyvoca_back_local_network

@@ -95,16 +95,17 @@ def authorize_google():
     user = User.query.filter_by(google_id=userinfo['id']).first()
     if user is None:
         user = User(
+            level_id=None,
             email=userinfo['email'],
             google_id=userinfo['id'],
             name=userinfo.get('name', ''),
             username=None,
             phone=None,
-            refresh_token=token['refresh_token'],
             code=None,
             book_cnt=3,
             gem_cnt=0,
             set_goal_cnt=3,
+            refresh_token=token['refresh_token'],
             last_logged_at=None
         )
         db.session.add(user)
@@ -146,6 +147,7 @@ def login_google_app():
     if user is None:
         # 사용자가 존재하지 않으면 회원가입 처리
         user = User(
+            level_id=None,
             email = email,
             google_id = google_id,
             username = None,
@@ -196,3 +198,35 @@ def logout():
     session.pop('os', None)
     logout_user()
     return render_template('index.html')
+
+
+@login_bp.route('/get_user_info')
+@login_required
+def get_user_info():
+    user_item = {
+        'level_id' : current_user.level_id,
+        'username' : current_user.username,
+        'code' : current_user.code,
+        'book_cnt' : current_user.book_cnt,
+        'gem_cnt' : current_user.gem_cnt,
+        'set_goal_cnt' : current_user.set_goal_cnt,
+    }
+    return jsonify({'code':200, 'data': user_item})
+
+
+@login_bp.route('/update_user_info')
+@login_required
+def update_user_info():
+    data = request.json
+    level_id = data.get('level_id')
+    username = data.get('username')
+
+    user_item = db.session.query(User).filter(User.id == current_user.id).first()
+
+    if not user_item:
+        return jsonify({'code':404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+
+    user_item.level_id = level_id
+    user_item.username = username
+    db.session.commit()
+    return jsonify({'code':200, 'status': 'success'})

@@ -1,15 +1,17 @@
 import json
 import re
+import os
 from flask import render_template, redirect, url_for, request, session, jsonify
 from sqlalchemy import text, select
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
+# from flask_caching import Cache
+import redis
 
 from flask_login import current_user, login_required, login_user
 
-#cache = Cache(config={'CACHE_TYPE': 'RedisCache'})
-#cache.init_app(search_bp)
+cache = Cache()
 
 # @login_required
 @search_bp.route('/')
@@ -320,38 +322,105 @@ def search_bookstore_all():
 
 
 
-## 서점 데이터 API
-# bookstore, voca, voca_meaning, voca_example 테이블의 모든 데이터를 가져옴
-# @login_required
-# @cache.cached(timeout=600, query_string=True)  # 60초 캐싱
+
+
+
+
+# Redis 클라이언트 설정
+cache = redis.StrictRedis(
+    host=os.getenv('REDIS_HOST', 'redis'),
+    port=int(os.getenv('REDIS_PORT', 6379)),
+    db=0,
+    decode_responses=True
+)
+
+# 단어장 캐시 키 생성 함수
+def generate_cache_key_for_bookstore(bookstore_id):
+    return f"bookstore_{bookstore_id}"
+
 @search_bp.route('/bookstore2', methods=['GET'])
 def search_bookstore_all2():
-    from sqlalchemy import func, select
-    from sqlalchemy.orm import aliased
-
-
-    # 결과 가공
+    bookstore_items = db.session.query(Bookstore).all()
+    bookstore_ids = [item.id for item in bookstore_items]
+    
     final_results = []
-    for row in rows:
-        words = json.loads(row.words) if row.words else []
+    # 각 서점에 대해 캐시 조회
+    for bookstore_id in bookstore_ids:
+        cache_key = generate_cache_key_for_bookstore(bookstore_id)
         
-        final_results.append({
-            "id": row.bookstore_id,
-            "name": row.bookstore_name,
-            "downloads": row.downloads,
-            "category": row.category,
-            "color": json.loads(row.color) if row.color else {},
-            "hide": row.hide,
-            "words": words
-        })
-    #temp = final_results[0]
-
-    # 실행 시간 측정
-    #end_time = time.time()
-    #execution_time = end_time - start_time
-    #print(f"API 실행 시간: {execution_time:.3f}초")
-
+        # Redis에서 캐시 조회
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            # 캐시된 데이터가 있으면 바로 사용
+            bookstore_data = json.loads(cached_data)
+        else:
+            # 캐시된 데이터가 없으면 DB에서 조회
+            query = text("""
+                SELECT 
+                    bs.id AS bookstore_id, 
+                    bs.name AS bookstore_name, 
+                    bs.downloads, 
+                    bs.category, 
+                    bs.color, 
+                    bs.hide,
+                    COALESCE(JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'id', v.id,
+                            'word', v.word,
+                            'pronunciation', v.pronunciation,
+                            'meaning', (
+                                SELECT JSON_ARRAYAGG(vm.meaning) 
+                                FROM voca_meaning_map vmm 
+                                JOIN voca_meaning vm ON vmm.meaning_id = vm.id 
+                                WHERE vmm.voca_id = v.id
+                            ),
+                            'examples', (
+                                SELECT JSON_ARRAYAGG(
+                                    JSON_OBJECT(
+                                        'origin', ve.exam_en, 
+                                        'meaning', ve.exam_ko
+                                    )
+                                )
+                                FROM voca_example_map vem
+                                JOIN voca_example ve ON vem.example_id = ve.id
+                                WHERE vem.voca_id = v.id
+                            )
+                        )
+                    ), JSON_ARRAY()) AS words
+                FROM bookstore bs
+                LEFT JOIN voca_book vb ON bs.book_id = vb.id
+                LEFT JOIN voca_book_map vbm ON vb.id = vbm.book_id
+                LEFT JOIN voca v ON vbm.voca_id = v.id
+                WHERE bs.id = :bookstore_id
+                GROUP BY bs.id
+            """)
+            
+            # 데이터 조회
+            rows = db.session.execute(query, {'bookstore_id': bookstore_id}).fetchall()
+            
+            bookstore_data = []
+            for row in rows:
+                words = json.loads(row.words) if row.words else []
+                bookstore_data.append({
+                    "id": row.bookstore_id,
+                    "name": row.bookstore_name,
+                    "downloads": row.downloads,
+                    "category": row.category,
+                    "color": json.loads(row.color) if row.color else {},
+                    "hide": row.hide,
+                    "words": words
+                })
+            
+            # 조회된 데이터를 캐시 저장 (예: 1시간 동안 유효)
+            cache.setex(cache_key, 3600, json.dumps(bookstore_data))
+        
+        # 최종 결과에 추가
+        final_results.append(bookstore_data)
+    
     return jsonify({'code': 200, 'data': final_results}), 200
+
+
 
 
 
