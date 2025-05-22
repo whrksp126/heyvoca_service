@@ -170,6 +170,7 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     hide = Column(String(1), nullable=False)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
+    level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
@@ -289,22 +290,36 @@ class UserGoals(db.Model):
         self.completed_at = completed_at
 
 
+class GoalType(db.Model):
+    __tablename__ = 'goal_type'
+    id = Column(Integer, primary_key=True, nullable=False)
+    type = Column(String(36), nullable=False)
+    description = Column(String(36), nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, type, description):
+        self.type = type
+        self.description = description
+
+
 class Goals(db.Model):
     __tablename__ = 'goals'
     id = Column(Integer, primary_key=True, nullable=False)
-    type = Column(String(36), nullable=False)
-    title = Column(String(36), nullable=False)
-    reward_value = Column(Integer, nullable=False)
-    reward_type = Column(String(36), nullable=False)
-    reward = Column(Integer, nullable=False)
+    type_id = Column(Integer, ForeignKey('goal_type.id'), nullable=False)
+    level = Column(Integer, nullable=False)
+    goal = Column(Integer, nullable=False)
+    reward_count = Column(Integer, nullable=False)
+    description = Column(String(512), nullable=True)
+    badge_img = Column(String(128), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self, type, title, reward_value, reward_type, reward):
-        self.type = type
-        self.title = title
-        self.reward_value = reward_value
-        self.reward_type = reward_type
-        self.reward = reward
+    def __init__(self, type_id, level, goal, reward_count, description, badge_img):
+        self.type_id = type_id
+        self.level = level
+        self.goal = goal
+        self.reward_count = reward_count
+        self.description = description
+        self.badge_img = badge_img
 
 
 

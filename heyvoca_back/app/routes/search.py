@@ -6,7 +6,7 @@ from sqlalchemy import text, select
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
-# from flask_caching import Cache
+from flask_caching import Cache
 import redis
 
 from flask_login import current_user, login_required, login_user
