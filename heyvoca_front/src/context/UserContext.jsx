@@ -3,7 +3,7 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
-  const [userProfile, setUserProfile] = useState([]);
+  const [userProfile, setUserProfile] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [errorUserProfile, setErrorUserProfile] = useState(null);
   const [userStorageData, setUserStorageData] = useState(JSON.parse(localStorage.getItem('user')));
@@ -20,15 +20,8 @@ export const UserProvider = ({ children }) => {
       setUserProfile(result.data);
       setErrorUserProfile(null);
     } catch (err) {
+      console.log("오류 발생함")
       setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
-      setUserProfile({
-        userName : null, // 유저 이름
-        level : null, // 유저 레벨
-        code : "112314", // 유저 코드
-        bookCnt : 3, // 유저 단어장 제한 개수
-        gemCnt : 0, // 유저 보석 갯수
-        setGoalCnt : 3, // 유저 설정 목표 갯수
-      });
       console.error('Failed to fetch user profile:', err);
     } finally {
       setIsUserProfileLoading(false);

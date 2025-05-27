@@ -9,13 +9,22 @@ import '../index.css';
 
 const Index = () => {
   const navigate = useNavigate();
-  const { getUserProfile, isUserProfileLoading, userStorageData } = useUser();
+  const { getUserProfile, isUserProfileLoading, userStorageData, setUserStorageData } = useUser();
 
   useEffect(() => {
     if(userStorageData?.status == "login"){
       if(isUserProfileLoading) return;
-      const userProfile = getUserProfile();;
-      if(userProfile.userName == null){
+      const userProfile = getUserProfile();
+      if(userProfile.id == null){
+        setUserStorageData({
+          google_id : null,
+          name : null,
+          email : null,
+          status : "logout",
+        })
+        navigate('/login');  
+        return
+      }else if(userProfile.userName == null){
         navigate('/initial-profile');
         return;
       }
