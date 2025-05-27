@@ -204,6 +204,7 @@ def logout():
 @login_required
 def get_user_info():
     user_item = {
+        'id' : current_user.id,
         'level_id' : current_user.level_id,
         'username' : current_user.username,
         'code' : current_user.code,
