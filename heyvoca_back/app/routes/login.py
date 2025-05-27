@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import login_bp
-from app.models.models import User, BookStore
+from app.models.models import User, Bookstore
 
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
@@ -237,9 +237,9 @@ def update_user_info():
 def level_voca_list():
     data = request.json
     level = data.get('level')
-    # voca_list = db.session.query(BookStore)\
-    #                 .filter(BookStore.level == level)\
-    #                 .filter(BookStore.hide != 'N')\
+    # voca_list = db.session.query(Bookstore)\
+    #                 .filter(Bookstore.level == level)\
+    #                 .filter(Bookstore.hide != 'N')\
     #                 .limit(4)\
     #                 .all()
     
