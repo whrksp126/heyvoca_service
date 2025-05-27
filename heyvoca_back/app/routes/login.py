@@ -254,23 +254,27 @@ def level_voca_list():
     data = [
         {
             'id' : 1,
-            'name' : '영단어 알아보기',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+            'name' : '영단어 알아보기1',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
+            'downloads' : 101
         },
         {
             'id' : 2,
-            'name' : '영단어 알아보기',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+            'name' : '영단어 알아보기2',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
+            'downloads' : 102
         },
         {
             'id' : 3,
-            'name' : '영단어 알아보기',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+            'name' : '영단어 알아보기3',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
+            'downloads' : 103
         },
         {
             'id' : 4,
-            'name' : '영단어 알아보기',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}'
+            'name' : '영단어 알아보기4',
+            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
+            'downloads' : 104
         }
     ]
     

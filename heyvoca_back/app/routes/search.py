@@ -412,8 +412,8 @@ def search_bookstore_all2():
                     "words": words
                 })
             
-            # 조회된 데이터를 캐시 저장 (예: 1시간 동안 유효)
-            cache.setex(cache_key, 3600, json.dumps(bookstore_data))
+            # 조회된 데이터를 캐시 저장 (24시간 동안 유효)
+            cache.setex(cache_key, 86400, json.dumps(bookstore_data))
         
         # 최종 결과에 추가
         final_results.append(bookstore_data)
