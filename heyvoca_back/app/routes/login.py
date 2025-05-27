@@ -233,10 +233,10 @@ def update_user_info():
 
 
 @login_bp.route('/level_book_list')
-@login_required
+# @login_required
 def level_voca_list():
-    data = request.json
-    level = data.get('level')
+    # data = request.json
+    # level_id = data.get('level_id')
     # voca_list = db.session.query(Bookstore)\
     #                 .filter(Bookstore.level == level)\
     #                 .filter(Bookstore.hide != 'N')\
@@ -250,32 +250,15 @@ def level_voca_list():
     #         'name' : voca.name,
     #         'color' : voca.color,
     #     })
-    data = [
-        {
-            'id' : 1,
-            'name' : '영단어 알아보기1',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
-            'downloads' : 101
-        },
-        {
-            'id' : 2,
-            'name' : '영단어 알아보기2',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
-            'downloads' : 102
-        },
-        {
-            'id' : 3,
-            'name' : '영단어 알아보기3',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
-            'downloads' : 103
-        },
-        {
-            'id' : 4,
-            'name' : '영단어 알아보기4',
-            'color' : '{"main":"#FF8DD4", "sub":"#FFD2EF", "background":"#FFEFFA"}',
-            'downloads' : 104
-        }
-    ]
+    import json
+    import os
+    
+    # JSON 파일 경로
+    json_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'dummy_dict.json')
+    
+    # JSON 파일 읽기
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
     
     return jsonify({'code':200, 'data': data})
 
