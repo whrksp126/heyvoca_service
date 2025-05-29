@@ -251,16 +251,15 @@ def level_voca_list():
     #         'name' : voca.name,
     #         'color' : voca.color,
     #     })
-    import json
-    import os
     
-    # JSON 파일 경로
-    json_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'dummy_dict.json')
-    
-    # JSON 파일 읽기
+    # 더미
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    json_path = os.path.join(current_dir, 'dummy_dict.json')
     with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
+        all_data = json.load(f)
+
+    data = all_data[0]
+
     return jsonify({'code':200, 'data': data})
 
 
