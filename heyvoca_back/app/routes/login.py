@@ -233,7 +233,7 @@ def update_user_info():
     return jsonify({'code':200, 'status': 'success'})
 
 
-@login_bp.route('/level_book_list')
+@login_bp.route('/level_book_list', methods=['GET'])
 # @login_required
 def level_voca_list():
     # data = request.json
