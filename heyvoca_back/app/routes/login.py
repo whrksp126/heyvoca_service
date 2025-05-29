@@ -258,8 +258,6 @@ def level_voca_list():
     with open(json_path, 'r', encoding='utf-8') as f:
         all_data = json.load(f)
 
-    data = all_data[0]
-
-    return jsonify({'code':200, 'data': data})
+    return jsonify({'code':200, 'data': all_data})
 
 
