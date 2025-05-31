@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import heyCharacter from '../../assets/images/헤이캐릭터.png';
 
-const Step2 = ({setStep, userProfile, setUserProfile}) => {
+const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const profileRef = useRef();
 
   useEffect(() => {
@@ -17,12 +18,13 @@ const Step2 = ({setStep, userProfile, setUserProfile}) => {
       alert('닉네임을 입력해주세요.');
       return;
     }
-    setUserProfile({
-      ...userProfile,
+    setUserInitialProfile({
+      ...userInitialProfile,
       name: profileRef.current.value,
     });
     setStep(3);
   };
+
   return (
     <div className="
       relative
@@ -79,18 +81,38 @@ const Step2 = ({setStep, userProfile, setUserProfile}) => {
               border-[1px] border-[#ccc]
               px-[15px]
               font-[16px] font-[400]
+              transition-all duration-200
+              focus:outline-none
+              focus:border-[#FF8DD4]
+              focus:ring-2
+              focus:ring-[#FF8DD4]/20
+              hover:border-[#FF8DD4]/50
             "
             autoComplete="off"
           />
-          <button
-          className="
-            w-full h-[50px]
-            rounded-[8px]
-            bg-[#FF8DD4]
-            text-[#fff] font-[16px] font-[700]
-          "
-          onClick={handleNextBtn}
-          >다음</button>
+          <motion.button
+            whileHover={{ 
+              scale: 1.02,
+              backgroundColor: "#FF7AC4",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
+            }}
+            whileTap={{ 
+              scale: 0.98,
+              backgroundColor: "#FF6AB4"
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+            className="
+              w-full h-[50px]
+              rounded-[8px]
+              bg-[#FF8DD4]
+              text-[#fff] font-[16px] font-[700]
+            "
+            onClick={handleNextBtn}
+          >다음</motion.button>
         </div>
 
       </div>

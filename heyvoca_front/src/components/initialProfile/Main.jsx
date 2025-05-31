@@ -1,43 +1,101 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { useUser } from '../../context/UserContext';
+import { motion, AnimatePresence } from 'framer-motion';
 import Step1 from './step1';
 import Step2 from './step2';
 import Step3 from './step3';
 import Step4 from './step4';
 import Step5 from './step5';
-
+import { useVocabulary } from '../../context/VocabularyContext';
+import { useNavigate } from 'react-router-dom';
 const Main = () => {
-  const { getUserProfile } = useUser();
+  const navigate = useNavigate();
+  const { addBookStoreVocabularySheet } = useVocabulary();
+  const { setUserProfile, updateUserProfile } = useUser();
   const [step, setStep] = useState(1);
-  const [userProfile, setUserProfile] = useState({
+  const [userInitialProfile, setUserInitialProfile] = useState({
     name: null,
     level: null,
     vocabook: null,
   });
 
-  const saveUserProfile = async () => {
-    console.log(userProfile);
-    // 이름, 레벨 저장
-
-    // 단어장 추가
-
-    // const url = `${backendUrl}/login/save_user_profile`;
-    // const method = 'POST';
-    // const fetchData = {userProfile};
-    // const result = await fetchDataAsync(url, method, fetchData);
-
-    
+  const endInitialProfile = async () => {
+    const updates = {
+      level_id: userInitialProfile.level,
+      username: userInitialProfile.name,
+    };
+    console.log(userInitialProfile);
+    await updateUserProfile(updates);
+    console.log("사용자 정보 업데이트 완료")
+    await addBookStoreVocabularySheet(userInitialProfile.vocabook);
+    console.log("단어장 추가 완료")
+    navigate('/');
   }
 
+  const variants = {
+    enter: {
+      opacity: 0,
+      scale: 0.95
+    },
+    center: {
+      opacity: 1,
+      scale: 1
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.95
+    }
+  };
+
   return (
-    <>
-      {step === 1 && <Step1 setStep={setStep} setUserProfile={setUserProfile} />}
-      {step === 2 && <Step2 setStep={setStep} userProfile={userProfile} setUserProfile={setUserProfile} />}
-      {step === 3 && <Step3 setStep={setStep} userProfile={userProfile} setUserProfile={setUserProfile} />}
-      {step === 4 && <Step4 setStep={setStep} userProfile={userProfile} setUserProfile={setUserProfile} />}
-      {step === 5 && <Step5 saveUserProfile={saveUserProfile} />}
-    </>
+    <div style={{ 
+      position: 'relative', 
+      width: '100%', 
+      height: '100vh',
+      overflow: 'hidden',
+      backgroundColor: '#FFEFFA'
+    }}>
+      <AnimatePresence mode="wait">
+        {step === 1 ? (
+          <motion.div
+            key="step1"
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              left: 0
+            }}
+          >
+            <Step1 setStep={setStep} setUserProfile={setUserProfile} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key={step}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut"
+            }}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              left: 0
+            }}
+          >
+            {step === 2 && <Step2 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
+            {step === 3 && <Step3 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
+            {step === 4 && <Step4 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
+            {step === 5 && <Step5 endInitialProfile={endInitialProfile} />}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

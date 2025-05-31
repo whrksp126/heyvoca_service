@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { Plus, BoxArrowDown } from '@phosphor-icons/react';
 import { useLevelBookListBottomSheet } from './BookStoreBottomSheet';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
-const Step4 = ({setStep, userProfile, setUserProfile}) => {
+
+const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const [levelBookList, setLevelBookList] = useState([]);
   const [isLevelBookListLoading, setIsLevelBookListLoading] = useState(true);
   const { showVocabularySheetPreviewBottomSheet } = useLevelBookListBottomSheet();
@@ -15,7 +16,7 @@ const Step4 = ({setStep, userProfile, setUserProfile}) => {
   const getLevelBookList = async () => {
     const url = `${backendUrl}/login/level_book_list`;
     const method = 'GET';
-    const fetchData = {level: userProfile.level};
+    const fetchData = {level: userInitialProfile.level};
     const result = await fetchDataAsync( url, method, fetchData );
     if(result.code == 200){
       setLevelBookList(result.data);
@@ -24,8 +25,8 @@ const Step4 = ({setStep, userProfile, setUserProfile}) => {
   }
 
   const addVocabularySheet = (vocabularySheet) => {
-    setUserProfile({
-      ...userProfile,
+    setUserInitialProfile({
+      ...userInitialProfile,
       vocabook: vocabularySheet,
     });
     setStep(5);
@@ -36,9 +37,17 @@ const Step4 = ({setStep, userProfile, setUserProfile}) => {
     showVocabularySheetPreviewBottomSheet(levelBookList[index], addVocabularySheet);
   };
 
-  const handleBackBtn = () => {
-    setStep(3);
-  }
+  const buttonVariants = {
+    hover: {
+      scale: 1.02,
+      backgroundColor: "#FF7AC4",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
+    },
+    tap: {
+      scale: 0.98,
+      backgroundColor: "#FF6AB4"
+    }
+  };
 
   if (isLevelBookListLoading) {
     return (
@@ -129,21 +138,25 @@ const Step4 = ({setStep, userProfile, setUserProfile}) => {
           )})}
         </ul>
       </div>
-      <div className="
-        flex flex-col items-center gap-[15px]
-        w-full
-      ">
-        <button
-          className="
-            w-full h-[50px]
-            rounded-[8px]
-            bg-[#CCC]
-            text-[#FFF] font-[16px] font-[700]
-          "
-          onClick={handleBackBtn}
-        >레벨 다시 선택하기</button>
-
-      </div>
+      <motion.button
+        variants={buttonVariants}
+        whileHover="hover"
+        whileTap="tap"
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 17
+        }}
+        className="
+          w-full h-[45px]
+          bg-[#CCCCCC]
+          rounded-[8px]
+          text-[#FFFFFF] font-[16px] font-[700]
+        "
+        onClick={() => setStep(3)}
+      >
+        레벨 다시 선택하기
+      </motion.button>
     </div>
   );
 };

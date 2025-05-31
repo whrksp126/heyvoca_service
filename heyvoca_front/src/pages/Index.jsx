@@ -25,6 +25,7 @@ const Index = () => {
         navigate('/login');  
         return
       }else if(userProfile.userName == null){
+        console.log("userProfile,",userProfile);
         navigate('/initial-profile');
         return;
       }
