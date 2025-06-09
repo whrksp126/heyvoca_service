@@ -12,6 +12,7 @@ const Index = () => {
   const { getUserProfile, isUserProfileLoading, userStorageData, setUserStorageData } = useUser();
 
   useEffect(() => {
+    console.log("userStorageData,",userStorageData);
     if(userStorageData?.status == "login"){
       if(isUserProfileLoading) return;
       const userProfile = getUserProfile();
@@ -24,7 +25,7 @@ const Index = () => {
         })
         navigate('/login');  
         return
-      }else if(userProfile.userName == null){
+      }else if(userProfile.username == null){
         console.log("userProfile,",userProfile);
         navigate('/initial-profile');
         return;
