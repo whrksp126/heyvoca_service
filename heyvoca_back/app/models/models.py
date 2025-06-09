@@ -247,7 +247,7 @@ class UserVocaBook(db.Model):
 class CheckIn(db.Model):
     __tablename__ = 'check_in'
     user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False, default=uuid4)
-    attendence_check = Column(String(20), primary_key=True, nullable=False)
+    attendence_date = Column(Date, primary_key=True, nullable=False)
     today_study_complete = Column(String(20), nullable=False)
 
     def __init__(self, user_id, attendence_check, today_study_complete):

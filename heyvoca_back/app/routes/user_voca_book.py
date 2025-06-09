@@ -12,6 +12,7 @@ from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample
 
 from flask_login import current_user, login_required, login_user
 
+
 @login_required
 @user_voca_book_bp.route('/list', methods=['GET'])
 def get_user_voca_book_list():
@@ -49,7 +50,6 @@ def create_user_voca_book():
 
     user = db.session.query(User).filter(User.id == user_id).first()
     print("###user : ",user)
-
 
     user_voca_book = UserVocaBook(
         user_id=user_id,
