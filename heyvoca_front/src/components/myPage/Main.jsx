@@ -53,16 +53,6 @@ const Main = () => {
             </div>
           </li>
 
-          <li onClick={() => navigate('/vocabulary_backup')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
-            <div className="flex items-center gap-2">
-              <HardDrives weight="fill" className="text-[20px] text-[#FF8DD4]" />
-              <span className="text-[16px] font-bold text-primary dark:text-primary-dark">단어장 백업</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
-            </div>
-          </li>
-
           <li onClick={() => navigate('/push_notifications')} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
             <div className="flex items-center gap-2">
               <Bell weight="fill" className="text-[20px] text-[#FF8DD4]" />

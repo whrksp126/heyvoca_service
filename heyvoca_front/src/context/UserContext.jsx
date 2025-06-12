@@ -4,11 +4,40 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState({});
+  const [userMainPage, setUserMainPage] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [errorUserProfile, setErrorUserProfile] = useState(null);
   const [userStorageData, setUserStorageData] = useState(JSON.parse(localStorage.getItem('user')));
   
-  
+  const fetchUserMainPage = useCallback(async () => {
+    try {
+      let userMainPageData = {};
+      const setUserDates = async () => {
+        const url = `${backendUrl}/mainpage/user_dates`;
+        const method = 'GET';
+        const fetchData = {};
+        const result = await fetchDataAsync(url, method, fetchData);
+        if(result.code == 200){
+          console.log(result.data);
+          userMainPageData.dates = result.data;
+        }
+      }
+      const setUserGoals = async () => {
+        const url = `${backendUrl}/mainpage/user_goals`;
+        const method = 'GET';
+        const fetchData = {};
+        const result = await fetchDataAsync(url, method, fetchData);
+        if(result.code == 200){
+          console.log(result.data);
+          userMainPageData.goals = result.data;
+        }
+      }
+      await setUserDates()
+      await setUserGoals()
+      setUserMainPage(userMainPageData);
+    } catch (err) {
+    }
+  }, []);
   const fetchUserProfile = useCallback(async () => {
     try {
       setIsUserProfileLoading(true);
@@ -62,18 +91,22 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     
     fetchUserProfile();
+    fetchUserMainPage();
   }, []);
 
 
   const value = {
     userStorageData,
     userProfile,
+    userMainPage,
     isUserProfileLoading,
     errorUserProfile,
     getUserProfile,
     updateUserProfile,
     fetchUserProfile,
+    fetchUserMainPage,
     setUserProfile,
+    setUserMainPage,
     setUserStorageData,
   };  
 
