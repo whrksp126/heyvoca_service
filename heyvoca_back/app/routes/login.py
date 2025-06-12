@@ -215,22 +215,31 @@ def get_user_info():
     return jsonify({'code':200, 'data': user_item})
 
 
-@login_bp.route('/update_user_info')
+@login_bp.route('/update_user_info', methods=['PATCH'])
 @login_required
 def update_user_info():
     data = request.json
-    level_id = data.get('level_id')
-    username = data.get('username')
+    
+    if not data:
+        return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
 
     user_item = db.session.query(User).filter(User.id == current_user.id).first()
 
     if not user_item:
-        return jsonify({'code':404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
 
-    user_item.level_id = level_id
-    user_item.username = username
-    db.session.commit()
-    return jsonify({'code':200, 'status': 'success'})
+    # 변경할 필드만 업데이트
+    if 'level_id' in data:
+        user_item.level_id = data['level_id']
+    if 'username' in data:
+        user_item.username = data['username']
+
+    try:
+        db.session.commit()
+        return jsonify({'code': 200, 'status': 'success'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @login_bp.route('/level_book_list', methods=['GET'])
