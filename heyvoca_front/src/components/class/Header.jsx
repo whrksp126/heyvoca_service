@@ -15,7 +15,7 @@ const Header = () => {
       </div>
       <div className="center">
         <h2 className='text-[16px] font-[700]'>
-          테스트
+          단어 학습
         </h2>
       </div>
       <div className="right">

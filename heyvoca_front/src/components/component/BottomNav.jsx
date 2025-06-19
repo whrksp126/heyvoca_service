@@ -92,7 +92,7 @@ const BottomNav = () => {
             <span className={`text-[10px] mt-1 ${
               location.pathname === '/class' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
             }`}>
-              테스트
+              학습
             </span>
           </div>
         </li>

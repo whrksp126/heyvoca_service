@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh } from '@phosphor-icons/react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 
 import { useFullSheet } from '../../context/FullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -8,6 +8,39 @@ import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useWordSetBottomSheet } from './WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 import UpdateVocabularyWords from './UpdateVocabularyWords';
+import MemorizationStatus from './MemorizationStatus';
+
+function getMemorizationStatus({ repetition, interval, ef }) {
+  // ✅ 미학습 상태 먼저 체크
+  if (repetition === 0 && interval === 0) {
+    return {
+      percent: 0,
+      Icon: <EggCrack size={10} weight="fill" />,
+    };
+  }
+
+  // 암기율 계산
+  let score = 0;
+  score += repetition * 15;
+  score += interval * 2;
+  score += (ef - 1.3) * 20;
+
+  const percent = Math.max(0, Math.min(100, Math.round(score)));
+
+  // 아이콘 분기
+  let Icon, label;
+  if (percent < 30) {
+    Icon = <Leaf size={10} weight="fill" />;
+  } else if (percent < 70) {
+    Icon = <Plant size={10} weight="fill" />;
+  } else {
+    Icon = <Carrot size={10} weight="fill" />;
+  }
+
+  return { percent, Icon };
+}
+
+
 const VocabularyWords = ({ id }) => {
 
   const { handleBack } = useFullSheet();
@@ -16,7 +49,7 @@ const VocabularyWords = ({ id }) => {
   const { pushFullSheet } = useFullSheet();
 
   const vocabularySheet = getVocabularySheet(id);
-
+  console.log("vocabularySheet", vocabularySheet.words);
   const buttonVariants = {
     tap: { 
       scale: 0.85,
@@ -51,6 +84,8 @@ const VocabularyWords = ({ id }) => {
   const handleCardClick = (id) => {
     
   };
+
+  
 
   return (
     <div className="flex flex-col h-full">
@@ -97,6 +132,7 @@ const VocabularyWords = ({ id }) => {
             text-[#CCC] dark:text-[#fff]
           "
         >
+          {/* 
           <motion.button 
             className="
             rounded-[20px]
@@ -113,7 +149,8 @@ const VocabularyWords = ({ id }) => {
             aria-label="단어장 편집"
           >
             <PencilSimple />
-          </motion.button>
+          </motion.button> 
+          */}
           <motion.button 
             className="
             rounded-[20px]
@@ -150,8 +187,7 @@ const VocabularyWords = ({ id }) => {
               
               <div 
                 className="
-                  flex flex-col gap-[10px]
-                  w-full
+                  flex flex-col gap-[10px] flex-1
                 "
               >
                 <div className="flex flex-wrap">
@@ -249,6 +285,11 @@ const VocabularyWords = ({ id }) => {
                   </motion.span>
                 </div>
               </div>
+              <div>
+                {MemorizationStatus({repetition: item.repetition, interval: item.interval, ef: item.ef})}
+              </div>
+
+              {/* 
               <div className="
                 flex gap-[8px]
               text-[#FF8DD4] text-[20px]
@@ -256,7 +297,8 @@ const VocabularyWords = ({ id }) => {
                 <button onClick={() => getTextSound(item.origin, "en")}>
                   <SpeakerHigh weight="fill" />
                 </button>
-              </div>
+              </div> 
+              */}
             </li>
           )
         })}

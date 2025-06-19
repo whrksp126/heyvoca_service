@@ -5,12 +5,13 @@ import TestSetup from './TestSetup';
 import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
-
+import { useTestSetupBottomSheet } from './TestSetupBottomSheet';
 
 const VocabularySheet = () => {
   const { handleBack } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { pushFullSheet } = useFullSheet();
+  const { showTestSetupBottomSheet } = useTestSetupBottomSheet();
   if (isVocabularySheetsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -29,9 +30,12 @@ const VocabularySheet = () => {
     const vocabularySheetLength = words.slice(0, MAX_TEST_VOCABULARY_COUNT).length;
     if(vocabularySheetLength < MIN_TEST_VOCABULARY_COUNT) return alert(`단어장에 단어가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
     const maxVocabularyCount = Math.min(vocabularySheetLength, MAX_TEST_VOCABULARY_COUNT);
-    pushFullSheet({
-      component: <TestSetup vocabularySheetId={id} maxVocabularyCount={maxVocabularyCount} />
-    });
+    console.log("TestSetup", id, maxVocabularyCount);
+    showTestSetupBottomSheet({id, maxVocabularyCount});
+
+    // pushFullSheet({
+    //   component: <TestSetup vocabularySheetId={id} maxVocabularyCount={maxVocabularyCount} />
+    // });
   };
 
   return (

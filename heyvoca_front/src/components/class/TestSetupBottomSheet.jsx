@@ -19,13 +19,15 @@ export const useTestSetupBottomSheet = () => {
   }, [handleBack]);
 
   const handleStartTest = useCallback((data) => {
+    console.log("data", data);
     handleBottomSheetReset();
     handleFullSheetReset();
     navigate('/take-test', { state: { data } });
   }, [questionType, vocabularySheetId, handleBack, navigate]);
 
-  const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
-    setQuestionType(questionType);
+  // const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
+  const showTestSetupBottomSheet = useCallback(({id:vocabularySheetId, maxVocabularyCount}) => {
+    // setQuestionType(questionType);
     setVocabularySheetId(vocabularySheetId);
     pushBottomSheet(
       <TestSetupBottomSheet 
@@ -33,7 +35,7 @@ export const useTestSetupBottomSheet = () => {
         onCancel={handleClose}
         onSet={(data) => handleStartTest({
           ...data,
-          questionType,
+          // questionType,
           vocabularySheetId 
         })}
       />,
@@ -49,6 +51,45 @@ export const useTestSetupBottomSheet = () => {
   };
 };
 
+
+
+function getQuestionTypeLabel(type) {
+  switch (type) {
+    case 'multipleChoice':
+      return '사지 선다';
+    case 'fillInTheBlank':
+      return '빈칸 채우기';
+    case 'trueOrFalse':
+      return 'OX';
+    case 'matchingPairs':
+      return '매칭 페어';
+    case 'typing':
+      return '타이핑';
+    case 'audioChoice':
+      return '오디오 선다';
+    case 'ordering':
+      return '순서 맞추기';
+    case 'dragAndDrop':
+      return '드래그 앤 드랍';
+    default:
+      return '';
+  }
+}
+
+function getMemoryStateLabel(type) {
+  switch (type) {
+    case 'unlearned':
+      return '미학습';
+    case 'shortTerm':
+      return '단기 암기';
+    case 'mediumTerm':
+      return '중기 암기';
+    case 'longTerm':
+      return '장기 암기';
+    default:
+      return '';
+  }
+}
 
 function getInitialViewTypeLabel(type) {
   switch (type) {
@@ -77,12 +118,16 @@ function getOriginFilterTypeLabel(type) {
 }
 
 const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
-  const [initialViewType, setInitialViewType] = useState('origin');
-  const [originFilterType, setOriginFilterType] = useState('all');
+  const [questionType, setQuestionType] = useState('multipleChoice');
+  const [memoryState, setMemoryState] = useState('unlearned');
+  // const [initialViewType, setInitialViewType] = useState('origin');
+  // const [originFilterType, setOriginFilterType] = useState('all');
   const [count, setCount] = useState(maxVocabularyCount > 12 ? 12 : maxVocabularyCount);
   const inputRefs = useRef({
-    initialViewType: [],
-    originFilterType: [],
+    questionType: [],
+    memoryState: [],
+    // initialViewType: [],
+    // originFilterType: [],
     count: []
   });
 
@@ -101,11 +146,14 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
 
   const getTestSetupData = useCallback(() => {
     return {
-      initialViewType: initialViewType,
-      originFilterType: originFilterType,
+      questionType: questionType,
+      memoryState: memoryState,
+      // initialViewType: initialViewType,
+      // originFilterType: originFilterType,
       count: count
     }
-  }, [initialViewType, originFilterType, count]);
+  // }, [initialViewType, originFilterType, count]);
+  }, [questionType, memoryState, count]);
   
   return (
     <div className="">
@@ -137,6 +185,40 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
             문제 유형
           </h3>
           <div className="grid grid-cols-2 gap-[10px]">
+            {/* {['origin', 'meanings', 'cross', 'random'].map((type, index) => ( */}
+            {['multipleChoice'].map((type, index) => (
+              <label 
+                key={type}
+                htmlFor={type}
+                className={`
+                  flex items-center justify-center gap-[5px] 
+                  h-[45px]
+                  px-[15px]
+                  border-[1px] rounded-[8px]
+                  ${questionType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                `}
+                onClick={() => {
+                  inputRefs.current[`questionType`][index]?.focus();
+                }}
+              >
+                <input 
+                  id={type} 
+                  type="radio" 
+                  name="questionType" 
+                  checked={questionType === type}
+                  onChange={() => setQuestionType(type)}
+                  ref={el => inputRefs.current[`questionType`][index] = el}
+                  hidden 
+                />
+                {questionType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
+                <span className={`text-[16px] font-[700] ${questionType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+                  {getQuestionTypeLabel(type)}
+                </span>
+              </label>
+            ))}
+          </div> 
+          {/* 
+          <div className="grid grid-cols-2 gap-[10px]">
             {['origin', 'meanings', 'cross', 'random'].map((type, index) => (
               <label 
                 key={type}
@@ -167,8 +249,10 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
                 </span>
               </label>
             ))}
-          </div>
+          </div> 
+          */}
         </div>
+        {/* 
         <div 
           className="
             flex justify-between flex-col gap-[8px]
@@ -212,7 +296,54 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
               </label>
             ))}
           </div>
-        </div>
+        </div> 
+        */}
+        <div 
+          className="
+            flex justify-between flex-col gap-[8px]
+          "
+        >
+          <h3 
+            className="
+              text-[14px] font-[700] text-[#111] text-center
+            dark:text-[#fff]
+            "
+          >
+            암기 상태(복습 지연 우선)
+          </h3>
+          <div className="grid grid-cols-2 gap-[10px]">
+            {['unlearned', 'shortTerm', 'mediumTerm', 'longTerm'].map((type, index) => (
+              <label 
+                key={type}
+                htmlFor={type}
+                className={`
+                  flex items-center justify-center gap-[5px] 
+                  h-[45px]
+                  px-[15px]
+                  border-[1px] rounded-[8px]
+                  ${memoryState === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                `}
+                onClick={() => inputRefs.current[`memoryState`][index]?.focus()}
+              >
+                <input 
+                  id={type} 
+                  type="radio" 
+                  name="memoryState" 
+                  checked={memoryState === type}
+                  onChange={() => setMemoryState(type)}
+                  ref={el => inputRefs.current[`memoryState`][index] = el}
+                  hidden 
+                />
+                {memoryState === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
+                <span className={`text-[16px] font-[700] ${memoryState === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+                  {getMemoryStateLabel(type)}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div> 
+
+
         <div 
           className="
             flex justify-between flex-col gap-[8px] 

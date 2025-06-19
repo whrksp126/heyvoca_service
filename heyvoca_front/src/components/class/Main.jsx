@@ -37,12 +37,13 @@ const Main = () => {
     if(type === 'all') {
       const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
       if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
-      console.log("maxVocabularyCount", maxVocabularyCount);
+      
+      console.log("TestSetup");
       pushFullSheet({
         component: <TestSetup maxVocabularyCount={maxVocabularyCount} />
-        
       });
     } else {
+      console.log("VocabularySheet");
       pushFullSheet({
         component: <VocabularySheet />
       });
@@ -57,6 +58,50 @@ const Main = () => {
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
       <ul className="flex flex-col gap-[20px]">
+        <li className="
+          flex flex-col items-center justify-center gap-[30px]
+          p-[30px] pt-[40px]
+          border-[1px] border-[#FF8DD4] rounded-[12px]
+          bg-[#FFEFFA]
+        ">
+          <div className="
+            flex flex-col items-center justify-center gap-[10px]
+          ">
+            <h2 className="
+              flex items-center gap-[8px]
+              text-[22px] font-[700] text-[#111]
+            ">
+              <div className="
+                flex items-center justify-center
+                w-[22px] h-[22px]
+                rounded-[5px]
+                text-[#fff]
+                bg-[#FF8DD4]
+              ">
+                <Check weight="bold" size={12} />
+              </div>
+              학습하기
+            </h2>
+            <p 
+              className="
+                text-[13px] font-[400] text-[#111] text-center
+              "
+            >자주 틀리거나<br />잊어버린 단어 위주로 복습해요!</p>
+          </div>
+          <motion.button 
+            className="
+              flex items-center justify-center
+              w-full h-[45px]
+              rounded-[8px]
+              bg-[#FF8DD4]
+              text-[#fff] text-[17px] font-[700]
+            "
+            whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
+            onClick={() => handleStartClick('selected')}
+          >
+            시작하기
+          </motion.button>
+        </li>
         <li className="
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
@@ -88,14 +133,15 @@ const Main = () => {
               >
                 All
               </div>
-              전체 단어장
+              테스트
             </h2>
             <p 
               className="
                 text-[13px] font-[400] text-[#111] text-center
               "
             >
-              나의 전체 단어장에 있는 단어들을<br />랜덤으로 학습해요!
+              나의 단어 실력을<br />
+              테스트로 점검해보세요!
               </p>
           </div>
           <motion.button 
@@ -112,50 +158,7 @@ const Main = () => {
             시작하기
           </motion.button>
         </li>
-        <li className="
-          flex flex-col items-center justify-center gap-[30px]
-          p-[30px] pt-[40px]
-          border-[1px] border-[#FF8DD4] rounded-[12px]
-          bg-[#FFEFFA]
-        ">
-          <div className="
-            flex flex-col items-center justify-center gap-[10px]
-          ">
-            <h2 className="
-              flex items-center gap-[8px]
-              text-[22px] font-[700] text-[#111]
-            ">
-              <div className="
-                flex items-center justify-center
-                w-[22px] h-[22px]
-                rounded-[5px]
-                text-[#fff]
-                bg-[#FF8DD4]
-              ">
-                <Check weight="bold" size={12} />
-              </div>
-              선택 단어장
-            </h2>
-            <p 
-              className="
-                text-[13px] font-[400] text-[#111] text-center
-              "
-            >원하는 단어장에 있는 단어들을<br />랜덤으로 학습해요!</p>
-          </div>
-          <motion.button 
-            className="
-              flex items-center justify-center
-              w-full h-[45px]
-              rounded-[8px]
-              bg-[#FF8DD4]
-              text-[#fff] text-[17px] font-[700]
-            "
-            whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
-            onClick={() => handleStartClick('selected')}
-          >
-            시작하기
-          </motion.button>
-        </li>
+        
       </ul>
     </motion.div>
   );

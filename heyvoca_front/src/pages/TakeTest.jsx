@@ -29,7 +29,7 @@ const TakeTest = () => {
               const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
               return {
                 ...word,
-                initialViewType: state.data.initialViewType,
+                // initialViewType: state.data.initialViewType,
                 options: shuffledOptions,
                 resultIndex,
                 questionType: state.data.questionType
@@ -50,7 +50,7 @@ const TakeTest = () => {
             const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
             return {
               ...word,
-              initialViewType: state.data.initialViewType,
+              // initialViewType: state.data.initialViewType,
               options: shuffledOptions,
               resultIndex,
               questionType: state.data.questionType
