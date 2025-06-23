@@ -1,84 +1,79 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, SpeakerHigh, BookOpenText } from "@phosphor-icons/react";
 import { getTextSound } from '../../utils/common';
 import { useProblemDataBottomSheet } from './ProblemDataBottomSheet';
+import { updateSM2 } from '../../utils/common';
 
 const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
-  const [isTestComplete, setIsTestComplete] = useState(false);
   const [progressBarIndex, setProgressBarIndex] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
-
+  const [isFetching, setIsFetching] = useState(false);
+  const startTimeRef = useRef(null);
+  const endTimeRef = useRef(null);
   const { showProblemDataBottomSheet } = useProblemDataBottomSheet();
-
+  const { updateWord } = useVocabulary();
   // 문제가 변경될 때마다 텍스트 읽기
   useEffect(() => {
-    console.log("testQuestions", testQuestions);
-    // count: 12
-    // memoryState: "unlearned"
-    // questionType: "multipleChoice"
-    // vocabularySheetId: "0fb89232-3e62-48ca-a3a2-04ccb254acd5"
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
+      console.log("question", question);
       const textToRead = question.origin;
       const lang =  "en";
-      // const textToRead = question.initialViewType === "origin" 
-      //   ? question.origin 
-      //   : question.meanings.join(", ");
-      // const lang = question.initialViewType === "origin" ? "en" : "ko";
       getTextSound(textToRead, lang);
     }
-  }, [progressIndex, testQuestions]);
+    startTimeRef.current = Date.now();
+    endTimeRef.current = null; // 항상 초기화!
+  }, [progressIndex]);
+
+  // 문제 시작 시
+  useEffect(() => {
+
+  }, [progressIndex]);
 
   const handleOptionClick = (index, option) => {
-
-    if (isTestComplete || isAnswered) return;
-    // setIsAnswered(true);
+    if (isAnswered) return;
     if(userSelected === index) {
       setUserSelected(null);
     }else{
       setUserSelected(index);
     }
-    
-    // const resultIndex = testQuestions[progressIndex].resultIndex;
-    
-    // // 정답/오답 설정과 동시에 프로그레스바 증가
-    // if(resultIndex === index){
-    //   setIsCorrect(true);
-    // }else{
-    //   setIsCorrect(false);
-    // }
-    // setProgressBarIndex(progressBarIndex + 1);
-
-    // if(progressIndex === testQuestions.length-1){
-    //   // 마지막 문제일 경우
-    //   setIsTestComplete(true);
-    //   // 결과 표시 시간 후 테스트 종료
-    //   setTimeout(() => {
-    //     alert("테스트 완료");
-    //   }, 1000);
-    // } else {
-    //   // 마지막 문제가 아닐 경우
-    //   setTimeout(() => {
-    //     setProgressIndex(progressIndex + 1);
-    //     setIsCorrect(null);
-    //     setUserSelected(null);
-    //     setIsAnswered(false);
-    //   }, 1000);
-    // }
   }
 
   // 아래 버튼튼 클릭 시
-  const handleClickNext = () => {
+  const handleClickNext = async () => {
     if(userSelected === null) return;
+    if(isFetching) return;
     if(isStay){
-      if(progressIndex === testQuestions.length-1){ // 마지막 문제
+      const timeTakenSec = Math.round((endTimeRef.current - startTimeRef.current) / 1000);
+      const testQuestion = testQuestions[progressIndex];
+      
+      const q = isCorrect ? 
+        (timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0) : 0;
+      
+      const newState = updateSM2({
+        ef: testQuestion.ef,
+        repetition: testQuestion.repetition,
+        interval: testQuestion.interval
+      }, q);
+      
+      Object.assign(testQuestions[progressIndex], newState);
+      const sheetId = testQuestions[progressIndex].vocabularySheetId;
+      const wordId = testQuestions[progressIndex].id;
+      setIsFetching(true);
+      updateWord(sheetId, wordId, newState).then(()=>{
+        setIsFetching(false);
+      });
+      
 
+      if(progressIndex === testQuestions.length-1){ // 마지막 문제
+        
       }else{
+        
         setProgressIndex(progressIndex + 1);
         setIsCorrect(null);
         setUserSelected(null);
@@ -86,11 +81,11 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
         setIsStay(false);
       }
       return;
-    }
-    if (isTestComplete || isAnswered) return;
+    };
+    if (isAnswered) return;
     
-    setIsAnswered(true);
-    
+    endTimeRef.current = Date.now();
+
     const resultIndex = testQuestions[progressIndex].resultIndex;
     
     // 정답/오답 설정과 동시에 프로그레스바 증가
@@ -101,23 +96,7 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
     }
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
-
-    // if(progressIndex === testQuestions.length-1){
-    //   // 마지막 문제일 경우
-    //   setIsTestComplete(true);
-    //   // 결과 표시 시간 후 테스트 종료
-    //   setTimeout(() => {
-    //     alert("테스트 완료");
-    //   }, 1000);
-    // } else {
-    //   // 마지막 문제가 아닐 경우
-    //   setTimeout(() => {
-    //     setProgressIndex(progressIndex + 1);
-    //     setIsCorrect(null);
-    //     setUserSelected(null);
-    //     setIsAnswered(false);
-    //   }, 1000);
-    // }
+    setIsAnswered(true);
   }
 
   const handleClickTTS = () => {
@@ -261,11 +240,6 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
                     text-[28px] font-[700] text-[#111] text-center
                   ">
                     {testQuestions[progressIndex].origin}
-                    {/* {testQuestions[progressIndex].initialViewType === "origin" 
-                      ? testQuestions[progressIndex].origin 
-                      : testQuestions[progressIndex].initialViewType === "meanings" 
-                        ? testQuestions[progressIndex].meanings.join(", ") 
-                        : ""} */}
                   </h2>
                   <motion.button 
                     onClick={handleClickTTS}
@@ -320,41 +294,43 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
                 <div className="
                   flex flex-col gap-[10px]
                 ">
-                  {testQuestions[progressIndex].options.map((option, index) => (
-                    <motion.button 
-                      key={index}
-                      whileTap={{ 
-                        scale: 0.92,
-                        transition: { 
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 17
-                        }
-                      }}
-                      onClick={() => handleOptionClick(index, option)}
-                      disabled={isAnswered}
-                      className={`
-                        flex items-center justify-center
-                        w-full h-[50px]
-                        px-[20px]
-                        border-[1px] rounded-[10px]
-                        text-[14px] font-[700]
-                        ${!isAnswered ? 'border-[#CCCCCC] text-[#111]' : ''}
-                        ${!isAnswered && userSelected === index ? 'border-[#FF8DD4] text-[#FF8DD4]' : ""}
-                        ${isAnswered && userSelected === index && isCorrect === true ? "border-[#17E937] text-[#17E937] bg-[#E4FFE8]" : ""}
-                        ${isAnswered && userSelected === index && isCorrect === false ? "border-[#FF585B] text-[#FF585B] bg-[#FFEBEC]" : ""}
-                        
-                        ${isAnswered && userSelected !== index && index === testQuestions[progressIndex].resultIndex && isCorrect === false 
-                          ? "border-[#17E937] text-[#17E937] bg-[#E4FFE8]" 
-                          : ""}
-                      `}
-                    >
-                      {option.meanings.join(", ")}
-                      {/* {testQuestions[progressIndex].initialViewType === "origin" 
-                        ? option.meanings.join(", ")
-                        : option.origin} */}
-                    </motion.button>
-                  ))}
+                  {testQuestions[progressIndex].options.map((option, index) => {
+                    let btnStyle = "";
+                    if(isCorrect !== null && testQuestions[progressIndex].resultIndex == index){
+                      btnStyle = 'border-[#17E937] text-[#17E937] bg-[#E4FFE8]';
+                    }else if(isCorrect === false && userSelected === index){
+                      btnStyle = 'border-[#FF585B] text-[#FF585B] bg-[#FFEBEC]';
+                    }else if(isCorrect === null && userSelected == index){
+                      btnStyle = 'border-[#FF8DD4] text-[#FF8DD4]';
+                    }else{
+                      btnStyle = 'border-[#CCCCCC] text-[#111]';
+                    }
+                    return (  
+                      <motion.button 
+                        key={index}
+                        whileTap={{ 
+                          scale: 0.92,
+                          transition: { 
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17
+                          }
+                        }}
+                        onClick={() => handleOptionClick(index, option)}
+                        disabled={isAnswered}
+                        className={`
+                          flex items-center justify-center
+                          w-full h-[50px]
+                          px-[20px]
+                          border-[1px] rounded-[10px]
+                          text-[14px] font-[700]
+                          ${btnStyle}
+                        `}
+                      >
+                        {option.meanings.join(", ")}
+                      </motion.button>
+                    )
+                  })}
                   
                 </div>
                 <motion.button 

@@ -106,7 +106,7 @@ export const getTextSound = async (text, lang) => {
  * @param {number} state.ef - 기억 용이도 (Ease Factor), 기본 2.5
  * @param {number} state.repetition - 복습 성공 횟수
  * @param {number} state.interval - 이전 복습 간격 (일 수)
- * @param {number} q - 복습 평가 점수 (again: 0, hard: 3, good: 4, easy: 5)
+ * @param {number} q - 복습 평가 점수 (again: 0, hard: 3, good: 4, easy: 5) // 3:easy, 7:good, 12:hard
  * @param {Date} today - 기준 날짜 (보통 new Date())
  * @returns {Object} - 갱신된 복습 상태
  */
@@ -140,7 +140,7 @@ export const updateSM2 = (state, q, today = new Date()) => {
     ef: Number(ef.toFixed(2)),
     repetition,
     interval,
-    next_review: nextReviewDate.toISOString().split('T')[0]
+    nextReview: nextReviewDate.toISOString().split('T')[0]
   };
 }
 // // 사용법

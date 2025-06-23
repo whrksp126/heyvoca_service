@@ -30,7 +30,6 @@ export const useProblemDataBottomSheet = () => {
 
 
 const ProblemDataBottomSheet = ({onCancel, options}) => {
-  console.log("options", options);
   return (
     <div className="">
       <div>
@@ -50,7 +49,7 @@ const ProblemDataBottomSheet = ({onCancel, options}) => {
         overflow-y-auto
       ">
         {options.map((option, index) => (
-        <div key={index}
+        <div key={`${option.id}-${index}`}
           className="
             flex flex-col gap-[10px]
           "

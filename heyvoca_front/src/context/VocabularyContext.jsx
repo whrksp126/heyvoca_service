@@ -103,7 +103,6 @@ export const VocabularyProvider = ({ children }) => {
 
   // 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
-    console.log("updateVocabularySheet", id, updates)
     try {
       const url = `${backendUrl}/user_voca_book/update`;
       const method = 'PATCH';

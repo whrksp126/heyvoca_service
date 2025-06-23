@@ -32,15 +32,24 @@ const TakeTest = () => {
                 // initialViewType: state.data.initialViewType,
                 options: shuffledOptions,
                 resultIndex,
-                questionType: state.data.questionType
+                questionType: state.data.questionType,
+                vocabularySheetId: vocabularySheet.id,
+                isCorrect: null,
               };
             });
         }
       }else{
-        testQuestions = vocabularySheets.flatMap(vocabularySheet => vocabularySheet.words)
+        
+        testQuestions = vocabularySheets.flatMap(vocabularySheet => 
+          vocabularySheet.words.map(word => ({
+            ...word,
+            vocabularySheetId: vocabularySheet.id
+          }))
+        )
           .sort(() => Math.random() - 0.5)
           .slice(0, state.data.count)
           .map(word => {
+            console.log("word", word);
             const otherWords = vocabularySheets.flatMap(sheet => sheet.words).filter(w => w.id !== word.id);
             const randomOptions = otherWords
               .sort(() => Math.random() - 0.5)
@@ -53,16 +62,16 @@ const TakeTest = () => {
               // initialViewType: state.data.initialViewType,
               options: shuffledOptions,
               resultIndex,
-              questionType: state.data.questionType
+              questionType: state.data.questionType,
+              vocabularySheetId: word.vocabularySheetId,
+              isCorrect: null,
             };
           });
       }
-      console.log("testQuestions,", testQuestions);
       setTestQuestions(testQuestions);
       setIsTestQuestionsSetting(false);
     }
-  }, [vocabularySheets]);
-  console.log("testQuestions,", testQuestions);
+  }, []);
 
   if(isTestQuestionsSetting){
     return (
