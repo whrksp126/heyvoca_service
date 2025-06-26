@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, SpeakerHigh, BookOpenText } from "@phosphor-icons/react";
 import { getTextSound } from '../../utils/common';
 import { useProblemDataBottomSheet } from './ProblemDataBottomSheet';
 import { updateSM2 } from '../../utils/common';
+import MemorizationStatus from "../common/MemorizationStatus";
 
 const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
   const [isCorrect, setIsCorrect] = useState(null);
@@ -197,48 +198,56 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="
-                    absolute top-[50%] left-[50%] z-[0]
-                    translate-x-[-50%] translate-y-[-50%]
-                  ">
-                    <AnimatePresence>
-                      {isCorrect === true && (
-                        <motion.div
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          exit={{ scale: 0, opacity: 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 500,
-                            damping: 20,
-                            duration: 0.4
-                          }}
-                        >
-                          <Circle size={150} weight="bold" className="text-[#39E859]" />
-                        </motion.div>
-                      )}
-                      {isCorrect === false && (
-                        <motion.div
-                          initial={{ scale: 0, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          exit={{ scale: 0, opacity: 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 500,
-                            damping: 20,
-                            duration: 0.4
-                          }}
-                        >
-                          <X size={150} weight="bold" className="text-[#F26A6A]" />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  
                   <h2 className="
-                    z-[1]
+                    relative z-[1]
                     max-w-[90%]
                     text-[28px] font-[700] text-[#111] text-center
                   ">
+                    
+                    <div className="
+                      absolute bottom-[100%] left-[50%] z-[-1] translate-x-[-50%]
+                      text-[12px] font-[400] text-[#7B7B7B]
+                    ">
+                      <MemorizationStatus repetition={testQuestions[progressIndex].repetition} interval={testQuestions[progressIndex].interval} ef={testQuestions[progressIndex].ef} />
+                    </div>
+                    <div className="
+                      absolute top-[50%] left-[50%] z-[-1]
+                      translate-x-[-50%] translate-y-[-50%]
+                    ">
+                      <AnimatePresence>
+                        {isCorrect === true && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 500,
+                              damping: 20,
+                              duration: 0.4
+                            }}
+                          >
+                            <Circle size={150} weight="bold" className="text-[#39E859]" />
+                          </motion.div>
+                        )}
+                        {isCorrect === false && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 500,
+                              damping: 20,
+                              duration: 0.4
+                            }}
+                          >
+                            <X size={150} weight="bold" className="text-[#F26A6A]" />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                     {testQuestions[progressIndex].origin}
                   </h2>
                   <motion.button 

@@ -19,7 +19,6 @@ export const useTestSetupBottomSheet = () => {
   }, [handleBack]);
 
   const handleStartTest = useCallback((data) => {
-    console.log("data", data);
     handleBottomSheetReset();
     handleFullSheetReset();
     navigate('/take-test', { state: { data } });

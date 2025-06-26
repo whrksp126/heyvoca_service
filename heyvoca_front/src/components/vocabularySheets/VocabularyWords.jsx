@@ -1,45 +1,12 @@
 import React, { useState } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 
 import { useFullSheet } from '../../context/FullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useWordSetBottomSheet } from './WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 import UpdateVocabularyWords from './UpdateVocabularyWords';
-import MemorizationStatus from './MemorizationStatus';
-
-function getMemorizationStatus({ repetition, interval, ef }) {
-  // ✅ 미학습 상태 먼저 체크
-  if (repetition === 0 && interval === 0) {
-    return {
-      percent: 0,
-      Icon: <EggCrack size={10} weight="fill" />,
-    };
-  }
-
-  // 암기율 계산
-  let score = 0;
-  score += repetition * 15;
-  score += interval * 2;
-  score += (ef - 1.3) * 20;
-
-  const percent = Math.max(0, Math.min(100, Math.round(score)));
-
-  // 아이콘 분기
-  let Icon, label;
-  if (percent < 30) {
-    Icon = <Leaf size={10} weight="fill" />;
-  } else if (percent < 70) {
-    Icon = <Plant size={10} weight="fill" />;
-  } else {
-    Icon = <Carrot size={10} weight="fill" />;
-  }
-
-  return { percent, Icon };
-}
-
 
 const VocabularyWords = ({ id }) => {
 

@@ -3,6 +3,7 @@ import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
+import MemorizationStatus from "../common/MemorizationStatus";
 
 export const useProblemDataBottomSheet = () => {
   const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
@@ -49,7 +50,7 @@ const ProblemDataBottomSheet = ({onCancel, options}) => {
         overflow-y-auto
       ">
         {options.map((option, index) => (
-        <div key={`${option.id}-${index}`}
+        <div key={`option_${option.id}_${index}`}
           className="
             flex flex-col gap-[10px]
           "
@@ -57,6 +58,7 @@ const ProblemDataBottomSheet = ({onCancel, options}) => {
           <div className="
             flex flex-col gap-[10px]
           ">
+            <MemorizationStatus repetition={option.repetition} interval={option.interval} ef={option.ef} />
             <h2 className="text-[20px] font-[700]">{option.origin}</h2>
             <p className="text-[14px] font-[400]">{option.meanings.join(", ")}</p>
           </div>
