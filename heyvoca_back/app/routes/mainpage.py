@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import mainpage_bp
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 
@@ -11,7 +11,7 @@ import io
 import json
 
 
-@mainpage_bp.route('/user_goals')
+@mainpage_bp.route('/user_goals', methods=['GET'])
 @login_required
 def api_user_goals():
     user_id = current_user.id
@@ -30,7 +30,7 @@ def api_user_goals():
     return {'code' : 200, 'data' : data}
 
 
-@mainpage_bp.route('/user_dates')
+@mainpage_bp.route('/user_dates', methods=['GET'])
 @login_required
 def api_user_dates():
     user_id = current_user.id
@@ -102,3 +102,84 @@ def api_user_dates():
     return {'code' : 200, 'data' : dummy}
 
 
+@mainpage_bp.route('/gem_cnt', methods=['GET'])
+@login_required
+def api_gem_cnt():
+    user_id = current_user.id
+
+    user_gem_cnt = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
+
+    return {'code' : 200, 'data' : user_gem_cnt}
+
+
+@mainpage_bp.route('user_recent_study_data', methods=['GET'])
+@login_required
+def api_user_recent_study_data():
+    user_id = current_user.id
+    recent_data = db.session.query(UserRecentStudy).filter(UserRecentStudy.user_id == user_id).first()
+
+    if recent_data:
+        data = {
+            'id': recent_data.id,
+            'study_data': json.loads(recent_data.study_data),
+            'status': recent_data.status,
+            'progress_index': recent_data.progress_index,
+            'created_at': recent_data.created_at + timedelta(hours=9),
+            'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
+        }
+    else:
+        data = {
+            'id': None,
+            'study_data': None,
+            'status': None,
+            'progress_index': None,
+            'created_at': None,
+            'updated_at': None,
+        }
+
+    return {'code': 200, 'data': data}
+
+
+@mainpage_bp.route('user_recent_study_create_update', methods=['POST'])
+@login_required
+def api_user_recent_study_create_update():
+    data = request.json
+    id = data['id']
+    study_data = data['study_data']
+    status = data['status']
+    progress_index = data['progress_index']
+
+    user_id = current_user.id
+
+    # update
+    if id is not None:
+        recent_data = db.session.query(UserRecentStudy)\
+                            .filter(UserRecentStudy.id == id)\
+                            .filter(UserRecentStudy.user_id == user_id)\
+                            .first()
+        recent_data.study_data = json.dumps(study_data)
+        recent_data.status = status
+        recent_data.progress_index = progress_index
+        recent_data.updated_at = datetime.utcnow()
+
+        db.session.commit()
+    
+    # create
+    else:
+        recent_data = UserRecentStudy(
+            user_id=user_id, study_data=json.dumps(study_data), status=status,
+            progress_index=progress_index, updated_at=None
+        )
+        db.session.add(recent_data)
+        db.session.commit()
+
+    data = {
+        'id': recent_data.id,
+        'study_data': json.loads(recent_data.study_data),
+        'status': recent_data.status,
+        'progress_index': recent_data.progress_index,
+        'created_at': recent_data.created_at + timedelta(hours=9),
+        'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
+    }
+
+    return {'code': 200, 'data': data}
