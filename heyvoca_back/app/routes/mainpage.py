@@ -14,6 +14,7 @@ import json
 @mainpage_bp.route('/user_goals', methods=['GET'])
 @login_required
 def api_user_goals():
+    print("#####################3 api_user_goals")
     user_id = current_user.id
     goals = db.session.query(UserGoals.current_value, GoalType.type, Goals.badge_img, Goals.level)\
                     .join(Goals, UserGoals.goal_id == Goals.id)\
@@ -33,49 +34,49 @@ def api_user_goals():
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @login_required
 def api_user_dates():
-    user_id = current_user.id
+    # user_id = current_user.id
 
-    kst_now = datetime.utcnow() + timedelta(hours=9)
-    today = kst_now.date()
-    this_sunday = today - timedelta(days=today.weekday() + 1 if today.weekday() != 6 else 0)
-    this_saturday = this_sunday + timedelta(days=6)
+    # kst_now = datetime.utcnow() + timedelta(hours=9)
+    # today = kst_now.date()
+    # this_sunday = today - timedelta(days=today.weekday() + 1 if today.weekday() != 6 else 0)
+    # this_saturday = this_sunday + timedelta(days=6)
 
-    checkins = db.session.query(CheckIn)\
-                .filter(
-                    and_(
-                        CheckIn.user_id == user_id,
-                        CheckIn.check_date >= this_sunday,
-                        CheckIn.check_date <= this_saturday
-                    )
-                ).all()
+    # checkins = db.session.query(CheckIn)\
+    #             .filter(
+    #                 and_(
+    #                     CheckIn.user_id == user_id,
+    #                     CheckIn.check_date >= this_sunday,
+    #                     CheckIn.check_date <= this_saturday
+    #                 )
+    #             ).all()
     
-    checkin_dict = {checkin.check_date: checkin for checkin in checkins}
-    days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-    data = []
-    for i in range(7):
-        date = this_sunday + timedelta(days=i)
-        checkin = checkin_dict.get(date)
-        data.append({
-            'date': days[i],
-            'attend': bool(checkin.attendence_check) if checkin else False,
-            'daily_mission': bool(checkin.study_complete) if checkin else False,
-        })
+    # checkin_dict = {checkin.check_date: checkin for checkin in checkins}
+    # days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    # data = []
+    # for i in range(7):
+    #     date = this_sunday + timedelta(days=i)
+    #     checkin = checkin_dict.get(date)
+    #     data.append({
+    #         'date': days[i],
+    #         'attend': bool(checkin.attendence_check) if checkin else False,
+    #         'daily_mission': bool(checkin.study_complete) if checkin else False,
+    #     })
 
     dummy = [
         {
             'date': 'SUN',
             'attend': True,
-            'daily_mission': True,
+            'daily_mission': False,
         },
         {
             'date': 'MON',
             'attend': True,
-            'daily_mission': True,
+            'daily_mission': False,
         },
         {
             'date': 'TUE',
             'attend': True,
-            'daily_mission': True,
+            'daily_mission': False,
         },
         {
             'date': 'WED',
@@ -90,7 +91,7 @@ def api_user_dates():
         {
             'date': 'FRI',
             'attend': False,
-            'daily_mission': True,
+            'daily_mission': False,
         },
         {
             'date': 'SAT',
