@@ -8,6 +8,7 @@ import { updateSM2 } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 
 const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
+
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
   const [progressBarIndex, setProgressBarIndex] = useState(0);

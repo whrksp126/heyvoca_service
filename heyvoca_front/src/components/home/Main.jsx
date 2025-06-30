@@ -10,9 +10,6 @@ import { useUser } from '../../context/UserContext';
 
 const Main = () => {
   const { userMainPage } = useUser();
-
-  console.log("userMainPage,", userMainPage);
-
   const handleTodayStudyButtonClick = () => {
     console.log('오늘의 학습 버튼 클릭');
   }

@@ -11,18 +11,49 @@ export const useTestSetupBottomSheet = () => {
   const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
   const { handleReset: handleFullSheetReset } = useFullSheet();
   const navigate = useNavigate();
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, updateRecentStudy } = useVocabulary();
   const [questionType, setQuestionType] = useState('multipleChoice');
   const [vocabularySheetId, setVocabularySheetId] = useState(null);
   const handleClose = useCallback(() => {
     handleBack();
   }, [handleBack]);
 
-  const handleStartTest = useCallback((data) => {
-    handleBottomSheetReset();
-    handleFullSheetReset();
-    navigate('/take-test', { state: { data } });
-  }, [questionType, vocabularySheetId, handleBack, navigate]);
+  const handleStartTest = useCallback(async (data) => {
+    try {
+      // 먼저 updateRecentStudy를 호출
+      await updateRecentStudy({
+        study_data: null,
+        status: null,
+        progress_index: 0,
+        updated_at: new Date().toISOString(),
+      });
+      
+      // 그 다음에 navigate 호출
+      handleBottomSheetReset();
+      handleFullSheetReset();
+      navigate('/take-test', { 
+        state: { 
+          data: {
+            ...data,
+            vocabularySheetId 
+          }
+        } 
+      });
+    } catch (error) {
+      console.error('Failed to update recent study:', error);
+      // 에러가 발생해도 테스트는 시작할 수 있도록
+      handleBottomSheetReset();
+      handleFullSheetReset();
+      navigate('/take-test', { 
+        state: { 
+          data: {
+            ...data,
+            vocabularySheetId 
+          }
+        } 
+      });
+    }
+  }, [questionType, vocabularySheetId, handleBack, navigate, updateRecentStudy, handleBottomSheetReset, handleFullSheetReset]);
 
   // const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
   const showTestSetupBottomSheet = useCallback(({id:vocabularySheetId, maxVocabularyCount}) => {
@@ -32,18 +63,14 @@ export const useTestSetupBottomSheet = () => {
       <TestSetupBottomSheet 
         maxVocabularyCount={maxVocabularyCount}
         onCancel={handleClose}
-        onSet={(data) => handleStartTest({
-          ...data,
-          // questionType,
-          vocabularySheetId 
-        })}
+        onSet={(data) => handleStartTest(data)}
       />,
       {
         isBackdropClickClosable: false,
         isDragToCloseEnabled: true
       }
     );
-  }, [handleClose]);
+  }, [handleClose, handleStartTest, pushBottomSheet]);
 
   return {
     showTestSetupBottomSheet

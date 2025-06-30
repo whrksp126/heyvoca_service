@@ -9,7 +9,7 @@ export const VocabularyProvider = ({ children }) => {
   const [bookStore, setBookStore] = useState([]);
   const [isBookStoreLoading, setIsBookStoreLoading] = useState(true);
   const [errorBookStore, setErrorBookStore] = useState(null);
-  const [recentStudy, setRecentStudy] = useState([]);
+  const [recentStudy, setRecentStudy] = useState({});
   const [isRecentStudyLoading, setIsRecentStudyLoading] = useState(true);
   const [errorRecentStudy, setErrorRecentStudy] = useState(null);
 
@@ -326,7 +326,7 @@ export const VocabularyProvider = ({ children }) => {
   const fetchRecentStudy = useCallback(async () => {
     try {
       setIsRecentStudyLoading(true);
-      const url = `${backendUrl}/user_voca_book/recent_study`;
+      const url = `${backendUrl}/mainpage/user_recent_study_data`;
       const method = 'GET';
       const fetchData = {};
       const result = await fetchDataAsync(url, method, fetchData);
@@ -360,12 +360,11 @@ export const VocabularyProvider = ({ children }) => {
   }, []);
 
   // 최근 학습 데이터 수정
-  const updateRecentStudy = useCallback(async (id, updates) => {
+  const updateRecentStudy = useCallback(async (updates) => {
     try {
-      const url = `${backendUrl}/user_voca_book/recent_study/update`;
-      const method = 'PATCH';
+      const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
+      const method = 'POST';
       const fetchData = {
-        id: id,
         ...updates,
       };
       const result = await fetchDataAsync(url, method, fetchData);
@@ -434,6 +433,7 @@ export const VocabularyProvider = ({ children }) => {
     recentStudy,
     isRecentStudyLoading,
     errorRecentStudy,
+    getRecentStudy,
     fetchRecentStudy,
     addRecentStudy,
     updateRecentStudy,

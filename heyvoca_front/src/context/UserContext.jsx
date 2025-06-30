@@ -18,7 +18,6 @@ export const UserProvider = ({ children }) => {
         const fetchData = {};
         const result = await fetchDataAsync(url, method, fetchData);
         if(result.code == 200){
-          console.log(result.data);
           userMainPageData.dates = result.data;
         }
       }
@@ -28,7 +27,6 @@ export const UserProvider = ({ children }) => {
         const fetchData = {};
         const result = await fetchDataAsync(url, method, fetchData);
         if(result.code == 200){
-          console.log(result.data);
           userMainPageData.goals = result.data;
         }
       }
