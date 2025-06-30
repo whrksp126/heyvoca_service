@@ -21,12 +21,12 @@ export const useTestSetupBottomSheet = () => {
   const handleStartTest = useCallback(async (data) => {
     try {
       // 먼저 updateRecentStudy를 호출
-      await updateRecentStudy({
-        study_data: null,
-        status: null,
-        progress_index: 0,
-        updated_at: new Date().toISOString(),
-      });
+      // await updateRecentStudy({
+      //   study_data: null,
+      //   status: null,
+      //   progress_index: 0,
+      //   updated_at: new Date().toISOString(),
+      // });
       
       // 그 다음에 navigate 호출
       handleBottomSheetReset();
