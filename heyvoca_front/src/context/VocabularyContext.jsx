@@ -9,7 +9,7 @@ export const VocabularyProvider = ({ children }) => {
   const [bookStore, setBookStore] = useState([]);
   const [isBookStoreLoading, setIsBookStoreLoading] = useState(true);
   const [errorBookStore, setErrorBookStore] = useState(null);
-  const [recentStudy, setRecentStudy] = useState([]);
+  const [recentStudy, setRecentStudy] = useState({});
   const [isRecentStudyLoading, setIsRecentStudyLoading] = useState(true);
   const [errorRecentStudy, setErrorRecentStudy] = useState(null);
 
@@ -396,6 +396,7 @@ export const VocabularyProvider = ({ children }) => {
     recentStudy,
     isRecentStudyLoading,
     errorRecentStudy,
+    getRecentStudy,
     fetchRecentStudy,
     updateRecentStudy,
   };

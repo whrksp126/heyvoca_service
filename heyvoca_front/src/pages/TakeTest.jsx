@@ -9,6 +9,8 @@ const TakeTest = () => {
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
+
+
   useEffect(() => {
     if(isRecentStudyLoading || isVocabularySheetsLoading) return;
     if(recentStudy.status === "learning") {
@@ -27,8 +29,9 @@ const TakeTest = () => {
             .sort(() => Math.random() - 0.5)
             .slice(0, state.data.count)
             .map(word => {
-              const availableWords = otherWords.filter(w => w.id !== word.id);
-              const randomOptions = availableWords
+              console.log("word", word);
+              const otherWords = vocabularySheets.flatMap(sheet => sheet.words).filter(w => w.id !== word.id);
+              const randomOptions = otherWords
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 3);
               const options = [word, ...randomOptions];
@@ -40,7 +43,7 @@ const TakeTest = () => {
                 options: shuffledOptions,
                 resultIndex,
                 questionType: state.data.questionType,
-                vocabularySheetId: vocabularySheet.id,
+                vocabularySheetId: word.vocabularySheetId,
                 isCorrect: null,
               };
             });

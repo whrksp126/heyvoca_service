@@ -42,18 +42,14 @@ export const useTestSetupBottomSheet = () => {
       <TestSetupBottomSheet 
         maxVocabularyCount={maxVocabularyCount}
         onCancel={handleClose}
-        onSet={(data) => handleStartTest({
-          ...data,
-          // questionType,
-          vocabularySheetId 
-        })}
+        onSet={(data) => handleStartTest(data)}
       />,
       {
         isBackdropClickClosable: false,
         isDragToCloseEnabled: true
       }
     );
-  }, [handleClose]);
+  }, [handleClose, handleStartTest, pushBottomSheet]);
 
   return {
     showTestSetupBottomSheet
