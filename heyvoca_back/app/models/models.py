@@ -261,7 +261,7 @@ class UserRecentStudy(db.Model):
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
     study_data = Column(TEXT, nullable=True)
-    status = Column(String(36), nullable=False)
+    status = Column(String(36), nullable=True)
     progress_index = Column(Integer, nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
