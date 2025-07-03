@@ -326,7 +326,7 @@ export const VocabularyProvider = ({ children }) => {
   const fetchRecentStudy = useCallback(async () => {
     try {
       setIsRecentStudyLoading(true);
-      const url = `${backendUrl}/user_voca_book/recent_study`;
+      const url = `${backendUrl}/mainpage/user_recent_study_data`;
       const method = 'GET';
       const fetchData = {};
       const result = await fetchDataAsync(url, method, fetchData);
@@ -341,60 +341,22 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
-  // 최근 학습 데이터 추가
-  const addRecentStudy = useCallback(async (recentStudy) => {
+  // 최근 학습 데이터 수정
+  const updateRecentStudy = useCallback(async (recentStudy) => {
     try {
-      const newRecentStudyData = {
+      const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
+      const method = 'POST';
+      const fetchData = {
         ...recentStudy,
       };
-      const url = `${backendUrl}/user_voca_book/recent_study/create`;
-      const method = 'POST';
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
-      setRecentStudy(prev => [...prev, newRecentStudyData]);
-      return newRecentStudyData;
+      return result.data;
     } catch (err) {
       setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');
       throw err;
     }
   }, []);
-
-  // 최근 학습 데이터 수정
-  const updateRecentStudy = useCallback(async (id, updates) => {
-    try {
-      const url = `${backendUrl}/user_voca_book/recent_study/update`;
-      const method = 'PATCH';
-      const fetchData = {
-        id: id,
-        ...updates,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
-      if(result.code != 200) return alert('최근 학습 데이터를 수정하는데 실패했습니다.');
-      setRecentStudy(prev => prev.map(study => study.id === id ? { ...study, ...updates } : study));
-    } catch (err) {
-      setErrorRecentStudy('최근 학습 데이터를 수정하는데 실패했습니다.');
-      throw err;
-    }
-  }, []);
-  
-
-  // 최근 학습 데이터 삭제
-  const deleteRecentStudy = useCallback(async (id) => {
-    try {
-      const url = `${backendUrl}/user_voca_book/recent_study/delete`;
-      const method = 'DELETE';
-      const fetchData = {
-        id: id,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
-      if(result.code != 200) return alert('최근 학습 데이터를 삭제하는데 실패했습니다.');
-      setRecentStudy(prev => prev.filter(study => study.id !== id));
-    } catch (err) {
-      setErrorRecentStudy('최근 학습 데이터를 삭제하는데 실패했습니다.');
-      throw err;
-    }
-  }, []);
-
 
   // 앱 시작시 데이터 로드
   useEffect(() => {
@@ -435,9 +397,7 @@ export const VocabularyProvider = ({ children }) => {
     isRecentStudyLoading,
     errorRecentStudy,
     fetchRecentStudy,
-    addRecentStudy,
     updateRecentStudy,
-    deleteRecentStudy,
   };
 
   return (

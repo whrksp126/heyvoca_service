@@ -11,18 +11,28 @@ export const useTestSetupBottomSheet = () => {
   const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
   const { handleReset: handleFullSheetReset } = useFullSheet();
   const navigate = useNavigate();
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, recentStudy, updateRecentStudy } = useVocabulary();
   const [questionType, setQuestionType] = useState('multipleChoice');
   const [vocabularySheetId, setVocabularySheetId] = useState(null);
   const handleClose = useCallback(() => {
     handleBack();
   }, [handleBack]);
 
-  const handleStartTest = useCallback((data) => {
+  const handleStartTest = useCallback(async (data) => {
+    if(recentStudy.status === "learning") {
+      await updateRecentStudy({
+        ...recentStudy,
+        progress_index : null,
+        status: null,
+        study_data: null,
+        updated_at : null,
+        created_at : null,
+      });
+    }
     handleBottomSheetReset();
     handleFullSheetReset();
     navigate('/take-test', { state: { data } });
-  }, [questionType, vocabularySheetId, handleBack, navigate]);
+  }, [recentStudy, questionType, vocabularySheetId, handleBack, navigate]);
 
   // const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
   const showTestSetupBottomSheet = useCallback(({id:vocabularySheetId, maxVocabularyCount}) => {

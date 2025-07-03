@@ -5,18 +5,25 @@ import { useLocation } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 const TakeTest = () => {
   const { state } = useLocation();
-  const { vocabularySheets } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy } = useVocabulary();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
   useEffect(() => {
-    if(vocabularySheets){
-      let testQuestions = [];
+    if(isRecentStudyLoading || isVocabularySheetsLoading) return;
+    if(recentStudy.status === "learning") {
+      // 학습 중 이면 기존 학습 기록 그대로 적용해서 학습 시작
+      setTestQuestions(recentStudy.study_data);
+      setProgressIndex(recentStudy.progress_index);
+      setIsTestQuestionsSetting(false);
+    }else{
+      // 학습 기록이 없으면 새로운 학습 데이터 생성 후 학습 시작
+      let tempTestQuestions = [];
       if(state.data.vocabularySheetId){
         const vocabularySheet = vocabularySheets.find(vocabularySheet => vocabularySheet.id === state.data.vocabularySheetId);
         if(vocabularySheet){
           const otherWords = vocabularySheets.flatMap(sheet => sheet.words);
-          testQuestions = vocabularySheet.words
+          tempTestQuestions = vocabularySheet.words
             .sort(() => Math.random() - 0.5)
             .slice(0, state.data.count)
             .map(word => {
@@ -39,8 +46,7 @@ const TakeTest = () => {
             });
         }
       }else{
-        
-        testQuestions = vocabularySheets.flatMap(vocabularySheet => 
+        tempTestQuestions = vocabularySheets.flatMap(vocabularySheet => 
           vocabularySheet.words.map(word => ({
             ...word,
             vocabularySheetId: vocabularySheet.id
@@ -68,10 +74,18 @@ const TakeTest = () => {
             };
           });
       }
-      setTestQuestions(testQuestions);
+      updateRecentStudy({
+        ...recentStudy,
+        progress_index : 0,
+        status: "learning",
+        study_data: tempTestQuestions,
+        updated_at : new Date().toISOString(),
+        created_at : new Date().toISOString(),
+      });
+      setTestQuestions(tempTestQuestions);
       setIsTestQuestionsSetting(false);
     }
-  }, []);
+  }, [isRecentStudyLoading, isVocabularySheetsLoading]);
 
   if(isTestQuestionsSetting){
     return (
