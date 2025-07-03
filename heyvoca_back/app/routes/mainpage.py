@@ -9,6 +9,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 import io
 import json
+from uuid import UUID
+
 
 
 @mainpage_bp.route('/user_goals', methods=['GET'])
