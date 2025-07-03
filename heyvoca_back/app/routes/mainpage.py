@@ -157,7 +157,7 @@ def api_user_recent_study_create_update():
     # update
     if id is not None:
         recent_data = db.session.query(UserRecentStudy)\
-                            .filter(UserRecentStudy.id == id)\
+                            .filter(UserRecentStudy.id == UUID(id))\
                             .filter(UserRecentStudy.user_id == user_id)\
                             .first()
         recent_data.study_data = study_data
