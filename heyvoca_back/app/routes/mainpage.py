@@ -124,7 +124,7 @@ def api_user_recent_study_data():
     if recent_data:
         data = {
             'id': recent_data.id,
-            'study_data': json.loads(recent_data.study_data),
+            'study_data': json.loads(recent_data.study_data) if recent_data.study_data is not None else None,
             'status': recent_data.status,
             'progress_index': recent_data.progress_index,
             'created_at': recent_data.created_at + timedelta(hours=9),
