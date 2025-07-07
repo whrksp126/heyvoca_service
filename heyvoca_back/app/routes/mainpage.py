@@ -151,6 +151,7 @@ def api_user_recent_study_create_update():
     study_data = data['study_data']
     status = data['status']
     progress_index = data['progress_index']
+    type = data['type']
 
     user_id = current_user.id
 
@@ -165,6 +166,7 @@ def api_user_recent_study_create_update():
         recent_data.study_data = study_data
         recent_data.status = status
         recent_data.progress_index = progress_index
+        recent_data.type = type
         recent_data.updated_at = datetime.utcnow()
 
         db.session.commit()
@@ -173,7 +175,7 @@ def api_user_recent_study_create_update():
     else:
         recent_data = UserRecentStudy(
             user_id=user_id, study_data=study_data, status=status,
-            progress_index=progress_index, updated_at=None
+            progress_index=progress_index, type=type, updated_at=None
         )
         db.session.add(recent_data)
         db.session.commit()
@@ -183,6 +185,7 @@ def api_user_recent_study_create_update():
         'study_data': json.loads(recent_data.study_data) if recent_data.study_data is not None else None,
         'status': recent_data.status,
         'progress_index': recent_data.progress_index,
+        'type': recent_data.type,
         'created_at': recent_data.created_at + timedelta(hours=9),
         'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
     }

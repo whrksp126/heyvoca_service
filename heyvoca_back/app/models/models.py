@@ -263,14 +263,16 @@ class UserRecentStudy(db.Model):
     study_data = Column(TEXT, nullable=True)
     status = Column(String(36), nullable=True)
     progress_index = Column(Integer, nullable=True)
+    type = Column(String(64), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, user_id, study_data, progress_index, status, updated_at):
+    def __init__(self, user_id, study_data, progress_index, status, type, updated_at):
         self.user_id = user_id
         self.study_data = study_data
         self.progress_index = progress_index
         self.status = status
+        self.type = type
         self.updated_at = updated_at
 
 
