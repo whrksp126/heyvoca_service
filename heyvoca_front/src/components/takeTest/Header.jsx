@@ -2,8 +2,10 @@ import React from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useVocabulary } from '../../context/VocabularyContext';
 
 const Header = () => {
+  const { recentStudy } = useVocabulary();
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -50,7 +52,7 @@ const Header = () => {
       </div>
       <div className="center">
         <h2 className='text-[18px] font-[700] leading-[21px]'>
-          테스트
+          {recentStudy.type ===  "test" ? "학습" : "테스트"}
         </h2>
       </div>
       <div className="right">

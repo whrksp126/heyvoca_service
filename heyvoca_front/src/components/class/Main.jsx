@@ -6,7 +6,7 @@ import VocabularySheet from './VocabularySheet';
 import TestSetup from './TestSetup';
 
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
-import { Check } from "@phosphor-icons/react";
+import { Brain, Lightbulb } from "@phosphor-icons/react";
 
 const Main = () => {
   // const word = {
@@ -34,17 +34,20 @@ const Main = () => {
 
 
   const handleStartClick = (type) => {
-    if(type === 'all') {
-      const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
-      if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
-      pushFullSheet({
-        component: <TestSetup maxVocabularyCount={maxVocabularyCount} />
-      });
-    } else {
-      pushFullSheet({
-        component: <VocabularySheet />
-      });
-    }
+    pushFullSheet({
+      component: <VocabularySheet type={type} />
+    });
+    // if(type === 'all') {
+    //   const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
+    //   if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
+    //   pushFullSheet({
+    //     component: <TestSetup maxVocabularyCount={maxVocabularyCount} />
+    //   });
+    // } else {
+    //   pushFullSheet({
+    //     component: <VocabularySheet />
+    //   });
+    // }
   }
 
   return (
@@ -75,9 +78,9 @@ const Main = () => {
                 text-[#fff]
                 bg-[#FF8DD4]
               ">
-                <Check weight="bold" size={12} />
+                <Brain size={12} weight="fill" />
               </div>
-              학습하기
+              학습
             </h2>
             <p 
               className="
@@ -94,11 +97,57 @@ const Main = () => {
               text-[#fff] text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
-            onClick={() => handleStartClick('selected')}
+            onClick={() => handleStartClick('test')}
           >
             시작하기
           </motion.button>
         </li>
+        <li className="
+          flex flex-col items-center justify-center gap-[30px]
+          p-[30px] pt-[40px]
+          border-[1px] border-[#CD8DFF] rounded-[12px]
+          bg-[#F6EFFF]
+        ">
+          <div className="
+            flex flex-col items-center justify-center gap-[10px]
+          ">
+            <h2 className="
+              flex items-center gap-[8px]
+              text-[22px] font-[700] text-[#111]
+            ">
+              <div className="
+                flex items-center justify-center
+                w-[22px] h-[22px]
+                rounded-[5px]
+                text-[#fff]
+                bg-[#CD8DFF]
+              ">
+                <Lightbulb size={12} weight="fill" />
+              </div>
+              테스트
+            </h2>
+            <p 
+              className="
+                text-[13px] font-[400] text-[#111] text-center
+              "
+            >나의 단어 실력을<br />테스트로 점검해보세요!</p>
+          </div>
+          <motion.button 
+            className="
+              flex items-center justify-center
+              w-full h-[45px]
+              rounded-[8px]
+              bg-[#CD8DFF]
+              text-[#fff] text-[17px] font-[700]
+            "
+            whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
+            onClick={() => handleStartClick('exam')}
+          >
+            시작하기
+          </motion.button>
+        </li>
+
+        {/* 
         <li className="
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
@@ -155,6 +204,7 @@ const Main = () => {
             시작하기
           </motion.button>
         </li>
+        */}
         
       </ul>
     </motion.div>

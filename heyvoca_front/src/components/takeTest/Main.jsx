@@ -6,24 +6,23 @@ import { getTextSound } from '../../utils/common';
 import { useProblemDataBottomSheet } from './ProblemDataBottomSheet';
 import { updateSM2 } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
-
-const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
+ 
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex }) => {
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
-  const [progressBarIndex, setProgressBarIndex] = useState(0);
+  const [progressBarIndex, setProgressBarIndex] = useState(progressIndex || 0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
   const { showProblemDataBottomSheet } = useProblemDataBottomSheet();
-  const { updateWord } = useVocabulary();
+  const { updateWord, updateRecentStudy, recentStudy } = useVocabulary();
   // 문제가 변경될 때마다 텍스트 읽기
   useEffect(() => {
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
-      console.log("question", question);
       const textToRead = question.origin;
       const lang =  "en";
       getTextSound(textToRead, lang);
@@ -70,11 +69,22 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
       updateWord(sheetId, wordId, newState).then(()=>{
         setIsFetching(false);
       });
-      
-
       if(progressIndex === testQuestions.length-1){ // 마지막 문제
-        
+        await updateRecentStudy({
+          ...recentStudy,
+          progress_index : null,
+          status: "end",
+          study_data: testQuestions,
+          updated_at : new Date().toISOString(),
+        });
       }else{
+        await updateRecentStudy({
+          ...recentStudy,
+          progress_index : progressIndex + 1,
+          status: "learning",
+          study_data: testQuestions,
+          updated_at : new Date().toISOString(),
+        });
         
         setProgressIndex(progressIndex + 1);
         setIsCorrect(null);
@@ -82,6 +92,8 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
         setIsAnswered(false);
         setIsStay(false);
       }
+
+
       return;
     };
     if (isAnswered) return;
@@ -93,8 +105,12 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
     // 정답/오답 설정과 동시에 프로그레스바 증가
     if(resultIndex === userSelected){
       setIsCorrect(true);
+      testQuestions[progressIndex].isCorrect = true;
+      testQuestions[progressIndex].userResultIndex = userSelected;
     }else{
       setIsCorrect(false);
+      testQuestions[progressIndex].isCorrect = false;
+      testQuestions[progressIndex].userResultIndex = userSelected;
     }
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
@@ -110,7 +126,6 @@ const Main = ({ testQuestions, progressIndex, setProgressIndex }) => {
 
   const handleClickProblemData = () => {
     const question = testQuestions[progressIndex];
-    console.log(question);
     showProblemDataBottomSheet({
       options: question.options
     });

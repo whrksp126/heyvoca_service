@@ -351,6 +351,7 @@ export const VocabularyProvider = ({ children }) => {
       };
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
+      setRecentStudy(result.data);
       return result.data;
     } catch (err) {
       setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');

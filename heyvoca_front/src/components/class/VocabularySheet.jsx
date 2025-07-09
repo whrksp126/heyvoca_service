@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { useTestSetupBottomSheet } from './TestSetupBottomSheet';
 
-const VocabularySheet = () => {
+const VocabularySheet = ({type : testType}) => {
   const { handleBack } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { pushFullSheet } = useFullSheet();
@@ -26,11 +26,21 @@ const VocabularySheet = () => {
   );
 
   const handleCardClick = (id, index) => {
-    const words = sortedVocabularySheets.find(vocabularySheet => vocabularySheet.id === id).words;
-    const vocabularySheetLength = words.slice(0, MAX_TEST_VOCABULARY_COUNT).length;
-    if(vocabularySheetLength < MIN_TEST_VOCABULARY_COUNT) return alert(`단어장에 단어가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
-    const maxVocabularyCount = Math.min(vocabularySheetLength, MAX_TEST_VOCABULARY_COUNT);
-    showTestSetupBottomSheet({id, maxVocabularyCount});
+    if(id === "all") {
+      const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
+      if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`); 
+      showTestSetupBottomSheet({id, maxVocabularyCount, testType});
+      return;
+    }else{
+      const words = sortedVocabularySheets.find(vocabularySheet => vocabularySheet.id === id).words;
+      const vocabularySheetLength = words.slice(0, MAX_TEST_VOCABULARY_COUNT).length;
+      if(vocabularySheetLength < MIN_TEST_VOCABULARY_COUNT) return alert(`단어장에 단어가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
+      const maxVocabularyCount = Math.min(vocabularySheetLength, MAX_TEST_VOCABULARY_COUNT);
+      showTestSetupBottomSheet({id, maxVocabularyCount, testType});
+      
+    }
+
+
 
     // pushFullSheet({
     //   component: <TestSetup vocabularySheetId={id} maxVocabularyCount={maxVocabularyCount} />
@@ -89,10 +99,52 @@ const VocabularySheet = () => {
       <ul 
         className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto"
       >
+            <motion.li
+              style={{
+                background: 'linear-gradient(160deg,rgba(255, 239, 250, 1) 10%, rgba(246, 239, 255, 1) 50%, rgba(246, 239, 255, 1) 90%)',
+              }}
+              className="
+                flex flex-col gap-[15px]
+                p-[20px]
+                rounded-[12px]
+                cursor-pointer
+
+              "
+              onClick={() => handleCardClick("all")}
+              whileTap={{ scale: 0.96}}
+              whileHover={{ scale: 1.04}}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <div 
+              className="
+                top
+                flex items-center justify-between
+                w-full
+              "
+            >
+              <h2 className="
+              flex items-center gap-[10px]
+              text-[16px] font-[700] text-[#111]
+            ">
+              <div 
+                className="
+                  flex items-center justify-center
+                  w-[22px] h-[22px]
+                  rounded-[5px]
+                  text-[#fff] text-[10px] font-[700]
+                "
+                style={{ background: 'linear-gradient(160deg,rgba(255, 141, 212, 1) 10%, rgba(205, 141, 255, 1) 50%, rgba(116, 213, 255, 1) 90%)' }}
+              >
+                All
+              </div>
+              전체 단어장
+            </h2>
+            </div>
+          </motion.li>
         {sortedVocabularySheets.map((item) => {
           const progress = item.total === 0 ? 0 : Math.round((item.memorized/item.total) * 100);
           return (
-            <motion.li
+          <motion.li
               key={item.id}
               style={{ backgroundColor: item.color.background }}
               className="
