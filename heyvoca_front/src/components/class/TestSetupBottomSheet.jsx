@@ -20,7 +20,7 @@ export const useTestSetupBottomSheet = () => {
 
   const handleStartTest = useCallback(async (data, testType) => {
     if(recentStudy.status === "learning") {
-      console.log("여기를 통과함>>>>>");
+
     }
     await updateRecentStudy({
       ...recentStudy,
@@ -33,7 +33,6 @@ export const useTestSetupBottomSheet = () => {
     });
     handleBottomSheetReset();
     handleFullSheetReset();
-    console.log("여기를 통과함");
     navigate('/take-test', { state: { data, testType } });
   }, [recentStudy, questionType, vocabularySheetId, handleBack, navigate]);
 

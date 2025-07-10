@@ -10,6 +10,7 @@ import VocabularySheets from './pages/VocabularySheets';
 import BookStore from './pages/BookStore';
 import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
+import StudyResult from './components/takeTest/StudyResult';
 
 import MyPage from './pages/mypage/MyPage';
 import Account from './pages/mypage/Account';
@@ -37,7 +38,8 @@ const AppLayout = () => {
       <Route path="/book-store" element={<BookStore />} />
       <Route path="/class" element={<Class />} />
       <Route path="/take-test" element={<TakeTest />} />
-      
+      <Route path="/take-test/result" element={<StudyResult />} />
+
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/account" element={<Account />} />
       <Route path="/mypage/theme" element={<Theme />} />

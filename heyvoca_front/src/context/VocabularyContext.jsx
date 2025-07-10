@@ -133,6 +133,29 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 단어장 수정(로컬만 업데이트)
+  const updateVocabularySheetState = useCallback((id, updates) => {
+    setVocabularySheets(prev => prev.map(sheet => sheet.id === id ? { ...sheet, ...updates, updatedAt: new Date().toISOString() } : sheet));
+  }, []);
+
+  // 단어장 수정(서버)
+  const updateVocabularySheetServer = useCallback(async (id) => {
+    try {
+      const updates = vocabularySheets.find(sheet => sheet.id === id);
+      const url = `${backendUrl}/user_voca_book/update`;
+      const method = 'PATCH';
+      const fetchData = {
+        id: id, 
+        ...updates,
+      };
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
+    } catch (err) {
+      setErrorVocabularySheets('단어장 수정에 실패했습니다.');
+      throw err;
+    }
+  }, [vocabularySheets]);
+
   // 단어장 삭제
   const deleteVocabularySheet = useCallback(async (id) => {
     try {
@@ -192,6 +215,14 @@ export const VocabularyProvider = ({ children }) => {
       setErrorVocabularySheets('단어 수정에 실패했습니다.');
       throw err;
     }
+  }, [vocabularySheets]);
+
+  // 단어 수정(로컬만 업데이트)
+  const updateWordState = useCallback((sheetId, wordId, updates) => {
+    const copyVocabularySheet = getVocabularySheet(sheetId);
+    const updatedWord = { ...copyVocabularySheet.words.find(word => word.id === wordId), ...updates, updatedAt: new Date().toISOString() };
+    const copyWords = copyVocabularySheet.words.map(word => word.id === wordId ? updatedWord : word);
+    updateVocabularySheetState(sheetId, {words: copyWords});
   }, [vocabularySheets]);
 
   // 단어 삭제
@@ -359,6 +390,28 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 최근 학습 데이터 수정(로컬만 업데이트)
+  const updateRecentStudyState = useCallback((updates) => {
+    setRecentStudy(prev => ({ ...prev, ...updates}));
+  }, []);
+
+  // 최근 학습 데이터 수정(서버)
+  const updateRecentStudyServer = useCallback(async () => {
+    try {
+      const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
+      const method = 'POST';
+      const fetchData = {
+        ...recentStudy, 
+      };
+      const result = await fetchDataAsync(url, method, fetchData);
+      if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
+      return result.data;
+    } catch (err) {
+      setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');
+      throw err;
+    }
+  }, [recentStudy]);
+
   // 앱 시작시 데이터 로드
   useEffect(() => {
     fetchVocabularySheets();
@@ -375,10 +428,13 @@ export const VocabularyProvider = ({ children }) => {
     getVocabularySheet,
     addVocabularySheet,
     updateVocabularySheet,
+    updateVocabularySheetState,
+    updateVocabularySheetServer,
     deleteVocabularySheet,
     getWord,
     addWord,
     updateWord,
+    updateWordState,
     deleteWord,
     getFilteredVocabularySheets,
     getRecentVocabularySheets,
@@ -400,6 +456,8 @@ export const VocabularyProvider = ({ children }) => {
     getRecentStudy,
     fetchRecentStudy,
     updateRecentStudy,
+    updateRecentStudyState,
+    updateRecentStudyServer,
   };
 
   return (

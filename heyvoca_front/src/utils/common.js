@@ -162,3 +162,90 @@ export const updateSM2 = (state, q, today = new Date()) => {
 // //   interval: 1,
 // //   next_review: '2025-03-28'
 // // }
+
+/**
+ * 학습 패턴 분석 - 의심스러운 상황 감지
+ * @param {Object} wordState - 단어의 현재 상태
+ * @param {number} wordState.ef - 기억 용이도
+ * @param {number} wordState.repetition - 연속 정답 횟수
+ * @param {number} q - 사용자 평가 점수 (0-5)
+ * @returns {Object} - 분석 결과
+ */
+export const analyzeLearningPattern = (wordState, q) => {
+  const { ef, repetition } = wordState;
+  
+  // 의심스러운 패턴들
+  const suspiciousPatterns = {
+
+    // 실수로 틀렸을 가능성  
+    suspiciousMistake: {
+      condition: repetition >= 5 && q === 0,
+      message: "정말 이 단어가 기억나지 않나요?", 
+      icon: "WarningCircle",
+      reason: "연속 5번 이상 정답인데 갑자기 완전히 잊어버렸다고 함",
+      bgColor: "bg-[linear-gradient(180deg,rgba(230,255,244,0)_0%,rgba(230,255,244,.5)_10%,rgba(230,255,244,1)_30%,rgba(230,255,244,1)_100%)]",
+      btn : [
+        {
+          text: "기억이 잘 안나요",
+          color: "bg-[#ccc]",
+        },
+        {
+          text: "실수에요, 알고 있어요",
+          color: "bg-[#F26A6A]",
+        }
+      ]
+    },
+
+    // 찍어서 맞췄을 가능성
+    suspiciousGuess: {
+      condition: ef <= 1.5 && q === 5,
+      message: "정말 이 단어를 기억하나요?",
+      icon: "HandsClapping",
+      reason: "매우 어려운 단어(ef ≤ 1.5)인데 갑자기 완벽하게 기억한다고 함",
+      
+      bgColor: "bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]",
+      btn : [
+        {
+          text: "사실 몰랐어요",
+          color: "bg-[#ccc]",
+        },
+        {
+          text: "당연히 알고 있어요",
+          color: "bg-[#39E859]",
+        }
+      ]
+    }
+  };
+  
+  // 의심스러운 패턴 찾기
+  const detectedPatterns = Object.values(suspiciousPatterns).filter(
+    pattern => pattern.condition
+  );
+  
+  if (detectedPatterns.length > 0) {
+    // 가장 의심도가 높은 패턴 반환
+    const mostSuspicious = detectedPatterns.reduce((prev, current) => {
+      // ef가 낮을수록, repetition이 높을수록 더 의심스러움
+      const prevScore = (1.5 - prev.condition.ef) + (prev.condition.repetition || 0);
+      const currentScore = (1.5 - current.condition.ef) + (current.condition.repetition || 0);
+      return currentScore > prevScore ? current : prev;
+    });
+    
+    return {
+      isSuspicious: true,
+      message: mostSuspicious.message,
+      reason: mostSuspicious.reason,
+      btn: mostSuspicious.btn,  
+      bgColor: mostSuspicious.bgColor,
+      icon: mostSuspicious.icon,
+      confidence: "high"
+    };
+  }
+  
+  return {
+    isSuspicious: false,
+    message: "특이사항 없음",
+    reason: "정상적인 학습 패턴",
+    confidence: "normal"
+  };
+};

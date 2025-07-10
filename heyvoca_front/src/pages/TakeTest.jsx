@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import StudyResult from '../components/takeTest/StudyResult';
 const TakeTest = () => {
   const { state } = useLocation();
-  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState } = useVocabulary();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
-
+  const navigate = useNavigate();
+  // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
+  const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
 
   useEffect(() => {
     const initializeTest = async () => {
@@ -99,7 +101,77 @@ const TakeTest = () => {
     initializeTest();
   }, [isRecentStudyLoading, isVocabularySheetsLoading]);
 
-  
+  // 앱 종료 감지 (학습 중에만)
+  useEffect(() => {
+    let hasPageHideHandled = false;
+
+    const handlePageHide = async () => {
+      if(hasPageHideHandled) return;
+      hasPageHideHandled = true;
+      console.log('학습 중 페이지 숨김 감지');
+      await updateVocabularySheetAndRecentStudyData();
+      hasPageHideHandled = false;
+    };
+
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'hidden') {
+        if(hasPageHideHandled) return;
+        hasPageHideHandled = true;
+        console.log('학습 중 앱 백그라운드 전환 감지');
+        await updateVocabularySheetAndRecentStudyData();
+        hasPageHideHandled = false;
+      }
+    };
+
+    const handleBeforeUnload = async (event) => {
+      if(hasPageHideHandled) return;
+      hasPageHideHandled = true;
+      console.log('학습 중 앱 종료 감지');
+      await updateVocabularySheetAndRecentStudyData();
+      hasPageHideHandled = false;
+    };
+
+    
+
+    // 이벤트 리스너 등록
+    window.addEventListener('pagehide', handlePageHide);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // 컴포넌트 언마운트 시 정리
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [ ]);
+
+  // 
+  useEffect(() => {
+    const handleUpdateAndNavigate = async () => {
+      if(recentStudy.status === "end"){
+        await updateVocabularySheetAndRecentStudyData();
+        navigate("/take-test/result" , {state: {testQuestions: testQuestions}});
+      }
+    };
+    handleUpdateAndNavigate();
+    // eslint-disable-next-line
+  }, [recentStudy]);
+
+  // 학습 데이터 서버에 업데이트
+  const updateVocabularySheetAndRecentStudyData = async () => {
+    if(pendingUpdateSheetIds.size > 0){
+      // 학습 데이터 업데이트!
+      const sheetIds = Array.from(pendingUpdateSheetIds);
+      pendingUpdateSheetIds.clear();
+      await Promise.all(sheetIds.map(async sheetId => {
+        await updateVocabularySheetServer(sheetId);
+      }));
+
+      // 학습 기록 업데이트!
+      await updateRecentStudyServer();
+    }
+  };
 
   if(isTestQuestionsSetting){
     return (
@@ -109,9 +181,10 @@ const TakeTest = () => {
     );
   }else{
     if(recentStudy.status === "end"){
+      // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>
-          <StudyResult testQuestions={testQuestions} />
+          학습 결과 저장 중...
         </div>
       );
     }
@@ -119,7 +192,7 @@ const TakeTest = () => {
     return (
       <div>
         <Header />
-        <Main testQuestions={testQuestions} setTestQuestions={setTestQuestions} progressIndex={progressIndex} setProgressIndex={setProgressIndex} />
+        <Main testQuestions={testQuestions} setTestQuestions={setTestQuestions} progressIndex={progressIndex} setProgressIndex={setProgressIndex} setPendingUpdateSheetIds={setPendingUpdateSheetIds} />
       </div>
     );
   }
