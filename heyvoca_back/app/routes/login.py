@@ -200,6 +200,25 @@ def logout():
     return render_template('index.html')
 
 
+@login_bp.route("/logout/app", methods=['POST'])
+@login_required
+def logout_app():
+    # 세션에서 사용자 정보 제거
+    session.pop('access_token', None)
+    session.pop('user_id', None)
+    session.pop('os', None)
+    session.pop('oauth_state', None)
+    
+    # Flask-Login에서 사용자 로그아웃
+    logout_user()
+    
+    return jsonify({
+        'code': 200,
+        'message': '로그아웃이 성공적으로 완료되었습니다.',
+        'status': 'success'
+    }), 200
+
+
 @login_bp.route('/get_user_info')
 @login_required
 def get_user_info():

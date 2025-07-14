@@ -30,7 +30,7 @@ def get_user_voca_book_list():
         vocabook_dict['words'] = json.loads(user_voca_book.voca_list) if user_voca_book.voca_list else []
         vocabook_dict['color'] = json.loads(user_voca_book.color)
         vocabook_dict['total'] = user_voca_book.total_word_cnt
-        vocabook_dict['memorized'] = None       # TODO
+        vocabook_dict['memorized'] = user_voca_book.memorized_word_cnt
         vocabook_dict['createdAt'] = user_voca_book.created_at + datetime.timedelta(hours=9)
         vocabook_dict['updatedAt'] = user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else user_voca_book.created_at + datetime.timedelta(hours=9)
 
@@ -96,7 +96,7 @@ def update_user_voca_book():
         user_voca_book.voca_list = json.dumps(data['words'])
     if 'total' in data:
         user_voca_book.total_word_cnt = data['total']
-    if 'memorized' in data:
+    if 'memorized' in data and data['memorized'] is not None:
         user_voca_book.memorized_word_cnt = data['memorized']
 
     user_voca_book.updated_at = datetime.datetime.utcnow()
