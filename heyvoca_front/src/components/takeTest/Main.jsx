@@ -14,7 +14,7 @@ const iconComponentMap = {
   HandsClapping: <HandsClapping size={32} weight="fill" color="#39E859" />,
 }
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, testType }) => {
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
@@ -48,12 +48,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   }, [progressIndex]);
 
+  // 문제 선택지 선택 시
   const handleOptionClick = (index, option) => {
     if (isAnswered) return;
     if(userSelected === index) {
       setUserSelected(null);
     }else{
       setUserSelected(index);
+    }
+    if(testType === "exam") {
+      handleClickExamOption(index, option);
     }
   }
 
@@ -62,80 +66,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if(userSelected === null) return;
     if(isFetching) return;
     const timeTakenSec = Math.round((endTimeRef.current - startTimeRef.current) / 1000);
-    const testQuestion = testQuestions[progressIndex];
-
     if(isStay){
-      
-      
-      
-      const sheetId = testQuestions[progressIndex].vocabularySheetId;
-      const wordId = testQuestions[progressIndex].id;
-      setIsFetching(true);
-      // updateWord(sheetId, wordId, newState).then(()=>{
-      //   setIsFetching(false);
-      // });
-      updateWordState(sheetId, wordId, tempSm2);
-      setIsFetching(false);
-      setPendingUpdateSheetIds(prev => prev.add(sheetId));
-      if(progressIndex === testQuestions.length-1){ // 마지막 문제
-        updateRecentStudyState({
-          ...recentStudy,
-          progress_index : null,
-          status: "end",
-          study_data: testQuestions,
-          updated_at : new Date().toISOString(),
-        });
-        // await updateRecentStudy({
-        //   ...recentStudy,
-        //   progress_index : null,
-        //   status: "end",
-        //   study_data: testQuestions,
-        //   updated_at : new Date().toISOString(),
-        // });
-        // navigate("/take-test/result", {
-        //   state: {
-        //     testQuestions: testQuestions,
-        //   }
-        // });
-      }else{
-        updateRecentStudyState({
-          ...recentStudy,
-          progress_index : progressIndex + 1,
-          status: "learning",
-          study_data: testQuestions,
-          updated_at : new Date().toISOString(),
-        });
-        // await updateRecentStudy({
-        //   ...recentStudy,
-        //   progress_index : progressIndex + 1,
-        //   status: "learning",
-        //   study_data: testQuestions,
-        //   updated_at : new Date().toISOString(),
-        // });
-
-        
-        setProgressIndex(progressIndex + 1);
-        setIsCorrect(null);
-        setUserSelected(null);
-        setIsAnswered(false);
-        setIsStay(false);
-      }
-
-
+      if(isSuspicious) return;
+      setUpdateRecentStudyStateAndStatus();
       return;
     };
     if (isAnswered) return;
-    
     endTimeRef.current = Date.now();
-
     const resultIndex = testQuestions[progressIndex].resultIndex;
-    
-
-    // const q = isCorrect ? 
-    //     (timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0) : 0;
-      
-      
-
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
     if(resultIndex === userSelected){
@@ -149,27 +87,85 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = 0;
     }
+    const learningPattern = analyzeLearningPattern(testQuestions[progressIndex], q);
 
-    const learningPattern = analyzeLearningPattern(testQuestion, q);
-    console.log(learningPattern);
     if(learningPattern.isSuspicious && learningPattern.confidence === "high"){
-      setIsSuspicious(learningPattern);
+      setIsSuspicious({
+        ...learningPattern,
+        ef: testQuestions[progressIndex].ef,
+        interval: testQuestions[progressIndex].interval,
+        nextReview: testQuestions[progressIndex].nextReview,
+        repetition: testQuestions[progressIndex].repetition
+      });
     }
 
     const newState = updateSM2({
-      ef: testQuestion.ef,
-      repetition: testQuestion.repetition,
-      interval: testQuestion.interval
+      ef: testQuestions[progressIndex].ef,
+      repetition: testQuestions[progressIndex].repetition,
+      interval: testQuestions[progressIndex].interval
     }, q);
-    setTempSm2(newState);
+
     Object.assign(testQuestions[progressIndex], newState);
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
     setIsAnswered(true);
+    
+  }
+
+  // 시험 모드에서 문제 선택지 선택 시
+  const handleClickExamOption = (index, option) => {
+
+    const timeTakenSec = Math.round((endTimeRef.current - startTimeRef.current) / 1000);
+    endTimeRef.current = Date.now();
+    const resultIndex = testQuestions[progressIndex].resultIndex;
+    // 정답/오답 설정과 동시에 프로그레스바 증가
+    let q = 0;
+    if(resultIndex === index){
+      setIsCorrect(true);
+      testQuestions[progressIndex].isCorrect = true;
+      testQuestions[progressIndex].userResultIndex = index;
+      q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
+    }else{
+      setIsCorrect(false);
+      testQuestions[progressIndex].isCorrect = false;
+      testQuestions[progressIndex].userResultIndex = index;
+      q = 0;
+    }
+
+    const newState = updateSM2({
+      ef: testQuestions[progressIndex].ef,
+      repetition: testQuestions[progressIndex].repetition,
+      interval: testQuestions[progressIndex].interval
+    }, q);
+
+    Object.assign(testQuestions[progressIndex], newState);
+    setProgressBarIndex(progressBarIndex + 1);
+    setIsAnswered(true);
+
+    setTimeout(() => {
+      setUpdateRecentStudyStateAndStatus();
+    }, 1000);
   }
 
 
+  // 이전 기록 유지
+  const handleClickMistake = () => {
+    Object.assign(testQuestions[progressIndex], {
+      ef: isSuspicious.ef,
+      interval: isSuspicious.interval,
+      nextReview: isSuspicious.nextReview,
+      repetition: isSuspicious.repetition
+    });
+    setIsSuspicious(null);
+    setUpdateRecentStudyStateAndStatus();
+  }
+  // 새로운 기록 적용
+  const handleClickNormal = () => {
+    setIsSuspicious(null);
+    setUpdateRecentStudyStateAndStatus();
+  }
 
+  // 문제 읽기
   const handleClickTTS = () => {
     const question = testQuestions[progressIndex];
     const textToRead = question.origin;
@@ -177,11 +173,54 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     getTextSound(textToRead, lang);
   }
 
-  const handleClickProblemData = () => {
+  // 문제 힌트 데이터 표시
+  const handleClickProblemHintData = () => {
     const question = testQuestions[progressIndex];
     showProblemDataBottomSheet({
       options: question.options
     });
+  }
+
+  // 문제 완료 시 처리
+  const setUpdateRecentStudyStateAndStatus = () => {
+    const sheetId = testQuestions[progressIndex].vocabularySheetId;
+    const wordId = testQuestions[progressIndex].id;
+    setIsFetching(true);
+
+    const updateData = {
+      ef: testQuestions[progressIndex].ef,
+      repetition: testQuestions[progressIndex].repetition,
+      interval: testQuestions[progressIndex].interval,
+      nextReview: testQuestions[progressIndex].nextReview,
+    }
+
+    updateWordState(sheetId, wordId, updateData);
+    setIsFetching(false);
+    setPendingUpdateSheetIds(prev => prev.add(sheetId));
+    if(progressIndex === testQuestions.length-1){ // 마지막 문제
+      updateRecentStudyState({
+        ...recentStudy,
+        progress_index : null,
+        status: "end",
+        study_data: testQuestions,
+        updated_at : new Date().toISOString(),
+      });
+    }else{
+      updateRecentStudyState({
+        ...recentStudy,
+        progress_index : progressIndex + 1,
+        status: "learning",
+        study_data: testQuestions,
+        updated_at : new Date().toISOString(),
+      });
+
+      
+      setProgressIndex(progressIndex + 1);
+      setIsCorrect(null);
+      setUserSelected(null);
+      setIsAnswered(false);
+      setIsStay(false);
+    }  
   }
 
   const slideVariants = {
@@ -356,9 +395,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       isCorrect={isCorrect}
                     />
                   </div>
-                  {isAnswered && (
+                  { testType === "test" && isAnswered && (
                   <motion.button 
-                    onClick={handleClickProblemData}
+                    onClick={handleClickProblemHintData}
                     whileHover={{ 
                       backgroundColor: 'rgba(255, 141, 212, 0.1)',
                       scale: 1.05
@@ -425,6 +464,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   })}
                   
                 </div>
+                {testType === "test" && (
                 <motion.button 
                   onClick={handleClickNext}
                   whileTap={{ 
@@ -443,62 +483,82 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   `}
                 >
                   확인
-                </motion.button>
+                </motion.button>    
+                )}
               </>
             )}
           </motion.div>
           
         </AnimatePresence>
       </div>
-      {isSuspicious && (
-      <div className="
-        absolute bottom-0 left-0 right-0
-        flex flex-col gap-[30px] items-center justify-end
-        h-[210px]
-        px-[16px] py-[20px]
-        bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]
-      ">
-        <div className="
-          flex flex-col items-center gap-[10px]
-          text-[#FFF] text-[14px] font-[700]
-        ">
-          {iconComponentMap[isSuspicious.icon]}
-          <span className="
-            text-[#111] text-[16px] font-[600]
-          ">
-            {isSuspicious.message}
-          </span>
-        </div>
-        <div
+      <AnimatePresence>
+        {isSuspicious && (
+        <motion.div 
           className="
-            flex items-center justify-between gap-[10px] w-full
+            absolute bottom-0 left-0 right-0
+            flex flex-col gap-[30px] items-center justify-end
+            h-[210px]
+            px-[16px] py-[20px]
+            bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]
           "
+          initial={{ y: 210 }}
+          animate={{ y: 0 }}
+          exit={{ y: 210 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 25,
+            duration: 0.5
+          }}
         >
-          {
-            isSuspicious.btn.map((btn, index) => (
-              <motion.button 
-                key={index}
-                className={`
-                  flex-1
-                  h-[45px]
-                  rounded-[8px]
-                  text-[#fff] text-[16px] font-[700]
-                  ${btn.color}
-                `}
-                whileTap={{ scale: 0.95 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-              >
-                {btn.text}
-              </motion.button>
-            ))
-          }
-        </div>
-      </div>
-    )}
+          <div className="
+            flex flex-col items-center gap-[10px]
+            text-[#FFF] text-[14px] font-[700]
+          ">
+            {iconComponentMap[isSuspicious.icon]}
+            <span className="
+              text-[#111] text-[16px] font-[600]
+            ">
+              {isSuspicious.message}
+            </span>
+            <span className="
+              text-[#111] text-[14px] font-[400]
+            ">
+              암기 상태를 수정하시겠습니까?
+            </span>
+          </div>
+          <div
+            className="
+              flex items-center justify-between gap-[10px] w-full
+            "
+          >
+            {
+              isSuspicious.btn.map((btn, index) => (
+                <motion.button 
+                  key={index}
+                  className={`
+                    flex-1
+                    h-[45px]
+                    rounded-[8px]
+                    text-[#fff] text-[16px] font-[700]
+                    ${btn.color}
+                  `}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 500, 
+                    damping: 15
+                  }}
+                  onClick={btn.type === "mistake" ? handleClickMistake : handleClickNormal}
+                >
+                  {btn.text}
+                </motion.button>
+              ))
+            }
+          </div>
+        </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

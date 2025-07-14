@@ -12,12 +12,7 @@ import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 
-import MyPage from './pages/mypage/MyPage';
-import Account from './pages/mypage/Account';
-import Theme from './pages/mypage/Theme';
-import ExampleSettings from './pages/mypage/ExampleSettings';
-import PushNotifications from './pages/mypage/PushNotifications';
-import VocabularyBackup from './pages/mypage/VocabularyBackup';
+import MyPage from './pages/myPage';
 
 import { ThemeProvider } from './context/ThemeContext';
 import { BottomSheetProvider } from './context/BottomSheetContext';
@@ -41,11 +36,6 @@ const AppLayout = () => {
       <Route path="/take-test/result" element={<StudyResult />} />
 
       <Route path="/mypage" element={<MyPage />} />
-      <Route path="/mypage/account" element={<Account />} />
-      <Route path="/mypage/theme" element={<Theme />} />
-      <Route path="/mypage/example_settings" element={<ExampleSettings />} />
-      <Route path="/mypage/push_notifications" element={<PushNotifications />} />
-      <Route path="/mypage/vocabulary_backup" element={<VocabularyBackup />} />
 
 
     </Routes>

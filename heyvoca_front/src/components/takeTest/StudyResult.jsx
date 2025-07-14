@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Circle, X } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 const StudyResult = () => {
-  const {  recentStudy, updateRecentStudy } = useVocabulary();
+  const {  recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
   const navigate = useNavigate();
   const { state } = useLocation();
   const testQuestions = state.testQuestions;
+
+  useEffect(() => {
+    if(recentStudy.status ===  "learning") {
+      navigate('/class');
+    }
+  }, [isRecentStudyLoading]);
+
   const onClickTestAgain = async () => {
     // 요소의 순서를 랜덤으로 섞어서 반환
     // options을 랜덤으로 섞고, 정답의 index(resultIndex)도 새로 계산

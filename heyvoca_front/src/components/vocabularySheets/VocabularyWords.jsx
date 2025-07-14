@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useWordSetBottomSheet } from './WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 import UpdateVocabularyWords from './UpdateVocabularyWords';
+import MemorizationStatus from "../common/MemorizationStatus";
 
 const VocabularyWords = ({ id }) => {
 

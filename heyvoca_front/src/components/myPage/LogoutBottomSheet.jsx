@@ -1,0 +1,110 @@
+import React, { useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useBottomSheet } from '../../context/BottomSheetContext';
+import { backendUrl, fetchDataAsync } from '../../utils/common';
+import { useFullSheet } from '../../context/FullSheetContext';
+import { useUser } from '../../context/UserContext';
+
+export const useLogoutBottomSheet = () => {
+  const { pushBottomSheet, handleBack: handleBottomSheetBack, handleReset: handleBottomSheetReset } = useBottomSheet();
+  const { handleReset: handleFullSheetReset } = useFullSheet();
+  const navigate = useNavigate();
+  const { setUserStorageData } = useUser();
+
+  const handleClose = useCallback(() => {
+    handleBottomSheetBack();
+  }, [handleBottomSheetBack]);
+
+    const handleLogout = useCallback(async () => {
+    try {
+      // 로그아웃 API 호출
+      const url = `${backendUrl}/login/logout/app`;
+      const method = 'POST';
+      const fetchData = {};
+      
+      const result = await fetchDataAsync(url, method, fetchData);
+      if (result.code !== 200) {
+        alert('로그아웃 중 오류가 발생하였습니다.');
+        return;
+      }
+      
+      // 로그인 페이지와 동일한 방식으로 로그아웃 상태 설정
+      setUserStorageData({
+        google_id: null,
+        name: null,
+        email: null,
+        status: "logout",
+      });
+      
+      // 컨텍스트 초기화
+      handleBottomSheetReset();
+      handleFullSheetReset();
+      
+      // 로그인 페이지로 이동
+      navigate('/login');
+      
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+      alert('로그아웃 중 오류가 발생하였습니다.');
+    }
+  }, [navigate, setUserStorageData, handleBottomSheetReset, handleFullSheetReset]);
+
+  const showLogOutBottomSheet = useCallback(() => {
+    pushBottomSheet(
+      <LogoutBottomSheet onCancel={handleClose} onLogout={handleLogout} />
+    );
+  }, [handleClose, handleLogout, pushBottomSheet]);
+
+  return {
+    showLogOutBottomSheet,
+  }
+};
+
+const LogoutBottomSheet = ({ onCancel, onLogout }) => {
+  return (
+    <div className="">
+      <div className="
+        flex flex-col gap-[15px] items-center justify-center 
+        pt-[40px] px-[20px] pb-[10px]
+      ">
+        <h3 className="text-[18px] font-[700]">정말 로그아웃 하시겠어요?</h3>
+        <p className="text-[14px] font-[400] text-[#111]">단어 공부를 포기하지 마세요..😢</p>
+      </div>
+      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#ccc]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={onCancel}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >취소</motion.button>
+        <motion.button 
+          className="
+            flex-1
+            h-[45px]
+            rounded-[8px]
+            bg-[#FF8DD4]
+            text-[#fff] text-[16px] font-[700]
+          "
+          onClick={onLogout}
+          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500, 
+            damping: 15
+          }}
+        >로그아웃</motion.button>
+      </div>
+    </div>
+  );
+};

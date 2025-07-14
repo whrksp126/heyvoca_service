@@ -8,6 +8,7 @@ const Header = () => {
       flex items-center justify-between
       w-full h-[55px]
       px-[16px] py-[14px]
+      border-b-[1px] border-[#ddd]
       bg-[#fff] 
       dark:bg-[#111]
     '>

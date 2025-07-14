@@ -173,7 +173,8 @@ export const updateSM2 = (state, q, today = new Date()) => {
  */
 export const analyzeLearningPattern = (wordState, q) => {
   const { ef, repetition } = wordState;
-  
+  console.log("ef", ef, "repetition", repetition, "q", q);
+
   // 의심스러운 패턴들
   const suspiciousPatterns = {
 
@@ -186,12 +187,16 @@ export const analyzeLearningPattern = (wordState, q) => {
       bgColor: "bg-[linear-gradient(180deg,rgba(230,255,244,0)_0%,rgba(230,255,244,.5)_10%,rgba(230,255,244,1)_30%,rgba(230,255,244,1)_100%)]",
       btn : [
         {
-          text: "기억이 잘 안나요",
+          type : "mistake",
+          text: "실수에요, 알고 있어요",
           color: "bg-[#ccc]",
+
         },
         {
-          text: "실수에요, 알고 있어요",
+          type : "normal",
+          text: "기억이 잘 안나요",
           color: "bg-[#F26A6A]",
+
         }
       ]
     },
@@ -206,10 +211,12 @@ export const analyzeLearningPattern = (wordState, q) => {
       bgColor: "bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]",
       btn : [
         {
+          type : "mistake",
           text: "사실 몰랐어요",
           color: "bg-[#ccc]",
         },
         {
+          type : "normal",
           text: "당연히 알고 있어요",
           color: "bg-[#39E859]",
         }
@@ -248,4 +255,12 @@ export const analyzeLearningPattern = (wordState, q) => {
     reason: "정상적인 학습 패턴",
     confidence: "normal"
   };
+};
+
+
+// 효과음 재생 함수
+export const playButtonSound = (audioUrl) => {
+  const audio = new Audio(audioUrl); // 효과음 파일 경로
+  audio.volume = 0.5; // 볼륨 설정
+  audio.play().catch(err => console.log('효과음 재생 실패:', err));
 };

@@ -44,7 +44,7 @@ export const useTestSetupBottomSheet = () => {
       <TestSetupBottomSheet 
         maxVocabularyCount={maxVocabularyCount}
         onCancel={handleClose}
-        onSet={(data) => handleStartTest(data, testType)}
+        onSet={(data) => handleStartTest({...data, vocabularySheetId: vocabularySheetId}, testType)}
       />,
       {
         isBackdropClickClosable: false,
@@ -224,87 +224,7 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
               </label>
             ))}
           </div> 
-          {/* 
-          <div className="grid grid-cols-2 gap-[10px]">
-            {['origin', 'meanings', 'cross', 'random'].map((type, index) => (
-              <label 
-                key={type}
-                htmlFor={type}
-                className={`
-                  flex items-center justify-center gap-[5px] 
-                  h-[45px]
-                  px-[15px]
-                  border-[1px] rounded-[8px]
-                  ${initialViewType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
-                `}
-                onClick={() => {
-                  inputRefs.current[`initialViewType`][index]?.focus();
-                }}
-              >
-                <input 
-                  id={type} 
-                  type="radio" 
-                  name="initialViewType" 
-                  checked={initialViewType === type}
-                  onChange={() => setInitialViewType(type)}
-                  ref={el => inputRefs.current[`initialViewType`][index] = el}
-                  hidden 
-                />
-                {initialViewType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                <span className={`text-[16px] font-[700] ${initialViewType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
-                  {getInitialViewTypeLabel(type)}
-                </span>
-              </label>
-            ))}
-          </div> 
-          */}
         </div>
-        {/* 
-        <div 
-          className="
-            flex justify-between flex-col gap-[8px]
-          "
-        >
-          <h3 
-            className="
-              text-[14px] font-[700] text-[#111] text-center
-            dark:text-[#fff]
-            "
-          >
-            단어 유형
-          </h3>
-          <div className="grid grid-cols-2 gap-[10px]">
-            {['all', 'forget'].map((type, index) => (
-              <label 
-                key={type}
-                htmlFor={type}
-                className={`
-                  flex items-center justify-center gap-[5px] 
-                  h-[45px]
-                  px-[15px]
-                  border-[1px] rounded-[8px]
-                  ${originFilterType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
-                `}
-                onClick={() => inputRefs.current[`originFilterType`][index]?.focus()}
-              >
-                <input 
-                  id={type} 
-                  type="radio" 
-                  name="originFilterType" 
-                  checked={originFilterType === type}
-                  onChange={() => setOriginFilterType(type)}
-                  ref={el => inputRefs.current[`originFilterType`][index] = el}
-                  hidden 
-                />
-                {originFilterType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                <span className={`text-[16px] font-[700] ${originFilterType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
-                  {getOriginFilterTypeLabel(type)}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div> 
-        */}
         <div 
           className="
             flex justify-between flex-col gap-[8px]

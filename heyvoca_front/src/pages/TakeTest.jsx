@@ -4,6 +4,15 @@ import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import StudyResult from '../components/takeTest/StudyResult';
+
+// SM-2 알고리즘 기준 학습 상태 정의
+const MEMORY_STATES = {
+  UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
+  SHORT_TERM: 'shortTerm',     // 단기 복습 (repetition: 1-2, interval: 1-6일)
+  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (repetition: 3-4, interval: 7-30일)
+  LONG_TERM: 'longTerm'        // 장기 복습 (repetition: 5+, interval: 30일+)
+};
+
 const TakeTest = () => {
   const { state } = useLocation();
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState } = useVocabulary();
@@ -14,12 +23,111 @@ const TakeTest = () => {
   // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
 
+  // SM-2 알고리즘 기준으로 단어의 학습 상태를 판단하는 함수
+  const getWordMemoryState = (word) => {
+    if (!word.memoryState) return MEMORY_STATES.UNLEARNED;
+    
+    const { repetition, interval, ef } = word.memoryState;
+    
+    // 미학습
+    if (repetition === 0) return MEMORY_STATES.UNLEARNED;
+    
+    // 단기 복습 (1-2회 연속 정답, 간격 1-6일)
+    if (repetition >= 1 && repetition <= 2 && interval <= 6) return MEMORY_STATES.SHORT_TERM;
+    
+    // 중기 복습 (3-4회 연속 정답, 간격 7-30일)
+    if (repetition >= 3 && repetition <= 4 && interval <= 30) return MEMORY_STATES.MEDIUM_TERM;
+    
+    // 장기 복습 (5회 이상 연속 정답, 간격 30일 이상)
+    if (repetition >= 5) return MEMORY_STATES.LONG_TERM;
+    
+    return MEMORY_STATES.UNLEARNED;
+  };
+
+
+
+  // 학습 데이터를 세팅하는 함수
+  const setupTestQuestions = (targetMemoryState, vocabularySheetId, count) => {
+    let allWords = [];
+    
+    if (vocabularySheetId !== "all") {
+      const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
+      if (vocabularySheet) {
+        allWords = vocabularySheet.words;
+      }
+    } else {
+      // 전체 단어장 선택 시 vocabularySheetId를 각 단어에 추가
+      allWords = vocabularySheets.flatMap(sheet => 
+        sheet.words.map(word => ({
+          ...word,
+          vocabularySheetId: sheet.id
+        }))
+      );
+    }
+
+    // 1. nextReview가 있는 단어들만 필터링 (미학습 제외)
+    const wordsWithNextReview = allWords.filter(word => 
+      word.nextReview !== null
+    );
+    // 2. 복습 지연 단어들 먼저 필터링 (현재 날짜보다 nextReview가 과거인 것들)
+    const now = new Date();
+    
+    const overdueWords = wordsWithNextReview.filter(word => {
+      const nextReviewDate = new Date(word.nextReview);
+      const isOverdue = nextReviewDate < now;
+      return isOverdue;
+    });
+
+    // 3. 복습 지연 단어들을 nextReview 기준으로 정렬 (가장 오래된 것부터)
+    const sortedOverdueWords = overdueWords.sort((a, b) => {
+      const dateA = new Date(a.nextReview);
+      const dateB = new Date(b.nextReview);
+      return dateA - dateB; // 오름차순 (가장 오래된 것부터)
+    });
+
+    // 4. 목표 학습 상태에 해당하는 단어들 선택
+    const targetStateWords = allWords.filter(word => getWordMemoryState(word) === targetMemoryState);
+
+    // 5. 최종 단어 목록 구성
+    let selectedWords = [];
+    
+    // 복습 지연 단어들을 우선적으로 추가 (가장 오래된 것부터)
+    selectedWords.push(...sortedOverdueWords.slice(0, count));
+    
+    // 목표 상태 단어들 추가 (부족한 경우에만)
+    if (selectedWords.length < count) {
+      const remainingCount = count - selectedWords.length;
+      selectedWords.push(...targetStateWords.slice(0, remainingCount));
+    }
+    
+    // 6. 우선순위 순서대로 문제 생성
+    return selectedWords
+      .slice(0, count)
+      .map(word => {
+        const otherWords = allWords.filter(w => w.id !== word.id);
+        const randomOptions = otherWords
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        const options = [word, ...randomOptions];
+        const shuffledOptions = options.sort(() => Math.random() - 0.5);
+        const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
+        
+        return {
+          ...word,
+          options: shuffledOptions,
+          resultIndex,
+          questionType: state.data.questionType,
+          vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
+          isCorrect: null,
+        };
+      });
+  };
+
   useEffect(() => {
     const initializeTest = async () => {
       if(isRecentStudyLoading || isVocabularySheetsLoading) return;
       if(recentStudy.status === "end"){
         setIsTestQuestionsSetting(false);
-
         return;
       }
       if(recentStudy.status === "learning") {
@@ -29,61 +137,16 @@ const TakeTest = () => {
         setIsTestQuestionsSetting(false);
       }else{
         // 학습 기록이 없으면 새로운 학습 데이터 생성 후 학습 시작
-        let tempTestQuestions = [];
-        if(state.data.vocabularySheetId){
-          const vocabularySheet = vocabularySheets.find(vocabularySheet => vocabularySheet.id === state.data.vocabularySheetId);
-          if(vocabularySheet){
-            const otherWords = vocabularySheets.flatMap(sheet => sheet.words);
-            tempTestQuestions = vocabularySheet.words
-              .sort(() => Math.random() - 0.5)
-              .slice(0, state.data.count)
-              .map(word => {
-                const otherWords = vocabularySheets.flatMap(sheet => sheet.words).filter(w => w.id !== word.id);
-                const randomOptions = otherWords
-                  .sort(() => Math.random() - 0.5)
-                  .slice(0, 3);
-                const options = [word, ...randomOptions];
-                const shuffledOptions = options.sort(() => Math.random() - 0.5);
-                const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
-                return {
-                  ...word,
-                  // initialViewType: state.data.initialViewType,
-                  options: shuffledOptions,
-                  resultIndex,
-                  questionType: state.data.questionType,
-                  vocabularySheetId: word.vocabularySheetId,
-                  isCorrect: null,
-                };
-              });
-          }
-        }else{
-          tempTestQuestions = vocabularySheets.flatMap(vocabularySheet => 
-            vocabularySheet.words.map(word => ({
-              ...word,
-              vocabularySheetId: vocabularySheet.id
-            }))
-          )
-            .sort(() => Math.random() - 0.5)
-            .slice(0, state.data.count)
-            .map(word => {
-              const otherWords = vocabularySheets.flatMap(sheet => sheet.words).filter(w => w.id !== word.id);
-              const randomOptions = otherWords
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3);
-              const options = [word, ...randomOptions];
-              const shuffledOptions = options.sort(() => Math.random() - 0.5);
-              const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
-              return {
-                ...word,
-                // initialViewType: state.data.initialViewType,
-                options: shuffledOptions,
-                resultIndex,
-                questionType: state.data.questionType,
-                vocabularySheetId: word.vocabularySheetId,
-                isCorrect: null,
-              };
-            });
-        }
+        console.log("state", state.data.memoryState);
+        
+        // SM-2 알고리즘 기준으로 학습 데이터 세팅
+        const tempTestQuestions = setupTestQuestions(
+          state.data.memoryState,
+          state.data.vocabularySheetId,
+          state.data.count
+        );
+        console.log("tempTestQuestions", tempTestQuestions);
+
         await updateRecentStudy({
           ...recentStudy,
           progress_index : 0,
@@ -192,7 +255,14 @@ const TakeTest = () => {
     return (
       <div>
         <Header />
-        <Main testQuestions={testQuestions} setTestQuestions={setTestQuestions} progressIndex={progressIndex} setProgressIndex={setProgressIndex} setPendingUpdateSheetIds={setPendingUpdateSheetIds} />
+        <Main 
+          testQuestions={testQuestions} 
+          setTestQuestions={setTestQuestions} 
+          progressIndex={progressIndex} 
+          setProgressIndex={setProgressIndex} 
+          setPendingUpdateSheetIds={setPendingUpdateSheetIds} 
+          testType={state?.testType ? state.testType : recentStudy?.type}
+        />
       </div>
     );
   }
