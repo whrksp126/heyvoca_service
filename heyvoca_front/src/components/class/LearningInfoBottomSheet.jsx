@@ -45,7 +45,7 @@ const LearningInfoBottomSheet = ({onCancel, onSet}) => {
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">이어 학습</h1>
+          <h1 className="text-[18px] font-[700]">학습 이어가기</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -55,10 +55,10 @@ const LearningInfoBottomSheet = ({onCancel, onSet}) => {
       ">
         <div className="flex flex-col gap-[10px]">
           <h2 className="text-[18px] font-[700] text-center">
-            기존 학습을 이어서 학습하시겠습니까?
+            이전 학습을 이어서 진행할까요?
           </h2>
           <p className="text-[14px] font-[400] text-center">
-            이어 학습을 진행하면 이전 학습 내용을 기반으로<br /> 학습을 이어서 진행합니다.
+            이어 학습을 선택하면 지난번에 학습하던 내용부터<br /> 자연스럽게 이어서 학습할 수 있어요.
           </p>
         </div>
       </div>

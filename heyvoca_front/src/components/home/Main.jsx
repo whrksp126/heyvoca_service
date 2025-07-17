@@ -7,11 +7,26 @@ import 보석 from '../../assets/images/보석.png';
 
 import { SketchLogo, Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
+import { useFullSheet } from '../../context/FullSheetContext';
+
+import StoreSheet from './StoreSheet';
+import TodayStudySheet from './TodayStudySheet';
 
 const Main = () => {
   const { userMainPage } = useUser();
+  const { pushFullSheet } = useFullSheet();
+
+  const handleStoreButtonClick = () => {
+    pushFullSheet({
+      component: <StoreSheet />
+    });
+  }
+
   const handleTodayStudyButtonClick = () => {
     console.log('오늘의 학습 버튼 클릭');
+    pushFullSheet({
+      component: <TodayStudySheet />
+    });
   }
 
   return (
@@ -24,15 +39,15 @@ const Main = () => {
       }}
     >
       <div className="
-          flex justify-between items-center
-          pt-[20px] px-[16px] pb-[14px]
-        ">
-          <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
-          <div className="flex gap-[5px] items-center">
-            <img src={보석} alt="보석" className="w-[20px] h-[18px]" />
-            <span className="text-[#fff] text-[14px] font-bold">50</span>
-          </div>
+        flex justify-between items-center
+        pt-[20px] px-[16px] pb-[14px]
+      ">
+        <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
+        <div className="flex gap-[5px] items-center" onClick={handleStoreButtonClick}>
+          <img src={보석} alt="보석" className="w-[20px] h-[18px]" />
+          <span className="text-[#fff] text-[14px] font-bold">50</span>
         </div>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}

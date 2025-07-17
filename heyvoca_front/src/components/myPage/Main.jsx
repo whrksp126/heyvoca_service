@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { useUser } from '../../context/UserContext';
 import Account from './Account';
@@ -45,7 +46,12 @@ const Main = () => {
   }
 
   return (
-    <main className="flex-grow">
+    <motion.main 
+      className="flex-grow"
+      initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
+      exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+    >
       <ul className="w-full m-0 p-0 list-none">
           <li onClick={handleAccountClick} 
               className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
@@ -95,7 +101,7 @@ const Main = () => {
             </div>
           </li> */}
         </ul>
-      </main>
+      </motion.main>
   );
 };
 
