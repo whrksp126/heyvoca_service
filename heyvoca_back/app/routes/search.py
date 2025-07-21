@@ -421,10 +421,6 @@ def search_bookstore_all2():
     return jsonify({'code': 200, 'data': final_results}), 200
 
 
-
-
-
-
 # 서점 다운로드 수 증가
 @search_bp.route('/bookstore/download', methods=['POST'])
 def bookstore_download():
