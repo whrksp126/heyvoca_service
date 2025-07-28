@@ -277,14 +277,22 @@ def level_voca_list():
                     .limit(4)\
                     .all()
     
+    # 색상 세트 리스트
+    COLOR_SETS = [
+        {"main": "#FF8DD4", "sub": "#FFD2EF", "background": "#FFEFFA"},
+        {"main": "#CD8DFF", "sub": "#EAD2FF", "background": "#F6EFFF"},
+        {"main": "#74D5FF", "sub": "#C6ECFF", "background": "#EAF6FF"},
+        {"main": "#42F98B", "sub": "#B2FDCC", "background": "#E2FFE8"},
+    ]
+
     data = []
-    for vocabook in filtered_voca_list:
+    for idx, vocabook in enumerate(filtered_voca_list):
         data.append({
             'id' : vocabook.id,
             'name' : vocabook.name,
             'download': vocabook.downloads,
             'category': vocabook.category,
-            'color' : vocabook.color,
+            'color' : COLOR_SETS[idx], # 인덱스 순서대로 색상 할당
         })
     
     # 더미
