@@ -2,7 +2,13 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    container_name: heyvoca_back_dev
+    image: whrksp126/heyvoca_back:dev
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      platforms: 
+        - linux/amd64
     ports:
       - "5002:5000"
     env_file:
