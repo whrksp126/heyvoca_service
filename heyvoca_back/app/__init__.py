@@ -12,6 +12,7 @@ from flask_caching import Cache
 import json
 
 from app.login_manager import load_user, unauthorized_callback
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # 로컬 테스트 전용
 env_file = os.environ.get('FLASK_ENV_FILE')
@@ -25,7 +26,13 @@ cache = Cache()
 
 def create_app():
   app = Flask(__name__, static_folder='static', static_url_path='')
-  CORS(app, supports_credentials=True)
+  CORS(app, origins=[
+      "https://heyvoca-front.ghmate.com",
+      "https://stg-heyvoca-front.ghmate.com",
+      "https://dev-heyvoca-front.ghmate.com",
+      "http://localhost:3000"
+  ], supports_credentials=True)
+
   
   config_class = os.environ.get('FLASK_CONFIG') or 'development'
   if config_class == 'production':
@@ -34,6 +41,8 @@ def create_app():
     app.config.from_object(StagingConfig)
   else:
     app.config.from_object(DevelopmentConfig) 
+
+  app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
   # Redis 캐시 설정
   app.config['CACHE_TYPE'] = 'redis'

@@ -24,6 +24,7 @@ import os
 OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
 OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
+FRONT_END_URL = os.getenv('FRONT_END_URL')
 
 
 @login_bp.route('/')
@@ -35,18 +36,19 @@ def index():
 # 로그인 라우트: 구글 OAuth2 인증 요청
 @login_bp.route('/google')
 def login_google():
+    print('/google')
     device_type = request.args.get('device_type', 'web')
     session['device_type'] = device_type
     # OAuth2Session 생성
-    
     oauth = OAuth2Session(OAUTH_CLIENT_ID, redirect_uri=OAUTH_REDIRECT_URI, 
                           scope=[
                               'https://www.googleapis.com/auth/userinfo.profile', 
                               'https://www.googleapis.com/auth/userinfo.email', 
                               'openid',
-                              'https://www.googleapis.com/auth/drive.file'
                             ]
                         )
+    print('oauth:', oauth)
+
 
     # 인증 요청을 생성합니다.
     authorization_url, state = oauth.authorization_url(
@@ -55,8 +57,12 @@ def login_google():
         prompt="consent"
     )
 
+    print('authorization_url:', authorization_url)
+
     # 상태(state)를 세션에 저장
     session['oauth_state'] = state
+
+    print('state:', state)
 
     return redirect(authorization_url)
 
@@ -64,6 +70,7 @@ def login_google():
 # 인증 콜백 라우트: OAuth2 인증 완료 후 실행
 @login_bp.route('/login_google/callback')
 def authorize_google():
+    print('/login_google/callback')
     state = session.pop('oauth_state', None)
     authorization_response = request.url
     if state is None or state != request.args.get('state'):
@@ -77,7 +84,6 @@ def authorize_google():
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email',
             'openid',
-            'https://www.googleapis.com/auth/drive.file'
         ]
     )
     try:
@@ -121,7 +127,7 @@ def authorize_google():
 
     # 리다이렉트 URL 생성
     # front_end_url = 'https://voca.ghmate.com/html/login.html'
-    front_end_url = 'http://localhost:3000/login'
+    front_end_url = f'{FRONT_END_URL}/login'
     query_params = {
         'googleId': user.id,
         'email': user.email,
