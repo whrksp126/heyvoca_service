@@ -6,7 +6,7 @@ import googleLogo from '../assets/images/google_logo.png';
 import '../index.css';
 import { backendUrl, fetchDataAsync, getValueFromURL } from '../utils/common';
 import { useUser } from '../context/UserContext';
-
+import { getDevicePlatform } from '../utils/osFunction';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -82,7 +82,12 @@ const Login = () => {
   }, []);
 
   const clickGoogleLogin = () => {
-    window.location.href = "http://localhost:5003/login/google?device_type=web";
+    const device_type = getDevicePlatform();
+    if(device_type == 'web'){
+      window.location.href = `${backendUrl}/login/google?device_type=${device_type}`;
+    }else{
+      window.ReactNativeWebView.postMessage('launchGoogleAuth');
+    }
   };
 
   return (

@@ -172,21 +172,40 @@ docker push whrksp126/heyvoca_front:local
 ✅ 로컬에서 개발 후, 필요하면 Docker Hub에 올려서 공유 가능!
 
 ✅ 2️⃣ 개발 (dev) 서버 배포
-최신 코드 기반으로 Docker Hub에 푸쉬
-docker-compose.dev.yml 사용
+
+# dev 환경의 이미지 확인
+docker images | grep heyvoca_front
+
+# 컨테이너 중지(필요시)
+docker stop heyvoca_front_dev
+
+# 컨테이너 삭제(필요시)
+docker rm heyvoca_front_dev
+
+# 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_front:dev
+
 # dev 환경 빌드 및 실행
 docker compose -f docker-compose.dev.yml up --build -d
 
 # dev 환경의 이미지 확인
 docker images | grep heyvoca_front
 
+
 # dev 태그로 Docker Hub에 푸쉬
 docker push whrksp126/heyvoca_front:dev
 
 # dev 서버에서 최신 이미지 다운로드 및 실행
 docker pull whrksp126/heyvoca_front:dev
+
 docker run -d --name heyvoca_front_dev -p 3002:3000 whrksp126/heyvoca_front:dev
+
+
 sudo systemctl restart heyvoca_front_dev
+
+# 로그 확인
+docker logs -f heyvoca_front_dev
+
 ✅ 개발 서버 (http://dev-heyvoca-front.ghmate.com)에서 정상 동작 확인!
 
 ✅ 3️⃣ 스테이징 (stg) 서버 배포

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
 import { useUser } from '../../context/UserContext';
 import Account from './Account';
 import Theme from './Theme';
@@ -11,7 +10,6 @@ import PushNotifications from './PushNotifications';
 import { useFullSheet } from '../../context/FullSheetContext';
 
 const Main = () => {
-  const { isDark } = useTheme();
   const { userStorageData } = useUser();
   const { pushFullSheet } = useFullSheet();
 

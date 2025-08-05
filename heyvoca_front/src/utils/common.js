@@ -3,7 +3,9 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const MAX_TEST_VOCABULARY_COUNT = 30;
 export const MIN_TEST_VOCABULARY_COUNT = 4;
 
-console.log(backendUrl);
+
+console.log("import.meta.env",import.meta.env);
+
 // 비동기 fetch api
 export async function fetchDataAsync(url, method, data, form=false){
   let newUrl = url;
