@@ -288,13 +288,13 @@ def api_user_study_history():
     if memory_goal_complete:
         goals.append({
             'name' : '암기왕',
-            'badge_img' : 'memory_goal_complete',
+            'badge_img' : memory_goal_complete.badge_img,
             'completed_at' : memory_goal_complete.completed_at + timedelta(hours=9),
         })
     if effort_goal_complete:
         goals.append({
             'name' : '노력왕',
-            'badge_img' : 'effort_goal_complete',
+            'badge_img' : effort_goal_complete.badge_img,
             'completed_at' : effort_goal_complete.completed_at + timedelta(hours=9),
         })
 
@@ -332,8 +332,8 @@ def checkin():
     goals = []
     if attendance_goal_complete:
         goals.append({
-            'name' : '암기왕',
-            'badge_img' : 'memory_goal_complete',
+            'name' : '출석왕',
+            'badge_img' : attendance_goal_complete.badge_img,
             'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
         })
     
