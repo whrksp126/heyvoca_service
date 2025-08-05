@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import login_bp
-from app.models.models import User, Bookstore
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals
 
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
@@ -100,21 +100,41 @@ def authorize_google():
     # 기존 사용자 조회
     user = User.query.filter_by(google_id=userinfo['id']).first()
     if user is None:
-        user = User(
-            level_id=None,
-            email=userinfo['email'],
-            google_id=userinfo['id'],
-            name=userinfo.get('name', ''),
-            username=None,
-            phone=None,
-            code=None,
-            book_cnt=3,
-            gem_cnt=0,
-            set_goal_cnt=3,
-            refresh_token=token['refresh_token'],
-            last_logged_at=None
-        )
-        db.session.add(user)
+        try:
+            user = User(
+                level_id=None,
+                email=userinfo['email'],
+                google_id=userinfo['id'],
+                name=userinfo.get('name', ''),
+                username=None,
+                phone=None,
+                code=None,
+                book_cnt=3,
+                gem_cnt=0,
+                set_goal_cnt=3,
+                refresh_token=token['refresh_token'],
+                last_logged_at=None
+            )
+            db.session.add(user)
+            db.session.flush()
+            
+            all_goal = db.session.query(Goals)\
+                                .filter(Goals.level == 1)\
+                                .all()
+            
+            for goal in all_goal:
+                user_goal = UserGoals(
+                    user_id=user.id,
+                    goal_id=goal.id,
+                    current_value=0,
+                    is_completed=False,
+                    completed_at=None
+                )
+                db.session.add(user_goal)
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error during user creation: {str(e)}")
+            return f"An error occurred: {str(e)}", 500
     else:
         user.refresh_token = token['refresh_token']
     db.session.commit()
@@ -283,14 +303,22 @@ def level_voca_list():
                     .limit(4)\
                     .all()
     
+    # 색상 세트 리스트
+    COLOR_SETS = [
+        {"main": "#FF8DD4", "sub": "#FFD2EF", "background": "#FFEFFA"},
+        {"main": "#CD8DFF", "sub": "#EAD2FF", "background": "#F6EFFF"},
+        {"main": "#74D5FF", "sub": "#C6ECFF", "background": "#EAF6FF"},
+        {"main": "#42F98B", "sub": "#B2FDCC", "background": "#E2FFE8"},
+    ]
+
     data = []
-    for vocabook in filtered_voca_list:
+    for idx, vocabook in enumerate(filtered_voca_list):
         data.append({
             'id' : vocabook.id,
             'name' : vocabook.name,
             'download': vocabook.downloads,
             'category': vocabook.category,
-            'color' : vocabook.color,
+            'color' : COLOR_SETS[idx], # 인덱스 순서대로 색상 할당
         })
     
     # 더미

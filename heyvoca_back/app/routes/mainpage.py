@@ -193,3 +193,161 @@ def api_user_recent_study_create_update():
     }
 
     return {'code': 200, 'data': data}
+
+
+def update_user_goal(goal_type_name: str):
+    user_id = current_user.id
+    
+    # 현재 유저가 달성 중인 해당 업적 조회
+    current_user_goal = db.session.query(UserGoals)\
+                            .join(Goals, UserGoals.goal_id == Goals.id)\
+                            .join(GoalType, Goals.type_id == GoalType.id)\
+                            .filter(UserGoals.user_id == user_id)\
+                            .filter(GoalType.type == goal_type_name)\
+                            .filter(UserGoals.is_completed == False)\
+                            .first()
+    # Goal 조회
+    goal = db.session.query(Goals)\
+                .filter(Goals.id == current_user_goal.goal_id)\
+                .first()
+
+    # current_value 증가
+    current_user_goal.current_value += 1
+
+    # 목표 도달 시 완료 처리
+    goal_complete = False
+    if current_user_goal.current_value >= goal.goal:
+        goal_complete = True
+        current_user_goal.is_completed = True
+        current_user_goal.completed_at = datetime.utcnow()
+
+        # 다음 레벨 목표 존재 여부 확인
+        current_goal = db.session.query(Goals).filter(Goals.id == current_user_goal.goal_id).first()
+        next_goal = db.session.query(Goals)\
+                        .filter(Goals.type_id == current_goal.type_id)\
+                        .filter(Goals.level == current_goal.level + 1)\
+                        .first()
+        if next_goal:
+            next_user_goal = UserGoals(
+                user_id=user_id,
+                goal_id=next_goal.id,
+                current_value=0,
+                is_completed=False,
+                completed_at=None
+            )
+            db.session.add(next_user_goal)
+
+    return current_user_goal, goal.reward_count if goal_complete else None
+
+
+@mainpage_bp.route('/user_study_history', methods=['POST'])
+# @login_required
+def api_user_study_history():
+    data = request.json
+    today_study_complete = data['today_study_complete']
+    correct_cnt = int(data.get('correct_cnt') or 0)
+    incorrect_cnt = int(data.get('incorrect_cnt') or 0)
+
+    user_id = current_user.id
+
+    # 1. 경험치 업데이트
+    add_xp = correct_cnt * 5 + incorrect_cnt * 2
+    user = db.session.query(User).filter(User.id == user_id).first()
+    user.xp += add_xp
+
+    # 2. 오늘의 미션 업데이트
+    is_today_study_complete = False
+    if today_study_complete:
+        today = (datetime.utcnow() + timedelta(hours=9)).date()
+        checkin = db.session.query(CheckIn)\
+                    .filter(CheckIn.user_id == user_id)\
+                    .filter(CheckIn.attendence_date == today)\
+                    .first()
+        
+        if checkin.today_study_complete == False:
+            is_today_study_complete = True
+            checkin.today_study_complete = True
+
+    # 3.업적(암기왕, 노력왕) 업데이트
+    memory_goal_complete, memory_goal_reward_count = update_user_goal('암기왕')
+    effort_goal_complete, effort_goal_reward_count = update_user_goal('노력왕')
+
+    # 4. 보석 업데이트
+    add_gem = 0
+    if is_today_study_complete:
+        add_gem += 1
+    if memory_goal_reward_count:
+        add_gem += memory_goal_reward_count
+    if effort_goal_reward_count:
+        add_gem += effort_goal_reward_count
+    user.gem_cnt += add_gem
+
+    db.session.commit()
+
+    goals = []
+    if memory_goal_complete:
+        goals.append({
+            'name' : '암기왕',
+            'badge_img' : memory_goal_complete.badge_img,
+            'completed_at' : memory_goal_complete.completed_at + timedelta(hours=9),
+        })
+    if effort_goal_complete:
+        goals.append({
+            'name' : '노력왕',
+            'badge_img' : effort_goal_complete.badge_img,
+            'completed_at' : effort_goal_complete.completed_at + timedelta(hours=9),
+        })
+
+    return {
+        'code': 200,
+        'data': {
+            'exp': {
+                'before' : user.xp - add_xp,
+                'after' : user.xp,
+            },
+            'gem': {
+                'before': user.gem_cnt - add_gem,
+                'after': user.gem_cnt
+            },
+            'today_study_complete': today_study_complete,
+            'goals': goals
+        }
+    }
+
+
+@mainpage_bp.route('/checkin', methods=['GET'])
+@login_required
+def checkin():
+    user_id = current_user.id
+    today = (datetime.utcnow() + timedelta(hours=9)).date()
+    exists = db.session.query(CheckIn).filter(
+                    CheckIn.user_id == user_id, 
+                    CheckIn.date == today
+                ).first()
+    if not exists:
+        db.session.add(CheckIn(user_id=user_id, attendence_check=today, today_study_complete=False))
+        db.session.commit()
+
+    attendance_goal_complete, attendance_goal_reward_count = update_user_goal('출석왕')
+    goals = []
+    if attendance_goal_complete:
+        goals.append({
+            'name' : '출석왕',
+            'badge_img' : attendance_goal_complete.badge_img,
+            'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
+        })
+    
+    user = db.session.query(User).filter(User.id == user_id).first()
+    user.gem_cnt += attendance_goal_reward_count
+    db.session.commit()
+
+    return {
+        'code': 200,
+        'data': {
+            'gem': {
+                'before': user.gem_cnt - attendance_goal_reward_count,
+                'after': user.gem_cnt
+            },
+            'goals': goals
+        }
+    }

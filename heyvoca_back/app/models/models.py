@@ -55,6 +55,7 @@ class User(db.Model):
     username = Column(String(36), nullable=True, default=None)
     phone = Column(String(16), nullable=True)
     code = Column(String(36), nullable=False)
+    xp = Column(Integer, nullable=False, default=0)
     book_cnt = Column(Integer, nullable=False, default=3)
     gem_cnt = Column(Integer, nullable=False, default=0)
     set_goal_cnt = Column(Integer, nullable=False, default=3)
@@ -249,7 +250,7 @@ class CheckIn(db.Model):
     __tablename__ = 'check_in'
     user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False, default=uuid4)
     attendence_date = Column(Date, primary_key=True, nullable=False)
-    today_study_complete = Column(String(20), nullable=False)
+    today_study_complete = Column(Boolean, nullable=False, default=False)
 
     def __init__(self, user_id, attendence_check, today_study_complete):
         self.user_id = user_id
@@ -282,14 +283,14 @@ class UserGoals(db.Model):
     user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
     goal_id = Column(Integer, ForeignKey('goals.id'), primary_key=True, nullable=False)
     current_value = Column(Integer, nullable=False)
-    status = Column(String(50), nullable=False)
-    completed_at = Column(DateTime, nullable=False)
+    is_completed = Column(Boolean, nullable=False, default=False)
+    completed_at = Column(DateTime, nullable=True)
 
-    def __init__(self, user_id, goal_id, current_value, status, completed_at):
+    def __init__(self, user_id, goal_id, current_value, is_completed, completed_at):
         self.user_id = user_id
         self.goal_id = goal_id
         self.current_value = current_value
-        self.status = status
+        self.is_completed = is_completed
         self.completed_at = completed_at
 
 
