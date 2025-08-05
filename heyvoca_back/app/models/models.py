@@ -170,6 +170,7 @@ class Bookstore(db.Model):
     category = Column(String(50), nullable=False)
     color = Column(String(255), nullable=True)
     hide = Column(String(1), nullable=False)
+    level = Column(String(50), nullable=True)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
     # level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
 
