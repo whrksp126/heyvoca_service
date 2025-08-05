@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.heyvoca"
+    namespace "com.ghmate.heyvoca"
     defaultConfig {
-        applicationId "com.heyvoca"
+        applicationId "com.ghmate.heyvoca"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
