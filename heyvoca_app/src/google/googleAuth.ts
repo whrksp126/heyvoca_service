@@ -3,7 +3,8 @@ import Config from 'react-native-config';
 const GOOGLE_CLIENT_ANDROID_ID = Config.GOOGLE_CLIENT_ANDROID_ID;
 const GOOGLE_CLIENT_IOS_ID = Config.GOOGLE_CLIENT_IOS_ID;
 const GOOGLE_CLIENT_WEB_ID = Config.GOOGLE_CLIENT_WEB_ID;
-const FRONT_URL = Config.FRONT_URL;
+import { Platform } from 'react-native';
+const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 import { Alert } from 'react-native';
 import { appAsyncStore, saveAppAsyncStorage, clearAppAsyncStorage, updateAppAsyncStorage } from '../utils/asyncStorage';
