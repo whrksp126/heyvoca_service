@@ -7,7 +7,7 @@ import Config from 'react-native-config';
 
 import { Platform } from 'react-native';
 
-const FRONT_URL = Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
+const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 
 const HomeScreen = () => {
