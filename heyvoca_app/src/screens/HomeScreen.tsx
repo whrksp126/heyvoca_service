@@ -4,7 +4,11 @@ import { WebView } from 'react-native-webview';
 import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
 
-const FRONT_URL = Config.FRONT_URL;
+
+import { Platform } from 'react-native';
+
+const FRONT_URL = Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
+
 
 const HomeScreen = () => {
   const webViewRef = useRef(null);
