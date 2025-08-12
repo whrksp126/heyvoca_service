@@ -237,7 +237,11 @@ def update_user_goal(goal_type_name: str):
             )
             db.session.add(next_user_goal)
 
-    return current_user_goal, goal.reward_count, current_goal.badge_img if goal_complete else None
+    if goal_complete:
+        return current_user_goal, goal.reward_count, current_goal.badge_img
+    else:
+        return None, None, None
+    
 
 
 @mainpage_bp.route('/user_study_history', methods=['POST'])
