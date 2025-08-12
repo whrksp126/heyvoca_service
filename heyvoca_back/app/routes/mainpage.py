@@ -241,7 +241,7 @@ def update_user_goal(goal_type_name: str):
 
 
 @mainpage_bp.route('/user_study_history', methods=['POST'])
-# @login_required
+@login_required
 def api_user_study_history():
     data = request.json
     today_study_complete = data['today_study_complete']
@@ -351,3 +351,5 @@ def checkin():
             'goals': goals
         }
     }
+
+
