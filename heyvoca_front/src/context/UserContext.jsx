@@ -85,9 +85,77 @@ export const UserProvider = ({ children }) => {
     }
   }, [userProfile]);
 
+
+  // 업적, 보석, ... 업데이트 함수
+  const updateUserHistory = useCallback(async ({today_study_complete, correct_cnt, incorrect_cnt}) => {
+    try {
+      const url = `${backendUrl}/mainpage/user_study_history`;
+      const method = 'POST';
+      const fetchData = {
+        'today_study_complete': today_study_complete,
+        'correct_cnt': correct_cnt,
+        'incorrect_cnt': incorrect_cnt
+    }
+      const result = await fetchDataAsync(url, method, fetchData);
+      // 보석 업데이트 내용 적용
+      setUserProfile({
+        ...userProfile,
+        gem_cnt: result.data.gem.after,
+      })
+      // 업적 업데이트 내용 적용
+
+      // 오늘의 학습이고 최초 학습이면 오늘의 학습 기록 업데이트
+
+
+    //   {
+    //     'exp': {
+    //         'before' : 1,
+    //         'after' : 3,
+    //     },
+    //     'gem': {
+    //         'before': 2,
+    //         'after': 4
+    //     },
+    //     'today_study_complete': today_study_complete,
+    //     'goals': goals
+    // }
+
+      if(result.code != 200) return result.data;
+    } catch (err) {
+      console.log("오류 발생함")
+    }
+  }, []);
+
+
+  // 출석 체크
+  const fetchUserCheckin = useCallback(async () => {
+    try {
+      const url = `${backendUrl}/mainpage/checkin`;
+      const method = 'GET';
+      const fetchData = {};
+      const result = await fetchDataAsync(url, method, fetchData);
+    //   {
+    //     'gem': {
+    //         'before': 1,
+    //         'after': 2
+    //     },
+    //     'goals': goals
+    // }
+      if(result.code === 200){
+        setUserProfile({
+          ...userProfile,
+          gem_cnt: result.data.gem.after,
+        })
+      }
+    } catch (err) {
+      console.log("오류 발생함")
+    }
+  }, []);
+
+
   // 앱 시작시 데이터 로드
   useEffect(() => {
-    
+    fetchUserCheckin();
     fetchUserProfile();
     fetchUserMainPage();
   }, []);
@@ -106,6 +174,7 @@ export const UserProvider = ({ children }) => {
     setUserProfile,
     setUserMainPage,
     setUserStorageData,
+    updateUserHistory,
   };  
 
   return (

@@ -9,11 +9,18 @@ import { SketchLogo, Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { useFullSheet } from '../../context/FullSheetContext';
 
+import 초대왕 from '../../assets/images/헤이캐릭터/초대왕.png';
+import 출석왕 from '../../assets/images/헤이캐릭터/출석왕.png';
+import 노력왕 from '../../assets/images/헤이캐릭터/노력왕.png';
+import 단어왕 from '../../assets/images/헤이캐릭터/단어왕.png';
+import 끈기왕 from '../../assets/images/헤이캐릭터/끈기왕.png';
+import 독서왕 from '../../assets/images/헤이캐릭터/독서왕.png';
+
 import StoreSheet from './StoreSheet';
 import TodayStudySheet from './TodayStudySheet';
 
 const Main = () => {
-  const { userMainPage } = useUser();
+  const { userMainPage , userProfile} = useUser();
   const { pushFullSheet } = useFullSheet();
 
   const handleStoreButtonClick = () => {
@@ -45,7 +52,7 @@ const Main = () => {
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[5px] items-center" onClick={handleStoreButtonClick}>
           <img src={보석} alt="보석" className="w-[20px] h-[18px]" />
-          <span className="text-[#fff] text-[14px] font-bold">50</span>
+          <span className="text-[#fff] text-[14px] font-bold">{userProfile.gem_cnt}</span>
         </div>
       </div>
       <motion.div
@@ -61,7 +68,7 @@ const Main = () => {
           <h2 className="
             text-[#fff] text-[24px]
           ">
-            <strong>헤이</strong>님,<br/>
+            <strong>{userProfile.username}</strong>님,<br/>
             <strong>1,450개</strong><br/>
             단어를 학습 중이에요!
           </h2>
@@ -99,7 +106,7 @@ const Main = () => {
         </div>
         <div className="
           flex flex-col gap-[15px] 
-          px-[16px] py-[18px]
+          px-[16px] py-[18px] pb-[88px]
         ">
           <div className="
             flex items-start gap-[50px]
@@ -181,7 +188,56 @@ const Main = () => {
             bg-[#F6EFFF] 
           ">
             <h2 className="text-[#111] text-[16px] font-[700]">나의 업적</h2>
-
+            <div
+              className={`
+                flex flex-wrap
+                justify-center
+                gap-2
+              `}
+              style={{
+                rowGap: '16px',
+                columnGap: 'auto',
+              }}
+            >
+              {/* 업적 아이템 배열로 관리, 4개 이하일 때도 중앙 정렬 */}
+              {[
+                { src: 초대왕, label: '초대왕', level: 1 },
+                { src: 출석왕, label: '출석왕', level: 2 },
+                { src: 노력왕 , label: '노력왕', level: 3 },
+                { src: 단어왕 , label: '단어왕', level: 4 },
+                { src: 끈기왕 , label: '끈기왕', level: 5 },
+                { src: 독서왕 , label: '독서왕', level: 6 },
+                // 필요시 추가
+              ].map((item, idx) => (
+                <div
+                  key={item.label}
+                  className="flex flex-col items-center gap-[5px] w-[60px]"
+                  style={{
+                    flex: '0 1 25%', // 한 줄에 최대 4개
+                    maxWidth: '60px',
+                  }}
+                >
+                  <div className="relative h-[70px]">
+                    <img src={item.src} alt="" className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" />
+                    <div className="w-[60px] h-[60px] rounded-[50%] bg-[#C0C0C0]"></div>
+                    <span 
+                      className="
+                        absolute bottom-[0] left-[50%] 
+                        translate-x-[-50%] z-[1] 
+                        text-[#D4D4D4] text-[16px] font-[700]
+                        font-family: 'Cafe24Ssurround', sans-serif;
+                        [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                      "
+                      >
+                        <span className="text-[10px]">LV.</span>{item.level}
+                    </span>
+                  </div>
+                  <span className="text-[#111] text-[12px] font-[600]">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>

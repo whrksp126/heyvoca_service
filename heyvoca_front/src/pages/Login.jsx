@@ -49,6 +49,7 @@ const Login = () => {
           email: email,
           name: name
         };
+        alert(name);
         try {
           const result = await fetchDataAsync(url, method, fetchData);
           if (result.code !== 200) {

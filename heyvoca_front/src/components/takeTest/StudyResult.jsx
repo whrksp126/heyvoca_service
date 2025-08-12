@@ -3,12 +3,30 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Circle, X } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useUser } from '../../context/UserContext';
 
 const StudyResult = () => {
   const {  recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
+  const { updateUserHistory } = useUser();
   const navigate = useNavigate();
   const { state } = useLocation();
   const testQuestions = state.testQuestions;
+
+  // 학습 결과 저장
+  useEffect(()=>{
+    console.log('recentStudy,',recentStudy);
+    if(recentStudy.status === "end"){
+      const correctCnt = testQuestions.filter(question => question.isCorrect).length;
+      const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
+      updateUserHistory({
+        'today_study_complete': false,
+        'correct_cnt': correctCnt,
+        'incorrect_cnt': incorrectCnt
+      })
+    }
+  },[])
+
+
 
   useEffect(() => {
     if(recentStudy.status ===  "learning") {
