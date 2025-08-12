@@ -252,9 +252,9 @@ class CheckIn(db.Model):
     attendence_date = Column(Date, primary_key=True, nullable=False)
     today_study_complete = Column(Boolean, nullable=False, default=False)
 
-    def __init__(self, user_id, attendence_check, today_study_complete):
+    def __init__(self, user_id, attendence_date, today_study_complete):
         self.user_id = user_id
-        self.attendence_check = attendence_check
+        self.attendence_date = attendence_date
         self.today_study_complete = today_study_complete
 
 

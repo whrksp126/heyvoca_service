@@ -322,7 +322,7 @@ def checkin():
     today = (datetime.utcnow() + timedelta(hours=9)).date()
     exists = db.session.query(CheckIn).filter(
                     CheckIn.user_id == user_id, 
-                    CheckIn.date == today
+                    CheckIn.attendence_date == today
                 ).first()
     
     goals = []
@@ -330,7 +330,7 @@ def checkin():
     after_gem_cnt = 0
     user = db.session.query(User).filter(User.id == user_id).first()
     if not exists:
-        db.session.add(CheckIn(user_id=user_id, attendence_check=today, today_study_complete=False))
+        db.session.add(CheckIn(user_id=user_id, attendence_date=today, today_study_complete=False))
         db.session.commit()
 
         attendance_goal_complete, attendance_goal_reward_count, attendance_goal_badge_img = update_user_goal('출석왕')
