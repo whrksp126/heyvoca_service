@@ -237,7 +237,7 @@ def update_user_goal(goal_type_name: str):
             )
             db.session.add(next_user_goal)
 
-    return current_user_goal, goal.reward_count if goal_complete else None
+    return current_user_goal, goal.reward_count, current_goal.badge_img if goal_complete else None
 
 
 @mainpage_bp.route('/user_study_history', methods=['POST'])
@@ -269,8 +269,8 @@ def api_user_study_history():
             checkin.today_study_complete = True
 
     # 3.업적(암기왕, 노력왕) 업데이트
-    memory_goal_complete, memory_goal_reward_count = update_user_goal('암기왕')
-    effort_goal_complete, effort_goal_reward_count = update_user_goal('노력왕')
+    memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img = update_user_goal('암기왕')
+    effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img = update_user_goal('노력왕')
 
     # 4. 보석 업데이트
     add_gem = 0
@@ -288,13 +288,13 @@ def api_user_study_history():
     if memory_goal_complete:
         goals.append({
             'name' : '암기왕',
-            'badge_img' : memory_goal_complete.badge_img,
+            'badge_img' : memory_goal_badge_img,
             'completed_at' : memory_goal_complete.completed_at + timedelta(hours=9),
         })
     if effort_goal_complete:
         goals.append({
             'name' : '노력왕',
-            'badge_img' : effort_goal_complete.badge_img,
+            'badge_img' : effort_goal_badge_img,
             'completed_at' : effort_goal_complete.completed_at + timedelta(hours=9),
         })
 
@@ -333,11 +333,11 @@ def checkin():
         db.session.add(CheckIn(user_id=user_id, attendence_check=today, today_study_complete=False))
         db.session.commit()
 
-        attendance_goal_complete, attendance_goal_reward_count = update_user_goal('출석왕')
+        attendance_goal_complete, attendance_goal_reward_count, attendance_goal_badge_img = update_user_goal('출석왕')
         if attendance_goal_complete:
             goals.append({
                 'name' : '출석왕',
-                'badge_img' : attendance_goal_complete.badge_img,
+                'badge_img' : attendance_goal_badge_img,
                 'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
             })
         
