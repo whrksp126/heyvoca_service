@@ -38,6 +38,7 @@ export const signInWithGoogle = async (webViewRef) => {
       const newUrl = `${FRONT_URL}/login?googleId=${appAsyncStore.googleId}&accessToken=${appAsyncStore.accessToken}&refreshToken=${appAsyncStore.refreshToken}&email=${appAsyncStore.email}&name=${appAsyncStore.name}&type=app&status=200`;
       const script = `window.location.href = '${newUrl}';`;
       webViewRef.current.injectJavaScript(script);
+      console.log('newUrl', newUrl);
     }
   } catch (error) {
     handleSignInError(error);

@@ -3,10 +3,7 @@ import { StyleSheet, SafeAreaView, StatusBar, BackHandler, ToastAndroid } from '
 import { WebView } from 'react-native-webview';
 import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
-
-
 import { Platform } from 'react-native';
-
 const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 
