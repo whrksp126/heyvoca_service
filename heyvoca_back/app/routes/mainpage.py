@@ -324,29 +324,38 @@ def checkin():
                     CheckIn.user_id == user_id, 
                     CheckIn.date == today
                 ).first()
+    
+    goals = []
+    before_gem_cnt = 0
+    after_gem_cnt = 0
+    user = db.session.query(User).filter(User.id == user_id).first()
     if not exists:
         db.session.add(CheckIn(user_id=user_id, attendence_check=today, today_study_complete=False))
         db.session.commit()
 
-    attendance_goal_complete, attendance_goal_reward_count = update_user_goal('출석왕')
-    goals = []
-    if attendance_goal_complete:
-        goals.append({
-            'name' : '출석왕',
-            'badge_img' : attendance_goal_complete.badge_img,
-            'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
-        })
-    
-    user = db.session.query(User).filter(User.id == user_id).first()
-    user.gem_cnt += attendance_goal_reward_count
-    db.session.commit()
+        attendance_goal_complete, attendance_goal_reward_count = update_user_goal('출석왕')
+        if attendance_goal_complete:
+            goals.append({
+                'name' : '출석왕',
+                'badge_img' : attendance_goal_complete.badge_img,
+                'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
+            })
+        
+        user.gem_cnt += attendance_goal_reward_count
+        db.session.commit()
+
+        before_gem_cnt = user.gem_cnt - attendance_goal_reward_count
+        after_gem_cnt = user.gem_cnt
+    else:
+        before_gem_cnt = user.gem_cnt
+        after_gem_cnt = user.gem_cnt
 
     return {
         'code': 200,
         'data': {
             'gem': {
-                'before': user.gem_cnt - attendance_goal_reward_count,
-                'after': user.gem_cnt
+                'before': before_gem_cnt,
+                'after': after_gem_cnt
             },
             'goals': goals
         }
