@@ -1,97 +1,61 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## iOS 환경에서 새로운 네이티브 패키지 추가 시 세팅 방법
 
-## Step 1: Start Metro
+1. CocoaPods 설치 (최초 1회만 필요, 이미 설치되어 있다면 생략)
+sudo gem install cocoapods
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+2. iOS 디렉토리로 이동
+cd ios
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+3. Pod install 실행
+pod install
 
-```sh
-# Using npm
-npm start
+4. 프로젝트 루트로 이동
+cd ..
 
-# OR using Yarn
-yarn start
+
+## 🟢 Android에서 커스텀 .env 파일(.env.dev 등) 적용 방법
+
+Android에서 .env.dev 등 커스텀 환경변수 파일을 사용하려면
+android/app/build.gradle 파일 상단에 아래 코드를 반드시 추가해야 합니다.
+
+// react-native-config 수동 추가
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+
+## 🍏 iOS Google 로그인 연동을 위한 Info.plist 설정 방법
+
+Google 로그인을 위해서는 **iOS URL 스키마**를 반드시 Info.plist에 등록해야 합니다.
+
+### 1. iOS URL 스키마 확인 방법
+
+- 구글 클라우드 콘솔에서 iOS용 OAuth 클라이언트 생성 시,  "iOS URL 스키마" 항목을 복사합니다. 
+- 또는 `GoogleService-Info.plist` 파일의 `REVERSED_CLIENT_ID` 값과 동일합니다.
+
+### 2. Info.plist에 등록 방법
+`ios/heyvoca/Info.plist` 파일에 아래와 같이 추가하세요.
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>com.googleusercontent.apps.584113926081-no8unvtm9s5lbli7se02m54pakac320l</string>
+    </array>
+  </dict>
+</array>
 ```
 
-## Step 2: Build and run your app
+## 🔑 Android SHA-1 확인 방법
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+### 1. Debug 키스토어 SHA-1 확인
 
 ```sh
-# Using npm
-npm run android
+keytool -list -v -keystore android/app/debug.keystore -alias androiddebugkey -storepass android -keypass android
+keytool -list -v -keystore [릴리즈키경로] -alias [별칭] -storepass [스토어패스] -keypass [키패스]
 
-# OR using Yarn
-yarn android
 ```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
