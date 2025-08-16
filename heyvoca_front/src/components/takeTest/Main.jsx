@@ -31,6 +31,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [tempSm2, setTempSm2] = useState(null);
 
   const navigate = useNavigate();
+
+
+  useEffect(()=>{
+    console.log("testType,", testType);
+  },[])
+
   // 문제가 변경될 때마다 텍스트 읽기
   useEffect(() => {
     if (testQuestions[progressIndex]) {
@@ -464,7 +470,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   })}
                   
                 </div>
-                {testType === "test" && (
+                {testType === "test" || testType === "today" && (
                 <motion.button 
                   onClick={handleClickNext}
                   whileTap={{ 

@@ -223,7 +223,7 @@ const Main = () => {
                     <span 
                       className="
                         absolute bottom-[0] left-[50%] 
-                        translate-x-[-50%] z-[1] 
+                        translate-x-[-50%]
                         text-[#D4D4D4] text-[16px] font-[700]
                         font-family: 'Cafe24Ssurround', sans-serif;
                         [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
