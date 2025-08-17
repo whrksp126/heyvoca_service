@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import mainpage_bp
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 
@@ -111,7 +111,7 @@ def api_user_recent_study_data():
 @login_required
 def api_user_recent_study_create_update():
     data = request.json
-    id = data['id']
+    id = data.get('id', None)
     study_data = data['study_data']
     status = data['status']
     progress_index = data['progress_index']
@@ -330,5 +330,8 @@ def checkin():
             'goals': goals
         }
     }
+
+
+
 
 
