@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import { Plus, BoxArrowDown } from '@phosphor-icons/react';
 import { useLevelBookListBottomSheet } from './BookStoreBottomSheet';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
+import { useVocabulary } from '../../context/VocabularyContext';
 
 const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const [levelBookList, setLevelBookList] = useState([]);
   const [isLevelBookListLoading, setIsLevelBookListLoading] = useState(true);
   const { showVocabularySheetPreviewBottomSheet } = useLevelBookListBottomSheet();
-
+  const { getBookStoreVocabularySheet } = useVocabulary();
   useEffect(() => {
     getLevelBookList();
   }, []);
@@ -19,12 +20,21 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
     const fetchData = {level: userInitialProfile.level};
     const result = await fetchDataAsync( url, method, fetchData );
     if(result.code == 200){
-      setLevelBookList(result.data);
+      const levelBookList = result.data.map((item)=>{
+        const bookId = item.id
+        const vocabularySheet = getBookStoreVocabularySheet(bookId)
+        return {
+          ...item,
+          ...vocabularySheet
+        }
+      })
+      setLevelBookList(levelBookList);
       setIsLevelBookListLoading(false);
     }
   }
 
   const addVocabularySheet = (vocabularySheet) => {
+    console.log('addVocabularySheet', vocabularySheet);
     setUserInitialProfile({
       ...userInitialProfile,
       vocabook: vocabularySheet,
@@ -33,7 +43,6 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   }
 
   const handleBookStoreClick = (index) => {
-    console.log(levelBookList[index]);
     showVocabularySheetPreviewBottomSheet(levelBookList[index], addVocabularySheet);
   };
 

@@ -203,30 +203,50 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     updateWordState(sheetId, wordId, updateData);
     setIsFetching(false);
     setPendingUpdateSheetIds(prev => prev.add(sheetId));
-    if(progressIndex === testQuestions.length-1){ // 마지막 문제
-      updateRecentStudyState({
-        ...recentStudy,
-        progress_index : null,
-        status: "end",
-        study_data: testQuestions,
-        updated_at : new Date().toISOString(),
-      });
-    }else{
-      updateRecentStudyState({
-        ...recentStudy,
-        progress_index : progressIndex + 1,
-        status: "learning",
-        study_data: testQuestions,
-        updated_at : new Date().toISOString(),
-      });
 
-      
+    const isNotLastQuestion = progressIndex === testQuestions.length-1;
+    updateRecentStudyState({
+      [testType] : {
+        ...recentStudy[testType],
+        progress_index : isNotLastQuestion ? progressIndex + 1 : null,
+        status: isNotLastQuestion ? "learning" : "end",
+        study_data: testQuestions,
+        updated_at : new Date().toISOString(),
+      }
+    });
+    if(isNotLastQuestion){
       setProgressIndex(progressIndex + 1);
       setIsCorrect(null);
       setUserSelected(null);
       setIsAnswered(false);
       setIsStay(false);
-    }  
+    }
+
+
+    // if(progressIndex === testQuestions.length-1){ // 마지막 문제
+    //   updateRecentStudyState({
+    //     ...recentStudy,
+    //     progress_index : null,
+    //     status: "end",
+    //     study_data: testQuestions,
+    //     updated_at : new Date().toISOString(),
+    //   });
+    // }else{
+    //   updateRecentStudyState({
+    //     ...recentStudy,
+    //     progress_index : progressIndex + 1,
+    //     status: "learning",
+    //     study_data: testQuestions,
+    //     updated_at : new Date().toISOString(),
+    //   });
+
+      
+    //   setProgressIndex(progressIndex + 1);
+    //   setIsCorrect(null);
+    //   setUserSelected(null);
+    //   setIsAnswered(false);
+    //   setIsStay(false);
+    // }  
   }
 
   const slideVariants = {

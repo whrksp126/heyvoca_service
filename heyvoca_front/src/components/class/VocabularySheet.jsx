@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { useTestSetupBottomSheet } from './TestSetupBottomSheet';
 
-const VocabularySheet = ({type : testType}) => {
+const VocabularySheet = ({testType}) => {
   const { handleBack } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { pushFullSheet } = useFullSheet();

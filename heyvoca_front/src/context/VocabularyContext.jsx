@@ -103,7 +103,7 @@ export const VocabularyProvider = ({ children }) => {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [vocabularySheets]);
 
   // 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
@@ -291,7 +291,6 @@ export const VocabularyProvider = ({ children }) => {
 
   // 서점 특정 단어장 조회
   const getBookStoreVocabularySheet = useCallback((bookStoreId) => {
-    console.log("bookStore", bookStore)
     return bookStore.find(book => book.id === bookStoreId);
   }, [bookStore]);
 
@@ -373,16 +372,21 @@ export const VocabularyProvider = ({ children }) => {
   }, []);
 
   // 최근 학습 데이터 수정
-  const updateRecentStudy = useCallback(async (recentStudy) => {
+  const updateRecentStudy = useCallback(async (testType, curRecentStudy) => {
     try {
       const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
       const method = 'POST';
       const fetchData = {
-        ...recentStudy,
+        ...curRecentStudy,
       };
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
-      setRecentStudy(result.data);
+      setRecentStudy(
+        {
+          ...recentStudy,
+          [testType] : result.data,
+        }
+      );
       return result.data;
     } catch (err) {
       setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');

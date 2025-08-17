@@ -8,9 +8,49 @@ import Step4 from './step4';
 import Step5 from './step5';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNavigate } from 'react-router-dom';
+
+
+
+
+const getColorSet = (mainColor) => {
+  switch(mainColor) {
+    case '#FF8DD4': return {
+        main : "#FF8DD4",
+        sub : "#FF8DD44d",
+        background : "#FFEFFA"
+      };
+      case '#CD8DFF': return {
+        main : "#CD8DFF",
+        sub : "#CD8DFF4d",
+        background : "#F8E6FF"
+      };
+      case '#74D5FF': return {
+        main : "#74D5FF",
+        sub : "#74D5FF4d",
+        background : "#EAF6FF"
+      };
+      case '#42F98B': return {
+        main : "#42F98B",
+        sub : "#42F98B4d",
+        background : "#E6FFE9"
+      };
+      case '#FFBD3C': return {
+        main : "#FFBD3C",
+        sub : "#FFBD3C4d",
+        background : "#FFF8E6"
+      };
+      default: return {
+        main : "#FF8DD4",
+        sub : "#FF8DD44d",
+        background : "#FFEFFA"
+      };
+  }
+};
+
+
 const Main = () => {
   const navigate = useNavigate();
-  const { addBookStoreVocabularySheet } = useVocabulary();
+  const { addVocabularySheet, updateVocabularySheet } = useVocabulary();
   const { setUserProfile, updateUserProfile } = useUser();
   const [step, setStep] = useState(1);
   const [userInitialProfile, setUserInitialProfile] = useState({
@@ -20,14 +60,44 @@ const Main = () => {
   });
 
   const endInitialProfile = async () => {
+    console.log('endInitialProfile', userInitialProfile);
     const updates = {
       level_id: userInitialProfile.level,
       username: userInitialProfile.name,
     };
-    console.log(userInitialProfile);
     await updateUserProfile(updates);
-    console.log("사용자 정보 업데이트 완료")
-    await addBookStoreVocabularySheet(userInitialProfile.vocabook);
+    // 단순 단어장 추가
+    const vocabularySheet = await addVocabularySheet({
+      title: userInitialProfile.vocabook.name,
+      color: getColorSet('#FF8DD4'),
+    })
+
+    // 단어장 내 단어 추가
+    await updateVocabularySheet(
+      vocabularySheet.id,
+      {
+        words: userInitialProfile.vocabook.words.map((word, index)=>{
+          return {
+            id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+            dictionaryId : word.id,
+            origin : word.origin,
+            meanings : word.meanings,
+            examples : word.examples,
+            pronunciation : word.pronunciation,
+            ef : 2.5,
+            repetition : 0,
+            interval : 0,
+            nextReview : null,
+            createdAt : new Date().toISOString(),
+            updatedAt : new Date().toISOString(),
+          }
+        }),
+        total: userInitialProfile.vocabook.words.length,
+      }
+    )
+
+
+    // await addBookStoreVocabularySheet(userInitialProfile.vocabook);
     console.log("단어장 추가 완료")
     navigate('/');
   }

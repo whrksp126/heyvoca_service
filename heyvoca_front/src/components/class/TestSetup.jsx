@@ -28,9 +28,10 @@ const TestSetup = ({ vocabularySheetId, maxVocabularyCount }) => {
       </div>
     );
   }
-
+å
   const handleCardClick = (questionType) => {
-    showTestSetupBottomSheet({questionType, vocabularySheetId, maxVocabularyCount});
+    // showTestSetupBottomSheet({questionType, vocabularySheetId, maxVocabularyCount});
+
   };
 
   return (

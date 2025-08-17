@@ -2,8 +2,11 @@ import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 import { useNavigate } from 'react-router-dom';
+import { useFullSheet } from '../../context/FullSheetContext';
+import VocabularySheet from './VocabularySheet';
 
 export const useLearningInfoBottomSheet = () => {
+  const { pushFullSheet } = useFullSheet();
   const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
   const navigate = useNavigate();
   const handleClose = useCallback(() => {
@@ -15,10 +18,16 @@ export const useLearningInfoBottomSheet = () => {
     navigate('/take-test');
   }, []);
 
-  const showLearningInfoBottomSheet = useCallback(() => {
+  const handleCancel = (testType) => {
+    pushFullSheet({
+      component: <VocabularySheet type={testType} />
+    });
+  }
+
+  const showLearningInfoBottomSheet = useCallback(({testType}) => {
     pushBottomSheet(
       <LearningInfoBottomSheet 
-        onCancel={handleClose}
+        onCancel={() => handleCancel(testType)}
         onSet={() => handleStartTest()}
       />,
       {
@@ -78,7 +87,7 @@ const LearningInfoBottomSheet = ({onCancel, onSet}) => {
             stiffness: 500, 
             damping: 15
           }}
-        >취소</motion.button>
+        >새로 시작</motion.button>
         <motion.button 
           className="
             flex-1

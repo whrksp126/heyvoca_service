@@ -18,19 +18,32 @@ export const useTestSetupBottomSheet = () => {
     handleBack();
   }, [handleBack]);
 
-  const handleStartTest = useCallback(async (data, testType) => {
+  const handleStartTest = useCallback(async (data) => {
+    const testType = data.testType;
     if(recentStudy.status === "learning") {
 
     }
-    await updateRecentStudy({
-      ...recentStudy,
+
+    // MEMO : testType : test, exam, today
+    await updateRecentStudy(testType, {
+      ...recentStudy[testType],
       progress_index : null,
-      type: null,
+      type: testType,
       status: null,
       study_data: null,
       updated_at : null,
       created_at : null,
     });
+    
+    // await updateRecentStudy({
+    //   ...recentStudy,
+    //   progress_index : null,
+    //   type: null,
+    //   status: null,
+    //   study_data: null,
+    //   updated_at : null,
+    //   created_at : null,
+    // });
     handleBottomSheetReset();
     handleFullSheetReset();
     navigate('/take-test', { state: { data, testType } });
@@ -39,12 +52,13 @@ export const useTestSetupBottomSheet = () => {
   // const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
   const showTestSetupBottomSheet = useCallback(({id:vocabularySheetId, maxVocabularyCount, testType}) => {
     // setQuestionType(questionType);
+    console.log("testType", testType)
     setVocabularySheetId(vocabularySheetId);
     pushBottomSheet(
       <TestSetupBottomSheet 
         maxVocabularyCount={maxVocabularyCount}
         onCancel={handleClose}
-        onSet={(data) => handleStartTest({...data, vocabularySheetId: vocabularySheetId}, testType)}
+        onSet={(data) => handleStartTest({...data, vocabularySheetId: vocabularySheetId, testType: testType})}
       />,
       {
         isBackdropClickClosable: false,

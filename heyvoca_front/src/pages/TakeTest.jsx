@@ -214,7 +214,7 @@ const TakeTest = () => {
     const handleUpdateAndNavigate = async () => {
       if(recentStudy.status === "end"){
         await updateVocabularySheetAndRecentStudyData();
-        navigate("/take-test/result" , {state: {testQuestions: testQuestions}});
+        navigate("/take-test/result" , {state: {testQuestions: testQuestions, testType: state.testType}});
       }
     };
     handleUpdateAndNavigate();

@@ -4,7 +4,7 @@ import { useFullSheet } from '../../context/FullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import VocabularySheet from './VocabularySheet';
 import TestSetup from './TestSetup';
-
+import { useLearningInfoBottomSheet } from './LearningInfoBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
 
@@ -30,13 +30,28 @@ const Main = () => {
   // const updated = updateSM2(word, q, today);
 
   const { pushFullSheet } = useFullSheet();
-  const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
+  const { vocabularySheets, isVocabularySheetsLoading, recentStudy } = useVocabulary();
+  const { showLearningInfoBottomSheet } = useLearningInfoBottomSheet();
 
 
-  const handleStartClick = (type) => {
-    pushFullSheet({
-      component: <VocabularySheet type={type} />
-    });
+  const handleStartClick = (testType) => {
+    const isLearning = recentStudy[testType]?.status === "learning";
+    if(isLearning){
+      // 이어학습 유무 확인
+      showLearningInfoBottomSheet({testType});
+    }else{
+
+      pushFullSheet({
+        component: <VocabularySheet testType={testType} />
+      });
+  
+    }
+
+    return;
+
+
+
+
     // if(type === 'all') {
     //   const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
     //   if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);

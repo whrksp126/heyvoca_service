@@ -11,6 +11,7 @@ const StudyResult = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const testQuestions = state.testQuestions;
+  const testType = state.testType;
 
   // 학습 결과 저장
   useEffect(()=>{
@@ -54,7 +55,7 @@ const StudyResult = () => {
         };
       })
       .sort(() => Math.random() - 0.5);
-    await updateRecentStudy({
+    await updateRecentStudy(testType, {
       ...recentStudy,
       status: "learning",
       progress_index: 0,

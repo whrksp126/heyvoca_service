@@ -12,7 +12,6 @@ const Index = () => {
   const { getUserProfile, isUserProfileLoading, userStorageData, setUserStorageData } = useUser();
 
   useEffect(() => {
-    console.log("userStorageData,",userStorageData);
     if(userStorageData?.status == "login"){
       if(isUserProfileLoading) return;
       const userProfile = getUserProfile();

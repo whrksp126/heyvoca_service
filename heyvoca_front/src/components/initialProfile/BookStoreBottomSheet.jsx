@@ -14,7 +14,7 @@ export const useLevelBookListBottomSheet = () => {
   const showVocabularySheetPreviewBottomSheet = useCallback((vocabularySheet, addVocabularySheet) => {
     pushBottomSheet(
       <PreviewBookStore 
-      vocabularySheet={vocabularySheet}
+        vocabularySheet={vocabularySheet}
         onCancel={handleClose}
         onSet={() => {
           handleClose();
