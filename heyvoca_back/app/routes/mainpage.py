@@ -36,73 +36,42 @@ def api_user_goals():
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @login_required
 def api_user_dates():
-    # user_id = current_user.id
+    user_id = current_user.id
 
-    # kst_now = datetime.utcnow() + timedelta(hours=9)
-    # today = kst_now.date()
-    # this_sunday = today - timedelta(days=today.weekday() + 1 if today.weekday() != 6 else 0)
-    # this_saturday = this_sunday + timedelta(days=6)
+    kst_now = datetime.utcnow() + timedelta(hours=9)
+    today = kst_now.date()
 
-    # checkins = db.session.query(CheckIn)\
-    #             .filter(
-    #                 and_(
-    #                     CheckIn.user_id == user_id,
-    #                     CheckIn.check_date >= this_sunday,
-    #                     CheckIn.check_date <= this_saturday
-    #                 )
-    #             ).all()
-    
-    # checkin_dict = {checkin.check_date: checkin for checkin in checkins}
-    # days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-    # data = []
-    # for i in range(7):
-    #     date = this_sunday + timedelta(days=i)
-    #     checkin = checkin_dict.get(date)
-    #     data.append({
-    #         'date': days[i],
-    #         'attend': bool(checkin.attendence_check) if checkin else False,
-    #         'daily_mission': bool(checkin.study_complete) if checkin else False,
-    #     })
+    this_sunday = today - timedelta(days=(today.weekday() + 1) % 7)
+    this_saturday = this_sunday + timedelta(days=6)
 
-    dummy = [
-        {
-            'date': 'SUN',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'MON',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'TUE',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'WED',
-            'attend': True,
-            'daily_mission': True,
-        },
-        {
-            'date': 'THU',
-            'attend': True,
-            'daily_mission': True,
-        },
-        {
-            'date': 'FRI',
-            'attend': False,
-            'daily_mission': False,
-        },
-        {
-            'date': 'SAT',
-            'attend': False,
-            'daily_mission': False,
-        }
+    # 이번 주 체크인 전체 조회
+    checkins = (
+        db.session.query(CheckIn)
+        .filter(
+            and_(
+                CheckIn.user_id == user_id,
+                CheckIn.attendence_date >= this_sunday,
+                CheckIn.attendence_date <= this_saturday,
+            )
+        )
+        .all()
+    )
 
-    ]
-    return {'code' : 200, 'data' : dummy}
+    # 날짜 → 체크인 레코드 매핑
+    by_date = {c.attendence_date: c for c in checkins}
+
+    days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    data = []
+    for i in range(7):
+        d = this_sunday + timedelta(days=i)
+        ci = by_date.get(d)
+        data.append({
+            'date': days[i],
+            'attend': True if ci else False,
+            'daily_mission': bool(ci.today_study_complete) if ci else False,
+        })
+
+    return {'code' : 200, 'data' : data}
 
 
 @mainpage_bp.route('/gem_cnt', methods=['GET'])
