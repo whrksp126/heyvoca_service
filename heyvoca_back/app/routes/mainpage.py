@@ -182,6 +182,32 @@ def update_user_goal(goal_type_name: str):
                             .filter(GoalType.type == goal_type_name)\
                             .filter(UserGoals.is_completed == False)\
                             .first()
+    
+    # 진행중 목표 없음 → 마지막 레벨까지 다 했는지 확인
+    if not current_user_goal:
+        # 이 타입의 최대 레벨 찾기
+        max_level = (
+            db.session.query(func.max(Goals.level))
+            .join(GoalType, Goals.type_id == GoalType.id)
+            .filter(GoalType.type == goal_type_name)
+            .scalar()
+        )
+
+        # 유저가 그 max_level을 완료했는지 확인
+        last_goal_done = (
+            db.session.query(UserGoals)
+            .join(Goals, UserGoals.goal_id == Goals.id)
+            .join(GoalType, Goals.type_id == GoalType.id)
+            .filter(UserGoals.user_id == user_id)
+            .filter(GoalType.type == goal_type_name)
+            .filter(Goals.level == max_level)
+            .filter(UserGoals.is_completed == True)
+            .first()
+        )
+
+        if last_goal_done:
+            return None, None, None  
+    
     # Goal 조회
     goal = db.session.query(Goals)\
                 .filter(Goals.id == current_user_goal.goal_id)\
