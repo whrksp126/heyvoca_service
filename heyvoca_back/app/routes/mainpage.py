@@ -332,6 +332,19 @@ def checkin():
     }
 
 
-
+@mainpage_bp.route('/user_book_cnt_check', methods=['GET'])
+@login_required
+def user_book_cnt_check():
+    user_id = current_user.id
+    user_item = db.session.query(User).filter(User.id == user_id).first()
+    
+    can_add_book = True if user_item.book_cnt > 0 else False
+    
+    return jsonify({
+        'code': 200,
+        'data': {
+            'can_add_book': can_add_book
+        }
+    })
 
 

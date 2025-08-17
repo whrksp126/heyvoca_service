@@ -233,7 +233,7 @@ class UserVocaBook(db.Model):
     __tablename__ = 'user_voca_book'
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
-    vocabook_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
+    bookstore_id = Column(Integer, ForeignKey('bookstore.id'), nullable=True)
     color = Column(String(256), nullable=False)
     name = Column(String(36), nullable=False)
     total_word_cnt = Column(Integer, nullable=False, default=0)
@@ -242,9 +242,9 @@ class UserVocaBook(db.Model):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, user_id, vocabook_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
+    def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
         self.user_id = user_id
-        self.vocabook_id = vocabook_id
+        self.bookstore_id = bookstore_id
         self.color = color
         self.name = name
         self.total_word_cnt = total_word_cnt
