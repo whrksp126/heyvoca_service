@@ -172,7 +172,7 @@ class Bookstore(db.Model):
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
-    # level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
+    level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
 
     # 관계 정의
     voca_book = relationship("VocaBook")

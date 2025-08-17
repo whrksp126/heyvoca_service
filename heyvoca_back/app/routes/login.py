@@ -292,12 +292,12 @@ def update_user_info():
 # @login_required
 def level_voca_list():
     level = request.args.get('level')
-
+    
     if not level:
         return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
     
     filtered_voca_list = db.session.query(Bookstore)\
-                    .filter(Bookstore.level == level)\
+                    .filter(Bookstore.level_id == level)\
                     .filter(Bookstore.hide == 'N')\
                     .order_by(Bookstore.downloads.desc()) \
                     .limit(4)\
@@ -326,7 +326,6 @@ def level_voca_list():
     # json_path = os.path.join(current_dir, 'dummy_dict.json')
     # with open(json_path, 'r', encoding='utf-8') as f:
     #     all_data = json.load(f)
-
     return jsonify({'code':200, 'data': data})
 
 
