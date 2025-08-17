@@ -16,22 +16,32 @@ from uuid import UUID
 @mainpage_bp.route('/user_goals', methods=['GET'])
 @login_required
 def api_user_goals():
-    print("#####################3 api_user_goals")
     user_id = current_user.id
-    goals = db.session.query(UserGoals.current_value, GoalType.type, Goals.badge_img, Goals.level)\
-                    .join(Goals, UserGoals.goal_id == Goals.id)\
-                    .join(GoalType, Goals.type_id == GoalType.id)\
-                    .filter(UserGoals.user_id == user_id)\
-                    .all()
-    
-    data = []
-    for goal in goals:
-        data.append({
-            'name' : goal.type,
-            'badge_img' : goal.badge_img,
-        })
-    return {'code' : 200, 'data' : data}
 
+    goal_types = [r[0] for r in db.session.query(GoalType.type).all()]
+
+    completed_rows = (
+        db.session.query(
+            GoalType.type.label('goal_type'),
+            func.max(Goals.level).label('max_level')
+        )
+        .select_from(UserGoals)
+        .join(Goals, UserGoals.goal_id == Goals.id)
+        .join(GoalType, Goals.type_id == GoalType.id)
+        .filter(UserGoals.user_id == user_id)
+        .filter(UserGoals.completed_at.isnot(None))
+        .group_by(GoalType.type)
+        .all()
+    )
+
+    completed_dict = {row.goal_type: row.max_level for row in completed_rows}
+
+    data = [
+        {'type': gt, 'level': completed_dict.get(gt, 0)}
+        for gt in goal_types
+    ]
+
+    return {'code': 200, 'data': data}
 
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @login_required
