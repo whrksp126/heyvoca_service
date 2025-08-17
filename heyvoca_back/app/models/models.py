@@ -13,6 +13,13 @@ from datetime import datetime, timedelta
 import enum
 
 
+### enum ###
+class RecentStudyType(enum.Enum):
+    TEST = "test"      # 학습
+    EXAM = "exam"      # 시험
+    TODAY = "today"    # 오늘의 학습
+### enum ###
+
 class BinaryUUID(TypeDecorator):
     impl = BINARY(16)
     cache_ok = True  # 캐시 키 사용을 허용하여 경고 제거
@@ -171,8 +178,8 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
-    book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
     level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
+    book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
@@ -260,12 +267,13 @@ class CheckIn(db.Model):
 
 class UserRecentStudy(db.Model):
     __tablename__ = 'user_recent_study'
+    __table_args__ = (UniqueConstraint('user_id', 'type'),)
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    type = Column(Enum(RecentStudyType), nullable=False)
     study_data = Column(TEXT, nullable=True)
     status = Column(String(36), nullable=True)
     progress_index = Column(Integer, nullable=True)
-    type = Column(String(64), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
