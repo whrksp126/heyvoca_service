@@ -95,6 +95,7 @@ def api_user_recent_study_data():
     data_dict = {}
     for recent in recent_data:
         data = {
+            'id': recent.id,
             'status': recent.status,
             'progress_index': recent.progress_index,
             'type': recent.type.value,
@@ -112,13 +113,12 @@ def api_user_recent_study_data():
 def api_user_recent_study_create_update():
     data = request.json
     id = data.get('id', None)
-    study_data = data['study_data']
-    status = data['status']
-    progress_index = data['progress_index']
+    study_data = data.get('study_data', None)
+    status = data.get('status', None)
+    progress_index = data.get('progress_index', None)
     type = data['type']
 
     user_id = current_user.id
-
     study_data = json.dumps(study_data) if study_data is not None else None
 
     # update
@@ -153,7 +153,7 @@ def api_user_recent_study_create_update():
         'study_data': json.loads(recent_data.study_data) if recent_data.study_data is not None else None,
         'status': recent_data.status,
         'progress_index': recent_data.progress_index,
-        'type': recent_data.type,
+        'type': recent_data.type.value,
         'created_at': recent_data.created_at + timedelta(hours=9),
         'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
     }
