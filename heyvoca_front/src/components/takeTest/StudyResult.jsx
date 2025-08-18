@@ -13,10 +13,11 @@ const StudyResult = () => {
   const testQuestions = state.testQuestions;
   const testType = state.testType;
 
+
   // 학습 결과 저장
   useEffect(()=>{
     console.log('recentStudy,',recentStudy);
-    if(recentStudy.status === "end"){
+    if(recentStudy && recentStudy[testType] && recentStudy[testType].status === "end"){
       const correctCnt = testQuestions.filter(question => question.isCorrect).length;
       const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
       updateUserHistory({
@@ -30,7 +31,7 @@ const StudyResult = () => {
 
 
   useEffect(() => {
-    if(recentStudy.status ===  "learning") {
+    if(recentStudy && recentStudy[testType] && recentStudy[testType].status ===  "learning") {
       navigate('/class');
     }
   }, [isRecentStudyLoading]);
@@ -38,7 +39,7 @@ const StudyResult = () => {
   const onClickTestAgain = async () => {
     // 요소의 순서를 랜덤으로 섞어서 반환
     // options을 랜덤으로 섞고, 정답의 index(resultIndex)도 새로 계산
-    const tempTestQuestions = recentStudy.study_data
+    const tempTestQuestions = recentStudy[testType].study_data
       .map((question) => {
         // 기존 정답(원래 options에서 resultIndex로 찾음)
         const correctAnswer = question.options[question.resultIndex];
@@ -56,14 +57,18 @@ const StudyResult = () => {
       })
       .sort(() => Math.random() - 0.5);
     await updateRecentStudy(testType, {
-      ...recentStudy,
+      ...recentStudy[testType],
       status: "learning",
       progress_index: 0,
       study_data: tempTestQuestions,
       updated_at : new Date().toISOString(),
       created_at : new Date().toISOString(),
     })
-    navigate('/take-test');
+    navigate('/take-test', {
+      state: {
+        testType: testType
+      }
+    });
   }
 
   const onClickEndStudy = async () => {

@@ -400,12 +400,12 @@ export const VocabularyProvider = ({ children }) => {
   }, []);
 
   // 최근 학습 데이터 수정(서버)
-  const updateRecentStudyServer = useCallback(async () => {
+  const updateRecentStudyServer = useCallback(async (testType) => {
     try {
       const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
       const method = 'POST';
       const fetchData = {
-        ...recentStudy, 
+        ...recentStudy[testType], 
       };
       const result = await fetchDataAsync(url, method, fetchData);
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');

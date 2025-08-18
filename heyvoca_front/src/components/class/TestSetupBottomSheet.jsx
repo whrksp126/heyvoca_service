@@ -20,6 +20,9 @@ export const useTestSetupBottomSheet = () => {
 
   const handleStartTest = useCallback(async (data) => {
     const testType = data.testType;
+
+    console.log(testType, "testType")
+
     if(recentStudy.status === "learning") {
 
     }

@@ -13,9 +13,14 @@ export const useLearningInfoBottomSheet = () => {
     handleBack();
   }, [handleBack]);
 
-  const handleStartTest = useCallback(async () => {
+  const handleStartTest = useCallback(async (testType) => {
+    console.log("handleStartTest")
     handleBottomSheetReset();
-    navigate('/take-test');
+    navigate('/take-test', {
+      state: {
+        testType: testType
+      }
+    });
   }, []);
 
   const handleCancel = (testType) => {
@@ -28,7 +33,7 @@ export const useLearningInfoBottomSheet = () => {
     pushBottomSheet(
       <LearningInfoBottomSheet 
         onCancel={() => handleCancel(testType)}
-        onSet={() => handleStartTest()}
+        onSet={() => handleStartTest(testType)}
       />,
       {
         isBackdropClickClosable: false,

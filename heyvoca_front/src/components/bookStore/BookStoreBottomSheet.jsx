@@ -321,7 +321,7 @@ const AddBookStore = ({ name, onCancel, onSet }) => {
             stiffness: 500, 
             damping: 15
           }}
-        >추가가</motion.button>
+        >추가</motion.button>
       </div>
     </div>
   );

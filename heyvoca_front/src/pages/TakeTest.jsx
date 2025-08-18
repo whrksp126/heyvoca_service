@@ -126,14 +126,14 @@ const TakeTest = () => {
   useEffect(() => {
     const initializeTest = async () => {
       if(isRecentStudyLoading || isVocabularySheetsLoading) return;
-      if(recentStudy.status === "end"){
+        if(recentStudy[state.testType].status === "end"){
         setIsTestQuestionsSetting(false);
         return;
       }
-      if(recentStudy.status === "learning") {
+      if(recentStudy[state.testType].status === "learning") {
         // 학습 중 이면 기존 학습 기록 그대로 적용해서 학습 시작
-        setTestQuestions(recentStudy.study_data);
-        setProgressIndex(recentStudy.progress_index);
+        setTestQuestions(recentStudy[state.testType].study_data);
+        setProgressIndex(recentStudy[state.testType].progress_index);
         setIsTestQuestionsSetting(false);
       }else{
         // 학습 기록이 없으면 새로운 학습 데이터 생성 후 학습 시작
@@ -147,8 +147,8 @@ const TakeTest = () => {
         );
         console.log("tempTestQuestions", tempTestQuestions);
 
-        await updateRecentStudy({
-          ...recentStudy,
+        await updateRecentStudy(state.testType,{
+          ...recentStudy[state.testType],
           progress_index : 0,
           status: "learning",
           type: state.testType,
@@ -212,7 +212,7 @@ const TakeTest = () => {
   // 
   useEffect(() => {
     const handleUpdateAndNavigate = async () => {
-      if(recentStudy.status === "end"){
+      if(recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end"){
         await updateVocabularySheetAndRecentStudyData();
         navigate("/take-test/result" , {state: {testQuestions: testQuestions, testType: state.testType}});
       }
@@ -232,7 +232,7 @@ const TakeTest = () => {
       }));
 
       // 학습 기록 업데이트!
-      await updateRecentStudyServer();
+      await updateRecentStudyServer(state.testType);
     }
   };
 
@@ -243,7 +243,7 @@ const TakeTest = () => {
       </div>
     );
   }else{
-    if(recentStudy.status === "end"){
+    if(recentStudy[state.testType].status === "end"){
       // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>
@@ -261,7 +261,7 @@ const TakeTest = () => {
           progressIndex={progressIndex} 
           setProgressIndex={setProgressIndex} 
           setPendingUpdateSheetIds={setPendingUpdateSheetIds} 
-          testType={state?.testType ? state.testType : recentStudy?.type}
+          testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
         />
       </div>
     );

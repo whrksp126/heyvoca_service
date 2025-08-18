@@ -115,7 +115,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
     setIsAnswered(true);
-    
   }
 
   // 시험 모드에서 문제 선택지 선택 시
@@ -204,7 +203,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsFetching(false);
     setPendingUpdateSheetIds(prev => prev.add(sheetId));
 
-    const isNotLastQuestion = progressIndex === testQuestions.length-1;
+    const isNotLastQuestion = progressIndex !== testQuestions.length-1;
+
+
     updateRecentStudyState({
       [testType] : {
         ...recentStudy[testType],
@@ -481,6 +482,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           px-[20px]
                           border-[1px] rounded-[10px]
                           text-[14px] font-[700]
+                          text-center
+                          overflow-hidden
+                          whitespace-pre-line
+                          break-keep
+                          [display:-webkit-box]
+                          [-webkit-line-clamp:2]
+                          [-webkit-box-orient:vertical]
                           ${btnStyle}
                         `}
                       >
@@ -490,7 +498,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   })}
                   
                 </div>
-                {testType === "test" || testType === "today" && (
+                {(testType === "test" || testType === "today") && (
                 <motion.button 
                   onClick={handleClickNext}
                   whileTap={{ 
