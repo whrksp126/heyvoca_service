@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 import { useNavigate } from 'react-router-dom';
@@ -13,27 +13,33 @@ export const useLearningInfoBottomSheet = () => {
     handleBack();
   }, [handleBack]);
 
-  const handleStartTest = useCallback(async (testType) => {
-    console.log("handleStartTest")
-    handleBottomSheetReset();
-    navigate('/take-test', {
-      state: {
-        testType: testType
-      }
-    });
+  const callbacksRef = useRef({});
+
+  // 콜백 저장 (key별)
+  const handleFunction = useCallback((key, cb) => {
+    callbacksRef.current[key] = cb;
   }, []);
 
-  const handleCancel = (testType) => {
-    pushFullSheet({
-      component: <VocabularySheet type={testType} />
-    });
+  // 콜백 실행 (key별)
+  const runCallback = useCallback((key, props) => {
+    if (callbacksRef.current[key]) {
+      callbacksRef.current[key](props);
+    }
+  }, []);
+
+  const handleStartTest = useCallback(async (props) => {
+    runCallback('onStartTest', props); 
+  }, [handleBottomSheetReset, navigate, runCallback]);
+
+  const handleCancel = (props) => {
+    runCallback('onCancel', props);
   }
 
   const showLearningInfoBottomSheet = useCallback(({testType}) => {
     pushBottomSheet(
       <LearningInfoBottomSheet 
-        onCancel={() => handleCancel(testType)}
-        onSet={() => handleStartTest(testType)}
+        onCancel={() => handleCancel({testType: testType})}
+        onSet={() => handleStartTest({testType: testType})}
       />,
       {
         isBackdropClickClosable: false,
@@ -43,7 +49,9 @@ export const useLearningInfoBottomSheet = () => {
   }, [handleClose, handleStartTest, pushBottomSheet]);
 
   return {
-    showLearningInfoBottomSheet
+    showLearningInfoBottomSheet,
+    handleFunction, // (key, cb) 형태로 사용
+    runCallback,    // (key) 형태로 사용
   };
 };
 

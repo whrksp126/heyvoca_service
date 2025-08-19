@@ -7,8 +7,10 @@ import TestSetup from './TestSetup';
 import { useLearningInfoBottomSheet } from './LearningInfoBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
-
+import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNavigate } from 'react-router-dom';
 const Main = () => {
+  const navigate = useNavigate();
   // const word = {
   //   id: '1', // 사용자 단어장 데이터 기준 단어 ID,
   //   dictionaryId : 1, // 헤이보카 사전의 단어 ID, 없으면 null
@@ -31,14 +33,32 @@ const Main = () => {
 
   const { pushFullSheet } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading, recentStudy } = useVocabulary();
-  const { showLearningInfoBottomSheet } = useLearningInfoBottomSheet();
-
+  const { showLearningInfoBottomSheet, handleFunction} = useLearningInfoBottomSheet();
+  const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
 
   const handleStartClick = (testType) => {
     const isLearning = recentStudy[testType]?.status === "learning";
     if(isLearning){
       // 이어학습 유무 확인
       showLearningInfoBottomSheet({testType});
+      handleFunction('onStartTest', (props) => {
+        handleBottomSheetReset();
+        navigate('/take-test', {
+          state: {
+            testType: props.testType
+          }
+        });
+      });
+
+      handleFunction('onCancel', (props) => {
+        handleBottomSheetBack();
+        setTimeout(() => {
+          pushFullSheet({
+            component: <VocabularySheet type={props.testType} />
+          });
+        }, 300);
+      });
+      return;
     }else{
 
       pushFullSheet({

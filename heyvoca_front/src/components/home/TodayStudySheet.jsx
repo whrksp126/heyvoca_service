@@ -1,21 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFullSheet } from '../../context/FullSheetContext';
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, WarningCircle } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { useVocabulary } from '../../context/VocabularyContext';
 import heyQuestionImg from '../../assets/images/헤이_물음표 1.png';
 import speechBubbleTailImg from '../../assets/images/말풍선 꼬리.png';
+import { useLearningInfoBottomSheet } from '../class/LearningInfoBottomSheet';
+import { useBottomSheet } from '../../context/BottomSheetContext';
 
 const TodayStudy = () => {
   const navigate = useNavigate();
-  const { handleBack, handleReset } = useFullSheet();
+  const { handleBack: handleFullSheetBack, handleReset: handleFullSheetReset, pushFullSheet } = useFullSheet();
+  const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
+
   const [wordCount, setWordCount] = React.useState(10);
   const [showWarning, setShowWarning] = React.useState(false);
+  const {  recentStudy, updateRecentStudy } = useVocabulary();
+  const { showLearningInfoBottomSheet, handleFunction } = useLearningInfoBottomSheet();
+  
 
-  const handleStart = () => {
-    console.log("오늘의 학습 시작")
-    handleReset();
+  useEffect(() => {
+    if(recentStudy && recentStudy['today'] && recentStudy['today'].status === "learning") {
+      setTimeout(() => {
+        showLearningInfoBottomSheet({testType: 'today'});
+        handleFunction('onStartTest', (props) => {
+          handleFullSheetReset();
+          handleBottomSheetBack();
+          navigate('/take-test', {
+            state: {
+              testType: props.testType
+            }
+          });
+        });
+  
+        handleFunction('onCancel', (props) => {
+          handleBottomSheetBack();
+        });
+      }, 300);
+      return;
+    }
+  }, [recentStudy]);
+
+  const handleStart = async () => {
+
+    await updateRecentStudy('today', {
+      ...recentStudy['today'],
+      progress_index : null,
+      type: 'today',
+      status: null,
+      study_data: null,
+      updated_at : null,
+      created_at : null,
+    });
+    handleFullSheetReset();
     navigate('/take-test', { 
       state: { 
         data: { 
@@ -40,7 +78,7 @@ const TodayStudy = () => {
       ">
         
         <motion.button
-          onClick={handleBack}
+          onClick={handleFullSheetBack}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]

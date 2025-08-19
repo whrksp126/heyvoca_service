@@ -4,6 +4,8 @@ import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import StudyResult from '../components/takeTest/StudyResult';
+import MakeStudyData from '../components/takeTest/MakeStudyData';
+import SaveStudyData from '../components/takeTest/SaveStudyData';
 
 // SM-2 알고리즘 기준 학습 상태 정의
 const MEMORY_STATES = {
@@ -126,11 +128,11 @@ const TakeTest = () => {
   useEffect(() => {
     const initializeTest = async () => {
       if(isRecentStudyLoading || isVocabularySheetsLoading) return;
-        if(recentStudy[state.testType].status === "end"){
+      if(recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end"){
         setIsTestQuestionsSetting(false);
         return;
       }
-      if(recentStudy[state.testType].status === "learning") {
+      if(recentStudy &&  recentStudy[state.testType] && recentStudy[state.testType].status === "learning") {
         // 학습 중 이면 기존 학습 기록 그대로 적용해서 학습 시작
         setTestQuestions(recentStudy[state.testType].study_data);
         setProgressIndex(recentStudy[state.testType].progress_index);
@@ -145,7 +147,6 @@ const TakeTest = () => {
           state.data.vocabularySheetId,
           state.data.count
         );
-        console.log("tempTestQuestions", tempTestQuestions);
 
         await updateRecentStudy(state.testType,{
           ...recentStudy[state.testType],
@@ -239,7 +240,7 @@ const TakeTest = () => {
   if(isTestQuestionsSetting){
     return (
       <div>
-        학습 데이터 세팅 중
+        <MakeStudyData />
       </div>
     );
   }else{
@@ -247,7 +248,7 @@ const TakeTest = () => {
       // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>
-          학습 결과 저장 중...
+          <SaveStudyData />
         </div>
       );
     }

@@ -16,12 +16,11 @@ const StudyResult = () => {
 
   // 학습 결과 저장
   useEffect(()=>{
-    console.log('recentStudy,',recentStudy);
     if(recentStudy && recentStudy[testType] && recentStudy[testType].status === "end"){
       const correctCnt = testQuestions.filter(question => question.isCorrect).length;
       const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
       updateUserHistory({
-        'today_study_complete': false,
+        'today_study_complete': testType === "today" ? true : false,
         'correct_cnt': correctCnt,
         'incorrect_cnt': incorrectCnt
       })
@@ -72,7 +71,7 @@ const StudyResult = () => {
   }
 
   const onClickEndStudy = async () => {
-    navigate('/class');
+    testType === "today" ? navigate('/home') : navigate('/class');
   }
 
 
