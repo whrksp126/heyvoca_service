@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step5 = ({endInitialProfile}) => {
   const buttonVariants = {
@@ -39,7 +39,7 @@ const Step5 = ({endInitialProfile}) => {
           모든 설정이 완료되었습니다! <br />
           이제 학습을 시작해보세요!
         </div>
-        <img src={heyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo" 
           className="
             w-[160px]
           "

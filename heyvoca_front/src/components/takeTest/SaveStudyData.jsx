@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const SaveStudyData = ({endInitialProfile}) => {
   const buttonVariants = {
@@ -38,7 +38,7 @@ const SaveStudyData = ({endInitialProfile}) => {
           학습 결과를 저장하고 있습니다! <br />
           잠시만 기다려 주세요!
         </div>
-        <img src={heyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo" 
           className="
             w-[160px]
           "

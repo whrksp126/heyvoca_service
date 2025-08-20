@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step1 = ({ setStep }) => {
   const buttonVariants = {
@@ -39,7 +39,7 @@ const Step1 = ({ setStep }) => {
           안녕하세요!<br />
           오늘부터 함께할 헤이라고 해요.
         </div>
-        <img src={heyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo" 
           className="
             w-[160px]
           "

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { CaretLeft, WarningCircle } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
-import heyQuestionImg from '../../assets/images/헤이_물음표 1.png';
-import speechBubbleTailImg from '../../assets/images/말풍선 꼬리.png';
+import HeyQuestionImg from '../../assets/images/HeyQuestionImg.png';
+import SpeechBubbleTailImg from '../../assets/images/SpeechBubbleTailImg.png';
 import { useLearningInfoBottomSheet } from '../class/LearningInfoBottomSheet';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 
@@ -122,7 +122,7 @@ const TodayStudy = () => {
           background: 'linear-gradient(135deg, rgba(255, 185, 233, 1) 0%, rgba(255, 185, 233, 1) 40%, rgba(255, 221, 242, 1) 100%)',
         }}
         >
-          <img src={heyQuestionImg} alt="heyQuestionImg" className="h-[160px]" />
+          <img src={HeyQuestionImg} alt="heyQuestionImg" className="h-[160px]" />
           <div className="flex flex-col gap-[25px]">
             <div className="
                relative 
@@ -133,7 +133,7 @@ const TodayStudy = () => {
                shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)]
              ">
               <span>오늘은 몇 개 단어를<br/>공부해볼까요?</span> 
-              <img src={speechBubbleTailImg} alt="speechBubbleTailImg" className="absolute top-[100%] h-[11px]" />
+              <img src={SpeechBubbleTailImg} alt="speechBubbleTailImg" className="absolute top-[100%] h-[11px]" />
             </div>
             <div className="relative flex justify-end">
               <motion.input 

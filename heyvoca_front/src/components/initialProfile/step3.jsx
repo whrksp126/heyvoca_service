@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step3 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const handleNextBtn = (target) => {
@@ -47,7 +47,7 @@ const Step3 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
           시작하기 전에 맞춤 테스트를 제공할 수 있도록 <br />
           원하는 레벨을 선택해주세요!
         </div>
-        <img src={heyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo" 
           className="
             w-[160px]
           "

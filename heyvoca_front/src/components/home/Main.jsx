@@ -2,19 +2,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import logo_h from '../../assets/images/logo_h.png';
-import 헤이캐릭터02 from '../../assets/images/헤이캐릭터02.png';
-import 보석 from '../../assets/images/보석.png';
+import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
+import gem from '../../assets/images/gem.png';
 
 import { SketchLogo, Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { useFullSheet } from '../../context/FullSheetContext';
 
-import 초대왕 from '../../assets/images/헤이캐릭터/초대왕.png';
-import 출석왕 from '../../assets/images/헤이캐릭터/출석왕.png';
-import 노력왕 from '../../assets/images/헤이캐릭터/노력왕.png';
-import 단어왕 from '../../assets/images/헤이캐릭터/단어왕.png';
-import 끈기왕 from '../../assets/images/헤이캐릭터/끈기왕.png';
-import 독서왕 from '../../assets/images/헤이캐릭터/독서왕.png';
+import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
+import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
+import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
+import WordKing from '../../assets/images/HeyCharacter/WordKing.png';
+import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
+import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 
 import StoreSheet from './StoreSheet';
 import TodayStudySheet from './TodayStudySheet';
@@ -51,7 +51,7 @@ const Main = () => {
       ">
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[5px] items-center" onClick={handleStoreButtonClick}>
-          <img src={보석} alt="보석" className="w-[20px] h-[18px]" />
+          <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
           <span className="text-[#fff] text-[14px] font-bold">{userProfile.gem_cnt}</span>
         </div>
       </div>
@@ -72,7 +72,7 @@ const Main = () => {
             <strong>1,450개</strong><br/>
             단어를 학습 중이에요!
           </h2>
-          <img src={헤이캐릭터02} alt="" className="
+          <img src={HeyCharacter02} alt="" className="
             absolute top-[-9px] right-[25px]
             h-[148px]
           " />
@@ -201,12 +201,12 @@ const Main = () => {
             >
               {/* 업적 아이템 배열로 관리, 4개 이하일 때도 중앙 정렬 */}
               {[
-                { src: 초대왕, label: '초대왕', level: 1 },
-                { src: 출석왕, label: '출석왕', level: 2 },
-                { src: 노력왕 , label: '노력왕', level: 3 },
-                { src: 단어왕 , label: '단어왕', level: 4 },
-                { src: 끈기왕 , label: '끈기왕', level: 5 },
-                { src: 독서왕 , label: '독서왕', level: 6 },
+                { src: InviteKing, label: '초대왕', level: 1 },
+                { src: AttendanceKing, label: '출석왕', level: 2 },
+                { src: NoryeokKing , label: '노력왕', level: 3 },
+                { src: WordKing , label: '단어왕', level: 4 },
+                { src: PerseveranceKing , label: '끈기왕', level: 5 },
+                { src: ReadingKing , label: '독서왕', level: 6 },
                 // 필요시 추가
               ].map((item, idx) => (
                 <div

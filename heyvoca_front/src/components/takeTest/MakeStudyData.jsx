@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const MakeStudyData = ({endInitialProfile}) => {
   const buttonVariants = {
@@ -38,7 +38,7 @@ const MakeStudyData = ({endInitialProfile}) => {
           가장 암기가 필요한 단어를 찾고 있어요! <br />
           잠시만 기다려 주세요!
         </div>
-        <img src={heyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo" 
           className="
             w-[160px]
           "

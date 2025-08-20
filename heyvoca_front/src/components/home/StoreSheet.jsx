@@ -3,10 +3,10 @@ import { useFullSheet } from '../../context/FullSheetContext';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 
-import gem10 from '../../assets/images/보석 10개.png';
-import gem35 from '../../assets/images/보석 35개.png';
-import gem110 from '../../assets/images/보석 110개.png';
-import 보석 from '../../assets/images/보석.png';
+import gem10 from '../../assets/images/gem10.png';
+import gem35 from '../../assets/images/gem35.png';
+import gem110 from '../../assets/images/gem110.png';
+import gem from '../../assets/images/gem.png';
 
 const gems = [
   {

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import heyCharacter from '../../assets/images/헤이캐릭터.png';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const profileRef = useRef();
@@ -52,7 +52,7 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
             앞으로 제가 어떻게
             부르면 될까요?
           </div>
-          <img src={heyCharacter} alt="logo" 
+          <img src={HeyCharacter} alt="logo" 
             className="
               w-[173px]
             "
