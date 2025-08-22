@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   web:
-    build: .
     container_name: heyvoca_back_local
+    image: whrksp126/heyvoca_back:local
+    build: .
     ports:
       - "5003:5000"
     env_file:
