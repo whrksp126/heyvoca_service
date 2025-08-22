@@ -26,6 +26,7 @@ def get_user_voca_book_list():
     for user_voca_book in user_voca_book_list:
         vocabook_dict = {}
         vocabook_dict['id'] = user_voca_book.id
+        vocabook_dict['bookstore_id'] = user_voca_book.bookstore_id
         vocabook_dict['title'] = user_voca_book.name
         vocabook_dict['words'] = json.loads(user_voca_book.voca_list) if user_voca_book.voca_list else []
         vocabook_dict['color'] = json.loads(user_voca_book.color)
@@ -43,7 +44,7 @@ def get_user_voca_book_list():
 @user_voca_book_bp.route('/create', methods=['POST'])
 def create_user_voca_book():
     data = request.get_json()
-    vocabook_id = data.get('vocabook_id')
+    bookstore_id = data.get('bookstore_id')
     name = data['title']
     color = data['color']
     user_id = current_user.id
@@ -51,26 +52,43 @@ def create_user_voca_book():
     user = db.session.query(User).filter(User.id == user_id).first()
     print("###user : ",user)
 
-    user_voca_book = UserVocaBook(
-        user_id=user_id,
-        vocabook_id=vocabook_id,
-        color=json.dumps(color),
-        name=name,
-        total_word_cnt=0,
-        memorized_word_cnt=0,
-        voca_list=None,
-        updated_at=None
-    )
+    try:
+        user_voca_book = UserVocaBook(
+            user_id=user_id,
+            bookstore_id=bookstore_id,
+            color=json.dumps(color),
+            name=name,
+            total_word_cnt=0,
+            memorized_word_cnt=0,
+            voca_list=None,
+            updated_at=None
+        )
+        db.session.add(user_voca_book)
 
-    db.session.add(user_voca_book)
-    db.session.commit()
+        # gem 사용 여부 확인
+        if bookstore_id:
+            bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+            if user.gem_cnt < bookstore_item.gem:
+                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+            user.gem_cnt -= 1
+            bookstore_item.downloads += 1
+        else:
+            if user.book_cnt < 1:
+                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+            user.book_cnt -= 1
 
-    data = {
-        'id': user_voca_book.id,
-        'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
-    }
+        db.session.commit() 
 
-    return jsonify({'code': 200, 'data': data}), 200
+        data = {
+            'id': user_voca_book.id,
+            'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
+        }
+
+        return jsonify({'code': 200, 'data': data}), 200
+    
+    except Exception as e:
+        print("###error : ",e)
+        return jsonify({'code': 400, 'message': '단어장 생성 실패'})
 
 
 # @login_required

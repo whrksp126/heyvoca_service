@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify
 from app import db
 from app.routes import mainpage_bp
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 
@@ -16,93 +16,72 @@ from uuid import UUID
 @mainpage_bp.route('/user_goals', methods=['GET'])
 @login_required
 def api_user_goals():
-    print("#####################3 api_user_goals")
     user_id = current_user.id
-    goals = db.session.query(UserGoals.current_value, GoalType.type, Goals.badge_img, Goals.level)\
-                    .join(Goals, UserGoals.goal_id == Goals.id)\
-                    .join(GoalType, Goals.type_id == GoalType.id)\
-                    .filter(UserGoals.user_id == user_id)\
-                    .all()
-    
-    data = []
-    for goal in goals:
-        data.append({
-            'name' : goal.type,
-            'badge_img' : goal.badge_img,
-        })
-    return {'code' : 200, 'data' : data}
 
+    goal_types = [r[0] for r in db.session.query(GoalType.type).all()]
+
+    completed_rows = (
+        db.session.query(
+            GoalType.type.label('goal_type'),
+            func.max(Goals.level).label('max_level')
+        )
+        .select_from(UserGoals)
+        .join(Goals, UserGoals.goal_id == Goals.id)
+        .join(GoalType, Goals.type_id == GoalType.id)
+        .filter(UserGoals.user_id == user_id)
+        .filter(UserGoals.completed_at.isnot(None))
+        .group_by(GoalType.type)
+        .all()
+    )
+
+    completed_dict = {row.goal_type: row.max_level for row in completed_rows}
+
+    data = [
+        {'type': gt, 'level': completed_dict.get(gt, 0)}
+        for gt in goal_types
+    ]
+
+    return {'code': 200, 'data': data}
 
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @login_required
 def api_user_dates():
-    # user_id = current_user.id
+    user_id = current_user.id
 
-    # kst_now = datetime.utcnow() + timedelta(hours=9)
-    # today = kst_now.date()
-    # this_sunday = today - timedelta(days=today.weekday() + 1 if today.weekday() != 6 else 0)
-    # this_saturday = this_sunday + timedelta(days=6)
+    kst_now = datetime.utcnow() + timedelta(hours=9)
+    today = kst_now.date()
 
-    # checkins = db.session.query(CheckIn)\
-    #             .filter(
-    #                 and_(
-    #                     CheckIn.user_id == user_id,
-    #                     CheckIn.check_date >= this_sunday,
-    #                     CheckIn.check_date <= this_saturday
-    #                 )
-    #             ).all()
-    
-    # checkin_dict = {checkin.check_date: checkin for checkin in checkins}
-    # days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-    # data = []
-    # for i in range(7):
-    #     date = this_sunday + timedelta(days=i)
-    #     checkin = checkin_dict.get(date)
-    #     data.append({
-    #         'date': days[i],
-    #         'attend': bool(checkin.attendence_check) if checkin else False,
-    #         'daily_mission': bool(checkin.study_complete) if checkin else False,
-    #     })
+    this_sunday = today - timedelta(days=(today.weekday() + 1) % 7)
+    this_saturday = this_sunday + timedelta(days=6)
 
-    dummy = [
-        {
-            'date': 'SUN',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'MON',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'TUE',
-            'attend': True,
-            'daily_mission': False,
-        },
-        {
-            'date': 'WED',
-            'attend': True,
-            'daily_mission': True,
-        },
-        {
-            'date': 'THU',
-            'attend': True,
-            'daily_mission': True,
-        },
-        {
-            'date': 'FRI',
-            'attend': False,
-            'daily_mission': False,
-        },
-        {
-            'date': 'SAT',
-            'attend': False,
-            'daily_mission': False,
-        }
+    # 이번 주 체크인 전체 조회
+    checkins = (
+        db.session.query(CheckIn)
+        .filter(
+            and_(
+                CheckIn.user_id == user_id,
+                CheckIn.attendence_date >= this_sunday,
+                CheckIn.attendence_date <= this_saturday,
+            )
+        )
+        .all()
+    )
 
-    ]
-    return {'code' : 200, 'data' : dummy}
+    # 날짜 → 체크인 레코드 매핑
+    by_date = {c.attendence_date: c for c in checkins}
+
+    days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+    data = []
+    for i in range(7):
+        d = this_sunday + timedelta(days=i)
+        ci = by_date.get(d)
+        data.append({
+            'date': days[i],
+            'attend': True if ci else False,
+            'daily_mission': bool(ci.today_study_complete) if ci else False,
+        })
+
+    return {'code' : 200, 'data' : data}
 
 
 @mainpage_bp.route('/gem_cnt', methods=['GET'])
@@ -119,44 +98,37 @@ def api_gem_cnt():
 @login_required
 def api_user_recent_study_data():
     user_id = current_user.id
-    recent_data = db.session.query(UserRecentStudy).filter(UserRecentStudy.user_id == user_id).first()
+    recent_data = db.session.query(UserRecentStudy)\
+                .filter(UserRecentStudy.user_id == user_id)\
+                .all()
 
-    if recent_data:
+    data_dict = {}
+    for recent in recent_data:
         data = {
-            'id': recent_data.id,
-            'study_data': json.loads(recent_data.study_data) if recent_data.study_data is not None else None,
-            'type': recent_data.type,
-            'status': recent_data.status,
-            'progress_index': recent_data.progress_index,
-            'created_at': recent_data.created_at + timedelta(hours=9),
-            'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
+            'id': recent.id,
+            'status': recent.status,
+            'progress_index': recent.progress_index,
+            'type': recent.type.value,
+            'study_data': json.loads(recent.study_data) if recent.study_data is not None else None,
+            'created_at': (recent.created_at + timedelta(hours=9)),
+            'updated_at': (recent.updated_at + timedelta(hours=9)) if recent.updated_at else None,
         }
-    else:
-        data = {
-            'id': None,
-            'study_data': None,
-            'type': None,
-            'status': None,
-            'progress_index': None,
-            'created_at': None,
-            'updated_at': None,
-        }
+        data_dict[recent.type.value] = data
 
-    return {'code': 200, 'data': data}
+    return {'code': 200, 'data': data_dict}
 
 
 @mainpage_bp.route('user_recent_study_create_update', methods=['POST'])
 @login_required
 def api_user_recent_study_create_update():
     data = request.json
-    id = data['id']
-    study_data = data['study_data']
-    status = data['status']
-    progress_index = data['progress_index']
+    id = data.get('id', None)
+    study_data = data.get('study_data', None)
+    status = data.get('status', None)
+    progress_index = data.get('progress_index', None)
     type = data['type']
 
     user_id = current_user.id
-
     study_data = json.dumps(study_data) if study_data is not None else None
 
     # update
@@ -165,10 +137,14 @@ def api_user_recent_study_create_update():
                             .filter(UserRecentStudy.id == UUID(id))\
                             .filter(UserRecentStudy.user_id == user_id)\
                             .first()
+        
+        if RecentStudyType(type.lower()) != recent_data.type:
+            return {'code': 400, 'message': 'type 변경 불가능'}
+        
         recent_data.study_data = study_data
         recent_data.status = status
         recent_data.progress_index = progress_index
-        recent_data.type = type
+        # recent_data.type = type
         recent_data.updated_at = datetime.utcnow()
 
         db.session.commit()
@@ -177,7 +153,7 @@ def api_user_recent_study_create_update():
     else:
         recent_data = UserRecentStudy(
             user_id=user_id, study_data=study_data, status=status,
-            progress_index=progress_index, type=type, updated_at=None
+            progress_index=progress_index, type=RecentStudyType(type.lower()), updated_at=None
         )
         db.session.add(recent_data)
         db.session.commit()
@@ -187,7 +163,7 @@ def api_user_recent_study_create_update():
         'study_data': json.loads(recent_data.study_data) if recent_data.study_data is not None else None,
         'status': recent_data.status,
         'progress_index': recent_data.progress_index,
-        'type': recent_data.type,
+        'type': recent_data.type.value,
         'created_at': recent_data.created_at + timedelta(hours=9),
         'updated_at': recent_data.updated_at + timedelta(hours=9) if recent_data.updated_at is not None else None,
     }
@@ -206,6 +182,32 @@ def update_user_goal(goal_type_name: str):
                             .filter(GoalType.type == goal_type_name)\
                             .filter(UserGoals.is_completed == False)\
                             .first()
+    
+    # 진행중 목표 없음 → 마지막 레벨까지 다 했는지 확인
+    if not current_user_goal:
+        # 이 타입의 최대 레벨 찾기
+        max_level = (
+            db.session.query(func.max(Goals.level))
+            .join(GoalType, Goals.type_id == GoalType.id)
+            .filter(GoalType.type == goal_type_name)
+            .scalar()
+        )
+
+        # 유저가 그 max_level을 완료했는지 확인
+        last_goal_done = (
+            db.session.query(UserGoals)
+            .join(Goals, UserGoals.goal_id == Goals.id)
+            .join(GoalType, Goals.type_id == GoalType.id)
+            .filter(UserGoals.user_id == user_id)
+            .filter(GoalType.type == goal_type_name)
+            .filter(Goals.level == max_level)
+            .filter(UserGoals.is_completed == True)
+            .first()
+        )
+
+        if last_goal_done:
+            return None, None, None  
+    
     # Goal 조회
     goal = db.session.query(Goals)\
                 .filter(Goals.id == current_user_goal.goal_id)\
@@ -364,5 +366,21 @@ def checkin():
             'goals': goals
         }
     }
+
+
+@mainpage_bp.route('/user_book_cnt_check', methods=['GET'])
+@login_required
+def user_book_cnt_check():
+    user_id = current_user.id
+    user_item = db.session.query(User).filter(User.id == user_id).first()
+    
+    can_add_book = True if user_item.book_cnt > 0 else False
+    
+    return jsonify({
+        'code': 200,
+        'data': {
+            'can_add_book': can_add_book
+        }
+    })
 
 

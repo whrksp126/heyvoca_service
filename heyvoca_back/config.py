@@ -17,18 +17,24 @@ else:
 class Config:
   SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard_to_guess_secret_key'
   SQLALCHEMY_TRACK_MODIFICATIONS = False
+  SQLALCHEMY_ENGINE_OPTIONS = {
+    'connect_args': {
+      'charset': 'utf8mb4',
+      'use_unicode': True
+    }
+  }
 
 class DevelopmentConfig(Config):
   DEBUG = True
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4&use_unicode=1'
 
 class StagingConfig(Config):
   DEBUG = False
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4&use_unicode=1'
 
 class ProductionConfig(Config):
   DEBUG = False
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4&use_unicode=1'
 
 
 # Google OAuth2 정보 설정

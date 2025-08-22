@@ -45,6 +45,8 @@ def create_app():
 
   app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
+  app.config['JSON_AS_ASCII'] = False
+
   # Redis 캐시 설정
   app.config['CACHE_TYPE'] = 'redis'
   app.config['CACHE_REDIS_HOST'] = os.getenv('REDIS_HOST', 'redis')

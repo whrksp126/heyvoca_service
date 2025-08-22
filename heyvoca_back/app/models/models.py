@@ -13,6 +13,13 @@ from datetime import datetime, timedelta
 import enum
 
 
+### enum ###
+class RecentStudyType(enum.Enum):
+    TEST = "test"      # 학습
+    EXAM = "exam"      # 시험
+    TODAY = "today"    # 오늘의 학습
+### enum ###
+
 class BinaryUUID(TypeDecorator):
     impl = BINARY(16)
     cache_ok = True  # 캐시 키 사용을 허용하여 경고 제거
@@ -169,10 +176,11 @@ class Bookstore(db.Model):
     downloads = Column(Integer, nullable=False)
     category = Column(String(50), nullable=False)
     color = Column(String(255), nullable=True)
+    gem = Column(Integer, nullable=False, default=0)
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
+    level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
-    # level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
@@ -226,7 +234,7 @@ class UserVocaBook(db.Model):
     __tablename__ = 'user_voca_book'
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
-    vocabook_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
+    bookstore_id = Column(Integer, ForeignKey('bookstore.id'), nullable=True)
     color = Column(String(256), nullable=False)
     name = Column(String(36), nullable=False)
     total_word_cnt = Column(Integer, nullable=False, default=0)
@@ -235,9 +243,9 @@ class UserVocaBook(db.Model):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
-    def __init__(self, user_id, vocabook_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
+    def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
         self.user_id = user_id
-        self.vocabook_id = vocabook_id
+        self.bookstore_id = bookstore_id
         self.color = color
         self.name = name
         self.total_word_cnt = total_word_cnt
@@ -260,12 +268,13 @@ class CheckIn(db.Model):
 
 class UserRecentStudy(db.Model):
     __tablename__ = 'user_recent_study'
+    __table_args__ = (UniqueConstraint('user_id', 'type'),)
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    type = Column(Enum(RecentStudyType), nullable=False)
     study_data = Column(TEXT, nullable=True)
     status = Column(String(36), nullable=True)
     progress_index = Column(Integer, nullable=True)
-    type = Column(String(64), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
 
