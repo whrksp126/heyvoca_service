@@ -65,9 +65,17 @@ def create_user_voca_book():
         )
         db.session.add(user_voca_book)
 
-        user.book_cnt -= 1
-        if user.book_cnt < 0:
-            return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+        # gem 사용 여부 확인
+        if bookstore_id:
+            bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+            if user.gem_cnt < bookstore_item.gem:
+                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+            user.gem_cnt -= 1
+            bookstore_item.downloads += 1
+        else:
+            if user.book_cnt < 1:
+                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+            user.book_cnt -= 1
 
         db.session.commit() 
 
