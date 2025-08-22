@@ -35,6 +35,9 @@ class ProductionConfig(Config):
 OAUTH_CLIENT_ID = os.environ.get('OAUTH_CLIENT_ID')
 OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
 OAUTH_REDIRECT_URI = os.environ.get('OAUTH_REDIRECT_URI')
+GOOGLE_WEB_CLIENT_ID = os.environ.get('GOOGLE_WEB_CLIENT_ID')
+ACCESS_SECRET = os.environ.get('ACCESS_SECRET')
+REFRESH_SECRET = os.environ.get('REFRESH_SECRET')
 
 # FCM
 FCM_API_KEY = os.environ.get('FCM_API_KEY')

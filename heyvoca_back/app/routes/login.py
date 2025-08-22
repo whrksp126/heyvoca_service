@@ -6,7 +6,6 @@ from app.models.models import User, Bookstore, GoalType, UserGoals, Goals
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
 
-import json
 from werkzeug.security import generate_password_hash, check_password_hash
 
 import io
@@ -14,28 +13,176 @@ import json
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload, MediaFileUpload, MediaIoBaseDownload
+from google.oauth2 import id_token as google_id_token
+from google.auth.transport import requests as google_requests
+
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
-# from config import OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_REDIRECT_URI
+from config import OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_REDIRECT_URI, GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET
 
 from dotenv import load_dotenv
-import os
+import os, time, jwt
+from datetime import datetime, timedelta, timezone
+
+# -------------------
+# 환경 변수 & 기본값
+# -------------------
+GOOGLE_WEB_CLIENT_ID = os.getenv("GOOGLE_WEB_CLIENT_ID")
+ACCESS_SECRET = os.getenv("ACCESS_SECRET")
+REFRESH_SECRET = os.getenv("REFRESH_SECRET")
+ACCESS_TTL_SECONDS  = 60 * 60                 # 60분
+REFRESH_TTL_SECONDS = 60 * 60 * 24 * 30       # 30일
+
 OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
 OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
 FRONT_END_URL = os.getenv('FRONT_END_URL')
 
+# # UTC+9 (Asia/Seoul) 기준 타임스탬프가 필요하면 아래 tz 사용
+KST = timezone(timedelta(hours=9))
 
 @login_bp.route('/')
 @login_required
 def index():
     return render_template('main_login.html')
 
+# access, refresh token 생성
+def generate_access_token(id, email):
+    """Access Token 생성 (1시간 유효)"""
+    now = int(time.time())
+    payload = {
+        "id": str(id),
+        "email": email,
+        "exp": now + ACCESS_TTL_SECONDS,
+    }
+    # print('jwt accessToken 발급 : ', payload)
+    try:
+        access_token = jwt.encode(payload, ACCESS_SECRET, algorithm="HS256")
+        # print('jwt accessToken 발급 : ', access_token)
+    except Exception as e:
+        print('에러 발생', e)
+    return access_token
+
+def generate_refresh_token(id, email):
+    """Refresh Token 생성 (30일 유효)"""
+    now = int(time.time())
+    payload = {
+        "id": str(id),
+        "email": email,
+        "exp": now + REFRESH_TTL_SECONDS,
+    }
+    # print('jwt refreshToken 발급 : ', payload)
+    return jwt.encode(payload, REFRESH_SECRET, algorithm="HS256")
+
+# # ## 구글 로그인(앱) ##
+# # # access, refresh 백엔드 처리
+@login_bp.route('/google/app', methods=['POST'])
+def login_google():
+    print('===== login_google ===== ')
+    data = request.json
+    id_token = data.get('id_token')
+    google_id = data.get('google_id')
+    email = data.get('email')
+    name = data.get('name')
+    # print('data', data)
+
+    try:
+        try:
+            # 1-2) 구글 토큰 검증
+            # payload = _verify_google_id_token(id_token_str)
+            req = google_requests.Request()
+
+            # & 3) 페이로드 추출
+            payload = google_id_token.verify_oauth2_token(
+                id_token, req, audience=GOOGLE_WEB_CLIENT_ID
+            )
+            # print('payload : ', payload)
+        except Exception as e:
+            return jsonify({'code': 400, 'message': 'Google 토큰 검증 실패'}), 400
+
+        # 4) 사용자 조회 또는 생성
+        # user = _find_or_create_user_from_google(payload)
+        google_sub = payload.get("sub")         # Google 고유 ID
+        email = payload.get("email")
+        name = payload.get("name")
+        print('google_sub : ', google_sub)
+        print('email : ', email)
+        print('name : ', name)
+
+        if not email or not google_sub:
+            return jsonify({'code': 400, 'message': 'Google 토큰에 email 또는 sub(google_id)가 없습니다.'}), 400
+
+        # 4-1) 사용자 정보 확인
+        print('== google_id == ', google_id)
+        user = User.query.filter_by(email=email).first()
+        print('db 조회 결과 : ', user)
+        if user is None:
+            print('== !! 신규 유저 생성 !! ==')
+            # 사용자가 존재하지 않으면 회원가입 처리 (신규 생성)
+            user = User(
+                level_id=None,
+                email = email,
+                google_id = google_id,
+                username = None,
+                name = name,
+                phone = None,
+                refresh_token = None,
+                code = None,
+                book_cnt = 3,
+                gem_cnt = 0,
+                set_goal_cnt = 3,
+                last_logged_at = None
+            )
+            db.session.add(user)
+            try:
+                db.session.commit()
+                print('== !! 신규 유저 DB 저장 !! ==')
+            except:
+                db.session.rollback()
+                return jsonify({'code': 400, 'message': '사용자 저장 중 에러'}), 400
+        else:
+            print('== !!사용자 있음!! ==')
+        
+        # 5) JWT 발급
+        print('== access_token 전 == ', user.id, user.email)
+        access_token = generate_access_token(user.id, user.email)
+        print('== access_token == ', access_token)
+        refresh_token = generate_refresh_token(user.id, user.email)
+        print('== refresh_token == ', refresh_token)
+
+        # 5) Refresh Token DB 저장 (UPDATE)
+        user.refresh_token = refresh_token
+        print('== refresh_token DB 업데이트 전 == ', user.refresh_token)
+        # user.last_logged_at = datetime.now(tz=KST)
+        db.session.add(user)
+        db.session.commit()
+        print('== refresh_token DB 업데이트 완료 == ')
+
+        # Flask-Login을 병행하려면 필요 시 사용
+        # from flask_login import login_user
+        # login_user(user)
+
+        return jsonify({
+            "code": 200,
+            "status": "success",
+            "accessToken": access_token,
+            "refreshToken": refresh_token,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "name": getattr(user, "name", None),
+            }
+        }), 200
+
+    except Exception as e:
+        print('== login_google 에러 == ', e)
+        return jsonify({'code': 400, 'message': '로그인 처리 오류'}), 400
+
 
 # 로그인 라우트: 구글 OAuth2 인증 요청
 @login_bp.route('/google')
-def login_google():
+def login_google_old():
     print('/google')
     device_type = request.args.get('device_type', 'web')
     session['device_type'] = device_type

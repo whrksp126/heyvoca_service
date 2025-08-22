@@ -30,7 +30,8 @@ def create_app():
       "https://heyvoca-front.ghmate.com",
       "https://stg-heyvoca-front.ghmate.com",
       "https://dev-heyvoca-front.ghmate.com",
-      "http://localhost:3000"
+      "http://localhost:3000",
+      "http://10.0.2.2:3000",
   ], supports_credentials=True)
 
   

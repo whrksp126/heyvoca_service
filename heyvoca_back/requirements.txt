@@ -19,3 +19,4 @@ APScheduler==3.10.4
 pandas==1.5.3
 PyMySQL==1.0.3
 redis==4.5.5
+PyJWT==2.8.0
