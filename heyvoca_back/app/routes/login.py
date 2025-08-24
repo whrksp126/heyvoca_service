@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify, g
 from app import db
 from app.routes import login_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals
@@ -24,6 +24,8 @@ from config import OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_REDIRECT_URI, GOO
 from dotenv import load_dotenv
 import os, time, jwt
 from datetime import datetime, timedelta, timezone
+
+from app.routes.auth import jwt_required
 
 # -------------------
 # 환경 변수 & 기본값
@@ -56,10 +58,8 @@ def generate_access_token(id, email):
         "email": email,
         "exp": now + ACCESS_TTL_SECONDS,
     }
-    # print('jwt accessToken 발급 : ', payload)
     try:
         access_token = jwt.encode(payload, ACCESS_SECRET, algorithm="HS256")
-        # print('jwt accessToken 발급 : ', access_token)
     except Exception as e:
         print('에러 발생', e)
     return access_token
@@ -72,53 +72,41 @@ def generate_refresh_token(id, email):
         "email": email,
         "exp": now + REFRESH_TTL_SECONDS,
     }
-    # print('jwt refreshToken 발급 : ', payload)
     return jwt.encode(payload, REFRESH_SECRET, algorithm="HS256")
 
 # # ## 구글 로그인(앱) ##
 # # # access, refresh 백엔드 처리
 @login_bp.route('/google/app', methods=['POST'])
 def login_google():
-    print('===== login_google ===== ')
     data = request.json
     id_token = data.get('id_token')
     google_id = data.get('google_id')
     email = data.get('email')
     name = data.get('name')
-    # print('data', data)
 
     try:
         try:
             # 1-2) 구글 토큰 검증
-            # payload = _verify_google_id_token(id_token_str)
             req = google_requests.Request()
 
-            # & 3) 페이로드 추출
+            # 3) 페이로드 추출
             payload = google_id_token.verify_oauth2_token(
                 id_token, req, audience=GOOGLE_WEB_CLIENT_ID
             )
-            # print('payload : ', payload)
         except Exception as e:
             return jsonify({'code': 400, 'message': 'Google 토큰 검증 실패'}), 400
 
         # 4) 사용자 조회 또는 생성
-        # user = _find_or_create_user_from_google(payload)
         google_sub = payload.get("sub")         # Google 고유 ID
         email = payload.get("email")
         name = payload.get("name")
-        print('google_sub : ', google_sub)
-        print('email : ', email)
-        print('name : ', name)
 
         if not email or not google_sub:
             return jsonify({'code': 400, 'message': 'Google 토큰에 email 또는 sub(google_id)가 없습니다.'}), 400
 
         # 4-1) 사용자 정보 확인
-        print('== google_id == ', google_id)
         user = User.query.filter_by(email=email).first()
-        print('db 조회 결과 : ', user)
         if user is None:
-            print('== !! 신규 유저 생성 !! ==')
             # 사용자가 존재하지 않으면 회원가입 처리 (신규 생성)
             user = User(
                 level_id=None,
@@ -137,31 +125,19 @@ def login_google():
             db.session.add(user)
             try:
                 db.session.commit()
-                print('== !! 신규 유저 DB 저장 !! ==')
             except:
                 db.session.rollback()
                 return jsonify({'code': 400, 'message': '사용자 저장 중 에러'}), 400
-        else:
-            print('== !!사용자 있음!! ==')
         
         # 5) JWT 발급
-        print('== access_token 전 == ', user.id, user.email)
         access_token = generate_access_token(user.id, user.email)
-        print('== access_token == ', access_token)
         refresh_token = generate_refresh_token(user.id, user.email)
-        print('== refresh_token == ', refresh_token)
 
         # 5) Refresh Token DB 저장 (UPDATE)
         user.refresh_token = refresh_token
-        print('== refresh_token DB 업데이트 전 == ', user.refresh_token)
         # user.last_logged_at = datetime.now(tz=KST)
         db.session.add(user)
         db.session.commit()
-        print('== refresh_token DB 업데이트 완료 == ')
-
-        # Flask-Login을 병행하려면 필요 시 사용
-        # from flask_login import login_user
-        # login_user(user)
 
         return jsonify({
             "code": 200,
@@ -392,30 +368,35 @@ def logout_app():
     }), 200
 
 
-@login_bp.route('/get_user_info')
-@login_required
+@login_bp.route('/get_user_info', methods=['GET'])
+@jwt_required
 def get_user_info():
+    user = db.session.query(User).filter(User.id == g.user_id).first()
+
+    if not user:
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+
     user_item = {
-        'id' : current_user.id,
-        'level_id' : current_user.level_id,
-        'username' : current_user.username,
-        'code' : current_user.code,
-        'book_cnt' : current_user.book_cnt,
-        'gem_cnt' : current_user.gem_cnt,
-        'set_goal_cnt' : current_user.set_goal_cnt,
+        'id' : user.id,
+        'level_id' : user.level_id,
+        'username' : user.username,
+        'code' : user.code,
+        'book_cnt' : user.book_cnt,
+        'gem_cnt' : user.gem_cnt,
+        'set_goal_cnt' : user.set_goal_cnt,
     }
     return jsonify({'code':200, 'data': user_item})
 
 
 @login_bp.route('/update_user_info', methods=['PATCH'])
-@login_required
+@jwt_required
 def update_user_info():
     data = request.json
     
     if not data:
         return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
 
-    user_item = db.session.query(User).filter(User.id == current_user.id).first()
+    user_item = db.session.query(User).filter(User.id == g.user_id).first()
 
     if not user_item:
         return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
@@ -436,7 +417,6 @@ def update_user_info():
 
 ### (회원가입 시) 단어장 선택 레벨링
 @login_bp.route('/level_book_list', methods=['GET'])
-# @login_required
 def level_voca_list():
     level = request.args.get('level')
     

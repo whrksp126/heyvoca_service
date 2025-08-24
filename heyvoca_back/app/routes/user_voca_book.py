@@ -1,6 +1,6 @@
 import json
 import re
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify, g
 from sqlalchemy import text, select
 from sqlalchemy.orm import joinedload, contains_eager
 # from datetime import datetime, timedelta
@@ -10,13 +10,15 @@ from uuid import uuid4, UUID
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
 
-from flask_login import current_user, login_required, login_user
+#from flask_login import current_user, login_required, login_user
+
+from app.routes.auth import jwt_required
 
 
-@login_required
 @user_voca_book_bp.route('/list', methods=['GET'])
+@jwt_required
 def get_user_voca_book_list():
-    user_id = current_user.id
+    user_id = g.user_id
 
     user_voca_book_list = db.session.query(UserVocaBook)\
                                 .filter(UserVocaBook.user_id == user_id).all()
@@ -40,14 +42,14 @@ def get_user_voca_book_list():
     return jsonify({'code': 200, 'data': data}), 200
 
 
-@login_required
 @user_voca_book_bp.route('/create', methods=['POST'])
+@jwt_required
 def create_user_voca_book():
     data = request.get_json()
     bookstore_id = data.get('bookstore_id')
     name = data['title']
     color = data['color']
-    user_id = current_user.id
+    user_id = g.user_id
 
     user = db.session.query(User).filter(User.id == user_id).first()
     print("###user : ",user)
@@ -91,7 +93,7 @@ def create_user_voca_book():
         return jsonify({'code': 400, 'message': '단어장 생성 실패'})
 
 
-# @login_required
+#@jwt_required
 @user_voca_book_bp.route('/update', methods=['PATCH'])
 def update_user_voca_book():
     data = request.get_json()

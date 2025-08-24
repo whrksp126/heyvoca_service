@@ -1,22 +1,21 @@
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify, g
 from app import db
 from app.routes import mainpage_bp
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 
-from flask_login import current_user, login_required, login_user, logout_user
-
 import io
 import json
 from uuid import UUID
 
+from app.routes.auth import jwt_required
 
 
 @mainpage_bp.route('/user_goals', methods=['GET'])
-@login_required
+@jwt_required
 def api_user_goals():
-    user_id = current_user.id
+    user_id = g.user_id
 
     goal_types = [r[0] for r in db.session.query(GoalType.type).all()]
 
@@ -33,20 +32,17 @@ def api_user_goals():
         .group_by(GoalType.type)
         .all()
     )
-
     completed_dict = {row.goal_type: row.max_level for row in completed_rows}
-
     data = [
         {'type': gt, 'level': completed_dict.get(gt, 0)}
         for gt in goal_types
     ]
-
     return {'code': 200, 'data': data}
 
 @mainpage_bp.route('/user_dates', methods=['GET'])
-@login_required
+@jwt_required
 def api_user_dates():
-    user_id = current_user.id
+    user_id = g.user_id
 
     kst_now = datetime.utcnow() + timedelta(hours=9)
     today = kst_now.date()
@@ -85,9 +81,9 @@ def api_user_dates():
 
 
 @mainpage_bp.route('/gem_cnt', methods=['GET'])
-@login_required
+@jwt_required
 def api_gem_cnt():
-    user_id = current_user.id
+    user_id = g.user_id
 
     user_gem_cnt = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
 
@@ -95,9 +91,9 @@ def api_gem_cnt():
 
 
 @mainpage_bp.route('user_recent_study_data', methods=['GET'])
-@login_required
+@jwt_required
 def api_user_recent_study_data():
-    user_id = current_user.id
+    user_id = g.user_id
     recent_data = db.session.query(UserRecentStudy)\
                 .filter(UserRecentStudy.user_id == user_id)\
                 .all()
@@ -119,7 +115,7 @@ def api_user_recent_study_data():
 
 
 @mainpage_bp.route('user_recent_study_create_update', methods=['POST'])
-@login_required
+@jwt_required
 def api_user_recent_study_create_update():
     data = request.json
     id = data.get('id', None)
@@ -128,7 +124,7 @@ def api_user_recent_study_create_update():
     progress_index = data.get('progress_index', None)
     type = data['type']
 
-    user_id = current_user.id
+    user_id = g.user_id
     study_data = json.dumps(study_data) if study_data is not None else None
 
     # update
@@ -170,9 +166,9 @@ def api_user_recent_study_create_update():
 
     return {'code': 200, 'data': data}
 
-
+@jwt_required
 def update_user_goal(goal_type_name: str):
-    user_id = current_user.id
+    user_id = g.user_id
     
     # 현재 유저가 달성 중인 해당 업적 조회
     current_user_goal = db.session.query(UserGoals)\
@@ -247,14 +243,14 @@ def update_user_goal(goal_type_name: str):
 
 
 @mainpage_bp.route('/user_study_history', methods=['POST'])
-@login_required
+@jwt_required
 def api_user_study_history():
     data = request.json
     today_study_complete = data['today_study_complete']
     correct_cnt = int(data.get('correct_cnt') or 0)
     incorrect_cnt = int(data.get('incorrect_cnt') or 0)
 
-    user_id = current_user.id
+    user_id = g.user_id
 
     # 1. 경험치 업데이트
     add_xp = correct_cnt * 5 + incorrect_cnt * 2
@@ -322,9 +318,9 @@ def api_user_study_history():
 
 
 @mainpage_bp.route('/checkin', methods=['GET'])
-@login_required
+@jwt_required
 def checkin():
-    user_id = current_user.id
+    user_id = g.user_id
     today = (datetime.utcnow() + timedelta(hours=9)).date()
     exists = db.session.query(CheckIn).filter(
                     CheckIn.user_id == user_id, 
@@ -369,9 +365,9 @@ def checkin():
 
 
 @mainpage_bp.route('/user_book_cnt_check', methods=['GET'])
-@login_required
+@jwt_required
 def user_book_cnt_check():
-    user_id = current_user.id
+    user_id = g.user_id
     user_item = db.session.query(User).filter(User.id == user_id).first()
     
     can_add_book = True if user_item.book_cnt > 0 else False
