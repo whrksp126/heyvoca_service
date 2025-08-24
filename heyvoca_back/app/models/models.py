@@ -176,7 +176,7 @@ class Bookstore(db.Model):
     downloads = Column(Integer, nullable=False)
     category = Column(String(50), nullable=False)
     color = Column(String(255), nullable=True)
-    gem = Column(Integer, nullable=False, default=0)
+    gem = Column(Integer, nullable=False, default=10)
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
     level_id = Column(Integer, ForeignKey('level.id'), nullable=False)

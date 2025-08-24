@@ -1,13 +1,15 @@
 from flask import render_template, redirect, url_for, request, session, jsonify, g
 from app import db
 from app.routes import mainpage_bp
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
+from sqlalchemy.orm import aliased
 
 import io
 import json
 from uuid import UUID
+import random
 
 from app.routes.auth import jwt_required
 
@@ -380,3 +382,99 @@ def user_book_cnt_check():
     })
 
 
+@mainpage_bp.route('/today_study_recommend', methods=['GET'])
+# @jwt_required
+def api_today_study_recommend():
+    word_count = request.args.get('word_count', 10, type=int)
+    # user_id = g.user_id
+    user_id = UUID('123e4567-e89b-12d3-a456-426614174000')
+
+    uvb = aliased(UserVocaBook)
+
+    # 유저가 가진 단어 제외 (origin 배열 기준 정확 매칭)
+    json_origin_arr = func.json_extract(func.coalesce(uvb.voca_list, '[]'), '$[*].origin')
+    not_owned = ~db.session.query(uvb.id).filter(
+        uvb.user_id == user_id,
+        func.json_contains(json_origin_arr, func.json_quote(Voca.word)) == 1
+    ).exists()
+
+    # 피벗 스캔 + 단어 id 확보
+    min_id, max_id = db.session.query(func.min(Voca.id), func.max(Voca.id)).one()
+
+    pivot = random.randint(int(min_id), int(max_id))
+
+    # 오버샘플 팩터: 중복/필터 손실 고려해서 넉넉히
+    oversample = max(6, word_count // 2)
+    target = word_count * oversample
+
+    # 1차: pivot 이상에서 voca_id만 수집
+    ids_head = (
+        db.session.query(Voca.id)
+        .filter(not_owned, Voca.id >= pivot)
+        .limit(target)
+        .all()
+    )
+    ids = [i[0] for i in ids_head]
+
+    # 부족하면 pivot 미만에서 보충
+    if len(ids) < target:
+        need = target - len(ids)
+        ids_tail = (
+            db.session.query(Voca.id)
+            .filter(not_owned, Voca.id < pivot)
+            .limit(need)
+            .all()
+        )
+        ids += [i[0] for i in ids_tail]
+
+    # 중복 제거
+    uniq_ids = []
+    voca_set = set()
+    for vid in ids:
+        if vid not in voca_set:
+            voca_set.add(vid)
+            uniq_ids.append(vid)
+        if len(uniq_ids) == target:
+            break
+
+    # 최종 단어 조회
+    # ---> 받을 단어 dict 만 확인해서 변경하기!!!!!
+    # 1) 단어별로 book_id 하나만 선택하는 서브쿼리 (MIN 사용)
+    book_pick_subq = (
+        db.session.query(
+            VocaBookMap.voca_id.label('v_id'),
+            func.min(VocaBookMap.book_id).label('book_id')
+        )
+        .filter(VocaBookMap.voca_id.in_(uniq_ids))
+        .group_by(VocaBookMap.voca_id)
+        .subquery()
+    )
+
+    # 2) Voca 상세 + 선택된 book_id 조인 후, 최종 word_count개만 반환
+    rows = (
+        db.session.query(
+            Voca.id.label('word_id'),
+            Voca.word.label('word'),                # 네 모델에서 단어 문자열 컬럼명 (예: word/origin 등)
+            Voca.pronunciation.label('pronunciation'),
+            Voca.meanings.label('meanings'),        # JSON/Text라면 그대로 전달하거나 json.loads 처리
+            Voca.examples.label('examples'),        # 예문(리스트/JSON/Text) 컬럼
+            book_pick_subq.c.book_id.label('bookstore_id')
+        )
+        .join(book_pick_subq, book_pick_subq.c.v_id == Voca.id)
+        .limit(word_count)
+        .all()
+    )
+
+    # 3) API 응답 포맷 구성
+    data = []
+    for r in rows:
+        data.append({
+            'word_id': r.word_id,
+            'bookstore_id': r.store_id if hasattr(r, 'store_id') else r.bookstore_id,  # 네 컬럼명에 맞춰 조정
+            'word': r.word,
+            'pronunciation': r.pronunciation,
+            'meanings': r.meanings,   # 만약 TEXT에 JSON문자열이면: json.loads(r.meanings)로 변환 가능
+            'examples': r.examples    # 위와 동일
+        })
+
+    return {'code': 200, 'data': data}
