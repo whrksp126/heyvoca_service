@@ -7,20 +7,23 @@ export const MIN_TEST_VOCABULARY_COUNT = 4;
 console.log("import.meta.env",import.meta.env);
 
 // 비동기 fetch api
-export async function fetchDataAsync(url, method, data, form=false){
+export async function fetchDataAsync(url, method, data, form=false, accessToken=null){
   let newUrl = url;
-  const headers = {
-    // 'Authorization': `Bearer ${accessToken}`
-  }
+  const headers = {}
+
+  if(accessToken){headers['Authorization'] = `Bearer ${accessToken}`}
+
   if(!form){ headers['Content-Type'] = `application/json`}
+
   let fetchOptions = { method, headers};
+
   if(method !== 'GET' && form) {
     const formData = new FormData();
-    formData.append('json_data', JSON.stringify(data.json_data)) 
+    formData.append('json_data', JSON.stringify(data.json_data));
     data.form_data.forEach(({key, value})=>{
       formData.append(key, value);
     })
-    fetchOptions.body = formData
+    fetchOptions.body = formData;
   }
   if(method !== 'GET' && !form){
     fetchOptions.body = JSON.stringify(data);
@@ -33,10 +36,13 @@ export async function fetchDataAsync(url, method, data, form=false){
     }
     console.log(newUrl);
   }
-  fetchOptions.credentials = 'include';
+
+  fetchOptions.credentials = 'include'; // 쿠키 필요하면 유지
+
   try {
     const response = await fetch(newUrl, fetchOptions);
     const contentType = response.headers.get('Content-Type');
+    
     if (response.ok) {
       if (contentType.includes('application/json')) {
         return await response.json();
@@ -85,7 +91,7 @@ export const getTextSound = async (text, lang) => {
     text : text,
     language : lang
   }
-  const audioBlob = await fetchDataAsync(url, method, fetchData);
+  const audioBlob = await fetchDataAsync(url, method, fetchData, false, null);
   const audioUrl = URL.createObjectURL(audioBlob);
   currentAudioUrl = audioUrl;
   

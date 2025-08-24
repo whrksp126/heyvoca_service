@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
         const url = `${backendUrl}/mainpage/user_dates`;
         const method = 'GET';
         const fetchData = {};
-        const result = await fetchDataAsync(url, method, fetchData);
+        const result = await fetchDataAsync(url, method, fetchData, false, userStorageData?.accessToken);
         if(result.code == 200){
           userMainPageData.dates = result.data;
         }
@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
         const url = `${backendUrl}/mainpage/user_goals`;
         const method = 'GET';
         const fetchData = {};
-        const result = await fetchDataAsync(url, method, fetchData);
+        const result = await fetchDataAsync(url, method, fetchData, false, userStorageData?.accessToken);
         if(result.code == 200){
           userMainPageData.goals = result.data;
         }
@@ -35,14 +35,14 @@ export const UserProvider = ({ children }) => {
       setUserMainPage(userMainPageData);
     } catch (err) {
     }
-  }, []);
+  }, [userStorageData?.accessToken]);
   const fetchUserProfile = useCallback(async () => {
     try {
       setIsUserProfileLoading(true);
       const url = `${backendUrl}/login/get_user_info`;
       const method = 'GET';
       const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await fetchDataAsync(url, method, fetchData, false, userStorageData?.accessToken);
       if(result.code != 200) return alert('유저 정보를 불러오는데 실패했습니다.');
       // book_cnt: 3
       // code: null
@@ -55,14 +55,16 @@ export const UserProvider = ({ children }) => {
       setErrorUserProfile(null);
     } catch (err) {
       console.log("오류 발생함")
+      alert('유저 정보를 불러오는데 실패했습니다.');
       setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
       console.error('Failed to fetch user profile:', err);
     } finally {
       setIsUserProfileLoading(false);
     }
-  }, []);
+  }, [userStorageData?.accessToken]);
 
   const getUserProfile = useCallback(() => {
+    console.log('userProfile', userProfile);
     return userProfile;
   }, [userProfile, isUserProfileLoading]);
 
@@ -70,7 +72,7 @@ export const UserProvider = ({ children }) => {
     try {
       const url = `${backendUrl}/login/update_user_info`;
       const method = 'PATCH';
-      const result = await fetchDataAsync(url, method, updates);
+      const result = await fetchDataAsync(url, method, updates, false, userStorageData?.accessToken);
       if(result.code != 200) return alert('유저 정보를 불러오는데 실패했습니다.');
       setUserProfile({
         ...userProfile,
@@ -83,7 +85,7 @@ export const UserProvider = ({ children }) => {
       setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
       console.error('Failed to fetch user profile:', err);
     }
-  }, [userProfile]);
+  }, [userProfile, userStorageData?.accessToken]);
 
 
   // 업적, 보석, ... 업데이트 함수
@@ -96,7 +98,7 @@ export const UserProvider = ({ children }) => {
         'correct_cnt': correct_cnt,
         'incorrect_cnt': incorrect_cnt
     }
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await fetchDataAsync(url, method, fetchData, false, userStorageData?.accessToken);
       // 보석 업데이트 내용 적용
       setUserProfile({
         ...userProfile,
@@ -118,7 +120,7 @@ export const UserProvider = ({ children }) => {
     //     },
     //     'today_study_complete': today_study_complete,
     //     'goals': goals
-    // }
+    //   }
 
       if(result.code != 200) return result.data;
     } catch (err) {
@@ -133,7 +135,7 @@ export const UserProvider = ({ children }) => {
       const url = `${backendUrl}/mainpage/checkin`;
       const method = 'GET';
       const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await fetchDataAsync(url, method, fetchData, false, userStorageData?.accessToken);
     //   {
     //     'gem': {
     //         'before': 1,
@@ -155,10 +157,16 @@ export const UserProvider = ({ children }) => {
 
   // 앱 시작시 데이터 로드
   useEffect(() => {
-    fetchUserCheckin();
-    fetchUserProfile();
-    fetchUserMainPage();
-  }, []);
+    // 로그인 상태일 때만 API 호출
+    if (userStorageData?.status === 'login' && userStorageData?.accessToken) {
+      console.log('🔐 [USER] 로그인 상태 확인됨, API 호출 시작');
+      fetchUserCheckin();
+      fetchUserProfile();
+      fetchUserMainPage();
+    } else {
+      console.log('🔓 [USER] 로그인되지 않은 상태, API 호출 건너뜀');
+    }
+  }, [userStorageData?.status, userStorageData?.accessToken]);
 
 
   const value = {

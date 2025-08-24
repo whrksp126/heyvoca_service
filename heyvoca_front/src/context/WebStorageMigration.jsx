@@ -9,7 +9,7 @@ async function checkAndMigrateStorage() {
     const url = `${CHECK_VERSION_URL}`;
     const method = 'GET';
     const fetchData = {};
-    const result = await fetchDataAsync(url, method, fetchData);
+    const result = await fetchDataAsync(url, method, fetchData, false, null);
     if(result.code != 200){
       console.error("웹 버전 체크 실패:", result.message);
       return;

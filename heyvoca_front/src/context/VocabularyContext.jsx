@@ -418,9 +418,9 @@ export const VocabularyProvider = ({ children }) => {
 
   // 앱 시작시 데이터 로드
   useEffect(() => {
-    fetchVocabularySheets();
-    fetchBookStore();
-    fetchRecentStudy();
+    // fetchVocabularySheets();
+    // fetchBookStore();
+    // fetchRecentStudy();
   }, [fetchVocabularySheets, fetchBookStore, fetchRecentStudy]);
 
   const value = {

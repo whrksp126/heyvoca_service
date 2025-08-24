@@ -174,7 +174,9 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
       const response = await fetchDataAsync(
         `${backendUrl}/search/partial/en`,
         'GET',
-        { word: word }
+        { word: word },
+        false,
+        null
       );
       if(response.code != 200) return alert('단어 검색 실패');
       setWordSearchResults(response.data);

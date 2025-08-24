@@ -18,7 +18,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
     const url = `${backendUrl}/login/level_book_list`;
     const method = 'GET';
     const fetchData = {level: userInitialProfile.level};
-    const result = await fetchDataAsync( url, method, fetchData );
+    const result = await fetchDataAsync( url, method, fetchData, false, null );
     if(result.code == 200){
       const levelBookList = result.data.map((item)=>{
         const bookId = item.id

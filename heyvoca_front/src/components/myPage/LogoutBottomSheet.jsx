@@ -23,7 +23,7 @@ export const useLogoutBottomSheet = () => {
       const method = 'POST';
       const fetchData = {};
       
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await fetchDataAsync(url, method, fetchData, false, null);
       if (result.code !== 200) {
         alert('로그아웃 중 오류가 발생하였습니다.');
         return;
