@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const appAsyncStore = {
+  idToken: null,
   googleId: null,
   email: null,
   name: null,

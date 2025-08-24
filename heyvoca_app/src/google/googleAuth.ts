@@ -27,18 +27,16 @@ export const signInWithGoogle = async (webViewRef) => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
+    appAsyncStore.idToken = userInfo.data.idToken;
     appAsyncStore.googleId = userInfo.data.user.id;
     appAsyncStore.email = userInfo.data.user.email;
     appAsyncStore.name = userInfo.data.user.name;
-    appAsyncStore.accessToken = userInfo.data.idToken;
-    appAsyncStore.refreshToken = userInfo.data.serverAuthCode;
     console.log('userInfo', userInfo);
     await saveAppAsyncStorage();
     if (webViewRef.current) {
-      const newUrl = `${FRONT_URL}/login?googleId=${appAsyncStore.googleId}&accessToken=${appAsyncStore.accessToken}&refreshToken=${appAsyncStore.refreshToken}&email=${appAsyncStore.email}&name=${appAsyncStore.name}&type=app&status=200`;
+      const newUrl = `${FRONT_URL}/login?idToken=${appAsyncStore.idToken}&googleId=${appAsyncStore.googleId}&email=${appAsyncStore.email}&name=${appAsyncStore.name}&type=app&status=200`;
       const script = `window.location.href = '${newUrl}';`;
       webViewRef.current.injectJavaScript(script);
-      console.log('newUrl', newUrl);
     }
   } catch (error) {
     handleSignInError(error);
@@ -71,14 +69,22 @@ export const handleSignInError = (error) => {
   }
 };
 
-export async function refreshAccessToken(webViewRef) {
+// 액세스 토큰 갱신
+export async function refreshAccessToken(webViewRef, accessToken, refreshToken) {
   try {
-    const { accessToken } = await GoogleSignin.getTokens();
-    appAsyncStore.accessToken = accessToken;
-    await updateAppAsyncStorage('accessToken', accessToken);
-    webViewRef.current.postMessage(JSON.stringify({
+    appAsyncStore.accessToken = accessToken; // 액세스 토큰 저장
+    appAsyncStore.refreshToken = refreshToken; // 리프레시 토큰 저장
+
+    // await updateAppAsyncStorage('accessToken', accessToken);
+    // await updateAppAsyncStorage('refreshToken', refreshToken);
+    await saveAppAsyncStorage(); // 앱에 저장
+
+    webViewRef.current.postMessage(JSON.stringify({ // 프론트엔드에 토큰 전송
       type: 'access_token_return',
-      data: accessToken,
+      data: {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
     }));
   } catch (error) {
     console.error("액세스 토큰 갱신 실패:", error);
