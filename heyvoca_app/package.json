@@ -15,7 +15,13 @@
     "ios:local": "cross-env ENVFILE=.env.local npx react-native run-ios log-ios",
     "ios:dev": "cross-env ENVFILE=.env.dev npx react-native run-ios log-ios",
     "ios:stg": "cross-env ENVFILE=.env.stg npx react-native run-ios log-ios",
-    "ios:prod": "cross-env ENVFILE=.env npx react-native run-ios log-ios"
+    "ios:prod": "cross-env ENVFILE=.env npx react-native run-ios log-ios",
+    "build:android-apk": "cd android && ./gradlew assembleRelease",
+    "build:android-aab": "cd android && ./gradlew bundleRelease",
+    "build:android-clean": "cd android && ./gradlew clean",
+    "build:ios-archive": "cd ios && xcodebuild -workspace codingpt.xcworkspace -scheme codingpt -configuration Release -destination generic/platform=iOS -archivePath build/codingpt.xcarchive archive",
+    "build:ios-ipa": "cd ios && xcodebuild -exportArchive -archivePath build/codingpt.xcarchive -exportPath build/ipa -exportOptionsPlist exportOptions.plist",
+    "build:ios-clean": "cd ios && xcodebuild clean"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",

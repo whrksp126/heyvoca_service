@@ -79,3 +79,5 @@ yarn-error.log
 .env.dev
 .env.stg
 .env.local
+
+android/app/keystore.properties
