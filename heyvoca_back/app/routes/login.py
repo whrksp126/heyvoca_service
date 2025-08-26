@@ -340,33 +340,51 @@ def refresh_access_token(user):
 
 
 @login_bp.route("/logout")
-@login_required
+@jwt_required
 def logout():
-    session.pop('access_token', None)
-    session.pop('user_id', None)
-    session.pop('os', None)
-    logout_user()
-    return render_template('index.html')
+    try:
+        user = db.session.query(User).filter(User.id == g.user_id).first()
+        if user:
+            # refresh token을 제거하여 토큰 무효화
+            user.refresh_token = None
+            db.session.commit()
+        
+        return jsonify({
+            'code': 200,
+            'message': '로그아웃이 성공적으로 완료되었습니다.',
+            'status': 'success'
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'code': 500,
+            'message': '로그아웃 처리 중 오류가 발생했습니다.',
+            'status': 'error'
+        }), 500
 
 
 @login_bp.route("/logout/app", methods=['POST'])
-@login_required
+@jwt_required
 def logout_app():
-    # 세션에서 사용자 정보 제거
-    session.pop('access_token', None)
-    session.pop('user_id', None)
-    session.pop('os', None)
-    session.pop('oauth_state', None)
-    
-    # Flask-Login에서 사용자 로그아웃
-    logout_user()
-    
-    return jsonify({
-        'code': 200,
-        'message': '로그아웃이 성공적으로 완료되었습니다.',
-        'status': 'success'
-    }), 200
-
+    try:
+        user = db.session.query(User).filter(User.id == g.user_id).first()
+        if user:
+            # refresh token을 제거하여 토큰 무효화
+            user.refresh_token = None
+            db.session.commit()
+        
+        return jsonify({
+            'code': 200,
+            'message': '로그아웃이 성공적으로 완료되었습니다.',
+            'status': 'success'
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'code': 500,
+            'message': '로그아웃 처리 중 오류가 발생했습니다.',
+            'status': 'error'
+        }), 500
 
 @login_bp.route('/get_user_info', methods=['GET'])
 @jwt_required

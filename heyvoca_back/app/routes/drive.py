@@ -1,8 +1,7 @@
-from flask import render_template, redirect, url_for, request, session, jsonify, send_file
+from flask import render_template, redirect, url_for, request, session, jsonify, send_file, g
 from app import db
 from app.routes import drive_bp
 from app.models.models import User
-from flask_login import current_user, login_required, login_user, logout_user
 import json
 import requests
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,6 +19,8 @@ import pandas as pd
 
 from dotenv import load_dotenv
 import os
+
+from app.routes.auth import jwt_required
 OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
 OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
@@ -164,7 +165,7 @@ def download_excel():
 
 ## 드라이브에 엑셀 파일로 저장 TODO : word->origin
 @drive_bp.route('/backup', methods=['POST'])
-@login_required
+@jwt_required
 def backup():
     print("ckeck_backup")
     data = request.get_json()
@@ -172,9 +173,9 @@ def backup():
         return jsonify({"code":400, "msg": "제공된 데이터가 없습니다"})
     
     drive_service = None
-    user = User.query.filter_by(google_id=session['user_id']).first()
+    user = User.query.filter_by(google_id=g.user_id).first()
     credentials = Credentials(
-        token=session['access_token'],
+        token=g.access_token,
         refresh_token=user.refresh_token,
         token_uri='https://oauth2.googleapis.com/token',
         client_id=OAUTH_CLIENT_ID,
@@ -256,7 +257,7 @@ def backup():
 
 
 @drive_bp.route('/backup/app', methods=['POST'])
-@login_required
+@jwt_required
 def backup_app():
     data = request.json
     notebooks = data['notebooks']
@@ -395,7 +396,7 @@ def backup_app():
         return jsonify({'code': 500, 'msg': '파일 업로드 실패', 'details': upload_response.json()})
 
 @drive_bp.route('/excel_to_json', methods=['GET'])
-@login_required
+@jwt_required
 def excel_to_json():
     # Google Drive 서비스 객체 생성
     drive_service = get_google_drive_service()
@@ -430,7 +431,7 @@ def excel_to_json():
 
 
 @drive_bp.route('/excel_to_json/app', methods=['GET'])
-@login_required
+@jwt_required
 def excel_to_json_app():
     access_token = request.args.get('access_token')  # 쿼리 파라미터로 access_token 가져오기
     if not access_token:
@@ -551,9 +552,9 @@ def convert_excel_to_json(fh):
 
 # 사용자 인증을 통해 Google Drive 서비스 객체를 생성
 def get_google_drive_service():
-    user = User.query.filter_by(google_id=session['user_id']).first()
+    user = User.query.filter_by(google_id=g.user_id).first()
     credentials = Credentials(
-        token=session['access_token'],
+        token=g.access_token,
         refresh_token=user.refresh_token,
         token_uri='https://oauth2.googleapis.com/token',
         client_id=OAUTH_CLIENT_ID,

@@ -4,7 +4,7 @@ from app.routes import fcm_bp
 from app.models.models import db, User, UserHasToken
 #from config import FCM_API_KEY
 
-from flask_login import current_user, login_required, login_user, logout_user
+# from flask_login import current_user, login_required, login_user, logout_user
 
 import json
 from gtts import gTTS
@@ -19,6 +19,9 @@ from pyfcm import FCMNotification
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import atexit
+
+from flask import g
+from app.routes.auth import jwt_required
 
 @fcm_bp.route('/fcm_html')
 def fcm_html():
@@ -204,10 +207,11 @@ def create_scheduler(app):
 
 
 @fcm_bp.route('/is_message_allowed', methods=['POST'])
+@jwt_required
 def is_message_allowed():
     is_allowed = request.json.get('is_allowed')
     fcm_token = request.json.get('fcm_token')
-    user_id = current_user.id
+    user_id = g.user_id
 
     user_has_token_item = UserHasToken.query\
                                     .filter(UserHasToken.user_id == user_id)\

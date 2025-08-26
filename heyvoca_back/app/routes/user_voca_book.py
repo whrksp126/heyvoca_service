@@ -10,8 +10,6 @@ from uuid import uuid4, UUID
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
 
-#from flask_login import current_user, login_required, login_user
-
 from app.routes.auth import jwt_required
 
 
@@ -130,7 +128,7 @@ def update_user_voca_book():
     return jsonify({'code': 200, 'data': data}), 200
 
 
-# @login_required
+#@jwt_required
 @user_voca_book_bp.route('/delete', methods=['DELETE'])
 def delete_user_voca_book():
     data = request.get_json()
