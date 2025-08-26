@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '../contexts/NavigationContext';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -11,13 +11,12 @@ const AppNavigator = () => {
 
   const renderScreen = () => {
     const route = { params: navigationParams };
-
-        switch (currentScreen) {
-            case 'home':
-                return <HomeScreen />;
-        default:
-            return <HomeScreen />;
-        }
+    switch (currentScreen) {
+      case 'home':
+          return <HomeScreen />;
+    default:
+      return <HomeScreen />;
+    }
   };
 
   return (

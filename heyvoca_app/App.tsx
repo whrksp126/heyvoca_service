@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StatusBar, StyleSheet } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationProvider } from './src/contexts/NavigationContext';
 import AppNavigator from './src/navigation/AppNavigator';
 
@@ -8,10 +8,10 @@ import "./global.css";
 
 function Main() {
   return (
-    <View style={styles.container}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+    <SafeAreaView className="flex-1 bg-black">
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <AppNavigator />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -24,10 +24,3 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject, // ✅ 이걸로 진짜 전체화면
-    backgroundColor: '#FFE6F1',
-  },
-});

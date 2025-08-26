@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, SafeAreaView, StatusBar, BackHandler, ToastAndroid } from 'react-native';
+import { StyleSheet, StatusBar, BackHandler, ToastAndroid, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
@@ -40,7 +40,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: '#fff' }]}> 
+    <View style={[styles.container, { backgroundColor: '#fff' }]}> 
       <StatusBar 
         barStyle={'dark-content'}
         backgroundColor={'#fff'}
@@ -65,7 +65,7 @@ const HomeScreen = () => {
         `}
         style={styles.webview}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
