@@ -2,25 +2,22 @@ version: '3.8'
 
 services:
   web:
-    container_name: heyvoca_back_local
     image: whrksp126/heyvoca_back:local
-    build: .
+    container_name: heyvoca_back_local
+    build:
+      context: .
+      dockerfile: Dockerfile.local
     ports:
       - "5003:5000"
     env_file:
       - .env.local
+    volumes:
+      - .:/app
     networks:
       - heyvoca_back_local_network
-    volumes:
-      - .:/app 
-    working_dir: /app
-    command: gunicorn --reload -w 3 -b 0.0.0.0:5000 run:app
-    restart: always
-
-
-
     depends_on:
       - redis
+    restart: always
 
   redis:
     image: redis:latest
@@ -30,9 +27,6 @@ services:
     networks:
       - heyvoca_back_local_network
     restart: always
-
-
-
 
 networks:
   heyvoca_back_local_network:

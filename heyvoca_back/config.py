@@ -38,9 +38,9 @@ class ProductionConfig(Config):
 
 
 # Google OAuth2 정보 설정
-OAUTH_CLIENT_ID = os.environ.get('OAUTH_CLIENT_ID')
-OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
-OAUTH_REDIRECT_URI = os.environ.get('OAUTH_REDIRECT_URI')
+# OAUTH_CLIENT_ID = os.environ.get('OAUTH_CLIENT_ID')
+# OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
+# OAUTH_REDIRECT_URI = os.environ.get('OAUTH_REDIRECT_URI')
 GOOGLE_WEB_CLIENT_ID = os.environ.get('GOOGLE_WEB_CLIENT_ID')
 ACCESS_SECRET = os.environ.get('ACCESS_SECRET')
 REFRESH_SECRET = os.environ.get('REFRESH_SECRET')

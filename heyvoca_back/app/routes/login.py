@@ -19,7 +19,7 @@ from google.auth.transport import requests as google_requests
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
-from config import OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_REDIRECT_URI, GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET
+from config import GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET
 
 from dotenv import load_dotenv
 import os, time, jwt
@@ -36,9 +36,9 @@ REFRESH_SECRET = os.getenv("REFRESH_SECRET")
 ACCESS_TTL_SECONDS  = 60 * 60                 # 60분
 REFRESH_TTL_SECONDS = 60 * 60 * 24 * 30       # 30일
 
-OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
-OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
-OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
+# OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
+# OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
+# OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
 FRONT_END_URL = os.getenv('FRONT_END_URL')
 
 # # UTC+9 (Asia/Seoul) 기준 타임스탬프가 필요하면 아래 tz 사용
@@ -156,130 +156,130 @@ def login_google():
         return jsonify({'code': 400, 'message': '로그인 처리 오류'}), 400
 
 
-# 로그인 라우트: 구글 OAuth2 인증 요청
-@login_bp.route('/google')
-def login_google_old():
-    print('/google')
-    device_type = request.args.get('device_type', 'web')
-    session['device_type'] = device_type
-    # OAuth2Session 생성
-    oauth = OAuth2Session(OAUTH_CLIENT_ID, redirect_uri=OAUTH_REDIRECT_URI, 
-                          scope=[
-                              'https://www.googleapis.com/auth/userinfo.profile', 
-                              'https://www.googleapis.com/auth/userinfo.email', 
-                              'openid',
-                            ]
-                        )
-    print('oauth:', oauth)
+# # 로그인 라우트: 구글 OAuth2 인증 요청
+# @login_bp.route('/google')
+# def login_google_old():
+#     print('/google')
+#     device_type = request.args.get('device_type', 'web')
+#     session['device_type'] = device_type
+#     # OAuth2Session 생성
+#     oauth = OAuth2Session(OAUTH_CLIENT_ID, redirect_uri=OAUTH_REDIRECT_URI, 
+#                           scope=[
+#                               'https://www.googleapis.com/auth/userinfo.profile', 
+#                               'https://www.googleapis.com/auth/userinfo.email', 
+#                               'openid',
+#                             ]
+#                         )
+#     print('oauth:', oauth)
 
 
-    # 인증 요청을 생성합니다.
-    authorization_url, state = oauth.authorization_url(
-        'https://accounts.google.com/o/oauth2/auth',
-        access_type="offline",
-        prompt="consent"
-    )
+#     # 인증 요청을 생성합니다.
+#     authorization_url, state = oauth.authorization_url(
+#         'https://accounts.google.com/o/oauth2/auth',
+#         access_type="offline",
+#         prompt="consent"
+#     )
 
-    print('authorization_url:', authorization_url)
+#     print('authorization_url:', authorization_url)
 
-    # 상태(state)를 세션에 저장
-    session['oauth_state'] = state
+#     # 상태(state)를 세션에 저장
+#     session['oauth_state'] = state
 
-    print('state:', state)
+#     print('state:', state)
 
-    return redirect(authorization_url)
+#     return redirect(authorization_url)
 
 
-# 인증 콜백 라우트: OAuth2 인증 완료 후 실행
-@login_bp.route('/login_google/callback')
-def authorize_google():
-    print('/login_google/callback')
-    state = session.pop('oauth_state', None)
-    authorization_response = request.url
-    if state is None or state != request.args.get('state'):
-        return 'Invalid OAuth state', 400
+# # 인증 콜백 라우트: OAuth2 인증 완료 후 실행
+# @login_bp.route('/login_google/callback')
+# def authorize_google():
+#     print('/login_google/callback')
+#     state = session.pop('oauth_state', None)
+#     authorization_response = request.url
+#     if state is None or state != request.args.get('state'):
+#         return 'Invalid OAuth state', 400
 
-    oauth = OAuth2Session(
-        OAUTH_CLIENT_ID,
-        redirect_uri=OAUTH_REDIRECT_URI,
-        state=state,
-        scope=[
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email',
-            'openid',
-        ]
-    )
-    try:
-        token = oauth.fetch_token(
-            'https://accounts.google.com/o/oauth2/token',
-            authorization_response=authorization_response,
-            client_secret=OAUTH_CLIENT_SECRET
-        )
-        userinfo = oauth.get('https://www.googleapis.com/oauth2/v1/userinfo').json()
-    except Exception as e:
-        print(f"Error during token fetch or userinfo fetch: {str(e)}")
-        return f"An error occurred: {str(e)}", 500
+#     oauth = OAuth2Session(
+#         OAUTH_CLIENT_ID,
+#         redirect_uri=OAUTH_REDIRECT_URI,
+#         state=state,
+#         scope=[
+#             'https://www.googleapis.com/auth/userinfo.profile',
+#             'https://www.googleapis.com/auth/userinfo.email',
+#             'openid',
+#         ]
+#     )
+#     try:
+#         token = oauth.fetch_token(
+#             'https://accounts.google.com/o/oauth2/token',
+#             authorization_response=authorization_response,
+#             client_secret=OAUTH_CLIENT_SECRET
+#         )
+#         userinfo = oauth.get('https://www.googleapis.com/oauth2/v1/userinfo').json()
+#     except Exception as e:
+#         print(f"Error during token fetch or userinfo fetch: {str(e)}")
+#         return f"An error occurred: {str(e)}", 500
 
-    # 기존 사용자 조회
-    user = User.query.filter_by(google_id=userinfo['id']).first()
-    if user is None:
-        try:
-            user = User(
-                level_id=None,
-                email=userinfo['email'],
-                google_id=userinfo['id'],
-                name=userinfo.get('name', ''),
-                username=None,
-                phone=None,
-                code=None,
-                book_cnt=3,
-                gem_cnt=0,
-                set_goal_cnt=3,
-                refresh_token=token['refresh_token'],
-                last_logged_at=None
-            )
-            db.session.add(user)
-            db.session.flush()
+#     # 기존 사용자 조회
+#     user = User.query.filter_by(google_id=userinfo['id']).first()
+#     if user is None:
+#         try:
+#             user = User(
+#                 level_id=None,
+#                 email=userinfo['email'],
+#                 google_id=userinfo['id'],
+#                 name=userinfo.get('name', ''),
+#                 username=None,
+#                 phone=None,
+#                 code=None,
+#                 book_cnt=3,
+#                 gem_cnt=0,
+#                 set_goal_cnt=3,
+#                 refresh_token=token['refresh_token'],
+#                 last_logged_at=None
+#             )
+#             db.session.add(user)
+#             db.session.flush()
             
-            all_goal = db.session.query(Goals)\
-                                .filter(Goals.level == 1)\
-                                .all()
+#             all_goal = db.session.query(Goals)\
+#                                 .filter(Goals.level == 1)\
+#                                 .all()
             
-            for goal in all_goal:
-                user_goal = UserGoals(
-                    user_id=user.id,
-                    goal_id=goal.id,
-                    current_value=0,
-                    is_completed=False,
-                    completed_at=None
-                )
-                db.session.add(user_goal)
-        except Exception as e:
-            db.session.rollback()
-            print(f"Error during user creation: {str(e)}")
-            return f"An error occurred: {str(e)}", 500
-    else:
-        user.refresh_token = token['refresh_token']
-    db.session.commit()
+#             for goal in all_goal:
+#                 user_goal = UserGoals(
+#                     user_id=user.id,
+#                     goal_id=goal.id,
+#                     current_value=0,
+#                     is_completed=False,
+#                     completed_at=None
+#                 )
+#                 db.session.add(user_goal)
+#         except Exception as e:
+#             db.session.rollback()
+#             print(f"Error during user creation: {str(e)}")
+#             return f"An error occurred: {str(e)}", 500
+#     else:
+#         user.refresh_token = token['refresh_token']
+#     db.session.commit()
 
-    # 세션에 사용자 ID와 액세스 토큰 저장
-    session['user_id'] = user.google_id
-    session['access_token'] = token['access_token']
-    session['os'] = 'web'
-    login_user(user)
+#     # 세션에 사용자 ID와 액세스 토큰 저장
+#     session['user_id'] = user.google_id
+#     session['access_token'] = token['access_token']
+#     session['os'] = 'web'
+#     login_user(user)
 
-    # 리다이렉트 URL 생성
-    # front_end_url = 'https://voca.ghmate.com/html/login.html'
-    front_end_url = f'{FRONT_END_URL}/login'
-    query_params = {
-        'googleId': user.id,
-        'email': user.email,
-        'name': user.name,
-        'type': 'web',
-        'status': 200
-    }
-    redirect_url = f"{front_end_url}?{urlencode(query_params)}"
-    return redirect(redirect_url)
+#     # 리다이렉트 URL 생성
+#     # front_end_url = 'https://voca.ghmate.com/html/login.html'
+#     front_end_url = f'{FRONT_END_URL}/login'
+#     query_params = {
+#         'googleId': user.id,
+#         'email': user.email,
+#         'name': user.name,
+#         'type': 'web',
+#         'status': 200
+#     }
+#     redirect_url = f"{front_end_url}?{urlencode(query_params)}"
+#     return redirect(redirect_url)
 
 # 앱 로그인 처리
 @login_bp.route('/login_google/callback/app', methods=['POST'])
@@ -322,21 +322,21 @@ def login_google_app():
 
     return jsonify({ 'code' : 200, 'status': 'success'})
 
-# 토큰 갱신 함수
-def refresh_access_token(user):
-    token_url = "https://accounts.google.com/o/oauth2/token"
-    data = {
-        'client_id': OAUTH_CLIENT_ID,
-        'client_secret': OAUTH_CLIENT_SECRET,
-        'refresh_token': user.refresh_token,
-        'grant_type': 'refresh_token'
-    }
-    response = requests.post(token_url, data=data)
-    if response.ok:
-        new_access_token = response.json().get('access_token')
-        session['access_token'] = new_access_token
-        return new_access_token
-    return None
+# # 토큰 갱신 함수
+# def refresh_access_token(user):
+#     token_url = "https://accounts.google.com/o/oauth2/token"
+#     data = {
+#         'client_id': OAUTH_CLIENT_ID,
+#         'client_secret': OAUTH_CLIENT_SECRET,
+#         'refresh_token': user.refresh_token,
+#         'grant_type': 'refresh_token'
+#     }
+#     response = requests.post(token_url, data=data)
+#     if response.ok:
+#         new_access_token = response.json().get('access_token')
+#         session['access_token'] = new_access_token
+#         return new_access_token
+#     return None
 
 
 @login_bp.route("/logout")
