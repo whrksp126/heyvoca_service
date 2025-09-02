@@ -10,7 +10,7 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload, MediaFileUpload, MediaIoBaseDownload
 from google.auth.transport.requests import Request
-
+from app.routes.auth import jwt_required
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
