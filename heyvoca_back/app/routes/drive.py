@@ -19,17 +19,9 @@ import pandas as pd
 
 from dotenv import load_dotenv
 import os
-<<<<<<< HEAD
 # OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
 # OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 # OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
-=======
-
-from app.routes.auth import jwt_required
-OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
-OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
-OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
->>>>>>> 18b4eab42a85c21e49f08ea489576ee6e5df0061
 
 # 더미 데이터
 data = [
@@ -169,7 +161,6 @@ def download_excel():
 #     return jsonify({"file_id": file.get('id')})
 
 
-<<<<<<< HEAD
 # ## 드라이브에 엑셀 파일로 저장 TODO : word->origin
 # @drive_bp.route('/backup', methods=['POST'])
 # @login_required
@@ -189,27 +180,6 @@ def download_excel():
 #         client_secret=OAUTH_CLIENT_SECRET
 #     )
 #     drive_service = build('drive', 'v3', credentials=credentials)
-=======
-## 드라이브에 엑셀 파일로 저장 TODO : word->origin
-@drive_bp.route('/backup', methods=['POST'])
-@jwt_required
-def backup():
-    print("ckeck_backup")
-    data = request.get_json()
-    if not data:
-        return jsonify({"code":400, "msg": "제공된 데이터가 없습니다"})
-    
-    drive_service = None
-    user = User.query.filter_by(google_id=g.user_id).first()
-    credentials = Credentials(
-        token=g.access_token,
-        refresh_token=user.refresh_token,
-        token_uri='https://oauth2.googleapis.com/token',
-        client_id=OAUTH_CLIENT_ID,
-        client_secret=OAUTH_CLIENT_SECRET
-    )
-    drive_service = build('drive', 'v3', credentials=credentials)
->>>>>>> 18b4eab42a85c21e49f08ea489576ee6e5df0061
     
 #     # 폴더 이름
 #     folder_name = 'HeyVoca'
