@@ -39,6 +39,8 @@ const HomeScreen = () => {
     }
   };
 
+  console.log('FRONT_URL', FRONT_URL);
+
   return (
     <View style={[styles.container, { backgroundColor: '#fff' }]}> 
       <StatusBar 
@@ -55,6 +57,7 @@ const HomeScreen = () => {
         userAgent="HeyVoca"
         onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp)}
         javaScriptEnabled={true}
+        webviewDebuggingEnabled={true}
         injectedJavaScript={`
           window.alert = function(message) {
             window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
