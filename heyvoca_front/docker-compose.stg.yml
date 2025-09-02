@@ -1,22 +1,41 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  front-end:
+  front-stg:
+    image: whrksp126/heyvoca_front:stg
     container_name: heyvoca_front_stg
-    image: whrksp126/heyvoca_front:staging
     build:
       context: .
       dockerfile: Dockerfile.stg
-      args:
-        - NODE_ENV=staging
+      platforms: [linux/amd64]
+      args:                           # ← 빌드 타임에만 쓰임 (Vite용)
+        VITE_BACKEND_URL: https://stg-heyvoca-back.ghmate.com
+        VITE_DEBUG: "false"
+        NODE_ENV: staging
     ports:
       - "3001:80"
-    env_file:
-      - .env.stg
-    networks:
-      - heyvoca_front_stg_network
     restart: unless-stopped
 
-networks:
-  heyvoca_front_stg_network:
-    driver: bridge
+
+
+# version: '3.8'
+
+# services:
+#   front-end:
+#     container_name: heyvoca_front_stg
+#     image: whrksp126/heyvoca_front:staging
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.stg
+#       args:
+#         - NODE_ENV=staging
+#     ports:
+#       - "3001:80"
+#     env_file:
+#       - .env.stg
+#     networks:
+#       - heyvoca_front_stg_network
+#     restart: unless-stopped
+
+# networks:
+#   heyvoca_front_stg_network:
+#     driver: bridge
