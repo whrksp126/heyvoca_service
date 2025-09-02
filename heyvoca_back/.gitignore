@@ -13,7 +13,7 @@ __pycache__/
 .env.dev
 .env.stg
 .env.prod
-
+__.env.local
 
 # Docker 관련
 *.log
