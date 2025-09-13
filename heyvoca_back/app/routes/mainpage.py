@@ -1,6 +1,8 @@
 from flask import render_template, redirect, url_for, request, session, jsonify, g
 from app import db
 from app.routes import mainpage_bp
+from app.utils.jwt_utils import jwt_required
+from uuid import UUID
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
@@ -8,16 +10,15 @@ from sqlalchemy.orm import aliased
 
 import io
 import json
-from uuid import UUID
+
 import random
 
-from app.routes.auth import jwt_required
 
 
 @mainpage_bp.route('/user_goals', methods=['GET'])
 @jwt_required
 def api_user_goals():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
 
     goal_types = [r[0] for r in db.session.query(GoalType.type).all()]
 
@@ -44,7 +45,7 @@ def api_user_goals():
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @jwt_required
 def api_user_dates():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
 
     kst_now = datetime.utcnow() + timedelta(hours=9)
     today = kst_now.date()
@@ -85,7 +86,7 @@ def api_user_dates():
 @mainpage_bp.route('/gem_cnt', methods=['GET'])
 @jwt_required
 def api_gem_cnt():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
 
     user_gem_cnt = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
 
@@ -95,7 +96,7 @@ def api_gem_cnt():
 @mainpage_bp.route('user_recent_study_data', methods=['GET'])
 @jwt_required
 def api_user_recent_study_data():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     recent_data = db.session.query(UserRecentStudy)\
                 .filter(UserRecentStudy.user_id == user_id)\
                 .all()
@@ -126,7 +127,7 @@ def api_user_recent_study_create_update():
     progress_index = data.get('progress_index', None)
     type = data['type']
 
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     study_data = json.dumps(study_data) if study_data is not None else None
 
     # update
@@ -168,9 +169,8 @@ def api_user_recent_study_create_update():
 
     return {'code': 200, 'data': data}
 
-@jwt_required
 def update_user_goal(goal_type_name: str):
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     
     # 현재 유저가 달성 중인 해당 업적 조회
     current_user_goal = db.session.query(UserGoals)\
@@ -252,7 +252,7 @@ def api_user_study_history():
     correct_cnt = int(data.get('correct_cnt') or 0)
     incorrect_cnt = int(data.get('incorrect_cnt') or 0)
 
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
 
     # 1. 경험치 업데이트
     add_xp = correct_cnt * 5 + incorrect_cnt * 2
@@ -322,7 +322,7 @@ def api_user_study_history():
 @mainpage_bp.route('/checkin', methods=['GET'])
 @jwt_required
 def checkin():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     today = (datetime.utcnow() + timedelta(hours=9)).date()
     exists = db.session.query(CheckIn).filter(
                     CheckIn.user_id == user_id, 
@@ -369,7 +369,7 @@ def checkin():
 @mainpage_bp.route('/user_book_cnt_check', methods=['GET'])
 @jwt_required
 def user_book_cnt_check():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     user_item = db.session.query(User).filter(User.id == user_id).first()
     
     can_add_book = True if user_item.book_cnt > 0 else False
@@ -383,11 +383,10 @@ def user_book_cnt_check():
 
 
 @mainpage_bp.route('/today_study_recommend', methods=['GET'])
-# @jwt_required
+@jwt_required
 def api_today_study_recommend():
     word_count = request.args.get('word_count', 10, type=int)
-    # user_id = g.user_id
-    user_id = UUID('123e4567-e89b-12d3-a456-426614174000')
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
 
     uvb = aliased(UserVocaBook)
 

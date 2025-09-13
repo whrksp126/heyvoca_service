@@ -21,7 +21,6 @@ from apscheduler.triggers.cron import CronTrigger
 import atexit
 
 from flask import g
-from app.routes.auth import jwt_required
 
 @fcm_bp.route('/fcm_html')
 def fcm_html():
@@ -207,7 +206,6 @@ def create_scheduler(app):
 
 
 @fcm_bp.route('/is_message_allowed', methods=['POST'])
-@jwt_required
 def is_message_allowed():
     is_allowed = request.json.get('is_allowed')
     fcm_token = request.json.get('fcm_token')

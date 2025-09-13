@@ -10,7 +10,6 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload, MediaFileUpload, MediaIoBaseDownload
 from google.auth.transport.requests import Request
-from app.routes.auth import jwt_required
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
@@ -255,7 +254,6 @@ def download_excel():
 
 
 @drive_bp.route('/backup/app', methods=['POST'])
-@jwt_required
 def backup_app():
     data = request.json
     notebooks = data['notebooks']
@@ -394,7 +392,6 @@ def backup_app():
         return jsonify({'code': 500, 'msg': '파일 업로드 실패', 'details': upload_response.json()})
 
 @drive_bp.route('/excel_to_json', methods=['GET'])
-@jwt_required
 def excel_to_json():
     # Google Drive 서비스 객체 생성
     drive_service = get_google_drive_service()
@@ -429,7 +426,6 @@ def excel_to_json():
 
 
 @drive_bp.route('/excel_to_json/app', methods=['GET'])
-@jwt_required
 def excel_to_json_app():
     access_token = request.args.get('access_token')  # 쿼리 파라미터로 access_token 가져오기
     if not access_token:

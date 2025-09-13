@@ -9,14 +9,14 @@ from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
+from app.utils.jwt_utils import jwt_required
 
-from app.routes.auth import jwt_required
 
 
 @user_voca_book_bp.route('/list', methods=['GET'])
 @jwt_required
 def get_user_voca_book_list():
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # JWT에서 온 문자열을 UUID로 변환
 
     user_voca_book_list = db.session.query(UserVocaBook)\
                                 .filter(UserVocaBook.user_id == user_id).all()
@@ -47,7 +47,7 @@ def create_user_voca_book():
     bookstore_id = data.get('bookstore_id')
     name = data['title']
     color = data['color']
-    user_id = g.user_id
+    user_id = UUID(g.user_id)  # JWT에서 온 문자열을 UUID로 변환
 
     user = db.session.query(User).filter(User.id == user_id).first()
     print("###user : ",user)
@@ -91,8 +91,8 @@ def create_user_voca_book():
         return jsonify({'code': 400, 'message': '단어장 생성 실패'})
 
 
-#@jwt_required
 @user_voca_book_bp.route('/update', methods=['PATCH'])
+@jwt_required
 def update_user_voca_book():
     data = request.get_json()
     user_voca_book_id = UUID(data.get('id'))
@@ -128,8 +128,8 @@ def update_user_voca_book():
     return jsonify({'code': 200, 'data': data}), 200
 
 
-#@jwt_required
 @user_voca_book_bp.route('/delete', methods=['DELETE'])
+@jwt_required
 def delete_user_voca_book():
     data = request.get_json()
     user_voca_book_id = UUID(data['id'])
