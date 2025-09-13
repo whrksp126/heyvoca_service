@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { backendUrl, fetchDataAsync } from '../utils/common';
+import { useUser } from './UserContext';
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
+  const { isLogin, isLoginChecked } = useUser();
+  
   const [vocabularySheets, setVocabularySheets] = useState([]);
   const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
   const [errorVocabularySheets, setErrorVocabularySheets] = useState(null);
@@ -416,12 +419,28 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, [recentStudy]);
 
-  // 앱 시작시 데이터 로드
+  // 앱 시작시 데이터 로드 (로그인 상태 확인 후)
   useEffect(() => {
-    // fetchVocabularySheets();
-    // fetchBookStore();
-    // fetchRecentStudy();
-  }, [fetchVocabularySheets, fetchBookStore, fetchRecentStudy]);
+    if (isLogin && isLoginChecked) {
+      console.log('📚 [VOCABULARY] 로그인 상태 확인됨, 단어장 데이터 로드 시작');
+      
+      const loadVocabularyData = async () => {
+        try {
+          await Promise.all([
+            fetchVocabularySheets(),
+            fetchBookStore(),
+            fetchRecentStudy()
+          ]);
+        } catch (error) {
+          console.error('❌ [VOCABULARY] 데이터 로드 중 오류 발생:', error);
+        }
+      };
+      
+      loadVocabularyData();
+    } else if (!isLogin && isLoginChecked) {
+      console.log('🔓 [VOCABULARY] 로그인되지 않은 상태, API 호출 건너뜀');
+    }
+  }, [isLogin, isLoginChecked]); // 함수 의존성 제거
 
   const value = {
     vocabularySheets,

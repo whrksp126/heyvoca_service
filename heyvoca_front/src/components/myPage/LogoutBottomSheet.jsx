@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useBottomSheet } from '../../context/BottomSheetContext';
-import { backendUrl, fetchDataAsync } from '../../utils/common';
+import { backendUrl, fetchDataAsync, setCookie } from '../../utils/common';
 import { useFullSheet } from '../../context/FullSheetContext';
 import { useUser } from '../../context/UserContext';
 
@@ -10,45 +10,45 @@ export const useLogoutBottomSheet = () => {
   const { pushBottomSheet, handleBack: handleBottomSheetBack, handleReset: handleBottomSheetReset } = useBottomSheet();
   const { handleReset: handleFullSheetReset } = useFullSheet();
   const navigate = useNavigate();
-  const { setUserStorageData } = useUser();
+  const { setAuth } = useUser();
 
   const handleClose = useCallback(() => {
     handleBottomSheetBack();
   }, [handleBottomSheetBack]);
 
     const handleLogout = useCallback(async () => {
-    try {
-      // 로그아웃 API 호출
-      const url = `${backendUrl}/login/logout/app`;
-      const method = 'POST';
-      const fetchData = {};
-      
-      const result = await fetchDataAsync(url, method, fetchData, false, null);
-      if (result.code !== 200) {
+      try {
+        // 로그아웃 API 호출
+        const url = `${backendUrl}/auth/logout`;
+        const method = 'POST';
+        const fetchData = {};
+        
+        const result = await fetchDataAsync(url, method, fetchData);
+        if (result.code !== 200) {
+          alert('로그아웃 중 오류가 발생하였습니다.');
+          return;
+        }
+        
+        // 쿠키에서 accessToken 제거
+        setCookie('userAccessToken', '', -1); // 쿠키 즉시 만료
+        
+        // auth 상태 초기화
+        setAuth({
+          user: null,
+        });
+        
+        // 컨텍스트 초기화
+        handleBottomSheetReset();
+        handleFullSheetReset();
+        
+        // 로그인 페이지로 이동
+        navigate('/login');
+        
+      } catch (error) {
+        console.error('로그아웃 실패:', error);
         alert('로그아웃 중 오류가 발생하였습니다.');
-        return;
       }
-      
-      // 로그인 페이지와 동일한 방식으로 로그아웃 상태 설정
-      setUserStorageData({
-        google_id: null,
-        name: null,
-        email: null,
-        status: "logout",
-      });
-      
-      // 컨텍스트 초기화
-      handleBottomSheetReset();
-      handleFullSheetReset();
-      
-      // 로그인 페이지로 이동
-      navigate('/login');
-      
-    } catch (error) {
-      console.error('로그아웃 실패:', error);
-      alert('로그아웃 중 오류가 발생하였습니다.');
-    }
-  }, [navigate, setUserStorageData, handleBottomSheetReset, handleFullSheetReset]);
+    }, [navigate, setAuth, handleBottomSheetReset, handleFullSheetReset]);
 
   const showLogOutBottomSheet = useCallback(() => {
     pushBottomSheet(

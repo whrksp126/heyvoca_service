@@ -6,55 +6,109 @@ export const MIN_TEST_VOCABULARY_COUNT = 4;
 
 console.log("import.meta.env",import.meta.env);
 
+// 쿠키 조회
+export function getCookie(name) {
+  const cookieString = document.cookie;
+  const cookies = cookieString.split("; ");
+  for (const cookie of cookies) {
+    const [key, value] = cookie.split("=");
+    if (key === name) return value;
+  }
+  return null;
+}
+
+// 쿠키 설정
+export function setCookie(name, value, days = 365) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + "; " + expires + "; path=/";
+}
+
+// URL에서 마지막 경로 값을 가져오는 함수
+export function getLastPathFromURL() {
+  const path = window.location.pathname;
+  let lastPath = path.substring(path.lastIndexOf('/') + 1);
+  if (lastPath.endsWith('.html')) {
+    lastPath = lastPath.substring(0, lastPath.lastIndexOf('.'));
+  }
+  return lastPath;
+}
+
+// Access Token 갱신 함수
+async function refreshAccessToken() {
+  try {
+    const response = await fetch(`${backendUrl}/auth/refresh`, {
+      method: 'POST',
+      credentials: 'include', // refresh token 쿠키 포함
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      setCookie('userAccessToken', data.access_token);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('Token refresh failed:', error);
+    return false;
+  }
+}
+
 // 비동기 fetch api
-export async function fetchDataAsync(url, method, data, form=false, accessToken=null){
+export async function fetchDataAsync(url, method, data, form = false) {
+  const accessToken = getCookie("userAccessToken");
+
   let newUrl = url;
-  const headers = {}
-
-  if(accessToken){headers['Authorization'] = `Bearer ${accessToken}`}
-
-  if(!form){ headers['Content-Type'] = `application/json`}
-
-  let fetchOptions = { method, headers};
-
-  if(method !== 'GET' && form) {
+  const headers = {
+    'Authorization': `Bearer ${accessToken}`
+  }
+  if (!form) { headers['Content-Type'] = `application/json` }
+  const fetchOptions = { method, headers };
+  
+  if (method !== 'GET' && form) {
     const formData = new FormData();
-    formData.append('json_data', JSON.stringify(data.json_data));
-    data.form_data.forEach(({key, value})=>{
+    formData.append('json_data', JSON.stringify(data.json_data))
+    data.form_data.forEach(({ key, value }) => {
       formData.append(key, value);
     })
-    fetchOptions.body = formData;
+    fetchOptions.body = formData
   }
-  if(method !== 'GET' && !form){
+  if (method !== 'GET' && !form) {
     fetchOptions.body = JSON.stringify(data);
   }
-  if(method == 'GET' || method == 'DELETE'){
+  if (method == 'GET' || method == 'DELETE') {
     newUrl += `?`
     for (const key in data) {
       const value = data[key];
       newUrl += `${key}=${value}&`;
     }
-    console.log(newUrl);
   }
-
-  fetchOptions.credentials = 'include'; // 쿠키 필요하면 유지
-
+  fetchOptions.credentials = 'include';
+  
   try {
     const response = await fetch(newUrl, fetchOptions);
-    const contentType = response.headers.get('Content-Type');
-    
     if (response.ok) {
+      const contentType = response.headers.get('Content-Type') || '';
       if (contentType.includes('application/json')) {
         return await response.json();
-      } else if (contentType.includes('text')) {
-        return await response.text();
-      } else if (contentType.includes('audio')) {
+      } else if (contentType.includes('image/') || contentType.includes('audio/') || contentType.includes('application/octet-stream')) {
         return await response.blob();
+      } else if (contentType.includes('text/')) {
+        return await response.text();
       } else {
-        throw new Error(`Unsupported content type: ${contentType}`);
+        throw new Error('지원하지 않는 데이터 형식입니다.');
+      }
+    } else if (response.status === 401) {
+      console.log("Access Token 만료: 갱신 시도");
+      const refreshed = await refreshAccessToken();
+      if (refreshed) {
+        return await fetchDataAsync(url, method, data, form) // 새 Access Token으로 재요청
+      } else {
+        return null;
       }
     } else {
-      throw new Error('문제가 발생했습니다.');
+      return response;
     }
   } catch (error) {
     console.error(error);
