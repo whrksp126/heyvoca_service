@@ -327,7 +327,6 @@ def logout():
         }), 500
 
 @auth_bp.route('/get_user_info', methods=['GET'])
-@auth_bp.route('/login/get_user_info', methods=['GET'])  # 기존 경로도 지원
 @jwt_required
 def get_user_info():
     user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
