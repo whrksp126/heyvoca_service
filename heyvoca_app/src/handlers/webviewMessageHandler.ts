@@ -1,18 +1,6 @@
 import { Alert } from 'react-native';
 import Tts from 'react-native-tts';
-import { signInWithGoogle, signOutWithGoogle, refreshAccessToken, requestGooglePermissions } from '../google/googleAuth';
-import { appAsyncStore, saveAppAsyncStorage } from '../utils/asyncStorage';
-
-interface WebViewMessage {
-  type: string;
-  language?: string;
-  text?: string;
-  value?: boolean;
-  message?: string;
-  btns?: Array<{ text: string }>;
-  accessToken?: string;
-  refreshToken?: string;
-}
+import { signInWithGoogle } from '../google/googleAuth';
 
 const handleWebViewMessage = async (
   event: { nativeEvent: { data: string } }, 
@@ -22,13 +10,17 @@ const handleWebViewMessage = async (
   const message = event.nativeEvent.data;
   if (message === 'launchGoogleAuth') {
     signInWithGoogle(webViewRef);
-  } else if (message === 'logoutGoogleAuth') {
-    signOutWithGoogle();
-  }  else if (message === 'get_access_token') {
-    refreshAccessToken(webViewRef);
-  } else if (message === 'request_google_permissions') {
-    requestGooglePermissions(webViewRef);
-  } else {
+  } 
+  // else if (message === 'logoutGoogleAuth') {
+  //   signOutWithGoogle();
+  // }  
+  // else if (message === 'get_access_token') {
+  //   refreshAccessToken(webViewRef);
+  // } 
+  // else if (message === 'request_google_permissions') {
+  //   requestGooglePermissions(webViewRef);
+  // } 
+  else {
     try {
       const data = JSON.parse(message);
       if (data.type === 'tts') {
