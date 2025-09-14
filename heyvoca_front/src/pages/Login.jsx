@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
 import '../index.css';
 import { useUser } from '../context/UserContext';
+import { getValueFromURL } from '../utils/common';
+import postMessageManager from '../utils/postMessageManager';
 
 const Login = () => {
   const navigate = useNavigate();
   const { auth, Login, clickGoogleOauth } = useUser();
+
 
   useEffect(() => {
     // auth.user가 있으면 로그인된 상태
@@ -18,14 +21,67 @@ const Login = () => {
       // 로그인되지 않은 상태이면 로그인 처리
       handleLogin();
     }
-  }, [navigate, auth.user]);
+  }, []);
+
+  // 앱에서 받은 구글 사용자 정보로 로그인 처리하는 함수
+  const handleAppGoogleAuth = useCallback(async (data) => {
+    console.log(`앱 구글 OAuth 정보 받음: ${JSON.stringify(data)}`);
+    
+    const { googleId, email, name, status } = data;
+    
+    // 필수 정보 검증
+    if (!googleId || !email || !name || !status) {
+      console.error(`앱에서 받은 구글 사용자 정보가 불완전합니다: ${JSON.stringify(data)}`);
+      return;
+    }
+
+    try {
+      console.log(`앱 로그인 처리 시작: ${JSON.stringify({ googleId, email, name, status })}`);
+      
+      const result = await Login({ googleId, email, name, status });
+      
+      if (result.success) {
+        console.log(`앱 로그인 성공`);
+        navigate('/');
+      } else {
+        console.log(`앱 로그인 실패`);
+      }
+    } catch (error) {
+      console.error(`앱 로그인 처리 중 오류: ${error}`);
+    }
+  }, [Login, navigate]);
+
+  // 앱 구글 OAuth 처리
+  useEffect(() => {
+    // 앱 구글 OAuth 리스너 등록
+    postMessageManager.setupAppGoogleAuth(handleAppGoogleAuth);
+
+    // 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      postMessageManager.removeAppGoogleAuth();
+    };
+  }, [handleAppGoogleAuth]);
+
   
   const handleLogin = async () => {
-    const result = await Login();
+    // URL에서 파라미터 가져오기
+    const googleId = getValueFromURL('googleId');
+    const email = getValueFromURL('email');
+    const name = getValueFromURL('name');
+    const status = getValueFromURL('status');
+
+    // 필수 파라미터가 있는지 확인
+    if (!googleId || !email || !name || !status) {
+      console.log('로그인에 필요한 파라미터가 없습니다.');
+      return;
+    }
+
+    const result = await Login({ googleId, email, name, status });
     if (result.success) {
       navigate('/');
     }
   }
+
 
   useEffect(() => {
     const container = document.getElementById("lottie-container");

@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [userMainPage, setUserMainPage] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [errorUserProfile, setErrorUserProfile] = useState(null);
+  const [userStorageData, setUserStorageData] = useState(JSON.parse(localStorage.getItem('user')));
   
   // 인증 상태 (user 정보만 관리, accessToken은 쿠키로 관리)
   const [auth, setAuth] = useState({
@@ -60,7 +61,7 @@ export const UserProvider = ({ children }) => {
       // id: "132902cb-33ba-45ce-9339-811e33e01662"
       // level_id: null
       // set_goal_cnt: 3
-      // username: null
+      // username:art 
       setUserProfile(result.data);
       setErrorUserProfile(null);
     } catch (err) {
@@ -82,15 +83,18 @@ export const UserProvider = ({ children }) => {
       const url = `${backendUrl}/auth/update_user_info`;
       const method = 'PATCH';
       const result = await fetchDataAsync(url, method, updates);
-      if(result.code != 200) return console.log('유저 정보를 불러오는데 실패했습니다.');
-      setUserProfile({
-        ...userProfile,
+      if (result.code !== 200) {
+        console.log('유저 정보를 불러오는데 실패했습니다.');
+        return;
+      }
+      setUserProfile(prevProfile => ({
+        ...prevProfile,
         level_id: updates.level_id,
         username: updates.username,
-      });
+      }));
       setErrorUserProfile(null);
     } catch (err) {
-      console.log("오류 발생함")
+      console.log("오류 발생함");
       setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
       console.error('Failed to fetch user profile:', err);
     }
@@ -163,33 +167,40 @@ export const UserProvider = ({ children }) => {
     }
   }, []); // userProfile 의존성 제거
 
-  // 로그인 처리 함수 (URL 파라미터 파싱 + 검증 + 로그인 처리)
-  const Login = useCallback(async () => {
-    // URL 파라미터 파싱
-    const google_id = getValueFromURL('googleId');
-    if (!google_id) return { success: false };
-
-    const email = getValueFromURL('email');
-    const name = getValueFromURL('name');
-    const type = getValueFromURL('type');
-    const status = getValueFromURL('status');
-    const id_token = getValueFromURL('id_token');
-
-    // 필수값 검증
-    if (Number(status) !== 200) {
-      console.log('google_id이 없습니다. (URL 파라미터 googleId 확인)');
-      return { success: false };
-    }
-
+  // 로그인 처리 함수 (매개변수로 받은 정보로 로그인 처리)
+  const Login = useCallback(async ({ googleId, email, name, status }) => {
     try {
+      console.log("Login 함수 내부 시작됨");
       
+      // 매개변수 검증
+      if (!googleId) {
+        console.log('googleId가 없습니다.');
+        return { success: false };
+      }
+
+      if (!email) {
+        console.log('email이 없습니다.');
+        return { success: false };
+      }
+
+      if (!name) {
+        console.log('name이 없습니다.');
+        return { success: false };
+      }
+
+      // 필수값 검증
+      if (Number(status) !== 200) {
+        console.log('status가 200이 아닙니다.');
+        return { success: false };
+      }
+
+      console.log("Login 제대로 동작 중");
       const url = `${backendUrl}/auth/login`;
       const fetchData = {
-        google_id,
+        google_id: googleId,
         email,
         name
       };
-      
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -198,37 +209,29 @@ export const UserProvider = ({ children }) => {
         credentials: 'include', // 쿠키 포함 필수!
         body: JSON.stringify(fetchData),
       });
-      
       if (!response.ok) {
+        console.log('response', response);
         console.log('로그인 중 오류가 발생하였습니다.');
         return { success: false };
       }
-      
       const data = await response.json();
       const accessToken = data.access_token;
-      
-      // accessToken을 쿠키에 저장
       setCookie('userAccessToken', accessToken);
       
-      // Context에 user 정보 저장
       setAuth({
         user: {
           name,
           email,
         }
       });
-
-      // 로그인 상태 업데이트
       setIsLogin(true);
       setIsLoginChecked(true);
       
-      // 앱인 경우 토큰 전송
-      if (type === 'app') {
-        const message = JSON.stringify({
-          type: "loginSuccess",
-          data: data
-        });
-        window.ReactNativeWebView.postMessage(message);
+      // 서버에서 실제 사용자 프로필 정보 가져오기
+      try {
+        await fetchUserProfile();
+      } catch (error) {
+        console.error('사용자 프로필 가져오기 실패:', error);
       }
       
       return { success: true, accessToken };
@@ -237,14 +240,14 @@ export const UserProvider = ({ children }) => {
       console.log('로그인 중 오류가 발생하였습니다.');
       return { success: false };
     }
-  }, [setAuth]);
+  }, []);
 
   // 구글 로그인 클릭 처리 (웹/앱 자동 구분)
   const clickGoogleOauth = useCallback(() => {
     const device_type = getDevicePlatform();
-    if(device_type == 'web'){
+    if (device_type === 'web') {
       window.location.href = `${backendUrl}/auth/google/oauth/web?device_type=${device_type}`;
-    }else{
+    } else {
       window.ReactNativeWebView.postMessage('launchGoogleAuth');
     }
   }, []);
@@ -252,18 +255,18 @@ export const UserProvider = ({ children }) => {
   // 로그인 상태 확인 함수 (전역 상태 업데이트)
   const checkLoginStatus = useCallback(async () => {
     const accessToken = getCookie('userAccessToken');
-    
+
     if (accessToken) {
       try {
         // 서버에서 토큰 유효성 확인 + user 정보 가져오기
         await fetchUserProfile();
         const userProfile = getUserProfile();
-        
+
         // 로그인 상태 업데이트
         setIsLogin(true);
         setIsLoginChecked(true);
         setAuth({ user: { name: userProfile?.name, email: userProfile?.email } });
-        
+
         return { isLoggedIn: true, userProfile };
       } catch (error) {
         // 토큰이 유효하지 않으면 로그아웃 처리
@@ -272,7 +275,7 @@ export const UserProvider = ({ children }) => {
         setAuth({ user: null });
         setIsLogin(false);
         setIsLoginChecked(true);
-        
+
         return { isLoggedIn: false, userProfile: null };
       }
     } else {
@@ -280,17 +283,15 @@ export const UserProvider = ({ children }) => {
       setAuth({ user: null });
       setIsLogin(false);
       setIsLoginChecked(true);
-      
+
       return { isLoggedIn: false, userProfile: null };
     }
   }, [fetchUserProfile, getUserProfile, setAuth]);
-
 
   // 앱 시작시 로그인 상태 확인
   useEffect(() => {
     const initializeAuth = async () => {
       if (!isLoginChecked) {
-        console.log('🔍 [USER] 로그인 상태 확인 시작');
         await checkLoginStatus();
       }
     };
@@ -301,8 +302,6 @@ export const UserProvider = ({ children }) => {
   // 로그인 상태에 따른 데이터 로드
   useEffect(() => {
     if (isLogin && isLoginChecked) {
-      console.log('🔐 [USER] 로그인 상태 확인됨, 추가 데이터 로드 시작');
-      
       const loadAdditionalData = async () => {
         try {
           await Promise.all([
@@ -315,8 +314,6 @@ export const UserProvider = ({ children }) => {
       };
       
       loadAdditionalData();
-    } else if (!isLogin && isLoginChecked) {
-      console.log('🔓 [USER] 로그인되지 않은 상태, API 호출 건너뜀');
     }
   }, [isLogin, isLoginChecked]); // 함수 의존성 제거
 

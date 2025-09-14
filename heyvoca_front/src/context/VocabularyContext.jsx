@@ -437,8 +437,6 @@ export const VocabularyProvider = ({ children }) => {
       };
       
       loadVocabularyData();
-    } else if (!isLogin && isLoginChecked) {
-      console.log('🔓 [VOCABULARY] 로그인되지 않은 상태, API 호출 건너뜀');
     }
   }, [isLogin, isLoginChecked]); // 함수 의존성 제거
 

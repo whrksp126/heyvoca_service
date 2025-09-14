@@ -63,7 +63,7 @@ function App() {
           <Layout>
             <BottomSheetProvider>
               <FullSheetProvider>
-                  <AppLayout />
+                <AppLayout />
               </FullSheetProvider>
             </BottomSheetProvider>
           </Layout>

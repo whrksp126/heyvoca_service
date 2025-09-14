@@ -9,30 +9,35 @@ import '../index.css';
 
 const Index = () => {
   const navigate = useNavigate();
-  const { isLogin, isLoginChecked, userProfile } = useUser();
+  const { isLogin, isLoginChecked, userProfile, isUserProfileLoading } = useUser();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
     if (isLoginChecked) {
-      if (isLogin && userProfile) {
-        if (userProfile.id == null) {
-          // 유저 프로필이 없으면 로그아웃 처리
-          navigate('/login');
-          return;
-        } else if (userProfile.username == null) {
-          console.log("userProfile,", userProfile);
-          navigate('/initial-profile');
-          return;
+      if (isLogin) {
+        // 로그인된 상태 - userProfile 로딩 완료까지 기다림
+        if (!isUserProfileLoading && userProfile) {
+          if (userProfile.id) {
+            if (userProfile.username == null) {
+              console.log("userProfile,", userProfile);
+              navigate('/initial-profile');
+            } else {
+              navigate('/home');
+            }
+          } else {
+            // userProfile.id가 없으면 로그아웃 처리
+            navigate('/login');
+          }
+          setIsCheckingAuth(false);
         }
-        navigate('/home');
+        // userProfile이 아직 로딩 중이면 기다림
       } else {
         // 로그인되지 않은 상태
         navigate('/login');
+        setIsCheckingAuth(false);
       }
-      
-      setIsCheckingAuth(false);
     }
-  }, [navigate, isLogin, isLoginChecked, userProfile]);
+  }, [navigate, isLogin, isLoginChecked, userProfile, isUserProfileLoading]);
   
   
   useEffect(() => {
