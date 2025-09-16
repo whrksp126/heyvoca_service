@@ -255,6 +255,7 @@ def search_bookstore_all():
             bs.category, 
             bs.color, 
             bs.hide,
+            bs.gem,
 
             -- 단어 목록을 JSON 배열로 변환
             COALESCE(JSON_ARRAYAGG(
@@ -304,7 +305,8 @@ def search_bookstore_all():
             "category": row.category,
             "color": json.loads(row.color) if row.color else {},
             "hide": row.hide,
-            "words": words
+            "words": words,
+            "gem": row.gem
         })
     #temp = final_results[0]
 
