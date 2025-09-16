@@ -59,7 +59,7 @@ const Header = () => {
         >
           <strong className="
             text-[#FF8DD4] font-[700]
-          ">헤이</strong>의 단어장
+          ">{userProfile.username}</strong>의 단어장
           </h2>
       </div>
       <div className="center">

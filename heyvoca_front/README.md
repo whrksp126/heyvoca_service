@@ -50,7 +50,7 @@ docker images | grep heyvoca_front
 docker push whrksp126/heyvoca_front:dev
 
 ## 서버 적용
-sudo systemctl restart heyvoca_back_dev
+sudo systemctl restart heyvoca_front_dev
 
 ---
 
@@ -81,7 +81,7 @@ docker images | grep heyvoca_front
 docker push whrksp126/heyvoca_front:stg
 
 ## 서버 적용
-sudo systemctl restart heyvoca_back_stg
+sudo systemctl restart heyvoca_front_stg
 
 ---
 
