@@ -1,12 +1,13 @@
 // src/components/home/main
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
-
+import { useVocabulary } from '../../context/VocabularyContext';
 import { SketchLogo, Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
+
 import { useFullSheet } from '../../context/FullSheetContext';
 
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -19,8 +20,94 @@ import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import StoreSheet from './StoreSheet';
 import TodayStudySheet from './TodayStudySheet';
 
+// 업적 타입과 이미지 매핑
+const ACHIEVEMENT_IMAGES = {
+  '초대왕': InviteKing,
+  '출석왕': AttendanceKing,
+  '노력왕': NoryeokKing,
+  '단어왕': WordKing,
+  '끈기왕': PerseveranceKing,
+  '독서왕': ReadingKing,
+  '암기왕': NoryeokKing, // 암기왕은 노력왕 이미지 사용
+};
+
+// 레벨별 배경 색상 및 스타일
+const getAchievementBackgroundStyle = (level) => {
+  if (level >= 10) {
+    // 레벨 10 이상: 그라데이션
+    return {
+      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+    };
+  } else if (level >= 6) {
+    // 레벨 6~9: 노란색
+    return {
+      backgroundColor: '#F2D252',
+    };
+  } else if (level >= 3) {
+    // 레벨 3~5: 회색
+    return {
+      backgroundColor: '#C0C0C0',
+    };
+  } else {
+    // 레벨 0~2: 갈색
+    return {
+      backgroundColor: '#D3A686',
+    };
+  }
+};
+
+// 레벨별 글자 색상 및 스타일 (배경색과 동일)
+const getAchievementTextStyle = (level) => {
+  if (level >= 10) {
+    // 레벨 10 이상: 그라데이션 글자 (배경과 동일)
+    return {
+      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      color: 'transparent',
+    };
+  } else if (level >= 6) {
+    // 레벨 6~9: 노란색 글자
+    return {
+      color: '#F2D252',
+    };
+  } else if (level >= 3) {
+    // 레벨 3~5: 회색 글자
+    return {
+      color: '#C0C0C0',
+    };
+  } else {
+    // 레벨 0~2: 갈색 글자
+    return {
+      color: '#D3A686',
+    };
+  }
+};
+
 const Main = () => {
   const { userMainPage , userProfile} = useUser();
+  const { vocabularySheets } = useVocabulary();
+
+  // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
+  const getTodayStatus = () => {
+    const today = new Date();
+    const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']; // 영어 약어로 변경
+    const todayName = dayNames[today.getDay()];
+    
+    // userMainPage.dates에서 오늘 요일 찾기
+    const todayData = userMainPage?.dates?.find(date => date.date === todayName);
+    
+    return {
+      attendCompleted: todayData?.attend || false,        // 접속하기는 attend 값
+      dailyMissionCompleted: todayData?.daily_mission || false,  // 오늘의 학습은 daily_mission 값
+      todayName
+    };
+  };
+
+  const todayStatus = getTodayStatus();
+
+  const total = useCallback(vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0), [vocabularySheets]);
   const { pushFullSheet } = useFullSheet();
 
   const handleStoreButtonClick = () => {
@@ -69,7 +156,7 @@ const Main = () => {
             text-[#fff] text-[24px]
           ">
             <strong>{userProfile.username}</strong>님,<br/>
-            <strong>1,450개</strong><br/>
+            <strong>{total}개</strong><br/>
             단어를 학습 중이에요!
           </h2>
           <img src={HeyCharacter02} alt="" className="
@@ -118,25 +205,35 @@ const Main = () => {
             <div className="flex flex-col flex-1 gap-[8px]">
               <div className="flex justify-between">
                 <span className="text-[#fff] text-[12px] font-[600]">접속하기</span>
-                <div className="
+                <div className={`
                   flex items-center justify-center 
                   w-[60px] h-[20px] 
                   px-[6px] py-[4px] 
                   rounded-[5px] 
-                  text-[#fff] text-[10px] font-[700]
-                  bg-[#E569B7] 
-                ">완료</div>
+                  text-[10px] font-[700]
+                  ${todayStatus.attendCompleted 
+                    ? 'text-[#fff] bg-[#E569B7]' 
+                    : 'text-[#FF8DD4] bg-[#fff]'
+                  }
+                `}>
+                  {todayStatus.attendCompleted ? '완료' : '미완료'}
+                </div>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#fff] text-[12px] font-[600]">오늘의 학습</span>
-                <div className="
+                <div className={`
                   flex items-center justify-center 
                   w-[60px] h-[20px] 
                   px-[6px] py-[4px] 
                   rounded-[5px] 
-                  text-[#FF8DD4] text-[10px] font-[700]
-                  bg-[#fff] 
-                ">미완료</div>
+                  text-[10px] font-[700]
+                  ${todayStatus.dailyMissionCompleted 
+                    ? 'text-[#fff] bg-[#E569B7]' 
+                    : 'text-[#FF8DD4] bg-[#fff]'
+                  }
+                `}>
+                  {todayStatus.dailyMissionCompleted ? '완료' : '미완료'}
+                </div>
               </div>
             </div>
           </div>  
@@ -188,55 +285,82 @@ const Main = () => {
             bg-[#F6EFFF] 
           ">
             <h2 className="text-[#111] text-[16px] font-[700]">나의 업적</h2>
-            <div
-              className={`
-                flex flex-wrap
-                justify-center
-                gap-2
-              `}
-              style={{
-                rowGap: '16px',
-                columnGap: 'auto',
-              }}
-            >
-              {/* 업적 아이템 배열로 관리, 4개 이하일 때도 중앙 정렬 */}
-              {[
-                { src: InviteKing, label: '초대왕', level: 1 },
-                { src: AttendanceKing, label: '출석왕', level: 2 },
-                { src: NoryeokKing , label: '노력왕', level: 3 },
-                { src: WordKing , label: '단어왕', level: 4 },
-                { src: PerseveranceKing , label: '끈기왕', level: 5 },
-                { src: ReadingKing , label: '독서왕', level: 6 },
-                // 필요시 추가
-              ].map((item, idx) => (
-                <div
-                  key={item.label}
-                  className="flex flex-col items-center gap-[5px] w-[60px]"
-                  style={{
-                    flex: '0 1 25%', // 한 줄에 최대 4개
-                    maxWidth: '60px',
-                  }}
-                >
-                  <div className="relative h-[70px]">
-                    <img src={item.src} alt="" className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" />
-                    <div className="w-[60px] h-[60px] rounded-[50%] bg-[#C0C0C0]"></div>
-                    <span 
-                      className="
-                        absolute bottom-[0] left-[50%] 
-                        translate-x-[-50%]
-                        text-[#D4D4D4] text-[16px] font-[700]
-                        font-family: 'Cafe24Ssurround', sans-serif;
-                        [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
-                      "
-                      >
-                        <span className="text-[10px]">LV.</span>{item.level}
+            <div className="flex flex-col gap-y-4">
+              {/* 첫 번째 줄: 4개 아이템 */}
+              <div className="grid grid-cols-4 justify-items-center gap-x-3">
+                {userMainPage?.goals?.slice(0, 4).map((goal, idx) => (
+                  <div
+                    key={goal.type}
+                    className="flex flex-col items-center gap-[5px] w-[60px]"
+                  >
+                    <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
+                      <img 
+                        src={ACHIEVEMENT_IMAGES[goal.type]} 
+                        alt="" 
+                        className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" 
+                      />
+                      <div 
+                        className="w-[60px] h-[60px] rounded-[50%]"
+                        style={getAchievementBackgroundStyle(goal.level)}
+                      ></div>
+                      <span 
+                        className="
+                          absolute bottom-[0] left-[50%] 
+                          translate-x-[-50%]
+                          text-[16px] font-[700]
+                          font-family: 'Cafe24Ssurround', sans-serif;
+                          [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                        "
+                        style={getAchievementTextStyle(goal.level)}
+                        >
+                          <span className="text-[10px]">LV.</span>{goal.level}
+                      </span>
+                    </div>
+                    <span className="text-[#111] text-[12px] font-[600]">
+                      {goal.type}
                     </span>
                   </div>
-                  <span className="text-[#111] text-[12px] font-[600]">
-                    {item.label}
-                  </span>
+                ))}
+              </div>
+              
+              {/* 두 번째 줄: 나머지 아이템들 (중앙 정렬) */}
+              {userMainPage?.goals?.length > 4 && (
+                <div className="flex justify-center gap-x-3">
+                  {userMainPage.goals.slice(4).map((goal, idx) => (
+                    <div
+                      key={goal.type}
+                      className="flex flex-col items-center gap-[5px] w-[60px]"
+                    >
+                      <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
+                        <img 
+                          src={ACHIEVEMENT_IMAGES[goal.type]} 
+                          alt="" 
+                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" 
+                        />
+                        <div 
+                          className="w-[60px] h-[60px] rounded-[50%]"
+                          style={getAchievementBackgroundStyle(goal.level)}
+                        ></div>
+                        <span 
+                          className="
+                            absolute bottom-[0] left-[50%] 
+                            translate-x-[-50%]
+                            text-[16px] font-[700]
+                            font-family: 'Cafe24Ssurround', sans-serif;
+                            [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                          "
+                          style={getAchievementTextStyle(goal.level)}
+                          >
+                            <span className="text-[10px]">LV.</span>{goal.level}
+                        </span>
+                      </div>
+                      <span className="text-[#111] text-[12px] font-[600]">
+                        {goal.type}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

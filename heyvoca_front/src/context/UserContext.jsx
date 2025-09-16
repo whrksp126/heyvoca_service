@@ -1,42 +1,33 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { backendUrl, fetchDataAsync, getValueFromURL, setCookie, getCookie } from '../utils/common';
+import { backendUrl, setCookie, getCookie } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
+import { loginApi, updateUserInfoApi, getUserInfoApi } from '../api/auth';
+import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
+
 
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState({});
   const [userMainPage, setUserMainPage] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
-  const [errorUserProfile, setErrorUserProfile] = useState(null);
-  const [userStorageData, setUserStorageData] = useState(JSON.parse(localStorage.getItem('user')));
-  
-  // 인증 상태 (user 정보만 관리, accessToken은 쿠키로 관리)
+  const [isLogin, setIsLogin] = useState(false);
+  const [isLoginChecked, setIsLoginChecked] = useState(false);  
   const [auth, setAuth] = useState({
     user: null,
   });
 
   // 로그인 상태 관리
-  const [isLogin, setIsLogin] = useState(false);
-  const [isLoginChecked, setIsLoginChecked] = useState(false);
-  
-
   const fetchUserMainPage = useCallback(async () => {
     try {
       let userMainPageData = {};
       const setUserDates = async () => {
-        const url = `${backendUrl}/mainpage/user_dates`;
-        const method = 'GET';
-        const fetchData = {};
-        const result = await fetchDataAsync(url, method, fetchData);
+        const result = await getUserDatesApi()
         if(result.code == 200){
           userMainPageData.dates = result.data;
         }
       }
       const setUserGoals = async () => {
-        const url = `${backendUrl}/mainpage/user_goals`;
-        const method = 'GET';
-        const fetchData = {};
-        const result = await fetchDataAsync(url, method, fetchData);
+        const result = await getUserGoalsApi()
         if(result.code == 200){
           userMainPageData.goals = result.data;
         }
@@ -50,25 +41,25 @@ export const UserProvider = ({ children }) => {
   const fetchUserProfile = useCallback(async () => {
     try {
       setIsUserProfileLoading(true);
-      const url = `${backendUrl}/auth/get_user_info`;
-      const method = 'GET';
-      const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
-      if(result.code != 200) return console.log('유저 정보를 불러오는데 실패했습니다.');
-      // book_cnt: 3
-      // code: null
-      // gem_cnt: 0
-      // id: "132902cb-33ba-45ce-9339-811e33e01662"
-      // level_id: null
-      // set_goal_cnt: 3
-      // username:art 
+
+      const result = await getUserInfoApi();
+      if(result.code != 200) {
+        console.log('유저 정보를 불러오는데 실패했습니다.');
+        return {
+          success: false,
+          userProfile: null,
+        }
+      }
       setUserProfile(result.data);
-      setErrorUserProfile(null);
+      return {
+        success: true,
+        userProfile: result.data,
+      }
     } catch (err) {
-      console.log("오류 발생함")
-      console.log('유저 정보를 불러오는데 실패했습니다.');
-      setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
-      console.error('Failed to fetch user profile:', err);
+      return {
+        success: false,
+        userProfile: null,
+      }
     } finally {
       setIsUserProfileLoading(false);
     }
@@ -78,94 +69,43 @@ export const UserProvider = ({ children }) => {
     return userProfile;
   }, [userProfile, isUserProfileLoading]);
 
-  const updateUserProfile = useCallback(async (updates) => {
-    try {
-      const url = `${backendUrl}/auth/update_user_info`;
-      const method = 'PATCH';
-      const result = await fetchDataAsync(url, method, updates);
-      if (result.code !== 200) {
-        console.log('유저 정보를 불러오는데 실패했습니다.');
-        return;
-      }
-      setUserProfile(prevProfile => ({
-        ...prevProfile,
-        level_id: updates.level_id,
-        username: updates.username,
-      }));
-      setErrorUserProfile(null);
-    } catch (err) {
-      console.log("오류 발생함");
-      setErrorUserProfile('유저 정보를 불러오는데 실패했습니다.');
-      console.error('Failed to fetch user profile:', err);
-    }
+  const updateUserProfile = useCallback(async ({username, level_id}) => {
+    const result = await updateUserInfoApi({username, level_id});
+    if(result.code != 200) return;
+    setUserProfile(prevProfile => ({
+      ...prevProfile,
+      level_id: level_id,
+      username: username,
+    }));
   }, [userProfile]);
 
 
   // 업적, 보석, ... 업데이트 함수
   const updateUserHistory = useCallback(async ({today_study_complete, correct_cnt, incorrect_cnt}) => {
     try {
-      const url = `${backendUrl}/mainpage/user_study_history`;
-      const method = 'POST';
-      const fetchData = {
-        'today_study_complete': today_study_complete,
-        'correct_cnt': correct_cnt,
-        'incorrect_cnt': incorrect_cnt
-    }
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await updateUserStudyHistoryApi({today_study_complete, correct_cnt, incorrect_cnt});
+      if(result.code != 200) return;
       // 보석 업데이트 내용 적용
       setUserProfile(prevProfile => ({
         ...prevProfile,
         gem_cnt: result.data.gem.after,
       }))
-      // 업적 업데이트 내용 적용
-
-      // 오늘의 학습이고 최초 학습이면 오늘의 학습 기록 업데이트
-
-
-    //   {
-    //     'exp': {
-    //         'before' : 1,
-    //         'after' : 3,
-    //     },
-    //     'gem': {
-    //         'before': 2,
-    //         'after': 4
-    //     },
-    //     'today_study_complete': today_study_complete,
-    //     'goals': goals
-    //   }
-
       if(result.code != 200) return result.data;
     } catch (err) {
       console.log("오류 발생함")
     }
-  }, []); // userProfile 의존성 제거
+  }, []); 
 
 
   // 출석 체크
   const fetchUserCheckin = useCallback(async () => {
-    try {
-      const url = `${backendUrl}/mainpage/checkin`;
-      const method = 'GET';
-      const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
-    //   {
-    //     'gem': {
-    //         'before': 1,
-    //         'after': 2
-    //     },
-    //     'goals': goals
-    // }
-      if(result.code === 200){
-        setUserProfile(prevProfile => ({
-          ...prevProfile,
-          gem_cnt: result.data.gem.after,
-        }))
-      }
-    } catch (err) {
-      console.log("오류 발생함")
-    }
-  }, []); // userProfile 의존성 제거
+    const result = await setUserCheckinApi();
+    if(result.code != 200) return;
+    setUserProfile(prevProfile => ({
+      ...prevProfile,
+      gem_cnt: result.data.gem.after,
+    }))
+  }, []); 
 
   // 로그인 처리 함수 (매개변수로 받은 정보로 로그인 처리)
   const Login = useCallback(async ({ googleId, email, name, status }) => {
@@ -194,28 +134,8 @@ export const UserProvider = ({ children }) => {
         return { success: false };
       }
 
-      console.log("Login 제대로 동작 중");
-      const url = `${backendUrl}/auth/login`;
-      const fetchData = {
-        google_id: googleId,
-        email,
-        name
-      };
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // 쿠키 포함 필수!
-        body: JSON.stringify(fetchData),
-      });
-      if (!response.ok) {
-        console.log('response', response);
-        console.log('로그인 중 오류가 발생하였습니다.');
-        return { success: false };
-      }
-      const data = await response.json();
-      const accessToken = data.access_token;
+      const result = await loginApi({googleId, email, name});
+      const accessToken = result.access_token;
       setCookie('userAccessToken', accessToken);
       
       setAuth({
@@ -228,12 +148,11 @@ export const UserProvider = ({ children }) => {
       setIsLoginChecked(true);
       
       // 서버에서 실제 사용자 프로필 정보 가져오기
-      try {
-        await fetchUserProfile();
-      } catch (error) {
-        console.error('사용자 프로필 가져오기 실패:', error);
+
+      const userProfileResult = await fetchUserProfile();
+      if(userProfileResult.success){
+        setUserProfile(userProfileResult.userProfile);
       }
-      
       return { success: true, accessToken };
     } catch (error) {
       console.error('로그인 오류:', error);
@@ -255,27 +174,22 @@ export const UserProvider = ({ children }) => {
   // 로그인 상태 확인 함수 (전역 상태 업데이트)
   const checkLoginStatus = useCallback(async () => {
     const accessToken = getCookie('userAccessToken');
-
     if (accessToken) {
-      try {
-        // 서버에서 토큰 유효성 확인 + user 정보 가져오기
-        await fetchUserProfile();
+      // 서버에서 토큰 유효성 확인 + user 정보 가져오기
+      const userProfileResult = await fetchUserProfile(); 
+      if(userProfileResult.success){
         const userProfile = getUserProfile();
-
         // 로그인 상태 업데이트
         setIsLogin(true);
         setIsLoginChecked(true);
         setAuth({ user: { name: userProfile?.name, email: userProfile?.email } });
-
         return { isLoggedIn: true, userProfile };
-      } catch (error) {
+      }else{
         // 토큰이 유효하지 않으면 로그아웃 처리
-        console.error('토큰 검증 실패:', error);
         setCookie('userAccessToken', '', -1);
         setAuth({ user: null });
         setIsLogin(false);
         setIsLoginChecked(true);
-
         return { isLoggedIn: false, userProfile: null };
       }
     } else {
@@ -283,7 +197,6 @@ export const UserProvider = ({ children }) => {
       setAuth({ user: null });
       setIsLogin(false);
       setIsLoginChecked(true);
-
       return { isLoggedIn: false, userProfile: null };
     }
   }, [fetchUserProfile, getUserProfile, setAuth]);
@@ -297,7 +210,7 @@ export const UserProvider = ({ children }) => {
     };
     
     initializeAuth();
-  }, [isLoginChecked, checkLoginStatus]);
+  }, [isLoginChecked]);
 
   // 로그인 상태에 따른 데이터 로드
   useEffect(() => {
@@ -322,7 +235,6 @@ export const UserProvider = ({ children }) => {
     userProfile,
     userMainPage,
     isUserProfileLoading,
-    errorUserProfile,
     getUserProfile,
     updateUserProfile,
     fetchUserProfile,

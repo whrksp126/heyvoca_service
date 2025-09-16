@@ -1,0 +1,1 @@
+import { backendUrl, fetchDataAsync } from '../utils/common';

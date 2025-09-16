@@ -26,6 +26,7 @@ const VocabularySheet = ({testType}) => {
   );
 
   const handleCardClick = (id, index) => {
+    console.log("testType", testType);
     if(id === "all") {
       const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
       if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`); 

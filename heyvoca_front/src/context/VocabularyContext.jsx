@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import { backendUrl, fetchDataAsync } from '../utils/common';
 import { useUser } from './UserContext';
+import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
+import { getBookStoreApi } from '../api/store';
+import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
@@ -60,10 +62,7 @@ export const VocabularyProvider = ({ children }) => {
   const fetchVocabularySheets = useCallback(async () => {
     try {
       setIsVocabularySheetsLoading(true);
-      const url = `${backendUrl}/user_voca_book/list`;
-      const method = 'GET';
-      const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await getUserVocabularySheetsApi();
       if(result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
       setVocabularySheets(result.data);
       setErrorVocabularySheets(null);
@@ -87,21 +86,18 @@ export const VocabularyProvider = ({ children }) => {
   // 단어장 추가
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
-      const url = `${backendUrl}/user_voca_book/create`;
-      const method = 'POST';
-      const fetchData = {
-        words: [],
-        total: 0,
-        memorized: 0,
-        ...newVocabulary,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await addUserVocabularySheetApi(newVocabulary);
       if(result.code != 200) return alert('단어장 추가에 실패했습니다.');
-      fetchData.id = result.data.id
-      fetchData.createdAt = result.data.createdAt
-      fetchData.updatedAt = result.data.createdAt
-      setVocabularySheets(prev => [...prev, fetchData]);
-      return fetchData;
+      newVocabulary.id = result.data.id
+      newVocabulary.createdAt = result.data.createdAt
+      newVocabulary.updatedAt = result.data.createdAt
+      newVocabulary.bookstore_id = null;
+      newVocabulary.memorized = 0;
+      newVocabulary.total = 0;
+      newVocabulary.words = [];
+
+      setVocabularySheets(prev => [...prev, newVocabulary]);
+      return newVocabulary;
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
@@ -111,13 +107,7 @@ export const VocabularyProvider = ({ children }) => {
   // 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
     try {
-      const url = `${backendUrl}/user_voca_book/update`;
-      const method = 'PATCH';
-      const fetchData = {
-        ...updates,
-        id: id,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await updateUserVocabularySheetApi(id, updates);
       if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
       setVocabularySheets(prev => 
         prev.map(sheet => 
@@ -145,13 +135,7 @@ export const VocabularyProvider = ({ children }) => {
   const updateVocabularySheetServer = useCallback(async (id) => {
     try {
       const updates = vocabularySheets.find(sheet => sheet.id === id);
-      const url = `${backendUrl}/user_voca_book/update`;
-      const method = 'PATCH';
-      const fetchData = {
-        id: id, 
-        ...updates,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await updateUserVocabularySheetApi(id, updates);
       if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
     } catch (err) {
       setErrorVocabularySheets('단어장 수정에 실패했습니다.');
@@ -162,12 +146,7 @@ export const VocabularyProvider = ({ children }) => {
   // 단어장 삭제
   const deleteVocabularySheet = useCallback(async (id) => {
     try {
-      const url = `${backendUrl}/user_voca_book/delete`;
-      const method = 'DELETE';
-      const fetchData = {
-        id: id,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await deleteUserVocabularySheetApi(id);
       if(result.code != 200) return alert('단어장 삭제에 실패했습니다.');
       setVocabularySheets(prev => prev.filter(sheet => sheet.id !== id));
     } catch (err) {
@@ -301,10 +280,7 @@ export const VocabularyProvider = ({ children }) => {
   const fetchBookStore = useCallback(async () => {
     try {
       setIsBookStoreLoading(true);
-      const url = `${backendUrl}/search/bookstore`;
-      const method = 'GET';
-      const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await getBookStoreApi();
       if(result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
       setBookStore(result.data);
       setErrorBookStore(null);
@@ -359,10 +335,7 @@ export const VocabularyProvider = ({ children }) => {
   const fetchRecentStudy = useCallback(async () => {
     try {
       setIsRecentStudyLoading(true);
-      const url = `${backendUrl}/mainpage/user_recent_study_data`;
-      const method = 'GET';
-      const fetchData = {};
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await getUserRecentStudyDataApi();
       if(result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
       setRecentStudy(result.data);
       setErrorRecentStudy(null);
@@ -377,12 +350,7 @@ export const VocabularyProvider = ({ children }) => {
   // 최근 학습 데이터 수정
   const updateRecentStudy = useCallback(async (testType, curRecentStudy) => {
     try {
-      const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
-      const method = 'POST';
-      const fetchData = {
-        ...curRecentStudy,
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await updateUserRecentStudyDataApi({curRecentStudy});
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
       setRecentStudy(
         {
@@ -405,12 +373,7 @@ export const VocabularyProvider = ({ children }) => {
   // 최근 학습 데이터 수정(서버)
   const updateRecentStudyServer = useCallback(async (testType) => {
     try {
-      const url = `${backendUrl}/mainpage/user_recent_study_create_update`;
-      const method = 'POST';
-      const fetchData = {
-        ...recentStudy[testType], 
-      };
-      const result = await fetchDataAsync(url, method, fetchData);
+      const result = await updateUserRecentStudyDataApi({curRecentStudy: recentStudy[testType]});
       if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
       return result.data;
     } catch (err) {

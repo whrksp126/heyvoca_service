@@ -4,11 +4,14 @@ import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useFullSheet } from '../../context/FullSheetContext';
 import UpdateVocabularySheet from './UpdateVocabularySheet';
+import { useUser } from '../../context/UserContext';
+import { userBookCntCheckApi } from '../../api/voca';
 
 const Header = () => {
   const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
   const { pushFullSheet } = useFullSheet();
-  
+  const { userProfile } = useUser();
+
   const buttonVariants = {
     tap: { 
       scale: 0.85,
@@ -22,8 +25,16 @@ const Header = () => {
     }
   };
 
-  const handleAddClick = () => {
-    showVocabularySetBottomSheet();
+  const handleAddClick = async () => {
+    // 단어장 생성 가능 여부 확인
+    const result = await userBookCntCheckApi();
+    const canAddBook = result.data.can_add_book;
+    if(userProfile.book_cnt > 0 || canAddBook){
+      showVocabularySetBottomSheet();
+    }else{
+      alert('단어장 생성 가능 횟수를 초과했습니다.');
+    }
+
   };
 
   const handleEditClick = () => {

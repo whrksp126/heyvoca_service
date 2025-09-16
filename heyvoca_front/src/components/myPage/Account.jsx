@@ -5,11 +5,12 @@ import { useFullSheet } from '../../context/FullSheetContext';
 import { motion } from 'framer-motion';
 import google from '../../assets/images/google_logo.png'; 
 import { useLogoutBottomSheet } from './LogoutBottomSheet';
-
+import { useUser } from '../../context/UserContext';
 
 const Account = () => {
   const { showLogOutBottomSheet } = useLogoutBottomSheet();
   const { handleBack } = useFullSheet();
+  const { userProfile } = useUser();
   
   const handleLogout = () => {
     showLogOutBottomSheet();
@@ -84,7 +85,7 @@ const Account = () => {
             </li>
             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] bg-[#fff] dark:bg-[#111]">
                 <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">계정 이메일</h2>
-                <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">heyvoca@ghmate.com</span>
+                <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">{userProfile?.email || "로그인 필요"}</span>
             </li>
           </ul>
           <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-[#fff] dark:bg-[#111]"

@@ -10,7 +10,7 @@ import PushNotifications from './PushNotifications';
 import { useFullSheet } from '../../context/FullSheetContext';
 
 const Main = () => {
-  const { userStorageData } = useUser();
+  const { userProfile } = useUser();
   const { pushFullSheet } = useFullSheet();
 
   
@@ -59,7 +59,7 @@ const Main = () => {
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[12px] font-normal text-[#999]">
-                {userStorageData?.status === "login" ? userStorageData?.email : "로그인 필요"}
+                {userProfile?.email || "로그인 필요"}
               </span>
               <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
             </div>

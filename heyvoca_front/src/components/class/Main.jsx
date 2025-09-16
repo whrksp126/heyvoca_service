@@ -42,6 +42,7 @@ const Main = () => {
       // 이어학습 유무 확인
       showLearningInfoBottomSheet({testType});
       handleFunction('onStartTest', (props) => {
+        console.log("onStartTest", props);
         handleBottomSheetReset();
         navigate('/take-test', {
           state: {
@@ -51,10 +52,11 @@ const Main = () => {
       });
 
       handleFunction('onCancel', (props) => {
+        console.log("onCancel", props);
         handleBottomSheetBack();
         setTimeout(() => {
           pushFullSheet({
-            component: <VocabularySheet type={props.testType} />
+            component: <VocabularySheet testType={props.testType} />
           });
         }, 300);
       });

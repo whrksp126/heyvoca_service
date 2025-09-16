@@ -112,22 +112,8 @@ export const useVocabularySetBottomSheet = () => {
 
   const handleColorChange = useCallback((newColor) => {
     currentStateRef.current.selectedColor = newColor;
-    
-    pushBottomSheet( 
-      <AddVocabularySheet 
-        id={currentStateRef.current.vocabularyId}
-        title={currentStateRef.current.vocabularyTitle}
-        selectedColor={newColor}
-        setSelectedColor={handleColorChange}
-        onCancel={handleClose}
-        onSet={currentStateRef.current.mode === 'add' ? handleAdd : handleEdit}
-      />,
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
-      }
-    );
-  }, [pushBottomSheet, handleClose, handleAdd, handleEdit]);
+    // 모달을 다시 열지 않고 상태만 업데이트
+  }, []);
 
   const showVocabularySetBottomSheet = useCallback((id=null) => {
     let newMode = 'add';
@@ -184,10 +170,16 @@ export const useVocabularySetBottomSheet = () => {
 
 const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
   const nameInputRef = useRef(null);
+  const [currentColor, setCurrentColor] = useState(selectedColor);
+
+  const handleColorSelect = (newColor) => {
+    setCurrentColor(newColor);
+    setSelectedColor(newColor);
+  };
 
   const handleSubmit = () => {
     const vocabularyName = nameInputRef.current?.value || '';
-    onSet({ id: id, name: vocabularyName, color: selectedColor });
+    onSet({ id: id, name: vocabularyName, color: currentColor });
   };
 
   return (
@@ -237,7 +229,11 @@ const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCance
             />
           </div>
         </div>
-        <div>
+        <div 
+          className="
+            flex justify-between flex-col gap-[8px]
+          "
+        >
           <h3 
             className="
               text-[14px] font-[700] text-[#111] 
@@ -248,7 +244,7 @@ const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCance
           </h3>
           <div className="flex items-center justify-between">
             {VOCABULARY_COLORS.map((color) => {
-              const isSelected = selectedColor === color.value;
+              const isSelected = currentColor === color.value;
               
               return (
                 <motion.label 
@@ -275,7 +271,7 @@ const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCance
                     className="hidden" 
                     value={color.value}
                     checked={isSelected}
-                    onChange={() => setSelectedColor(color.value)}
+                    onChange={() => handleColorSelect(color.value)}
                   />
                   {isSelected && (
                     <Check 
