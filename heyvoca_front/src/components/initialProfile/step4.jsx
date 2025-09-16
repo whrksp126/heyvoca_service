@@ -15,7 +15,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   }, []);
 
   const getLevelBookList = async () => {
-    const url = `${backendUrl}/login/level_book_list`;
+    const url = `${backendUrl}/auth/level_book_list`;
     const method = 'GET';
     const fetchData = {level: userInitialProfile.level};
     const result = await fetchDataAsync( url, method, fetchData, false, null );
