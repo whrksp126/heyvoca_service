@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   web:
-    container_name: heyvoca_back_dev
     image: whrksp126/heyvoca_back:dev
-    build: 
+    container_name: heyvoca_back_dev
+    build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       platforms: 
         - linux/amd64
     ports:
@@ -15,6 +15,18 @@ services:
       - .env.dev
     networks:
       - heyvoca_back_dev_network
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: heyvoca_redis_dev
+    ports:
+      - "6380:6379"
+    networks:
+      - heyvoca_back_dev_network
+    restart: always
 
 networks:
   heyvoca_back_dev_network:

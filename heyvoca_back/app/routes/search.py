@@ -1,15 +1,13 @@
 import json
 import re
 import os
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify, g
 from sqlalchemy import text, select
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
 from flask_caching import Cache
 import redis
-
-from flask_login import current_user, login_required, login_user
 
 cache = Cache()
 
@@ -23,7 +21,6 @@ def index():
 # 사전 검색 API #
 ################
 ## 영어(단어) 전체 검색
-# @login_required
 @search_bp.route('/en', methods=['GET'])
 def search_voca_word_en():
 
@@ -78,7 +75,6 @@ def search_voca_word_en():
     return jsonify({'code': 200, 'data': data}), 200
 
 ## 영어(단어) 부분 검색
-# @login_required
 @search_bp.route('/partial/en', methods=['GET'])
 def search_word_en():
 
@@ -245,7 +241,6 @@ def get_unicode_range_for_initial(char):
 
 ## 서점 데이터 API
 # bookstore, voca, voca_meaning, voca_example 테이블의 모든 데이터를 가져옴
-# @login_required
 # @cache.cached(timeout=600, query_string=True)  # 60초 캐싱
 @search_bp.route('/bookstore', methods=['GET'])
 def search_bookstore_all():

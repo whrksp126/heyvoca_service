@@ -30,7 +30,8 @@ def create_app():
       "https://heyvoca-front.ghmate.com",
       "https://stg-heyvoca-front.ghmate.com",
       "https://dev-heyvoca-front.ghmate.com",
-      "http://localhost:3000"
+      "http://localhost:3000",
+      "http://10.0.2.2:3000",
   ], supports_credentials=True)
 
   
@@ -63,7 +64,7 @@ def create_app():
 
   # # 모든 모델 클래스들을 한번에 import
   from app.models import models  
-  from app.routes.login import login_bp
+  from app.routes.auth import auth_bp
   from app.routes.search import search_bp
   from app.routes.tts import tts_bp
   from app.routes.fcm import fcm_bp
@@ -72,7 +73,7 @@ def create_app():
   from app.routes.version import version_bp
   from app.routes.user_voca_book import user_voca_book_bp
   
-  app.register_blueprint(login_bp)
+  app.register_blueprint(auth_bp)
   app.register_blueprint(search_bp)
   app.register_blueprint(tts_bp)
   app.register_blueprint(fcm_bp)

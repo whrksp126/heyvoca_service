@@ -1,3 +1,102 @@
+### 로컬(local) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_local
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_local
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:local
+
+## local 환경 실행
+docker compose -f docker-compose.local.yml up --build
+
+## local 환경 실행 (백그라운드)
+docker compose -f docker-compose.local.yml up --build -d
+
+## local 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## local 허브에 local 태그로 푸쉬
+docker push whrksp126/heyvoca_back:local
+
+---
+
+### 데브(dev) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_dev
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_dev
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:dev
+
+## dev 환경 실행
+docker compose -f docker-compose.dev.yml up --build
+
+## dev 환경 실행 (백그라운드)
+docker compose -f docker-compose.dev.yml up --build -d
+
+## dev 환경 실행 컨테이너 중지
+docker compose -f docker-compose.dev.yml down
+
+## dev 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 dev 태그로 푸쉬
+docker push whrksp126/heyvoca_back:dev
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_dev
+
+---
+
+### 스테이징(stg) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_stg
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_stg
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:stg
+
+## stg 환경 실행
+docker compose -f docker-compose.stg.yml up --build
+
+## stg 환경 실행 (백그라운드)
+docker compose -f docker-compose.stg.yml up --build -d
+
+## stg 환경 실행 컨테이너 중지
+docker compose -f docker-compose.stg.yml down
+
+## stg 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 stg 태그로 푸쉬
+docker push whrksp126/heyvoca_back:stg
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_stg
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 📌 **프로젝트 README (Docker 기반 개발 및 배포 가이드)**
 🚀 **이 문서는 프로젝트의 개발 및 배포 프로세스를 정리한 가이드입니다.**  
 ✅ **Git, Docker, CI/CD, 배포 단계까지 모두 포함**  

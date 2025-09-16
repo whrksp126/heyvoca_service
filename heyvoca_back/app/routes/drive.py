@@ -1,8 +1,7 @@
-from flask import render_template, redirect, url_for, request, session, jsonify, send_file
+from flask import render_template, redirect, url_for, request, session, jsonify, send_file, g
 from app import db
 from app.routes import drive_bp
 from app.models.models import User
-from flask_login import current_user, login_required, login_user, logout_user
 import json
 import requests
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,7 +10,6 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload, MediaFileUpload, MediaIoBaseDownload
 from google.auth.transport.requests import Request
-
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
@@ -20,9 +18,9 @@ import pandas as pd
 
 from dotenv import load_dotenv
 import os
-OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
-OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
-OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
+# OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
+# OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
+# OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
 
 # 더미 데이터
 data = [
@@ -162,101 +160,100 @@ def download_excel():
 #     return jsonify({"file_id": file.get('id')})
 
 
-## 드라이브에 엑셀 파일로 저장 TODO : word->origin
-@drive_bp.route('/backup', methods=['POST'])
-@login_required
-def backup():
-    print("ckeck_backup")
-    data = request.get_json()
-    if not data:
-        return jsonify({"code":400, "msg": "제공된 데이터가 없습니다"})
+# ## 드라이브에 엑셀 파일로 저장 TODO : word->origin
+# @drive_bp.route('/backup', methods=['POST'])
+# @login_required
+# def backup():
+#     print("ckeck_backup")
+#     data = request.get_json()
+#     if not data:
+#         return jsonify({"code":400, "msg": "제공된 데이터가 없습니다"})
     
-    drive_service = None
-    user = User.query.filter_by(google_id=session['user_id']).first()
-    credentials = Credentials(
-        token=session['access_token'],
-        refresh_token=user.refresh_token,
-        token_uri='https://oauth2.googleapis.com/token',
-        client_id=OAUTH_CLIENT_ID,
-        client_secret=OAUTH_CLIENT_SECRET
-    )
-    drive_service = build('drive', 'v3', credentials=credentials)
+#     drive_service = None
+#     user = User.query.filter_by(google_id=session['user_id']).first()
+#     credentials = Credentials(
+#         token=session['access_token'],
+#         refresh_token=user.refresh_token,
+#         token_uri='https://oauth2.googleapis.com/token',
+#         client_id=OAUTH_CLIENT_ID,
+#         client_secret=OAUTH_CLIENT_SECRET
+#     )
+#     drive_service = build('drive', 'v3', credentials=credentials)
     
-    # 폴더 이름
-    folder_name = 'HeyVoca'
+#     # 폴더 이름
+#     folder_name = 'HeyVoca'
 
-    # 폴더가 존재하는지 확인
-    query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and trashed=false"
-    results = drive_service.files().list(q=query, fields="files(id, name)").execute()
-    folders = results.get('files', [])
+#     # 폴더가 존재하는지 확인
+#     query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and trashed=false"
+#     results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+#     folders = results.get('files', [])
 
-    if not folders:
-        # 폴더가 없으면 생성
-        file_metadata = {
-            'name': folder_name,
-            'mimeType': 'application/vnd.google-apps.folder'
-        }
-        folder = drive_service.files().create(body=file_metadata, fields='id').execute()
-        folder_id = folder.get('id')
-    else:
-        # 폴더가 있으면 그 폴더 ID 사용
-        folder_id = folders[0].get('id')
+#     if not folders:
+#         # 폴더가 없으면 생성
+#         file_metadata = {
+#             'name': folder_name,
+#             'mimeType': 'application/vnd.google-apps.folder'
+#         }
+#         folder = drive_service.files().create(body=file_metadata, fields='id').execute()
+#         folder_id = folder.get('id')
+#     else:
+#         # 폴더가 있으면 그 폴더 ID 사용
+#         folder_id = folders[0].get('id')
 
-    # 동일한 파일명이 있는지 확인
-    backup_file_name = 'heyvoca_backup.xlsx'
-    query = f"'{folder_id}' in parents and name='{backup_file_name}' and trashed=false"
-    results = drive_service.files().list(q=query, fields="files(id, name)").execute()
-    existing_files = results.get('files', [])
+#     # 동일한 파일명이 있는지 확인
+#     backup_file_name = 'heyvoca_backup.xlsx'
+#     query = f"'{folder_id}' in parents and name='{backup_file_name}' and trashed=false"
+#     results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+#     existing_files = results.get('files', [])
 
-    # 동일한 파일명이 있다면 삭제
-    for file in existing_files:
-        drive_service.files().delete(fileId=file['id']).execute()
+#     # 동일한 파일명이 있다면 삭제
+#     for file in existing_files:
+#         drive_service.files().delete(fileId=file['id']).execute()
 
-    # 새로운 파일 생성 준비
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='openpyxl') as writer:
-        for notebook in data:
-            sheet_name = notebook['name']
-            words = notebook['words']
+#     # 새로운 파일 생성 준비
+#     output = BytesIO()
+#     with pd.ExcelWriter(output, engine='openpyxl') as writer:
+#         for notebook in data:
+#             sheet_name = notebook['name']
+#             words = notebook['words']
 
-            # 노트북의 메타데이터를 DataFrame으로 저장
-            metadata = pd.DataFrame([{
-                "name": notebook['name'],
-                "color_main": notebook['color']['main'],
-                "color_background": notebook['color']['background'],
-                "createdAt": notebook['createdAt'],
-                "updatedAt": notebook['updatedAt'],
-                "status": notebook['status'],
-                "id": notebook['id']
-            }])
+#             # 노트북의 메타데이터를 DataFrame으로 저장
+#             metadata = pd.DataFrame([{
+#                 "name": notebook['name'],
+#                 "color_main": notebook['color']['main'],
+#                 "color_background": notebook['color']['background'],
+#                 "createdAt": notebook['createdAt'],
+#                 "updatedAt": notebook['updatedAt'],
+#                 "status": notebook['status'],
+#                 "id": notebook['id']
+#             }])
 
-            # 메타데이터를 시트에 먼저 저장
-            metadata.to_excel(writer, sheet_name=sheet_name, index=False, startrow=0)
+#             # 메타데이터를 시트에 먼저 저장
+#             metadata.to_excel(writer, sheet_name=sheet_name, index=False, startrow=0)
 
-            # 단어 데이터 추가
-            if words:
-                df_words = pd.DataFrame(words)
-                df_words.to_excel(writer, sheet_name=sheet_name, index=False, startrow=len(metadata) + 2)
-            else:
-                pd.DataFrame().to_excel(writer, sheet_name=sheet_name, index=False, startrow=len(metadata) + 2)
+#             # 단어 데이터 추가
+#             if words:
+#                 df_words = pd.DataFrame(words)
+#                 df_words.to_excel(writer, sheet_name=sheet_name, index=False, startrow=len(metadata) + 2)
+#             else:
+#                 pd.DataFrame().to_excel(writer, sheet_name=sheet_name, index=False, startrow=len(metadata) + 2)
 
-    output.seek(0)
+#     output.seek(0)
 
-    # Google Drive에 엑셀 파일 업로드
-    file_metadata = {
-        'name': backup_file_name,
-        'parents': [folder_id]  # 파일을 업로드할 폴더 지정
-    }
+#     # Google Drive에 엑셀 파일 업로드
+#     file_metadata = {
+#         'name': backup_file_name,
+#         'parents': [folder_id]  # 파일을 업로드할 폴더 지정
+#     }
 
-    media = MediaIoBaseUpload(output, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+#     media = MediaIoBaseUpload(output, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+#     file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-    return jsonify({"code": 200, "file_id": file.get('id')})
+#     return jsonify({"code": 200, "file_id": file.get('id')})
 
 
 @drive_bp.route('/backup/app', methods=['POST'])
-@login_required
 def backup_app():
     data = request.json
     notebooks = data['notebooks']
@@ -395,7 +392,6 @@ def backup_app():
         return jsonify({'code': 500, 'msg': '파일 업로드 실패', 'details': upload_response.json()})
 
 @drive_bp.route('/excel_to_json', methods=['GET'])
-@login_required
 def excel_to_json():
     # Google Drive 서비스 객체 생성
     drive_service = get_google_drive_service()
@@ -430,7 +426,6 @@ def excel_to_json():
 
 
 @drive_bp.route('/excel_to_json/app', methods=['GET'])
-@login_required
 def excel_to_json_app():
     access_token = request.args.get('access_token')  # 쿼리 파라미터로 access_token 가져오기
     if not access_token:
@@ -549,17 +544,17 @@ def convert_excel_to_json(fh):
 
     return restored_data
 
-# 사용자 인증을 통해 Google Drive 서비스 객체를 생성
-def get_google_drive_service():
-    user = User.query.filter_by(google_id=session['user_id']).first()
-    credentials = Credentials(
-        token=session['access_token'],
-        refresh_token=user.refresh_token,
-        token_uri='https://oauth2.googleapis.com/token',
-        client_id=OAUTH_CLIENT_ID,
-        client_secret=OAUTH_CLIENT_SECRET
-    )
-    return build('drive', 'v3', credentials=credentials)
+# # 사용자 인증을 통해 Google Drive 서비스 객체를 생성
+# def get_google_drive_service():
+#     user = User.query.filter_by(google_id=session['user_id']).first()
+#     credentials = Credentials(
+#         token=session['access_token'],
+#         refresh_token=user.refresh_token,
+#         token_uri='https://oauth2.googleapis.com/token',
+#         client_id=OAUTH_CLIENT_ID,
+#         client_secret=OAUTH_CLIENT_SECRET
+#     )
+#     return build('drive', 'v3', credentials=credentials)
 
 # Google Drive에서 폴더를 검색하고 ID 반환
 def find_drive_folder(drive_service, folder_name):
