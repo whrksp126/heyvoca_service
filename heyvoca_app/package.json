@@ -1,6 +1,6 @@
 {
   "name": "heyvoca",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -19,13 +19,13 @@
     "build:android-apk": "cd android && ./gradlew assembleRelease",
     "build:android-aab": "cd android && ./gradlew bundleRelease",
     "build:android-clean": "cd android && ./gradlew clean",
-    "build:ios-archive": "cd ios && xcodebuild -workspace codingpt.xcworkspace -scheme codingpt -configuration Release -destination generic/platform=iOS -archivePath build/codingpt.xcarchive archive",
-    "build:ios-ipa": "cd ios && xcodebuild -exportArchive -archivePath build/codingpt.xcarchive -exportPath build/ipa -exportOptionsPlist exportOptions.plist",
+    "build:ios-archive": "cd ios && xcodebuild -workspace heyvoca.xcworkspace -scheme heyvoca -configuration Release -destination generic/platform=iOS -archivePath build/heyvoca.xcarchive archive",
+    "build:ios-ipa": "cd ios && xcodebuild -exportArchive -archivePath build/heyvoca.xcarchive -exportPath build/ipa -exportOptionsPlist exportOptions.plist",
     "build:ios-clean": "cd ios && xcodebuild clean"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
-    "@react-native-google-signin/google-signin": "^15.0.0",
+    "@react-native-google-signin/google-signin": "^12.0.1",
     "@react-native/new-app-screen": "0.80.2",
     "nativewind": "^4.1.23",
     "react": "19.1.0",
