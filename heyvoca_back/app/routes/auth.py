@@ -339,6 +339,7 @@ def get_user_info():
         'id' : user.id,
         'level_id' : user.level_id,
         'username' : user.username,
+        'email' : user.email,
         'code' : user.code,
         'book_cnt' : user.book_cnt,
         'gem_cnt' : user.gem_cnt,
@@ -439,7 +440,9 @@ def login():
     refresh_token = generate_refresh_token(user.id, user.email)
 
     # 응답 및 refresh_token을 HttpOnly 쿠키로 설정 (보안 강화)
-    response = make_response(jsonify({'access_token': access_token}))
+    response = make_response(jsonify({
+        'access_token': access_token
+    }))
     response.set_cookie(
         'refresh_token',
         refresh_token,
