@@ -91,7 +91,7 @@ def create_user_voca_book():
         return jsonify({'code': 400, 'message': '단어장 생성 실패'})
 
 
-# @login_required
+@login_required
 @user_voca_book_bp.route('/update', methods=['PATCH'])
 def update_user_voca_book():
     data = request.get_json()
@@ -128,7 +128,7 @@ def update_user_voca_book():
     return jsonify({'code': 200, 'data': data}), 200
 
 
-# @login_required
+@login_required
 @user_voca_book_bp.route('/delete', methods=['DELETE'])
 def delete_user_voca_book():
     data = request.get_json()

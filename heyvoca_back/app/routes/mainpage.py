@@ -477,8 +477,8 @@ def api_today_study_recommend():
             'bookstore_id': r.store_id if hasattr(r, 'store_id') else r.bookstore_id,  # 네 컬럼명에 맞춰 조정
             'word': r.word,
             'pronunciation': r.pronunciation,
-            'meanings': r.meanings,   # 만약 TEXT에 JSON문자열이면: json.loads(r.meanings)로 변환 가능
-            'examples': r.examples    # 위와 동일
+            'meanings': r.meanings,
+            'examples': r.examples
         })
 
     return {'code': 200, 'data': data}
