@@ -7,7 +7,9 @@ env_path = Path('/var/www/heyvoca_back')
 config_env = os.getenv('FLASK_CONFIG', 'development')
 
 # 환경별 .env 파일 로드
-if config_env == 'development':
+if config_env == 'local':
+  load_dotenv(dotenv_path=env_path / '.env.local')
+elif config_env == 'development':
   load_dotenv(dotenv_path=env_path / '.env.dev')
 elif config_env == 'staging':
   load_dotenv(dotenv_path=env_path / '.env.stg')
@@ -24,6 +26,10 @@ class Config:
     }
   }
 
+class LocalConfig(Config):
+  DEBUG = True
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4&use_unicode=1'
+
 class DevelopmentConfig(Config):
   DEBUG = True
   SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:password@localhost/mydatabase?charset=utf8mb4&use_unicode=1'
@@ -39,11 +45,10 @@ class ProductionConfig(Config):
 
 # Google OAuth2 정보 설정
 # OAUTH_CLIENT_ID = os.environ.get('OAUTH_CLIENT_ID')
-# OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
 # OAUTH_REDIRECT_URI = os.environ.get('OAUTH_REDIRECT_URI')
+FRONT_END_URL = os.environ.get('FRONT_END_URL')
+OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
 GOOGLE_WEB_CLIENT_ID = os.environ.get('GOOGLE_WEB_CLIENT_ID')
 ACCESS_SECRET = os.environ.get('ACCESS_SECRET')
 REFRESH_SECRET = os.environ.get('REFRESH_SECRET')
-
-# FCM
 FCM_API_KEY = os.environ.get('FCM_API_KEY')

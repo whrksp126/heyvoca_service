@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from config import DevelopmentConfig, StagingConfig, ProductionConfig
+from config import DevelopmentConfig, StagingConfig, ProductionConfig, LocalConfig
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from sqlalchemy.ext.declarative import declarative_base
@@ -40,6 +40,8 @@ def create_app():
     app.config.from_object(ProductionConfig)
   elif config_class == 'staging':
     app.config.from_object(StagingConfig)
+  elif config_class == 'local':
+    app.config.from_object(LocalConfig)
   else:
     app.config.from_object(DevelopmentConfig) 
 

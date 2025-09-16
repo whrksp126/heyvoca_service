@@ -21,7 +21,7 @@ from google.auth.transport import requests as google_requests
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
-from config import GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET
+from config import GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET, OAUTH_CLIENT_SECRET, FRONT_END_URL
 
 from dotenv import load_dotenv
 import os, time, jwt
@@ -31,16 +31,16 @@ from uuid import UUID
 # -------------------
 # 환경 변수 & 기본값
 # -------------------
-GOOGLE_WEB_CLIENT_ID = os.getenv("GOOGLE_WEB_CLIENT_ID")
-ACCESS_SECRET = os.getenv("ACCESS_SECRET")
-REFRESH_SECRET = os.getenv("REFRESH_SECRET")
+# GOOGLE_WEB_CLIENT_ID = os.getenv("GOOGLE_WEB_CLIENT_ID")
+# ACCESS_SECRET = os.getenv("ACCESS_SECRET")
+# REFRESH_SECRET = os.getenv("REFRESH_SECRET")
 ACCESS_TTL_SECONDS  = 60 * 60                 # 60분
 REFRESH_TTL_SECONDS = 60 * 60 * 24 * 30       # 30일
 
 # OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
-OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
+# OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 # OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
-FRONT_END_URL = os.getenv('FRONT_END_URL')
+# FRONT_END_URL = os.getenv('FRONT_END_URL')
 
 # # UTC+9 (Asia/Seoul) 기준 타임스탬프가 필요하면 아래 tz 사용
 KST = timezone(timedelta(hours=9))
