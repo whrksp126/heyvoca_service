@@ -12,6 +12,7 @@
     "android:dev": "cross-env ENVFILE=.env.dev npx react-native run-android log-android",
     "android:stg": "cross-env ENVFILE=.env.stg npx react-native run-android log-android",
     "android:prod": "cross-env ENVFILE=.env npx react-native run-android log-android",
+    "ios-simulator-iphone:local": "cross-env ENVFILE=.env.local npx react-native run-ios log-ios --simulator=\"iPhone 16 Pro\"",
     "ios:local": "cross-env ENVFILE=.env.local npx react-native run-ios log-ios",
     "ios:dev": "cross-env ENVFILE=.env.dev npx react-native run-ios log-ios",
     "ios:stg": "cross-env ENVFILE=.env.stg npx react-native run-ios log-ios",
