@@ -32,6 +32,7 @@ def create_app():
       "https://dev-heyvoca-front.ghmate.com",
       "http://localhost:3000",
       "http://10.0.2.2:3000",
+      "http://192.168.0.11:3000",
   ], supports_credentials=True)
 
   
@@ -74,6 +75,7 @@ def create_app():
   from app.routes.mainpage import mainpage_bp
   from app.routes.version import version_bp
   from app.routes.user_voca_book import user_voca_book_bp
+  from app.routes.purchase import purchase_bp
   
   app.register_blueprint(auth_bp)
   app.register_blueprint(search_bp)
@@ -83,5 +85,5 @@ def create_app():
   app.register_blueprint(mainpage_bp)
   app.register_blueprint(version_bp)
   app.register_blueprint(user_voca_book_bp)
-
+  app.register_blueprint(purchase_bp)
   return app
