@@ -10,21 +10,21 @@ import gem from '../../assets/images/gem.png';
 
 const gems = [
   {
-    id: 1,
+    id: 'com.heyvoca.gems_10',
     name: '보석 10개',
     price: 1100,
     bonus: 0,
     image: gem10
   },
   {
-    id: 2,
+    id: 'com.heyvoca.gems_35',
     name: '보석 35개',
     price: 3300,
     bonus: 5,
     image: gem35
   },
   {
-    id: 3,
+    id: 'com.heyvoca.gems_110',
     name: '보석 110개',
     price: 9900,
     bonus: 10,
@@ -34,6 +34,10 @@ const gems = [
 
 const StoreSheet = () => {
   const { handleBack } = useFullSheet();
+
+  const handleGemClick = (id) => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'iapPurchase', 'props': {itemId: id}}));
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -82,7 +86,7 @@ const StoreSheet = () => {
           "
         >
           <div className="flex gap-[5px] items-center">
-            <img src={보석} alt="보석" className="w-[20px] h-[18px]" />
+            <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
             <span className="text-[#111] text-[16px] font-bold">50</span>
           </div>
         </div>
@@ -90,7 +94,9 @@ const StoreSheet = () => {
 
       <div className="flex items-start justify-center h-full gap-[10px] p-[16px]">
         {gems.map((gem) => (
-        <div key={gem.id} className="relative flex flex-col items-center justify-center gap-[10px] flex-1">
+        <div key={gem.id} className="relative flex flex-col items-center justify-center gap-[10px] flex-1"
+        onClick={() => handleGemClick(gem.id)}
+        >
           <img src={gem.image} alt="" className="w-[80px] h-[80px]" />
             {gem.bonus > 0 && (
           <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-[#FF8DD4]">

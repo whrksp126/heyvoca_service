@@ -23,6 +23,10 @@ export function setCookie(name, value, days = 365) {
   date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
   const expires = "expires=" + date.toUTCString();
   document.cookie = name + "=" + value + "; " + expires + "; path=/";
+  if(window.ReactNativeWebView){
+    window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'setCookie', 'props': {name: name, value: value, expires: date.toUTCString()}}));
+  }
+
 }
 
 // URL에서 마지막 경로 값을 가져오는 함수

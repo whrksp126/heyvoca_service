@@ -167,7 +167,7 @@ export const UserProvider = ({ children }) => {
     if (device_type === 'web') {
       window.location.href = `${backendUrl}/auth/google/oauth/web?device_type=${device_type}`;
     } else {
-      window.ReactNativeWebView.postMessage('launchGoogleAuth');
+      window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'launchGoogleAuth'}));
     }
   }, []);
 

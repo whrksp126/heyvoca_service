@@ -18,6 +18,8 @@ export const VocabularyProvider = ({ children }) => {
   const [isRecentStudyLoading, setIsRecentStudyLoading] = useState(true);
   const [errorRecentStudy, setErrorRecentStudy] = useState(null);
 
+  const [delayedWords, setDelayedWords] = useState([]);
+
 
   // 전체 통계 계산
   const statistics = useMemo(() => {
@@ -78,9 +80,6 @@ export const VocabularyProvider = ({ children }) => {
   const getVocabularySheets = useCallback(() => {
     return vocabularySheets;
   }, [vocabularySheets]);
-
-
-  
 
 
   // 단어장 추가
@@ -382,6 +381,25 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, [recentStudy]);
 
+  // 복습 지연 단어 조회
+  const getDelayedWords = useCallback(() => {
+    return delayedWords
+  }, [delayedWords]);
+
+  // 복습 지연 단어 목록 업데이트
+  const updateDelayedWords = useCallback(() => {
+    let words = [];
+    vocabularySheets.forEach(sheet => {
+      sheet.words.forEach(word => {
+        if (word.nextReview !== null && new Date(word.nextReview) < new Date()) {
+          words.push(word);
+        }
+      });
+    });
+    setDelayedWords(words);
+    return words;
+  }, [vocabularySheets]);
+
   // 앱 시작시 데이터 로드 (로그인 상태 확인 후)
   useEffect(() => {
     if (isLogin && isLoginChecked) {
@@ -442,6 +460,11 @@ export const VocabularyProvider = ({ children }) => {
     updateRecentStudy,
     updateRecentStudyState,
     updateRecentStudyServer,
+
+    delayedWords,
+    setDelayedWords,
+    getDelayedWords,
+    updateDelayedWords,
   };
 
   return (
