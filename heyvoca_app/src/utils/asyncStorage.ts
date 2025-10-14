@@ -55,3 +55,47 @@ export const clearAppAsyncStorage = async () => {
     console.error("데이터 초기화 오류:", error);
   }
 };
+
+// 쿠키 저장 (cookie_{name} 형태로 저장)
+export const saveCookieToAsyncStorage = async (name, value, expires) => {
+  try {
+    const cookieData = {
+      value: value,
+      expires: expires,
+      timestamp: new Date().toISOString()
+    };
+    
+    await AsyncStorage.setItem(`cookie_${name}`, JSON.stringify(cookieData));
+    console.log(`쿠키 저장됨: ${name}`, cookieData);
+  } catch (error) {
+    console.error("쿠키 저장 오류:", error);
+  }
+};
+
+// 쿠키 조회 (cookie_{name} 형태로 조회, 만료일 확인)
+export const getCookieFromAsyncStorage = async (name) => {
+  try {
+    const cookieDataStr = await AsyncStorage.getItem(`cookie_${name}`);
+    if (!cookieDataStr) {
+      console.log(`쿠키 없음: ${name}`);
+      return null;
+    }
+    
+    const cookieData = JSON.parse(cookieDataStr);
+    const expiresDate = new Date(cookieData.expires);
+    const now = new Date();
+    
+    // 만료 확인
+    if (now > expiresDate) {
+      console.log(`쿠키 만료됨: ${name}`);
+      await AsyncStorage.removeItem(`cookie_${name}`);
+      return null;
+    }
+    
+    console.log(`쿠키 조회됨: ${name}`, cookieData.value);
+    return cookieData.value;
+  } catch (error) {
+    console.error("쿠키 가져오기 오류:", error);
+    return null;
+  }
+};

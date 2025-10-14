@@ -1,15 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, BackHandler, ToastAndroid, View } from 'react-native';
+import { StyleSheet, StatusBar, BackHandler, ToastAndroid, View, Text, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
+import IapScreen from './IapScreen';
+
 const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 
 const HomeScreen = () => {
   const webViewRef = useRef(null);
   const [lastBackPressed, setLastBackPressed] = useState(0);
+  const [isIapTest, setIsIapTest] = useState(false);
 
   useEffect(() => {
     const backAction = () => {
@@ -27,7 +30,7 @@ const HomeScreen = () => {
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
     return () => backHandler.remove();
-  }, [lastBackPressed]);
+  }, []);
 
   const handleExitApp = () => {
     const now = Date.now();
@@ -49,25 +52,29 @@ const HomeScreen = () => {
         translucent={false}
         hidden={false} 
       />
-      <WebView
-        source={{ uri: FRONT_URL }}
-        ref={webViewRef}
-        bounces={false}
-        overScrollMode="never"
-        userAgent="HeyVoca"
-        onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp)}
-        javaScriptEnabled={true}
-        webviewDebuggingEnabled={true}
-        injectedJavaScript={`
-          window.alert = function(message) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
-          };
-          window.console.log = function(message) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
-          };
-        `}
-        style={styles.webview}
-      />
+      {isIapTest ? (
+        <IapScreen onClose={() => setIsIapTest(false)} />
+      ) : (
+        <WebView
+          source={{ uri: FRONT_URL }}
+          ref={webViewRef}
+          bounces={false}
+          overScrollMode="never"
+          userAgent="HeyVoca"
+          onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp)}
+          javaScriptEnabled={true}
+          webviewDebuggingEnabled={true}
+          injectedJavaScript={`
+            window.alert = function(message) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
+            };
+            window.console.log = function(message) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
+            };
+          `}
+          style={styles.webview}
+        />
+      )}
     </View>
   );
 };
