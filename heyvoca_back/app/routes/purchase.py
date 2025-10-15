@@ -6,6 +6,8 @@ import base64
 import os
 from app.routes import purchase_bp
 from app.utils.jwt_utils import jwt_required
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore
+
 
 # 환경 변수
 GOOGLE_PLAY_PACKAGE_NAME = "com.ghmate.heyvoca"
@@ -57,6 +59,11 @@ def verify_purchase():
                 'message': f'영수증 검증 실패: {verification_result["error"]}'
             }), 400
 
+
+        # 검증 성공 보석 업데이트 (근지님 작업.. 부탁해요)
+        user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
+        
+
         # 검증 성공 응답
         return jsonify({
             'code': 200,
@@ -66,6 +73,8 @@ def verify_purchase():
                 'platform': platform,
                 'product_id': data['productId'],
                 'transaction_id': data['transactionId']
+                # 보석 추가 게수
+                # 총 보석 개수
             }
         }), 200
 
@@ -170,7 +179,6 @@ def verify_android_receipt(data):
     """Android Google Play 영수증 검증"""
     try:
 
-        print("여기까지는 정상")
         # 필수 Android 필드 검증
         required_android_fields = ['purchaseToken', 'packageName', 'orderId']
         for field in required_android_fields:
@@ -186,26 +194,16 @@ def verify_android_receipt(data):
         product_id = data.get('productId')
         order_id = data['orderId']
         
-        # Google Play Console API 인증 (Service Account 사용)
-        if not GOOGLE_PLAY_SERVICE_ACCOUNT_KEY:
-            return {'success': False, 'error': 'Google Play Console API 설정이 필요합니다'}
-        
-        # 구매 토큰 형식 검증 (기본적인 Base64 디코딩 테스트)
-        try:
-            # purchase_token이 유효한 Base64인지 확인
-            print("purchase_token")
-            print(purchase_token)
-            print("여기서 종료")
-            base64.b64decode(purchase_token, validate=True)
-        except Exception:
-            return {'success': False, 'error': '유효하지 않은 구매 토큰 형식입니다'}
-        
-        # Google Play Console API 호출 (실제 구현)
+        # Google Play Developer API 라이브러리 사용
         try:
             from google.oauth2 import service_account
             from googleapiclient.discovery import build
             
             # 서비스 계정 인증
+            if not GOOGLE_PLAY_SERVICE_ACCOUNT_KEY or not os.path.exists(GOOGLE_PLAY_SERVICE_ACCOUNT_KEY):
+                return {'success': False, 'error': 'Google Play 서비스 계정 키 파일이 필요합니다.'}
+            
+            
             credentials = service_account.Credentials.from_service_account_file(
                 GOOGLE_PLAY_SERVICE_ACCOUNT_KEY,
                 scopes=['https://www.googleapis.com/auth/androidpublisher']
@@ -221,6 +219,7 @@ def verify_android_receipt(data):
                 token=purchase_token
             ).execute()
             
+            
             # 구매 상태 확인
             purchase_state = result.get('purchaseState')
             if purchase_state != 0:  # 0 = 구매됨
@@ -232,7 +231,8 @@ def verify_android_receipt(data):
                 return {'success': False, 'error': '이미 소비된 구매입니다'}
             
             # 주문 ID 검증
-            if result.get('orderId') != order_id:
+            api_order_id = result.get('orderId')
+            if api_order_id != order_id:
                 return {'success': False, 'error': '주문 ID가 일치하지 않습니다'}
             
             return {'success': True, 'data': result}
