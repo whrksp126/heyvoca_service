@@ -268,7 +268,16 @@ def api_user_study_history():
                     .filter(CheckIn.attendence_date == today)\
                     .first()
         
-        if checkin.today_study_complete == False:
+        # checkin이 없으면 생성
+        if not checkin:
+            checkin = CheckIn(
+                user_id=user_id,
+                attendence_date=today,
+                today_study_complete=True
+            )
+            db.session.add(checkin)
+            is_today_study_complete = True
+        elif checkin.today_study_complete == False:
             is_today_study_complete = True
             checkin.today_study_complete = True
 

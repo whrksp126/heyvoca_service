@@ -31,33 +31,8 @@ from uuid import UUID
 # -------------------
 # 환경 변수 & 기본값
 # -------------------
-# GOOGLE_WEB_CLIENT_ID = os.getenv("GOOGLE_WEB_CLIENT_ID")
-# ACCESS_SECRET = os.getenv("ACCESS_SECRET")
-# REFRESH_SECRET = os.getenv("REFRESH_SECRET")
-ACCESS_TTL_SECONDS  = 60 * 60                 # 60분
-REFRESH_TTL_SECONDS = 60 * 60 * 24 * 30       # 30일
-
-# OAUTH_CLIENT_ID = os.getenv('OAUTH_CLIENT_ID')
-# OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
-# OAUTH_REDIRECT_URI = os.getenv('OAUTH_REDIRECT_URI')
-# FRONT_END_URL = os.getenv('FRONT_END_URL')
-
-# # UTC+9 (Asia/Seoul) 기준 타임스탬프가 필요하면 아래 tz 사용
+# UTC+9 (Asia/Seoul) 기준 타임스탬프
 KST = timezone(timedelta(hours=9))
-
-SECRET_KEY = ACCESS_SECRET  # config.py에서 가져온 값 사용
-REFRESH_SECRET_KEY = REFRESH_SECRET  # config.py에서 가져온 값 사용
-
-
-def generate_refresh_token(id, email):
-    """Refresh Token 생성 (30일 유효)"""
-    now = int(time.time())
-    payload = {
-        "id": str(id),
-        "email": email,
-        "exp": now + REFRESH_TTL_SECONDS,
-    }
-    return jwt.encode(payload, REFRESH_SECRET, algorithm="HS256")
 
 # # ## 구글 로그인(앱) ##
 # # # access, refresh 백엔드 처리
@@ -124,17 +99,31 @@ def google_oauth_app():
         db.session.add(user)
         db.session.commit()
 
-        return jsonify({
+        # 6) 응답 생성 - accessToken은 JSON으로, refreshToken은 httponly 쿠키로
+        response = make_response(jsonify({
             "code": 200,
             "status": "success",
             "accessToken": access_token,
-            "refreshToken": refresh_token,
             "user": {
                 "id": user.id,
                 "email": user.email,
                 "name": getattr(user, "name", None),
             }
-        }), 200
+        }), 200)
+        
+        # refreshToken을 httponly 쿠키로 설정
+        # local 환경만 HTTP, 나머지(development, staging, production)는 HTTPS
+        is_local = os.getenv('FLASK_CONFIG') == 'local'
+        response.set_cookie(
+            'refresh_token',
+            refresh_token,
+            httponly=True,  # JavaScript에서 접근 불가 (보안 강화)
+            secure=not is_local,  # local이 아니면 HTTPS 사용
+            samesite='Lax',
+            max_age=60*60*24*30  # 30일
+        )
+        
+        return response
 
     except Exception as e:
         print('== login_google 에러 == ', e)
@@ -306,11 +295,12 @@ def logout():
             'status': 'success'
         }), 200)
         
+        is_local = os.getenv('FLASK_CONFIG') == 'local'
         response.set_cookie(
             'refresh_token',
             '',
             httponly=True,
-            secure=True,
+            secure=not is_local,
             samesite='Lax',
             max_age=0  # 즉시 만료
         )
@@ -443,11 +433,12 @@ def login():
     response = make_response(jsonify({
         'access_token': access_token
     }))
+    is_local = os.getenv('FLASK_CONFIG') == 'local'
     response.set_cookie(
         'refresh_token',
         refresh_token,
         httponly=True,  # JavaScript에서 접근 불가 (보안 강화)
-        secure=True,  # HTTPS 환경에서만 전송
+        secure=not is_local,  # local이 아니면 HTTPS 사용
         samesite='Lax',
         max_age=60*60*24*14
     )
@@ -456,20 +447,38 @@ def login():
 # 리프레시 토큰 재발급 엔드포인트
 @auth_bp.route('/refresh', methods=['POST'])
 def refresh():
+    print("=== 토큰 갱신 요청 시작 ===")
+    
+    # 쿠키에서 refresh_token 가져오기
     refresh_token = request.cookies.get('refresh_token')
+    print(f"쿠키에서 가져온 refresh_token: {refresh_token[:20] if refresh_token else None}...")
     
     if not refresh_token:
-        return jsonify({'msg': 'Refresh token is missing'}), 401
+        print("❌ Refresh token이 쿠키에 없음")
+        return jsonify({
+            'code': 401,
+            'message': 'Refresh token is missing'
+        }), 401
     
     # 리프레시 토큰 검증
     user_id = verify_refresh_token(refresh_token)
+    print(f"검증된 user_id: {user_id}")
+    
     if not user_id:
-        return jsonify({'msg': 'Invalid or expired refresh token'}), 401
+        print("❌ Refresh token 검증 실패")
+        return jsonify({
+            'code': 401,
+            'message': 'Invalid or expired refresh token'
+        }), 401
     
     # 새로운 액세스 토큰 발급
     new_access_token = generate_access_token(user_id)
+    print(f"✅ 새로운 액세스 토큰 발급 성공: {new_access_token[:20]}...")
     
-    return jsonify({'access_token': new_access_token})
+    return jsonify({
+        'code': 200,
+        'access_token': new_access_token
+    }), 200
 
 
 # 테스트용 엔드포인트 - 토큰 상태 확인

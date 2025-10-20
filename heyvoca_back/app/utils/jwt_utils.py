@@ -11,6 +11,10 @@ REFRESH_SECRET = os.getenv("REFRESH_SECRET")
 SECRET_KEY = ACCESS_SECRET
 REFRESH_SECRET_KEY = REFRESH_SECRET
 
+# JWT 유효 시간 설정
+ACCESS_TTL_SECONDS = int(os.getenv("ACCESS_TTL_SECONDS", 60 * 60))  # 기본 60분
+REFRESH_TTL_SECONDS = int(os.getenv("REFRESH_TTL_SECONDS", 60 * 60 * 24 * 30))  # 기본 30일
+
 
 def jwt_required(f):
     """
@@ -53,26 +57,30 @@ def jwt_required(f):
     return decorated
 
 
-def generate_access_token(user_id):
+def generate_access_token(user_id, email=None):
     """
-    액세스 토큰 생성 (30분 유효)
+    액세스 토큰 생성
     """
-    exp_time = datetime.utcnow() + timedelta(minutes=30)  # 30분으로 설정 (일반적인 값)
+    exp_time = datetime.utcnow() + timedelta(seconds=ACCESS_TTL_SECONDS)
     payload = {
         'user_id': str(user_id),
         'exp': exp_time
     }
+    # 이메일이 제공되면 payload에 추가 (기존 코드와의 호환성)
+    if email:
+        payload['email'] = email
+    
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     return token
 
 
 def generate_refresh_token(user_id, email=None):
     """
-    리프레시 토큰 생성 (14일 유효)
+    리프레시 토큰 생성
     user_id: 사용자 ID (필수)
     email: 이메일 (선택사항, 기존 코드와의 호환성을 위해)
     """
-    exp_time = datetime.utcnow() + timedelta(days=14)
+    exp_time = datetime.utcnow() + timedelta(seconds=REFRESH_TTL_SECONDS)
     payload = {
         'user_id': str(user_id),
         'exp': exp_time
@@ -92,11 +100,11 @@ def verify_refresh_token(refresh_token):
     try:
         data = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=['HS256'])
         
-        # 기존 코드와의 호환성을 위해 'id' 키 사용
-        if 'id' not in data:
+        # user_id 또는 id 키 찾기 (호환성)
+        user_id = data.get('user_id') or data.get('id')
+        if not user_id:
             return None
             
-        user_id = data['id']
         return user_id
     except jwt.ExpiredSignatureError:
         print("⏰ 리프레시 토큰 만료됨 - 재로그인 필요")
