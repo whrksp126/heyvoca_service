@@ -3,7 +3,7 @@ import { backendUrl, setCookie, getCookie } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
-
+import { getGemItemsApi } from '../api/store';
 
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
@@ -15,6 +15,7 @@ export const UserProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
   });
+  const [gemItems, setGemItems] = useState([]);
 
   // 로그인 상태 관리
   const fetchUserMainPage = useCallback(async () => {
@@ -38,6 +39,8 @@ export const UserProvider = ({ children }) => {
     } catch (err) {
     }
   }, []);
+
+  // 사용자 정보 조회
   const fetchUserProfile = useCallback(async () => {
     try {
       setIsUserProfileLoading(true);
@@ -65,10 +68,12 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  // 사용자 정보 조회 함수
   const getUserProfile = useCallback(() => {
     return userProfile;
   }, [userProfile, isUserProfileLoading]);
 
+  // 사용자 정보 업데이트 함수
   const updateUserProfile = useCallback(async ({username, level_id}) => {
     const result = await updateUserInfoApi({username, level_id});
     if(result.code != 200) return;
@@ -78,7 +83,6 @@ export const UserProvider = ({ children }) => {
       username: username,
     }));
   }, [userProfile]);
-
 
   // 업적, 보석, ... 업데이트 함수
   const updateUserHistory = useCallback(async ({today_study_complete, correct_cnt, incorrect_cnt}) => {
@@ -96,7 +100,6 @@ export const UserProvider = ({ children }) => {
     }
   }, []); 
 
-
   // 출석 체크
   const fetchUserCheckin = useCallback(async () => {
     const result = await setUserCheckinApi();
@@ -106,6 +109,20 @@ export const UserProvider = ({ children }) => {
       gem_cnt: result.data.gem.after,
     }))
   }, []); 
+
+  // 상품 조회 함수
+  const fetchGemItems = useCallback(async () => {
+    try {
+      const result = await getGemItemsApi();
+      if(result.code != 200) {
+        console.error('상품 조회 오류:', result.message);
+        return;
+      }
+      setGemItems(result.data);
+    } catch (err) {
+      console.error('fetchGemItems 오류:', err);
+    }
+  }, []);
 
   // 로그인 처리 함수 (매개변수로 받은 정보로 로그인 처리)
   const Login = useCallback(async ({ googleId, email, name, status }) => {
@@ -219,7 +236,8 @@ export const UserProvider = ({ children }) => {
         try {
           await Promise.all([
             fetchUserMainPage(),
-            fetchUserCheckin()
+            fetchUserCheckin(),
+            fetchGemItems()
           ]);
         } catch (error) {
           console.error('❌ [USER] 추가 데이터 로드 중 오류 발생:', error);
@@ -252,6 +270,11 @@ export const UserProvider = ({ children }) => {
     Login,
     clickGoogleOauth,
     checkLoginStatus,
+
+    // 상품 조회 함수
+    gemItems,
+    setGemItems,
+    fetchGemItems,
   };  
 
   return (

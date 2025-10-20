@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { useUser } from './UserContext';
 import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
-import { getBookStoreApi } from '../api/store';
+import { getBookStoreApi } from '../api/bookStore';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 
 const VocabularyContext = createContext(null);
