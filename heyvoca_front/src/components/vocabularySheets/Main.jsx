@@ -1,4 +1,5 @@
-import { PencilSimple, Trash } from '@phosphor-icons/react';
+import React, { useEffect } from 'react';
+import { PencilSimple, Trash, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -11,6 +12,11 @@ const Main = () => {
   const { pushFullSheet } = useFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   
+  // Hook은 항상 조건부 return 전에 호출되어야 합니다
+  useEffect(() => {
+    console.log(vocabularySheets);
+  }, [ isVocabularySheetsLoading, vocabularySheets]);
+
   const today_sentence = {
     title: "오늘의 문장 💬",
     sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
@@ -34,6 +40,46 @@ const Main = () => {
     pushFullSheet({
       component: <VocabularyWords id={id} />
     });
+  };
+
+  // 암기 상태별 단어 개수 계산 함수
+  const calculateMemorizationStats = (words) => {
+    if (!words || words.length === 0) {
+      return { unlearned: 0, leaf: 0, plant: 0, carrot: 0 };
+    }
+
+    const stats = {
+      unlearned: 0,  // 미학습 (EggCrack)
+      leaf: 0,       // 0-29% (Leaf)
+      plant: 0,      // 30-69% (Plant)
+      carrot: 0      // 70-100% (Carrot)
+    };
+
+    words.forEach(word => {
+      // 미학습 상태 체크
+      if (word.repetition === 0 && word.interval === 0) {
+        stats.unlearned++;
+        return;
+      }
+
+      // 암기율 계산 (MemorizationStatus와 동일한 로직)
+      let score = 0;
+      score += word.repetition * 15;
+      score += word.interval * 2;
+      score += (word.ef - 1.3) * 20;
+      const percent = Math.max(0, Math.min(100, Math.round(score)));
+
+      // 퍼센트에 따라 분류
+      if (percent < 30) {
+        stats.leaf++;
+      } else if (percent < 70) {
+        stats.plant++;
+      } else {
+        stats.carrot++;
+      }
+    });
+
+    return stats;
   };
 
   return (
@@ -93,7 +139,8 @@ const Main = () => {
           className="flex flex-col gap-[15px]"
         >
           {sortedVocabularySheets.map((item) => {
-            const progress = item.total === 0 ? 0 : Math.round((item.memorized/item.total) * 100);
+            const memorizationStats = calculateMemorizationStats(item.words);
+            
             return (
               <motion.li
                 key={item.id}
@@ -135,39 +182,41 @@ const Main = () => {
                   </button>
                 </div>
               </div>
-  
-              <div className="bottom">
-                <div 
-                  style={{ backgroundColor: item.color.sub }}
-                  className="
-                    w-[100%] h-[16px]
-                    rounded-[16px]
-                    overflow-hidden
-                  "
-                >
-                  <div 
-                    style={{ 
-                      width: `${progress}%`,
-                      backgroundColor: item.color.main
-                    }}
-                    className="
-                      relative
-                      h-[100%]
-                      rounded-[16px]
-                    "
-                  >
-                    <span 
-                      style={{
-                        transform : `translateY(-50%) translateX(${progress > 10 ? '0' : '30px'})`
-                      }}
-                      className="
-                        absolute top-[50%] right-[8px]
-                        text-[10px] font-[600] text-[#fff]
-                      ">
-                      {progress}%
+
+              {/* 암기 상태별 단어 개수 표시 */}
+              <div className="flex items-center gap-[12px] flex-wrap">
+                {memorizationStats.unlearned > 0 && (
+                  <div className="flex items-center gap-[4px]">
+                    <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
+                    <span className="text-[13px] font-[600] text-[#9D835A]">
+                      {memorizationStats.unlearned}
                     </span>
                   </div>
-                </div>
+                )}
+                {memorizationStats.leaf > 0 && (
+                  <div className="flex items-center gap-[4px]">
+                    <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
+                    <span className="text-[13px] font-[600] text-[#77CE4F]">
+                      {memorizationStats.leaf}
+                    </span>
+                  </div>
+                )}
+                {memorizationStats.plant > 0 && (
+                  <div className="flex items-center gap-[4px]">
+                    <Plant size={16} weight="fill" className="text-[#38CE38]" />
+                    <span className="text-[13px] font-[600] text-[#38CE38]">
+                      {memorizationStats.plant}
+                    </span>
+                  </div>
+                )}
+                {memorizationStats.carrot > 0 && (
+                  <div className="flex items-center gap-[4px]">
+                    <Carrot size={16} weight="fill" className="text-[#F68300]" />
+                    <span className="text-[13px] font-[600] text-[#F68300]">
+                      {memorizationStats.carrot}
+                    </span>
+                  </div>
+                )}
               </div>
             </motion.li>
           )})}

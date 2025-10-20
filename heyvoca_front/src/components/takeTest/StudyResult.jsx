@@ -17,15 +17,43 @@ const StudyResult = () => {
   // 학습 결과 저장
   useEffect(()=>{
     if(recentStudy && recentStudy[testType] && recentStudy[testType].status === "end"){
-      const correctCnt = testQuestions.filter(question => question.isCorrect).length;
-      const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
-      updateUserHistory({
+      updateUserHistoryAndNavigate()
+    }
+  },[])
+
+  const updateUserHistoryAndNavigate = async () => {
+    const correctCnt = testQuestions.filter(question => question.isCorrect).length;
+    const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
+    try{
+      const result = await updateUserHistory({
         'today_study_complete': testType === "today" ? true : false,
         'correct_cnt': correctCnt,
         'incorrect_cnt': incorrectCnt
       })
+      // TODO : 여기 해야함
+      const gems = result.gem;
+      console.log(`${gems.before} ${gems.after}`);
+      if(gems.after > gems.before){
+        // 보석 획득 표현 페이지
+        console.log(`${gems.after - gems.before}개의 보석을 획득했습니다.`);
+      }
+      const todayStudyComplete = result.today_study_complete;
+      console.log(`${todayStudyComplete}`);
+      if(todayStudyComplete){
+        // 오늘의 미션 달성 표현 페이지
+        console.log(`오늘의 미션을 달성했습니다.`);
+      }
+      const goals = result.goals;
+      console.log(`${goals.length}`);
+      if(goals.length > 0){
+        // 업적 달성 표현 페이지
+        console.log(`${goals.length}개의 업적을 달성했습니다.`);
+      }
+    }catch(err){
+      console.log("오류 발생함")
     }
-  },[])
+
+  }
 
 
 

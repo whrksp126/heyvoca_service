@@ -1,6 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useUser } from '../../context/UserContext';
+import { useFlyingAnimation } from '../../context/GemAnimationContext';
 import postMessageManager from '../../utils/postMessageManager';
 
 export const useStoreBuyItemBottomSheet = () => {
@@ -17,7 +19,7 @@ export const useStoreBuyItemBottomSheet = () => {
         options={options}
       />,
       {
-        isBackdropClickClosable: true,
+        isBackdropClickClosable: false,
         isDragToCloseEnabled: false
       }
     );
@@ -33,14 +35,15 @@ const StoreBuyItemBottomSheet = ({onCancel, options}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [purchaseResult, setPurchaseResult] = useState(null);
   const [error, setError] = useState(null);
-
+  const { setUserProfile } = useUser();
+  const { triggerFlyingAnimation } = useFlyingAnimation();
   useEffect(() => {
     // 결제 성공 콜백 등록
     const handlePurchaseSuccess = (data) => {
       console.log(`🎯 결제 성공 데이터 전체: ${JSON.stringify(data, null, 2)}`);
       
       // 실제 젬 데이터는 serverResponse.data 안에 있음
-      const serverData = data.data?.serverResponse?.data;
+      const serverData = data.data.data;
       
       if (serverData) {
         console.log(`🎯 서버 데이터: ${JSON.stringify(serverData, null, 2)}`);
@@ -69,66 +72,66 @@ const StoreBuyItemBottomSheet = ({onCancel, options}) => {
     };
   }, []);
 
-  const renderContent = () => {
-    if (isLoading) {
-      return (
-        <div className="flex flex-col items-center justify-center p-[40px] gap-[20px]">
-          <div className="animate-spin rounded-full h-[40px] w-[40px] border-b-2 border-[#007AFF]"></div>
-          <div className="text-[16px] text-[#666]">결제 중입니다...</div>
-        </div>
-      );
-    }
-
-    if (error) {
-      return (
-        <div className="flex flex-col items-center justify-center p-[40px] gap-[20px]">
-          <div className="text-[48px]">❌</div>
-          <div className="text-[18px] font-[700] text-[#FF3B30]">결제 실패</div>
-          <div className="text-[14px] text-[#666] text-center">{error}</div>
-        </div>
-      );
-    }
-
-    if (purchaseResult) {
-      return (
-        <div className="flex flex-col items-center justify-center p-[40px] gap-[20px]">
-          <div className="text-[48px]">✅</div>
-          <div className="text-[18px] font-[700] text-[#34C759]">결제 완료</div>
-          <div className="text-[14px] text-[#666] text-center">
-            {purchaseResult.gem_added}개의 젬을 획득했습니다!
-          </div>
-          <div className="text-[12px] text-[#999] text-center">
-            보유 젬: {purchaseResult.total_gems}개
-          </div>
-        </div>
-      );
-    }
-
-    return null;
-  };
+  const onConfirm = useCallback(() => {
+    // 모달 먼저 닫기
+    onCancel();
+    
+    // 모달이 닫힌 후 전역 애니메이션 시작
+    setTimeout(() => {
+      triggerFlyingAnimation({
+        imageUrl: options.image_url,
+        quantity: purchaseResult?.quantity || 1,
+        startPoint: { type: 'position', value: 'center-bottom' },
+        endPoint: { type: 'element', value: '#gem-counter' }, // 보석 카운터로 날아감
+        animationPreset: 'gem-burst', // 원하는 프리셋 선택 가능
+        duration: 1.2,
+        delay: 0.1,
+        onStart: () => {
+          console.log('💎 보석 애니메이션 시작!');
+        },
+        onComplete: () => {
+          // 애니메이션 완료 후 카운트 업데이트
+          setUserProfile(prevProfile => ({...prevProfile, gem_cnt: purchaseResult?.total_gems}));
+          console.log('✅ 보석 애니메이션 완료!');
+        }
+      });
+    }, 300); // 모달 닫히는 애니메이션 후
+  }, [purchaseResult, options, setUserProfile, onCancel, triggerFlyingAnimation]);
 
   return (
     <div className="">
-      <div>
-        <div className="left"></div>
-        <div className="
-          flex items-center justify-center
-          p-[20px] pb-[0px]
-          ">
-          <h1 className="text-[18px] font-[700]">
-            {isLoading ? '결제 진행 중' : error ? '결제 실패' : '결제 완료'}
-          </h1>
-        </div>
-        <div className="right"></div>
-      </div>
-
       <div className="
         flex flex-col gap-[30px]
         max-h-[calc(90vh-47px)] h-full
-        p-[20px] pb-[105px]
+        p-[20px] pt-[40px] pb-[105px]
         overflow-y-auto
       ">
-        {renderContent()}
+        <div className="flex flex-col items-center justify-center gap-[10px]">
+          {isLoading && (
+            <>
+              <div className="flex items-center justify-center w-[80px] h-[80px]">
+                <div className="animate-spin rounded-full h-[40px] w-[40px] border-b-2 border-[#FF8DD4]"></div>
+              </div>
+              <div className="text-[18px] font-[700] text-[#111]">스토어 결제 진행 중...</div>
+            </>
+          )}
+
+          {error && (
+            <>
+              <div className="text-[48px]">❌</div>
+              <div className="text-[18px] font-[700] text-[#FF3B30]">결제 실패</div>
+            </>
+          )}
+
+          {purchaseResult?.verified && (
+            <>
+              <img src={options.image_url} alt="" className="w-[80px] h-[80px]" />
+              <div className="text-[18px] font-[700] text-[#111] text-center">
+                <strong className="text-[#FF8DD4]">보석 {purchaseResult?.gem_added}개</strong>를 구매 완료!
+              </div>
+            </>
+          )}
+        </div>
         
         <div className="
           absolute bottom-0 left-0 right-0
@@ -136,21 +139,41 @@ const StoreBuyItemBottomSheet = ({onCancel, options}) => {
           bg-[#fff]/80 backdrop-blur-[1px]
         ">
           <motion.button 
-            className="
+            className={`
               flex-1
               h-[45px]
               rounded-[8px]
-              bg-[#ccc]
               text-[#fff] text-[16px] font-[700]
-            "
-            onClick={onCancel}
+              bg-[#FF8DD4]
+            `}
+            onClick={purchaseResult?.verified ?  onConfirm : onCancel}
             whileTap={{ scale: 0.95 }}
             transition={{ 
               type: "spring", 
               stiffness: 500, 
               damping: 15
             }}
-          >닫기</motion.button>
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-[6px] text-[24px]">
+                <motion.span
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
+                >•</motion.span>
+                <motion.span
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut", delay: 0.25 }}
+                >•</motion.span>
+                <motion.span
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                >•</motion.span>
+              </span>
+            ) : (
+              <span className="text-[16px] font-[700] text-[#fff]">확인</span>
+            )}
+          </motion.button>
         </div>
       </div>
     </div>

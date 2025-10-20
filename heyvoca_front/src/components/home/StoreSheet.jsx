@@ -14,7 +14,7 @@ const StoreSheet = () => {
 
   const handleGemClick = (id) => {
     window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'iapPurchase', 'props': {itemId: id}}));
-    showStoreBuyItemBottomSheet({options: {productId: id}})
+    showStoreBuyItemBottomSheet({options: {productId: id, image_url: gemItems.find(gem => gem.product_id === id).image_url}})
   }
 
   return (
@@ -63,7 +63,10 @@ const StoreSheet = () => {
             text-[#CCC] dark:text-[#fff]
           "
         >
-          <div className="flex gap-[5px] items-center">
+          <div 
+            id="gem-counter" 
+            className="flex gap-[5px] items-center"
+          >
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
             <span className="text-[#111] text-[16px] font-bold">{userProfile.gem_cnt}</span>
           </div>

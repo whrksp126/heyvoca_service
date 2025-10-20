@@ -40,7 +40,7 @@ export function getLastPathFromURL() {
 }
 
 // Access Token 갱신 함수
-async function refreshAccessToken() {
+export async function refreshAccessToken() {
   try {
     const response = await fetch(`${backendUrl}/auth/refresh`, {
       method: 'POST',

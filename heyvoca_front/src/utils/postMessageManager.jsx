@@ -96,7 +96,6 @@ class PostMessageManager {
     this.removeListener('iap_purchase_success');
   }
 
-
   /**
    * 포스트메시지 처리 핸들러
    * @param {MessageEvent} event - 포스트메시지 이벤트

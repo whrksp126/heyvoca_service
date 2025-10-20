@@ -94,7 +94,11 @@ export const UserProvider = ({ children }) => {
         ...prevProfile,
         gem_cnt: result.data.gem.after,
       }))
-      if(result.code != 200) return result.data;
+      if(result.code == 200){
+        return result.data;
+      }else{
+        return null;
+      }
     } catch (err) {
       console.log("오류 발생함")
     }
