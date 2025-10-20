@@ -152,7 +152,6 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
   try {
     console.log('구매 완료:', purchase);
 
-    
     // 1단계: 서버에서 영수증 검증
     console.log('서버 검증 시작...');
     const serverResult = await verifyPurchaseWithServer(purchase);
@@ -189,18 +188,7 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
     const successData = {
       type: 'iap_purchase_success',
       data: {
-        // 구매 정보
-        platform: purchase.platform,
-        productId: purchase.productId,
-        quantity: purchase.quantity,
-        transactionId: purchase.transactionId,
-        transactionDate: purchase.transactionDate,
-        
-        // 서버 검증 결과
-        serverVerified: true,
-        serverResponse: serverResult.data,
-        gemsAwarded: serverResult.data?.gemsAwarded || 0,
-        userGems: serverResult.data?.userGems || 0,
+        ...serverResult.data,
       }
     };
     

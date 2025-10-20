@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import Tts from 'react-native-tts';
+// import Tts from 'react-native-tts';
 import { signInWithGoogle } from '../google/googleAuth';
 import { executePurchase } from '../handlers/iapHandler';
 import { saveCookieToAsyncStorage } from '../utils/asyncStorage';
