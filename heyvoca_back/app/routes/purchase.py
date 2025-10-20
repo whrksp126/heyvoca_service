@@ -4,9 +4,11 @@ import requests
 import json
 import base64
 import os
+from uuid import UUID
 from app.routes import purchase_bp
 from app.utils.jwt_utils import jwt_required
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase
+from app import db
 
 
 # 환경 변수
@@ -59,27 +61,190 @@ def verify_purchase():
                 'message': f'영수증 검증 실패: {verification_result["error"]}'
             }), 400
 
-
-        # 검증 성공 후 영수증 DB 레코드 추가 (근지님 작업.. 부탁해요)
-
-
-        # 검증 성공 보석 업데이트 (근지님 작업.. 부탁해요)
+        # 상품 정보 조회
+        product = Product.query.filter_by(
+            product_id=data['productId'],
+            platform=platform,
+            is_active=True
+        ).first()
         
+        if not product:
+            return jsonify({
+                'code': 400,
+                'message': '유효하지 않은 상품입니다.'
+            }), 400
 
-        # 검증 성공 응답
+        # 중복 구매 검증 (같은 거래 ID로 이미 구매한 경우)
+        existing_purchase = Purchase.query.filter_by(
+            transaction_id=data['transactionId'],
+            platform=platform
+        ).first()
+        
+        if existing_purchase:
+            return jsonify({
+                'code': 400,
+                'message': '이미 처리된 구매입니다.'
+            }), 400
+
+        try:
+            # user_id를 UUID 객체로 변환
+            user_id = UUID(g.user_id)
+            
+            # 구매 수량 확인 (영수증 검증 결과의 data에서 가져오거나 기본값 1)
+            verification_data = verification_result.get('data', {})
+            quantity = verification_data.get('quantity', data.get('quantity', 1))
+            if not isinstance(quantity, int) or quantity <= 0:
+                quantity = 1
+            
+            # 실제 지급할 보석 수량 계산 (상품 보석 수량 × 구매 수량)
+            total_gem_amount = product.gem_amount * quantity
+            
+            # 영수증 DB 레코드 추가
+            purchase_record = Purchase(
+                user_id=user_id,
+                product_id=data['productId'],
+                transaction_id=data['transactionId'],
+                platform=platform,
+                gem_amount=total_gem_amount,  # 실제 지급할 보석 수량
+                price=product.price * quantity,  # 실제 결제 금액
+                receipt_data=json.dumps(data)  # 원본 데이터 저장
+            )
+            
+            db.session.add(purchase_record)
+            
+            # 사용자 보석 업데이트
+            user = User.query.get(user_id)
+            if not user:
+                return jsonify({
+                    'code': 400,
+                    'message': '사용자를 찾을 수 없습니다.'
+                }), 400
+            
+            # 보석 추가 (수량만큼 곱해서)
+            user.gem_cnt += total_gem_amount
+            
+            # 변경사항 저장
+            db.session.commit()
+            
+            # 검증 성공 응답
+            return jsonify({
+                'code': 200,
+                'data': {
+                    'verified': True,
+                    'platform': platform,
+                    'product_id': data['productId'],
+                    'transaction_id': data['transactionId'],
+                    'quantity': quantity,
+                    'gem_added': total_gem_amount,
+                    'total_gems': user.gem_cnt
+                }
+            }), 200
+            
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({
+                'code': 500,
+                'message': f'구매 처리 중 오류가 발생했습니다: {str(e)}'
+            }), 500
+
+    except Exception as e:
+        return jsonify({
+            'code': 500,
+            'message': f'서버 오류가 발생했습니다: {str(e)}'
+        }), 500
+
+
+@purchase_bp.route('/history', methods=['GET'])
+@jwt_required
+def get_purchase_history():
+    """사용자 구매 내역 조회 API"""
+    try:
+        # user_id를 UUID 객체로 변환
+        user_id = UUID(g.user_id)
+        
+        # 페이지네이션 파라미터
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 20, type=int)
+        
+        # 구매 내역 조회
+        purchases = Purchase.query.filter_by(
+            user_id=user_id
+        ).order_by(Purchase.created_at.desc()).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
+        
+        # 응답 데이터 구성
+        purchase_list = []
+        for purchase in purchases.items:
+            purchase_list.append({
+                'id': str(purchase.id),
+                'product_id': purchase.product_id,
+                'transaction_id': purchase.transaction_id,
+                'platform': purchase.platform,
+                'gem_amount': purchase.gem_amount,
+                'price': purchase.price,
+                'status': purchase.status,
+                'verified_at': purchase.verified_at.isoformat() if purchase.verified_at else None,
+                'created_at': purchase.created_at.isoformat()
+            })
+        
         return jsonify({
             'code': 200,
-            'message': '영수증 검증이 완료되었습니다.',
+            'message': '구매 내역을 조회했습니다.',
             'data': {
-                'verified': True,
-                'platform': platform,
-                'product_id': data['productId'],
-                'transaction_id': data['transactionId']
-                # 보석 추가 게수
-                # 총 보석 개수
+                'purchases': purchase_list,
+                'pagination': {
+                    'page': purchases.page,
+                    'per_page': purchases.per_page,
+                    'total': purchases.total,
+                    'pages': purchases.pages,
+                    'has_next': purchases.has_next,
+                    'has_prev': purchases.has_prev
+                }
             }
         }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'code': 500,
+            'message': f'서버 오류가 발생했습니다: {str(e)}'
+        }), 500
 
+
+@purchase_bp.route('/products', methods=['GET'])
+def get_products():
+    """상품 목록 조회 API"""
+    try:
+        platform = request.args.get('platform', 'all')
+        
+        # 플랫폼별 상품 조회
+        query = Product.query.filter_by(is_active=True)
+        if platform != 'all':
+            query = query.filter_by(platform=platform)
+        
+        products = query.order_by(Product.price.asc()).all()
+        
+        # 응답 데이터 구성
+        product_list = []
+        for product in products:
+            product_list.append({
+                'id': product.id,
+                'product_id': product.product_id,
+                'name': product.name,
+                'description': product.description,
+                'gem_amount': product.gem_amount,
+                'price': product.price,
+                'platform': product.platform
+            })
+        
+        return jsonify({
+            'code': 200,
+            'message': '상품 목록을 조회했습니다.',
+            'data': {
+                'products': product_list
+            }
+        }), 200
+        
     except Exception as e:
         return jsonify({
             'code': 500,

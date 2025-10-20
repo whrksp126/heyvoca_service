@@ -236,3 +236,52 @@ git push origin main
 | **5️⃣ 실제 배포** | `main` 브랜치로 머지 및 배포 | `http://yourproject.com` |
 
 ✅ **이제 개발자는 손쉽게 로컬 환경을 설정하고, 동일한 과정으로 배포할 수 있음!** 🚀🔥
+
+---
+
+## **💎 8. 인앱결제 시스템**
+
+### **📌 구매 관련 기능**
+- **영수증 검증**: iOS App Store, Android Google Play 영수증 검증
+- **상품 관리**: 보석 구매 상품 정보 관리
+- **구매 기록**: 사용자 구매 내역 저장 및 조회
+- **보석 지급**: 구매 성공 시 자동으로 사용자 보석 지급
+
+### **📌 API 엔드포인트**
+| 메서드 | 엔드포인트 | 설명 | 인증 |
+|--------|------------|------|------|
+| `POST` | `/purchase/verify` | 영수증 검증 및 구매 처리 | ✅ |
+| `GET` | `/purchase/history` | 사용자 구매 내역 조회 | ✅ |
+| `GET` | `/purchase/products` | 상품 목록 조회 | ❌ |
+
+### **📌 데이터베이스 테이블**
+- **`product`**: 상품 정보 (보석 수량, 가격, 플랫폼 등)
+- **`purchase`**: 구매 기록 (거래 ID, 영수증 데이터, 보석 수량 등)
+
+### **📌 상품 데이터 초기화**
+```bash
+# 상품 데이터를 DB에 추가
+python init_products.py
+```
+
+### **📌 환경 변수 설정**
+```env
+# Apple App Store
+APPLE_SHARED_SECRET=your_shared_secret
+APPLE_APP_STORE_CONNECT_KEY_ID=your_key_id
+APPLE_APP_STORE_CONNECT_ISSUER_ID=your_issuer_id
+APPLE_APP_STORE_CONNECT_PRIVATE_KEY=your_private_key
+
+# Google Play Console
+GOOGLE_PLAY_SERVICE_ACCOUNT_KEY=path/to/service_account.json
+```
+
+### **📌 구매 플로우**
+1. **앱에서 결제 완료** → 영수증 데이터 생성
+2. **백엔드로 영수증 전송** → `/purchase/verify` API 호출
+3. **스토어 검증** → Apple/Google 서버에서 영수증 검증
+4. **상품 정보 확인** → DB에서 상품 정보 조회
+5. **중복 구매 검증** → 동일 거래 ID 중복 처리 방지
+6. **구매 기록 저장** → `purchase` 테이블에 기록 저장
+7. **보석 지급** → 사용자 `gem_cnt` 업데이트
+8. **응답 반환** → 구매 완료 및 보석 수량 정보 반환

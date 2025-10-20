@@ -3,7 +3,7 @@ from app import db
 from app.routes import mainpage_bp
 from app.utils.jwt_utils import jwt_required
 from uuid import UUID
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 from sqlalchemy.orm import aliased
@@ -477,3 +477,44 @@ def api_today_study_recommend():
         })
 
     return {'code': 200, 'data': data}
+
+
+@mainpage_bp.route('/products', methods=['GET'])
+def api_get_active_products():
+    """활성화된 모든 상품 조회 API"""
+    try:
+        # 활성화된 상품만 조회 (is_active=True)
+        products = db.session.query(Product)\
+            .filter(Product.is_active == True)\
+            .order_by(Product.price.asc())\
+            .all()
+        
+        # 응답 데이터 구성
+        product_list = []
+        for product in products:
+            product_list.append({
+                'id': product.id,
+                'product_id': product.product_id,
+                'name': product.name,
+                'description': product.description,
+                'gem_amount': product.gem_amount,
+                'price': product.price,
+                'platform': product.platform,
+                'bonus': product.bonus,
+                'image_url': product.image_url,
+                'created_at': product.created_at.isoformat() if product.created_at else None,
+                'updated_at': product.updated_at.isoformat() if product.updated_at else None
+            })
+        
+        return jsonify({
+            'code': 200,
+            'data': product_list
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'code': 500,
+            'message': f'서버 오류가 발생했습니다: {str(e)}'
+        }), 500
+
+

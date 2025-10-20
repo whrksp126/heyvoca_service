@@ -335,4 +335,63 @@ class Goals(db.Model):
         self.badge_img = badge_img
 
 
+##############
+# 구매 관련 테이블 #
+##############
+
+# 상품 정보
+class Product(db.Model):
+    __tablename__ = 'product'
+    id = Column(Integer, primary_key=True, nullable=False)
+    product_id = Column(String(100), nullable=False, unique=True)  # 스토어 상품 ID
+    name = Column(String(100), nullable=False)  # 상품명
+    description = Column(String(500), nullable=True)  # 상품 설명
+    gem_amount = Column(Integer, nullable=False)  # 지급할 보석 수량
+    price = Column(Integer, nullable=False)  # 가격 (원)
+    platform = Column(String(20), nullable=False)  # ios, android
+    bonus = Column(Integer, nullable=True, default=0)  # 보너스 보석 수량
+    image_url = Column(String(500), nullable=True)  # 상품 이미지 URL (S3 경로)
+    is_active = Column(Boolean, nullable=False, default=True)  # 판매 여부
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None)
+
+    def __init__(self, product_id, name, description, gem_amount, price, platform, bonus=0, image_url=None, is_active=True):
+        self.product_id = product_id
+        self.name = name
+        self.description = description
+        self.gem_amount = gem_amount
+        self.price = price
+        self.platform = platform
+        self.bonus = bonus
+        self.image_url = image_url
+        self.is_active = is_active
+
+
+# 구매 기록
+class Purchase(db.Model):
+    __tablename__ = 'purchase'
+    id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    product_id = Column(String(100), nullable=False)  # 스토어 상품 ID
+    transaction_id = Column(String(200), nullable=False)  # 스토어 거래 ID
+    platform = Column(String(20), nullable=False)  # ios, android
+    gem_amount = Column(Integer, nullable=False)  # 구매한 보석 수량
+    price = Column(Integer, nullable=False)  # 구매 가격
+    status = Column(String(20), nullable=False, default='completed')  # completed, refunded, failed
+    receipt_data = Column(Text, nullable=True)  # 영수증 원본 데이터
+    verified_at = Column(DateTime, nullable=False, default=datetime.utcnow)  # 검증 완료 시간
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None)
+
+    def __init__(self, user_id, product_id, transaction_id, platform, gem_amount, price, 
+                 status='completed', receipt_data=None):
+        self.user_id = user_id
+        self.product_id = product_id
+        self.transaction_id = transaction_id
+        self.platform = platform
+        self.gem_amount = gem_amount
+        self.price = price
+        self.status = status
+        self.receipt_data = receipt_data
+
 
