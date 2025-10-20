@@ -17,7 +17,7 @@ const handleWebViewMessage = async (
         break;    
       case 'iapPurchase':
         executePurchase(messageData.props.itemId, webViewRef);
-        break;   
+        break;
       case 'setCookie':
         // 웹에서 쿠키 동기화 메시지 받음
         const { name, value, expires } = messageData.props;

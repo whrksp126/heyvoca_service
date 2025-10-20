@@ -20,8 +20,51 @@ let currentWebViewRef: any = null;
 let purchaseUpdateSubscription: any = null;
 let purchaseErrorSubscription: any = null;
 
+// 웹뷰의 전역 함수를 호출하여 토큰 갱신
+const requestTokenRefresh = async (): Promise<boolean> => {
+  try {
+    console.log('웹의 refreshUserToken() 함수 호출 중...');
+    
+    if (!currentWebViewRef?.current) {
+      console.error('WebView ref가 없습니다');
+      return false;
+    }
+
+    // 웹뷰에서 window.refreshUserToken() 실행
+    const script = `
+      (async function() {
+        try {
+          if (typeof window.refreshUserToken === 'function') {
+            const token = await window.refreshUserToken();
+            console.log('토큰 갱신 결과:', token ? '성공' : '실패');
+            return true;
+          } else {
+            console.error('refreshUserToken 함수가 없습니다');
+            return false;
+          }
+        } catch (error) {
+          console.error('토큰 갱신 오류:', error);
+          return false;
+        }
+      })();
+    `;
+
+    // 웹뷰에서 스크립트 실행 (반환값 없이)
+    currentWebViewRef.current.injectJavaScript(script);
+    
+    // 웹이 토큰 갱신하고 AsyncStorage에 저장할 시간 대기 (3초)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    console.log('✅ 토큰 갱신 대기 완료');
+    return true;
+  } catch (error) {
+    console.error('❌ 토큰 갱신 오류:', error);
+    return false;
+  }
+};
+
 // 서버에 영수증 검증 요청
-const verifyPurchaseWithServer = async (purchase: Purchase) => {
+const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Promise<{ success: boolean; data?: any; error?: string; needsRetry?: boolean }> => {
   try {
 
     // const androidPurchase = {
@@ -73,10 +116,10 @@ const verifyPurchaseWithServer = async (purchase: Purchase) => {
       } : {
         // Android Google Play 영수증 검증용
         purchaseToken: purchase.purchaseToken,
-        packageName: purchase.packageNameAndroid,
+        packageName: (purchase as any).packageNameAndroid,
         orderId: purchase.id, // Android에서는 id가 orderId와 동일
-        dataAndroid: purchase.dataAndroid,
-        signatureAndroid: purchase.signatureAndroid,
+        dataAndroid: (purchase as any).dataAndroid,
+        signatureAndroid: (purchase as any).signatureAndroid,
       })
     };
 
@@ -91,6 +134,38 @@ const verifyPurchaseWithServer = async (purchase: Purchase) => {
       body: JSON.stringify(receiptData),
     });
 
+    // 401 에러 처리: 토큰 만료
+    if (response.status === 401) {
+      console.log('401 에러: 액세스 토큰 만료');
+      
+      // 재시도 횟수 체크 (최대 1번만 재시도)
+      if (retryCount >= 1) {
+        console.error('토큰 갱신 후에도 401 에러 발생');
+        return { 
+          success: false, 
+          error: '인증 실패: 로그인이 필요합니다',
+          needsRetry: false
+        };
+      }
+
+      // 웹의 전역 함수로 토큰 갱신 요청
+      console.log('웹에 토큰 갱신 요청...');
+      const refreshSuccess = await requestTokenRefresh();
+      
+      if (!refreshSuccess) {
+        console.error('토큰 갱신 실패');
+        return { 
+          success: false, 
+          error: '토큰 갱신 실패',
+          needsRetry: false
+        };
+      }
+      
+      // 갱신된 토큰으로 재시도
+      console.log('토큰 갱신 완료, 재시도 중...');
+      return verifyPurchaseWithServer(purchase, retryCount + 1);
+    }
+
     if (response.ok) {
       const result = await response.json();
       console.log('서버 검증 성공:', result);
@@ -98,11 +173,19 @@ const verifyPurchaseWithServer = async (purchase: Purchase) => {
     } else {
       const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
       console.error('서버 검증 실패:', response.status, errorData);
-      return { success: false, error: errorData.error || '서버 검증 실패' };
+      return { 
+        success: false, 
+        error: errorData.error || '서버 검증 실패',
+        needsRetry: false
+      };
     }
   } catch (error: any) {
     console.error('서버 검증 요청 실패:', error);
-    return { success: false, error: error.message || '네트워크 오류' };
+    return { 
+      success: false, 
+      error: error.message || '네트워크 오류',
+      needsRetry: false
+    };
   }
 };
 
