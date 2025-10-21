@@ -60,5 +60,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>f38h382jlk.skadnetwork</string>
+		</dict>
+	</array>
 </dict>
 </plist>

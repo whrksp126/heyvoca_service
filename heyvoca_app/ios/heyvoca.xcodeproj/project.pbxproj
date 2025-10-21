@@ -13,6 +13,7 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9B3E75ADAAF6416C9B021F18 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A25B70B470D044439994207D /* Colors.xcassets */; };
+		B57327972E8C0DF700CF59F3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57327962E8C0DF700CF59F3 /* StoreKit.framework */; };
 		F7973FE5E49F45C08483C780 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78EC8998474F4CF580164ECE /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,8 @@
 		78EC8998474F4CF580164ECE /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = heyvoca/BootSplash.storyboard; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = heyvoca/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A25B70B470D044439994207D /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = heyvoca/Colors.xcassets; sourceTree = "<group>"; };
+		B57327962E8C0DF700CF59F3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B57327992E8C124900CF59F3 /* heyvoca.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = heyvoca.storekit; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -37,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-heyvoca.a in Frameworks */,
+				B57327972E8C0DF700CF59F3 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +64,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B57327962E8C0DF700CF59F3 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-heyvoca.a */,
 			);
@@ -76,6 +81,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B57327992E8C124900CF59F3 /* heyvoca.storekit */,
 				13B07FAE1A68108700A75B9A /* heyvoca */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -275,7 +281,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = BB8GGQPRRX;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = heyvoca/Info.plist;
@@ -285,7 +291,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -305,7 +311,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = BB8GGQPRRX;
 				INFOPLIST_FILE = heyvoca/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = heyvoca;
@@ -314,7 +320,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

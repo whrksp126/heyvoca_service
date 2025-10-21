@@ -32,9 +32,9 @@ export const signInWithGoogle = async (webViewRef: any) => {
 
       const data = {
         type: 'google_oauth_app_callback',
-        googleId: userInfo.data.user.id || '',
-        email: userInfo.data.user.email || '',
-        name: userInfo.data.user.name || '',
+        googleId: userInfo.user.id || '',
+        email: userInfo.user.email || '',
+        name: userInfo.user.name || '',
         loginType: 'app',
         status: 200,
       };
