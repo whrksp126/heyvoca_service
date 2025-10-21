@@ -1,12 +1,12 @@
 import React from 'react';
 import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
+import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
 
-const UpdateVocabularySheet = () => {
-  const { handleBack } = useFullSheet();
+const UpdateVocabularySheetNewFullSheet = () => {
+  const { popNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { showVocabularySetBottomSheet, showVocabularyDeleteBottomSheet } = useVocabularySetBottomSheet();
 
@@ -25,7 +25,7 @@ const UpdateVocabularySheet = () => {
 
   if (isVocabularySheetsLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full w-full bg-white">
         <p>로딩 중...</p>
       </div>
     );
@@ -47,7 +47,7 @@ const UpdateVocabularySheet = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full bg-white">
       {/* Header */}
       <div className="
         relative
@@ -57,7 +57,7 @@ const UpdateVocabularySheet = () => {
       ">
         
         <motion.button
-          onClick={handleBack}
+          onClick={popNewFullSheet}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -156,4 +156,5 @@ const UpdateVocabularySheet = () => {
   );
 };
 
-export default UpdateVocabularySheet; 
+export default UpdateVocabularySheetNewFullSheet;
+

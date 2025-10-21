@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh } from '@phosphor-icons/react';
 
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useWordSetBottomSheet } from './WordBottomSheet';
+import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
+import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
-import UpdateVocabularyWords from './UpdateVocabularyWords';
-import MemorizationStatus from "../common/MemorizationStatus";
 
-const VocabularyWords = ({ id }) => {
-
-  const { handleBack } = useFullSheet();
-  const { isVocabularySheetsLoading, getVocabularySheet } = useVocabulary();
-  const { showWordSetBottomSheet } = useWordSetBottomSheet();
-  const { pushFullSheet } = useFullSheet();
+const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { popNewFullSheet } = useNewFullSheet();
+  const { isVocabularySheetsLoading, getVocabularySheet, deleteWord } = useVocabulary();
+  const { showWordSetBottomSheet, showWordDeleteBottomSheet } = useWordSetBottomSheet();
 
   const vocabularySheet = getVocabularySheet(id);
-  console.log("vocabularySheet", vocabularySheet.words);
+
   const buttonVariants = {
     tap: { 
       scale: 0.85,
@@ -33,30 +31,40 @@ const VocabularyWords = ({ id }) => {
 
   if (isVocabularySheetsLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="
+        flex items-center justify-center h-full
+        sm:max-w-[500px] sm:h-[90vh] sm:rounded-[20px] sm:overflow-hidden
+        bg-white dark:bg-[#111]
+      ">
         <p>로딩 중...</p>
       </div>
     );
   }
 
-  const handleEditClick = () => {
-    pushFullSheet({
-      component: <UpdateVocabularyWords id={id} />
-    });
+  // // updatedAt 기준으로 정렬된 단어장 목록
+  // const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
+  //   new Date(b.updatedAt) - new Date(a.updatedAt)
+  // );
+
+  const handleEditClick = (word_id) => {
+    console.log("vocabularySheet_id: ", vocabularySheet.id);
+    console.log("word_id: ", word_id);
+    showWordSetBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
+  };
+
+  const handleDeleteClick = async (word_id) => {
+    showWordDeleteBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
   };
 
   const handleAddClick = () => {
     showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
   };
 
-  const handleCardClick = (id) => {
-    
-  };
-
-  
-
   return (
-    <div className="flex flex-col h-full">
+    <div className="
+      flex flex-col h-full
+      bg-white
+    ">
       {/* Header */}
       <div className="
         relative
@@ -66,7 +74,7 @@ const VocabularyWords = ({ id }) => {
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
-            onClick={handleBack}
+            onClick={popNewFullSheet}
             className="
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]
@@ -100,42 +108,27 @@ const VocabularyWords = ({ id }) => {
             text-[#CCC] dark:text-[#fff]
           "
         >
-          {/* 
           <motion.button 
             className="
-            rounded-[20px]
-              text-[#FF8DD4] text-[20px]
+              h-[30px] px-[12px]
+              border border-[#FF8DD4] rounded-[6px]
+              text-[#FF8DD4] text-[13px] font-[700]
             "
-            variants={buttonVariants}
-            whileTap="tap"
+            whileHover={{ 
+              backgroundColor: 'rgba(255, 141, 212, 0.1)',
+              scale: 1.02
+            }}
+            whileTap={{ 
+              scale: 0.98,
+              backgroundColor: 'rgba(255, 141, 212, 0.2)'
+            }}
             transition={{ 
               type: "spring", 
-              stiffness: 500, 
-              damping: 15
+              stiffness: 400, 
+              damping: 17
             }}
-            onClick={handleEditClick}
-            aria-label="단어장 편집"
-          >
-            <PencilSimple />
-          </motion.button> 
-          */}
-          <motion.button 
-            className="
-            rounded-[20px]
-              text-[#FF8DD4] text-[20px]
-            "
-            variants={buttonVariants}
-            whileTap="tap"
-            transition={{ 
-              type: "spring", 
-              stiffness: 500, 
-              damping: 15
-            }}
-            onClick={handleAddClick}
-            aria-label="새 단어 추가"
-          >
-            <Plus />
-          </motion.button>
+          >선택 삭제</motion.button>
+          
         </div>
       </div>
 
@@ -155,7 +148,8 @@ const VocabularyWords = ({ id }) => {
               
               <div 
                 className="
-                  flex flex-col gap-[10px] flex-1
+                  flex flex-col gap-[10px]
+                  w-full
                 "
               >
                 <div className="flex flex-wrap">
@@ -253,84 +247,52 @@ const VocabularyWords = ({ id }) => {
                   </motion.span>
                 </div>
               </div>
-              <div>
-                {MemorizationStatus({repetition: item.repetition, interval: item.interval, ef: item.ef})}
-              </div>
-
-              {/* 
               <div className="
                 flex gap-[8px]
               text-[#FF8DD4] text-[20px]
               ">
-                <button onClick={() => getTextSound(item.origin, "en")}>
-                  <SpeakerHigh weight="fill" />
-                </button>
-              </div> 
-              */}
+                <motion.button 
+                  className="
+                  rounded-[20px]
+                    text-[#FF8DD4] text-[20px]
+                  "
+                  variants={buttonVariants}
+                  whileTap="tap"
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 500, 
+                    damping: 15
+                  }}
+                  onClick={() => handleEditClick(item.id)}
+                  aria-label="단어 편집"
+                >
+                  <PencilSimple/>
+                </motion.button>
+                <motion.button 
+                className="
+                rounded-[20px]
+                  text-[red] text-[20px]
+                "
+                variants={buttonVariants}
+                whileTap="tap"
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 500, 
+                  damping: 15
+                }}
+                onClick={() => handleDeleteClick(item.id)}
+                aria-label="단어 삭제"
+                >
+                  <Trash/>
+                </motion.button>
+              </div>
             </li>
           )
         })}
-
-
-
-
-        {/* {sortedVocabularySheets.map((item, index) => {
-          return (
-            <li
-              key={item.id}
-              style={{ backgroundColor: item.color.background }}
-              className="
-                flex gap-[15px] items-start
-                p-[20px]
-                rounded-[12px]
-              "
-            >
-              <div 
-              className="
-                top
-                flex flex-col
-                w-full
-              "
-            >
-              <h3 className="text-[16px] font-[700]">{item.title}</h3>
-              <span className="text-[10px] font-[400] text-[#999]">{item.memorized}/{item.total}</span>
-            </div>
-
-            <div className="flex items-center gap-[8px]">
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants(item.color.sub)}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => handleEditClick(item.id, index)}
-                aria-label="단어장 편집"
-              >
-                <PencilSimple size={18} color={item.color.main} />
-              </motion.button>
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants('#ff00004d')}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => handleDeleteClick(item.id, index)}
-                aria-label="단어장 삭제"
-              >
-                <Trash size={18} color="red" />
-              </motion.button>
-            </div>
-          </li>
-        )})} */}
       </div>
     </div>
   );
 };
 
-export default VocabularyWords;   
+export default UpdateVocabularyWordsNewFullSheet;
+

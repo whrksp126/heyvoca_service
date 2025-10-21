@@ -8,7 +8,8 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 
-import { useFullSheet } from '../../context/FullSheetContext';
+// import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
 import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
@@ -20,8 +21,10 @@ import { IconBell, IconBellRingingFill } from '../../assets/svg/icon';
 import { getLastSeenTime, setLastSeenTime } from '../../utils/badgeStorage';
 import { shouldShowDot, getOverdueCount } from '../../utils/badgeCalc';
 
-import StoreSheet from './StoreSheet';
-import TodayStudySheet from './TodayStudySheet';
+// import StoreSheet from './StoreSheet';
+// import TodayStudySheet from './TodayStudySheet';
+import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
+import TodayStudyNewFullSheet from '../newfullsheet/TodayStudyNewFullSheet';
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {
@@ -115,7 +118,8 @@ const Main = () => {
   const todayStatus = getTodayStatus();
 
   const total = useCallback(vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0), [vocabularySheets]);
-  const { pushFullSheet } = useFullSheet();
+  // const { pushFullSheet } = useFullSheet();
+  const { pushNewFullSheet } = useNewFullSheet();
 
   // 시간이 흐르면 상태가 바뀌니까 가벼운 폴링(60초)
   useEffect(() => {
@@ -188,8 +192,9 @@ const Main = () => {
   }, [showTooltip]);
 
   const handleStoreButtonClick = () => {
-    pushFullSheet({
-      component: <StoreSheet />
+    pushNewFullSheet(StoreNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
     });
   }
 
@@ -210,8 +215,9 @@ const Main = () => {
 
   const handleTodayStudyButtonClick = () => {
     console.log('오늘의 학습 버튼 클릭');
-    pushFullSheet({
-      component: <TodayStudySheet />
+    pushNewFullSheet(TodayStudyNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
     });
   }
 

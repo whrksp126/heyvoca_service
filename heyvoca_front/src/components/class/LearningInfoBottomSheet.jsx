@@ -2,11 +2,11 @@ import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 import { useNavigate } from 'react-router-dom';
-import { useFullSheet } from '../../context/FullSheetContext';
-import VocabularySheet from './VocabularySheet';
+// import { useFullSheet } from '../../context/FullSheetContext';
+// import VocabularySheet from './VocabularySheet';
 
 export const useLearningInfoBottomSheet = () => {
-  const { pushFullSheet } = useFullSheet();
+  // const { pushFullSheet } = useFullSheet();
   const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
   const navigate = useNavigate();
   const handleClose = useCallback(() => {

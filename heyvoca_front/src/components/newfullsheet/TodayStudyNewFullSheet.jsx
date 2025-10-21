@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, WarningCircle } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,9 +9,9 @@ import SpeechBubbleTailImg from '../../assets/images/SpeechBubbleTailImg.png';
 import { useLearningInfoBottomSheet } from '../class/LearningInfoBottomSheet';
 import { useBottomSheet } from '../../context/BottomSheetContext';
 
-const TodayStudy = () => {
+const TodayStudyNewFullSheet = () => {
   const navigate = useNavigate();
-  const { handleBack: handleFullSheetBack, handleReset: handleFullSheetReset, pushFullSheet } = useFullSheet();
+  const { popNewFullSheet, closeNewFullSheet } = useNewFullSheet();
   const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
 
   const [wordCount, setWordCount] = React.useState(10);
@@ -25,7 +25,7 @@ const TodayStudy = () => {
       setTimeout(() => {
         showLearningInfoBottomSheet({testType: 'today'});
         handleFunction('onStartTest', (props) => {
-          handleFullSheetReset();
+          closeNewFullSheet();
           handleBottomSheetBack();
           navigate('/take-test', {
             state: {
@@ -53,7 +53,7 @@ const TodayStudy = () => {
       updated_at : null,
       created_at : null,
     });
-    handleFullSheetReset();
+    closeNewFullSheet();
     navigate('/take-test', { 
       state: { 
         data: { 
@@ -68,7 +68,10 @@ const TodayStudy = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="
+      flex flex-col h-full w-full
+      bg-white
+    ">
       {/* Header */}
       <div className="
         relative
@@ -78,7 +81,7 @@ const TodayStudy = () => {
       ">
         
         <motion.button
-          onClick={handleFullSheetBack}
+          onClick={popNewFullSheet}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -226,4 +229,5 @@ const TodayStudy = () => {
   );
 };
 
-export default TodayStudy; 
+export default TodayStudyNewFullSheet;
+

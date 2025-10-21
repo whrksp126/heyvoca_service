@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
-import VocabularySheet from './VocabularySheet';
-import TestSetup from './TestSetup';
+// import VocabularySheet from './VocabularySheet';
+import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
+// import TestSetup from './TestSetup';
 import { useLearningInfoBottomSheet } from './LearningInfoBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
@@ -31,7 +33,8 @@ const Main = () => {
   // const today = new Date("2025-05-01");
   // const updated = updateSM2(word, q, today);
 
-  const { pushFullSheet } = useFullSheet();
+  // const { pushFullSheet } = useFullSheet();
+  const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading, recentStudy } = useVocabulary();
   const { showLearningInfoBottomSheet, handleFunction} = useLearningInfoBottomSheet();
   const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
@@ -55,16 +58,18 @@ const Main = () => {
         console.log("onCancel", props);
         handleBottomSheetBack();
         setTimeout(() => {
-          pushFullSheet({
-            component: <VocabularySheet testType={props.testType} />
+          pushNewFullSheet(VocabularySheetNewFullSheet, { testType: props.testType }, {
+            smFull: true,
+            closeOnBackdropClick: true
           });
         }, 300);
       });
       return;
     }else{
 
-      pushFullSheet({
-        component: <VocabularySheet testType={testType} />
+      pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
+        smFull: true,
+        closeOnBackdropClick: true
       });
   
     }

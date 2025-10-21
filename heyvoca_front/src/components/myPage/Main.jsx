@@ -3,45 +3,53 @@ import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight } fr
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
-import Account from './Account';
-import Theme from './Theme';
-import ExampleSettings from './ExampleSettings';
-import PushNotifications from './PushNotifications';
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+// import Account from './Account';
+// import Theme from './Theme';
+// import ExampleSettings from './ExampleSettings';
+// import PushNotifications from './PushNotifications';
+import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
+import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
+import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
+import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
 
 const Main = () => {
   const { userProfile } = useUser();
-  const { pushFullSheet } = useFullSheet();
+  const { pushNewFullSheet } = useNewFullSheet();
 
   
 
   // 계정
   const handleAccountClick = () => {
-    pushFullSheet({
-      component: <Account />
+    pushNewFullSheet(AccountNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
     });
   }
 
-  // 테마
-  const handleThemeClick = () => {
-    pushFullSheet({
-      component: <Theme />
-    });
-  }
+  // // 테마
+  // const handleThemeClick = () => {
+  //   pushNewFullSheet(ThemeNewFullSheet, {}, {
+  //     smFull: true,
+  //     closeOnBackdropClick: true
+  //   });
+  // }
 
-  // 예문 설정
-  const handleExampleSettingsClick = () => {
-    pushFullSheet({
-      component: <ExampleSettings />
-    });
-  }
+  // // 예문 설정
+  // const handleExampleSettingsClick = () => {
+  //   pushNewFullSheet(ExampleSettingsNewFullSheet, {}, {
+  //     smFull: true,
+  //     closeOnBackdropClick: true
+  //   });
+  // }
 
-  // 푸시 알림
-  const handlePushNotificationsClick = () => {
-    pushFullSheet({
-      component: <PushNotifications />
-    });
-  }
+  // // 푸시 알림
+  // const handlePushNotificationsClick = () => {
+  //   pushNewFullSheet(PushNotificationsNewFullSheet, {}, {
+  //     smFull: true,
+  //     closeOnBackdropClick: true
+  //   });
+  // }
 
   return (
     <motion.main 

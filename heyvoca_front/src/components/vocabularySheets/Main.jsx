@@ -4,12 +4,15 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useFullSheet } from '../../context/FullSheetContext';
-import VocabularyWords from './VocabularyWords';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+// import VocabularyWords from './VocabularyWords';
+import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 
 const Main = () => {
 
   const navigate = useNavigate();
   const { pushFullSheet } = useFullSheet();
+  const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   
   // Hook은 항상 조건부 return 전에 호출되어야 합니다
@@ -37,8 +40,9 @@ const Main = () => {
   );
 
   const handleCardClick = (id) => {
-    pushFullSheet({
-      component: <VocabularyWords id={id} />
+    pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, {
+      smFull: true,
+      closeOnBackdropClick: true
     });
   };
 

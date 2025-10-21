@@ -1,6 +1,6 @@
 // src/App.jsx
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Home from './pages/Home';
@@ -16,6 +16,8 @@ import MyPage from './pages/myPage';
 
 import { BottomSheetProvider } from './context/BottomSheetContext';
 import { FullSheetProvider } from './context/FullSheetContext';
+import { NewFullSheetProvider as NewFullSheetContextProvider, NewFullSheetContext } from './context/NewFullSheetContext';
+import { NewFullSheetProvider } from './components/newfullsheet/NewFullSheetProvider';
 import Layout from './components/Layout';
 import { VocabularyProvider } from './context/VocabularyContext';
 import { UserProvider } from './context/UserContext';
@@ -55,18 +57,33 @@ const AppLayout = () => {
   );
 };
 
+// NewFullSheetContext를 전역에 등록하기 위한 컴포넌트
+function AppWithContexts() {
+  const newFullSheetContext = useContext(NewFullSheetContext);
+  
+  // NewFullSheetContext를 전역에 등록
+  window.newFullSheetContext = newFullSheetContext;
+  
+  return (
+    <Layout>
+      <BottomSheetProvider>
+        <FullSheetProvider>
+          <AppLayout />
+          <NewFullSheetProvider />
+        </FullSheetProvider>
+      </BottomSheetProvider>
+    </Layout>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <UserProvider>
         <VocabularyProvider>
-          <Layout>
-            <BottomSheetProvider>
-              <FullSheetProvider>
-                <AppLayout />
-              </FullSheetProvider>
-            </BottomSheetProvider>
-          </Layout>
+          <NewFullSheetContextProvider>
+            <AppWithContexts />
+          </NewFullSheetContextProvider>
         </VocabularyProvider>
       </UserProvider>
     </BrowserRouter>

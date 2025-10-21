@@ -1,13 +1,13 @@
 import React from 'react';
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import gem from '../../assets/images/gem.png';
 import { useUser } from '../../context/UserContext';
-import { useStoreBuyItemBottomSheet } from './StoreBuyItemBottomSheet';
+import { useStoreBuyItemBottomSheet } from '../home/StoreBuyItemBottomSheet';
 
-const StoreSheet = () => {
-  const { handleBack } = useFullSheet();
+const StoreNewFullSheet = () => {
+  const { popNewFullSheet } = useNewFullSheet();
   const { gemItems } = useUser();
   const { userProfile } = useUser();
   const { showStoreBuyItemBottomSheet } = useStoreBuyItemBottomSheet();
@@ -18,7 +18,11 @@ const StoreSheet = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="
+      flex flex-col 
+      w-full h-full
+      bg-white
+    ">
       {/* Header */}
       <div className="
         relative
@@ -28,7 +32,7 @@ const StoreSheet = () => {
       ">
         
         <motion.button
-          onClick={handleBack}
+          onClick={popNewFullSheet}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -96,4 +100,5 @@ const StoreSheet = () => {
   );
 };
 
-export default StoreSheet; 
+export default StoreNewFullSheet;
+

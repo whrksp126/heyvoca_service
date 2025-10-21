@@ -2,14 +2,15 @@ import React from 'react';
 import { Plus, PencilSimple } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
-import { useFullSheet } from '../../context/FullSheetContext';
-import UpdateVocabularySheet from './UpdateVocabularySheet';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+// import UpdateVocabularySheet from './UpdateVocabularySheet';
+import UpdateVocabularySheetNewFullSheet from '../newfullsheet/UpdateVocabularySheetNewFullSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
 
 const Header = () => {
   const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
-  const { pushFullSheet } = useFullSheet();
+  const { pushNewFullSheet } = useNewFullSheet();
   const { userProfile } = useUser();
 
   const buttonVariants = {
@@ -38,8 +39,9 @@ const Header = () => {
   };
 
   const handleEditClick = () => {
-    pushFullSheet({
-      component: <UpdateVocabularySheet />
+    pushNewFullSheet(UpdateVocabularySheetNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
     });
   };
 

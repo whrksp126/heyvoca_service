@@ -1,20 +1,20 @@
 import React from 'react';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useFullSheet } from '../../context/FullSheetContext';
-import TestSetup from './TestSetup';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+// import TestSetup from '../class/TestSetup';
 import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
-import { useTestSetupBottomSheet } from './TestSetupBottomSheet';
+import { useTestSetupBottomSheet } from '../class/TestSetupBottomSheet';
 
-const VocabularySheet = ({testType}) => {
-  const { handleBack } = useFullSheet();
+const VocabularySheetNewFullSheet = ({testType}) => {
+  const { popNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  const { pushFullSheet } = useFullSheet();
   const { showTestSetupBottomSheet } = useTestSetupBottomSheet();
+  
   if (isVocabularySheetsLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full w-full bg-white">
         <p>로딩 중...</p>
       </div>
     );
@@ -49,7 +49,7 @@ const VocabularySheet = ({testType}) => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full bg-white">
       {/* Header */}
       <div className="
         relative
@@ -59,7 +59,7 @@ const VocabularySheet = ({testType}) => {
       ">
         
         <motion.button
-          onClick={handleBack}
+          onClick={popNewFullSheet}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -226,4 +226,5 @@ const VocabularySheet = ({testType}) => {
   );
 };
 
-export default VocabularySheet; 
+export default VocabularySheetNewFullSheet;
+
