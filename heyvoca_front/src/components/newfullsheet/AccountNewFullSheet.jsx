@@ -4,16 +4,24 @@ import { CaretLeft, SignOut } from '@phosphor-icons/react';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { motion } from 'framer-motion';
 import google from '../../assets/images/google_logo.png'; 
-import { useLogoutBottomSheet } from '../myPage/LogoutBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { LogoutNewBottomSheet } from '../newBottomSheet/LogoutNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 
 const AccountNewFullSheet = () => {
-  const { showLogOutBottomSheet } = useLogoutBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   const { popNewFullSheet } = useNewFullSheet();
   const { userProfile } = useUser();
   
   const handleLogout = () => {
-    showLogOutBottomSheet();
+    pushNewBottomSheet(
+      LogoutNewBottomSheet,
+      {},
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      }
+    );
   }
 
 

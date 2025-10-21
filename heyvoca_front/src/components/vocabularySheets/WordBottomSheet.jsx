@@ -1,13 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Check, Plus, CaretDown, Pencil, Trash } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import './WordBottomSheet.css';
 
 export const useWordSetBottomSheet = () => {
-  const { pushBottomSheet, handleBack } = useBottomSheet();
+  const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheet();
   const { addWord, updateWord, getWord, deleteWord } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
@@ -21,7 +21,7 @@ export const useWordSetBottomSheet = () => {
   });
 
   const handleClose = useCallback(() => {
-    handleBack();
+    popNewBottomSheet();
     currentStateRef.current = {
       mode: 'add',
       vocabularyId: null,
@@ -30,7 +30,7 @@ export const useWordSetBottomSheet = () => {
       meanings: [],
       examples: [],
     };
-  }, [handleBack]);
+  }, [popNewBottomSheet]);
 
   const handleAdd = useCallback(async (data) => {
     try {
@@ -101,17 +101,18 @@ export const useWordSetBottomSheet = () => {
       examples: newExamples,
     };
 
-    pushBottomSheet(
-      <AddWordSheet 
-        id={id}
-        vocabularyId={vocabularyId || currentStateRef.current.vocabularyId}
-        dictionaryId={dictionaryId || currentStateRef.current.dictionaryId}
-        origin={newOrigin}
-        meanings={newMeanings}
-        examples={newExamples}
-        onCancel={handleClose}
-        onSet={newMode === 'add' ? handleAdd : handleEdit}
-      />,
+    pushNewBottomSheet(
+      AddWordSheet,
+      {
+        id: id,
+        vocabularyId: vocabularyId || currentStateRef.current.vocabularyId,
+        dictionaryId: dictionaryId || currentStateRef.current.dictionaryId,
+        origin: newOrigin,
+        meanings: newMeanings,
+        examples: newExamples,
+        onCancel: handleClose,
+        onSet: newMode === 'add' ? handleAdd : handleEdit
+      },
       {
         isBackdropClickClosable: true,
         isDragToCloseEnabled: false
@@ -121,15 +122,16 @@ export const useWordSetBottomSheet = () => {
   
   const showWordDeleteBottomSheet = useCallback(({vocabularyId=null, id=null}) => {
     
-    pushBottomSheet(
-      <DeleteWordSheet 
-        vocabularyId={vocabularyId}
-        id={id}
-        onCancel={handleClose}
-        onDelete={handleDelete}
-      />
+    pushNewBottomSheet(
+      DeleteWordSheet,
+      {
+        vocabularyId: vocabularyId,
+        id: id,
+        onCancel: handleClose,
+        onDelete: handleDelete
+      }
     );
-  }, [handleClose, pushBottomSheet]);
+  }, [handleClose, pushNewBottomSheet]);
 
   return {
     showWordSetBottomSheet,
@@ -138,7 +140,7 @@ export const useWordSetBottomSheet = () => {
   };
 };
 
-const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, examples, onCancel, onSet }) => {
+export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, examples, onCancel, onSet }) => {
   console.log("examples: ", examples);
   const [wordData, setWordData] = useState({
     id: id,
@@ -665,7 +667,7 @@ const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, example
   );
 }; 
 
-const DeleteWordSheet = ({ vocabularyId, id, onCancel, onDelete }) => {
+export const DeleteWordSheet = ({ vocabularyId, id, onCancel, onDelete }) => {
   return (
     <div className="">
       <div className="

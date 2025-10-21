@@ -5,12 +5,13 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
-import { useTestSetupBottomSheet } from '../class/TestSetupBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 
 const VocabularySheetNewFullSheet = ({testType}) => {
   const { popNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  const { showTestSetupBottomSheet } = useTestSetupBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   
   if (isVocabularySheetsLoading) {
     return (
@@ -30,22 +31,37 @@ const VocabularySheetNewFullSheet = ({testType}) => {
     if(id === "all") {
       const maxVocabularyCount = vocabularySheets.slice(0, MAX_TEST_VOCABULARY_COUNT).reduce((sum, sheet) => sum + sheet.words.length, 0);
       if(maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`); 
-      showTestSetupBottomSheet({id, maxVocabularyCount, testType});
+      pushNewBottomSheet(
+        TestSetupNewBottomSheet,
+        {
+          maxVocabularyCount: maxVocabularyCount,
+          vocabularySheetId: id,
+          testType: testType
+        },
+        {
+          isBackdropClickClosable: false,
+          isDragToCloseEnabled: true
+        }
+      );
       return;
     }else{
       const words = sortedVocabularySheets.find(vocabularySheet => vocabularySheet.id === id).words;
       const vocabularySheetLength = words.slice(0, MAX_TEST_VOCABULARY_COUNT).length;
       if(vocabularySheetLength < MIN_TEST_VOCABULARY_COUNT) return alert(`단어장에 단어가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
       const maxVocabularyCount = Math.min(vocabularySheetLength, MAX_TEST_VOCABULARY_COUNT);
-      showTestSetupBottomSheet({id, maxVocabularyCount, testType});
-      
+      pushNewBottomSheet(
+        TestSetupNewBottomSheet,
+        {
+          maxVocabularyCount: maxVocabularyCount,
+          vocabularySheetId: id,
+          testType: testType
+        },
+        {
+          isBackdropClickClosable: false,
+          isDragToCloseEnabled: true
+        }
+      );
     }
-
-
-
-    // pushFullSheet({
-    //   component: <TestSetup vocabularySheetId={id} maxVocabularyCount={maxVocabularyCount} />
-    // });
   };
 
   return (

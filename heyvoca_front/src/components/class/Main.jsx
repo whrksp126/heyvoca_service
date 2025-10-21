@@ -1,15 +1,15 @@
 import React from 'react';
 import { motion, AnimatePresence } from "framer-motion";
-import { useFullSheet } from '../../context/FullSheetContext';
+// import { useFullSheet } from '../../context/FullSheetContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 // import VocabularySheet from './VocabularySheet';
-import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
+import VocabularySheetNewFullSheet from '../newFullSheet/VocabularySheetNewFullSheet';
 // import TestSetup from './TestSetup';
-import { useLearningInfoBottomSheet } from './LearningInfoBottomSheet';
+import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useNavigate } from 'react-router-dom';
 const Main = () => {
   const navigate = useNavigate();
@@ -36,34 +36,41 @@ const Main = () => {
   // const { pushFullSheet } = useFullSheet();
   const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading, recentStudy } = useVocabulary();
-  const { showLearningInfoBottomSheet, handleFunction} = useLearningInfoBottomSheet();
-  const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
+  const { clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheet();
 
   const handleStartClick = (testType) => {
     const isLearning = recentStudy[testType]?.status === "learning";
     if(isLearning){
       // 이어학습 유무 확인
-      showLearningInfoBottomSheet({testType});
-      handleFunction('onStartTest', (props) => {
-        console.log("onStartTest", props);
-        handleBottomSheetReset();
-        navigate('/take-test', {
-          state: {
-            testType: props.testType
+      pushNewBottomSheet(
+        LearningInfoNewBottomSheet,
+        {
+          onCancel: (props) => {
+            console.log("onCancel", props);
+            popNewBottomSheet();
+            setTimeout(() => {
+              pushNewFullSheet(VocabularySheetNewFullSheet, { testType: props.testType }, {
+                smFull: true,
+                closeOnBackdropClick: true
+              });
+            }, 300);
+          },
+          onSet: (props) => {
+            console.log("onStartTest", props);
+            clearNewBottomSheetStack();
+            navigate('/take-test', {
+              state: {
+                testType: props.testType
+              }
+            });
           }
-        });
-      });
-
-      handleFunction('onCancel', (props) => {
-        console.log("onCancel", props);
-        handleBottomSheetBack();
-        setTimeout(() => {
-          pushNewFullSheet(VocabularySheetNewFullSheet, { testType: props.testType }, {
-            smFull: true,
-            closeOnBackdropClick: true
-          });
-        }, 300);
-      });
+        },
+        {
+          isBackdropClickClosable: false,
+          isDragToCloseEnabled: true
+        }
+      );
       return;
     }else{
 

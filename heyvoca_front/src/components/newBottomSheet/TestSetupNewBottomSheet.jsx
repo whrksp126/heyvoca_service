@@ -2,78 +2,12 @@ import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
-import { useFullSheet } from '../../context/FullSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 
-export const useTestSetupBottomSheet = () => {
-  const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
-  const { handleReset: handleFullSheetReset } = useFullSheet();
-  const navigate = useNavigate();
-  const { vocabularySheets, recentStudy, updateRecentStudy } = useVocabulary();
-  const [questionType, setQuestionType] = useState('multipleChoice');
-  const [vocabularySheetId, setVocabularySheetId] = useState(null);
-  const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
-
-  const handleStartTest = useCallback(async (data) => {
-    const testType = data.testType;
-
-    console.log(testType, "testType")
-
-    if(recentStudy.status === "learning") {
-
-    }
-
-    // MEMO : testType : test, exam, today
-    await updateRecentStudy(testType, {
-      ...recentStudy[testType],
-      progress_index : null,
-      type: testType,
-      status: null,
-      study_data: null,
-      updated_at : null,
-      created_at : null,
-    });
-    
-    // await updateRecentStudy({
-    //   ...recentStudy,
-    //   progress_index : null,
-    //   type: null,
-    //   status: null,
-    //   study_data: null,
-    //   updated_at : null,
-    //   created_at : null,
-    // });
-    handleBottomSheetReset();
-    handleFullSheetReset();
-    navigate('/take-test', { state: { data, testType } });
-  }, [recentStudy, questionType, vocabularySheetId, handleBack, navigate]);
-
-  // const showTestSetupBottomSheet = useCallback(({questionType, vocabularySheetId, maxVocabularyCount}) => {
-  const showTestSetupBottomSheet = useCallback(({id:vocabularySheetId, maxVocabularyCount, testType}) => {
-    // setQuestionType(questionType);
-    console.log("testType", testType)
-    setVocabularySheetId(vocabularySheetId);
-    pushBottomSheet(
-      <TestSetupBottomSheet 
-        maxVocabularyCount={maxVocabularyCount}
-        onCancel={handleClose}
-        onSet={(data) => handleStartTest({...data, vocabularySheetId: vocabularySheetId, testType: testType})}
-      />,
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
-      }
-    );
-  }, [handleClose, handleStartTest, pushBottomSheet]);
-
-  return {
-    showTestSetupBottomSheet
-  };
-};
+// Hook 제거 - 직접 컴포넌트 사용
 
 
 
@@ -141,7 +75,7 @@ function getOriginFilterTypeLabel(type) {
   }
 }
 
-const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
+export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType}) => {
   const [questionType, setQuestionType] = useState('multipleChoice');
   const [memoryState, setMemoryState] = useState('unlearned');
   // const [initialViewType, setInitialViewType] = useState('origin');
@@ -154,6 +88,40 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
     // originFilterType: [],
     count: []
   });
+
+  const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheet();
+  const { clearStack: clearNewFullSheetStack } = useNewFullSheet();
+  const navigate = useNavigate();
+  const { recentStudy, updateRecentStudy } = useVocabulary();
+
+  const handleClose = useCallback(() => {
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
+
+  const handleStartTest = useCallback(async (data) => {
+    const testTypeData = testType || data.testType;
+
+    console.log(testTypeData, "testType")
+
+    if(recentStudy.status === "learning") {
+
+    }
+
+    // MEMO : testType : test, exam, today
+    await updateRecentStudy(testTypeData, {
+      ...recentStudy[testTypeData],
+      progress_index : null,
+      type: testTypeData,
+      status: null,
+      study_data: null,
+      updated_at : null,
+      created_at : null,
+    });
+    
+    clearNewBottomSheetStack();
+    clearNewFullSheetStack();
+    navigate('/take-test', { state: { data, testType: testTypeData } });
+  }, [recentStudy, testType, navigate, clearNewBottomSheetStack, clearNewFullSheetStack, updateRecentStudy]);
 
   const setCountFun = useCallback((value) => {
     if(value < MIN_TEST_VOCABULARY_COUNT){
@@ -347,7 +315,7 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={onCancel || handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -363,7 +331,14 @@ const TestSetupBottomSheet = ({onCancel, onSet, maxVocabularyCount}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() => onSet(getTestSetupData())}
+          onClick={() => {
+            const data = getTestSetupData();
+            if (onSet) {
+              onSet({...data, vocabularySheetId: vocabularySheetId, testType: testType});
+            } else {
+              handleStartTest({...data, vocabularySheetId: vocabularySheetId, testType: testType});
+            }
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

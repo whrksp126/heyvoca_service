@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, BoxArrowDown } from '@phosphor-icons/react';
-import { useLevelBookListBottomSheet } from './BookStoreBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { InitialProfilePreviewBookStoreNewBottomSheet } from '../newBottomSheet/InitialProfileBookStoreNewBottomSheet';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const [levelBookList, setLevelBookList] = useState([]);
   const [isLevelBookListLoading, setIsLevelBookListLoading] = useState(true);
-  const { showVocabularySheetPreviewBottomSheet } = useLevelBookListBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   const { getBookStoreVocabularySheet } = useVocabulary();
   useEffect(() => {
     getLevelBookList();
@@ -43,7 +44,17 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   }
 
   const handleBookStoreClick = (index) => {
-    showVocabularySheetPreviewBottomSheet(levelBookList[index], addVocabularySheet);
+    pushNewBottomSheet(
+      InitialProfilePreviewBookStoreNewBottomSheet,
+      {
+        vocabularySheet: levelBookList[index],
+        onSet: addVocabularySheet
+      },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: false
+      }
+    );
   };
 
   const buttonVariants = {

@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, SpeakerHigh, BookOpenText, WarningCircle, HandsClapping } from "@phosphor-icons/react";
 import { getTextSound } from '../../utils/common';
-import { useProblemDataBottomSheet } from './ProblemDataBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import { updateSM2, analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 
@@ -24,7 +25,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isFetching, setIsFetching] = useState(false);
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
-  const { showProblemDataBottomSheet } = useProblemDataBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   const { updateWord, updateRecentStudy, recentStudy, setRecentStudy, updateWordState, updateRecentStudyState } = useVocabulary();
   const [isSuspicious, setIsSuspicious] = useState(null);
 
@@ -181,9 +182,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 힌트 데이터 표시
   const handleClickProblemHintData = () => {
     const question = testQuestions[progressIndex];
-    showProblemDataBottomSheet({
-      options: question.options
-    });
+    pushNewBottomSheet(
+      ProblemDataNewBottomSheet,
+      {
+        options: question.options
+      },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: false
+      }
+    );
   }
 
   // 문제 완료 시 처리

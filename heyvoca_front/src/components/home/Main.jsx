@@ -23,8 +23,8 @@ import { shouldShowDot, getOverdueCount } from '../../utils/badgeCalc';
 
 // import StoreSheet from './StoreSheet';
 // import TodayStudySheet from './TodayStudySheet';
-import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
-import TodayStudyNewFullSheet from '../newfullsheet/TodayStudyNewFullSheet';
+import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
+import TodayStudyNewFullSheet from '../newFullSheet/TodayStudyNewFullSheet';
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {

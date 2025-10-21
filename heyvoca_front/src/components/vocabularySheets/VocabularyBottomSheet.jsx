@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 export const VOCABULARY_COLORS = [
@@ -48,7 +48,7 @@ const getColorSet = (mainColor) => {
 };
 
 export const useVocabularySetBottomSheet = () => {
-  const { pushBottomSheet, handleBack } = useBottomSheet();
+  const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheet();
   const { addVocabularySheet, updateVocabularySheet, deleteVocabularySheet, vocabularySheets } = useVocabulary();
 
   // 모든 상태를 추적하기 위한 ref
@@ -60,14 +60,14 @@ export const useVocabularySetBottomSheet = () => {
   });
 
   const handleClose = useCallback(() => {
-    handleBack();
+    popNewBottomSheet();
     currentStateRef.current = {
       mode: 'add',
       vocabularyId: null,
       vocabularyTitle: "",
       selectedColor: VOCABULARY_COLORS[0].value
     };
-  }, [handleBack]);
+  }, [popNewBottomSheet]);
 
   const handleAdd = useCallback(async (data) => {
     try {
@@ -137,15 +137,16 @@ export const useVocabularySetBottomSheet = () => {
       selectedColor: newColor
     };
 
-    pushBottomSheet(
-      <AddVocabularySheet 
-        id={id}
-        title={newTitle}
-        selectedColor={newColor}
-        setSelectedColor={handleColorChange}
-        onCancel={handleClose}
-        onSet={newMode === 'add' ? handleAdd : handleEdit}
-      />,
+    pushNewBottomSheet(
+      AddVocabularySheet,
+      {
+        id,
+        title: newTitle,
+        selectedColor: newColor,
+        setSelectedColor: handleColorChange,
+        onCancel: handleClose,
+        onSet: newMode === 'add' ? handleAdd : handleEdit
+      },
       {
         isBackdropClickClosable: false,
         isDragToCloseEnabled: true
@@ -155,11 +156,12 @@ export const useVocabularySetBottomSheet = () => {
 
   const showVocabularyDeleteBottomSheet = useCallback((id) => {
     currentStateRef.current.vocabularyId = id;
-    pushBottomSheet(
-      <DeleteVocabularySheet id={id} onCancel={handleClose} onDelete={handleDelete} />,
+    pushNewBottomSheet(
+      DeleteVocabularySheet,
+      { id, onCancel: handleClose, onDelete: handleDelete },
       { isBackdropClickClosable: false, isDragToCloseEnabled: true }
     );
-  }, [handleClose, pushBottomSheet]);
+  }, [handleClose, pushNewBottomSheet]);
 
   return {
     showVocabularySetBottomSheet,
@@ -168,7 +170,7 @@ export const useVocabularySetBottomSheet = () => {
   };
 };
 
-const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
+export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
   const nameInputRef = useRef(null);
   const [currentColor, setCurrentColor] = useState(selectedColor);
 
@@ -326,7 +328,7 @@ const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCance
   );
 }; 
 
-const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
+export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
   return (
     <div className="">
       <div className="

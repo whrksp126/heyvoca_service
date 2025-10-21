@@ -1,39 +1,25 @@
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 
-export const useContinueLearningBottomSheet = () => {
-  const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
-  const navigate = useNavigate();
+// Hook 제거 - 직접 컴포넌트 사용
+
+
+export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
+  const { popNewBottomSheet } = useNewBottomSheet();
+
   const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
 
+  const handleSet = useCallback(() => {
+    if (onSet) {
+      onSet();
+    } else {
+      console.log("이어학습 클릭함");
+    }
+  }, [onSet]);
 
-  const showContinueLearningBottomSheet = useCallback(() => {
-    pushBottomSheet(
-      <ContinueLearningBottomSheet 
-        onCancel={handleClose}
-        onSet={() => {
-          console.log("이어학습 클릭함")
-        }}
-      />,
-
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
-      }
-    );
-  }, [handleClose]);
-
-  return {
-    showContinueLearningBottomSheet
-  };
-};
-
-
-const ContinueLearningBottomSheet = ({onCancel, onSet}) => {
   return (
     <div className="">
       <div>
@@ -61,7 +47,7 @@ const ContinueLearningBottomSheet = ({onCancel, onSet}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={onCancel || handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -77,7 +63,7 @@ const ContinueLearningBottomSheet = ({onCancel, onSet}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() => onSet()}
+          onClick={handleSet}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

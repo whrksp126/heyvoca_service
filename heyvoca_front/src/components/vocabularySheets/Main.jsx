@@ -3,15 +3,15 @@ import { PencilSimple, Trash, Leaf, Plant, Carrot, EggCrack } from '@phosphor-ic
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useFullSheet } from '../../context/FullSheetContext';
+// import { useFullSheet } from '../../context/FullSheetContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import VocabularyWords from './VocabularyWords';
-import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
+import VocabularyWordsNewFullSheet from '../newFullSheet/VocabularyWordsNewFullSheet';
 
 const Main = () => {
 
   const navigate = useNavigate();
-  const { pushFullSheet } = useFullSheet();
+  // const { pushFullSheet } = useFullSheet();
   const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   

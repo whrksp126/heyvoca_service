@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { BoxArrowDown, Plus } from "@phosphor-icons/react";
-import { useBookStoreBottomSheet } from "./BookStoreBottomSheet";
+import { useNewBottomSheet } from "../../hooks/useNewBottomSheet";
+import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/BookStoreNewBottomSheet";
 const Main = () => {
-  const { isBookStoreLoading, bookStore } = useVocabulary();
-  const { showBookStorePreviewBottomSheet } = useBookStoreBottomSheet();
+  const { isBookStoreLoading, bookStore, getBookStoreVocabularySheet } = useVocabulary();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   
   if (isBookStoreLoading) {
     return (
@@ -15,7 +16,17 @@ const Main = () => {
   }
 
   const handleBookStoreClick = (id) => {
-    showBookStorePreviewBottomSheet(id);
+    const bookStoreVocabularySheet = getBookStoreVocabularySheet(id);
+    pushNewBottomSheet(
+      PreviewBookStoreNewBottomSheet,
+      {
+        bookStoreVocabularySheet: bookStoreVocabularySheet
+      },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: false
+      }
+    );
   };
 
   return (

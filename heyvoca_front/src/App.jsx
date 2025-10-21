@@ -14,10 +14,13 @@ import StudyResult from './components/takeTest/StudyResult';
 
 import MyPage from './pages/myPage';
 
-import { BottomSheetProvider } from './context/BottomSheetContext';
-import { FullSheetProvider } from './context/FullSheetContext';
+// import { BottomSheetProvider } from './context/BottomSheetContext';
+// import { FullSheetProvider } from './context/FullSheetContext';
 import { NewFullSheetProvider as NewFullSheetContextProvider, NewFullSheetContext } from './context/NewFullSheetContext';
-import { NewFullSheetProvider } from './components/newfullsheet/NewFullSheetProvider';
+import { NewFullSheetProvider } from './components/newFullSheet/NewFullSheetProvider';
+
+import { NewBottomSheetProvider as NewBottomSheetContextProvider, NewBottomSheetContext } from './context/NewBottomSheetContext';
+import { NewBottomSheetProvider } from './components/newBottomSheet/NewBottomSheetProvider';
 import Layout from './components/Layout';
 import { VocabularyProvider } from './context/VocabularyContext';
 import { UserProvider } from './context/UserContext';
@@ -60,18 +63,21 @@ const AppLayout = () => {
 // NewFullSheetContext를 전역에 등록하기 위한 컴포넌트
 function AppWithContexts() {
   const newFullSheetContext = useContext(NewFullSheetContext);
+  const newBottomSheetContext = useContext(NewBottomSheetContext);
   
   // NewFullSheetContext를 전역에 등록
   window.newFullSheetContext = newFullSheetContext;
+  window.newBottomSheetContext = newBottomSheetContext;
   
   return (
     <Layout>
-      <BottomSheetProvider>
-        <FullSheetProvider>
+      {/* <BottomSheetProvider> */}
+        {/* <FullSheetProvider> */}
           <AppLayout />
           <NewFullSheetProvider />
-        </FullSheetProvider>
-      </BottomSheetProvider>
+          <NewBottomSheetProvider />
+        {/* </FullSheetProvider> */}
+      {/* </BottomSheetProvider> */}
     </Layout>
   );
 }
@@ -82,7 +88,9 @@ function App() {
       <UserProvider>
         <VocabularyProvider>
           <NewFullSheetContextProvider>
-            <AppWithContexts />
+            <NewBottomSheetContextProvider>
+              <AppWithContexts />
+            </NewBottomSheetContextProvider>
           </NewFullSheetContextProvider>
         </VocabularyProvider>
       </UserProvider>

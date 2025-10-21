@@ -1,36 +1,20 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 
-export const useProblemDataBottomSheet = () => {
-  const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
+// Hook 제거 - 직접 컴포넌트 사용
+
+
+export const ProblemDataNewBottomSheet = ({onCancel, options}) => {
+  const { popNewBottomSheet } = useNewBottomSheet();
+
   const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
 
-  const showProblemDataBottomSheet = useCallback(({options}) => {
-    pushBottomSheet(
-      <ProblemDataBottomSheet 
-        onCancel={handleClose}
-        options={options}
-      />,
-      {
-        isBackdropClickClosable: true,
-        isDragToCloseEnabled: false
-      }
-    );
-  }, [handleClose]);
-
-  return {
-    showProblemDataBottomSheet
-  };
-};
-
-
-const ProblemDataBottomSheet = ({onCancel, options}) => {
   return (
     <div className="">
       <div>
@@ -88,7 +72,7 @@ const ProblemDataBottomSheet = ({onCancel, options}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={onCancel || handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -1,59 +1,24 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
-import { useVocabulary } from '../../context/VocabularyContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { getTextSound } from '../../utils/common';
 
-export const useBookStoreBottomSheet = () => {
-  const { pushBottomSheet, handleBack, reset } = useBottomSheet();
-  const { getBookStoreVocabularySheet, bookStore, addBookStoreVocabularySheet } = useVocabulary();
+// Hook 제거 - 직접 컴포넌트 사용
+
+export const InitialProfilePreviewBookStoreNewBottomSheet = ({vocabularySheet, onCancel, onSet }) => {
+  const { popNewBottomSheet } = useNewBottomSheet();
 
   const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
 
-  const handleAdd = useCallback(async (bookStoreVocabularySheetId) => {
-    try {
-      const bookStoreVocabularySheet = getBookStoreVocabularySheet(bookStoreVocabularySheetId);  
-      await addBookStoreVocabularySheet(bookStoreVocabularySheet);
-      reset();
-    } catch (error) {
-      console.error('단어장 추가 실패:', error);
+  const handleSet = useCallback(() => {
+    if (onSet) {
+      onSet();
     }
-  }, [handleClose, getBookStoreVocabularySheet, bookStore]);
+  }, [onSet]);
 
-  const showBookStoreAddBottomSheet = useCallback((bookStoreVocabularySheetId) => {
-    const bookStoreVocabularySheet = getBookStoreVocabularySheet(bookStoreVocabularySheetId);
-    pushBottomSheet(
-      <AddBookStore name={bookStoreVocabularySheet.name} onCancel={handleClose} onSet={() => handleAdd(bookStoreVocabularySheetId)} />,
-      { isBackdropClickClosable: false, isDragToCloseEnabled: true }
-    );
-  }, [bookStore, pushBottomSheet, handleClose]);
-
-  const showBookStorePreviewBottomSheet = useCallback((BookStoreVocabularySheetId) => {
-    const bookStoreVocabularySheet = getBookStoreVocabularySheet(BookStoreVocabularySheetId);
-    pushBottomSheet(
-      <PreviewBookStore 
-        bookStoreVocabularySheet={bookStoreVocabularySheet}
-        onCancel={handleClose}
-        onSet={() => showBookStoreAddBottomSheet(BookStoreVocabularySheetId)}
-      />,
-      {
-        isBackdropClickClosable: true,
-        isDragToCloseEnabled: false
-      }
-    );
-  }, [handleClose, showBookStoreAddBottomSheet, bookStore]);
-
-  return {
-    showBookStorePreviewBottomSheet,
-    showBookStoreAddBottomSheet,
-  };
-};
-
-const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
-  console.log("bookStoreVocabularySheet", bookStoreVocabularySheet)
   return (
     <div className="relative">
       <div>
@@ -77,10 +42,10 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
             flex items-center gap-[5px]
             text-[16px] font-[700] text-[#111]
           ">
-            {bookStoreVocabularySheet.category && (
+            {vocabularySheet.category && (
               <div 
                 style={{
-                  backgroundColor: bookStoreVocabularySheet.color.main
+                  backgroundColor: vocabularySheet.color.main
                 }}
               className="
                 py-[3px] px-[6px]
@@ -88,22 +53,22 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
                 text-[8px] font-[700] text-[#fff]
               "
             >
-                {bookStoreVocabularySheet.category} 
+                {vocabularySheet.category} 
               </div>
             )}
-            {bookStoreVocabularySheet.name}
+            {vocabularySheet.name}
           </div>
           <div className="text-[12px] font-[400] text-[#111]">
-            {bookStoreVocabularySheet.words.length}개의 단어
+            {vocabularySheet.words.length}개의 단어
           </div>
         </div>
         <div className="flex flex-col gap-[10px] flex-1">
-          {bookStoreVocabularySheet.words.map((item, word_index) => {
+          {vocabularySheet.words.map((item, word_index) => {
           return item.meanings === null || item.origin === null ? null : (
           <li
             key={item.id}
             style={{
-              backgroundColor: bookStoreVocabularySheet.color.background
+              backgroundColor: vocabularySheet.color.background
             }}
             className="
               flex gap-[10px] items-start
@@ -213,7 +178,7 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
             </div>
             <div 
               style={{
-                color: bookStoreVocabularySheet.color.main
+                color: vocabularySheet.color.main
               }}
               className="
                 flex gap-[8px]
@@ -240,7 +205,7 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={onCancel || handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -250,7 +215,7 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
         >취소</motion.button>
         <motion.button 
           style={{
-            backgroundColor: bookStoreVocabularySheet.color.main
+            backgroundColor: vocabularySheet.color.main
           }}
           className="
             flex-1
@@ -258,7 +223,7 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onSet}
+          onClick={handleSet}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -270,59 +235,3 @@ const PreviewBookStore = ({bookStoreVocabularySheet, onCancel, onSet }) => {
     </div>
   );
 }; 
-
-const AddBookStore = ({ name, onCancel, onSet }) => {
-  
-
-  return (
-    <div className="">
-      <div className="
-        flex flex-col gap-[15px] items-center justify-center 
-        pt-[40px] px-[20px] pb-[10px]
-      ">
-        <h3 className="
-          text-[18px] font-[700] text-center
-          whitespace-normal
-          break-words
-        ">{name}을 내 단어장에 추가하시겠어요?</h3>
-        <p className="text-[14px] font-[400] text-[#111]">
-        추가 후에는 내 단어장에서 수정 가능해요 😉
-        </p>
-      </div>
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
-          className="
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
-          "
-          onClick={onCancel}
-          whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
-            damping: 15
-          }}
-        >취소</motion.button>
-        <motion.button 
-          className="
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-[#FF8DD4]
-            text-[#fff] text-[16px] font-[700]
-          "
-          onClick={onSet}
-          whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
-            damping: 15
-          }}
-        >추가</motion.button>
-      </div>
-    </div>
-  );
-};

@@ -1,42 +1,24 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import { useFlyingAnimation } from '../../context/GemAnimationContext';
 import postMessageManager from '../../utils/postMessageManager';
 
-export const useStoreBuyItemBottomSheet = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { pushBottomSheet, handleBack } = useBottomSheet();
-  const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
-
-  const showStoreBuyItemBottomSheet = useCallback(({options}) => {
-    pushBottomSheet(
-      <StoreBuyItemBottomSheet 
-        onCancel={handleClose}
-        options={options}
-      />,
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: false
-      }
-    );
-  }, [handleClose]);
-
-  return {
-    showStoreBuyItemBottomSheet
-  };
-};
+// Hook 제거 - 직접 컴포넌트 사용
 
 
-const StoreBuyItemBottomSheet = ({onCancel, options}) => {
+export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [purchaseResult, setPurchaseResult] = useState(null);
   const [error, setError] = useState(null);
   const { setUserProfile } = useUser();
   const { triggerFlyingAnimation } = useFlyingAnimation();
+  const { popNewBottomSheet } = useNewBottomSheet();
+
+  const handleClose = useCallback(() => {
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
   useEffect(() => {
     // 결제 성공 콜백 등록
     const handlePurchaseSuccess = (data) => {
@@ -146,7 +128,7 @@ const StoreBuyItemBottomSheet = ({onCancel, options}) => {
               text-[#fff] text-[16px] font-[700]
               bg-[#FF8DD4]
             `}
-            onClick={purchaseResult?.verified ?  onConfirm : onCancel}
+            onClick={purchaseResult?.verified ?  onConfirm : (onCancel || handleClose)}
             whileTap={{ scale: 0.95 }}
             transition={{ 
               type: "spring", 

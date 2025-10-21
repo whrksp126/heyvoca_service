@@ -1,64 +1,27 @@
 import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useNavigate } from 'react-router-dom';
 // import { useFullSheet } from '../../context/FullSheetContext';
 // import VocabularySheet from './VocabularySheet';
 
-export const useLearningInfoBottomSheet = () => {
-  // const { pushFullSheet } = useFullSheet();
-  const { pushBottomSheet, handleBack, handleReset: handleBottomSheetReset } = useBottomSheet();
-  const navigate = useNavigate();
+// Hook 제거 - 직접 컴포넌트 사용
+
+
+
+export const LearningInfoNewBottomSheet = ({onCancel, onSet}) => {
+  const { popNewBottomSheet } = useNewBottomSheet();
+
   const handleClose = useCallback(() => {
-    handleBack();
-  }, [handleBack]);
+    popNewBottomSheet();
+  }, [popNewBottomSheet]);
 
-  const callbacksRef = useRef({});
-
-  // 콜백 저장 (key별)
-  const handleFunction = useCallback((key, cb) => {
-    callbacksRef.current[key] = cb;
-  }, []);
-
-  // 콜백 실행 (key별)
-  const runCallback = useCallback((key, props) => {
-    if (callbacksRef.current[key]) {
-      callbacksRef.current[key](props);
+  const handleSet = useCallback(() => {
+    if (onSet) {
+      onSet();
     }
-  }, []);
+  }, [onSet]);
 
-  const handleStartTest = useCallback(async (props) => {
-    runCallback('onStartTest', props); 
-  }, [handleBottomSheetReset, navigate, runCallback]);
-
-  const handleCancel = (props) => {
-    runCallback('onCancel', props);
-  }
-
-  const showLearningInfoBottomSheet = useCallback(({testType}) => {
-    pushBottomSheet(
-      <LearningInfoBottomSheet 
-        onCancel={() => handleCancel({testType: testType})}
-        onSet={() => handleStartTest({testType: testType})}
-      />,
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
-      }
-    );
-  }, [handleClose, handleStartTest, pushBottomSheet]);
-
-  return {
-    showLearningInfoBottomSheet,
-    handleFunction, // (key, cb) 형태로 사용
-    runCallback,    // (key) 형태로 사용
-  };
-};
-
-
-
-const LearningInfoBottomSheet = ({onCancel, onSet}) => {
-  
   return (
     <div className="">
       <div>
@@ -93,7 +56,7 @@ const LearningInfoBottomSheet = ({onCancel, onSet}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={onCancel || handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -109,7 +72,7 @@ const LearningInfoBottomSheet = ({onCancel, onSet}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() => onSet()}
+          onClick={handleSet}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

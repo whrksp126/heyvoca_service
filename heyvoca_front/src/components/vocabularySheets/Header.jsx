@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import UpdateVocabularySheet from './UpdateVocabularySheet';
-import UpdateVocabularySheetNewFullSheet from '../newfullsheet/UpdateVocabularySheetNewFullSheet';
+import UpdateVocabularySheetNewFullSheet from '../newFullSheet/UpdateVocabularySheetNewFullSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
 

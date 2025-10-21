@@ -8,10 +8,10 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
 // import PushNotifications from './PushNotifications';
-import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
-import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
-import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
-import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
+import AccountNewFullSheet from '../newFullSheet/AccountNewFullSheet';
+// import ThemeNewFullSheet from '../newFullSheet/ThemeNewFullSheet';
+// import ExampleSettingsNewFullSheet from '../newFullSheet/ExampleSettingsNewFullSheet';
+// import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
 
 const Main = () => {
   const { userProfile } = useUser();

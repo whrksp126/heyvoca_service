@@ -4,17 +4,27 @@ import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import gem from '../../assets/images/gem.png';
 import { useUser } from '../../context/UserContext';
-import { useStoreBuyItemBottomSheet } from '../home/StoreBuyItemBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { StoreBuyItemNewBottomSheet } from '../newBottomSheet/StoreBuyItemNewBottomSheet';
 
 const StoreNewFullSheet = () => {
   const { popNewFullSheet } = useNewFullSheet();
   const { gemItems } = useUser();
   const { userProfile } = useUser();
-  const { showStoreBuyItemBottomSheet } = useStoreBuyItemBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
 
   const handleGemClick = (id) => {
     window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'iapPurchase', 'props': {itemId: id}}));
-    showStoreBuyItemBottomSheet({options: {productId: id, image_url: gemItems.find(gem => gem.product_id === id).image_url}})
+    pushNewBottomSheet(
+      StoreBuyItemNewBottomSheet,
+      {
+        options: {productId: id, image_url: gemItems.find(gem => gem.product_id === id).image_url}
+      },
+      {
+        isBackdropClickClosable: false,
+        isDragToCloseEnabled: false
+      }
+    );
   }
 
   return (

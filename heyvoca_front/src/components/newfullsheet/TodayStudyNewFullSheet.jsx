@@ -6,37 +6,44 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
 import HeyQuestionImg from '../../assets/images/HeyQuestionImg.png';
 import SpeechBubbleTailImg from '../../assets/images/SpeechBubbleTailImg.png';
-import { useLearningInfoBottomSheet } from '../class/LearningInfoBottomSheet';
-import { useBottomSheet } from '../../context/BottomSheetContext';
+import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 
 const TodayStudyNewFullSheet = () => {
   const navigate = useNavigate();
   const { popNewFullSheet, closeNewFullSheet } = useNewFullSheet();
-  const { handleReset: handleBottomSheetReset, handleBack: handleBottomSheetBack } = useBottomSheet();
+  const { clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheet();
 
   const [wordCount, setWordCount] = React.useState(10);
   const [showWarning, setShowWarning] = React.useState(false);
   const {  recentStudy, updateRecentStudy } = useVocabulary();
-  const { showLearningInfoBottomSheet, handleFunction } = useLearningInfoBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheet();
   
 
   useEffect(() => {
     if(recentStudy && recentStudy['today'] && recentStudy['today'].status === "learning") {
       setTimeout(() => {
-        showLearningInfoBottomSheet({testType: 'today'});
-        handleFunction('onStartTest', (props) => {
-          closeNewFullSheet();
-          handleBottomSheetBack();
-          navigate('/take-test', {
-            state: {
-              testType: props.testType
+        pushNewBottomSheet(
+          LearningInfoNewBottomSheet,
+          {
+            onCancel: (props) => {
+              popNewBottomSheet();
+            },
+            onSet: (props) => {
+              closeNewFullSheet();
+              clearNewBottomSheetStack();
+              navigate('/take-test', {
+                state: {
+                  testType: props.testType
+                }
+              });
             }
-          });
-        });
-  
-        handleFunction('onCancel', (props) => {
-          handleBottomSheetBack();
-        });
+          },
+          {
+            isBackdropClickClosable: false,
+            isDragToCloseEnabled: true
+          }
+        );
       }, 300);
       return;
     }
