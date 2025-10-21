@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useNavigation } from '../contexts/NavigationContext';
 
 import HomeScreen from '../screens/HomeScreen';
+import OCRScreen from '../screens/OCRScreen';
 
 
 const AppNavigator = () => {
@@ -14,6 +15,8 @@ const AppNavigator = () => {
     switch (currentScreen) {
       case 'home':
           return <HomeScreen />;
+      case 'ocr-camera':
+          return <OCRScreen />;
     default:
       return <HomeScreen />;
     }

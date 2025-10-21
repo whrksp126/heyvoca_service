@@ -16,8 +16,10 @@ interface NavigationProviderProps {
 
 export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => {
   const [currentScreen, setCurrentScreen] = useState('home');
+  // const [currentScreen, setCurrentScreen] = useState('ocr-camera'); // OCR 테스트를 위해 직접 OCR 화면으로 시작
   const [navigationParams, setNavigationParams] = useState<any>({});
   const [navigationHistory, setNavigationHistory] = useState<string[]>(['home']);
+  // const [navigationHistory, setNavigationHistory] = useState<string[]>(['ocr-camera']); // OCR 테스트를 위해 직접 OCR 화면으로 시작
 
   const navigate = (screen: string, params?: any) => {
     setNavigationHistory(prev => [...prev, screen]);
