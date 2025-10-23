@@ -38,28 +38,20 @@ if (typeof window !== 'undefined') {
 
 // 토스트 메시지 표시 함수
 export async function showToast(message) {
-  if (DEVICE_DATA().OS === 'BROWSER') {
+  if (getDevicePlatform() === 'web') {
     createWebToast(message);
   } else {
     // Android/iOS에서는 WEBVIEW_API_MAP 사용
-    if(!WEBVIEW_API_MAP[DEVICE_DATA().OS] || !WEBVIEW_API_MAP[DEVICE_DATA().OS].show_toast){
-      setWebViewApiMap();
-    }
-    await WEBVIEW_API_MAP[DEVICE_DATA().OS].show_toast(message);
+    await window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'showToast', 'props': {message: message}}));
   }
 }
 
 // 앱 종료 함수
 export async function closeApp() {
-  if (DEVICE_DATA().OS === 'BROWSER') {
-    // 웹에서는 창 닫기
+  if (getDevicePlatform() === 'web') {
     window.close();
   } else {
-    if(!WEBVIEW_API_MAP[DEVICE_DATA().OS] || !WEBVIEW_API_MAP[DEVICE_DATA().OS].close_app){
-      setWebViewApiMap();
-    }
-    // Android/iOS에서는 WEBVIEW_API_MAP 사용
-    await WEBVIEW_API_MAP[DEVICE_DATA().OS].close_app();
+    await window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'closeApp'}));
   }
 }
 
@@ -71,32 +63,19 @@ let appExitTimeout = null;
 export function onBackPressed() {
   const currentPath = AppHistory.getCurrentPath();
   
-  // 1. Alert이 열려있으면 Alert pop
-  if (window.alertContext && window.alertContext.stack.length > 0) {
-    window.alertContext.popAlert();
+  if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
+    window.newBottomSheetContext.popNewBottomSheet();
     return;
   }
   
-  // 2. ImagePreview가 열려있으면 pop
-  if (window.imagePreviewContext && window.imagePreviewContext.stack.length > 0) {
-    window.imagePreviewContext.popImagePreview();
-    return;
-  }
   
-  // 3. Modal이 열려있으면 Modal pop
-  if (window.modalContext && window.modalContext.stack.length > 0) {
-    window.modalContext.popModal();
-    return;
-  }
-  
-  // 4. HamburgerOverlay가 열려있으면 닫기
-  if (window.hamburgerOverlayContext && window.hamburgerOverlayContext.isHamburgerOpen) {
-    window.hamburgerOverlayContext.closeHamburger();
+  if (window.newFullSheetContext && window.newFullSheetContext.stack.length > 0) {
+    window.newFullSheetContext.popNewFullSheet();
     return;
   }
   
   // 5. 앱 종료가 필요한 상황인지 확인 (정규식 사용)
-  const shouldExitApp = /^\/(home|login|reviewNote|diyExam|voca)\/?$/.test(currentPath);
+  const shouldExitApp = /^\/(home|vocabulary-sheets|book-store|class|mypage)\/?$/.test(currentPath);
   
   if (shouldExitApp) {
     // 앱 종료가 필요한 상황에서는 더블탭 방식

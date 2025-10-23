@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export const LearningInfoNewBottomSheet = ({onCancel, onSet}) => {
+export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
   const { popNewBottomSheet } = useNewBottomSheet();
 
   const handleClose = useCallback(() => {
@@ -18,9 +18,9 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet}) => {
 
   const handleSet = useCallback(() => {
     if (onSet) {
-      onSet();
+      onSet({testType});
     }
-  }, [onSet]);
+  }, [onSet, testType]);
 
   return (
     <div className="">

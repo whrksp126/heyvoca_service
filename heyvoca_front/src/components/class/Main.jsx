@@ -46,6 +46,7 @@ const Main = () => {
       pushNewBottomSheet(
         LearningInfoNewBottomSheet,
         {
+          testType,
           onCancel: (props) => {
             console.log("onCancel", props);
             popNewBottomSheet();

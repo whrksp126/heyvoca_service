@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 
-const Header = () => {
+const Header = ({ testType }) => {
   const { recentStudy } = useVocabulary();
   const navigate = useNavigate();
+
+
+  console.log(recentStudy);
 
   const handleBackClick = () => {
     if (window.confirm('학습을 종료하시겠습니까?')) {
@@ -52,7 +55,7 @@ const Header = () => {
       </div>
       <div className="center">
         <h2 className='text-[18px] font-[700] leading-[21px]'>
-          {recentStudy.type ===  "test" ? "학습" : "테스트"}
+          {testType ===  "today" ? "오늘의 학습" : testType === "test" ? "학습" : "테스트"}
         </h2>
       </div>
       <div className="right">

@@ -255,7 +255,7 @@ const TakeTest = () => {
   
     return (
       <div>
-        <Header />
+        <Header testType={state?.testType ? state.testType : recentStudy[state.testType]?.type} />
         <Main 
           testQuestions={testQuestions} 
           setTestQuestions={setTestQuestions} 

@@ -21,15 +21,18 @@ const TodayStudyNewFullSheet = () => {
   
 
   useEffect(() => {
+    console.log(recentStudy);
     if(recentStudy && recentStudy['today'] && recentStudy['today'].status === "learning") {
       setTimeout(() => {
         pushNewBottomSheet(
           LearningInfoNewBottomSheet,
           {
+            testType: 'today',
             onCancel: (props) => {
               popNewBottomSheet();
             },
             onSet: (props) => {
+              console.log(props);
               closeNewFullSheet();
               clearNewBottomSheetStack();
               navigate('/take-test', {
@@ -47,7 +50,7 @@ const TodayStudyNewFullSheet = () => {
       }, 300);
       return;
     }
-  }, [recentStudy]);
+  }, []);
 
   const handleStart = async () => {
 
