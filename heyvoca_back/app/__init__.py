@@ -33,6 +33,7 @@ def create_app():
       "http://localhost:3000",
       "http://10.0.2.2:3000",
       "http://192.168.0.11:3000",
+      "http://192.168.45.28:3000",
   ], supports_credentials=True)
 
   
