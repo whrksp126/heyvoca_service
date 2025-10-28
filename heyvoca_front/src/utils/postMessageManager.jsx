@@ -90,10 +90,29 @@ class PostMessageManager {
   }
 
   /**
+   * 인앱 결제 실패 콜백 등록
+   * @param {Function} callback - 결제 실패 처리 콜백 함수
+   */
+  setupIAPPurchaseError(callback) {
+    // 포스트메시지 매니저 초기화
+    this.init();
+    
+    // 인앱 결제 실패 콜백 리스너 등록
+    this.addListener('iap_purchase_error', callback);
+  }
+
+  /**
    * 인앱 결제 성공 콜백 제거
    */
   removeIAPPurchaseSuccess() {
     this.removeListener('iap_purchase_success');
+  }
+
+  /**
+   * 인앱 결제 실패 콜백 제거
+   */
+  removeIAPPurchaseError() {
+    this.removeListener('iap_purchase_error');
   }
 
   /**

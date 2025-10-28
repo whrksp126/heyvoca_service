@@ -59,9 +59,13 @@ export const NewFullSheetProvider = () => {
       {(visible || phase === 'exit') && (
         <motion.div
           key="newFullSheet-backdrop"
-          className="fixed inset-0 bg-[#42424266] z-50 flex items-center justify-center backdrop-blur-[5px]"
-          initial={phase === 'enter' ? { opacity: 0 } : {}}
-          animate={{ opacity: phase === 'exit' ? 0 : 1 }}
+          className="
+            fixed z-50 
+            flex items-center justify-center 
+            inset-0
+          "
+          // initial={phase === 'enter' ? { opacity: 0 } : {}}
+          // animate={{ opacity: phase === 'exit' ? 0 : 1 }}
         >
           {renderedStack.map((newFullSheet, index) => {
             const shouldRender = index === renderedActiveIndex || newFullSheet.options.keepInDOM;

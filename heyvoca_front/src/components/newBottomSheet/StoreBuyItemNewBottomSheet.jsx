@@ -38,19 +38,21 @@ export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
       }
     };
 
-    // 결제 실패 콜백 등록 (필요시)
+    // 결제 실패 콜백 등록
     const handlePurchaseError = (data) => {
       console.log('결제 실패 데이터:', data);
       setError(data.data || '결제 중 오류가 발생했습니다.');
       setIsLoading(false);
+      handleClose();
     };
 
     // 포스트메시지 리스너 등록
     postMessageManager.setupIAPPurchaseSuccess(handlePurchaseSuccess);
-    
+    postMessageManager.setupIAPPurchaseError(handlePurchaseError);
     // 컴포넌트 언마운트 시 리스너 정리
     return () => {
       postMessageManager.removeIAPPurchaseSuccess();
+      postMessageManager.removeIAPPurchaseError();
     };
   }, []);
 

@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { BoxArrowDown, Plus } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react";
 import { useNewBottomSheet } from "../../hooks/useNewBottomSheet";
 import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/BookStoreNewBottomSheet";
+import gem from "../../assets/images/gem.png";
 const Main = () => {
   const { isBookStoreLoading, bookStore, getBookStoreVocabularySheet } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheet();
@@ -79,8 +80,8 @@ const Main = () => {
                   <h2 className="font-[700] text-[16px] text-[#111]">{item.name}</h2>
                 </div>
                 <div className="flex items-end justify-between">
-                  <span className="flex items-center gap-[2px] text-[10px] text-[#999]">
-                    <BoxArrowDown size={12} /> {item.downloads}
+                  <span className="flex items-center gap-[2px] text-[14px] font-[600] text-[#111]">
+                    <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
                   </span>
                   <div 
                     style={{ 

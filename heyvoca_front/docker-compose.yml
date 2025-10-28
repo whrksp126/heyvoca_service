@@ -1,23 +1,42 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  front-end:
-    container_name: heyvoca_front
-    image: whrksp126/heyvoca_front:main
+  front-prod:
+    image: whrksp126/heyvoca_front:prod
+    container_name: heyvoca_front_prod
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
-      args:
-        - NODE_ENV=staging
+      platforms: [linux/amd64]
+      args:                           # ← 빌드 타임에만 쓰임 (Vite용)
+        VITE_BACKEND_URL: https://heyvoca-back.ghmate.com
+        VITE_DEBUG: "false"
+        NODE_ENV: production
     ports:
       - "3000:80"
-    env_file:
-      - .env
-    networks:
-      - heyvoca_front_network
     restart: unless-stopped
 
-networks:
-  heyvoca_front_network:
-    driver: bridge
+
+
+# version: '3.8'
+
+# services:
+#   front-end:
+#     container_name: heyvoca_front
+#     image: whrksp126/heyvoca_front:main
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#       target: production
+#       args:
+#         - NODE_ENV=staging
+#     ports:
+#       - "3000:80"
+#     env_file:
+#       - .env
+#     networks:
+#       - heyvoca_front_network
+#     restart: unless-stopped
+
+# networks:
+#   heyvoca_front_network:
+#     driver: bridge

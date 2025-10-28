@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 
 export const NewBottomSheetProvider = () => {
-  const { stack, handleBack, handleExitComplete } = useNewBottomSheet();
+  const { stack, handleBack, handleExitComplete, clearStack, popNewBottomSheet } = useNewBottomSheet();
   const [renderedStack, setRenderedStack] = useState([]);
   const [renderedActiveIndex, setRenderedActiveIndex] = useState(-1);
   const [phase, setPhase] = useState('idle');
@@ -22,13 +22,16 @@ export const NewBottomSheetProvider = () => {
   const handleBackdropClick = (e) => {
     const currentSheet = stack[stack.length - 1];
     if (currentSheet?.options?.isBackdropClickClosable !== false) {
-      handleBack();
+      // handleBack();
+      popNewBottomSheet();
+
     }
   };
 
   const handleDragEnd = (event, info, newBottomSheet) => {
     if (newBottomSheet.options.isDragToCloseEnabled && (info.offset.y > 100 || info.velocity.y > 300)) {
-      handleBack();
+      // handleBack();
+      popNewBottomSheet();
     }
   };
 
