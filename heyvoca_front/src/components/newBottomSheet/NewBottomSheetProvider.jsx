@@ -103,6 +103,10 @@ export const NewBottomSheetProvider = () => {
                   after:h-[101vh] 
                   after:bg-white
                 "
+                initial={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
+                animate={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                style={newBottomSheet.options?.hidden ? { pointerEvents: 'none' } : undefined}
                 drag={newBottomSheet.options?.isDragToCloseEnabled ? "y" : false}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0.4}

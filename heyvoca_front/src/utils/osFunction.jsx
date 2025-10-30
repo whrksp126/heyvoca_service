@@ -118,5 +118,5 @@ export function onBackPressed() {
 }
 
 // window.is_backable = is_backable;
-window.onBackPressed = onBackPressed;
+window.onBackPressed = onBackPressed
 

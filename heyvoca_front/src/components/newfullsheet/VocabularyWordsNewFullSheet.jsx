@@ -2,19 +2,23 @@ import React, { useState } from 'react';
 import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
+// import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 import UpdateVocabularyWordsNewFullSheet from './UpdateVocabularyWordsNewFullSheet';
 import MemorizationStatus from "../common/MemorizationStatus";
+// import DeleteWordNewBottomSheet from '../newBottomSheet/DeleteWordNewBottomSheet';
+import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
+import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 
 const VocabularyWordsNewFullSheet = ({ id }) => {
 
   const { popNewFullSheet, pushNewFullSheet } = useNewFullSheet();
   const { isVocabularySheetsLoading, getVocabularySheet } = useVocabulary();
-  const { showWordSetBottomSheet } = useWordSetBottomSheet();
-
+  // const { showWordSetBottomSheet } = useWordSetBottomSheet();
+  const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheet();
   const vocabularySheet = getVocabularySheet(id);
   console.log("vocabularySheet", vocabularySheet.words);
   const buttonVariants = {
@@ -50,11 +54,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   };
 
   const handleAddClick = () => {
-    showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
+    // showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
+    pushNewBottomSheet(AddWordNewBottomSheet, { vocabularyId: vocabularySheet.id }, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
   };
 
-  const handleCardClick = (id) => {
+  const handleCardClick = async (id) => {
+    console.log(`handleCardClick: ${id}`);
     
+    const result = await pushAwaitNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id });
+    console.log(`result: ${JSON.stringify(result)}`);
   };
 
   
@@ -158,6 +169,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 rounded-[12px]
                 bg-[#F5F5F5]
               "
+              onClick={() => handleCardClick(item.id)}
             >
               
               <div 

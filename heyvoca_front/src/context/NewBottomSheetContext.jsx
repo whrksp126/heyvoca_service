@@ -99,7 +99,12 @@ const newBottomSheetReducer = (state, action) => {
     }
 
     case 'PUSH_AWAIT_NEW_BOTTOM_SHEET': {
-      const newStack = state.stack.map(item => ({ ...item, isActive: false }));
+      const hideUnderlying = !!action.payload.options?.hideUnderlying;
+      const newStack = state.stack.map(item => ({ 
+        ...item, 
+        isActive: false,
+        options: hideUnderlying ? { ...item.options, hidden: true } : item.options
+      }));
       newStack.push({
         id: generateId(),
         component: action.payload.component,
@@ -128,6 +133,15 @@ const newBottomSheetReducer = (state, action) => {
       // 현재 newBottomSheet만 제거하고 이전 newBottomSheet로 돌아가기
       const newStack = state.stack.filter((_, index) => index !== state.activeIndex);
       const newActiveIndex = newStack.length > 0 ? Math.max(0, state.activeIndex - 1) : -1;
+
+      if (newActiveIndex >= 0) {
+        // 활성화되는 항목을 다시 보이도록 변경
+        newStack[newActiveIndex] = {
+          ...newStack[newActiveIndex],
+          isActive: true,
+          options: { ...newStack[newActiveIndex].options, hidden: false }
+        };
+      }
       
       return { 
         stack: newStack, 

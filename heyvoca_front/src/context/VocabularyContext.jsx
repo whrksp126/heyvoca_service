@@ -173,6 +173,8 @@ export const VocabularyProvider = ({ children }) => {
         ...word,
       };
       const vocabularySheet = getVocabularySheet(sheetId);
+      console.log(`sheetId: ${sheetId}`);
+      console.log(`vocabularySheet: ${JSON.stringify(vocabularySheet)}`);
       await updateVocabularySheet(sheetId, {
         total: vocabularySheet.words.length + 1,
         words: [...vocabularySheet.words, newWordData],
