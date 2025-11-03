@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
 
 from flask_login import current_user, login_required, login_user, logout_user
@@ -334,6 +334,7 @@ def get_user_info():
         'book_cnt' : user.book_cnt,
         'gem_cnt' : user.gem_cnt,
         'set_goal_cnt' : user.set_goal_cnt,
+        'invite_code' : user.invite_code,
     }
     return jsonify({'code':200, 'data': user_item})
 
@@ -362,6 +363,33 @@ def update_user_info():
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+
+# 초대자 코드 저장
+@auth_bp.route('/save_invite_code', methods=['POST'])
+@jwt_required
+def save_invite_code():
+    data = request.json
+    invite_code = data.get('invite_code')
+    user_id = UUID(g.user_id)
+    user = db.session.query(User).filter(User.id == user_id).first()
+    if user is None:
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+
+    invite_user = db.session.query(User).filter(User.invite_code == invite_code).first()
+    if invite_user is None:
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+    
+    if user.id == invite_user.id:
+        return jsonify({'code': 400, 'message': '자기 자신을 초대할 수 없습니다.'}), 400
+    
+    user.invited_by = invite_user.id
+    invite_map = InviteMap(inviter_id=user.id, invitee_id=invite_user.id)
+    
+    db.session.add(user)
+    db.session.add(invite_map)
+    db.session.commit()
+    return jsonify({'code': 200, 'status': 'success'})
 
 
 ### (회원가입 시) 단어장 선택 레벨링

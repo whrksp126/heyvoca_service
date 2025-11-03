@@ -67,8 +67,13 @@ class User(db.Model):
     gem_cnt = Column(Integer, nullable=False, default=0)
     set_goal_cnt = Column(Integer, nullable=False, default=3)
     refresh_token = Column(String(512), nullable=True)
+    invite_code = Column(String(36), nullable=True, default=None)
+    invited_by = Column(BinaryUUID, ForeignKey('user.id'), nullable=True, default=None)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     last_logged_at = Column(DateTime, nullable=True, default=None)
+
+    def generate_invite_code():
+        return uuid4().hex[:8].upper()
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
@@ -84,6 +89,7 @@ class User(db.Model):
         self.book_cnt = book_cnt
         self.gem_cnt = gem_cnt
         self.set_goal_cnt = set_goal_cnt
+        self.invite_code = generate_invite_code()
         self.last_logged_at = last_logged_at
 
     
@@ -107,6 +113,22 @@ class UserHasToken(db.Model):
         self.user_id = user_id
         self.token = token
         self.is_message_allowed = is_message_allowed
+
+
+class InviteMap(db.Model):
+    __tablename__ = "invite_map"
+    __table_args__ = (
+        PrimaryKeyConstraint("inviter_id", "invitee_id", name="pk_invite_map"),
+    )
+
+    inviter_id = Column(BINARY(16), ForeignKey("user.id"), nullable=False, comment="초대한 사람 (추천인)")
+    invitee_id = Column(BINARY(16), ForeignKey("user.id"), nullable=False, comment="초대받은 사람 (피추천인)")
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, inviter_id, invitee_id):
+        self.inviter_id = inviter_id
+        self.invitee_id = invitee_id
+
 
 ##############
 # 기본 테이블 #
@@ -338,6 +360,7 @@ class Goals(db.Model):
 ##############
 # 구매 관련 테이블 #
 ##############
+
 
 # 상품 정보
 class Product(db.Model):
