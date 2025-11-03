@@ -1,6 +1,6 @@
 from app import db
 
-from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index
+from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyConstraint
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT
 
@@ -72,9 +72,6 @@ class User(db.Model):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     last_logged_at = Column(DateTime, nullable=True, default=None)
 
-    def generate_invite_code():
-        return uuid4().hex[:8].upper()
-
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
                  book_cnt, gem_cnt, set_goal_cnt):
@@ -89,7 +86,7 @@ class User(db.Model):
         self.book_cnt = book_cnt
         self.gem_cnt = gem_cnt
         self.set_goal_cnt = set_goal_cnt
-        self.invite_code = generate_invite_code()
+        self.invite_code = uuid4().hex[:8].upper()
         self.last_logged_at = last_logged_at
 
     
