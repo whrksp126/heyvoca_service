@@ -297,11 +297,10 @@ export const VocabularyProvider = ({ children }) => {
   const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
     try {
       const newVocabularySheet = await addVocabularySheet({
-        bookStoreId : vocabularySheet.id,
+        bookstore_id : vocabularySheet.id,
         title : vocabularySheet.name,
         color : vocabularySheet.color,
       });
-      console.log("newVocabularySheet", newVocabularySheet)
       await updateVocabularySheet(newVocabularySheet.id, {
         total : vocabularySheet.words.length,
         words: vocabularySheet.words.map((word, index)=>{

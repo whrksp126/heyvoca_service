@@ -1,12 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Plus } from "@phosphor-icons/react";
-import { useNewBottomSheet } from "../../hooks/useNewBottomSheet";
+import { useNewBottomSheetActions } from "../../context/NewBottomSheetContext";
 import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/BookStoreNewBottomSheet";
 import gem from "../../assets/images/gem.png";
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { isBookStoreLoading, bookStore, getBookStoreVocabularySheet } = useVocabulary();
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
   
   if (isBookStoreLoading) {
     return (
@@ -16,6 +19,7 @@ const Main = () => {
     );
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleBookStoreClick = (id) => {
     const bookStoreVocabularySheet = getBookStoreVocabularySheet(id);
     pushNewBottomSheet(

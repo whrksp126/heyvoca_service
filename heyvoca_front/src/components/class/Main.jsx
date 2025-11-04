@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 // import { useFullSheet } from '../../context/FullSheetContext';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 // import VocabularySheet from './VocabularySheet';
 import VocabularySheetNewFullSheet from '../newFullSheet/VocabularySheetNewFullSheet';
@@ -9,9 +9,11 @@ import VocabularySheetNewFullSheet from '../newFullSheet/VocabularySheetNewFullS
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
   // const word = {
   //   id: '1', // 사용자 단어장 데이터 기준 단어 ID,
@@ -34,11 +36,12 @@ const Main = () => {
   // const updated = updateSM2(word, q, today);
 
   // const { pushFullSheet } = useFullSheet();
-  const { pushNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const { vocabularySheets, isVocabularySheetsLoading, recentStudy } = useVocabulary();
-  const { pushNewBottomSheet } = useNewBottomSheet();
-  const { clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheet();
+  const { pushNewBottomSheet, clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheetActions();
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleStartClick = (testType) => {
     const isLearning = recentStudy[testType]?.status === "learning";
     if(isLearning){

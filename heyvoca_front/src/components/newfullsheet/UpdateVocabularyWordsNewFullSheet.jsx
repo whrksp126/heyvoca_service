@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh } from '@phosphor-icons/react';
 
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
@@ -9,11 +9,15 @@ import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 
 const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [isEditMode, setIsEditMode] = useState(false);
-  const { popNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet } = useNewFullSheetActions();
   const { isVocabularySheetsLoading, getVocabularySheet, deleteWord } = useVocabulary();
   const { showWordSetBottomSheet, showWordDeleteBottomSheet } = useWordSetBottomSheet();
 
+  // React Compiler가 자동으로 메모이제이션 처리
   const vocabularySheet = getVocabularySheet(id);
 
   const buttonVariants = {

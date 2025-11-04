@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 export const NewBottomSheetContext = createContext(undefined);
+export const NewBottomSheetActionsContext = createContext(undefined);
 
 // 고유 ID 생성 함수
 const generateId = () => {
@@ -28,7 +29,12 @@ const newBottomSheetReducer = (state, action) => {
     }
 
     case 'PUSH_NEW_BOTTOM_SHEET': {
-      const newStack = state.stack.map(item => ({ ...item, isActive: false }));
+      const hideUnderlying = !!action.payload.options?.hideUnderlying;
+      const newStack = state.stack.map(item => ({ 
+        ...item, 
+        isActive: false,
+        options: hideUnderlying ? { ...item.options, hidden: true } : item.options
+      }));
       newStack.push({
         id: generateId(),
         component: action.payload.component,
@@ -155,8 +161,11 @@ const newBottomSheetReducer = (state, action) => {
 };
 
 export const NewBottomSheetProvider = ({ children }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [state, dispatch] = useReducer(newBottomSheetReducer, { stack: [], activeIndex: -1 });
 
+  // React Compiler가 자동으로 useCallback 처리
   const openNewBottomSheet = (component, props, options) => {
     dispatch({ type: 'OPEN_NEW_BOTTOM_SHEET', payload: { component, props, options } });
   };
@@ -197,21 +206,29 @@ export const NewBottomSheetProvider = ({ children }) => {
     dispatch({ type: 'RESOLVE_NEW_BOTTOM_SHEET', payload: { value } });
   };
 
+  // React Compiler가 자동으로 useMemo 처리
+  const stateValue = {
+    stack: state.stack,
+    activeIndex: state.activeIndex
+  };
+
+  const actionsValue = {
+    openNewBottomSheet,
+    closeNewBottomSheet,
+    pushNewBottomSheet,
+    popNewBottomSheet,
+    goToNewBottomSheet,
+    clearStack,
+    openAwaitNewBottomSheet,
+    pushAwaitNewBottomSheet,
+    resolveNewBottomSheet
+  };
+
   return (
-    <NewBottomSheetContext.Provider value={{
-      stack: state.stack,
-      activeIndex: state.activeIndex,
-      openNewBottomSheet,
-      closeNewBottomSheet,
-      pushNewBottomSheet,
-      popNewBottomSheet,
-      goToNewBottomSheet,
-      clearStack,
-      openAwaitNewBottomSheet,
-      pushAwaitNewBottomSheet,
-      resolveNewBottomSheet
-    }}>
-      {children}
+    <NewBottomSheetContext.Provider value={stateValue}>
+      <NewBottomSheetActionsContext.Provider value={actionsValue}>
+        {children}
+      </NewBottomSheetActionsContext.Provider>
     </NewBottomSheetContext.Provider>
   );
 }; 
@@ -220,6 +237,14 @@ export const useNewBottomSheetContext = () => {
   const context = useContext(NewBottomSheetContext);
   if (!context) {
     throw new Error('useNewBottomSheetContext must be used within NewBottomSheetProvider');
+  }
+  return context;
+};
+
+export const useNewBottomSheetActions = () => {
+  const context = useContext(NewBottomSheetActionsContext);
+  if (!context) {
+    throw new Error('useNewBottomSheetActions must be used within NewBottomSheetProvider');
   }
   return context;
 }; 

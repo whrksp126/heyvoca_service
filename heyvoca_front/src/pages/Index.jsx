@@ -8,6 +8,8 @@ import animationData from '../assets/lottie/heyvoca logo-01.json';
 import '../index.css';
 
 const Index = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
   const { isLogin, isLoginChecked, userProfile, isUserProfileLoading } = useUser();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);

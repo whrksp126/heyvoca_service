@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useFlyingAnimation } from '../../context/GemAnimationContext';
 import postMessageManager from '../../utils/postMessageManager';
@@ -9,16 +9,20 @@ import postMessageManager from '../../utils/postMessageManager';
 
 
 export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [isLoading, setIsLoading] = useState(true);
   const [purchaseResult, setPurchaseResult] = useState(null);
   const [error, setError] = useState(null);
   const { setUserProfile } = useUser();
   const { triggerFlyingAnimation } = useFlyingAnimation();
-  const { popNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet } = useNewBottomSheetActions();
 
-  const handleClose = useCallback(() => {
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
   useEffect(() => {
     // 결제 성공 콜백 등록
     const handlePurchaseSuccess = (data) => {

@@ -1,36 +1,30 @@
 import React, { useCallback } from 'react';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
-import { useVocabulary } from '../../context/VocabularyContext';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
+import { AddBookStoreNewBottomSheet } from './AddBookStoreNewBottomSheet';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
-export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet, onCancel, onSet }) => {
-  const { popNewBottomSheet, clearStack } = useNewBottomSheet();
-  const { addBookStoreVocabularySheet } = useVocabulary();
+export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const handleClose = useCallback(() => {
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
+
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
-  const handleAdd = useCallback(async () => {
-    try {
-      await addBookStoreVocabularySheet(bookStoreVocabularySheet);
-      clearStack();
-    } catch (error) {
-      console.error('단어장 추가 실패:', error);
-    }
-  }, [bookStoreVocabularySheet, addBookStoreVocabularySheet, clearStack]);
-
-  const handleSet = useCallback(() => {
-    if (onSet) {
-      onSet();
-    } else {
-      handleAdd();
-    }
-  }, [onSet, handleAdd]);
+  const handleAdd = async () => {
+    pushNewBottomSheet(AddBookStoreNewBottomSheet, { bookStoreVocabularySheet }, {
+      hideUnderlying: true,
+      isBackdropClickClosable: false,
+      isDragToCloseEnabled: true
+    });
+  };
 
   console.log("bookStoreVocabularySheet", bookStoreVocabularySheet)
   return (
@@ -219,7 +213,7 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet, onCanc
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={handleClose}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -237,7 +231,7 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet, onCanc
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSet}
+          onClick={handleAdd}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -249,69 +243,3 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet, onCanc
     </div>
   );
 }; 
-
-export const AddBookStoreNewBottomSheet = ({ name, onCancel, onSet }) => {
-  const { popNewBottomSheet } = useNewBottomSheet();
-
-  const handleClose = useCallback(() => {
-    popNewBottomSheet();
-  }, [popNewBottomSheet]);
-
-  const handleSet = useCallback(() => {
-    if (onSet) {
-      onSet();
-    }
-  }, [onSet]);
-
-  return (
-    <div className="">
-      <div className="
-        flex flex-col gap-[15px] items-center justify-center 
-        pt-[40px] px-[20px] pb-[10px]
-      ">
-        <h3 className="
-          text-[18px] font-[700] text-center
-          whitespace-normal
-          break-words
-        ">{name}을 내 단어장에 추가하시겠어요?</h3>
-        <p className="text-[14px] font-[400] text-[#111]">
-        추가 후에는 내 단어장에서 수정 가능해요 😉
-        </p>
-      </div>
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
-          className="
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
-          "
-          onClick={onCancel || handleClose}
-          whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
-            damping: 15
-          }}
-        >취소</motion.button>
-        <motion.button 
-          className="
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-[#FF8DD4]
-            text-[#fff] text-[16px] font-[700]
-          "
-          onClick={handleSet}
-          whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
-            damping: 15
-          }}
-        >추가</motion.button>
-      </div>
-    </div>
-  );
-};

@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step3 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // React Compiler가 자동으로 useCallback 처리
   const handleNextBtn = (target) => {
     setUserInitialProfile({
       ...userInitialProfile,

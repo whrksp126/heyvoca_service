@@ -45,3 +45,18 @@ export const getUserInfoApi = async () => {
     console.error('getUserInfoApi 오류:', error);
   }
 }
+
+// 사용자 보석 차감 API
+export const deductGemApi = async ({gem_cnt}) => {
+  const url = `${backendUrl}/auth/deduct_gem`;
+  const method = 'POST';
+  const fetchData = {
+    gem_cnt: gem_cnt
+  };
+  try {
+    const result = await fetchDataAsync(url, method, fetchData);
+    return result;
+  } catch (error) {
+    console.error('deductGemApi 오류:', error);
+  }
+}

@@ -1,15 +1,19 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { showToast } from '../../utils/osFunction';
 const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, resolve}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [examplesState, setExamplesState] = useState(examples || []);
   const exampleOriginInputRef = useRef(examples[exampleIndex - 1]?.origin || '');
   const exampleMeaningInputRef = useRef(examples[exampleIndex - 1]?.meaning || '');
 
-  const { resolveNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { resolveNewBottomSheet } = useNewBottomSheetActions();
+  // React Compiler가 자동으로 useCallback 처리
   // 저장 클릭 시
-  const handleSave = useCallback(() => {
+  const handleSave = () => {
     const origin = exampleOriginInputRef.current?.value.trim() || '';
     const meaning = exampleMeaningInputRef.current?.value.trim() || '';
     if(origin === '' || meaning === '') {
@@ -22,12 +26,12 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
       exampleIndex,
       example: { origin, meaning }
     });
-  }, []);
+  };
 
   // 취소 클릭 시
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     resolveNewBottomSheet({ cancelled: true });
-  }, []);
+  };
   return (
     <div className="relative h-full">
       <div>
@@ -35,7 +39,7 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
         <div className="
           flex items-center justify-center
           p-[20px] pb-[0px]
-          ">
+        ">
           <h1 className="text-[18px] font-[700]">예문 {setType === "add" ? "추가" : "수정"}</h1>
         </div>
         <div className="right"></div>

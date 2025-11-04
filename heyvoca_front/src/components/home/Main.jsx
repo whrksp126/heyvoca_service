@@ -1,5 +1,5 @@
 // src/components/home/main
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
@@ -9,7 +9,7 @@ import { Heart, Check, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 
 // import { useFullSheet } from '../../context/FullSheetContext';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
 import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
@@ -93,6 +93,8 @@ const getAchievementTextStyle = (level) => {
 };
 
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { userMainPage , userProfile} = useUser();
   const { vocabularySheets, isVocabularySheetsLoading, updateDelayedWords, getDelayedWords } = useVocabulary();
   const [now, setNow] = useState(Date.now());
@@ -100,6 +102,7 @@ const Main = () => {
   const [delayedWords, setDelayedWords] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
   const getTodayStatus = () => {
     const today = new Date();
@@ -118,9 +121,11 @@ const Main = () => {
 
   const todayStatus = getTodayStatus();
 
-  const total = useCallback(vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0), [vocabularySheets]);
+  // React Compiler가 자동으로 메모이제이션 처리
+  const total = vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0);
   // const { pushFullSheet } = useFullSheet();
-  const { pushNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewFullSheet } = useNewFullSheetActions();
 
   // 시간이 흐르면 상태가 바뀌니까 가벼운 폴링(60초)
   useEffect(() => {
@@ -139,8 +144,9 @@ const Main = () => {
     };
   }, []);
 
+  // React Compiler가 자동으로 메모이제이션 처리
   // 빨간 점 표시 여부 계산
-  const showDot = useMemo(() => {
+  const showDot = (() => {
     // delayedWords가 없거나 로딩 중이면 false
     if(!delayedWords || delayedWords.length === 0) return false;
     
@@ -149,10 +155,11 @@ const Main = () => {
       nextReviewAt: new Date(word.nextReview).getTime()
     }));
     return shouldShowDot(words, now, lastSeen);
-  }, [delayedWords, now, lastSeen]);
+  })();
 
+  // React Compiler가 자동으로 메모이제이션 처리
   // 기한 지난 단어 개수 계산
-  const overdueCount = useMemo(() => {
+  const overdueCount = (() => {
     // delayedWords가 없거나 로딩 중이면 0
     if(!delayedWords || delayedWords.length === 0) return 0;
     
@@ -161,7 +168,7 @@ const Main = () => {
       nextReviewAt: new Date(word.nextReview).getTime()
     }));
     return getOverdueCount(words, now);
-  }, [delayedWords, now]);
+  })();
 
   // 복습 지연 단어 목록 업데이트 (데이터 로딩 완료 후에만 실행)
   useEffect(() => {
@@ -192,6 +199,7 @@ const Main = () => {
     }
   }, [showTooltip]);
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleStoreButtonClick = () => {
     pushNewFullSheet(StoreNewFullSheet, {}, {
       smFull: true,

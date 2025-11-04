@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
 export const NewBottomSheetProvider = () => {
-  const { stack, handleBack, handleExitComplete, clearStack, popNewBottomSheet } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // State와 Actions 분리 구독
+  const { stack } = useNewBottomSheetContext();
+  const { clearStack, popNewBottomSheet } = useNewBottomSheetActions();
   const [renderedStack, setRenderedStack] = useState([]);
   const [renderedActiveIndex, setRenderedActiveIndex] = useState(-1);
   const [phase, setPhase] = useState('idle');
@@ -36,7 +40,7 @@ export const NewBottomSheetProvider = () => {
   };
 
   return createPortal(
-    <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+    <AnimatePresence mode="wait">
       {renderedStack.length > 0 && (
         <>
           <motion.div 

@@ -1,12 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 
 const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { deleteWord } = useVocabulary();
-  const { resolveNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { resolveNewBottomSheet } = useNewBottomSheetActions();
   // 삭제 클릭 시    
   const handleDelete = async () => {
     await deleteWord(vocabularyId, id);

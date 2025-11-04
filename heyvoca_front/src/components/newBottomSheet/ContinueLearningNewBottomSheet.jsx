@@ -1,24 +1,28 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
 
 export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
-  const { popNewBottomSheet } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const handleClose = useCallback(() => {
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet } = useNewBottomSheetActions();
+
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
-  const handleSet = useCallback(() => {
+  const handleSet = () => {
     if (onSet) {
       onSet();
     } else {
       console.log("이어학습 클릭함");
     }
-  }, [onSet]);
+  };
 
   return (
     <div className="">

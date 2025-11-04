@@ -1,6 +1,7 @@
 import { GemAnimationProvider } from '../context/GemAnimationContext';
 
 const Layout = ({ children }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   return (
     <GemAnimationProvider>

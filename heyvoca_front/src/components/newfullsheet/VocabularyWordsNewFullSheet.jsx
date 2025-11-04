@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 // import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
@@ -14,13 +14,17 @@ import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 
 const VocabularyWordsNewFullSheet = ({ id }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewFullSheet, pushNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
   const { isVocabularySheetsLoading, getVocabularySheet } = useVocabulary();
   // const { showWordSetBottomSheet } = useWordSetBottomSheet();
-  const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  
+  // React Compiler가 자동으로 메모이제이션 처리
   const vocabularySheet = getVocabularySheet(id);
-  console.log("vocabularySheet", vocabularySheet.words);
+  console.log("vocabularySheet", vocabularySheet?.words);
   const buttonVariants = {
     tap: { 
       scale: 0.85,
@@ -63,9 +67,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
   const handleCardClick = async (id) => {
     console.log(`handleCardClick: ${id}`);
-    
-    const result = await pushAwaitNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id });
-    console.log(`result: ${JSON.stringify(result)}`);
+    pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id });
   };
 
   

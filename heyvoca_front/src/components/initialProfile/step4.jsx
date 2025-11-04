@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, BoxArrowDown } from '@phosphor-icons/react';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { InitialProfilePreviewBookStoreNewBottomSheet } from '../newBottomSheet/InitialProfileBookStoreNewBottomSheet';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [levelBookList, setLevelBookList] = useState([]);
   const [isLevelBookListLoading, setIsLevelBookListLoading] = useState(true);
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { getBookStoreVocabularySheet } = useVocabulary();
   useEffect(() => {
     getLevelBookList();
   }, []);
 
+  // React Compiler가 자동으로 useCallback 처리
   const getLevelBookList = async () => {
     const url = `${backendUrl}/auth/level_book_list`;
     const method = 'GET';
@@ -34,6 +38,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
     }
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   const addVocabularySheet = (vocabularySheet) => {
     console.log('addVocabularySheet', vocabularySheet);
     setUserInitialProfile({
@@ -43,6 +48,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
     setStep(5);
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleBookStoreClick = (index) => {
     pushNewBottomSheet(
       InitialProfilePreviewBookStoreNewBottomSheet,

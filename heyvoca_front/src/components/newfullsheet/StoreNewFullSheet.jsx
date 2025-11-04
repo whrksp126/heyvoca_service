@@ -1,18 +1,21 @@
 import React from 'react';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import gem from '../../assets/images/gem.png';
 import { useUser } from '../../context/UserContext';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { StoreBuyItemNewBottomSheet } from '../newBottomSheet/StoreBuyItemNewBottomSheet';
 
 const StoreNewFullSheet = () => {
-  const { popNewFullSheet } = useNewFullSheet();
-  const { gemItems } = useUser();
-  const { userProfile } = useUser();
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet } = useNewFullSheetActions();
+  const { gemItems, userProfile } = useUser();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+
+  // React Compiler가 자동으로 메모이제이션 처리
   const handleGemClick = (id) => {
     window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'iapPurchase', 'props': {itemId: id}}));
     pushNewBottomSheet(

@@ -3,12 +3,15 @@ import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const profileRef = useRef();
 
   useEffect(() => {
     profileRef.current.focus();
   }, []);
   
+  // React Compiler가 자동으로 useCallback 처리
   const handleNextBtn = () => {
     if(profileRef.current.value.length > 8){
       alert('닉네임은 8자 이내로 입력해주세요.');

@@ -2,8 +2,8 @@ import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 
@@ -89,16 +89,20 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
     count: []
   });
 
-  const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheet();
-  const { clearStack: clearNewFullSheetStack } = useNewFullSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
+  const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const navigate = useNavigate();
   const { recentStudy, updateRecentStudy } = useVocabulary();
 
-  const handleClose = useCallback(() => {
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
-  const handleStartTest = useCallback(async (data) => {
+  const handleStartTest = async (data) => {
     const testTypeData = testType || data.testType;
 
     console.log(testTypeData, "testType")
@@ -121,9 +125,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
     clearNewBottomSheetStack();
     clearNewFullSheetStack();
     navigate('/take-test', { state: { data, testType: testTypeData } });
-  }, [recentStudy, testType, navigate, clearNewBottomSheetStack, clearNewFullSheetStack, updateRecentStudy]);
+  };
 
-  const setCountFun = useCallback((value) => {
+  // React Compiler가 자동으로 useCallback 처리
+  const setCountFun = (value) => {
     if(value < MIN_TEST_VOCABULARY_COUNT){
       inputRefs.current['count'].value = MIN_TEST_VOCABULARY_COUNT;
       setCount(MIN_TEST_VOCABULARY_COUNT);
@@ -134,9 +139,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       inputRefs.current['count'].value = value;
       setCount(value);
     }
-  }, [maxVocabularyCount]);
+  };
 
-  const getTestSetupData = useCallback(() => {
+  // React Compiler가 자동으로 useCallback 처리
+  const getTestSetupData = () => {
     return {
       questionType: questionType,
       memoryState: memoryState,
@@ -144,8 +150,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       // originFilterType: originFilterType,
       count: count
     }
-  // }, [initialViewType, originFilterType, count]);
-  }, [questionType, memoryState, count]);
+  };
   
   return (
     <div className="">

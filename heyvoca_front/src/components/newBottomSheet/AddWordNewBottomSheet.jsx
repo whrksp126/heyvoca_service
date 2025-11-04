@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';  
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { CaretDown, Plus, Pencil, Trash } from '@phosphor-icons/react';
 import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
 
 const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { addWord, updateWord, getWord, deleteWord, vocabularySheets } = useVocabulary();
-  const { popNewBottomSheet, pushAwaitNewBottomSheet, clearStack } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet, pushAwaitNewBottomSheet, clearStack } = useNewBottomSheetActions();
 
   // 모든 상태를 추적하기 위한 ref (한 번에 초기화)
   const initialCurrentState = (() => {

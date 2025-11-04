@@ -1,17 +1,20 @@
 import React from 'react';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import TestSetup from '../class/TestSetup';
 import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 
 const VocabularySheetNewFullSheet = ({testType}) => {
-  const { popNewFullSheet } = useNewFullSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet } = useNewFullSheetActions();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
   
   if (isVocabularySheetsLoading) {
     return (
@@ -21,6 +24,7 @@ const VocabularySheetNewFullSheet = ({testType}) => {
     );
   }
 
+  // React Compiler가 자동으로 메모이제이션 처리
   // updatedAt 기준으로 정렬된 단어장 목록
   const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
     new Date(b.updatedAt) - new Date(a.updatedAt)

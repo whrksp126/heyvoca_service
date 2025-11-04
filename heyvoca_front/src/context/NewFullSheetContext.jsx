@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 export const NewFullSheetContext = createContext(undefined);
+export const NewFullSheetActionsContext = createContext(undefined);
 
 // 고유 ID 생성 함수
 const generateId = () => {
@@ -141,8 +142,11 @@ const newFullSheetReducer = (state, action) => {
 };
 
 export const NewFullSheetProvider = ({ children }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [state, dispatch] = useReducer(newFullSheetReducer, { stack: [], activeIndex: -1 });
 
+  // React Compiler가 자동으로 useCallback 처리
   const openNewFullSheet = (component, props, options) => {
     dispatch({ type: 'OPEN_NEW_FULL_SHEET', payload: { component, props, options } });
   };
@@ -183,21 +187,29 @@ export const NewFullSheetProvider = ({ children }) => {
     dispatch({ type: 'RESOLVE_NEW_FULL_SHEET', payload: { value } });
   };
 
+  // React Compiler가 자동으로 useMemo 처리
+  const stateValue = {
+    stack: state.stack,
+    activeIndex: state.activeIndex
+  };
+
+  const actionsValue = {
+    openNewFullSheet,
+    closeNewFullSheet,
+    pushNewFullSheet,
+    popNewFullSheet,
+    goToNewFullSheet,
+    clearStack,
+    openAwaitNewFullSheet,
+    pushAwaitNewFullSheet,
+    resolveNewFullSheet
+  };
+
   return (
-    <NewFullSheetContext.Provider value={{
-      stack: state.stack,
-      activeIndex: state.activeIndex,
-      openNewFullSheet,
-      closeNewFullSheet,
-      pushNewFullSheet,
-      popNewFullSheet,
-      goToNewFullSheet,
-      clearStack,
-      openAwaitNewFullSheet,
-      pushAwaitNewFullSheet,
-      resolveNewFullSheet
-    }}>
-      {children}
+    <NewFullSheetContext.Provider value={stateValue}>
+      <NewFullSheetActionsContext.Provider value={actionsValue}>
+        {children}
+      </NewFullSheetActionsContext.Provider>
     </NewFullSheetContext.Provider>
   );
 }; 
@@ -206,6 +218,14 @@ export const useNewFullSheetContext = () => {
   const context = useContext(NewFullSheetContext);
   if (!context) {
     throw new Error('useNewFullSheetContext must be used within NewFullSheetProvider');
+  }
+  return context;
+};
+
+export const useNewFullSheetActions = () => {
+  const context = useContext(NewFullSheetActionsContext);
+  if (!context) {
+    throw new Error('useNewFullSheetActions must be used within NewFullSheetProvider');
   }
   return context;
 }; 

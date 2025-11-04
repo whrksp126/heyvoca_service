@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, WarningCircle } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,17 +7,19 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import HeyQuestionImg from '../../assets/images/HeyQuestionImg.png';
 import SpeechBubbleTailImg from '../../assets/images/SpeechBubbleTailImg.png';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
 const TodayStudyNewFullSheet = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
-  const { popNewFullSheet, closeNewFullSheet } = useNewFullSheet();
-  const { clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
+  const { clearStack: clearNewBottomSheetStack, popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheetActions();
 
   const [wordCount, setWordCount] = React.useState(10);
   const [showWarning, setShowWarning] = React.useState(false);
-  const {  recentStudy, updateRecentStudy } = useVocabulary();
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  const { recentStudy, updateRecentStudy } = useVocabulary();
   
 
   useEffect(() => {

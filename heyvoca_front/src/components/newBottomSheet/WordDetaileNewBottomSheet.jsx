@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { getTextSound } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
@@ -10,14 +10,18 @@ import AddWordNewBottomSheet from './AddWordNewBottomSheet';
 
 
 const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+  
   const { getWord } = useVocabulary();
-  const { resolveNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushAwaitNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
 
-  const word = useMemo(() => getWord(vocabularyId, id), [vocabularyId, id]);
+  // React Compiler가 자동으로 메모이제이션 처리 (useMemo 불필요)
+  const word = getWord(vocabularyId, id);
   console.log(word);
 
   const handleClose = () => {
-    resolveNewBottomSheet({ cancelled: false });
+    popNewBottomSheet();
   };
 
   // 단어 수정 함수
@@ -28,7 +32,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     if (editResult.cancelled) {
       return;
     }
-    resolveNewBottomSheet({ cancelled: false });
+    popNewBottomSheet();
   };
 
   // 단어 삭제 함수
@@ -39,7 +43,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     if (deleteResult.cancelled) {
       return;
     }
-    resolveNewBottomSheet({ cancelled: false });
+    popNewBottomSheet();
   };
   return (
     <div className="">
