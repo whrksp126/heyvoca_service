@@ -2,12 +2,18 @@ version: '3.8'
 
 services:
   web:
-    image: whrksp126/heyvoca_back:main
+    image: whrksp126/heyvoca_back:prod
     container_name: heyvoca_back_prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms: 
+        - linux/amd64
     ports:
-      - "5006:5000"
+      # - "5001:5000" # MAC 환경에서 5000번 포트 사용 불가, 5001번 포트 사용
+      - "5000:5000"
     env_file:
-      - .env.prod
+      - .env
     networks:
       - heyvoca_back_prod_network
     depends_on:
@@ -26,3 +32,33 @@ services:
 networks:
   heyvoca_back_prod_network:
     name: heyvoca_back_prod_network
+
+
+# version: '3.8'
+
+# services:
+#   web:
+#     image: whrksp126/heyvoca_back:main
+#     container_name: heyvoca_back_prod
+#     ports:
+#       - "5006:5000"
+#     env_file:
+#       - .env.prod
+#     networks:
+#       - heyvoca_back_prod_network
+#     depends_on:
+#       - redis
+#     restart: always
+
+#   redis:
+#     image: redis:latest
+#     container_name: heyvoca_redis_prod
+#     ports:
+#       - "6382:6379"
+#     networks:
+#       - heyvoca_back_prod_network
+#     restart: always
+
+# networks:
+#   heyvoca_back_prod_network:
+#     name: heyvoca_back_prod_network
