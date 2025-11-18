@@ -67,8 +67,11 @@ def create_user_voca_book():
         db.session.add(user_voca_book)
 
         # gem 사용 여부 확인
+        print('bookstore_id:', bookstore_id)
         if bookstore_id:
             bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+            print('user.gem_cnt:', user.gem_cnt)
+            print('bookstore_item.gem:', bookstore_item.gem)
             if user.gem_cnt < bookstore_item.gem:
                 return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
             user.gem_cnt -= bookstore_item.gem

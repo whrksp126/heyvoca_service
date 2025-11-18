@@ -85,6 +85,39 @@ sudo systemctl restart heyvoca_back_stg
 
 ---
 
+### 프로덕션(prod) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_prod
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_prod
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:prod
+
+## prod 환경 실행
+docker compose -f docker-compose.yml up --build
+
+## prod 환경 실행 (백그라운드)
+docker compose -f docker-compose.yml up --build -d
+
+## prod 환경 실행 컨테이너 중지
+docker compose -f docker-compose.yml down
+
+## prod 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 prod 태그로 푸쉬
+docker push whrksp126/heyvoca_back:prod
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_prod
+
+---
+
+
+
 
 
 

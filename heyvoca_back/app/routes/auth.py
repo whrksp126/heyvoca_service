@@ -366,8 +366,56 @@ def update_user_info():
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
+@auth_bp.route('/deduct_gem', methods=['POST'])
+@jwt_required
+def deduct_gem():
 
+    data = request.json
+    print('data:', data)
+    if not data:
+        return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
 
+    # 차감할 보석 개수 확인
+    deduct_amount = data.get('gem_cnt')
+    if deduct_amount is None:
+        return jsonify({'code': 400, 'message': '차감할 보석 개수가 필요합니다.'}), 400
+    
+    if not isinstance(deduct_amount, int) or deduct_amount <= 0:
+        return jsonify({'code': 400, 'message': '차감할 보석 개수는 양의 정수여야 합니다.'}), 400
+
+    # 사용자 조회
+    user_id = UUID(g.user_id)
+    user = db.session.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+
+    # 보석이 충분한지 확인
+    if user.gem_cnt < deduct_amount:
+        return jsonify({
+            'code': 400, 
+            'message': f'보석이 부족합니다. 현재 보유 보석: {user.gem_cnt}개, 필요 보석: {deduct_amount}개'
+        }), 400
+
+    # 보석 차감
+    deducted_amount = deduct_amount
+    user.gem_cnt -= deducted_amount
+    remaining_gem = user.gem_cnt
+
+    try:
+        db.session.commit()
+        return jsonify({
+            'code': 200,
+            'data': {
+                'remaining_gem_cnt': remaining_gem,
+                'deducted_gem_cnt': deducted_amount
+            }
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+        
 # 초대자 코드 저장
 @auth_bp.route('/save_invite_code', methods=['POST'])
 @jwt_required
