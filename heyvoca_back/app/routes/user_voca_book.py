@@ -8,7 +8,8 @@ import datetime
 from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
-from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
+from app.routes.common import register_gem_log
+from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, GemReason
 from app.utils.jwt_utils import jwt_required
 
 
@@ -70,7 +71,8 @@ def create_user_voca_book():
             bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
             if user.gem_cnt < bookstore_item.gem:
                 return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
-            user.gem_cnt -= 1
+            user.gem_cnt -= bookstore_item.gem
+            register_gem_log(user_id, -bookstore_item.gem, GemReason.BOOK_PURCHASE, f"단어장 구매: {bookstore_item.name}", "bookstore", bookstore_id, user.gem_cnt)
             bookstore_item.downloads += 1
         else:
             if user.book_cnt < 1:

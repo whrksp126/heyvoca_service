@@ -3,7 +3,8 @@ from app import db
 from app.routes import mainpage_bp
 from app.utils.jwt_utils import jwt_required
 from uuid import UUID
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
+from app.routes.common import register_gem_log
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 from sqlalchemy.orm import aliased
@@ -169,8 +170,11 @@ def api_user_recent_study_create_update():
 
     return {'code': 200, 'data': data}
 
-def update_user_goal(goal_type_name: str):
-    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
+def update_user_goal(goal_type_name: str, user_id: UUID = None):
+    if user_id is None:
+        user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
+    else:   # 초대왕용. 초대한 사람의 ID를 넘겨줄 경우
+        user_id = UUID(user_id) if isinstance(user_id, str) else user_id
     
     # 현재 유저가 달성 중인 해당 업적 조회
     current_user_goal = db.session.query(UserGoals)\
@@ -238,6 +242,19 @@ def update_user_goal(goal_type_name: str):
             db.session.add(next_user_goal)
 
     if goal_complete:
+        # 업적 완료 시 보석 지급 및 로그 기록
+        user = db.session.query(User).filter(User.id == user_id).first()
+        if user and goal.reward_count > 0:
+            user.gem_cnt += goal.reward_count
+            register_gem_log(
+                user_id=user_id,
+                amount=goal.reward_count,
+                reason=GemReason.ACHIEVEMENT,
+                description=f"업적 완료: {goal_type_name} 레벨 {current_goal.level}",
+                source_type="achievement",
+                source_id=str(current_user_goal.id),
+                balance_after=user.gem_cnt
+            )
         return current_user_goal, goal.reward_count, current_goal.badge_img
     else:
         return None, None, None
@@ -285,14 +302,11 @@ def api_user_study_history():
     memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img = update_user_goal('암기왕')
     effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img = update_user_goal('노력왕')
 
-    # 4. 보석 업데이트
+    # 4. 보석 업데이트 (오늘의 학습 완료 보석만 추가, 업적 보상은 update_user_goal에서 처리)
     add_gem = 0
     if is_today_study_complete:
         add_gem += 1
-    if memory_goal_reward_count:
-        add_gem += memory_goal_reward_count
-    if effort_goal_reward_count:
-        add_gem += effort_goal_reward_count
+    # 업적 보상 보석은 update_user_goal 함수 내부에서 이미 지급됨
     user.gem_cnt += add_gem
 
     db.session.commit()
@@ -354,10 +368,10 @@ def checkin():
                 'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
             })
         
-        user.gem_cnt += attendance_goal_reward_count
+        # 업적 보상 보석은 update_user_goal 함수 내부에서 이미 지급됨
         db.session.commit()
 
-        before_gem_cnt = user.gem_cnt - attendance_goal_reward_count
+        before_gem_cnt = user.gem_cnt - (attendance_goal_reward_count if attendance_goal_reward_count else 0)
         after_gem_cnt = user.gem_cnt
     else:
         before_gem_cnt = user.gem_cnt

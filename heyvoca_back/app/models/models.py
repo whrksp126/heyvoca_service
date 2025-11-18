@@ -415,3 +415,40 @@ class Purchase(db.Model):
         self.receipt_data = receipt_data
 
 
+### 보석 로그용 ###
+class GemReason(enum.Enum):
+    IAP_PURCHASE  = "IAP_PURCHASE"    # 유료 결제 충전
+    BOOK_PURCHASE = "BOOK_PURCHASE"   # 단어장 구매
+    ACHIEVEMENT   = "ACHIEVEMENT"     # 업적 보상
+    ADMIN_ADJUST  = "ADMIN_ADJUST"    # 관리자 조정
+    REFUND        = "REFUND"          # 환불(보석 회수)
+
+
+class GemLog(db.Model):
+    __tablename__ = 'gem_log'
+    __table_args__ = (
+        Index('ix_gemlog_src', 'user_id', 'source_type', 'source_id'),
+    )
+
+    id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
+    amount = Column(Integer, nullable=False)  # ex) +20, -20
+    reason = Column(Enum(GemReason), nullable=False)
+    description = Column(String(255), nullable=True)    # 화면용
+    # 관련 엔티티 조인용(필요 시만 세팅)
+    source_type = Column(String(40), nullable=True)   # 'purchase','bookstore','goal' 등
+    source_id   = Column(BinaryUUID, nullable=True)   # 해당 테이블의 PK(UUID)
+    # 관련 엔티티 조인용(필요 시만 세팅)
+    balance_after = Column(Integer, nullable=False)  # 이 로그 반영 직후의 보석 잔액
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, user_id, amount, reason, description, source_type, source_id, balance_after):
+        self.user_id = user_id
+        self.amount = amount
+        self.reason = reason
+        self.description = description
+        self.source_type = source_type
+        self.source_id = source_id
+        self.balance_after = balance_after
+
+### 보석 로그용 ###

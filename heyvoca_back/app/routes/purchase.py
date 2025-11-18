@@ -7,8 +7,9 @@ import os
 from uuid import UUID
 from app.routes import purchase_bp
 from app.utils.jwt_utils import jwt_required
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase, GemReason
 from app import db
+from app.routes.common import register_gem_log
 
 
 # 환경 변수
@@ -122,6 +123,10 @@ def verify_purchase():
             
             # 보석 추가 (수량만큼 곱해서)
             user.gem_cnt += total_gem_amount
+            
+            # 보석 로그 등록
+            register_gem_log(user_id, total_gem_amount, GemReason.IAP_PURCHASE, f"유료 결제: {product.name}", 
+                            "purchase", purchase_record.id, user.gem_cnt)
             
             # 변경사항 저장
             db.session.commit()

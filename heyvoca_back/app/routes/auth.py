@@ -3,6 +3,7 @@ from functools import wraps
 from app import db
 from app.routes import auth_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap
+from app.routes.mainpage import update_user_goal
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
 
 from flask_login import current_user, login_required, login_user, logout_user
@@ -365,6 +366,8 @@ def update_user_info():
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
+
+
 # 초대자 코드 저장
 @auth_bp.route('/save_invite_code', methods=['POST'])
 @jwt_required
@@ -384,10 +387,14 @@ def save_invite_code():
         return jsonify({'code': 400, 'message': '자기 자신을 초대할 수 없습니다.'}), 400
     
     user.invited_by = invite_user.id
-    invite_map = InviteMap(inviter_id=user.id, invitee_id=invite_user.id)
+    invite_map = InviteMap(inviter_id=invite_user.id, invitee_id=user.id)
     
-    db.session.add(user)
     db.session.add(invite_map)
+    db.session.flush()
+    
+    # 초대왕 업적 업데이트 (초대한 사람의 업적)
+    update_user_goal('초대왕', user_id=invite_user.id)
+
     db.session.commit()
     return jsonify({'code': 200, 'status': 'success'})
 
