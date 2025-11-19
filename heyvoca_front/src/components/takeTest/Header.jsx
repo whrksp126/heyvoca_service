@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 const Header = ({ testType }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { recentStudy } = useVocabulary();
   const navigate = useNavigate();
 
 
   console.log(recentStudy);
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleBackClick = () => {
     if (window.confirm('학습을 종료하시겠습니까?')) {
       navigate(-1);

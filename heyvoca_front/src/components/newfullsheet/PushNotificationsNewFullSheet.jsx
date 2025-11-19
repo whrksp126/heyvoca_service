@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
 
 const PushNotificationsNewFullSheet = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewFullSheet } = useNewFullSheetActions();
 
 
   return (

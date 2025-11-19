@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, SpeakerHigh, BookOpenText, WarningCircle, HandsClapping } from "@phosphor-icons/react";
 import { getTextSound } from '../../utils/common';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import { updateSM2, analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
@@ -16,6 +16,7 @@ const iconComponentMap = {
 }
 
 const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, testType }) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
@@ -25,7 +26,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isFetching, setIsFetching] = useState(false);
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
-  const { pushNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { updateWord, updateRecentStudy, recentStudy, setRecentStudy, updateWordState, updateRecentStudyState } = useVocabulary();
   const [isSuspicious, setIsSuspicious] = useState(null);
 
@@ -55,6 +57,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   }, [progressIndex]);
 
+  // React Compiler가 자동으로 useCallback 처리
   // 문제 선택지 선택 시
   const handleOptionClick = (index, option) => {
     if (isAnswered) return;
@@ -68,7 +71,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
   }
 
-  // 아래 버튼튼 클릭 시
+  // React Compiler가 자동으로 useCallback 처리
+  // 아래 버튼 클릭 시
   const handleClickNext = async () => {
     if(userSelected === null) return;
     if(isFetching) return;
@@ -118,6 +122,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsAnswered(true);
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   // 시험 모드에서 문제 선택지 선택 시
   const handleClickExamOption = (index, option) => {
 
@@ -154,6 +159,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   }
 
 
+  // React Compiler가 자동으로 useCallback 처리
   // 이전 기록 유지
   const handleClickMistake = () => {
     Object.assign(testQuestions[progressIndex], {
@@ -165,12 +171,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsSuspicious(null);
     setUpdateRecentStudyStateAndStatus();
   }
+  // React Compiler가 자동으로 useCallback 처리
   // 새로운 기록 적용
   const handleClickNormal = () => {
     setIsSuspicious(null);
     setUpdateRecentStudyStateAndStatus();
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   // 문제 읽기
   const handleClickTTS = () => {
     const question = testQuestions[progressIndex];
@@ -179,6 +187,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     getTextSound(textToRead, lang);
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   // 문제 힌트 데이터 표시
   const handleClickProblemHintData = () => {
     const question = testQuestions[progressIndex];
@@ -194,6 +203,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     );
   }
 
+  // React Compiler가 자동으로 useCallback 처리
   // 문제 완료 시 처리
   const setUpdateRecentStudyStateAndStatus = () => {
     const sheetId = testQuestions[progressIndex].vocabularySheetId;

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { CaretLeft, SignOut } from '@phosphor-icons/react';
 
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
 import google from '../../assets/images/google_logo.png'; 
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { LogoutNewBottomSheet } from '../newBottomSheet/LogoutNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 
 const AccountNewFullSheet = () => {
-  const { pushNewBottomSheet } = useNewBottomSheet();
-  const { popNewFullSheet } = useNewFullSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { popNewFullSheet } = useNewFullSheetActions();
   const { userProfile } = useUser();
   
   const handleLogout = () => {

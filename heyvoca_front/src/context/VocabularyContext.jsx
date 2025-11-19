@@ -173,6 +173,8 @@ export const VocabularyProvider = ({ children }) => {
         ...word,
       };
       const vocabularySheet = getVocabularySheet(sheetId);
+      console.log(`sheetId: ${sheetId}`);
+      console.log(`vocabularySheet: ${JSON.stringify(vocabularySheet)}`);
       await updateVocabularySheet(sheetId, {
         total: vocabularySheet.words.length + 1,
         words: [...vocabularySheet.words, newWordData],
@@ -295,11 +297,10 @@ export const VocabularyProvider = ({ children }) => {
   const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
     try {
       const newVocabularySheet = await addVocabularySheet({
-        bookStoreId : vocabularySheet.id,
+        bookstore_id : vocabularySheet.id,
         title : vocabularySheet.name,
         color : vocabularySheet.color,
       });
-      console.log("newVocabularySheet", newVocabularySheet)
       await updateVocabularySheet(newVocabularySheet.id, {
         total : vocabularySheet.words.length,
         words: vocabularySheet.words.map((word, index)=>{

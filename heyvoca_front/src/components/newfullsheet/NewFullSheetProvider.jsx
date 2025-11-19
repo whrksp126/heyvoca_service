@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useNewFullSheetContext } from '../../context/NewFullSheetContext';
+import { useNewFullSheetContext, useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const NewFullSheetProvider = () => {
-  const { stack, activeIndex, closeNewFullSheet, resolveNewFullSheet } = useNewFullSheetContext();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // State와 Actions 분리 구독
+  const { stack, activeIndex } = useNewFullSheetContext();
+  const { closeNewFullSheet, resolveNewFullSheet } = useNewFullSheetActions();
 
   // 스냅샷 유지로 최종 닫힘 시 exit 애니메이션 재생
   const [renderedStack, setRenderedStack] = useState([]);
@@ -59,9 +63,13 @@ export const NewFullSheetProvider = () => {
       {(visible || phase === 'exit') && (
         <motion.div
           key="newFullSheet-backdrop"
-          className="fixed inset-0 bg-[#42424266] z-50 flex items-center justify-center backdrop-blur-[5px]"
-          initial={phase === 'enter' ? { opacity: 0 } : {}}
-          animate={{ opacity: phase === 'exit' ? 0 : 1 }}
+          className="
+            fixed z-50 
+            flex items-center justify-center 
+            inset-0
+          "
+          // initial={phase === 'enter' ? { opacity: 0 } : {}}
+          // animate={{ opacity: phase === 'exit' ? 0 : 1 }}
         >
           {renderedStack.map((newFullSheet, index) => {
             const shouldRender = index === renderedActiveIndex || newFullSheet.options.keepInDOM;

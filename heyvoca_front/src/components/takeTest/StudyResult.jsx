@@ -6,6 +6,8 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 
 const StudyResult = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const {  recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();

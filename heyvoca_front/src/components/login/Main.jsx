@@ -4,6 +4,8 @@ import Btn from '../component/Btn';
 import { setToken } from '../../utils/auth';
 
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -11,6 +13,7 @@ const Main = () => {
   });
   const [error, setError] = useState('');
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -20,6 +23,7 @@ const Main = () => {
     setError('');
   };
 
+  // React Compiler가 자동으로 useCallback 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
     

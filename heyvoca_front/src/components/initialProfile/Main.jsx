@@ -49,6 +49,8 @@ const getColorSet = (mainColor) => {
 
 
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
   const { addVocabularySheet, updateVocabularySheet } = useVocabulary();
   const { setUserProfile, updateUserProfile } = useUser();
@@ -59,6 +61,7 @@ const Main = () => {
     vocabook: null,
   });
 
+  // React Compiler가 자동으로 useCallback 처리
   const endInitialProfile = async () => {
     console.log('endInitialProfile', userInitialProfile);
     const updates = {

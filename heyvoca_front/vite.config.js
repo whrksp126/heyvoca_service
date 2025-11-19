@@ -31,7 +31,28 @@ const hmr =
       }
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    // React Compiler - 점진적 적용 (annotation 모드)
+    // "use memo" 디렉티브가 있는 컴포넌트만 컴파일
+    react({
+      babel: {
+        plugins: [
+          [
+            'babel-plugin-react-compiler',
+            {
+              // React 18을 사용하므로 target 명시
+              target: '18',
+              // annotation 모드: "use memo" 디렉티브가 있는 컴포넌트만 컴파일
+              // 점진적 적용에 최적화된 모드
+              compilationMode: 'annotation',
+              // 에러 시 빌드 실패 방지 (점진적 적용 시 필수)
+              panicThreshold: 'none',
+            },
+          ],
+        ],
+      },
+    }),
+  ],
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },

@@ -1,17 +1,20 @@
 import { useContext } from 'react';
-import { NewFullSheetContext } from '../context/NewFullSheetContext';
+import { NewFullSheetContext, NewFullSheetActionsContext } from '../context/NewFullSheetContext';
 
 export const useNewFullSheet = () => {
-  const context = useContext(NewFullSheetContext);
-  if (!context) {
+  const state = useContext(NewFullSheetContext);
+  const actions = useContext(NewFullSheetActionsContext);
+  
+  if (!state || !actions) {
     throw new Error('useNewFullSheet must be used within NewFullSheetProvider');
   }
   
   return {
-    ...context,
+    ...state,
+    ...actions,
     // 편의 함수들
-    isNewFullSheetOpen: context.stack.length > 0,
-    currentNewFullSheet: context.stack[context.activeIndex],
-    stackLength: context.stack.length
+    isNewFullSheetOpen: state.stack.length > 0,
+    currentNewFullSheet: state.stack[state.activeIndex],
+    stackLength: state.stack.length
   };
 }; 

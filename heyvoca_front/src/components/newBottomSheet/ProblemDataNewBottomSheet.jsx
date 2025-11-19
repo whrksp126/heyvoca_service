@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 
@@ -9,11 +9,15 @@ import MemorizationStatus from "../common/MemorizationStatus";
 
 
 export const ProblemDataNewBottomSheet = ({onCancel, options}) => {
-  const { popNewBottomSheet } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const handleClose = useCallback(() => {
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet } = useNewBottomSheetActions();
+
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
   return (
     <div className="">

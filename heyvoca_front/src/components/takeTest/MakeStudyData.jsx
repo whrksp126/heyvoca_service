@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
 const MakeStudyData = ({endInitialProfile}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
   const buttonVariants = {
     hover: {
       scale: 1.02,

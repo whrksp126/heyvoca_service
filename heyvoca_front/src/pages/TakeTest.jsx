@@ -16,6 +16,8 @@ const MEMORY_STATES = {
 };
 
 const TakeTest = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { state } = useLocation();
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState } = useVocabulary();
   const [testQuestions, setTestQuestions] = useState([]);
@@ -25,7 +27,7 @@ const TakeTest = () => {
   // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
 
-  // SM-2 알고리즘 기준으로 단어의 학습 상태를 판단하는 함수
+  // React Compiler가 자동으로 useCallback 처리
   const getWordMemoryState = (word) => {
     if (!word.memoryState) return MEMORY_STATES.UNLEARNED;
     
@@ -48,7 +50,7 @@ const TakeTest = () => {
 
 
 
-  // 학습 데이터를 세팅하는 함수
+  // React Compiler가 자동으로 useCallback 처리
   const setupTestQuestions = (targetMemoryState, vocabularySheetId, count) => {
     let allWords = [];
     
@@ -222,7 +224,7 @@ const TakeTest = () => {
     // eslint-disable-next-line
   }, [recentStudy]);
 
-  // 학습 데이터 서버에 업데이트
+  // React Compiler가 자동으로 useCallback 처리
   const updateVocabularySheetAndRecentStudyData = async () => {
     if(pendingUpdateSheetIds.size > 0){
       // 학습 데이터 업데이트!

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
@@ -9,6 +9,8 @@ import { getValueFromURL } from '../utils/common';
 import postMessageManager from '../utils/postMessageManager';
 
 const Login = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const navigate = useNavigate();
   const { auth, Login, clickGoogleOauth } = useUser();
 
@@ -23,8 +25,8 @@ const Login = () => {
     }
   }, []);
 
-  // 앱에서 받은 구글 사용자 정보로 로그인 처리하는 함수
-  const handleAppGoogleAuth = useCallback(async (data) => {
+  // React Compiler가 자동으로 useCallback 처리
+  const handleAppGoogleAuth = async (data) => {
     console.log(`앱 구글 OAuth 정보 받음: ${JSON.stringify(data)}`);
     
     const { googleId, email, name, status } = data;
@@ -49,7 +51,7 @@ const Login = () => {
     } catch (error) {
       console.error(`앱 로그인 처리 중 오류: ${error}`);
     }
-  }, [Login, navigate]);
+  };
 
   // 앱 구글 OAuth 처리
   useEffect(() => {
@@ -63,6 +65,7 @@ const Login = () => {
   }, [handleAppGoogleAuth]);
 
   
+  // React Compiler가 자동으로 useCallback 처리
   const handleLogin = async () => {
     // URL에서 파라미터 가져오기
     const googleId = getValueFromURL('googleId');

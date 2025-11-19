@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
 export const NewBottomSheetProvider = () => {
-  const { stack, handleBack, handleExitComplete } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // State와 Actions 분리 구독
+  const { stack } = useNewBottomSheetContext();
+  const { clearStack, popNewBottomSheet } = useNewBottomSheetActions();
   const [renderedStack, setRenderedStack] = useState([]);
   const [renderedActiveIndex, setRenderedActiveIndex] = useState(-1);
   const [phase, setPhase] = useState('idle');
@@ -22,18 +26,21 @@ export const NewBottomSheetProvider = () => {
   const handleBackdropClick = (e) => {
     const currentSheet = stack[stack.length - 1];
     if (currentSheet?.options?.isBackdropClickClosable !== false) {
-      handleBack();
+      // handleBack();
+      popNewBottomSheet();
+
     }
   };
 
   const handleDragEnd = (event, info, newBottomSheet) => {
     if (newBottomSheet.options.isDragToCloseEnabled && (info.offset.y > 100 || info.velocity.y > 300)) {
-      handleBack();
+      // handleBack();
+      popNewBottomSheet();
     }
   };
 
   return createPortal(
-    <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+    <AnimatePresence mode="wait">
       {renderedStack.length > 0 && (
         <>
           <motion.div 
@@ -100,6 +107,10 @@ export const NewBottomSheetProvider = () => {
                   after:h-[101vh] 
                   after:bg-white
                 "
+                initial={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
+                animate={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                style={newBottomSheet.options?.hidden ? { pointerEvents: 'none' } : undefined}
                 drag={newBottomSheet.options?.isDragToCloseEnabled ? "y" : false}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={0.4}

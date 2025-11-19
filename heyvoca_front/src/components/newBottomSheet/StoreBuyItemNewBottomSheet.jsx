@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useFlyingAnimation } from '../../context/GemAnimationContext';
 import postMessageManager from '../../utils/postMessageManager';
@@ -9,16 +9,20 @@ import postMessageManager from '../../utils/postMessageManager';
 
 
 export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const [isLoading, setIsLoading] = useState(true);
   const [purchaseResult, setPurchaseResult] = useState(null);
   const [error, setError] = useState(null);
   const { setUserProfile } = useUser();
   const { triggerFlyingAnimation } = useFlyingAnimation();
-  const { popNewBottomSheet } = useNewBottomSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet } = useNewBottomSheetActions();
 
-  const handleClose = useCallback(() => {
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
   useEffect(() => {
     // 결제 성공 콜백 등록
     const handlePurchaseSuccess = (data) => {
@@ -38,19 +42,21 @@ export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
       }
     };
 
-    // 결제 실패 콜백 등록 (필요시)
+    // 결제 실패 콜백 등록
     const handlePurchaseError = (data) => {
       console.log('결제 실패 데이터:', data);
       setError(data.data || '결제 중 오류가 발생했습니다.');
       setIsLoading(false);
+      handleClose();
     };
 
     // 포스트메시지 리스너 등록
     postMessageManager.setupIAPPurchaseSuccess(handlePurchaseSuccess);
-    
+    postMessageManager.setupIAPPurchaseError(handlePurchaseError);
     // 컴포넌트 언마운트 시 리스너 정리
     return () => {
       postMessageManager.removeIAPPurchaseSuccess();
+      postMessageManager.removeIAPPurchaseError();
     };
   }, []);
 

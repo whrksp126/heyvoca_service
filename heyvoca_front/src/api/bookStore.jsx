@@ -11,4 +11,4 @@ export const getBookStoreApi = async () => {
   }catch(error){
     console.error('getBookStoreApi 오류:', error);
   }
-}
+};

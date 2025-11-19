@@ -3,7 +3,7 @@ import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight } fr
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import Account from './Account';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
@@ -14,11 +14,15 @@ import AccountNewFullSheet from '../newFullSheet/AccountNewFullSheet';
 // import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
 
 const Main = () => {
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
   const { userProfile } = useUser();
-  const { pushNewFullSheet } = useNewFullSheet();
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { pushNewFullSheet } = useNewFullSheetActions();
 
   
 
+  // React Compiler가 자동으로 useCallback 처리
   // 계정
   const handleAccountClick = () => {
     pushNewFullSheet(AccountNewFullSheet, {}, {

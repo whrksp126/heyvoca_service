@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
 // import { useFullSheet } from '../../context/FullSheetContext';
 // import VocabularySheet from './VocabularySheet';
@@ -10,17 +10,21 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
-  const { popNewBottomSheet } = useNewBottomSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const handleClose = useCallback(() => {
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet } = useNewBottomSheetActions();
+
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
-  const handleSet = useCallback(() => {
+  const handleSet = () => {
     if (onSet) {
       onSet({testType});
     }
-  }, [onSet, testType]);
+  };
 
   return (
     <div className="">

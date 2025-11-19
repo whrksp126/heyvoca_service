@@ -1,22 +1,26 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { backendUrl, fetchDataAsync, setCookie } from '../../utils/common';
-import { useNewFullSheet } from '../../hooks/useNewFullSheet';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
 export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
-  const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheet();
-  const { clearStack: clearNewFullSheetStack } = useNewFullSheet();
+  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
+  const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
+  const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const navigate = useNavigate();
   const { setAuth } = useUser();
 
-  const handleClose = useCallback(() => {
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
     popNewBottomSheet();
-  }, [popNewBottomSheet]);
+  };
 
   const handleLogout = useCallback(async () => {
     try {
