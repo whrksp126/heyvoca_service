@@ -90,6 +90,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
       p-[20px]
       bg-[#fff]
     ">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div></div>
       <div className="
         flex flex-col items-center

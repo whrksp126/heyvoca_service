@@ -43,6 +43,7 @@ const Main = () => {
 
   // React Compiler가 자동으로 useCallback 처리
   const handleStartClick = (testType) => {
+    console.log("???testType", testType);
     const isLearning = recentStudy[testType]?.status === "learning";
     if(isLearning){
       // 이어학습 유무 확인
@@ -54,7 +55,7 @@ const Main = () => {
             console.log("onCancel", props);
             popNewBottomSheet();
             setTimeout(() => {
-              pushNewFullSheet(VocabularySheetNewFullSheet, { testType: props.testType }, {
+              pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
                 smFull: true,
                 closeOnBackdropClick: true
               });

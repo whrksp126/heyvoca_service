@@ -69,6 +69,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
       flex flex-col h-full
       bg-white
     ">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
       <div className="
         relative

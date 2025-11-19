@@ -23,6 +23,7 @@ const SaveStudyData = ({endInitialProfile}) => {
       p-[20px]
       bg-[#FFEFFA]
     ">
+    
       <div className="
         flex flex-col items-center
         gap-[10px]

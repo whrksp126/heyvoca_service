@@ -36,6 +36,35 @@ if (typeof window !== 'undefined') {
   window.refreshUserToken = refreshUserToken;
 }
 
+// 웹 토스트 메시지 생성 함수
+function createWebToast(message) {
+  // 간단한 웹 토스트 구현
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 10000;
+    font-size: 14px;
+    pointer-events: none;
+  `;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 2000);
+}
+
 // 토스트 메시지 표시 함수
 export async function showToast(message) {
   if (getDevicePlatform() === 'web') {

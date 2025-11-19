@@ -287,7 +287,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     <motion.div 
       className="
         flex flex-col 
-        h-[calc(100vh-theme(height.header))]
+        h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
         px-[16px] pt-[5px] pb-[20px]
       "
       initial={{ opacity: 0, x: 20 }}

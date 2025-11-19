@@ -239,6 +239,7 @@ const Main = () => {
         background: 'linear-gradient(to bottom, #FF69C6 0%, #FF8DD4 22%, #FFFFFF 42%)',
       }}
     >
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div className="
         flex justify-between items-center
         pt-[20px] px-[16px] pb-[14px]

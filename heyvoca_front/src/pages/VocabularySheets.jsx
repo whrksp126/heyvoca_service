@@ -6,6 +6,7 @@ import Header from '../components/vocabularySheets/Header';
 const VocabularySheets = () => {
   return (
     <>
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <Header />
       <Main />
       <BottomNav />

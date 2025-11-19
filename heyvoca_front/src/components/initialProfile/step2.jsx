@@ -36,6 +36,7 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
       p-[20px]
       bg-[#FFEFFA]
     ">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div></div>
       <div className="
           absolute top-[35px] left-[50%] translate-x-[-50%]

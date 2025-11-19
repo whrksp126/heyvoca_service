@@ -3,7 +3,6 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
-import StudyResult from '../components/takeTest/StudyResult';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
 
@@ -242,6 +241,7 @@ const TakeTest = () => {
   if(isTestQuestionsSetting){
     return (
       <div>
+        <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <MakeStudyData />
       </div>
     );
@@ -250,6 +250,7 @@ const TakeTest = () => {
       // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>
+          <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
           <SaveStudyData />
         </div>
       );
@@ -257,6 +258,7 @@ const TakeTest = () => {
   
     return (
       <div>
+        <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <Header testType={state?.testType ? state.testType : recentStudy[state.testType]?.type} />
         <Main 
           testQuestions={testQuestions} 

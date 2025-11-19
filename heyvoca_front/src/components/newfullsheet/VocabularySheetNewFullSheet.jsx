@@ -70,6 +70,7 @@ const VocabularySheetNewFullSheet = ({testType}) => {
 
   return (
     <div className="flex flex-col h-full w-full bg-white">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
       <div className="
         relative

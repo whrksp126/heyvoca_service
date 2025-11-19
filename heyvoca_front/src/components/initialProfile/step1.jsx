@@ -23,6 +23,7 @@ const Step1 = ({ setStep }) => {
       p-[20px]
       bg-[#FFEFFA]
     ">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div></div>
       <div className="
         flex flex-col items-center
