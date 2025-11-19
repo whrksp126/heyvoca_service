@@ -97,6 +97,29 @@ class PostMessageManager {
   }
 
   /**
+   * OCR 결과 콜백 등록
+   * @param {Function} callback - OCR 결과 처리 콜백 함수
+   */
+  setupOCRResult(callback) {
+    console.log('OCR 결과 콜백 등록 시작');
+    console.log(callback);
+    // 포스트메시지 매니저 초기화
+    this.init();
+    
+    // OCR 결과 콜백 리스너 등록
+    this.addListener('ocrResult', callback);
+    console.log('OCR 결과 콜백 등록 완료');
+    console.log(this.listeners);
+  }
+
+  /**
+   * OCR 결과 콜백 제거
+   */
+  removeOCRResult() {
+    this.removeListener('ocrResult');
+  }
+
+  /**
    * 포스트메시지 처리 핸들러
    * @param {MessageEvent} event - 포스트메시지 이벤트
    */
@@ -150,6 +173,34 @@ class PostMessageManager {
    */
   clearAllListeners() {
     this.listeners.clear();
+  }
+
+  /**
+   * React Native로 메시지 전송
+   * @param {string} type - 메시지 타입
+   * @param {Object} data - 전송할 데이터
+   */
+  sendMessageToReactNative(type, data = {}) {
+    const message = {
+      type: type,
+      props: data
+    };
+
+    try {
+      // React Native WebView 환경 확인
+      if (window.ReactNativeWebView) {
+        // React Native WebView로 메시지 전송
+        window.ReactNativeWebView.postMessage(JSON.stringify(message));
+        console.log(`📤 React Native로 메시지 전송: ${type}`, message);
+        alert('메시지 전송 완료');
+      } else {
+        console.warn('⚠️ React Native WebView 환경이 아닙니다. 메시지 전송이 불가능합니다.');
+        alert('메시지 전송 실패');
+      }
+    } catch (error) {
+      console.error('❌ React Native 메시지 전송 실패:', error);
+      alert('메시지 전송 실패');
+    }
   }
 
   /**

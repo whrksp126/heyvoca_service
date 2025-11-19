@@ -4,7 +4,9 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
+import postMessageManager from '../../utils/postMessageManager';
 import './WordBottomSheet.css';
+import { IconCamera } from '../../assets/svg/icon';
 
 export const useWordSetBottomSheet = () => {
   const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheet();
@@ -164,6 +166,57 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
   const exampleMeaningInputRef = useRef(wordData.examples[exampleSetType.exampleIndex - 1]?.meaning || '');
   const { vocabularySheets } = useVocabulary();
 
+  // OCR 결과 처리 핸들러
+  const handleOCRResult = useCallback(async (message) => {
+    // console.log('OCR 결과 받음:', message);
+    // console.log(message.data.words);
+    
+    if (message.data.words && message.data.words.length > 0) {
+      try {
+        // 백엔드로 OCR 데이터 전송 (전처리 및 DB 확인)
+        const response = await fetchDataAsync(
+          `${backendUrl}/ocr/words`,
+          'POST',
+          {
+            words: message.data.words
+          },
+          false
+        );
+
+        if (response.code === 200) {
+          console.log('백엔드 OCR 처리 완료:')
+          console.log(response.data);
+          
+          // 백엔드에서 전처리된 결과 리스트를 앱에 전달 (word, meaning만)
+          const matched_words = response.data.matched_words;
+          
+          // 처리된 데이터를 앱으로 전달
+          postMessageManager.sendMessageToReactNative('filteredWords', matched_words);
+          // console.log('앱으로 OCR 처리 결과 전송 완료');
+          
+        } else {
+          console.error('백엔드 OCR 처리 실패:', response);
+          alert('OCR 처리에 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('OCR 데이터 전송 오류:', error);
+        alert('OCR 데이터 전송 중 오류가 발생했습니다.');
+      }
+    }
+  }, []);
+
+  // OCR 결과 리스너 등록
+  useEffect(() => {
+    // console.log('OCR 리스너 등록');
+    postMessageManager.setupOCRResult(handleOCRResult);
+    
+    // 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      // console.log('OCR 리스너 제거');
+      postMessageManager.removeOCRResult();
+    };
+  }, [handleOCRResult]);
+
   // 단어 검색 함수
   const searchWord = async (word) => {
     if (!word.trim() || word.trim().length < 2) {
@@ -206,10 +259,24 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
       <div>
         <div className="left"></div>
         <div className="
-          flex items-center justify-center
+          relative flex items-center justify-center
           p-[20px] pb-[0px]
           ">
           <h1 className="text-[18px] font-[700]">단어 {id ? "수정" : "추가"}</h1>
+          <button
+            type="button"
+            className="
+              absolute right-[20px]
+              inline-flex items-center justify-center
+              w-[29px] h-[26px]
+            "
+            onClick={() => {
+              // React Native로 메시지 전송
+              postMessageManager.sendMessageToReactNative('openCamera', vocabularyId);
+            }}
+          >
+            <IconCamera width={29} height={26} className="text-[#FF8DD4]" />
+          </button>
         </div>
         <div className="right"></div>
       </div>
