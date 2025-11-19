@@ -18,5 +18,6 @@ pyfcm==2.0.7
 APScheduler==3.10.4
 pandas==1.5.3
 PyMySQL==1.0.3
+cryptography==41.0.7
 redis==4.5.5
 PyJWT==2.8.0

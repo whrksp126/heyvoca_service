@@ -252,7 +252,7 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
                 reason=GemReason.ACHIEVEMENT,
                 description=f"업적 완료: {goal_type_name} 레벨 {current_goal.level}",
                 source_type="achievement",
-                source_id=str(current_user_goal.id),
+                source_id=None, 
                 balance_after=user.gem_cnt
             )
         return current_user_goal, goal.reward_count, current_goal.badge_img
