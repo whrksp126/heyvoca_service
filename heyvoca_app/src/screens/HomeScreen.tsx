@@ -5,14 +5,23 @@ import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
 import IapScreen from './IapScreen';
+import OCRScreen from './OCRScreen';
+import { useNavigation } from '../contexts/NavigationContext';
 
 const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 
+
 const HomeScreen = () => {
-  const webViewRef = useRef(null);
+  const webViewRef = useRef<any>(null);
   const [lastBackPressed, setLastBackPressed] = useState(0);
   const [isIapTest, setIsIapTest] = useState(false);
+  const { navigate, setWebViewRef, isOCRScreen, setIsOCRScreen, setOcrFilteredWords } = useNavigation();
+
+  // webViewRef를 NavigationContext에 설정
+  useEffect(() => {
+    setWebViewRef(webViewRef);
+  }, [setWebViewRef]);
 
   useEffect(() => {
     const backAction = () => {
@@ -52,28 +61,31 @@ const HomeScreen = () => {
         translucent={false}
         hidden={false} 
       />
-      {isIapTest ? (
-        <IapScreen onClose={() => setIsIapTest(false)} />
-      ) : (
-        <WebView
-          source={{ uri: FRONT_URL }}
-          ref={webViewRef}
-          bounces={false}
-          overScrollMode="never"
-          userAgent="HeyVoca"
-          onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp)}
-          javaScriptEnabled={true}
-          webviewDebuggingEnabled={true}
-          injectedJavaScript={`
-            window.alert = function(message) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
-            };
-            window.console.log = function(message) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
-            };
-          `}
-          style={styles.webview}
-        />
+      {/* 웹뷰는 항상 렌더링 */}
+      <WebView
+        source={{ uri: FRONT_URL || '' }}
+        ref={webViewRef}
+        bounces={false}
+        overScrollMode="never"
+        userAgent="HeyVoca"
+        onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp, setIsOCRScreen, setOcrFilteredWords)}
+        javaScriptEnabled={true}
+        webviewDebuggingEnabled={true}
+        injectedJavaScript={`
+          window.alert = function(message) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
+          };
+          window.console.log = function(message) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
+          };
+        `}
+        style={styles.webview}
+      />
+      {/* OCR 카메라는 웹뷰 위에 오버레이로 표시 */}
+      {isOCRScreen && (
+        <View style={styles.ocrOverlay}>
+          <OCRScreen />
+        </View>
       )}
     </View>
   );
@@ -82,6 +94,14 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   webview: { flex: 1 },
+  ocrOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
+  },
 });
 
 export default HomeScreen;
