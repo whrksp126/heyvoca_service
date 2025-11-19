@@ -1,13 +1,17 @@
+import React from 'react';
 import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message';
 // import Tts from 'react-native-tts';
 import { signInWithGoogle } from '../google/googleAuth';
 import { executePurchase } from '../handlers/iapHandler';
 import { saveCookieToAsyncStorage } from '../utils/asyncStorage';
+
 const handleWebViewMessage = async (
   event: { nativeEvent: { data: string } }, 
-  webViewRef: { current: any }, 
-  handleExitApp: () => void
+  webViewRef: React.RefObject<any>, 
+  handleExitApp: () => void,
+  setIsOCRScreen: (isOCRScreen: boolean) => void,
+  setOcrFilteredWords: (words: any[]) => void,
 ) => {
   try {
     const messageData = JSON.parse(event.nativeEvent.data);
@@ -52,6 +56,16 @@ const handleWebViewMessage = async (
         handleExitApp();
         break;
 
+      case 'openCamera':
+        console.log('openCamera!!!!');
+        setIsOCRScreen(true);
+        break;
+      case 'filteredWords':
+        // 웹뷰에서 정제된 단어리스트를 받음 (하위 호환성)
+        console.log('✅ OCR 처리 완료된 단어리스트 받음:', messageData.props);
+        // Context에 정제된 단어 저장
+        setOcrFilteredWords(messageData.props || []);
+        break;
       default:
         console.log('알 수 없는 메시지 타입:', messageData.type);
     }

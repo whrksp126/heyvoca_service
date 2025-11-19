@@ -4,18 +4,16 @@ import { useNavigation } from '../contexts/NavigationContext';
 
 import HomeScreen from '../screens/HomeScreen';
 
-
-const AppNavigator = () => {
+const AppNavigator: React.FC = () => {
   const { currentScreen, navigationParams } = useNavigation();
-
 
   const renderScreen = () => {
     const route = { params: navigationParams };
     switch (currentScreen) {
       case 'home':
-          return <HomeScreen />;
-    default:
-      return <HomeScreen />;
+        return <HomeScreen />;
+      default:
+        return <HomeScreen />;
     }
   };
 
