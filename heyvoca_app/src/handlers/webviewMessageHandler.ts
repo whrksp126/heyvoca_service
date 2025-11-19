@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 // import Tts from 'react-native-tts';
 import { signInWithGoogle } from '../google/googleAuth';
 import { executePurchase } from '../handlers/iapHandler';
@@ -36,6 +37,19 @@ const handleWebViewMessage = async (
           { text: messageData.btns[0].text, onPress: () => webViewRef.current.postMessage(JSON.stringify({ type: "confirm_return", success: true, result: false })), style: 'cancel' },
           { text: messageData.btns[1].text, onPress: () => webViewRef.current.postMessage(JSON.stringify({ type: "confirm_return", success: true, result: true })) },
         ], { cancelable: false });
+        break;
+
+      case 'showToast':
+        Toast.show({
+          type: 'info',
+          text1: messageData.props.message,
+          position: 'bottom',
+          visibilityTime: 2000,
+        });
+        break;
+
+      case 'closeApp':
+        handleExitApp();
         break;
 
       default:

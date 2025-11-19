@@ -1,26 +1,30 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, BackHandler, ToastAndroid, View, Text, Button } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { StyleSheet, StatusBar, BackHandler, View } from 'react-native';
+import WebView from 'react-native-webview';
 import handleWebViewMessage from '../handlers/webviewMessageHandler';
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IapScreen from './IapScreen';
 
 const FRONT_URL = Config.APP_ENV === 'local' && Platform.OS === 'android' ? Config.ANDROID_FRONT_URL : Config.FRONT_URL;
 
 
 const HomeScreen = () => {
-  const webViewRef = useRef(null);
-  const [lastBackPressed, setLastBackPressed] = useState(0);
+  const webViewRef = useRef<WebView>(null);
   const [isIapTest, setIsIapTest] = useState(false);
+  const insets = useSafeAreaInsets();
+  const statusBarHeight = insets.top;
 
   useEffect(() => {
     const backAction = () => {
       if (webViewRef.current) {
+        // 웹의 onBackPressed 함수를 직접 호출
         webViewRef.current.injectJavaScript(`
           (function() {
-            const isBackable = is_backable();
-            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'isBackable', value: isBackable }));
+            if (window.onBackPressed) {
+              window.onBackPressed();
+            }
           })();
         `);
         return true;
@@ -33,30 +37,25 @@ const HomeScreen = () => {
   }, []);
 
   const handleExitApp = () => {
-    const now = Date.now();
-    if (lastBackPressed && (now - lastBackPressed) < 2000) {
-      BackHandler.exitApp();
-    } else {
-      ToastAndroid.show('종료하려면 뒤로를 다시 누르세요..', ToastAndroid.SHORT);
-      setLastBackPressed(now);
-    }
+    // 웹에서 closeApp 호출 시 앱 종료
+    BackHandler.exitApp();
   };
 
   console.log('FRONT_URL', FRONT_URL);
 
   return (
-    <View style={[styles.container, { backgroundColor: '#fff' }]}> 
+    <View style={[styles.container, { backgroundColor: 'transparent' }]}> 
       <StatusBar 
         barStyle={'dark-content'}
-        backgroundColor={'#fff'}
-        translucent={false}
+        backgroundColor={'transparent'}
+        translucent={true}
         hidden={false} 
       />
       {isIapTest ? (
         <IapScreen onClose={() => setIsIapTest(false)} />
       ) : (
         <WebView
-          source={{ uri: FRONT_URL }}
+          source={{ uri: FRONT_URL || '' }}
           ref={webViewRef}
           bounces={false}
           overScrollMode="never"
@@ -65,12 +64,17 @@ const HomeScreen = () => {
           javaScriptEnabled={true}
           webviewDebuggingEnabled={true}
           injectedJavaScript={`
-            window.alert = function(message) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
-            };
-            window.console.log = function(message) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
-            };
+            (function() {
+              // CSS 변수 설정: 상태바 높이
+              document.documentElement.style.setProperty('--status-bar-height', '${statusBarHeight}px');
+              console.log('statusBarHeight', '${statusBarHeight}px');
+              window.alert = function(message) {
+                window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
+              };
+              // window.console.log = function(message) {
+              //   window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
+              // };
+            })();
           `}
           style={styles.webview}
         />

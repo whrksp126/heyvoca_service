@@ -301,8 +301,6 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
 
 // 구매 에러 처리
 const handlePurchaseError = (error: PurchaseError) => {
-  console.error('구매 에러:', error);
-  
   // 웹으로 에러 결과 전송
   const errorData = {
     type: 'iap_purchase_error',

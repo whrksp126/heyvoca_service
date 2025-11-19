@@ -1,6 +1,6 @@
 {
   "name": "heyvoca",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -9,9 +9,9 @@
     "start": "react-native start",
     "test": "jest",
     "android:local": "cross-env ENVFILE=.env.local npx react-native run-android --mode=playDebug log-android",
-    "android:dev": "cross-env ENVFILE=.env.dev npx react-native run-android log-android",
-    "android:stg": "cross-env ENVFILE=.env.stg npx react-native run-android log-android",
-    "android:prod": "cross-env ENVFILE=.env npx react-native run-android log-android",
+    "android:dev": "cross-env ENVFILE=.env.dev npx react-native run-android --mode=playDebug log-android",
+    "android:stg": "cross-env ENVFILE=.env.stg npx react-native run-android --mode=playDebug log-android",
+    "android:prod": "cross-env ENVFILE=.env npx react-native run-android --mode=playDebug log-android",
     "ios-simulator-iphone:local": "cross-env ENVFILE=.env.local npx react-native run-ios log-ios --simulator=\"iPhone 16 Pro\"",
     "ios:local": "cross-env ENVFILE=.env.local npx react-native run-ios log-ios",
     "ios:dev": "cross-env ENVFILE=.env.dev npx react-native run-ios log-ios",
@@ -36,6 +36,7 @@
     "react-native-iap": "^14.4.7",
     "react-native-nitro-modules": "^0.29.6",
     "react-native-safe-area-context": "^5.5.2",
+    "react-native-toast-message": "^2.3.3",
     "react-native-tts": "^4.1.1",
     "react-native-webview": "^13.15.0"
   },
