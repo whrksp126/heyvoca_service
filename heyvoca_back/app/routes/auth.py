@@ -76,8 +76,8 @@ def google_oauth_app():
                 username = None,
                 name = name,
                 phone = None,
-                refresh_token = None,
-                code = None,
+                refresh_token = '',
+                code = '',
                 book_cnt = 3,
                 gem_cnt = 0,
                 set_goal_cnt = 3,
@@ -233,8 +233,8 @@ def google_app_callback():
             username = None,
             name = name,
             phone = None,
-            refresh_token = refresh_token,
-            code = None,
+            refresh_token = refresh_token or '',
+            code = '',
             book_cnt = 3,
             gem_cnt = 0,
             set_goal_cnt = 3,
@@ -341,13 +341,15 @@ def get_user_info():
 
 
 @auth_bp.route('/update_user_info', methods=['PATCH'])
+@jwt_required
 def update_user_info():
     data = request.json
     
     if not data:
         return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
 
-    user_item = db.session.query(User).filter(User.id == g.user_id).first()
+    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
+    user_item = db.session.query(User).filter(User.id == user_id).first()
 
     if not user_item:
         return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
@@ -501,9 +503,18 @@ def login():
     user = User.query.filter_by(google_id=google_id).first()
     if user is None:
         user = User(
+            level_id=None,
             email=email,
             google_id=google_id,
+            username=None,
             name=name or '',
+            phone=None,
+            last_logged_at=None,
+            refresh_token='',
+            code='',
+            book_cnt=3,
+            gem_cnt=0,
+            set_goal_cnt=3
         )
         db.session.add(user)
         db.session.commit()

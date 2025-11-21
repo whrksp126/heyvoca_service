@@ -208,7 +208,31 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
         )
 
         if last_goal_done:
-            return None, None, None  
+            return None, None, None
+        
+        # 진행 중인 목표도 없고 마지막 레벨도 완료하지 않은 경우 → 첫 번째 레벨 목표 생성
+        goal_type = db.session.query(GoalType).filter(GoalType.type == goal_type_name).first()
+        if not goal_type:
+            return None, None, None
+        
+        first_goal = db.session.query(Goals)\
+                        .filter(Goals.type_id == goal_type.id)\
+                        .filter(Goals.level == 1)\
+                        .first()
+        
+        if not first_goal:
+            return None, None, None
+        
+        # 첫 번째 레벨 목표를 UserGoals에 생성
+        current_user_goal = UserGoals(
+            user_id=user_id,
+            goal_id=first_goal.id,
+            current_value=0,
+            is_completed=False,
+            completed_at=None
+        )
+        db.session.add(current_user_goal)
+        db.session.flush()  # ID를 얻기 위해 flush
     
     # Goal 조회
     goal = db.session.query(Goals)\
@@ -240,8 +264,7 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
                 completed_at=None
             )
             db.session.add(next_user_goal)
-
-    if goal_complete:
+        
         # 업적 완료 시 보석 지급 및 로그 기록
         user = db.session.query(User).filter(User.id == user_id).first()
         if user and goal.reward_count > 0:
@@ -255,9 +278,9 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
                 source_id=None, 
                 balance_after=user.gem_cnt
             )
-        return current_user_goal, goal.reward_count, current_goal.badge_img
+        return current_user_goal, goal.reward_count, current_goal.badge_img, current_goal.level
     else:
-        return None, None, None
+        return None, None, None, None
     
 
 
@@ -299,8 +322,8 @@ def api_user_study_history():
             checkin.today_study_complete = True
 
     # 3.업적(암기왕, 노력왕) 업데이트
-    memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img = update_user_goal('암기왕')
-    effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img = update_user_goal('노력왕')
+    memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img, memory_goal_level = update_user_goal('암기왕')
+    effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = update_user_goal('노력왕')
 
     # 4. 보석 업데이트 (오늘의 학습 완료 보석만 추가, 업적 보상은 update_user_goal에서 처리)
     add_gem = 0
@@ -315,12 +338,16 @@ def api_user_study_history():
     if memory_goal_complete:
         goals.append({
             'name' : '암기왕',
+            'type' : '암기왕',
+            'level' : memory_goal_level,
             'badge_img' : memory_goal_badge_img,
             'completed_at' : memory_goal_complete.completed_at + timedelta(hours=9),
         })
     if effort_goal_complete:
         goals.append({
             'name' : '노력왕',
+            'type' : '노력왕',
+            'level' : effort_goal_level,
             'badge_img' : effort_goal_badge_img,
             'completed_at' : effort_goal_complete.completed_at + timedelta(hours=9),
         })
