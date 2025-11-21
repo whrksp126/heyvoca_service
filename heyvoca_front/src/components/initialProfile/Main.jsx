@@ -128,7 +128,6 @@ const Main = () => {
       overflow: 'hidden',
       backgroundColor: '#FFEFFA'
     }}>
-      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <AnimatePresence mode="wait">
         {step === 1 ? (
           <motion.div

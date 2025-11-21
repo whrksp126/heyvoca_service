@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack, Leaf } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -17,6 +17,78 @@ const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
 const MAX_RENDERED_ITEMS = 100; // DOM에 최대 렌더링할 아이템 개수 (성능 최적화)
 const ITEM_HEIGHT_ESTIMATE = 120; // 각 아이템의 예상 높이 (px)
+
+// 암기 상태 판단 함수
+const getMemoryState = (word) => {
+  const repetition = word.repetition ?? 0;
+  const interval = word.interval ?? 0;
+  const ef = word.ef ?? 2.5;
+
+  // 미학습: repetition === 0 && interval === 0
+  if (repetition === 0 && interval === 0) {
+    return {
+      type: 'unlearned',
+      label: '미학습',
+      icon: EggCrack,
+      color: '#9D835A',
+      borderColor: '#9D835A',
+      bgColor: '#FFFCF3'
+    };
+  }
+
+  // 암기율 계산
+  let score = 0;
+  score += repetition * 15;
+  score += interval * 2;
+  score += (ef - 1.3) * 20;
+  const percent = Math.max(0, Math.min(100, Math.round(score)));
+
+  // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
+  if (repetition === 0 && interval > 0) {
+    return {
+      type: 'shortTerm',
+      label: '단기암기',
+      icon: Leaf,
+      color: '#77CE4F',
+      borderColor: '#77CE4F',
+      bgColor: '#F2FFEB'
+    };
+  }
+
+  // 단기 암기 (0-29%)
+  if (percent < 30) {
+    return {
+      type: 'shortTerm',
+      label: '단기암기',
+      icon: Leaf,
+      color: '#77CE4F',
+      borderColor: '#77CE4F',
+      bgColor: '#F2FFEB'
+    };
+  }
+  
+  // 중기 암기 (30-69%)
+  if (percent < 70) {
+    return {
+      type: 'mediumTerm',
+      label: '중기암기',
+      icon: Plant,
+      color: '#38CE38',
+      borderColor: '#38CE38',
+      bgColor: '#EBFFEE'
+    };
+  }
+  
+  // 장기 암기 (70-100%)
+  return {
+    type: 'longTerm',
+    label: '장기암기',
+    icon: Carrot,
+    color: '#F68300',
+    borderColor: '#F68300',
+    bgColor: '#FFF8E8'
+  };
+};
 
 const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -443,7 +515,29 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 </div>
               </div>
               <div>
-                {MemorizationStatus({repetition: item.repetition, interval: item.interval, ef: item.ef})}
+                {(() => {
+                  const memoryState = getMemoryState(item);
+                  const IconComponent = memoryState.icon;
+                  return (
+                    <div 
+                      className="
+                        flex items-center gap-[3px]
+                        w-[max-content]
+                        py-[3px] px-[5px]
+                        border rounded-[3px]
+                        text-[10px] font-[600]
+                      "
+                      style={{
+                        borderColor: memoryState.borderColor,
+                        backgroundColor: memoryState.bgColor,
+                        color: memoryState.color
+                      }}
+                    >
+                      <IconComponent size={10} weight="fill" />
+                      <span>{memoryState.label}</span>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* 

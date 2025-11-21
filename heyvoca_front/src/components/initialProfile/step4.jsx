@@ -12,7 +12,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   const [levelBookList, setLevelBookList] = useState([]);
   const [isLevelBookListLoading, setIsLevelBookListLoading] = useState(true);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
   const { getBookStoreVocabularySheet } = useVocabulary();
   useEffect(() => {
     getLevelBookList();
@@ -40,11 +40,11 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
 
   // React Compiler가 자동으로 useCallback 처리
   const addVocabularySheet = (vocabularySheet) => {
-    console.log('addVocabularySheet', vocabularySheet);
     setUserInitialProfile({
       ...userInitialProfile,
       vocabook: vocabularySheet,
     });
+    popNewBottomSheet();
     setStep(5);
   }
 
@@ -84,20 +84,22 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   }
 
   return (
+    <>
+    <div className="bg-[#fff]" style={{ paddingTop: 'var(--status-bar-height)' }}></div>
     <div className="
-      flex flex-col items-center justify-between 
-      w-full h-screen 
+      flex flex-col items-center justify-between gap-[20px]
+      w-full h-[calc(100vh-var(--status-bar-height))]
       p-[20px]
       bg-[#fff]
     ">
-      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-      <div></div>
       <div className="
+        w-full h-full
         flex flex-col items-center
-        gap-[10px]
+        gap-[20px]
       ">
         <div 
           className="
+            w-full
             px-[15px] py-[12px]
             bg-[#fff]
             rounded-[10px]
@@ -108,7 +110,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
           선택하신 레벨에 맞는 단어장을 선물해 드릴게요!<br />
           원하시는 단어장 하나를 선택해주세요.
         </div>
-        <ul className="grid grid-cols-2 gap-[15px]">
+        <ul className="grid grid-cols-2 gap-[15px] w-full">
           {levelBookList.map((item, index) => {return (
           <motion.li
             key={item.id}
@@ -119,6 +121,8 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
               rounded-[12px]
               cursor-pointer
               shadow-sm
+              aspect-square
+              w-full
             `}
             whileTap={{ scale: 0.96}}
             whileHover={{ scale: 1.04}}
@@ -185,6 +189,7 @@ const Step4 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
         레벨 다시 선택하기
       </motion.button>
     </div>
+    </>
   );
 };
 

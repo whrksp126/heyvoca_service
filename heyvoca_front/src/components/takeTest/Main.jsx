@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -14,6 +14,21 @@ const iconComponentMap = {
   WarningCircle: <WarningCircle size={32} weight="fill" color="#F26A6A" />,
   HandsClapping: <HandsClapping size={32} weight="fill" color="#39E859" />,
 }
+
+// meanings가 여러 개면 랜덤하게 2~3개만 선택 (중복 제거)
+const getDisplayMeanings = (meanings) => {
+  if (!meanings || meanings.length === 0) return [];
+  
+  // 중복 제거
+  const uniqueMeanings = [...new Set(meanings)];
+  
+  if (uniqueMeanings.length <= 2) return uniqueMeanings;
+  
+  // 2개 또는 3개를 랜덤하게 선택
+  const count = Math.random() < 0.5 ? 2 : 3;
+  const shuffled = [...uniqueMeanings].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
+};
 
 const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -35,6 +50,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   const navigate = useNavigate();
 
+  // 현재 문제의 옵션들에 대해 displayMeanings를 한 번만 계산
+  const optionsWithDisplayMeanings = useMemo(() => {
+    if (!testQuestions[progressIndex] || !testQuestions[progressIndex].options) {
+      return [];
+    }
+    return testQuestions[progressIndex].options.map(option => ({
+      ...option,
+      displayMeanings: getDisplayMeanings(option.meanings)
+    }));
+  }, [progressIndex, testQuestions]);
 
   useEffect(()=>{
     console.log("testType,", testType);
@@ -166,7 +191,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       ef: isSuspicious.ef,
       interval: isSuspicious.interval,
       nextReview: isSuspicious.nextReview,
-      repetition: isSuspicious.repetition
+      repetition: isSuspicious.repetition,
+      // memoryState 객체도 함께 업데이트
+      memoryState: {
+        ef: isSuspicious.ef,
+        repetition: isSuspicious.repetition,
+        interval: isSuspicious.interval,
+        nextReview: isSuspicious.nextReview,
+      }
     });
     setIsSuspicious(null);
     setUpdateRecentStudyStateAndStatus();
@@ -215,6 +247,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       repetition: testQuestions[progressIndex].repetition,
       interval: testQuestions[progressIndex].interval,
       nextReview: testQuestions[progressIndex].nextReview,
+      // memoryState 객체도 함께 업데이트
+      memoryState: {
+        ef: testQuestions[progressIndex].ef,
+        repetition: testQuestions[progressIndex].repetition,
+        interval: testQuestions[progressIndex].interval,
+        nextReview: testQuestions[progressIndex].nextReview,
+      }
     }
 
     updateWordState(sheetId, wordId, updateData);
@@ -282,6 +321,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       opacity: 0
     })
   };
+  
+  // 성능 최적화를 위한 transition 설정
+  const optimizedTransition = {
+    duration: 0.2,
+    ease: [0.4, 0, 0.2, 1] // cubic-bezier for smoother animation
+  };
 
   return (
     <motion.div 
@@ -293,7 +338,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.2 }}
+      transition={optimizedTransition}
+      style={{ willChange: 'transform, opacity' }}
     >
       <motion.div className="
         relative
@@ -312,7 +358,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           animate={{ 
             width: `${Math.floor((progressBarIndex) / testQuestions.length * 100)}%` 
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          style={{ willChange: 'width' }}
         />
         {/* <span className="
           absolute top-[50%] right-[10px] translate-y-[-50%]
@@ -332,9 +379,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             animate="center"
             exit="exit"
             transition={{
-              duration: 0.3,
-              ease: "easeInOut"
+              duration: 0.25,
+              ease: [0.4, 0, 0.2, 1]
             }}
+            style={{ willChange: 'transform, opacity' }}
             className="flex flex-col gap-[15px] w-full h-full absolute"
           >
             {testQuestions[progressIndex].questionType === "multipleChoice" && (
@@ -349,7 +397,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   `}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   
                   <h2 className="
@@ -376,10 +425,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             exit={{ scale: 0, opacity: 0 }}
                             transition={{
                               type: "spring",
-                              stiffness: 500,
-                              damping: 20,
-                              duration: 0.4
+                              stiffness: 600,
+                              damping: 25,
+                              duration: 0.3
                             }}
+                            style={{ willChange: 'transform, opacity' }}
                           >
                             <Circle size={150} weight="bold" className="text-[#39E859]" />
                           </motion.div>
@@ -391,10 +441,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             exit={{ scale: 0, opacity: 0 }}
                             transition={{
                               type: "spring",
-                              stiffness: 500,
-                              damping: 20,
-                              duration: 0.4
+                              stiffness: 600,
+                              damping: 25,
+                              duration: 0.3
                             }}
+                            style={{ willChange: 'transform, opacity' }}
                           >
                             <X size={150} weight="bold" className="text-[#F26A6A]" />
                           </motion.div>
@@ -418,6 +469,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       stiffness: 400, 
                       damping: 17
                     }}
+                    style={{ willChange: 'transform, background-color' }}
                     className="
                       absolute bottom-[15px] left-[15px]
                       rounded-[8px] p-[5px]
@@ -434,10 +486,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   ">
                     <MemorizationStatus 
                       key={progressIndex}
+                      wordId={testQuestions[progressIndex].id}
                       repetition={testQuestions[progressIndex].repetition} 
                       interval={testQuestions[progressIndex].interval}
                       ef={testQuestions[progressIndex].ef} 
                       isCorrect={isCorrect}
+                      nextReview={testQuestions[progressIndex].nextReview}
+                      useRandomMessages={true}
                     />
                   </div>
                   { testType === "test" && isAnswered && (
@@ -456,6 +511,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       stiffness: 400, 
                       damping: 17
                     }}
+                    style={{ willChange: 'transform, background-color' }}
                     className="
                       absolute bottom-[15px] right-[15px]
                       rounded-[8px] p-[5px]
@@ -470,7 +526,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 <div className="
                   flex flex-col gap-[10px]
                 ">
-                  {testQuestions[progressIndex].options.map((option, index) => {
+                  {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";
                     if(isCorrect !== null && testQuestions[progressIndex].resultIndex == index){
                       btnStyle = 'border-[#17E937] text-[#17E937] bg-[#E4FFE8]';
@@ -481,6 +537,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     }else{
                       btnStyle = 'border-[#CCCCCC] text-[#111]';
                     }
+                    
                     return (  
                       <motion.button 
                         key={index}
@@ -494,6 +551,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         }}
                         onClick={() => handleOptionClick(index, option)}
                         disabled={isAnswered}
+                        style={{ willChange: 'transform' }}
                         className={`
                           flex items-center justify-center
                           w-full h-[50px]
@@ -510,7 +568,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           ${btnStyle}
                         `}
                       >
-                        {option.meanings.join(", ")}
+                        {option.displayMeanings.join(", ")}
                       </motion.button>
                     )
                   })}
@@ -527,6 +585,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       damping: 17
                     }
                   }}
+                  style={{ willChange: 'transform' }}
                   className={`
                     w-full h-[45px]
                     rounded-[8px]
@@ -558,10 +617,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           exit={{ y: 210 }}
           transition={{ 
             type: "spring", 
-            stiffness: 300, 
-            damping: 25,
-            duration: 0.5
+            stiffness: 400, 
+            damping: 30,
+            duration: 0.3
           }}
+          style={{ willChange: 'transform' }}
         >
           <div className="
             flex flex-col items-center gap-[10px]

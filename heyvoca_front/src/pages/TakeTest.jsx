@@ -18,7 +18,7 @@ const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { state } = useLocation();
-  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
@@ -28,12 +28,34 @@ const TakeTest = () => {
 
   // React Compiler가 자동으로 useCallback 처리
   const getWordMemoryState = (word) => {
-    if (!word.memoryState) return MEMORY_STATES.UNLEARNED;
+    // memoryState 객체가 있는 경우
+    if (word.memoryState) {
+      const { repetition, interval } = word.memoryState;
+      
+      // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
+      if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
+      
+      // 단기 복습 (1-2회 연속 정답, 간격 1-6일)
+      if (repetition >= 1 && repetition <= 2 && interval <= 6) return MEMORY_STATES.SHORT_TERM;
+      
+      // 중기 복습 (3-4회 연속 정답, 간격 7-30일)
+      if (repetition >= 3 && repetition <= 4 && interval <= 30) return MEMORY_STATES.MEDIUM_TERM;
+      
+      // 장기 복습 (5회 이상 연속 정답, 간격 30일 이상)
+      if (repetition >= 5) return MEMORY_STATES.LONG_TERM;
+      
+      // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
+      if (repetition === 0 && interval > 0) return MEMORY_STATES.SHORT_TERM;
+      
+      return MEMORY_STATES.UNLEARNED;
+    }
     
-    const { repetition, interval, ef } = word.memoryState;
+    // memoryState가 없고 직접 속성이 있는 경우
+    const repetition = word.repetition ?? 0;
+    const interval = word.interval ?? 0;
     
-    // 미학습
-    if (repetition === 0) return MEMORY_STATES.UNLEARNED;
+    // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
+    if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
     
     // 단기 복습 (1-2회 연속 정답, 간격 1-6일)
     if (repetition >= 1 && repetition <= 2 && interval <= 6) return MEMORY_STATES.SHORT_TERM;
@@ -44,13 +66,26 @@ const TakeTest = () => {
     // 장기 복습 (5회 이상 연속 정답, 간격 30일 이상)
     if (repetition >= 5) return MEMORY_STATES.LONG_TERM;
     
+    // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
+    if (repetition === 0 && interval > 0) return MEMORY_STATES.SHORT_TERM;
+    
     return MEMORY_STATES.UNLEARNED;
+  };
+
+  // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   };
 
 
 
   // React Compiler가 자동으로 useCallback 처리
-  const setupTestQuestions = (targetMemoryState, vocabularySheetId, count) => {
+  const setupTestQuestions = (targetMemoryState, vocabularySheetId, count, testType) => {
     let allWords = [];
     
     if (vocabularySheetId !== "all") {
@@ -68,17 +103,21 @@ const TakeTest = () => {
       );
     }
 
-    // 1. nextReview가 있는 단어들만 필터링 (미학습 제외)
-    const wordsWithNextReview = allWords.filter(word => 
-      word.nextReview !== null
-    );
-    // 2. 복습 지연 단어들 먼저 필터링 (현재 날짜보다 nextReview가 과거인 것들)
+    // 현재 날짜 (시간 제거, 날짜만 비교)
     const now = new Date();
+    now.setHours(0, 0, 0, 0);
     
-    const overdueWords = wordsWithNextReview.filter(word => {
+    // 1. 미학습 단어들 (nextReview가 null이거나 없음)
+    const unlearnedWords = allWords.filter(word => 
+      !word.nextReview || word.nextReview === null
+    );
+    
+    // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
+    const overdueWords = allWords.filter(word => {
+      if (!word.nextReview) return false;
       const nextReviewDate = new Date(word.nextReview);
-      const isOverdue = nextReviewDate < now;
-      return isOverdue;
+      nextReviewDate.setHours(0, 0, 0, 0);
+      return nextReviewDate < now;
     });
 
     // 3. 복습 지연 단어들을 nextReview 기준으로 정렬 (가장 오래된 것부터)
@@ -88,24 +127,63 @@ const TakeTest = () => {
       return dateA - dateB; // 오름차순 (가장 오래된 것부터)
     });
 
-    // 4. 목표 학습 상태에 해당하는 단어들 선택
-    const targetStateWords = allWords.filter(word => getWordMemoryState(word) === targetMemoryState);
-
-    // 5. 최종 단어 목록 구성
     let selectedWords = [];
-    
-    // 복습 지연 단어들을 우선적으로 추가 (가장 오래된 것부터)
-    selectedWords.push(...sortedOverdueWords.slice(0, count));
-    
-    // 목표 상태 단어들 추가 (부족한 경우에만)
-    if (selectedWords.length < count) {
-      const remainingCount = count - selectedWords.length;
-      selectedWords.push(...targetStateWords.slice(0, remainingCount));
+
+    // 오늘의 학습 (today): 망각 곡선 중심의 단어 추천
+    if (testType === 'today') {
+      // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
+      selectedWords.push(...sortedOverdueWords.slice(0, count));
+      
+      // 우선순위 2: 미학습 단어들 (부족한 경우에만)
+      if (selectedWords.length < count) {
+        const remainingCount = count - selectedWords.length;
+        const selectedWordIds = new Set(selectedWords.map(w => w.id));
+        const availableUnlearned = unlearnedWords.filter(w => !selectedWordIds.has(w.id));
+        selectedWords.push(...availableUnlearned.slice(0, remainingCount));
+      }
+      
+      // 랜덤하게 섞기
+      selectedWords = shuffleArray(selectedWords).slice(0, count);
+    } 
+    // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어만
+    else if (testType === 'test' || testType === 'exam') {
+      // 목표 학습 상태에 해당하는 단어들 선택
+      const targetStateWords = allWords.filter(word => {
+        const memoryState = getWordMemoryState(word);
+        // 목표 상태와 일치하는 단어만 선택
+        return memoryState === targetMemoryState;
+      });
+
+      // 미학습을 선택한 경우: 모든 미학습 단어를 랜덤하게 선택 (복습 지연 우선순위 제거)
+      if (targetMemoryState === MEMORY_STATES.UNLEARNED) {
+        selectedWords = shuffleArray(targetStateWords).slice(0, count);
+      } else {
+        // 다른 암기 상태를 선택한 경우: 복습 지연 우선순위 적용
+        // 우선순위 1: 복습 지연 단어들 중에서 목표 상태인 것들 (가장 오래된 것부터)
+        const overdueTargetStateWords = sortedOverdueWords.filter(word => {
+          const memoryState = getWordMemoryState(word);
+          return memoryState === targetMemoryState;
+        });
+        selectedWords.push(...overdueTargetStateWords.slice(0, count));
+        
+        // 우선순위 2: 목표 상태 단어들 중 복습 지연이 아닌 것들 (부족한 경우에만)
+        if (selectedWords.length < count) {
+          const remainingCount = count - selectedWords.length;
+          const selectedWordIds = new Set(selectedWords.map(w => w.id));
+          const availableTargetState = targetStateWords.filter(w => 
+            !selectedWordIds.has(w.id) && 
+            (!w.nextReview || new Date(w.nextReview) >= now)
+          );
+          selectedWords.push(...availableTargetState.slice(0, remainingCount));
+        }
+        
+        // 랜덤하게 섞기
+        selectedWords = shuffleArray(selectedWords).slice(0, count);
+      }
     }
     
-    // 6. 우선순위 순서대로 문제 생성
+    // 문제 생성
     return selectedWords
-      .slice(0, count)
       .map(word => {
         const otherWords = allWords.filter(w => w.id !== word.id);
         const randomOptions = otherWords
@@ -146,7 +224,8 @@ const TakeTest = () => {
         const tempTestQuestions = setupTestQuestions(
           state.data.memoryState,
           state.data.vocabularySheetId,
-          state.data.count
+          state.data.count,
+          state.testType
         );
 
         await updateRecentStudy(state.testType,{
@@ -235,6 +314,9 @@ const TakeTest = () => {
 
       // 학습 기록 업데이트!
       await updateRecentStudyServer(state.testType);
+      
+      // 최신 단어장 데이터 다시 가져오기
+      await fetchVocabularySheets();
     }
   };
 

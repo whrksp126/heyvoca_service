@@ -52,7 +52,11 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
           <div className="flex flex-col gap-[10px]">
             <div className="flex items-center justify-between">
               <div>
-                {MemorizationStatus({repetition: word.repetition, interval: word.interval, ef: word.ef})}
+                <MemorizationStatus 
+                  repetition={word.repetition} 
+                  interval={word.interval} 
+                  ef={word.ef}
+                />
               </div>
               <div className="flex items-center gap-[8px]">
                 <motion.button
@@ -95,6 +99,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   stiffness: 400,
                   damping: 20
                 }}
+                style={{ willChange: 'transform' }}
                 className="
                   text-[20px] font-[700] text-[#111]
                   cursor-pointer relative
@@ -104,13 +109,12 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                 id={`word-${id}`}
               >
                 {word.origin.split('').map((char, index) => (
-                  <motion.span
+                  <span
                     key={index}
-                    initial={{ color: "#111" }}
                     className="inline-block"
                   >
                     {char}
-                  </motion.span>
+                  </span>
                 ))}
               </motion.h3>
             </div>
@@ -142,6 +146,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   stiffness: 400,
                   damping: 20
                 }}
+                style={{ willChange: 'transform' }}
                 className="
                   text-[14px] font-[400] text-[#111]
                   cursor-pointer relative
@@ -151,13 +156,12 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                 id={`meaning-${id}`}
               >
                 {word.meanings.join(", ").split('').map((char, index) => (
-                  <motion.span
+                  <span
                     key={index}
-                    initial={{ color: "#111" }}
                     className="inline-block"
                   >
                     {char}
-                  </motion.span>
+                  </span>
                 ))}
               </motion.span>
             </div>
@@ -191,6 +195,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                     stiffness: 400,
                     damping: 20
                   }}
+                  style={{ willChange: 'transform' }}
                   className="
                     text-[14px] font-[400] text-[#111]
                     cursor-pointer relative
@@ -200,13 +205,12 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   id={`example-${id}-${index}`}
                 >
                   {example.origin.split('').map((char, index) => (
-                    <motion.span
+                    <span
                       key={index}
-                      initial={{ color: "#111" }}
                       className="inline-block"
                     >
                       {char}
-                    </motion.span>
+                    </span>
                   ))}
                 </motion.span>
                 <motion.span
@@ -236,6 +240,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                     stiffness: 400,
                     damping: 20
                   }}
+                  style={{ willChange: 'transform' }}
                   className="
                     text-[14px] font-[400] text-[#111]
                     cursor-pointer relative
@@ -245,13 +250,12 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   id={`example-${id}-${index}-meaning`}
                 >
                   {example.meaning.split('').map((char, index) => (
-                    <motion.span
+                    <span
                       key={index}
-                      initial={{ color: "#111" }}
                       className="inline-block"
                     >
                       {char}
-                    </motion.span>
+                    </span>
                   ))}
                 </motion.span>
               </div>
@@ -278,6 +282,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             stiffness: 500, 
             damping: 15
           }}
+          style={{ willChange: 'transform' }}
         >닫기</motion.button>
       </div>
     </div>

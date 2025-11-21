@@ -17,13 +17,14 @@ const Step1 = ({ setStep }) => {
   };
 
   return (
+    <>
+    <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
     <div className="
       flex flex-col items-center justify-between
-      w-full h-screen 
+      w-full h-[calc(100vh-var(--status-bar-height))]
       p-[20px]
       bg-[#FFEFFA]
     ">
-      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div></div>
       <div className="
         flex flex-col items-center
@@ -67,6 +68,7 @@ const Step1 = ({ setStep }) => {
         시작하기
       </motion.button>
     </div>
+    </>
   )
 };
 

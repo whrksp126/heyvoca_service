@@ -447,68 +447,40 @@ const StudyResult = () => {
           <motion.div 
             className="relative h-[70px]"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            animate={{ 
+              scale: 1, 
+              opacity: 1,
+              y: [0, -8, 0]
+            }}
             transition={{ 
-              type: "spring", 
-              stiffness: 200, 
-              damping: 15,
-              duration: 0.6
+              scale: {
+                type: "spring", 
+                stiffness: 200, 
+                damping: 15,
+                duration: 0.6
+              },
+              opacity: {
+                duration: 0.6
+              },
+              y: {
+                delay: 0.7,
+                duration: 2.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }
             }}
           >
-            <motion.img 
+            <img 
               src={ACHIEVEMENT_IMAGES[goalType]} 
               alt={goalType}
               className="absolute bottom-[10px] left-[50%] translate-x-[-50%] w-[60px] h-[60px] object-contain"
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ 
-                y: [0, -8, 0],
-                opacity: 1,
-                rotate: [0, 3, -3, 0]
-              }}
-              transition={{ 
-                y: {
-                  delay: 0.7,
-                  duration: 2.5,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut"
-                },
-                opacity: {
-                  delay: 0.2,
-                  duration: 0.5
-                },
-                rotate: {
-                  delay: 0.7,
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut"
-                }
-              }}
             />
-            <motion.div 
+            <div 
               className="w-[60px] h-[60px] rounded-[50%]"
               style={getAchievementBackgroundStyle(goalLevel)}
-              initial={{ scale: 0 }}
-              animate={{ 
-                scale: [1, 1.05, 1]
-              }}
-              transition={{ 
-                scale: {
-                  type: "spring", 
-                  stiffness: 200, 
-                  damping: 15,
-                  duration: 0.5,
-                  times: [0, 0.5, 1],
-                  delay: 0,
-                  repeat: Infinity,
-                  repeatDelay: 0.7,
-                  repeatType: "reverse",
-                  ease: "easeInOut"
-                }
-              }}
-            ></motion.div>
-            <motion.span 
+            ></div>
+            <span 
               className="
                 absolute bottom-[0] left-[50%] 
                 translate-x-[-50%]
@@ -517,18 +489,9 @@ const StudyResult = () => {
                 [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
               "
               style={getAchievementTextStyle(goalLevel)}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                delay: 0.4,
-                type: "spring", 
-                stiffness: 300, 
-                damping: 20,
-                duration: 0.4
-              }}
             >
               <span className="text-[10px]">LV.</span>{goalLevel}
-            </motion.span>
+            </span>
           </motion.div>
           <motion.p 
             className='text-[16px] font-[700]'
@@ -539,7 +502,7 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-[#FF8DD4]'>{goalType}</strong>을 달성했어요!
+            <strong className='text-[#FF8DD4]'>{goalType} {goalLevel}레벨</strong>을 달성했어요!
           </motion.p>
         </div>
       );

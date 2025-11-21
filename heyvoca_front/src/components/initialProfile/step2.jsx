@@ -1,24 +1,64 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 
 const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const profileRef = useRef();
+  const { openAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   useEffect(() => {
-    profileRef.current.focus();
+    profileRef.current?.focus();
+  }, []);
+
+  // 항상 포커스 유지
+  useEffect(() => {
+    const handleBlur = () => {
+      // blur 이벤트가 발생하면 즉시 다시 포커스
+      setTimeout(() => {
+        profileRef.current?.focus();
+      }, 0);
+    };
+
+    const inputElement = profileRef.current;
+    if (inputElement) {
+      inputElement.addEventListener('blur', handleBlur);
+      
+      return () => {
+        inputElement.removeEventListener('blur', handleBlur);
+      };
+    }
   }, []);
   
   // React Compiler가 자동으로 useCallback 처리
-  const handleNextBtn = () => {
+  const handleNextBtn = async () => {
     if(profileRef.current.value.length > 8){
-      alert('닉네임은 8자 이내로 입력해주세요.');
+      await openAwaitNewBottomSheet(
+        AlertNewBottomSheet,
+        {
+          title: '닉네임은 8자 이내로 입력해주세요.',
+        },
+        {
+          isBackdropClickClosable: true,
+          isDragToCloseEnabled: true
+        }
+      );
       return;
     };
     if(profileRef.current.value.length == 0){
-      alert('닉네임을 입력해주세요.');
+      await openAwaitNewBottomSheet(
+        AlertNewBottomSheet,
+        {
+          title: '닉네임을 입력해주세요.',
+        },
+        {
+          isBackdropClickClosable: true,
+          isDragToCloseEnabled: true
+        }
+      );
       return;
     }
     setUserInitialProfile({
@@ -28,16 +68,24 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
     setStep(3);
   };
 
+  // 엔터 키 또는 모바일 키보드의 다음 버튼 처리
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+      e.preventDefault();
+      handleNextBtn();
+    }
+  };
+
   return (
+    <>
+    <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
     <div className="
       relative
       flex flex-col items-center gap-[45px] justify-end 
-      w-full h-screen 
+      w-full h-[calc(100vh-var(--status-bar-height))]
       p-[20px]
       bg-[#FFEFFA]
     ">
-      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-      <div></div>
       <div className="
           absolute top-[35px] left-[50%] translate-x-[-50%]
           flex flex-col items-center
@@ -73,7 +121,6 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
           w-full
           bg-[#FFEFFA]
         ">
-
           <input type="text" placeholder="닉네임을 입력해주세요(8자 이내)" 
             id="name"
             name="name"
@@ -93,6 +140,7 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
               hover:border-[#FF8DD4]/50
             "
             autoComplete="off"
+            onKeyDown={handleKeyDown}
           />
           <motion.button
             whileHover={{ 
@@ -121,6 +169,7 @@ const Step2 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
 
       </div>
     </div>
+    </>
   );
 };
 

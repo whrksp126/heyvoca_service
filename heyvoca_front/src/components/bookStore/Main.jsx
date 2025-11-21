@@ -60,6 +60,7 @@ const Main = () => {
                   rounded-[12px]
                   cursor-pointer
                   shadow-sm
+                  aspect-square
                 `}
                 whileTap={{ scale: 0.96}}
                 whileHover={{ scale: 1.04}}

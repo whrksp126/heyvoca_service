@@ -27,118 +27,120 @@ const Step3 = ({setStep, userInitialProfile, setUserInitialProfile}) => {
   };
 
   return (
-    <div className="
-      flex flex-col items-center gap-[45px] justify-end 
-      w-full h-screen 
-      p-[20px]
-      bg-[#FFEFFA]
-    ">
+    <>
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div className="
-        flex flex-col items-center
-        gap-[10px]
+        flex flex-col items-center gap-[45px] justify-end 
+        w-full h-[calc(100vh-var(--status-bar-height))]
+        p-[20px]
+        bg-[#FFEFFA]
       ">
-        <div 
-          className="
-            px-[15px] py-[12px]
-            bg-[#fff]
-            rounded-[10px]
-            font-[16px] font-[600]
-          "
-          style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
-        >
-          좋아요! {userInitialProfile.name}님 <br />
-          시작하기 전에 맞춤 테스트를 제공할 수 있도록 <br />
-          원하는 레벨을 선택해주세요!
+        <div className="
+          flex flex-col items-center
+          gap-[10px]
+        ">
+          <div 
+            className="
+              px-[15px] py-[12px]
+              bg-[#fff]
+              rounded-[10px]
+              font-[16px] font-[600]
+            "
+            style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
+          >
+            좋아요! {userInitialProfile.name}님 <br />
+            시작하기 전에 맞춤 테스트를 제공할 수 있도록 <br />
+            원하는 레벨을 선택해주세요!
+          </div>
+          <img src={HeyCharacter} alt="logo" 
+            className="
+              w-[160px]
+            "
+          />
         </div>
-        <img src={HeyCharacter} alt="logo" 
-          className="
-            w-[160px]
-          "
-        />
+        <ul className="
+          flex flex-col items-center gap-[10px]
+          w-full
+        ">
+          <motion.button
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+            className="
+              w-full h-[45px]
+              border-[1px] border-[#FF8DD4] rounded-[8px]
+              text-[#FF8DD4] font-[16px] font-[700]
+              bg-[#FFFFFF]
+            "
+            onClick={() => handleNextBtn(1)}
+          >
+            Lv 1. 초등학생
+          </motion.button>
+          <motion.button
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+            className="
+              w-full h-[45px]
+              border-[1px] border-[#FF8DD4] rounded-[8px]
+              text-[#FF8DD4] font-[16px] font-[700]
+              bg-[#FFFFFF]
+            "
+            onClick={() => handleNextBtn(2)}
+          >
+            Lv 2. 중학생
+          </motion.button>
+          <motion.button
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+            className="
+              w-full h-[45px]
+              border-[1px] border-[#FF8DD4] rounded-[8px]
+              text-[#FF8DD4] font-[16px] font-[700]
+              bg-[#FFFFFF]
+            "
+            onClick={() => handleNextBtn(3)}
+          >
+            Lv 3. 고등학생
+          </motion.button>
+          <motion.button
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+            className="
+              w-full h-[45px]
+              border-[1px] border-[#FF8DD4] rounded-[8px]
+              text-[#FF8DD4] font-[16px] font-[700]
+              bg-[#FFFFFF]
+            "
+            onClick={() => handleNextBtn(4)}
+          > 
+            Lv 4. 대학생 이상
+          </motion.button>
+        </ul>
       </div>
-      <ul className="
-        flex flex-col items-center gap-[10px]
-        w-full
-      ">
-        <motion.button
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17
-          }}
-          className="
-            w-full h-[45px]
-            border-[1px] border-[#FF8DD4] rounded-[8px]
-            text-[#FF8DD4] font-[16px] font-[700]
-            bg-[#FFFFFF]
-          "
-          onClick={() => handleNextBtn(1)}
-        >
-          Lv 1. 초등학생
-        </motion.button>
-        <motion.button
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17
-          }}
-          className="
-            w-full h-[45px]
-            border-[1px] border-[#FF8DD4] rounded-[8px]
-            text-[#FF8DD4] font-[16px] font-[700]
-            bg-[#FFFFFF]
-          "
-          onClick={() => handleNextBtn(2)}
-        >
-          Lv 2. 중학생
-        </motion.button>
-        <motion.button
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17
-          }}
-          className="
-            w-full h-[45px]
-            border-[1px] border-[#FF8DD4] rounded-[8px]
-            text-[#FF8DD4] font-[16px] font-[700]
-            bg-[#FFFFFF]
-          "
-          onClick={() => handleNextBtn(3)}
-        >
-          Lv 3. 고등학생
-        </motion.button>
-        <motion.button
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17
-          }}
-          className="
-            w-full h-[45px]
-            border-[1px] border-[#FF8DD4] rounded-[8px]
-            text-[#FF8DD4] font-[16px] font-[700]
-            bg-[#FFFFFF]
-          "
-          onClick={() => handleNextBtn(4)}
-        > 
-          Lv 4. 대학생 이상
-        </motion.button>
-      </ul>
-    </div>
+    </>
   )
 };
 

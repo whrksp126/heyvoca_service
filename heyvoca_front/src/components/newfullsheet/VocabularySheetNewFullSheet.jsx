@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import TestSetup from '../class/TestSetup';
-import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
+import { PencilSimple, Trash, CaretLeft, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -23,6 +23,50 @@ const VocabularySheetNewFullSheet = ({testType}) => {
       </div>
     );
   }
+
+  // 암기 상태별 단어 개수 계산 함수 (암기율 계산 방식 사용)
+  const calculateMemorizationStats = (words) => {
+    if (!words || words.length === 0) {
+      return { unlearned: 0, shortTerm: 0, mediumTerm: 0, longTerm: 0 };
+    }
+
+    const stats = {
+      unlearned: 0,   // 미학습 (repetition === 0 && interval === 0)
+      shortTerm: 0,   // 단기 암기 (암기율 0-29%)
+      mediumTerm: 0,  // 중기 암기 (암기율 30-69%)
+      longTerm: 0     // 장기 암기 (암기율 70-100%)
+    };
+
+    words.forEach(word => {
+      // 미학습 상태 체크
+      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
+      const interval = word.memoryState?.interval ?? word.interval ?? 0;
+      
+      if (repetition === 0 && interval === 0) {
+        stats.unlearned++;
+        return;
+      }
+
+      // 암기율 계산 (MemorizationStatus와 동일한 로직)
+      const ef = word.memoryState?.ef ?? word.ef ?? 2.5;
+      let score = 0;
+      score += repetition * 15;
+      score += interval * 2;
+      score += (ef - 1.3) * 20;
+      const percent = Math.max(0, Math.min(100, Math.round(score)));
+
+      // 퍼센트에 따라 분류
+      if (percent < 30) {
+        stats.shortTerm++;
+      } else if (percent < 70) {
+        stats.mediumTerm++;
+      } else {
+        stats.longTerm++;
+      }
+    });
+
+    return stats;
+  };
 
   // React Compiler가 자동으로 메모이제이션 처리
   // updatedAt 기준으로 정렬된 단어장 목록
@@ -164,7 +208,7 @@ const VocabularySheetNewFullSheet = ({testType}) => {
             </div>
           </motion.li>
         {sortedVocabularySheets.map((item) => {
-          const progress = item.total === 0 ? 0 : Math.round((item.memorized/item.total) * 100);
+          const memorizationStats = calculateMemorizationStats(item.words || []);
           return (
           <motion.li
               key={item.id}
@@ -188,7 +232,35 @@ const VocabularySheetNewFullSheet = ({testType}) => {
               "
             >
               <h3 className="text-[16px] font-[700]">{item.title}</h3>
-              <span className="text-[10px] font-[400] text-[#999]">{item.memorized||0}/{item.total}</span>
+              <span className="text-[10px] font-[400] text-[#999]">{item.total||0}</span>
+            </div>
+
+            {/* 암기 상태별 단어 개수 표시 */}
+            <div className="flex items-center gap-[12px] flex-wrap">
+              <div className="flex items-center gap-[4px]">
+                <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
+                <span className="text-[13px] font-[600] text-[#9D835A]">
+                  {memorizationStats.unlearned || 0}
+                </span>
+              </div>
+              <div className="flex items-center gap-[4px]">
+                <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
+                <span className="text-[13px] font-[600] text-[#77CE4F]">
+                  {memorizationStats.shortTerm || 0}
+                </span>
+              </div>
+              <div className="flex items-center gap-[4px]">
+                <Plant size={16} weight="fill" className="text-[#38CE38]" />
+                <span className="text-[13px] font-[600] text-[#38CE38]">
+                  {memorizationStats.mediumTerm || 0}
+                </span>
+              </div>
+              <div className="flex items-center gap-[4px]">
+                <Carrot size={16} weight="fill" className="text-[#F68300]" />
+                <span className="text-[13px] font-[600] text-[#F68300]">
+                  {memorizationStats.longTerm || 0}
+                </span>
+              </div>
             </div>
 
             <div 
@@ -204,40 +276,6 @@ const VocabularySheetNewFullSheet = ({testType}) => {
                 <button>
                   <Trash/>
                 </button>
-              </div>
-            </div>
-
-            <div className="bottom">
-              <div 
-                style={{ backgroundColor: item.color.sub }}
-                className="
-                  w-[100%] h-[16px]
-                  rounded-[16px]
-                  overflow-hidden
-                "
-              >
-                <div 
-                  style={{ 
-                    width: `${progress}%`,
-                    backgroundColor: item.color.main
-                  }}
-                  className="
-                    relative
-                    h-[100%]
-                    rounded-[16px]
-                  "
-                >
-                  <span 
-                    style={{
-                      transform : `translateY(-50%) translateX(${progress > 10 ? '0' : '30px'})`
-                    }}
-                    className="
-                      absolute top-[50%] right-[8px]
-                      text-[10px] font-[600] text-[#fff]
-                    ">
-                    {progress}%
-                  </span>
-                </div>
               </div>
             </div>
           </motion.li>
