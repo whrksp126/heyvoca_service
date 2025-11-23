@@ -107,10 +107,12 @@ const TakeTest = () => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     
-    // 1. 미학습 단어들 (nextReview가 null이거나 없음)
-    const unlearnedWords = allWords.filter(word => 
-      !word.nextReview || word.nextReview === null
-    );
+    // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
+    const unlearnedWords = allWords.filter(word => {
+      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
+      const interval = word.memoryState?.interval ?? word.interval ?? 0;
+      return (!word.nextReview || word.nextReview === null) && repetition === 0 && interval === 0;
+    });
     
     // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
     const overdueWords = allWords.filter(word => {
@@ -120,7 +122,15 @@ const TakeTest = () => {
       return nextReviewDate < now;
     });
 
-    // 3. 복습 지연 단어들을 nextReview 기준으로 정렬 (가장 오래된 것부터)
+    // 3. 오늘 학습 예정 단어들 (nextReview가 오늘인 것들)
+    const todayScheduledWords = allWords.filter(word => {
+      if (!word.nextReview) return false;
+      const nextReviewDate = new Date(word.nextReview);
+      nextReviewDate.setHours(0, 0, 0, 0);
+      return nextReviewDate.getTime() === now.getTime();
+    });
+
+    // 4. 복습 지연 단어들을 nextReview 기준으로 정렬 (가장 오래된 것부터)
     const sortedOverdueWords = overdueWords.sort((a, b) => {
       const dateA = new Date(a.nextReview);
       const dateB = new Date(b.nextReview);
@@ -134,7 +144,15 @@ const TakeTest = () => {
       // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
       selectedWords.push(...sortedOverdueWords.slice(0, count));
       
-      // 우선순위 2: 미학습 단어들 (부족한 경우에만)
+      // 우선순위 2: 오늘 학습 예정 단어들 (부족한 경우에만)
+      if (selectedWords.length < count) {
+        const remainingCount = count - selectedWords.length;
+        const selectedWordIds = new Set(selectedWords.map(w => w.id));
+        const availableTodayScheduled = todayScheduledWords.filter(w => !selectedWordIds.has(w.id));
+        selectedWords.push(...availableTodayScheduled.slice(0, remainingCount));
+      }
+      
+      // 우선순위 3: 미학습 단어들 (부족한 경우에만)
       if (selectedWords.length < count) {
         const remainingCount = count - selectedWords.length;
         const selectedWordIds = new Set(selectedWords.map(w => w.id));
