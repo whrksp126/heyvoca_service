@@ -36,6 +36,8 @@ const StoreNewFullSheet = () => {
       w-full h-full
       bg-white
     ">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
+
       {/* Header */}
       <div className="
         relative

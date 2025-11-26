@@ -5,6 +5,7 @@ import Header from '../components/bookStore/Header';
 const BookStore = () => {
   return (
     <div>
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <Header />
       <Main />
       <BottomNav />

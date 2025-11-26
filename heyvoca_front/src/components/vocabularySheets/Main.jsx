@@ -168,7 +168,7 @@ const Main = () => {
                 "
               >
                 <h3 className="text-[16px] font-[700]">{item.title}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.memorized||0}/{item.total}</span>
+                <span className="text-[10px] font-[400] text-[#999]">{item.total||0}</span>
               </div>
   
               <div 
@@ -189,38 +189,30 @@ const Main = () => {
 
               {/* 암기 상태별 단어 개수 표시 */}
               <div className="flex items-center gap-[12px] flex-wrap">
-                {memorizationStats.unlearned > 0 && (
-                  <div className="flex items-center gap-[4px]">
-                    <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
-                    <span className="text-[13px] font-[600] text-[#9D835A]">
-                      {memorizationStats.unlearned}
-                    </span>
-                  </div>
-                )}
-                {memorizationStats.leaf > 0 && (
-                  <div className="flex items-center gap-[4px]">
-                    <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
-                    <span className="text-[13px] font-[600] text-[#77CE4F]">
-                      {memorizationStats.leaf}
-                    </span>
-                  </div>
-                )}
-                {memorizationStats.plant > 0 && (
-                  <div className="flex items-center gap-[4px]">
-                    <Plant size={16} weight="fill" className="text-[#38CE38]" />
-                    <span className="text-[13px] font-[600] text-[#38CE38]">
-                      {memorizationStats.plant}
-                    </span>
-                  </div>
-                )}
-                {memorizationStats.carrot > 0 && (
-                  <div className="flex items-center gap-[4px]">
-                    <Carrot size={16} weight="fill" className="text-[#F68300]" />
-                    <span className="text-[13px] font-[600] text-[#F68300]">
-                      {memorizationStats.carrot}
-                    </span>
-                  </div>
-                )}
+                <div className="flex items-center gap-[4px]">
+                  <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
+                  <span className="text-[13px] font-[600] text-[#9D835A]">
+                    {memorizationStats.unlearned || 0}
+                  </span>
+                </div>
+                <div className="flex items-center gap-[4px]">
+                  <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
+                  <span className="text-[13px] font-[600] text-[#77CE4F]">
+                    {memorizationStats.leaf || 0}
+                  </span>
+                </div>
+                <div className="flex items-center gap-[4px]">
+                  <Plant size={16} weight="fill" className="text-[#38CE38]" />
+                  <span className="text-[13px] font-[600] text-[#38CE38]">
+                    {memorizationStats.plant || 0}
+                  </span>
+                </div>
+                <div className="flex items-center gap-[4px]">
+                  <Carrot size={16} weight="fill" className="text-[#F68300]" />
+                  <span className="text-[13px] font-[600] text-[#F68300]">
+                    {memorizationStats.carrot || 0}
+                  </span>
+                </div>
               </div>
             </motion.li>
           )})}

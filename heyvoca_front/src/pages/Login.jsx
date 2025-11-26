@@ -103,6 +103,7 @@ const Login = () => {
 
   return (
     <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         id="lottie-container"
         className="w-[240px] absolute top-[150px] left-1/2 transform -translate-x-1/2"
