@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { backendUrl, setCookie, getCookie } from '../utils/common';
+import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
 import { getGemItemsApi } from '../api/store';
+import postMessageManager from '../utils/postMessageManager';
 
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
@@ -192,6 +193,75 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  // 로그아웃 처리 함수 (웹/앱 공통)
+  const performLogout = useCallback(async () => {
+    try {
+      // 로그아웃 API 호출
+      const url = `${backendUrl}/auth/logout`;
+      const method = 'POST';
+      const fetchData = {};
+      
+      const result = await fetchDataAsync(url, method, fetchData);
+      if (result.code !== 200) {
+        console.error('로그아웃 API 실패:', result);
+        return { success: false, error: '로그아웃 API 실패' };
+      }
+      
+      // 쿠키에서 accessToken 제거
+      setCookie('userAccessToken', '', -1); // 쿠키 즉시 만료
+      
+      // auth 상태 초기화
+      setAuth({
+        user: null,
+      });
+      
+      // 로그인 상태 초기화
+      setIsLogin(false);
+      setIsLoginChecked(true);
+      
+      return { success: true };
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+      return { success: false, error: error.message };
+    }
+  }, [setAuth]);
+
+  // 앱 구글 로그아웃 콜백 처리
+  const handleAppGoogleLogout = useCallback(async (data) => {
+    console.log(`앱 구글 로그아웃 콜백 받음: ${JSON.stringify(data)}`);
+    
+    const { status, error } = data;
+    
+    // 앱에서 로그아웃 성공한 경우에만 웹 로그아웃 처리
+    if (status === 200) {
+      const result = await performLogout();
+      
+      if (result.success) {
+        // 컨텍스트 초기화 (전역 객체를 통해 접근)
+        if (window.newBottomSheetContext && window.newBottomSheetContext.clearStack) {
+          window.newBottomSheetContext.clearStack();
+        }
+        if (window.newFullSheetContext && window.newFullSheetContext.clearStack) {
+          window.newFullSheetContext.clearStack();
+        }
+        
+        // 로그인 페이지로 이동
+        window.location.href = '/login';
+      }
+    } else {
+      console.error(`앱 로그아웃 실패: ${error || '알 수 없는 오류'}`);
+    }
+  }, [performLogout]);
+
+  // 앱 구글 로그아웃 리스너 등록
+  useEffect(() => {
+    postMessageManager.setupAppGoogleLogout(handleAppGoogleLogout);
+    
+    return () => {
+      postMessageManager.removeAppGoogleLogout();
+    };
+  }, [handleAppGoogleLogout]);
+
   // 로그인 상태 확인 함수 (전역 상태 업데이트)
   const checkLoginStatus = useCallback(async () => {
     const accessToken = getCookie('userAccessToken');
@@ -274,6 +344,7 @@ export const UserProvider = ({ children }) => {
     Login,
     clickGoogleOauth,
     checkLoginStatus,
+    performLogout,
 
     // 상품 조회 함수
     gemItems,

@@ -16,10 +16,10 @@ import MyPage from './pages/myPage';
 
 // import { BottomSheetProvider } from './context/BottomSheetContext';
 // import { FullSheetProvider } from './context/FullSheetContext';
-import { NewFullSheetProvider as NewFullSheetContextProvider, NewFullSheetContext } from './context/NewFullSheetContext';
+import { NewFullSheetProvider as NewFullSheetContextProvider, NewFullSheetContext, NewFullSheetActionsContext } from './context/NewFullSheetContext';
 import { NewFullSheetProvider } from './components/newFullSheet/NewFullSheetProvider';
 
-import { NewBottomSheetProvider as NewBottomSheetContextProvider, NewBottomSheetContext } from './context/NewBottomSheetContext';
+import { NewBottomSheetProvider as NewBottomSheetContextProvider, NewBottomSheetContext, NewBottomSheetActionsContext } from './context/NewBottomSheetContext';
 import { NewBottomSheetProvider } from './components/newBottomSheet/NewBottomSheetProvider';
 import Layout from './components/Layout';
 import { VocabularyProvider } from './context/VocabularyContext';
@@ -63,11 +63,19 @@ const AppLayout = () => {
 // NewFullSheetContext를 전역에 등록하기 위한 컴포넌트
 function AppWithContexts() {
   const newFullSheetContext = useContext(NewFullSheetContext);
+  const newFullSheetActions = useContext(NewFullSheetActionsContext);
   const newBottomSheetContext = useContext(NewBottomSheetContext);
+  const newBottomSheetActions = useContext(NewBottomSheetActionsContext);
   
-  // NewFullSheetContext를 전역에 등록
-  window.newFullSheetContext = newFullSheetContext;
-  window.newBottomSheetContext = newBottomSheetContext;
+  // NewFullSheetContext를 전역에 등록 (state와 actions를 합쳐서)
+  window.newFullSheetContext = {
+    ...newFullSheetContext,
+    ...newFullSheetActions
+  };
+  window.newBottomSheetContext = {
+    ...newBottomSheetContext,
+    ...newBottomSheetActions
+  };
   
   return (
     <Layout>

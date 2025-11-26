@@ -122,7 +122,21 @@ const Main = () => {
   const todayStatus = getTodayStatus();
 
   // React Compiler가 자동으로 메모이제이션 처리
-  const total = vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0);
+  // 학습 기록이 있는 단어만 카운팅 (repetition > 0 || interval > 0 || nextReview !== null)
+  const total = vocabularySheets.reduce((acc, sheet) => {
+    if (!sheet.words || !Array.isArray(sheet.words)) return acc;
+    
+    const learningWordsCount = sheet.words.filter(word => {
+      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
+      const interval = word.memoryState?.interval ?? word.interval ?? 0;
+      const nextReview = word.memoryState?.nextReview ?? word.nextReview;
+      
+      // 학습 기록이 있는 단어: repetition > 0 또는 interval > 0 또는 nextReview가 있음
+      return repetition > 0 || interval > 0 || (nextReview !== null && nextReview !== undefined);
+    }).length;
+    
+    return acc + learningWordsCount;
+  }, 0);
   // const { pushFullSheet } = useFullSheet();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();

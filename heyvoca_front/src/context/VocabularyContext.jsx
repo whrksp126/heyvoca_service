@@ -86,7 +86,11 @@ export const VocabularyProvider = ({ children }) => {
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
       const result = await addUserVocabularySheetApi(newVocabulary);
-      if(result.code != 200) return alert('단어장 추가에 실패했습니다.');
+      if(!result || result.code != 200 || !result.data) {
+        const errorMessage = result?.message || '단어장 추가에 실패했습니다.';
+        alert(errorMessage);
+        throw new Error(errorMessage);
+      }
       newVocabulary.id = result.data.id
       newVocabulary.createdAt = result.data.createdAt
       newVocabulary.updatedAt = result.data.createdAt

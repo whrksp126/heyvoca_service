@@ -47,11 +47,12 @@ export const getUserInfoApi = async () => {
 }
 
 // 사용자 보석 차감 API
-export const deductGemApi = async ({gem_cnt}) => {
+export const deductGemApi = async ({gem_cnt, bookstore_id}) => {
   const url = `${backendUrl}/auth/deduct_gem`;
   const method = 'POST';
   const fetchData = {
-    gem_cnt: gem_cnt
+    gem_cnt: gem_cnt,
+    ...(bookstore_id && { bookstore_id })
   };
   try {
     const result = await fetchDataAsync(url, method, fetchData);
