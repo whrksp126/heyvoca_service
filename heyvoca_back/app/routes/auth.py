@@ -2,9 +2,11 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason
 from app.routes.mainpage import update_user_goal
+from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
+from uuid import UUID
 
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
@@ -27,7 +29,6 @@ from config import GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET, OAUTH_CL
 from dotenv import load_dotenv
 import os, time, jwt
 from datetime import datetime, timedelta, timezone
-from uuid import UUID
 
 # -------------------
 # 환경 변수 & 기본값
@@ -404,10 +405,32 @@ def deduct_gem():
     user.gem_cnt -= deducted_amount
     remaining_gem = user.gem_cnt
 
+    # bookstore_id가 제공된 경우 Bookstore 정보 조회
+    bookstore_id = data.get('bookstore_id')
+    reason_enum = GemReason.BOOK_PURCHASE
+    description = f'보석 차감: {deducted_amount}개'
+    source_type = 'bookstore'
+    
+    if bookstore_id:
+        bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+        if bookstore_item:
+            description = f'단어장 구매: {bookstore_item.name}'
+    
     try:
+        register_gem_log(
+            user_id=user_id,
+            amount=-deducted_amount,
+            reason=reason_enum,
+            description=description,
+            source_type=source_type,
+            source_id=None,  # bookstore_id는 Integer이므로 None
+            balance_after=remaining_gem
+        )
+        
         db.session.commit()
         return jsonify({
             'code': 200,
+            'message': f'{deducted_amount}개의 보석이 차감되었습니다.',
             'data': {
                 'remaining_gem_cnt': remaining_gem,
                 'deducted_gem_cnt': deducted_amount
@@ -415,6 +438,7 @@ def deduct_gem():
         }), 200
     except Exception as e:
         db.session.rollback()
+        print(f"###error in deduct_gem: {e}")
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
         

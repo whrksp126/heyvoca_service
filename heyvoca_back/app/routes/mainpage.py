@@ -8,6 +8,7 @@ from app.routes.common import register_gem_log
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
 from sqlalchemy.orm import aliased
+from sqlalchemy.exc import IntegrityError
 
 import io
 import json
@@ -75,9 +76,11 @@ def api_user_dates():
     for i in range(7):
         d = this_sunday + timedelta(days=i)
         ci = by_date.get(d)
+        # 오늘 날짜인 경우 체크인이 없어도 출석한 것으로 표시 (checkin 엔드포인트에서 생성됨)
+        is_today = (d == today)
         data.append({
             'date': days[i],
-            'attend': True if ci else False,
+            'attend': True if ci else (True if is_today else False),
             'daily_mission': bool(ci.today_study_complete) if ci else False,
         })
 
@@ -208,12 +211,12 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
         )
 
         if last_goal_done:
-            return None, None, None
+            return None, None, None, None
         
         # 진행 중인 목표도 없고 마지막 레벨도 완료하지 않은 경우 → 첫 번째 레벨 목표 생성
         goal_type = db.session.query(GoalType).filter(GoalType.type == goal_type_name).first()
         if not goal_type:
-            return None, None, None
+            return None, None, None, None
         
         first_goal = db.session.query(Goals)\
                         .filter(Goals.type_id == goal_type.id)\
@@ -221,7 +224,7 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
                         .first()
         
         if not first_goal:
-            return None, None, None
+            return None, None, None, None
         
         # 첫 번째 레벨 목표를 UserGoals에 생성
         current_user_goal = UserGoals(
@@ -374,32 +377,58 @@ def api_user_study_history():
 def checkin():
     user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     today = (datetime.utcnow() + timedelta(hours=9)).date()
-    exists = db.session.query(CheckIn).filter(
-                    CheckIn.user_id == user_id, 
-                    CheckIn.attendence_date == today
-                ).first()
+    
+    # 먼저 체크인 존재 여부 확인
+    exists = db.session.query(CheckIn)\
+                .filter(CheckIn.user_id == user_id)\
+                .filter(CheckIn.attendence_date == today)\
+                .first()
     
     goals = []
     before_gem_cnt = 0
     after_gem_cnt = 0
     user = db.session.query(User).filter(User.id == user_id).first()
+    
     if not exists:
-        db.session.add(CheckIn(user_id=user_id, attendence_date=today, today_study_complete=False))
-        db.session.commit()
+        try:
+            # 체크인 생성 시도
+            new_checkin = CheckIn(user_id=user_id, attendence_date=today, today_study_complete=False)
+            db.session.add(new_checkin)
+            db.session.flush()  # ID를 얻기 위해 flush
 
-        attendance_goal_complete, attendance_goal_reward_count, attendance_goal_badge_img = update_user_goal('출석왕')
-        if attendance_goal_complete:
-            goals.append({
-                'name' : '출석왕',
-                'badge_img' : attendance_goal_badge_img,
-                'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
-            })
-        
-        # 업적 보상 보석은 update_user_goal 함수 내부에서 이미 지급됨
-        db.session.commit()
-
-        before_gem_cnt = user.gem_cnt - (attendance_goal_reward_count if attendance_goal_reward_count else 0)
-        after_gem_cnt = user.gem_cnt
+            # 출석왕 업적 업데이트
+            attendance_goal_complete, attendance_goal_reward_count, attendance_goal_badge_img, attendance_goal_level = update_user_goal('출석왕')
+            if attendance_goal_complete:
+                goals.append({
+                    'name' : '출석왕',
+                    'badge_img' : attendance_goal_badge_img,
+                    'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
+                })
+            
+            # 업적 보상 보석은 update_user_goal 함수 내부에서 이미 지급됨
+            db.session.commit()
+            
+            # 사용자 정보 다시 조회 (커밋 후 최신 정보)
+            user = db.session.query(User).filter(User.id == user_id).first()
+            before_gem_cnt = user.gem_cnt - (attendance_goal_reward_count if attendance_goal_reward_count else 0)
+            after_gem_cnt = user.gem_cnt
+        except IntegrityError:
+            # 중복 키 에러 또는 데드락 발생 시 롤백 후 재조회
+            db.session.rollback()
+            # 다른 요청에서 이미 생성했을 수 있으므로 다시 확인
+            exists = db.session.query(CheckIn)\
+                        .filter(CheckIn.user_id == user_id)\
+                        .filter(CheckIn.attendence_date == today)\
+                        .first()
+            
+            if exists:
+                # 이미 체크인이 존재하는 경우
+                user = db.session.query(User).filter(User.id == user_id).first()
+                before_gem_cnt = user.gem_cnt
+                after_gem_cnt = user.gem_cnt
+            else:
+                # 예상치 못한 오류
+                raise
     else:
         before_gem_cnt = user.gem_cnt
         after_gem_cnt = user.gem_cnt

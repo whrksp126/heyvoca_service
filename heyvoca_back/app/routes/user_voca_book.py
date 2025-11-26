@@ -8,8 +8,7 @@ import datetime
 from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
-from app.routes.common import register_gem_log
-from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, GemReason
+from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
 from app.utils.jwt_utils import jwt_required
 
 
@@ -66,21 +65,23 @@ def create_user_voca_book():
         )
         db.session.add(user_voca_book)
 
-        # gem 사용 여부 확인
-        print('bookstore_id:', bookstore_id)
+        message = ''
         if bookstore_id:
+            # 유료 단어장인 경우 다운로드 카운트만 증가
             bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
-            print('user.gem_cnt:', user.gem_cnt)
-            print('bookstore_item.gem:', bookstore_item.gem)
-            if user.gem_cnt < bookstore_item.gem:
-                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
-            user.gem_cnt -= bookstore_item.gem
-            register_gem_log(user_id, -bookstore_item.gem, GemReason.BOOK_PURCHASE, f"단어장 구매: {bookstore_item.name}", "bookstore", bookstore_id, user.gem_cnt)
-            bookstore_item.downloads += 1
+            if bookstore_item:
+                bookstore_item.downloads += 1
+            message = '단어장이 생성되었습니다.'
         else:
+            # 무료 단어장인 경우 book_cnt 차감
             if user.book_cnt < 1:
-                return jsonify({'code': 400, 'message': '단어장 생성 실패'}), 400
+                db.session.rollback()
+                return jsonify({
+                    'code': 400, 
+                    'message': '최대 단어장 생성 개수를 초과했습니다.'
+                }), 400
             user.book_cnt -= 1
+            message = '단어장이 생성되었습니다.'
 
         db.session.commit() 
 
@@ -89,11 +90,12 @@ def create_user_voca_book():
             'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
         }
 
-        return jsonify({'code': 200, 'data': data}), 200
+        return jsonify({'code': 200, 'message': message, 'data': data}), 200
     
     except Exception as e:
         print("###error : ",e)
-        return jsonify({'code': 400, 'message': '단어장 생성 실패'})
+        db.session.rollback()
+        return jsonify({'code': 400, 'message': f'단어장 생성 중 오류가 발생했습니다: {str(e)}'})
 
 
 @user_voca_book_bp.route('/update', methods=['PATCH'])
