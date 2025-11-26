@@ -50,17 +50,36 @@ export const signInWithGoogle = async (webViewRef: any) => {
   }
 };
 
-// export const signOutWithGoogle = async () => {
-//   try {
-//     await GoogleSignin.signOut();
-//     await clearAppAsyncStorage();
-//     console.log("사용자 로그아웃 및 데이터 초기화 완료");
-//   } catch (error) {
-//     console.error('로그아웃 실패:', error);
-//   }
-// };
+export const signOutWithGoogle = async (webViewRef: any) => {
+  try {
+    await GoogleSignin.signOut();
+    await clearAppAsyncStorage();
+    console.log("사용자 로그아웃 및 데이터 초기화 완료");
+    
+    // 웹뷰에 로그아웃 완료 메시지 전송
+    if (webViewRef.current) {
+      const data = {
+        type: 'google_logout_app_callback',
+        status: 200,
+      };
+      webViewRef.current.postMessage(JSON.stringify(data));
+    }
+  } catch (error: unknown) {
+    console.error('로그아웃 실패:', error);
+    // 에러 발생 시에도 웹뷰에 알림
+    if (webViewRef.current) {
+      const errorMessage = error instanceof Error ? error.message : '로그아웃 실패';
+      const data = {
+        type: 'google_logout_app_callback',
+        status: 500,
+        error: errorMessage,
+      };
+      webViewRef.current.postMessage(JSON.stringify(data));
+    }
+  }
+};
 
-export const handleSignInError = (error) => {
+export const handleSignInError = (error: any) => {
   console.error('전체 에러 객체:', error);
 
   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
