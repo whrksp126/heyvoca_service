@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message';
 // import Tts from 'react-native-tts';
-import { signInWithGoogle } from '../google/googleAuth';
+import { signInWithGoogle, signOutWithGoogle } from '../google/googleAuth';
 import { executePurchase } from '../handlers/iapHandler';
 import { saveCookieToAsyncStorage } from '../utils/asyncStorage';
 
@@ -19,6 +19,9 @@ const handleWebViewMessage = async (
     switch (messageData.type) {
       case 'launchGoogleAuth':
         signInWithGoogle(webViewRef);
+        break;
+      case 'launchGoogleLogout':
+        signOutWithGoogle(webViewRef);
         break;    
       case 'iapPurchase':
         executePurchase(messageData.props.itemId, webViewRef);
