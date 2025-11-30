@@ -3,8 +3,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Alert, Dimensions, Linking, Image, ScrollView } from 'react-native';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import type { Camera as CameraType } from 'react-native-vision-camera';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { recognizeTextFromImage } from '../components/ocrHelper';
 import { useNavigation } from '../contexts/NavigationContext';
+import BottomSheet from '../components/BottomSheet';
+import { IconCamera } from '../assets/SvgIcon';
 // import OCRBoundingOverlay from '../components/OCRBoundingOverlay';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -13,6 +16,7 @@ const OCRCamera: React.FC = () => {
   const camera = useRef<CameraType>(null);
   const device = useCameraDevice('back'); // ✅ 더 안전한 방식
   const { goBack, webViewRef, setIsOCRScreen, ocrFilteredWords, setOcrFilteredWords } = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const [hasPermission, setHasPermission] = useState(false);
   const [isPreview, setIsPreview] = useState(false); // ✅ 촬영 후 이미지 미리보기 모드
@@ -20,6 +24,7 @@ const OCRCamera: React.FC = () => {
   const [photoSize, setPhotoSize] = useState({ width: 0, height: 0 });
   const [words, setWords] = useState<any[]>([]);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [selectedWord, setSelectedWord] = useState<any | null>(null);
   // ✅ 미리보기 크기는 화면 크기와 동일 (contain 모드에서 자동 조정)
 
   // ✅ 권한 요청
@@ -97,6 +102,7 @@ const OCRCamera: React.FC = () => {
     setWords([]);
     setOcrFilteredWords([]);
     setIsFiltering(false);
+    setSelectedWord(null);
   };
 
   // ✅ 웹뷰로 결과 전달
@@ -122,6 +128,7 @@ const OCRCamera: React.FC = () => {
     setWords([]);
     setOcrFilteredWords([]);
     setIsFiltering(false);
+    setSelectedWord(null);
     setIsOCRScreen(false);
   };
 
@@ -148,86 +155,128 @@ const OCRCamera: React.FC = () => {
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>
           </View>
+          {/* 촬영 버튼 */}
           <View style={styles.captureButtonContainer}>
-            <TouchableOpacity style={styles.captureButton} onPress={takePhoto}>
-              <Text style={styles.buttonText}>촬영</Text>
+            <TouchableOpacity onPress={takePhoto}>
+              <IconCamera width="70" height="70" />
             </TouchableOpacity>
           </View>
         </>
       ) : (
         /* ✅ 촬영 후 결과 화면 */
-        <View style={styles.resultContainer}>
-          {/* 뒤로가기 버튼 */}
-          <View style={styles.resultBackButtonContainer}>
-            <TouchableOpacity style={styles.resultBackButton} onPress={closeOCRScreen}>
-              <Text style={styles.backButtonText}>←</Text>
+        <View style={styles.previewContainer}>
+          {/* 헤더 */}
+          <View style={[styles.header, { paddingTop: insets.top }]}>
+            <TouchableOpacity
+              style={styles.headerBackButton}
+              onPress={closeOCRScreen}
+            >
+              <Text style={styles.headerBackIcon}>←</Text>
             </TouchableOpacity>
-          </View>
-          {/* 🔹 상단: 이미지 + 하이라이트 */}
-          <View style={styles.imageContainer}>
-            {photoUri && (
-              <>
-                <Image
-                  source={{ uri: photoUri }}
-                  style={styles.previewImage}
-                  resizeMode="contain"
-                />
-                {/* <OCRBoundingOverlay
-                  words={words}
-                  photoSize={photoSize}
-                  screenSize={{ width: screenWidth, height: screenHeight * 0.6 }}
-                /> */}
-              </>
-            )}
+            <Text style={styles.headerTitle}>단어 선택</Text>
+            <View style={styles.headerRightPlaceholder} />
           </View>
 
-          {/* 🔹 하단: 인식된 단어 리스트 */}
-          <View style={styles.wordListContainer}>
-            <Text style={styles.listTitle}>
-              {isFiltering ? '🔄 단어 필터링 중...' : '📘 정제된 단어'}
-            </Text>
+          {/* 카메라 결과 이미지 */}
+          {photoUri && (
+            <Image
+              source={{ uri: photoUri }}
+              style={styles.previewImage}
+              resizeMode="cover"
+            />
+          )}
+
+          {/* 여기서부터 커스텀 바텀시트 사용 */}
+          <BottomSheet
+            visible={isPreview}
+            onClose={closeOCRScreen}
+            title="단어 선택"
+            maxHeightRatio={selectedWord ? 0.25 : 0.47}
+            backgroundColor="#FFFFFF"
+            showHeader={false}
+            scrollable={false}
+          >
+            {/* 여기 안에 단어 리스트 + 버튼들 넣기 */}
             {isFiltering ? (
-              <Text style={styles.loadingText}>웹에서 DB 단어를 필터링하고 있습니다...</Text>
-            ) : ocrFilteredWords.length === 0 && words.length === 0 ? (
-              <Text style={styles.emptyText}>인식된 단어가 없습니다.</Text>
-            ) : ocrFilteredWords.length === 0 && words.length > 0 ? (
-              <Text style={styles.emptyText}>DB에 있는 단어가 없습니다.</Text>
+              <Text style={{ textAlign: 'center', color: '#FF87B0' }}>
+                단어 정제 중입니다...
+              </Text>
             ) : (
-              <ScrollView style={styles.scrollList}>
-                {ocrFilteredWords.map((item, idx) => {
-                  // meanings를 안전하게 문자열로 변환
-                  const getMeaningsText = () => {
-                    if (!item.meanings || !Array.isArray(item.meanings) || item.meanings.length === 0) {
-                      return '';
-                    }
-                    return item.meanings
-                      .slice(0, 2)
-                      .map((m: any) => typeof m === 'string' ? m : m.meaning || m.text || JSON.stringify(m))
-                      .join(', ');
-                  };
-
-                  return (
-                    <View key={item.id || idx} style={styles.wordItemContainer}>
-                      <Text style={styles.wordText}>{item.word || '(단어 없음)'}</Text>
-                      {getMeaningsText() && (
-                        <Text style={styles.meaningText} numberOfLines={2}>
-                          {getMeaningsText()}
-                        </Text>
-                      )}
+              <View style={styles.bottomSheetContent}>
+                {/* 선택된 단어가 있으면 해당 단어만, 없으면 전체 리스트 */}
+                {selectedWord ? (
+                  // 선택된 단어 상세 화면
+                  <View style={styles.selectedWordContainer}>
+                    <View style={styles.selectedWordItemContainer}>
+                      <Text style={styles.wordText}>{selectedWord.word || '(단어 없음)'}</Text>
+                      <Text style={styles.meaningText}>
+                        {selectedWord.meanings && Array.isArray(selectedWord.meanings) && selectedWord.meanings.length > 0
+                          ? selectedWord.meanings
+                              .map((m: any) => typeof m === 'string' ? m : m.meaning || m.text || JSON.stringify(m))
+                              .join(', ')
+                          : '-'}
+                      </Text>
                     </View>
-                  );
-                })}
-              </ScrollView>
+                  </View>
+                ) : (
+                  // 전체 단어 리스트
+                  <ScrollView style={styles.scrollList} showsVerticalScrollIndicator={false}>
+                    {ocrFilteredWords.map((item, idx) => {
+                      // meanings를 안전하게 문자열로 변환
+                      const getMeaningsText = () => {
+                        if (!item.meanings || !Array.isArray(item.meanings) || item.meanings.length === 0) {
+                          return '';
+                        }
+                        return item.meanings
+                          .slice(0, 2)
+                          .map((m: any) => typeof m === 'string' ? m : m.meaning || m.text || JSON.stringify(m))
+                          .join(', ');
+                      };
+
+                      return (
+                        <TouchableOpacity 
+                          key={item.id || idx} 
+                          style={styles.wordItemContainer}
+                          onPress={() => setSelectedWord(item)}
+                        >
+                          <Text style={styles.wordText}>{item.word || '(단어 없음)'}</Text>
+                          <Text style={styles.meaningText} numberOfLines={2}>
+                            {getMeaningsText() || '-'}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                )}
+                {/* 하단 버튼 - 선택 여부에 따라 다르게 표시 */}
+                <View style={styles.buttonRow}>
+                  {selectedWord ? (
+                    <>
+                      <TouchableOpacity 
+                        style={[styles.actionButton, styles.reselectButton]} 
+                        onPress={() => setSelectedWord(null)}
+                      >
+                        <Text style={styles.buttonText}>다시 선택</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity 
+                        style={[styles.actionButton, styles.addButton]} 
+                        onPress={() => {
+                          // TODO: 단어 추가 로직
+                          console.log('단어 추가:', selectedWord);
+                        }}
+                      >
+                        <Text style={styles.buttonText}>추가</Text>
+                      </TouchableOpacity>
+                    </>
+                  ) : (
+                    <TouchableOpacity style={styles.retakeButton} onPress={retakePhoto}>
+                      <Text style={styles.buttonText}>재촬영</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
             )}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.retakeButton} onPress={retakePhoto}>
-                <Text style={styles.buttonText}>다시 촬영</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.completeButton} onPress={sendResultToWebView}>
-                <Text style={styles.buttonText}>완료</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          </BottomSheet>
         </View>
       )}
     </View>
@@ -264,119 +313,125 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
-  resultBackButtonContainer: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-    zIndex: 1,
-  },
-  resultBackButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   captureButtonContainer: {
     position: 'absolute',
     bottom: 60,
     alignSelf: 'center',
   },
-  captureButton: {
-    backgroundColor: '#00BFFF',
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  resultContainer: {
+  bottomSheetContent: {
     flex: 1,
-    backgroundColor: 'black',
-  },
-  imageContainer: {
-    flex: 6, // 상단 60%
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  wordListContainer: {
-    flex: 4, // 하단 40%
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    paddingHorizontal: 20,
-    paddingTop: 10,
-  },
-  listTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    flexDirection: 'column',
   },
   scrollList: {
-    maxHeight: '70%',
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 15,
+    marginBottom: 20,
+    backgroundColor: '#FFEFFA',
+    borderRadius: 10,
   },
-  wordItem: {
-    fontSize: 16,
-    paddingVertical: 6,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
+  selectedWordContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    marginVertical: 20,
+    justifyContent: 'center',
+    backgroundColor: '#FFEFFA',
+    borderRadius: 10,
+  },
+  selectedWordItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 5,
   },
   wordItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     paddingVertical: 12,
-    paddingHorizontal: 4,
-    borderBottomColor: '#e0e0e0',
+    paddingHorizontal: 5,
+    borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
   },
   wordText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 4,
-  },
-  pronunciationText: {
-    fontSize: 14,
-    color: '#666',
-    fontStyle: 'italic',
-    marginBottom: 4,
+    color: '#111111',
   },
   meaningText: {
-    fontSize: 14,
-    color: '#555',
-    lineHeight: 20,
-  },
-  emptyText: { fontSize: 16, color: '#888', textAlign: 'center' },
-  loadingText: { 
-    fontSize: 16, 
-    color: '#00BFFF', 
-    textAlign: 'center',
-    fontStyle: 'italic'
+    fontSize: 13,
+    fontWeight: 'regular',
+    color: '#111111',
   },
   previewImage: {
     width: '100%',
     height: '100%',
   },
-  buttonContainer: {
+  previewContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  header: {
+    height: 80,
+    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 12,
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    zIndex: 5,
+  },
+  headerBackButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerBackIcon: {
+    fontSize: 22,
+    color: '#111111',
+  },
+  headerTitle: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#111111',
+  },
+  headerRightPlaceholder: {
+    width: 44,
+    height: 44,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    gap: 20,
   },
   retakeButton: {
-    backgroundColor: '#FF6347',
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    borderRadius: 20,
-    flex: 0.4,
+    flex: 1,
     alignItems: 'center',
-  },
-  completeButton: {
-    backgroundColor: '#00BFFF',
-    paddingVertical: 10,
+    justifyContent: 'center',
+    backgroundColor: '#CCCCCC',
+    paddingVertical: 16,
     paddingHorizontal: 24,
-    borderRadius: 20,
-    flex: 0.4,
-    alignItems: 'center',
+    borderRadius: 10,
   },
-  buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+  actionButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  reselectButton: {
+    backgroundColor: '#CCCCCC',
+  },
+  addButton: {
+    backgroundColor: '#FF8DD4',
+  },
+  buttonText: { 
+    color: '#ffffff', 
+    fontSize: 16, 
+    fontWeight: '600' 
+  },
 });
