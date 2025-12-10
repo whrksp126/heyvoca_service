@@ -76,11 +76,14 @@ def api_user_dates():
     for i in range(7):
         d = this_sunday + timedelta(days=i)
         ci = by_date.get(d)
-        # 오늘 날짜인 경우 체크인이 없어도 출석한 것으로 표시 (checkin 엔드포인트에서 생성됨)
+        # 오늘 날짜인 경우 체크인이 없어도 출석한 것으로 표시
+        # (이 API를 호출했다는 것 자체가 접속을 의미하므로)
         is_today = (d == today)
+        # 체크인 레코드가 있거나 오늘 날짜면 출석으로 처리
+        attend = bool(ci) or is_today
         data.append({
             'date': days[i],
-            'attend': True if ci else (True if is_today else False),
+            'attend': attend,
             'daily_mission': bool(ci.today_study_complete) if ci else False,
         })
 
