@@ -90,18 +90,79 @@ export const UserProvider = ({ children }) => {
     try {
       const result = await updateUserStudyHistoryApi({today_study_complete, correct_cnt, incorrect_cnt});
       if(result.code != 200) return;
+      
       // 보석 업데이트 내용 적용
       setUserProfile(prevProfile => ({
         ...prevProfile,
         gem_cnt: result.data.gem.after,
       }))
+      
+      // 오늘의 학습 완료 시 데일리 미션 업데이트
+      if(result.data.today_study_complete) {
+        const today = new Date();
+        const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const todayName = dayNames[today.getDay()];
+        
+        setUserMainPage(prevMainPage => {
+          const updatedDates = prevMainPage.dates?.map(date => {
+            if(date.date === todayName) {
+              return {
+                ...date,
+                daily_mission: true
+              };
+            }
+            return date;
+          }) || [];
+          
+          return {
+            ...prevMainPage,
+            dates: updatedDates
+          };
+        });
+      }
+      
+      // 업적 업데이트 (새로 완료된 업적이 있는 경우)
+      if(result.data.goals && result.data.goals.length > 0) {
+        setUserMainPage(prevMainPage => {
+          const existingGoals = prevMainPage.goals || [];
+          
+          // 기존 업적 목록을 복사하고, 새로 완료된 업적을 추가/업데이트
+          const updatedGoals = [...existingGoals];
+          
+          result.data.goals.forEach(newGoal => {
+            const existingIndex = updatedGoals.findIndex(g => g.type === newGoal.type);
+            if(existingIndex >= 0) {
+              // 기존 업적이 있으면 레벨 업데이트
+              updatedGoals[existingIndex] = {
+                ...updatedGoals[existingIndex],
+                level: newGoal.level,
+                badge_img: newGoal.badge_img
+              };
+            } else {
+              // 새 업적 추가
+              updatedGoals.push({
+                name: newGoal.name,
+                type: newGoal.type,
+                level: newGoal.level,
+                badge_img: newGoal.badge_img
+              });
+            }
+          });
+          
+          return {
+            ...prevMainPage,
+            goals: updatedGoals
+          };
+        });
+      }
+      
       if(result.code == 200){
         return result.data;
       }else{
         return null;
       }
     } catch (err) {
-      console.log("오류 발생함")
+      console.log("오류 발생함", err)
     }
   }, []); 
 

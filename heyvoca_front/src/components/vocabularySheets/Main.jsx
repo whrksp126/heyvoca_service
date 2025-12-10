@@ -92,7 +92,7 @@ const Main = () => {
     <motion.div 
       className="
         flex flex-col 
-        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav))]
+        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav)-var(--status-bar-height))]
         px-[16px] py-[10px]
         overflow-y-auto
       "

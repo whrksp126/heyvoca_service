@@ -294,24 +294,26 @@ const StudyResult = () => {
             style={{
               background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, .5) 100%)'
             }}
-          >
-              <motion.button 
-                className="
-                  flex-1
-                  h-[45px]
-                  rounded-[8px]
-                  bg-[#ccc]
-                  text-[#fff] text-[16px] font-[700]
-                "
-                onClick={onClickTestAgain}
-                whileTap={{ scale: 0.95 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-              >테스트 다시 하기</motion.button>
-              <motion.button 
+            >
+              {testType !== "today" && (
+                <motion.button 
+                  className="
+                    flex-1
+                    h-[45px]
+                    rounded-[8px]
+                    bg-[#ccc]
+                    text-[#fff] text-[16px] font-[700]
+                  "
+                  onClick={onClickTestAgain}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 500, 
+                    damping: 15
+                  }}
+                >테스트 다시 하기</motion.button>
+              )}
+              <motion.button
                 className="
                   flex-1
                   h-[45px]

@@ -1,13 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useUser } from '../../context/UserContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import Step1 from './step1';
-import Step2 from './step2';
-import Step3 from './step3';
-import Step4 from './step4';
-import Step5 from './step5';
+import { motion } from 'framer-motion';
+import HeyCharacter from '../../assets/images/HeyCharacter.png';
+import InitialProfileStep2NewFullSheet from '../newFullSheet/InitialProfileStep2NewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNavigate } from 'react-router-dom';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 
 
 
@@ -54,7 +52,7 @@ const Main = () => {
   const navigate = useNavigate();
   const { addVocabularySheet, updateVocabularySheet } = useVocabulary();
   const { setUserProfile, updateUserProfile } = useUser();
-  const [step, setStep] = useState(1);
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const [userInitialProfile, setUserInitialProfile] = useState({
     name: null,
     level: null,
@@ -105,18 +103,16 @@ const Main = () => {
     navigate('/');
   }
 
-  const variants = {
-    enter: {
-      opacity: 0,
-      scale: 0.95
+
+  const buttonVariants = {
+    hover: {
+      scale: 1.02,
+      backgroundColor: "#FF7AC4",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
     },
-    center: {
-      opacity: 1,
-      scale: 1
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.95
+    tap: {
+      scale: 0.98,
+      backgroundColor: "#FF6AB4"
     }
   };
 
@@ -128,46 +124,67 @@ const Main = () => {
       overflow: 'hidden',
       backgroundColor: '#FFEFFA'
     }}>
-      <AnimatePresence mode="wait">
-        {step === 1 ? (
-          <motion.div
-            key="step1"
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              top: 0,
-              left: 0
-            }}
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
+      <div className="
+        flex flex-col items-center justify-between
+        w-full h-[calc(100vh-var(--status-bar-height))]
+        p-[20px]
+        bg-[#FFEFFA]
+      ">
+        <div></div>
+        <div className="
+          flex flex-col items-center
+          gap-[10px]
+        ">
+          <div 
+            className="
+              px-[15px] py-[12px]
+              bg-[#fff]
+              rounded-[10px]
+              font-[16px] font-[600]
+            "
+            style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
           >
-            <Step1 setStep={setStep} setUserProfile={setUserProfile} />
-          </motion.div>
-        ) : (
-          <motion.div
-            key={step}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              duration: 0.3,
-              ease: "easeInOut"
-            }}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              top: 0,
-              left: 0
-            }}
-          >
-            {step === 2 && <Step2 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
-            {step === 3 && <Step3 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
-            {step === 4 && <Step4 setStep={setStep} userInitialProfile={userInitialProfile} setUserInitialProfile={setUserInitialProfile} />}
-            {step === 5 && <Step5 endInitialProfile={endInitialProfile} />}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            안녕하세요!<br />
+            오늘부터 함께할 헤이라고 해요.
+          </div>
+          <img src={HeyCharacter} alt="logo" 
+            className="
+              w-[160px]
+            "
+          />
+        </div>
+        <motion.button
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="tap"
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17
+          }}
+          className="
+            w-full h-[45px]
+            bg-[#FF8DD4]
+            rounded-[8px]
+            text-[#FFFFFF] font-[16px] font-[700]
+          "
+          onClick={() => {
+            // step2를 FullSheet로 직접 열기
+            pushNewFullSheet(
+              InitialProfileStep2NewFullSheet,
+              { userInitialProfile, setUserInitialProfile, endInitialProfile },
+              {
+                smFull: true,
+                closeOnBackdropClick: false,
+                isDragToCloseEnabled: false
+              }
+            );
+          }}
+        >
+          시작하기
+        </motion.button>
+      </div>
     </div>
   );
 };
