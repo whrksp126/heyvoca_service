@@ -328,8 +328,19 @@ def api_user_study_history():
             checkin.today_study_complete = True
 
     # 3.업적(암기왕, 노력왕) 업데이트
-    memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img, memory_goal_level = update_user_goal('암기왕')
-    effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = update_user_goal('노력왕')
+    # 암기왕: 만점일 때만 업데이트 (모든 문제를 맞췄을 때만)
+    total_cnt = correct_cnt + incorrect_cnt
+    is_perfect_score = (incorrect_cnt == 0 and total_cnt > 0)  # 만점인지 확인
+    
+    memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img, memory_goal_level = None, None, None, None
+    if is_perfect_score:
+        # 만점일 때만 암기왕 업적 업데이트
+        memory_goal_complete, memory_goal_reward_count, memory_goal_badge_img, memory_goal_level = update_user_goal('암기왕')
+    
+    # 노력왕: 문제를 풀었으면 업데이트
+    effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = None, None, None, None
+    if total_cnt > 0:
+        effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = update_user_goal('노력왕')
 
     # 4. 보석 업데이트 (오늘의 학습 완료 보석만 추가, 업적 보상은 update_user_goal에서 처리)
     add_gem = 0

@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -633,5 +633,109 @@ def test_token_status():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
+
+@auth_bp.route('/withdraw', methods=['DELETE'])
+@jwt_required
+def withdraw():
+    """회원 탈퇴 API - 사용자 관련 모든 데이터 삭제"""
+    try:
+        if not g.user_id:
+            return jsonify({
+                'code': 400,
+                'message': '사용자 ID가 없습니다.',
+                'status': 'error'
+            }), 400
+        
+        user_id = UUID(g.user_id)
+        
+        # 사용자 존재 확인
+        user = db.session.query(User).filter(User.id == user_id).first()
+        if not user:
+            return jsonify({
+                'code': 404,
+                'message': '사용자를 찾을 수 없습니다.',
+                'status': 'error'
+            }), 404
+        
+        # 트랜잭션 시작 - 모든 삭제 작업을 하나의 트랜잭션으로 처리
+        try:
+            # user_id를 bytes로 변환 (BINARY(16) 컬럼용)
+            user_id_bytes = user_id.bytes
+            
+            # 1. UserHasToken 삭제 (FCM 토큰)
+            db.session.query(UserHasToken).filter(UserHasToken.user_id == user_id).delete()
+            
+            # 2. InviteMap 삭제 (초대 관련 - inviter_id 또는 invitee_id가 해당 user_id인 경우)
+            # InviteMap의 inviter_id와 invitee_id는 BINARY(16) 타입이므로 bytes로 변환 필요
+            db.session.query(InviteMap).filter(
+                (InviteMap.inviter_id == user_id_bytes) | (InviteMap.invitee_id == user_id_bytes)
+            ).delete()
+            
+            # 3. UserVocaBook 삭제 (사용자 단어장)
+            db.session.query(UserVocaBook).filter(UserVocaBook.user_id == user_id).delete()
+            
+            # 4. CheckIn 삭제 (출석 체크)
+            db.session.query(CheckIn).filter(CheckIn.user_id == user_id).delete()
+            
+            # 5. UserRecentStudy 삭제 (최근 학습)
+            db.session.query(UserRecentStudy).filter(UserRecentStudy.user_id == user_id).delete()
+            
+            # 6. UserGoals 삭제 (사용자 목표)
+            db.session.query(UserGoals).filter(UserGoals.user_id == user_id).delete()
+            
+            # 7. Purchase 삭제 (구매 기록)
+            db.session.query(Purchase).filter(Purchase.user_id == user_id).delete()
+            
+            # 8. GemLog 삭제 (보석 로그)
+            db.session.query(GemLog).filter(GemLog.user_id == user_id).delete()
+            
+            # 9. User 삭제 (사용자 자체)
+            db.session.delete(user)
+            
+            # 모든 변경사항 커밋
+            db.session.commit()
+            
+            # 응답 생성 및 refresh_token 쿠키 제거
+            response = make_response(jsonify({
+                'code': 200,
+                'message': '회원 탈퇴가 성공적으로 완료되었습니다.',
+                'status': 'success'
+            }), 200)
+            
+            # refresh_token 쿠키 제거
+            is_local = os.getenv('FLASK_CONFIG') == 'local'
+            response.set_cookie(
+                'refresh_token',
+                '',
+                httponly=True,
+                secure=not is_local,
+                samesite='Lax',
+                max_age=0  # 즉시 만료
+            )
+            
+            return response
+            
+        except Exception as e:
+            # 에러 발생 시 롤백
+            db.session.rollback()
+            print(f"회원 탈퇴 처리 중 오류 발생: {e}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({
+                'code': 500,
+                'message': '회원 탈퇴 처리 중 오류가 발생했습니다.',
+                'status': 'error'
+            }), 500
+        
+    except Exception as e:
+        db.session.rollback()
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'code': 500,
+            'message': '회원 탈퇴 처리 중 오류가 발생했습니다.',
+            'status': 'error'
+        }), 500
 
 
