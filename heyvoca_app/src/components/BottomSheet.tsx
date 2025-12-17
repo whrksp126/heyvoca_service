@@ -23,6 +23,7 @@ interface BottomSheetProps {
   maxHeightRatio?: number; /** 0~1 사이 비율 (0.6 = 화면 높이의 60%) */
   scrollable?: boolean;
   backgroundColor?: string; /** 시트 배경색 */
+  customHeader?: React.ReactNode; /** 커스텀 헤더 (Modal 위에 표시) */
 }
 
 /**
@@ -37,6 +38,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   maxHeightRatio = 0.5,
   scrollable = true,
   backgroundColor,
+  customHeader,
 }) => {
   const slideAnim = useRef(new Animated.Value(screenHeight)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -123,6 +125,12 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.wrapper}
       >
+        {/* 커스텀 헤더 (Modal 안에 포함되어 위에 표시) */}
+        {customHeader && (
+          <View style={styles.customHeaderContainer} pointerEvents="box-none">
+            {customHeader}
+          </View>
+        )}
         {/* 바텀시트 본체 */}
         <Animated.View
           style={[
@@ -146,6 +154,14 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  customHeaderContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+    pointerEvents: 'box-none',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

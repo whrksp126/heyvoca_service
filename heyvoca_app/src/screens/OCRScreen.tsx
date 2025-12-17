@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { recognizeTextFromImage } from '../components/ocrHelper';
 import { useNavigation } from '../contexts/NavigationContext';
 import BottomSheet from '../components/BottomSheet';
-import { IconCamera } from '../assets/SvgIcon';
+import { IconBack, IconCamera } from '../assets/SvgIcon';
 // import OCRBoundingOverlay from '../components/OCRBoundingOverlay';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -51,8 +51,8 @@ const OCRCamera: React.FC = () => {
   useEffect(() => {
     // 필터링 중일 때만 처리 (초기 렌더링 시 빈 배열은 무시)
     if (isFiltering) {
-      console.log('✅ OCR 처리 완료! 정제된 단어 개수:', ocrFilteredWords.length);
-      console.log('정제된 단어 목록:', ocrFilteredWords);
+      // console.log('✅ OCR 처리 완료! 정제된 단어 개수:', ocrFilteredWords.length);
+      // console.log('정제된 단어 목록:', ocrFilteredWords);
       setIsFiltering(false);
     }
   }, [ocrFilteredWords, isFiltering]);
@@ -63,7 +63,6 @@ const OCRCamera: React.FC = () => {
     try {
       const photo = await camera.current.takePhoto();
       const fileUri = photo.path.startsWith('file://') ? photo.path : `file://${photo.path}`;
-      console.log('📷 촬영 완료:', fileUri);
 
       const recognizedWords = await recognizeTextFromImage(fileUri);
       setWords(recognizedWords);
@@ -75,9 +74,9 @@ const OCRCamera: React.FC = () => {
       if (webViewRef?.current) {
         setIsFiltering(true);
         setOcrFilteredWords([]); // 이전 필터링 결과 초기화
-        console.log('📤 웹뷰로 OCR 결과 전송 (필터링 요청)');
-        console.log('   인식된 단어 개수:', recognizedWords.length);
-        console.log('   인식된 단어:', recognizedWords.map(w => w.text).join(', '));
+        // console.log('📤 웹뷰로 OCR 결과 전송 (필터링 요청)');
+        // console.log('   인식된 단어 개수:', recognizedWords.length);
+        // console.log('   인식된 단어:', recognizedWords.map(w => w.text).join(', '));
         webViewRef.current.postMessage(JSON.stringify({
           type: 'ocrResult',
           data: {
@@ -142,17 +141,19 @@ const OCRCamera: React.FC = () => {
       {/* ✅ 촬영 전 (카메라 프리뷰) */}
       {!isPreview ? (
         <>
-          <Camera
-            ref={camera}
-            style={StyleSheet.absoluteFill}
-            device={device}
-            isActive={!isPreview}
-            photo={true}
-          />
+          {device && (
+            <Camera
+              ref={camera}
+              style={[StyleSheet.absoluteFill, { top: insets.top }]}
+              device={device}
+              isActive={!isPreview && hasPermission}
+              photo={true}
+            />
+          )}
           {/* 뒤로가기 버튼 */}
-          <View style={styles.backButtonContainer}>
+          <View style={[styles.backButtonContainer, { top: 50 + insets.top }]}>
             <TouchableOpacity style={styles.backButton} onPress={closeOCRScreen}>
-              <Text style={styles.backButtonText}>←</Text>
+              <IconBack width="12" height="22" />
             </TouchableOpacity>
           </View>
           {/* 촬영 버튼 */}
@@ -164,27 +165,19 @@ const OCRCamera: React.FC = () => {
         </>
       ) : (
         /* ✅ 촬영 후 결과 화면 */
-        <View style={styles.previewContainer}>
-          {/* 헤더 */}
-          <View style={[styles.header, { paddingTop: insets.top }]}>
-            <TouchableOpacity
-              style={styles.headerBackButton}
-              onPress={closeOCRScreen}
-            >
-              <Text style={styles.headerBackIcon}>←</Text>
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>단어 선택</Text>
-            <View style={styles.headerRightPlaceholder} />
+        <>
+          <View style={styles.previewContainer}>
+            {/* 카메라 결과 이미지 */}
+            {photoUri && (
+              <Image
+                source={{ uri: photoUri }}
+                style={styles.previewImage}
+                resizeMode="cover"
+              />
+            )}
+            {/* 상태바 영역을 덮는 흰색 배경 */}
+            <View style={[styles.statusBarOverlay, { height: insets.top, backgroundColor: '#FFFFFF' }]} />
           </View>
-
-          {/* 카메라 결과 이미지 */}
-          {photoUri && (
-            <Image
-              source={{ uri: photoUri }}
-              style={styles.previewImage}
-              resizeMode="cover"
-            />
-          )}
 
           {/* 여기서부터 커스텀 바텀시트 사용 */}
           <BottomSheet
@@ -195,6 +188,21 @@ const OCRCamera: React.FC = () => {
             backgroundColor="#FFFFFF"
             showHeader={false}
             scrollable={false}
+            customHeader={
+              <View style={[styles.header, { paddingTop: 0, height: 30 + insets.top }]} pointerEvents="box-none">
+                <View pointerEvents="auto">
+                  <TouchableOpacity
+                    style={styles.headerBackButton}
+                    onPress={closeOCRScreen}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.headerBackIcon}>←</Text>
+                  </TouchableOpacity>
+                </View>
+                <Text style={styles.headerTitle} pointerEvents="none">단어 선택</Text>
+                <View style={styles.headerRightPlaceholder} pointerEvents="none" />
+              </View>
+            }
           >
             {/* 여기 안에 단어 리스트 + 버튼들 넣기 */}
             {isFiltering ? (
@@ -261,8 +269,13 @@ const OCRCamera: React.FC = () => {
                       <TouchableOpacity 
                         style={[styles.actionButton, styles.addButton]} 
                         onPress={() => {
-                          // TODO: 단어 추가 로직
-                          console.log('단어 추가:', selectedWord);
+                          if (webViewRef?.current && selectedWord) {
+                            webViewRef.current.postMessage(JSON.stringify({
+                              type: 'addWord',
+                              data: selectedWord
+                            }));
+                            setIsOCRScreen(false);  // 웹뷰 화면으로 돌아가기
+                          }
                         }}
                       >
                         <Text style={styles.buttonText}>추가</Text>
@@ -277,7 +290,7 @@ const OCRCamera: React.FC = () => {
               </View>
             )}
           </BottomSheet>
-        </View>
+        </>
       )}
     </View>
   );
@@ -287,6 +300,13 @@ export default OCRCamera;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'black' },
+  statusBarOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
   infoText: {
     flex: 1,
     textAlign: 'center',
@@ -366,20 +386,19 @@ const styles = StyleSheet.create({
     color: '#111111',
   },
   previewImage: {
-    width: '100%',
-    height: '100%',
+    ...StyleSheet.absoluteFillObject,
+    top: 0,
   },
   previewContainer: {
     flex: 1,
     backgroundColor: '#000',
   },
   header: {
-    height: 80,
+    height: 60,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    zIndex: 5,
   },
   headerBackButton: {
     width: 44,
