@@ -7,6 +7,8 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import VocabularyWords from './VocabularyWords';
 import VocabularyWordsNewFullSheet from '../newFullSheet/VocabularyWordsNewFullSheet';
+import note_ring from '../../assets/images/note_ring.png';
+
 
 const Main = () => {
 
@@ -90,7 +92,7 @@ const Main = () => {
     <motion.div 
       className="
         flex flex-col 
-        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav))]
+        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav)-var(--status-bar-height))]
         px-[16px] py-[10px]
         overflow-y-auto
       "
@@ -118,7 +120,7 @@ const Main = () => {
           {[0,1,2,3,4,5,6,7,8,9].map((item) => (
             <img 
               key={item} 
-              src="/src/assets/images/note_ring.png" 
+              src={note_ring} 
               alt="노트 위 고리 이미지" 
               className="
                 note_ring

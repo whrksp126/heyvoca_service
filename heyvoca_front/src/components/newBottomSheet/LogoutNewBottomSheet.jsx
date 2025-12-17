@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { backendUrl, fetchDataAsync, setCookie } from '../../utils/common';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
+import { launchGoogleLogout, getDevicePlatform } from '../../utils/osFunction';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -15,7 +15,7 @@ export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
   const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const navigate = useNavigate();
-  const { setAuth } = useUser();
+  const { performLogout } = useUser();
 
   // React Compiler가 자동으로 useCallback 처리
   const handleClose = () => {
@@ -24,24 +24,22 @@ export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
 
   const handleLogout = useCallback(async () => {
     try {
-      // 로그아웃 API 호출
-      const url = `${backendUrl}/auth/logout`;
-      const method = 'POST';
-      const fetchData = {};
+      // 앱 환경인 경우 앱에 로그아웃 요청 전송
+      await launchGoogleLogout();
       
-      const result = await fetchDataAsync(url, method, fetchData);
-      if (result.code !== 200) {
-        alert('로그아웃 중 오류가 발생하였습니다.');
+      // 앱 환경이면 launchGoogleLogout에서 처리하고 여기서 종료
+      // 앱에서 google_logout_app_callback을 받으면 UserContext에서 실제 로그아웃 처리 진행
+      if (getDevicePlatform() !== 'web') {
         return;
       }
       
-      // 쿠키에서 accessToken 제거
-      setCookie('userAccessToken', '', -1); // 쿠키 즉시 만료
+      // 웹 환경인 경우 로그아웃 처리
+      const result = await performLogout();
       
-      // auth 상태 초기화
-      setAuth({
-        user: null,
-      });
+      if (!result.success) {
+        alert('로그아웃 중 오류가 발생하였습니다.');
+        return;
+      }
       
       // 컨텍스트 초기화
       clearNewBottomSheetStack();
@@ -54,7 +52,7 @@ export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
       console.error('로그아웃 실패:', error);
       alert('로그아웃 중 오류가 발생하였습니다.');
     }
-  }, [navigate, setAuth, clearNewBottomSheetStack, clearNewFullSheetStack]);
+  }, [navigate, performLogout, clearNewBottomSheetStack, clearNewFullSheetStack]);
 
   return (
     <div className="">

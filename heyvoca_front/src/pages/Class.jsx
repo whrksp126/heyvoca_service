@@ -16,6 +16,7 @@ const Class = () => {
 
   return (
     <div>
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <Header />
       <Main />
       <BottomNav />

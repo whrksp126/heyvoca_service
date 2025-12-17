@@ -84,6 +84,21 @@ export async function closeApp() {
   }
 }
 
+// 구글 로그아웃 함수
+export async function launchGoogleLogout() {
+  if (getDevicePlatform() === 'web') {
+    // 웹 환경에서는 처리하지 않음 (웹 로그아웃은 별도로 처리)
+    return;
+  } else {
+    // 앱 환경에서는 앱에 로그아웃 요청 전송
+    if (window.ReactNativeWebView) {
+      await window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'launchGoogleLogout'
+      }));
+    }
+  }
+}
+
 // 앱 종료 더블탭을 위한 변수
 let appExitPressed = false;
 let appExitTimeout = null;

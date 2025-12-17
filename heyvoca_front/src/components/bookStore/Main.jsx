@@ -2,7 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Plus } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from "../../context/NewBottomSheetContext";
-import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/BookStoreNewBottomSheet";
+import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/PreviewBookStoreNewBottomSheet";
+// import { PreviewBookStoreNewFullSheet } from "../newFullSheet/PreviewBookStoreNewFullSheet";
+// import { useNewFullSheetActions } from "../../context/NewFullSheetContext";
 import gem from "../../assets/images/gem.png";
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -10,6 +12,7 @@ const Main = () => {
   const { isBookStoreLoading, bookStore, getBookStoreVocabularySheet } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+  // const { pushNewFullSheet } = useNewFullSheetActions();
   
   if (isBookStoreLoading) {
     return (
@@ -32,6 +35,16 @@ const Main = () => {
         isDragToCloseEnabled: false
       }
     );
+    // pushNewFullSheet(
+    //   PreviewBookStoreNewFullSheet,
+    //   {
+    //     bookStoreVocabularySheet: bookStoreVocabularySheet
+    //   },
+    //   {
+    //     smFull: true,
+    //     closeOnBackdropClick: true
+    //   }
+    // );
   };
 
   return (

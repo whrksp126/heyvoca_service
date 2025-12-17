@@ -1,5 +1,12 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('./assets/fonts/Cafe24Ssurround-v2.0.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,6 +21,8 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  --height-header: 55px;
+  --height-bottom-nav: 70px;
 }
 
 * {

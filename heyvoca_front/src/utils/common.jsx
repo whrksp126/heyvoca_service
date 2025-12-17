@@ -128,20 +128,25 @@ export const getValueFromURL = (param) => {
 
 let currentTTSAudio = null;
 let currentAudioUrl = null;
+let currentRequestId = 0;
 
 export const getTextSound = async (text, lang) => {
-  // Stop and cleanup current audio if playing
+  // 즉시 기존 오디오 중단
   if (currentTTSAudio) {
     currentTTSAudio.pause();
-    currentTTSAudio.src = ''; // Clear source
+    currentTTSAudio.currentTime = 0;
+    currentTTSAudio.src = '';
     currentTTSAudio = null;
   }
 
-  // Revoke previous blob URL to prevent memory leak
+  // 이전 blob URL 정리
   if (currentAudioUrl) {
     URL.revokeObjectURL(currentAudioUrl);
     currentAudioUrl = null;
   }
+
+  // 새로운 요청 ID 생성 (이전 요청과 구분하기 위해)
+  const requestId = ++currentRequestId;
 
   const url = `${backendUrl}/tts/output`;
   const method = 'GET';
@@ -149,21 +154,56 @@ export const getTextSound = async (text, lang) => {
     text : text,
     language : lang
   }
-  const audioBlob = await fetchDataAsync(url, method, fetchData, false, null);
-  const audioUrl = URL.createObjectURL(audioBlob);
-  currentAudioUrl = audioUrl;
   
-  const audio = new Audio(audioUrl);
-  currentTTSAudio = audio;
-  
-  // Add ended event handler to cleanup
-  audio.addEventListener('ended', () => {
-    URL.revokeObjectURL(audioUrl);
-    currentAudioUrl = null;
-    currentTTSAudio = null;
-  });
+  try {
+    const audioBlob = await fetchDataAsync(url, method, fetchData, false, null);
+    
+    // 요청이 완료되었지만, 이미 새로운 요청이 와서 이 요청이 무효화된 경우
+    if (requestId !== currentRequestId) {
+      // 이전 요청이므로 종료 (blob은 자동으로 가비지 컬렉션됨)
+      return;
+    }
 
-  audio.play();
+    const audioUrl = URL.createObjectURL(audioBlob);
+    currentAudioUrl = audioUrl;
+    
+    const audio = new Audio(audioUrl);
+    
+    // 재생 전에 다시 한 번 확인 (새로운 요청이 왔는지)
+    if (requestId !== currentRequestId) {
+      URL.revokeObjectURL(audioUrl);
+      return;
+    }
+    
+    currentTTSAudio = audio;
+    
+    // Add ended event handler to cleanup
+    audio.addEventListener('ended', () => {
+      // 이 요청의 오디오가 끝났는지 확인
+      if (currentTTSAudio === audio) {
+        URL.revokeObjectURL(audioUrl);
+        currentAudioUrl = null;
+        currentTTSAudio = null;
+      }
+    });
+
+    audio.play().catch(err => {
+      console.error('오디오 재생 실패:', err);
+      // 재생 실패 시 정리
+      if (currentTTSAudio === audio) {
+        URL.revokeObjectURL(audioUrl);
+        currentAudioUrl = null;
+        currentTTSAudio = null;
+      }
+    });
+  } catch (error) {
+    console.error('TTS 요청 실패:', error);
+    // 요청 실패 시에도 이전 요청인지 확인
+    if (requestId === currentRequestId) {
+      currentTTSAudio = null;
+      currentAudioUrl = null;
+    }
+  }
 }
 
 /**

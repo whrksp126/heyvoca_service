@@ -74,6 +74,9 @@ export const NewFullSheetProvider = () => {
           {renderedStack.map((newFullSheet, index) => {
             const shouldRender = index === renderedActiveIndex || newFullSheet.options.keepInDOM;
             if (!shouldRender) return null;
+            // stack에서 최신 props 가져오기
+            const currentStackItem = stack.find(item => item.id === newFullSheet.id);
+            const currentProps = currentStackItem?.props || newFullSheet.props;
             const NewFullSheetComponent = newFullSheet.component;
             const isActive = index === renderedActiveIndex;
             if (isActive && phase !== 'idle') {
@@ -105,7 +108,7 @@ export const NewFullSheetProvider = () => {
                     }
                   }}
                 >
-                  <NewFullSheetComponent {...newFullSheet.props} />
+                  <NewFullSheetComponent {...currentProps} />
                 </motion.div>
               );
             }
@@ -122,7 +125,7 @@ export const NewFullSheetProvider = () => {
                   e.stopPropagation();
                 }}
               >
-                <NewFullSheetComponent {...newFullSheet.props} />
+                <NewFullSheetComponent {...currentProps} />
               </div>
             );
           })}

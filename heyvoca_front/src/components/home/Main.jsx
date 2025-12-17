@@ -1,11 +1,12 @@
 // src/components/home/main
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Heart, Check, CircleDashed } from '@phosphor-icons/react';
+import { Heart, CheckCircle, CircleDashed } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 
 // import { useFullSheet } from '../../context/FullSheetContext';
@@ -68,6 +69,7 @@ const getAchievementTextStyle = (level) => {
   if (level >= 10) {
     // 레벨 10 이상: 그라데이션 글자 (배경과 동일)
     return {
+      fontFamily: 'Cafe24Ssurround',
       background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
@@ -77,16 +79,19 @@ const getAchievementTextStyle = (level) => {
   } else if (level >= 6) {
     // 레벨 6~9: 노란색 글자
     return {
+      fontFamily: 'Cafe24Ssurround',
       color: '#F2D252',
     };
   } else if (level >= 3) {
     // 레벨 3~5: 회색 글자
     return {
+      fontFamily: 'Cafe24Ssurround',
       color: '#C0C0C0',
     };
   } else {
     // 레벨 0~2: 갈색 글자
     return {
+      fontFamily: 'Cafe24Ssurround',
       color: '#D3A686',
     };
   }
@@ -95,6 +100,7 @@ const getAchievementTextStyle = (level) => {
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
+  const navigate = useNavigate();
   const { userMainPage , userProfile} = useUser();
   const { vocabularySheets, isVocabularySheetsLoading, updateDelayedWords, getDelayedWords } = useVocabulary();
   const [now, setNow] = useState(Date.now());
@@ -122,7 +128,21 @@ const Main = () => {
   const todayStatus = getTodayStatus();
 
   // React Compiler가 자동으로 메모이제이션 처리
-  const total = vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0);
+  // 학습 기록이 있는 단어만 카운팅 (repetition > 0 || interval > 0 || nextReview !== null)
+  const total = vocabularySheets.reduce((acc, sheet) => {
+    if (!sheet.words || !Array.isArray(sheet.words)) return acc;
+    
+    const learningWordsCount = sheet.words.filter(word => {
+      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
+      const interval = word.memoryState?.interval ?? word.interval ?? 0;
+      const nextReview = word.memoryState?.nextReview ?? word.nextReview;
+      
+      // 학습 기록이 있는 단어: repetition > 0 또는 interval > 0 또는 nextReview가 있음
+      return repetition > 0 || interval > 0 || (nextReview !== null && nextReview !== undefined);
+    }).length;
+    
+    return acc + learningWordsCount;
+  }, 0);
   // const { pushFullSheet } = useFullSheet();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
@@ -224,10 +244,16 @@ const Main = () => {
 
   const handleTodayStudyButtonClick = () => {
     console.log('오늘의 학습 버튼 클릭');
-    pushNewFullSheet(TodayStudyNewFullSheet, {}, {
-      smFull: true,
-      closeOnBackdropClick: true
-    });
+    // 오늘의 학습이 완료된 상태라면 /class로 이동
+    if (todayStatus.dailyMissionCompleted) {
+      navigate('/class');
+    } else {
+      // 미완료 상태라면 기존처럼 TodayStudyNewFullSheet 열기
+      pushNewFullSheet(TodayStudyNewFullSheet, {}, {
+        smFull: true,
+        closeOnBackdropClick: true
+      });
+    }
   }
 
   return (
@@ -311,7 +337,7 @@ const Main = () => {
                   className="text-[#111] text-[14px] font-[400]"
                   dangerouslySetInnerHTML={{
                     __html: overdueCount > 0 
-                      ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요`
+                      ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요!`
                       : '알림이 없습니다'
                   }}
                 />
@@ -369,7 +395,7 @@ const Main = () => {
                 bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                 text-[16px] font-[800]
               ">
-                오늘의 학습
+                {todayStatus.dailyMissionCompleted ? '학습하기' : '오늘의 학습하기'}
               </span>
             </button>
           </motion.div>
@@ -427,7 +453,7 @@ const Main = () => {
             rounded-[12px]
             bg-[#FFEFFA] 
           ">
-            <h2 className="text-[#111] text-[16px] font-[700]">데일리 미션</h2>
+            <h2 className="text-[#111] text-[16px] font-[700]">출석체크</h2>
             <div className="flex justify-between">
               {userMainPage?.dates?.map((item, index) => (
               <div key={index} className="flex flex-col gap-[10px] items-center">
@@ -444,12 +470,7 @@ const Main = () => {
                 )}
                 {(item.attend && !item.daily_mission) && (
                   <div className="w-[30px] h-[30px] flex items-center justify-center">
-                    <div className="flex items-center justify-center w-[24px] h-[24px] 
-                      bg-[#FF8DD4]
-                      rounded-[50%]
-                    ">
-                      <Check size={12} color="#fff" />
-                    </div>
+                    <CheckCircle size={30} weight="fill"  color="#FF8DD4"/>
                   </div>
                 )}
                 {(!item.attend && !item.daily_mission) && (
@@ -495,12 +516,11 @@ const Main = () => {
                               absolute bottom-[0] left-[50%] 
                               translate-x-[-50%]
                               text-[16px] font-[700]
-                              font-family: 'Cafe24Ssurround', sans-serif;
                               [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
                             "
-                            style={getAchievementTextStyle(goal.level)}
+                            style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
                             >
-                              <span className="text-[10px]">LV.</span>{goal.level}
+                              <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
                           </span>
                         </div>
                         <span className="text-[#111] text-[12px] font-[600]">
