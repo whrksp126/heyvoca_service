@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CaretLeft } from '@phosphor-icons/react';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 
-const InitialProfileStep4NewFullSheet = ({endInitialProfile}) => {
+const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
   const { popNewFullSheet } = useNewFullSheetActions();
+  const [isLoading, setIsLoading] = useState(false);
   const buttonVariants = {
     hover: {
       scale: 1.02,
@@ -97,17 +98,26 @@ const InitialProfileStep4NewFullSheet = ({endInitialProfile}) => {
             stiffness: 400,
             damping: 17
           }}
-          className="
+          className={`
             w-full h-[45px]
             bg-[#FF8DD4]
             rounded-[8px]
             text-[#FFFFFF] font-[16px] font-[700]
-          "
-          onClick={() => {
-            endInitialProfile();
+            ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
+          `}
+          onClick={async () => {
+            if (isLoading) return;
+            setIsLoading(true);
+            try {
+              await endInitialProfile(userInitialProfile);
+            } catch (error) {
+              console.error('초기 프로필 설정 실패:', error);
+              setIsLoading(false);
+            }
           }}
+          disabled={isLoading}
         >
-          학습하러 가기
+          {isLoading ? '처리 중...' : '학습하러 가기'}
         </motion.button>
       </div>
 

@@ -97,6 +97,25 @@ class PostMessageManager {
   }
 
   /**
+   * 앱 구글 회원 탈퇴 콜백 등록
+   * @param {Function} callback - 회원 탈퇴 처리 콜백 함수
+   */
+  setupAppGoogleWithdraw(callback) {
+    // 포스트메시지 매니저 초기화
+    this.init();
+    
+    // 앱 구글 회원 탈퇴 콜백 리스너 등록 (로그아웃과 동일한 콜백 사용)
+    this.addListener('google_logout_app_callback', callback);
+  }
+
+  /**
+   * 앱 구글 회원 탈퇴 콜백 제거
+   */
+  removeAppGoogleWithdraw() {
+    this.removeListener('google_logout_app_callback');
+  }
+
+  /**
    * 인앱 결제 성공 콜백 등록
    * @param {Function} callback - 결제 성공 처리 콜백 함수
    */

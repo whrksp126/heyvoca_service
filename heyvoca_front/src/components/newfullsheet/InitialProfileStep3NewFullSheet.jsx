@@ -65,7 +65,7 @@ const InitialProfileStep3NewFullSheet = ({userInitialProfile, setUserInitialProf
           // step4를 FullSheet로 열기
           pushNewFullSheet(
             InitialProfileStep4NewFullSheet,
-            { endInitialProfile },
+            { userInitialProfile: finalProfile, endInitialProfile },
             {
               smFull: true,
               closeOnBackdropClick: false,

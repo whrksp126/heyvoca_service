@@ -61,3 +61,17 @@ export const deductGemApi = async ({gem_cnt, bookstore_id}) => {
     console.error('deductGemApi 오류:', error);
   }
 }
+
+// 회원 탈퇴 API
+export const withdrawApi = async () => {
+  const url = `${backendUrl}/auth/withdraw`;
+  const method = 'DELETE';
+  const fetchData = {};
+  try {
+    const result = await fetchDataAsync(url, method, fetchData);
+    return result;
+  } catch (error) {
+    console.error('withdrawApi 오류:', error);
+    throw error;
+  }
+}

@@ -99,6 +99,21 @@ export async function launchGoogleLogout() {
   }
 }
 
+// 구글 회원 탈퇴 함수 (로그아웃과 동일하게 구글 계정 선택 팝업 표시)
+export async function launchGoogleWithdraw() {
+  if (getDevicePlatform() === 'web') {
+    // 웹 환경에서는 처리하지 않음 (웹 회원 탈퇴는 별도로 처리)
+    return;
+  } else {
+    // 앱 환경에서는 앱에 로그아웃 요청 전송 (회원 탈퇴도 동일한 구글 계정 선택 팝업 사용)
+    if (window.ReactNativeWebView) {
+      await window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'launchGoogleLogout' // 회원 탈퇴도 동일한 구글 계정 선택 팝업 사용
+      }));
+    }
+  }
+}
+
 // 앱 종료 더블탭을 위한 변수
 let appExitPressed = false;
 let appExitTimeout = null;

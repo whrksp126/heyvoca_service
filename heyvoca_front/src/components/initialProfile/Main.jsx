@@ -52,7 +52,7 @@ const Main = () => {
   const navigate = useNavigate();
   const { addVocabularySheet, updateVocabularySheet } = useVocabulary();
   const { setUserProfile, updateUserProfile } = useUser();
-  const { pushNewFullSheet } = useNewFullSheetActions();
+  const { pushNewFullSheet, clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const [userInitialProfile, setUserInitialProfile] = useState({
     name: null,
     level: null,
@@ -60,16 +60,24 @@ const Main = () => {
   });
 
   // React Compiler가 자동으로 useCallback 처리
-  const endInitialProfile = async () => {
-    console.log('endInitialProfile', userInitialProfile);
+  const endInitialProfile = async (profile = userInitialProfile) => {
+    console.log('endInitialProfile', profile);
+    
+    // null 체크 추가
+    if (!profile || !profile.name || !profile.level || !profile.vocabook) {
+      console.error('프로필 정보가 완전하지 않습니다:', profile);
+      alert('프로필 정보가 완전하지 않습니다. 다시 시도해주세요.');
+      return;
+    }
+    
     const updates = {
-      level_id: userInitialProfile.level,
-      username: userInitialProfile.name,
+      level_id: profile.level,
+      username: profile.name,
     };
     await updateUserProfile(updates);
     // 단순 단어장 추가
     const vocabularySheet = await addVocabularySheet({
-      title: userInitialProfile.vocabook.name,
+      title: profile.vocabook.name,
       color: getColorSet('#FF8DD4'),
     })
 
@@ -77,7 +85,7 @@ const Main = () => {
     await updateVocabularySheet(
       vocabularySheet.id,
       {
-        words: userInitialProfile.vocabook.words.map((word, index)=>{
+        words: profile.vocabook.words.map((word, index)=>{
           return {
             id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
             dictionaryId : word.id,
@@ -93,13 +101,18 @@ const Main = () => {
             updatedAt : new Date().toISOString(),
           }
         }),
-        total: userInitialProfile.vocabook.words.length,
+        total: profile.vocabook.words.length,
       }
     )
 
 
     // await addBookStoreVocabularySheet(userInitialProfile.vocabook);
     console.log("단어장 추가 완료")
+    
+    // 모든 FullSheet 제거
+    clearNewFullSheetStack();
+    
+    // 홈으로 이동
     navigate('/');
   }
 
