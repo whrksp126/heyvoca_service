@@ -163,11 +163,41 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
     setExamplesState(examples);
   };
 
+  // 앱에서 단어 추가 메시지 처리 핸들러
+  const handleAddWordFromApp = useCallback((message) => {
+    
+    const { data } = message;
+    if (data) {
+      // 단어 설정
+      const word = data.word || '';
+      // 의미 추출 (meanings 배열에서 meaning 값들만 추출)
+      const meanings = data.meanings ? data.meanings.map(m => m.meaning) : [];
+      // 예문 변환 (exam_en -> origin, exam_ko -> meaning)
+      const examples = data.examples ? data.examples.map(e => ({
+        origin: e.exam_en,
+        meaning: e.exam_ko
+      })) : [];
+      
+      // 기존 handleWordSelect 로직 재사용
+      setWordSearchResults(null);
+      currentStateRef.current = {
+        ...currentStateRef.current,
+        origin: word,
+        meanings: meanings,
+        examples: examples
+      };
+      if (wordInputRef.current) {
+        wordInputRef.current.value = word;
+      }
+      if (meaningsInputRef.current) {
+        meaningsInputRef.current.value = meanings.join(', ');
+      }
+      setExamplesState(examples);
+    }
+  }, []);
+
   // OCR 결과 처리 핸들러
   const handleOCRResult = useCallback(async (message) => {
-    // console.log('OCR 결과 받음:', message);
-    // console.log(message.data.words);
-    
     if (message.data.words && message.data.words.length > 0) {
       try {
         // 백엔드로 OCR 데이터 전송 (전처리 및 DB 확인)
@@ -181,15 +211,11 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         );
 
         if (response.code === 200) {
-          console.log('백엔드 OCR 처리 완료:')
-          console.log(response.data);
-          
           // 백엔드에서 전처리된 결과 리스트를 앱에 전달 (word, meaning만)
           const matched_words = response.data.matched_words;
           
           // 처리된 데이터를 앱으로 전달
           postMessageManager.sendMessageToReactNative('filteredWords', matched_words);
-          // console.log('앱으로 OCR 처리 결과 전송 완료');
           
         } else {
           console.error('백엔드 OCR 처리 실패:', response);
@@ -204,15 +230,23 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
 
   // OCR 결과 리스너 등록
   useEffect(() => {
-    // console.log('OCR 리스너 등록');
     postMessageManager.setupOCRResult(handleOCRResult);
     
     // 컴포넌트 언마운트 시 리스너 제거
     return () => {
-      // console.log('OCR 리스너 제거');
       postMessageManager.removeOCRResult();
     };
   }, [handleOCRResult]);
+
+  // addWord 리스너 등록
+  useEffect(() => {
+    postMessageManager.setupAddWord(handleAddWordFromApp);
+    
+    // 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      postMessageManager.removeAddWord();
+    };
+  }, [handleAddWordFromApp]);
 
 
   return (

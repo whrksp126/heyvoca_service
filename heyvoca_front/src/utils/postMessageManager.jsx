@@ -139,6 +139,22 @@ class PostMessageManager {
   }
 
   /**
+   * 단어 추가 콜백 등록
+   * @param {Function} callback - 단어 추가 처리 콜백 함수
+   */
+  setupAddWord(callback) {
+    this.init();
+    this.addListener('addWord', callback);
+  }
+
+  /**
+   * 단어 추가 콜백 제거
+   */
+  removeAddWord() {
+    this.removeListener('addWord');
+  }
+
+  /**
    * 포스트메시지 처리 핸들러
    * @param {MessageEvent} event - 포스트메시지 이벤트
    */
@@ -211,7 +227,7 @@ class PostMessageManager {
         // React Native WebView로 메시지 전송
         window.ReactNativeWebView.postMessage(JSON.stringify(message));
         console.log(`📤 React Native로 메시지 전송: ${type}`, message);
-        alert('메시지 전송 완료');
+        // alert('메시지 전송 완료');
       } else {
         console.warn('⚠️ React Native WebView 환경이 아닙니다. 메시지 전송이 불가능합니다.');
         alert('메시지 전송 실패');
