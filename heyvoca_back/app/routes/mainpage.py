@@ -576,11 +576,19 @@ def api_today_study_recommend():
 def api_get_active_products():
     """활성화된 모든 상품 조회 API"""
     try:
+
+        platform = request.args.get('platform', 'web')
+
+        
         # 활성화된 상품만 조회 (is_active=True)
-        products = db.session.query(Product)\
-            .filter(Product.is_active == True)\
-            .order_by(Product.price.asc())\
-            .all()
+        query = db.session.query(Product)\
+            .filter(Product.is_active == True)
+        
+        # 플랫폼 필터링 (platform이 'all'이 아닌 경우)
+        if platform != 'web':
+            query = query.filter(Product.platform == platform)
+        
+        products = query.order_by(Product.price.asc()).all()
         
         # 응답 데이터 구성
         product_list = []

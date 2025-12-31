@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from config import DevelopmentConfig, StagingConfig, ProductionConfig, LocalConfig
+from config import DevelopmentConfig, StagingConfig, ProductionConfig, LocalConfig, FRONT_END_URL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from sqlalchemy.ext.declarative import declarative_base
@@ -26,15 +26,22 @@ cache = Cache()
 
 def create_app():
   app = Flask(__name__, static_folder='static', static_url_path='')
-  CORS(app, origins=[
+  
+  # CORS origins 리스트 구성
+  cors_origins = [
       "https://heyvoca-front.ghmate.com",
       "https://stg-heyvoca-front.ghmate.com",
       "https://dev-heyvoca-front.ghmate.com",
       "http://localhost:3000",
       "http://10.0.2.2:3000",
-      "http://192.168.0.11:3000",
-      "http://192.168.104.122:3000",
-  ], supports_credentials=True)
+
+  ]
+  
+  # .env의 FRONT_END_URL이 있으면 추가
+  if FRONT_END_URL:
+      cors_origins.append(FRONT_END_URL)
+  
+  CORS(app, origins=cors_origins, supports_credentials=True)
 
   
   config_class = os.environ.get('FLASK_CONFIG') or 'development'

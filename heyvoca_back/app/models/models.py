@@ -363,7 +363,7 @@ class Goals(db.Model):
 class Product(db.Model):
     __tablename__ = 'product'
     id = Column(Integer, primary_key=True, nullable=False)
-    product_id = Column(String(100), nullable=False, unique=True)  # 스토어 상품 ID
+    product_id = Column(String(100), nullable=False)  # 스토어 상품 ID
     name = Column(String(100), nullable=False)  # 상품명
     description = Column(String(500), nullable=True)  # 상품 설명
     gem_amount = Column(Integer, nullable=False)  # 지급할 보석 수량
