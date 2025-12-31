@@ -8,7 +8,7 @@ import postMessageManager from '../../utils/postMessageManager';
 // Hook 제거 - 직접 컴포넌트 사용
 
 
-export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
+export const StoreBuyItemNewBottomSheet = ({options}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +62,7 @@ export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
 
   const onConfirm = useCallback(() => {
     // 모달 먼저 닫기
-    onCancel();
+    handleClose();
     
     // 모달이 닫힌 후 전역 애니메이션 시작
     setTimeout(() => {
@@ -84,7 +84,7 @@ export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
         }
       });
     }, 300); // 모달 닫히는 애니메이션 후
-  }, [purchaseResult, options, setUserProfile, onCancel, triggerFlyingAnimation]);
+  }, [purchaseResult, options, setUserProfile, triggerFlyingAnimation]);
 
   return (
     <div className="">
@@ -134,7 +134,7 @@ export const StoreBuyItemNewBottomSheet = ({onCancel, options}) => {
               text-[#fff] text-[16px] font-[700]
               bg-[#FF8DD4]
             `}
-            onClick={purchaseResult?.verified ?  onConfirm : (onCancel || handleClose)}
+            onClick={purchaseResult?.verified ?  onConfirm : handleClose}
             whileTap={{ scale: 0.95 }}
             transition={{ 
               type: "spring", 

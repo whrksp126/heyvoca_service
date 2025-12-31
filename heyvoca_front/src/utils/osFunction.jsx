@@ -5,8 +5,15 @@ import { AppHistory } from './appHistory';
 export function getDevicePlatform() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   const isAppWebView = userAgent.includes('HeyVoca');
+
   if (isAppWebView) {
-    return 'app'
+    if(userAgent.includes('Android')) {
+      return 'android';
+    } else if(userAgent.includes('iOS')) {
+      return 'ios';
+    } else {
+      return 'app';
+    }
   }else{
     return 'web';
   }
@@ -109,6 +116,19 @@ export async function launchGoogleWithdraw() {
     if (window.ReactNativeWebView) {
       await window.ReactNativeWebView.postMessage(JSON.stringify({
         type: 'launchGoogleLogout' // 회원 탈퇴도 동일한 구글 계정 선택 팝업 사용
+      }));
+    }
+  }
+}
+
+export async function getDeviceOs(){
+  if (getDevicePlatform() === 'web') {
+    return 'web';
+  } else {
+    // 앱 환경에서는 앱에 로그아웃 요청 전송
+    if (window.ReactNativeWebView) {
+      return await window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'getDeviceOs'
       }));
     }
   }
