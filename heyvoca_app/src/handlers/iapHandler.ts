@@ -109,9 +109,9 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
       
       // 플랫폼별 영수증 데이터
       ...(Platform.OS === 'ios' ? {
-        // iOS App Store 영수증 검증용
-        transactionReceipt: (purchase as any).transactionReceipt,
-        originalTransactionId: (purchase as any).originalTransactionId,
+        // iOS App Store 영수증 검증용 (JWS 형식)
+        transactionReceipt: purchase.purchaseToken, // purchaseToken이 JWS 형식의 영수증
+        originalTransactionId: purchase.transactionId || purchase.id, // 첫 결제시 transactionId와 같음
         bundleId: 'com.ghmate.heyvoca',
       } : {
         // Android Google Play 영수증 검증용
@@ -122,6 +122,15 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
         signatureAndroid: (purchase as any).signatureAndroid,
       })
     };
+
+    // bundleId: "com.ghmate.heyvoca"
+    // originalTransactionId: undefined
+    // platform: "ios"
+    // productId: "com.heyvoca.gems_10"
+    // quantity: 1
+    // transactionDate: 1767105995853
+    // transactionId: "0"
+    // transactionReceipt: undefined
 
     console.log('서버로 전송할 영수증 데이터:', receiptData);
 
@@ -234,6 +243,20 @@ const initializeIAP = async (webViewRef: any) => {
 const handlePurchaseUpdate = async (purchase: Purchase) => {
   try {
     console.log('구매 완료:', purchase);
+
+    // appAccountToken: null
+    // id: "0"
+    // isAutoRenewing: false
+    // originalTransactionDateIOS: 1767105995853
+    // originalTransactionIdentifierIOS: null
+    // platform: "ios"
+    // productId: "com.heyvoca.gems_10"
+    // purchaseState: "purchased"
+    // purchaseToken: "eyJ4NWMiOlsiTUlJQnlqQ0NBWEdnQXdJQkFnSUJBVEFLQmdncWhrak9QUVFEQWpCSU1TSXdJQVlEVlFRREV4bFRkRzl5WlV0cGRDQlVaWE4wYVc1bklHbHVJRmhqYjJSbE1TSXdJQVlEVlFRS0V4bFRkRzl5WlV0cGRDQlVaWE4wYVc1bklHbHVJRmhqYjJSbE1CNFhEVEkxTURrek1ERXpORE0xTUZvWERUSTJNRGt6TURFek5ETTFNRm93U0RFaU1DQUdBMVVFQXhNWlUzUnZjbVZMYVhRZ1ZHVnpkR2x1WnlCcGJpQllZMjlrWlRFaU1DQUdBMVVFQ2hNWlUzUnZjbVZMYVhRZ1ZHVnpkR2x1WnlCcGJpQllZMjlrWlRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkdFY2lVZWRKQ2czUmt5bTE2Sjk4ZHcrbk8ySDFyMWtySGZ5czdkbTFobytBdnNWRUhSZ0xpN3RhdGxXcDFvUFNTNFpodGM2QjVUUnBVRFpXam15T255alREQktNQklHQTFVZEV3RUJcL3dRSU1BWUJBZjhDQVFBd0pBWURWUjBSQkIwd0c0RVpVM1J2Y21WTGFYUWdWR1Z6ZEdsdVp5QnBiaUJZWTI5a1pUQU9CZ05WSFE4QkFmOEVCQU1DQjRBd0NnWUlLb1pJemowRUF3SURSd0F3UkFJZ1RIWDY0ckdsYzgyZ1wvM2ZYVlZFUUxheVMybmswY2g3Q2tydExDZ0llbk5FQ0lFXC9ZQTB4R3JcL0lDZVEzQ0k2RDZUcHNON1YxVFhqeEp2SW8wS1BKUVhUdE0iXSwia2lkIjoiQXBwbGVfWGNvZGVfS2V5IiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJvcmlnaW5hbFRyYW5zYWN0aW9uSWQiOiIwIiwiYnVuZGxlSWQiOiJjb20uZ2htYXRlLmhleXZvY2EiLCJvcmlnaW5hbFB1cmNoYXNlRGF0ZSI6MTc2NzEwNTk5NTg1MywicXVhbnRpdHkiOjEsInByb2R1Y3RJZCI6ImNvbS5oZXl2b2NhLmdlbXNfMTAiLCJzdG9yZWZyb250SWQiOiIxNDM0NDEiLCJpbkFwcE93bmVyc2hpcFR5cGUiOiJQVVJDSEFTRUQiLCJ0eXBlIjoiQ29uc3VtYWJsZSIsInByaWNlIjoxMDAwLCJzaWduZWREYXRlIjoxNzY3MTA2MDAwNDEyLCJlbnZpcm9ubWVudCI6Ilhjb2RlIiwidHJhbnNhY3Rpb25JZCI6IjAiLCJ0cmFuc2FjdGlvblJlYXNvbiI6IlBVUkNIQVNFIiwiZGV2aWNlVmVyaWZpY2F0aW9uIjoiUGlNYjNocU5BWkNnUXJIYjhSamt1XC9aNkRYcTFwd2pra0RKK0FjcWNYVnp3dXQxWGRQdGdVMTh2SmFRNjQ2alEiLCJkZXZpY2VWZXJpZmljYXRpb25Ob25jZSI6IjhjNDNjZWUyLTllZTUtNGUyNy05OWEzLTVmNzgzZDgyYzU3OCIsInN0b3JlZnJvbnQiOiJVU0EiLCJhcHBUcmFuc2FjdGlvbklkIjoiMCIsInB1cmNoYXNlRGF0ZSI6MTc2NzEwNTk5NTg1MywiY3VycmVuY3kiOiJVU0QifQ.OyGQL2wEzhM_lP7TKqjWuU2zSE195moQxO77osjuOHF0yVBPnocJryMh8tZzQcNieYVGEBwR7OcKbzD-95mepA"
+    // quantity: 1
+    // quantityIOS: 1
+    // transactionDate: 1767105995853
+
 
     // 1단계: 서버에서 영수증 검증
     console.log('서버 검증 시작...');

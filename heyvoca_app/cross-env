@@ -1,0 +1,3 @@
+info Found Xcode workspace "heyvoca.xcworkspace"
+info Found booted 조건호의 iPad
+info Building (using "xcodebuild -workspace heyvoca.xcworkspace -configuration Debug -scheme heyvoca -destination id=00008020-00126DA82680402E")

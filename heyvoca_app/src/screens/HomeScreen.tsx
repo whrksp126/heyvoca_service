@@ -50,6 +50,7 @@ const HomeScreen = () => {
 
   console.log('FRONT_URL', FRONT_URL);
 
+  console.log('Platform', Platform);
   return (
     <View style={[styles.container, { backgroundColor: 'transparent' }]}> 
       <StatusBar 
@@ -64,7 +65,7 @@ const HomeScreen = () => {
         ref={webViewRef}
         bounces={false}
         overScrollMode="never"
-        userAgent="HeyVoca"
+        userAgent={`HeyVoca ${Platform.OS === 'ios' ? 'iOS' : 'Android'}`}
         onMessage={event => handleWebViewMessage(event, webViewRef, handleExitApp, setIsOCRScreen, setOcrFilteredWords)}
         javaScriptEnabled={true}
         webviewDebuggingEnabled={true}
