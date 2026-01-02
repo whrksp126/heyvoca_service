@@ -37,6 +37,8 @@ function getQuestionTypeLabel(type) {
 
 function getMemoryStateLabel(type) {
   switch (type) {
+    case 'all':
+      return '전체';
     case 'unlearned':
       return '미학습';
     case 'shortTerm':
@@ -78,6 +80,7 @@ function getOriginFilterTypeLabel(type) {
 
 // SM-2 알고리즘 기준 학습 상태 정의
 const MEMORY_STATES = {
+  ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
   SHORT_TERM: 'shortTerm',     // 단기 복습 (repetition: 1-2, interval: 1-6일)
   MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (repetition: 3-4, interval: 7-30일)
@@ -113,7 +116,7 @@ function getWordMemoryState(word) {
 
 export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType}) => {
   const [questionType, setQuestionType] = useState('multipleChoice');
-  const [memoryState, setMemoryState] = useState('unlearned');
+  const [memoryState, setMemoryState] = useState('all');
   const [errorMessage, setErrorMessage] = useState('');
   // const [initialViewType, setInitialViewType] = useState('origin');
   // const [originFilterType, setOriginFilterType] = useState('all');
@@ -124,6 +127,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
     // originFilterType: [],
     count: []
   });
+
+  // 길게 누르기 관련 ref
+  const longPressIntervalRef = useRef(null);
+  const longPressTimeoutRef = useRef(null);
 
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -148,6 +155,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
     }
 
     const counts = {
+      all: 0,
       unlearned: 0,
       shortTerm: 0,
       mediumTerm: 0,
@@ -159,6 +167,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       if (counts[state] !== undefined) {
         counts[state]++;
       }
+      counts.all++; // 전체 개수 카운트
     });
 
     return counts;
@@ -191,6 +200,18 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
+
+  // 컴포넌트 언마운트 시 interval, timeout 정리
+  useEffect(() => {
+    return () => {
+      if (longPressIntervalRef.current) {
+        clearInterval(longPressIntervalRef.current);
+      }
+      if (longPressTimeoutRef.current) {
+        clearTimeout(longPressTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // React Compiler가 자동으로 useCallback 처리
   const handleClose = () => {
@@ -248,6 +269,72 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       setCount(value);
     }
   };
+
+  // 길게 누르기 시작
+  const handleLongPressStart = useCallback((incrementValue, event) => {
+    // 기본 동작 방지 (텍스트 선택, 컨텍스트 메뉴 등)
+    if (event) {
+      event.preventDefault();
+    }
+
+    // 기존 interval/timeout 정리
+    if (longPressIntervalRef.current) {
+      clearInterval(longPressIntervalRef.current);
+    }
+    if (longPressTimeoutRef.current) {
+      clearTimeout(longPressTimeoutRef.current);
+    }
+
+    // 첫 클릭은 즉시 실행
+    setCount(prevCount => {
+      const maxCount = Math.min(currentMemoryStateCount, maxVocabularyCount);
+      const newValue = prevCount + incrementValue;
+      
+      if (newValue < MIN_TEST_VOCABULARY_COUNT) {
+        return MIN_TEST_VOCABULARY_COUNT;
+      } else if (newValue > maxCount) {
+        return maxCount;
+      } else {
+        if (inputRefs.current['count']) {
+          inputRefs.current['count'].value = newValue;
+        }
+        return newValue;
+      }
+    });
+
+    // 500ms 후부터 연속 실행 시작
+    longPressTimeoutRef.current = setTimeout(() => {
+      longPressIntervalRef.current = setInterval(() => {
+        setCount(prevCount => {
+          const maxCount = Math.min(currentMemoryStateCount, maxVocabularyCount);
+          const newValue = prevCount + incrementValue;
+          
+          if (newValue < MIN_TEST_VOCABULARY_COUNT) {
+            return MIN_TEST_VOCABULARY_COUNT;
+          } else if (newValue > maxCount) {
+            return maxCount;
+          } else {
+            if (inputRefs.current['count']) {
+              inputRefs.current['count'].value = newValue;
+            }
+            return newValue;
+          }
+        });
+      }, 100); // 100ms마다 실행
+    }, 500); // 500ms 후 시작
+  }, [currentMemoryStateCount, maxVocabularyCount]);
+
+  // 길게 누르기 종료
+  const handleLongPressEnd = useCallback(() => {
+    if (longPressIntervalRef.current) {
+      clearInterval(longPressIntervalRef.current);
+      longPressIntervalRef.current = null;
+    }
+    if (longPressTimeoutRef.current) {
+      clearTimeout(longPressTimeoutRef.current);
+      longPressTimeoutRef.current = null;
+    }
+  }, []);
 
   // React Compiler가 자동으로 useCallback 처리
   const getTestSetupData = () => {
@@ -338,7 +425,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             암기 상태(복습 지연 우선)
           </h3>
           <div className="grid grid-cols-2 gap-[10px]">
-            {['unlearned', 'shortTerm', 'mediumTerm', 'longTerm'].map((type, index) => {
+            {['all', 'unlearned', 'shortTerm', 'mediumTerm', 'longTerm'].map((type, index) => {
               const count = memoryStateCounts[type] || 0;
               const isDisabled = count < MIN_TEST_VOCABULARY_COUNT;
               return (
@@ -426,7 +513,9 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                 border-[1px] rounded-[8px]
                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onClick={() => setCountFun(count - 1)}
+              onTouchStart={(e) => handleLongPressStart(-1, e)}
+              onTouchEnd={handleLongPressEnd}
+              onTouchCancel={handleLongPressEnd}
               disabled={count <= MIN_TEST_VOCABULARY_COUNT}
             >
               <Minus size={18} />
@@ -447,7 +536,9 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                 border-[1px] rounded-[8px]
                 ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onClick={() => setCountFun(count + 1)}
+              onTouchStart={(e) => handleLongPressStart(1, e)}
+              onTouchEnd={handleLongPressEnd}
+              onTouchCancel={handleLongPressEnd}
               disabled={count >= Math.min(currentMemoryStateCount, maxVocabularyCount)}
             >
               <Plus size={18} />

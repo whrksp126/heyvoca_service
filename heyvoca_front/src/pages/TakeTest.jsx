@@ -8,6 +8,7 @@ import SaveStudyData from '../components/takeTest/SaveStudyData';
 
 // SM-2 알고리즘 기준 학습 상태 정의
 const MEMORY_STATES = {
+  ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
   SHORT_TERM: 'shortTerm',     // 단기 복습 (repetition: 1-2, interval: 1-6일)
   MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (repetition: 3-4, interval: 7-30일)
@@ -165,38 +166,71 @@ const TakeTest = () => {
     } 
     // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어만
     else if (testType === 'test' || testType === 'exam') {
-      // 목표 학습 상태에 해당하는 단어들 선택
-      const targetStateWords = allWords.filter(word => {
-        const memoryState = getWordMemoryState(word);
-        // 목표 상태와 일치하는 단어만 선택
-        return memoryState === targetMemoryState;
-      });
-
-      // 미학습을 선택한 경우: 모든 미학습 단어를 랜덤하게 선택 (복습 지연 우선순위 제거)
-      if (targetMemoryState === MEMORY_STATES.UNLEARNED) {
-        selectedWords = shuffleArray(targetStateWords).slice(0, count);
-      } else {
-        // 다른 암기 상태를 선택한 경우: 복습 지연 우선순위 적용
-        // 우선순위 1: 복습 지연 단어들 중에서 목표 상태인 것들 (가장 오래된 것부터)
-        const overdueTargetStateWords = sortedOverdueWords.filter(word => {
-          const memoryState = getWordMemoryState(word);
-          return memoryState === targetMemoryState;
-        });
-        selectedWords.push(...overdueTargetStateWords.slice(0, count));
+      // 전체를 선택한 경우: 모든 암기 상태의 단어 포함
+      if (targetMemoryState === MEMORY_STATES.ALL) {
+        // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
+        selectedWords.push(...sortedOverdueWords.slice(0, count));
         
-        // 우선순위 2: 목표 상태 단어들 중 복습 지연이 아닌 것들 (부족한 경우에만)
+        // 우선순위 2: 오늘 학습 예정 단어들 (부족한 경우에만)
         if (selectedWords.length < count) {
           const remainingCount = count - selectedWords.length;
           const selectedWordIds = new Set(selectedWords.map(w => w.id));
-          const availableTargetState = targetStateWords.filter(w => 
-            !selectedWordIds.has(w.id) && 
-            (!w.nextReview || new Date(w.nextReview) >= now)
-          );
-          selectedWords.push(...availableTargetState.slice(0, remainingCount));
+          const availableTodayScheduled = todayScheduledWords.filter(w => !selectedWordIds.has(w.id));
+          selectedWords.push(...availableTodayScheduled.slice(0, remainingCount));
+        }
+        
+        // 우선순위 3: 미학습 단어들 (부족한 경우에만)
+        if (selectedWords.length < count) {
+          const remainingCount = count - selectedWords.length;
+          const selectedWordIds = new Set(selectedWords.map(w => w.id));
+          const availableUnlearned = unlearnedWords.filter(w => !selectedWordIds.has(w.id));
+          selectedWords.push(...availableUnlearned.slice(0, remainingCount));
+        }
+        
+        // 우선순위 4: 모든 단어 중 부족한 경우에만 추가
+        if (selectedWords.length < count) {
+          const remainingCount = count - selectedWords.length;
+          const selectedWordIds = new Set(selectedWords.map(w => w.id));
+          const availableWords = allWords.filter(w => !selectedWordIds.has(w.id));
+          selectedWords.push(...availableWords.slice(0, remainingCount));
         }
         
         // 랜덤하게 섞기
         selectedWords = shuffleArray(selectedWords).slice(0, count);
+      } else {
+        // 목표 학습 상태에 해당하는 단어들 선택
+        const targetStateWords = allWords.filter(word => {
+          const memoryState = getWordMemoryState(word);
+          // 목표 상태와 일치하는 단어만 선택
+          return memoryState === targetMemoryState;
+        });
+
+        // 미학습을 선택한 경우: 모든 미학습 단어를 랜덤하게 선택 (복습 지연 우선순위 제거)
+        if (targetMemoryState === MEMORY_STATES.UNLEARNED) {
+          selectedWords = shuffleArray(targetStateWords).slice(0, count);
+        } else {
+          // 다른 암기 상태를 선택한 경우: 복습 지연 우선순위 적용
+          // 우선순위 1: 복습 지연 단어들 중에서 목표 상태인 것들 (가장 오래된 것부터)
+          const overdueTargetStateWords = sortedOverdueWords.filter(word => {
+            const memoryState = getWordMemoryState(word);
+            return memoryState === targetMemoryState;
+          });
+          selectedWords.push(...overdueTargetStateWords.slice(0, count));
+          
+          // 우선순위 2: 목표 상태 단어들 중 복습 지연이 아닌 것들 (부족한 경우에만)
+          if (selectedWords.length < count) {
+            const remainingCount = count - selectedWords.length;
+            const selectedWordIds = new Set(selectedWords.map(w => w.id));
+            const availableTargetState = targetStateWords.filter(w => 
+              !selectedWordIds.has(w.id) && 
+              (!w.nextReview || new Date(w.nextReview) >= now)
+            );
+            selectedWords.push(...availableTargetState.slice(0, remainingCount));
+          }
+          
+          // 랜덤하게 섞기
+          selectedWords = shuffleArray(selectedWords).slice(0, count);
+        }
       }
     }
     

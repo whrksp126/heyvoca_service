@@ -226,7 +226,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     pushNewBottomSheet(
       ProblemDataNewBottomSheet,
       {
-        options: question.options
+        options: question.options,
+        resultIndex: question.resultIndex
       },
       {
         isBackdropClickClosable: true,
