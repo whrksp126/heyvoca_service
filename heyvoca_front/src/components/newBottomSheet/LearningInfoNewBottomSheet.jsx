@@ -2,6 +2,8 @@ import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
+import { vibrate } from '../../utils/osFunction'; 
+
 // import { useFullSheet } from '../../context/FullSheetContext';
 // import VocabularySheet from './VocabularySheet';
 
@@ -60,7 +62,10 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -76,7 +81,10 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleSet();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

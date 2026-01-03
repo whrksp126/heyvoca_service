@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { vibrate } from '../../utils/osFunction';
 // import Account from './Account';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
@@ -63,7 +64,10 @@ const Main = () => {
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
       <ul className="w-full m-0 p-0 list-none">
-          <li onClick={handleAccountClick} 
+          <li onClick={() => {
+            vibrate({ duration: 5 });
+            handleAccountClick();
+          }}
               className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
             <div className="flex items-center gap-2">
               <UserCircle weight="fill" className="text-[20px] text-heyvocaPink" />

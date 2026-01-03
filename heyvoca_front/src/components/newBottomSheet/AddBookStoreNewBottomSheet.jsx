@@ -7,6 +7,7 @@ import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { deductGemApi } from '../../api/auth';
 import { showToast } from '../../utils/osFunction';
+import { vibrate } from '../../utils/osFunction'; 
 
 export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -116,7 +117,10 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -132,7 +136,10 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleSet();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -7,6 +7,7 @@ import MemorizationStatus from "../common/MemorizationStatus";
 import { PencilSimple, Trash} from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from './AddWordNewBottomSheet';
+import { vibrate } from '../../utils/osFunction';
 
 
 const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
@@ -20,12 +21,20 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   const word = getWord(vocabularyId, id);
   console.log(word);
 
+  // 단어가 삭제되어 없으면 자동으로 닫기
+  React.useEffect(() => {
+    if (!word) {
+      popNewBottomSheet();
+    }
+  }, [word, popNewBottomSheet]);
+
   const handleClose = () => {
     popNewBottomSheet();
   };
 
   // 단어 수정 함수
   const handleEdit = async () => {
+    if (!word) return; // 단어가 없으면 리턴
     const editResult = await pushAwaitNewBottomSheet(AddWordNewBottomSheet, { vocabularyId, dictionaryId: word.dictionaryId, id }, {
       hideUnderlying: true,
     });
@@ -45,32 +54,43 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     }
     popNewBottomSheet();
   };
+  
+  // 단어가 없으면 로딩 또는 빈 화면 표시
+  if (!word) {
+    return null;
+  }
+  
   return (
     <div className="">
       <div className="p-[20px] pb-[10px]">
-        {word && (
-          <div className="flex flex-col gap-[10px]">
-            <div className="flex items-center justify-between">
-              <div>
-                <MemorizationStatus 
-                  repetition={word.repetition} 
-                  interval={word.interval} 
-                  ef={word.ef}
-                />
-              </div>
-              <div className="flex items-center gap-[8px]">
-                <motion.button
-                  onClick={handleEdit}
-                >
-                  <PencilSimple size={18} color="#FF8DD4" />
-                </motion.button>
-                <motion.button
-                  onClick={handleDelete}
-                >
-                  <Trash size={18} color="red" />
-                </motion.button>
-              </div>
+        <div className="flex flex-col gap-[10px]">
+          <div className="flex items-center justify-between">
+            <div>
+              <MemorizationStatus 
+                repetition={word.repetition} 
+                interval={word.interval} 
+                ef={word.ef}
+              />
             </div>
+            <div className="flex items-center gap-[8px]">
+              <motion.button
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleEdit();
+                }}
+              >
+                <PencilSimple size={18} color="#FF8DD4" />
+              </motion.button>
+              <motion.button
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleDelete();
+                }}
+              >
+                <Trash size={18} color="red" />
+              </motion.button>
+            </div>
+          </div>
             <div className="flex flex-wrap">
               <motion.h3
                 onClick={() => {
@@ -259,12 +279,9 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   ))}
                 </motion.span>
               </div>
-              ))
-            }
- 
-          </div>
-
-        )}
+            ))
+          }
+        </div>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
         <motion.button 
@@ -275,7 +292,10 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

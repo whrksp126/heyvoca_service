@@ -3,6 +3,7 @@ import { SpeakerHigh } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
+import { vibrate } from '../../utils/osFunction'; 
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -346,7 +347,10 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({vocabularySheet, o
                 flex gap-[8px]
                 text-[20px]
               ">
-              <button onClick={() => getTextSound(item.origin, "en")}>
+              <button onClick={() => {
+                vibrate({ duration: 5 });
+                getTextSound(item.origin, "en");
+              }}>
                 <SpeakerHigh weight="fill" />
               </button>
             </div>
@@ -435,7 +439,10 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({vocabularySheet, o
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -453,7 +460,10 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({vocabularySheet, o
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleSet();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

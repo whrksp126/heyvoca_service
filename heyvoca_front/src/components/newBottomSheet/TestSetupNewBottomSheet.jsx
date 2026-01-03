@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
+import { MIN_TEST_VOCABULARY_COUNT, MEMORY_STATES, getWordMemoryState } from '../../utils/common';
 import { AlertNewBottomSheet } from './AlertNewBottomSheet';
+import { vibrate } from '../../utils/osFunction';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -75,42 +76,6 @@ function getOriginFilterTypeLabel(type) {
       return '헷갈리는 단어';
     default:
       return '';
-  }
-}
-
-// SM-2 알고리즘 기준 학습 상태 정의
-const MEMORY_STATES = {
-  ALL: 'all',                  // 전체 (모든 암기 상태)
-  UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
-  SHORT_TERM: 'shortTerm',     // 단기 복습 (repetition: 1-2, interval: 1-6일)
-  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (repetition: 3-4, interval: 7-30일)
-  LONG_TERM: 'longTerm'        // 장기 복습 (repetition: 5+, interval: 30일+)
-};
-
-// 단어의 암기 상태를 판단하는 함수 (암기율 계산 방식 사용 - VocabularySheetNewFullSheet와 동일)
-function getWordMemoryState(word) {
-  // memoryState 객체가 있는 경우
-  const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-  const interval = word.memoryState?.interval ?? word.interval ?? 0;
-  
-  // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
-  if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-  
-  // 암기율 계산 (MemorizationStatus와 동일한 로직)
-  const ef = word.memoryState?.ef ?? word.ef ?? 2.5;
-  let score = 0;
-  score += repetition * 15;
-  score += interval * 2;
-  score += (ef - 1.3) * 20;
-  const percent = Math.max(0, Math.min(100, Math.round(score)));
-  
-  // 퍼센트에 따라 분류
-  if (percent < 30) {
-    return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (0-29%)
-  } else if (percent < 70) {
-    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (30-69%)
-  } else {
-    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (70-100%)
   }
 }
 
@@ -272,11 +237,6 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
 
   // 길게 누르기 시작
   const handleLongPressStart = useCallback((incrementValue, event) => {
-    // 기본 동작 방지 (텍스트 선택, 컨텍스트 메뉴 등)
-    if (event) {
-      event.preventDefault();
-    }
-
     // 기존 interval/timeout 정리
     if (longPressIntervalRef.current) {
       clearInterval(longPressIntervalRef.current);
@@ -298,6 +258,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
         if (inputRefs.current['count']) {
           inputRefs.current['count'].value = newValue;
         }
+        vibrate({ duration: 5 });
         return newValue;
       }
     });
@@ -317,6 +278,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             if (inputRefs.current['count']) {
               inputRefs.current['count'].value = newValue;
             }
+            vibrate({ duration: 5 });
             return newValue;
           }
         });
@@ -398,7 +360,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                   type="radio" 
                   name="questionType" 
                   checked={questionType === type}
-                  onChange={() => setQuestionType(type)}
+                  onChange={() => {
+                    vibrate({ duration: 5 });
+                    setQuestionType(type);
+                  }}
                   ref={el => inputRefs.current[`questionType`][index] = el}
                   hidden 
                 />
@@ -459,6 +424,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                         setErrorMessage('최소 단어 개수가 부족하여 학습할 수 없어요');
                         return;
                       }
+                      vibrate({ duration: 5 });
                       setMemoryState(type);
                     }}
                     disabled={isDisabled}
@@ -506,43 +472,60 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             문제 개수
           </h3>
           <div className="flex items-center justify-center gap-[10px]">
-            <button 
+            <motion.button 
               className={`
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
+                select-none touch-none
                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onTouchStart={(e) => handleLongPressStart(-1, e)}
-              onTouchEnd={handleLongPressEnd}
-              onTouchCancel={handleLongPressEnd}
+              onPointerDown={(e) => {
+                e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
+                handleLongPressStart(-1, e);
+              }}
+              onPointerUp={handleLongPressEnd}
+              onPointerCancel={handleLongPressEnd}
+              onPointerLeave={handleLongPressEnd}
               disabled={count <= MIN_TEST_VOCABULARY_COUNT}
+              drag={false} // Framer Motion 드래그 비활성화
+              style={{ touchAction: 'none' }} // 브라우저의 터치 제스처 비활성화
             >
               <Minus size={18} />
-            </button>
+            </motion.button>
             <input 
               type="number" 
               ref={el => inputRefs.current['count'] = el}
               min={MIN_TEST_VOCABULARY_COUNT}
               max={Math.min(currentMemoryStateCount, maxVocabularyCount)}
               className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-[#FF8DD4] text-center outline-none focus:border-[#FF8DD4] transition-colors"
-              onChange={e => setCountFun(Number(e.target.value))}
+              onChange={e => {
+                vibrate({ duration: 5 });
+                setCountFun(Number(e.target.value));
+              }}
               value={count}
             />
-            <button 
+            <motion.button 
               className={`
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
+                select-none touch-none
                 ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
               `}
-              onTouchStart={(e) => handleLongPressStart(1, e)}
-              onTouchEnd={handleLongPressEnd}
-              onTouchCancel={handleLongPressEnd}
+              onPointerDown={(e) => {
+                e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
+                handleLongPressStart(1, e);
+              }}
+              onPointerUp={handleLongPressEnd}
+              onPointerCancel={handleLongPressEnd}
+              onPointerLeave={handleLongPressEnd}
               disabled={count >= Math.min(currentMemoryStateCount, maxVocabularyCount)}
+              drag={false} // Framer Motion 드래그 비활성화
+              style={{ touchAction: 'none' }} // 브라우저의 터치 제스처 비활성화
             >
               <Plus size={18} />
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
@@ -555,7 +538,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -172,6 +172,7 @@ export const VocabularyProvider = ({ children }) => {
         repetition: 0,
         interval: 0,
         nextReview: null,
+        lastStudyDate: null,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         ...word,
@@ -319,6 +320,7 @@ export const VocabularyProvider = ({ children }) => {
             repetition : 0,
             interval : 0,
             nextReview : null,
+            lastStudyDate : null,
             createdAt : new Date().toISOString(),
             updatedAt : new Date().toISOString(),
           }

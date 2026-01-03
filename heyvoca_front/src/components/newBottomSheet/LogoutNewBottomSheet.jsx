@@ -5,7 +5,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { launchGoogleLogout, getDevicePlatform } from '../../utils/osFunction';
-
+import { vibrate } from '../../utils/osFunction'; 
 // Hook 제거 - 직접 컴포넌트 사용
 
 export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
@@ -72,7 +72,10 @@ export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -88,7 +91,10 @@ export const LogoutNewBottomSheet = ({ onCancel, onLogout }) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onLogout || handleLogout}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onLogout || handleLogout();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

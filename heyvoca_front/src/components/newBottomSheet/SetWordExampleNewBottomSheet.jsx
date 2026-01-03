@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { showToast } from '../../utils/osFunction';
+import { showToast, vibrate } from '../../utils/osFunction';
 const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, resolve}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -121,7 +121,10 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

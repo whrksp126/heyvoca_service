@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { vibrate } from '../../utils/osFunction'; 
 
 export const ConfirmNewBottomSheet = ({title, btns}) => {
   "use memo";
@@ -40,7 +41,10 @@ export const ConfirmNewBottomSheet = ({title, btns}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -56,7 +60,10 @@ export const ConfirmNewBottomSheet = ({title, btns}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleConfirm}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleConfirm();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

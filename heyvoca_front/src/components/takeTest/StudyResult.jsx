@@ -9,6 +9,7 @@ import DailyMissionComplete from '../../assets/images/DailyMissionComplete.svg';
 import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
+import { vibrate } from '../../utils/osFunction';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -304,7 +305,10 @@ const StudyResult = () => {
                     bg-[#ccc]
                     text-[#fff] text-[16px] font-[700]
                   "
-                  onClick={onClickTestAgain}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    onClickTestAgain();
+                  }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ 
                     type: "spring", 
@@ -321,7 +325,10 @@ const StudyResult = () => {
                   bg-[#FF8DD4]
                   text-[#fff] text-[16px] font-[700]
                 "
-                onClick={onClickEndStudy}
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  onClickEndStudy();
+                }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ 
                   type: "spring", 
@@ -661,7 +668,10 @@ const StudyResult = () => {
                   bg-[#FF8DD4]
                   text-[#fff] text-[16px] font-[700]
                 "
-                onClick={handleNextScreen}
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleNextScreen();
+                }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ 
                   type: "spring", 

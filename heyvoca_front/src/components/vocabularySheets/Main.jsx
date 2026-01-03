@@ -8,7 +8,7 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import VocabularyWords from './VocabularyWords';
 import VocabularyWordsNewFullSheet from '../newFullSheet/VocabularyWordsNewFullSheet';
 import note_ring from '../../assets/images/note_ring.png';
-
+import { vibrate } from '../../utils/osFunction'; 
 
 const Main = () => {
 
@@ -157,7 +157,10 @@ const Main = () => {
                   rounded-[12px]
                   cursor-pointer
                 "
-                onClick={() => handleCardClick(item.id)}
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleCardClick(item.id);
+                }}
                 whileTap={{ scale: 0.96}}
                 whileHover={{ scale: 1.04}}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}

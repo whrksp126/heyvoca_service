@@ -8,7 +8,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import { updateSM2, analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
-
+import { vibrate } from '../../utils/osFunction';
 
 const iconComponentMap = {
   WarningCircle: <WarningCircle size={32} weight="fill" color="#F26A6A" />,
@@ -39,6 +39,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -49,6 +50,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [tempSm2, setTempSm2] = useState(null);
 
   const navigate = useNavigate();
+
+  // 안전성 체크: testQuestions가 비어있거나 progressIndex가 범위를 벗어난 경우
+  if (!testQuestions || testQuestions.length === 0 || !testQuestions[progressIndex]) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-[16px] text-[#999]">문제를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   // 현재 문제의 옵션들에 대해 displayMeanings를 한 번만 계산
   const optionsWithDisplayMeanings = useMemo(() => {
@@ -138,10 +148,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const newState = updateSM2({
       ef: testQuestions[progressIndex].ef,
       repetition: testQuestions[progressIndex].repetition,
-      interval: testQuestions[progressIndex].interval
-    }, q);
+      interval: testQuestions[progressIndex].interval,
+      nextReview: testQuestions[progressIndex].nextReview,
+      lastStudyDate: testQuestions[progressIndex].lastStudyDate
+    }, q, {
+      testType: testType,
+      today: new Date()
+    });
 
     Object.assign(testQuestions[progressIndex], newState);
+    setUpdateType(newState.updateType); // 업데이트 타입 저장
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
     setIsAnswered(true);
@@ -171,10 +187,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const newState = updateSM2({
       ef: testQuestions[progressIndex].ef,
       repetition: testQuestions[progressIndex].repetition,
-      interval: testQuestions[progressIndex].interval
-    }, q);
+      interval: testQuestions[progressIndex].interval,
+      nextReview: testQuestions[progressIndex].nextReview,
+      lastStudyDate: testQuestions[progressIndex].lastStudyDate
+    }, q, {
+      testType: testType,
+      today: new Date()
+    });
 
     Object.assign(testQuestions[progressIndex], newState);
+    setUpdateType(newState.updateType); // 업데이트 타입 저장
     setProgressBarIndex(progressBarIndex + 1);
     setIsAnswered(true);
 
@@ -248,12 +270,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       repetition: testQuestions[progressIndex].repetition,
       interval: testQuestions[progressIndex].interval,
       nextReview: testQuestions[progressIndex].nextReview,
+      lastStudyDate: testQuestions[progressIndex].lastStudyDate,
       // memoryState 객체도 함께 업데이트
       memoryState: {
         ef: testQuestions[progressIndex].ef,
         repetition: testQuestions[progressIndex].repetition,
         interval: testQuestions[progressIndex].interval,
         nextReview: testQuestions[progressIndex].nextReview,
+        lastStudyDate: testQuestions[progressIndex].lastStudyDate,
       }
     }
 
@@ -279,6 +303,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       setUserSelected(null);
       setIsAnswered(false);
       setIsStay(false);
+      setUpdateType(null); // 업데이트 타입 초기화
     }
 
 
@@ -386,7 +411,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             style={{ willChange: 'transform, opacity' }}
             className="flex flex-col gap-[15px] w-full h-full absolute"
           >
-            {testQuestions[progressIndex].questionType === "multipleChoice" && (
+            {testQuestions[progressIndex]?.questionType === "multipleChoice" && (
               <>
                 <motion.div 
                   className={`
@@ -456,7 +481,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     {testQuestions[progressIndex].origin}
                   </h2>
                   <motion.button 
-                    onClick={handleClickTTS}
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      handleClickTTS();
+                    }}
                     whileHover={{ 
                       backgroundColor: 'rgba(204, 204, 204, 0.1)',
                       scale: 1.05
@@ -493,12 +521,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       ef={testQuestions[progressIndex].ef} 
                       isCorrect={isCorrect}
                       nextReview={testQuestions[progressIndex].nextReview}
-                      useRandomMessages={true}
+                      useRandomMessages={isCorrect !== null}
+                      updateType={updateType}
                     />
                   </div>
                   { testType === "test" && isAnswered && (
                   <motion.button 
-                    onClick={handleClickProblemHintData}
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      handleClickProblemHintData();
+                    }}
                     whileHover={{ 
                       backgroundColor: 'rgba(255, 141, 212, 0.1)',
                       scale: 1.05
@@ -550,7 +582,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             damping: 17
                           }
                         }}
-                        onClick={() => handleOptionClick(index, option)}
+                        onClick={() => {
+                          vibrate({ duration: 5 });
+                          handleOptionClick(index, option);
+                        }}
                         disabled={isAnswered}
                         style={{ willChange: 'transform' }}
                         className={`
@@ -577,7 +612,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 </div>
                 {(testType === "test" || testType === "today") && (
                 <motion.button 
-                  onClick={handleClickNext}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleClickNext();
+                  }}
                   whileTap={{ 
                     scale: userSelected !== null ? 0.93 : 1,
                     transition: { 
@@ -662,7 +700,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     stiffness: 500, 
                     damping: 15
                   }}
-                  onClick={btn.type === "mistake" ? handleClickMistake : handleClickNormal}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    btn.type === "mistake" ? handleClickMistake() : handleClickNormal();
+                  }}
                 >
                   {btn.text}
                 </motion.button>

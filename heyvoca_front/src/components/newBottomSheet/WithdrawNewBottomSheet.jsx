@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-
+import { vibrate } from '../../utils/osFunction';
 export const WithdrawNewBottomSheet = () => {
   "use memo";
   const { resolveNewBottomSheet } = useNewBottomSheetActions();
@@ -47,7 +47,10 @@ export const WithdrawNewBottomSheet = () => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

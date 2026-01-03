@@ -7,6 +7,7 @@ import { CaretDown, Plus, Pencil, Trash } from '@phosphor-icons/react';
 import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
 import postMessageManager from '../../utils/postMessageManager';
 import { IconCamera } from '../../assets/svg/icon';
+import { vibrate } from '../../utils/osFunction'; 
 
 const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -258,6 +259,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
           p-[20px] pb-[0px]
           ">
           <h1 className="text-[18px] font-[700]">단어 {id ? "수정" : "추가"}</h1>
+          {/* 
           <button
             type="button"
             className="
@@ -270,7 +272,8 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             }}
           >
             <IconCamera width={29} height={26} className="text-[#FF8DD4]" />
-          </button>
+          </button> 
+          */}
         </div>
         <div className="right"></div>
       </div>
@@ -387,7 +390,10 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                 <li
                   key={index}
                   className="flex gap-[10px] pb-[10px] last:pb-0 last:border-b-0 border-b-[1px] border-[#DDDDDD] cursor-pointer"
-                  onClick={() => handleWordSelect({ word, meanings, examples })}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleWordSelect({ word, meanings, examples });
+                  }}
                 >
                   <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
                     {word.split('').map((char, i) => {
@@ -402,7 +408,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                       );
                     })}
                   </span>
-                  <p className="text-[11px] font-[400] text-[#111] dark:text-[#fff]">{meanings.join(', ')}</p>
+                  <p className="text-[11px] font-[400] text-[#111] dark:text-[#fff] self-center">{meanings.join(', ')}</p>
                 </li>
               ))}
             </ul>
@@ -467,6 +473,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             <button 
               className="text-[18px] text-[#FF8DD4]"
               onClick={async () => {
+                vibrate({ duration: 5 });
                 currentStateRef.current = {
                   ...currentStateRef.current,
                   origin : wordInputRef.current.value,
@@ -521,6 +528,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                   text-[18px]
                 ">
                   <button className="text-[#FF8DD4]" onClick={async () => {
+                    vibrate({ duration: 5 });
                     currentStateRef.current = {
                       ...currentStateRef.current,
                       origin : wordInputRef.current.value,
@@ -556,6 +564,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                     <Pencil />
                   </button>
                   <button className="text-[red]" onClick={() => {
+                    vibrate({ duration: 5 });
                     setExamplesState(examplesState.filter(example => example.id !== id));
                   }}>
                     <Trash />
@@ -598,7 +607,10 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -614,11 +626,12 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() =>  currentStateRef.current.mode === "add" 
-            ? 
-            handleAdd() 
-            : 
-            handleEdit()
+          onClick={() =>  {
+            vibrate({ duration: 5 });
+            currentStateRef.current.mode === "add" 
+              ? handleAdd()
+              : handleEdit()
+            }
           }
           whileTap={{ scale: 0.95 }}
           transition={{ 

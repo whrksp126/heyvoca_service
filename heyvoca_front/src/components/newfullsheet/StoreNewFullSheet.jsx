@@ -6,6 +6,7 @@ import gem from '../../assets/images/gem.png';
 import { useUser } from '../../context/UserContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { StoreBuyItemNewBottomSheet } from '../newBottomSheet/StoreBuyItemNewBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const StoreNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -17,6 +18,7 @@ const StoreNewFullSheet = () => {
 
   // React Compiler가 자동으로 메모이제이션 처리
   const handleGemClick = (id) => {
+    vibrate({ duration: 5 });
     window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'iapPurchase', 'props': {itemId: id}}));
     pushNewBottomSheet(
       StoreBuyItemNewBottomSheet,
@@ -47,7 +49,10 @@ const StoreNewFullSheet = () => {
       ">
         
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -92,9 +97,9 @@ const StoreNewFullSheet = () => {
         </div>
       </div>
 
-      <div className="flex items-start justify-center h-full gap-[10px] p-[16px]">
+      <div className="grid grid-cols-3 gap-[10px] gap-y-[20px] p-[16px]">
         {gemItems.map((gem) => (
-        <div key={gem.id} className="relative flex flex-col items-center justify-center gap-[10px] flex-1"
+        <div key={gem.id} className="relative flex flex-col items-center justify-center gap-[10px]"
         onClick={() => handleGemClick(gem.product_id)}
         >
           <img src={gem.image_url} alt="" className="w-[80px] h-[80px]" />

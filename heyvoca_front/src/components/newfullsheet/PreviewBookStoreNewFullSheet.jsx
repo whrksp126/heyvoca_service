@@ -5,6 +5,7 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -187,7 +188,10 @@ export const PreviewBookStoreNewFullSheet = ({bookStoreVocabularySheet}) => {
         pt-[20px] px-[10px] pb-[14px]
       ">
         <motion.button
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -446,7 +450,10 @@ export const PreviewBookStoreNewFullSheet = ({bookStoreVocabularySheet}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -464,7 +471,10 @@ export const PreviewBookStoreNewFullSheet = ({bookStoreVocabularySheet}) => {
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleAdd}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleAdd();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

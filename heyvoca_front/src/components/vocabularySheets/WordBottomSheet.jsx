@@ -7,6 +7,7 @@ import { backendUrl, fetchDataAsync } from '../../utils/common';
 import postMessageManager from '../../utils/postMessageManager';
 import './WordBottomSheet.css';
 import { IconCamera } from '../../assets/svg/icon';
+import { vibrate } from '../../utils/osFunction'; 
 
 export const useWordSetBottomSheet = () => {
   const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheet();
@@ -269,6 +270,7 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
               w-[29px] h-[26px]
             "
             onClick={() => {
+              vibrate({ duration: 5 });
               // React Native로 메시지 전송
               postMessageManager.sendMessageToReactNative('openCamera', vocabularyId);
             }}
@@ -383,7 +385,10 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
                 <li
                   key={index}
                   className="flex gap-[10px] pb-[10px] last:pb-0 last:border-b-0 border-b-[1px] border-[#DDDDDD] cursor-pointer"
-                  onClick={() => handleWordSelect({ word, meanings, examples })}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleWordSelect({ word, meanings, examples });
+                  }}
                 >
                   <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
                     {word.split('').map((char, i) => {
@@ -459,6 +464,7 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
             <button 
               className="text-[18px] text-[#FF8DD4]"
               onClick={()=>{
+                vibrate({ duration: 5 });
                 setWordData({
                   ...wordData,
                   origin : wordInputRef.current.value,
@@ -494,6 +500,7 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
                   text-[18px]
                 ">
                   <button className="text-[#FF8DD4]" onClick={() => {
+                    vibrate({ duration: 5 });
                     setWordData({
                       ...wordData,
                       origin : wordInputRef.current.value,
@@ -510,6 +517,7 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
                     <Pencil />
                   </button>
                   <button className="text-[red]" onClick={() => {
+                    vibrate({ duration: 5 });
                     setExamplesState(examplesState.filter(example => example.id !== id));
                   }}>
                     <Trash />
@@ -552,7 +560,10 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -568,17 +579,20 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() => onSet({
-            id, 
-            vocabularyId : wordData.vocabularyId,
-            dictionaryId,
-            origin: wordInputRef.current.value,
-            meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
-            examples: examplesState.map(example => ({
-              origin: example.origin,
-              meaning: example.meaning
-            }))
-          })}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onSet({
+              id, 
+              vocabularyId : wordData.vocabularyId,
+              dictionaryId,
+              origin: wordInputRef.current.value,
+              meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+              examples: examplesState.map(example => ({
+                origin: example.origin,
+                meaning: example.meaning
+              }))
+            });
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -677,11 +691,14 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() => setExampleSetType({
-            isExampleSet: false,
-            setType: "add",
-            exampleIndex: examplesState.length,
-          })}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            setExampleSetType({
+              isExampleSet: false,
+              setType: "add",
+              exampleIndex: examplesState.length,
+            });
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -698,6 +715,7 @@ export const AddWordSheet = ({id, vocabularyId, dictionaryId, origin, meanings, 
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
+            vibrate({ duration: 5 });
             if(exampleSetType.setType === "add") {
               setExamplesState([...examplesState, { 
                 origin: exampleOriginInputRef.current.value,

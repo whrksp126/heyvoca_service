@@ -3,6 +3,7 @@ import { Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { vibrate } from '../../utils/osFunction'; 
 
 export const VOCABULARY_COLORS = [
   { id: 'color-1', value: '#FF8DD4' },
@@ -273,7 +274,10 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
                     className="hidden" 
                     value={color.value}
                     checked={isSelected}
-                    onChange={() => handleColorSelect(color.value)}
+                    onChange={() => {
+                      vibrate({ duration: 5 });
+                      handleColorSelect(color.value);
+                    }}
                   />
                   {isSelected && (
                     <Check 
@@ -299,7 +303,10 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -315,7 +322,10 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSubmit}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleSubmit();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -347,7 +357,10 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -363,7 +376,10 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onDelete}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onDelete();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

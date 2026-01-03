@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 
-const MemorizationStatus = ({ repetition, interval, ef, isCorrect=null, nextReview=null, wordId=null, useRandomMessages=false }) => {
+const MemorizationStatus = ({ repetition, interval, ef, isCorrect=null, nextReview=null, wordId=null, useRandomMessages=false, updateType=null }) => {
   // 암기 상태 판단 함수
   const getMemoryState = () => {
     // 진짜 미학습 상태 체크 (한 번도 학습하지 않은 단어)
@@ -146,7 +146,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect=null, nextRevi
   };
 
   // 정답/오답 후 멘트 가져오기
-  const getResultMessage = (state, isCorrect, interval, nextReviewDate, repetition, seed, useRandom) => {
+  const getResultMessage = (state, isCorrect, interval, nextReviewDate, repetition, seed, useRandom, updateType) => {
     // 복습 지연 상태 확인 (정답/오답 후에도 확인)
     if (isReviewOverdue(nextReviewDate)) {
       return '복습 지연';
@@ -156,6 +156,44 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect=null, nextRevi
     if (!useRandom) {
       return getDefaultStatusText(state);
     }
+
+    // 같은 날 중복 학습 또는 예정일 전 학습인 경우 (간단한 메시지)
+    if (updateType === 'duplicate' || updateType === 'before_schedule') {
+      if (isCorrect === false) {
+        const messages = [
+          '틀렸어요',
+          '다시 확인해봐요',
+          '조금 더 노력해요'
+        ];
+        return getRandomMessage(messages, seed);
+      } else {
+        // 예정일이 있으면 복습 예정일 표시
+        if (nextReviewDate) {
+          const reviewDate = new Date(nextReviewDate);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          reviewDate.setHours(0, 0, 0, 0);
+          const daysDiff = Math.ceil((reviewDate - today) / (1000 * 60 * 60 * 24));
+          if (daysDiff > 0) {
+            const messages = [
+              `정답이에요! ${daysDiff}일 후 복습 예정이에요`,
+              `맞았어요! ${daysDiff}일 후 복습해요`,
+              `정답! ${daysDiff}일 후 만나요`
+            ];
+            return getRandomMessage(messages, seed);
+          }
+        }
+        const messages = [
+          '정답이에요',
+          '맞았어요',
+          '오늘 복습했어요',
+          '잘했어요'
+        ];
+        return getRandomMessage(messages, seed);
+      }
+    }
+
+    // 정상 업데이트인 경우 (기존 로직)
     if (isCorrect === false) {
       // 오답인 경우
       // repetition이 0이고 interval이 1이면: 방금 틀린 상태 (학습 시도했지만 틀림)
@@ -267,15 +305,15 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect=null, nextRevi
   
   // 상황별 고유 키 생성 (멘트를 고정하기 위해, wordId를 포함하여 각 단어별로 고유한 멘트 선택)
   const messageKey = useMemo(() => {
-    return `${wordId || 'default'}-${memoryState}-${repetition}-${interval}-${ef}-${isCorrect}-${nextReview}`;
-  }, [wordId, memoryState, repetition, interval, ef, isCorrect, nextReview]);
+    return `${wordId || 'default'}-${memoryState}-${repetition}-${interval}-${ef}-${isCorrect}-${nextReview}-${updateType}`;
+  }, [wordId, memoryState, repetition, interval, ef, isCorrect, nextReview, updateType]);
   
   // 멘트를 useMemo로 고정 (상황이 동일하면 같은 멘트 유지)
   const statusText = useMemo(() => {
     return isCorrect === null 
       ? getStatusText(memoryState, repetition, interval, ef, messageKey, useRandomMessages, nextReview) 
-      : getResultMessage(memoryState, isCorrect, interval, nextReview, repetition, messageKey, useRandomMessages);
-  }, [messageKey, memoryState, repetition, interval, ef, isCorrect, nextReview, useRandomMessages]);
+      : getResultMessage(memoryState, isCorrect, interval, nextReview, repetition, messageKey, useRandomMessages, updateType);
+  }, [messageKey, memoryState, repetition, interval, ef, isCorrect, nextReview, useRandomMessages, updateType]);
 
   // 상태별 스타일 설정
   const getStateStyles = (state, isCorrect, nextReviewDate) => {

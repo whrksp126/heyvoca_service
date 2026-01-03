@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-
+import { vibrate } from '../../utils/osFunction'; 
 export const NoTodayStudyWordsNewBottomSheet = ({onConfirm, onCancel}) => {
   "use memo";
   const { popNewBottomSheet } = useNewBottomSheetActions();
@@ -46,7 +46,10 @@ export const NoTodayStudyWordsNewBottomSheet = ({onConfirm, onCancel}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -62,7 +65,10 @@ export const NoTodayStudyWordsNewBottomSheet = ({onConfirm, onCancel}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleConfirm}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleConfirm();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

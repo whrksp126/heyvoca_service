@@ -3,6 +3,7 @@ import { CaretLeft } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
+import { vibrate } from '../../utils/osFunction'; 
 
 const PushNotificationsNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -23,7 +24,10 @@ const PushNotificationsNewFullSheet = () => {
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
-            onClick={popNewFullSheet}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              popNewFullSheet();
+            }}
             className="
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]

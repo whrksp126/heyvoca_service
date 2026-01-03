@@ -11,6 +11,8 @@ import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from 
 import { Brain, Lightbulb } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
+import { vibrate } from '../../utils/osFunction';
+
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -151,7 +153,10 @@ const Main = () => {
               text-[#fff] text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
-            onClick={() => handleStartClick('test')}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleStartClick('test');
+            }}
           >
             시작하기
           </motion.button>
@@ -195,7 +200,10 @@ const Main = () => {
               text-[#fff] text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
-            onClick={() => handleStartClick('exam')}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleStartClick('exam');
+            }}
           >
             시작하기
           </motion.button>

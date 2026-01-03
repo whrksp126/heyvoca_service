@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-
+import { vibrate } from '../../utils/osFunction'; 
 // Hook 제거 - 직접 컴포넌트 사용
 
 
@@ -51,7 +51,10 @@ export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -67,7 +70,10 @@ export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleSet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleSet();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

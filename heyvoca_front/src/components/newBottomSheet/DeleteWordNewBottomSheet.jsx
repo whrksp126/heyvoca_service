@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-
+import { vibrate } from '../../utils/osFunction'; 
 
 const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -37,7 +37,10 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleCancel}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleCancel();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -53,7 +56,10 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleDelete}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleDelete();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

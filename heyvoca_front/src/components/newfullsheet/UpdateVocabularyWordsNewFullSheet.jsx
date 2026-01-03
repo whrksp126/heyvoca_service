@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
 import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
+import { vibrate } from '../../utils/osFunction'; 
 
 const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -79,7 +80,10 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
-            onClick={popNewFullSheet}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              popNewFullSheet();
+            }}
             className="
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]

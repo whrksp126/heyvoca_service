@@ -7,6 +7,7 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import UpdateVocabularySheetNewFullSheet from '../newFullSheet/UpdateVocabularySheetNewFullSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
+import { vibrate } from '../../utils/osFunction';
 
 const Header = () => {
   const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
@@ -28,6 +29,7 @@ const Header = () => {
 
   const handleAddClick = async () => {
     // 단어장 생성 가능 여부 확인
+    // await vibrate({ cancel: true });
     const result = await userBookCntCheckApi();
     const canAddBook = result.data.can_add_book;
     if(userProfile.book_cnt > 0 || canAddBook){
@@ -81,7 +83,10 @@ const Header = () => {
               stiffness: 500, 
               damping: 15
             }}
-            onClick={handleEditClick}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleEditClick();
+            }}
             aria-label="단어장 편집"
           >
             <PencilSimple />
@@ -98,7 +103,10 @@ const Header = () => {
               stiffness: 500, 
               damping: 15
             }}
-            onClick={handleAddClick}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleAddClick();
+            }}
             aria-label="새 단어 추가"
           >
             <Plus />

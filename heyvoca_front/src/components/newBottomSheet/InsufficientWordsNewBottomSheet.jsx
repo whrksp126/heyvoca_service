@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNavigate } from 'react-router-dom';
-
+import { vibrate } from '../../utils/osFunction'; 
 export const InsufficientWordsNewBottomSheet = ({title}) => {
   "use memo";
   
@@ -53,7 +53,10 @@ export const InsufficientWordsNewBottomSheet = ({title}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleAddVocabulary}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleAddVocabulary();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -69,7 +72,10 @@ export const InsufficientWordsNewBottomSheet = ({title}) => {
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleGoToBookStore}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleGoToBookStore();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -4,6 +4,7 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
 import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const UpdateVocabularySheetNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -61,7 +62,10 @@ const UpdateVocabularySheetNewFullSheet = () => {
       ">
         
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -133,7 +137,10 @@ const UpdateVocabularySheetNewFullSheet = () => {
                   stiffness: 500, 
                   damping: 15
                 }}
-                onClick={() => handleEditClick(item.id, index)}
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleEditClick(item.id, index);
+                }}
                 aria-label="단어장 편집"
               >
                 <PencilSimple size={18} color={item.color.main} />
@@ -147,7 +154,10 @@ const UpdateVocabularySheetNewFullSheet = () => {
                   stiffness: 500, 
                   damping: 15
                 }}
-                onClick={() => handleDeleteClick(item.id, index)}
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  handleDeleteClick(item.id, index);
+                }}
                 aria-label="단어장 삭제"
               >
                 <Trash size={18} color="red" />

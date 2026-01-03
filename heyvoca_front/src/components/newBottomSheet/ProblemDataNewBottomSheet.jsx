@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT, getTextSound } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
+import { vibrate } from '../../utils/osFunction'; 
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -278,7 +279,10 @@ export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={onCancel || handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            onCancel || handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

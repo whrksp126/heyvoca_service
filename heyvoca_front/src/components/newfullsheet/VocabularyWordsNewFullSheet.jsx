@@ -12,6 +12,7 @@ import MemorizationStatus from "../common/MemorizationStatus";
 // import DeleteWordNewBottomSheet from '../newBottomSheet/DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
@@ -146,9 +147,16 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   
   
   // 표시할 단어 리스트 계산 (React Compiler가 자동으로 메모이제이션)
+  // 최근 수정/생성 순으로 정렬 (updatedAt 기준, 없으면 createdAt 기준)
   const allDisplayedWords = !vocabularySheet?.words 
     ? [] 
-    : vocabularySheet.words.slice(0, displayCount);
+    : [...vocabularySheet.words]
+        .sort((a, b) => {
+          const dateA = new Date(a.updatedAt || a.createdAt || 0);
+          const dateB = new Date(b.updatedAt || b.createdAt || 0);
+          return dateB - dateA; // 최근 날짜가 위로
+        })
+        .slice(0, displayCount);
   
   // 윈도우 기반 렌더링: 보이는 영역 + 버퍼만 렌더링 (성능 최적화)
   // 아이템이 적을 때는 전체 렌더링 (오버헤드 방지)
@@ -300,6 +308,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   };
 
   const handleAddClick = () => {
+    vibrate({ duration: 5 });
     // showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
     pushNewBottomSheet(AddWordNewBottomSheet, { vocabularyId: vocabularySheet.id }, {
       smFull: true,
@@ -308,6 +317,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   };
 
   const handleCardClick = async (id) => {
+    vibrate({ duration: 5 });
     console.log(`handleCardClick: ${id}`);
     pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id });
   };
@@ -329,7 +339,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
-            onClick={popNewFullSheet}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              popNewFullSheet();
+            }}
             className="
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]

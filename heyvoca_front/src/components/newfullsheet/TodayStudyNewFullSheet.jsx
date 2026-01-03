@@ -11,6 +11,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { InsufficientWordsNewBottomSheet } from '../newBottomSheet/InsufficientWordsNewBottomSheet';
 import { NoTodayStudyWordsNewBottomSheet } from '../newBottomSheet/NoTodayStudyWordsNewBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const TodayStudyNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -238,7 +239,10 @@ const TodayStudyNewFullSheet = () => {
       ">
         
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -301,6 +305,7 @@ const TodayStudyNewFullSheet = () => {
                 inputMode="numeric"
                 value={wordCount} 
                 onChange={(e) => {
+                  vibrate({ duration: 5 });
                   const inputValue = e.target.value.replace(/[^0-9]/g, '');
                   const maxCount = Math.min(availableWordCount, MAX_TEST_VOCABULARY_COUNT);
                   
@@ -381,7 +386,10 @@ const TodayStudyNewFullSheet = () => {
             stiffness: 400, 
             damping: 17
           }}
-          onClick={handleStart}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleStart();
+          }}
         >
           시작하기
         </motion.button>

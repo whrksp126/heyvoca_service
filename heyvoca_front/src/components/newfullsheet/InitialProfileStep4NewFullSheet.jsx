@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { CaretLeft } from '@phosphor-icons/react';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { vibrate } from '../../utils/osFunction'; 
 
 const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -34,7 +35,10 @@ const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}
         pt-[20px] px-[10px] pb-[14px]
       ">
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]

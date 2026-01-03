@@ -22,6 +22,8 @@ import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { IconBell, IconBellRingingFill } from '../../assets/svg/icon';
 import { getLastSeenTime, setLastSeenTime } from '../../utils/badgeStorage';
 import { shouldShowDot, getOverdueCount } from '../../utils/badgeCalc';
+import { vibrate } from '../../utils/osFunction';
+
 
 // import StoreSheet from './StoreSheet';
 // import TodayStudySheet from './TodayStudySheet';
@@ -228,8 +230,6 @@ const Main = () => {
   }
 
   const handleBellButtonClick = () => {
-    console.log('알림 버튼 클릭');
-    
     // 알림 상태인 경우: 클릭하면 알림 해제 + 툴팁 토글
     if (showDot) {
       const currentTime = Date.now();
@@ -243,8 +243,6 @@ const Main = () => {
   }
 
   const handleTodayStudyButtonClick = () => {
-    console.log('오늘의 학습 버튼 클릭');
-    // 오늘의 학습이 완료된 상태라면 /class로 이동
     if (todayStatus.dailyMissionCompleted) {
       navigate('/class');
     } else {
@@ -272,7 +270,10 @@ const Main = () => {
       ">
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[8px] items-center">
-          <div className="relative flex items-center" onClick={handleBellButtonClick}>
+          <div className="relative flex items-center" onClick={() => {
+            vibrate({ duration: 5 });
+            handleBellButtonClick();
+          }}>
             {showDot ? (
               <IconBellRingingFill width={18} height={18} className="text-[#fff]" />
             ) : (
@@ -345,7 +346,10 @@ const Main = () => {
               )}
             </AnimatePresence>
           </div>
-          <div className="flex gap-[5px] items-center" onClick={handleStoreButtonClick}>
+          <div className="flex gap-[5px] items-center" onClick={() => {
+            vibrate({ duration: 5 });
+            handleStoreButtonClick();
+          }}>
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
             <span className="text-[#fff] text-[14px] font-bold">{userProfile.gem_cnt}</span>
           </div>
@@ -374,7 +378,10 @@ const Main = () => {
           " />
           <motion.div 
             className="relative flex w-[100%] h-[50px]"
-            onClick={() => handleTodayStudyButtonClick()}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleTodayStudyButtonClick();
+            }}
             whileTap={{ scale: 0.96}}
             whileHover={{ scale: 1.04}}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const VocabularySheetNewFullSheet = ({testType}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -124,7 +125,10 @@ const VocabularySheetNewFullSheet = ({testType}) => {
       ">
         
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
@@ -176,7 +180,10 @@ const VocabularySheetNewFullSheet = ({testType}) => {
                 cursor-pointer
 
               "
-              onClick={() => handleCardClick("all")}
+              onClick={() => {
+                vibrate({ duration: 5 });
+                handleCardClick("all");
+              }}
               whileTap={{ scale: 0.96}}
               whileHover={{ scale: 1.04}}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -219,7 +226,10 @@ const VocabularySheetNewFullSheet = ({testType}) => {
                 rounded-[12px]
                 cursor-pointer
               "
-              onClick={() => handleCardClick(item.id)}
+              onClick={() => {
+                vibrate({ duration: 5 });
+                handleCardClick(item.id);
+              }}
               whileTap={{ scale: 0.96}}
               whileHover={{ scale: 1.04}}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}

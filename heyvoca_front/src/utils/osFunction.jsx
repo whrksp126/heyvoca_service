@@ -82,6 +82,53 @@ export async function showToast(message) {
   }
 }
 
+// 진동 함수
+// 사용 예시:
+// 1. 지정된 시간 진동 (예: 100ms):
+//    vibrate({ duration: 100 });
+//
+// 2. 기본 진동 (400ms):
+//    vibrate();  // 또는 vibrate({})
+//
+// 3. 진동 취소:
+//    vibrate({ cancel: true });
+export async function vibrate(props = null) {
+  if (getDevicePlatform() === 'web') {
+    // 웹 환경에서는 navigator.vibrate API 사용
+    if ('vibrate' in navigator) {
+      if (props && props.cancel) {
+        // 진동 취소
+        navigator.vibrate(0);
+      } else if (props && props.duration) {
+        // 지정된 시간 진동
+        navigator.vibrate(props.duration);
+      } else {
+        // 기본 진동 (400ms)
+        navigator.vibrate(400);
+      }
+    }
+  } else {
+    // 앱 환경에서는 ReactNativeWebView를 통해 네이티브에 요청
+    if (window.ReactNativeWebView) {
+      // props가 없거나 빈 객체면 기본 진동 (props 없이 type만 전송)
+      const hasProps = props && (props.duration || props.cancel);
+      
+      if (hasProps) {
+        // duration 또는 cancel이 있는 경우: props 포함
+        await window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'vibrate',
+          props: props
+        }));
+      } else {
+        // 기본 진동: props 없이 type만 전송
+        await window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'vibrate'
+        }));
+      }
+    }
+  }
+}
+
 // 앱 종료 함수
 export async function closeApp() {
   if (getDevicePlatform() === 'web') {

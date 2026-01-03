@@ -3,6 +3,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { Plus } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from "../../context/NewBottomSheetContext";
 import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/PreviewBookStoreNewBottomSheet";
+import { vibrate } from '../../utils/osFunction';
 // import { PreviewBookStoreNewFullSheet } from "../newFullSheet/PreviewBookStoreNewFullSheet";
 // import { useNewFullSheetActions } from "../../context/NewFullSheetContext";
 import gem from "../../assets/images/gem.png";
@@ -79,6 +80,7 @@ const Main = () => {
                 whileHover={{ scale: 1.04}}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 onClick={() => {
+                  vibrate({ duration: 5 });
                   handleBookStoreClick(item.id)
                 }}
               >

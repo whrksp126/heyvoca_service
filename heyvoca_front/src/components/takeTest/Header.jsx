@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
+import { vibrate } from '../../utils/osFunction';
 
 const Header = ({ testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -59,7 +60,10 @@ const Header = ({ testType }) => {
         flex items-center justify-center
       ">
         <motion.button
-          onClick={handleBackClick}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleBackClick();
+          }}
           className="
             text-[#CCC] dark:text-[#fff]
             rounded-[8px]

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Notepad, Storefront, Exam, User, House } from "@phosphor-icons/react";
+import { vibrate } from '../../utils/osFunction';
 
 const BottomNav = () => {
   const navigate = useNavigate();
@@ -19,7 +20,10 @@ const BottomNav = () => {
         ">
       <ul className="flex justify-around items-center h-[70px] max-w-md mx-auto">
         <li 
-          onClick={() => navigate('/home')} 
+          onClick={() => {
+            vibrate({ duration: 5 });
+            navigate('/home');
+          }} 
           className="flex items-center justify-center flex-1 w-full h-full"
         >
           <div
@@ -39,7 +43,10 @@ const BottomNav = () => {
           </div>
         </li>
         <li 
-          onClick={() => navigate('/vocabulary-sheets')} 
+          onClick={() => {
+            vibrate({ duration: 5 });
+            navigate('/vocabulary-sheets');
+          }} 
           className="flex items-center justify-center flex-1 w-full h-full"
         >
           <div
@@ -59,7 +66,10 @@ const BottomNav = () => {
           </div>
         </li>
         <li 
-          onClick={() => navigate('/book-store')} 
+          onClick={() => {
+            vibrate({ duration: 5 });
+            navigate('/book-store');
+          }} 
           className="flex items-center justify-center flex-1 w-full h-full"
         >
           <div
@@ -79,7 +89,10 @@ const BottomNav = () => {
           </div>
         </li>
         <li 
-          onClick={() => navigate('/class')} 
+          onClick={() => {
+            vibrate({ duration: 5 });
+            navigate('/class');
+          }} 
           className="flex items-center justify-center flex-1 w-full h-full"
           >
           <div
@@ -97,7 +110,10 @@ const BottomNav = () => {
           </div>
         </li>
         <li 
-          onClick={() => navigate('/mypage')} 
+          onClick={() => {
+            vibrate({ duration: 5 });
+            navigate('/mypage');
+          }} 
           className="
             flex items-center justify-center flex-1 w-full h-full
           "

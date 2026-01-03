@@ -5,15 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
-
-// SM-2 알고리즘 기준 학습 상태 정의
-const MEMORY_STATES = {
-  ALL: 'all',                  // 전체 (모든 암기 상태)
-  UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
-  SHORT_TERM: 'shortTerm',     // 단기 복습 (repetition: 1-2, interval: 1-6일)
-  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (repetition: 3-4, interval: 7-30일)
-  LONG_TERM: 'longTerm'        // 장기 복습 (repetition: 5+, interval: 30일+)
-};
+import { MEMORY_STATES, getWordMemoryState } from '../utils/common';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -26,52 +18,6 @@ const TakeTest = () => {
   const navigate = useNavigate();
   // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
-
-  // React Compiler가 자동으로 useCallback 처리
-  const getWordMemoryState = (word) => {
-    // memoryState 객체가 있는 경우
-    if (word.memoryState) {
-      const { repetition, interval } = word.memoryState;
-      
-      // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
-      if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-      
-      // 단기 복습 (1-2회 연속 정답, 간격 1-6일)
-      if (repetition >= 1 && repetition <= 2 && interval <= 6) return MEMORY_STATES.SHORT_TERM;
-      
-      // 중기 복습 (3-4회 연속 정답, 간격 7-30일)
-      if (repetition >= 3 && repetition <= 4 && interval <= 30) return MEMORY_STATES.MEDIUM_TERM;
-      
-      // 장기 복습 (5회 이상 연속 정답, 간격 30일 이상)
-      if (repetition >= 5) return MEMORY_STATES.LONG_TERM;
-      
-      // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
-      if (repetition === 0 && interval > 0) return MEMORY_STATES.SHORT_TERM;
-      
-      return MEMORY_STATES.UNLEARNED;
-    }
-    
-    // memoryState가 없고 직접 속성이 있는 경우
-    const repetition = word.repetition ?? 0;
-    const interval = word.interval ?? 0;
-    
-    // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
-    if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-    
-    // 단기 복습 (1-2회 연속 정답, 간격 1-6일)
-    if (repetition >= 1 && repetition <= 2 && interval <= 6) return MEMORY_STATES.SHORT_TERM;
-    
-    // 중기 복습 (3-4회 연속 정답, 간격 7-30일)
-    if (repetition >= 3 && repetition <= 4 && interval <= 30) return MEMORY_STATES.MEDIUM_TERM;
-    
-    // 장기 복습 (5회 이상 연속 정답, 간격 30일 이상)
-    if (repetition >= 5) return MEMORY_STATES.LONG_TERM;
-    
-    // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
-    if (repetition === 0 && interval > 0) return MEMORY_STATES.SHORT_TERM;
-    
-    return MEMORY_STATES.UNLEARNED;
-  };
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -204,6 +150,21 @@ const TakeTest = () => {
           // 목표 상태와 일치하는 단어만 선택
           return memoryState === targetMemoryState;
         });
+
+        console.log(`[TakeTest] 목표 암기 상태: ${targetMemoryState}, 찾은 단어 수: ${targetStateWords.length}`);
+        console.log('[TakeTest] 전체 단어 수:', allWords.length);
+        
+        // 디버깅: 첫 번째 단어 정보 출력
+        if (targetStateWords.length > 0) {
+          const firstWord = targetStateWords[0];
+          console.log('[TakeTest] 첫 번째 장기 암기 단어:', {
+            word: firstWord.origin,
+            repetition: firstWord.repetition,
+            interval: firstWord.interval,
+            ef: firstWord.ef,
+            memoryState: getWordMemoryState(firstWord)
+          });
+        }
 
         // 미학습을 선택한 경우: 모든 미학습 단어를 랜덤하게 선택 (복습 지연 우선순위 제거)
         if (targetMemoryState === MEMORY_STATES.UNLEARNED) {

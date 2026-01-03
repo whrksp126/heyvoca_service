@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { AddBookStoreNewBottomSheet } from './AddBookStoreNewBottomSheet';
-
+import { vibrate } from '../../utils/osFunction'; 
 // Hook 제거 - 직접 컴포넌트 사용
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
@@ -320,7 +320,10 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet}) => {
                 flex gap-[8px]
                 text-[20px]
               ">
-              <button onClick={() => getTextSound(item.origin, "en")}>
+              <button onClick={() => {
+                vibrate({ duration: 5 });
+                getTextSound(item.origin, "en");
+              }}>
                 <SpeakerHigh weight="fill" />
               </button>
             </div>
@@ -409,7 +412,10 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet}) => {
             bg-[#ccc]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleClose}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleClose();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 
@@ -427,7 +433,10 @@ export const PreviewBookStoreNewBottomSheet = ({bookStoreVocabularySheet}) => {
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={handleAdd}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            handleAdd();
+          }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
             type: "spring", 

@@ -12,6 +12,7 @@ import { useUser } from '../../context/UserContext';
 import { withdrawApi } from '../../api/auth';
 import { setCookie } from '../../utils/common';
 import { launchGoogleWithdraw, getDevicePlatform, showToast } from '../../utils/osFunction';
+import { vibrate } from '../../utils/osFunction'; 
 
 const AccountNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -136,7 +137,10 @@ const AccountNewFullSheet = () => {
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
-            onClick={popNewFullSheet}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              popNewFullSheet();
+            }}
             className="
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]
@@ -197,7 +201,10 @@ const AccountNewFullSheet = () => {
             <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-[#fff] dark:bg-[#111]">
                 <div className="flex flex-col items-start gap-[10px]">
                   <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">초대 코드</h2>
-                  <div className="flex items-center gap-[5px]" onClick={handleCopyInviteCode}>
+                  <div className="flex items-center gap-[5px]" onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleCopyInviteCode();
+                  }}>
                     <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">{userProfile?.invite_code || "-"}</span>
                     <Copy size={14} className="text-[#FF8DD4] dark:text-[#FF8DD4]" />
 
@@ -206,7 +213,10 @@ const AccountNewFullSheet = () => {
             </li>
           </ul>
           <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-[#fff] dark:bg-[#111]"
-            onClick={handleLogout}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleLogout();
+            }}
           >
               <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">로그아웃</h2>
               <SignOut size={20} className="text-[#ccc] dark:text-[#ccc]" />
@@ -217,7 +227,10 @@ const AccountNewFullSheet = () => {
         {/* 회원 탈퇴 버튼 */}
         <div className="flex justify-center py-[20px]">
           <button
-            onClick={handleWithdraw}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleWithdraw();
+            }}
             disabled={isWithdrawing}
             className="
               text-[12px] font-[400]

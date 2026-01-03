@@ -6,6 +6,7 @@ import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import InitialProfileStep4NewFullSheet from './InitialProfileStep4NewFullSheet';
+import { vibrate } from '../../utils/osFunction'; 
 
 const InitialProfileStep3NewFullSheet = ({userInitialProfile, setUserInitialProfile, endInitialProfile}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -110,7 +111,10 @@ const InitialProfileStep3NewFullSheet = ({userInitialProfile, setUserInitialProf
         pt-[20px] px-[10px] pb-[14px]
       ">
         <motion.button
-          onClick={popNewFullSheet}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            popNewFullSheet();
+          }}
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
