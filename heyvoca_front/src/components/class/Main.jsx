@@ -54,7 +54,6 @@ const Main = () => {
         {
           testType,
           onCancel: (props) => {
-            console.log("onCancel", props);
             popNewBottomSheet();
             setTimeout(() => {
               pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {

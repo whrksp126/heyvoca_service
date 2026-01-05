@@ -63,8 +63,7 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
-            vibrate({ duration: 5 });
-            onCancel || handleClose();
+            onCancel ? onCancel() : handleClose();
           }}
           whileTap={{ scale: 0.95 }}
           transition={{ 
