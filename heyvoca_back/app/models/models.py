@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyCons
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT
 
-from sqlalchemy.dialects.mysql import BINARY
+from sqlalchemy.dialects.mysql import BINARY, LONGTEXT
 from sqlalchemy.types import TypeDecorator
 from sqlalchemy.orm import relationship
 
@@ -291,7 +291,7 @@ class UserRecentStudy(db.Model):
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
     type = Column(Enum(RecentStudyType), nullable=False)
-    study_data = Column(TEXT, nullable=True)
+    study_data = Column(LONGTEXT, nullable=True)
     status = Column(String(36), nullable=True)
     progress_index = Column(Integer, nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
