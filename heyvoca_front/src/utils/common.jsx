@@ -26,17 +26,17 @@ export function getWordMemoryState(word) {
   const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
   const interval = word.memoryState?.interval ?? word.interval ?? 0;
   const ef = word.memoryState?.ef ?? word.ef ?? 2.5;
-  
+
   // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
   if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-  
+
   // 암기율 계산 (MemorizationStatus와 동일한 로직)
   let score = 0;
   score += repetition * 15;
   score += interval * 2;
   score += (ef - 1.3) * 20;
   const percent = Math.max(0, Math.min(100, Math.round(score)));
-  
+
   // 퍼센트에 따라 분류
   if (percent < 30) {
     return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (0-29%)
@@ -48,7 +48,7 @@ export function getWordMemoryState(word) {
 }
 
 
-console.log("import.meta.env",import.meta.env);
+console.log("import.meta.env", import.meta.env);
 
 // 쿠키 조회
 export function getCookie(name) {
@@ -67,8 +67,8 @@ export function setCookie(name, value, days = 365) {
   date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
   const expires = "expires=" + date.toUTCString();
   document.cookie = name + "=" + value + "; " + expires + "; path=/";
-  if(window.ReactNativeWebView){
-    window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'setCookie', 'props': {name: name, value: value, expires: date.toUTCString()}}));
+  if (window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'setCookie', 'props': { name: name, value: value, expires: date.toUTCString() } }));
   }
 
 }
@@ -90,7 +90,7 @@ export async function refreshAccessToken() {
       method: 'POST',
       credentials: 'include', // refresh token 쿠키 포함
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       setCookie('userAccessToken', data.access_token);
@@ -113,7 +113,7 @@ export async function fetchDataAsync(url, method, data, form = false) {
   }
   if (!form) { headers['Content-Type'] = `application/json` }
   const fetchOptions = { method, headers };
-  
+
   if (method !== 'GET' && form) {
     const formData = new FormData();
     formData.append('json_data', JSON.stringify(data.json_data))
@@ -133,7 +133,7 @@ export async function fetchDataAsync(url, method, data, form = false) {
     }
   }
   fetchOptions.credentials = 'include';
-  
+
   try {
     const response = await fetch(newUrl, fetchOptions);
     if (response.ok) {
@@ -163,6 +163,18 @@ export async function fetchDataAsync(url, method, data, form = false) {
     throw error;
   }
 }
+
+/**
+ * Date 객체를 로컬 날짜 문자열(YYYY-MM-DD)로 변환
+ * @param {Date} date 
+ * @returns {string}
+ */
+export const toLocalDateString = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 // URL에서 파라미터 값 가져오기
 export const getValueFromURL = (param) => {
@@ -195,13 +207,13 @@ export const getTextSound = async (text, lang) => {
   const url = `${backendUrl}/tts/output`;
   const method = 'GET';
   const fetchData = {
-    text : text,
-    language : lang
+    text: text,
+    language: lang
   }
-  
+
   try {
     const audioBlob = await fetchDataAsync(url, method, fetchData, false, null);
-    
+
     // 요청이 완료되었지만, 이미 새로운 요청이 와서 이 요청이 무효화된 경우
     if (requestId !== currentRequestId) {
       // 이전 요청이므로 종료 (blob은 자동으로 가비지 컬렉션됨)
@@ -210,17 +222,17 @@ export const getTextSound = async (text, lang) => {
 
     const audioUrl = URL.createObjectURL(audioBlob);
     currentAudioUrl = audioUrl;
-    
+
     const audio = new Audio(audioUrl);
-    
+
     // 재생 전에 다시 한 번 확인 (새로운 요청이 왔는지)
     if (requestId !== currentRequestId) {
       URL.revokeObjectURL(audioUrl);
       return;
     }
-    
+
     currentTTSAudio = audio;
-    
+
     // Add ended event handler to cleanup
     audio.addEventListener('ended', () => {
       // 이 요청의 오디오가 끝났는지 확인
@@ -281,7 +293,7 @@ const getBeforeScheduleEfBonus = (beforeScheduleCount) => {
 export const updateSM2 = (state, q, options = {}) => {
   const MIN_EF = 1.3;
   const MAX_EF = 2.5;
-  
+
   const { testType = 'test', today = new Date() } = options;
 
   let ef = state.ef ?? 2.5;
@@ -291,16 +303,17 @@ export const updateSM2 = (state, q, options = {}) => {
   const lastStudyDate = state.lastStudyDate;
   let beforeScheduleCount = state.beforeScheduleCount ?? 0;
 
-  // 오늘 날짜 (시간 제거)
-  const todayStr = today.toISOString().split('T')[0];
-  
+  // 오늘 날짜 (로컬 시간 기준)
+  const todayStr = toLocalDateString(today);
+
   // 같은 날 중복 학습 체크
-  if (lastStudyDate === todayStr) {
+  // 단, repetition이 0인 경우(오답으로 인한 리셋 상태 등)는 진행을 허용함
+  if (lastStudyDate === todayStr && repetition > 0) {
     if (q >= 3) {
       // 정답: ef만 소폭 상승 (+0.05), 나머지 유지
       console.log('[SM-2] 같은 날 중복 학습 - 정답: ef만 소폭 상승 (+0.05)');
       ef = Math.min(ef + 0.05, MAX_EF);
-      
+
       return {
         ef: Number(ef.toFixed(2)),
         repetition,
@@ -316,7 +329,7 @@ export const updateSM2 = (state, q, options = {}) => {
       repetition = 0;
       interval = 1;
       ef = Math.max(ef - 0.1, MIN_EF);
-      
+
       return {
         ef: Number(ef.toFixed(2)),
         repetition,
@@ -329,9 +342,9 @@ export const updateSM2 = (state, q, options = {}) => {
     }
   }
 
-  // 예정일 전 학습인지 체크
-  const isBeforeSchedule = nextReview && new Date(nextReview) > new Date(todayStr);
-  
+  // 예정일 전 학습인지 체크 (문자열 비교로 타임존 문제 방지)
+  const isBeforeSchedule = nextReview && nextReview > todayStr;
+
   // 예정일 전 학습인 경우 (모든 학습 모드에 적용)
   if (isBeforeSchedule) {
     if (q < 3) {
@@ -340,7 +353,7 @@ export const updateSM2 = (state, q, options = {}) => {
       repetition = 0;
       interval = 1;
       ef = Math.max(ef - 0.15, MIN_EF);
-      
+
       return {
         ef: Number(ef.toFixed(2)),
         repetition,
@@ -351,14 +364,14 @@ export const updateSM2 = (state, q, options = {}) => {
         updateType: 'normal' // 정상 업데이트 (틀렸으므로 리셋)
       };
     }
-    
+
     // 정답인 경우: 예정일 전 학습 횟수에 따라 ef 조정
     const efBonus = getBeforeScheduleEfBonus(beforeScheduleCount);
     ef = Math.min(ef + efBonus, MAX_EF);
     beforeScheduleCount += 1;
-    
+
     console.log(`[SM-2] 예정일 전 학습 ${beforeScheduleCount}회차 - 정답: ef +${efBonus} (repetition, interval, nextReview 유지)`);
-    
+
     return {
       ef: Number(ef.toFixed(2)),
       repetition,
@@ -372,9 +385,9 @@ export const updateSM2 = (state, q, options = {}) => {
 
   // 정상 SM-2 알고리즘 적용 (예정일 도래)
   console.log('[SM-2] 정상 SM-2 알고리즘 적용 (예정일 도래)');
-  
+
   let nextReviewDate;
-  
+
   if (q < 3) {
     // 복습 실패: 틀렸을 때는 오늘 바로 복습할 수 있도록 nextReview를 오늘로 설정
     console.log('[SM-2] 정상 SM-2 알고리즘 - 오답: ef 감소 (-0.15), repetition/interval 리셋');
@@ -393,7 +406,7 @@ export const updateSM2 = (state, q, options = {}) => {
     if (repetition === 1) interval = 1;
     else if (repetition === 2) interval = 6;
     else interval = Math.round(interval * ef);
-    
+
     // 정답일 때는 interval만큼 더한 날짜로 설정
     nextReviewDate = new Date(today);
     nextReviewDate.setDate(today.getDate() + interval);
@@ -403,7 +416,7 @@ export const updateSM2 = (state, q, options = {}) => {
     ef: Number(ef.toFixed(2)),
     repetition,
     interval,
-    nextReview: nextReviewDate.toISOString().split('T')[0],
+    nextReview: toLocalDateString(nextReviewDate),
     lastStudyDate: todayStr,
     beforeScheduleCount: 0, // 새로운 주기 시작으로 리셋
     updateType: 'normal' // 정상 업데이트
@@ -447,19 +460,19 @@ export const analyzeLearningPattern = (wordState, q) => {
     // 실수로 틀렸을 가능성  
     suspiciousMistake: {
       condition: repetition >= 5 && q === 0,
-      message: "정말 이 단어가 기억나지 않나요?", 
+      message: "정말 이 단어가 기억나지 않나요?",
       icon: "WarningCircle",
       reason: "연속 5번 이상 정답인데 갑자기 완전히 잊어버렸다고 함",
       bgColor: "bg-[linear-gradient(180deg,rgba(230,255,244,0)_0%,rgba(230,255,244,.5)_10%,rgba(230,255,244,1)_30%,rgba(230,255,244,1)_100%)]",
-      btn : [
+      btn: [
         {
-          type : "mistake",
+          type: "mistake",
           text: "실수에요, 알고 있어요",
           color: "bg-[#ccc]",
 
         },
         {
-          type : "normal",
+          type: "normal",
           text: "기억이 잘 안나요",
           color: "bg-[#F26A6A]",
 
@@ -473,28 +486,28 @@ export const analyzeLearningPattern = (wordState, q) => {
       message: "정말 이 단어를 기억하나요?",
       icon: "HandsClapping",
       reason: "매우 어려운 단어(ef ≤ 1.5)인데 갑자기 완벽하게 기억한다고 함",
-      
+
       bgColor: "bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]",
-      btn : [
+      btn: [
         {
-          type : "mistake",
+          type: "mistake",
           text: "사실 몰랐어요",
           color: "bg-[#ccc]",
         },
         {
-          type : "normal",
+          type: "normal",
           text: "당연히 알고 있어요",
           color: "bg-[#39E859]",
         }
       ]
     }
   };
-  
+
   // 의심스러운 패턴 찾기
   const detectedPatterns = Object.values(suspiciousPatterns).filter(
     pattern => pattern.condition
   );
-  
+
   if (detectedPatterns.length > 0) {
     // 가장 의심도가 높은 패턴 반환
     const mostSuspicious = detectedPatterns.reduce((prev, current) => {
@@ -503,18 +516,18 @@ export const analyzeLearningPattern = (wordState, q) => {
       const currentScore = (1.5 - current.condition.ef) + (current.condition.repetition || 0);
       return currentScore > prevScore ? current : prev;
     });
-    
+
     return {
       isSuspicious: true,
       message: mostSuspicious.message,
       reason: mostSuspicious.reason,
-      btn: mostSuspicious.btn,  
+      btn: mostSuspicious.btn,
       bgColor: mostSuspicious.bgColor,
       icon: mostSuspicious.icon,
       confidence: "high"
     };
   }
-  
+
   return {
     isSuspicious: false,
     message: "특이사항 없음",
