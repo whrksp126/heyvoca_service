@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, Vibration, Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 // import Tts from 'react-native-tts';
 import { signInWithGoogle, signOutWithGoogle } from '../google/googleAuth';
@@ -69,6 +69,27 @@ const handleWebViewMessage = async (
         // Context에 정제된 단어 저장
         setOcrFilteredWords(messageData.props || []);
         break;
+
+      case 'vibrate':
+        const { duration, cancel } = messageData.props || {};
+
+        if (cancel === true) {
+          Vibration.cancel();
+          console.log('진동 취소');
+          break;
+        }
+        
+        // 진동 실행: duration(ms)만큼 1회 진동
+        const vibrateDuration = duration && typeof duration === 'number' ? duration : 400;
+        
+        if (Platform.OS === 'ios') {
+          Vibration.vibrate([vibrateDuration], false);
+        } else {
+          Vibration.vibrate([0, vibrateDuration], false);
+        }
+        console.log('진동 실행:', vibrateDuration, 'ms');
+        break;
+
       default:
         console.log('알 수 없는 메시지 타입:', messageData.type);
     }
