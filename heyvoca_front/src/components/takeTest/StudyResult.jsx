@@ -10,6 +10,7 @@ import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
+import { getTextSound } from '../../utils/common';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -28,7 +29,7 @@ const ACHIEVEMENT_IMAGES = {
   '단어왕': WordKing,
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
-  '암기왕': MemorizedKing, 
+  '암기왕': MemorizedKing,
 };
 
 // 레벨별 배경 색상 및 스타일
@@ -88,7 +89,7 @@ const getAchievementTextStyle = (level) => {
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const {  recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -100,35 +101,35 @@ const StudyResult = () => {
   const [screenList, setScreenList] = useState([]); // 표시할 화면 리스트
 
   // 학습 결과 저장
-  useEffect(()=>{
-    if(recentStudy && recentStudy[testType] && recentStudy[testType].status === "end"){
+  useEffect(() => {
+    if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "end") {
       updateUserHistoryAndNavigate()
     }
-  },[])
+  }, [])
 
   const updateUserHistoryAndNavigate = async () => {
     const correctCnt = testQuestions.filter(question => question.isCorrect).length;
     const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
-    try{
+    try {
       const result = await updateUserHistory({
         'today_study_complete': testType === "today" ? true : false,
         'correct_cnt': correctCnt,
         'incorrect_cnt': incorrectCnt
       })
-      
+
       if (!result) return;
 
       setResultData(result);
-      
+
       // 표시할 화면 리스트 생성
       const screens = [];
-      
+
       // 1. 단어 학습 갯수와 정답 수를 이용해서 멘트 표현 (항상 표시)
       screens.push({
         type: 'words',
         data: { totalCnt: testQuestions.length }
       });
-      
+
       // 2. 데일리 미션 달성 표현 페이지
       if (result.today_study_complete) {
         screens.push({
@@ -136,7 +137,7 @@ const StudyResult = () => {
           data: {}
         });
       }
-      
+
       // 3. 업적 달성 표현 페이지 (각 업적마다 별도 화면 추가)
       if (result.goals && result.goals.length > 0) {
         result.goals.forEach((goal) => {
@@ -146,7 +147,7 @@ const StudyResult = () => {
           });
         });
       }
-      
+
       // 4. 보석 획득 표현 페이지
       if (result.gem && result.gem.after > result.gem.before) {
         screens.push({
@@ -154,17 +155,17 @@ const StudyResult = () => {
           data: { gemCount: result.gem.after - result.gem.before }
         });
       }
-      
+
       // 5. 학습 결과 페이지 (항상 마지막)
       screens.push({
         type: 'result',
         data: {}
       });
-      
+
       setScreenList(screens);
       setCurrentScreenIndex(0); // 첫 번째 화면부터 시작
-      
-    }catch(err){
+
+    } catch (err) {
       console.log("오류 발생함")
     }
   }
@@ -176,7 +177,7 @@ const StudyResult = () => {
   }
 
   useEffect(() => {
-    if(recentStudy && recentStudy[testType] && recentStudy[testType].status ===  "learning") {
+    if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "learning") {
       navigate('/class');
     }
   }, [isRecentStudyLoading]);
@@ -206,8 +207,8 @@ const StudyResult = () => {
       status: "learning",
       progress_index: 0,
       study_data: tempTestQuestions,
-      updated_at : new Date().toISOString(),
-      created_at : new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     })
     navigate('/take-test', {
       state: {
@@ -230,14 +231,14 @@ const StudyResult = () => {
     // 학습 결과 화면 (마지막 화면)
     if (currentScreen.type === 'result') {
       return (
-        <motion.div 
+        <motion.div
           key={currentScreenIndex}
           initial={{ x: '100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: '-100%', opacity: 0 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 300, 
+          transition={{
+            type: "spring",
+            stiffness: 300,
             damping: 30,
             duration: 0.5
           }}
@@ -264,26 +265,38 @@ const StudyResult = () => {
             overflow-y-auto
           '>
             {testQuestions.map((question, index) => (
-            <div key={index} className={`
+              <div key={index} className={`
               flex flex-col items-center gap-[10px] 
               px-[20px] py-[15px]
               rounded-[12px]
               ${question.isCorrect ? 'bg-[#E4FFE8]' : 'bg-[#FFEBEC]'}  
             `}>
-              <div className='flex flex-1 items-center gap-[10px] w-full'>
-                {question.isCorrect ? (
-                  <Circle size={24} weight="bold" className='text-[#17E937]' />
-                ) : (
-                  <X size={24} weight="bold" className='text-[#FF585B]' />
-                )}
-                <div className='flex flex-col flex-1 gap-[5px]'>
-                  <h3 className="text-[16px] font-[700]">{question.origin}</h3>
-                  <p className="text-[12px] font-[400] whitespace-pre-wrap">{question.meanings.map((meaning, index) => (
-                    meaning + (index !== question.meanings.length - 1 ? ', ' : '')
-                  )).join(' ')}</p>
+                <div className='flex flex-1 items-center gap-[10px] w-full'>
+                  {question.isCorrect ? (
+                    <Circle size={24} weight="bold" className='text-[#17E937]' />
+                  ) : (
+                    <X size={24} weight="bold" className='text-[#FF585B]' />
+                  )}
+                  <div className='flex flex-col flex-1 gap-[5px]'>
+                    <h3 className="text-[16px] font-[700]">
+                      <span
+                        onClick={() => getTextSound(question.origin, "en")}
+                        className="cursor-pointer"
+                      >
+                        {question.origin}
+                      </span>
+                    </h3>
+                    <p className="text-[12px] font-[400] whitespace-pre-wrap">
+                      <span
+                        onClick={() => getTextSound(question.meanings.join(", "), "ko")}
+                        className="cursor-pointer"
+                      >
+                        {question.meanings.join(', ')}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
             ))}
           </div>
           <div
@@ -295,47 +308,47 @@ const StudyResult = () => {
             style={{
               background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, .5) 100%)'
             }}
-            >
-              {testType !== "today" && (
-                <motion.button 
-                  className="
+          >
+            {testType !== "today" && (
+              <motion.button
+                className="
                     flex-1
                     h-[45px]
                     rounded-[8px]
                     bg-[#ccc]
                     text-[#fff] text-[16px] font-[700]
                   "
-                  onClick={() => {
-                    vibrate({ duration: 5 });
-                    onClickTestAgain();
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 500, 
-                    damping: 15
-                  }}
-                >테스트 다시 하기</motion.button>
-              )}
-              <motion.button
-                className="
+                onClick={() => {
+                  vibrate({ duration: 5 });
+                  onClickTestAgain();
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 15
+                }}
+              >테스트 다시 하기</motion.button>
+            )}
+            <motion.button
+              className="
                   flex-1
                   h-[45px]
                   rounded-[8px]
                   bg-[#FF8DD4]
                   text-[#fff] text-[16px] font-[700]
                 "
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  onClickEndStudy();
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-              >학습 종료</motion.button>
+              onClick={() => {
+                vibrate({ duration: 5 });
+                onClickEndStudy();
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 15
+              }}
+            >학습 종료</motion.button>
           </div>
         </motion.div>
       );
@@ -348,27 +361,27 @@ const StudyResult = () => {
       // 단어 학습 갯수와 정답 수를 이용한 멘트
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img 
-            src={WordsStudied} 
-            alt="단어 학습" 
+          <motion.img
+            src={WordsStudied}
+            alt="단어 학습"
             className='w-[100px] h-[100px] object-contain'
             initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{ 
-              scale: 1, 
-              opacity: 1, 
+            animate={{
+              scale: 1,
+              opacity: 1,
               rotate: 0,
               y: [0, -10, 0]
             }}
-            transition={{ 
+            transition={{
               scale: {
-                type: "spring", 
-                stiffness: 200, 
+                type: "spring",
+                stiffness: 200,
                 damping: 15,
                 duration: 0.6
               },
               rotate: {
-                type: "spring", 
-                stiffness: 200, 
+                type: "spring",
+                stiffness: 200,
                 damping: 15,
                 duration: 0.6
               },
@@ -384,11 +397,11 @@ const StudyResult = () => {
               }
             }}
           />
-          <motion.p 
+          <motion.p
             className='text-[16px] font-[700]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ 
+            transition={{
               delay: 0.3,
               duration: 0.5
             }}
@@ -401,17 +414,17 @@ const StudyResult = () => {
       // 데일리 미션 달성
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img 
-            src={DailyMissionComplete} 
-            alt="데일리 미션 완료" 
+          <motion.img
+            src={DailyMissionComplete}
+            alt="데일리 미션 완료"
             className='w-[100px] h-[100px] object-contain'
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
+            animate={{
               scale: [0, 1.2, 1, 1.1, 1],
               opacity: 1,
               rotate: [0, 5, -5, 0]
             }}
-            transition={{ 
+            transition={{
               scale: {
                 type: "tween",
                 ease: "easeOut",
@@ -430,11 +443,11 @@ const StudyResult = () => {
               }
             }}
           />
-          <motion.p 
+          <motion.p
             className='text-[16px] font-[700]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ 
+            transition={{
               delay: 0.3,
               duration: 0.5
             }}
@@ -447,24 +460,24 @@ const StudyResult = () => {
       // 업적 달성
       const goal = currentScreen.data.goal;
       if (!goal) return null;
-      
+
       const goalType = goal?.type || '단어왕';
       const goalLevel = goal?.level || 0;
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[20px]'>
           {/* 업적 이미지와 레벨 표시 */}
-          <motion.div 
+          <motion.div
             className="relative h-[70px]"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: 1, 
+            animate={{
+              scale: 1,
               opacity: 1,
               y: [0, -8, 0]
             }}
-            transition={{ 
+            transition={{
               scale: {
-                type: "spring", 
-                stiffness: 200, 
+                type: "spring",
+                stiffness: 200,
                 damping: 15,
                 duration: 0.6
               },
@@ -480,16 +493,16 @@ const StudyResult = () => {
               }
             }}
           >
-            <img 
-              src={ACHIEVEMENT_IMAGES[goalType]} 
+            <img
+              src={ACHIEVEMENT_IMAGES[goalType]}
               alt={goalType}
               className="absolute bottom-[10px] left-[50%] translate-x-[-50%] w-[60px] h-[60px] object-contain"
             />
-            <div 
+            <div
               className="w-[60px] h-[60px] rounded-[50%]"
               style={getAchievementBackgroundStyle(goalLevel)}
             ></div>
-            <span 
+            <span
               className="
                 absolute bottom-[0] left-[50%] 
                 translate-x-[-50%]
@@ -502,11 +515,11 @@ const StudyResult = () => {
               <span className="text-[10px]">LV.</span>{goalLevel}
             </span>
           </motion.div>
-          <motion.p 
+          <motion.p
             className='text-[16px] font-[700]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ 
+            transition={{
               delay: 0.5,
               duration: 0.5
             }}
@@ -519,17 +532,17 @@ const StudyResult = () => {
       // 보석 획득
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img 
-            src={gemImg} 
-            alt="보석" 
+          <motion.img
+            src={gemImg}
+            alt="보석"
             className='w-[100px] h-[100px] object-contain'
             initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{ 
+            animate={{
               scale: [0, 1.3, 1, 1.15, 1],
               opacity: 1,
               rotate: [0, 10, -10, 0]
             }}
-            transition={{ 
+            transition={{
               scale: {
                 type: "tween",
                 ease: "easeOut",
@@ -548,11 +561,11 @@ const StudyResult = () => {
               }
             }}
           />
-          <motion.p 
+          <motion.p
             className='text-[16px] font-[700]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ 
+            transition={{
               delay: 0.3,
               duration: 0.5
             }}
@@ -592,9 +605,9 @@ const StudyResult = () => {
             initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '-100%', opacity: 0 }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 300, 
+            transition={{
+              type: "spring",
+              stiffness: 300,
               damping: 30,
               duration: 0.5
             }}
@@ -609,9 +622,9 @@ const StudyResult = () => {
               {/* 핑크 글로우 배경 효과 */}
               {/* ResultItemBackground01: 크기 변화 + 회전 + 섬광 효과 */}
               <div className='absolute top-[50%] left-[50%] z-10 translate-x-[-50%] translate-y-[-50%] w-[230px] h-[230px]'>
-                <motion.img 
-                  src={ResultItemBackground01} 
-                  alt="결과 아이템 배경" 
+                <motion.img
+                  src={ResultItemBackground01}
+                  alt="결과 아이템 배경"
                   className='w-full h-full object-contain'
                   animate={{
                     rotate: [0, 360, 720],
@@ -627,9 +640,9 @@ const StudyResult = () => {
               </div>
               {/* ResultItemBackground02: 투명도 + 확대/축소 */}
               <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[757px] h-[600px]'>
-                <motion.img 
-                  src={ResultItemBackground02} 
-                  alt="결과 아이템 배경" 
+                <motion.img
+                  src={ResultItemBackground02}
+                  alt="결과 아이템 배경"
                   className='w-full h-full object-contain'
                   animate={{
                     scale: [1, 1.05, 1],
@@ -643,7 +656,7 @@ const StudyResult = () => {
               </div>
 
               {/* 콘텐츠 */}
-              
+
               <div className='relative z-10 w-full flex flex-col items-center justify-center'>
                 {content}
               </div>
@@ -660,7 +673,7 @@ const StudyResult = () => {
                 background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, .5) 100%)'
               }}
             >
-              <motion.button 
+              <motion.button
                 className="
                   w-full
                   h-[45px]
@@ -673,9 +686,9 @@ const StudyResult = () => {
                   handleNextScreen();
                 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
                   damping: 15
                 }}
               >확인</motion.button>

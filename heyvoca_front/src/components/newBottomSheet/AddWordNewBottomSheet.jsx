@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useVocabulary } from '../../context/VocabularyContext';  
+import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { backendUrl, fetchDataAsync } from '../../utils/common';
+import { backendUrl, fetchDataAsync, getTextSound } from '../../utils/common';
 import { CaretDown, Plus, Pencil, Trash } from '@phosphor-icons/react';
 import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
 import postMessageManager from '../../utils/postMessageManager';
 import { IconCamera } from '../../assets/svg/icon';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
-const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) => {
+const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = null }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { addWord, updateWord, getWord, deleteWord, vocabularySheets } = useVocabulary();
@@ -84,7 +84,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
       if (originalWord && vocabularyId !== currentStateRef.current.vocabularyId) {
         await addWord(currentStateRef.current.vocabularyId, originalWord);
         await deleteWord(vocabularyId, currentStateRef.current.id);
-      }else{ 
+      } else {
         const updates = {
           origin: currentStateRef.current.origin,
           meanings: currentStateRef.current.meanings,
@@ -138,7 +138,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         false,
         null
       );
-      if(response.code != 200) return alert('단어 검색 실패');
+      if (response.code != 200) return alert('단어 검색 실패');
       setWordSearchResults(response.data);
     } catch (error) {
       console.error('단어 검색 실패:', error);
@@ -148,7 +148,8 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
     }
   };
 
-  const handleWordSelect = ({word, meanings, examples}) => {
+  const handleWordSelect = ({ word, meanings, examples }) => {
+    getTextSound(word, "en");
     setWordSearchResults(null);
     currentStateRef.current = {
       ...currentStateRef.current,
@@ -166,7 +167,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
 
   // 앱에서 단어 추가 메시지 처리 핸들러
   const handleAddWordFromApp = useCallback((message) => {
-    
+
     const { data } = message;
     if (data) {
       // 단어 설정
@@ -178,7 +179,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         origin: e.exam_en,
         meaning: e.exam_ko
       })) : [];
-      
+
       // 기존 handleWordSelect 로직 재사용
       setWordSearchResults(null);
       currentStateRef.current = {
@@ -214,10 +215,10 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         if (response.code === 200) {
           // 백엔드에서 전처리된 결과 리스트를 앱에 전달 (word, meaning만)
           const matched_words = response.data.matched_words;
-          
+
           // 처리된 데이터를 앱으로 전달
           postMessageManager.sendMessageToReactNative('filteredWords', matched_words);
-          
+
         } else {
           console.error('백엔드 OCR 처리 실패:', response);
           alert('OCR 처리에 실패했습니다.');
@@ -232,7 +233,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
   // OCR 결과 리스너 등록
   useEffect(() => {
     postMessageManager.setupOCRResult(handleOCRResult);
-    
+
     // 컴포넌트 언마운트 시 리스너 제거
     return () => {
       postMessageManager.removeOCRResult();
@@ -242,7 +243,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
   // addWord 리스너 등록
   useEffect(() => {
     postMessageManager.setupAddWord(handleAddWordFromApp);
-    
+
     // 컴포넌트 언마운트 시 리스너 제거
     return () => {
       postMessageManager.removeAddWord();
@@ -283,12 +284,12 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         p-[20px] pb-[105px]
         overflow-y-auto
       ">
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -298,7 +299,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
           </h3>
           <div>
             <div className="relative">
-              <select 
+              <select
                 disabled={id ? false : true}
                 value={currentStateRef.current.vocabularyId || ''}
                 onChange={(e) => {
@@ -320,15 +321,15 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                   outline-none
                   transition-colors
                   appearance-none
-                  ${id ? false : true ? 
-                    'border-[#CCCCCC] bg-[#F5F5F5] text-[#999999]' : 
+                  ${id ? false : true ?
+                    'border-[#CCCCCC] bg-[#F5F5F5] text-[#999999]' :
                     'border-[#ccc] text-[#111] focus:border-[#FF8DD4]'
                   }
                 `}
               >
                 {vocabularySheets.map((vocabulary) => (
-                  <option 
-                    value={vocabulary.id} 
+                  <option
+                    value={vocabulary.id}
                     key={vocabulary.id}
                   >
                     {vocabulary.title}
@@ -341,12 +342,12 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             </div>
           </div>
         </div>
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -355,7 +356,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             단어<strong className="text-[#FF8DD4]">*</strong>
           </h3>
           <div className="relative">
-            <input 
+            <input
               ref={wordInputRef}
               defaultValue={currentStateRef.current.origin || ''}
               onChange={(e) => {
@@ -366,7 +367,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                 };
                 searchWord(e.target.value);
               }}
-              type="text" 
+              type="text"
               placeholder="단어를 입력하세요"
               className="
                 w-full h-[45px]
@@ -386,7 +387,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
           </div>
           {wordSearchResults && wordSearchResults.length > 0 && (
             <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-[#FFEFFA] overflow-y-auto">
-              {wordSearchResults.map(({word, meanings, examples}, index) => (
+              {wordSearchResults.map(({ word, meanings, examples }, index) => (
                 <li
                   key={index}
                   className="flex gap-[10px] pb-[10px] last:pb-0 last:border-b-0 border-b-[1px] border-[#DDDDDD] cursor-pointer"
@@ -400,8 +401,8 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                       const searchWord = wordInputRef.current.value.toLowerCase();
                       const currentWord = word.toLowerCase();
                       const startIndex = currentWord.indexOf(searchWord);
-                      const isHighlighted = startIndex !== -1 && 
-                        i >= startIndex && 
+                      const isHighlighted = startIndex !== -1 &&
+                        i >= startIndex &&
                         i < startIndex + searchWord.length;
                       return (
                         <span key={i} style={{ color: isHighlighted ? '#FF8DD4' : '#111' }}>{char}</span>
@@ -414,12 +415,12 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             </ul>
           )}
         </div>
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -428,7 +429,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             의미<strong className="text-[#FF8DD4]">*</strong>
           </h3>
           <div>
-            <input 
+            <input
               ref={meaningsInputRef}
               defaultValue={currentStateRef.current.meanings.join(', ') || ''}
               onChange={e => {
@@ -442,7 +443,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                 //   meanings: e.target.value.split(',').map(meaning => meaning.trim())
                 // });
               }}
-              type="text" 
+              type="text"
               placeholder="의미를 입력하세요"
               className="
                 w-full h-[45px]
@@ -456,13 +457,13 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             />
           </div>
         </div>
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
           <div className="flex justify-between items-center">
-            <h3 
+            <h3
               className="
                 text-[14px] font-[700] text-[#111] 
               dark:text-[#fff]
@@ -470,15 +471,15 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             >
               예문
             </h3>
-            <button 
+            <button
               className="text-[18px] text-[#FF8DD4]"
               onClick={async () => {
                 vibrate({ duration: 5 });
                 currentStateRef.current = {
                   ...currentStateRef.current,
-                  origin : wordInputRef.current.value,
-                  meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
-                  examples : examplesState
+                  origin: wordInputRef.current.value,
+                  meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+                  examples: examplesState
                 };
                 // setWordData({
                 //   ...wordData,
@@ -494,7 +495,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
                   hideUnderlying: true,
                 });
                 console.log(`exampleResult: ${JSON.stringify(exampleResult)}`);
-                if(!exampleResult || exampleResult.cancelled) return;
+                if (!exampleResult || exampleResult.cancelled) return;
                 setExamplesState([...examplesState, exampleResult.example]);
 
                 // setExampleSetType({
@@ -510,86 +511,92 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             </button>
           </div>
           <ul className="flex flex-col gap-[8px]">
-            {examplesState.map(({id, origin, meaning}, index) => (
-            <li key={index} 
-              className="
+            {examplesState.map(({ id, origin, meaning }, index) => (
+              <li key={index}
+                className="
                 flex flex-col gap-[5px] 
                 p-[15px] 
                 rounded-[8px]
                 bg-[#FFEFFA]
               "
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="text-[14px] font-[600] text-[#000] dark:text-[#fff]">
-                  {index + 1}
-                </h2>
-                <div className="
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[14px] font-[600] text-[#000] dark:text-[#fff]">
+                    {index + 1}
+                  </h2>
+                  <div className="
                   flex items-center gap-[8px]
                   text-[18px]
                 ">
-                  <button className="text-[#FF8DD4]" onClick={async () => {
-                    vibrate({ duration: 5 });
-                    currentStateRef.current = {
-                      ...currentStateRef.current,
-                      origin : wordInputRef.current.value,
-                      meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
-                      examples : examplesState
-                    };
-                    // setWordData({
-                    //   ...wordData,
-                    //   origin : wordInputRef.current.value,
-                    //   meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
-                    //   examples : examplesState
-                    // })
-                    const exampleResult = await pushAwaitNewBottomSheet(SetWordExampleNewBottomSheet, {
-                      examples: examplesState,
-                      setType: "edit",
-                      exampleIndex: index + 1,
-                    }, {
-                      hideUnderlying: true,
-                    });
-                    console.log(`exampleResult: ${JSON.stringify(exampleResult)}`);
-                    if(!exampleResult || exampleResult.cancelled) return;
-                    setExamplesState(examplesState.map((ex, exIdx) =>
-                      exIdx === (exampleResult.exampleIndex - 1) ? exampleResult.example : ex
-                    ));
-                    
-                    // setExampleSetType({
-                    //   isExampleSet: true,
-                    //   setType: "edit",
-                    //   exampleIndex: index + 1,
-                    // })}
-                  }}
-                  >
-                    <Pencil />
-                  </button>
-                  <button className="text-[red]" onClick={() => {
-                    vibrate({ duration: 5 });
-                    setExamplesState(examplesState.filter(example => example.id !== id));
-                  }}>
-                    <Trash />
-                  </button>
+                    <button className="text-[#FF8DD4]" onClick={async () => {
+                      vibrate({ duration: 5 });
+                      currentStateRef.current = {
+                        ...currentStateRef.current,
+                        origin: wordInputRef.current.value,
+                        meanings: meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+                        examples: examplesState
+                      };
+                      // setWordData({
+                      //   ...wordData,
+                      //   origin : wordInputRef.current.value,
+                      //   meanings : meaningsInputRef.current.value.split(',').map(meaning => meaning.trim()),
+                      //   examples : examplesState
+                      // })
+                      const exampleResult = await pushAwaitNewBottomSheet(SetWordExampleNewBottomSheet, {
+                        examples: examplesState,
+                        setType: "edit",
+                        exampleIndex: index + 1,
+                      }, {
+                        hideUnderlying: true,
+                      });
+                      console.log(`exampleResult: ${JSON.stringify(exampleResult)}`);
+                      if (!exampleResult || exampleResult.cancelled) return;
+                      setExamplesState(examplesState.map((ex, exIdx) =>
+                        exIdx === (exampleResult.exampleIndex - 1) ? exampleResult.example : ex
+                      ));
+
+                      // setExampleSetType({
+                      //   isExampleSet: true,
+                      //   setType: "edit",
+                      //   exampleIndex: index + 1,
+                      // })}
+                    }}
+                    >
+                      <Pencil />
+                    </button>
+                    <button className="text-[red]" onClick={() => {
+                      vibrate({ duration: 5 });
+                      setExamplesState(examplesState.filter(example => example.id !== id));
+                    }}>
+                      <Trash />
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
-                  <span>
-                  {origin && wordInputRef.current ? 
-                    origin.split(wordInputRef.current).map((part, i, arr) => (
-                      i < arr.length - 1 ? (
-                        <React.Fragment key={i}>
-                          {part}<strong>{wordInputRef.current}</strong>
-                        </React.Fragment>
-                      ) : part
-                    )) : origin}
-                  </span>
-                  <br />
-                  <span>
-                  {meaning}
-                  </span>
-                </p>
-              </div>
-            </li>
+                <div>
+                  <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => getTextSound(origin, "en")}
+                    >
+                      {origin && wordInputRef.current ?
+                        origin.split(wordInputRef.current).map((part, i, arr) => (
+                          i < arr.length - 1 ? (
+                            <React.Fragment key={i}>
+                              {part}<strong>{wordInputRef.current}</strong>
+                            </React.Fragment>
+                          ) : part
+                        )) : origin}
+                    </span>
+                    <br />
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => getTextSound(meaning, "ko")}
+                    >
+                      {meaning}
+                    </span>
+                  </p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>
@@ -599,7 +606,7 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
         flex items-center justify-between gap-[15px] 
         p-[20px]
       ">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -612,13 +619,13 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -626,23 +633,23 @@ const AddWordNewBottomSheet = ({vocabularyId=null, dictionaryId=null, id=null}) 
             bg-[#FF8DD4]
             text-[#fff] text-[16px] font-[700]
           "
-          onClick={() =>  {
+          onClick={() => {
             vibrate({ duration: 5 });
-            currentStateRef.current.mode === "add" 
+            currentStateRef.current.mode === "add"
               ? handleAdd()
               : handleEdit()
-            }
+          }
           }
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >{id ? "수정" : "추가"}</motion.button>
       </div>
     </div>
-  ) 
+  )
 
   // return (
   //   !exampleSetType.isExampleSet ? (

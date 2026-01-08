@@ -4,7 +4,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { getTextSound } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
-import { PencilSimple, Trash} from '@phosphor-icons/react';
+import { PencilSimple, Trash } from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from './AddWordNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
@@ -12,7 +12,7 @@ import { vibrate } from '../../utils/osFunction';
 
 const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
-  
+
   const { getWord } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushAwaitNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
@@ -46,7 +46,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
 
   // 단어 삭제 함수
   const handleDelete = async () => {
-    const deleteResult = await pushAwaitNewBottomSheet(DeleteWordNewBottomSheet, { vocabularyId, id },{
+    const deleteResult = await pushAwaitNewBottomSheet(DeleteWordNewBottomSheet, { vocabularyId, id }, {
       hideUnderlying: true,
     });
     if (deleteResult.cancelled) {
@@ -54,21 +54,21 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     }
     popNewBottomSheet();
   };
-  
+
   // 단어가 없으면 로딩 또는 빈 화면 표시
   if (!word) {
     return null;
   }
-  
+
   return (
     <div className="">
       <div className="p-[20px] pb-[10px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex items-center justify-between">
             <div>
-              <MemorizationStatus 
-                repetition={word.repetition} 
-                interval={word.interval} 
+              <MemorizationStatus
+                repetition={word.repetition}
+                interval={word.interval}
                 ef={word.ef}
               />
             </div>
@@ -91,27 +91,10 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               </motion.button>
             </div>
           </div>
-            <div className="flex flex-wrap">
-              <motion.h3
-                onClick={() => {
-                  getTextSound(word.origin, "en");
-                  const spans = document.querySelectorAll(`#word-${id} span`);
-                  spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                  spans.forEach((span, index) => {
-                    span.animate(
-                      [
-                        { color: "#111", offset: 0 },
-                        { color: "#FFFFFF", offset: 0.5 },
-                        { color: "#111", offset: 1 }
-                      ],
-                      { 
-                        duration: 1000, 
-                        delay: index * 50,
-                        easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                      }
-                    );
-                  });
-                }}
+          <div className="flex flex-wrap">
+            <h3 className="text-[20px] font-[700] text-[#111]">
+              <motion.span
+                onClick={() => getTextSound(word.origin, "en")}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{
@@ -119,172 +102,73 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   stiffness: 400,
                   damping: 20
                 }}
+                className="inline-block cursor-pointer"
                 style={{ willChange: 'transform' }}
-                className="
-                  text-[20px] font-[700] text-[#111]
-                  cursor-pointer relative
-                  overflow-hidden
-                  break-words 
-                "
-                id={`word-${id}`}
               >
-                {word.origin.split('').map((char, index) => (
-                  <span
-                    key={index}
-                    className="inline-block"
-                  >
-                    {char}
-                  </span>
-                ))}
-              </motion.h3>
-            </div>
-            <div className="flex flex-wrap">
+                {word.origin}
+              </motion.span>
+            </h3>
+          </div>
+          <div className="flex flex-wrap">
+            <span className="text-[14px] font-[400] text-[#111]">
               <motion.span
-                onClick={() => {
-                  getTextSound(word.meanings.join(", "), "ko");
-                  const spans = document.querySelectorAll(`#meaning-${id} span`);
-                  spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                  spans.forEach((span, index) => {
-                    span.animate(
-                      [
-                        { color: "#111", offset: 0 },
-                        { color: "#FFFFFF", offset: 0.5 },
-                        { color: "#111", offset: 1 }
-                      ],
-                      { 
-                        duration: 1000, 
-                        delay: index * 50,
-                        easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                      }
-                    );
-                  });
-                }}
+                onClick={() => getTextSound(word.meanings.join(", "), "ko")}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{
-                  type: "spring", 
+                  type: "spring",
                   stiffness: 400,
                   damping: 20
                 }}
+                className="inline-block cursor-pointer"
                 style={{ willChange: 'transform' }}
-                className="
-                  text-[14px] font-[400] text-[#111]
-                  cursor-pointer relative
-                  overflow-hidden
-                  break-words
-                "
-                id={`meaning-${id}`}
               >
-                {word.meanings.join(", ").split('').map((char, index) => (
-                  <span
-                    key={index}
-                    className="inline-block"
-                  >
-                    {char}
-                  </span>
-                ))}
+                {word.meanings.join(", ")}
               </motion.span>
-            </div>
-            {
-              word.examples?.map((example, index) => (
+            </span>
+          </div>
+          {
+            word.examples?.map((example, index) => (
               <div key={`${id}-${index}`} className="flex flex-col">
-                <motion.span
-                  onClick={() => {
-                    getTextSound(example.origin.join(", "), "ko");
-                    const spans = document.querySelectorAll(`#example-${id}-${index} span`);
-                    spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                    spans.forEach((span, index) => {
-                      span.animate(
-                        [
-                          { color: "#111", offset: 0 },
-                          { color: "#FFFFFF", offset: 0.5 },
-                          { color: "#111", offset: 1 }
-                        ],
-                        { 
-                          duration: 1000, 
-                          delay: index * 50,
-                          easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                        }
-                      );
-                    });
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{
-                    type: "spring", 
-                    stiffness: 400,
-                    damping: 20
-                  }}
-                  style={{ willChange: 'transform' }}
-                  className="
-                    text-[14px] font-[400] text-[#111]
-                    cursor-pointer relative
-                    overflow-hidden
-                    break-words
-                  "
-                  id={`example-${id}-${index}`}
-                >
-                  {example.origin.split('').map((char, index) => (
-                    <span
-                      key={index}
-                      className="inline-block"
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </motion.span>
-                <motion.span
-                  onClick={() => {
-                    getTextSound(example.meaning, "ko");
-                    const spans = document.querySelectorAll(`#example-${id}-${index}-meaning span`);
-                    spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                    spans.forEach((span, index) => {
-                      span.animate(
-                        [
-                          { color: "#111", offset: 0 },
-                          { color: "#FFFFFF", offset: 0.5 },
-                          { color: "#111", offset: 1 }
-                        ],
-                        { 
-                          duration: 1000, 
-                          delay: index * 50,
-                          easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                        }
-                      );
-                    });
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{
-                    type: "spring", 
-                    stiffness: 400,
-                    damping: 20
-                  }}
-                  style={{ willChange: 'transform' }}
-                  className="
-                    text-[14px] font-[400] text-[#111]
-                    cursor-pointer relative
-                    overflow-hidden
-                    break-words
-                  "
-                  id={`example-${id}-${index}-meaning`}
-                >
-                  {example.meaning.split('').map((char, index) => (
-                    <span
-                      key={index}
-                      className="inline-block"
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </motion.span>
+                <span className="text-[14px] font-[400] text-[#111]">
+                  <motion.span
+                    onClick={() => getTextSound(example.origin, "en")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="inline-block cursor-pointer"
+                    style={{ willChange: 'transform' }}
+                  >
+                    {example.origin}
+                  </motion.span>
+                </span>
+                <span className="text-[14px] font-[400] text-[#111]">
+                  <motion.span
+                    onClick={() => getTextSound(example.meaning, "ko")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="inline-block cursor-pointer"
+                    style={{ willChange: 'transform' }}
+                  >
+                    {example.meaning}
+                  </motion.span>
+                </span>
               </div>
             ))
           }
         </div>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -297,9 +181,9 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
           style={{ willChange: 'transform' }}

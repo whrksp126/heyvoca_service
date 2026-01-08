@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT, getTextSound } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
 
-export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
+export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -51,95 +51,97 @@ export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
             rounded-[12px]
             bg-[#E4FFE8]
           ">
-            <div 
+            <div
               className="
                 flex flex-col gap-[10px] flex-1
               "
             >
               <div className="flex flex-wrap">
                 <h3
-                  onClick={() => {
-                    getTextSound(correctOption.origin, "en");
-                    const spans = document.querySelectorAll(`#correct-word-${correctOption.id} span`);
-                    spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                    spans.forEach((span, index) => {
-                      span.animate(
-                        [
-                          { color: "#09C92C", offset: 0 },
-                          { color: "#FFFFFF", offset: 0.5 },
-                          { color: "#09C92C", offset: 1 }
-                        ],
-                        { 
-                          duration: 1000, 
-                          delay: index * 50,
-                          easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                        }
-                      );
-                    });
-                  }}
                   className="
                     text-[16px] font-[700] text-[#09C92C]
-                    cursor-pointer relative
+                    relative
                     overflow-hidden
                     break-words 
                   "
-                  id={`correct-word-${correctOption.id}`}
                 >
-                  {correctOption.origin.split('').map((char, index) => (
-                    <span
-                      key={index}
-                      className="inline-block"
-                    >
-                      {char}
-                    </span>
-                  ))}
+                  <motion.span
+                    onClick={() => getTextSound(correctOption.origin, "en")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="inline-block cursor-pointer"
+                    style={{ 调节willChange: 'transform' }}
+                  >
+                    {correctOption.origin}
+                  </motion.span>
                 </h3>
               </div>
               <div className="flex flex-wrap">
                 <span
-                  onClick={() => {
-                    getTextSound(correctOption.meanings.join(", "), "ko");
-                    const spans = document.querySelectorAll(`#correct-meaning-${correctOption.id} span`);
-                    spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                    spans.forEach((span, index) => {
-                      span.animate(
-                        [
-                          { color: "#111", offset: 0 },
-                          { color: "#FFFFFF", offset: 0.5 },
-                          { color: "#111", offset: 1 }
-                        ],
-                        { 
-                          duration: 1000, 
-                          delay: index * 50,
-                          easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                        }
-                      );
-                    });
-                  }}
                   className="
                     text-[12px] font-[400] text-[#333]
-                    cursor-pointer relative
+                    relative
                     overflow-hidden
                     break-words
                   "
-                  id={`correct-meaning-${correctOption.id}`}
                 >
-                  {correctOption.meanings.join(", ").split('').map((char, index) => (
-                    <span
-                      key={index}
-                      className="inline-block"
-                    >
-                      {char}
-                    </span>
-                  ))}
+                  <motion.span
+                    onClick={() => getTextSound(correctOption.meanings.join(", "), "ko")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 20
+                    }}
+                    className="inline-block cursor-pointer"
+                    style={{ willChange: 'transform' }}
+                  >
+                    {correctOption.meanings.join(", ")}
+                  </motion.span>
                 </span>
               </div>
               {correctOption.examples && correctOption.examples.length > 0 && (
                 <div className="flex flex-col gap-[8px]">
                   {correctOption.examples.map((example, index) => (
                     <div key={`correct_example_${index}`} className="flex flex-col">
-                      <p className="text-[12px] font-[400] text-[#333]">{example.origin}</p>
-                      <p className="text-[12px] font-[400] text-[#333]">{example.meaning}</p>
+                      <p className="text-[12px] font-[400] text-[#333]">
+                        <motion.span
+                          onClick={() => getTextSound(example.origin, "en")}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 20
+                          }}
+                          className="inline-block cursor-pointer"
+                          style={{ willChange: 'transform' }}
+                        >
+                          {example.origin}
+                        </motion.span>
+                      </p>
+                      <p className="text-[12px] font-[400] text-[#333]">
+                        <motion.span
+                          onClick={() => getTextSound(example.meaning, "ko")}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 20
+                          }}
+                          className="inline-block cursor-pointer"
+                          style={{ willChange: 'transform' }}
+                        >
+                          {example.meaning}
+                        </motion.span>
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -164,95 +166,97 @@ export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
                   bg-[#F5F5F5]
                 "
               >
-                <div 
+                <div
                   className="
                     flex flex-col gap-[10px] flex-1
                   "
                 >
                   <div className="flex flex-wrap">
                     <h3
-                      onClick={() => {
-                        getTextSound(option.origin, "en");
-                        const spans = document.querySelectorAll(`#word-${option.id} span`);
-                        spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                        spans.forEach((span, idx) => {
-                          span.animate(
-                            [
-                              { color: "#111", offset: 0 },
-                              { color: "#FFFFFF", offset: 0.5 },
-                              { color: "#111", offset: 1 }
-                            ],
-                            { 
-                              duration: 1000, 
-                              delay: idx * 50,
-                              easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                            }
-                          );
-                        });
-                      }}
                       className="
                         text-[16px] font-[700] text-[#111]
-                        cursor-pointer relative
+                        relative
                         overflow-hidden
                         break-words 
                       "
-                      id={`word-${option.id}`}
                     >
-                      {option.origin.split('').map((char, charIndex) => (
-                        <span
-                          key={charIndex}
-                          className="inline-block"
-                        >
-                          {char}
-                        </span>
-                      ))}
+                      <motion.span
+                        onClick={() => getTextSound(option.origin, "en")}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 20
+                        }}
+                        className="inline-block cursor-pointer"
+                        style={{ willChange: 'transform' }}
+                      >
+                        {option.origin}
+                      </motion.span>
                     </h3>
                   </div>
                   <div className="flex flex-wrap">
                     <span
-                      onClick={() => {
-                        getTextSound(option.meanings.join(", "), "ko");
-                        const spans = document.querySelectorAll(`#meaning-${option.id} span`);
-                        spans.forEach(span => span.getAnimations().forEach(anim => anim.cancel()));
-                        spans.forEach((span, idx) => {
-                          span.animate(
-                            [
-                              { color: "#111", offset: 0 },
-                              { color: "#FFFFFF", offset: 0.5 },
-                              { color: "#111", offset: 1 }
-                            ],
-                            { 
-                              duration: 1000, 
-                              delay: idx * 50,
-                              easing: "cubic-bezier(0.4, 0, 0.2, 1)"
-                            }
-                          );
-                        });
-                      }}
                       className="
                         text-[12px] font-[400] text-[#111]
-                        cursor-pointer relative
+                        relative
                         overflow-hidden
                         break-words
                       "
-                      id={`meaning-${option.id}`}
                     >
-                      {option.meanings.join(", ").split('').map((char, charIndex) => (
-                        <span
-                          key={charIndex}
-                          className="inline-block"
-                        >
-                          {char}
-                        </span>
-                      ))}
+                      <motion.span
+                        onClick={() => getTextSound(option.meanings.join(", "), "ko")}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 20
+                        }}
+                        className="inline-block cursor-pointer"
+                        style={{ willChange: 'transform' }}
+                      >
+                        {option.meanings.join(", ")}
+                      </motion.span>
                     </span>
                   </div>
                   {option.examples && option.examples.length > 0 && (
                     <div className="flex flex-col gap-[8px]">
                       {option.examples.map((example, exIndex) => (
                         <div key={`option_example_${index}_${exIndex}`} className="flex flex-col">
-                          <p className="text-[12px] font-[400] text-[#333]">{example.origin}</p>
-                          <p className="text-[12px] font-[400] text-[#333]">{example.meaning}</p>
+                          <p className="text-[12px] font-[400] text-[#333]">
+                            <motion.span
+                              onClick={() => getTextSound(example.origin, "en")}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 20
+                              }}
+                              className="inline-block cursor-pointer"
+                              style={{ willChange: 'transform' }}
+                            >
+                              {example.origin}
+                            </motion.span>
+                          </p>
+                          <p className="text-[12px] font-[400] text-[#333]">
+                            <motion.span
+                              onClick={() => getTextSound(example.meaning, "ko")}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 20
+                              }}
+                              className="inline-block cursor-pointer"
+                              style={{ willChange: 'transform' }}
+                            >
+                              {example.meaning}
+                            </motion.span>
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -271,7 +275,7 @@ export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
         flex items-center justify-between gap-[15px] p-[20px]
         bg-[#fff]/80 backdrop-blur-[1px]
       ">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -284,9 +288,9 @@ export const ProblemDataNewBottomSheet = ({onCancel, options, resultIndex}) => {
             onCancel || handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >닫기</motion.button>
