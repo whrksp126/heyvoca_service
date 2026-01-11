@@ -9,6 +9,8 @@ import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBotto
 import { updateSM2, analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 import { vibrate } from '../../utils/osFunction';
+import { playSuccessSound, playErrorSound } from '../../utils/audio';
+
 
 const iconComponentMap = {
   WarningCircle: <WarningCircle size={32} weight="fill" color="#F26A6A" />,
@@ -123,12 +125,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
     if (resultIndex === userSelected) {
-      setIsCorrect(true);
+      playSuccessSound();
+      setTimeout(() => {
+        setIsCorrect(true);
+      }, 200);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
-      setIsCorrect(false);
+      playErrorSound();
+      setTimeout(() => {
+        setIsCorrect(false);
+      }, 50);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = 0;
@@ -173,12 +181,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
     if (resultIndex === index) {
-      setIsCorrect(true);
+      playSuccessSound();
+      setTimeout(() => {
+        setIsCorrect(true);
+      }, 200);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = index;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
-      setIsCorrect(false);
+      playErrorSound();
+      setTimeout(() => {
+        setIsCorrect(false);
+      }, 200);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = index;
       q = 0;
@@ -373,6 +387,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         mb-[15px]
         rounded-[50px]
         bg-[#FF8DD44d]
+        overflow-hidden
       ">
         <motion.div
           className="
@@ -387,12 +402,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ willChange: 'width' }}
         />
-        {/* <span className="
-          absolute top-[50%] right-[10px] translate-y-[-50%]
-          text-[#7B7B7B] text-[10px] font-[600]
+        <span className="
+          absolute right-[10px] top-[50%] translate-y-[-50%]
+          text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
         ">
           {progressBarIndex}/{testQuestions.length}
-        </span> */}
+        </span>
       </motion.div>
 
       <div className="relative middle flex h-full overflow-hidden">

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack, Leaf } from '@phosphor-icons/react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack, Leaf, CaretDown } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 // import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
 import UpdateVocabularyWordsNewFullSheet from './UpdateVocabularyWordsNewFullSheet';
@@ -12,6 +12,7 @@ import MemorizationStatus from "../common/MemorizationStatus";
 // import DeleteWordNewBottomSheet from '../newBottomSheet/DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
+import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
@@ -132,6 +133,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       setScrollTop(0); // 스크롤 위치도 리셋
       scrollTopRef.current = 0;
       lastScrollTopRef.current = 0;
+      setSortBy('updatedAt'); // 단어장이 바뀌면 정렬 초기화
+      setShowSortDropdown(false);
 
       // 스크롤 컨테이너가 있으면 스크롤 위치도 리셋 (다음 프레임에서 실행하여 DOM 업데이트 보장)
       const container = scrollContainerRef.current;
@@ -145,45 +148,63 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     }
   }, [vocabularySheet?.id]);
 
+  const [sortBy, setSortBy] = useState('updatedAt'); // 'updatedAt', 'createdAt', 'alphabetical'
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
+
+  // 정렬 라벨 맵
+  const sortLabels = {
+    updatedAt: '최근 수정순',
+    createdAt: '생성일순',
+    alphabetical: '알파벳순',
+  };
 
   // 표시할 단어 리스트 계산 (React Compiler가 자동으로 메모이제이션)
-  // 최근 수정/생성 순으로 정렬 (updatedAt 기준, 없으면 createdAt 기준)
-  const allDisplayedWords = !vocabularySheet?.words
-    ? []
-    : [...vocabularySheet.words]
+  const allDisplayedWords = useMemo(() => {
+    if (!vocabularySheet?.words) return [];
+
+    return [...vocabularySheet.words]
       .sort((a, b) => {
-        const dateA = new Date(a.updatedAt || a.createdAt || 0);
-        const dateB = new Date(b.updatedAt || b.createdAt || 0);
-        return dateB - dateA; // 최근 날짜가 위로
-      })
-      .slice(0, displayCount);
+        if (sortBy === 'updatedAt') {
+          const dateA = new Date(a.updatedAt || a.createdAt || 0);
+          const dateB = new Date(b.updatedAt || b.createdAt || 0);
+          return dateB - dateA;
+        } else if (sortBy === 'createdAt') {
+          const dateA = new Date(a.createdAt || 0);
+          const dateB = new Date(b.createdAt || b.updatedAt || 0);
+          return dateB - dateA;
+        } else if (sortBy === 'alphabetical') {
+          return (a.origin || "").localeCompare(b.origin || "");
+        }
+        return 0;
+      });
+  }, [vocabularySheet?.words, sortBy]);
+
+  const wordsToShow = allDisplayedWords.slice(0, displayCount);
 
   // 윈도우 기반 렌더링: 보이는 영역 + 버퍼만 렌더링 (성능 최적화)
-  // 아이템이 적을 때는 전체 렌더링 (오버헤드 방지)
-  const shouldUseWindowRendering = allDisplayedWords.length > MAX_RENDERED_ITEMS;
+  const shouldUseWindowRendering = wordsToShow.length > MAX_RENDERED_ITEMS;
 
   const visibleRange = shouldUseWindowRendering ? (() => {
     const container = scrollContainerRef.current;
     if (!container) return { start: 0, end: MAX_RENDERED_ITEMS };
 
     const containerHeight = container.clientHeight;
-    const buffer = Math.ceil(containerHeight / ITEM_HEIGHT_ESTIMATE) + 10; // 위아래 버퍼 증가
+    const buffer = Math.ceil(containerHeight / ITEM_HEIGHT_ESTIMATE) + 10;
 
-    // scrollTop state를 사용하여 리렌더링 트리거
     const currentScrollTop = scrollTop;
     const visibleStartIndex = Math.floor(currentScrollTop / ITEM_HEIGHT_ESTIMATE);
     const startIndex = Math.max(0, visibleStartIndex - buffer);
     const endIndex = Math.min(
-      allDisplayedWords.length,
+      wordsToShow.length,
       startIndex + MAX_RENDERED_ITEMS
     );
 
     return { start: startIndex, end: endIndex };
-  })() : { start: 0, end: allDisplayedWords.length };
+  })() : { start: 0, end: wordsToShow.length };
 
-  const displayedWords = allDisplayedWords.slice(visibleRange.start, visibleRange.end);
+  const displayedWords = wordsToShow.slice(visibleRange.start, visibleRange.end);
 
-  // 더 로드할 단어가 있는지 확인 (React Compiler가 자동으로 메모이제이션)
+  // 더 로드할 단어가 있는지 확인
   const hasMore = vocabularySheet?.words
     ? displayCount < vocabularySheet.words.length
     : false;
@@ -322,6 +343,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id });
   };
 
+  const handleStudyClick = () => {
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(TestSetupNewBottomSheet, {
+      vocabularySheetId: id,
+      maxVocabularyCount: vocabularySheet.words.length,
+      testType: 'test'
+    }, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  };
+
 
 
   return (
@@ -413,6 +446,93 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             <Plus />
           </motion.button>
         </div>
+      </div>
+
+      {/* Filter & Study Section */}
+      <div className="flex items-center justify-between px-[16px] py-[10px]">
+        {/* Sort Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              vibrate({ duration: 5 });
+              setShowSortDropdown(!showSortDropdown);
+            }}
+            className="
+              flex items-center justify-between
+              w-[120px] h-[35px]
+              px-[15px]
+              bg-white
+              border border-[#ccc] rounded-[6px]
+            "
+          >
+            <span className="text-[14px] font-[400] text-[#111]">
+              {sortLabels[sortBy] || '정렬'}
+            </span>
+            <CaretDown size={14} color="#111" />
+          </button>
+
+          <AnimatePresence>
+            {showSortDropdown && (
+              <>
+                <div
+                  className="fixed inset-0 z-[10]"
+                  onClick={() => setShowSortDropdown(false)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="
+                    absolute top-[40px] left-0
+                    w-[120px]
+                    bg-white
+                    border border-[#ccc] rounded-[6px]
+                    shadow-lg
+                    z-[11]
+                    overflow-hidden
+                  "
+                >
+                  {Object.entries(sortLabels).map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        vibrate({ duration: 5 });
+                        setSortBy(key);
+                        setShowSortDropdown(false);
+                      }}
+                      className={`
+                        w-full h-[40px]
+                        px-[15px]
+                        text-left text-[13px]
+                        ${sortBy === key ? 'text-[#FF8DD4] font-[600]' : 'text-[#666]'}
+                        hover:bg-[#F5F5F5]
+                        transition-colors
+                      `}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Study Button */}
+        <motion.button
+          onClick={handleStudyClick}
+          whileTap={{ scale: 0.95 }}
+          className="
+            flex items-center justify-center
+            h-[35px] px-[15px]
+            bg-white
+            border border-[#FF8DD4] rounded-[6px]
+          "
+        >
+          <span className="text-[14px] font-[700] text-[#FF8DD4]">
+            이 단어장으로 학습
+          </span>
+        </motion.button>
       </div>
 
       {/* Content */}
@@ -652,4 +772,3 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 };
 
 export default VocabularyWordsNewFullSheet;
-
