@@ -3,15 +3,19 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
+import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
 import { MEMORY_STATES, getWordMemoryState } from '../utils/common';
+import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
+import { AppHistory } from '../utils/appHistory';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { state } = useLocation();
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
+  const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
@@ -34,7 +38,7 @@ const TakeTest = () => {
   // React Compiler가 자동으로 useCallback 처리
   const setupTestQuestions = (targetMemoryState, vocabularySheetId, count, testType) => {
     let allWords = [];
-    
+
     if (vocabularySheetId !== "all") {
       const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
       if (vocabularySheet) {
@@ -42,7 +46,7 @@ const TakeTest = () => {
       }
     } else {
       // 전체 단어장 선택 시 vocabularySheetId를 각 단어에 추가
-      allWords = vocabularySheets.flatMap(sheet => 
+      allWords = vocabularySheets.flatMap(sheet =>
         sheet.words.map(word => ({
           ...word,
           vocabularySheetId: sheet.id
@@ -53,14 +57,14 @@ const TakeTest = () => {
     // 현재 날짜 (시간 제거, 날짜만 비교)
     const now = new Date();
     now.setHours(0, 0, 0, 0);
-    
+
     // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
     const unlearnedWords = allWords.filter(word => {
       const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
       const interval = word.memoryState?.interval ?? word.interval ?? 0;
       return (!word.nextReview || word.nextReview === null) && repetition === 0 && interval === 0;
     });
-    
+
     // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
     const overdueWords = allWords.filter(word => {
       if (!word.nextReview) return false;
@@ -90,7 +94,7 @@ const TakeTest = () => {
     if (testType === 'today') {
       // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
       selectedWords.push(...sortedOverdueWords.slice(0, count));
-      
+
       // 우선순위 2: 오늘 학습 예정 단어들 (부족한 경우에만)
       if (selectedWords.length < count) {
         const remainingCount = count - selectedWords.length;
@@ -98,7 +102,7 @@ const TakeTest = () => {
         const availableTodayScheduled = todayScheduledWords.filter(w => !selectedWordIds.has(w.id));
         selectedWords.push(...availableTodayScheduled.slice(0, remainingCount));
       }
-      
+
       // 우선순위 3: 미학습 단어들 (부족한 경우에만)
       if (selectedWords.length < count) {
         const remainingCount = count - selectedWords.length;
@@ -106,17 +110,17 @@ const TakeTest = () => {
         const availableUnlearned = unlearnedWords.filter(w => !selectedWordIds.has(w.id));
         selectedWords.push(...availableUnlearned.slice(0, remainingCount));
       }
-      
+
       // 랜덤하게 섞기
       selectedWords = shuffleArray(selectedWords).slice(0, count);
-    } 
+    }
     // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어만
     else if (testType === 'test' || testType === 'exam') {
       // 전체를 선택한 경우: 모든 암기 상태의 단어 포함
       if (targetMemoryState === MEMORY_STATES.ALL) {
         // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
         selectedWords.push(...sortedOverdueWords.slice(0, count));
-        
+
         // 우선순위 2: 오늘 학습 예정 단어들 (부족한 경우에만)
         if (selectedWords.length < count) {
           const remainingCount = count - selectedWords.length;
@@ -124,7 +128,7 @@ const TakeTest = () => {
           const availableTodayScheduled = todayScheduledWords.filter(w => !selectedWordIds.has(w.id));
           selectedWords.push(...availableTodayScheduled.slice(0, remainingCount));
         }
-        
+
         // 우선순위 3: 미학습 단어들 (부족한 경우에만)
         if (selectedWords.length < count) {
           const remainingCount = count - selectedWords.length;
@@ -132,7 +136,7 @@ const TakeTest = () => {
           const availableUnlearned = unlearnedWords.filter(w => !selectedWordIds.has(w.id));
           selectedWords.push(...availableUnlearned.slice(0, remainingCount));
         }
-        
+
         // 우선순위 4: 모든 단어 중 부족한 경우에만 추가
         if (selectedWords.length < count) {
           const remainingCount = count - selectedWords.length;
@@ -140,7 +144,7 @@ const TakeTest = () => {
           const availableWords = allWords.filter(w => !selectedWordIds.has(w.id));
           selectedWords.push(...availableWords.slice(0, remainingCount));
         }
-        
+
         // 랜덤하게 섞기
         selectedWords = shuffleArray(selectedWords).slice(0, count);
       } else {
@@ -153,7 +157,7 @@ const TakeTest = () => {
 
         console.log(`[TakeTest] 목표 암기 상태: ${targetMemoryState}, 찾은 단어 수: ${targetStateWords.length}`);
         console.log('[TakeTest] 전체 단어 수:', allWords.length);
-        
+
         // 디버깅: 첫 번째 단어 정보 출력
         if (targetStateWords.length > 0) {
           const firstWord = targetStateWords[0];
@@ -177,24 +181,24 @@ const TakeTest = () => {
             return memoryState === targetMemoryState;
           });
           selectedWords.push(...overdueTargetStateWords.slice(0, count));
-          
+
           // 우선순위 2: 목표 상태 단어들 중 복습 지연이 아닌 것들 (부족한 경우에만)
           if (selectedWords.length < count) {
             const remainingCount = count - selectedWords.length;
             const selectedWordIds = new Set(selectedWords.map(w => w.id));
-            const availableTargetState = targetStateWords.filter(w => 
-              !selectedWordIds.has(w.id) && 
+            const availableTargetState = targetStateWords.filter(w =>
+              !selectedWordIds.has(w.id) &&
               (!w.nextReview || new Date(w.nextReview) >= now)
             );
             selectedWords.push(...availableTargetState.slice(0, remainingCount));
           }
-          
+
           // 랜덤하게 섞기
           selectedWords = shuffleArray(selectedWords).slice(0, count);
         }
       }
     }
-    
+
     // 문제 생성
     return selectedWords
       .map(word => {
@@ -205,7 +209,7 @@ const TakeTest = () => {
         const options = [word, ...randomOptions];
         const shuffledOptions = options.sort(() => Math.random() - 0.5);
         const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
-        
+
         return {
           ...word,
           options: shuffledOptions,
@@ -219,20 +223,20 @@ const TakeTest = () => {
 
   useEffect(() => {
     const initializeTest = async () => {
-      if(isRecentStudyLoading || isVocabularySheetsLoading) return;
-      if(recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end"){
+      if (isRecentStudyLoading || isVocabularySheetsLoading) return;
+      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         setIsTestQuestionsSetting(false);
         return;
       }
-      if(recentStudy &&  recentStudy[state.testType] && recentStudy[state.testType].status === "learning") {
+      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning") {
         // 학습 중 이면 기존 학습 기록 그대로 적용해서 학습 시작
         setTestQuestions(recentStudy[state.testType].study_data);
         setProgressIndex(recentStudy[state.testType].progress_index);
         setIsTestQuestionsSetting(false);
-      }else{
+      } else {
         // 학습 기록이 없으면 새로운 학습 데이터 생성 후 학습 시작
         console.log("state", state.data.memoryState);
-        
+
         // SM-2 알고리즘 기준으로 학습 데이터 세팅
         const tempTestQuestions = setupTestQuestions(
           state.data.memoryState,
@@ -241,14 +245,14 @@ const TakeTest = () => {
           state.testType
         );
 
-        await updateRecentStudy(state.testType,{
+        await updateRecentStudy(state.testType, {
           ...recentStudy[state.testType],
-          progress_index : 0,
+          progress_index: 0,
           status: "learning",
           type: state.testType,
           study_data: tempTestQuestions,
-          updated_at : new Date().toISOString(),
-          created_at : new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
         });
         setTestQuestions(tempTestQuestions);
         setIsTestQuestionsSetting(false);
@@ -258,12 +262,51 @@ const TakeTest = () => {
     initializeTest();
   }, [isRecentStudyLoading, isVocabularySheetsLoading]);
 
+  // 학습 종료 확인 및 네비게이션 함수
+  const handleStopLearning = async () => {
+    // 1. 이미 바텀시트가 열려있는지 확인 (중복 실행 방지)
+    if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
+      window.newBottomSheetContext.popNewBottomSheet();
+      return;
+    }
+
+    // 2. 학습 종료 확인 바텀시트 표시
+    const ConfirmResult = await pushAwaitNewBottomSheet(
+      ConfirmNewBottomSheet,
+      {
+        title: (
+          <>
+            학습할 단어가 남아있어요.<br />
+            학습을 종료하시겠습니까?😢
+          </>
+        ),
+        btns: {
+          confirm: "종료",
+          cancel: "취소",
+        }
+      },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      }
+    );
+
+    // 3. 결과 처리
+    if (ConfirmResult) {
+      if (AppHistory.canGoBack()) {
+        navigate(-1);
+      } else {
+        navigate('/home');
+      }
+    }
+  };
+
   // 앱 종료 감지 (학습 중에만)
   useEffect(() => {
     let hasPageHideHandled = false;
 
     const handlePageHide = async () => {
-      if(hasPageHideHandled) return;
+      if (hasPageHideHandled) return;
       hasPageHideHandled = true;
       console.log('학습 중 페이지 숨김 감지');
       await updateVocabularySheetAndRecentStudyData();
@@ -272,7 +315,7 @@ const TakeTest = () => {
 
     const handleVisibilityChange = async () => {
       if (document.visibilityState === 'hidden') {
-        if(hasPageHideHandled) return;
+        if (hasPageHideHandled) return;
         hasPageHideHandled = true;
         console.log('학습 중 앱 백그라운드 전환 감지');
         await updateVocabularySheetAndRecentStudyData();
@@ -281,14 +324,17 @@ const TakeTest = () => {
     };
 
     const handleBeforeUnload = async (event) => {
-      if(hasPageHideHandled) return;
+      if (hasPageHideHandled) return;
       hasPageHideHandled = true;
       console.log('학습 중 앱 종료 감지');
       await updateVocabularySheetAndRecentStudyData();
       hasPageHideHandled = false;
     };
 
-    
+
+    // 뒤로가기 핸들러 재정의
+    const originalOnBackPressed = window.onBackPressed;
+    window.onBackPressed = handleStopLearning;
 
     // 이벤트 리스너 등록
     window.addEventListener('pagehide', handlePageHide);
@@ -300,15 +346,18 @@ const TakeTest = () => {
       window.removeEventListener('pagehide', handlePageHide);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
+
+      // 원래 뒤로가기 핸들러 복구
+      window.onBackPressed = originalOnBackPressed;
     };
-  }, [ ]);
+  }, []);
 
   // 
   useEffect(() => {
     const handleUpdateAndNavigate = async () => {
-      if(recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end"){
+      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         await updateVocabularySheetAndRecentStudyData();
-        navigate("/take-test/result" , {state: {testQuestions: testQuestions, testType: state.testType}});
+        navigate("/take-test/result", { state: { testQuestions: testQuestions, testType: state.testType } });
       }
     };
     handleUpdateAndNavigate();
@@ -317,7 +366,7 @@ const TakeTest = () => {
 
   // React Compiler가 자동으로 useCallback 처리
   const updateVocabularySheetAndRecentStudyData = async () => {
-    if(pendingUpdateSheetIds.size > 0){
+    if (pendingUpdateSheetIds.size > 0) {
       // 학습 데이터 업데이트!
       const sheetIds = Array.from(pendingUpdateSheetIds);
       pendingUpdateSheetIds.clear();
@@ -327,21 +376,21 @@ const TakeTest = () => {
 
       // 학습 기록 업데이트!
       await updateRecentStudyServer(state.testType);
-      
+
       // 최신 단어장 데이터 다시 가져오기
       await fetchVocabularySheets();
     }
   };
 
-  if(isTestQuestionsSetting){
+  if (isTestQuestionsSetting) {
     return (
       <div>
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <MakeStudyData />
       </div>
     );
-  }else{
-    if(recentStudy[state.testType].status === "end"){
+  } else {
+    if (recentStudy[state.testType].status === "end") {
       // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>
@@ -350,17 +399,20 @@ const TakeTest = () => {
         </div>
       );
     }
-  
+
     return (
       <div>
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-        <Header testType={state?.testType ? state.testType : recentStudy[state.testType]?.type} />
-        <Main 
-          testQuestions={testQuestions} 
-          setTestQuestions={setTestQuestions} 
-          progressIndex={progressIndex} 
-          setProgressIndex={setProgressIndex} 
-          setPendingUpdateSheetIds={setPendingUpdateSheetIds} 
+        <Header
+          testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
+          onBackClick={handleStopLearning}
+        />
+        <Main
+          testQuestions={testQuestions}
+          setTestQuestions={setTestQuestions}
+          progressIndex={progressIndex}
+          setProgressIndex={setProgressIndex}
+          setPendingUpdateSheetIds={setPendingUpdateSheetIds}
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
         />
       </div>

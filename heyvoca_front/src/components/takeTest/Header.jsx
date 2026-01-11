@@ -7,7 +7,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 
-const Header = ({ testType }) => {
+const Header = ({ testType, onBackClick }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { recentStudy } = useVocabulary();
@@ -16,33 +16,14 @@ const Header = ({ testType }) => {
 
   console.log(recentStudy);
 
-  // React Compiler가 자동으로 useCallback 처리
+  // 상위에서 전달받은 onBackClick이 있으면 사용, 없으면 기본 동작
   const handleBackClick = async () => {
-    const ConfirmResult = await pushAwaitNewBottomSheet(
-      ConfirmNewBottomSheet,
-      {
-        title: (
-          <>
-            학습할 단어가 남아있어요.<br />
-            학습을 종료하시겠습니까?😢 
-          </>
-        ),
-        btns: {
-          confirm: "종료",
-          cancel: "취소",
-        }
-      },
-      {
-        isBackdropClickClosable: true,
-        isDragToCloseEnabled: true
-      }
-    );
-    if (ConfirmResult) {
-      navigate(-1);
+    if (onBackClick) {
+      await onBackClick();
+      return;
     }
-    // if (window.confirm('학습을 종료하시겠습니까?')) {
-    //   navigate(-1);
-    // }
+
+    navigate(-1);
   };
 
   return (
@@ -54,7 +35,7 @@ const Header = ({ testType }) => {
       bg-[#fff] 
       dark:bg-[#111]
     '>
-      
+
       <div className="
         absolute left-[10px] bottom-[13px]
         flex items-center justify-center
@@ -68,17 +49,17 @@ const Header = ({ testType }) => {
             text-[#CCC] dark:text-[#fff]
             rounded-[8px]
           "
-          whileHover={{ 
+          whileHover={{
             backgroundColor: 'rgba(0, 0, 0, 0.05)',
             scale: 1.05
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             backgroundColor: 'rgba(0, 0, 0, 0.1)'
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
         >
@@ -87,7 +68,7 @@ const Header = ({ testType }) => {
       </div>
       <div className="center">
         <h2 className='text-[18px] font-[700] leading-[21px]'>
-          {testType ===  "today" ? "오늘의 학습" : testType === "test" ? "학습" : "테스트"}
+          {testType === "today" ? "오늘의 학습" : testType === "test" ? "학습" : "테스트"}
         </h2>
       </div>
       <div className="right">

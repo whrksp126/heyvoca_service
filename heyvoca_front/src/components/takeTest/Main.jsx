@@ -18,12 +18,12 @@ const iconComponentMap = {
 // meanings가 여러 개면 랜덤하게 2~3개만 선택 (중복 제거)
 const getDisplayMeanings = (meanings) => {
   if (!meanings || meanings.length === 0) return [];
-  
+
   // 중복 제거
   const uniqueMeanings = [...new Set(meanings)];
-  
+
   if (uniqueMeanings.length <= 2) return uniqueMeanings;
-  
+
   // 2개 또는 3개를 랜덤하게 선택
   const count = Math.random() < 0.5 ? 2 : 3;
   const shuffled = [...uniqueMeanings].sort(() => Math.random() - 0.5);
@@ -71,16 +71,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }));
   }, [progressIndex, testQuestions]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("testType,", testType);
-  },[])
+  }, [])
 
   // 문제가 변경될 때마다 텍스트 읽기
   useEffect(() => {
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
       const textToRead = question.origin;
-      const lang =  "en";
+      const lang = "en";
       getTextSound(textToRead, lang);
     }
     startTimeRef.current = Date.now();
@@ -96,12 +96,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 선택지 선택 시
   const handleOptionClick = (index, option) => {
     if (isAnswered) return;
-    if(userSelected === index) {
+    if (userSelected === index) {
       setUserSelected(null);
-    }else{
+    } else {
       setUserSelected(index);
     }
-    if(testType === "exam") {
+    if (testType === "exam") {
       handleClickExamOption(index, option);
     }
   }
@@ -109,11 +109,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // React Compiler가 자동으로 useCallback 처리
   // 아래 버튼 클릭 시
   const handleClickNext = async () => {
-    if(userSelected === null) return;
-    if(isFetching) return;
+    if (userSelected === null) return;
+    if (isFetching) return;
     const timeTakenSec = Math.round((endTimeRef.current - startTimeRef.current) / 1000);
-    if(isStay){
-      if(isSuspicious) return;
+    if (isStay) {
+      if (isSuspicious) return;
       setUpdateRecentStudyStateAndStatus();
       return;
     };
@@ -122,12 +122,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const resultIndex = testQuestions[progressIndex].resultIndex;
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
-    if(resultIndex === userSelected){
+    if (resultIndex === userSelected) {
       setIsCorrect(true);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
-    }else{
+    } else {
       setIsCorrect(false);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = userSelected;
@@ -135,7 +135,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
     const learningPattern = analyzeLearningPattern(testQuestions[progressIndex], q);
 
-    if(learningPattern.isSuspicious && learningPattern.confidence === "high"){
+    if (learningPattern.isSuspicious && learningPattern.confidence === "high") {
       setIsSuspicious({
         ...learningPattern,
         ef: testQuestions[progressIndex].ef,
@@ -172,12 +172,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const resultIndex = testQuestions[progressIndex].resultIndex;
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
-    if(resultIndex === index){
+    if (resultIndex === index) {
       setIsCorrect(true);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = index;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
-    }else{
+    } else {
       setIsCorrect(false);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = index;
@@ -237,7 +237,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const handleClickTTS = () => {
     const question = testQuestions[progressIndex];
     const textToRead = question.origin;
-    const lang =  "en";
+    const lang = "en";
     getTextSound(textToRead, lang);
   }
 
@@ -285,19 +285,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsFetching(false);
     setPendingUpdateSheetIds(prev => prev.add(sheetId));
 
-    const isNotLastQuestion = progressIndex !== testQuestions.length-1;
+    const isNotLastQuestion = progressIndex !== testQuestions.length - 1;
 
 
     updateRecentStudyState({
-      [testType] : {
+      [testType]: {
         ...recentStudy[testType],
-        progress_index : isNotLastQuestion ? progressIndex + 1 : null,
+        progress_index: isNotLastQuestion ? progressIndex + 1 : null,
         status: isNotLastQuestion ? "learning" : "end",
         study_data: testQuestions,
-        updated_at : new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       }
     });
-    if(isNotLastQuestion){
+    if (isNotLastQuestion) {
       setProgressIndex(progressIndex + 1);
       setIsCorrect(null);
       setUserSelected(null);
@@ -324,7 +324,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //     updated_at : new Date().toISOString(),
     //   });
 
-      
+
     //   setProgressIndex(progressIndex + 1);
     //   setIsCorrect(null);
     //   setUserSelected(null);
@@ -347,7 +347,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       opacity: 0
     })
   };
-  
+
   // 성능 최적화를 위한 transition 설정
   const optimizedTransition = {
     duration: 0.2,
@@ -355,7 +355,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="
         flex flex-col 
         h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
@@ -374,15 +374,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         rounded-[50px]
         bg-[#FF8DD44d]
       ">
-        <motion.div 
+        <motion.div
           className="
             h-[100%]
             rounded-[50px]
             bg-[#FF8DD4]
           "
           initial={{ width: "0%" }}
-          animate={{ 
-            width: `${Math.floor((progressBarIndex) / testQuestions.length * 100)}%` 
+          animate={{
+            width: `${Math.floor((progressBarIndex) / testQuestions.length * 100)}%`
           }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ willChange: 'width' }}
@@ -413,7 +413,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           >
             {testQuestions[progressIndex]?.questionType === "multipleChoice" && (
               <>
-                <motion.div 
+                <motion.div
                   className={`
                     relative
                     flex items-center justify-center flex-1
@@ -426,13 +426,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  
+
                   <h2 className="
                     relative z-[1]
                     max-w-[90%]
                     text-[28px] font-[700] text-[#111] text-center
                   ">
-                    
+
                     {/* <div className="
                       absolute bottom-[100%] left-[50%] z-[-1] translate-x-[-50%]
                       text-[12px] font-[400] text-[#7B7B7B]
@@ -480,22 +480,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     </div>
                     {testQuestions[progressIndex].origin}
                   </h2>
-                  <motion.button 
+                  <motion.button
                     onClick={() => {
                       vibrate({ duration: 5 });
                       handleClickTTS();
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       backgroundColor: 'rgba(204, 204, 204, 0.1)',
                       scale: 1.05
                     }}
-                    whileTap={{ 
+                    whileTap={{
                       scale: 0.95,
                       backgroundColor: 'rgba(204, 204, 204, 0.2)'
                     }}
-                    transition={{ 
-                      type: "spring", 
-                      stiffness: 400, 
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
                       damping: 17
                     }}
                     style={{ willChange: 'transform, background-color' }}
@@ -513,46 +513,46 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     h-[32px]
                     text-[12px] font-[400] text-[#7B7B7B]
                   ">
-                    <MemorizationStatus 
+                    <MemorizationStatus
                       key={progressIndex}
                       wordId={testQuestions[progressIndex].id}
-                      repetition={testQuestions[progressIndex].repetition} 
+                      repetition={testQuestions[progressIndex].repetition}
                       interval={testQuestions[progressIndex].interval}
-                      ef={testQuestions[progressIndex].ef} 
+                      ef={testQuestions[progressIndex].ef}
                       isCorrect={isCorrect}
                       nextReview={testQuestions[progressIndex].nextReview}
                       useRandomMessages={isCorrect !== null}
                       updateType={updateType}
                     />
                   </div>
-                  { testType === "test" && isAnswered && (
-                  <motion.button 
-                    onClick={() => {
-                      vibrate({ duration: 5 });
-                      handleClickProblemHintData();
-                    }}
-                    whileHover={{ 
-                      backgroundColor: 'rgba(255, 141, 212, 0.1)',
-                      scale: 1.05
-                    }}
-                    whileTap={{ 
-                      scale: 0.95,
-                      backgroundColor: 'rgba(255, 141, 212, 0.2)'
-                    }}
-                    transition={{ 
-                      type: "spring", 
-                      stiffness: 400, 
-                      damping: 17
-                    }}
-                    style={{ willChange: 'transform, background-color' }}
-                    className="
+                  {testType === "test" && isAnswered && (
+                    <motion.button
+                      onClick={() => {
+                        vibrate({ duration: 5 });
+                        handleClickProblemHintData();
+                      }}
+                      whileHover={{
+                        backgroundColor: 'rgba(255, 141, 212, 0.1)',
+                        scale: 1.05
+                      }}
+                      whileTap={{
+                        scale: 0.95,
+                        backgroundColor: 'rgba(255, 141, 212, 0.2)'
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17
+                      }}
+                      style={{ willChange: 'transform, background-color' }}
+                      className="
                       absolute bottom-[15px] right-[15px]
                       rounded-[8px] p-[5px]
                       text-[#FF8DD4]
                     "
-                  >
-                    <BookOpenText size={22} weight="duotone" />
-                  </motion.button>
+                    >
+                      <BookOpenText size={22} weight="duotone" />
+                    </motion.button>
                   )}
 
                 </motion.div>
@@ -561,22 +561,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 ">
                   {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";
-                    if(isCorrect !== null && testQuestions[progressIndex].resultIndex == index){
+                    if (isCorrect !== null && testQuestions[progressIndex].resultIndex == index) {
                       btnStyle = 'border-[#17E937] text-[#17E937] bg-[#E4FFE8]';
-                    }else if(isCorrect === false && userSelected === index){
+                    } else if (isCorrect === false && userSelected === index) {
                       btnStyle = 'border-[#FF585B] text-[#FF585B] bg-[#FFEBEC]';
-                    }else if(isCorrect === null && userSelected == index){
+                    } else if (isCorrect === null && userSelected == index) {
                       btnStyle = 'border-[#FF8DD4] text-[#FF8DD4]';
-                    }else{
+                    } else {
                       btnStyle = 'border-[#CCCCCC] text-[#111]';
                     }
-                    
-                    return (  
-                      <motion.button 
+
+                    return (
+                      <motion.button
                         key={index}
-                        whileTap={{ 
+                        whileTap={{
                           scale: 0.92,
-                          transition: { 
+                          transition: {
                             type: "spring",
                             stiffness: 400,
                             damping: 17
@@ -608,109 +608,109 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       </motion.button>
                     )
                   })}
-                  
+
                 </div>
                 {(testType === "test" || testType === "today") && (
-                <motion.button 
-                  onClick={() => {
-                    vibrate({ duration: 5 });
-                    handleClickNext();
-                  }}
-                  whileTap={{ 
-                    scale: userSelected !== null ? 0.93 : 1,
-                    transition: { 
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 17
-                    }
-                  }}
-                  style={{ willChange: 'transform' }}
-                  className={`
+                  <motion.button
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      handleClickNext();
+                    }}
+                    whileTap={{
+                      scale: userSelected !== null ? 0.93 : 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17
+                      }
+                    }}
+                    style={{ willChange: 'transform' }}
+                    className={`
                     w-full h-[45px]
                     rounded-[8px]
                     text-[16px] text-[#FFF] font-[700] 
                     ${userSelected !== null ? "bg-[#FF8DD4]" : "bg-[#CCC]"}
                   `}
-                >
-                  확인
-                </motion.button>    
+                  >
+                    확인
+                  </motion.button>
                 )}
               </>
             )}
           </motion.div>
-          
+
         </AnimatePresence>
       </div>
       <AnimatePresence>
         {isSuspicious && (
-        <motion.div 
-          className="
+          <motion.div
+            className="
             absolute bottom-0 left-0 right-0
             flex flex-col gap-[30px] items-center justify-end
             h-[210px]
             px-[16px] py-[20px]
             bg-[linear-gradient(180deg,rgba(255,233,233,0)_0%,rgba(255,233,233,.5)_10%,rgba(255,233,233,1)_30%,rgba(255,233,233,1)_100%)]
           "
-          initial={{ y: 210 }}
-          animate={{ y: 0 }}
-          exit={{ y: 210 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
-            damping: 30,
-            duration: 0.3
-          }}
-          style={{ willChange: 'transform' }}
-        >
-          <div className="
+            initial={{ y: 210 }}
+            animate={{ y: 0 }}
+            exit={{ y: 210 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+              duration: 0.3
+            }}
+            style={{ willChange: 'transform' }}
+          >
+            <div className="
             flex flex-col items-center gap-[10px]
             text-[#FFF] text-[14px] font-[700]
           ">
-            {iconComponentMap[isSuspicious.icon]}
-            <span className="
+              {iconComponentMap[isSuspicious.icon]}
+              <span className="
               text-[#111] text-[16px] font-[600]
             ">
-              {isSuspicious.message}
-            </span>
-            <span className="
+                {isSuspicious.message}
+              </span>
+              <span className="
               text-[#111] text-[14px] font-[400]
             ">
-              암기 상태를 수정하시겠습니까?
-            </span>
-          </div>
-          <div
-            className="
+                암기 상태를 수정하시겠습니까?
+              </span>
+            </div>
+            <div
+              className="
               flex items-center justify-between gap-[10px] w-full
             "
-          >
-            {
-              isSuspicious.btn.map((btn, index) => (
-                <motion.button 
-                  key={index}
-                  className={`
+            >
+              {
+                isSuspicious.btn.map((btn, index) => (
+                  <motion.button
+                    key={index}
+                    className={`
                     flex-1
                     h-[45px]
                     rounded-[8px]
                     text-[#fff] text-[16px] font-[700]
                     ${btn.color}
                   `}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 500, 
-                    damping: 15
-                  }}
-                  onClick={() => {
-                    vibrate({ duration: 5 });
-                    btn.type === "mistake" ? handleClickMistake() : handleClickNormal();
-                  }}
-                >
-                  {btn.text}
-                </motion.button>
-              ))
-            }
-          </div>
-        </motion.div>
+                    whileTap={{ scale: 0.95 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 15
+                    }}
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      btn.type === "mistake" ? handleClickMistake() : handleClickNormal();
+                    }}
+                  >
+                    {btn.text}
+                  </motion.button>
+                ))
+              }
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.div>

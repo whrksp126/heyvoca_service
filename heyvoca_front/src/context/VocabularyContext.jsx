@@ -7,7 +7,7 @@ import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
   const { isLogin, isLoginChecked } = useUser();
-  
+
   const [vocabularySheets, setVocabularySheets] = useState([]);
   const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
   const [errorVocabularySheets, setErrorVocabularySheets] = useState(null);
@@ -26,7 +26,7 @@ export const VocabularyProvider = ({ children }) => {
     const total = vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0);
     const memorized = vocabularySheets.reduce((acc, sheet) => acc + sheet.memorized, 0);
     const totalSheets = vocabularySheets.length;
-    
+
     return {
       total,
       memorized,
@@ -65,7 +65,7 @@ export const VocabularyProvider = ({ children }) => {
     try {
       setIsVocabularySheetsLoading(true);
       const result = await getUserVocabularySheetsApi();
-      if(result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
+      if (result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
       setVocabularySheets(result.data);
       setErrorVocabularySheets(null);
     } catch (err) {
@@ -86,7 +86,7 @@ export const VocabularyProvider = ({ children }) => {
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
       const result = await addUserVocabularySheetApi(newVocabulary);
-      if(!result || result.code != 200 || !result.data) {
+      if (!result || result.code != 200 || !result.data) {
         const errorMessage = result?.message || '단어장 추가에 실패했습니다.';
         alert(errorMessage);
         throw new Error(errorMessage);
@@ -111,15 +111,15 @@ export const VocabularyProvider = ({ children }) => {
   const updateVocabularySheet = useCallback(async (id, updates) => {
     try {
       const result = await updateUserVocabularySheetApi(id, updates);
-      if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
-      setVocabularySheets(prev => 
-        prev.map(sheet => 
-          sheet.id === id 
-            ? { 
-                ...sheet, 
-                ...updates, 
-                updatedAt: result.data.updatedAt 
-              }
+      if (result.code != 200) return alert('단어장 수정에 실패했습니다.');
+      setVocabularySheets(prev =>
+        prev.map(sheet =>
+          sheet.id === id
+            ? {
+              ...sheet,
+              ...updates,
+              updatedAt: result.data.updatedAt
+            }
             : sheet
         )
       );
@@ -139,7 +139,7 @@ export const VocabularyProvider = ({ children }) => {
     try {
       const updates = vocabularySheets.find(sheet => sheet.id === id);
       const result = await updateUserVocabularySheetApi(id, updates);
-      if(result.code != 200) return alert('단어장 수정에 실패했습니다.');
+      if (result.code != 200) return alert('단어장 수정에 실패했습니다.');
     } catch (err) {
       setErrorVocabularySheets('단어장 수정에 실패했습니다.');
       throw err;
@@ -150,7 +150,7 @@ export const VocabularyProvider = ({ children }) => {
   const deleteVocabularySheet = useCallback(async (id) => {
     try {
       const result = await deleteUserVocabularySheetApi(id);
-      if(result.code != 200) return alert('단어장 삭제에 실패했습니다.');
+      if (result.code != 200) return alert('단어장 삭제에 실패했습니다.');
       setVocabularySheets(prev => prev.filter(sheet => sheet.id !== id));
     } catch (err) {
       setErrorVocabularySheets('단어장 삭제에 실패했습니다.');
@@ -197,7 +197,7 @@ export const VocabularyProvider = ({ children }) => {
       const copyVocabularySheet = getVocabularySheet(sheetId);
       const updatedWord = { ...copyVocabularySheet.words.find(word => word.id === wordId), ...updates, updatedAt: new Date().toISOString() };
       const copyWords = copyVocabularySheet.words.map(word => word.id === wordId ? updatedWord : word);
-      await updateVocabularySheet(sheetId, {words: copyWords});
+      await updateVocabularySheet(sheetId, { words: copyWords });
       return updatedWord;
     } catch (err) {
       setErrorVocabularySheets('단어 수정에 실패했습니다.');
@@ -210,7 +210,7 @@ export const VocabularyProvider = ({ children }) => {
     const copyVocabularySheet = getVocabularySheet(sheetId);
     const updatedWord = { ...copyVocabularySheet.words.find(word => word.id === wordId), ...updates, updatedAt: new Date().toISOString() };
     const copyWords = copyVocabularySheet.words.map(word => word.id === wordId ? updatedWord : word);
-    updateVocabularySheetState(sheetId, {words: copyWords});
+    updateVocabularySheetState(sheetId, { words: copyWords });
   }, [vocabularySheets]);
 
   // 단어 삭제
@@ -218,7 +218,7 @@ export const VocabularyProvider = ({ children }) => {
     try {
       const copyVocabularySheet = getVocabularySheet(sheetId);
       const copyWords = copyVocabularySheet.words.filter(word => word.id !== wordId);
-      await updateVocabularySheet(sheetId, {total: copyWords.length, words: copyWords});
+      await updateVocabularySheet(sheetId, { total: copyWords.length, words: copyWords });
     } catch (err) {
       setErrorVocabularySheets('단어 삭제에 실패했습니다.');
       throw err;
@@ -233,11 +233,11 @@ export const VocabularyProvider = ({ children }) => {
   // 필터링된 단어장 목록 가져오기
   const getFilteredVocabularySheets = useCallback((filterOptions = {}) => {
     const { searchTerm, sortBy } = filterOptions;
-    
+
     let filtered = [...vocabularySheets];
 
     if (searchTerm) {
-      filtered = filtered.filter(sheet => 
+      filtered = filtered.filter(sheet =>
         sheet.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -287,7 +287,7 @@ export const VocabularyProvider = ({ children }) => {
     try {
       setIsBookStoreLoading(true);
       const result = await getBookStoreApi();
-      if(result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
+      if (result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
       setBookStore(result.data);
       setErrorBookStore(null);
     } catch (err) {
@@ -302,27 +302,27 @@ export const VocabularyProvider = ({ children }) => {
   const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
     try {
       const newVocabularySheet = await addVocabularySheet({
-        bookstore_id : vocabularySheet.id,
-        title : vocabularySheet.name,
-        color : vocabularySheet.color,
+        bookstore_id: vocabularySheet.id,
+        title: vocabularySheet.name,
+        color: vocabularySheet.color,
       });
       await updateVocabularySheet(newVocabularySheet.id, {
-        total : vocabularySheet.words.length,
-        words: vocabularySheet.words.map((word, index)=>{
+        total: vocabularySheet.words.length,
+        words: vocabularySheet.words.map((word, index) => {
           return {
-            id : `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-            dictionaryId : word.id,
-            origin : word.origin,
-            meanings : word.meanings,
-            examples : word.examples,
-            pronunciation : word.pronunciation,
-            ef : 2.5,
-            repetition : 0,
-            interval : 0,
-            nextReview : null,
-            lastStudyDate : null,
-            createdAt : new Date().toISOString(),
-            updatedAt : new Date().toISOString(),
+            id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+            dictionaryId: word.id,
+            origin: word.origin,
+            meanings: word.meanings,
+            examples: word.examples,
+            pronunciation: word.pronunciation,
+            ef: 2.5,
+            repetition: 0,
+            interval: 0,
+            nextReview: null,
+            lastStudyDate: null,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           }
         }),
       })
@@ -342,7 +342,7 @@ export const VocabularyProvider = ({ children }) => {
     try {
       setIsRecentStudyLoading(true);
       const result = await getUserRecentStudyDataApi();
-      if(result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
+      if (result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
       setRecentStudy(result.data);
       setErrorRecentStudy(null);
     } catch (err) {
@@ -356,14 +356,12 @@ export const VocabularyProvider = ({ children }) => {
   // 최근 학습 데이터 수정
   const updateRecentStudy = useCallback(async (testType, curRecentStudy) => {
     try {
-      const result = await updateUserRecentStudyDataApi({curRecentStudy});
-      if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
-      setRecentStudy(
-        {
-          ...recentStudy,
-          [testType] : result.data,
-        }
-      );
+      const result = await updateUserRecentStudyDataApi({ curRecentStudy });
+      if (result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
+      setRecentStudy(prev => ({
+        ...prev,
+        [testType]: result.data,
+      }));
       return result.data;
     } catch (err) {
       setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');
@@ -373,14 +371,14 @@ export const VocabularyProvider = ({ children }) => {
 
   // 최근 학습 데이터 수정(로컬만 업데이트)
   const updateRecentStudyState = useCallback((updates) => {
-    setRecentStudy(prev => ({ ...prev, ...updates}));
+    setRecentStudy(prev => ({ ...prev, ...updates }));
   }, []);
 
   // 최근 학습 데이터 수정(서버)
   const updateRecentStudyServer = useCallback(async (testType) => {
     try {
-      const result = await updateUserRecentStudyDataApi({curRecentStudy: recentStudy[testType]});
-      if(result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
+      const result = await updateUserRecentStudyDataApi({ curRecentStudy: recentStudy[testType] });
+      if (result.code != 200) return alert('최근 학습 데이터를 추가하는데 실패했습니다.');
       return result.data;
     } catch (err) {
       setErrorRecentStudy('최근 학습 데이터를 추가하는데 실패했습니다.');
@@ -411,7 +409,7 @@ export const VocabularyProvider = ({ children }) => {
   useEffect(() => {
     if (isLogin && isLoginChecked) {
       console.log('📚 [VOCABULARY] 로그인 상태 확인됨, 단어장 데이터 로드 시작');
-      
+
       const loadVocabularyData = async () => {
         try {
           await Promise.all([
@@ -423,7 +421,7 @@ export const VocabularyProvider = ({ children }) => {
           console.error('❌ [VOCABULARY] 데이터 로드 중 오류 발생:', error);
         }
       };
-      
+
       loadVocabularyData();
     }
   }, [isLogin, isLoginChecked]); // 함수 의존성 제거
