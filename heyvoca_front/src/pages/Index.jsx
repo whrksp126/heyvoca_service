@@ -40,8 +40,8 @@ const Index = () => {
       }
     }
   }, [navigate, isLogin, isLoginChecked, userProfile, isUserProfileLoading]);
-  
-  
+
+
   useEffect(() => {
     const container = document.getElementById("lottie-container");
     if (container) {

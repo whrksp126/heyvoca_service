@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { CaretLeft } from '@phosphor-icons/react';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
-const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}) => {
+const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
   const { popNewFullSheet } = useNewFullSheetActions();
   const [isLoading, setIsLoading] = useState(false);
@@ -46,17 +46,17 @@ const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}
             p-[4px]
             rounded-[8px]
           "
-          whileHover={{ 
+          whileHover={{
             backgroundColor: 'rgba(0, 0, 0, 0.05)',
             scale: 1.05
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             backgroundColor: 'rgba(0, 0, 0, 0.1)'
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
         >
@@ -75,7 +75,7 @@ const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}
           flex flex-col items-center
           gap-[10px]
         ">
-          <div 
+          <div
             className="
               px-[15px] py-[12px]
               bg-[#fff]
@@ -87,7 +87,7 @@ const InitialProfileStep4NewFullSheet = ({userInitialProfile, endInitialProfile}
             모든 설정이 완료되었습니다! <br />
             이제 학습을 시작해보세요!
           </div>
-          <img src={HeyCharacter} alt="logo" 
+          <img src={HeyCharacter} alt="logo"
             className="
               w-[160px]
             "

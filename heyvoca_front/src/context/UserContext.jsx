@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
-import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi } from '../api/auth';
+import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
 import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
   const [userMainPage, setUserMainPage] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
-  const [isLoginChecked, setIsLoginChecked] = useState(false);  
+  const [isLoginChecked, setIsLoginChecked] = useState(false);
   const [auth, setAuth] = useState({
     user: null,
   });
@@ -24,13 +24,13 @@ export const UserProvider = ({ children }) => {
       let userMainPageData = {};
       const setUserDates = async () => {
         const result = await getUserDatesApi()
-        if(result.code == 200){
+        if (result.code == 200) {
           userMainPageData.dates = result.data;
         }
       }
       const setUserGoals = async () => {
         const result = await getUserGoalsApi()
-        if(result.code == 200){
+        if (result.code == 200) {
           userMainPageData.goals = result.data;
         }
       }
@@ -47,7 +47,7 @@ export const UserProvider = ({ children }) => {
       setIsUserProfileLoading(true);
 
       const result = await getUserInfoApi();
-      if(result.code != 200) {
+      if (result.code != 200) {
         console.log('유저 정보를 불러오는데 실패했습니다.');
         return {
           success: false,
@@ -75,9 +75,9 @@ export const UserProvider = ({ children }) => {
   }, [userProfile, isUserProfileLoading]);
 
   // 사용자 정보 업데이트 함수
-  const updateUserProfile = useCallback(async ({username, level_id}) => {
-    const result = await updateUserInfoApi({username, level_id});
-    if(result.code != 200) return;
+  const updateUserProfile = useCallback(async ({ username, level_id }) => {
+    const result = await updateUserInfoApi({ username, level_id });
+    if (result.code != 200) return;
     setUserProfile(prevProfile => ({
       ...prevProfile,
       level_id: level_id,
@@ -86,26 +86,26 @@ export const UserProvider = ({ children }) => {
   }, [userProfile]);
 
   // 업적, 보석, ... 업데이트 함수
-  const updateUserHistory = useCallback(async ({today_study_complete, correct_cnt, incorrect_cnt}) => {
+  const updateUserHistory = useCallback(async ({ today_study_complete, correct_cnt, incorrect_cnt }) => {
     try {
-      const result = await updateUserStudyHistoryApi({today_study_complete, correct_cnt, incorrect_cnt});
-      if(result.code != 200) return;
-      
+      const result = await updateUserStudyHistoryApi({ today_study_complete, correct_cnt, incorrect_cnt });
+      if (result.code != 200) return;
+
       // 보석 업데이트 내용 적용
       setUserProfile(prevProfile => ({
         ...prevProfile,
         gem_cnt: result.data.gem.after,
       }))
-      
+
       // 오늘의 학습 완료 시 데일리 미션 업데이트
-      if(result.data.today_study_complete) {
+      if (result.data.today_study_complete) {
         const today = new Date();
         const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
         const todayName = dayNames[today.getDay()];
-        
+
         setUserMainPage(prevMainPage => {
           const updatedDates = prevMainPage.dates?.map(date => {
-            if(date.date === todayName) {
+            if (date.date === todayName) {
               return {
                 ...date,
                 daily_mission: true
@@ -113,25 +113,25 @@ export const UserProvider = ({ children }) => {
             }
             return date;
           }) || [];
-          
+
           return {
             ...prevMainPage,
             dates: updatedDates
           };
         });
       }
-      
+
       // 업적 업데이트 (새로 완료된 업적이 있는 경우)
-      if(result.data.goals && result.data.goals.length > 0) {
+      if (result.data.goals && result.data.goals.length > 0) {
         setUserMainPage(prevMainPage => {
           const existingGoals = prevMainPage.goals || [];
-          
+
           // 기존 업적 목록을 복사하고, 새로 완료된 업적을 추가/업데이트
           const updatedGoals = [...existingGoals];
-          
+
           result.data.goals.forEach(newGoal => {
             const existingIndex = updatedGoals.findIndex(g => g.type === newGoal.type);
-            if(existingIndex >= 0) {
+            if (existingIndex >= 0) {
               // 기존 업적이 있으면 레벨 업데이트
               updatedGoals[existingIndex] = {
                 ...updatedGoals[existingIndex],
@@ -148,39 +148,39 @@ export const UserProvider = ({ children }) => {
               });
             }
           });
-          
+
           return {
             ...prevMainPage,
             goals: updatedGoals
           };
         });
       }
-      
-      if(result.code == 200){
+
+      if (result.code == 200) {
         return result.data;
-      }else{
+      } else {
         return null;
       }
     } catch (err) {
       console.log("오류 발생함", err)
     }
-  }, []); 
+  }, []);
 
   // 출석 체크
   const fetchUserCheckin = useCallback(async () => {
     const result = await setUserCheckinApi();
-    if(result.code != 200) return;
+    if (result.code != 200) return;
     setUserProfile(prevProfile => ({
       ...prevProfile,
       gem_cnt: result.data.gem.after,
     }))
-  }, []); 
+  }, []);
 
   // 상품 조회 함수
   const fetchGemItems = useCallback(async () => {
     try {
       const result = await getGemItemsApi();
-      if(result.code != 200) {
+      if (result.code != 200) {
         console.error('상품 조회 오류:', result.message);
         return;
       }
@@ -194,7 +194,7 @@ export const UserProvider = ({ children }) => {
   const Login = useCallback(async ({ googleId, email, name, status }) => {
     try {
       console.log("Login 함수 내부 시작됨");
-      
+
       // 매개변수 검증
       if (!googleId) {
         console.log('googleId가 없습니다.');
@@ -217,10 +217,10 @@ export const UserProvider = ({ children }) => {
         return { success: false };
       }
 
-      const result = await loginApi({googleId, email, name});
+      const result = await loginApi({ googleId, email, name });
       const accessToken = result.access_token;
       setCookie('userAccessToken', accessToken);
-      
+
       setAuth({
         user: {
           name,
@@ -229,11 +229,11 @@ export const UserProvider = ({ children }) => {
       });
       setIsLogin(true);
       setIsLoginChecked(true);
-      
+
       // 서버에서 실제 사용자 프로필 정보 가져오기
 
       const userProfileResult = await fetchUserProfile();
-      if(userProfileResult.success){
+      if (userProfileResult.success) {
         setUserProfile(userProfileResult.userProfile);
       }
       return { success: true, accessToken };
@@ -244,13 +244,76 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  // Apple 로그인 처리 함수
+  const AppleLogin = useCallback(async ({ identityToken, fullName, email, status }) => {
+    try {
+      console.log("AppleLogin 함수 내부 시작됨");
+
+      if (Number(status) !== 200) {
+        console.log('status가 200이 아닙니다.');
+        return { success: false };
+      }
+
+      const result = await appleLoginApi({ identityToken, fullName, email });
+      if (!result || result.code !== 200) {
+        console.log('Apple 로그인 API 실패');
+        return { success: false };
+      }
+
+      const accessToken = result.accessToken;
+      setCookie('userAccessToken', accessToken);
+
+      // 이름 정보가 있으면 업데이트 (최초 로그인 시)
+      let userName = 'Apple User';
+      if (fullName) {
+        if (typeof fullName === 'object') {
+          const { familyName, givenName } = fullName;
+          userName = `${familyName || ''}${givenName || ''}`;
+        } else {
+          userName = fullName;
+        }
+      }
+      if (!userName.trim() && email) {
+        userName = email.split('@')[0];
+      }
+
+      setAuth({
+        user: {
+          name: userName,
+          email: email,
+        }
+      });
+      setIsLogin(true);
+      setIsLoginChecked(true);
+
+      const userProfileResult = await fetchUserProfile();
+      if (userProfileResult.success) {
+        setUserProfile(userProfileResult.userProfile);
+      }
+      return { success: true, accessToken };
+    } catch (error) {
+      console.error('Apple 로그인 오류:', error);
+      return { success: false };
+    }
+  }, []); // loginApi 의존성 제거
+
   // 구글 로그인 클릭 처리 (웹/앱 자동 구분)
   const clickGoogleOauth = useCallback(() => {
     const device_type = getDevicePlatform();
     if (device_type === 'web') {
       window.location.href = `${backendUrl}/auth/google/oauth/web?device_type=${device_type}`;
     } else {
-      window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'launchGoogleAuth'}));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'launchGoogleAuth' }));
+    }
+  }, []);
+
+  // 애플 로그인 클릭 처리 (앱 전용)
+  const clickAppleOauth = useCallback(() => {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'launchAppleAuth' }));
+    } else {
+      console.log("Apple Login is only supported in App environment.");
+      alert("Apple 로그인은 앱에서만 가능합니다.");
     }
   }, []);
 
@@ -261,25 +324,25 @@ export const UserProvider = ({ children }) => {
       const url = `${backendUrl}/auth/logout`;
       const method = 'POST';
       const fetchData = {};
-      
+
       const result = await fetchDataAsync(url, method, fetchData);
       if (result.code !== 200) {
         console.error('로그아웃 API 실패:', result);
         return { success: false, error: '로그아웃 API 실패' };
       }
-      
+
       // 쿠키에서 accessToken 제거
       setCookie('userAccessToken', '', -1); // 쿠키 즉시 만료
-      
+
       // auth 상태 초기화
       setAuth({
         user: null,
       });
-      
+
       // 로그인 상태 초기화
       setIsLogin(false);
       setIsLoginChecked(true);
-      
+
       return { success: true };
     } catch (error) {
       console.error('로그아웃 실패:', error);
@@ -290,13 +353,13 @@ export const UserProvider = ({ children }) => {
   // 앱 구글 로그아웃 콜백 처리
   const handleAppGoogleLogout = useCallback(async (data) => {
     console.log(`앱 구글 로그아웃 콜백 받음: ${JSON.stringify(data)}`);
-    
+
     const { status, error } = data;
-    
+
     // 앱에서 로그아웃 성공한 경우에만 웹 로그아웃 처리
     if (status === 200) {
       const result = await performLogout();
-      
+
       if (result.success) {
         // 컨텍스트 초기화 (전역 객체를 통해 접근)
         if (window.newBottomSheetContext && window.newBottomSheetContext.clearStack) {
@@ -305,7 +368,7 @@ export const UserProvider = ({ children }) => {
         if (window.newFullSheetContext && window.newFullSheetContext.clearStack) {
           window.newFullSheetContext.clearStack();
         }
-        
+
         // 로그인 페이지로 이동
         window.location.href = '/login';
       }
@@ -319,28 +382,28 @@ export const UserProvider = ({ children }) => {
     try {
       // 회원 탈퇴 API 호출
       const result = await withdrawApi();
-      
+
       if (result.code !== 200) {
         console.error('회원 탈퇴 API 실패:', result);
         return { success: false, error: '회원 탈퇴 API 실패' };
       }
-      
+
       // 모든 캐시 및 저장소 삭제
       localStorage.clear();
       sessionStorage.clear();
-      
+
       // 쿠키에서 accessToken 제거
       setCookie('userAccessToken', '', -1);
-      
+
       // auth 상태 초기화
       setAuth({
         user: null,
       });
-      
+
       // 로그인 상태 초기화
       setIsLogin(false);
       setIsLoginChecked(true);
-      
+
       return { success: true };
     } catch (error) {
       console.error('회원 탈퇴 실패:', error);
@@ -351,13 +414,13 @@ export const UserProvider = ({ children }) => {
   // 앱 구글 회원 탈퇴 콜백 처리
   const handleAppGoogleWithdraw = useCallback(async (data) => {
     console.log(`앱 구글 회원 탈퇴 콜백 받음: ${JSON.stringify(data)}`);
-    
+
     const { status, error } = data;
-    
+
     // 앱에서 구글 계정 선택 성공한 경우에만 웹 회원 탈퇴 처리
     if (status === 200) {
       const result = await performWithdraw();
-      
+
       if (result.success) {
         // 컨텍스트 초기화 (전역 객체를 통해 접근)
         if (window.newBottomSheetContext && window.newBottomSheetContext.clearStack) {
@@ -366,7 +429,7 @@ export const UserProvider = ({ children }) => {
         if (window.newFullSheetContext && window.newFullSheetContext.clearStack) {
           window.newFullSheetContext.clearStack();
         }
-        
+
         // 로그인 페이지로 이동
         window.location.href = '/login';
       }
@@ -378,7 +441,7 @@ export const UserProvider = ({ children }) => {
   // 앱 구글 로그아웃 리스너 등록
   useEffect(() => {
     postMessageManager.setupAppGoogleLogout(handleAppGoogleLogout);
-    
+
     return () => {
       postMessageManager.removeAppGoogleLogout();
     };
@@ -387,7 +450,7 @@ export const UserProvider = ({ children }) => {
   // 앱 구글 회원 탈퇴 리스너 등록
   useEffect(() => {
     postMessageManager.setupAppGoogleWithdraw(handleAppGoogleWithdraw);
-    
+
     return () => {
       postMessageManager.removeAppGoogleWithdraw();
     };
@@ -398,15 +461,15 @@ export const UserProvider = ({ children }) => {
     const accessToken = getCookie('userAccessToken');
     if (accessToken) {
       // 서버에서 토큰 유효성 확인 + user 정보 가져오기
-      const userProfileResult = await fetchUserProfile(); 
-      if(userProfileResult.success){
+      const userProfileResult = await fetchUserProfile();
+      if (userProfileResult.success) {
         const userProfile = getUserProfile();
         // 로그인 상태 업데이트
         setIsLogin(true);
         setIsLoginChecked(true);
         setAuth({ user: { name: userProfile?.name, email: userProfile?.email } });
         return { isLoggedIn: true, userProfile };
-      }else{
+      } else {
         // 토큰이 유효하지 않으면 로그아웃 처리
         setCookie('userAccessToken', '', -1);
         setAuth({ user: null });
@@ -430,7 +493,7 @@ export const UserProvider = ({ children }) => {
         await checkLoginStatus();
       }
     };
-    
+
     initializeAuth();
   }, [isLoginChecked]);
 
@@ -448,7 +511,7 @@ export const UserProvider = ({ children }) => {
           console.error('❌ [USER] 추가 데이터 로드 중 오류 발생:', error);
         }
       };
-      
+
       loadAdditionalData();
     }
   }, [isLogin, isLoginChecked]); // 함수 의존성 제거
@@ -473,7 +536,10 @@ export const UserProvider = ({ children }) => {
     isLoginChecked,
     // 로그인 처리 함수들 추가
     Login,
+    AppleLogin,
     clickGoogleOauth,
+    clickAppleOauth,
+    checkLoginStatus,
     checkLoginStatus,
     performLogout,
 
@@ -481,7 +547,7 @@ export const UserProvider = ({ children }) => {
     gemItems,
     setGemItems,
     fetchGemItems,
-  };  
+  };
 
   return (
     <UserContext.Provider value={value}>

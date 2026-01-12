@@ -6,9 +6,9 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import InitialProfileStep3NewFullSheet from './InitialProfileStep3NewFullSheet';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
-const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProfile, endInitialProfile}) => {
+const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialProfile, endInitialProfile }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const profileRef = useRef();
@@ -31,16 +31,16 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
     const inputElement = profileRef.current;
     if (inputElement) {
       inputElement.addEventListener('blur', handleBlur);
-      
+
       return () => {
         inputElement.removeEventListener('blur', handleBlur);
       };
     }
   }, []);
-  
+
   // React Compiler가 자동으로 useCallback 처리
   const handleNextBtn = async () => {
-    if(profileRef.current.value.length > 8){
+    if (profileRef.current.value.length > 8) {
       await openAwaitNewBottomSheet(
         AlertNewBottomSheet,
         {
@@ -53,7 +53,7 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
       );
       return;
     };
-    if(profileRef.current.value.length == 0){
+    if (profileRef.current.value.length == 0) {
       await openAwaitNewBottomSheet(
         AlertNewBottomSheet,
         {
@@ -71,7 +71,7 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
       name: profileRef.current.value,
     };
     setUserInitialProfile(updatedProfile);
-    
+
     // step3를 FullSheet로 열기
     pushNewFullSheet(
       InitialProfileStep3NewFullSheet,
@@ -118,17 +118,17 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
             rounded-[8px]
             
           "
-          whileHover={{ 
+          whileHover={{
             backgroundColor: 'rgba(0, 0, 0, 0.05)',
             scale: 1.05
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             backgroundColor: 'rgba(0, 0, 0, 0.1)'
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
         >
@@ -147,37 +147,37 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
             flex flex-col items-center
             gap-[10px]
           ">
-            <div 
-              className="
+          <div
+            className="
                 w-[max-content]
                 px-[15px] py-[12px]
                 rounded-[10px]
                 font-[16px] font-[600]
                 bg-[#fff]
               "
-              style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
-            >
-              앞으로 제가 어떻게
-              부르면 될까요?
-            </div>
-            <img src={HeyCharacter} alt="logo" 
-              className="
+            style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
+          >
+            앞으로 제가 어떻게
+            부르면 될까요?
+          </div>
+          <img src={HeyCharacter} alt="logo"
+            className="
                 w-[173px]
               "
-            />
-          </div>
+          />
+        </div>
         <div className="
           relative
           w-full
         ">
-          
+
           <div className="
             relative
             flex flex-col items-center gap-[15px]
             w-full
             bg-[#FFEFFA]
           ">
-            <input type="text" placeholder="닉네임을 입력해주세요(8자 이내)" 
+            <input type="text" placeholder="닉네임을 입력해주세요(8자 이내)"
               id="name"
               name="name"
               ref={profileRef}
@@ -200,12 +200,12 @@ const InitialProfileStep2NewFullSheet = ({userInitialProfile, setUserInitialProf
               onKeyDown={handleKeyDown}
             />
             <motion.button
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
                 backgroundColor: "#FF7AC4",
                 boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
               }}
-              whileTap={{ 
+              whileTap={{
                 scale: 0.98,
                 backgroundColor: "#FF6AB4"
               }}

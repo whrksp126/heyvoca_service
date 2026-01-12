@@ -41,11 +41,11 @@ export const NewFullSheetProvider = () => {
     if (e.target !== e.currentTarget) return;
     const active = renderedActiveIndex >= 0 ? renderedStack[renderedActiveIndex] : undefined;
     if (!active) return;
-    
+
     if (active.options?.onBackdropClick) {
       active.options.onBackdropClick();
     }
-    
+
     if (active.options?.closeOnBackdropClick) {
       // openAwaitNewFullSheet인 경우 (resolve 함수가 있는 경우) resolveNewFullSheet 호출
       if (active.resolve) {
@@ -68,8 +68,8 @@ export const NewFullSheetProvider = () => {
             flex items-center justify-center 
             inset-0
           "
-          // initial={phase === 'enter' ? { opacity: 0 } : {}}
-          // animate={{ opacity: phase === 'exit' ? 0 : 1 }}
+        // initial={phase === 'enter' ? { opacity: 0 } : {}}
+        // animate={{ opacity: phase === 'exit' ? 0 : 1 }}
         >
           {renderedStack.map((newFullSheet, index) => {
             const shouldRender = index === renderedActiveIndex || newFullSheet.options.keepInDOM;
@@ -86,7 +86,7 @@ export const NewFullSheetProvider = () => {
                   className={`
                     absolute inset-0 flex items-center justify-center 
                     block
-                    ${newFullSheet.options.smFull ? '': ''}
+                    ${newFullSheet.options.smFull ? '' : ''}
                   `}
                   onClick={e => {
                     handleBackdropClick(e);
@@ -94,9 +94,9 @@ export const NewFullSheetProvider = () => {
                   }}
                   initial={phase === 'enter' ? { x: '100%' } : { x: 0 }}
                   animate={{ x: phase === 'exit' ? '100%' : 0 }}
-                  transition={{ 
-                    type: 'spring', 
-                    damping: 25, 
+                  transition={{
+                    type: 'spring',
+                    damping: 25,
                     stiffness: 200,
                     mass: 0.8
                   }}
@@ -118,7 +118,7 @@ export const NewFullSheetProvider = () => {
                 className={`
                   absolute inset-0 flex items-center justify-center 
                   ${isActive ? 'block' : 'hidden'}
-                  ${newFullSheet.options.smFull ? '': ''}
+                  ${newFullSheet.options.smFull ? '' : ''}
                 `}
                 onClick={e => {
                   handleBackdropClick(e);

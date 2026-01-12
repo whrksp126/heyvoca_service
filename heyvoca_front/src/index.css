@@ -11,10 +11,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@layer base {}
 
-}
-
+/* 입력 요소는 선택 가능하도록 예외 처리 */
 :root {
   touch-action: pan-x pan-y;
   -webkit-touch-callout: none;
@@ -23,6 +22,32 @@
   -webkit-tap-highlight-color: transparent;
   --height-header: 55px;
   --height-bottom-nav: 70px;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  /* 전체 스크롤을 막고 내부 요소에서만 스크롤하게 설정 */
+}
+
+#root {
+  position: fixed;
+  /* 화면을 고정시켜 시스템이 밀어 올리지 못하게 함 */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 메인 콘텐츠 영역 스크롤 처리를 위한 클래스 */
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 * {
@@ -34,7 +59,8 @@
 }
 
 /* 입력 요소는 선택 가능하도록 예외 처리 */
-input, textarea {
+input,
+textarea {
   touch-action: auto;
   -webkit-touch-callout: auto;
   -webkit-user-select: text;

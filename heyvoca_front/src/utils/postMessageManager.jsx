@@ -26,17 +26,17 @@ class PostMessageManager {
       const setupListeners = () => {
         // 1. window.addEventListener (일반적인 방법)
         window.addEventListener('message', this.handleMessage.bind(this));
-        
+
         // 2. document.addEventListener (Android용)
         document.addEventListener('message', this.handleMessage.bind(this));
-        
+
         // 3. ReactNativeWebView.onMessage (iOS용)
         if (window.ReactNativeWebView) {
           window.ReactNativeWebView.onMessage = (message) => {
             this.handleMessage({ data: message });
           };
         }
-        
+
         // 4. window.webkit.messageHandlers (iOS WebKit용)
         if (window.webkit && window.webkit.messageHandlers) {
           window.webkit.messageHandlers.postMessage = {
@@ -46,7 +46,7 @@ class PostMessageManager {
           };
         }
       };
-      
+
       setupListeners();
       this.listenerType = 'ReactNativeWebView.multiple';
     } else {
@@ -65,7 +65,7 @@ class PostMessageManager {
   setupAppGoogleAuth(callback) {
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // 앱 구글 OAuth 콜백 리스너 등록
     this.addListener('google_oauth_app_callback', callback);
   }
@@ -78,13 +78,29 @@ class PostMessageManager {
   }
 
   /**
+   * 앱 Apple OAuth 콜백 등록 (전역 함수)
+   * @param {Function} callback - 로그인 처리 콜백 함수
+   */
+  setupAppAppleAuth(callback) {
+    this.init();
+    this.addListener('apple_oauth_app_callback', callback);
+  }
+
+  /**
+   * 앱 Apple OAuth 콜백 제거
+   */
+  removeAppAppleAuth() {
+    this.removeListener('apple_oauth_app_callback');
+  }
+
+  /**
    * 앱 구글 로그아웃 콜백 등록
    * @param {Function} callback - 로그아웃 처리 콜백 함수
    */
   setupAppGoogleLogout(callback) {
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // 앱 구글 로그아웃 콜백 리스너 등록
     this.addListener('google_logout_app_callback', callback);
   }
@@ -103,7 +119,7 @@ class PostMessageManager {
   setupAppGoogleWithdraw(callback) {
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // 앱 구글 회원 탈퇴 콜백 리스너 등록 (로그아웃과 동일한 콜백 사용)
     this.addListener('google_logout_app_callback', callback);
   }
@@ -122,7 +138,7 @@ class PostMessageManager {
   setupIAPPurchaseSuccess(callback) {
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // 인앱 결제 성공 콜백 리스너 등록
     this.addListener('iap_purchase_success', callback);
   }
@@ -134,7 +150,7 @@ class PostMessageManager {
   setupIAPPurchaseError(callback) {
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // 인앱 결제 실패 콜백 리스너 등록
     this.addListener('iap_purchase_error', callback);
   }
@@ -162,7 +178,7 @@ class PostMessageManager {
     console.log(callback);
     // 포스트메시지 매니저 초기화
     this.init();
-    
+
     // OCR 결과 콜백 리스너 등록
     this.addListener('ocrResult', callback);
     console.log('OCR 결과 콜백 등록 완료');
@@ -198,19 +214,19 @@ class PostMessageManager {
    */
   handleMessage(event) {
     console.log(`🎯 포스트메시지 받음!`);
-    
+
     try {
       // React Native WebView에서는 event.data를 사용
       const messageData = event.data;
-      
+
       if (!messageData) {
         console.log(`❌ 메시지 데이터가 없습니다.`);
         return;
       }
-      
+
       const data = JSON.parse(messageData);
       console.log(`✅ 메시지 파싱 성공: ${data.type}`);
-      
+
       // 등록된 리스너들 실행
       this.listeners.forEach((callback, messageType) => {
         if (data.type === messageType) {
@@ -285,11 +301,11 @@ class PostMessageManager {
         // 모든 리스너 제거
         window.removeEventListener('message', this.handleMessage.bind(this));
         document.removeEventListener('message', this.handleMessage.bind(this));
-        
+
         if (window.ReactNativeWebView) {
           window.ReactNativeWebView.onMessage = null;
         }
-        
+
         if (window.webkit && window.webkit.messageHandlers) {
           delete window.webkit.messageHandlers.postMessage;
         }
@@ -297,7 +313,7 @@ class PostMessageManager {
         // 일반 웹: window.removeEventListener
         window.removeEventListener('message', this.handleMessage.bind(this));
       }
-      
+
       this.clearAllListeners();
       this.isInitialized = false;
       this.listenerType = null;

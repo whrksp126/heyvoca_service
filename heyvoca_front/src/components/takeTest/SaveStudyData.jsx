@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
-const SaveStudyData = ({endInitialProfile}) => {
+const SaveStudyData = ({ endInitialProfile }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
   const buttonVariants = {
     hover: {
@@ -23,12 +23,12 @@ const SaveStudyData = ({endInitialProfile}) => {
       p-[20px]
       bg-[#FFEFFA]
     ">
-    
+
       <div className="
         flex flex-col items-center
         gap-[10px]
       ">
-        <div 
+        <div
           className="
             px-[15px] py-[12px]
             bg-[#fff]
@@ -40,7 +40,7 @@ const SaveStudyData = ({endInitialProfile}) => {
           학습 결과를 저장하고 있습니다! <br />
           잠시만 기다려 주세요!
         </div>
-        <img src={HeyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo"
           className="
             w-[160px]
           "

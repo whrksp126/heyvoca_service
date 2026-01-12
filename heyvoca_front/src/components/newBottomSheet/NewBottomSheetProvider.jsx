@@ -43,7 +43,7 @@ export const NewBottomSheetProvider = () => {
     <AnimatePresence mode="wait">
       {renderedStack.length > 0 && (
         <>
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-black/50 z-[1000]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -53,7 +53,7 @@ export const NewBottomSheetProvider = () => {
           {renderedStack.map((newBottomSheet, index) => {
             const isActive = index === renderedActiveIndex;
             const shouldRender = isActive || newBottomSheet.options?.keepInDOM;
-            
+
             if (!shouldRender) return null;
 
             if (isActive && phase !== 'idle') {
@@ -92,7 +92,7 @@ export const NewBottomSheetProvider = () => {
                 </motion.div>
               );
             }
-            
+
             return (
               <motion.div
                 key={newBottomSheet.id}

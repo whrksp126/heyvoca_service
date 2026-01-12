@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
 
-const MakeStudyData = ({endInitialProfile}) => {
+const MakeStudyData = ({ endInitialProfile }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
   const buttonVariants = {
     hover: {
@@ -27,7 +27,7 @@ const MakeStudyData = ({endInitialProfile}) => {
         flex flex-col items-center
         gap-[10px]
       ">
-        <div 
+        <div
           className="
             px-[15px] py-[12px]
             bg-[#fff]
@@ -39,7 +39,7 @@ const MakeStudyData = ({endInitialProfile}) => {
           가장 암기가 필요한 단어를 찾고 있어요! <br />
           잠시만 기다려 주세요!
         </div>
-        <img src={HeyCharacter} alt="logo" 
+        <img src={HeyCharacter} alt="logo"
           className="
             w-[160px]
           "

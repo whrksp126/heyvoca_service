@@ -14,7 +14,7 @@ const Main = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   // const { pushNewFullSheet } = useNewFullSheetActions();
-  
+
   if (isBookStoreLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -49,7 +49,7 @@ const Main = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="
         flex flex-col 
         h-[calc(100vh-theme(height.header)-theme(height.bottom-nav))]
@@ -76,8 +76,8 @@ const Main = () => {
                   shadow-sm
                   aspect-square
                 `}
-                whileTap={{ scale: 0.96}}
-                whileHover={{ scale: 1.04}}
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.04 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 onClick={() => {
                   vibrate({ duration: 5 });
@@ -86,7 +86,7 @@ const Main = () => {
               >
                 <div className="flex flex-col gap-[5px]">
                   {item.category && (
-                    <div 
+                    <div
                       style={{ backgroundColor: item.color.main }}
                       className={`
                         flex items-center justify-center
@@ -103,11 +103,11 @@ const Main = () => {
                   <span className="flex items-center gap-[2px] text-[14px] font-[600] text-[#111]">
                     <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
                   </span>
-                  <div 
-                    style={{ 
+                  <div
+                    style={{
                       color: item.color.main,
                       backgroundColor: item.color.sub
-                    }} 
+                    }}
                     className={`
                       flex items-center justify-center 
                       w-[30px] h-[30px] 

@@ -66,7 +66,7 @@ function AppWithContexts() {
   const newFullSheetActions = useContext(NewFullSheetActionsContext);
   const newBottomSheetContext = useContext(NewBottomSheetContext);
   const newBottomSheetActions = useContext(NewBottomSheetActionsContext);
-  
+
   // NewFullSheetContext를 전역에 등록 (state와 actions를 합쳐서)
   window.newFullSheetContext = {
     ...newFullSheetContext,
@@ -76,15 +76,15 @@ function AppWithContexts() {
     ...newBottomSheetContext,
     ...newBottomSheetActions
   };
-  
+
   return (
     <Layout>
       {/* <BottomSheetProvider> */}
-        {/* <FullSheetProvider> */}
-          <AppLayout />
-          <NewFullSheetProvider />
-          <NewBottomSheetProvider />
-        {/* </FullSheetProvider> */}
+      {/* <FullSheetProvider> */}
+      <AppLayout />
+      <NewFullSheetProvider />
+      <NewBottomSheetProvider />
+      {/* </FullSheetProvider> */}
       {/* </BottomSheetProvider> */}
     </Layout>
   );

@@ -8,7 +8,7 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import VocabularyWords from './VocabularyWords';
 import VocabularyWordsNewFullSheet from '../newFullSheet/VocabularyWordsNewFullSheet';
 import note_ring from '../../assets/images/note_ring.png';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 const Main = () => {
 
@@ -16,11 +16,11 @@ const Main = () => {
   // const { pushFullSheet } = useFullSheet();
   const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  
+
   // Hook은 항상 조건부 return 전에 호출되어야 합니다
   useEffect(() => {
     console.log(vocabularySheets);
-  }, [ isVocabularySheetsLoading, vocabularySheets]);
+  }, [isVocabularySheetsLoading, vocabularySheets]);
 
   const today_sentence = {
     title: "오늘의 문장 💬",
@@ -37,7 +37,7 @@ const Main = () => {
   }
 
   // updatedAt 기준으로 정렬된 단어장 목록
-  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
+  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) =>
     new Date(b.updatedAt) - new Date(a.updatedAt)
   );
 
@@ -89,7 +89,7 @@ const Main = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="
         flex flex-col 
         h-[calc(100vh-theme(height.header)-theme(height.bottom-nav)-var(--status-bar-height))]
@@ -109,7 +109,7 @@ const Main = () => {
         rounded-[12px]
         bg-[#FFEFFA]
       ">
-        <div 
+        <div
           className="
             absolute top-[0] left-[0]
             flex items-center justify-between
@@ -117,15 +117,15 @@ const Main = () => {
             px-[14px]
             translate-y-[-20%]
           ">
-          {[0,1,2,3,4,5,6,7,8,9].map((item) => (
-            <img 
-              key={item} 
-              src={note_ring} 
-              alt="노트 위 고리 이미지" 
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+            <img
+              key={item}
+              src={note_ring}
+              alt="노트 위 고리 이미지"
               className="
                 note_ring
                 w-[12px] h-[24px]
-              " 
+              "
             />
           ))}
         </div>
@@ -141,12 +141,12 @@ const Main = () => {
       </div>
 
       <div className="middle">
-        <ul 
+        <ul
           className="flex flex-col gap-[15px]"
         >
           {sortedVocabularySheets.map((item) => {
             const memorizationStats = calculateMemorizationStats(item.words);
-            
+
             return (
               <motion.li
                 key={item.id}
@@ -161,66 +161,67 @@ const Main = () => {
                   vibrate({ duration: 5 });
                   handleCardClick(item.id);
                 }}
-                whileTap={{ scale: 0.96}}
-                whileHover={{ scale: 1.04}}
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.04 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <div 
-                className="
+                <div
+                  className="
                   top
                   flex items-center justify-between
                   w-full
                 "
-              >
-                <h3 className="text-[16px] font-[700]">{item.title}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.total||0}</span>
-              </div>
-  
-              <div 
-                className="
+                >
+                  <h3 className="text-[16px] font-[700]">{item.title}</h3>
+                  <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
+                </div>
+
+                <div
+                  className="
                   middle
                   hidden
                 "
-              >
-                <div className="btns">
-                  <button>
-                    <PencilSimple  />
-                  </button>
-                  <button>
-                    <Trash/>
-                  </button>
+                >
+                  <div className="btns">
+                    <button>
+                      <PencilSimple />
+                    </button>
+                    <button>
+                      <Trash />
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              {/* 암기 상태별 단어 개수 표시 */}
-              <div className="flex items-center gap-[12px] flex-wrap">
-                <div className="flex items-center gap-[4px]">
-                  <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
-                  <span className="text-[13px] font-[600] text-[#9D835A]">
-                    {memorizationStats.unlearned || 0}
-                  </span>
+                {/* 암기 상태별 단어 개수 표시 */}
+                <div className="flex items-center gap-[12px] flex-wrap">
+                  <div className="flex items-center gap-[4px]">
+                    <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
+                    <span className="text-[13px] font-[600] text-[#9D835A]">
+                      {memorizationStats.unlearned || 0}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-[4px]">
+                    <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
+                    <span className="text-[13px] font-[600] text-[#77CE4F]">
+                      {memorizationStats.leaf || 0}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-[4px]">
+                    <Plant size={16} weight="fill" className="text-[#38CE38]" />
+                    <span className="text-[13px] font-[600] text-[#38CE38]">
+                      {memorizationStats.plant || 0}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-[4px]">
+                    <Carrot size={16} weight="fill" className="text-[#F68300]" />
+                    <span className="text-[13px] font-[600] text-[#F68300]">
+                      {memorizationStats.carrot || 0}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-[4px]">
-                  <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
-                  <span className="text-[13px] font-[600] text-[#77CE4F]">
-                    {memorizationStats.leaf || 0}
-                  </span>
-                </div>
-                <div className="flex items-center gap-[4px]">
-                  <Plant size={16} weight="fill" className="text-[#38CE38]" />
-                  <span className="text-[13px] font-[600] text-[#38CE38]">
-                    {memorizationStats.plant || 0}
-                  </span>
-                </div>
-                <div className="flex items-center gap-[4px]">
-                  <Carrot size={16} weight="fill" className="text-[#F68300]" />
-                  <span className="text-[13px] font-[600] text-[#F68300]">
-                    {memorizationStats.carrot || 0}
-                  </span>
-                </div>
-              </div>
-            </motion.li>
-          )})}
+              </motion.li>
+            )
+          })}
         </ul>
       </div>
     </motion.div>

@@ -38,7 +38,7 @@ const ACHIEVEMENT_IMAGES = {
   '단어왕': WordKing,
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
-  '암기왕': MemorizedKing, 
+  '암기왕': MemorizedKing,
 };
 
 // 레벨별 배경 색상 및 스타일
@@ -103,7 +103,7 @@ const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
-  const { userMainPage , userProfile} = useUser();
+  const { userMainPage, userProfile } = useUser();
   const { vocabularySheets, isVocabularySheetsLoading, updateDelayedWords, getDelayedWords } = useVocabulary();
   const [now, setNow] = useState(Date.now());
   const [lastSeen, setLastSeen] = useState(getLastSeenTime());
@@ -116,10 +116,10 @@ const Main = () => {
     const today = new Date();
     const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']; // 영어 약어로 변경
     const todayName = dayNames[today.getDay()];
-    
+
     // userMainPage.dates에서 오늘 요일 찾기
     const todayData = userMainPage?.dates?.find(date => date.date === todayName);
-    
+
     return {
       attendCompleted: todayData?.attend || false,        // 접속하기는 attend 값
       dailyMissionCompleted: todayData?.daily_mission || false,  // 오늘의 학습은 daily_mission 값
@@ -133,16 +133,16 @@ const Main = () => {
   // 학습 기록이 있는 단어만 카운팅 (repetition > 0 || interval > 0 || nextReview !== null)
   const total = vocabularySheets.reduce((acc, sheet) => {
     if (!sheet.words || !Array.isArray(sheet.words)) return acc;
-    
+
     const learningWordsCount = sheet.words.filter(word => {
       const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
       const interval = word.memoryState?.interval ?? word.interval ?? 0;
       const nextReview = word.memoryState?.nextReview ?? word.nextReview;
-      
+
       // 학습 기록이 있는 단어: repetition > 0 또는 interval > 0 또는 nextReview가 있음
       return repetition > 0 || interval > 0 || (nextReview !== null && nextReview !== undefined);
     }).length;
-    
+
     return acc + learningWordsCount;
   }, 0);
   // const { pushFullSheet } = useFullSheet();
@@ -170,8 +170,8 @@ const Main = () => {
   // 빨간 점 표시 여부 계산
   const showDot = (() => {
     // delayedWords가 없거나 로딩 중이면 false
-    if(!delayedWords || delayedWords.length === 0) return false;
-    
+    if (!delayedWords || delayedWords.length === 0) return false;
+
     const words = delayedWords.map(word => ({
       id: word.id,
       nextReviewAt: new Date(word.nextReview).getTime()
@@ -183,8 +183,8 @@ const Main = () => {
   // 기한 지난 단어 개수 계산
   const overdueCount = (() => {
     // delayedWords가 없거나 로딩 중이면 0
-    if(!delayedWords || delayedWords.length === 0) return 0;
-    
+    if (!delayedWords || delayedWords.length === 0) return 0;
+
     const words = delayedWords.map(word => ({
       id: word.id,
       nextReviewAt: new Date(word.nextReview).getTime()
@@ -195,7 +195,7 @@ const Main = () => {
   // 복습 지연 단어 목록 업데이트 (데이터 로딩 완료 후에만 실행)
   useEffect(() => {
     // 로딩 중이거나 vocabularySheets가 비어있으면 실행하지 않음
-    if(isVocabularySheetsLoading || !vocabularySheets || vocabularySheets.length === 0) return;
+    if (isVocabularySheetsLoading || !vocabularySheets || vocabularySheets.length === 0) return;
     const currentDelayedWords = updateDelayedWords();
     setDelayedWords(currentDelayedWords);
   }, [vocabularySheets, isVocabularySheetsLoading]);
@@ -279,12 +279,12 @@ const Main = () => {
             ) : (
               <IconBell width={18} height={18} className="text-[#fff]" />
             )}
-            
+
             {/* 툴팁 - 알림 상태일 때는 항상 표시, 일반 상태일 때는 토글 */}
             <AnimatePresence>
               {(showDot || showTooltip) && (
-                <motion.div 
-                className="
+                <motion.div
+                  className="
                   absolute top-[100%] right-[0] z-[1]
                   flex items-center
                   w-[max-content]
@@ -294,54 +294,54 @@ const Main = () => {
                   bg-[#fff]
                   shadow-[0_0_4px_rgba(0,0,0,0.25)]
                 "
-                // 툴팁 열기/닫기 애니메이션
-                initial={{ 
-                  opacity: 0, 
-                  scale: 0.8, 
-                  y: -10 
-                }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  y: 0,
-                  // 알림 상태일 때만 깜빡이는 애니메이션 추가
-                  ...(showDot ? {
-                    opacity: [1, 0.7, 1],
-                    scale: [1, 1.05, 1],
-                  } : {})
-                }}
-                exit={{ 
-                  opacity: 0, 
-                  scale: 0.8, 
-                  y: -10 
-                }}
-                transition={{
-                  // 기본 열기/닫기 애니메이션
-                  duration: 0.3,
-                  ease: "easeOut",
-                  // 알림 상태일 때 깜빡이는 애니메이션
-                  ...(showDot ? {
-                    opacity: {
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    },
-                    scale: {
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }
-                  } : {})
-                }}
-              >
-                <span 
-                  className="text-[#111] text-[14px] font-[400]"
-                  dangerouslySetInnerHTML={{
-                    __html: overdueCount > 0 
-                      ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요!`
-                      : '알림이 없습니다'
+                  // 툴팁 열기/닫기 애니메이션
+                  initial={{
+                    opacity: 0,
+                    scale: 0.8,
+                    y: -10
                   }}
-                />
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    // 알림 상태일 때만 깜빡이는 애니메이션 추가
+                    ...(showDot ? {
+                      opacity: [1, 0.7, 1],
+                      scale: [1, 1.05, 1],
+                    } : {})
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.8,
+                    y: -10
+                  }}
+                  transition={{
+                    // 기본 열기/닫기 애니메이션
+                    duration: 0.3,
+                    ease: "easeOut",
+                    // 알림 상태일 때 깜빡이는 애니메이션
+                    ...(showDot ? {
+                      opacity: {
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      },
+                      scale: {
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }
+                    } : {})
+                  }}
+                >
+                  <span
+                    className="text-[#111] text-[14px] font-[400]"
+                    dangerouslySetInnerHTML={{
+                      __html: overdueCount > 0
+                        ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요!`
+                        : '알림이 없습니다'
+                    }}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -368,22 +368,22 @@ const Main = () => {
           <h2 className="
             text-[#fff] text-[24px]
           ">
-            <strong>{userProfile.username}</strong>님,<br/>
-            <strong>{total}개</strong><br/>
+            <strong>{userProfile.username}</strong>님,<br />
+            <strong>{total}개</strong><br />
             단어를 학습 중이에요!
           </h2>
           <img src={HeyCharacter02} alt="" className="
             absolute top-[-9px] right-[25px]
             h-[148px]
           " />
-          <motion.div 
+          <motion.div
             className="relative flex w-[100%] h-[50px]"
             onClick={() => {
               vibrate({ duration: 5 });
               handleTodayStudyButtonClick();
             }}
-            whileTap={{ scale: 0.96}}
-            whileHover={{ scale: 1.04}}
+            whileTap={{ scale: 0.96 }}
+            whileHover={{ scale: 1.04 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <div className="
@@ -427,8 +427,8 @@ const Main = () => {
                   px-[6px] py-[4px] 
                   rounded-[5px] 
                   text-[10px] font-[700]
-                  ${todayStatus.attendCompleted 
-                    ? 'text-[#fff] bg-[#E569B7]' 
+                  ${todayStatus.attendCompleted
+                    ? 'text-[#fff] bg-[#E569B7]'
                     : 'text-[#FF8DD4] bg-[#fff]'
                   }
                 `}>
@@ -443,8 +443,8 @@ const Main = () => {
                   px-[6px] py-[4px] 
                   rounded-[5px] 
                   text-[10px] font-[700]
-                  ${todayStatus.dailyMissionCompleted 
-                    ? 'text-[#fff] bg-[#E569B7]' 
+                  ${todayStatus.dailyMissionCompleted
+                    ? 'text-[#fff] bg-[#E569B7]'
                     : 'text-[#FF8DD4] bg-[#fff]'
                   }
                 `}>
@@ -452,7 +452,7 @@ const Main = () => {
                 </div>
               </div>
             </div>
-          </div>  
+          </div>
 
           <div className="
             flex flex-col gap-[20px]
@@ -463,27 +463,27 @@ const Main = () => {
             <h2 className="text-[#111] text-[16px] font-[700]">출석체크</h2>
             <div className="flex justify-between">
               {userMainPage?.dates?.map((item, index) => (
-              <div key={index} className="flex flex-col gap-[10px] items-center">
-                <h3 className="text-[#111] text-[12px] font-[600]">{item.date}</h3>
-                {(item.attend && item.daily_mission) && (
-                  <div className="w-[30px] h-[30px] flex items-center justify-center">
-                    <div className="flex items-center justify-center w-[24px] h-[24px] 
+                <div key={index} className="flex flex-col gap-[10px] items-center">
+                  <h3 className="text-[#111] text-[12px] font-[600]">{item.date}</h3>
+                  {(item.attend && item.daily_mission) && (
+                    <div className="w-[30px] h-[30px] flex items-center justify-center">
+                      <div className="flex items-center justify-center w-[24px] h-[24px] 
                       bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                       rounded-[50%]
                     ">
-                      <Heart size={12} weight="fill" color="#fff" />
+                        <Heart size={12} weight="fill" color="#fff" />
+                      </div>
                     </div>
-                  </div>
-                )}
-                {(item.attend && !item.daily_mission) && (
-                  <div className="w-[30px] h-[30px] flex items-center justify-center">
-                    <CheckCircle size={30} weight="fill"  color="#FF8DD4"/>
-                  </div>
-                )}
-                {(!item.attend && !item.daily_mission) && (
-                  <CircleDashed size={30} color="#FF8DD4" />
-                )}
-              </div>    
+                  )}
+                  {(item.attend && !item.daily_mission) && (
+                    <div className="w-[30px] h-[30px] flex items-center justify-center">
+                      <CheckCircle size={30} weight="fill" color="#FF8DD4" />
+                    </div>
+                  )}
+                  {(!item.attend && !item.daily_mission) && (
+                    <CircleDashed size={30} color="#FF8DD4" />
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -502,42 +502,42 @@ const Main = () => {
                 {userMainPage?.goals?.slice(0, 4).map((goal, idx) => {
                   console.log(goal);
                   return (
-                    
-                      
-                      <div
-                        key={goal.type}
-                        className="flex flex-col items-center gap-[5px] w-[60px]"
-                      >
-                        <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
-                          <img 
-                            src={ACHIEVEMENT_IMAGES[goal.type]} 
-                            alt="" 
-                            className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" 
-                          />
-                          <div 
-                            className="w-[60px] h-[60px] rounded-[50%]"
-                            style={getAchievementBackgroundStyle(goal.level)}
-                          ></div>
-                          <span 
-                            className="
+
+
+                    <div
+                      key={goal.type}
+                      className="flex flex-col items-center gap-[5px] w-[60px]"
+                    >
+                      <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
+                        <img
+                          src={ACHIEVEMENT_IMAGES[goal.type]}
+                          alt=""
+                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]"
+                        />
+                        <div
+                          className="w-[60px] h-[60px] rounded-[50%]"
+                          style={getAchievementBackgroundStyle(goal.level)}
+                        ></div>
+                        <span
+                          className="
                               absolute bottom-[0] left-[50%] 
                               translate-x-[-50%]
                               text-[16px] font-[700]
                               [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
                             "
-                            style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
-                            >
-                              <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
-                          </span>
-                        </div>
-                        <span className="text-[#111] text-[12px] font-[600]">
-                          {goal.type}
+                          style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
+                        >
+                          <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
                         </span>
                       </div>
+                      <span className="text-[#111] text-[12px] font-[600]">
+                        {goal.type}
+                      </span>
+                    </div>
                   )
                 })}
               </div>
-              
+
               {/* 두 번째 줄: 나머지 아이템들 (중앙 정렬) */}
               {userMainPage?.goals?.length > 4 && (
                 <div className="flex justify-center gap-x-3">
@@ -547,16 +547,16 @@ const Main = () => {
                       className="flex flex-col items-center gap-[5px] w-[60px]"
                     >
                       <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
-                        <img 
-                          src={ACHIEVEMENT_IMAGES[goal.type]} 
-                          alt="" 
-                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]" 
+                        <img
+                          src={ACHIEVEMENT_IMAGES[goal.type]}
+                          alt=""
+                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]"
                         />
-                        <div 
+                        <div
                           className="w-[60px] h-[60px] rounded-[50%]"
                           style={getAchievementBackgroundStyle(goal.level)}
                         ></div>
-                        <span 
+                        <span
                           className="
                             absolute bottom-[0] left-[50%] 
                             translate-x-[-50%]
@@ -565,8 +565,8 @@ const Main = () => {
                             [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
                           "
                           style={getAchievementTextStyle(goal.level)}
-                          >
-                            <span className="text-[10px]">LV.</span>{goal.level}
+                        >
+                          <span className="text-[10px]">LV.</span>{goal.level}
                         </span>
                       </div>
                       <span className="text-[#111] text-[12px] font-[600]">
@@ -581,7 +581,7 @@ const Main = () => {
         </div>
       </motion.div>
 
-      
+
 
     </div>
   )
