@@ -24,6 +24,7 @@ from google.auth.transport import requests as google_requests
 from urllib.parse import urlencode
 
 from requests_oauthlib import OAuth2Session
+from jwt import PyJWKClient
 from config import GOOGLE_WEB_CLIENT_ID, ACCESS_SECRET, REFRESH_SECRET, OAUTH_CLIENT_SECRET, FRONT_END_URL
 
 from dotenv import load_dotenv
@@ -130,6 +131,144 @@ def google_oauth_app():
     except Exception as e:
         print('== login_google 에러 == ', e)
         return jsonify({'code': 400, 'message': '로그인 처리 오류'}), 400
+
+
+# --------------------------------------------------------------------------------
+# Apple 로그인 (앱)
+# --------------------------------------------------------------------------------
+@auth_bp.route('/apple/oauth/app', methods=['POST'])
+def apple_oauth_app():
+    try:
+        data = request.json
+        identity_token = data.get('identityToken')
+        full_name = data.get('fullName')  # 선택적 (최초 로그인 시에만 올 수 있음)
+        # full_name 예: {'givenName': 'Gildong', 'familyName': 'Hong'}
+        # email = data.get('email') # identityToken에서 추출하는 것이 더 안전함
+
+        if not identity_token:
+            return jsonify({'code': 400, 'message': 'identityToken이 없습니다.'}), 400
+
+        # 1. Apple Public Keys로 서명 검증 & 페이로드 디코딩
+        #    audience는 앱의 Bundle ID임. 검증하려면 환경변수나 하드코딩 필요.
+        #    여기서는 verify=True하되 audience는 옵션으로 처리 (환경변수 권장)
+        apple_client_id = os.getenv('APPLE_CLIENT_ID') # Bundle ID
+        
+        jwks_client = PyJWKClient("https://appleid.apple.com/auth/keys")
+        signing_key = jwks_client.get_signing_key_from_jwt(identity_token)
+        
+        decode_options = {"verify_exp": True}
+        if apple_client_id:
+            decode_options["verify_aud"] = True
+            audience = apple_client_id
+        else:
+            decode_options["verify_aud"] = False # Client ID 미설정 시 Audience 검증 스킵
+            audience = None
+
+        payload = jwt.decode(
+            identity_token,
+            signing_key.key,
+            algorithms=["RS256"],
+            audience=audience,
+            options=decode_options
+        )
+
+        # 2. 정보 추출
+        apple_sub = payload.get('sub') # Apple 고유 User ID
+        email = payload.get('email')
+        
+        if not apple_sub:
+            return jsonify({'code': 400, 'message': '유효하지 않은 토큰(sub 누락)'}), 400
+
+        # 3. 사용자 조회 (apple_id 우선, 없으면 email 체크)
+        user = User.query.filter_by(apple_id=apple_sub).first()
+        
+        if user is None and email:
+             # 기존에 같은 이메일로 가입된 유저가 있는지 확인 (Google 등)
+             user = User.query.filter_by(email=email).first()
+             if user:
+                 # 기존 유저가 있으면 연동 (apple_id 업데이트)
+                 user.apple_id = apple_sub
+                 db.session.commit()
+
+        if user is None:
+            # 4. 신규 가입
+            # 이름 처리: 클라이언트에서 받은 fullName 사용 또는 이메일 앞부분 등 사용
+            name_str = "Apple User"
+            if full_name:
+                 # full_name이 dict인지 string인지 체크 (클라이언트 구현에 따라 다름)
+                 # 보통 { givenName: ..., familyName: ... }
+                 given = full_name.get('givenName', '')
+                 family = full_name.get('familyName', '')
+                 if given or family:
+                    name_str = f"{family}{given}".strip()
+            elif email:
+                 name_str = email.split('@')[0]
+
+            user = User(
+                level_id=None,
+                email = email if email else f"{apple_sub}@privaterelay.appleid.com", # 이메일 비공개 시 가짜 이메일 생성
+                google_id = None, # Apple 로그인이므로 Null
+                apple_id = apple_sub,
+                username = None,
+                name = name_str,
+                phone = None,
+                refresh_token = '',
+                code = '',
+                book_cnt = 3,
+                gem_cnt = 0,
+                set_goal_cnt = 3,
+                last_logged_at = datetime.now(tz=KST)
+            )
+            db.session.add(user)
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Apple User Creation Error: {e}")
+                return jsonify({'code': 400, 'message': '사용자 생성 실패'}), 400
+
+        # 5. 토큰 발급
+        access_token = generate_access_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email)
+
+        user.refresh_token = refresh_token
+        # user.last_logged_at = datetime.now(tz=KST)
+        db.session.add(user)
+        db.session.commit()
+
+        # 6. 응답
+        response = make_response(jsonify({
+            "code": 200,
+            "status": "success",
+            "accessToken": access_token,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "name": getattr(user, "name", None),
+            }
+        }), 200)
+
+        is_local = os.getenv('FLASK_CONFIG') == 'local'
+        response.set_cookie(
+            'refresh_token',
+            refresh_token,
+            httponly=True,
+            secure=not is_local,
+            samesite='Lax',
+            max_age=60*60*24*30
+        )
+        return response
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({'code': 401, 'message': '토큰이 만료되었습니다.'}), 401
+    except jwt.InvalidTokenError as e:
+        print(f"Invalid Token: {e}")
+        return jsonify({'code': 401, 'message': '유효하지 않은 토큰입니다.'}), 401
+    except Exception as e:
+        print(f"Apple Login Error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '서버 오류'}), 500
 
 
 # 로그인 라우트: 구글 OAuth2 인증 요청

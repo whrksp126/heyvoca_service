@@ -57,7 +57,8 @@ class User(db.Model):
     id = Column(BinaryUUID, primary_key=True, default=uuid4)
     level_id = Column(Integer, ForeignKey('level.id'), nullable=True)
     email = Column(String(128), nullable=False) 
-    google_id = Column(String(128), nullable=False)
+    google_id = Column(String(128), nullable=True)
+    apple_id = Column(String(128), nullable=True) # Apple 고유 ID 추가
     name = Column(String(32), nullable=False)
     username = Column(String(36), nullable=True, default=None)
     phone = Column(String(16), nullable=True)
@@ -74,10 +75,11 @@ class User(db.Model):
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
-                 book_cnt, gem_cnt, set_goal_cnt):
+                 book_cnt, gem_cnt, set_goal_cnt, apple_id=None):
         self.level_id = level_id
         self.email = email
         self.google_id = google_id
+        self.apple_id = apple_id
         self.username = username
         self.name = name
         self.phone = phone
