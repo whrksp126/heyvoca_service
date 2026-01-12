@@ -2,27 +2,31 @@ import React from 'react';
 import { Alert, Vibration, Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 // import Tts from 'react-native-tts';
-import { signInWithGoogle, signOutWithGoogle } from '../google/googleAuth';
+import { signInWithGoogle, signOutWithGoogle } from '../oauth/googleAuth';
+import { signInWithApple } from '../oauth/appleAuth';
 import { executePurchase } from '../handlers/iapHandler';
 import { saveCookieToAsyncStorage } from '../utils/asyncStorage';
 
 const handleWebViewMessage = async (
-  event: { nativeEvent: { data: string } }, 
-  webViewRef: React.RefObject<any>, 
+  event: { nativeEvent: { data: string } },
+  webViewRef: React.RefObject<any>,
   handleExitApp: () => void,
   setIsOCRScreen: (isOCRScreen: boolean) => void,
   setOcrFilteredWords: (words: any[]) => void,
 ) => {
   try {
     const messageData = JSON.parse(event.nativeEvent.data);
-    
+
     switch (messageData.type) {
       case 'launchGoogleAuth':
         signInWithGoogle(webViewRef);
         break;
       case 'launchGoogleLogout':
         signOutWithGoogle(webViewRef);
-        break;    
+        break;
+      case 'launchAppleAuth':
+        signInWithApple(webViewRef);
+        break;
       case 'iapPurchase':
         executePurchase(messageData.props.itemId, webViewRef);
         break;
@@ -32,13 +36,13 @@ const handleWebViewMessage = async (
         saveCookieToAsyncStorage(name, value, expires);
         console.log('쿠키 동기화됨:', name, value);
         break;
- 
+
       case 'log':
         console.log('web log :', messageData.message);
         break;
       case 'alert':
         Alert.alert('', messageData.message);
-        break;  
+        break;
       case 'confirm':
         Alert.alert('', messageData.message, [
           { text: messageData.btns[0].text, onPress: () => webViewRef.current.postMessage(JSON.stringify({ type: "confirm_return", success: true, result: false })), style: 'cancel' },
@@ -78,10 +82,10 @@ const handleWebViewMessage = async (
           console.log('진동 취소');
           break;
         }
-        
+
         // 진동 실행: duration(ms)만큼 1회 진동
         const vibrateDuration = duration && typeof duration === 'number' ? duration : 400;
-        
+
         if (Platform.OS === 'ios') {
           Vibration.vibrate([vibrateDuration], false);
         } else {
@@ -108,15 +112,15 @@ const handleWebViewMessage = async (
   // }
   // try {
   //   const data = JSON.parse(messageData);
-    
+
   //   switch (data.type) {
 
-              
+
   //     // case 'iap_purchase':
   //     //   // 웹에서 인앱결제 요청
   //     //   const { productId } = data.data;
   //     //   break;
-        
+
   //     // case 'loginSuccess':
   //     //   const { accessToken, refreshToken } = data.data;
   //     //   console.log('로그인 성공:', { accessToken, refreshToken });
@@ -130,7 +134,7 @@ const handleWebViewMessage = async (
   //     //   Tts.setDefaultLanguage(language);
   //     //   Tts.speak(data.text);
   //     //   break;
-        
+
   //     // case 'isBackable':
   //     //   if (data.value) {
   //     //     webViewRef.current.goBack();
@@ -138,15 +142,15 @@ const handleWebViewMessage = async (
   //     //     handleExitApp();
   //     //   }
   //     //   break;
-        
+
   //     // case 'log':
   //     //   console.log('web log :', data.message);
   //     //   break;
-        
+
   //     // case 'alert':
   //     //   Alert.alert('', data.message, [{ text: 'OK' }], { cancelable: false });
   //     //   break;
-        
+
   //     // case 'confirm':
   //     //   Alert.alert('', data.message, [
   //     //     {
