@@ -7,9 +7,9 @@ export const MIN_TEST_VOCABULARY_COUNT = 4;
 export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
-  SHORT_TERM: 'shortTerm',     // 단기 복습 (암기율 0-29%)
-  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (암기율 30-69%)
-  LONG_TERM: 'longTerm'        // 장기 복습 (암기율 70-100%)
+  SHORT_TERM: 'shortTerm',     // 단기 복습 (간격 10일 미만)
+  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 10일 이상 50일 미만)
+  LONG_TERM: 'longTerm'        // 장기 복습 (간격 50일 이상)
 };
 
 /**
@@ -30,25 +30,24 @@ export function getWordMemoryState(word) {
   // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
   if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
 
-  // 암기율 계산 (MemorizationStatus와 동일한 로직)
+  // 암기율 계산 (사용자 요구사항 반영: 10일=30점, 50일=70점 기준 설계)
   let score = 0;
-  score += repetition * 15;
-  score += interval * 2;
-  score += (ef - 1.3) * 20;
+  score += repetition * 2;          // 횟수 영향도 축소
+  score += interval * 1.0;          // 날짜 기준 가중치 (10일 ≈ 10점, 50일 ≈ 50점)
+  score += (ef - 1.3) * 5;          // EF 영향도 축소
+  score += 10;                      // 기본 점수 (보정치)
+
   const percent = Math.max(0, Math.min(100, Math.round(score)));
 
-  // 퍼센트에 따라 분류
-  if (percent < 30) {
-    return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (0-29%)
-  } else if (percent < 70) {
-    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (30-69%)
+  // 간격(Interval) 날짜를 우선 기준으로 분류하되, 점수 체계와 호환성 유지
+  if (interval < 10) {
+    return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (10일 미만)
+  } else if (interval < 50) {
+    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (10일~49일)
   } else {
-    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (70-100%)
+    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (50일 이상)
   }
 }
-
-
-console.log("import.meta.env", import.meta.env);
 
 // 쿠키 조회
 export function getCookie(name) {
@@ -404,8 +403,14 @@ export const updateSM2 = (state, q, options = {}) => {
     repetition += 1;
 
     if (repetition === 1) interval = 1;
-    else if (repetition === 2) interval = 6;
-    else interval = Math.round(interval * ef);
+    else if (repetition === 2) interval = 3;  // 1 -> 3 (세분화)
+    else if (repetition === 3) interval = 7;  // 3 -> 7 (단계 추가)
+    else {
+      // 증가폭을 기존의 약 절반 수준으로 하향 조정 (EF 가중치 조절)
+      // ef가 2.5일 때, 기존 2.5배 -> 수정 후 약 1.6배 (1.0 + 1.2 * 0.5)
+      const adjustedEf = 1.0 + (ef - 1.3) * 0.5;
+      interval = Math.round(interval * adjustedEf);
+    }
 
     // 정답일 때는 interval만큼 더한 날짜로 설정
     nextReviewDate = new Date(today);

@@ -500,10 +500,7 @@ const Main = () => {
               {/* 첫 번째 줄: 4개 아이템 */}
               <div className="grid grid-cols-4 justify-items-center gap-x-3">
                 {userMainPage?.goals?.slice(0, 4).map((goal, idx) => {
-                  console.log(goal);
                   return (
-
-
                     <div
                       key={goal.type}
                       className="flex flex-col items-center gap-[5px] w-[60px]"

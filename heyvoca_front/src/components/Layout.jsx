@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     const handleFocus = (e) => {
       // input이나 textarea에 포커스될 때만 동작
-      const tagName = e.target.tagName.toLowerCase();
+      const tagName = e.target?.tagName?.toLowerCase();
       if (tagName === 'input' || tagName === 'textarea') {
         const targetElement = e.target;
         // 1. iOS가 강제로 화면을 밀어 올리는 것을 방지하기 위해 0으로 고정

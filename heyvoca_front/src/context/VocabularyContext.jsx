@@ -408,8 +408,6 @@ export const VocabularyProvider = ({ children }) => {
   // 앱 시작시 데이터 로드 (로그인 상태 확인 후)
   useEffect(() => {
     if (isLogin && isLoginChecked) {
-      console.log('📚 [VOCABULARY] 로그인 상태 확인됨, 단어장 데이터 로드 시작');
-
       const loadVocabularyData = async () => {
         try {
           await Promise.all([

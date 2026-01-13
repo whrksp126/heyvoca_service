@@ -17,6 +17,7 @@ export const UserProvider = ({ children }) => {
     user: null,
   });
   const [gemItems, setGemItems] = useState([]);
+  const [isWithdrawInProgress, setIsWithdrawInProgress] = useState(false);
 
   // 로그인 상태 관리
   const fetchUserMainPage = useCallback(async () => {
@@ -350,33 +351,6 @@ export const UserProvider = ({ children }) => {
     }
   }, [setAuth]);
 
-  // 앱 구글 로그아웃 콜백 처리
-  const handleAppGoogleLogout = useCallback(async (data) => {
-    console.log(`앱 구글 로그아웃 콜백 받음: ${JSON.stringify(data)}`);
-
-    const { status, error } = data;
-
-    // 앱에서 로그아웃 성공한 경우에만 웹 로그아웃 처리
-    if (status === 200) {
-      const result = await performLogout();
-
-      if (result.success) {
-        // 컨텍스트 초기화 (전역 객체를 통해 접근)
-        if (window.newBottomSheetContext && window.newBottomSheetContext.clearStack) {
-          window.newBottomSheetContext.clearStack();
-        }
-        if (window.newFullSheetContext && window.newFullSheetContext.clearStack) {
-          window.newFullSheetContext.clearStack();
-        }
-
-        // 로그인 페이지로 이동
-        window.location.href = '/login';
-      }
-    } else {
-      console.error(`앱 로그아웃 실패: ${error || '알 수 없는 오류'}`);
-    }
-  }, [performLogout]);
-
   // 회원 탈퇴 처리 함수 (웹/앱 공통)
   const performWithdraw = useCallback(async () => {
     try {
@@ -411,15 +385,21 @@ export const UserProvider = ({ children }) => {
     }
   }, [setAuth]);
 
-  // 앱 구글 회원 탈퇴 콜백 처리
-  const handleAppGoogleWithdraw = useCallback(async (data) => {
-    console.log(`앱 구글 회원 탈퇴 콜백 받음: ${JSON.stringify(data)}`);
+  // 앱 구글 로그아웃/회원탈퇴 콜백 처리 (앱에서는 두 경우 모두 같은 콜백을 보낼 수 있음)
+  const handleAppGoogleAccountAction = useCallback(async (data) => {
+    console.log(`앱 구글 계정 액션 콜백 받음 (탈퇴진행중: ${isWithdrawInProgress}): ${JSON.stringify(data)}`);
 
     const { status, error } = data;
 
-    // 앱에서 구글 계정 선택 성공한 경우에만 웹 회원 탈퇴 처리
     if (status === 200) {
-      const result = await performWithdraw();
+      let result;
+      if (isWithdrawInProgress) {
+        // 회원 탈퇴 처리
+        result = await performWithdraw();
+      } else {
+        // 로그아웃 처리
+        result = await performLogout();
+      }
 
       if (result.success) {
         // 컨텍스트 초기화 (전역 객체를 통해 접근)
@@ -433,28 +413,26 @@ export const UserProvider = ({ children }) => {
         // 로그인 페이지로 이동
         window.location.href = '/login';
       }
+
+      // 상태 초기화
+      setIsWithdrawInProgress(false);
     } else {
-      console.error(`앱 구글 계정 선택 실패: ${error || '알 수 없는 오류'}`);
+      console.error(`앱 계정 액션 실패: ${error || '알 수 없는 오류'}`);
+      setIsWithdrawInProgress(false);
     }
-  }, [performWithdraw]);
+  }, [performLogout, performWithdraw, isWithdrawInProgress]);
+
+
 
   // 앱 구글 로그아웃 리스너 등록
   useEffect(() => {
-    postMessageManager.setupAppGoogleLogout(handleAppGoogleLogout);
+    // 앱에서 구글 로그아웃/회원탈퇴 시 동일한 콜백을 사용할 수 있으므로 하나로 관리
+    postMessageManager.setupAppGoogleLogout(handleAppGoogleAccountAction);
 
     return () => {
       postMessageManager.removeAppGoogleLogout();
     };
-  }, [handleAppGoogleLogout]);
-
-  // 앱 구글 회원 탈퇴 리스너 등록
-  useEffect(() => {
-    postMessageManager.setupAppGoogleWithdraw(handleAppGoogleWithdraw);
-
-    return () => {
-      postMessageManager.removeAppGoogleWithdraw();
-    };
-  }, [handleAppGoogleWithdraw]);
+  }, [handleAppGoogleAccountAction]);
 
   // 로그인 상태 확인 함수 (전역 상태 업데이트)
   const checkLoginStatus = useCallback(async () => {
@@ -534,14 +512,17 @@ export const UserProvider = ({ children }) => {
     // 로그인 상태 관리
     isLogin,
     isLoginChecked,
+    // 회원 탈퇴 상태 관리
+    isWithdrawInProgress,
+    setIsWithdrawInProgress,
     // 로그인 처리 함수들 추가
     Login,
     AppleLogin,
     clickGoogleOauth,
     clickAppleOauth,
     checkLoginStatus,
-    checkLoginStatus,
     performLogout,
+    performWithdraw,
 
     // 상품 조회 함수
     gemItems,
