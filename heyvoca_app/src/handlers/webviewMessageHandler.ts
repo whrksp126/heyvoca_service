@@ -64,7 +64,6 @@ const handleWebViewMessage = async (
         break;
 
       case 'openCamera':
-        console.log('openCamera!!!!');
         setIsOCRScreen(true);
         break;
       case 'filteredWords':
@@ -79,7 +78,6 @@ const handleWebViewMessage = async (
 
         if (cancel === true) {
           Vibration.cancel();
-          console.log('진동 취소');
           break;
         }
 
@@ -91,7 +89,6 @@ const handleWebViewMessage = async (
         } else {
           Vibration.vibrate([0, vibrateDuration], false);
         }
-        console.log('진동 실행:', vibrateDuration, 'ms');
         break;
 
       default:

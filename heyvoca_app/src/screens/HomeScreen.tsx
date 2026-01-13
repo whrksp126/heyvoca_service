@@ -102,15 +102,10 @@ const HomeScreen = () => {
           hideKeyboardAccessoryView={true}
           injectedJavaScript={`
             (function() {
-              // CSS 변수 설정: 상태바 높이
               document.documentElement.style.setProperty('--status-bar-height', '${statusBarHeight}px');
-              console.log('statusBarHeight', '${statusBarHeight}px');
               window.alert = function(message) {
                 window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
               };
-              // window.console.log = function(message) {
-              //   window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'log', message: message }));
-              // };
             })();
           `}
           style={styles.webview}
