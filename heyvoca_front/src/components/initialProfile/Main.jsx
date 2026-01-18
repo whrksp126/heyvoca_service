@@ -6,9 +6,8 @@ import InitialProfileStep2NewFullSheet from '../newFullSheet/InitialProfileStep2
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNavigate } from 'react-router-dom';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-
-
-
+import { backendUrl, fetchDataAsync } from '../../utils/common';
+import InitialProfileGemRewardNewFullSheet from '../newFullSheet/InitialProfileGemRewardNewFullSheet';
 
 const getColorSet = (mainColor) => {
   switch (mainColor) {
@@ -60,9 +59,7 @@ const Main = () => {
   });
 
   // React Compiler가 자동으로 useCallback 처리
-  const endInitialProfile = async (profile = userInitialProfile) => {
-    console.log('endInitialProfile', profile);
-
+  const completeOnboarding = async (profile) => {
     // null 체크 추가
     if (!profile || !profile.name || !profile.level || !profile.vocabook) {
       console.error('프로필 정보가 완전하지 않습니다:', profile);
@@ -70,51 +67,99 @@ const Main = () => {
       return;
     }
 
-    const updates = {
-      level_id: profile.level,
-      username: profile.name,
-    };
-    await updateUserProfile(updates);
-    // 단순 단어장 추가
-    const vocabularySheet = await addVocabularySheet({
-      title: profile.vocabook.name,
-      color: getColorSet('#FF8DD4'),
-    })
-
-    // 단어장 내 단어 추가
-    await updateVocabularySheet(
-      vocabularySheet.id,
-      {
-        words: profile.vocabook.words.map((word, index) => {
-          return {
-            id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-            dictionaryId: word.id,
-            origin: word.origin,
-            meanings: word.meanings,
-            examples: word.examples,
-            pronunciation: word.pronunciation,
-            ef: 2.5,
-            repetition: 0,
-            interval: 0,
-            nextReview: null,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }
-        }),
-        total: profile.vocabook.words.length,
-      }
-    )
-
-
-    // await addBookStoreVocabularySheet(userInitialProfile.vocabook);
-    console.log("단어장 추가 완료")
-
-    // 모든 FullSheet 제거
+    console.log("단어장 저장 및 초기화 시작");
+    // 화면을 즉시 전환하여 배경 화면 노출 방지
+    navigate('/home');
     clearNewFullSheetStack();
 
-    // 홈으로 이동
-    navigate('/');
-  }
+    try {
+      const updates = {
+        level_id: profile.level,
+        username: profile.name,
+      };
+      await updateUserProfile(updates);
+
+      // 단순 단어장 추가
+      const vocabularySheet = await addVocabularySheet({
+        title: profile.vocabook.name,
+        color: getColorSet('#FF8DD4'),
+      });
+
+      // 단어장 내 단어 추가
+      await updateVocabularySheet(
+        vocabularySheet.id,
+        {
+          words: profile.vocabook.words.map((word, index) => {
+            return {
+              id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
+              dictionaryId: word.id,
+              origin: word.origin,
+              meanings: word.meanings,
+              examples: word.examples,
+              pronunciation: word.pronunciation,
+              ef: 2.5,
+              repetition: 0,
+              interval: 0,
+              nextReview: null,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+          }),
+          total: profile.vocabook.words.length,
+        }
+      );
+      console.log("단어장 저장 완료");
+    } catch (error) {
+      console.error('데이터 저장 중 오류 발생:', error);
+    }
+  };
+
+  const endInitialProfile = async (profile = userInitialProfile) => {
+    console.log('endInitialProfile', profile);
+
+    // 초대 코드 처리
+    if (profile.inviteCode) {
+      try {
+        const url = `${backendUrl}/auth/save_invite_code`;
+        const method = 'POST';
+        const fetchData = { invite_code: profile.inviteCode };
+        const result = await fetchDataAsync(url, method, fetchData, false);
+
+        // 보석 업데이트 반영 및 효과 연출 (SheetStack 이용)
+        if (result && result.code === 200 && result.data?.my_gem_cnt !== undefined) {
+          const newGemCnt = result.data.my_gem_cnt;
+          const gained = 10;
+
+          setUserProfile(prev => ({
+            ...prev,
+            gem_cnt: newGemCnt
+          }));
+
+          if (gained > 0) {
+            pushNewFullSheet(
+              InitialProfileGemRewardNewFullSheet,
+              {
+                gemCount: gained,
+                onConfirm: async () => {
+                  await completeOnboarding(profile);
+                }
+              },
+              {
+                smFull: true,
+                closeOnBackdropClick: false,
+                isDragToCloseEnabled: false
+              }
+            );
+            return; // 효과 확인 버튼을 누를 때까지 중단
+          }
+        }
+      } catch (error) {
+        console.error('초대 코드 저장 실패:', error);
+      }
+    }
+
+    completeOnboarding(profile);
+  };
 
 
   const buttonVariants = {

@@ -5,7 +5,7 @@ import HeyCharacter from '../../assets/images/HeyCharacter.png';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import InitialProfileStep3NewFullSheet from './InitialProfileStep3NewFullSheet';
+import InitialProfileStepPromoCodeNewFullSheet from './InitialProfileStepPromoCodeNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
 const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialProfile, endInitialProfile }) => {
@@ -72,9 +72,9 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
     };
     setUserInitialProfile(updatedProfile);
 
-    // step3를 FullSheet로 열기
+    // 초대 코드 입력 화면(PromoCode)을 FullSheet로 열기
     pushNewFullSheet(
-      InitialProfileStep3NewFullSheet,
+      InitialProfileStepPromoCodeNewFullSheet,
       { userInitialProfile: updatedProfile, setUserInitialProfile, endInitialProfile },
       {
         smFull: true,
