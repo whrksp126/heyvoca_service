@@ -581,7 +581,27 @@ def deduct_gem():
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
         
-# 초대자 코드 저장
+# 초대 코드 유효성 검사
+@auth_bp.route('/validate_invite_code', methods=['POST'])
+@jwt_required
+def validate_invite_code():
+    data = request.json
+    invite_code = data.get('invite_code')
+    user_id = UUID(g.user_id)
+    
+    if not invite_code:
+        return jsonify({'code': 400, 'message': '초대 코드를 입력해주세요.'}), 400
+
+    invite_user = db.session.query(User).filter(User.invite_code == invite_code).first()
+    if invite_user is None:
+        return jsonify({'code': 404, 'message': '존재하지 않는 초대 코드입니다.'}), 404
+    
+    if str(user_id) == str(invite_user.id):
+        return jsonify({'code': 400, 'message': '자기 자신은 초대할 수 없습니다.'}), 400
+        
+    return jsonify({'code': 200, 'status': 'success', 'message': '유효한 코드입니다.'})
+
+# 초대자 코드 저장 및 보상 지급
 @auth_bp.route('/save_invite_code', methods=['POST'])
 @jwt_required
 def save_invite_code():
@@ -594,22 +614,65 @@ def save_invite_code():
 
     invite_user = db.session.query(User).filter(User.invite_code == invite_code).first()
     if invite_user is None:
-        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+        return jsonify({'code': 404, 'message': '초대한 사용자 정보를 찾을 수 없습니다.'}), 404
     
     if user.id == invite_user.id:
         return jsonify({'code': 400, 'message': '자기 자신을 초대할 수 없습니다.'}), 400
     
-    user.invited_by = invite_user.id
-    invite_map = InviteMap(inviter_id=invite_user.id, invitee_id=user.id)
-    
-    db.session.add(invite_map)
-    db.session.flush()
-    
-    # 초대왕 업적 업데이트 (초대한 사람의 업적)
-    update_user_goal('초대왕', user_id=invite_user.id)
+    # 중복 초대 방지 체크 (이미 초대를 받았는지)
+    if user.invited_by:
+        return jsonify({'code': 400, 'message': '이미 초대 코드를 입력하셨습니다.'}), 400
 
-    db.session.commit()
-    return jsonify({'code': 200, 'status': 'success'})
+    try:
+        user.invited_by = invite_user.id
+        invite_map = InviteMap(inviter_id=invite_user.id, invitee_id=user.id)
+        db.session.add(invite_map)
+        
+        # --- 보상 지급 로직 ---
+        # 1. 초대받은 사람(본인) 보석 10개 지급
+        user.gem_cnt += 10
+        db.session.flush() # user.gem_cnt 반영을 위해 flush
+        
+        register_gem_log(
+            user_id=user.id,
+            amount=10,
+            reason=GemReason.REFERRAL, 
+            description="초대 코드 입력 보상",
+            source_type="referral",
+            source_id=None,
+            balance_after=user.gem_cnt
+        )
+
+        # 2. 초대한 사람 보석 10개 지급
+        invite_user.gem_cnt += 10
+        db.session.flush()
+        
+        register_gem_log(
+            user_id=invite_user.id,
+            amount=10,
+            reason=GemReason.REFERRAL,
+            description=f"초대 성공 보상 ({user.username or user.name})",
+            source_type="referral",
+            source_id=user.id,
+            balance_after=invite_user.gem_cnt
+        )
+        
+        # 초대왕 업적 업데이트 (초대한 사람의 업적)
+        update_user_goal('초대왕', user_id=invite_user.id)
+
+        db.session.commit()
+        return jsonify({
+            'code': 200, 
+            'status': 'success', 
+            'data': {
+                'my_gem_cnt': user.gem_cnt
+            }
+        })
+        
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in save_invite_code: {e}")
+        return jsonify({'code': 500, 'message': '보상 처리 중 서버 오류가 발생했습니다.'}), 500
 
 
 ### (회원가입 시) 단어장 선택 레벨링
@@ -799,16 +862,13 @@ def withdraw():
         
         # 트랜잭션 시작 - 모든 삭제 작업을 하나의 트랜잭션으로 처리
         try:
-            # user_id를 bytes로 변환 (BINARY(16) 컬럼용)
-            user_id_bytes = user_id.bytes
-            
             # 1. UserHasToken 삭제 (FCM 토큰)
             db.session.query(UserHasToken).filter(UserHasToken.user_id == user_id).delete()
             
             # 2. InviteMap 삭제 (초대 관련 - inviter_id 또는 invitee_id가 해당 user_id인 경우)
-            # InviteMap의 inviter_id와 invitee_id는 BINARY(16) 타입이므로 bytes로 변환 필요
+            # BinaryUUID 타입을 사용하므로 UUID 객체를 그대로 전달 가능
             db.session.query(InviteMap).filter(
-                (InviteMap.inviter_id == user_id_bytes) | (InviteMap.invitee_id == user_id_bytes)
+                (InviteMap.inviter_id == user_id) | (InviteMap.invitee_id == user_id)
             ).delete()
             
             # 3. UserVocaBook 삭제 (사용자 단어장)

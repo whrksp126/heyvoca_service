@@ -29,8 +29,12 @@ class BinaryUUID(TypeDecorator):
             return None
         if isinstance(value, UUID):
             return value.bytes
+        elif isinstance(value, bytes):
+            if len(value) == 16:
+                return value
+            raise ValueError('bytes value must be exactly 16 bytes for UUID')
         else:
-            raise ValueError('value {} is not a valid UUID'.format(value))
+            raise ValueError('value {} is not a valid UUID or bytes'.format(value))
 
     def process_result_value(self, value, dialect=None):
         if not value:
@@ -120,8 +124,8 @@ class InviteMap(db.Model):
         PrimaryKeyConstraint("inviter_id", "invitee_id", name="pk_invite_map"),
     )
 
-    inviter_id = Column(BINARY(16), ForeignKey("user.id"), nullable=False, comment="초대한 사람 (추천인)")
-    invitee_id = Column(BINARY(16), ForeignKey("user.id"), nullable=False, comment="초대받은 사람 (피추천인)")
+    inviter_id = Column(BinaryUUID, ForeignKey("user.id"), nullable=False, comment="초대한 사람 (추천인)")
+    invitee_id = Column(BinaryUUID, ForeignKey("user.id"), nullable=False, comment="초대받은 사람 (피추천인)")
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self, inviter_id, invitee_id):
@@ -424,6 +428,7 @@ class GemReason(enum.Enum):
     ACHIEVEMENT   = "ACHIEVEMENT"     # 업적 보상
     ADMIN_ADJUST  = "ADMIN_ADJUST"    # 관리자 조정
     REFUND        = "REFUND"          # 환불(보석 회수)
+    REFERRAL      = "REFERRAL"        # 초대 보상
 
 
 class GemLog(db.Model):
