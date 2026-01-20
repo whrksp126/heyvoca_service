@@ -1,7 +1,8 @@
 import React from 'react';
 import { Plus, PencilSimple } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
+// import { useVocabularySetBottomSheet } from './VocabularyBottomSheet';
+import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import UpdateVocabularySheet from './UpdateVocabularySheet';
 import UpdateVocabularySheetNewFullSheet from '../newFullSheet/UpdateVocabularySheetNewFullSheet';
@@ -10,7 +11,8 @@ import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';
 
 const Header = () => {
-  const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
+  // const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
+  const { showVocabularyManageNewBottomSheet } = useVocabularyManageNewBottomSheet();
   const { pushNewFullSheet } = useNewFullSheet();
   const { userProfile } = useUser();
 
@@ -33,7 +35,8 @@ const Header = () => {
     const result = await userBookCntCheckApi();
     const canAddBook = result.data.can_add_book;
     if(userProfile.book_cnt > 0 || canAddBook){
-      showVocabularySetBottomSheet();
+      // showVocabularySetBottomSheet();
+      showVocabularyManageNewBottomSheet();
     }else{
       alert('단어장 생성 가능 횟수를 초과했습니다.');
     }

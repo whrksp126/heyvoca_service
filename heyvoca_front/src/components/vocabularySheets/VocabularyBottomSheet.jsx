@@ -3,7 +3,7 @@ import { Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 export const VOCABULARY_COLORS = [
   { id: 'color-1', value: '#FF8DD4' },
