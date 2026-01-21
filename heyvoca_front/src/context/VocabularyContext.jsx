@@ -332,6 +332,17 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 퀴즐렛 업로드 후 백엔드에서 생성된 단어장을 로컬 state에 추가
+  const addVocabularySheetFromBackend = useCallback((vocabularySheet) => {
+    try {
+      setVocabularySheets(prev => [...prev, vocabularySheet]);
+      return vocabularySheet;
+    } catch (err) {
+      setErrorVocabularySheets('단어장 추가에 실패했습니다.');
+      throw err;
+    }
+  }, []);
+
   // 최근 학습 데이터 조회
   const getRecentStudy = useCallback(() => {
     return recentStudy;
@@ -432,6 +443,7 @@ export const VocabularyProvider = ({ children }) => {
     getVocabularySheets,
     getVocabularySheet,
     addVocabularySheet,
+    addVocabularySheetFromBackend,
     updateVocabularySheet,
     updateVocabularySheetState,
     updateVocabularySheetServer,

@@ -3,35 +3,65 @@ import { motion } from 'framer-motion';
 import { X, File, Plus } from '@phosphor-icons/react';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { UploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
+import { useVocabulary } from '../../context/VocabularyContext';
+import { useUser } from '../../context/UserContext';
+import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';
 
 export const LoadVocabularyNewBottomSheet = () => {
   const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
+  const { addVocabularySheetFromBackend } = useVocabulary();
+  const { userProfile } = useUser();
 
   const handleClose = () => {
     popNewBottomSheet();
   };
 
-  const showQuizletUploadBottomSheet = useCallback(() => {
-    const handleUpload = (quizletText) => {
-      // 퀴즐렛 텍스트를 파싱하고 처리하는 로직
-      console.log('퀴즐렛 텍스트:', quizletText);
-      // TODO: 실제 업로드 및 단어 추가 로직 구현
-      popNewBottomSheet();
-    };
-
-    pushNewBottomSheet(
-      UploadQuizletNewBottomSheet,
-      {
-        onCancel: popNewBottomSheet,
-        onUpload: handleUpload
-      },
-      {
-        isBackdropClickClosable: false,
-        isDragToCloseEnabled: true
+  const showQuizletUploadBottomSheet = useCallback(async () => {
+    // 단어장 생성 가능 여부 확인
+    try {
+      const result = await userBookCntCheckApi();
+      const canAddBook = result?.data?.can_add_book;
+      if(result.code != 200){
+        alert('단어장 개수 확인에 실패했습니다.');
+        return;
       }
-    );
-  }, [pushNewBottomSheet, popNewBottomSheet]);
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
+        return;
+      }
+
+      const handleUpload = (vocabularySheetData) => {
+        // 백엔드에서 생성된 단어장 데이터를 로컬 state에 추가
+        try {
+          // console.log('백엔드에서 생성된 단어장 데이터:', vocabularySheetData);
+          addVocabularySheetFromBackend(vocabularySheetData);
+          alert('퀴즐렛 데이터가 성공적으로 추가되었습니다.');
+          // 모든 바텀시트 닫기
+          popNewBottomSheet(); // UploadQuizletNewBottomSheet 닫기
+          popNewBottomSheet(); // LoadVocabularyNewBottomSheet 닫기
+        } catch (error) {
+          console.error('단어장 추가 실패:', error);
+          alert('단어장 추가에 실패했습니다.');
+        }
+      };
+
+      pushNewBottomSheet(
+        UploadQuizletNewBottomSheet,
+        {
+          onCancel: popNewBottomSheet,
+          onUpload: handleUpload
+        },
+        {
+          isBackdropClickClosable: false,
+          isDragToCloseEnabled: true
+        }
+      );
+    } catch (error) {
+      console.error('단어장 개수 체크 실패:', error);
+      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
+    }
+  }, [pushNewBottomSheet, popNewBottomSheet, addVocabularySheetFromBackend, userProfile]);    
 
   const menuItems = [
     {
