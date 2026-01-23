@@ -8,10 +8,25 @@ export const getGemItemsApi = async () => {
   const fetchData = {
     platform: getDevicePlatform(),
   };
-  try{
+  try {
     const result = await fetchDataAsync(url, method, fetchData);
     return result
-  }catch(error){
+  } catch (error) {
     console.error('getGemItemsApi 오류:', error);
+  }
+}
+
+// 단어장 구매 API
+export const purchaseBookApi = async (packageType) => {
+  const url = `${backendUrl}/purchase/book`;
+  const method = 'POST';
+  const fetchData = {
+    packageType: packageType, // 'single', 'small', 'large'
+  };
+  try {
+    const result = await fetchDataAsync(url, method, fetchData);
+    return result;
+  } catch (error) {
+    console.error('purchaseBookApi 오류:', error);
   }
 }

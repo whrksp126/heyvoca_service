@@ -22,19 +22,19 @@ const Main = () => {
     console.log(vocabularySheets);
   }, [isVocabularySheetsLoading, vocabularySheets]);
 
-  const today_sentence = {
-    title: "오늘의 문장 💬",
-    sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
-    translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
-  };
+  // const today_sentence = {
+  //   title: "오늘의 문장 💬",
+  //   sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
+  //   translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
+  // };
 
-  if (isVocabularySheetsLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p>로딩 중...</p>
-      </div>
-    );
-  }
+  // if (isVocabularySheetsLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-full">
+  //       <p>로딩 중...</p>
+  //     </div>
+  //   );
+  // }
 
   // updatedAt 기준으로 정렬된 단어장 목록
   const sortedVocabularySheets = [...vocabularySheets].sort((a, b) =>
@@ -100,6 +100,7 @@ const Main = () => {
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
+      {/* 
       <div className="
         top 
         relative
@@ -138,7 +139,8 @@ const Main = () => {
             {today_sentence.translation}
           </p>
         </div>
-      </div>
+      </div> 
+      */}
 
       <div className="middle">
         <ul

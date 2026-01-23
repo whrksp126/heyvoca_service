@@ -14,37 +14,37 @@ export const VOCABULARY_COLORS = [
 ];
 
 const getColorSet = (mainColor) => {
-  switch(mainColor) {
+  switch (mainColor) {
     case '#FF8DD4': return {
-        main : "#FF8DD4",
-        sub : "#FF8DD44d",
-        background : "#FFEFFA"
-      };
-      case '#CD8DFF': return {
-        main : "#CD8DFF",
-        sub : "#CD8DFF4d",
-        background : "#F8E6FF"
-      };
-      case '#74D5FF': return {
-        main : "#74D5FF",
-        sub : "#74D5FF4d",
-        background : "#EAF6FF"
-      };
-      case '#42F98B': return {
-        main : "#42F98B",
-        sub : "#42F98B4d",
-        background : "#E6FFE9"
-      };
-      case '#FFBD3C': return {
-        main : "#FFBD3C",
-        sub : "#FFBD3C4d",
-        background : "#FFF8E6"
-      };
-      default: return {
-        main : "#FF8DD4",
-        sub : "#FF8DD44d",
-        background : "#FFEFFA"
-      };
+      main: "#FF8DD4",
+      sub: "#FF8DD44d",
+      background: "#FFEFFA"
+    };
+    case '#CD8DFF': return {
+      main: "#CD8DFF",
+      sub: "#CD8DFF4d",
+      background: "#F8E6FF"
+    };
+    case '#74D5FF': return {
+      main: "#74D5FF",
+      sub: "#74D5FF4d",
+      background: "#EAF6FF"
+    };
+    case '#42F98B': return {
+      main: "#42F98B",
+      sub: "#42F98B4d",
+      background: "#E6FFE9"
+    };
+    case '#FFBD3C': return {
+      main: "#FFBD3C",
+      sub: "#FFBD3C4d",
+      background: "#FFF8E6"
+    };
+    default: return {
+      main: "#FF8DD4",
+      sub: "#FF8DD44d",
+      background: "#FFEFFA"
+    };
   }
 };
 
@@ -77,7 +77,7 @@ export const useVocabularySetBottomSheet = () => {
         title: data.name,
         color: getColorSet(data.color),
       };
-      
+
       await addVocabularySheet(newVocabularySheet);
       handleClose();
     } catch (error) {
@@ -116,7 +116,7 @@ export const useVocabularySetBottomSheet = () => {
     // 모달을 다시 열지 않고 상태만 업데이트
   }, []);
 
-  const showVocabularySetBottomSheet = useCallback((id=null) => {
+  const showVocabularySetBottomSheet = useCallback((id = null) => {
     let newMode = 'add';
     let newTitle = "";
     let newColor = VOCABULARY_COLORS[0].value;
@@ -129,7 +129,7 @@ export const useVocabularySetBottomSheet = () => {
         newColor = vocabularySheet.color.main;
       }
     }
-    
+
     // ref 업데이트
     currentStateRef.current = {
       mode: newMode,
@@ -171,7 +171,7 @@ export const useVocabularySetBottomSheet = () => {
   };
 };
 
-export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
+export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor, onCancel, onSet }) => {
   const nameInputRef = useRef(null);
   const [currentColor, setCurrentColor] = useState(selectedColor);
 
@@ -201,12 +201,12 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
         flex flex-col gap-[30px]
         p-[20px]
       ">
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -215,10 +215,10 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             단어장 이름
           </h3>
           <div>
-            <input 
+            <input
               ref={nameInputRef}
               defaultValue={title}
-              type="text" 
+              type="text"
               placeholder="단어장 이름을 입력하세요"
               className="
                 w-full h-[45px]
@@ -232,12 +232,12 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             />
           </div>
         </div>
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -248,9 +248,9 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
           <div className="flex items-center justify-between">
             {VOCABULARY_COLORS.map((color) => {
               const isSelected = currentColor === color.value;
-              
+
               return (
-                <motion.label 
+                <motion.label
                   key={color.id}
                   htmlFor={color.id}
                   style={{ backgroundColor: color.value }}
@@ -261,17 +261,17 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
                     relative
                   "
                   whileTap={{ scale: 0.9 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 500, 
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
                     damping: 15
                   }}
                 >
-                  <input 
-                    type="radio" 
-                    name="color" 
+                  <input
+                    type="radio"
+                    name="color"
                     id={color.id}
-                    className="hidden" 
+                    className="hidden"
                     value={color.value}
                     checked={isSelected}
                     onChange={() => {
@@ -280,12 +280,12 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
                     }}
                   />
                   {isSelected && (
-                    <Check 
-                      weight="bold" 
+                    <Check
+                      weight="bold"
                       className="
                         w-[15px] h-[15px] text-[#fff]
                         absolute
-                      " 
+                      "
                     />
                   )}
                 </motion.label>
@@ -295,7 +295,7 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
         </div>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -308,13 +308,13 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             onCancel();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -327,16 +327,16 @@ export const AddVocabularySheet = ({id, title, selectedColor, setSelectedColor, 
             handleSubmit();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >추가</motion.button>
       </div>
     </div>
   );
-}; 
+};
 
 export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
   return (
@@ -349,7 +349,7 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
         <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -362,13 +362,13 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             onCancel();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -381,9 +381,9 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             onDelete();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >삭제</motion.button>

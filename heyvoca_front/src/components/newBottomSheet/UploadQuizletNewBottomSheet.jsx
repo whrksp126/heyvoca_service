@@ -44,7 +44,7 @@ export const UploadQuizletNewBottomSheet = ({ onCancel, onUpload }) => {
       <div className="flex items-center justify-center p-[20px] pb-[0px]">
         <h1 className="text-[18px] font-[700]">퀴즐렛 텍스트 업로드</h1>
       </div>
-      
+
       <div className="flex flex-col gap-[15px] p-[20px]">
         <div className="flex flex-col gap-[8px]">
           <h3 className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">단어장 이름</h3>
@@ -90,7 +90,7 @@ export const UploadQuizletNewBottomSheet = ({ onCancel, onUpload }) => {
       </div>
 
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1 h-[45px] rounded-[8px]
             bg-[#ccc]
@@ -105,7 +105,7 @@ export const UploadQuizletNewBottomSheet = ({ onCancel, onUpload }) => {
         >
           취소
         </motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1 h-[45px] rounded-[8px]
             bg-[#FF8DD4]

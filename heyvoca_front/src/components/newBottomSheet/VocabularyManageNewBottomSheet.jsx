@@ -49,7 +49,7 @@ export const VocabularyManageNewBottomSheet = () => {
       id: 'create-vocabulary',
       icon: BookOpen,
       iconPlus: true,
-      text: '단어장 만들기',
+      text: '단어장 생성',
       onClick: () => {
         vibrate({ duration: 5 });
         // 기존 단어장 추가 바텀 시트
@@ -121,14 +121,14 @@ export const VocabularyManageNewBottomSheet = () => {
                 }}
               >
                 <div className="relative">
-                  <IconComponent 
-                    size={24} 
+                  <IconComponent
+                    size={24}
                     weight="regular"
                     className="text-[#111] dark:text-[#fff]"
                   />
                   {item.iconPlus && (
-                    <Plus 
-                      size={12} 
+                    <Plus
+                      size={12}
                       weight="bold"
                       className="
                         absolute -top-[2px] -right-[2px]

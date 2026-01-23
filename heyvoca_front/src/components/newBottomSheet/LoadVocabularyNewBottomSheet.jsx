@@ -22,7 +22,7 @@ export const LoadVocabularyNewBottomSheet = () => {
     try {
       const result = await userBookCntCheckApi();
       const canAddBook = result?.data?.can_add_book;
-      if(result.code != 200){
+      if (result.code != 200) {
         alert('단어장 개수 확인에 실패했습니다.');
         return;
       }
@@ -61,7 +61,7 @@ export const LoadVocabularyNewBottomSheet = () => {
       console.error('단어장 개수 체크 실패:', error);
       alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
     }
-  }, [pushNewBottomSheet, popNewBottomSheet, addVocabularySheetFromBackend, userProfile]);    
+  }, [pushNewBottomSheet, popNewBottomSheet, addVocabularySheetFromBackend, userProfile]);
 
   const menuItems = [
     {
@@ -171,8 +171,8 @@ export const LoadVocabularyNewBottomSheet = () => {
                     <Plus size={16} weight="bold" />
                   </div>
                 ) : (
-                  <File 
-                    size={24} 
+                  <File
+                    size={24}
                     weight="regular"
                     className={item.iconColor}
                   />
