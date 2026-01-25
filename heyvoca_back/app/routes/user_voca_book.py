@@ -9,6 +9,7 @@ from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
+from app.routes.mainpage import update_user_goal
 from app.utils.jwt_utils import jwt_required
 
 
@@ -84,12 +85,28 @@ def create_user_voca_book():
             user.book_cnt -= 1
             message = '단어장이 생성되었습니다.'
 
+        # 독서왕 업적 업데이트 (서점 단어장 추가 시)
+        reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = None, None, None, None
+        if bookstore_id:
+            reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = update_user_goal('독서왕')
+
         db.session.commit() 
 
         data = {
             'id': user_voca_book.id,
             'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
+            'book_cnt': user.book_cnt,
+            'goals': []
         }
+
+        if reading_goal_complete:
+            data['goals'].append({
+                'name' : '독서왕',
+                'type' : '독서왕',
+                'level' : reading_goal_level,
+                'badge_img' : reading_goal_badge_img,
+                'completed_at' : reading_goal_complete.completed_at + datetime.timedelta(hours=9),
+            })
 
         return jsonify({'code': 200, 'message': message, 'data': data}), 200
     
@@ -375,8 +392,11 @@ def upload_user_voca_book():
             "bookstore_id": None,
             "createdAt": user_voca_book.created_at + datetime.timedelta(hours=9),
             "updatedAt": user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None,
-            'words': frontend_format_items
+            'words': frontend_format_items,
+            'book_cnt': user.book_cnt,
+            'goals': []
         }
+
         # print("###response_data : ",response_data)
 
         response = jsonify({

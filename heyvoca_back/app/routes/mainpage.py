@@ -327,7 +327,7 @@ def api_user_study_history():
             is_today_study_complete = True
             checkin.today_study_complete = True
 
-    # 3.업적(암기왕, 노력왕) 업데이트
+    # 4. 업적(암기왕, 노력왕, 끈기왕) 업데이트
     # 암기왕: 만점일 때만 업데이트 (모든 문제를 맞췄을 때만)
     total_cnt = correct_cnt + incorrect_cnt
     is_perfect_score = (incorrect_cnt == 0 and total_cnt > 0)  # 만점인지 확인
@@ -342,7 +342,41 @@ def api_user_study_history():
     if total_cnt > 0:
         effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = update_user_goal('노력왕')
 
-    # 4. 보석 업데이트 (오늘의 학습 완료 보석만 추가, 업적 보상은 update_user_goal에서 처리)
+    # 끈기왕: 오늘 처음으로 학습을 완료했을 때만 업데이트
+    perseverance_goal_complete, perseverance_goal_reward_count, perseverance_goal_badge_img, perseverance_goal_level = None, None, None, None
+    if is_today_study_complete:
+        today = (datetime.utcnow() + timedelta(hours=9)).date()
+        yesterday = today - timedelta(days=1)
+        yesterday_checkin = db.session.query(CheckIn)\
+                                .filter(CheckIn.user_id == user_id)\
+                                .filter(CheckIn.attendence_date == yesterday)\
+                                .first()
+        
+        # 어제 학습을 완료했는지 확인
+        if yesterday_checkin and yesterday_checkin.today_study_complete:
+            # 어제도 완료했으면 연속 성공
+            per_goal_done, per_reward, per_badge, per_lv = update_user_goal('끈기왕')
+            perseverance_goal_complete, perseverance_goal_reward_count, perseverance_goal_badge_img, perseverance_goal_level = per_goal_done, per_reward, per_badge, per_lv
+        else:
+            # 연속 끊김 -> 끈기왕 진행 상태를 오늘부터 다시 1일로 리셋
+            reset_goal = db.session.query(UserGoals)\
+                                .join(Goals, UserGoals.goal_id == Goals.id)\
+                                .join(GoalType, Goals.type_id == GoalType.id)\
+                                .filter(UserGoals.user_id == user_id)\
+                                .filter(GoalType.type == '끈기왕')\
+                                .filter(UserGoals.is_completed == False)\
+                                .first()
+            if reset_goal:
+                reset_goal.current_value = 1
+            else:
+                # 진행 중인 목표가 없는 경우(첫 시작 등) 0에서 1로 만들어주기 위해 update_user_goal 호출
+                # 다만 update_user_goal은 current_value를 1 증가시키므로, 
+                # 처음 시작하는 유저라면 current_value가 1이 됨.
+                # reset_goal이 없다는 건 아예 레코드가 없거나 다 완료했다는 뜻.
+                # update_user_goal 내부에서 레코드가 없으면 생성하고 +1 함.
+                update_user_goal('끈기왕')
+
+    # 5. 보석 업데이트 (오늘의 학습 완료 보석만 추가, 업적 보상은 update_user_goal에서 처리)
     add_gem = 0
     if is_today_study_complete:
         add_gem += 1
@@ -367,6 +401,14 @@ def api_user_study_history():
             'level' : effort_goal_level,
             'badge_img' : effort_goal_badge_img,
             'completed_at' : effort_goal_complete.completed_at + timedelta(hours=9),
+        })
+    if perseverance_goal_complete:
+        goals.append({
+            'name' : '끈기왕',
+            'type' : '끈기왕',
+            'level' : perseverance_goal_level,
+            'badge_img' : perseverance_goal_badge_img,
+            'completed_at' : perseverance_goal_complete.completed_at + timedelta(hours=9),
         })
 
     return {
@@ -405,44 +447,36 @@ def checkin():
     
     if not exists:
         try:
-            # 체크인 생성 시도
+            # 1. 체크인 생성 시도
             new_checkin = CheckIn(user_id=user_id, attendence_date=today, today_study_complete=False)
             db.session.add(new_checkin)
-            db.session.flush()  # ID를 얻기 위해 flush
+            db.session.flush()
 
-            # 출석왕 업적 업데이트
+            # --- 업적 업데이트 ---
+            # 2. 출석왕 업데이트
             attendance_goal_complete, attendance_goal_reward_count, attendance_goal_badge_img, attendance_goal_level = update_user_goal('출석왕')
             if attendance_goal_complete:
                 goals.append({
                     'name' : '출석왕',
+                    'type' : '출석왕',
+                    'level' : attendance_goal_level,
                     'badge_img' : attendance_goal_badge_img,
                     'completed_at' : attendance_goal_complete.completed_at + timedelta(hours=9),
                 })
-            
-            # 업적 보상 보석은 update_user_goal 함수 내부에서 이미 지급됨
+
             db.session.commit()
             
-            # 사용자 정보 다시 조회 (커밋 후 최신 정보)
+            # 사용자 정보 최신화 (업적 보상 반영됨)
             user = db.session.query(User).filter(User.id == user_id).first()
-            before_gem_cnt = user.gem_cnt - (attendance_goal_reward_count if attendance_goal_reward_count else 0)
+            before_gem_cnt = user.gem_cnt - (attendance_goal_reward_count or 0)
             after_gem_cnt = user.gem_cnt
+
         except IntegrityError:
-            # 중복 키 에러 또는 데드락 발생 시 롤백 후 재조회
             db.session.rollback()
-            # 다른 요청에서 이미 생성했을 수 있으므로 다시 확인
-            exists = db.session.query(CheckIn)\
-                        .filter(CheckIn.user_id == user_id)\
-                        .filter(CheckIn.attendence_date == today)\
-                        .first()
-            
-            if exists:
-                # 이미 체크인이 존재하는 경우
-                user = db.session.query(User).filter(User.id == user_id).first()
-                before_gem_cnt = user.gem_cnt
-                after_gem_cnt = user.gem_cnt
-            else:
-                # 예상치 못한 오류
-                raise
+            # 이미 다른 세션에서 생성된 경우
+            user = db.session.query(User).filter(User.id == user_id).first()
+            before_gem_cnt = user.gem_cnt
+            after_gem_cnt = user.gem_cnt
     else:
         before_gem_cnt = user.gem_cnt
         after_gem_cnt = user.gem_cnt
