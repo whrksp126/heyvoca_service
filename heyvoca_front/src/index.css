@@ -66,3 +66,13 @@ textarea {
   -webkit-user-select: text;
   user-select: text;
 }
+
+/* 스크롤바 숨김 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -28,6 +28,8 @@ import { vibrate } from '../../utils/osFunction';
 // import TodayStudySheet from './TodayStudySheet';
 import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
 import TodayStudyNewFullSheet from '../newFullSheet/TodayStudyNewFullSheet';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {
@@ -146,6 +148,7 @@ const Main = () => {
   // const { pushFullSheet } = useFullSheet();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   // 시간이 흐르면 상태가 바뀌니까 가벼운 폴링(60초)
   useEffect(() => {
@@ -257,6 +260,18 @@ const Main = () => {
         closeOnBackdropClick: true
       });
     }
+  }
+
+  const handleAchievementClick = (goalType) => {
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(
+      AchievementDetailNewBottomSheet,
+      { selectedType: goalType },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      }
+    );
   }
 
   return (
@@ -505,7 +520,8 @@ const Main = () => {
               {userMainPage?.goals?.map((goal, idx) => (
                 <div
                   key={goal.type}
-                  className="flex flex-col items-center gap-[5px] w-[60px]"
+                  className="flex flex-col items-center gap-[5px] w-[60px] cursor-pointer"
+                  onClick={() => handleAchievementClick(goal.type)}
                 >
                   <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
                     <img

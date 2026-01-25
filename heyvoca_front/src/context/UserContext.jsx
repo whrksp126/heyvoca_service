@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi } from '../api/auth';
-import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
+import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi, getAchievementCriteriaApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
 import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 import { getGemItemsApi } from '../api/store';
@@ -20,6 +20,8 @@ export const UserProvider = ({ children }) => {
   });
   const [gemItems, setGemItems] = useState([]);
   const [isWithdrawInProgress, setIsWithdrawInProgress] = useState(false);
+  const [achievementCriteria, setAchievementCriteria] = useState({});
+  const [isAchievementCriteriaLoading, setIsAchievementCriteriaLoading] = useState(false);
 
   // 로그인 상태 관리
   const fetchUserMainPage = useCallback(async () => {
@@ -41,6 +43,20 @@ export const UserProvider = ({ children }) => {
       await setUserGoals()
       setUserMainPage(userMainPageData);
     } catch (err) {
+    }
+  }, []);
+
+  const fetchAchievementCriteria = useCallback(async () => {
+    try {
+      setIsAchievementCriteriaLoading(true);
+      const result = await getAchievementCriteriaApi();
+      if (result && result.code === 200) {
+        setAchievementCriteria(result.data);
+      }
+    } catch (error) {
+      console.error('fetchAchievementCriteria 오류:', error);
+    } finally {
+      setIsAchievementCriteriaLoading(false);
     }
   }, []);
 
@@ -229,14 +245,18 @@ export const UserProvider = ({ children }) => {
       });
     }
 
-    // 보석 업데이트 및 오버레이 표시 - 나중에 표시
+    // 보석 업데이트 및 오버레이 표시 - 업적이 없을 때만 표시
+    // 업적 완료 시 지급되는 보석은 업적 오버레이에 포함되므로 별도 표시 안 함
     if (result.data.gem && result.data.gem.after > result.data.gem.before) {
-      if (window.overlayContext?.showAwaitOverlay) {
-        window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
-          gemCount: result.data.gem.after - result.data.gem.before,
-          title: "출석 보상!",
-          description: "오늘의 보석 보상이 지급되었습니다."
-        });
+      // 업적이 완료되지 않은 경우에만 보석 오버레이 표시
+      if (!result.data.goals || result.data.goals.length === 0) {
+        if (window.overlayContext?.showAwaitOverlay) {
+          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
+            gemCount: result.data.gem.after - result.data.gem.before,
+            title: "출석 보상!",
+            description: "오늘의 보석 보상이 지급되었습니다."
+          });
+        }
       }
     }
 
@@ -551,7 +571,8 @@ export const UserProvider = ({ children }) => {
         try {
           await Promise.all([
             fetchUserMainPage(),
-            fetchGemItems()
+            fetchGemItems(),
+            fetchAchievementCriteria()
           ]);
         } catch (error) {
           console.error('❌ [USER] 추가 데이터 로드 중 오류 발생:', error);
@@ -597,6 +618,11 @@ export const UserProvider = ({ children }) => {
     gemItems,
     setGemItems,
     fetchGemItems,
+
+    // 업적 기준 데이터
+    achievementCriteria,
+    isAchievementCriteriaLoading,
+    fetchAchievementCriteria,
   };
 
   return (

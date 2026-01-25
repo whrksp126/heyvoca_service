@@ -3,6 +3,8 @@ import { useUser } from './UserContext';
 import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
 import { getBookStoreApi } from '../api/bookStore';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
+import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
+import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
@@ -104,6 +106,63 @@ export const VocabularyProvider = ({ children }) => {
       // 서버에서 반환된 최신 단어장 개수 업데이트
       if (result.data.book_cnt !== undefined) {
         setUserProfile(prev => ({ ...prev, book_cnt: result.data.book_cnt }));
+      }
+
+      // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
+      if (result.data.goals && result.data.goals.length > 0) {
+        // 업적 오버레이 표시
+        if (window.overlayContext?.showAwaitOverlay) {
+          result.data.goals.forEach(goal => {
+            window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+          });
+        }
+
+        // UserMainPage의 goals 배열 업데이트
+        if (window.userContext?.setUserMainPage) {
+          window.userContext.setUserMainPage(prevMainPage => {
+            const existingGoals = prevMainPage.goals || [];
+            const updatedGoals = [...existingGoals];
+
+            result.data.goals.forEach(newGoal => {
+              const existingIndex = updatedGoals.findIndex(g => g.type === newGoal.type);
+              if (existingIndex >= 0) {
+                updatedGoals[existingIndex] = {
+                  ...updatedGoals[existingIndex],
+                  level: newGoal.level,
+                  badge_img: newGoal.badge_img
+                };
+              } else {
+                updatedGoals.push({
+                  name: newGoal.name,
+                  type: newGoal.type,
+                  level: newGoal.level,
+                  badge_img: newGoal.badge_img
+                });
+              }
+            });
+
+            return {
+              ...prevMainPage,
+              goals: updatedGoals
+            };
+          });
+        }
+      }
+
+      // 보석 업데이트 및 오버레이 표시 - 나중에 표시
+      if (result.data.gem && result.data.gem.after > result.data.gem.before) {
+        if (window.overlayContext?.showAwaitOverlay) {
+          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
+            gemCount: result.data.gem.after - result.data.gem.before,
+            title: "업적 달성 보상!",
+            description: "독서왕 업적 달성 보석이 지급되었습니다."
+          });
+        }
+
+        setUserProfile(prev => ({
+          ...prev,
+          gem_cnt: result.data.gem.after,
+        }));
       }
 
       return newVocabulary;
