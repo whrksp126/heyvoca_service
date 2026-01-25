@@ -87,15 +87,24 @@ def create_user_voca_book():
 
         # 독서왕 업적 업데이트 (서점 단어장 추가 시)
         reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = None, None, None, None
+        before_gem_cnt = user.gem_cnt
         if bookstore_id:
             reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = update_user_goal('독서왕')
 
         db.session.commit() 
+        
+        # 사용자 정보 최신화 (업적 보상 반영됨)
+        user = db.session.query(User).filter(User.id == user_id).first()
+        after_gem_cnt = user.gem_cnt
 
         data = {
             'id': user_voca_book.id,
             'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
             'book_cnt': user.book_cnt,
+            'gem': {
+                'before': before_gem_cnt,
+                'after': after_gem_cnt
+            },
             'goals': []
         }
 

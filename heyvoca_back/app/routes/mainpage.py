@@ -44,6 +44,38 @@ def api_user_goals():
     ]
     return {'code': 200, 'data': data}
 
+
+@mainpage_bp.route('/achievement_criteria', methods=['GET'])
+def api_achievement_criteria():
+    """업적 달성 기준 조회 API"""
+    results = (
+        db.session.query(
+            GoalType.type.label('type_name'),
+            Goals.level,
+            Goals.goal,
+            Goals.reward_count,
+            Goals.goal_text,
+            Goals.description
+        )
+        .join(Goals, GoalType.id == Goals.type_id)
+        .order_by(GoalType.id, Goals.level)
+        .all()
+    )
+
+    achievement_criteria = {}
+    for r in results:
+        if r.type_name not in achievement_criteria:
+            achievement_criteria[r.type_name] = []
+
+        achievement_criteria[r.type_name].append({
+            'level': r.level,
+            'goal': r.goal_text or f"{r.type_name} {r.level}단계 달성",
+            'target_value': r.goal,
+            'reward': r.reward_count
+        })
+
+    return {'code': 200, 'data': achievement_criteria}
+
 @mainpage_bp.route('/user_dates', methods=['GET'])
 @jwt_required
 def api_user_dates():

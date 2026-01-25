@@ -347,15 +347,17 @@ class Goals(db.Model):
     level = Column(Integer, nullable=False)
     goal = Column(Integer, nullable=False)
     reward_count = Column(Integer, nullable=False)
+    goal_text = Column(String(255), nullable=True) # 추가: 업적 달성 기준 텍스트 (예: '친구 초대 1명 달성')
     description = Column(String(512), nullable=True)
     badge_img = Column(String(128), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self, type_id, level, goal, reward_count, description, badge_img):
+    def __init__(self, type_id, level, goal, reward_count, goal_text, description, badge_img):
         self.type_id = type_id
         self.level = level
         self.goal = goal
         self.reward_count = reward_count
+        self.goal_text = goal_text
         self.description = description
         self.badge_img = badge_img
 
