@@ -3,8 +3,9 @@ import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
-import { vibrate } from '../../utils/osFunction'; 
+import { useVocabularySetNewBottomSheet } from '../newBottomSheet/VocabularySetNewBottomSheet';
+import { useVocabularyDeleteNewBottomSheet } from '../newBottomSheet/VocabularyDeleteNewBottomSheet';
+import { vibrate } from '../../utils/osFunction';
 
 const UpdateVocabularySheetNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -12,10 +13,11 @@ const UpdateVocabularySheetNewFullSheet = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  const { showVocabularySetBottomSheet, showVocabularyDeleteBottomSheet } = useVocabularySetBottomSheet();
+  const { showVocabularySetNewBottomSheet } = useVocabularySetNewBottomSheet();
+  const { showVocabularyDeleteNewBottomSheet } = useVocabularyDeleteNewBottomSheet();
 
   const getButtonVariants = (color) => ({
-    tap: { 
+    tap: {
       scale: 0.85,
       rotate: -8,
       backgroundColor: color,
@@ -36,18 +38,16 @@ const UpdateVocabularySheetNewFullSheet = () => {
   }
 
   // updatedAt 기준으로 정렬된 단어장 목록
-  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) => 
+  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) =>
     new Date(b.updatedAt) - new Date(a.updatedAt)
   );
 
   const handleEditClick = (id, index) => {
-    console.log("edit", id, index);
-    showVocabularySetBottomSheet(id);
+    showVocabularySetNewBottomSheet(id);
   };
 
   const handleDeleteClick = (id, index) => {
-    console.log("delete", id, index);
-    showVocabularyDeleteBottomSheet(id);
+    showVocabularyDeleteNewBottomSheet(id);
   };
 
   return (
@@ -60,7 +60,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
         h-[55px] 
         pt-[20px] px-[10px] pb-[14px]
       ">
-        
+
         <motion.button
           onClick={() => {
             vibrate({ duration: 5 });
@@ -73,17 +73,17 @@ const UpdateVocabularySheetNewFullSheet = () => {
             p-[4px]
             rounded-[8px]
           "
-          whileHover={{ 
+          whileHover={{
             backgroundColor: 'rgba(0, 0, 0, 0.05)',
             scale: 1.05
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             backgroundColor: 'rgba(0, 0, 0, 0.1)'
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
         >
@@ -116,55 +116,56 @@ const UpdateVocabularySheetNewFullSheet = () => {
                 rounded-[12px]
               "
             >
-              <div 
-              className="
+              <div
+                className="
                 top
                 flex flex-col
                 w-full
               "
-            >
-              <h3 className="text-[16px] font-[700]">{item.title}</h3>
-              <span className="text-[10px] font-[400] text-[#999]">{item.total||0}</span>
-            </div>
+              >
+                <h3 className="text-[16px] font-[700]">{item.title}</h3>
+                <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
+              </div>
 
-            <div className="flex items-center gap-[8px]">
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants(item.color.sub)}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleEditClick(item.id, index);
-                }}
-                aria-label="단어장 편집"
-              >
-                <PencilSimple size={18} color={item.color.main} />
-              </motion.button>
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants('#ff00004d')}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleDeleteClick(item.id, index);
-                }}
-                aria-label="단어장 삭제"
-              >
-                <Trash size={18} color="red" />
-              </motion.button>
-            </div>
-          </li>
-        )})}
+              <div className="flex items-center gap-[8px]">
+                <motion.button
+                  className={`rounded-[20px]`}
+                  variants={getButtonVariants(item.color.sub)}
+                  whileTap="tap"
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 15
+                  }}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleEditClick(item.id, index);
+                  }}
+                  aria-label="단어장 편집"
+                >
+                  <PencilSimple size={18} color={item.color.main} />
+                </motion.button>
+                <motion.button
+                  className={`rounded-[20px]`}
+                  variants={getButtonVariants('#ff00004d')}
+                  whileTap="tap"
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 15
+                  }}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleDeleteClick(item.id, index);
+                  }}
+                  aria-label="단어장 삭제"
+                >
+                  <Trash size={18} color="red" />
+                </motion.button>
+              </div>
+            </li>
+          )
+        })}
       </div>
     </div>
   );

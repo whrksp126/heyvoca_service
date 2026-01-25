@@ -6,8 +6,9 @@ import InitialProfileStep2NewFullSheet from '../newFullSheet/InitialProfileStep2
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNavigate } from 'react-router-dom';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useOverlayActions } from '../../context/OverlayContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
-import InitialProfileGemRewardNewFullSheet from '../newFullSheet/InitialProfileGemRewardNewFullSheet';
+import InitialProfileGemRewardOverlay from '../overlay/InitialProfileGemRewardOverlay';
 
 const getColorSet = (mainColor) => {
   switch (mainColor) {
@@ -52,6 +53,7 @@ const Main = () => {
   const { addVocabularySheet, updateVocabularySheet } = useVocabulary();
   const { setUserProfile, updateUserProfile } = useUser();
   const { pushNewFullSheet, clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
+  const { showOverlay } = useOverlayActions();
   const [userInitialProfile, setUserInitialProfile] = useState({
     name: null,
     level: null,
@@ -136,18 +138,13 @@ const Main = () => {
           }));
 
           if (gained > 0) {
-            pushNewFullSheet(
-              InitialProfileGemRewardNewFullSheet,
+            showOverlay(
+              InitialProfileGemRewardOverlay,
               {
                 gemCount: gained,
                 onConfirm: async () => {
                   await completeOnboarding(profile);
                 }
-              },
-              {
-                smFull: true,
-                closeOnBackdropClick: false,
-                isDragToCloseEnabled: false
               }
             );
             return; // 효과 확인 버튼을 누를 때까지 중단

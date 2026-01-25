@@ -6,7 +6,7 @@ import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
-  const { isLogin, isLoginChecked } = useUser();
+  const { isLogin, isLoginChecked, setUserProfile } = useUser();
 
   const [vocabularySheets, setVocabularySheets] = useState([]);
   const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
@@ -100,6 +100,12 @@ export const VocabularyProvider = ({ children }) => {
       newVocabulary.words = [];
 
       setVocabularySheets(prev => [...prev, newVocabulary]);
+
+      // 서버에서 반환된 최신 단어장 개수 업데이트
+      if (result.data.book_cnt !== undefined) {
+        setUserProfile(prev => ({ ...prev, book_cnt: result.data.book_cnt }));
+      }
+
       return newVocabulary;
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
@@ -336,6 +342,12 @@ export const VocabularyProvider = ({ children }) => {
   const addVocabularySheetFromBackend = useCallback((vocabularySheet) => {
     try {
       setVocabularySheets(prev => [...prev, vocabularySheet]);
+
+      // 서버에서 반환된 최신 단어장 개수 업데이트 (퀴즐렛 등)
+      if (vocabularySheet.book_cnt !== undefined) {
+        setUserProfile(prev => ({ ...prev, book_cnt: vocabularySheet.book_cnt }));
+      }
+
       return vocabularySheet;
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');

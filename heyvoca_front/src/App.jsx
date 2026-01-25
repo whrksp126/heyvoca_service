@@ -24,6 +24,8 @@ import { NewBottomSheetProvider } from './components/newBottomSheet/NewBottomShe
 import Layout from './components/Layout';
 import { VocabularyProvider } from './context/VocabularyContext';
 import { UserProvider } from './context/UserContext';
+import { OverlayContextProvider, OverlayStateContext, OverlayActionsContext } from './context/OverlayContext';
+import { OverlayProvider } from './components/overlay/OverlayProvider';
 
 
 import { initializeApp } from "firebase/app";
@@ -66,6 +68,8 @@ function AppWithContexts() {
   const newFullSheetActions = useContext(NewFullSheetActionsContext);
   const newBottomSheetContext = useContext(NewBottomSheetContext);
   const newBottomSheetActions = useContext(NewBottomSheetActionsContext);
+  const overlayContext = useContext(OverlayStateContext);
+  const overlayActions = useContext(OverlayActionsContext);
 
   // NewFullSheetContext를 전역에 등록 (state와 actions를 합쳐서)
   window.newFullSheetContext = {
@@ -76,6 +80,10 @@ function AppWithContexts() {
     ...newBottomSheetContext,
     ...newBottomSheetActions
   };
+  window.overlayContext = {
+    ...overlayContext,
+    ...overlayActions
+  };
 
   return (
     <Layout>
@@ -84,6 +92,7 @@ function AppWithContexts() {
       <AppLayout />
       <NewFullSheetProvider />
       <NewBottomSheetProvider />
+      <OverlayProvider />
       {/* </FullSheetProvider> */}
       {/* </BottomSheetProvider> */}
     </Layout>
@@ -97,7 +106,9 @@ function App() {
         <VocabularyProvider>
           <NewFullSheetContextProvider>
             <NewBottomSheetContextProvider>
-              <AppWithContexts />
+              <OverlayContextProvider>
+                <AppWithContexts />
+              </OverlayContextProvider>
             </NewBottomSheetContextProvider>
           </NewFullSheetContextProvider>
         </VocabularyProvider>

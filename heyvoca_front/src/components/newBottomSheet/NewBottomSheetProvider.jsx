@@ -65,11 +65,12 @@ export const NewBottomSheetProvider = () => {
                     fixed 
                     max-h-[90vh]
                     rounded-t-2xl 
-                    bg-white 
+                    bg-white dark:bg-[#111]
+                    overflow-hidden
                     after:content-[''] 
                     after:absolute after:left-0 after:right-0 after:bottom-[-100vh] 
                     after:h-[101vh] 
-                    after:bg-white
+                    after:bg-white dark:after:bg-[#111]
                   "
                   initial={phase === 'enter' ? { y: '100%' } : { y: 0 }}
                   animate={{ y: phase === 'exit' ? '100%' : 0 }}

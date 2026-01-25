@@ -3,6 +3,8 @@ import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/commo
 import { getDevicePlatform } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi } from '../api/study';
+import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
+import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
 
@@ -93,6 +95,16 @@ export const UserProvider = ({ children }) => {
       if (result.code != 200) return;
 
       // 보석 업데이트 내용 적용
+      if (result.data.gem && result.data.gem.after > result.data.gem.before) {
+        if (window.overlayContext?.showAwaitOverlay) {
+          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
+            gemCount: result.data.gem.after - result.data.gem.before,
+            title: "학습 보상!",
+            description: "학습 완료 보석이 지급되었습니다."
+          });
+        }
+      }
+
       setUserProfile(prevProfile => ({
         ...prevProfile,
         gem_cnt: result.data.gem.after,
@@ -124,6 +136,13 @@ export const UserProvider = ({ children }) => {
 
       // 업적 업데이트 (새로 완료된 업적이 있는 경우)
       if (result.data.goals && result.data.goals.length > 0) {
+        // 업적 오버레이 표시
+        if (window.overlayContext?.showAwaitOverlay) {
+          result.data.goals.forEach(goal => {
+            window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+          });
+        }
+
         setUserMainPage(prevMainPage => {
           const existingGoals = prevMainPage.goals || [];
 
@@ -171,6 +190,56 @@ export const UserProvider = ({ children }) => {
   const fetchUserCheckin = useCallback(async () => {
     const result = await setUserCheckinApi();
     if (result.code != 200) return;
+
+    // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
+    if (result.data.goals && result.data.goals.length > 0) {
+      // 업적 오버레이 표시
+      if (window.overlayContext?.showAwaitOverlay) {
+        result.data.goals.forEach(goal => {
+          window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+        });
+      }
+
+      setUserMainPage(prevMainPage => {
+        const existingGoals = prevMainPage.goals || [];
+        const updatedGoals = [...existingGoals];
+
+        result.data.goals.forEach(newGoal => {
+          const existingIndex = updatedGoals.findIndex(g => g.type === newGoal.type);
+          if (existingIndex >= 0) {
+            updatedGoals[existingIndex] = {
+              ...updatedGoals[existingIndex],
+              level: newGoal.level,
+              badge_img: newGoal.badge_img
+            };
+          } else {
+            updatedGoals.push({
+              name: newGoal.name,
+              type: newGoal.type,
+              level: newGoal.level,
+              badge_img: newGoal.badge_img
+            });
+          }
+        });
+
+        return {
+          ...prevMainPage,
+          goals: updatedGoals
+        };
+      });
+    }
+
+    // 보석 업데이트 및 오버레이 표시 - 나중에 표시
+    if (result.data.gem && result.data.gem.after > result.data.gem.before) {
+      if (window.overlayContext?.showAwaitOverlay) {
+        window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
+          gemCount: result.data.gem.after - result.data.gem.before,
+          title: "출석 보상!",
+          description: "오늘의 보석 보상이 지급되었습니다."
+        });
+      }
+    }
+
     setUserProfile(prevProfile => ({
       ...prevProfile,
       gem_cnt: result.data.gem.after,
@@ -482,7 +551,6 @@ export const UserProvider = ({ children }) => {
         try {
           await Promise.all([
             fetchUserMainPage(),
-            fetchUserCheckin(),
             fetchGemItems()
           ]);
         } catch (error) {
@@ -503,6 +571,7 @@ export const UserProvider = ({ children }) => {
     updateUserProfile,
     fetchUserProfile,
     fetchUserMainPage,
+    fetchUserCheckin,
     setUserProfile,
     setUserMainPage,
     updateUserHistory,

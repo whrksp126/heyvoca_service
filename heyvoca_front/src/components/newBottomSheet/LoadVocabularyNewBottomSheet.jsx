@@ -1,21 +1,18 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { X, File, Plus } from '@phosphor-icons/react';
+import { Table, FileCsv, FilePlus } from '@phosphor-icons/react';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
-import { UploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
+import { useUploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';
 
 export const LoadVocabularyNewBottomSheet = () => {
-  const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
-  const { addVocabularySheetFromBackend } = useVocabulary();
+  "use memo";
+  const { popNewBottomSheet } = useNewBottomSheet();
+  const { showUploadQuizletNewBottomSheet } = useUploadQuizletNewBottomSheet();
   const { userProfile } = useUser();
-
-  const handleClose = () => {
-    popNewBottomSheet();
-  };
 
   const showQuizletUploadBottomSheet = useCallback(async () => {
     // 단어장 생성 가능 여부 확인
@@ -31,44 +28,21 @@ export const LoadVocabularyNewBottomSheet = () => {
         return;
       }
 
-      const handleUpload = (vocabularySheetData) => {
-        // 백엔드에서 생성된 단어장 데이터를 로컬 state에 추가
-        try {
-          // console.log('백엔드에서 생성된 단어장 데이터:', vocabularySheetData);
-          addVocabularySheetFromBackend(vocabularySheetData);
-          alert('퀴즐렛 데이터가 성공적으로 추가되었습니다.');
-          // 모든 바텀시트 닫기
-          popNewBottomSheet(); // UploadQuizletNewBottomSheet 닫기
-          popNewBottomSheet(); // LoadVocabularyNewBottomSheet 닫기
-        } catch (error) {
-          console.error('단어장 추가 실패:', error);
-          alert('단어장 추가에 실패했습니다.');
-        }
-      };
-
-      pushNewBottomSheet(
-        UploadQuizletNewBottomSheet,
-        {
-          onCancel: popNewBottomSheet,
-          onUpload: handleUpload
-        },
-        {
-          isBackdropClickClosable: false,
-          isDragToCloseEnabled: true
-        }
-      );
+      // 현재 바텀시트(LoadVocabularyNewBottomSheet) 닫기
+      popNewBottomSheet();
+      // 퀴즐렛 업로드 바텀시트 열기
+      showUploadQuizletNewBottomSheet();
     } catch (error) {
       console.error('단어장 개수 체크 실패:', error);
       alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
     }
-  }, [pushNewBottomSheet, popNewBottomSheet, addVocabularySheetFromBackend, userProfile]);
+  }, [popNewBottomSheet, showUploadQuizletNewBottomSheet, userProfile]);
 
   const menuItems = [
     {
       id: 'load-google-sheets',
-      text: '구글 스프레드시트 불러오기',
-      iconBg: 'bg-[#0F9D58]',
-      iconColor: 'text-white',
+      text: '구글 스프레트 시트 불러오기',
+      icon: Table,
       onClick: () => {
         vibrate({ duration: 5 });
         // TODO: 구글 스프레드시트 불러오기 기능 구현
@@ -78,8 +52,7 @@ export const LoadVocabularyNewBottomSheet = () => {
     {
       id: 'load-csv',
       text: 'CSV 파일 불러오기',
-      iconBg: 'bg-transparent border-[1px] border-[#E5E5E5]',
-      iconColor: 'text-[#999]',
+      icon: FileCsv,
       onClick: () => {
         vibrate({ duration: 5 });
         // TODO: CSV 파일 불러오기 기능 구현
@@ -87,10 +60,9 @@ export const LoadVocabularyNewBottomSheet = () => {
       }
     },
     {
-      id: 'load-vocat',
+      id: 'load-quizlet',
       text: '퀴즐렛 데이터 추가',
-      iconBg: 'bg-transparent',
-      iconColor: 'text-[#999]',
+      icon: FilePlus,
       onClick: () => {
         vibrate({ duration: 5 });
         showQuizletUploadBottomSheet();
@@ -99,96 +71,38 @@ export const LoadVocabularyNewBottomSheet = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#111]">
+    <div className="flex flex-col gap-[30px] items-center p-[20px] pb-[40px] bg-white dark:bg-[#111]">
       {/* Header */}
-      <div className="
-        flex items-center justify-between
-        p-[20px] pb-[0px]
-      ">
-        <h1 className="text-[18px] font-[700] text-[#111] dark:text-[#fff]">
-          불러오기
-        </h1>
-        <button
-          type="button"
-          className="
-            inline-flex items-center justify-center
-            w-[24px] h-[24px]
-            text-[#111] dark:text-[#fff]
-          "
-          onClick={() => {
-            vibrate({ duration: 5 });
-            handleClose();
-          }}
-        >
-          <X size={24} weight="bold" />
-        </button>
-      </div>
+      <h1 className="text-[18px] font-bold text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+        단어장 불러오기
+      </h1>
 
       {/* Menu Items */}
-      <div className="flex flex-col">
-        {menuItems.map((item, index) => {
+      <div className="flex flex-col gap-[10px] w-full">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
           return (
-            <React.Fragment key={item.id}>
-              {index > 0 && (
-                <div className="h-[1px] bg-[#E5E5E5] dark:bg-[#333]" />
-              )}
-              <motion.button
-                className="
-                  flex items-center gap-[12px]
-                  w-full
-                  p-[20px]
-                  text-left
-                  bg-white dark:bg-[#111]
-                  hover:bg-[#F5F5F5] dark:hover:bg-[#1A1A1A]
-                  transition-colors
-                "
-                onClick={item.onClick}
-                whileTap={{ scale: 0.98 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 15
-                }}
-              >
-                {item.id === 'load-google-sheets' ? (
-                  <div className={`
-                    flex items-center justify-center
-                    w-[24px] h-[24px]
-                    rounded-[4px]
-                    ${item.iconBg}
-                    ${item.iconColor}
-                  `}>
-                    <Plus size={16} weight="bold" />
-                  </div>
-                ) : item.id === 'load-csv' ? (
-                  <div className={`
-                    flex items-center justify-center
-                    w-[24px] h-[24px]
-                    rounded-[4px]
-                    ${item.iconBg}
-                    ${item.iconColor}
-                  `}>
-                    <Plus size={16} weight="bold" />
-                  </div>
-                ) : (
-                  <File
-                    size={24}
-                    weight="regular"
-                    className={item.iconColor}
-                  />
-                )}
-                <span className="
-                  text-[16px] font-[400]
-                  text-[#111] dark:text-[#fff]
-                ">
-                  {item.text}
-                </span>
-              </motion.button>
-            </React.Fragment>
+            <motion.button
+              key={item.id}
+              className="
+                                flex items-center justify-center gap-[8px]
+                                w-full h-[45px]
+                                bg-white dark:bg-[#1A1A1A]
+                                border border-[#ff8dd4] border-solid
+                                rounded-[8px]
+                                text-[#ff8dd4] font-bold text-[16px] tracking-[-0.32px]
+                            "
+              onClick={item.onClick}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Icon size={18} weight="bold" />
+              <span>{item.text}</span>
+            </motion.button>
           );
         })}
       </div>
     </div>
   );
 };
+
 

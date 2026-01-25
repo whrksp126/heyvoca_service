@@ -4,10 +4,9 @@ import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh } from '@phosphor-ico
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion } from 'framer-motion';
-import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
 import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
 import { getTextSound } from '../../utils/common';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -22,7 +21,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
   const vocabularySheet = getVocabularySheet(id);
 
   const buttonVariants = {
-    tap: { 
+    tap: {
       scale: 0.85,
       rotate: -8,
       backgroundColor: "rgba(255, 141, 212, 0.2)",
@@ -54,15 +53,15 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
   const handleEditClick = (word_id) => {
     console.log("vocabularySheet_id: ", vocabularySheet.id);
     console.log("word_id: ", word_id);
-    showWordSetBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
+    showWordSetBottomSheet({ vocabularyId: vocabularySheet.id, id: word_id });
   };
 
   const handleDeleteClick = async (word_id) => {
-    showWordDeleteBottomSheet({vocabularyId: vocabularySheet.id, id: word_id});
+    showWordDeleteBottomSheet({ vocabularyId: vocabularySheet.id, id: word_id });
   };
 
   const handleAddClick = () => {
-    showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
+    showWordSetBottomSheet({ vocabularyId: vocabularySheet.id });
   };
 
   return (
@@ -88,17 +87,17 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
               text-[#CCC] dark:text-[#fff]
               rounded-[8px]
             "
-            whileHover={{ 
+            whileHover={{
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
               scale: 1.05
             }}
-            whileTap={{ 
+            whileTap={{
               scale: 0.95,
               backgroundColor: 'rgba(0, 0, 0, 0.1)'
             }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
+            transition={{
+              type: "spring",
+              stiffness: 400,
               damping: 17
             }}
           >
@@ -117,27 +116,27 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
             text-[#CCC] dark:text-[#fff]
           "
         >
-          <motion.button 
+          <motion.button
             className="
               h-[30px] px-[12px]
               border border-[#FF8DD4] rounded-[6px]
               text-[#FF8DD4] text-[13px] font-[700]
             "
-            whileHover={{ 
+            whileHover={{
               backgroundColor: 'rgba(255, 141, 212, 0.1)',
               scale: 1.02
             }}
-            whileTap={{ 
+            whileTap={{
               scale: 0.98,
               backgroundColor: 'rgba(255, 141, 212, 0.2)'
             }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
+            transition={{
+              type: "spring",
+              stiffness: 400,
               damping: 17
             }}
           >선택 삭제</motion.button>
-          
+
         </div>
       </div>
 
@@ -154,8 +153,8 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                 bg-[#F5F5F5]
               "
             >
-              
-              <div 
+
+              <div
                 className="
                   flex flex-col gap-[10px]
                   w-full
@@ -174,8 +173,8 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                             { color: "#FFFFFF", offset: 0.5 },
                             { color: "#111", offset: 1 }
                           ],
-                          { 
-                            duration: 1000, 
+                          {
+                            duration: 1000,
                             delay: index * 50,
                             easing: "cubic-bezier(0.4, 0, 0.2, 1)"
                           }
@@ -221,8 +220,8 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                             { color: "#FFFFFF", offset: 0.5 },
                             { color: "#111", offset: 1 }
                           ],
-                          { 
-                            duration: 1000, 
+                          {
+                            duration: 1000,
                             delay: index * 50,
                             easing: "cubic-bezier(0.4, 0, 0.2, 1)"
                           }
@@ -232,7 +231,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{
-                      type: "spring", 
+                      type: "spring",
                       stiffness: 400,
                       damping: 20
                     }}
@@ -260,39 +259,39 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                 flex gap-[8px]
               text-[#FF8DD4] text-[20px]
               ">
-                <motion.button 
+                <motion.button
                   className="
                   rounded-[20px]
                     text-[#FF8DD4] text-[20px]
                   "
                   variants={buttonVariants}
                   whileTap="tap"
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 500, 
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
                     damping: 15
                   }}
                   onClick={() => handleEditClick(item.id)}
                   aria-label="단어 편집"
                 >
-                  <PencilSimple/>
+                  <PencilSimple />
                 </motion.button>
-                <motion.button 
-                className="
+                <motion.button
+                  className="
                 rounded-[20px]
                   text-[red] text-[20px]
                 "
-                variants={buttonVariants}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => handleDeleteClick(item.id)}
-                aria-label="단어 삭제"
+                  variants={buttonVariants}
+                  whileTap="tap"
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 15
+                  }}
+                  onClick={() => handleDeleteClick(item.id)}
+                  aria-label="단어 삭제"
                 >
-                  <Trash/>
+                  <Trash />
                 </motion.button>
               </div>
             </li>

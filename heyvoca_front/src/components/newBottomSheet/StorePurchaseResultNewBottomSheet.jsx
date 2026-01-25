@@ -20,36 +20,32 @@ export const StorePurchaseResultNewBottomSheet = ({ options }) => {
     };
 
     return (
-        <div className="">
-            <div className="
-        flex flex-col gap-[30px]
-        max-h-[calc(90vh-47px)] h-full
-        p-[20px] pt-[40px] pb-[105px]
-        overflow-y-auto
-        items-center
-      ">
-                <div className="flex flex-col items-center gap-[20px] pt-[30px]">
-                    <img src={image} alt="result" className="w-[120px] h-[120px] object-contain grayscale-[0.2]" />
-                    <h1 className="text-[20px] font-[700] text-[#111] dark:text-[#fff] text-center whitespace-pre-line">
-                        {success ? (
-                            <>
-                                <span className="text-[#FF8DD4]">{packageName}</span> 구매 완료!
-                            </>
-                        ) : (
-                            message || '구매를 처리할 수 없습니다.'
-                        )}
-                    </h1>
+        <div className="flex flex-col gap-[30px] items-center pt-[40px] pb-[20px] px-[20px] relative">
+            {/* 결과 아이콘 및 텍스트 구역 */}
+            <div className="flex flex-col items-center gap-[10px] w-full">
+                <div className="relative size-[80px] flex items-center justify-center">
+                    <img
+                        src={image}
+                        alt="result"
+                        className={`object-contain ${success ? 'w-full h-full' : 'w-[50px] h-[45px] opacity-80'}`}
+                    />
                 </div>
+                <h1 className="text-[18px] font-bold leading-[1.4] text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+                    {success ? (
+                        <>
+                            <span className="text-[#FF8DD4]">{packageName}</span> 구매 완료!
+                        </>
+                    ) : (
+                        <span className="whitespace-pre-line">{message || '구매를 처리할 수 없습니다.'}</span>
+                    )}
+                </h1>
             </div>
 
-            <div className="
-        absolute bottom-0 left-0 right-0
-        flex items-center justify-between gap-[15px] p-[20px]
-        bg-[#fff]/80 backdrop-blur-[1px]
-      ">
+            {/* 버튼 구역 */}
+            <div className="w-full">
                 <motion.button
                     onClick={success ? handleGoToVoca : popNewBottomSheet}
-                    className="w-full h-[45px] rounded-[8px] bg-[#FF8DD4] text-[#fff] font-[700] text-[16px]"
+                    className="w-full h-[45px] rounded-[8px] bg-[#FF8DD4] text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center"
                     whileTap={{ scale: 0.95 }}
                 >
                     {success ? '내 단어장 바로가기' : '확인'}

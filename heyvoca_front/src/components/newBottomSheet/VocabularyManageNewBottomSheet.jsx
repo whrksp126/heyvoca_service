@@ -1,20 +1,23 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { X, Stack, BookOpen, Plus, Download, ArrowsDownUp } from '@phosphor-icons/react';
-import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
-import { useVocabularySetBottomSheet } from '../vocabularySheets/VocabularyBottomSheet';
+import { FolderPlus, ArrowSquareIn } from '@phosphor-icons/react';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useVocabularySetNewBottomSheet } from './VocabularySetNewBottomSheet';
+import { VocabularyLimitNewBottomSheet } from './VocabularyLimitNewBottomSheet';
 import { LoadVocabularyNewBottomSheet } from './LoadVocabularyNewBottomSheet';
+import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';
+import { useUser } from '../../context/UserContext';
 
 export const useVocabularyManageNewBottomSheet = () => {
-  const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheet();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   const showVocabularyManageNewBottomSheet = useCallback(() => {
     pushNewBottomSheet(
       VocabularyManageNewBottomSheet,
       {},
       {
-        isBackdropClickClosable: false,
+        isBackdropClickClosable: true,
         isDragToCloseEnabled: true
       }
     );
@@ -26,8 +29,9 @@ export const useVocabularyManageNewBottomSheet = () => {
 };
 
 export const VocabularyManageNewBottomSheet = () => {
-  const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
-  const { showVocabularySetBottomSheet } = useVocabularySetBottomSheet();
+  const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheetActions();
+  const { showVocabularySetNewBottomSheet } = useVocabularySetNewBottomSheet();
+  const { userProfile } = useUser();
 
   const handleClose = () => {
     popNewBottomSheet();
@@ -38,7 +42,7 @@ export const VocabularyManageNewBottomSheet = () => {
       LoadVocabularyNewBottomSheet,
       {},
       {
-        isBackdropClickClosable: false,
+        isBackdropClickClosable: true,
         isDragToCloseEnabled: true
       }
     );
@@ -47,108 +51,101 @@ export const VocabularyManageNewBottomSheet = () => {
   const menuItems = [
     {
       id: 'create-vocabulary',
-      icon: BookOpen,
-      iconPlus: true,
+      icon: FolderPlus,
       text: '단어장 생성',
-      onClick: () => {
+      onClick: async () => {
         vibrate({ duration: 5 });
-        // 기존 단어장 추가 바텀 시트
-        showVocabularySetBottomSheet();
+        const result = await userBookCntCheckApi();
+        if (userProfile.book_cnt > 0 || result.data.can_add_book) {
+          popNewBottomSheet();
+          showVocabularySetNewBottomSheet();
+        } else {
+          popNewBottomSheet();
+          pushNewBottomSheet(
+            VocabularyLimitNewBottomSheet,
+            {},
+            {
+              isBackdropClickClosable: true,
+              isDragToCloseEnabled: true
+            }
+          );
+        }
       }
     },
     {
       id: 'load-vocabulary',
-      icon: Download,
+      icon: ArrowSquareIn,
       text: '단어장 불러오기',
-      onClick: () => {
+      onClick: async () => {
         vibrate({ duration: 5 });
-        showLoadVocabularyBottomSheet();
+        const result = await userBookCntCheckApi();
+        if (userProfile.book_cnt > 0 || result.data.can_add_book) {
+          popNewBottomSheet();
+          showLoadVocabularyBottomSheet();
+        } else {
+          popNewBottomSheet();
+          pushNewBottomSheet(
+            VocabularyLimitNewBottomSheet,
+            {},
+            {
+              isBackdropClickClosable: true,
+              isDragToCloseEnabled: true
+            }
+          );
+        }
       }
     }
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#111]">
-      {/* Header */}
-      <div className="
-        flex items-center justify-between
-        p-[20px] pb-[0px]
-      ">
-        <h1 className="text-[18px] font-[700] text-[#111] dark:text-[#fff]">
-          단어장 관리
+    <div className="flex flex-col items-center gap-[30px] p-[20px]">
+      {/* Header Info */}
+      <div className="flex flex-col items-center justify-center gap-[5px] w-full text-center">
+        <h1 className="text-[18px] font-bold text-[#111] dark:text-[#fff] tracking-[-0.36px]">
+          단어장 추가
         </h1>
-        <button
-          type="button"
-          className="
-            inline-flex items-center justify-center
-            w-[24px] h-[24px]
-            text-[#111] dark:text-[#fff]
-          "
-          onClick={() => {
-            vibrate({ duration: 5 });
-            handleClose();
-          }}
-        >
-          <X size={24} weight="bold" />
-        </button>
+        <p className="text-[12px] font-medium text-[#999] tracking-[-0.24px]">
+          추가 가능 단어장 {userProfile.book_cnt}개
+        </p>
       </div>
 
-      {/* Menu Items */}
-      <div className="flex flex-col">
-        {menuItems.map((item, index) => {
+      {/* Menu Buttons */}
+      <div className="flex flex-col gap-[10px] w-full">
+        {menuItems.map((item) => {
           const IconComponent = item.icon;
           return (
-            <React.Fragment key={item.id}>
-              {index > 0 && (
-                <div className="h-[1px] bg-[#E5E5E5] dark:bg-[#333]" />
-              )}
-              <motion.button
-                className="
-                  flex items-center gap-[12px]
-                  w-full
-                  p-[20px]
-                  text-left
-                  bg-white dark:bg-[#111]
-                  hover:bg-[#F5F5F5] dark:hover:bg-[#1A1A1A]
-                  transition-colors
-                "
-                onClick={item.onClick}
-                whileTap={{ scale: 0.98 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 15
-                }}
-              >
-                <div className="relative">
-                  <IconComponent
-                    size={24}
-                    weight="regular"
-                    className="text-[#111] dark:text-[#fff]"
-                  />
-                  {item.iconPlus && (
-                    <Plus
-                      size={12}
-                      weight="bold"
-                      className="
-                        absolute -top-[2px] -right-[2px]
-                        text-[#FF8DD4]
-                      "
-                    />
-                  )}
-                </div>
-                <span className="
-                  text-[16px] font-[400]
-                  text-[#111] dark:text-[#fff]
-                ">
-                  {item.text}
-                </span>
-              </motion.button>
-            </React.Fragment>
+            <motion.button
+              key={item.id}
+              className="
+                flex items-center justify-center gap-[8px]
+                w-full h-[45px] px-[15px]
+                bg-white dark:bg-[#111]
+                border border-[#FF8DD4] border-solid rounded-[8px]
+                transition-colors
+              "
+              onClick={item.onClick}
+              whileTap={{ scale: 0.98 }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 15
+              }}
+            >
+              <IconComponent
+                size={18}
+                weight="bold"
+                className="text-[#FF8DD4]"
+              />
+              <span className="text-[16px] font-bold text-[#FF8DD4] tracking-[-0.32px]">
+                {item.text}
+              </span>
+            </motion.button>
           );
         })}
       </div>
     </div>
   );
 };
+
+
 

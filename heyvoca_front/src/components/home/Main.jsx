@@ -15,7 +15,6 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
 import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
 import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
-import WordKing from '../../assets/images/HeyCharacter/WordKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
@@ -35,7 +34,6 @@ const ACHIEVEMENT_IMAGES = {
   '초대왕': InviteKing,
   '출석왕': AttendanceKing,
   '노력왕': NoryeokKing,
-  '단어왕': WordKing,
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
   '암기왕': MemorizedKing,
@@ -191,6 +189,13 @@ const Main = () => {
     }));
     return getOverdueCount(words, now);
   })();
+
+  const { fetchUserCheckin } = useUser();
+
+  // 홈 화면 진입 시 출석 체크 호출
+  useEffect(() => {
+    fetchUserCheckin();
+  }, []);
 
   // 복습 지연 단어 목록 업데이트 (데이터 로딩 완료 후에만 실행)
   useEffect(() => {
@@ -496,83 +501,39 @@ const Main = () => {
             bg-[#F6EFFF] 
           ">
             <h2 className="text-[#111] text-[16px] font-[700]">나의 업적</h2>
-            <div className="flex flex-col gap-y-4">
-              {/* 첫 번째 줄: 4개 아이템 */}
-              <div className="grid grid-cols-4 justify-items-center gap-x-3">
-                {userMainPage?.goals?.slice(0, 4).map((goal, idx) => {
-                  return (
+            <div className="grid grid-cols-3 gap-y-4 justify-items-center">
+              {userMainPage?.goals?.map((goal, idx) => (
+                <div
+                  key={goal.type}
+                  className="flex flex-col items-center gap-[5px] w-[60px]"
+                >
+                  <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
+                    <img
+                      src={ACHIEVEMENT_IMAGES[goal.type]}
+                      alt=""
+                      className="absolute bottom-[10px] left-[50%] translate-x-[-50%]"
+                    />
                     <div
-                      key={goal.type}
-                      className="flex flex-col items-center gap-[5px] w-[60px]"
+                      className="w-[60px] h-[60px] rounded-[50%]"
+                      style={getAchievementBackgroundStyle(goal.level)}
+                    ></div>
+                    <span
+                      className="
+                          absolute bottom-[0] left-[50%] 
+                          translate-x-[-50%]
+                          text-[16px] font-[700]
+                          [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                        "
+                      style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
                     >
-                      <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
-                        <img
-                          src={ACHIEVEMENT_IMAGES[goal.type]}
-                          alt=""
-                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]"
-                        />
-                        <div
-                          className="w-[60px] h-[60px] rounded-[50%]"
-                          style={getAchievementBackgroundStyle(goal.level)}
-                        ></div>
-                        <span
-                          className="
-                              absolute bottom-[0] left-[50%] 
-                              translate-x-[-50%]
-                              text-[16px] font-[700]
-                              [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
-                            "
-                          style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
-                        >
-                          <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
-                        </span>
-                      </div>
-                      <span className="text-[#111] text-[12px] font-[600]">
-                        {goal.type}
-                      </span>
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* 두 번째 줄: 나머지 아이템들 (중앙 정렬) */}
-              {userMainPage?.goals?.length > 4 && (
-                <div className="flex justify-center gap-x-3">
-                  {userMainPage.goals.slice(4).map((goal, idx) => (
-                    <div
-                      key={goal.type}
-                      className="flex flex-col items-center gap-[5px] w-[60px]"
-                    >
-                      <div className="relative h-[70px]" style={goal.level === 0 ? { opacity: 0.3 } : {}}>
-                        <img
-                          src={ACHIEVEMENT_IMAGES[goal.type]}
-                          alt=""
-                          className="absolute bottom-[10px] left-[50%] translate-x-[-50%]"
-                        />
-                        <div
-                          className="w-[60px] h-[60px] rounded-[50%]"
-                          style={getAchievementBackgroundStyle(goal.level)}
-                        ></div>
-                        <span
-                          className="
-                            absolute bottom-[0] left-[50%] 
-                            translate-x-[-50%]
-                            text-[16px] font-[700]
-                            font-family: 'Cafe24Ssurround', sans-serif;
-                            [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
-                          "
-                          style={getAchievementTextStyle(goal.level)}
-                        >
-                          <span className="text-[10px]">LV.</span>{goal.level}
-                        </span>
-                      </div>
-                      <span className="text-[#111] text-[12px] font-[600]">
-                        {goal.type}
-                      </span>
-                    </div>
-                  ))}
+                      <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
+                    </span>
+                  </div>
+                  <span className="text-[#111] text-[12px] font-[600]">
+                    {goal.type}
+                  </span>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>

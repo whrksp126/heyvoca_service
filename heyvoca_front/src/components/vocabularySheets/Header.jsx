@@ -17,7 +17,7 @@ const Header = () => {
   const { userProfile } = useUser();
 
   const buttonVariants = {
-    tap: { 
+    tap: {
       scale: 0.85,
       rotate: -8,
       backgroundColor: "rgba(255, 141, 212, 0.2)",
@@ -30,17 +30,7 @@ const Header = () => {
   };
 
   const handleAddClick = async () => {
-    // 단어장 생성 가능 여부 확인
-    // await vibrate({ cancel: true });
-    const result = await userBookCntCheckApi();
-    const canAddBook = result.data.can_add_book;
-    if(userProfile.book_cnt > 0 || canAddBook){
-      // showVocabularySetBottomSheet();
-      showVocabularyManageNewBottomSheet();
-    }else{
-      alert('단어장 생성 가능 횟수를 초과했습니다.');
-    }
-
+    showVocabularyManageNewBottomSheet();
   };
 
   const handleEditClick = () => {
@@ -67,23 +57,23 @@ const Header = () => {
           <strong className="
             text-[#FF8DD4] font-[700]
           ">{userProfile.username}</strong>의 단어장
-          </h2>
+        </h2>
       </div>
       <div className="center">
 
       </div>
       <div className="right">
         <div className="btns flex items-center gap-[10px]">
-          <motion.button 
+          <motion.button
             className="
             rounded-[20px]
               text-[#FF8DD4] text-[20px]
             "
             variants={buttonVariants}
             whileTap="tap"
-            transition={{ 
-              type: "spring", 
-              stiffness: 500, 
+            transition={{
+              type: "spring",
+              stiffness: 500,
               damping: 15
             }}
             onClick={() => {
@@ -94,16 +84,16 @@ const Header = () => {
           >
             <PencilSimple />
           </motion.button>
-          <motion.button 
+          <motion.button
             className="
             rounded-[20px]
               text-[#FF8DD4] text-[20px]
             "
             variants={buttonVariants}
             whileTap="tap"
-            transition={{ 
-              type: "spring", 
-              stiffness: 500, 
+            transition={{
+              type: "spring",
+              stiffness: 500,
               damping: 15
             }}
             onClick={() => {

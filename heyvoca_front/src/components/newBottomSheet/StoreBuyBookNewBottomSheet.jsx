@@ -24,8 +24,8 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
                 {
                     options: {
                         success: false,
-                        message: '보석이 부족합니다.',
-                        image: image
+                        message: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
+                        image: gem
                     }
                 }
             );
@@ -66,33 +66,22 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
     };
 
     return (
-        <div className="">
-            <div className="
-        flex flex-col gap-[30px]
-        max-h-[calc(90vh-47px)] h-full
-        p-[20px] pt-[40px] pb-[105px]
-        overflow-y-auto
-        items-center
-      ">
-                <div className="flex flex-col items-center gap-[15px] pt-[20px]">
-                    <h1 className="text-[20px] font-[700] text-[#111] dark:text-[#fff]">
-                        {packageName}를 구매할까요?
-                    </h1>
-                    <img src={image} alt={packageName} className="w-[120px] h-[120px] object-contain" />
-                </div>
+        <div className="flex flex-col gap-[30px] items-center pt-[40px] pb-[20px] px-[20px] relative">
+            {/* 타이틀 구역 */}
+            <div className="w-full flex flex-col items-center justify-center">
+                <h1 className="text-[18px] font-bold leading-[1.4] text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+                    {packageName}를 구매할까요?
+                </h1>
             </div>
 
-            <div className="
-        absolute bottom-0 left-0 right-0
-        flex items-center justify-between gap-[15px] p-[20px]
-        bg-[#fff]/80 backdrop-blur-[1px]
-      ">
+            {/* 버튼 구역 */}
+            <div className="w-full flex gap-[15px] items-start">
                 <motion.button
                     onClick={() => {
                         vibrate({ duration: 5 });
                         popNewBottomSheet();
                     }}
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#E9E9E9] text-[#777] font-[700] text-[16px]"
+                    className="flex-1 h-[45px] rounded-[8px] bg-[#ccc] text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center"
                     whileTap={{ scale: 0.95 }}
                 >
                     취소
@@ -100,7 +89,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
                 <motion.button
                     onClick={handleBuy}
                     disabled={isLoading}
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#FF8DD4] text-[#fff] font-[700] text-[16px] flex items-center justify-center gap-[8px]"
+                    className="flex-1 h-[45px] rounded-[8px] bg-[#ff8dd4] text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center gap-[3px]"
                     whileTap={{ scale: 0.95 }}
                 >
                     {isLoading ? (
