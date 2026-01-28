@@ -1,0 +1,529 @@
+[
+  {
+    "id": "1769583910876-p3fd2845m-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "audit",
+    "meanings": [
+      "회계 감사",
+      "감사를 실시하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-kyxzcbnwp-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "bankruptcy",
+    "meanings": [
+      "파산"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-q3n25o336-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "collateral",
+    "meanings": [
+      "담보"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-0zyqgern6-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "curb",
+    "meanings": [
+      "억제하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-9p6oqq22p-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "default",
+    "meanings": [
+      "채무를 불이행하다",
+      "채무 불이행"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-ufumsye6v-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "deteriorate",
+    "meanings": [
+      "악화되다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-ixvaclyj9-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "discrepancy",
+    "meanings": [
+      "차이",
+      "불일치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-5a031wa0k-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "dividend",
+    "meanings": [
+      "배당금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-q7mqloo67-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "embezzlement",
+    "meanings": [
+      "횡령"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-2q2n41qza-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "equity",
+    "meanings": [
+      "보통주",
+      "자기 자본"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-h4m2oy32u-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "fiscal",
+    "meanings": [
+      "회계의",
+      "재무의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-5t7vg3rh8-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "fluctuate",
+    "meanings": [
+      "변동하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-spi27q1yz-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "foreclose",
+    "meanings": [
+      "담보권을 행사하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-qmoqx8gk7-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "grossly",
+    "meanings": [
+      "지독히",
+      "현저하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-fpppqrule-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "implicit",
+    "meanings": [
+      "함축적인",
+      "암시적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-9qsaqvabk-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "insolvent",
+    "meanings": [
+      "파산한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-d4vxuesh0-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "ledger",
+    "meanings": [
+      "원장",
+      "회계 장부"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-zodf8zoh8-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "liable",
+    "meanings": [
+      "법적 책임이 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-brvrlqvye-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "lucrative",
+    "meanings": [
+      "수익성이 좋은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-mihlh9nzf-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "monetary",
+    "meanings": [
+      "통화의",
+      "금전의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-cwmygfnpd-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "mortgagee",
+    "meanings": [
+      "저당권자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-9xylqnno3-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "offset",
+    "meanings": [
+      "상쇄하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-w0udyidrj-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "outperform",
+    "meanings": [
+      "~보다 실적이 좋다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-r2p4blfdh-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "reconcile",
+    "meanings": [
+      "(장부 등을) 일치시키다",
+      "조정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-tef0khqht-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "remittance",
+    "meanings": [
+      "송금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-18mh9uywb-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "scrutinize",
+    "meanings": [
+      "정밀 조사하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-nc00lx1n1-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "solvent",
+    "meanings": [
+      "지불 능력이 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-47hxff2yi-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "speculate",
+    "meanings": [
+      "투기하다",
+      "추측하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-m75pkn5x2-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "surplus",
+    "meanings": [
+      "잉여금",
+      "흑자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-yblln133q-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "tangible",
+    "meanings": [
+      "형태가 있는",
+      "실질적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-n9yw6u5dx-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "unprecedented",
+    "meanings": [
+      "전례 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910876-zo5v1gvww-1769583910876",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.876099Z",
+    "updatedAt": "2026-01-28T07:05:10.876099Z",
+    "dictionaryId": null,
+    "origin": "yield",
+    "meanings": [
+      "(수익 등을) 내다",
+      "이윤",
+      "산출량"
+    ],
+    "examples": []
+  }
+]

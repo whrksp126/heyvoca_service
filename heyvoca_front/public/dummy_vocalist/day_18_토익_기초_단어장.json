@@ -1,0 +1,462 @@
+[
+  {
+    "id": "1769583910891-pasx4i0rk-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "area",
+    "meanings": [
+      "구역",
+      "지역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-2vz49ozqo-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "arrival",
+    "meanings": [
+      "도착"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-m3aun3rzq-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "away",
+    "meanings": [
+      "떨어져서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-l8wjp7ume-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "bed",
+    "meanings": [
+      "침대"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-imco6xzkk-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "breakfast",
+    "meanings": [
+      "아침 식사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-6fwj674qq-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "choose",
+    "meanings": [
+      "선택하다",
+      "고르다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ote64ognd-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "clean",
+    "meanings": [
+      "깨끗한",
+      "v. 청소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-d4iaeik1a-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "culture",
+    "meanings": [
+      "문화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-72vbo3iz7-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "delayed",
+    "meanings": [
+      "지연된",
+      "연기된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-x7jfxt9hh-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "dinner",
+    "meanings": [
+      "저녁 식사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-nq9gac0vl-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "double room",
+    "meanings": [
+      "2인용 방"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-zy7qoj9xz-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "famous",
+    "meanings": [
+      "유명한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-r6948kpb9-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "finish",
+    "meanings": [
+      "끝내다",
+      "마치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-dg8zicik3-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "guide",
+    "meanings": [
+      "안내(원)",
+      "가이드",
+      "v. 안내하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-3xnfbc802-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "history",
+    "meanings": [
+      "역사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-uogtu7hpm-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "hotel",
+    "meanings": [
+      "호텔"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-640ztl6o8-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "including",
+    "meanings": [
+      "~을 포함하여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-93sb1kbq1-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "inside",
+    "meanings": [
+      "~ 안에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-37z3a8ep0-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "lunch",
+    "meanings": [
+      "점심 식사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-vtu109fdq-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "main",
+    "meanings": [
+      "주요한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-jxcq66xjn-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "noisy",
+    "meanings": [
+      "시끄러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-iyxn1togd-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "popular",
+    "meanings": [
+      "인기 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ljdm8lj1i-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "quiet",
+    "meanings": [
+      "조용한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-p8v829whl-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "show",
+    "meanings": [
+      "보여주다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-lss2zfehl-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "stay",
+    "meanings": [
+      "머무르다",
+      "숙박하다",
+      "n. 체류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-6lo6h7sgk-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "tour",
+    "meanings": [
+      "여행",
+      "견학",
+      "v. 관광하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-fgkzott9w-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "travel",
+    "meanings": [
+      "여행하다",
+      "n. 여행"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-jfx7ijuue-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891393Z",
+    "updatedAt": "2026-01-28T07:05:10.891393Z",
+    "dictionaryId": null,
+    "origin": "wait",
+    "meanings": [
+      "기다리다"
+    ],
+    "examples": []
+  }
+]

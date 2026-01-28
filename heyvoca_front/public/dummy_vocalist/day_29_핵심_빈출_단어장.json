@@ -1,0 +1,932 @@
+[
+  {
+    "id": "1769583910842-h4j7fdjqe-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "conserve",
+    "meanings": [
+      "보존하다",
+      "유지하다"
+    ],
+    "examples": [
+      {
+        "origin": "Measures were introduced to <strong class=\"target-word\">conserve</strong> forests in the region.",
+        "meaning": "그 지역의 숲을 보존하기 위한 조치가 도입되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-3gp4b2jrp-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "chance",
+    "meanings": [
+      "가능성",
+      "기회"
+    ],
+    "examples": [
+      {
+        "origin": "The morning weather report predicted a 30 percent <strong class=\"target-word\">chance</strong> of rain today.",
+        "meaning": "아침 일기 예보에서는 오늘 비가 올 가능성이 30퍼센트라고 예상했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-8i7wd3hb6-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "forecast",
+    "meanings": [
+      "(날씨의) 예보"
+    ],
+    "examples": [
+      {
+        "origin": "The news station gives hourly weather <strong class=\"target-word\">forecasts</strong>.",
+        "meaning": "그 뉴스 방송국은 매시간 일기 예보를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-llcwmgaqt-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "waste",
+    "meanings": [
+      "쓰레기",
+      "폐기물"
+    ],
+    "examples": [
+      {
+        "origin": "Recyclable <strong class=\"target-word\">waste</strong> must be placed in the designated receptacles.",
+        "meaning": "재활용 쓰레기는 지정된 용기에 넣어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-c68b1leny-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "dispose",
+    "meanings": [
+      "처분하다",
+      "처리하다"
+    ],
+    "examples": [
+      {
+        "origin": "Manufacturers must <strong class=\"target-word\">dispose</strong> of their waste appropriately.",
+        "meaning": "제조업체들은 폐기물을 적절하게 처분해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-w3hygfghs-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "recycling",
+    "meanings": [
+      "재활용"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Recycling</strong> saves energy and reduces acid rain.",
+        "meaning": "재활용은 에너지를 절약하고 산성비를 감소시킨다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-px08d01m6-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "clear",
+    "meanings": [
+      "맑게 갠",
+      "명백한",
+      "분명한"
+    ],
+    "examples": [
+      {
+        "origin": "The picnic was held at the park on a <strong class=\"target-word\">clear</strong> day.",
+        "meaning": "맑게 갠 날 공원에서 소풍이 열렸다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-y75ga5pym-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "damage",
+    "meanings": [
+      "피해",
+      "손해"
+    ],
+    "examples": [
+      {
+        "origin": "The thunderstorm caused extensive <strong class=\"target-word\">damage</strong> to the region.",
+        "meaning": "폭풍우가 그 지역에 막대한 피해를 입혔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-lq5b78i8n-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "significant",
+    "meanings": [
+      "상당한",
+      "중대한",
+      "중요한"
+    ],
+    "examples": [
+      {
+        "origin": "Greenhouse gases have a <strong class=\"target-word\">significant</strong> impact on global temperatures.",
+        "meaning": "온실가스는 지구 기온에 중대한 영향을 끼친다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-vuuxoirrs-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "solution",
+    "meanings": [
+      "해결책"
+    ],
+    "examples": [
+      {
+        "origin": "Solar power is one <strong class=\"target-word\">solution</strong> to energy problems.",
+        "meaning": "태양광은 에너지 문제에 대한 하나의 해결책이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-exv47tvd6-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "occur",
+    "meanings": [
+      "(일이) 발생하다",
+      "생기다"
+    ],
+    "examples": [
+      {
+        "origin": "Earthquakes <strong class=\"target-word\">occur</strong> frequently in several regions of Japan.",
+        "meaning": "지진은 일본의 여러 지역에서 자주 발생한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-yzgwguzd2-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "ideal",
+    "meanings": [
+      "이상적인"
+    ],
+    "examples": [
+      {
+        "origin": "The weather this week has been <strong class=\"target-word\">ideal</strong> for a camping trip.",
+        "meaning": "이번 주 날씨는 캠핑 여행을 가기에 이상적이었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-jp1kqdsv3-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "preserve",
+    "meanings": [
+      "보존하다",
+      "보호하다"
+    ],
+    "examples": [
+      {
+        "origin": "EnviroCore's mandate is to <strong class=\"target-word\">preserve</strong> natural habitats in North America.",
+        "meaning": "EnviroCore의 임무는 북아메리카의 자연 서식지를 보존하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-7fxaoj536-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "aid",
+    "meanings": [
+      "원조"
+    ],
+    "examples": [
+      {
+        "origin": "The government pledged $15 million in <strong class=\"target-word\">aid</strong> to repair flood damage.",
+        "meaning": "정부는 홍수 피해를 복구하는 데 1,500만 달러의 원조를 약속했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-yw700qesc-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "excessive",
+    "meanings": [
+      "지나친",
+      "과도한"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Excessive</strong> garbage is a serious problem for many megacities.",
+        "meaning": "지나친 쓰레기는 많은 대도시의 심각한 문제이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-9vqpp4mbm-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "intensively",
+    "meanings": [
+      "집중적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The wind blew <strong class=\"target-word\">intensively</strong> for hours during the storm.",
+        "meaning": "폭풍이 칠 때 바람이 몇 시간 동안 집중적으로 불었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-qfyvkovqi-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "vary",
+    "meanings": [
+      "다르다",
+      "다양하다"
+    ],
+    "examples": [
+      {
+        "origin": "The level of water in the lake <strong class=\"target-word\">varies</strong> greatly from year to year.",
+        "meaning": "그 호수의 수위는 해마다 크게 다르다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-tihyldqa4-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "pleasing",
+    "meanings": [
+      "즐거운",
+      "기분 좋은",
+      "만족스러운"
+    ],
+    "examples": [
+      {
+        "origin": "Trees in city parks are not only <strong class=\"target-word\">pleasing</strong> to see, but environmentally beneficial.",
+        "meaning": "시립 공원의 나무들은 보기에도 즐거울 뿐만 아니라 환경적으로도 이롭다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-1d8sng6xj-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "mark",
+    "meanings": [
+      "점수",
+      "평점",
+      "표시"
+    ],
+    "examples": [
+      {
+        "origin": "The company <strong class=\"target-word\">marked</strong> Arbor Day by planting trees on its compound.",
+        "meaning": "그 회사는 구내에 나무를 심는 것으로 식목일을 기념했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-b2ug9nci6-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "inaccessible",
+    "meanings": [
+      "접근이 불가능한",
+      "이용이 불가능한"
+    ],
+    "examples": [
+      {
+        "origin": "The wildlife park is <strong class=\"target-word\">inaccessible</strong> by car, so visitors have to take a ferry.",
+        "meaning": "그 야생 공원은 자동차로 접근이 불가능해서, 방문객들은 페리를 타고 가야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-emtf76k93-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "disturb",
+    "meanings": [
+      "방해하다"
+    ],
+    "examples": [
+      {
+        "origin": "The guests were <strong class=\"target-word\">disturbed</strong> by the noise from the construction site.",
+        "meaning": "손님들은 건설 현장으로부터 나는 소리에 방해받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-zc4c2vpwn-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "pollutant",
+    "meanings": [
+      "오염 물질"
+    ],
+    "examples": [
+      {
+        "origin": "Automotive exhaust introduces harmful <strong class=\"target-word\">pollutants</strong> into the air.",
+        "meaning": "자동차 배기가스는 유해한 오염 물질을 대기 중으로 내보낸다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-i8j2fmv6g-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "emission",
+    "meanings": [
+      "배기가스",
+      "방출"
+    ],
+    "examples": [
+      {
+        "origin": "New laws now limit <strong class=\"target-word\">emissions</strong> from cars.",
+        "meaning": "새로운 법률이 이제부터 자동차 배기가스 양을 제한한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-rs50cjmw0-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "dense",
+    "meanings": [
+      "빽빽한",
+      "밀집한"
+    ],
+    "examples": [
+      {
+        "origin": "The Black Forest is so <strong class=\"target-word\">dense</strong> that it appears dark even at noon.",
+        "meaning": "Black 숲은 너무 빽빽해서 한낮에도 어두워 보인다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-0p1q9eni4-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "environmental",
+    "meanings": [
+      "환경적인"
+    ],
+    "examples": [
+      {
+        "origin": "Climate change has become a major global <strong class=\"target-word\">environmental</strong> issue.",
+        "meaning": "기후 변화는 전 세계적으로 중요한 환경 문제가 되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-cvtb4o086-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "consistent",
+    "meanings": [
+      "일치하는",
+      "지속적인",
+      "한결같은"
+    ],
+    "examples": [
+      {
+        "origin": "Factory construction must be <strong class=\"target-word\">consistent</strong> with government environmental regulations.",
+        "meaning": "공장 건설은 정부 환경 규정에 일치해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-yaayl9flp-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "leak",
+    "meanings": [
+      "누출",
+      "누출량"
+    ],
+    "examples": [
+      {
+        "origin": "Improperly sealed tanks slowly <strong class=\"target-word\">leaked</strong> chemicals into the water.",
+        "meaning": "부적절하게 밀봉된 탱크가 화학 물질이 물속으로 천천히 새게 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-gyqz18ggi-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "organization",
+    "meanings": [
+      "단체"
+    ],
+    "examples": [
+      {
+        "origin": "Many <strong class=\"target-word\">organizations</strong> have grouped together to protect the African savanna.",
+        "meaning": "많은 단체가 아프리카 사바나를 보호하기 위해 함께 뭉쳤다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-fgwmb98t5-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "continually",
+    "meanings": [
+      "계속해서"
+    ],
+    "examples": [
+      {
+        "origin": "The processing plant <strong class=\"target-word\">continually</strong> polluted nearby lakes.",
+        "meaning": "그 가공 처리 공장은 계속해서 인근 호수들을 오염시켰다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-f2iodqecg-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "contaminate",
+    "meanings": [
+      "오염시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The water was <strong class=\"target-word\">contaminated</strong> with gasoline.",
+        "meaning": "물이 휘발유로 오염되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-76pz9v55l-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "disaster",
+    "meanings": [
+      "재난"
+    ],
+    "examples": [
+      {
+        "origin": "Emergency procedures are implemented in case of a natural <strong class=\"target-word\">disaster</strong>.",
+        "meaning": "자연재해가 발생할 시에는 비상 절차가 시행된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-0mmtz8rhk-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "discharge",
+    "meanings": [
+      "방출하다"
+    ],
+    "examples": [
+      {
+        "origin": "It is illegal to <strong class=\"target-word\">discharge</strong> industrial chemicals into the environment.",
+        "meaning": "산업용 화학 물질을 자연환경으로 방출하는 것은 불법이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-netal56pr-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "resource",
+    "meanings": [
+      "자원"
+    ],
+    "examples": [
+      {
+        "origin": "Designating lands as national parks can help preserve natural <strong class=\"target-word\">resources</strong>.",
+        "meaning": "토지를 국립 공원으로 지정하는 것은 천연자원을 보존하는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-5ofgb9nqm-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "prominent",
+    "meanings": [
+      "유명한",
+      "두드러진"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Goldstein is a <strong class=\"target-word\">prominent</strong> expert in the energy industry.",
+        "meaning": "Mr. Goldstein은 에너지 업계에서 유명한 전문가이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-74nhy9kty-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "deplete",
+    "meanings": [
+      "고갈시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The area's water resources have been <strong class=\"target-word\">depleted</strong>, causing a drop in produce.",
+        "meaning": "그 지역의 수자원이 고갈되면서 농산물 감소의 원인이 되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-p1t1i67g4-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "purify",
+    "meanings": [
+      "정화시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The plant <strong class=\"target-word\">purifies</strong> the water before it is offered to the local population.",
+        "meaning": "그 공장은 지역 주민들에게 제공되기 전에 물을 정화시킨다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-oyhco3xv4-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "endangered",
+    "meanings": [
+      "멸종 위기에 처한"
+    ],
+    "examples": [
+      {
+        "origin": "WildAid is fighting to protect <strong class=\"target-word\">endangered</strong> species.",
+        "meaning": "WildAid는 멸종 위기에 처한 종들을 보호하기 위해 싸우고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-rr3mt87m9-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "extinction",
+    "meanings": [
+      "멸종"
+    ],
+    "examples": [
+      {
+        "origin": "Polar bears are now in danger of <strong class=\"target-word\">extinction</strong>.",
+        "meaning": "북극곰은 현재 멸종 위기에 처해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-zg545j6yg-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "drought",
+    "meanings": [
+      "가뭄"
+    ],
+    "examples": [
+      {
+        "origin": "The persistent <strong class=\"target-word\">drought</strong> affected the water supply.",
+        "meaning": "계속되는 가뭄이 급수에 영향을 주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-n4osp70bc-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "inflict",
+    "meanings": [
+      "(고통·피해를) 입히다",
+      "가하다"
+    ],
+    "examples": [
+      {
+        "origin": "The new dam has <strong class=\"target-word\">inflicted</strong> considerable damage on the local communities.",
+        "meaning": "새로운 댐은 지역 사회에 상당한 피해를 입혔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-vocxe9u8v-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "migration",
+    "meanings": [
+      "이동",
+      "이주"
+    ],
+    "examples": [
+      {
+        "origin": "The tank was isolated to prevent the <strong class=\"target-word\">migration</strong> of contaminants.",
+        "meaning": "탱크는 오염 물질의 이동을 막기 위해 격리되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-c5opxp0bv-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "ecology",
+    "meanings": [
+      "생태",
+      "자연환경"
+    ],
+    "examples": [
+      {
+        "origin": "Global warming alters the <strong class=\"target-word\">ecology</strong> of our planet.",
+        "meaning": "지구 온난화는 지구의 생태를 변화시킨다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910842-l6143nvcc-1769583910842",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.842093Z",
+    "updatedAt": "2026-01-28T07:05:10.842093Z",
+    "dictionaryId": null,
+    "origin": "habitat",
+    "meanings": [
+      "(동·식물의) 서식지"
+    ],
+    "examples": [
+      {
+        "origin": "The plant rarely grows outside its natural <strong class=\"target-word\">habitat</strong>.",
+        "meaning": "그 식물은 자연 서식지 밖에서는 거의 자라지 않는다."
+      }
+    ]
+  }
+]

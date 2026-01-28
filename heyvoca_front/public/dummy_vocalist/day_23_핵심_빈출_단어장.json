@@ -1,0 +1,922 @@
+[
+  {
+    "id": "1769583910857-m6zx49wfy-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "host",
+    "meanings": [
+      "(대회 등을) 주최하다"
+    ],
+    "examples": [
+      {
+        "origin": "Wilmar Industries will <strong class=\"target-word\">host</strong> this year's convention.",
+        "meaning": "Wilmar Industries사가 금년도 컨벤션을 주최할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-bz9taznct-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "annual",
+    "meanings": [
+      "매년의"
+    ],
+    "examples": [
+      {
+        "origin": "This year's <strong class=\"target-word\">annual</strong> conference was held in Atlanta.",
+        "meaning": "올해의 연례 회의는 애틀랜타에서 열렸다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-nmprpvgsl-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "purpose",
+    "meanings": [
+      "목적",
+      "의도"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">purpose</strong> of the training is to familiarize the staff with the new networking system.",
+        "meaning": "그 교육의 목적은 직원들이 새 네트워크 시스템에 익숙해지도록 하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-cvl8vcceb-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "enroll",
+    "meanings": [
+      "등록하다"
+    ],
+    "examples": [
+      {
+        "origin": "Employees must <strong class=\"target-word\">enroll</strong> in at least one program.",
+        "meaning": "직원들은 적어도 한 개의 프로그램에 등록해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-9ucll1f5d-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "lecture",
+    "meanings": [
+      "강의",
+      "강연"
+    ],
+    "examples": [
+      {
+        "origin": "The course will offer weekly guest <strong class=\"target-word\">lectures</strong>.",
+        "meaning": "그 강좌는 매주 초청 강의를 제공할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-9d8nk1cqs-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "participant",
+    "meanings": [
+      "참가자"
+    ],
+    "examples": [
+      {
+        "origin": "Many <strong class=\"target-word\">participants</strong> in the training program showed some improvement.",
+        "meaning": "교육 프로그램의 많은 참가자들이 약간의 발전을 보였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-369q01tza-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "attend",
+    "meanings": [
+      "참석하다",
+      "출석하다"
+    ],
+    "examples": [
+      {
+        "origin": "Staff were urged to <strong class=\"target-word\">attend</strong> weekend software courses.",
+        "meaning": "직원들은 주말 소프트웨어 강좌에 참석하도록 권고받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ea13er0og-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "encourage",
+    "meanings": [
+      "장려하다",
+      "북돋아 주다"
+    ],
+    "examples": [
+      {
+        "origin": "The CEO <strong class=\"target-word\">encouraged</strong> managers to allow flextime for workers.",
+        "meaning": "그 최고 경영자는 부장들에게 직원들의 탄력 근무 시간제를 허용하도록 장려했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-3snu18oyw-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "leave",
+    "meanings": [
+      "휴가",
+      "떠나다",
+      "남기다"
+    ],
+    "examples": [
+      {
+        "origin": "Employees can take up to 10 days annually for emergency <strong class=\"target-word\">leave</strong>.",
+        "meaning": "직원들은 연간 최대 10일의 청원 휴가를 낼 수 있다."
+      },
+      {
+        "origin": "The sales manager <strong class=\"target-word\">left</strong> for Singapore to conduct the orientation for sales staff.",
+        "meaning": "영업부장은 영업 사원 오리엔테이션을 진행하기 위해 싱가포르로 떠났다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-e1pgv60j2-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "recommendation",
+    "meanings": [
+      "추천 사항",
+      "추천"
+    ],
+    "examples": [
+      {
+        "origin": "Staff were asked for <strong class=\"target-word\">recommendations</strong> on improving the break room.",
+        "meaning": "직원들은 휴게실 개선에 대한 추천 사항을 요청받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ifyn00thw-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "conference",
+    "meanings": [
+      "회의",
+      "회담"
+    ],
+    "examples": [
+      {
+        "origin": "This year's <strong class=\"target-word\">conference</strong> focuses on developments in the field of human resources.",
+        "meaning": "올해 회의는 인적 자원 분야의 개발에 중점을 두고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-rty7h1cnt-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "schedule",
+    "meanings": [
+      "~을 예정하다",
+      "일정",
+      "스케줄"
+    ],
+    "examples": [
+      {
+        "origin": "Orientation is <strong class=\"target-word\">scheduled</strong> for the morning.",
+        "meaning": "오리엔테이션은 오전으로 예정되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-2bs9qz0ax-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "include",
+    "meanings": [
+      "포함하다"
+    ],
+    "examples": [
+      {
+        "origin": "The workshop curriculum <strong class=\"target-word\">includes</strong> special digital media classes.",
+        "meaning": "워크숍 교육 과정은 디지털 미디어 특강을 포함한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-b4qpw8q93-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "result",
+    "meanings": [
+      "결과",
+      "(~의 결과로) 되다"
+    ],
+    "examples": [
+      {
+        "origin": "As a <strong class=\"target-word\">result</strong> of increased sales, the marketing team was rewarded with a vacation.",
+        "meaning": "늘어난 매출의 결과로 마케팅팀은 포상 휴가를 받았다."
+      },
+      {
+        "origin": "Positive responses to the prototype <strong class=\"target-word\">resulted</strong> in more funding for it.",
+        "meaning": "시제품에 대한 긍정적인 반응은 그것을 위한 더 많은 자금 지원을 야기했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-e60sfhq8v-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "register",
+    "meanings": [
+      "등록하다"
+    ],
+    "examples": [
+      {
+        "origin": "Employees must <strong class=\"target-word\">register</strong> for unemployment insurance with the state government.",
+        "meaning": "직원들은 주 정부 주관의 실업 보험에 등록해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-jw6pqd59k-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "require",
+    "meanings": [
+      "요구하다"
+    ],
+    "examples": [
+      {
+        "origin": "Staff are <strong class=\"target-word\">required</strong> to attend the insurance provider's presentation on benefits.",
+        "meaning": "직원들은 보험금에 대한 보험 회사의 발표회에 참석하도록 요구된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-hq8li81af-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "grateful",
+    "meanings": [
+      "고마워하는",
+      "감사하는"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Warren was <strong class=\"target-word\">grateful</strong> for her recent raise in salary.",
+        "meaning": "Ms. Warren은 최근의 급여 인상에 대해 고마워했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-6qsvv49i4-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "overtime",
+    "meanings": [
+      "초과 근무",
+      "야근"
+    ],
+    "examples": [
+      {
+        "origin": "Employees are paid $20 for every hour of <strong class=\"target-word\">overtime</strong>.",
+        "meaning": "직원들은 초과 근무에 대해 시간당 20달러를 받는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ko8dpiv7q-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "responsibility",
+    "meanings": [
+      "부담",
+      "책임",
+      "의무"
+    ],
+    "examples": [
+      {
+        "origin": "Conference fees will be paid by Direxco, but dining expenses are the participants' <strong class=\"target-word\">responsibility</strong>.",
+        "meaning": "총회 참가비는 Direxco사에서 지불할 것이지만 식비는 참가자 부담입니다."
+      },
+      {
+        "origin": "environmental and social <strong class=\"target-word\">responsibility</strong>",
+        "meaning": "환경과 사회에 대한 책임"
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-97xn31enm-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "assent",
+    "meanings": [
+      "찬성하다",
+      "승인",
+      "동의"
+    ],
+    "examples": [
+      {
+        "origin": "The managers <strong class=\"target-word\">assented</strong> to giving everyone a small raise.",
+        "meaning": "관리자들은 모두에게 약간의 봉급 인상을 해 주는 것에 찬성했다."
+      },
+      {
+        "origin": "The company's president gave her <strong class=\"target-word\">assent</strong> for a planned construction project.",
+        "meaning": "그 회사의 사장은 계획된 건설 프로젝트를 승인했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ebz1velgy-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "regard",
+    "meanings": [
+      "~을 -으로 간주하다",
+      "여기다",
+      "관심",
+      "배려"
+    ],
+    "examples": [
+      {
+        "origin": "Workers <strong class=\"target-word\">regard</strong> prompt salary payment as a basic right.",
+        "meaning": "근로자들은 신속한 임금 지급을 기본 권리로 간주한다."
+      },
+      {
+        "origin": "The company showed little <strong class=\"target-word\">regard</strong> for employee welfare.",
+        "meaning": "그 회사는 직원 복지에 거의 관심을 보이지 않았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-mg4gt1fol-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "tentative",
+    "meanings": [
+      "임시적인",
+      "잠정적인"
+    ],
+    "examples": [
+      {
+        "origin": "The plan to increase paternity leave is still <strong class=\"target-word\">tentative</strong>.",
+        "meaning": "남성 육아 휴직을 늘리겠다는 계획은 여전히 임시적일 뿐이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-i0mqvqz9d-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "welcome",
+    "meanings": [
+      "반가운",
+      "기꺼이 받아들여지는",
+      "환영하다",
+      "맞이하다"
+    ],
+    "examples": [
+      {
+        "origin": "The extra microwave was a <strong class=\"target-word\">welcome</strong> addition to the staff kitchen.",
+        "meaning": "추가 전자레인지는 직원용 주방에서 환영받는 물건이었다."
+      },
+      {
+        "origin": "Audrey was <strong class=\"target-word\">welcomed</strong> warmly by her new colleagues on her first day at work.",
+        "meaning": "Audrey는 첫 출근 날 새로운 동료들로부터 따뜻하게 환영받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-gohcjb4yv-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "function",
+    "meanings": [
+      "행사",
+      "연회",
+      "작동하다"
+    ],
+    "examples": [
+      {
+        "origin": "The dining hall seats 100 people for private and business <strong class=\"target-word\">functions</strong>.",
+        "meaning": "그 식당은 개인 및 비즈니스 행사용으로 100명의 인원을 수용할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-a3o6y3ayf-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "commence",
+    "meanings": [
+      "시작되다"
+    ],
+    "examples": [
+      {
+        "origin": "The new shifts will <strong class=\"target-word\">commence</strong> next week.",
+        "meaning": "새 교대 근무가 다음 주에 시작될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-tk3ncxkcy-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "objective",
+    "meanings": [
+      "목표",
+      "목적",
+      "객관적인"
+    ],
+    "examples": [
+      {
+        "origin": "The learning <strong class=\"target-word\">objectives</strong> of the program are outlined in the brochure.",
+        "meaning": "프로그램의 학습 목표가 소책자에 요약되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-czug2fuhv-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "excited",
+    "meanings": [
+      "신이 난",
+      "들뜬"
+    ],
+    "examples": [
+      {
+        "origin": "Fred was <strong class=\"target-word\">excited</strong> about the opportunities his promotion would give him.",
+        "meaning": "Fred는 자신의 승진으로 제공받을 기회들에 신이 났다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ggrb4zmvp-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "reimbursement",
+    "meanings": [
+      "상환",
+      "변제",
+      "배상"
+    ],
+    "examples": [
+      {
+        "origin": "Employees will receive <strong class=\"target-word\">reimbursement</strong> for accommodations on business trips.",
+        "meaning": "직원들은 출장 시 숙박 비용에 대해 상환받을 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-y8xirozek-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "treatment",
+    "meanings": [
+      "대우",
+      "처우"
+    ],
+    "examples": [
+      {
+        "origin": "Every staff member, regardless of position, receives the same level of <strong class=\"target-word\">treatment</strong> from Mr. Scanlyn.",
+        "meaning": "모든 직원들은 직위와 관계없이 Mr. Scanlyn으로부터 동일한 수준의 대우를 받는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-ne7yo8jc5-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "honor",
+    "meanings": [
+      "존경",
+      "명예",
+      "존경하다",
+      "명예를 주다"
+    ],
+    "examples": [
+      {
+        "origin": "A banquet was held in <strong class=\"target-word\">honor</strong> of our director's retirement.",
+        "meaning": "우리 이사님의 은퇴를 기념하는 연회가 개최되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-635iuuper-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "emphasize",
+    "meanings": [
+      "강조하다"
+    ],
+    "examples": [
+      {
+        "origin": "emphasis n. 강조, 중점",
+        "meaning": ""
+      },
+      {
+        "origin": "stress 강조하다",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-rxtoj44bh-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "entry",
+    "meanings": [
+      "(경기 등의) 참가자",
+      "출품물"
+    ],
+    "examples": [
+      {
+        "origin": "enter v. 참가하다",
+        "meaning": ""
+      },
+      {
+        "origin": "entrance n. 입구, 입장",
+        "meaning": ""
+      },
+      {
+        "origin": "submission (서류·제안서 등의) 제출",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-9p0kmizmn-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "bonus",
+    "meanings": [
+      "상여금",
+      "보너스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910857-8j4gjnseh-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "salary",
+    "meanings": [
+      "급여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910857-fg6qerqz1-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "earn",
+    "meanings": [
+      "(금전 등을) 벌다",
+      "(평판을) 받다",
+      "얻다"
+    ],
+    "examples": [
+      {
+        "origin": "earnings n. 소득, 수익",
+        "meaning": ""
+      },
+      {
+        "origin": "earn : gain '얻다'를 의미하는 단어들의 용례 차이를 구별해 두자.",
+        "meaning": ""
+      },
+      {
+        "origin": "earn (금전 등을) 벌다, (명성을) 얻다",
+        "meaning": ""
+      },
+      {
+        "origin": "gain 획득하다, (노력해서) 얻다 (인기나 승리 등)",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-3kauwvcov-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "arise",
+    "meanings": [
+      "(문제 등이) 발생하다",
+      "일어나다"
+    ],
+    "examples": [
+      {
+        "origin": "happen 일어나다",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-m3dm680sq-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "labor",
+    "meanings": [
+      "노동",
+      "일하다",
+      "노동하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910857-mk7jdgp88-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "union",
+    "meanings": [
+      "노동조합"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910857-ceezn9yof-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "existing",
+    "meanings": [
+      "기존의",
+      "현행의"
+    ],
+    "examples": [
+      {
+        "origin": "exist v. 존재하다, 실재하다",
+        "meaning": ""
+      },
+      {
+        "origin": "existence n. 존재",
+        "meaning": ""
+      },
+      {
+        "origin": "existing + equipment/product 기존 설비/제품",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910857-6cq14nfa9-1769583910857",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.857756Z",
+    "updatedAt": "2026-01-28T07:05:10.857756Z",
+    "dictionaryId": null,
+    "origin": "exploit",
+    "meanings": [
+      "착취하다",
+      "부당하게 이용하다"
+    ],
+    "examples": [
+      {
+        "origin": "exploitation n. 착취, (부당한) 이용",
+        "meaning": ""
+      }
+    ]
+  }
+]

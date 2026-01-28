@@ -1,0 +1,528 @@
+[
+  {
+    "id": "1769583910816-xe8y8edl8-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "credential",
+    "meanings": [
+      "신임장",
+      "자격 증명서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-044snfw47-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "firsthand",
+    "meanings": [
+      "직접적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-1uj1g1k01-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "hiring committee",
+    "meanings": [
+      "고용 위원회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-i3pkpdg2a-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "not to mention",
+    "meanings": [
+      "~은 말할 것도 없고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-uu2y78fd5-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "on occasion",
+    "meanings": [
+      "때때로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-m2eloy1er-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "overqualified",
+    "meanings": [
+      "필요 이상으로 교육을 받은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ft7pb3rw3-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "screening",
+    "meanings": [
+      "심사",
+      "선발"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-1zj11xib4-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "lag",
+    "meanings": [
+      "뒤처지다",
+      "뒤떨어지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-cp65k7mot-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "on the waiting list",
+    "meanings": [
+      "대기자 명단에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-o0mxvv201-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "oriented",
+    "meanings": [
+      "~을 지향하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-q6gliwsxh-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "pertaining to",
+    "meanings": [
+      "~에 관계된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ptd78n35v-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "questionably",
+    "meanings": [
+      "의심스럽게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-2rgl2kvhl-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "regularity",
+    "meanings": [
+      "정기적임"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-0z08kbpjt-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "replenish",
+    "meanings": [
+      "다시 채우다",
+      "보충하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-l8y4tc0cm-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "simplicity",
+    "meanings": [
+      "간단함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-f2r0cxbvl-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "stellar",
+    "meanings": [
+      "뛰어난",
+      "별의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-hxtu2onnb-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "versatile",
+    "meanings": [
+      "다재다능한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-w4k2evi1h-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "adept",
+    "meanings": [
+      "능숙한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-vwx4flsdg-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "against all odds",
+    "meanings": [
+      "모든 역경을 딛고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-9hpvw4wrm-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "command",
+    "meanings": [
+      "(언어) 구사력",
+      "명령",
+      "지배력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-qdn1qifak-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "commensurate",
+    "meanings": [
+      "비례한",
+      "액수가 상응하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ty5bbfw5a-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "computer literate",
+    "meanings": [
+      "컴퓨터 사용 기술을 가진"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-yzo44fps9-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "eagerness",
+    "meanings": [
+      "열의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-qs1odv0gq-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "familiarize oneself with",
+    "meanings": [
+      "~에 정통하다",
+      "익숙하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-djkvyccrj-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "increment",
+    "meanings": [
+      "증가",
+      "인상"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-12x60bfl2-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "interpersonal skills",
+    "meanings": [
+      "대인 관계 능력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-vpq81qv0j-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "mindful",
+    "meanings": [
+      "유념하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-tdwwamgyo-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "preeminent",
+    "meanings": [
+      "우수한",
+      "탁월한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-h6afbm5jg-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "preliminary",
+    "meanings": [
+      "예비의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-a4pwcd3t6-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "prerequisite",
+    "meanings": [
+      "필수 조건",
+      "adj 필수적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-oxdzmd9y3-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "probationer",
+    "meanings": [
+      "수습 직원",
+      "견습생"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-2m7w4u0a9-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816219Z",
+    "updatedAt": "2026-01-28T07:05:10.816219Z",
+    "dictionaryId": null,
+    "origin": "sternly",
+    "meanings": [
+      "엄격하게",
+      "단호하게"
+    ],
+    "examples": []
+  }
+]

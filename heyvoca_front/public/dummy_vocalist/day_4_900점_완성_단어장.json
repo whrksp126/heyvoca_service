@@ -1,0 +1,536 @@
+[
+  {
+    "id": "1769583910824-68eu5fb2h-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "bookkeeping",
+    "meanings": [
+      "부기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-8y7yanx2u-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "have one's hands full",
+    "meanings": [
+      "몹시 바쁘다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-7qwtbgah2-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "make an outside call",
+    "meanings": [
+      "외부로 전화를 걸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-bs5skmofc-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "motivation",
+    "meanings": [
+      "이유",
+      "동기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-uwimb6cqr-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "newly listed",
+    "meanings": [
+      "새로 목록에 오른"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-m55a2d3b3-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "prioritize",
+    "meanings": [
+      "우선적으로 처리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-4wdbnb8nm-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "sit in alternate seats",
+    "meanings": [
+      "한 자리씩 건너 앉다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-ca3kep5v5-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "written authorization",
+    "meanings": [
+      "서면 결재"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-wff2i0r7e-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "written consent",
+    "meanings": [
+      "서면 동의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-lafa019v1-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "acquaintance",
+    "meanings": [
+      "아는 사람",
+      "아는 사이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-w7oy346tf-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "dimension",
+    "meanings": [
+      "규모",
+      "크기",
+      "차원",
+      "관점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-q1kn38exa-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "directive",
+    "meanings": [
+      "지시하는",
+      "지배적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-htylgql4v-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "discerning",
+    "meanings": [
+      "통찰력이 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-s1qa4hwi8-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "elegantly",
+    "meanings": [
+      "우아하게",
+      "고상하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-5m6kqqhvk-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "expectant",
+    "meanings": [
+      "기대하고 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-38xoh7jmw-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "invaluable",
+    "meanings": [
+      "매우 유용한",
+      "귀중한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-stx3pszoq-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "propel",
+    "meanings": [
+      "나아가게 하다",
+      "몰아가다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-0z980in93-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "realization",
+    "meanings": [
+      "깨달음",
+      "자각",
+      "인식"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-h4k8b6kp7-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "recline",
+    "meanings": [
+      "기대다",
+      "눕다",
+      "(의자가) 젖혀지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-68satv3a1-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "repository",
+    "meanings": [
+      "저장소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-wpg2gh9ab-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "respective",
+    "meanings": [
+      "각각의",
+      "저마다의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-mq4zlw1up-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "spontaneously",
+    "meanings": [
+      "자발적으로",
+      "자연 발생적으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-ip7m68snb-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "trivial",
+    "meanings": [
+      "사소한",
+      "하찮은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-le3bcovi4-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "turn in",
+    "meanings": [
+      "(실적·수익 등을) 올리다",
+      "제출하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-q1k5a85bm-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "ambiance",
+    "meanings": [
+      "(장소의) 분위기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-5xerbv9c3-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "aspiration",
+    "meanings": [
+      "포부",
+      "열망"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-dgovq8zh7-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "creditable",
+    "meanings": [
+      "훌륭한",
+      "칭찬할 만한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-3gmvnpv3e-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "eminent",
+    "meanings": [
+      "저명한",
+      "탁월한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-foaenjd23-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "endeavor",
+    "meanings": [
+      "노력하다",
+      "애쓰다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-xo1zik33x-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "entrust A with B",
+    "meanings": [
+      "A에게 B의 책임을 맡기다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-zn7hemm9o-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "on edge",
+    "meanings": [
+      "흥분하여",
+      "안절부절못하여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-2uqmicrpq-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824354Z",
+    "updatedAt": "2026-01-28T07:05:10.824354Z",
+    "dictionaryId": null,
+    "origin": "reach one's full potential",
+    "meanings": [
+      "능력을 최대한 발휘하다"
+    ],
+    "examples": []
+  }
+]

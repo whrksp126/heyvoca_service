@@ -1,0 +1,475 @@
+[
+  {
+    "id": "1769583910848-r4o530pba-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "abroad",
+    "meanings": [
+      "해외로",
+      "외국에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-bnpgfy7wx-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "airline",
+    "meanings": [
+      "항공사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-7vv73r4d0-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "amount",
+    "meanings": [
+      "양",
+      "액수"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-ger7onjv8-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "calculate",
+    "meanings": [
+      "계산하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-cjj1n6x20-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "cash",
+    "meanings": [
+      "현금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-6wmtptrdo-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "charge",
+    "meanings": [
+      "청구하다",
+      "n. 요금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-p5r5lhn3o-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "cost",
+    "meanings": [
+      "비용",
+      "v. 비용이 들다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-1n3ys9xqj-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "coupon",
+    "meanings": [
+      "쿠폰",
+      "할인권"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-2fikg1xr9-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "currency",
+    "meanings": [
+      "통화",
+      "화폐"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-8tpxm2okn-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "daily",
+    "meanings": [
+      "매일의",
+      "adv. 매일"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-5nbmjvcfr-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "debt",
+    "meanings": [
+      "빚",
+      "부채"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-ogorvdghu-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "decrease",
+    "meanings": [
+      "감소하다",
+      "n. 감소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-96bgmrfrp-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "due",
+    "meanings": [
+      "만기된",
+      "~하기로 되어 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-sb78zrknu-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "earn",
+    "meanings": [
+      "벌다",
+      "얻다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-kqltvtuoc-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "expense",
+    "meanings": [
+      "비용",
+      "지출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-0tff0yais-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "fee",
+    "meanings": [
+      "수수료",
+      "요금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-gztfxaecr-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "figure",
+    "meanings": [
+      "수치",
+      "인물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-wuis1jovs-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "finance",
+    "meanings": [
+      "재정",
+      "재무"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-ot8mx3cv6-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "foreign",
+    "meanings": [
+      "외국의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-8j6mr5okh-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "income",
+    "meanings": [
+      "수입",
+      "소득"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-9zol81kod-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "lack",
+    "meanings": [
+      "부족",
+      "v. ~이 부족하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-24c18c2x1-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "lose",
+    "meanings": [
+      "잃다",
+      "지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-irgsasacb-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "manage",
+    "meanings": [
+      "관리하다",
+      "경영하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-oud27tq6s-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "save",
+    "meanings": [
+      "기록하다",
+      "절약하다",
+      "구하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-t45vd8i04-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "salary",
+    "meanings": [
+      "급여",
+      "월급"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-ipmu4nznk-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "tax",
+    "meanings": [
+      "세금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-tv3o6gosr-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "tip",
+    "meanings": [
+      "칩",
+      "봉사료",
+      "조언"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910848-wz6q85xwy-1769583910848",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.848248Z",
+    "updatedAt": "2026-01-28T07:05:10.848248Z",
+    "dictionaryId": null,
+    "origin": "treat",
+    "meanings": [
+      "대우하다",
+      "치료하다"
+    ],
+    "examples": []
+  }
+]

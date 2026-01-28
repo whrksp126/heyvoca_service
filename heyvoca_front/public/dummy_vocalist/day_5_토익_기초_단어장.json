@@ -1,0 +1,460 @@
+[
+  {
+    "id": "1769583910849-cwx7v30kk-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "briefcase",
+    "meanings": [
+      "서류 가방"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-xs7btt6tp-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "business trip",
+    "meanings": [
+      "출장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-2visreg7j-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "come over",
+    "meanings": [
+      "방문하다",
+      "오다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-oxsnlewak-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "counter",
+    "meanings": [
+      "계산대",
+      "반대의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-9x6wuqgda-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "e-mail",
+    "meanings": [
+      "이메일",
+      "이메일을 보내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-0wukqq645-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "filing cabinet",
+    "meanings": [
+      "서류 정리 캐비닛"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-f7cjvvlso-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "folder",
+    "meanings": [
+      "서류철"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-ks78o6rbx-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "headache",
+    "meanings": [
+      "두통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-6qn2fiaxs-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "internship",
+    "meanings": [
+      "인턴 신분",
+      "인턴 기간"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-pfuymffrj-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "redo",
+    "meanings": [
+      "다시 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-7iuenm7l4-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "routine",
+    "meanings": [
+      "판에 박힌 일",
+      "정기적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-t3vx3z26g-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "table lamp",
+    "meanings": [
+      "탁상 전기스탠드"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-uflwplycz-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "thanks to",
+    "meanings": [
+      "~ 덕택에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-abgmhgs9l-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "timetable",
+    "meanings": [
+      "시간표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-3f2epwort-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "window display",
+    "meanings": [
+      "쇼윈도의 상품 진열"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-jvqevdpjl-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "chief",
+    "meanings": [
+      "주된",
+      "(직급상) 최고위자인",
+      "(단체의) 최고위자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-krdrrc827-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "conceal",
+    "meanings": [
+      "감추다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-lp2lpxgkg-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "correct",
+    "meanings": [
+      "맞는",
+      "정정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-o2ey4gyc4-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "economic",
+    "meanings": [
+      "경제의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-f8dw3jlgp-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "embrace",
+    "meanings": [
+      "받아들이다",
+      "포용하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-nm5bzfi62-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "expected",
+    "meanings": [
+      "예상되는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-fdoh51geb-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "forum",
+    "meanings": [
+      "토론회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-z570nut9p-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "instead of",
+    "meanings": [
+      "~ 대신에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-1djkj9084-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "mission",
+    "meanings": [
+      "임무"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-gs0mddeiz-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "programming",
+    "meanings": [
+      "방송 편성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-7s7za0dtl-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "remaining",
+    "meanings": [
+      "남아 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-d63zllbd1-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "rush",
+    "meanings": [
+      "서두르다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910849-kuyprmvwu-1769583910849",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.849589Z",
+    "updatedAt": "2026-01-28T07:05:10.849589Z",
+    "dictionaryId": null,
+    "origin": "unfortunately",
+    "meanings": [
+      "불행하게도",
+      "유감스럽게도"
+    ],
+    "examples": []
+  }
+]

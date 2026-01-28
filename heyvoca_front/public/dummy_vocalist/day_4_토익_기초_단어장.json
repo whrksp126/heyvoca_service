@@ -1,0 +1,464 @@
+[
+  {
+    "id": "1769583910818-ngbg3nhd3-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "bookcase",
+    "meanings": [
+      "책장",
+      "책꽂이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-4tskwvdcx-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "bookshelf",
+    "meanings": [
+      "책꽂이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-dkrgvjzro-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "case",
+    "meanings": [
+      "(특정한 상황의) 경우"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-xp8c0253l-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "central office",
+    "meanings": [
+      "중앙 사무실"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-b8g5q9k93-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "copy machine",
+    "meanings": [
+      "복사기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-frwk2mwhi-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "fax",
+    "meanings": [
+      "팩스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-wp6zfd1tt-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "file folder",
+    "meanings": [
+      "서류철"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-r7bhrhk0a-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "greet",
+    "meanings": [
+      "~에게 인사하다",
+      "~를 환영하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-84175pq4t-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "handwriting",
+    "meanings": [
+      "(개인의) 글씨",
+      "필체"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-5pcuzejdq-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "keypad",
+    "meanings": [
+      "(전화·계산기 등의) 소형 키보드"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-wzunftk92-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "knife",
+    "meanings": [
+      "칼"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-2bwf6wlck-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "log on to",
+    "meanings": [
+      "~에 로그인하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-0vkxgbt4n-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "online",
+    "meanings": [
+      "인터넷에 접속된",
+      "온라인으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-uu4i2oo24-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "photocopier",
+    "meanings": [
+      "복사기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-so9r5wy0j-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "photocopy",
+    "meanings": [
+      "복사",
+      "복사하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-iy30y6vfg-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "print out",
+    "meanings": [
+      "(프린터로) 출력하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-iqo16t4pd-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "right away",
+    "meanings": [
+      "즉시",
+      "당장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-atg7pz6ge-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "spell",
+    "meanings": [
+      "철자를 쓰다",
+      "철자를 말하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-gx3qjk3z8-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "wrap",
+    "meanings": [
+      "싸다",
+      "감싸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-v3wg8483o-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "fold",
+    "meanings": [
+      "접다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-uyin4uy4z-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "least",
+    "meanings": [
+      "가장 작은",
+      "가장 적은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-pvn09mrak-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "paper",
+    "meanings": [
+      "서류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-pqnsiltp1-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "planning",
+    "meanings": [
+      "계획",
+      "입안"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-uo5mue4p7-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "post",
+    "meanings": [
+      "붙이다",
+      "공고하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-ulbvnf27o-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "press the button",
+    "meanings": [
+      "버튼을 누르다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-n3kkir5el-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "server",
+    "meanings": [
+      "서빙하는 사람",
+      "(컴퓨터의) 서버"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-kj8dbc64e-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "store opening",
+    "meanings": [
+      "개점",
+      "개장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910818-vhv2n020n-1769583910818",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.818592Z",
+    "updatedAt": "2026-01-28T07:05:10.818592Z",
+    "dictionaryId": null,
+    "origin": "task",
+    "meanings": [
+      "일",
+      "직무"
+    ],
+    "examples": []
+  }
+]

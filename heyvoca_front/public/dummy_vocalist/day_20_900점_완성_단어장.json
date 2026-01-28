@@ -1,0 +1,535 @@
+[
+  {
+    "id": "1769583910825-l8nr7hpgg-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "accurate",
+    "meanings": [
+      "정확한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-wu0eo58al-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "allocation",
+    "meanings": [
+      "할당",
+      "배당"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-7ity7mnmd-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "audit",
+    "meanings": [
+      "회계 감사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-75v7x33p6-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "curtail",
+    "meanings": [
+      "삭감하다",
+      "단축하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-bqxwk9gnm-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "deduct",
+    "meanings": [
+      "공제하다",
+      "빼다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-27inldjwa-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "deficit",
+    "meanings": [
+      "적자",
+      "부족액"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-060twk0tu-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "discrepancy",
+    "meanings": [
+      "불일치",
+      "차이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-o4vp778j9-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "exempt",
+    "meanings": [
+      "면제된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-s2k50lzn4-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "expenditure",
+    "meanings": [
+      "지출",
+      "비용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-anraisrey-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "fiscal",
+    "meanings": [
+      "회계의",
+      "재정상의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-of8v0s4qh-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "incidentally",
+    "meanings": [
+      "우연히",
+      "그런데"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-dyvmx67x5-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "inflation",
+    "meanings": [
+      "물가 상승",
+      "인플레이션"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-97163vn95-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "ledger",
+    "meanings": [
+      "원장",
+      "장부"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-td1jf7imb-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "liable",
+    "meanings": [
+      "책임을 져야 할"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-wx70ik153-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "marginal",
+    "meanings": [
+      "약간의",
+      "주변부의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-3kgom6ikz-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "net",
+    "meanings": [
+      "순수한",
+      "에누리 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-fvx986blj-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "offset",
+    "meanings": [
+      "상쇄하다",
+      "차감하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-szpxb668x-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "outcome",
+    "meanings": [
+      "결과",
+      "성과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-htw694mg7-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "overdue",
+    "meanings": [
+      "기한이 지난"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-ohovma05y-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "precisely",
+    "meanings": [
+      "정확하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-kuah0bmzz-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "proceeds",
+    "meanings": [
+      "수익금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-d2xsrcikl-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "profitable",
+    "meanings": [
+      "수익성이 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-gm709po5y-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "projection",
+    "meanings": [
+      "예상치",
+      "추정"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-no5msyoiw-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "recede",
+    "meanings": [
+      "물러나다",
+      "감소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-sojexxrfa-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "reimburse",
+    "meanings": [
+      "변제하다",
+      "상환하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-wfty4cnpo-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "scrutinize",
+    "meanings": [
+      "정밀 조사하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-4ouklpqgt-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "shortfall",
+    "meanings": [
+      "부족액"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-mtmv49hsh-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "significant",
+    "meanings": [
+      "상당한",
+      "중대한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-rrrqxyddt-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "statement",
+    "meanings": [
+      "내역서",
+      "성명서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-97nfum9fr-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "substantially",
+    "meanings": [
+      "상당히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-wltwx83xk-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "surplus",
+    "meanings": [
+      "흑자",
+      "잉여금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910825-h60vl2xhr-1769583910825",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.825573Z",
+    "updatedAt": "2026-01-28T07:05:10.825573Z",
+    "dictionaryId": null,
+    "origin": "verify",
+    "meanings": [
+      "확인하다",
+      "증명하다"
+    ],
+    "examples": []
+  }
+]

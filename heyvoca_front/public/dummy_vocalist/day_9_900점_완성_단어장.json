@@ -1,0 +1,535 @@
+[
+  {
+    "id": "1769583910858-qb2q6jlsw-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "billing address",
+    "meanings": [
+      "청구서 주소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-wnq84iyg7-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "government grant",
+    "meanings": [
+      "정부 보조금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-dfyc3lir5-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "market value",
+    "meanings": [
+      "시가",
+      "시세"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-3bg5dee61-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "pull down",
+    "meanings": [
+      "~을 끌어내리다",
+      "~을 하락시키다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-8vb7x9b4l-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "stationary",
+    "meanings": [
+      "움직이지 않는",
+      "정지된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-zs0mgo0gh-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "abate",
+    "meanings": [
+      "누그러지다",
+      "약해지다",
+      "감소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-ggfgx5tw1-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "cease",
+    "meanings": [
+      "중지하다",
+      "그치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-41cv8eafp-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "conspicuously",
+    "meanings": [
+      "눈에 띄게",
+      "두드러지게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-6tapueu1l-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "deteriorate",
+    "meanings": [
+      "악화되다",
+      "나빠지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-uol5el5zi-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "implicitly",
+    "meanings": [
+      "암암리에",
+      "절대적으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-ct6jlwqvm-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "leisurely",
+    "meanings": [
+      "느긋한",
+      "여유 있는",
+      "천천히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-noowt77j7-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "menace",
+    "meanings": [
+      "위협하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-oikhwhccs-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "perceptible",
+    "meanings": [
+      "상당한 정도의",
+      "인지할 수 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-1e3fkjqav-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "placement",
+    "meanings": [
+      "놓기",
+      "배치",
+      "취업 알선"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-0267bf99s-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "remark",
+    "meanings": [
+      "주의하다",
+      "말하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-igbz4kokp-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "retrieval",
+    "meanings": [
+      "복구",
+      "만회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-jm8msbki4-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "slowdown",
+    "meanings": [
+      "경기 후퇴"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-22v4pfsc7-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "solitary",
+    "meanings": [
+      "혼자의",
+      "외로운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-eegqo1dgd-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "ailing",
+    "meanings": [
+      "병든",
+      "괴로워하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-uhj5yclxh-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "financial statement",
+    "meanings": [
+      "재무제표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-7vwm1vge2-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "have a monopoly on",
+    "meanings": [
+      "~의 독점권을 갖다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-7sp2anooz-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "in demand",
+    "meanings": [
+      "수요가 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-k1mio6374-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "multilateral",
+    "meanings": [
+      "다국간의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-33liqoq8c-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "nontransferable",
+    "meanings": [
+      "양도할 수 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-874bfck4s-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "parent company",
+    "meanings": [
+      "모(母)회사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-jdqqyk4e3-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "privatization",
+    "meanings": [
+      "민영화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-67c63gul1-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "rebound",
+    "meanings": [
+      "회복",
+      "다시 일어서다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-mf1bytkhk-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "runner-up",
+    "meanings": [
+      "2위의 경기자",
+      "차점자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-ca3eqs01m-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "secondary effect",
+    "meanings": [
+      "부차적 영향"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-zik9qm2w4-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "sluggish",
+    "meanings": [
+      "불경기의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-94kruszg5-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "stagnation",
+    "meanings": [
+      "침체",
+      "불경기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910858-uov02ql95-1769583910858",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.858504Z",
+    "updatedAt": "2026-01-28T07:05:10.858504Z",
+    "dictionaryId": null,
+    "origin": "volatile",
+    "meanings": [
+      "(가격 등이) 심하게 변동하는"
+    ],
+    "examples": []
+  }
+]

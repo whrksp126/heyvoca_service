@@ -1,0 +1,470 @@
+[
+  {
+    "id": "1769583910846-r43ibf2jd-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "check",
+    "meanings": [
+      "조사하다",
+      "확인하다",
+      "n. 점검"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-p6wboj1wu-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "collect",
+    "meanings": [
+      "수금하다",
+      "모으다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-73jbnfdff-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "damage",
+    "meanings": [
+      "손상",
+      "손해",
+      "v. 손상을 입히다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-31mwnlsbd-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "door-to-door",
+    "meanings": [
+      "호별 방문의",
+      "집집마다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-9pfnznaoa-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "empty",
+    "meanings": [
+      "비어 있는",
+      "v. 비우다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-u3rqked25-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "fail",
+    "meanings": [
+      "실패하다",
+      "(기대가) 어긋나다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-umge4bdq9-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "fast",
+    "meanings": [
+      "빠른",
+      "adv. 빠르게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-b5ln3oer7-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "finish",
+    "meanings": [
+      "끝내다",
+      "마치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-snsde7wx8-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "forget",
+    "meanings": [
+      "잊다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-i7dtb5sz1-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "hand",
+    "meanings": [
+      "건네주다",
+      "n. 손"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-wb6a9bkji-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "heavy",
+    "meanings": [
+      "무거운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-2tvycdzt7-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "inform",
+    "meanings": [
+      "알리다",
+      "통지하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-qzspbq4eo-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "instead of",
+    "meanings": [
+      "~ 대신에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-kijlti9ew-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "keep",
+    "meanings": [
+      "유지하다",
+      "보관하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-di2zz9f8a-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "letter",
+    "meanings": [
+      "편지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-es9xnund3-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "load",
+    "meanings": [
+      "(짐을) 싣다",
+      "n. 짐"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-qh6zj0h0e-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "lost",
+    "meanings": [
+      "분실된",
+      "길을 잃은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-bex1amz8m-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "mail",
+    "meanings": [
+      "우편물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-v9qp21y4c-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "parcel",
+    "meanings": [
+      "소포"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-utdzuggwd-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "pick up",
+    "meanings": [
+      "~을 찾아오다",
+      "차에 태우다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-i0gw38c3n-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "post office",
+    "meanings": [
+      "우체국"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-hofx5q0xu-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "reach",
+    "meanings": [
+      "도착하다",
+      "~에 닿다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-drrv9luji-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "receive",
+    "meanings": [
+      "받다",
+      "수령하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-l4kivwmbq-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "route",
+    "meanings": [
+      "경로",
+      "노선"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-14b58cyos-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "safe",
+    "meanings": [
+      "안전한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-alyg29atl-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "send",
+    "meanings": [
+      "보내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-fpmqv3hvd-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "ship",
+    "meanings": [
+      "배송하다",
+      "n. 배"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910846-yf7di8r0x-1769583910846",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.846843Z",
+    "updatedAt": "2026-01-28T07:05:10.846843Z",
+    "dictionaryId": null,
+    "origin": "weigh",
+    "meanings": [
+      "무게를 달다"
+    ],
+    "examples": []
+  }
+]

@@ -1,0 +1,518 @@
+[
+  {
+    "id": "1769583910838-sybfk80kl-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "complaint",
+    "meanings": [
+      "불평"
+    ],
+    "examples": [
+      {
+        "origin": "Customers can register <strong class=\"target-word\">complaints</strong> at the customer service center or online.",
+        "meaning": "고객들은 고객 서비스 센터나 온라인으로 불평을 신고할 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-nc281toy7-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "deal",
+    "meanings": [
+      "처리하다",
+      "거래하다",
+      "분배하다",
+      "거래"
+    ],
+    "examples": [
+      {
+        "origin": "The problem will be <strong class=\"target-word\">dealt</strong> with immediately.",
+        "meaning": "그 문제는 즉시 처리될 것이다."
+      },
+      {
+        "origin": "Davis Automotive <strong class=\"target-word\">deals</strong> in used cars and automotive accessories.",
+        "meaning": "Davis Automotive사는 중고차와 차량 부품을 거래한다."
+      },
+      {
+        "origin": "The government will <strong class=\"target-word\">deal</strong> out debt relief grants to the poor.",
+        "meaning": "정부는 빈민들에게 채무 구제 보조금을 나누어 줄 것이다."
+      },
+      {
+        "origin": "Fly-Age agency offers good <strong class=\"target-word\">deals</strong> on international flights.",
+        "meaning": "Fly-Age 여행사는 국제 항공편에 대해 유리한 거래를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-zhgqlnuzz-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "argumentative",
+    "meanings": [
+      "논쟁적인",
+      "논쟁을 좋아하는"
+    ],
+    "examples": [
+      {
+        "origin": "Service personnel must avoid becoming <strong class=\"target-word\">argumentative</strong> with upset customers.",
+        "meaning": "서비스 직원들은 화난 손님들과 논쟁하는 것을 피해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-eh3mswloj-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "appropriately",
+    "meanings": [
+      "적절하게"
+    ],
+    "examples": [
+      {
+        "origin": "Telephone representatives should know how to handle customer complaints <strong class=\"target-word\">appropriately</strong>.",
+        "meaning": "전화 상담원들은 고객의 불만을 적절하게 처리하는 법을 알아야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-brixt43dg-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "respond",
+    "meanings": [
+      "응답하다"
+    ],
+    "examples": [
+      {
+        "origin": "Sales staff should <strong class=\"target-word\">respond</strong> promptly to questions from customers.",
+        "meaning": "판매 사원들은 고객의 질문에 지체 없이 응답해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-0xcm8uwww-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "infuriate",
+    "meanings": [
+      "화나게 하다",
+      "격분시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The attendant's incompetence <strong class=\"target-word\">infuriated</strong> the customer.",
+        "meaning": "그 안내원의 무능함은 고객을 화나게 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-kyajt39iz-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "courteous",
+    "meanings": [
+      "예의 바른"
+    ],
+    "examples": [
+      {
+        "origin": "All inquiries must be handled in a <strong class=\"target-word\">courteous</strong> manner.",
+        "meaning": "모든 문의는 예의 바른 태도로 처리되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-dayu3sck4-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "satisfaction",
+    "meanings": [
+      "만족"
+    ],
+    "examples": [
+      {
+        "origin": "We hope our assistance was to your <strong class=\"target-word\">satisfaction</strong>.",
+        "meaning": "저희 도움이 여러분께서 만족하셨기를 바랍니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-pa2qvyipo-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "inconvenience",
+    "meanings": [
+      "불편",
+      "~에게 불편을 느끼게 하다"
+    ],
+    "examples": [
+      {
+        "origin": "We apologize for the <strong class=\"target-word\">inconvenience</strong> during construction.",
+        "meaning": "공사 중 불편을 드려 죄송합니다."
+      },
+      {
+        "origin": "Cheryl asked the manager if it would <strong class=\"target-word\">inconvenience</strong> him to reschedule her interview.",
+        "meaning": "Cheryl은 관리자에게 면접 일정을 변경하는 것이 그를 불편하게 하는지 문의했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-o7nw5lgfr-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "complete",
+    "meanings": [
+      "완료하다",
+      "완성하다",
+      "완료된",
+      "완성된"
+    ],
+    "examples": [
+      {
+        "origin": "The paperwork must be <strong class=\"target-word\">completed</strong> within one month.",
+        "meaning": "그 서류 작업은 한 달 안에 완료되어야 한다."
+      },
+      {
+        "origin": "Once you receive a confirmation e-mail, the registration process is <strong class=\"target-word\">complete</strong>.",
+        "meaning": "귀하께서 확인 이메일을 받으시면, 등록 절차는 완료됩니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-obys5vbgo-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "specific",
+    "meanings": [
+      "구체적인",
+      "명확한"
+    ],
+    "examples": [
+      {
+        "origin": "When seeking help online, clients must be very <strong class=\"target-word\">specific</strong> in describing problems.",
+        "meaning": "고객들은 온라인으로 도움을 요청할 때, 문제를 설명하는 데 있어 아주 구체적이어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-bf3wwkvj1-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "return",
+    "meanings": [
+      "반환하다",
+      "반송하다",
+      "돌아오다",
+      "돌아가다"
+    ],
+    "examples": [
+      {
+        "origin": "Merchandise can be <strong class=\"target-word\">returned</strong> at the counter.",
+        "meaning": "상품은 계산대에서 반환하실 수 있습니다."
+      },
+      {
+        "origin": "John <strong class=\"target-word\">returned</strong> to the mobile phone store to ask about his warranty.",
+        "meaning": "John은 보증서에 관해 물어보기 위해 휴대 전화 매장으로 돌아왔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-r3zq8463n-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "replace",
+    "meanings": [
+      "~을 교체하다",
+      "대체하다"
+    ],
+    "examples": [
+      {
+        "origin": "The mechanic <strong class=\"target-word\">replaced</strong> the generator's motor with a new one.",
+        "meaning": "정비사가 발전기의 모터를 새것으로 교체했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-43s1e4wzj-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "presentation",
+    "meanings": [
+      "발표"
+    ],
+    "examples": [
+      {
+        "origin": "Melissa gave the employees a <strong class=\"target-word\">presentation</strong> about handling difficult clients.",
+        "meaning": "Melissa는 직원들에게 까다로운 고객들을 다루는 방법에 대해 발표했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-plckvyf30-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "evaluation",
+    "meanings": [
+      "평가"
+    ],
+    "examples": [
+      {
+        "origin": "Please fill out the <strong class=\"target-word\">evaluation</strong> form.",
+        "meaning": "평가서를 작성해 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-03y41qsoo-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "confident",
+    "meanings": [
+      "확신하는",
+      "자신 있는"
+    ],
+    "examples": [
+      {
+        "origin": "The manager is <strong class=\"target-word\">confident</strong> that Ms. Brown will be an excellent team leader.",
+        "meaning": "그 관리자는 Ms. Brown이 훌륭한 팀 리더가 될 것이라고 확신한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-3bpmwwqof-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "cause",
+    "meanings": [
+      "~을 야기하다",
+      "~의 원인이 되다",
+      "원인"
+    ],
+    "examples": [
+      {
+        "origin": "The defect in the lamp was <strong class=\"target-word\">caused</strong> by improper wiring.",
+        "meaning": "전등의 결함은 잘못된 배선에 의해 야기되었다."
+      },
+      {
+        "origin": "Researchers tried to find the <strong class=\"target-word\">cause</strong> of the error.",
+        "meaning": "연구원들은 그 오류의 원인을 찾으려고 노력했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-vexl6qxiq-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "commentary",
+    "meanings": [
+      "해설",
+      "설명"
+    ],
+    "examples": [
+      {
+        "origin": "Richard added <strong class=\"target-word\">commentary</strong> to the service training film.",
+        "meaning": "Richard는 서비스 교육 영상에 해설을 덧붙였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-781g8nk8o-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "notification",
+    "meanings": [
+      "통지"
+    ],
+    "examples": [
+      {
+        "origin": "We require written <strong class=\"target-word\">notification</strong> of any order cancellations.",
+        "meaning": "저희는 모든 주문 취소에 대한 서면 통지를 요구합니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-2unnmfhb7-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "apologize",
+    "meanings": [
+      "사과하다"
+    ],
+    "examples": [
+      {
+        "origin": "We <strong class=\"target-word\">apologize</strong> for the late delivery service.",
+        "meaning": "늦은 배송 서비스에 대해 사과 드립니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-uaqvqzkzw-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "interact",
+    "meanings": [
+      "소통하다",
+      "교류하다",
+      "상호 작용을 하다"
+    ],
+    "examples": [
+      {
+        "origin": "When <strong class=\"target-word\">interacting</strong> with shoppers, clerks should deal with them in a pleasant manner.",
+        "meaning": "쇼핑객들과 소통할 때, 점원들은 유쾌한 태도로 그들을 대해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-7xbxz7ltf-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.838873Z",
+    "updatedAt": "2026-01-28T07:05:10.838873Z",
+    "dictionaryId": null,
+    "origin": "certain",
+    "meanings": [
+      "확신하는",
+      "확실한",
+      "특정한"
+    ],
+    "examples": [
+      {
+        "origin": "Sharon was not <strong class=\"target-word\">certain</strong> where she had bought the blouse.",
+        "meaning": "Sharon은 그 블라우스를 어디서 샀는지 확신하지 못했다."
+      },
+      {
+        "origin": "Registrants are required to provide <strong class=\"target-word\">certain</strong> details on the form, but other information is optional.",
+        "meaning": "등록자들은 양식에 특정 정보를 기입하도록 요구되지만, 다른 정보는 선택 사항이다."
+      }
+    ]
+  }
+]

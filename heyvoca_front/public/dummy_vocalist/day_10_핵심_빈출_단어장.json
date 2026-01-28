@@ -1,0 +1,938 @@
+[
+  {
+    "id": "1769583910874-tikaa61dm-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "purchase",
+    "meanings": [
+      "구매하다",
+      "구매"
+    ],
+    "examples": [
+      {
+        "origin": "The customer <strong class=\"target-word\">purchased</strong> a laptop computer.",
+        "meaning": ""
+      },
+      {
+        "origin": "For every <strong class=\"target-word\">purchase</strong> of $100 or more, customers will receive a raffle ticket.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-nd53v3zle-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "price",
+    "meanings": [
+      "가격"
+    ],
+    "examples": [
+      {
+        "origin": "The new color printer has a retail <strong class=\"target-word\">price</strong> of only $150.99.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-090be5q7e-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "affordable",
+    "meanings": [
+      "(가격이) 알맞은",
+      "감당할 수 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Toyama launched an <strong class=\"target-word\">affordable</strong> mid-range sedan.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-1v2vogt5h-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "exactly",
+    "meanings": [
+      "정확히"
+    ],
+    "examples": [
+      {
+        "origin": "The sales representatives help customers decide <strong class=\"target-word\">exactly</strong> what style fits them best.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-ckqrjlosg-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "installment",
+    "meanings": [
+      "할부"
+    ],
+    "examples": [
+      {
+        "origin": "The shop allows buyers to pay for furniture in monthly <strong class=\"target-word\">installments</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-1qkjgqm1c-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "notice",
+    "meanings": [
+      "통지",
+      "공고"
+    ],
+    "examples": [
+      {
+        "origin": "The prices listed in the catalog are effective until further <strong class=\"target-word\">notice</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-rth2815ro-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "charge",
+    "meanings": [
+      "요금",
+      "청구 금액",
+      "책임",
+      "의무",
+      "~을 청구하다",
+      "(외상으로) 달아놓다"
+    ],
+    "examples": [
+      {
+        "origin": "The price includes shipping and handling <strong class=\"target-word\">charges</strong>.",
+        "meaning": ""
+      },
+      {
+        "origin": "Ms. Long is in <strong class=\"target-word\">charge</strong> of product returns.",
+        "meaning": ""
+      },
+      {
+        "origin": "The phone company <strong class=\"target-word\">charges</strong> high fees for installations.",
+        "meaning": ""
+      },
+      {
+        "origin": "She <strong class=\"target-word\">charged</strong> the fee to her credit card.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-s1atyy4sc-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "experienced",
+    "meanings": [
+      "경험이 있는",
+      "노련한",
+      "능숙한"
+    ],
+    "examples": [
+      {
+        "origin": "Bill is the most <strong class=\"target-word\">experienced</strong> salesperson in the store.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-00dv4d72v-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "instruction",
+    "meanings": [
+      "설명",
+      "지시"
+    ],
+    "examples": [
+      {
+        "origin": "The receipt gives <strong class=\"target-word\">instructions</strong> for returning or exchanging items.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-ckaqx13ky-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "expert",
+    "meanings": [
+      "전문가",
+      "전문가의",
+      "전문적인"
+    ],
+    "examples": [
+      {
+        "origin": "A personal shopper is an <strong class=\"target-word\">expert</strong> at finding bargains for customers.",
+        "meaning": ""
+      },
+      {
+        "origin": "An <strong class=\"target-word\">expert</strong> designer created the layout of the store.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-zwzjddmlc-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "warranty",
+    "meanings": [
+      "(품질 등의) 보증",
+      "보증서"
+    ],
+    "examples": [
+      {
+        "origin": "The computer is under <strong class=\"target-word\">warranty</strong> for two years.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-koladpavi-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "refund",
+    "meanings": [
+      "환불",
+      "환불금"
+    ],
+    "examples": [
+      {
+        "origin": "Buyers can get a full <strong class=\"target-word\">refund</strong> for a defective product.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-d1z31hj2j-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "subscriber",
+    "meanings": [
+      "가입자",
+      "구독자"
+    ],
+    "examples": [
+      {
+        "origin": "The Web site now has millions of <strong class=\"target-word\">subscribers</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-l1jiu18yj-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "delivery",
+    "meanings": [
+      "배달"
+    ],
+    "examples": [
+      {
+        "origin": "We guarantee <strong class=\"target-word\">delivery</strong> within three days.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-1d4zbrc9a-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "receipt",
+    "meanings": [
+      "영수증"
+    ],
+    "examples": [
+      {
+        "origin": "The original <strong class=\"target-word\">receipt</strong> is required for all refunds.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-jnp6xl1sy-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "carefully",
+    "meanings": [
+      "주의 깊게",
+      "신중히"
+    ],
+    "examples": [
+      {
+        "origin": "Please follow the installation directions <strong class=\"target-word\">carefully</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-cryb7oyf4-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "offer",
+    "meanings": [
+      "제공하다",
+      "제공",
+      "오퍼"
+    ],
+    "examples": [
+      {
+        "origin": "Z-Mart <strong class=\"target-word\">offers</strong> $25 gift cards to customers signing up for membership.",
+        "meaning": ""
+      },
+      {
+        "origin": "The supermarket entices customers with promotional <strong class=\"target-word\">offers</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-dgayfhq89-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "benefit",
+    "meanings": [
+      "혜택",
+      "이익",
+      "혜택을 보다",
+      "이익을 얻다"
+    ],
+    "examples": [
+      {
+        "origin": "The Shoppers' Club offers many <strong class=\"target-word\">benefits</strong> to its members.",
+        "meaning": ""
+      },
+      {
+        "origin": "NBC Mart shoppers <strong class=\"target-word\">benefit</strong> from various coupons and free delivery service.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-ss78vk6x1-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "exclusively",
+    "meanings": [
+      "오로지",
+      "독점적으로"
+    ],
+    "examples": [
+      {
+        "origin": "A 10 percent discount is available <strong class=\"target-word\">exclusively</strong> to Premium Club members.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-s2heb2jdq-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "description",
+    "meanings": [
+      "(제품 등의) 설명",
+      "해설"
+    ],
+    "examples": [
+      {
+        "origin": "Call customer service for a more extensive <strong class=\"target-word\">description</strong> of any of the equipment.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-1izr9bfji-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "relatively",
+    "meanings": [
+      "상대적으로"
+    ],
+    "examples": [
+      {
+        "origin": "McCoy's has a <strong class=\"target-word\">relatively</strong> lenient return policy compared to similar stores.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-qme2ndaxv-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "preparation",
+    "meanings": [
+      "준비",
+      "대비"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Preparations</strong> are under way for the department store's grand opening.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-58t0umwsj-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "spare",
+    "meanings": [
+      "아끼다",
+      "할애하다",
+      "예비의",
+      "여분의"
+    ],
+    "examples": [
+      {
+        "origin": "The shopping mall <strong class=\"target-word\">spared</strong> no expense on the 10th anniversary promotion.",
+        "meaning": ""
+      },
+      {
+        "origin": "Customers may order <strong class=\"target-word\">spare</strong> parts at the service counter.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-ai4hyc80a-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "area",
+    "meanings": [
+      "지역",
+      "구역"
+    ],
+    "examples": [
+      {
+        "origin": "There are excellent retail stores in this <strong class=\"target-word\">area</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-2fy70682x-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "clearance",
+    "meanings": [
+      "정리",
+      "없애기",
+      "허가"
+    ],
+    "examples": [
+      {
+        "origin": "There is usually a <strong class=\"target-word\">clearance</strong> sale for winter clothes in March.",
+        "meaning": ""
+      },
+      {
+        "origin": "The clerk got special <strong class=\"target-word\">clearance</strong> to discount the shoes.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-4ze129j0j-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "alter",
+    "meanings": [
+      "(성질·형상을) 고치다",
+      "바꾸다"
+    ],
+    "examples": [
+      {
+        "origin": "The customer asked that the length of his pants be <strong class=\"target-word\">altered</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-9o5d4g6nr-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "apply",
+    "meanings": [
+      "적용하다",
+      "지원하다"
+    ],
+    "examples": [
+      {
+        "origin": "The cashier <strong class=\"target-word\">applied</strong> the discount to all the items.",
+        "meaning": ""
+      },
+      {
+        "origin": "Those wishing to <strong class=\"target-word\">apply</strong> for the position must be familiar with our merchandise.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-wqm17q1wn-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "mutually",
+    "meanings": [
+      "서로",
+      "상호 간에"
+    ],
+    "examples": [
+      {
+        "origin": "The couple and dealer reached a <strong class=\"target-word\">mutually</strong> agreeable price for the car.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-g0n59o20r-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "method",
+    "meanings": [
+      "방식",
+      "방법"
+    ],
+    "examples": [
+      {
+        "origin": "In recent years, debit cards have become a popular <strong class=\"target-word\">method</strong> of payment.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-whsjyjvzo-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "acceptable",
+    "meanings": [
+      "용인되는",
+      "받아들일 수 있는",
+      "훌륭한",
+      "만족스러운"
+    ],
+    "examples": [
+      {
+        "origin": "Jenson Fashions sells clothes that are <strong class=\"target-word\">acceptable</strong> as business attire.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-a9gq903fb-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "desire",
+    "meanings": [
+      "욕구",
+      "갈망",
+      "원하다",
+      "바라다"
+    ],
+    "examples": [
+      {
+        "origin": "Effective advertising can create a <strong class=\"target-word\">desire</strong> in consumers to buy goods they do not need.",
+        "meaning": ""
+      },
+      {
+        "origin": "Many people <strong class=\"target-word\">desire</strong> the latest electronic devices.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-bd90j4nbc-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "redeemable",
+    "meanings": [
+      "(현금·상품과) 교환할 수 있는",
+      "환급할 수 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Store gift vouchers are <strong class=\"target-word\">redeemable</strong> at any branch.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-7p5eiwjuf-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "officially",
+    "meanings": [
+      "공식적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The online store will <strong class=\"target-word\">officially</strong> open next month.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-klx3kdseu-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "consumption",
+    "meanings": [
+      "소비(량)",
+      "소모"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Consumption</strong> of high-end products like home theaters has increased recently.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-qzstwwwzo-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "qualify",
+    "meanings": [
+      "~의 자격을 얻다"
+    ],
+    "examples": [
+      {
+        "origin": "Clients need a regular income to <strong class=\"target-word\">qualify</strong> for credit cards.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-i3a4uu4vv-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "fabric",
+    "meanings": [
+      "섬유",
+      "천"
+    ],
+    "examples": [
+      {
+        "origin": "The manufacturer's garments are made of natural <strong class=\"target-word\">fabric</strong> only.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-qb1k5uolt-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "auction",
+    "meanings": [
+      "경매"
+    ],
+    "examples": [
+      {
+        "origin": "A number of antique pieces will be sold at the <strong class=\"target-word\">auction</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-b69apwkt7-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "authentic",
+    "meanings": [
+      "진정한",
+      "진짜의",
+      "진품의"
+    ],
+    "examples": [
+      {
+        "origin": "The new restaurant downtown serves <strong class=\"target-word\">authentic</strong> Spanish cuisine.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-4avdhsqbs-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "valid",
+    "meanings": [
+      "유효한"
+    ],
+    "examples": [
+      {
+        "origin": "A <strong class=\"target-word\">valid</strong> receipt must be presented.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910874-l51x4hyoj-1769583910874",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.874857Z",
+    "updatedAt": "2026-01-28T07:05:10.874857Z",
+    "dictionaryId": null,
+    "origin": "vendor",
+    "meanings": [
+      "노점상",
+      "가판대",
+      "판매업체"
+    ],
+    "examples": [
+      {
+        "origin": "The street is filled with <strong class=\"target-word\">vendors</strong> during the weekly market.",
+        "meaning": ""
+      },
+      {
+        "origin": "Software <strong class=\"target-word\">vendors</strong> have been instructed to sell the product at a specific retail price.",
+        "meaning": ""
+      }
+    ]
+  }
+]

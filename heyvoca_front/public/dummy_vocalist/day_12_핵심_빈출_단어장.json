@@ -1,0 +1,924 @@
+[
+  {
+    "id": "1769583910822-2qb0lpgk8-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "equipment",
+    "meanings": [
+      "장비",
+      "설비"
+    ],
+    "examples": [
+      {
+        "origin": "The company uses special <strong class=\"target-word\">equipment</strong> to load large crates onto freight trucks.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-19r9mtk5a-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "automate",
+    "meanings": [
+      "자동화하다"
+    ],
+    "examples": [
+      {
+        "origin": "The production plant will be fully <strong class=\"target-word\">automated</strong> by next year.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-po2frx462-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "specification",
+    "meanings": [
+      "명세서",
+      "설명서",
+      "사양"
+    ],
+    "examples": [
+      {
+        "origin": "The quality control team checks if all items meet product <strong class=\"target-word\">specifications</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-ov8f4gq1w-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "properly",
+    "meanings": [
+      "제대로",
+      "정확하게"
+    ],
+    "examples": [
+      {
+        "origin": "Machinery must be well-maintained to operate <strong class=\"target-word\">properly</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-os0zamd0d-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "safety",
+    "meanings": [
+      "안전"
+    ],
+    "examples": [
+      {
+        "origin": "Factory supervisors prioritize <strong class=\"target-word\">safety</strong> over speed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-byyfpeqkn-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "precaution",
+    "meanings": [
+      "예방 조치",
+      "예방책"
+    ],
+    "examples": [
+      {
+        "origin": "After the accident, the company introduced stricter safety <strong class=\"target-word\">precautions</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-yy1v01dsk-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "operate",
+    "meanings": [
+      "(기계 등이) 작동하다",
+      "움직이다"
+    ],
+    "examples": [
+      {
+        "origin": "The assembly line <strong class=\"target-word\">operates</strong> round the clock.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-rz1uxnr63-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "processing",
+    "meanings": [
+      "가공",
+      "처리"
+    ],
+    "examples": [
+      {
+        "origin": "Food <strong class=\"target-word\">processing</strong> requires a clean environment.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-hpmx8tndc-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "capacity",
+    "meanings": [
+      "용량",
+      "수용력",
+      "역할"
+    ],
+    "examples": [
+      {
+        "origin": "The warehouse's <strong class=\"target-word\">capacity</strong> will double after the construction.",
+        "meaning": ""
+      },
+      {
+        "origin": "As Ms. Jones was away, Sam acted in her <strong class=\"target-word\">capacity</strong> as president during the meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-zmsohypph-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "assemble",
+    "meanings": [
+      "(부품·기계 등을) 조립하다",
+      "(사람을) 모으다"
+    ],
+    "examples": [
+      {
+        "origin": "Components are manufactured abroad and <strong class=\"target-word\">assembled</strong> domestically.",
+        "meaning": ""
+      },
+      {
+        "origin": "The manager <strong class=\"target-word\">assembled</strong> everyone in the department for a meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-9qdsgwh4s-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "utilize",
+    "meanings": [
+      "이용하다",
+      "활용하다"
+    ],
+    "examples": [
+      {
+        "origin": "The technicians <strong class=\"target-word\">utilized</strong> computer technology to improve processes.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-s3cwovnxa-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "place",
+    "meanings": [
+      "~을 -한 상태에 두다",
+      "(지시·주문·신청 등을) 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The factory supervisor has <strong class=\"target-word\">placed</strong> production operations on standby.",
+        "meaning": ""
+      },
+      {
+        "origin": "The office manager has to <strong class=\"target-word\">place</strong> an order for additional materials immediately.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-zumdmj9z1-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "fill",
+    "meanings": [
+      "~을 채우다",
+      "(주문대로) 이행하다"
+    ],
+    "examples": [
+      {
+        "origin": "An attendant <strong class=\"target-word\">filled</strong> the car's tank with gas.",
+        "meaning": ""
+      },
+      {
+        "origin": "It will take a week to <strong class=\"target-word\">fill</strong> the hotel's order for bed sheets.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-y13zi95hf-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "manufacturing",
+    "meanings": [
+      "제조(업)의"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">manufacturing</strong> process in the automotive industry has changed with computer advances.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-ly7h9eqxo-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "renovate",
+    "meanings": [
+      "(낡은 건물·가구 등을) 개조하다",
+      "수리하다",
+      "보수하다"
+    ],
+    "examples": [
+      {
+        "origin": "The packaging area was <strong class=\"target-word\">renovated</strong> to use the space more effectively.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-7q5zfs4x2-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "decision",
+    "meanings": [
+      "결정",
+      "판단"
+    ],
+    "examples": [
+      {
+        "origin": "The CEO's <strong class=\"target-word\">decision</strong> was to release the computer in February.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-yfrqsfrto-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "material",
+    "meanings": [
+      "재료",
+      "물질"
+    ],
+    "examples": [
+      {
+        "origin": "The designers selected the <strong class=\"target-word\">material</strong> because of its durability.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-91jqq7wnw-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "success",
+    "meanings": [
+      "성공",
+      "성과"
+    ],
+    "examples": [
+      {
+        "origin": "The company owes its <strong class=\"target-word\">success</strong> to strict quality control.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-gdoyy74q5-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "attribute",
+    "meanings": [
+      "(원인을) ~의 덕분으로 돌리다"
+    ],
+    "examples": [
+      {
+        "origin": "Management has <strong class=\"target-word\">attributed</strong> last year's gains to increased development.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-4xf600bmg-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "efficiency",
+    "meanings": [
+      "효율",
+      "능률"
+    ],
+    "examples": [
+      {
+        "origin": "The consultant suggested measures to improve energy <strong class=\"target-word\">efficiency</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-puvnk1eu7-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "limit",
+    "meanings": [
+      "한계",
+      "제한"
+    ],
+    "examples": [
+      {
+        "origin": "There is a <strong class=\"target-word\">limit</strong> to the amount of merchandise the factory can make in a day.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-2ly1uwwer-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "tailored",
+    "meanings": [
+      "맞춤의",
+      "주문에 따라 맞춘"
+    ],
+    "examples": [
+      {
+        "origin": "This equipment can be <strong class=\"target-word\">tailored</strong> to the company's production needs.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-j0fick4y8-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "component",
+    "meanings": [
+      "부품",
+      "(구성) 요소"
+    ],
+    "examples": [
+      {
+        "origin": "The store returned the defective <strong class=\"target-word\">components</strong> to the manufacturer.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-nn53msxxf-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "capable",
+    "meanings": [
+      "~을 할 수 있는",
+      "~할 능력이 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Ferrum Corporation is <strong class=\"target-word\">capable</strong> of processing all kinds of metals.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-qfzcfpnso-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "economize",
+    "meanings": [
+      "절약하다",
+      "아끼다"
+    ],
+    "examples": [
+      {
+        "origin": "Hybrid cars are becoming popular because they <strong class=\"target-word\">economize</strong> on fuel.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-x0j263xcv-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "flexible",
+    "meanings": [
+      "융통성 있는",
+      "유연한",
+      "잘 구부러지는"
+    ],
+    "examples": [
+      {
+        "origin": "Management is more <strong class=\"target-word\">flexible</strong> about granting vacations when business is slow.",
+        "meaning": ""
+      },
+      {
+        "origin": "Plastic is a <strong class=\"target-word\">flexible</strong> material that has numerous applications.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-9bpl0dvf3-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "comparable",
+    "meanings": [
+      "필적하는",
+      "비교되는"
+    ],
+    "examples": [
+      {
+        "origin": "The car's quality standards are <strong class=\"target-word\">comparable</strong> to the industry average.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-p88n7164s-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "produce",
+    "meanings": [
+      "생산하다"
+    ],
+    "examples": [
+      {
+        "origin": "The new machinery <strong class=\"target-word\">produces</strong> 1,000 units per hour.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-o2gvt17h3-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "respectively",
+    "meanings": [
+      "각각",
+      "따로"
+    ],
+    "examples": [
+      {
+        "origin": "The camera and tablet computer cost $225 and $350 <strong class=\"target-word\">respectively</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-082c8nb9q-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "device",
+    "meanings": [
+      "장치"
+    ],
+    "examples": [
+      {
+        "origin": "The new <strong class=\"target-word\">device</strong> was tested for possible defects.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-niv1hn23l-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "trim",
+    "meanings": [
+      "(깎아) 다듬다",
+      "없애다",
+      "삭감하다"
+    ],
+    "examples": [
+      {
+        "origin": "This mechanism <strong class=\"target-word\">trims</strong> the plastic packaging to make it smaller.",
+        "meaning": ""
+      },
+      {
+        "origin": "The team <strong class=\"target-word\">trimmed</strong> nearly 20 percent off of current production costs.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-mxeoyzruq-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "launch",
+    "meanings": [
+      "(신제품을) 출시하다"
+    ],
+    "examples": [
+      {
+        "origin": "Computer programmers fix technical malfunctions before <strong class=\"target-word\">launching</strong> any software.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-zc2fis3zj-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "separately",
+    "meanings": [
+      "개별적으로",
+      "따로따로"
+    ],
+    "examples": [
+      {
+        "origin": "The cushioning pads are made <strong class=\"target-word\">separately</strong> as each shoe is slightly different.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-to6mea34v-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "expiration",
+    "meanings": [
+      "(기간·임기 등의) 만료",
+      "만기"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">expiration</strong> date is printed on the top of the milk carton.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-ub16ctkpe-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "maneuver",
+    "meanings": [
+      "이동시키다",
+      "움직이다"
+    ],
+    "examples": [
+      {
+        "origin": "Assembly line workers <strong class=\"target-word\">maneuvered</strong> the machinery into place.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-vzsw1bsyc-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "coming",
+    "meanings": [
+      "다가오는"
+    ],
+    "examples": [
+      {
+        "origin": "Factory output will double in the <strong class=\"target-word\">coming</strong> year.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-wtn4u8w0e-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "damaged",
+    "meanings": [
+      "손상된",
+      "손해를 입은"
+    ],
+    "examples": [
+      {
+        "origin": "The conveyor belts were <strong class=\"target-word\">damaged</strong> from excessive use.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-rnws59z6m-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "prevent",
+    "meanings": [
+      "~을 막다",
+      "~을 예방하다"
+    ],
+    "examples": [
+      {
+        "origin": "Employees are expected to observe safety guidelines to <strong class=\"target-word\">prevent</strong> accidents.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-hvw6w8hyq-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "power",
+    "meanings": [
+      "전력",
+      "전기"
+    ],
+    "examples": [
+      {
+        "origin": "The plant was closed for half a business day due to a <strong class=\"target-word\">power</strong> outage.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-90q3kkgfv-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "chemical",
+    "meanings": [
+      "화학 제품"
+    ],
+    "examples": [
+      {
+        "origin": "Protective gear is needed when working with dangerous <strong class=\"target-word\">chemicals</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910822-1rqk200vc-1769583910822",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.822704Z",
+    "updatedAt": "2026-01-28T07:05:10.822704Z",
+    "dictionaryId": null,
+    "origin": "minimize",
+    "meanings": [
+      "최소화하다",
+      "축소하다"
+    ],
+    "examples": [
+      {
+        "origin": "To <strong class=\"target-word\">minimize</strong> employees' workload, the company upgraded its software.",
+        "meaning": ""
+      }
+    ]
+  }
+]

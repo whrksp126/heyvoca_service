@@ -1,0 +1,518 @@
+[
+  {
+    "id": "1769583910891-z5oilotqh-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "biodiversity",
+    "meanings": [
+      "생물 다양성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-y36maiscu-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "biosphere",
+    "meanings": [
+      "생물권"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-fs0x50gfk-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "carcinogen",
+    "meanings": [
+      "발암 물질"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-mdbi9wiw2-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "chlorofluorocarbons",
+    "meanings": [
+      "염화불화탄소 (프레온 가스)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-jmfkrmcvz-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "deforestation",
+    "meanings": [
+      "삼림 파괴"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-07t3n7n6h-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "desalination",
+    "meanings": [
+      "담수화 (해수에서 염분을 제거함)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-t6u3vu7qd-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "desertification",
+    "meanings": [
+      "사막화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-fqde5d4mz-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "effluent",
+    "meanings": [
+      "유출수",
+      "폐수"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-pake1oxj1-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "ecosystem",
+    "meanings": [
+      "생태계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ppmmc32b9-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "emissions trading",
+    "meanings": [
+      "배출권 거래"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-o6fzvbiim-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "environmental degradation",
+    "meanings": [
+      "환경 저하"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ti05h1n2p-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "fossil fuel",
+    "meanings": [
+      "화석 연료"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-th39riwce-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "global cooling",
+    "meanings": [
+      "지구 한랭화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-rv0c5cs9t-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "green auditing",
+    "meanings": [
+      "환경 감사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-6gd4t24wy-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "heavy metals",
+    "meanings": [
+      "중금속"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-2363er6v8-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "incineration",
+    "meanings": [
+      "소각"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-itigvpakj-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "industrial runoff",
+    "meanings": [
+      "산업 유출수"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ab6as3d90-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "marine debris",
+    "meanings": [
+      "해양 쓰레기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-nx2ind3np-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "meteorological",
+    "meanings": [
+      "기상의",
+      "기상학의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-mur4ow67d-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "microplastics",
+    "meanings": [
+      "미세 플라스틱"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ms55wbvsj-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "nitrous oxide",
+    "meanings": [
+      "아산화질소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-oijmbfqdx-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "nuclear waste",
+    "meanings": [
+      "핵폐기물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-gza5icpfj-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "particulate matter",
+    "meanings": [
+      "입자상 물질 (미세 먼지)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-drtnqr4n2-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "photovoltaic",
+    "meanings": [
+      "광기전성의",
+      "태양광 발전의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-hru1gnaen-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "precipitation",
+    "meanings": [
+      "강수",
+      "강수량"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-dc9wfya4d-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "reforestation",
+    "meanings": [
+      "재조림"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-n47x68d0v-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "sewage treatment",
+    "meanings": [
+      "하수 처리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-7n1qxokdl-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "smog",
+    "meanings": [
+      "스모그"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-ji7k651aj-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "stratosphere",
+    "meanings": [
+      "성층권"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-jr7b3snsn-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "toxicity",
+    "meanings": [
+      "독성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-m7je73kpk-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "waste management",
+    "meanings": [
+      "폐기물 관리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910891-vtacyx940-1769583910891",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.891930Z",
+    "updatedAt": "2026-01-28T07:05:10.891930Z",
+    "dictionaryId": null,
+    "origin": "wildlife conservation",
+    "meanings": [
+      "야생 동물 보호"
+    ],
+    "examples": []
+  }
+]

@@ -1,0 +1,969 @@
+[
+  {
+    "id": "1769583910821-sjbgrblsj-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "rest",
+    "meanings": [
+      "쉬다",
+      "휴식을 취하다",
+      "휴식",
+      "나머지"
+    ],
+    "examples": [
+      {
+        "origin": "Hikers can <span class=\"target-word\">rest</span> on the bench halfway up the hill.",
+        "meaning": ""
+      },
+      {
+        "origin": "The tour group had a <span class=\"target-word\">rest</span> before visiting the palace.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-yovyhz0ss-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "exhibition",
+    "meanings": [
+      "전시회"
+    ],
+    "examples": [
+      {
+        "origin": "The gallery hosted an <span class=\"target-word\">exhibition</span> of urban scenic photographs.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-325hmqssi-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "celebrity",
+    "meanings": [
+      "유명 인사",
+      "명사"
+    ],
+    "examples": [
+      {
+        "origin": "Many <span class=\"target-word\">celebrities</span> attended the city's summer park festival.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-37fzhbq06-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "live",
+    "meanings": [
+      "(라디오·TV가) 생방송인"
+    ],
+    "examples": [
+      {
+        "origin": "Finnegan's café hosts a <span class=\"target-word\">live</span> music performance every Saturday.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-ufwkum2dg-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "improvise",
+    "meanings": [
+      "(연주·연설 등을) 즉흥적으로 하다",
+      "즉석에서 만들다"
+    ],
+    "examples": [
+      {
+        "origin": "The performers <span class=\"target-word\">improvised</span> a jazz melody.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-v92tax3an-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "popular",
+    "meanings": [
+      "인기 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Broadway musicals are so <span class=\"target-word\">popular</span> that they frequently go on tour.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-xgy1l1mms-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "donation",
+    "meanings": [
+      "기증",
+      "기부"
+    ],
+    "examples": [
+      {
+        "origin": "The library is accepting <span class=\"target-word\">donations</span> of children's books.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-i6k3ahz4r-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "alumni",
+    "meanings": [
+      "동창생들",
+      "졸업생들"
+    ],
+    "examples": [
+      {
+        "origin": "St. John's University <span class=\"target-word\">alumni</span> were invited to the graduation ceremony.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-ql7ekomf2-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "present",
+    "meanings": [
+      "제시하다",
+      "현재의",
+      "참석한"
+    ],
+    "examples": [
+      {
+        "origin": "Please <span class=\"target-word\">present</span> valid tickets at the door.",
+        "meaning": ""
+      },
+      {
+        "origin": "The <span class=\"target-word\">present</span> owner of the resort intends to renovate it.",
+        "meaning": ""
+      },
+      {
+        "origin": "Famous athlete Matt London was <span class=\"target-word\">present</span> at the game.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-4ghibo7cu-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "admission",
+    "meanings": [
+      "입장"
+    ],
+    "examples": [
+      {
+        "origin": "Those wishing to visit the exhibit will be charged an extra <span class=\"target-word\">admission</span> fee.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-s2gyc95un-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "banquet",
+    "meanings": [
+      "연회",
+      "만찬"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel has facilities for large-scale wedding <span class=\"target-word\">banquets</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-u3m7veuo6-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "anniversary",
+    "meanings": [
+      "기념일"
+    ],
+    "examples": [
+      {
+        "origin": "The couple celebrated their 50th <span class=\"target-word\">anniversary</span> with a party.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-9p1728en8-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "required",
+    "meanings": [
+      "필수의",
+      "의무적인"
+    ],
+    "examples": [
+      {
+        "origin": "Proper swimming attire is <span class=\"target-word\">required</span> when using the hotel pool.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-9exkhow8u-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "succeed",
+    "meanings": [
+      "성공하다",
+      "뒤를 잇다"
+    ],
+    "examples": [
+      {
+        "origin": "Peggy <span class=\"target-word\">succeeded</span> in convincing her family to visit Hawaii.",
+        "meaning": ""
+      },
+      {
+        "origin": "Mr. Chambers will <span class=\"target-word\">succeed</span> Ms. Shipman as head of the Tourism Board after she retires.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-hm21xrtjo-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "collection",
+    "meanings": [
+      "소장품",
+      "수집물",
+      "징수",
+      "수금"
+    ],
+    "examples": [
+      {
+        "origin": "The museum has a unique <span class=\"target-word\">collection</span> of stamps.",
+        "meaning": ""
+      },
+      {
+        "origin": "Toll <span class=\"target-word\">collection</span> operates by means of an electronic system.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-hohzjpjdz-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "fund-raising",
+    "meanings": [
+      "모금"
+    ],
+    "examples": [
+      {
+        "origin": "Auctions are a popular form of <span class=\"target-word\">fund-raising</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-1uo344zjb-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "resume",
+    "meanings": [
+      "재개하다",
+      "다시 시작하다"
+    ],
+    "examples": [
+      {
+        "origin": "The play will <span class=\"target-word\">resume</span> after a short intermission.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-4tsr046sw-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "issue",
+    "meanings": [
+      "(출판물의) 제 ~호",
+      "문제",
+      "쟁점"
+    ],
+    "examples": [
+      {
+        "origin": "Jack's cake recipe was in the April <span class=\"target-word\">issue</span> of Baker Monthly.",
+        "meaning": ""
+      },
+      {
+        "origin": "There are many perspectives on the <span class=\"target-word\">issue</span> of global warming.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-i0rlv0fz4-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "subscription",
+    "meanings": [
+      "(정기 발행물의) 구독"
+    ],
+    "examples": [
+      {
+        "origin": "I would like to get a <span class=\"target-word\">subscription</span> to the Weekly Herald.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-1xsdvhl10-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "appear",
+    "meanings": [
+      "나타나다",
+      "출현하다"
+    ],
+    "examples": [
+      {
+        "origin": "The novelist <span class=\"target-word\">appeared</span> at the bookstore to sign autographs.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-bxknp1rp4-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "accompany",
+    "meanings": [
+      "동행하다",
+      "동반하다"
+    ],
+    "examples": [
+      {
+        "origin": "Mary <span class=\"target-word\">accompanied</span> her grandmother to the mall.",
+        "meaning": ""
+      },
+      {
+        "origin": "Be careful because strong winds often <span class=\"target-word\">accompany</span> rain in the mountains.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-24q1e9aj8-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "edition",
+    "meanings": [
+      "(간행물의) 판"
+    ],
+    "examples": [
+      {
+        "origin": "A revised <span class=\"target-word\">edition</span> of the economics book will be published soon.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-jwp853yhp-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "specifically",
+    "meanings": [
+      "명확하게",
+      "분명히",
+      "특히",
+      "특별히"
+    ],
+    "examples": [
+      {
+        "origin": "The package terms <span class=\"target-word\">specifically</span> stated that guests would stay at a hotel.",
+        "meaning": ""
+      },
+      {
+        "origin": "Campgrounds around the lake are worth visiting, <span class=\"target-word\">specifically</span> the Milligan site.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-ewgjn3dzg-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "anonymous",
+    "meanings": [
+      "익명의",
+      "이름을 모르는"
+    ],
+    "examples": [
+      {
+        "origin": "The charity received $6,000 from an <span class=\"target-word\">anonymous</span> donor.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-nm8aksp5b-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "commit",
+    "meanings": [
+      "헌신하다",
+      "전념하다"
+    ],
+    "examples": [
+      {
+        "origin": "The store is <span class=\"target-word\">committed</span> to providing excellent customer service.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-bb7rjha2m-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "informative",
+    "meanings": [
+      "유익한",
+      "정보를 주는"
+    ],
+    "examples": [
+      {
+        "origin": "The documentary was <span class=\"target-word\">informative</span> and interesting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-jwa0c7sg6-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "audience",
+    "meanings": [
+      "청중",
+      "관중"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">audience</span> applauded the singer enthusiastically.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-remky16a1-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "author",
+    "meanings": [
+      "작가",
+      "저자"
+    ],
+    "examples": [
+      {
+        "origin": "All of the <span class=\"target-word\">author's</span> short stories are popular.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-fciaexpix-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "note",
+    "meanings": [
+      "주목하다",
+      "특별히 언급하다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <span class=\"target-word\">note</span> the intricate details of the architecture.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-uhcsl632i-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "antique",
+    "meanings": [
+      "골동품"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Antiques</span> are popular for home decor.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-4e0bztq5y-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "manuscript",
+    "meanings": [
+      "원고"
+    ],
+    "examples": [
+      {
+        "origin": "The author is working on several <span class=\"target-word\">manuscripts</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-7reaqjnjx-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "beneficial",
+    "meanings": [
+      "유익한",
+      "이로운"
+    ],
+    "examples": [
+      {
+        "origin": "The organization's work is <span class=\"target-word\">beneficial</span> to the community.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-8c25et60h-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "upcoming",
+    "meanings": [
+      "곧 있을",
+      "다가오는"
+    ],
+    "examples": [
+      {
+        "origin": "A reporter spoke to a candidate for the <span class=\"target-word\">upcoming</span> election.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-sc3c3k3s6-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "lend",
+    "meanings": [
+      "빌려 주다"
+    ],
+    "examples": [
+      {
+        "origin": "The library <span class=\"target-word\">lends</span> a variety of audio-visual materials.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-cdso46yj0-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "current",
+    "meanings": [
+      "현재의",
+      "현행의",
+      "통용되는"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Current</span> subscribers to the magazine will receive a free supplement.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-ud7mdu60p-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "local",
+    "meanings": [
+      "지방의",
+      "고장의"
+    ],
+    "examples": [
+      {
+        "origin": "The tournament will be held at the <span class=\"target-word\">local</span> high school.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-mvw600fvb-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "variety",
+    "meanings": [
+      "다양성",
+      "변화",
+      "종류",
+      "품종"
+    ],
+    "examples": [
+      {
+        "origin": "The newsstand sells a <span class=\"target-word\">variety</span> of magazines and newspapers.",
+        "meaning": ""
+      },
+      {
+        "origin": "The specialty coffee store sells more than twenty <span class=\"target-word\">varieties</span> of coffee.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-90mtu2dkq-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "advocate",
+    "meanings": [
+      "옹호자"
+    ],
+    "examples": [
+      {
+        "origin": "The writer is an <span class=\"target-word\">advocate</span> of public education.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-6c76zfe2o-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "contributor",
+    "meanings": [
+      "기고가",
+      "공헌자"
+    ],
+    "examples": [
+      {
+        "origin": "The doctor is a regular <span class=\"target-word\">contributor</span> to the medical journal.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-iqi255iok-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "defy",
+    "meanings": [
+      "저항하다",
+      "(설명·묘사 등이) 거의 불가능하다"
+    ],
+    "examples": [
+      {
+        "origin": "The documentary series <span class=\"target-word\">defies</span> conventional wisdom about fitness.",
+        "meaning": ""
+      },
+      {
+        "origin": "The play <span class=\"target-word\">defied</span> all description.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-yupgmavnp-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "fascinating",
+    "meanings": [
+      "매혹적인",
+      "황홀한"
+    ],
+    "examples": [
+      {
+        "origin": "Many <span class=\"target-word\">fascinating</span> pieces of art were on display.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910821-4u2hycysm-1769583910821",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.821082Z",
+    "updatedAt": "2026-01-28T07:05:10.821082Z",
+    "dictionaryId": null,
+    "origin": "showing",
+    "meanings": [
+      "(영화·연극의) 상영",
+      "전시"
+    ],
+    "examples": [
+      {
+        "origin": "We attended the premiere <span class=\"target-word\">showing</span> of the Rita Garner movie.",
+        "meaning": ""
+      },
+      {
+        "origin": "There will be another <span class=\"target-word\">showing</span> of this artist's work.",
+        "meaning": ""
+      }
+    ]
+  }
+]

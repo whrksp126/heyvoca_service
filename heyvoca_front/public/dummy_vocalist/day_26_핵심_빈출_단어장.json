@@ -1,0 +1,982 @@
+[
+  {
+    "id": "1769583910852-5ze4ptfau-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "delinquent",
+    "meanings": [
+      "(세금 등이) 연체된",
+      "미불의"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">delinquent</strong> account has been suspended.",
+        "meaning": "그 연체된 계좌는 정지되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-zfr132m86-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "overdue",
+    "meanings": [
+      "(지불·반납 등의) 기한이 지난",
+      "지불 기한이 넘은"
+    ],
+    "examples": [
+      {
+        "origin": "The bill for October is <strong class=\"target-word\">overdue</strong> and must be paid soon.",
+        "meaning": "10월 청구서는 지불 기한이 지났으므로 곧 납부되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-wao7sn09b-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "regrettably",
+    "meanings": [
+      "유감스럽게도"
+    ],
+    "examples": [
+      {
+        "origin": "We are <strong class=\"target-word\">regrettably</strong> unable to approve your loan.",
+        "meaning": "저희는 유감스럽게도 귀하의 대출을 승인할 수 없습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-cfijg37dv-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "balance",
+    "meanings": [
+      "잔고",
+      "차감 잔액"
+    ],
+    "examples": [
+      {
+        "origin": "Urban Bank's Web site allows customers to check their account <strong class=\"target-word\">balance</strong> online.",
+        "meaning": "Urban 은행의 웹사이트는 고객들이 계좌 잔고를 온라인으로 확인할 수 있게 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-u2jt4v4s6-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "deposit",
+    "meanings": [
+      "입금하다",
+      "예금하다"
+    ],
+    "examples": [
+      {
+        "origin": "Steve <strong class=\"target-word\">deposited</strong> his paycheck at the bank this morning.",
+        "meaning": "Steve는 오늘 아침에 자신의 급료를 은행에 입금했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-863u8stu8-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "investigation",
+    "meanings": [
+      "조사"
+    ],
+    "examples": [
+      {
+        "origin": "The government's <strong class=\"target-word\">investigation</strong> into Harp Financial revealed no signs of illegal activity.",
+        "meaning": "Harp Financial사에 대한 정부의 조사는 불법적인 활동의 흔적을 밝히지 못했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-qrli2ebxz-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "account",
+    "meanings": [
+      "계좌",
+      "설명",
+      "고려"
+    ],
+    "examples": [
+      {
+        "origin": "Banks always take security into <strong class=\"target-word\">account</strong>.",
+        "meaning": "은행은 항시 보안을 고려한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-hx9mepnmm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "statement",
+    "meanings": [
+      "명세서",
+      "성명서"
+    ],
+    "examples": [
+      {
+        "origin": "Bank <strong class=\"target-word\">statements</strong> are sent out monthly.",
+        "meaning": "예금 명세서는 매달 발송됩니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-my1k6hn7k-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "amount",
+    "meanings": [
+      "액수",
+      "양"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">amount</strong> of money needed to open a savings account is $50.",
+        "meaning": "예금 계좌를 개설하는 데 필요한 액수는 50달러이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-pap4z9hdm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "withdrawal",
+    "meanings": [
+      "(예금의) 인출"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Withdrawals</strong> can be made anytime at the cash machine.",
+        "meaning": "예금 인출은 현급 자동 지급기에서 언제든지 가능합니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-7pd9idg2r-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "previously",
+    "meanings": [
+      "이전에"
+    ],
+    "examples": [
+      {
+        "origin": "The SC card application requires proof of a <strong class=\"target-word\">previously</strong> opened credit card account.",
+        "meaning": "SC 카드 신청에는 이전에 개설했던 신용카드 계좌가 증거로 필요하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-yaooueguo-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "due",
+    "meanings": [
+      "만기가 된",
+      "지불 기일이 된",
+      "(금전 등이) ~에게 마땅히 지급되어야 할"
+    ],
+    "examples": [
+      {
+        "origin": "The payment is <strong class=\"target-word\">due</strong> on the first of next month.",
+        "meaning": "지불은 다음 달 1일까지이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-kof1wsz7p-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "receive",
+    "meanings": [
+      "받다",
+      "수취하다"
+    ],
+    "examples": [
+      {
+        "origin": "receipt",
+        "meaning": ""
+      },
+      {
+        "origin": "reception",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-9p9g0q623-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "expect",
+    "meanings": [
+      "예상하다",
+      "기대하다"
+    ],
+    "examples": [
+      {
+        "origin": "Interest rates are <strong class=\"target-word\">expected</strong> to increase by 2 percent.",
+        "meaning": "금리가 2퍼센트 증가할 것으로 예상된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-wchzrtzbn-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "certificate",
+    "meanings": [
+      "증명서",
+      "증서"
+    ],
+    "examples": [
+      {
+        "origin": "The bank requires a <strong class=\"target-word\">certificate</strong> of employment to approve the loan.",
+        "meaning": "그 은행은 대출을 승인하는 데 고용 증명서를 요구한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-enp273taf-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "document",
+    "meanings": [
+      "서류",
+      "문서"
+    ],
+    "examples": [
+      {
+        "origin": "Please submit the required tax <strong class=\"target-word\">documents</strong> by this Friday.",
+        "meaning": "이번 금요일까지 필요한 세무 서류들을 제출해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-fbwh6134j-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "spending",
+    "meanings": [
+      "소비",
+      "지출"
+    ],
+    "examples": [
+      {
+        "origin": "The Vantage Checking Account is ideal for your daily <strong class=\"target-word\">spending</strong> needs.",
+        "meaning": "Vantage 당좌 예금 계좌는 여러분의 일상적인 소비 요구에 가장 알맞습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-mwy6pvxh0-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "successfully",
+    "meanings": [
+      "성공적으로"
+    ],
+    "examples": [
+      {
+        "origin": "James <strong class=\"target-word\">successfully</strong> transferred $5,000 to his overseas account.",
+        "meaning": "James는 성공적으로 5천 달러를 그의 해외 계좌로 이체했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-9becrojw2-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "bill",
+    "meanings": [
+      "~에게 청구서를 보내다"
+    ],
+    "examples": [
+      {
+        "origin": "Residents will be <strong class=\"target-word\">billed</strong> separately for gas and electricity charges.",
+        "meaning": "거주자들은 가스와 전기 요금에 대한 청구서를 따로 받을 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-s0bol6d8i-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "pleasure",
+    "meanings": [
+      "즐거움",
+      "기쁨",
+      "영광"
+    ],
+    "examples": [
+      {
+        "origin": "Fast and friendly service makes it a <strong class=\"target-word\">pleasure</strong> to bank with Township Capital.",
+        "meaning": "빠르고 친절한 서비스는 Township Capital사와 거래하는 것을 즐겁게 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-8zltafyji-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "study",
+    "meanings": [
+      "연구"
+    ],
+    "examples": [
+      {
+        "origin": "This <strong class=\"target-word\">study</strong> investigates the feasibility of the proposed tax cuts.",
+        "meaning": "이 연구는 제시된 세금 감면안의 실현 가능성을 조사한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-h6yrdrchh-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "summary",
+    "meanings": [
+      "요약",
+      "개요"
+    ],
+    "examples": [
+      {
+        "origin": "summarize",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-55k5jphbd-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "temporary",
+    "meanings": [
+      "임시의"
+    ],
+    "examples": [
+      {
+        "origin": "temporarily",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-98frzlowm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "lower",
+    "meanings": [
+      "(양·가격을) 줄이다"
+    ],
+    "examples": [
+      {
+        "origin": "lower the price",
+        "meaning": ""
+      },
+      {
+        "origin": "the lower price",
+        "meaning": ""
+      },
+      {
+        "origin": "low",
+        "meaning": ""
+      },
+      {
+        "origin": "raise",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-rlb98lfy9-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "transaction",
+    "meanings": [
+      "거래",
+      "업무"
+    ],
+    "examples": [
+      {
+        "origin": "The first five <strong class=\"target-word\">transactions</strong> will not be charged a service fee.",
+        "meaning": "처음 다섯 번의 거래에는 서비스 비용이 청구되지 않을 것입니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-mhcw5i5tv-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "double",
+    "meanings": [
+      "두 배로 만들다"
+    ],
+    "examples": [
+      {
+        "origin": "All of the investors who purchased MAGG's stock a month ago <strong class=\"target-word\">doubled</strong> their money.",
+        "meaning": "한 달 전에 MAGG사의 주식을 구입한 모든 투자자는 자신들의 돈을 두 배로 만들었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-jnm82edu5-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "identification",
+    "meanings": [
+      "신분증",
+      "신분 증명서"
+    ],
+    "examples": [
+      {
+        "origin": "Two forms of <strong class=\"target-word\">identification</strong> are required to open an account.",
+        "meaning": "계좌를 개설하려면 두 가지 신분증이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-vroe7zrwj-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "dissatisfaction",
+    "meanings": [
+      "불만",
+      "불평"
+    ],
+    "examples": [
+      {
+        "origin": "Clients registered their <strong class=\"target-word\">dissatisfaction</strong> with the bank at the Consumer Protection Office.",
+        "meaning": "고객들은 은행에 대한 그들의 불만을 소비자 보호원에 등록했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-0aezjcoq2-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "in common",
+    "meanings": [
+      "공통으로",
+      "공동으로"
+    ],
+    "examples": [
+      {
+        "origin": "Credit unions and banks have much <strong class=\"target-word\">in common</strong>.",
+        "meaning": "신용 협동조합과 은행은 많은 공통점이 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-v81hqs96f-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "interest",
+    "meanings": [
+      "관심",
+      "권리",
+      "이자"
+    ],
+    "examples": [
+      {
+        "origin": "Bay Bank offers the most competitive <strong class=\"target-word\">interest</strong> rates.",
+        "meaning": "Bay 은행은 가장 경쟁력 있는 이자율을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-mfxdrav1e-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "reject",
+    "meanings": [
+      "거절하다",
+      "거부하다"
+    ],
+    "examples": [
+      {
+        "origin": "Sarah was <strong class=\"target-word\">rejected</strong> for a mortgage application at Singer Bank.",
+        "meaning": "Sarah는 Singer 은행에서 융자 신청을 거절당했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-yoktl62nh-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "relation",
+    "meanings": [
+      "관계"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Relations</strong> between the financial corporation and investors became strained.",
+        "meaning": "금융 기업과 투자자들 사이의 관계가 불편해졌다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-uw1evfyyk-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "tentatively",
+    "meanings": [
+      "임시로",
+      "시험적으로"
+    ],
+    "examples": [
+      {
+        "origin": "Helen <strong class=\"target-word\">tentatively</strong> agreed to invest $10,000 in Jim's company.",
+        "meaning": "Helen은 1만 달러를 Jim의 회사에 투자하는 것에 임시로 동의했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-j3mh7k6k3-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "alternatively",
+    "meanings": [
+      "그렇지 않으면",
+      "그 대신에"
+    ],
+    "examples": [
+      {
+        "origin": "The money can go in a savings account; <strong class=\"target-word\">alternatively</strong>, it can be placed into an investment fund.",
+        "meaning": "그 돈은 예금 계좌로 들어갈 수 있으며, 그렇지 않으면 투자 펀드에 투자될 수도 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-croevo4et-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "attentive",
+    "meanings": [
+      "주의 깊은",
+      "세심한"
+    ],
+    "examples": [
+      {
+        "origin": "attend",
+        "meaning": ""
+      },
+      {
+        "origin": "attention",
+        "meaning": ""
+      },
+      {
+        "origin": "inattentive",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-gvlluov6n-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "convert",
+    "meanings": [
+      "전환하다",
+      "변환하다"
+    ],
+    "examples": [
+      {
+        "origin": "Savings accounts can be <strong class=\"target-word\">converted</strong> into mutual funds at no charge.",
+        "meaning": "보통 예금 계좌는 무료로 뮤추얼 펀드로 전환될 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-1f9hkxo2t-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "heavily",
+    "meanings": [
+      "몹시",
+      "심하게"
+    ],
+    "examples": [
+      {
+        "origin": "The institution <strong class=\"target-word\">heavily</strong> relies on capital gained from lending.",
+        "meaning": "그 기관은 대출로 얻은 자금에 지나치게 의존하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-t3zhf9hjc-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "loan",
+    "meanings": [
+      "대출",
+      "대출금"
+    ],
+    "examples": [
+      {
+        "origin": "The couple took out a <strong class=\"target-word\">loan</strong> to finance their child's college education.",
+        "meaning": "그 부부는 자녀의 대학 교육비를 대기 위해 대출을 받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-z0yxxj7qm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "unexpected",
+    "meanings": [
+      "예기치 않은"
+    ],
+    "examples": [
+      {
+        "origin": "Price drops were an <strong class=\"target-word\">unexpected</strong> side effect of the economic reform policy.",
+        "meaning": "물가 하락은 경제 개혁 정책의 예기치 않은 부작용이었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-0v9mtarwo-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "cash",
+    "meanings": [
+      "현금으로 바꾸다"
+    ],
+    "examples": [
+      {
+        "origin": "The bank refuses to <strong class=\"target-word\">cash</strong> the check without proper identification.",
+        "meaning": "은행은 적절한 신분증이 없으면 수표를 현금으로 바꾸어 주기를 거부한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-g7qowwugp-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "mortgage",
+    "meanings": [
+      "(담보) 대출"
+    ],
+    "examples": [
+      {
+        "origin": "Higher <strong class=\"target-word\">mortgage</strong> rates will hurt homeowners.",
+        "meaning": "더 높은 담보 대출 금리는 주택 소유자들에게 손해를 입힐 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-yv9zlk0ns-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "payable",
+    "meanings": [
+      "지불해야 하는"
+    ],
+    "examples": [
+      {
+        "origin": "Make all checks <strong class=\"target-word\">payable</strong> to Everson Ltd.",
+        "meaning": "모든 수표가 Everson사에 지불되도록 해 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-paxt01gw3-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "personal",
+    "meanings": [
+      "개인의"
+    ],
+    "examples": [
+      {
+        "origin": "Jane visited the bank to cash a <strong class=\"target-word\">personal</strong> check.",
+        "meaning": "Jane은 개인 수표를 현금으로 바꾸기 위해 은행에 들렀다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910852-r9cptbtcb-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852158Z",
+    "updatedAt": "2026-01-28T07:05:10.852158Z",
+    "dictionaryId": null,
+    "origin": "practice",
+    "meanings": [
+      "관행",
+      "관례"
+    ],
+    "examples": [
+      {
+        "origin": "The investment bank is known for its responsible business <strong class=\"target-word\">practice</strong>.",
+        "meaning": "그 투자 은행은 책임감 있는 사업 관행으로 알려져 있다."
+      }
+    ]
+  }
+]

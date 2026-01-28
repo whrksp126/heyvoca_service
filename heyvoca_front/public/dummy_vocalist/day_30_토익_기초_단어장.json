@@ -1,0 +1,442 @@
+[
+  {
+    "id": "1769583910867-hv15wh7pc-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "allergic",
+    "meanings": [
+      "알레르기가 있는",
+      "알레르기의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-s21yzjryu-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "blind",
+    "meanings": [
+      "눈이 먼"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-ccoayta4q-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "cavity",
+    "meanings": [
+      "충치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-dc4nxcwlp-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "cold",
+    "meanings": [
+      "감기",
+      "추위",
+      "추운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-yuts4u49u-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "cosmetic",
+    "meanings": [
+      "미용의",
+      "화장의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-54oa7zz2i-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "feel sick",
+    "meanings": [
+      "몸이 찌뿌드드하다",
+      "메스껍다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-ayb80bw55-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "fitness",
+    "meanings": [
+      "건강 상태"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-pv1f81zcc-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "gym",
+    "meanings": [
+      "체육관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-o44fgpmsv-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "have an injection",
+    "meanings": [
+      "주사를 맞다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-aazq1qd96-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "medical facility",
+    "meanings": [
+      "의료 시설"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-3woyun87x-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "raincoat",
+    "meanings": [
+      "비옷"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-6vb1n6k4d-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "surgery",
+    "meanings": [
+      "수술"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-cbx4sjm9o-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "toothache",
+    "meanings": [
+      "치통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-0fd8rj6mo-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "treat",
+    "meanings": [
+      "치료하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-0hz0wlggw-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "vision",
+    "meanings": [
+      "시력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-3mh99tiv1-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "workout",
+    "meanings": [
+      "운동"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-q8mzlumha-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "beat",
+    "meanings": [
+      "(심장·맥박이) 뛰다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-7ghfule7i-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "blink",
+    "meanings": [
+      "눈을 깜빡이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-tpuv6z1qp-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "cure",
+    "meanings": [
+      "치료",
+      "치료하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-epw7r6qkx-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "disease",
+    "meanings": [
+      "질병"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-5a1hb5fha-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "healing",
+    "meanings": [
+      "치료의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-3jfdl9qwa-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "internal",
+    "meanings": [
+      "내부의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-vgm9oe5cv-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "lung",
+    "meanings": [
+      "폐",
+      "허파"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-sfqrkgupo-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "organ",
+    "meanings": [
+      "(신체) 기관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-ea7t5fiqb-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "remedy",
+    "meanings": [
+      "치료법",
+      "의약"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-bjn0igabw-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "stomachache",
+    "meanings": [
+      "복통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910867-yg9jo08sb-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867944Z",
+    "updatedAt": "2026-01-28T07:05:10.867944Z",
+    "dictionaryId": null,
+    "origin": "well-being",
+    "meanings": [
+      "(건강과) 행복"
+    ],
+    "examples": []
+  }
+]

@@ -317,7 +317,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                             className="inline-block cursor-pointer"
                             style={{ willChange: 'transform' }}
                           >
-                            {example.origin}
+                            <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                           </motion.span>
                         </p>
                       </div>

@@ -1,0 +1,892 @@
+[
+  {
+    "id": "1769583910868-zt095lrx5-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "transportation",
+    "meanings": [
+      "운송",
+      "수송",
+      "운송 수단"
+    ],
+    "examples": [
+      {
+        "origin": "Construction work has caused delays in public <strong class=\"target-word\">transportation</strong>.",
+        "meaning": "건설 작업 때문에 대중교통 이용이 지연되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-huwwakl6n-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "commute",
+    "meanings": [
+      "출퇴근하다"
+    ],
+    "examples": [
+      {
+        "origin": "Regular <strong class=\"target-word\">commuters</strong> can purchase a monthly pass at a discount.",
+        "meaning": "정기 통근자들은 할인 가격에 월 정기권을 구입할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-rmo3cixal-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "environment",
+    "meanings": [
+      "환경"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">environmental</strong> impact of the new factory is under review.",
+        "meaning": "새 공장이 환경에 미치는 영향이 검토 중이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-hbhkzknfx-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "pollute",
+    "meanings": [
+      "오염시키다"
+    ],
+    "examples": [
+      {
+        "origin": "Automobile exhaust <strong class=\"target-word\">pollutes</strong> the air in large cities.",
+        "meaning": "자동차 배기가스는 대도시의 공기를 오염시킨다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-yodso4a7l-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "reduce",
+    "meanings": [
+      "줄이다",
+      "감소시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The local government has decided to <strong class=\"target-word\">reduce</strong> bus fares.",
+        "meaning": "지방 정부는 버스 요금을 인하하기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-4cxj0mxmh-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "resource",
+    "meanings": [
+      "자원"
+    ],
+    "examples": [
+      {
+        "origin": "The city spent all of its <strong class=\"target-word\">resources</strong> on the subway project.",
+        "meaning": "그 도시는 모든 자원을 지하철 프로젝트에 쏟아 부었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-tx5xib43r-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "preserve",
+    "meanings": [
+      "보존하다",
+      "보호하다"
+    ],
+    "examples": [
+      {
+        "origin": "The government's goal is to <strong class=\"target-word\">preserve</strong> more of the countryside.",
+        "meaning": "정부의 목표는 시골 지역을 더 보호하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-qp4qe658u-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "waste",
+    "meanings": [
+      "낭비하다",
+      "낭비",
+      "쓰레기",
+      "폐기물"
+    ],
+    "examples": [
+      {
+        "origin": "We should avoid <strong class=\"target-word\">wasting</strong> energy.",
+        "meaning": "우리는 에너지 낭비를 피해야 한다."
+      },
+      {
+        "origin": "The local landfill is nearly full of household <strong class=\"target-word\">waste</strong>.",
+        "meaning": "지역 쓰레기 매립지는 가계 폐기물로 거의 가득 찼다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-ye2zk0b1t-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "convenient",
+    "meanings": [
+      "편리한"
+    ],
+    "examples": [
+      {
+        "origin": "The building is at a <strong class=\"target-word\">convenient</strong> location near the train station.",
+        "meaning": "그 건물은 기차역 근처의 편리한 장소에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-5x5q9i1jo-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "congested",
+    "meanings": [
+      "정체된",
+      "혼잡한"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">congested</strong> roads resulted in many late arrivals.",
+        "meaning": "도로의 정체로 인해 많은 지각 도착이 발생했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-qx2oqif39-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "alternative",
+    "meanings": [
+      "대안",
+      "대안의",
+      "대체 가능한"
+    ],
+    "examples": [
+      {
+        "origin": "We are looking for <strong class=\"target-word\">alternative</strong> routes to avoid the construction.",
+        "meaning": "우리는 공사를 피하기 위해 대안 노선을 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910868-223nlxk8p-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "regulation",
+    "meanings": [
+      "규정",
+      "법규"
+    ],
+    "examples": [
+      {
+        "origin": "Construction safety <strong class=\"target-word\">regulations</strong> are strictly enforced.",
+        "meaning": "건설 안전 규정은 엄격히 시행된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-zpxgv89v0-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "impact",
+    "meanings": [
+      "영향",
+      "충격",
+      "영향을 주다"
+    ],
+    "examples": [
+      {
+        "origin": "The closure of the bridge will have a significant <strong class=\"target-word\">impact</strong> on traffic.",
+        "meaning": "다리 폐쇄는 교통에 상당한 영향을 줄 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-hsc3l5jvv-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "benefit",
+    "meanings": [
+      "혜택",
+      "이익",
+      "득이 되다",
+      "이익을 얻다"
+    ],
+    "examples": [
+      {
+        "origin": "Reduced air pollution will <strong class=\"target-word\">benefit</strong> everyone.",
+        "meaning": "대기 오염이 감소하면 모두에게 이로울 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-n65827qz0-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "efficient",
+    "meanings": [
+      "효율적인"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">efficient</strong> distribution of goods keeps costs low.",
+        "meaning": "상품의 효율적인 유통이 비용을 낮게 유지해 준다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-9qnxi7yi1-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "hazardous",
+    "meanings": [
+      "위험한"
+    ],
+    "examples": [
+      {
+        "origin": "It is <strong class=\"target-word\">hazardous</strong> to drive when the roads are icy.",
+        "meaning": "도로가 얼었을 때 운전하는 것은 위험하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-hjpxaps2e-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "implement",
+    "meanings": [
+      "시행하다",
+      "이행하다"
+    ],
+    "examples": [
+      {
+        "origin": "The plan to <strong class=\"target-word\">implement</strong> a new traffic system was approved.",
+        "meaning": "새로운 교통망을 확충하려는 계획이 승인되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-ta2dmgsqm-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "leak",
+    "meanings": [
+      "(액체·가스 등이) 새다",
+      "누설하다",
+      "샘",
+      "누출"
+    ],
+    "examples": [
+      {
+        "origin": "They should fix the <strong class=\"target-word\">leak</strong> in the pipe immediately.",
+        "meaning": "그들은 파이프의 샘을 즉시 고쳐야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-34g13qevo-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "monitor",
+    "meanings": [
+      "감시하다",
+      "관찰하다",
+      "모니터",
+      "감시 장치"
+    ],
+    "examples": [
+      {
+        "origin": "Security cameras <strong class=\"target-word\">monitor</strong> the warehouse around the clock.",
+        "meaning": "보안 카메라들이 24시간 내내 창고를 감시한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-d9c03odru-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "penalty",
+    "meanings": [
+      "처벌",
+      "벌금",
+      "불이익"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">penalty</strong> for overdue books is 50 cents a day.",
+        "meaning": "연체 도서에 대한 벌금은 하루에 50센트이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-qexuvbaev-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "properly",
+    "meanings": [
+      "제대로",
+      "적절하게"
+    ],
+    "examples": [
+      {
+        "origin": "The data in the contract must be <strong class=\"target-word\">properly</strong> reviewed.",
+        "meaning": "계약서의 정보는 적절하게 검토되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-4kyis3x81-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "proximity",
+    "meanings": [
+      "근접",
+      "가까움"
+    ],
+    "examples": [
+      {
+        "origin": "We are in close <strong class=\"target-word\">proximity</strong> to reaching a final agreement.",
+        "meaning": "우리는 최종 합의에 도달하는 것에 아주 근접해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-e44xep2i6-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "reliable",
+    "meanings": [
+      "믿을 수 있는",
+      "신뢰할 만한"
+    ],
+    "examples": [
+      {
+        "origin": "The firm has a <strong class=\"target-word\">reliable</strong> reputation for honoring its contracts.",
+        "meaning": "그 회사는 계약을 준수하는 것에 대해 신뢰할 만한 명성을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-a8zlmazmi-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "rural",
+    "meanings": [
+      "시골의",
+      "지방의"
+    ],
+    "examples": [
+      {
+        "origin": "Lawyers are often used to settle disputes in <strong class=\"target-word\">rural</strong> areas.",
+        "meaning": "변호사들은 시골 지역의 분쟁을 해결하기 위해 자주 고용된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-d0a00t0ny-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "significant",
+    "meanings": [
+      "상당한",
+      "중대한"
+    ],
+    "examples": [
+      {
+        "origin": "A <strong class=\"target-word\">significant</strong> amount of money was spent on the negotiation.",
+        "meaning": "협상에 상당한 액수의 돈이 쓰였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-rpnxsw3dg-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "suburban",
+    "meanings": [
+      "교외의"
+    ],
+    "examples": [
+      {
+        "origin": "The law firm is located in a <strong class=\"target-word\">suburban</strong> area.",
+        "meaning": "그 법률 회사는 교외 지역에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-thqparzei-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "surround",
+    "meanings": [
+      "둘러싸다",
+      "에워싸다"
+    ],
+    "examples": [
+      {
+        "origin": "The building is <strong class=\"target-word\">surrounded</strong> by a high security fence.",
+        "meaning": "그 건물은 높은 보안 울타리로 둘러싸여 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-90005dxc2-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "sustainable",
+    "meanings": [
+      "지속 가능한"
+    ],
+    "examples": [
+      {
+        "origin": "We are seeking a <strong class=\"target-word\">sustainable</strong> agreement for both parties.",
+        "meaning": "우리는 양측 모두에게 지속 가능한 합의를 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-88fsf9wxl-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "toxic",
+    "meanings": [
+      "독성의",
+      "유독한"
+    ],
+    "examples": [
+      {
+        "origin": "The dispute was caused by <strong class=\"target-word\">toxic</strong> waste disposal in the area.",
+        "meaning": "분쟁은 그 지역의 독성 폐기물 처리로 인해 발생했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-t1jofjxh3-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "urban",
+    "meanings": [
+      "도시의"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">urban</strong> renewal project was included in the contract.",
+        "meaning": "도시 재생 프로젝트가 계약에 포함되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-xki75wvev-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "vehicle",
+    "meanings": [
+      "탈것",
+      "차량",
+      "수단"
+    ],
+    "examples": [
+      {
+        "origin": "car, transport",
+        "meaning": "차량"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-i6wmp5g7d-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "vital",
+    "meanings": [
+      "매우 중요한",
+      "활기찬"
+    ],
+    "examples": [
+      {
+        "origin": "essential, crucial",
+        "meaning": "매우 중요한"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-epbf47jva-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "wasteful",
+    "meanings": [
+      "낭비하는"
+    ],
+    "examples": [
+      {
+        "origin": "extravagant",
+        "meaning": "낭비하는"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-4a0gk4ks3-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "accidental",
+    "meanings": [
+      "우연한",
+      "돌발적인"
+    ],
+    "examples": [
+      {
+        "origin": "accidentally adv. 우연히",
+        "meaning": ""
+      },
+      {
+        "origin": "intentional",
+        "meaning": "의도적인"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-nil6t5cb4-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "adequate",
+    "meanings": [
+      "적절한",
+      "충분한"
+    ],
+    "examples": [
+      {
+        "origin": "adequately adv. 적절히",
+        "meaning": ""
+      },
+      {
+        "origin": "sufficient, enough",
+        "meaning": "충분한"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-wuuczndj9-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "conservation",
+    "meanings": [
+      "(자원 등의) 보호",
+      "보존"
+    ],
+    "examples": [
+      {
+        "origin": "conserve v. 아껴 쓰다, 보존하다",
+        "meaning": ""
+      },
+      {
+        "origin": "preservation",
+        "meaning": "보존"
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-j4y38adwc-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "ecology",
+    "meanings": [
+      "생태계",
+      "생태학"
+    ],
+    "examples": [
+      {
+        "origin": "ecological adj. 생태학적인",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-uvxga8sz8-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "extinct",
+    "meanings": [
+      "멸종된"
+    ],
+    "examples": [
+      {
+        "origin": "extinction n. 멸종",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910869-q68arnurc-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "habitat",
+    "meanings": [
+      "서식지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910869-xg4j33olk-1769583910869",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868979Z",
+    "updatedAt": "2026-01-28T07:05:10.868979Z",
+    "dictionaryId": null,
+    "origin": "renewable",
+    "meanings": [
+      "재생 가능한"
+    ],
+    "examples": [
+      {
+        "origin": "renew v. 갱신하다, 재개하다",
+        "meaning": ""
+      }
+    ]
+  }
+]

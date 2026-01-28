@@ -1,0 +1,462 @@
+[
+  {
+    "id": "1769583910852-tpj555os8-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "application form",
+    "meanings": [
+      "신청서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-d05itzm5y-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "career",
+    "meanings": [
+      "직업",
+      "경력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-2kj9ve2ph-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "completion",
+    "meanings": [
+      "완료",
+      "완성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-djb6tccew-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "fair",
+    "meanings": [
+      "공정한",
+      "타당한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-blzvkg5pb-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "graduation",
+    "meanings": [
+      "졸업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-56nhyaddu-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "in fact",
+    "meanings": [
+      "사실은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-yjlukxn7r-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "job fair",
+    "meanings": [
+      "취업 박람회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-q8cmxyjbc-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "job offer",
+    "meanings": [
+      "일자리 제안"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-gqa0yxocv-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "list",
+    "meanings": [
+      "목록",
+      "명단",
+      "목록에 기입하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-d04lkmdek-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "newcomer",
+    "meanings": [
+      "새로 온 사람",
+      "신입사원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-w7qp6wffm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "part-time",
+    "meanings": [
+      "파트타임의",
+      "시간제의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-yluzky8dm-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "previous job",
+    "meanings": [
+      "이전 직업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-sox7foomn-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "secretary",
+    "meanings": [
+      "비서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-qf85l3s96-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "send in",
+    "meanings": [
+      "~을 제출하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-6dta9ji8z-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "tidy",
+    "meanings": [
+      "단정한",
+      "깔끔한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-ow0uoc19o-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "trainee",
+    "meanings": [
+      "훈련받는 사람"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-myz53zb4d-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "apply for",
+    "meanings": [
+      "~에 지원하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-0rbj4qr1t-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "aptitude",
+    "meanings": [
+      "재능",
+      "소질"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-i7j0yt8fd-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "be admitted to",
+    "meanings": [
+      "~에 입장이 허용되다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-0d4k389od-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "be advised to do",
+    "meanings": [
+      "~할 것을 권유받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-bi9b6xhzh-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "criteria",
+    "meanings": [
+      "기준 (criterion의 복수형)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-ma8w6orzl-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "decade",
+    "meanings": [
+      "10년"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-rky7dsqw9-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "employ",
+    "meanings": [
+      "고용하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-uk87e4zeo-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "insufficient",
+    "meanings": [
+      "불충분한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-q6hdk315d-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "minimum",
+    "meanings": [
+      "최소한도",
+      "최소한의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-gnrrx77kw-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "party",
+    "meanings": [
+      "단체",
+      "당사자",
+      "연회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-1nrl6ie0d-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "plentiful",
+    "meanings": [
+      "풍부한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910852-gxvl69sq0-1769583910852",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.852874Z",
+    "updatedAt": "2026-01-28T07:05:10.852874Z",
+    "dictionaryId": null,
+    "origin": "profession",
+    "meanings": [
+      "직업"
+    ],
+    "examples": []
+  }
+]

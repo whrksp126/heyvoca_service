@@ -1,0 +1,529 @@
+[
+  {
+    "id": "1769583910863-czxhet1m9-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "arbitrary",
+    "meanings": [
+      "임의적인",
+      "자의적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-m7pd8g5k1-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "bequeath",
+    "meanings": [
+      "물려주다",
+      "유증하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-3w0mtfsyg-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "bonus",
+    "meanings": [
+      "보너스",
+      "장려금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-5trfzlyj3-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "brokerage",
+    "meanings": [
+      "중개",
+      "중개 수수료"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-9vnmhxhvd-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "commodity",
+    "meanings": [
+      "상품",
+      "일용품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-e60iiqkwa-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "depreciate",
+    "meanings": [
+      "가치가 떨어지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-7y43bc37d-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "diversification",
+    "meanings": [
+      "다양화",
+      "다각화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-9co2iqcds-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "downsize",
+    "meanings": [
+      "규모를 축소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-ia3u862oj-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "earnings",
+    "meanings": [
+      "수입",
+      "소득"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-kl12gxsb3-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "feasible",
+    "meanings": [
+      "실행 가능한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-jfpyhiutp-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "financial statement",
+    "meanings": [
+      "재무제표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-09k64i02u-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "fluctuation",
+    "meanings": [
+      "변동",
+      "오르내림"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-hby4jfcpq-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "hedge",
+    "meanings": [
+      "(위험 등을) 방지하다",
+      "대비하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-lxpq1771g-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "inflation",
+    "meanings": [
+      "인플레이션",
+      "물가 상승"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-ymydiaw88-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "intangible",
+    "meanings": [
+      "무형의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-sabuhiyj2-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "investment firm",
+    "meanings": [
+      "투자 회사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-ls6dfjgvj-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "joint venture",
+    "meanings": [
+      "합작 투자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-3debvmxn4-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "liability",
+    "meanings": [
+      "부채",
+      "책임"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-u7di28jyg-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "mutual fund",
+    "meanings": [
+      "뮤추얼 펀드"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-jsskxkgz2-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "net profit",
+    "meanings": [
+      "순이익"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-v0q8psbat-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "pension",
+    "meanings": [
+      "연금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-09xbrulfo-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "plummet",
+    "meanings": [
+      "폭락하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-i2gmi0uo5-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "portfolio",
+    "meanings": [
+      "포트폴리오"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-skjojw3sr-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "premium",
+    "meanings": [
+      "보험료",
+      "우수한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-7bidw1yha-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "profitability",
+    "meanings": [
+      "수익성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-7avopfr7u-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "prospectus",
+    "meanings": [
+      "(투자) 안내서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-w3dq7rit8-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "recede",
+    "meanings": [
+      "물러나다",
+      "약해지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-xqcoenlw8-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "shareholder",
+    "meanings": [
+      "주주"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-a89mmwc5v-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "soar",
+    "meanings": [
+      "치솟다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-aptybsar8-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "stagnant",
+    "meanings": [
+      "정체된",
+      "침체된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-vtk9es35f-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "subsidiary",
+    "meanings": [
+      "자회사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910863-b3rxgukv0-1769583910863",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.863401Z",
+    "updatedAt": "2026-01-28T07:05:10.863401Z",
+    "dictionaryId": null,
+    "origin": "volatile",
+    "meanings": [
+      "휘발성의",
+      "변덕스러운"
+    ],
+    "examples": []
+  }
+]

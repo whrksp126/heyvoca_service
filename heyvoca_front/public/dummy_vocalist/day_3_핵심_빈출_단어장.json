@@ -1,0 +1,893 @@
+[
+  {
+    "id": "1769583910814-mxmw1i47s-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "accustomed",
+    "meanings": [
+      "익숙한"
+    ],
+    "examples": [
+      {
+        "origin": "All our employees are <span class=\"target-word\">accustomed</span> to using the new design software.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-3rbwwhd7z-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "corporation",
+    "meanings": [
+      "주식회사",
+      "법인"
+    ],
+    "examples": [
+      {
+        "origin": "Delroy Lee heads a multinational telecommunications <span class=\"target-word\">corporation</span> based in Virginia.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-d1qkj0duc-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "demanding",
+    "meanings": [
+      "요구가 많은",
+      "힘든"
+    ],
+    "examples": [
+      {
+        "origin": "Although Ms. Jenkins is a <span class=\"target-word\">demanding</span> supervisor, she has a reputation for being fair.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-xutrgp60s-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "colleague",
+    "meanings": [
+      "(직업상의) 동료"
+    ],
+    "examples": [
+      {
+        "origin": "Regular social activities can improve cooperation among <span class=\"target-word\">colleagues</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-ex88ylwix-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "division",
+    "meanings": [
+      "부서"
+    ],
+    "examples": [
+      {
+        "origin": "The technician will transfer to the automobile <span class=\"target-word\">division</span> after training.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-9p3aihp9a-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "request",
+    "meanings": [
+      "요청",
+      "요청하다"
+    ],
+    "examples": [
+      {
+        "origin": "Factory tours are available upon <span class=\"target-word\">request</span>.",
+        "meaning": ""
+      },
+      {
+        "origin": "Mike <span class=\"target-word\">requested</span> a copy of the contract from the sales director.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-ihofq4y50-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "efficiently",
+    "meanings": [
+      "효율적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The software helps employees work more <span class=\"target-word\">efficiently</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-wk7cf46sd-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "manage",
+    "meanings": [
+      "~을 경영하다",
+      "가까스로 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The boss decided Colleen could <span class=\"target-word\">manage</span> the new store.",
+        "meaning": ""
+      },
+      {
+        "origin": "They <span class=\"target-word\">managed</span> to do the assigned work in time.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-hh70e4ult-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "submit",
+    "meanings": [
+      "제출하다"
+    ],
+    "examples": [
+      {
+        "origin": "Applicants should <span class=\"target-word\">submit</span> a résumé to the personnel manager.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-mqk1oqnem-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "directly",
+    "meanings": [
+      "곧바로"
+    ],
+    "examples": [
+      {
+        "origin": "All regional branches report <span class=\"target-word\">directly</span> to the head office in Washington.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-lpfnu43ho-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "remind",
+    "meanings": [
+      "~에게 상기시키다",
+      "일깨우다"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Williams <span class=\"target-word\">reminded</span> Mr. Johnson of his lunch meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-s4nnou7mg-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "instruct",
+    "meanings": [
+      "지시하다",
+      "가르치다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager <span class=\"target-word\">instructed</span> the staff to read the conference materials beforehand.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-06qgcw513-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "deadline",
+    "meanings": [
+      "마감일",
+      "마감 시간"
+    ],
+    "examples": [
+      {
+        "origin": "The team worked together closely and finished the project ahead of the <span class=\"target-word\">deadline</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-0mm7gi3io-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "sample",
+    "meanings": [
+      "견본",
+      "샘플",
+      "표본",
+      "시식하다",
+      "(견본으로 질을) 시험하다"
+    ],
+    "examples": [
+      {
+        "origin": "We need to prepare <span class=\"target-word\">samples</span> of our products for the fair.",
+        "meaning": ""
+      },
+      {
+        "origin": "The customer <span class=\"target-word\">sampled</span> some cake at the opening of the bakery.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-za1vxnrgq-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "notify",
+    "meanings": [
+      "~에게 통지하다",
+      "알리다"
+    ],
+    "examples": [
+      {
+        "origin": "All staff applying for leave must <span class=\"target-word\">notify</span> their supervisors in writing.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-3hkns8bmv-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "perform",
+    "meanings": [
+      "(일·과제·의무 등을) 행하다",
+      "실행하다"
+    ],
+    "examples": [
+      {
+        "origin": "All visitors must <span class=\"target-word\">perform</span> a safety check before entering the factory.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-kki2msgue-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "deserve",
+    "meanings": [
+      "~할 만한 가치가 있다",
+      "~을 받을 만하다"
+    ],
+    "examples": [
+      {
+        "origin": "The sales team <span class=\"target-word\">deserves</span> a bonus for exceeding their goals.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-q73vao6ry-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "assignment",
+    "meanings": [
+      "일",
+      "과제",
+      "임무"
+    ],
+    "examples": [
+      {
+        "origin": "The manager gave the team a difficult <span class=\"target-word\">assignment</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-w0y2udwni-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "entire",
+    "meanings": [
+      "전체의"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">entire</span> staff was present at the meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-6oaxvjayx-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "release",
+    "meanings": [
+      "출시하다",
+      "발표하다",
+      "출시",
+      "발표"
+    ],
+    "examples": [
+      {
+        "origin": "The company will <span class=\"target-word\">release</span> its new product line next month.",
+        "meaning": ""
+      },
+      {
+        "origin": "The press <span class=\"target-word\">release</span> was sent to all major news outlets.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-m0i61l2o8-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "extension",
+    "meanings": [
+      "연장",
+      "확대",
+      "(전화의) 내선"
+    ],
+    "examples": [
+      {
+        "origin": "The manager granted an <span class=\"target-word\">extension</span> on the project deadline.",
+        "meaning": ""
+      },
+      {
+        "origin": "If you have any questions, please call me at <span class=\"target-word\">extension</span> 402.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-a7jpr3p98-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "electronically",
+    "meanings": [
+      "컴퓨터 통신망으로",
+      "온라인으로"
+    ],
+    "examples": [
+      {
+        "origin": "You can submit your application <span class=\"target-word\">electronically</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-skplgbqgi-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "attendance",
+    "meanings": [
+      "출석"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Attendance</span> at the workshop is mandatory for all new staff.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-2dy60w9j7-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "absolutely",
+    "meanings": [
+      "절대적으로",
+      "완전히"
+    ],
+    "examples": [
+      {
+        "origin": "It is <span class=\"target-word\">absolutely</span> necessary to finish the report today.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-1lxpvzjb1-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "delegate",
+    "meanings": [
+      "(권한 등을) 위임하다",
+      "대표"
+    ],
+    "examples": [
+      {
+        "origin": "A good manager knows how to <span class=\"target-word\">delegate</span> responsibilities.",
+        "meaning": ""
+      },
+      {
+        "origin": "The <span class=\"target-word\">delegates</span> from several countries attended the conference.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-7s7ih30b2-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "attentively",
+    "meanings": [
+      "주의 깊게",
+      "조심스럽게"
+    ],
+    "examples": [
+      {
+        "origin": "The students listened <span class=\"target-word\">attentively</span> to the teacher's instructions.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-4dcsyzlap-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "supervision",
+    "meanings": [
+      "감독"
+    ],
+    "examples": [
+      {
+        "origin": "Close <span class=\"target-word\">supervision</span> ensures high quality.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-vos1ix1iu-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "workshop",
+    "meanings": [
+      "워크숍",
+      "연수"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Kim was asked to speak at the <span class=\"target-word\">workshop</span> on Friday.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-hlixl9108-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "draw",
+    "meanings": [
+      "끌다",
+      "끌어당기다"
+    ],
+    "examples": [
+      {
+        "origin": "The company's annual conference usually <span class=\"target-word\">draws</span> 800 employees from around the world.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-9ty25wby9-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "revision",
+    "meanings": [
+      "수정",
+      "개정"
+    ],
+    "examples": [
+      {
+        "origin": "The team manager will make <span class=\"target-word\">revisions</span> to the proposal.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-189fc85lw-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "reluctantly",
+    "meanings": [
+      "마지못해",
+      "꺼려하여"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Danvers <span class=\"target-word\">reluctantly</span> agreed to cut the advertising budget.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-ehcssn5ue-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "acquaint",
+    "meanings": [
+      "~에게 숙지시키다",
+      "잘 알게 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The training program <span class=\"target-word\">acquaints</span> new employees with company procedures.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-vxgvyh8z5-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "convey",
+    "meanings": [
+      "(용건을) 전달하다"
+    ],
+    "examples": [
+      {
+        "origin": "The secretary urgently <span class=\"target-word\">conveyed</span> the message to the director.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-xas0vvxls-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "check",
+    "meanings": [
+      "검사하다",
+      "조사하다",
+      "확인하다",
+      "검사"
+    ],
+    "examples": [
+      {
+        "origin": "Please <span class=\"target-word\">check</span> your computer regularly for disk errors.",
+        "meaning": ""
+      },
+      {
+        "origin": "Click this link to <span class=\"target-word\">check</span> for the latest updates.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-s9rv30psl-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "headquarters",
+    "meanings": [
+      "본부"
+    ],
+    "examples": [
+      {
+        "origin": "The company <span class=\"target-word\">headquarters</span> is located in London.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-vk16dshjm-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "file",
+    "meanings": [
+      "(서류를) 정리하다",
+      "철하다",
+      "(서류·신청·고소 등을) 정식으로 제기하다",
+      "제출하다",
+      "서류"
+    ],
+    "examples": [
+      {
+        "origin": "Old accounting documents are <span class=\"target-word\">filed</span> in the storage room.",
+        "meaning": ""
+      },
+      {
+        "origin": "The department <span class=\"target-word\">filed</span> an insurance claim for the water damage in the conference room.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-mwcnbmuam-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "oversee",
+    "meanings": [
+      "감독하다"
+    ],
+    "examples": [
+      {
+        "origin": "Natalie will <span class=\"target-word\">oversee</span> the office relocation process.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-p9usi8avl-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "involved",
+    "meanings": [
+      "관여하는",
+      "관계된",
+      "연루된"
+    ],
+    "examples": [
+      {
+        "origin": "Dr. Mair was deeply <span class=\"target-word\">involved</span> in the decision-making process.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910814-6ek2uba2t-1769583910814",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.814110Z",
+    "updatedAt": "2026-01-28T07:05:10.814110Z",
+    "dictionaryId": null,
+    "origin": "concentrate",
+    "meanings": [
+      "집중하다",
+      "집중시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The sales team <span class=\"target-word\">concentrated</span> on developing new strategies.",
+        "meaning": ""
+      }
+    ]
+  }
+]

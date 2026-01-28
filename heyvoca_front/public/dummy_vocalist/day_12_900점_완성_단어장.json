@@ -1,0 +1,524 @@
+[
+  {
+    "id": "1769583910871-tvteljfhf-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "come apart",
+    "meanings": [
+      "부서지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-8ptrbbsl3-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "flow chart",
+    "meanings": [
+      "작업 공정도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-wxsmn4m3e-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "production quota",
+    "meanings": [
+      "생산량 할당"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-x6thbe489-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "tie up",
+    "meanings": [
+      "단단히 묶다",
+      "(일을) 마무리 짓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-0sfn7gghq-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "void",
+    "meanings": [
+      "빈 공간",
+      "텅 빈"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-o8bftvssk-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "discontinue",
+    "meanings": [
+      "중단하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-0u00tiq0i-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "halt",
+    "meanings": [
+      "중단",
+      "정지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-x8byo3hns-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "occurrence",
+    "meanings": [
+      "발생하는 것"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-dcldlal0u-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "operating",
+    "meanings": [
+      "(기계·설비의) 조작상의",
+      "운영상의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-bldrgtqf2-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "predicted",
+    "meanings": [
+      "예상되는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-opihsydkf-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "welding",
+    "meanings": [
+      "용접"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-on6evk5jx-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "arable",
+    "meanings": [
+      "(땅이) 경작에 알맞은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-lt6f9zpyd-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "broadly",
+    "meanings": [
+      "대략"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-jm0qn7okj-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "continuity",
+    "meanings": [
+      "지속성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-5mpomneuw-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "disassemble",
+    "meanings": [
+      "분해하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-b8465bh8h-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "excavation",
+    "meanings": [
+      "발굴"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-5f1r7tis5-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "fabricate",
+    "meanings": [
+      "제작하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-ox4y9uuos-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "involuntarily",
+    "meanings": [
+      "본의 아니게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-wknxizrp7-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "liquidity",
+    "meanings": [
+      "(자산의) 유동성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-p2se5ugad-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "nimble",
+    "meanings": [
+      "민첩한",
+      "재빠른"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-v6ailcg3y-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "obfuscate",
+    "meanings": [
+      "당황하게 하다",
+      "혼란스럽게 만들다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-yxirsj9sj-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "pertinent",
+    "meanings": [
+      "관련된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-671rggcpg-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "perturbed",
+    "meanings": [
+      "동요하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-vpy2acf4q-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "pragmatic",
+    "meanings": [
+      "실용적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-tojbb7aj4-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "precede",
+    "meanings": [
+      "~보다 앞서다",
+      "~보다 중요하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-yqnqr7bkh-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "prevail",
+    "meanings": [
+      "널리 퍼지다",
+      "이기다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-fuztsp77i-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "procurement",
+    "meanings": [
+      "(필수품의) 조달"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-s2vgr1krw-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "provoke",
+    "meanings": [
+      "화나게 하다",
+      "유발하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-1edlbf5g7-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "recede",
+    "meanings": [
+      "(가치·품질이) 떨어지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-hoxeemcyc-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "tolerance",
+    "meanings": [
+      "관용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-se3hhazaz-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "unfailingly",
+    "meanings": [
+      "변함없이",
+      "영락없이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910871-koic94g8t-1769583910871",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.871740Z",
+    "updatedAt": "2026-01-28T07:05:10.871740Z",
+    "dictionaryId": null,
+    "origin": "unmet",
+    "meanings": [
+      "(요구 등이) 채워지지 않은"
+    ],
+    "examples": []
+  }
+]

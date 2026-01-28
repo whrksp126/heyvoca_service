@@ -1,0 +1,884 @@
+[
+  {
+    "id": "1769583910828-d3t6bptpn-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "agenda",
+    "meanings": [
+      "의제",
+      "의사일정"
+    ],
+    "examples": [
+      {
+        "origin": "The board members discussed the first item on the <strong class=\"target-word\">agenda</strong> for today's meeting.",
+        "meaning": "이사회 멤버들은 오늘 회의 의제의 첫 번째 항목을 논의했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-cwxy5lqoe-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "convene",
+    "meanings": [
+      "(회원 등이) 모이다",
+      "(회의가) 개최되다"
+    ],
+    "examples": [
+      {
+        "origin": "The committee will <strong class=\"target-word\">convene</strong> at 10:00 A.M. to finalize the budget plan.",
+        "meaning": "위원회는 예산안을 확정하기 위해 오전 10시에 모일 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-d9sm4k2k9-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "refute",
+    "meanings": [
+      "부인하다",
+      "반박하다"
+    ],
+    "examples": [
+      {
+        "origin": "The spokesperson <strong class=\"target-word\">refuted</strong> the rumors about the company's financial crisis.",
+        "meaning": "대변인은 회사의 재정 위기에 대한 소문을 부인했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-43c3rueqq-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "coordination",
+    "meanings": [
+      "조정"
+    ],
+    "examples": [
+      {
+        "origin": "Effective <strong class=\"target-word\">coordination</strong> between the departments is essential for the project's success.",
+        "meaning": "부서 간의 효과적인 조정은 프로젝트의 성공을 위해 필수적이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-hlqlxhqgn-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "unanimous",
+    "meanings": [
+      "만장일치의",
+      "동의하는"
+    ],
+    "examples": [
+      {
+        "origin": "The board reached a <strong class=\"target-word\">unanimous</strong> decision to appoint Ms. Han as the new CEO.",
+        "meaning": "이사회는 Ms. Han을 새로운 CEO로 임명하는 만장일치 결정을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-s9epy4wmn-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "convince",
+    "meanings": [
+      "납득시키다",
+      "확신시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The marketing manager <strong class=\"target-word\">convinced</strong> the team that the new strategy would work.",
+        "meaning": "마케팅 본부장은 새로운 전략이 효과가 있을 것이라고 팀을 설득했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-7s4cd22u3-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "consensus",
+    "meanings": [
+      "여론",
+      "일치된 의견"
+    ],
+    "examples": [
+      {
+        "origin": "After much discussion, the committee finally reached a <strong class=\"target-word\">consensus</strong> on the proposal.",
+        "meaning": "많은 논의 끝에 위원회는 마침내 제안서에 대해 일치된 의견에 도달했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-xum7r58rn-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "defer",
+    "meanings": [
+      "연기하다",
+      "미루다"
+    ],
+    "examples": [
+      {
+        "origin": "The board decided to <strong class=\"target-word\">defer</strong> the final decision until the next monthly meeting.",
+        "meaning": "이사회는 최종 결정을 다음 달 정기 회의까지 미루기로 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-kw8k0befl-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "usually",
+    "meanings": [
+      "보통",
+      "일반적으로"
+    ],
+    "examples": [
+      {
+        "origin": "Staff meetings are <strong class=\"target-word\">usually</strong> held in the main conference room on Monday mornings.",
+        "meaning": "직원 회의는 보통 월요일 아침에 주 회의실에서 개최된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-0l0wky3yx-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "reschedule",
+    "meanings": [
+      "일정을 조정하다"
+    ],
+    "examples": [
+      {
+        "origin": "The HR manager had to <strong class=\"target-word\">reschedule</strong> the interviews due to an urgent business trip.",
+        "meaning": "인사과장은 긴급 출장 때문에 인터뷰 일정을 조정해야만 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-jl4wmcfyt-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "determine",
+    "meanings": [
+      "결정하다",
+      "확정하다",
+      "알아내다"
+    ],
+    "examples": [
+      {
+        "origin": "The committee will <strong class=\"target-word\">determine</strong> the winner of the architectural design contest.",
+        "meaning": "위원회는 건축 설계 공모전의 우승자를 결정할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-r3arovd4g-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "report",
+    "meanings": [
+      "보고하다",
+      "n. 보고서",
+      "보도"
+    ],
+    "examples": [
+      {
+        "origin": "The division head will <strong class=\"target-word\">report</strong> on the quarterly sales performance tomorrow morning.",
+        "meaning": "부서장은 내일 아침 분기별 영업 실적에 대해 보고할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-o9w0cvhsm-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "comment",
+    "meanings": [
+      "논평하다",
+      "의견을 밝히다",
+      "n. 논평",
+      "언급"
+    ],
+    "examples": [
+      {
+        "origin": "The spokesperson declined to <strong class=\"target-word\">comment</strong> on the ongoing contract negotiations.",
+        "meaning": "대변인은 진행 중인 계약 협상에 대해 언급하기를 거부했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-h1v071mhv-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "phase",
+    "meanings": [
+      "단계"
+    ],
+    "examples": [
+      {
+        "origin": "The initial <strong class=\"target-word\">phase</strong> of the renovation project is expected to be finished by June.",
+        "meaning": "개보수 프로젝트의 초기 단계가 6월까지는 마무리될 것으로 예상된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-kekc11b0s-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "approve",
+    "meanings": [
+      "승인하다",
+      "찬성하다"
+    ],
+    "examples": [
+      {
+        "origin": "The city council is expected to <strong class=\"target-word\">approve</strong> the new housing development plan.",
+        "meaning": "시의회는 새로운 주택 개발 계획을 승인할 것으로 예상된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-pqcmlpw2v-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "enclosed",
+    "meanings": [
+      "동봉된"
+    ],
+    "examples": [
+      {
+        "origin": "Please review the <strong class=\"target-word\">enclosed</strong> documents before attending the session.",
+        "meaning": "시간에 참석하기 전에 동봉된 문서들을 검토해 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-eu9hdub5i-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "record",
+    "meanings": [
+      "기록",
+      "경력",
+      "이력",
+      "v. 기록하다"
+    ],
+    "examples": [
+      {
+        "origin": "The secretary is responsible for keeping an accurate <strong class=\"target-word\">record</strong> of the board meeting.",
+        "meaning": "비서는 이사회 회의의 정확한 기록을 관리하는 책임이 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-z4cx4es2h-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "suggestion",
+    "meanings": [
+      "제안"
+    ],
+    "examples": [
+      {
+        "origin": "The committee welcomes <strong class=\"target-word\">suggestions</strong> for improving the employee welfare program.",
+        "meaning": "위원회는 직원 복지 프로그램을 개선하기 위한 제안들을 환영한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-lzbgjnhxf-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "attention",
+    "meanings": [
+      "주의",
+      "집중"
+    ],
+    "examples": [
+      {
+        "origin": "Please give your full <strong class=\"target-word\">attention</strong> to the instructions before operating the machinery.",
+        "meaning": "기계를 작동하기 전에 지침에 전적으로 주의를 기울여 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-zl4ufrqhr-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "object",
+    "meanings": [
+      "반대하다",
+      "n. 물체",
+      "목표"
+    ],
+    "examples": [
+      {
+        "origin": "A few members <strong class=\"target-word\">objected</strong> to the proposal to reduce the annual vacation days.",
+        "meaning": "몇몇 위원들이 연차 휴가 일수를 줄이자는 제안에 반대했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-8pwfq62os-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "coincidentally",
+    "meanings": [
+      "우연히",
+      "일치하게"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Coincidentally</strong>, both of the speakers at the workshop had studied at the same university.",
+        "meaning": "우연히도, 워크숍의 두 발표자 모두 같은 대학에서 공부했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-xvnxxhtij-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "briefly",
+    "meanings": [
+      "잠시",
+      "간단히"
+    ],
+    "examples": [
+      {
+        "origin": "The manager <strong class=\"target-word\">briefly</strong> explained the main objectives of the new project.",
+        "meaning": "관리자는 새로운 프로젝트의 주요 목표들을 간단히 설명했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-dx4fqg47x-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "distract",
+    "meanings": [
+      "(주의를) 흩뜨리다",
+      "빗나게 하다"
+    ],
+    "examples": [
+      {
+        "origin": "Please try not to <strong class=\"target-word\">distract</strong> the employees while they are working on the final report.",
+        "meaning": "직원들이 최종 보고서를 작성하는 동안 그들의 주의를 흩뜨리지 않도록 하십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-v8jc4tlcr-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "emphasis",
+    "meanings": [
+      "강조",
+      "역점"
+    ],
+    "examples": [
+      {
+        "origin": "The company places a strong <strong class=\"target-word\">emphasis</strong> on providing excellent customer service.",
+        "meaning": "그 회사는 훌륭한 고객 서비스를 제공하는 것에 강한 역점을 둔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-urciripw1-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "press",
+    "meanings": [
+      "언론계",
+      "보도 기관",
+      "v. 누르다"
+    ],
+    "examples": [
+      {
+        "origin": "The company will hold a <strong class=\"target-word\">press</strong> conference to announce the new product launch.",
+        "meaning": "회사는 신제품 출시를 발표하기 위해 기자 회견을 열 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-naxrxsh0c-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "procrastinate",
+    "meanings": [
+      "미루다",
+      "꾸물거리다"
+    ],
+    "examples": [
+      {
+        "origin": "You should not <strong class=\"target-word\">procrastinate</strong> on completing the required safety training modules.",
+        "meaning": "필수 안전 교육 모듈들을 완료하는 것을 미루어서는 안 된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-3j2lhygsl-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "refreshment",
+    "meanings": [
+      "다과",
+      "가벼운 음식"
+    ],
+    "examples": [
+      {
+        "origin": "Light <strong class=\"target-word\">refreshments</strong> like coffee and cookies will be provided during the seminar break.",
+        "meaning": "세미나 쉬는 시간 동안 커피와 쿠키 같은 가벼운 다과가 제공될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-xmihvw73m-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "relevant",
+    "meanings": [
+      "관련된",
+      "적절한"
+    ],
+    "examples": [
+      {
+        "origin": "The candidate's previous experience in marketing is highly <strong class=\"target-word\">relevant</strong> to this position.",
+        "meaning": "지원자의 이전 마케팅 경험은 이 직책과 매우 관련이 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-7erfhg0if-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "rely",
+    "meanings": [
+      "의지하다",
+      "신뢰하다"
+    ],
+    "examples": [
+      {
+        "origin": "We <strong class=\"target-word\">rely</strong> on your prompt assistance to finalize the project by the end of the week.",
+        "meaning": "우리는 이번 주말까지 프로젝트를 마무리하기 위해 귀하의 신속한 도움에 의지하고 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-ebi7ih4rn-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "remind",
+    "meanings": [
+      "상기시키다",
+      "일깨우다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager sent an e-mail to <strong class=\"target-word\">remind</strong> the staff about the quarterly budget meeting.",
+        "meaning": "관리자는 직원들에게 분기별 예산 회의에 대해 상기시키기 위해 이메일을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-csw6edjut-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "session",
+    "meanings": [
+      "시간",
+      "기간",
+      "회기"
+    ],
+    "examples": [
+      {
+        "origin": "The afternoon training <strong class=\"target-word\">session</strong> on digital marketing will be held in Room 302.",
+        "meaning": "디지털 마케팅에 대한 오후 교육 시간은 302호실에서 열릴 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-jt0j40qjv-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "shortly",
+    "meanings": [
+      "곧",
+      "얼마 안 있어"
+    ],
+    "examples": [
+      {
+        "origin": "We will be starting the meeting <strong class=\"target-word\">shortly</strong>, so please take your seats.",
+        "meaning": "곧 회의를 시작할 것이니, 자리에 앉아 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-4j4fh2hwt-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "utmost",
+    "meanings": [
+      "최선의",
+      "극도의"
+    ],
+    "examples": [
+      {
+        "origin": "All staff must handle client information with the <strong class=\"target-word\">utmost</strong> confidentiality.",
+        "meaning": "모든 직원은 고객 정보를 최대한의 기밀로 다뤄야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-yzrutwa2y-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "wide",
+    "meanings": [
+      "넓은"
+    ],
+    "examples": [
+      {
+        "origin": "We offer a <strong class=\"target-word\">wide</strong> variety of financial products to meet our clients' needs.",
+        "meaning": "우리는 고객들의 요구를 충족시키기 위해 매우 다양한 금융 상품들을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-ms8i45vvu-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "constructive",
+    "meanings": [
+      "건설적인"
+    ],
+    "examples": [
+      {
+        "origin": "We should focus on providing <strong class=\"target-word\">constructive</strong> criticism during the peer review process.",
+        "meaning": "우리는 동료 검토 과정 동안 건설적인 비평을 제공하는 것에 집중해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-87lnqcywc-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "continuous",
+    "meanings": [
+      "끊임없는",
+      "연속적인"
+    ],
+    "examples": [
+      {
+        "origin": "The company has maintained <strong class=\"target-word\">continuous</strong> operation for over twenty years without any major issues.",
+        "meaning": "회사는 큰 문제 없이 20년 넘게 끊임없는 운영을 유지해 왔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-2wxphq1hg-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "debate",
+    "meanings": [
+      "토론",
+      "논쟁",
+      "v. 토론하다"
+    ],
+    "examples": [
+      {
+        "origin": "The board members had a heated <strong class=\"target-word\">debate</strong> over the proposed merger with Allistair Finance.",
+        "meaning": "이사회 멤버들은 Allistair Finance와의 합병 제안에 대해 열띤 토론을 벌였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-t32s4mha9-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "forget",
+    "meanings": [
+      "잊다"
+    ],
+    "examples": [
+      {
+        "origin": "Please don't <strong class=\"target-word\">forget</strong> to sign and return the enclosed contract by Friday.",
+        "meaning": "금요일까지 동봉된 계약서에 서명하여 반송하는 것을 잊지 마십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-3onabx4dk-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "nervous",
+    "meanings": [
+      "초조한",
+      "긴장한"
+    ],
+    "examples": [
+      {
+        "origin": "The employee felt <strong class=\"target-word\">nervous</strong> about presenting her ideas to the senior management.",
+        "meaning": "그 직원은 고위 경영진에게 자신의 아이디어를 발표하는 것에 대해 초조해했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910828-bwzoct46a-1769583910828",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.828778Z",
+    "updatedAt": "2026-01-28T07:05:10.828778Z",
+    "dictionaryId": null,
+    "origin": "persuade",
+    "meanings": [
+      "설득하다",
+      "납득시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The sales representative was able to <strong class=\"target-word\">persuade</strong> the client to upgrade their service package.",
+        "meaning": "영업 사원은 고객이 서비스 패키지를 업그레이드하도록 설득할 수 있었다."
+      }
+    ]
+  }
+]

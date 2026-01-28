@@ -1,0 +1,462 @@
+[
+  {
+    "id": "1769583910875-wxmzgvj8q-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "after all",
+    "meanings": [
+      "결국"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-p0co60jit-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "answer the phone",
+    "meanings": [
+      "전화를 받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-1wwglq5n9-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "as it is",
+    "meanings": [
+      "있는 그대로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-3yss98y6s-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "be based on",
+    "meanings": [
+      "~에 근거하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-brw89dezv-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "be familiar with",
+    "meanings": [
+      "~을 잘 알고 있다",
+      "~에 익숙하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-2z20j8l7w-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "concrete",
+    "meanings": [
+      "구체적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-ce76ksy56-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "conflict with",
+    "meanings": [
+      "~과 상충되다",
+      "충돌하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-xxmjrg39c-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "on display",
+    "meanings": [
+      "전시된",
+      "진열된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-05v7qrxuk-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "shadow",
+    "meanings": [
+      "그림자",
+      "그늘"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-iuvrfa1qt-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "around the world",
+    "meanings": [
+      "전 세계에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-r4oioi2l8-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "array",
+    "meanings": [
+      "진열",
+      "배열"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-h5e2i4yla-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "attempt",
+    "meanings": [
+      "시도하다",
+      "시도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-uqvctlb41-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "audiovisual",
+    "meanings": [
+      "시청각의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-tjv91zts2-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "avoid",
+    "meanings": [
+      "방지하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-b4owiacpu-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "based",
+    "meanings": [
+      "~에 기반을 둔"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-81t19sgdm-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "cinema",
+    "meanings": [
+      "영화관",
+      "극장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-3ppludm70-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "competitive",
+    "meanings": [
+      "경쟁을 하는",
+      "경쟁력 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-7c94exe5i-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "conclude",
+    "meanings": [
+      "결론을 내리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-033hsy72u-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "energy drink",
+    "meanings": [
+      "에너지 음료"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-tee3cuwov-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "find out",
+    "meanings": [
+      "찾아내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-xuadm28wf-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "informal",
+    "meanings": [
+      "격식에 얽매이지 않는",
+      "편안한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-atictvdux-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "marketplace",
+    "meanings": [
+      "시장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-kax5mzkqo-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "pattern",
+    "meanings": [
+      "무늬",
+      "경향",
+      "모범"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-1usrrs7zw-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "public relations (PR) department",
+    "meanings": [
+      "홍보부"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-hk88rp837-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "sales",
+    "meanings": [
+      "판매의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-map0d818g-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "strict",
+    "meanings": [
+      "엄격한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-ojboqt8hh-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "tool",
+    "meanings": [
+      "도구"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910875-drvacdpbq-1769583910875",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.875522Z",
+    "updatedAt": "2026-01-28T07:05:10.875522Z",
+    "dictionaryId": null,
+    "origin": "typical",
+    "meanings": [
+      "전형적인",
+      "대표적인"
+    ],
+    "examples": []
+  }
+]

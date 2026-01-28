@@ -1,0 +1,521 @@
+[
+  {
+    "id": "1769583910866-wv0d6vk89-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "discrepancy",
+    "meanings": [
+      "불일치",
+      "차이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-m09anu70o-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "improperly",
+    "meanings": [
+      "부적절하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-nn13ul4dz-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "on behalf of",
+    "meanings": [
+      "~을 대신하여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-01a4oxhbr-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "prepaid",
+    "meanings": [
+      "선불의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-kj13dudep-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "recipient",
+    "meanings": [
+      "수령인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-281mvdlpo-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "stamped",
+    "meanings": [
+      "우표를 붙인",
+      "도장이 찍힌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-bo57ievuj-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "tariff",
+    "meanings": [
+      "관세"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-zt6l6m4e3-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "unattended",
+    "meanings": [
+      "지켜보는 사람이 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-rze6y42j4-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "vessel",
+    "meanings": [
+      "선박",
+      "배"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-hn4kvtn62-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "waybill",
+    "meanings": [
+      "운송장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-dmuobvpms-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "as per",
+    "meanings": [
+      "~에 따라"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-avfmpdxlc-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "customs clearance",
+    "meanings": [
+      "통관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-zf6xd92ra-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "dispatch",
+    "meanings": [
+      "발송하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-rx7cbw5b8-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "expedite",
+    "meanings": [
+      "신속히 처리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-re9cqvnxs-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "freight forwarder",
+    "meanings": [
+      "소화물 운송 업자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-h0pimkowd-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "import duties",
+    "meanings": [
+      "수입 관세"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-9fq0et6tu-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "in good condition",
+    "meanings": [
+      "양호한 상태로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-okh9d2ujr-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "inbound",
+    "meanings": [
+      "도착하는",
+      "귀항하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-34lbm1len-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "outbound",
+    "meanings": [
+      "떠나는",
+      "외국행의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-2kuk1erov-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "pack away",
+    "meanings": [
+      "치우다",
+      "보관하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-cge3me0c6-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "per hour",
+    "meanings": [
+      "시간당"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-9h1i2aovg-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "place a call",
+    "meanings": [
+      "전화하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-heunzyk83-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "provide a quote",
+    "meanings": [
+      "견적을 내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-z7q0z5loo-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "refer a friend",
+    "meanings": [
+      "친구를 추천하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-64x4ctpam-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "regular maintenance",
+    "meanings": [
+      "정기 점검"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-kk84zst05-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "run out",
+    "meanings": [
+      "품절되다",
+      "다 쓰다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-t602bfh8p-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "safety goggles",
+    "meanings": [
+      "보안경"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-mij8gkeif-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "short-handed",
+    "meanings": [
+      "일손이 부족한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-6rtij7t3b-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "signature",
+    "meanings": [
+      "서명"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-orv9cl9q3-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "take part",
+    "meanings": [
+      "참여하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-a48po0dpt-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "up to code",
+    "meanings": [
+      "규정에 맞는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910866-vjd5ivnnt-1769583910866",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.866155Z",
+    "updatedAt": "2026-01-28T07:05:10.866155Z",
+    "dictionaryId": null,
+    "origin": "weight limit",
+    "meanings": [
+      "중량 제한"
+    ],
+    "examples": []
+  }
+]

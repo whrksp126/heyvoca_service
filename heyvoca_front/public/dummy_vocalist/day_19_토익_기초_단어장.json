@@ -1,0 +1,472 @@
+[
+  {
+    "id": "1769583910864-wol6p5r5y-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "administer",
+    "meanings": [
+      "관리하다",
+      "운영하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-ofrhmakrt-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "appointment",
+    "meanings": [
+      "진찰[방문] 예약",
+      "임명"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-b4zsv0jne-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "briefcase",
+    "meanings": [
+      "서류 가방"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-6zn48ahep-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "busy",
+    "meanings": [
+      "바쁜"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-tfl31of2u-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "carry",
+    "meanings": [
+      "나르다",
+      "운반하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-rlem0hdxn-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "case",
+    "meanings": [
+      "사례",
+      "경우",
+      "사건"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-u13b11jkc-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "clerk",
+    "meanings": [
+      "점원",
+      "사무원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-8afnmt9c6-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "copy",
+    "meanings": [
+      "복사하다",
+      "n. 복제(본)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-2p1dg1nur-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "correctly",
+    "meanings": [
+      "똑바르게",
+      "올바르게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-lqpjwbi25-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "disk",
+    "meanings": [
+      "디스크",
+      "원반"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-6j4wxk27o-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "eraser",
+    "meanings": [
+      "지우개"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-imr74rw1r-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "hand over",
+    "meanings": [
+      "~을 건네주다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-cmordyc0x-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "help",
+    "meanings": [
+      "돕다",
+      "거들다",
+      "n. 도움"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-gwalfnf62-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "instead",
+    "meanings": [
+      "대신에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-o0fj41us0-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "least",
+    "meanings": [
+      "가장 적은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-hkqczny7a-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "matter",
+    "meanings": [
+      "문제",
+      "일"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-qedmyb7tr-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "notice",
+    "meanings": [
+      "공고문",
+      "통지",
+      "v. 알아채다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-nxxxwfzmh-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "office",
+    "meanings": [
+      "사무실"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-r1bzoe5r3-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "paper",
+    "meanings": [
+      "종이",
+      "서류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-b36k8w5ab-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "pencil",
+    "meanings": [
+      "연필"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-aseeh8qjo-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "plan",
+    "meanings": [
+      "계획하다",
+      "n. 계획"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-qtlwsnrrf-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "project",
+    "meanings": [
+      "프로젝트",
+      "사업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-peuo2ktpv-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "secretary",
+    "meanings": [
+      "비서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-j1dcaobdl-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "sort",
+    "meanings": [
+      "분류하다",
+      "n. 종류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-u63bv05zf-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "stamp",
+    "meanings": [
+      "도장",
+      "우표",
+      "v. 도장을 찍다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-qohenim3k-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "stapler",
+    "meanings": [
+      "스테이플러"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-yj995ajuq-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "suggestion",
+    "meanings": [
+      "제안"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910864-ag9om53vb-1769583910864",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.864623Z",
+    "updatedAt": "2026-01-28T07:05:10.864623Z",
+    "dictionaryId": null,
+    "origin": "work",
+    "meanings": [
+      "일하다",
+      "n. 일",
+      "직업"
+    ],
+    "examples": []
+  }
+]

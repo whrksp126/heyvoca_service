@@ -1,0 +1,465 @@
+[
+  {
+    "id": "1769583910824-spgnfic0y-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "avoid",
+    "meanings": [
+      "피하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-h7g1836pl-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "chemical",
+    "meanings": [
+      "화학 물질",
+      "화학의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-7yw6u06d0-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "clean",
+    "meanings": [
+      "깨끗한",
+      "청소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-ddcd8ragt-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "cold",
+    "meanings": [
+      "추운",
+      "차가운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-4tcmm8b0p-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "container",
+    "meanings": [
+      "그릇",
+      "용기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-d2tta30hx-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "dark",
+    "meanings": [
+      "어두운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-qq7lemigw-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "dirty",
+    "meanings": [
+      "더러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-sdmmip0pf-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "drop",
+    "meanings": [
+      "떨어뜨리다",
+      "방울"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-2l72kicqj-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "flat",
+    "meanings": [
+      "평평한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-7bohjqoo9-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "fresh",
+    "meanings": [
+      "신선한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-y8qabzgqz-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "glass",
+    "meanings": [
+      "유리",
+      "유리 잔"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-i7a3tyb5p-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "light",
+    "meanings": [
+      "빛",
+      "가벼운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-rv7rpm8qi-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "pick up",
+    "meanings": [
+      "집어 들다",
+      "(사람을) 태워 주다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-jy8c7g1nb-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "pile",
+    "meanings": [
+      "더미",
+      "쌓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-n59k9ptxa-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "plastic",
+    "meanings": [
+      "플라스틱",
+      "플라스틱제의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-06dgeiejw-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "polite",
+    "meanings": [
+      "예의 바른"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-fnwhuvf9r-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "pure",
+    "meanings": [
+      "순수한",
+      "깨끗한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-jstyyl0eq-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "quiet",
+    "meanings": [
+      "조용한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-yxtpf9wuf-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "reduce",
+    "meanings": [
+      "줄이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-x1lnrvdn6-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "recycle",
+    "meanings": [
+      "재활용하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-a45gdmkv0-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "save",
+    "meanings": [
+      "절약하다",
+      "구하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-6zxs8431d-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "shout",
+    "meanings": [
+      "소리치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-1femiz67a-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "smell",
+    "meanings": [
+      "냄새",
+      "냄새를 맡다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-tqxmgsqls-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "smoke",
+    "meanings": [
+      "연기",
+      "담배를 피우다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-78bg9kzqn-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "stay",
+    "meanings": [
+      "머무르다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-xkioheg52-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "throw away",
+    "meanings": [
+      "버리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-nql9tsfpa-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "wash",
+    "meanings": [
+      "씻다",
+      "세탁하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910824-ci0pzx4sw-1769583910824",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.824925Z",
+    "updatedAt": "2026-01-28T07:05:10.824925Z",
+    "dictionaryId": null,
+    "origin": "wet",
+    "meanings": [
+      "젖은"
+    ],
+    "examples": []
+  }
+]

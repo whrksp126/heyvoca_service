@@ -76,3 +76,7 @@ textarea {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.target-word {
+  font-weight: 700;
+}

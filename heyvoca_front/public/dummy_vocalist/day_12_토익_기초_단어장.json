@@ -1,0 +1,464 @@
+[
+  {
+    "id": "1769583910834-9jnwhe5ae-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "clothing line",
+    "meanings": [
+      "의류 상품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-jh0dpgk67-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "craft",
+    "meanings": [
+      "기술"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-roxlibxvh-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "crop",
+    "meanings": [
+      "농작물",
+      "산출량"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-xed2bb1oo-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "curved",
+    "meanings": [
+      "구부러진",
+      "곡선 모양의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-lhmbyjnbk-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "cyclist",
+    "meanings": [
+      "자전거 타는 사람"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-q15ctyh2x-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "firewood",
+    "meanings": [
+      "장작"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-qk4rcbjkw-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "iron",
+    "meanings": [
+      "철",
+      "다리미질을 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-2qvt53uy8-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "look up",
+    "meanings": [
+      "~을 찾다",
+      "쳐다보다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-7hctdrctp-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "machinery",
+    "meanings": [
+      "기계류",
+      "기계 장치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-1nfpjp3z3-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "not at all",
+    "meanings": [
+      "전혀 ~아니다",
+      "천만에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-qt4gt5q1a-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "not far from",
+    "meanings": [
+      "~에서 멀지 않은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-ibubbj5xr-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "plant",
+    "meanings": [
+      "식물",
+      "공장",
+      "(식물을) 심다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-hpkj1ezfv-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "publication company",
+    "meanings": [
+      "출판 회사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-dn35vkaq6-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "scratch",
+    "meanings": [
+      "긁다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-t3xvwiqmy-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "tool belt",
+    "meanings": [
+      "공구 벨트"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-sqytp68gg-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "watering can",
+    "meanings": [
+      "물뿌리개"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-xug3zt5wn-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "a number of",
+    "meanings": [
+      "많은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-f84842oo8-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "be composed of",
+    "meanings": [
+      "~으로 구성되다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-vwn4w54u4-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "be filled with",
+    "meanings": [
+      "~으로 채워지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-17d61juen-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "be made up of",
+    "meanings": [
+      "~으로 구성되다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-wv31tzlgy-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "facility",
+    "meanings": [
+      "시설"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-931scpxau-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "fasten",
+    "meanings": [
+      "매다",
+      "잠그다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-56otlke7j-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "incredible",
+    "meanings": [
+      "놀라운",
+      "믿기 어려운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-87hzg2rov-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "modification",
+    "meanings": [
+      "변경",
+      "수정"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-x74p6ijk0-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "rank",
+    "meanings": [
+      "계급",
+      "순위",
+      "등급을 매기다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-v4mavk2v3-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "raw material",
+    "meanings": [
+      "원자재"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-unxcqpytc-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "shortage",
+    "meanings": [
+      "부족"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910834-poz3hq5ux-1769583910834",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.834419Z",
+    "updatedAt": "2026-01-28T07:05:10.834419Z",
+    "dictionaryId": null,
+    "origin": "underground",
+    "meanings": [
+      "지하의",
+      "비밀의"
+    ],
+    "examples": []
+  }
+]

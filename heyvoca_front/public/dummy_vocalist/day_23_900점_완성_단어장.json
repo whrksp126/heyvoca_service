@@ -1,0 +1,533 @@
+[
+  {
+    "id": "1769583910880-11i90wrzx-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "get reimbursed for",
+    "meanings": [
+      "~을 환급받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-a1mzfavem-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "hearty",
+    "meanings": [
+      "마음에서 우러난",
+      "(음식의 양이) 풍부한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-xzw2aqs1o-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "kindhearted",
+    "meanings": [
+      "친절한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-pnk82rtoa-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "knock off",
+    "meanings": [
+      "업무를 마치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-hus8vvb03-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "maternity leave",
+    "meanings": [
+      "출산 휴가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-vdnum4j7x-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "misuse",
+    "meanings": [
+      "오용",
+      "악용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-9akbkv96r-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "nursery",
+    "meanings": [
+      "유아원",
+      "놀이방",
+      "보육"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-xzt53ip1r-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "nursing",
+    "meanings": [
+      "간호",
+      "간호학"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-2bxxyq7py-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "chronological",
+    "meanings": [
+      "시간순의",
+      "연대순의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-bz3ojpkg5-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "exhibitor",
+    "meanings": [
+      "(전시회의) 출품자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-qzomyu701-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "flatter",
+    "meanings": [
+      "아첨하다",
+      "듣기 좋은 칭찬을 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-duewjv76k-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "give in",
+    "meanings": [
+      "굴복하다",
+      "양보하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-dd7min80b-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "second",
+    "meanings": [
+      "찬성하다",
+      "지지하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-k76boh3s6-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "citation",
+    "meanings": [
+      "인용구",
+      "인용",
+      "표창장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-0wvraubo5-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "commemorate",
+    "meanings": [
+      "기념하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-2ofsmnfy6-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "conjunction",
+    "meanings": [
+      "연합",
+      "공동"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-udl81im2q-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "cut benefits",
+    "meanings": [
+      "복리 후생을 줄이다",
+      "수당을 줄이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-fpib070cm-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "discriminate",
+    "meanings": [
+      "차별하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-2l01te15l-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "distort",
+    "meanings": [
+      "왜곡하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-1q9wayale-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "flextime",
+    "meanings": [
+      "자율 근무 시간제"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-wdobnyat7-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "fringe benefits",
+    "meanings": [
+      "부가 급부"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-u5uob0d34-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "goodwill",
+    "meanings": [
+      "호의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-vfjlcwu0t-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "labor costs",
+    "meanings": [
+      "인건비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-1w2wviy28-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "labor dispute",
+    "meanings": [
+      "노동 쟁의",
+      "노사 분규"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-f6s0p71op-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "off-peak",
+    "meanings": [
+      "한산할 때의",
+      "비수기의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-o5cv1xwgg-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "pique",
+    "meanings": [
+      "화",
+      "불쾌",
+      "불쾌감"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-fjrvdsv42-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "sabotage",
+    "meanings": [
+      "(고의적인) 방해 행위"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-l7sxj8r6r-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "salary review",
+    "meanings": [
+      "연봉 심사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-ypdzmfkcc-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "severance pay",
+    "meanings": [
+      "퇴직금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-idkh2lgcg-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "spry",
+    "meanings": [
+      "기운찬",
+      "활발한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-yyaw0rdjd-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "straightforward",
+    "meanings": [
+      "정직한",
+      "간단한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910880-f9xf9ezuz-1769583910880",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.880180Z",
+    "updatedAt": "2026-01-28T07:05:10.880180Z",
+    "dictionaryId": null,
+    "origin": "yearn",
+    "meanings": [
+      "열망하다"
+    ],
+    "examples": []
+  }
+]

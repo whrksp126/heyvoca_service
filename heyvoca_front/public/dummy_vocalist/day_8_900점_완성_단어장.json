@@ -1,0 +1,530 @@
+[
+  {
+    "id": "1769583910879-ue501b6n7-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "discipline",
+    "meanings": [
+      "훈련"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-oywyg7sen-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "jingle",
+    "meanings": [
+      "시엠송 (광고 선전용 노래)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-2icn3wwet-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "mobility",
+    "meanings": [
+      "이동성"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-eg5z9qvzz-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "abruptly",
+    "meanings": [
+      "갑자기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-n6jue4h2t-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "absorbing",
+    "meanings": [
+      "흥미진진한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-khz0gyxkp-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "admiringly",
+    "meanings": [
+      "감탄하며"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-wkas18rfy-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "at large",
+    "meanings": [
+      "대체로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-7lszmgzc4-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "boast about",
+    "meanings": [
+      "~을 자랑하다",
+      "뽐내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-5bin3sdlx-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "coincide with",
+    "meanings": [
+      "~와 동시에 일어나다",
+      "일치하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-xjkoaspcw-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "correspondent",
+    "meanings": [
+      "특파원",
+      "통신원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-whoy29h1q-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "counterpart",
+    "meanings": [
+      "상대방",
+      "대응물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-qbb8ceags-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "defeat",
+    "meanings": [
+      "패배시키다",
+      "실패"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-igppu6li6-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "dominant",
+    "meanings": [
+      "지배적인",
+      "우세한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-g4kv09aff-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "fabulous",
+    "meanings": [
+      "굉장히 좋은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-si4kvjfyf-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "fortify",
+    "meanings": [
+      "강화하다",
+      "튼튼히 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-rrjjzfsgr-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "fundamental",
+    "meanings": [
+      "기본적인",
+      "필수적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-og5utsvju-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "mingle",
+    "meanings": [
+      "섞다",
+      "혼합하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-ej22qyc18-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "nuisance",
+    "meanings": [
+      "성가신 존재",
+      "골칫거리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-lxuwhz471-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "preciously",
+    "meanings": [
+      "까다롭게",
+      "매우"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-8lrtafhqn-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "stark",
+    "meanings": [
+      "(차이가) 극명한",
+      "황량한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-rb34fbxj3-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "steadiness",
+    "meanings": [
+      "착실함",
+      "끈기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-i9b2deixg-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "alluring",
+    "meanings": [
+      "유혹하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-3mg1gb41u-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "assimilate",
+    "meanings": [
+      "~을 일치시키다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-czo1dwpdf-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "at all costs",
+    "meanings": [
+      "무슨 일이 있어도",
+      "기어코"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-r25xn9nn5-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "await",
+    "meanings": [
+      "기다리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-fmy5bjcno-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "captivate",
+    "meanings": [
+      "~의 마음을 사로잡다",
+      "매혹하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-68a3h8u6n-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "culminate in",
+    "meanings": [
+      "결국 ~이 되다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-as0chamcc-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "dissipate",
+    "meanings": [
+      "낭비하다",
+      "흩뜨리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-8nd0i56fb-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "driving force",
+    "meanings": [
+      "추진력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-5cook4onz-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "elicit",
+    "meanings": [
+      "이끌어내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-ltx82elew-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "overwhelming",
+    "meanings": [
+      "압도적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-vtwap6rbx-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879623Z",
+    "updatedAt": "2026-01-28T07:05:10.879623Z",
+    "dictionaryId": null,
+    "origin": "voiced",
+    "meanings": [
+      "말로 표명한"
+    ],
+    "examples": []
+  }
+]

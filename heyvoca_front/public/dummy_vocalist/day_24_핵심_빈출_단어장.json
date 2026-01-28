@@ -1,0 +1,909 @@
+[
+  {
+    "id": "1769583910877-dzjio48po-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "appoint",
+    "meanings": [
+      "임명하다",
+      "지명하다"
+    ],
+    "examples": [
+      {
+        "origin": "President Davis <strong class=\"target-word\">appointed</strong> Roger Lance as head of finance.",
+        "meaning": "Davis 회장은 Roger Lance를 재무 부장으로 임명했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-xgk6l81go-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "appraisal",
+    "meanings": [
+      "평가"
+    ],
+    "examples": [
+      {
+        "origin": "Supervisors carry out performance <strong class=\"target-word\">appraisals</strong> every three months.",
+        "meaning": "관리자들은 석 달마다 실적 평가를 시행한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-gz49m1j35-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "promote",
+    "meanings": [
+      "승진시키다",
+      "촉진하다"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Wilson was <strong class=\"target-word\">promoted</strong> in April to the position of marketing director.",
+        "meaning": "Ms. Wilson은 4월에 마케팅 부장으로 승진되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-r8vbcik1w-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "skilled",
+    "meanings": [
+      "숙련된",
+      "노련한"
+    ],
+    "examples": [
+      {
+        "origin": "Several production plants are short of <strong class=\"target-word\">skilled</strong> workers.",
+        "meaning": "일부 생산 공장들은 숙련된 근로자가 부족하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-8s3iisvhj-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "radically",
+    "meanings": [
+      "완전히",
+      "철저히"
+    ],
+    "examples": [
+      {
+        "origin": "Several divisions will be <strong class=\"target-word\">radically</strong> restructured.",
+        "meaning": "일부 부서들이 완전히 개편될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-clzvh2yuw-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "exceptional",
+    "meanings": [
+      "뛰어난",
+      "예외적인"
+    ],
+    "examples": [
+      {
+        "origin": "Paul Lang showed <strong class=\"target-word\">exceptional</strong> talent in computer programming.",
+        "meaning": "Paul Lang은 컴퓨터 프로그래밍에 뛰어난 재능을 보였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-y90quj71s-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "appreciation",
+    "meanings": [
+      "감사"
+    ],
+    "examples": [
+      {
+        "origin": "The director gave a short speech to express his <strong class=\"target-word\">appreciation</strong>.",
+        "meaning": "그 이사는 감사를 표하기 위해 짧은 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-i41d4wwsj-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "evaluate",
+    "meanings": [
+      "평가하다"
+    ],
+    "examples": [
+      {
+        "origin": "Workers' performance should be <strong class=\"target-word\">evaluated</strong> annually.",
+        "meaning": "직원들의 실적은 매년 평가되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-dy635qgu8-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "suggest",
+    "meanings": [
+      "제안하다",
+      "추천하다"
+    ],
+    "examples": [
+      {
+        "origin": "Charles <strong class=\"target-word\">suggested</strong> posting a job advertisement.",
+        "meaning": "Charles는 채용 광고를 올리는 것을 제안했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-525imov8n-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "preference",
+    "meanings": [
+      "선호"
+    ],
+    "examples": [
+      {
+        "origin": "meal preference",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-mqk8nzznx-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "management",
+    "meanings": [
+      "경영진",
+      "경영"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Management</strong> announced a new hiring plan this month.",
+        "meaning": "경영진은 이번 달에 새로운 고용 계획을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-rx2bkkubj-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "predict",
+    "meanings": [
+      "예측하다"
+    ],
+    "examples": [
+      {
+        "origin": "Many <strong class=\"target-word\">predict</strong> that the CEO will retire soon.",
+        "meaning": "많은 사람들이 최고 경영자가 곧 은퇴할 것으로 예측한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-zh20fh8fy-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "transfer",
+    "meanings": [
+      "보내다",
+      "전근시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The administrator has been <strong class=\"target-word\">transferred</strong> to England.",
+        "meaning": "그 관리자는 영국으로 전근되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-prm5yh65u-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "award",
+    "meanings": [
+      "상",
+      "(상 등을) 수여하다"
+    ],
+    "examples": [
+      {
+        "origin": "The company <strong class=\"target-word\">awards</strong> a prize to the most dedicated employee.",
+        "meaning": "그 회사는 가장 헌신적인 직원에게 상을 수여한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-51m4vnljf-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "mandatory",
+    "meanings": [
+      "의무적인"
+    ],
+    "examples": [
+      {
+        "origin": "Attendance to the weekly staff meeting is <strong class=\"target-word\">mandatory</strong>.",
+        "meaning": "주간 직원회의 출석은 의무적이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-pzeikkwvh-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "competent",
+    "meanings": [
+      "유능한",
+      "능숙한"
+    ],
+    "examples": [
+      {
+        "origin": "Eileen is very <strong class=\"target-word\">competent</strong> at her job and is well-liked by her staff.",
+        "meaning": "Eileen은 일에 있어서 매우 유능하고 그녀의 직원들에게 매우 사랑받는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-9pqgn3ro1-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "performance",
+    "meanings": [
+      "실적",
+      "성과",
+      "공연",
+      "연주",
+      "연기"
+    ],
+    "examples": [
+      {
+        "origin": "The director's welcoming ceremony included a <strong class=\"target-word\">performance</strong> by a string quartet.",
+        "meaning": "이사 환영식은 현악 4중주단의 공연을 포함했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-5tjmwp8fz-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "reward",
+    "meanings": [
+      "~에 보답하다",
+      "보상하다",
+      "포상",
+      "보상"
+    ],
+    "examples": [
+      {
+        "origin": "He was given the job as a <strong class=\"target-word\">reward</strong> for meeting his sales quota.",
+        "meaning": "판매 할당량을 달성한 것에 대한 포상으로 그에게 그 업무가 주어졌다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-ywvjk1r3v-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "search",
+    "meanings": [
+      "찾기",
+      "수색",
+      "조사"
+    ],
+    "examples": [
+      {
+        "origin": "We have been in <strong class=\"target-word\">search</strong> of a new president ever since Mr. Rowles resigned.",
+        "meaning": "우리는 Mr. Rowles가 사임한 후로 계속해서 새 회장을 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-jyplqlaky-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "inexperienced",
+    "meanings": [
+      "경험 없는",
+      "미숙한"
+    ],
+    "examples": [
+      {
+        "origin": "Robert is too <strong class=\"target-word\">inexperienced</strong> to be promoted to manager.",
+        "meaning": "Robert는 부장으로 승진하기에 너무 경험이 없다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-px7h7zum5-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "early",
+    "meanings": [
+      "시간상 이른",
+      "조기의"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Jones opted for an <strong class=\"target-word\">early</strong> retirement.",
+        "meaning": "Ms. Jones는 조기 퇴직을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-ifq56ubes-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "designate",
+    "meanings": [
+      "지명하다",
+      "지정하다"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Carling <strong class=\"target-word\">designated</strong> Owen to be the project's team leader.",
+        "meaning": "Ms. Carling은 Owen을 그 프로젝트의 팀장으로 지명했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-fot3k8hw0-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "executive",
+    "meanings": [
+      "경영의",
+      "관리의"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Fulton holds an <strong class=\"target-word\">executive</strong> position at Greenway Bank.",
+        "meaning": "Mr. Fulton은 Greenway 은행에서 경영직을 맡고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-7gvywdmsx-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "dedication",
+    "meanings": [
+      "헌신"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Hayes was recognized for her <strong class=\"target-word\">dedication</strong> to the company.",
+        "meaning": "Ms. Hayes는 회사에 대한 헌신으로 인정받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-npy7st3tw-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "unanimously",
+    "meanings": [
+      "만장일치로"
+    ],
+    "examples": [
+      {
+        "origin": "The board voted <strong class=\"target-word\">unanimously</strong> to replace the underperforming CEO.",
+        "meaning": "이사회는 실적이 저조한 최고 경영자를 교체하는 데 만장일치로 찬성했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-n7v0rdvoy-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "progress",
+    "meanings": [
+      "진행",
+      "진척",
+      "진전"
+    ],
+    "examples": [
+      {
+        "origin": "Daily reports are good tools for measuring employees' work <strong class=\"target-word\">progress</strong>.",
+        "meaning": "일일 보고서는 직원의 업무 진행 상황을 측정하는 데 좋은 도구이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-13shb80in-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "congratulate",
+    "meanings": [
+      "축하하다"
+    ],
+    "examples": [
+      {
+        "origin": "The president personally <strong class=\"target-word\">congratulated</strong> the assistant on her promotion.",
+        "meaning": "그 사장은 보좌관의 승진을 직접 축하해 주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-0qlddcdgf-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "dismiss",
+    "meanings": [
+      "해임하다",
+      "해고하다"
+    ],
+    "examples": [
+      {
+        "origin": "Those staff found in violation of company regulations may be <strong class=\"target-word\">dismissed</strong>.",
+        "meaning": "회사 규정을 위반한 것으로 확인된 직원들은 해임될 수도 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-4lmsoaxn0-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "independence",
+    "meanings": [
+      "독립성"
+    ],
+    "examples": [
+      {
+        "origin": "Branch managers are given the <strong class=\"target-word\">independence</strong> to make some decisions.",
+        "meaning": "지점장들은 일부 결정을 내릴 수 있도록 독립성을 부여받는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-kad8kqtsv-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "participation",
+    "meanings": [
+      "참여",
+      "참가",
+      "가입"
+    ],
+    "examples": [
+      {
+        "origin": "participation : participant",
+        "meaning": ""
+      },
+      {
+        "origin": "participate",
+        "meaning": ""
+      },
+      {
+        "origin": "involvement",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-agxgzu9iy-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "praise",
+    "meanings": [
+      "칭찬",
+      "칭찬하다"
+    ],
+    "examples": [
+      {
+        "origin": "Stacey Randall received <strong class=\"target-word\">praise</strong> for her outstanding sales record.",
+        "meaning": "Stacey Randall은 뛰어난 판매 실적으로 칭찬을 받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-mxf0ws8mm-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "accomplishment",
+    "meanings": [
+      "성과",
+      "업적"
+    ],
+    "examples": [
+      {
+        "origin": "The team was given a bonus for its <strong class=\"target-word\">accomplishments</strong> last quarter.",
+        "meaning": "그 팀은 지난 분기 성과에 대한 상여금을 받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-wa684o6cx-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "deliberation",
+    "meanings": [
+      "토의",
+      "심의"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">deliberation</strong> about hiring new staff lasted for nearly two hours.",
+        "meaning": "새로운 직원들을 고용하는 것에 대한 토의는 거의 두 시간 동안 지속되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-rky2tlcoh-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "leadership",
+    "meanings": [
+      "리더십",
+      "지도력"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Robinson's display of <strong class=\"target-word\">leadership</strong> has earned her the respect of her staff.",
+        "meaning": "Ms. Robinson이 발휘한 리더십은 그녀에게 직원들의 존경심을 가져다주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-0j3ix1v6s-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "retire",
+    "meanings": [
+      "퇴직하다",
+      "은퇴하다"
+    ],
+    "examples": [
+      {
+        "origin": "Peter Oswald <strong class=\"target-word\">retires</strong> in May after 40 years with the firm.",
+        "meaning": "Peter Oswald는 그 회사에서 40년 근무한 끝에 5월에 퇴직한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-koc7xf8cn-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "nomination",
+    "meanings": [
+      "임명",
+      "지명"
+    ],
+    "examples": [
+      {
+        "origin": "Sue Blaine's <strong class=\"target-word\">nomination</strong> to the board was a surprise.",
+        "meaning": "Sue Blaine이 이사회에 임명된 것은 놀라운 일이었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-1muga5meb-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "reorganize",
+    "meanings": [
+      "재편성하다",
+      "재조직하다"
+    ],
+    "examples": [
+      {
+        "origin": "The marketing team will be <strong class=\"target-word\">reorganized</strong> after the merger.",
+        "meaning": "마케팅팀은 합병 이후에 재편성될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-haw86wma3-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "serve",
+    "meanings": [
+      "일하다",
+      "근무하다"
+    ],
+    "examples": [
+      {
+        "origin": "The marketing director will <strong class=\"target-word\">serve</strong> as the acting director of consumer relations for now.",
+        "meaning": "마케팅부장이 당분간 고객 서비스 부장 대행으로서 일할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-apt0azvwc-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "encouragement",
+    "meanings": [
+      "격려"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Vance offers regular <strong class=\"target-word\">encouragement</strong> to his employees.",
+        "meaning": "Mr. Vance는 직원들에게 주기적으로 격려를 해 준다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-w99bz6v67-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "resignation",
+    "meanings": [
+      "사임",
+      "사직",
+      "사직서"
+    ],
+    "examples": [
+      {
+        "origin": "The company announced the <strong class=\"target-word\">resignation</strong> of its head of development.",
+        "meaning": "회사는 개발부장의 사임을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910877-ccss6iem3-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877922Z",
+    "updatedAt": "2026-01-28T07:05:10.877922Z",
+    "dictionaryId": null,
+    "origin": "strictly",
+    "meanings": [
+      "엄격히"
+    ],
+    "examples": [
+      {
+        "origin": "International transfer opportunities are <strong class=\"target-word\">strictly</strong> limited.",
+        "meaning": "해외 전근 기회는 엄격히 제한된다."
+      }
+    ]
+  }
+]

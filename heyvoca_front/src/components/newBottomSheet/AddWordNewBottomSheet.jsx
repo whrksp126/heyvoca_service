@@ -578,14 +578,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                       className="cursor-pointer"
                       onClick={() => getTextSound(origin, "en")}
                     >
-                      {origin && wordInputRef.current ?
-                        origin.split(wordInputRef.current).map((part, i, arr) => (
-                          i < arr.length - 1 ? (
-                            <React.Fragment key={i}>
-                              {part}<strong>{wordInputRef.current}</strong>
-                            </React.Fragment>
-                          ) : part
-                        )) : origin}
+                      <span dangerouslySetInnerHTML={{ __html: origin }} />
                     </span>
                     <br />
                     <span

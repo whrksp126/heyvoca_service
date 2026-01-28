@@ -1,0 +1,534 @@
+[
+  {
+    "id": "1769583910868-5ajznw6dy-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "amenity",
+    "meanings": [
+      "생활 편의 시설"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-z8d0b4e2t-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "blueprinting",
+    "meanings": [
+      "청사진 작성",
+      "설계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-g4obuzv8w-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "boundary",
+    "meanings": [
+      "경계",
+      "한계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-z4pweqb24-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "demolish",
+    "meanings": [
+      "허물다",
+      "파괴하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-chcu2lnxb-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "dilapidated",
+    "meanings": [
+      "황폐한",
+      "낡아 빠진"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-ormk2ujzv-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "dwelling",
+    "meanings": [
+      "주거",
+      "주택"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-ulgdsqx3f-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "easement",
+    "meanings": [
+      "지역권 (타인의 토지를 이용할 수 있는 권리)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-x76a6kzk8-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "facade",
+    "meanings": [
+      "(건물의) 정면",
+      "외관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-dgerft0bx-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "fixtures",
+    "meanings": [
+      "정착물",
+      "붙박이 가구"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-h0r2gj4d3-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "floorboard",
+    "meanings": [
+      "마루청"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-5oa8wnf8p-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "foreclosure",
+    "meanings": [
+      "담보권 행사",
+      "압류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-txieyjx92-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "habitat",
+    "meanings": [
+      "서식지",
+      "거주지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-kdsfiqb9y-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "insulation",
+    "meanings": [
+      "단열재",
+      "절연"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-wov3z8dzb-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "landscaping",
+    "meanings": [
+      "조경"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-cw6duei82-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "mortgagor",
+    "meanings": [
+      "저당권 설정자",
+      "채무자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-nzmenzj8c-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "ordinance",
+    "meanings": [
+      "법령",
+      "조례"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-aggzz559y-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "partition",
+    "meanings": [
+      "칸막이",
+      "칸막이를 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-iq73corqf-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "pathway",
+    "meanings": [
+      "오솔길",
+      "통로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-o6zd5jxbz-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "prefabricated",
+    "meanings": [
+      "조립식의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-04fvclsg1-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "premises",
+    "meanings": [
+      "부지",
+      "구내"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-qrlliz2i0-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "realtor",
+    "meanings": [
+      "부동산 중개업자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-iikxd5jkg-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "refurbish",
+    "meanings": [
+      "재단장하다",
+      "수리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-ao4jwt07d-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "retrofitting",
+    "meanings": [
+      "(기존 건물 등에) 새로운 장비를 장착함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-aq9b6e4jk-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "scaffolding",
+    "meanings": [
+      "비계 (공사장 발판)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-abg8eq90c-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "sublet",
+    "meanings": [
+      "전대하다 (빌린 것을 다시 빌려주다)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-96ewtt9ag-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "suburban",
+    "meanings": [
+      "교외의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-pxud2ss4d-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "tenancy",
+    "meanings": [
+      "차용",
+      "차용 기간"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-dcv3kcqsh-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "topography",
+    "meanings": [
+      "지형",
+      "지형도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-416xj1mkt-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "urbanization",
+    "meanings": [
+      "도시화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-8c6jrj04x-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "utility pole",
+    "meanings": [
+      "전신주"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-us2echs0x-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "ventilation",
+    "meanings": [
+      "통풍",
+      "환기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910868-b4sx1flv0-1769583910868",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.868478Z",
+    "updatedAt": "2026-01-28T07:05:10.868478Z",
+    "dictionaryId": null,
+    "origin": "zoning",
+    "meanings": [
+      "구역 설정",
+      "도시 계획"
+    ],
+    "examples": []
+  }
+]

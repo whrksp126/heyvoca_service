@@ -1,0 +1,932 @@
+[
+  {
+    "id": "1769583910883-8mtwfrkol-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "sophisticated",
+    "meanings": [
+      "(기계가) 정교한",
+      "복잡한",
+      "세련된"
+    ],
+    "examples": [
+      {
+        "origin": "A <span class=\"target-word\">sophisticated</span> surveillance system was installed.",
+        "meaning": ""
+      },
+      {
+        "origin": "The decorator exhibited a <span class=\"target-word\">sophisticated</span> taste in art.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-ff7bqn5fz-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "timely",
+    "meanings": [
+      "시기적절한",
+      "때를 맞춘"
+    ],
+    "examples": [
+      {
+        "origin": "The report was completed in a <span class=\"target-word\">timely</span> manner.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-brvkqz0dp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "realistically",
+    "meanings": [
+      "현실적으로"
+    ],
+    "examples": [
+      {
+        "origin": "We cannot <span class=\"target-word\">realistically</span> expect to have the presentation ready on time.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-ugtzf9arp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "promptly",
+    "meanings": [
+      "즉시",
+      "정각에"
+    ],
+    "examples": [
+      {
+        "origin": "It is company policy to respond <span class=\"target-word\">promptly</span> to all inquiries.",
+        "meaning": ""
+      },
+      {
+        "origin": "The train will leave <span class=\"target-word\">promptly</span> at 4 P.M.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-xyuv50cd2-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "accessible",
+    "meanings": [
+      "출입할 수 있는",
+      "이용할 수 있는"
+    ],
+    "examples": [
+      {
+        "origin": "The 18th floor is only <span class=\"target-word\">accessible</span> to executive staff.",
+        "meaning": ""
+      },
+      {
+        "origin": "Please make the manual <span class=\"target-word\">accessible</span> to all employees.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-bfmfo4eij-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "implement",
+    "meanings": [
+      "실시하다",
+      "실행하다"
+    ],
+    "examples": [
+      {
+        "origin": "Board members voted to <span class=\"target-word\">implement</span> an innovative marketing campaign.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-cql8nw4ti-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "feedback",
+    "meanings": [
+      "의견",
+      "반응"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Feedback</span> from colleagues can be of great assistance.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-ykpgg24ag-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "outstanding",
+    "meanings": [
+      "우수한",
+      "(부채 등이) 미지불된"
+    ],
+    "examples": [
+      {
+        "origin": "The director presented an <span class=\"target-word\">outstanding</span> business plan.",
+        "meaning": ""
+      },
+      {
+        "origin": "By clearing its <span class=\"target-word\">outstanding</span> debt, Cottonvale was able to finance new product development.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-at62mdxzp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "inform",
+    "meanings": [
+      "~에게 알리다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <span class=\"target-word\">inform</span> the director that the meeting has been canceled.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-mte4iqufh-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "replacement",
+    "meanings": [
+      "교체",
+      "후임자"
+    ],
+    "examples": [
+      {
+        "origin": "We need a <span class=\"target-word\">replacement</span> for this broken laptop.",
+        "meaning": ""
+      },
+      {
+        "origin": "Human resources is looking for a <span class=\"target-word\">replacement</span> for Mr. Winters.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-x2rpbsxja-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "announcement",
+    "meanings": [
+      "공고",
+      "발표"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Dane posted an <span class=\"target-word\">announcement</span> about the general meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-5w1kbum53-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "department",
+    "meanings": [
+      "(조직·기구의) 부서"
+    ],
+    "examples": [
+      {
+        "origin": "Report payroll problems to the finance <span class=\"target-word\">department</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-pfclqeqmm-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "permanently",
+    "meanings": [
+      "영구적으로",
+      "불변으로"
+    ],
+    "examples": [
+      {
+        "origin": "The computer files have been <span class=\"target-word\">permanently</span> deleted and cannot be retrieved.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-brij86n1n-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "fulfill",
+    "meanings": [
+      "(조건을) 만족시키다",
+      "(약속·의무 등을) 지키다",
+      "이행하다"
+    ],
+    "examples": [
+      {
+        "origin": "The final product design <span class=\"target-word\">fulfilled</span> the terms of the contract.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-p6e9te4ay-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "outline",
+    "meanings": [
+      "개요",
+      "설명하다",
+      "약술하다"
+    ],
+    "examples": [
+      {
+        "origin": "Begin making the report by arranging the main ideas in an <span class=\"target-word\">outline</span>.",
+        "meaning": ""
+      },
+      {
+        "origin": "The salesman <span class=\"target-word\">outlined</span> the features of the vacuum cleaner.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-8vc5gfhvw-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "explain",
+    "meanings": [
+      "설명하다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager <span class=\"target-word\">explained</span> the new regulations to everyone in the department.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-fk2i5cwsp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "contain",
+    "meanings": [
+      "포함하다"
+    ],
+    "examples": [
+      {
+        "origin": "The filing cabinet <span class=\"target-word\">contains</span> copies of all our invoices.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-wiwiav3l7-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "compile",
+    "meanings": [
+      "(자료 등을) 편집하다",
+      "모으다"
+    ],
+    "examples": [
+      {
+        "origin": "The assistant <span class=\"target-word\">compiled</span> a list of tablet computer manufacturers.",
+        "meaning": ""
+      },
+      {
+        "origin": "Ms. Atkins will <span class=\"target-word\">compile</span> all year-end reports and submit them to Ms. Woo.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-bqvyj0h67-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "subsequent",
+    "meanings": [
+      "차후의",
+      "그 다음의"
+    ],
+    "examples": [
+      {
+        "origin": "Some employees received separation pay <span class=\"target-word\">subsequent</span> to the company's closing.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-iul2xxe53-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "overview",
+    "meanings": [
+      "개요",
+      "개관"
+    ],
+    "examples": [
+      {
+        "origin": "Scott gave an <span class=\"target-word\">overview</span> of the topic before the presentation.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-tx2jg1gke-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "provider",
+    "meanings": [
+      "공급자",
+      "제공자"
+    ],
+    "examples": [
+      {
+        "origin": "There are numerous Internet and cable <span class=\"target-word\">providers</span> in the city.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-woe74wsuc-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "matter",
+    "meanings": [
+      "문제",
+      "일"
+    ],
+    "examples": [
+      {
+        "origin": "Please deal with personal <span class=\"target-word\">matters</span> outside the office.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-j8hgybjnq-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "expertise",
+    "meanings": [
+      "전문 지식",
+      "전문 기술"
+    ],
+    "examples": [
+      {
+        "origin": "This kind of project falls outside the firm's area of <span class=\"target-word\">expertise</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-peojbwq3r-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "demonstrate",
+    "meanings": [
+      "증명하다",
+      "(모형·실험 등으로) 설명하다"
+    ],
+    "examples": [
+      {
+        "origin": "Sales figures <span class=\"target-word\">demonstrate</span> that the advertising campaign was successful.",
+        "meaning": ""
+      },
+      {
+        "origin": "Our representative will <span class=\"target-word\">demonstrate</span> how to use the instrument.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-g2dozqwk8-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "remainder",
+    "meanings": [
+      "나머지"
+    ],
+    "examples": [
+      {
+        "origin": "Audits will continue throughout the <span class=\"target-word\">remainder</span> of the month.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-oams6zfxe-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "essential",
+    "meanings": [
+      "필수적인",
+      "극히 중요한",
+      "본질적인"
+    ],
+    "examples": [
+      {
+        "origin": "Perseverance is <span class=\"target-word\">essential</span> to success in business.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-v981ojpo6-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "divide",
+    "meanings": [
+      "분배하다",
+      "나누다"
+    ],
+    "examples": [
+      {
+        "origin": "Required overtime will be <span class=\"target-word\">divided</span> equally among employees.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-hvtusdtab-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "major",
+    "meanings": [
+      "주요한",
+      "중대한"
+    ],
+    "examples": [
+      {
+        "origin": "A <span class=\"target-word\">major</span> figure in publishing, Ms. Yarrow is highly influential.",
+        "meaning": ""
+      },
+      {
+        "origin": "The new manager has had a <span class=\"target-word\">major</span> impact on productivity.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-g3krdkjn9-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "compliance",
+    "meanings": [
+      "(명령·법규에의) 준수"
+    ],
+    "examples": [
+      {
+        "origin": "Government officials will inspect the plant's <span class=\"target-word\">compliance</span> with safety guidelines.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-bdnha94at-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "clarify",
+    "meanings": [
+      "명확하게 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The notice <span class=\"target-word\">clarified</span> some details of the vacation policy modifications.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-pibndh2vu-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "face",
+    "meanings": [
+      "(문제 등에) 직면하다",
+      "향하다",
+      "마주보다"
+    ],
+    "examples": [
+      {
+        "origin": "Businesses are <span class=\"target-word\">faced</span> with the challenge of foreign competition.",
+        "meaning": ""
+      },
+      {
+        "origin": "The elevator <span class=\"target-word\">faces</span> the lobby of the building.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-k8dw6ll00-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "follow",
+    "meanings": [
+      "~을 따라가다",
+      "주시하다",
+      "(분명히) 이해하다"
+    ],
+    "examples": [
+      {
+        "origin": "The guests <span class=\"target-word\">followed</span> the guide into the exhibition hall.",
+        "meaning": ""
+      },
+      {
+        "origin": "Bill <span class=\"target-word\">followed</span> the conversations at the meeting closely.",
+        "meaning": ""
+      },
+      {
+        "origin": "The manager realized the staff was not <span class=\"target-word\">following</span> his talk.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-mbmavzxqv-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "aspect",
+    "meanings": [
+      "관점",
+      "국면"
+    ],
+    "examples": [
+      {
+        "origin": "Every <span class=\"target-word\">aspect</span> of the problem must be taken into consideration.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-7w333q884-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "apparently",
+    "meanings": [
+      "보기에 ~한 듯한",
+      "외관상으로는"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Apparently</span>, Mr. Jones was not invited to this meeting.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-5quz7rrx4-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "aware",
+    "meanings": [
+      "알고 있는",
+      "인식하고 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Workers should be made <span class=\"target-word\">aware</span> of safety procedures.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-ps88vcicg-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "extended",
+    "meanings": [
+      "(기간 등을) 연장한",
+      "장기간에 걸친"
+    ],
+    "examples": [
+      {
+        "origin": "The accounting department works <span class=\"target-word\">extended</span> hours on the first week of every month.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-yxwbrggki-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "accidentally",
+    "meanings": [
+      "뜻하지 않게",
+      "우연히"
+    ],
+    "examples": [
+      {
+        "origin": "Alison <span class=\"target-word\">accidentally</span> made some errors in the financial statements.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-zovsv5l00-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "advisable",
+    "meanings": [
+      "바람직한",
+      "합당한"
+    ],
+    "examples": [
+      {
+        "origin": "It is <span class=\"target-word\">advisable</span> to update computer equipment regularly.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-j9eyikved-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "concerned",
+    "meanings": [
+      "염려하는",
+      "걱정하는",
+      "관련된"
+    ],
+    "examples": [
+      {
+        "origin": "Management is <span class=\"target-word\">concerned</span> about security.",
+        "meaning": ""
+      },
+      {
+        "origin": "The report is mainly <span class=\"target-word\">concerned</span> with current investments.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910883-xf5dyr0uc-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883203Z",
+    "updatedAt": "2026-01-28T07:05:10.883203Z",
+    "dictionaryId": null,
+    "origin": "speak",
+    "meanings": [
+      "이야기하다"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Brooke <span class=\"target-word\">spoke</span> to his clients about a new venture.",
+        "meaning": ""
+      }
+    ]
+  }
+]

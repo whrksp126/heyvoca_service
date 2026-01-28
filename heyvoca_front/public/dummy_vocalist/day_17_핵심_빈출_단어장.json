@@ -1,0 +1,868 @@
+[
+  {
+    "id": "1769583910817-beduko2mw-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "fragile",
+    "meanings": [
+      "깨지기 쉬운"
+    ],
+    "examples": [
+      {
+        "origin": "We should be careful when handling <strong class=\"target-word\">fragile</strong> items.",
+        "meaning": "깨지기 쉬운 물품을 취급할 때는 조심해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-he3bgazf2-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "perishable",
+    "meanings": [
+      "부패하기 쉬운"
+    ],
+    "examples": [
+      {
+        "origin": "All <strong class=\"target-word\">perishable</strong> goods must be stored in the refrigerator.",
+        "meaning": "모든 부패하기 쉬운 제품들은 냉장고에 보관되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-scek3yw9k-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "deliver",
+    "meanings": [
+      "배달하다",
+      "(연설을) 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The courier is expected to <strong class=\"target-word\">deliver</strong> the package by noon.",
+        "meaning": "배달원은 정오까지 소포를 배달할 예정이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-nttm0z3rm-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "ensure",
+    "meanings": [
+      "확실하게 하다",
+      "보장하다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager implemented new policies to <strong class=\"target-word\">ensure</strong> workplace safety.",
+        "meaning": "관리자는 직장 안전을 보장하기 위해 새로운 정책을 시행했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-wlelchni8-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "courier",
+    "meanings": [
+      "급송 택배"
+    ],
+    "examples": [
+      {
+        "origin": "The documents were sent to the client via <strong class=\"target-word\">courier</strong>.",
+        "meaning": "서류들이 급송 택배를 통해 고객에게 전달되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-xrhaht250-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "carton",
+    "meanings": [
+      "(큰) 판지 상자"
+    ],
+    "examples": [
+      {
+        "origin": "Each <strong class=\"target-word\">carton</strong> should be clearly labeled with the contents.",
+        "meaning": "각 판지 상자에는 내용물이 명확하게 표시되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-rq22bvmll-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "address",
+    "meanings": [
+      "주소",
+      "(어려운 문제 등을) 처리하다",
+      "다루다"
+    ],
+    "examples": [
+      {
+        "origin": "The CEO will <strong class=\"target-word\">address</strong> the staff at the meeting tomorrow.",
+        "meaning": "최고 경영자는 내일 회의에서 직원들에게 연설할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-b9u01gmrc-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "shipment",
+    "meanings": [
+      "선적",
+      "(화물의) 발송",
+      "수송품",
+      "적하물"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">shipment</strong> of the new cars was delayed by the storm.",
+        "meaning": "신차들의 발송이 폭풍 때문에 지연되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-5rda1af6e-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "particularly",
+    "meanings": [
+      "특히"
+    ],
+    "examples": [
+      {
+        "origin": "I <strong class=\"target-word\">particularly</strong> enjoyed the speaker's presentation on international trade.",
+        "meaning": "나는 특히 무역에 관한 연설자의 발표가 즐거웠다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-g41aigwrx-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "adequately",
+    "meanings": [
+      "적절히"
+    ],
+    "examples": [
+      {
+        "origin": "The training program <strong class=\"target-word\">adequately</strong> prepares the new employees for their roles.",
+        "meaning": "그 교육 프로그램은 신입 사원들이 자신들의 직무에 대해 적절히 준비하게 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-f3rso07zw-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "article",
+    "meanings": [
+      "물품",
+      "물건",
+      "기사",
+      "논설"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">article</strong> of clothing was manufactured in the local factory.",
+        "meaning": "그 의류 품목은 현지 공장에서 제조되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-85jhxkn6k-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "efficient",
+    "meanings": [
+      "(기계·방법 등이) 효과적인",
+      "능률적인"
+    ],
+    "examples": [
+      {
+        "origin": "The and <strong class=\"target-word\">efficient</strong> way to complete the project is by working together.",
+        "meaning": "프로젝트를 완료하기 위한 효과적이고 능률적인 방법은 함께 협력하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-e7h4np6mf-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "agency",
+    "meanings": [
+      "대행 회사",
+      "대리점"
+    ],
+    "examples": [
+      {
+        "origin": "We are looking for a marketing <strong class=\"target-word\">agency</strong> to promote our new product.",
+        "meaning": "우리는 신제품을 홍보하기 위해 마케팅 대행사를 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-m3sx5bnd0-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "enclose",
+    "meanings": [
+      "~을 동봉하다",
+      "~을 둘러싸다",
+      "에워싸다"
+    ],
+    "examples": [
+      {
+        "origin": "Please find the requested documents <strong class=\"target-word\">enclosed</strong> with this letter.",
+        "meaning": "이 편지에 동봉된 요청하신 서류들을 확인해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-3irffesef-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "careful",
+    "meanings": [
+      "조심스러운",
+      "주의 깊은"
+    ],
+    "examples": [
+      {
+        "origin": "Be <strong class=\"target-word\">careful</strong> when handling the fragile glassware.",
+        "meaning": "깨지기 쉬운 유리 제품을 취급할 때는 조심하세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-6r851r12i-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "pick up",
+    "meanings": [
+      "~을 찾다",
+      "(사람·물건 등을) 도중에 태우다"
+    ],
+    "examples": [
+      {
+        "origin": "I will <strong class=\"target-word\">pick up</strong> the groceries on my way home from work.",
+        "meaning": "퇴근하는 길에 식료품을 찾아올 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-vzk82ahxx-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "carry",
+    "meanings": [
+      "지니다",
+      "(물품을) 팔다",
+      "가게에 놓다"
+    ],
+    "examples": [
+      {
+        "origin": "The shop <strong class=\"target-word\">carries</strong> a wide variety of handmade gifts.",
+        "meaning": "그 상점은 매우 다양한 수제 선물을 팔고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-nnaotmrte-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "attach",
+    "meanings": [
+      "첨부하다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <strong class=\"target-word\">attach</strong> the label to the front of the box.",
+        "meaning": "상자 앞면에 라벨을 첨부해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-86iqhlq63-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "inventory",
+    "meanings": [
+      "재고 목록",
+      "재고"
+    ],
+    "examples": [
+      {
+        "origin": "The company is conducting an <strong class=\"target-word\">inventory</strong> check this weekend.",
+        "meaning": "그 회사는 이번 주말에 재고 조사를 실시할 예정이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-otxinebuv-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "catalog",
+    "meanings": [
+      "카탈로그",
+      "(물품·책 등의) 목록"
+    ],
+    "examples": [
+      {
+        "origin": "You can browse through our online <strong class=\"target-word\">catalog</strong> to see our current products.",
+        "meaning": "당신은 현재 제품들을 보기 위해 우리의 온라인 카탈로그를 훑어볼 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-jw952mjkt-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "invoice",
+    "meanings": [
+      "송장",
+      "청구서"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">invoice</strong> shows the total amount due for the goods and services.",
+        "meaning": "송장은 상품과 서비스에 대한 총 지불 금액을 보여준다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-hbcykncg7-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "move",
+    "meanings": [
+      "옮기다",
+      "움직이다",
+      "n. 조치",
+      "수단"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-itslas6dm-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "supply",
+    "meanings": [
+      "공급하다",
+      "n. 비품",
+      "소모품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-wugfiaxae-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "discount",
+    "meanings": [
+      "할인",
+      "v. 할인하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-qqrkpzhz1-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "order",
+    "meanings": [
+      "주문하다",
+      "n. 주문"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-em2iajzeg-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "payment",
+    "meanings": [
+      "지불(금액)",
+      "납입(금액)"
+    ],
+    "examples": [
+      {
+        "origin": "Once <strong class=\"target-word\">payment</strong> has been received, we will process the shipment.",
+        "meaning": "일단 결제가 완료되면, 우리는 발송을 처리할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-thcnkyxb6-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "confirmation",
+    "meanings": [
+      "확인",
+      "확증"
+    ],
+    "examples": [
+      {
+        "origin": "Please send a <strong class=\"target-word\">confirmation</strong> email to acknowledge receipt of the order.",
+        "meaning": "주문을 받았음을 알리는 확인 이메일을 보내주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-jq5gjitwh-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "unavailable",
+    "meanings": [
+      "이용 불가능한",
+      "시간이 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-g21gu427n-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "unable",
+    "meanings": [
+      "~할 수 없는"
+    ],
+    "examples": [
+      {
+        "origin": "We were <strong class=\"target-word\">unable</strong> to reach an agreement on the terms of the contract.",
+        "meaning": "우리는 계약 조건에 대한 합의에 도달할 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-kfby6n914-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "measure",
+    "meanings": [
+      "대책",
+      "조치",
+      "수단",
+      "측정하다"
+    ],
+    "examples": [
+      {
+        "origin": "New <strong class=\"target-word\">measures</strong> were taken to improve the efficiency of the production process.",
+        "meaning": "생산 공정의 효율을 개선하기 위해 새로운 조치가 취해졌다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-ck6nugllz-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "bargain",
+    "meanings": [
+      "특가품",
+      "흥정"
+    ],
+    "examples": [
+      {
+        "origin": "deal 거래, (쌍방에 이익이 되는) 협정",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-21kn8wcpp-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "stock",
+    "meanings": [
+      "재고",
+      "주식",
+      "저장하다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager decided to <strong class=\"target-word\">stock</strong> a new range of products for the upcoming season.",
+        "meaning": "관리자는 다가오는 시즌을 위해 새로운 종류의 제품을 갖추어 놓기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-96tanmpd4-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "affordability",
+    "meanings": [
+      "감당할 수 있는 비용"
+    ],
+    "examples": [
+      {
+        "origin": "affordable adj. (가격이) 알맞은",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-eg1hnuxa9-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "clientele",
+    "meanings": [
+      "(집합적) 고객들",
+      "(변호사·건축가 등의) 모든 의뢰인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-apxma0q2q-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "acclaim",
+    "meanings": [
+      "호평",
+      "찬사"
+    ],
+    "examples": [
+      {
+        "origin": "acclaimed adj. 호평을 받은",
+        "meaning": ""
+      },
+      {
+        "origin": "praise 찬사, 찬양",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-pmc669w5v-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "represent",
+    "meanings": [
+      "~을 대표하다"
+    ],
+    "examples": [
+      {
+        "origin": "representation n. 대표",
+        "meaning": ""
+      },
+      {
+        "origin": "representative n. 대표자",
+        "meaning": ""
+      },
+      {
+        "origin": "speak for 대변하다",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910817-bynrs10d9-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "rating",
+    "meanings": [
+      "등급",
+      "평가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-ro1d2tp0p-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "encompass",
+    "meanings": [
+      "포함하다",
+      "둘러싸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-ce8rur3vy-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "finalize",
+    "meanings": [
+      "마무리 짓다",
+      "완결하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-yrx72b73x-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "market",
+    "meanings": [
+      "시장",
+      "(상품을) 시장에 내놓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910817-dxescsl9u-1769583910817",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.817872Z",
+    "updatedAt": "2026-01-28T07:05:10.817872Z",
+    "dictionaryId": null,
+    "origin": "consignment",
+    "meanings": [
+      "위탁 판매"
+    ],
+    "examples": [
+      {
+        "origin": "consign v. 위탁하다",
+        "meaning": ""
+      }
+    ]
+  }
+]

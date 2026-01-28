@@ -1,0 +1,878 @@
+[
+  {
+    "id": "1769583910832-ttnasx23w-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "book",
+    "meanings": [
+      "예약하다",
+      "책"
+    ],
+    "examples": [
+      {
+        "origin": "You should <strong class=\"target-word\">book</strong> your flight at least two weeks in advance.",
+        "meaning": "적어도 2주 전에는 비행기를 예약해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-dz9ikcf33-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "cafeteria",
+    "meanings": [
+      "구내식당",
+      "카페테리아"
+    ],
+    "examples": [
+      {
+        "origin": "The university <strong class=\"target-word\">cafeteria</strong> offers a variety of healthy meal options.",
+        "meaning": "대학교 구내식당은 다양한 건강식 메뉴를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-o1vnakjs8-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "cater",
+    "meanings": [
+      "음식을 공급하다",
+      "(요구 등을) 만족시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel <strong class=\"target-word\">caters</strong> to the needs of business travelers.",
+        "meaning": "그 호텔은 비즈니스 여행객들의 요구를 만족시킨다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-s6juj57fh-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "confirm",
+    "meanings": [
+      "확인하다",
+      "확정하다"
+    ],
+    "examples": [
+      {
+        "origin": "Please call the airline to <strong class=\"target-word\">confirm</strong> your flight details.",
+        "meaning": "항공사에 전화해서 비행기 세부 사항을 확인해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-mnp900npg-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "dish",
+    "meanings": [
+      "요리",
+      "접시"
+    ],
+    "examples": [
+      {
+        "origin": "The chef prepared a special <strong class=\"target-word\">dish</strong> for the guest of honor.",
+        "meaning": "주방장은 귀빈을 위해 특별한 요리를 준비했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-fnl5ekqs0-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "flavor",
+    "meanings": [
+      "맛",
+      "풍미",
+      "v. 맛을 내다"
+    ],
+    "examples": [
+      {
+        "origin": "The new spices were added to enhance the <strong class=\"target-word\">flavor</strong> of the meal.",
+        "meaning": "식사의 풍미를 높이기 위해 새로운 양념들이 추가되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-5ypmcw7w6-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "refreshment",
+    "meanings": [
+      "다과",
+      "가벼운 음식"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel provides light <strong class=\"target-word\">refreshments</strong> for the seminar participants.",
+        "meaning": "그 호텔은 세미나 참가자들을 위해 가벼운 다과를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-jvm8t4x1x-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "reservation",
+    "meanings": [
+      "예약"
+    ],
+    "examples": [
+      {
+        "origin": "It is essential to make a <strong class=\"target-word\">reservation</strong> for the peak tourist season.",
+        "meaning": "관광 성수기에는 예약을 하는 것이 필수적이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-y29h7961m-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "tasty",
+    "meanings": [
+      "맛있는"
+    ],
+    "examples": [
+      {
+        "origin": "The local market is famous for its <strong class=\"target-word\">tasty</strong> street food.",
+        "meaning": "그 현지 시장은 맛있는 길거리 음식으로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-t36afujz7-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "utensil",
+    "meanings": [
+      "(주방) 기구",
+      "도구"
+    ],
+    "examples": [
+      {
+        "origin": "The kitchen is equipped with modern cooking <strong class=\"target-word\">utensils</strong>.",
+        "meaning": "그 주방은 현대적인 조리 기구들을 갖추고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-fzqbzrjms-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "appetizer",
+    "meanings": [
+      "식전 요리",
+      "에피타이저"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">appetizer</strong> was so delicious that we decided to order more.",
+        "meaning": "그 식전 요리가 너무 맛있어서 우리는 더 주문하기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-61ujeze5c-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "beverage",
+    "meanings": [
+      "음료"
+    ],
+    "examples": [
+      {
+        "origin": "The airline provides a wide range of complimentary <strong class=\"target-word\">beverages</strong>.",
+        "meaning": "그 항공사는 매우 다양한 무료 음료를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-dwisurp7y-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "bill",
+    "meanings": [
+      "청구서",
+      "고지서",
+      "v. 청구하다"
+    ],
+    "examples": [
+      {
+        "origin": "Waitress, could we please have the <strong class=\"target-word\">bill</strong> when you have a moment?",
+        "meaning": "웨이트리스님, 잠시 시간이 나시면 청구서를 좀 주실 수 있을까요?"
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-6a8ipzhx9-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "chef",
+    "meanings": [
+      "주방장",
+      "요리사"
+    ],
+    "examples": [
+      {
+        "origin": "The executive <strong class=\"target-word\">chef</strong> at the restaurant is famous for his signature dessert.",
+        "meaning": "그 식당의 총괄 주방장은 자신의 대표 디저트로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-aewpxenx0-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "complimentary",
+    "meanings": [
+      "무료의",
+      "칭찬하는"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel offers a <strong class=\"target-word\">complimentary</strong> shuttle service to the airport.",
+        "meaning": "그 호텔은 공항까지 무료 셔틀 서비스를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-nresyntgi-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "container",
+    "meanings": [
+      "그릇",
+      "용기"
+    ],
+    "examples": [
+      {
+        "origin": "Glass <strong class=\"target-word\">containers</strong> are better for storing food than plastic ones.",
+        "meaning": "유리 용기가 플라스틱 용기보다 음식을 보관하는 데 더 좋다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-wiztwus5s-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "dessert",
+    "meanings": [
+      "후식",
+      "디저트"
+    ],
+    "examples": [
+      {
+        "origin": "The chocolate lava cake is the most popular <strong class=\"target-word\">dessert</strong> on the menu.",
+        "meaning": "초콜릿 라바 케이크가 메뉴에서 가장 인기 있는 디저트이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-fsshk8ugj-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "ingredient",
+    "meanings": [
+      "재료",
+      "성분"
+    ],
+    "examples": [
+      {
+        "origin": "The secret <strong class=\"target-word\">ingredients</strong> in the chef's special sauce were never revealed.",
+        "meaning": "주방장의 특별 소스에 들어가는 비법 재료들은 전해지지 않았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-5tfksp5in-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "menu",
+    "meanings": [
+      "식단",
+      "메뉴"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">menu</strong> features a wide range of international dishes.",
+        "meaning": "그 메뉴는 매우 다양한 국제적인 요리들을 특징으로 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-dgd264g0o-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "order",
+    "meanings": [
+      "주문하다",
+      "n. 주문"
+    ],
+    "examples": [
+      {
+        "origin": "I would like to <strong class=\"target-word\">order</strong> the grilled salmon for my main course.",
+        "meaning": "메인 코스로 연어 구이를 주문하고 싶습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-7nkk6tmtb-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "rate",
+    "meanings": [
+      "요금",
+      "비율",
+      "v. 평가하다"
+    ],
+    "examples": [
+      {
+        "origin": "The electricity <strong class=\"target-word\">rate</strong> has increased significantly this year.",
+        "meaning": "올해 전기 요금이 상당히 올랐다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-6xlbxd7hv-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "reception",
+    "meanings": [
+      "환영회",
+      "(호텔 등의) 접수처"
+    ],
+    "examples": [
+      {
+        "origin": "We were invited to a cocktail <strong class=\"target-word\">reception</strong> at the French embassy.",
+        "meaning": "우리는 프랑스 대사관의 칵테일 환영회에 초대받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-l3r0ud29r-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "recipe",
+    "meanings": [
+      "조리법",
+      "레시피"
+    ],
+    "examples": [
+      {
+        "origin": "I'm looking for a quick and easy <strong class=\"target-word\">recipe</strong> for a healthy dinner.",
+        "meaning": "나는 건강한 저녁 식사를 위한 빠르고 쉬운 조리법을 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-6znkyv1ps-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "serve",
+    "meanings": [
+      "(음식을) 제공하다",
+      "시중들다"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel <strong class=\"target-word\">serves</strong> a complimentary breakfast for all guests.",
+        "meaning": "그 호텔은 모든 투숙객들에게 무료 조식을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-yh9h9y17f-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "waiter",
+    "meanings": [
+      "웨이터",
+      "웨이트리스"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">waiter</strong> was very helpful and recommended some great dishes.",
+        "meaning": "그 웨이터는 매우 도움이 되었고 몇몇 훌륭한 요리들을 추천해 주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-18hs3d9oc-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "atmosphere",
+    "meanings": [
+      "분위기",
+      "대기"
+    ],
+    "examples": [
+      {
+        "origin": "The restaurant's cozy <strong class=\"target-word\">atmosphere</strong> makes it a popular spot for couples.",
+        "meaning": "그 식당의 아늑한 분위기는 커플들에게 인기 있는 장소로 만든다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-7kasqn1ob-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "check-in",
+    "meanings": [
+      "탑승 수속",
+      "투숙 수속"
+    ],
+    "examples": [
+      {
+        "origin": "Please be sure to <strong class=\"target-word\">check in</strong> before the counter closes.",
+        "meaning": "카운터가 닫히기 전에 반드시 체크인하십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-2huf2w85p-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "confirm",
+    "meanings": [
+      "확인하다",
+      "확정하다"
+    ],
+    "examples": [
+      {
+        "origin": "We would like to <strong class=\"target-word\">confirm</strong> your reservation for a double room.",
+        "meaning": "당신의 2인실 예약을 확인하고 싶습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-shmqj2ivj-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "cruise",
+    "meanings": [
+      "유람선 여행"
+    ],
+    "examples": [
+      {
+        "origin": "The Mediterranean <strong class=\"target-word\">cruise</strong> was the highlight of our summer vacation.",
+        "meaning": "지중해 유람선 여행은 우리 여름 휴가의 하이라이트였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-oz93wgv2y-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "deluxe",
+    "meanings": [
+      "호화로운",
+      "사치스러운"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">deluxe</strong> suite offers a breathtaking view of the city skyline.",
+        "meaning": "호화로운 스위트룸은 도시 스카이라인의 장관을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-k5xhsw41c-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "itinerary",
+    "meanings": [
+      "여정",
+      "여행 일정표"
+    ],
+    "examples": [
+      {
+        "origin": "The travel agent provided a detailed <strong class=\"target-word\">itinerary</strong> for the trip.",
+        "meaning": "여행사 직원은 여행을 위한 상세한 일정표를 제공했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-lf2h9w04i-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "landmark",
+    "meanings": [
+      "경계표",
+      "주요 지착물"
+    ],
+    "examples": [
+      {
+        "origin": "The Statue of Liberty is a world-renowned <strong class=\"target-word\">landmark</strong>.",
+        "meaning": "자유의 여신상은 세계적으로 유명한 주요 지표이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-2perzx5fy-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "occupancy",
+    "meanings": [
+      "(호텔 등의) 수용 인원",
+      "사용",
+      "점유"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel maintains high <strong class=\"target-word\">occupancy</strong> rates throughout the year.",
+        "meaning": "그 호텔은 연중 높은 투숙률을 유지한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-n502ezal7-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "prohibit",
+    "meanings": [
+      "금지하다"
+    ],
+    "examples": [
+      {
+        "origin": "Photography is <strong class=\"target-word\">prohibited</strong> inside the museum.",
+        "meaning": "박물관 내부에서의 사진 촬영은 금지되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-adxpqwk85-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "remind",
+    "meanings": [
+      "생각나게 하다",
+      "상기시키다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <strong class=\"target-word\">remind</strong> the guests that breakfast is served until 10 a.m.",
+        "meaning": "투숙객들에게 아침 식사가 오전 10시까지 제공된다는 것을 상기시켜 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-mj25ympp6-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "scenic",
+    "meanings": [
+      "경치가 좋은"
+    ],
+    "examples": [
+      {
+        "origin": "The train journey offers a <strong class=\"target-word\">scenic</strong> view of the countryside.",
+        "meaning": "기차 여행은 시골의 경치 좋은 풍경을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-agtmylr14-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "sightseeing",
+    "meanings": [
+      "관광"
+    ],
+    "examples": [
+      {
+        "origin": "The city tour includes several hours of <strong class=\"target-word\">sightseeing</strong>.",
+        "meaning": "도시 관광은 몇 시간 동안의 관광을 포함한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-qdmfasun3-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "souvenir",
+    "meanings": [
+      "기념품"
+    ],
+    "examples": [
+      {
+        "origin": "I bought a small <strong class=\"target-word\">souvenir</strong> to commemorate the trip.",
+        "meaning": "나는 여행을 기념하기 위해 작은 기념품을 샀다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-ed36jfdvf-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "spectacular",
+    "meanings": [
+      "구경거리의",
+      "장관의"
+    ],
+    "examples": [
+      {
+        "origin": "The mountain range provides a <strong class=\"target-word\">spectacular</strong> backdrop for the resort.",
+        "meaning": "그 산맥은 리조트를 위한 장관인 배경을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910832-06l5gjoc6-1769583910832",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.832215Z",
+    "updatedAt": "2026-01-28T07:05:10.832215Z",
+    "dictionaryId": null,
+    "origin": "transportation",
+    "meanings": [
+      "운송",
+      "수송"
+    ],
+    "examples": [
+      {
+        "origin": "The resort provides free <strong class=\"target-word\">transportation</strong> to and from the airport.",
+        "meaning": "그 리조트는 공항을 오가는 무료 운송 수단을 제공한다."
+      }
+    ]
+  }
+]

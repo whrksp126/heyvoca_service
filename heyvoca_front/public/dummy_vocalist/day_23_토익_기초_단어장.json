@@ -1,0 +1,464 @@
+[
+  {
+    "id": "1769583910889-qftgunte1-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "application",
+    "meanings": [
+      "지원",
+      "신청"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-cy7mucim5-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "award ceremony",
+    "meanings": [
+      "시상식"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-6t3r8l6w0-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "chat",
+    "meanings": [
+      "담소",
+      "v. 담소를 나누다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-09j19ds0h-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "clap",
+    "meanings": [
+      "박수",
+      "v. 손뼉 치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-g3ctxua6n-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "get paid",
+    "meanings": [
+      "급여를 받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-3qe5w5fnv-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "grab",
+    "meanings": [
+      "잡다",
+      "움켜쥐다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-yqp7r246v-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "group",
+    "meanings": [
+      "(그룹으로) 나누다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-zlete8lb7-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "hook",
+    "meanings": [
+      "걸이",
+      "v. ~에 걸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-ztayp0dly-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "introduction",
+    "meanings": [
+      "도입",
+      "소개"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-69atrxiqm-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "learning center",
+    "meanings": [
+      "교육 센터"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-e502nwk3b-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "loudspeaker",
+    "meanings": [
+      "확성기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-higpdy8j1-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "lounge",
+    "meanings": [
+      "대합실"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-odayd4pcl-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "management seminar",
+    "meanings": [
+      "경영 세미나"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-2wvu0bn61-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "smoking section",
+    "meanings": [
+      "흡연 구역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-65hw9vcqt-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "take a vacation",
+    "meanings": [
+      "휴가를 얻다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-e8fmpgexc-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "wallpaper",
+    "meanings": [
+      "벽지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-tyz8l9s9c-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "bold",
+    "meanings": [
+      "대담한",
+      "용감한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-2cmuennby-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "finely",
+    "meanings": [
+      "곱게",
+      "정교하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-z4uht8f8h-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "friendly",
+    "meanings": [
+      "친절한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-tnvcxhh7r-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "gentle",
+    "meanings": [
+      "온화한",
+      "점잖은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-xy0t61tha-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "in charge of",
+    "meanings": [
+      "~을 맡아서",
+      "담당해서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-dgfoxoen4-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "lively",
+    "meanings": [
+      "활기찬",
+      "활발한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-qjjk12aw5-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "pharmacy",
+    "meanings": [
+      "약국"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-nkgb3k77n-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "precise",
+    "meanings": [
+      "정확한",
+      "정밀한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-3fd5x77ie-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "prize",
+    "meanings": [
+      "상품",
+      "v. 소중하게 여기다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-2n7hyrk0a-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "registration",
+    "meanings": [
+      "등록"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-xlmt4s5r0-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "vacation",
+    "meanings": [
+      "휴가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910889-89hvfrxh5-1769583910889",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.889278Z",
+    "updatedAt": "2026-01-28T07:05:10.889278Z",
+    "dictionaryId": null,
+    "origin": "weekly",
+    "meanings": [
+      "매주의",
+      "adv. 매주"
+    ],
+    "examples": []
+  }
+]

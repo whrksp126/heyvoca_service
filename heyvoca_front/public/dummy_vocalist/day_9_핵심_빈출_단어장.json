@@ -1,0 +1,899 @@
+[
+  {
+    "id": "1769583910826-3g8jqcgu1-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "stagnant",
+    "meanings": [
+      "침체된",
+      "불경기인"
+    ],
+    "examples": [
+      {
+        "origin": "Profits are down this year as sales have been <strong class=\"target-word\">stagnant</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-o4cr3avor-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "dramatically",
+    "meanings": [
+      "극적으로"
+    ],
+    "examples": [
+      {
+        "origin": "Interest rates climbed <strong class=\"target-word\">dramatically</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-hsrm2huxk-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "brisk",
+    "meanings": [
+      "활발한",
+      "호황의"
+    ],
+    "examples": [
+      {
+        "origin": "A <strong class=\"target-word\">brisk</strong> market is developing in online shopping.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-piszrmpin-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "unstable",
+    "meanings": [
+      "불안정한",
+      "변하기 쉬운"
+    ],
+    "examples": [
+      {
+        "origin": "Gas prices have been <strong class=\"target-word\">unstable</strong> in recent years.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-xdp3x8oph-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "rapidly",
+    "meanings": [
+      "급속히",
+      "빨리"
+    ],
+    "examples": [
+      {
+        "origin": "Energy demand increased <strong class=\"target-word\">rapidly</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-45020gm3o-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "soar",
+    "meanings": [
+      "(물가 등이) 폭등하다",
+      "높이 치솟다"
+    ],
+    "examples": [
+      {
+        "origin": "Interest rates have <strong class=\"target-word\">soared</strong> due to inflation.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-0ri4peqfg-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "assert",
+    "meanings": [
+      "단언하다",
+      "주장하다"
+    ],
+    "examples": [
+      {
+        "origin": "The report <strong class=\"target-word\">asserts</strong> that corporate growth will continue.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-4mv9ak19m-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "boost",
+    "meanings": [
+      "(경기를) 부양시키다",
+      "상승시키다",
+      "후원",
+      "(가격의) 인상"
+    ],
+    "examples": [
+      {
+        "origin": "The real estate industry has helped <strong class=\"target-word\">boost</strong> the economy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-htz8oow35-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "analyst",
+    "meanings": [
+      "분석가"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Analysts</strong> recommend buying stock in energy companies.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-dmt9ew1wu-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "potential",
+    "meanings": [
+      "잠재적인",
+      "가능성"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Potential</strong> earnings from the trade deal could reach billions of dollars.",
+        "meaning": ""
+      },
+      {
+        "origin": "The newly formed company has great <strong class=\"target-word\">potential</strong> to succeed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-3i5k8wbrn-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "pleased",
+    "meanings": [
+      "만족해하는",
+      "기쁜"
+    ],
+    "examples": [
+      {
+        "origin": "Investors are <strong class=\"target-word\">pleased</strong> with the market's performance.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-nm1ldq3yn-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "remain",
+    "meanings": [
+      "계속 ~한 상태이다",
+      "아직 ~해야 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The cost of living will <strong class=\"target-word\">remain</strong> stable over the next decade.",
+        "meaning": ""
+      },
+      {
+        "origin": "It <strong class=\"target-word\">remains</strong> to be seen whether or not the tax cut will be passed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-isksp405v-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "limited",
+    "meanings": [
+      "제한된",
+      "한정된"
+    ],
+    "examples": [
+      {
+        "origin": "The island nation has <strong class=\"target-word\">limited</strong> natural resources.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-q6dia9ahx-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "costly",
+    "meanings": [
+      "비용이 많이 드는",
+      "손실이 큰"
+    ],
+    "examples": [
+      {
+        "origin": "Starting a business is <strong class=\"target-word\">costly</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-aa2ujhjj4-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "particular",
+    "meanings": [
+      "특정한",
+      "자세한 내용",
+      "세목"
+    ],
+    "examples": [
+      {
+        "origin": "Import taxes are higher for <strong class=\"target-word\">particular</strong> products that are luxury goods.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-n7735chuh-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "drastic",
+    "meanings": [
+      "과감한",
+      "급격한"
+    ],
+    "examples": [
+      {
+        "origin": "Resolving the financial crisis will require <strong class=\"target-word\">drastic</strong> action.",
+        "meaning": ""
+      },
+      {
+        "origin": "Private citizens want <strong class=\"target-word\">drastic</strong> reform of the banking industry.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-6wj1m8tb7-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "evenly",
+    "meanings": [
+      "고르게",
+      "균등하게"
+    ],
+    "examples": [
+      {
+        "origin": "Economic wealth is not <strong class=\"target-word\">evenly</strong> distributed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-5trug8yx3-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "evidence",
+    "meanings": [
+      "증거"
+    ],
+    "examples": [
+      {
+        "origin": "The latest employment data shows <strong class=\"target-word\">evidence</strong> that the economy is improving.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-jem3d2cn2-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "prospect",
+    "meanings": [
+      "전망",
+      "예상"
+    ],
+    "examples": [
+      {
+        "origin": "Bolton Industries is facing the <strong class=\"target-word\">prospect</strong> of having to reduce its workforce.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-dn5ynviog-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "lead",
+    "meanings": [
+      "이끌다",
+      "지휘하다",
+      "(어떤 결과에) 이르다"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Vasquez helped <strong class=\"target-word\">lead</strong> the company to success.",
+        "meaning": ""
+      },
+      {
+        "origin": "Growing oil markets will <strong class=\"target-word\">lead</strong> to economic improvement.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-jf976365t-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "fall",
+    "meanings": [
+      "(값·가치가) 하락하다",
+      "하락",
+      "낙하"
+    ],
+    "examples": [
+      {
+        "origin": "The rate of unemployment has <strong class=\"target-word\">fallen</strong> steadily this quarter.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-haonvoujk-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "period",
+    "meanings": [
+      "기간",
+      "시기"
+    ],
+    "examples": [
+      {
+        "origin": "For a <strong class=\"target-word\">period</strong> of three years, the company underwent rapid expansion.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-ycjr0gtn9-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "indicator",
+    "meanings": [
+      "지표",
+      "지수"
+    ],
+    "examples": [
+      {
+        "origin": "Current economic <strong class=\"target-word\">indicators</strong> show rising growth in mining.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-8605udetx-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "industry",
+    "meanings": [
+      "산업"
+    ],
+    "examples": [
+      {
+        "origin": "Jobs in the newspaper <strong class=\"target-word\">industry</strong> are declining rapidly.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-nxqru2yop-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "likely",
+    "meanings": [
+      "~할 것 같은"
+    ],
+    "examples": [
+      {
+        "origin": "The new CEO is <strong class=\"target-word\">likely</strong> to confront major challenges.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-dbrccnc77-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "boom",
+    "meanings": [
+      "붐",
+      "호황"
+    ],
+    "examples": [
+      {
+        "origin": "Land developers are taking advantage of the housing <strong class=\"target-word\">boom</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-oot13bvaw-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "director",
+    "meanings": [
+      "임원",
+      "책임자"
+    ],
+    "examples": [
+      {
+        "origin": "The company <strong class=\"target-word\">directors</strong> are discussing a new business strategy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-df9txdc23-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "substitute",
+    "meanings": [
+      "대용품",
+      "대신하다"
+    ],
+    "examples": [
+      {
+        "origin": "Corn syrup is used as a <strong class=\"target-word\">substitute</strong> for sugar in many food products.",
+        "meaning": ""
+      },
+      {
+        "origin": "Ms. Ohara will be <strong class=\"target-word\">substituting</strong> for the project manager this week.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-1bp4v5dzo-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "consequence",
+    "meanings": [
+      "결과"
+    ],
+    "examples": [
+      {
+        "origin": "Profits grew as a <strong class=\"target-word\">consequence</strong> of increased business.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-7ivyfyu1f-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "fairly",
+    "meanings": [
+      "상당히",
+      "꽤"
+    ],
+    "examples": [
+      {
+        "origin": "Concerns over the bankruptcy are <strong class=\"target-word\">fairly</strong> widespread.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-79jjzk84m-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "economical",
+    "meanings": [
+      "경제적인",
+      "절약되는"
+    ],
+    "examples": [
+      {
+        "origin": "Companies are searching for <strong class=\"target-word\">economical</strong> ways to utilize energy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-hxz1b8k1g-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "thrive",
+    "meanings": [
+      "번영하다",
+      "성공하다"
+    ],
+    "examples": [
+      {
+        "origin": "The delivery service industry is <strong class=\"target-word\">thriving</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-1uz50yy0v-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "implication",
+    "meanings": [
+      "영향",
+      "밀접한 관계"
+    ],
+    "examples": [
+      {
+        "origin": "The Supreme Court ruling has <strong class=\"target-word\">implications</strong> for small businesses.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-9ie94ciyt-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "wane",
+    "meanings": [
+      "감소",
+      "쇠퇴"
+    ],
+    "examples": [
+      {
+        "origin": "Consumer spending is on the <strong class=\"target-word\">wane</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-8kv8qgnno-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "prosperity",
+    "meanings": [
+      "번영"
+    ],
+    "examples": [
+      {
+        "origin": "Strong economic growth is a prerequisite for national <strong class=\"target-word\">prosperity</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-qqlhfmdzf-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "depression",
+    "meanings": [
+      "불황"
+    ],
+    "examples": [
+      {
+        "origin": "The entire industry is going through an economic <strong class=\"target-word\">depression</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-6ylwjcut8-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "dwindle",
+    "meanings": [
+      "줄어들다",
+      "감소되다"
+    ],
+    "examples": [
+      {
+        "origin": "The company's profits <strong class=\"target-word\">dwindled</strong> in the 1990s.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-zypy1j8d6-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "impede",
+    "meanings": [
+      "저해하다",
+      "방해하다"
+    ],
+    "examples": [
+      {
+        "origin": "Natural calamities in the summer will <strong class=\"target-word\">impede</strong> national growth.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-bgv28oggn-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "promising",
+    "meanings": [
+      "유망한",
+      "전망이 좋은"
+    ],
+    "examples": [
+      {
+        "origin": "Many people find <strong class=\"target-word\">promising</strong> careers in health and technology.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910826-m578eikwg-1769583910826",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.826307Z",
+    "updatedAt": "2026-01-28T07:05:10.826307Z",
+    "dictionaryId": null,
+    "origin": "adversity",
+    "meanings": [
+      "역경",
+      "불운"
+    ],
+    "examples": [
+      {
+        "origin": "In spite of the <strong class=\"target-word\">adversity</strong> he faced, Mike managed to find a job.",
+        "meaning": ""
+      }
+    ]
+  }
+]

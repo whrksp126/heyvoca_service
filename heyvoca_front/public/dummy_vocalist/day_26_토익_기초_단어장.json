@@ -1,0 +1,452 @@
+[
+  {
+    "id": "1769583910860-ebksyb021-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "ATM",
+    "meanings": [
+      "현금 자동 입출금기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-x4tlu70b6-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "back-and-forth",
+    "meanings": [
+      "왔다 갔다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-chxa9lrsv-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "bank account",
+    "meanings": [
+      "은행 계좌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-3acnym7vk-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "bank teller",
+    "meanings": [
+      "은행 창구 직원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-yziowg9lu-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "bill a client",
+    "meanings": [
+      "고객에게 청구서를 보내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-mp4lep0zx-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "borrow money",
+    "meanings": [
+      "돈을 빌리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-5k6abx6u8-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "cash the check",
+    "meanings": [
+      "수표를 현금으로 바꾸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-ny5igrtt4-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "check account",
+    "meanings": [
+      "당좌 예금 계좌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-8nydcq1u0-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "closing hour",
+    "meanings": [
+      "영업 종료 시간"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-67a3zgunl-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "coin",
+    "meanings": [
+      "동전"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-p4a6rduho-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "credit limit",
+    "meanings": [
+      "신용 한도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-qsfggvv0k-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "currency exchange",
+    "meanings": [
+      "환전"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-1mi5zfmox-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "fill out a form",
+    "meanings": [
+      "양식을 작성하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-rlvo76n9c-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "interest rate",
+    "meanings": [
+      "이율",
+      "금리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-8svy1krzh-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "keep a record",
+    "meanings": [
+      "기록하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-iy1vq5iil-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "make a deposit",
+    "meanings": [
+      "예금하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-lwayto5bf-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "manage an account",
+    "meanings": [
+      "계좌를 관리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-7seiv9k6q-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "savings account",
+    "meanings": [
+      "보통 예금 계좌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-tergiwk2g-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "service charge",
+    "meanings": [
+      "서비스 이용료"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-k96q9ig1x-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "waiting list",
+    "meanings": [
+      "대기자 명단"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-rcmqg78yp-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "bank statement",
+    "meanings": [
+      "은행 예금 명세서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-fsiqzia7a-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "cancel a credit card",
+    "meanings": [
+      "신용 카드를 취소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-0bxwvjnjr-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "checking account",
+    "meanings": [
+      "당좌 예금 계좌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-8bnq1533f-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "identity",
+    "meanings": [
+      "신원",
+      "정체"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-sq7b7hslr-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "overdraw",
+    "meanings": [
+      "(예금보다) 더 많이 찾다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-9fj8ow6et-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "remittance",
+    "meanings": [
+      "송금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-ssnl5wnxf-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "safe-deposit box",
+    "meanings": [
+      "은행 금고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910860-yyffl95fw-1769583910860",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.860800Z",
+    "updatedAt": "2026-01-28T07:05:10.860800Z",
+    "dictionaryId": null,
+    "origin": "withdrawal form",
+    "meanings": [
+      "인출 양식"
+    ],
+    "examples": []
+  }
+]

@@ -1,0 +1,466 @@
+[
+  {
+    "id": "1769583910830-osh77btxo-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "afford",
+    "meanings": [
+      "~할 여유가 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-s8fjridoe-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "agree",
+    "meanings": [
+      "동의하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-k7tqyob1a-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "bill",
+    "meanings": [
+      "고지서",
+      "청구서",
+      "v. 청구하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-d6sraeby1-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "business hours",
+    "meanings": [
+      "영업시간"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-mlqavx8e8-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "cash",
+    "meanings": [
+      "현금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-e1oemnwod-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "choose",
+    "meanings": [
+      "고르다",
+      "선택하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-bwgfszakt-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "complain",
+    "meanings": [
+      "불평하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-41qpwe9o6-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "customer",
+    "meanings": [
+      "고객"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-fbuvycup6-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "delivery",
+    "meanings": [
+      "배송"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-onsflw03j-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "exchange",
+    "meanings": [
+      "교환하다",
+      "n. 교환"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-sthbr3t0d-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "expensive",
+    "meanings": [
+      "비싼"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-uc14lrgm1-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "item",
+    "meanings": [
+      "항목",
+      "물품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-um8s5csuj-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "list",
+    "meanings": [
+      "명단",
+      "목록",
+      "v. 열거하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-58uyo5mbe-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "local",
+    "meanings": [
+      "지역의",
+      "현지의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-q2d2krsoa-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "mall",
+    "meanings": [
+      "쇼핑몰"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-4gq1nw233-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "offer",
+    "meanings": [
+      "제공하다",
+      "n. 제안"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-3170ctgzr-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "pay",
+    "meanings": [
+      "지불하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-ygz84jqaq-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "prefer",
+    "meanings": [
+      "선호하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-rppaju0s6-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "price",
+    "meanings": [
+      "가격"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-o0kmj8s42-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "purchase",
+    "meanings": [
+      "구매하다",
+      "n. 구매"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-q4nor9ndl-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "quality",
+    "meanings": [
+      "질",
+      "품질"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-19fnu8vlz-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "receipt",
+    "meanings": [
+      "영수증",
+      "수령"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-5towszxtu-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "refund",
+    "meanings": [
+      "환불",
+      "v. 환불하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-h82su2ezp-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "return",
+    "meanings": [
+      "반납하다",
+      "돌아오다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-ysoy2uqeh-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "select",
+    "meanings": [
+      "선택하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-u27k21mqo-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "set",
+    "meanings": [
+      "세트",
+      "v. 설비하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-i6ufq6ad0-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "sell",
+    "meanings": [
+      "팔다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-fyvjkmpy6-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830090Z",
+    "updatedAt": "2026-01-28T07:05:10.830090Z",
+    "dictionaryId": null,
+    "origin": "store",
+    "meanings": [
+      "상점",
+      "v. 저장하다"
+    ],
+    "examples": []
+  }
+]

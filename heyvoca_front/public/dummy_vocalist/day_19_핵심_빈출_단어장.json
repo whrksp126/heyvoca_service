@@ -1,0 +1,883 @@
+[
+  {
+    "id": "1769583910850-nfk1f39yf-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "acquire",
+    "meanings": [
+      "인수하다",
+      "취득하다"
+    ],
+    "examples": [
+      {
+        "origin": "The technology firm plans to <strong class=\"target-word\">acquire</strong> a smaller competitor.",
+        "meaning": "그 기술 회사는 더 작은 경쟁사를 인수할 계획이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-becixhswt-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "adjacent",
+    "meanings": [
+      "인접한"
+    ],
+    "examples": [
+      {
+        "origin": "Parking is available in the lot <strong class=\"target-word\">adjacent</strong> to the building.",
+        "meaning": "건물에 인접한 주차장에서 주차가 가능하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-9cma08gw7-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "assign",
+    "meanings": [
+      "할당하다",
+      "배정하다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager will <strong class=\"target-word\">assign</strong> tasks to the team members tomorrow.",
+        "meaning": "관리자는 내일 팀원들에게 업무를 배정할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-14bmwb054-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "collaborate",
+    "meanings": [
+      "협력하다",
+      "공동으로 작업하다"
+    ],
+    "examples": [
+      {
+        "origin": "The two departments will <strong class=\"target-word\">collaborate</strong> on the upcoming project.",
+        "meaning": "두 부서가 다가오는 프로젝트에서 협력할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-i3pz38fl8-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "confidential",
+    "meanings": [
+      "기밀의",
+      "내밀한"
+    ],
+    "examples": [
+      {
+        "origin": "All employee records are kept in a <strong class=\"target-word\">confidential</strong> file.",
+        "meaning": "모든 직원 기록은 기밀 파일에 보관된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-ttk6qk9wg-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "cooperate",
+    "meanings": [
+      "협력하다",
+      "협조하다"
+    ],
+    "examples": [
+      {
+        "origin": "We need all departments to <strong class=\"target-word\">cooperate</strong> to meet the deadline.",
+        "meaning": "우리는 마감 기한을 맞추기 위해 모든 부서가 협력할 필요가 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-qstoyd5wj-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "coordinator",
+    "meanings": [
+      "조정자",
+      "진행 관리자"
+    ],
+    "examples": [
+      {
+        "origin": "The project <strong class=\"target-word\">coordinator</strong> will oversee the entire process.",
+        "meaning": "프로젝트 조정자가 전체 과정을 감독할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-1mmxzmqt2-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "department",
+    "meanings": [
+      "부서",
+      "학과"
+    ],
+    "examples": [
+      {
+        "origin": "The marketing <strong class=\"target-word\">department</strong> is launching a new advertising campaign.",
+        "meaning": "마케팅 부서가 새로운 광고 캠페인을 시작하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-gnjv3qae9-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "directory",
+    "meanings": [
+      "주소록",
+      "인명부"
+    ],
+    "examples": [
+      {
+        "origin": "Please check the company <strong class=\"target-word\">directory</strong> for the phone numbers.",
+        "meaning": "전화번호를 위해 회사 인명부를 확인해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-7drymfsdq-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "duplicate",
+    "meanings": [
+      "복사본",
+      "v. 복사하다"
+    ],
+    "examples": [
+      {
+        "origin": "The assistant was asked to <strong class=\"target-word\">duplicate</strong> the report for the meeting.",
+        "meaning": "비서는 회의를 위해 보고서를 복사하라는 요청을 받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-0goqni6k6-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "efficiently",
+    "meanings": [
+      "효율적으로",
+      "능률적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The warehouse was reorganized to help the staff work more <strong class=\"target-word\">efficiently</strong>.",
+        "meaning": "직원들이 더 효율적으로 일할 수 있도록 창고가 재정리되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-0gpuuslag-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "equipment",
+    "meanings": [
+      "장비",
+      "설비"
+    ],
+    "examples": [
+      {
+        "origin": "The factory recently purchased new production <strong class=\"target-word\">equipment</strong>.",
+        "meaning": "그 공장은 최근에 새로운 생산 장비를 구입했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-pwluql28b-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "executive",
+    "meanings": [
+      "임원",
+      "경영 간부",
+      "adj. 경영의"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">executives</strong> met to discuss the company's expansion plans.",
+        "meaning": "임원들은 회사의 확장 계획을 논의하기 위해 모였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-rcedy49ai-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "facility",
+    "meanings": [
+      "시설",
+      "설비"
+    ],
+    "examples": [
+      {
+        "origin": "The new manufacturing <strong class=\"target-word\">facility</strong> is expected to be completed by June.",
+        "meaning": "새로운 제조 시설은 6월까지 완공될 것으로 예상된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-c2jmmzorn-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "finalize",
+    "meanings": [
+      "마무리하다",
+      "완결하다"
+    ],
+    "examples": [
+      {
+        "origin": "The legal team will <strong class=\"target-word\">finalize</strong> the merger agreement by tomorrow.",
+        "meaning": "법무팀은 내일까지 합병 계약을 마무리할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-cld5nn5ct-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "formal",
+    "meanings": [
+      "공식적인",
+      "격식을 차린"
+    ],
+    "examples": [
+      {
+        "origin": "We have received a <strong class=\"target-word\">formal</strong> request from the client for a proposal.",
+        "meaning": "우리는 고객으로부터 제안서에 대한 공식적인 요청을 받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-y57paiubu-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "furnish",
+    "meanings": [
+      "공급하다",
+      "제공하다",
+      "가구를 비치하다"
+    ],
+    "examples": [
+      {
+        "origin": "We will <strong class=\"target-word\">furnish</strong> the office with the necessary equipment.",
+        "meaning": "우리는 사무실에 필요한 장비를 갖출 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-j9q0dpsuk-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "implement",
+    "meanings": [
+      "시행하다",
+      "이행하다",
+      "n. 도구"
+    ],
+    "examples": [
+      {
+        "origin": "The company will <strong class=\"target-word\">implement</strong> a new security system next month.",
+        "meaning": "회사는 다음 달에 새로운 보안 시스템을 시행할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-jqv4ubw3y-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "logistics",
+    "meanings": [
+      "실행 계획",
+      "물류"
+    ],
+    "examples": [
+      {
+        "origin": "Efficiency in <strong class=\"target-word\">logistics</strong> is key to maintaining competitive advantage.",
+        "meaning": "물류의 효율성은 경쟁 우위를 유지하는 데 핵심이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-othtbuo41-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "manage",
+    "meanings": [
+      "관리하다",
+      "경영하다"
+    ],
+    "examples": [
+      {
+        "origin": "The supervisor has to <strong class=\"target-word\">manage</strong> multiple projects simultaneously.",
+        "meaning": "관리자는 동시에 여러 프로젝트를 관리해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-sk12i1puo-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "memo",
+    "meanings": [
+      "회람",
+      "메모"
+    ],
+    "examples": [
+      {
+        "origin": "A <strong class=\"target-word\">memo</strong> regarding the change in office hours was sent to all staff.",
+        "meaning": "근무 시간 변경에 관한 회람이 모든 직원에게 발송되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-2p0d603pb-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "monitor",
+    "meanings": [
+      "감시하다",
+      "관찰하다",
+      "n. 모니터"
+    ],
+    "examples": [
+      {
+        "origin": "The team lead will <strong class=\"target-word\">monitor</strong> the progress of the project.",
+        "meaning": "팀장이 프로젝트의 진행 상황을 관찰할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-ysuvouq3k-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "operate",
+    "meanings": [
+      "운영하다",
+      "가동하다"
+    ],
+    "examples": [
+      {
+        "origin": "The new manager will <strong class=\"target-word\">operate</strong> the branch office in Chicago.",
+        "meaning": "새로운 관리자가 시카고 지점을 운영할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-hfi129gq7-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "oversee",
+    "meanings": [
+      "감독하다",
+      "감시하다"
+    ],
+    "examples": [
+      {
+        "origin": "The supervisor will <strong class=\"target-word\">oversee</strong> the development of the new software.",
+        "meaning": "관리자가 새로운 소프트웨어 개발을 감독할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-dz99fjmsn-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "personnel",
+    "meanings": [
+      "(집합적) 직원",
+      "인원",
+      "인사과"
+    ],
+    "examples": [
+      {
+        "origin": "The HR department is responsible for managing all <strong class=\"target-word\">personnel</strong> files.",
+        "meaning": "인사과는 모든 직원 파일을 관리할 책임이 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-0uw6m3uvi-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "procedure",
+    "meanings": [
+      "절차",
+      "순서"
+    ],
+    "examples": [
+      {
+        "origin": "The standard <strong class=\"target-word\">procedure</strong> for ordering office supplies has changed.",
+        "meaning": "사무용품을 주문하는 표준 절차가 변경되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-47az4oo7y-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "proposal",
+    "meanings": [
+      "제안",
+      "계획"
+    ],
+    "examples": [
+      {
+        "origin": "The board is reviewing the <strong class=\"target-word\">proposal</strong> for a new marketing campaign.",
+        "meaning": "이사회는 새로운 마케팅 캠페인에 대한 제안을 검토하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-hxxpch85l-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "reception",
+    "meanings": [
+      "접수처",
+      "환영회"
+    ],
+    "examples": [
+      {
+        "origin": "Please leave your message at the <strong class=\"target-word\">reception</strong> desk.",
+        "meaning": "접수처에 메시지를 남겨 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-tnyn6ryz0-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "register",
+    "meanings": [
+      "등록하다",
+      "n. 현금 등록기"
+    ],
+    "examples": [
+      {
+        "origin": "Attendees are required to <strong class=\"target-word\">register</strong> for the conference in advance.",
+        "meaning": "참석자들은 사전에 컨퍼런스에 등록해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-yg001drp6-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "regulate",
+    "meanings": [
+      "규제하다",
+      "조절하다"
+    ],
+    "examples": [
+      {
+        "origin": "New laws have been introduced to <strong class=\"target-word\">regulate</strong> financial transactions.",
+        "meaning": "금융 거래를 규제하기 위해 새로운 법률들이 도입되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-prqerx1ys-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "responsibility",
+    "meanings": [
+      "책임(감)",
+      "의무"
+    ],
+    "examples": [
+      {
+        "origin": "It is the <strong class=\"target-word\">responsibility</strong> of the manager to supervise the team.",
+        "meaning": "팀을 감독하는 것은 관리자의 책임이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-15kug0ql4-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "schedule",
+    "meanings": [
+      "일정(표)",
+      "v. 일정을 잡다"
+    ],
+    "examples": [
+      {
+        "origin": "The production <strong class=\"target-word\">schedule</strong> has been updated to reflect the changes.",
+        "meaning": "생산 일정이 변경 사항을 반영하여 업데이트되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-q18pqqb3r-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "security",
+    "meanings": [
+      "보안",
+      "경비",
+      "안보"
+    ],
+    "examples": [
+      {
+        "origin": "The building has a sophisticated <strong class=\"target-word\">security</strong> system.",
+        "meaning": "그 건물은 정교한 보안 시스템을 갖추고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-w19qlqijp-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "supervise",
+    "meanings": [
+      "감독하다",
+      "관리하다"
+    ],
+    "examples": [
+      {
+        "origin": "The manager will <strong class=\"target-word\">supervise</strong> the training of the new employees.",
+        "meaning": "관리자가 신입 사원들의 교육을 감독할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-mzvvlk1mi-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "system",
+    "meanings": [
+      "체계",
+      "제도"
+    ],
+    "examples": [
+      {
+        "origin": "The new filing <strong class=\"target-word\">system</strong> is much more efficient than the old one.",
+        "meaning": "새로운 서류 정리 체계가 예전 것보다 훨씬 더 효율적이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-abyfbfuaa-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "technical",
+    "meanings": [
+      "기술적인",
+      "전문적인"
+    ],
+    "examples": [
+      {
+        "origin": "Please contact the <strong class=\"target-word\">technical</strong> support team for assistance.",
+        "meaning": "도움을 위해 기술 지원 팀에 연락해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-ramth0hgs-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "thoroughly",
+    "meanings": [
+      "철저히",
+      "완전히"
+    ],
+    "examples": [
+      {
+        "origin": "The data was <strong class=\"target-word\">thoroughly</strong> analyzed before the report was written.",
+        "meaning": "보고서가 작성되기 전에 데이터가 철저히 분석되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-ovikczm4k-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "update",
+    "meanings": [
+      "갱신하다",
+      "최신 정보를 주다",
+      "n. 갱신"
+    ],
+    "examples": [
+      {
+        "origin": "Please <strong class=\"target-word\">update</strong> the client list with the latest contact information.",
+        "meaning": "최신 연락처 정보로 고객 명단을 갱신해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-ti0nk7jfm-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "various",
+    "meanings": [
+      "다양한",
+      "여러 가지의"
+    ],
+    "examples": [
+      {
+        "origin": "The conference will address <strong class=\"target-word\">various</strong> issues related to global trade.",
+        "meaning": "그 회의는 세계 무역과 관련된 다양한 문제들을 다룰 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910850-jig5u6z90-1769583910850",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.850640Z",
+    "updatedAt": "2026-01-28T07:05:10.850640Z",
+    "dictionaryId": null,
+    "origin": "workforce",
+    "meanings": [
+      "노동 인력",
+      "전 종업원"
+    ],
+    "examples": []
+  }
+]

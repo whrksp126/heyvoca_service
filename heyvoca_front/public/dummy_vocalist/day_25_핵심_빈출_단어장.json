@@ -1,0 +1,858 @@
+[
+  {
+    "id": "1769583910865-2pwsgsv2j-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "congestion",
+    "meanings": [
+      "(교통의) 체증",
+      "혼잡"
+    ],
+    "examples": [
+      {
+        "origin": "Traffic <strong class=\"target-word\">congestion</strong> on the highway is heaviest between 5 P.M. and 7 P.M.",
+        "meaning": "고속도로의 교통 체증은 오후 5시부터 7시 사이에 가장 심하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-1ixmnyrmv-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "alleviate",
+    "meanings": [
+      "완화하다"
+    ],
+    "examples": [
+      {
+        "origin": "The new freeway lane <strong class=\"target-word\">alleviated</strong> traffic congestion.",
+        "meaning": "새 고속도로 차선은 교통 체증을 완화했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-3ujpb8eh9-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "divert",
+    "meanings": [
+      "우회시키다",
+      "다른 곳으로 돌리다"
+    ],
+    "examples": [
+      {
+        "origin": "Traffic was <strong class=\"target-word\">diverted</strong> during construction.",
+        "meaning": "공사 기간 동안 차량이 우회되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-0ddwby5sh-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "detour",
+    "meanings": [
+      "우회"
+    ],
+    "examples": [
+      {
+        "origin": "The express bus had to take a <strong class=\"target-word\">detour</strong> to avoid heavy traffic.",
+        "meaning": "그 고속버스는 교통 혼잡을 피하기 위해 우회해야 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-w5e4y56qf-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "fuel",
+    "meanings": [
+      "연료"
+    ],
+    "examples": [
+      {
+        "origin": "Our car ran out of <strong class=\"target-word\">fuel</strong> on the highway.",
+        "meaning": "우리 차는 고속도로에서 연료가 떨어졌다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-uv8sc9m6m-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "malfunction",
+    "meanings": [
+      "오작동",
+      "기능 불량"
+    ],
+    "examples": [
+      {
+        "origin": "The car's problems stemmed from a brake <strong class=\"target-word\">malfunction</strong>.",
+        "meaning": "그 자동차의 문제들은 브레이크 오작동에서 비롯되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-id936oikq-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "permit",
+    "meanings": [
+      "허락하다"
+    ],
+    "examples": [
+      {
+        "origin": "Residents must purchase a parking <strong class=\"target-word\">permit</strong> every year.",
+        "meaning": "거주자들은 매년 주차 허가증을 구입해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-qbdj5srvw-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "transportation",
+    "meanings": [
+      "교통(수단)",
+      "운송 수단"
+    ],
+    "examples": [
+      {
+        "origin": "All of the city's major tourist attractions are reachable by public <strong class=\"target-word\">transportation</strong>.",
+        "meaning": "그 도시의 모든 주요 관광지들은 대중교통으로 갈 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-iv2qbq8yc-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "opportunity",
+    "meanings": [
+      "기회"
+    ],
+    "examples": [
+      {
+        "origin": "The bus tour provides visitors with an <strong class=\"target-word\">opportunity</strong> to explore the city in one day.",
+        "meaning": "버스 투어는 방문객들에게 하루 만에 도시를 둘러볼 기회를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-h2brkgiy3-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "clearly",
+    "meanings": [
+      "명확히"
+    ],
+    "examples": [
+      {
+        "origin": "The reporter's use of animated graphics <strong class=\"target-word\">clearly</strong> showed the flow of traffic during rush hour.",
+        "meaning": "그 기자의 동영상 그래픽 사용은 출퇴근 시간의 교통 흐름을 명확히 보여주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-uqw05mmtw-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "ongoing",
+    "meanings": [
+      "계속 진행 중인"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Ongoing</strong> roadwork is causing delays through the city center.",
+        "meaning": "계속 진행 중인 도로 공사가 도심 여기저기에 지체를 일으키고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-02i2wfzwd-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "detailed",
+    "meanings": [
+      "상세한"
+    ],
+    "examples": [
+      {
+        "origin": "The tourist information counter provides <strong class=\"target-word\">detailed</strong> local maps for visitors.",
+        "meaning": "관광 안내 창구는 방문객들에게 상세한 지역 지도를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-mb35e4lhn-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "alternative",
+    "meanings": [
+      "대안",
+      "대체"
+    ],
+    "examples": [
+      {
+        "origin": "Due to a flight cancellation, Samuel had to fly on an <strong class=\"target-word\">alternative</strong> air carrier.",
+        "meaning": "비행편 취소 때문에, Samuel은 다른 항공사를 이용해야 했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-f5f8raq5h-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "obtain",
+    "meanings": [
+      "획득하다",
+      "얻다"
+    ],
+    "examples": [
+      {
+        "origin": "Driver's licenses can be <strong class=\"target-word\">obtained</strong> from the Department of Motor Vehicles.",
+        "meaning": "운전 면허증은 차량 관리국에서 획득할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-f8rxfvex0-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "designated",
+    "meanings": [
+      "지정된"
+    ],
+    "examples": [
+      {
+        "origin": "Parking is restricted to <strong class=\"target-word\">designated</strong> spots.",
+        "meaning": "주차는 지정된 장소로 제한되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-4uz19hjsw-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "intersection",
+    "meanings": [
+      "교차로",
+      "교차 지점"
+    ],
+    "examples": [
+      {
+        "origin": "A traffic light is being installed at the <strong class=\"target-word\">intersection</strong> of Fifth Avenue and Main Street.",
+        "meaning": "신호등이 5번가와 Main가의 교차로에 설치되고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-ydjx51sg5-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "equip",
+    "meanings": [
+      "갖추다",
+      "설비하다"
+    ],
+    "examples": [
+      {
+        "origin": "Newer cars come <strong class=\"target-word\">equipped</strong> with emergency kits.",
+        "meaning": "최신 자동차들은 비상 도구 세트가 갖추어져 나온다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-oyrruk0xi-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "commute",
+    "meanings": [
+      "통근하다"
+    ],
+    "examples": [
+      {
+        "origin": "Many workers <strong class=\"target-word\">commute</strong> into the city daily by bus.",
+        "meaning": "많은 근로자들이 버스를 타고 매일 시내로 통근한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-p78fbml0r-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "downtown",
+    "meanings": [
+      "시내에서",
+      "도심지로"
+    ],
+    "examples": [
+      {
+        "origin": "It is difficult to find free parking <strong class=\"target-word\">downtown</strong>.",
+        "meaning": "시내에서 무료 주차장을 찾는 것은 어렵다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-g7hf6lks4-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "automotive",
+    "meanings": [
+      "자동차의"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Automotive</strong> repair service is offered for free on new vehicles.",
+        "meaning": "신차에는 자동차 수리 서비스가 무료로 제공된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-v26ylfrqz-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "closure",
+    "meanings": [
+      "폐쇄"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910865-n2zg62ayc-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "vehicle",
+    "meanings": [
+      "차량",
+      "운송 수단"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910865-lncef8jah-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "platform",
+    "meanings": [
+      "승강장"
+    ],
+    "examples": [
+      {
+        "origin": "All trains to Denver will now be departing from <strong class=\"target-word\">platform</strong> two.",
+        "meaning": "모든 덴버행 열차는 지금 2번 승강장에서 출발할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-axiizvxcs-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "official",
+    "meanings": [
+      "공무원",
+      "관리"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">official</strong> report showed that automobile accidents have recently increased.",
+        "meaning": "그 공식 보고서는 최근에 자동차 사고가 증가하고 있음을 나타냈다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-07gahmwms-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "transit",
+    "meanings": [
+      "교통",
+      "수송"
+    ],
+    "examples": [
+      {
+        "origin": "The travel card can be used for all public <strong class=\"target-word\">transit</strong>.",
+        "meaning": "그 교통 카드는 모든 대중교통에 이용할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-qyz9mfvn4-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "fare",
+    "meanings": [
+      "교통 요금"
+    ],
+    "examples": [
+      {
+        "origin": "Bus <strong class=\"target-word\">fares</strong> increased in line with gasoline prices.",
+        "meaning": "버스 요금이 휘발유 가격에 맞추어 인상되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-1pu5j2bj5-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "expense",
+    "meanings": [
+      "비용",
+      "지출"
+    ],
+    "examples": [
+      {
+        "origin": "Residents agreed that the new highway was worth the <strong class=\"target-word\">expense</strong>.",
+        "meaning": "주민들은 새로운 고속도로가 비용을 들일 만큼 가치 있다는 데 동의했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-qtm8z1ehj-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "trust",
+    "meanings": [
+      "신뢰",
+      "신임"
+    ],
+    "examples": [
+      {
+        "origin": "Drivers <strong class=\"target-word\">trust</strong> that the police will keep roadways safe.",
+        "meaning": "운전자들은 경찰이 도로를 안전하게 유지할 것이라고 믿는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-iwkqqrjl6-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "head",
+    "meanings": [
+      "(~의 방향으로) 나아가다",
+      "향하게 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The motorcyclists <strong class=\"target-word\">headed</strong> west toward the mountains.",
+        "meaning": "오토바이 운전자들은 산을 향해 서쪽으로 나아갔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-56btstl3l-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "drive",
+    "meanings": [
+      "(차 등을) 운전하다",
+      "타고 가다",
+      "조종하다"
+    ],
+    "examples": [
+      {
+        "origin": "Vehicles with multiple passengers are allowed to <strong class=\"target-word\">drive</strong> in the carpool lane.",
+        "meaning": "다수의 탑승자가 있는 차량은 다인승 전용 차선에서 운전하는 것이 허용된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-oa673e0uz-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "fine",
+    "meanings": [
+      "벌금"
+    ],
+    "examples": [
+      {
+        "origin": "Drivers speeding in a school zone are subject to a substantial <strong class=\"target-word\">fine</strong>.",
+        "meaning": "어린이 보호 구역에서 과속하는 운전자들에게는 상당한 벌금이 부과된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-vylbr4lgz-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "pass",
+    "meanings": [
+      "지나가다",
+      "통과하다"
+    ],
+    "examples": [
+      {
+        "origin": "For safety reasons, motorists should not <strong class=\"target-word\">pass</strong> other cars on the right.",
+        "meaning": "안전상의 이유로, 자동차 운전자들은 다른 차량의 오른쪽으로 지나가면 안 된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-wubn80brh-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "securely",
+    "meanings": [
+      "(매듭 등이) 단단하게",
+      "튼튼하게"
+    ],
+    "examples": [
+      {
+        "origin": "Passengers are required to fasten seatbelts <strong class=\"target-word\">securely</strong>.",
+        "meaning": "승객들은 안전벨트를 단단히 고정시켜야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-tbho8ym2x-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "prominently",
+    "meanings": [
+      "눈에 잘 띄게",
+      "두드러지게"
+    ],
+    "examples": [
+      {
+        "origin": "Traffic control signs are <strong class=\"target-word\">prominently</strong> displayed along the highway.",
+        "meaning": "교통 표지판이 고속도로를 따라 눈에 잘 띄게 설치되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-ns1d23t0t-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "reserved",
+    "meanings": [
+      "예약된",
+      "예약한",
+      "지정된"
+    ],
+    "examples": [
+      {
+        "origin": "The rail service allows passengers to view <strong class=\"target-word\">reserved</strong> seats online.",
+        "meaning": "철도청은 승객들이 온라인으로 예약된 좌석을 볼 수 있게 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-0039otblb-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "average",
+    "meanings": [
+      "평균치",
+      "평균"
+    ],
+    "examples": [
+      {
+        "origin": "Compared to last year's <strong class=\"target-word\">average</strong>, road accidents have significantly decreased.",
+        "meaning": "작년 평균치와 비교해 볼 때, 교통사고가 현저하게 감소했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-spd074kph-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "collision",
+    "meanings": [
+      "충돌"
+    ],
+    "examples": [
+      {
+        "origin": "Fortunately, no one was hurt in the four-car <strong class=\"target-word\">collision</strong>.",
+        "meaning": "다행스럽게도, 4중 차량 충돌 사고에서 아무도 다치지 않았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-obpxv3qgt-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "tow",
+    "meanings": [
+      "(차를) 견인하다"
+    ],
+    "examples": [
+      {
+        "origin": "All unauthorized vehicles will be <strong class=\"target-word\">towed</strong>.",
+        "meaning": "허가되지 않은 모든 차량은 견인될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-ubgiwtac4-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "reverse",
+    "meanings": [
+      "뒤의",
+      "반대의"
+    ],
+    "examples": [
+      {
+        "origin": "Jim accidentally put the truck into <strong class=\"target-word\">reverse</strong> gear.",
+        "meaning": "Jim은 실수로 트럭을 후진 기어에 놓았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910865-wmxnim8qj-1769583910865",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.865083Z",
+    "updatedAt": "2026-01-28T07:05:10.865083Z",
+    "dictionaryId": null,
+    "origin": "obstruct",
+    "meanings": [
+      "(전망 등을) 가리다",
+      "차단하다",
+      "(도로 등을) 막다"
+    ],
+    "examples": [
+      {
+        "origin": "Passengers must not <strong class=\"target-word\">obstruct</strong> the driver's view.",
+        "meaning": "승객들은 운전자의 시야를 가리지 말아야 한다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,907 @@
+[
+  {
+    "id": "1769583910867-i7h378bp4-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "résumé",
+    "meanings": [
+      "이력서"
+    ],
+    "examples": [
+      {
+        "origin": "Fax your <strong class=\"target-word\">résumé</strong> and cover letter to the above number.",
+        "meaning": "위 번호로 이력서와 자기소개서를 팩스로 보내주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-a8styv38j-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "opening",
+    "meanings": [
+      "공석",
+      "결원",
+      "개장",
+      "개시"
+    ],
+    "examples": [
+      {
+        "origin": "There are several job <strong class=\"target-word\">openings</strong> at the restaurant right now.",
+        "meaning": "현재 그 식당에는 일자리가 몇 개 있다."
+      },
+      {
+        "origin": "JX Finances officially announced the <strong class=\"target-word\">opening</strong> of its first international branch.",
+        "meaning": "JX Finances사는 첫 번째 해외 지점 개장을 공식적으로 발표했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-nn400mi79-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "applicant",
+    "meanings": [
+      "지원자",
+      "신청자"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Applicants</strong> are required to submit a résumé.",
+        "meaning": "지원자들은 이력서를 제출해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-w9wwxudhp-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "requirement",
+    "meanings": [
+      "필요조건",
+      "요건"
+    ],
+    "examples": [
+      {
+        "origin": "A driver's license is a <strong class=\"target-word\">requirement</strong> of this job.",
+        "meaning": "운전 면허증은 이 작업의 필요조건이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-1wep508fw-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "meet",
+    "meanings": [
+      "(필요·요구 등을) 만족시키다"
+    ],
+    "examples": [
+      {
+        "origin": "Applicants must <strong class=\"target-word\">meet</strong> all the requirements for the job.",
+        "meaning": "지원자들은 그 직책의 모든 필요조건을 만족시켜야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-lknizai9w-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "qualified",
+    "meanings": [
+      "자격 있는",
+      "적격의"
+    ],
+    "examples": [
+      {
+        "origin": "People with master's degrees are <strong class=\"target-word\">qualified</strong> for the research position.",
+        "meaning": "석사 학위를 갖춘 사람들은 연구직에 자격이 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-xoqgjjrve-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "candidate",
+    "meanings": [
+      "후보자",
+      "지원자"
+    ],
+    "examples": [
+      {
+        "origin": "Five <strong class=\"target-word\">candidates</strong> will be selected for final interviews.",
+        "meaning": "5명의 후보자가 최종 면접을 위해 선발될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-rxg1eibrg-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "confidence",
+    "meanings": [
+      "확신",
+      "자신",
+      "신임"
+    ],
+    "examples": [
+      {
+        "origin": "We have <strong class=\"target-word\">confidence</strong> that she can handle the position.",
+        "meaning": "우리는 그녀가 그 직책을 수행할 수 있다고 확신한다."
+      },
+      {
+        "origin": "The recommendations showed <strong class=\"target-word\">confidence</strong> in his abilities.",
+        "meaning": "그 추천서들은 그의 능력에 대한 신임을 보여 주었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-zo6fi4xbp-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "highly",
+    "meanings": [
+      "매우",
+      "대단히"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Monroe's experience makes him <strong class=\"target-word\">highly</strong> qualified for the job.",
+        "meaning": "Mr. Monroe의 경험이 그를 그 작업에 매우 자격이 있게 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-pwah2ani2-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "professional",
+    "meanings": [
+      "전문적인",
+      "직업의",
+      "전문가"
+    ],
+    "examples": [
+      {
+        "origin": "Jeff is known as a <strong class=\"target-word\">professional</strong> photographer.",
+        "meaning": "Jeff는 전문 사진가로 알려져 있다."
+      },
+      {
+        "origin": "Merseyside Hospital is looking for a certified health <strong class=\"target-word\">professional</strong>.",
+        "meaning": "Merseyside 병원은 자격증이 있는 의료 전문가를 찾고 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-2wghi2mps-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "interview",
+    "meanings": [
+      "면접",
+      "면접을 보다"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">interviews</strong> are being held in meeting room three.",
+        "meaning": "면접은 3번 회의실에서 이루어지고 있다."
+      },
+      {
+        "origin": "The manager <strong class=\"target-word\">interviewed</strong> almost 100 applicants.",
+        "meaning": "그 부장은 거의 100명의 지원자의 면접을 보았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-cc41latbx-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "hire",
+    "meanings": [
+      "고용하다"
+    ],
+    "examples": [
+      {
+        "origin": "The company expects to <strong class=\"target-word\">hire</strong> several new employees next month.",
+        "meaning": "회사는 다음 달에 신입사원 몇 명을 고용할 계획이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-vkk55ckfa-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "training",
+    "meanings": [
+      "교육",
+      "훈련"
+    ],
+    "examples": [
+      {
+        "origin": "This company offers on-the-job <strong class=\"target-word\">training</strong> for new staff.",
+        "meaning": "이 회사는 신입 사원들을 위한 현장 교육을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-znhmm3idv-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "reference",
+    "meanings": [
+      "추천서",
+      "참고"
+    ],
+    "examples": [
+      {
+        "origin": "Philip asked his previous employer to write a <strong class=\"target-word\">reference</strong> letter for him.",
+        "meaning": "Philip은 그의 이전 상사에게 추천서를 써 달라고 부탁했다."
+      },
+      {
+        "origin": "The database contains <strong class=\"target-word\">reference</strong> material on all aspects of labor law.",
+        "meaning": "그 데이터베이스는 노동법 전반에 대한 참고 자료를 포함하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-azqw6gvtj-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "position",
+    "meanings": [
+      "일자리",
+      "직책",
+      "두다"
+    ],
+    "examples": [
+      {
+        "origin": "The advertised <strong class=\"target-word\">position</strong> provides health care and other benefits.",
+        "meaning": "광고된 일자리는 의료 서비스와 다른 혜택들을 제공한다."
+      },
+      {
+        "origin": "The secretary <strong class=\"target-word\">positioned</strong> the chairs around the table before the meeting began.",
+        "meaning": "비서는 회의가 시작되기 전에 탁자 주변에 의자를 두었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-tysj3ym9r-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "achievement",
+    "meanings": [
+      "성취",
+      "달성"
+    ],
+    "examples": [
+      {
+        "origin": "List all of your <strong class=\"target-word\">achievements</strong> from previous jobs on your résumé.",
+        "meaning": "이전 직장에서 이룬 모든 성취 사항들을 이력서에 기록하시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-oxwpffflr-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "impressed",
+    "meanings": [
+      "인상 깊게 생각하는",
+      "감명을 받은"
+    ],
+    "examples": [
+      {
+        "origin": "The CEO was <strong class=\"target-word\">impressed</strong> by his assistant's organizing skills.",
+        "meaning": "그 최고 경영자는 비서의 정리 능력을 인상 깊게 생각했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-0xo3l3pmn-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "excellent",
+    "meanings": [
+      "훌륭한",
+      "탁월한"
+    ],
+    "examples": [
+      {
+        "origin": "Because of her <strong class=\"target-word\">excellent</strong> managerial skills, Erin was hired for the job.",
+        "meaning": "그녀의 훌륭한 관리 능력 때문에, Erin은 그 일자리에 채용되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-v9ar6l8vu-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "eligible",
+    "meanings": [
+      "자격이 있는",
+      "적격의"
+    ],
+    "examples": [
+      {
+        "origin": "The part-time workers are also <strong class=\"target-word\">eligible</strong> for paid holidays.",
+        "meaning": "시간제 근로자들도 유급 휴가를 받을 자격이 있다."
+      },
+      {
+        "origin": "Business dinners are included as <strong class=\"target-word\">allowed</strong> expenses.",
+        "meaning": "사업상 갖는 저녁 식사는 허용된 경비에 포함된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-7jj7wdn2u-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "identify",
+    "meanings": [
+      "알아보다",
+      "확인하다"
+    ],
+    "examples": [
+      {
+        "origin": "Staff members wear uniforms so that they are easy for customers to <strong class=\"target-word\">identify</strong>.",
+        "meaning": "직원들은 손님들이 쉽게 알아볼 수 있도록 제복을 입는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-a760v9ih8-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "associate",
+    "meanings": [
+      "관련시키다"
+    ],
+    "examples": [
+      {
+        "origin": "Two of the applicants were <strong class=\"target-word\">associated</strong> with a competitor.",
+        "meaning": "지원자 중 두 명은 경쟁사와 관련되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-zqdcttmvn-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "condition",
+    "meanings": [
+      "조건"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">conditions</strong> of employment are listed in the job opening notice.",
+        "meaning": "고용 조건들은 채용 공고문에 열거되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-0f5o32aex-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "employment",
+    "meanings": [
+      "고용"
+    ],
+    "examples": [
+      {
+        "origin": "The company announced <strong class=\"target-word\">employment</strong> opportunities in personnel department.",
+        "meaning": "회사는 인사 부서에 고용 기회가 있음을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-ij9pn91hz-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "lack",
+    "meanings": [
+      "~이 없다",
+      "부족"
+    ],
+    "examples": [
+      {
+        "origin": "Carl <strong class=\"target-word\">lacked</strong> the ability to get along well with his coworkers.",
+        "meaning": "Carl은 동료들과 잘 지내는 능력이 없었다."
+      },
+      {
+        "origin": "Due to a <strong class=\"target-word\">lack</strong> of funds, the project has been temporarily halted.",
+        "meaning": "자금 부족 때문에, 그 프로젝트는 일시적으로 중단되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-678o7qsck-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "managerial",
+    "meanings": [
+      "관리의"
+    ],
+    "examples": [
+      {
+        "origin": "Mike is seeking a <strong class=\"target-word\">managerial</strong> position in the accounting field.",
+        "meaning": "Mike는 회계 분야에서 관리직 자리를 찾고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-k71fe57jb-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "diligent",
+    "meanings": [
+      "성실한"
+    ],
+    "examples": [
+      {
+        "origin": "Carmen is one of the most <strong class=\"target-word\">diligent</strong> workers in the company.",
+        "meaning": "Carmen은 회사에서 가장 성실한 직원들 중 한 명이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-1h4lpdq2h-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "familiar",
+    "meanings": [
+      "익숙한",
+      "친숙한"
+    ],
+    "examples": [
+      {
+        "origin": "Staff must review the handbook to become <strong class=\"target-word\">familiar</strong> with it.",
+        "meaning": "직원들은 익숙해지도록 안내서를 복습해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-6ssy70y4g-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "proficiency",
+    "meanings": [
+      "숙달",
+      "능숙"
+    ],
+    "examples": [
+      {
+        "origin": "Overseas workers need proof of <strong class=\"target-word\">proficiency</strong> in a second language.",
+        "meaning": "해외 근로자들은 외국어 숙달에 관한 증거 자료가 필요하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-kr05ltmci-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "prospective",
+    "meanings": [
+      "장래의",
+      "미래의"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Prospective</strong> employees were asked to come in for a second interview.",
+        "meaning": "장래의 직원들은 2차 면접을 보러 오라고 요청받았다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-qzzlvyb23-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "appeal",
+    "meanings": [
+      "관심을 끌다",
+      "매력적이다"
+    ],
+    "examples": [
+      {
+        "origin": "The 10 percent pay increase <strong class=\"target-word\">appealed</strong> to the staff.",
+        "meaning": "10퍼센트 임금 인상은 직원들의 관심을 끌었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-pja0mi5eg-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "specialize",
+    "meanings": [
+      "~을 전공하다",
+      "전문적으로 다루다"
+    ],
+    "examples": [
+      {
+        "origin": "Most of the programmers <strong class=\"target-word\">specialized</strong> in software design in college.",
+        "meaning": "대부분의 프로그래머는 대학에서 소프트웨어 디자인을 전공했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-kv5v5tcnj-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "apprehensive",
+    "meanings": [
+      "걱정하는",
+      "염려하는"
+    ],
+    "examples": [
+      {
+        "origin": "Many people feel <strong class=\"target-word\">apprehensive</strong> before an important job interview.",
+        "meaning": "많은 사람들은 중요한 면접 전에 걱정한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-k3op9j5go-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "consultant",
+    "meanings": [
+      "고문",
+      "컨설턴트"
+    ],
+    "examples": [
+      {
+        "origin": "Emma currently works in London as an interior design <strong class=\"target-word\">consultant</strong>.",
+        "meaning": "Emma는 현재 런던에서 인테리어 디자인 고문으로 일하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-62k7iyurh-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "entitle",
+    "meanings": [
+      "자격에서 주다"
+    ],
+    "examples": [
+      {
+        "origin": "Executives are <strong class=\"target-word\">entitled</strong> to additional benefits.",
+        "meaning": "임원들에게는 추가 혜택에 대한 자격이 주어진다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-z8796xcxt-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "degree",
+    "meanings": [
+      "학위"
+    ],
+    "examples": [
+      {
+        "origin": "A bachelor's <strong class=\"target-word\">degree</strong> in engineering is a requirement for this position.",
+        "meaning": "공학 학사 학위는 이 직책의 필요조건이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-sjwrvspnm-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "payroll",
+    "meanings": [
+      "임금 대장",
+      "급료 명부"
+    ],
+    "examples": [
+      {
+        "origin": "Fifteen new employees were added to the <strong class=\"target-word\">payroll</strong> last month.",
+        "meaning": "15명의 신입 사원이 지난달 임금 대장에 추가되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-hpsrf5ocz-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "recruit",
+    "meanings": [
+      "(신입 사원 등을) 모집하다"
+    ],
+    "examples": [
+      {
+        "origin": "The firm <strong class=\"target-word\">recruits</strong> promising graduates on a yearly basis.",
+        "meaning": "그 회사는 장래가 촉망되는 졸업자들을 매년 모집한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-ro9riz02h-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "certification",
+    "meanings": [
+      "증명서",
+      "증명"
+    ],
+    "examples": [
+      {
+        "origin": "Obtaining accounting <strong class=\"target-word\">certification</strong> takes approximately a year.",
+        "meaning": "회계 자격증을 취득하는 데는 대략 1년이 걸린다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-xepzkpzhk-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "occupation",
+    "meanings": [
+      "직업"
+    ],
+    "examples": [
+      {
+        "origin": "Journalism is an interesting and challenging <strong class=\"target-word\">occupation</strong>.",
+        "meaning": "보도직은 흥미로우면서도 도전적인 직업이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910867-x8cvgnt66-1769583910867",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.867146Z",
+    "updatedAt": "2026-01-28T07:05:10.867146Z",
+    "dictionaryId": null,
+    "origin": "wage",
+    "meanings": [
+      "임금",
+      "급료"
+    ],
+    "examples": [
+      {
+        "origin": "Workers with formal education may earn higher <strong class=\"target-word\">wages</strong> than those without.",
+        "meaning": "정식 교육을 받은 근로자들은 그렇지 않은 사람들보다 더 높은 임금을 받을 수 있다."
+      }
+    ]
+  }
+]

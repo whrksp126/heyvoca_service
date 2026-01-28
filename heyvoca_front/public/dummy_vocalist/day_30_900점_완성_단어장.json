@@ -1,0 +1,521 @@
+[
+  {
+    "id": "1769583910877-e4vtdqvns-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "acute",
+    "meanings": [
+      "급성의",
+      "극심한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-wow849kmw-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "antibiotics",
+    "meanings": [
+      "항생제"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-m3qwajr8j-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "asthma",
+    "meanings": [
+      "천식"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-y3xbmpwaq-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "benign",
+    "meanings": [
+      "양성의 (종양 등이 해롭지 않은)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-2vyxn13nk-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "cardiovascular",
+    "meanings": [
+      "심혈관의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-au122qr1g-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "chronic",
+    "meanings": [
+      "만성의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-zlx4lswmt-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "contagious",
+    "meanings": [
+      "전염성의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-n0txhr2ir-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "dermatology",
+    "meanings": [
+      "피부과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-9yj2pvgte-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "diabetes",
+    "meanings": [
+      "당뇨병"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-hfl12g16n-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "epidemic",
+    "meanings": [
+      "유행병",
+      "유행병의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-8xsvopifo-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "genetic",
+    "meanings": [
+      "유전의",
+      "유전학의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-7g7ha4bwg-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "hypertension",
+    "meanings": [
+      "고혈압"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-ixarauaxj-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "immune system",
+    "meanings": [
+      "면역 체계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-8kl3yhsdp-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "inflammation",
+    "meanings": [
+      "염증"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-yev7e4ko8-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "insulation",
+    "meanings": [
+      "단열",
+      "절연 (의학적으론 격리 등)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-kya7lmoni-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "intravenous",
+    "meanings": [
+      "정맥 내의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-xol6h2kik-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "malignant",
+    "meanings": [
+      "악성의 (종양 등이 해로운)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-jv92ac18i-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "metabolism",
+    "meanings": [
+      "신진대사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-4dkj8mekg-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "mortality rate",
+    "meanings": [
+      "사망률"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-7ja8unslz-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "neurology",
+    "meanings": [
+      "신경과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-brh3ug87k-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "obesity",
+    "meanings": [
+      "비만"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-rwltwmj1k-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "oncology",
+    "meanings": [
+      "종양학",
+      "암센터"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-2dn6nhblx-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "orthopedics",
+    "meanings": [
+      "정형외과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-lwsgjs63w-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "outpatient",
+    "meanings": [
+      "외래 환자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-1avqlx8tk-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "pandemic",
+    "meanings": [
+      "전 세계적 유행병"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-0umvytw3i-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "pathogen",
+    "meanings": [
+      "병원균"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-rx4bqmz2t-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "pediatrics",
+    "meanings": [
+      "소아과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-ovaboq79p-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "post-traumatic",
+    "meanings": [
+      "외상 후의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-zndvx9v3t-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "prognosis",
+    "meanings": [
+      "예후 (치료 후의 경과 예측)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-xmpiea2if-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "quarantine",
+    "meanings": [
+      "격리",
+      "격리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-r4ua6b5jb-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "sedentary",
+    "meanings": [
+      "주로 앉아서 하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910877-fizhzf6q1-1769583910877",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.877399Z",
+    "updatedAt": "2026-01-28T07:05:10.877399Z",
+    "dictionaryId": null,
+    "origin": "therapeutic",
+    "meanings": [
+      "치료법의",
+      "치료의"
+    ],
+    "examples": []
+  }
+]

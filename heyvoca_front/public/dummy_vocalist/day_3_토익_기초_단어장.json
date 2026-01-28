@@ -1,0 +1,462 @@
+[
+  {
+    "id": "1769583910873-clskj181o-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "a sheet of",
+    "meanings": [
+      "~ 한 장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-jchilvr0t-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "business card",
+    "meanings": [
+      "명함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-tqsa858ch-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "cartridge",
+    "meanings": [
+      "(프린터 등의) 잉크 카트리지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-2o34pjq26-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "daily",
+    "meanings": [
+      "매일의",
+      "날마다",
+      "매일"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-5bmgve41y-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "edit",
+    "meanings": [
+      "편집하다",
+      "수정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-2yzujmdvj-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "hand",
+    "meanings": [
+      "손",
+      "건네주다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-gcjofirvp-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "in order to do",
+    "meanings": [
+      "~하기 위해서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-d50cj58pu-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "laptop",
+    "meanings": [
+      "휴대용 컴퓨터"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-6eczawvkb-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "name tag",
+    "meanings": [
+      "명찰",
+      "명패"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-sbldhfafz-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "on vacation",
+    "meanings": [
+      "휴가 중인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-fbm6ni2z7-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "paper jam",
+    "meanings": [
+      "(복사기에서의) 종이 걸림"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-qp743kw6o-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "paperwork",
+    "meanings": [
+      "문서 작업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-30luv5w6j-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "partition",
+    "meanings": [
+      "칸막이",
+      "분할"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-25qx55wat-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "rush hour",
+    "meanings": [
+      "(출퇴근 시의) 교통 혼잡 시간"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-tnesnkck3-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "section",
+    "meanings": [
+      "부분",
+      "구역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-869lahtpq-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "sheet",
+    "meanings": [
+      "시트",
+      "종이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-w7mjua0wb-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "tabletop",
+    "meanings": [
+      "테이블 윗면"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-8dhqp7krq-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "telephone call",
+    "meanings": [
+      "전화 통화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-meav7dlrw-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "trash bin",
+    "meanings": [
+      "쓰레기통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-nt4dar0kn-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "upstairs",
+    "meanings": [
+      "위층의",
+      "위층으로",
+      "위층에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-lcov9lr7m-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "as if",
+    "meanings": [
+      "마치 ~인 듯이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-hmdvhqhwt-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "as well as",
+    "meanings": [
+      "~에 더하여",
+      "게다가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-z2zfgl65x-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "be aware of",
+    "meanings": [
+      "~을 알고 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-3bfo72prq-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "be known as",
+    "meanings": [
+      "~으로 알려져 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-bhrxve3te-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "be likely to",
+    "meanings": [
+      "~할 가능성이 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-w1sha2z95-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "detail",
+    "meanings": [
+      "세부 사항"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-skeabl3i8-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "offering",
+    "meanings": [
+      "제공된 것"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910873-bmo9dt45u-1769583910873",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.873031Z",
+    "updatedAt": "2026-01-28T07:05:10.873031Z",
+    "dictionaryId": null,
+    "origin": "on one's own",
+    "meanings": [
+      "혼자서",
+      "혼자 힘으로"
+    ],
+    "examples": []
+  }
+]

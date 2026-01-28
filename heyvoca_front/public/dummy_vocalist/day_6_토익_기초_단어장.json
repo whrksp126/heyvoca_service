@@ -1,0 +1,461 @@
+[
+  {
+    "id": "1769583910879-fbfa3jjdx-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "backpack",
+    "meanings": [
+      "배낭"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-017tcj5ek-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "bike",
+    "meanings": [
+      "자전거",
+      "오토바이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-jiq86eass-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "cabin",
+    "meanings": [
+      "조종실",
+      "통나무집"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-vskzd7onh-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "climb a mountain",
+    "meanings": [
+      "산에 오르다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-8p0dp9r67-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "film festival",
+    "meanings": [
+      "영화제"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-a3si8xe0i-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "fishing",
+    "meanings": [
+      "낚시"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-adxu275uk-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "gallery",
+    "meanings": [
+      "화랑",
+      "미술관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-eiwetrwhh-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "invitation",
+    "meanings": [
+      "초대"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-xz746gujs-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "lawn",
+    "meanings": [
+      "잔디",
+      "잔디밭"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-svp65or69-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "paint",
+    "meanings": [
+      "물감",
+      "그림을 그리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-9plyb5dvs-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "painting",
+    "meanings": [
+      "그림",
+      "회화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-0zce5ynhi-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "play cards",
+    "meanings": [
+      "카드놀이를 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-8e9vs84t1-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "public library",
+    "meanings": [
+      "공공 도서관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-rb99dvwmd-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "race",
+    "meanings": [
+      "경주",
+      "경주하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-m4f5vq1tb-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "resort",
+    "meanings": [
+      "리조트"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-uiwb1td6o-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "theater",
+    "meanings": [
+      "극장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-sc10lytr8-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "watch a film",
+    "meanings": [
+      "영화를 보다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-t0kpwkzon-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "adventure",
+    "meanings": [
+      "모험"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-ngw2l9e9k-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "art museum",
+    "meanings": [
+      "미술관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-n5q04y5ey-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "begin",
+    "meanings": [
+      "시작하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-35y0wqg63-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "bring",
+    "meanings": [
+      "가져오다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-feez5of8e-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "care for",
+    "meanings": [
+      "~를 돌보다",
+      "~를 좋아하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-4wy2ly2q3-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "concert",
+    "meanings": [
+      "콘서트"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-pi944l4y2-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "length",
+    "meanings": [
+      "길이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-2nl65s78c-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "leisure",
+    "meanings": [
+      "여가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-9jv9o7ekp-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "librarian",
+    "meanings": [
+      "도서관원",
+      "사서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-a91z3wmf6-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "menu",
+    "meanings": [
+      "메뉴",
+      "음식",
+      "요리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910879-n2ochs196-1769583910879",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.879112Z",
+    "updatedAt": "2026-01-28T07:05:10.879112Z",
+    "dictionaryId": null,
+    "origin": "sightseeing",
+    "meanings": [
+      "관광"
+    ],
+    "examples": []
+  }
+]

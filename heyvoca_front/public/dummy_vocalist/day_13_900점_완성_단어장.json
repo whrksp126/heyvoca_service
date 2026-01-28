@@ -1,0 +1,524 @@
+[
+  {
+    "id": "1769583910883-ey00r29bn-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "at one's earliest convenience",
+    "meanings": [
+      "가능한 빨리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-1b5eodtec-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "displeasure",
+    "meanings": [
+      "불쾌감"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-4mnr3odnp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "replacement for",
+    "meanings": [
+      "~의 후임자",
+      "~의 대체물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-upd9gm4wn-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "take one's time",
+    "meanings": [
+      "천천히 하다",
+      "서두르지 않다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-6pn6ed0b5-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "unavailability",
+    "meanings": [
+      "쓸모 없음",
+      "무효"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-8owd8cqnq-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "attentive",
+    "meanings": [
+      "주의를 기울이는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-6kjd5k5nz-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "courtesy",
+    "meanings": [
+      "예의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-he34lcl6g-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "defect",
+    "meanings": [
+      "결함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-hlp7s154c-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "faulty",
+    "meanings": [
+      "결함이 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-5n5tkwg5x-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "inquiry",
+    "meanings": [
+      "문의",
+      "질문"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-prl7p8g3o-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "unsatisfactory",
+    "meanings": [
+      "불만족스러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-ykmch0emn-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "aggravate",
+    "meanings": [
+      "악화시키다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-2bhdbwmfz-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "appallingly",
+    "meanings": [
+      "형편없이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-zp9kek3pb-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "be on the safe side",
+    "meanings": [
+      "신중을 기하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-x5rfnrc8f-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "complimentary",
+    "meanings": [
+      "무료의",
+      "칭찬하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-8z4lg0p65-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "condone",
+    "meanings": [
+      "(죄·잘못을) 용납하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-n7fs7x4ag-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "desist from",
+    "meanings": [
+      "~을 그만두다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-29djlsvmm-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "disgruntle",
+    "meanings": [
+      "기분 상하게 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-tk2dxbkx3-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "empathetic",
+    "meanings": [
+      "공감하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-wat6fw6d0-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "flimsy",
+    "meanings": [
+      "약하고 부서지기 쉬운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-bwoyc65c1-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "gratuitous",
+    "meanings": [
+      "무료의",
+      "불필요한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-hdxzknsr0-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "in retrospect",
+    "meanings": [
+      "되돌아보면",
+      "회상하면"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-6vicfzyvp-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "inadvertently",
+    "meanings": [
+      "부주의하게",
+      "본의 아니게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-yrcgoi97a-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "leniently",
+    "meanings": [
+      "관대하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-z5kpx0a17-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "mishap",
+    "meanings": [
+      "불행한 사건"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-go95tcob8-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "nerve-racking",
+    "meanings": [
+      "안절부절못하게 하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-wa6pqnqqe-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "perfunctory",
+    "meanings": [
+      "형식적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-dq7gnquvu-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "repulsive",
+    "meanings": [
+      "불쾌한",
+      "혐오스러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-mvyhyhklq-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "resolute",
+    "meanings": [
+      "단호한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-tlvodp4vk-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "take heed of",
+    "meanings": [
+      "~에 주의를 기울이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-28w5ummyo-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "unbeknownst to",
+    "meanings": [
+      "~가 모르게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910883-xbbf1gd2u-1769583910883",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.883838Z",
+    "updatedAt": "2026-01-28T07:05:10.883838Z",
+    "dictionaryId": null,
+    "origin": "withstand",
+    "meanings": [
+      "저항하다",
+      "견디다"
+    ],
+    "examples": []
+  }
+]

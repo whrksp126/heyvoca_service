@@ -1,0 +1,1167 @@
+[
+  {
+    "id": "1769583910816-kvrmls0bo-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "at a reasonable price",
+    "meanings": [
+      "저렴한 가격에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ql2dg4ftf-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "be aware of",
+    "meanings": [
+      "~을 알고 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-al07rgcdx-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "bulk order",
+    "meanings": [
+      "대량 주문"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4osdh1t95-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "business relationship",
+    "meanings": [
+      "사업 관계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-53p1sawt1-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "commercial products",
+    "meanings": [
+      "상업 제품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ggos5xxvj-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "confirm an order",
+    "meanings": [
+      "주문을 확인하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-ftj8dzei5-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "contact list",
+    "meanings": [
+      "연락처 명단"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4px4uwbbg-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "costly",
+    "meanings": [
+      "비용이 많이 드는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-x601m8rgd-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "customer service",
+    "meanings": [
+      "고객 서비스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-rux3rvn7v-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "delivery charges",
+    "meanings": [
+      "배송비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-8vd9hf6w2-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "discount coupon",
+    "meanings": [
+      "할인 쿠폰"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4yn3iiv75-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "distribute flyers",
+    "meanings": [
+      "전단지를 돌리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-2tlk9mvnf-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "finalize a plan",
+    "meanings": [
+      "계획을 마무리 짓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-1bjrehazm-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "in stock",
+    "meanings": [
+      "재고가 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-pyy2mo5t7-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "invoice number",
+    "meanings": [
+      "송장 번호"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-r6nijh4f1-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "itemized list",
+    "meanings": [
+      "항목별 목록"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-eit07zzfp-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "limited supply",
+    "meanings": [
+      "한정된 공급"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-kkk3tsasn-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "make a move",
+    "meanings": [
+      "조치를 취하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-269lq04lr-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "market research",
+    "meanings": [
+      "시장 조사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-7k0eyp733-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "office supplies",
+    "meanings": [
+      "사무용품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-v8y1esqmg-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "order cancellation",
+    "meanings": [
+      "주문 취소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-h09ebq4ts-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "out of stock",
+    "meanings": [
+      "품절된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-e5beznytk-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "payment terms",
+    "meanings": [
+      "지불 조건"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-vas5xnbyr-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "price quote",
+    "meanings": [
+      "가격 견적"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-snn7z7x3f-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "provide information",
+    "meanings": [
+      "정보를 제공하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-igsgowkkp-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "reasonable price",
+    "meanings": [
+      "합리적인 가격"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-58v1lqb3t-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "retail sales",
+    "meanings": [
+      "소매 매출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4ugm2lh9w-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "safety measures",
+    "meanings": [
+      "안전 조치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-i15vwzrpo-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "stock level",
+    "meanings": [
+      "재고 수준"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-xij00xcum-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "strategic move",
+    "meanings": [
+      "전략적 조치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-gsckylej9-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "acquisition",
+    "meanings": [
+      "인수"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-oa8o8lk93-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "bargain",
+    "meanings": [
+      "특가품",
+      "흥정"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-8wxjl275c-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "clientele",
+    "meanings": [
+      "모든 의뢰인",
+      "고객들"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-9r109h5wm-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "commodity",
+    "meanings": [
+      "상품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-yw59rdlhy-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "completely",
+    "meanings": [
+      "완전히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-20o7xuecx-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "confirmation",
+    "meanings": [
+      "확인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-u4ia9nkub-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "contact",
+    "meanings": [
+      "연락하다",
+      "n. 인맥"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-fpk4oi7xb-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "deal",
+    "meanings": [
+      "거래하다",
+      "n. 거래"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-tup189ht7-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "dealer",
+    "meanings": [
+      "상인",
+      "판매업자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-aeqpzuk66-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "discount",
+    "meanings": [
+      "할인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-t851dl23o-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "distribute",
+    "meanings": [
+      "배포하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-393ojg8mo-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "encompass",
+    "meanings": [
+      "포함하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-oo9dzfcta-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "finalize",
+    "meanings": [
+      "마무리하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-kps7plx5v-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "invoice",
+    "meanings": [
+      "송장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-tg98jtpyj-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "market",
+    "meanings": [
+      "시장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-edbb7xda3-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "measure",
+    "meanings": [
+      "조치",
+      "v. 측정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-xccmvcyrq-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "order",
+    "meanings": [
+      "주문하다",
+      "n. 주문"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-tdyqisn2s-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "payment",
+    "meanings": [
+      "지불"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-eb5j2tvl7-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "provide",
+    "meanings": [
+      "공급하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-557dpqm6r-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "quote",
+    "meanings": [
+      "견적(액)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-vju30pbyf-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "acclaim",
+    "meanings": [
+      "호평",
+      "찬사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-rio9g6c7o-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "affordability",
+    "meanings": [
+      "감당할 수 있는 비용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-3bw7kvitj-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "assure",
+    "meanings": [
+      "보장하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-5wax0kgx3-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "bulk",
+    "meanings": [
+      "대량의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-hlhuvvtpa-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "commercial",
+    "meanings": [
+      "상업적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-zbtkc6bh6-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "consignment",
+    "meanings": [
+      "위탁 판매"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-lt42l41m8-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "cost",
+    "meanings": [
+      "비용",
+      "v. 비용이 들다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-wyoqo6tpl-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "inventory",
+    "meanings": [
+      "재고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-qhnams6yk-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "move",
+    "meanings": [
+      "조치",
+      "v. 옮기다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-trwod5c6y-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "rating",
+    "meanings": [
+      "등급"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-uqzbx77z4-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "refuse",
+    "meanings": [
+      "거절하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-smvxwdxt7-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "represent",
+    "meanings": [
+      "대표하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4wr5xpciv-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "retail",
+    "meanings": [
+      "소매"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-eo79iheam-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "satisfactory",
+    "meanings": [
+      "만족스러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-r64sdu2hi-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "seek",
+    "meanings": [
+      "찾다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-d4yvtt4s7-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "selection",
+    "meanings": [
+      "정선품",
+      "선택"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-0hd544m1w-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "short",
+    "meanings": [
+      "부족한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-wosh8jy9b-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "stock",
+    "meanings": [
+      "재고",
+      "주식"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-4sgexerid-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "subject",
+    "meanings": [
+      "~을 받기 쉬운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-q8pafgoka-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "supply",
+    "meanings": [
+      "공급하다",
+      "n. 비품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-pdvej9zsa-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "temporarily",
+    "meanings": [
+      "일시적으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910816-lj1mh7nik-1769583910816",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.816823Z",
+    "updatedAt": "2026-01-28T07:05:10.816823Z",
+    "dictionaryId": null,
+    "origin": "unable",
+    "meanings": [
+      "~할 수 없는"
+    ],
+    "examples": []
+  }
+]

@@ -1,0 +1,1155 @@
+[
+  {
+    "id": "1769583910835-zt7ai6dxc-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "account balance",
+    "meanings": [
+      "계좌 잔고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-kvfr17svi-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "account number",
+    "meanings": [
+      "계좌 번호"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-3c1ooxqvn-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "accumulated interest",
+    "meanings": [
+      "누적 이자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-h3ruy50xv-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "approve a loan",
+    "meanings": [
+      "대출을 승인하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-juyhp2ul1-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "ask for a loan",
+    "meanings": [
+      "대출을 신청하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ge5dtb01f-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "authorized signature",
+    "meanings": [
+      "공인된 서명"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-t7cspwb98-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "bank transaction",
+    "meanings": [
+      "은행 거래"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-7kak4t5er-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "bear interest",
+    "meanings": [
+      "이자가 붙다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-cv2s8ikwv-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "by the due date",
+    "meanings": [
+      "만기일까지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-vio9iztf2-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "cash a check",
+    "meanings": [
+      "수표를 현금으로 바꾸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-p84qnay09-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "cash in on",
+    "meanings": [
+      "~에서 이익을 얻다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-6kv68k6ke-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "closing balance",
+    "meanings": [
+      "기말 잔고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-gg5e2a5pp-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "come to a standstill",
+    "meanings": [
+      "멈추다",
+      "정지하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-hqas0kxkw-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "compound interest",
+    "meanings": [
+      "복리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-u3oubagzt-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "credit rating",
+    "meanings": [
+      "신용 등급"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ehnbdi8gz-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "current account",
+    "meanings": [
+      "당좌 예금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-v3lh2hjof-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "deduct A from B",
+    "meanings": [
+      "B에서 A를 빼다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-74u4z07t5-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "deposit money",
+    "meanings": [
+      "돈을 예금하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-vaeuxg3hy-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "due on delivery",
+    "meanings": [
+      "배달 시 지불해야 하는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-4tbw777kx-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "fall into arrears",
+    "meanings": [
+      "체납하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ind78c1im-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "fill out an application",
+    "meanings": [
+      "신청서를 작성하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-wkn7ju0dq-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "finance the project",
+    "meanings": [
+      "프로젝트에 자금을 대다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-93o1lbyh5-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "financial institution",
+    "meanings": [
+      "금융 기관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-osyntyrzr-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "fixed interest rate",
+    "meanings": [
+      "고정 금리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-li32uk6hz-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "foreign exchange",
+    "meanings": [
+      "외환"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-rghtvbgzo-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "get into debt",
+    "meanings": [
+      "빚을 지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-jfzxp4zah-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "grant a loan",
+    "meanings": [
+      "대출을 허가하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-elwuflv5o-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "gross income",
+    "meanings": [
+      "총수입"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-qcg22hugf-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "high interest rate",
+    "meanings": [
+      "높은 이자율"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-rf5g62rvu-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "in extreme cases",
+    "meanings": [
+      "극단적인 경우에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-pp90aojcz-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "install a system",
+    "meanings": [
+      "시스템을 설치하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-b6bl8035y-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "interest-free loan",
+    "meanings": [
+      "무이자 대출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-8x72s6lhq-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "investment advisor",
+    "meanings": [
+      "투자 고문"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-403lkv9wc-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "joint account",
+    "meanings": [
+      "공동 계좌"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-1mfahglzj-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "keep a close watch on",
+    "meanings": [
+      "~을 예의 주시하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-yhzih80ya-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "late payment fee",
+    "meanings": [
+      "연체료"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ucfijjzk2-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "lend money",
+    "meanings": [
+      "돈을 빌려주다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-7fhabfh8w-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "loan application",
+    "meanings": [
+      "대출 신청서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-2b5fc64z0-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "low interest rate",
+    "meanings": [
+      "낮은 이자율"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-cyopie5p0-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "make a payment",
+    "meanings": [
+      "지불하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-1o4dkn8gm-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "make a withdrawal",
+    "meanings": [
+      "인출하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ka4iomtuy-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "market value",
+    "meanings": [
+      "시장 가치"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-pphj92ze6-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "monthly statement",
+    "meanings": [
+      "월간 명세서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ovbi4mdp9-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "mortgage loan",
+    "meanings": [
+      "담보 대출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-16tan6edo-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "net income",
+    "meanings": [
+      "순수입"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-9awq1hbz7-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "on a monthly basis",
+    "meanings": [
+      "매달"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-tdmska5tn-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "opening balance",
+    "meanings": [
+      "기초 잔고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-jshkus4go-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "outstanding balance",
+    "meanings": [
+      "미결제 잔액"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-38khubozw-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "overdue payment",
+    "meanings": [
+      "연체 대금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-6daq7snpw-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "pay off a debt",
+    "meanings": [
+      "빚을 갚다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-xmithcapb-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "payment terms",
+    "meanings": [
+      "지불 조건"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-7f3knnykd-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "personal loan",
+    "meanings": [
+      "개인 대출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-qophzht5p-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "proof of identity",
+    "meanings": [
+      "신원 증명"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-his5pt7x2-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "provide collateral",
+    "meanings": [
+      "담보를 제공하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ir789k871-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "reach an agreement",
+    "meanings": [
+      "합의에 도달하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-yclvmdp0v-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "repay a loan",
+    "meanings": [
+      "대출금을 상환하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-7vcwkrywg-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "savings plan",
+    "meanings": [
+      "저축 계획"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-wcuptgbsi-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "secure a loan",
+    "meanings": [
+      "대출을 받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-11c0jkjzt-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "set up an account",
+    "meanings": [
+      "계좌를 개설하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-ywr7584sp-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "take out a mortgage",
+    "meanings": [
+      "담보 대출을 받다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-n3rjzrlsi-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "tax return",
+    "meanings": [
+      "세금 신고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-sxq6fc6y1-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "transfer funds",
+    "meanings": [
+      "자금을 이체하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-zcrm6zoec-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "traveler's check",
+    "meanings": [
+      "여행자 수표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-qogo5t3pv-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "unpaid balance",
+    "meanings": [
+      "미지불 잔액"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-qneokvbc9-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "variable interest rate",
+    "meanings": [
+      "변동 금리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-iqoynnrxq-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "with no interest",
+    "meanings": [
+      "무이자로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-rp28ujweo-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "within the limit",
+    "meanings": [
+      "한도 내에서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-kwo2y5s3v-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "worth the money",
+    "meanings": [
+      "돈 가치가 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-4rag5icq0-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "write a check",
+    "meanings": [
+      "수표를 발행하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-2496h58m5-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "yield a profit",
+    "meanings": [
+      "수익을 내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-tglh9kps3-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "zero interest",
+    "meanings": [
+      "무이자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910835-656t6qazc-1769583910835",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.835568Z",
+    "updatedAt": "2026-01-28T07:05:10.835568Z",
+    "dictionaryId": null,
+    "origin": "accountable for",
+    "meanings": [
+      "~에 책임이 있는"
+    ],
+    "examples": []
+  }
+]

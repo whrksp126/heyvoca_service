@@ -1,0 +1,1038 @@
+[
+  {
+    "id": "1769583910888-r8fih9vkm-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "research",
+    "meanings": [
+      "연구",
+      "조사"
+    ],
+    "examples": [
+      {
+        "origin": "The company started a <strong class=\"target-word\">research</strong> program into developing GPS technology.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-fec4k3wxe-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "devise",
+    "meanings": [
+      "고안하다",
+      "발명하다"
+    ],
+    "examples": [
+      {
+        "origin": "The firm <strong class=\"target-word\">devised</strong> a more efficient network system.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-lb14smd6e-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "revolutionary",
+    "meanings": [
+      "혁명적인"
+    ],
+    "examples": [
+      {
+        "origin": "The car's <strong class=\"target-word\">revolutionary</strong> new engine surpasses those of the competition.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-fep53fpd0-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "innovative",
+    "meanings": [
+      "혁신적인"
+    ],
+    "examples": [
+      {
+        "origin": "Simpson & Associates provides clients with <strong class=\"target-word\">innovative</strong> solutions to their needs.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-4c7v1896u-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "feature",
+    "meanings": [
+      "특징",
+      "특색",
+      "특징으로 삼다",
+      "특별히 포함하다"
+    ],
+    "examples": [
+      {
+        "origin": "The latest dryer has several new <strong class=\"target-word\">features</strong>.",
+        "meaning": ""
+      },
+      {
+        "origin": "This refrigerator model <strong class=\"target-word\">features</strong> high energy efficiency.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-dtv10lfzm-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "inspiration",
+    "meanings": [
+      "영감"
+    ],
+    "examples": [
+      {
+        "origin": "The new fashion designer draws her <strong class=\"target-word\">inspiration</strong> from traditional attire.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-9vnpw2y0y-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "sufficiently",
+    "meanings": [
+      "충분히"
+    ],
+    "examples": [
+      {
+        "origin": "The containers are <strong class=\"target-word\">sufficiently</strong> strong to resist breakage.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-z70zy859l-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "patent",
+    "meanings": [
+      "특허",
+      "특허권",
+      "특허품"
+    ],
+    "examples": [
+      {
+        "origin": "The lawyers submitted the paperwork for a <strong class=\"target-word\">patent</strong> application.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-hsw3jmpwp-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "envision",
+    "meanings": [
+      "(장래의 일 등을) 계획하다",
+      "상상하다"
+    ],
+    "examples": [
+      {
+        "origin": "Management <strong class=\"target-word\">envisions</strong> its latest product being sold in stores across the country.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-7d4aso1ec-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "extend",
+    "meanings": [
+      "연장하다",
+      "(기간을) 늘리다",
+      "(감사의 뜻을) 말하다",
+      "베풀다"
+    ],
+    "examples": [
+      {
+        "origin": "A switch for adjusting brightness <strong class=\"target-word\">extends</strong> from the back of the lamp.",
+        "meaning": ""
+      },
+      {
+        "origin": "The manager <strong class=\"target-word\">extended</strong> the design deadline for a month.",
+        "meaning": ""
+      },
+      {
+        "origin": "The CEO <strong class=\"target-word\">extended</strong> his thanks to the research team for their great work.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-h6vv1oyru-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "following",
+    "meanings": [
+      "~ 후에",
+      "다음의",
+      "다음에 오는"
+    ],
+    "examples": [
+      {
+        "origin": "The software was launched <strong class=\"target-word\">following</strong> months of research.",
+        "meaning": ""
+      },
+      {
+        "origin": "Product brochures are available in the <strong class=\"target-word\">following</strong> languages.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-lq63r06gr-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "intend",
+    "meanings": [
+      "~할 작정이다",
+      "의도하다"
+    ],
+    "examples": [
+      {
+        "origin": "Beauford Incorporated <strong class=\"target-word\">intends</strong> to release its new appliances this fall.",
+        "meaning": ""
+      },
+      {
+        "origin": "The inventor <strong class=\"target-word\">intended</strong> that her mixer be used for bread-making.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-npmf2e0j3-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "grant",
+    "meanings": [
+      "(인정하여 정식으로) 수여하다",
+      "주다",
+      "(연구비·장학금 등의) 보조금"
+    ],
+    "examples": [
+      {
+        "origin": "The patent for the handheld computer was <strong class=\"target-word\">granted</strong> on April 27.",
+        "meaning": ""
+      },
+      {
+        "origin": "The research team will receive a government <strong class=\"target-word\">grant</strong> of up to $4,000.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-wsqrmdv61-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "allow",
+    "meanings": [
+      "~하게 하다",
+      "~을 허락하다"
+    ],
+    "examples": [
+      {
+        "origin": "The program's new feature <strong class=\"target-word\">allows</strong> users to conduct advanced searches.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-z7hdy56n2-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "inspect",
+    "meanings": [
+      "~을 검사하다",
+      "조사하다"
+    ],
+    "examples": [
+      {
+        "origin": "The head researcher <strong class=\"target-word\">inspects</strong> all equipment and chemicals in the laboratory daily to ensure safety.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-518a70myd-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "improve",
+    "meanings": [
+      "향상시키다",
+      "개선하다"
+    ],
+    "examples": [
+      {
+        "origin": "A variety of incentives can <strong class=\"target-word\">improve</strong> staff productivity.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-oiza7cez6-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "increasingly",
+    "meanings": [
+      "점점",
+      "더욱더"
+    ],
+    "examples": [
+      {
+        "origin": "Technology is becoming an <strong class=\"target-word\">increasingly</strong> important factor in the nation's economy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-eghmz00rw-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "invest",
+    "meanings": [
+      "투자하다",
+      "운용하다"
+    ],
+    "examples": [
+      {
+        "origin": "Lamont Manufacturing <strong class=\"target-word\">invested</strong> millions of dollars in improving its assembly line.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-5ryoeuujk-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "various",
+    "meanings": [
+      "여러 가지의",
+      "가지각색의"
+    ],
+    "examples": [
+      {
+        "origin": "This car has <strong class=\"target-word\">various</strong> features not included in older models.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-okypgqvhk-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "upgrade",
+    "meanings": [
+      "업그레이드",
+      "개량형",
+      "업그레이드하다",
+      "개선하다"
+    ],
+    "examples": [
+      {
+        "origin": "Special customers are eligible for one free computer <strong class=\"target-word\">upgrade</strong>.",
+        "meaning": ""
+      },
+      {
+        "origin": "Gina just <strong class=\"target-word\">upgraded</strong> her cell phone software.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-0ktlcu4b1-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "manual",
+    "meanings": [
+      "설명서",
+      "안내서"
+    ],
+    "examples": [
+      {
+        "origin": "Rachel is writing the product <strong class=\"target-word\">manual</strong> for the new air conditioner.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-en2k16lnk-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "explore",
+    "meanings": [
+      "조사하다",
+      "탐구하다"
+    ],
+    "examples": [
+      {
+        "origin": "Clients seeking company information can <strong class=\"target-word\">explore</strong> our Web site.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-eumk4zrqf-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "response",
+    "meanings": [
+      "응답",
+      "대답"
+    ],
+    "examples": [
+      {
+        "origin": "Those testing the new microwave are asked to submit written <strong class=\"target-word\">responses</strong> to some questions.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-n9f7b6lcd-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "appearance",
+    "meanings": [
+      "외관",
+      "외모"
+    ],
+    "examples": [
+      {
+        "origin": "The design team completely modernized the product's <strong class=\"target-word\">appearance</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-adou9tgbh-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "successful",
+    "meanings": [
+      "성공적인",
+      "성공한"
+    ],
+    "examples": [
+      {
+        "origin": "The floor lamps are the company's most <strong class=\"target-word\">successful</strong> product.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-jn5ff918w-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "hold",
+    "meanings": [
+      "~을 수용하다",
+      "~을 담다",
+      "(회의 등을) 개최하다",
+      "열다"
+    ],
+    "examples": [
+      {
+        "origin": "The washing machine <strong class=\"target-word\">holds</strong> up to three kilograms of laundry.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-t3ak0ae7y-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "advance",
+    "meanings": [
+      "진보",
+      "전진"
+    ],
+    "examples": [
+      {
+        "origin": "The product development team researches <strong class=\"target-word\">advances</strong> in computer technology.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-8ry4ozgmm-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "reliable",
+    "meanings": [
+      "믿을 만한",
+      "신뢰할 수 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Tests indicate that Branco's products are <strong class=\"target-word\">reliable</strong> and efficient.",
+        "meaning": ""
+      },
+      {
+        "origin": "The firm's management system is not <strong class=\"target-word\">reliant</strong> on any single person.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-jqiwkrr6d-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "quality",
+    "meanings": [
+      "품질",
+      "질"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">quality</strong> control division inspects samples of all items.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-8h76kpsgt-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "domestic",
+    "meanings": [
+      "국내의",
+      "국산의"
+    ],
+    "examples": [
+      {
+        "origin": "Slow sales in the <strong class=\"target-word\">domestic</strong> market forced companies to expand overseas.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-eapsjq6f2-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "development",
+    "meanings": [
+      "개발",
+      "발전"
+    ],
+    "examples": [
+      {
+        "origin": "The project is in the final stage of <strong class=\"target-word\">development</strong>.",
+        "meaning": ""
+      },
+      {
+        "origin": "<strong class=\"target-word\">Developments</strong> in wireless technology allow for high-powered smart phones.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-gr2uuwuid-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "availability",
+    "meanings": [
+      "(입수) 가능성",
+      "유효성",
+      "유용성"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Availability</strong> of product depends on market demand and supply.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-sebzfbuaa-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "update",
+    "meanings": [
+      "갱신",
+      "개정",
+      "갱신하다",
+      "최신의 것으로 하다"
+    ],
+    "examples": [
+      {
+        "origin": "The Web site <strong class=\"target-word\">update</strong> includes information on the latest hair styling appliances.",
+        "meaning": ""
+      },
+      {
+        "origin": "The factory <strong class=\"target-word\">updated</strong> the software of its equipment to speed up the production rate.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-1b9l8dkot-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "accurate",
+    "meanings": [
+      "정확한"
+    ],
+    "examples": [
+      {
+        "origin": "The new accounting software is <strong class=\"target-word\">accurate</strong> and precise.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-rtsjlt9kd-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "complicated",
+    "meanings": [
+      "복잡한"
+    ],
+    "examples": [
+      {
+        "origin": "Project delays often create a <strong class=\"target-word\">complicated</strong> situation for the public relations department.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-jod57zd5f-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "accomplished",
+    "meanings": [
+      "숙련된",
+      "노련한"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">accomplished</strong> chemist has been hired to develop a flexible battery.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-r8nu59zxb-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "inquiry",
+    "meanings": [
+      "문의",
+      "질문"
+    ],
+    "examples": [
+      {
+        "origin": "Please call our customer representatives for service <strong class=\"target-word\">inquiries</strong>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-uds1xmk8q-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "indication",
+    "meanings": [
+      "징후",
+      "조짐"
+    ],
+    "examples": [
+      {
+        "origin": "Uneven printing is an <strong class=\"target-word\">indication</strong> of a technical fault.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-fxeelfde8-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "manufacturer",
+    "meanings": [
+      "제조 회사",
+      "제조업자"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">manufacturer</strong> guarantees all its products for up to one year.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-tdvgo0pcx-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "compatible",
+    "meanings": [
+      "호환되는",
+      "양립할 수 있는"
+    ],
+    "examples": [
+      {
+        "origin": "The remote control is <strong class=\"target-word\">compatible</strong> with all models.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-8gbww8lth-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "superior",
+    "meanings": [
+      "우수한",
+      "상급의"
+    ],
+    "examples": [
+      {
+        "origin": "The company's latest television is <strong class=\"target-word\">superior</strong> to those on the market today.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-cffalhago-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "absolute",
+    "meanings": [
+      "완전한",
+      "완전무결한"
+    ],
+    "examples": [
+      {
+        "origin": "The latest technology keeps production costs to an <strong class=\"target-word\">absolute</strong> minimum.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-t70pfff5z-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "broaden",
+    "meanings": [
+      "넓히다"
+    ],
+    "examples": [
+      {
+        "origin": "The new CEO is <strong class=\"target-word\">broadening</strong> the scope of the company's research.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-dnycp71kv-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "corrosion",
+    "meanings": [
+      "부식"
+    ],
+    "examples": [
+      {
+        "origin": "This steel roof is designed to be resistant to <strong class=\"target-word\">corrosion</strong> from the weather.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910888-7j2lft5dw-1769583910888",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.888100Z",
+    "updatedAt": "2026-01-28T07:05:10.888100Z",
+    "dictionaryId": null,
+    "origin": "remotely",
+    "meanings": [
+      "원격으로",
+      "멀리서"
+    ],
+    "examples": [
+      {
+        "origin": "Researchers are allowed to work <strong class=\"target-word\">remotely</strong> for up to two days per week.",
+        "meaning": ""
+      }
+    ]
+  }
+]

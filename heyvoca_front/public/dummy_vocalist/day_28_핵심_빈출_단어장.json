@@ -1,0 +1,867 @@
+[
+  {
+    "id": "1769583910813-d7g9mizun-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "furnished",
+    "meanings": [
+      "가구가 비치된"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Furnished</strong> apartments often cost more to rent than those that come empty.",
+        "meaning": "가구가 비치된 아파트는 가구가 없는 곳들보다 대개 임대하는 데 비용이 더 든다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-depmr6ywk-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "residence",
+    "meanings": [
+      "거주지",
+      "주택"
+    ],
+    "examples": [
+      {
+        "origin": "Students usually attend the school closest to their <strong class=\"target-word\">residence</strong>.",
+        "meaning": "학생들은 보통 자신의 집에서 가장 가까운 학교에 다닌다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-tqs99h3xf-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "spacious",
+    "meanings": [
+      "(공간이) 넓은"
+    ],
+    "examples": [
+      {
+        "origin": "The corporate offices are equipped with a <strong class=\"target-word\">spacious</strong> kitchen area.",
+        "meaning": "그 회사 사무실에는 넓은 주방이 갖추어져 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-9slxe2xaf-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "drape",
+    "meanings": [
+      "(방 등을 커튼 등으로) 장식하다"
+    ],
+    "examples": [
+      {
+        "origin": "The decorator <strong class=\"target-word\">draped</strong> the living room windows with a silk curtain.",
+        "meaning": "그 장식가는 거실 창문들을 실크 커튼으로 장식했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-8ds7j5lp6-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "unoccupied",
+    "meanings": [
+      "(집 등이) 비어 있는",
+      "사람이 살지 않는"
+    ],
+    "examples": [
+      {
+        "origin": "The top floor has been <strong class=\"target-word\">unoccupied</strong> for four months.",
+        "meaning": "꼭대기 층은 넉 달 동안 비어 있었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-pzk9r2cwy-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "renovation",
+    "meanings": [
+      "수리",
+      "개조"
+    ],
+    "examples": [
+      {
+        "origin": "The archives room will be closed for <strong class=\"target-word\">renovation</strong>.",
+        "meaning": "자료 보관실은 수리를 위해 폐쇄될 예정이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-p0a9cp6ss-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "appropriate",
+    "meanings": [
+      "적당한",
+      "적합한"
+    ],
+    "examples": [
+      {
+        "origin": "The apartment's size is <strong class=\"target-word\">appropriate</strong> for a family of four.",
+        "meaning": "그 아파트의 규모는 4인 가족에게 적당하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-ubfbrybj2-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "delay",
+    "meanings": [
+      "연기하다",
+      "~을 뒤로 미루다"
+    ],
+    "examples": [
+      {
+        "origin": "The landlord repeatedly <strong class=\"target-word\">delayed</strong> repairing the roof.",
+        "meaning": "집주인은 여러 차례 지붕 수리를 연기했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-zoo30fraz-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "community",
+    "meanings": [
+      "지역 사회",
+      "공동체"
+    ],
+    "examples": [
+      {
+        "origin": "Plans for building a new airport were met with strong <strong class=\"target-word\">community</strong> opposition.",
+        "meaning": "새 공항을 건설하는 계획은 지역 사회의 강한 반대에 부딪혔다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-3ijp54f6a-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "construction",
+    "meanings": [
+      "건설",
+      "건축"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">construction</strong> of the bridge is progressing well.",
+        "meaning": "교량 건설은 순조롭게 진행되고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-21m608wch-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "repair",
+    "meanings": [
+      "수리하다"
+    ],
+    "examples": [
+      {
+        "origin": "The plumber <strong class=\"target-word\">repaired</strong> the leaking pipe.",
+        "meaning": "그 배관공이 새는 파이프를 수리했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-y9b5nc5wn-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "currently",
+    "meanings": [
+      "현재"
+    ],
+    "examples": [
+      {
+        "origin": "The museum is <strong class=\"target-word\">currently</strong> closed due to reconstruction.",
+        "meaning": "박물관은 재건으로 인해 현재 폐쇄 중이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-p2jnylykb-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "regularly",
+    "meanings": [
+      "정기적으로"
+    ],
+    "examples": [
+      {
+        "origin": "A gardener <strong class=\"target-word\">regularly</strong> does yard work in front of the home.",
+        "meaning": "정원사는 정기적으로 그 집 앞에서 정원 일을 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-2aofx27v3-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "arrange",
+    "meanings": [
+      "배열하다",
+      "정돈하다"
+    ],
+    "examples": [
+      {
+        "origin": "Miranda <strong class=\"target-word\">arranged</strong> the boardroom furniture in a functional way.",
+        "meaning": "Miranda는 중역 회의실 가구를 기능적으로 배열했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-3yivtonn0-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "location",
+    "meanings": [
+      "장소",
+      "위치"
+    ],
+    "examples": [
+      {
+        "origin": "The bay area is an ideal <strong class=\"target-word\">location</strong> for a house.",
+        "meaning": "그 만 일대는 주거지로 이상적인 장소이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-1aqpsp7tq-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "restore",
+    "meanings": [
+      "복구하다",
+      "회복시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The historic sites were <strong class=\"target-word\">restored</strong> to their original appearance.",
+        "meaning": "유적지들은 원래 모습으로 복구되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-43ewnubzr-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "presently",
+    "meanings": [
+      "현재"
+    ],
+    "examples": [
+      {
+        "origin": "The entrance is <strong class=\"target-word\">presently</strong> under construction.",
+        "meaning": "입구는 현재 공사 중입니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-pbkzbjo4g-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "numerous",
+    "meanings": [
+      "많은"
+    ],
+    "examples": [
+      {
+        "origin": "The condominium has been rented to <strong class=\"target-word\">numerous</strong> families in recent years.",
+        "meaning": "그 아파트는 최근에 많은 가구에 임대되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-joimbjrt7-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "abandon",
+    "meanings": [
+      "그만두다",
+      "버리다"
+    ],
+    "examples": [
+      {
+        "origin": "The building project was <strong class=\"target-word\">abandoned</strong> when funds ran out.",
+        "meaning": "건설 프로젝트는 자금이 고갈되자 중단되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-ibzx5qmmd-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "contractor",
+    "meanings": [
+      "계약자",
+      "도급업자"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">contractor</strong> expects to finish all renovations in one month.",
+        "meaning": "그 계약자는 모든 수리를 한 달 안에 끝낼 것으로 예상한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-v2q8s3e0m-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "develop",
+    "meanings": [
+      "개발하다"
+    ],
+    "examples": [
+      {
+        "origin": "Asiawide is <strong class=\"target-word\">developing</strong> the property into a complex of townhouses.",
+        "meaning": "Asiawide사는 그 땅을 연립 주택 단지로 개발하고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-jbocs5fku-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "maintain",
+    "meanings": [
+      "유지하다",
+      "관리하다"
+    ],
+    "examples": [
+      {
+        "origin": "Tenants must pay fees to <strong class=\"target-word\">maintain</strong> the building.",
+        "meaning": "임차인들은 건물 유지를 위한 비용을 지불해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-tfscqldrs-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "densely",
+    "meanings": [
+      "빽빽이",
+      "밀집하여"
+    ],
+    "examples": [
+      {
+        "origin": "dense",
+        "meaning": ""
+      },
+      {
+        "origin": "density",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-cy8jjmgab-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "prepare",
+    "meanings": [
+      "준비하다",
+      "채비를 갖추다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910813-qh6zrfir1-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "finally",
+    "meanings": [
+      "결국",
+      "마침내"
+    ],
+    "examples": [
+      {
+        "origin": "The vacant lot was <strong class=\"target-word\">finally</strong> sold for $1.2 million.",
+        "meaning": "그 공터는 결국 120만 달러에 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-9sg4jkmem-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "district",
+    "meanings": [
+      "지역",
+      "지구"
+    ],
+    "examples": [
+      {
+        "origin": "The business <strong class=\"target-word\">district</strong> is the most expensive area of city.",
+        "meaning": "그 상업 지구는 도시에서 가장 비싼 지역이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-zz8xuut4m-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "renewal",
+    "meanings": [
+      "재개발"
+    ],
+    "examples": [
+      {
+        "origin": "The city embarked on an urban <strong class=\"target-word\">renewal</strong> project.",
+        "meaning": "그 도시는 도시 재개발 프로젝트에 착수했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-0gk0l0odl-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "compulsory",
+    "meanings": [
+      "의무적인"
+    ],
+    "examples": [
+      {
+        "origin": "Obtaining permission for home renovations is <strong class=\"target-word\">compulsory</strong>.",
+        "meaning": "주택 개조를 위한 허가 취득은 의무적이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-1ltb8i6qb-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "interfere",
+    "meanings": [
+      "방해하다",
+      "해치다"
+    ],
+    "examples": [
+      {
+        "origin": "Persistent bad weather <strong class=\"target-word\">interfered</strong> with construction progress.",
+        "meaning": "계속되는 악천후가 공사 진행을 방해했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-2gk812x9b-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "relocation",
+    "meanings": [
+      "이전",
+      "재배치"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Relocation</strong> of the company's offices can begin as soon as the new building is completed.",
+        "meaning": "그 회사 사무실의 이전은 새 건물이 준공되는 대로 시작할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-5bb2idu3i-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "totally",
+    "meanings": [
+      "완전히",
+      "전적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The theater has been <strong class=\"target-word\">totally</strong> renovated and will reopen soon.",
+        "meaning": "그 극장은 완전히 개조되었고 곧 다시 개관할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-w5f311keq-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "actually",
+    "meanings": [
+      "실제로",
+      "사실은"
+    ],
+    "examples": [
+      {
+        "origin": "Axiom Tower has fewer floors than the Wade Building, but it is <strong class=\"target-word\">actually</strong> taller.",
+        "meaning": "Axiom Tower는 Wade Building보다 층수가 더 적지만, 실제로 더 높다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-2e20uynag-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "architect",
+    "meanings": [
+      "건축가"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Architects</strong> at the firm of McCall and Associates are busy working on a design for the building.",
+        "meaning": "McCall and Associates사의 건축가들은 건물을 설계하느라 바쁘다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-ly6fvgai1-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "enlarge",
+    "meanings": [
+      "확장하다",
+      "확대하다"
+    ],
+    "examples": [
+      {
+        "origin": "The parking area will need to be <strong class=\"target-word\">enlarged</strong> to accommodate more cars.",
+        "meaning": "주차 구역은 더 많은 자동차를 수용하기 위해 확장되어야 할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-9oj9gvcab-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "install",
+    "meanings": [
+      "설치하다",
+      "장치하다"
+    ],
+    "examples": [
+      {
+        "origin": "The Internet line will be <strong class=\"target-word\">installed</strong> on Monday.",
+        "meaning": "인터넷 회선은 월요일에 설치될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-td7qszfi3-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "suppose",
+    "meanings": [
+      "생각하다",
+      "추측하다"
+    ],
+    "examples": [
+      {
+        "origin": "The building project could take longer to finish than anyone <strong class=\"target-word\">supposes</strong>.",
+        "meaning": "그 건축 프로젝트는 모두가 생각하는 것보다 완수하는 데 더 오래 걸릴 수도 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-liyhj8gee-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "permanent",
+    "meanings": [
+      "영구적인"
+    ],
+    "examples": [
+      {
+        "origin": "Please write your <strong class=\"target-word\">permanent</strong> address in the space provided.",
+        "meaning": "제시된 공간에 본적을 기입해 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-v4if4jwqe-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "adjacent",
+    "meanings": [
+      "인접한"
+    ],
+    "examples": [
+      {
+        "origin": "The storage room is <strong class=\"target-word\">adjacent</strong> to the administrative offices.",
+        "meaning": "창고는 행정실에 인접해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-ovta7xj69-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "consist",
+    "meanings": [
+      "구성되다",
+      "이루어지다"
+    ],
+    "examples": [
+      {
+        "origin": "The center <strong class=\"target-word\">consists</strong> of two conference rooms.",
+        "meaning": "그 센터는 두 개의 회의실로 구성되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910813-872e83a57-1769583910813",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.813147Z",
+    "updatedAt": "2026-01-28T07:05:10.813147Z",
+    "dictionaryId": null,
+    "origin": "utility",
+    "meanings": [
+      "공공시설",
+      "공공요금"
+    ],
+    "examples": [
+      {
+        "origin": "This property's <strong class=\"target-word\">utility</strong> bills are very high.",
+        "meaning": "이 건물의 공공요금은 상당히 비싸다."
+      }
+    ]
+  }
+]

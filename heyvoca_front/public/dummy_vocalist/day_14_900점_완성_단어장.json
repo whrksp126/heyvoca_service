@@ -1,0 +1,515 @@
+[
+  {
+    "id": "1769583910845-wtqcm4gqj-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "at affordable rates",
+    "meanings": [
+      "알맞은 요금에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-qz9hhhqyu-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "concierge",
+    "meanings": [
+      "호텔 안내원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-epfft84al-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "itinerary",
+    "meanings": [
+      "여행 일정"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-2orrrpfsv-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "under the seat",
+    "meanings": [
+      "좌석 밑에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-pggns6ahq-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "adjust",
+    "meanings": [
+      "조절하다",
+      "적응하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-srbn80hpb-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "belongings",
+    "meanings": [
+      "소지품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-hhku7glbw-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "confirm",
+    "meanings": [
+      "확인하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-wsjyoayv9-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "customs",
+    "meanings": [
+      "세관"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-8g309ht1i-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "departure",
+    "meanings": [
+      "출발"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-6hjzuucg1-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "missing",
+    "meanings": [
+      "분실된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-7nhc4vc42-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "reservation",
+    "meanings": [
+      "예약"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-nhlvbk3d8-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "tourist",
+    "meanings": [
+      "관광객"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-jhygaslvo-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "at a brisk pace",
+    "meanings": [
+      "빠른 속도로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-t70ssxkwr-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "be on the safe side",
+    "meanings": [
+      "신중을 기하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-1ry5g6g0x-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "carry-on",
+    "meanings": [
+      "휴대용의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-wre6t8za6-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "complimentary",
+    "meanings": [
+      "무료의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-2qt0vnuv3-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "destination",
+    "meanings": [
+      "목적지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-0823pbif1-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "excess baggage",
+    "meanings": [
+      "초과 수하물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-06jzklhg0-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "flight attendant",
+    "meanings": [
+      "비행기 승무원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-kwmkk3wo2-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "hotel amenities",
+    "meanings": [
+      "호텔 편의 시설"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-7x8wx35qg-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "land",
+    "meanings": [
+      "착륙하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-ndc0trn0y-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "pack one's bags",
+    "meanings": [
+      "짐을 싸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-2c6vlwgg1-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "passport control",
+    "meanings": [
+      "여권 심사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-5h0r4fysh-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "round-trip flight",
+    "meanings": [
+      "왕복 비행"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-u29ha1nof-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "shuttle bus",
+    "meanings": [
+      "셔틀 버스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-eisa9pmm3-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "suitcase",
+    "meanings": [
+      "여행 가방"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-ccukucsoq-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "tour guide",
+    "meanings": [
+      "관광 가이드"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-ov4fm9jgo-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "unlimited access",
+    "meanings": [
+      "무제한 이용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-bypdjekzp-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "valid",
+    "meanings": [
+      "유효한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-olntha89q-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "vehicle",
+    "meanings": [
+      "차량"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-kjxgmhgil-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "via",
+    "meanings": [
+      "~을 경유하여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910845-02k4tm4k0-1769583910845",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.845200Z",
+    "updatedAt": "2026-01-28T07:05:10.845200Z",
+    "dictionaryId": null,
+    "origin": "withstand",
+    "meanings": [
+      "견디다"
+    ],
+    "examples": []
+  }
+]

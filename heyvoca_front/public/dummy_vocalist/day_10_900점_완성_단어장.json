@@ -1,0 +1,526 @@
+[
+  {
+    "id": "1769583910819-22hcs30ej-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "automotive repair shop",
+    "meanings": [
+      "자동차 수리점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-ksw9lqs77-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "awning",
+    "meanings": [
+      "(창·문 등의) 차양",
+      "덮개"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-jfkivjwdm-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "cash register",
+    "meanings": [
+      "금전 등록기",
+      "계산대"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-ra2n3rezv-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "cooking utensil (= cookware)",
+    "meanings": [
+      "조리 기구"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-4rn547rug-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "display case",
+    "meanings": [
+      "진열 상자",
+      "진열함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-7ar531rjf-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "garment",
+    "meanings": [
+      "의류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-mfc0o6xkd-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "look different",
+    "meanings": [
+      "다르게 보이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-66wp1lqj2-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "tailor",
+    "meanings": [
+      "재단사"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-5gs1hpxv3-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "wind a watch",
+    "meanings": [
+      "시계태엽을 감다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-ietwpuwwz-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "collectable",
+    "meanings": [
+      "모을 수 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-nvym0epm6-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "conversely",
+    "meanings": [
+      "거꾸로",
+      "반대로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-p342s66j5-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "dilute",
+    "meanings": [
+      "희석하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-in8waawss-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "exposition",
+    "meanings": [
+      "박람회",
+      "전시회"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-tyr7aa1ic-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "generic",
+    "meanings": [
+      "회사 이름이 붙지 않은",
+      "일반적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-d7jin1kqa-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "high-end",
+    "meanings": [
+      "최고급의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-v55w2nm0q-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "merchant",
+    "meanings": [
+      "상인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-wtkdd9vnk-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "observably",
+    "meanings": [
+      "눈에 띄게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-v011a2mss-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "predictably",
+    "meanings": [
+      "예상대로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-uvmryjb2s-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "secondhand",
+    "meanings": [
+      "중고의",
+      "간접의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-calp5oqph-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "stylishly",
+    "meanings": [
+      "현대식으로",
+      "유행에 따르게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-zwrr6hbtp-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "at a substantial discount",
+    "meanings": [
+      "엄청난 할인가에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-a18xrbp5l-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "bargain over prices",
+    "meanings": [
+      "가격을 흥정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-58plmd7c8-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "embellish",
+    "meanings": [
+      "장식하다",
+      "꾸미다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-wp0m8vekr-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "embroider",
+    "meanings": [
+      "수놓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-45mxsc9o7-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "equivalent",
+    "meanings": [
+      "~에 상당하는",
+      "맞먹는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-ps5deztsy-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "exhilarating",
+    "meanings": [
+      "아주 신나는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-x94qrte8f-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "exorbitant price",
+    "meanings": [
+      "터무니없이 비싼 가격"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-e5reap1yf-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "exquisite",
+    "meanings": [
+      "정교한",
+      "우아한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-yb0orulek-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "extravagance",
+    "meanings": [
+      "사치품",
+      "낭비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-occiuxkwo-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "lavish",
+    "meanings": [
+      "사치스러운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-b1xioxa9z-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "redeem",
+    "meanings": [
+      "바꾸다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910819-cxsw49u29-1769583910819",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.819224Z",
+    "updatedAt": "2026-01-28T07:05:10.819224Z",
+    "dictionaryId": null,
+    "origin": "undercharge",
+    "meanings": [
+      "너무 낮은 가격에 팔다"
+    ],
+    "examples": []
+  }
+]

@@ -1,0 +1,464 @@
+[
+  {
+    "id": "1769583910885-5s7zpel9g-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "bakery",
+    "meanings": [
+      "빵집",
+      "제과점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-g2d65bbr6-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "best-selling",
+    "meanings": [
+      "베스트셀러의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-7zem2x693-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "cashier",
+    "meanings": [
+      "(은행·상점·호텔 등의) 출납원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-vltve2vik-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "clothing",
+    "meanings": [
+      "의류"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-lm6cnjff0-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "corner",
+    "meanings": [
+      "모퉁이",
+      "구석"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-fen0epbrs-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "costume",
+    "meanings": [
+      "복장",
+      "의상"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-5e8k4989v-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "free",
+    "meanings": [
+      "자유로이 ~할 수 있는",
+      "마음대로의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-5bcq6basq-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "label",
+    "meanings": [
+      "라벨",
+      "꼬리표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-h9bisc9gv-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "necklace",
+    "meanings": [
+      "목걸이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-x3aheedps-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "photography equipment",
+    "meanings": [
+      "사진 장비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-mzeif1vyn-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "shelf",
+    "meanings": [
+      "선반"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-5ldv1jomu-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "shop",
+    "meanings": [
+      "상점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-v24clb6s5-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "shopper",
+    "meanings": [
+      "쇼핑객"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-oe4xz4y3g-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "size",
+    "meanings": [
+      "크기",
+      "치수"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-5cjyrqc6v-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "sunglasses",
+    "meanings": [
+      "선글라스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-rusah23aw-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "supermarket",
+    "meanings": [
+      "슈퍼마켓"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-xsijrrapr-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "unwanted",
+    "meanings": [
+      "원치 않는",
+      "반갑지 않은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-8plxbdlwx-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "basis",
+    "meanings": [
+      "기초",
+      "근거",
+      "원칙"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-kx3asx9cd-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "brand",
+    "meanings": [
+      "상표",
+      "브랜드"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-uk7cik081-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "department store",
+    "meanings": [
+      "백화점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-6i04xnmnm-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "discount store",
+    "meanings": [
+      "할인 점포"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-6xomjicy9-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "display",
+    "meanings": [
+      "전시하다",
+      "진열하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-3dav3dxb2-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "fit",
+    "meanings": [
+      "(치수가) ~에 꼭 맞다",
+      "~에 적합하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-jpwqwh7z2-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "fully",
+    "meanings": [
+      "완전히",
+      "충분히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-q2umfrw2u-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "grocery",
+    "meanings": [
+      "식료품점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-12apcl5ny-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "keep",
+    "meanings": [
+      "보유하다",
+      "계속하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-ps8jz1xko-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "store",
+    "meanings": [
+      "가게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910885-msst1mh4g-1769583910885",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.885884Z",
+    "updatedAt": "2026-01-28T07:05:10.885884Z",
+    "dictionaryId": null,
+    "origin": "tax",
+    "meanings": [
+      "세금"
+    ],
+    "examples": []
+  }
+]

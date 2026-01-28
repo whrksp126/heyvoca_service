@@ -1,0 +1,886 @@
+[
+  {
+    "id": "1769583910892-0hjqgelyd-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "international",
+    "meanings": [
+      "국제적인"
+    ],
+    "examples": [
+      {
+        "origin": "Passengers for <strong class=\"target-word\">international</strong> flights check in at counter three.",
+        "meaning": "국제선 승객들은 3번 카운터에서 탑승 수속을 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-mcbb2rcql-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "attraction",
+    "meanings": [
+      "관광 명소"
+    ],
+    "examples": [
+      {
+        "origin": "This bus takes visitors to the city's best tourist <strong class=\"target-word\">attractions</strong>.",
+        "meaning": "이 버스는 방문객들을 도시 최고의 관광 명소로 데려간다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-rz8ybqlhi-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "itinerary",
+    "meanings": [
+      "여행 일정"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">itinerary</strong> includes a visit to Boston.",
+        "meaning": "여행 일정에는 보스턴 방문이 포함되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-7wpykhy26-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "exotic",
+    "meanings": [
+      "이국적인",
+      "매혹적인"
+    ],
+    "examples": [
+      {
+        "origin": "Our Web site contains information on numerous <strong class=\"target-word\">exotic</strong> vacation spots.",
+        "meaning": "저희 웹사이트에는 많은 이국적 휴양지에 대한 정보가 담겨 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-9b3ay9adc-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "diverse",
+    "meanings": [
+      "다양한"
+    ],
+    "examples": [
+      {
+        "origin": "A <strong class=\"target-word\">diverse</strong> selection of tours is available for London.",
+        "meaning": "런던에서는 다양한 관광을 이용할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-58dfxqqyg-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "superb",
+    "meanings": [
+      "최고의",
+      "뛰어난"
+    ],
+    "examples": [
+      {
+        "origin": "The service at the hotel was <strong class=\"target-word\">superb</strong>.",
+        "meaning": "그 호텔의 서비스는 최고였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-xcljw41iu-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "baggage",
+    "meanings": [
+      "수하물"
+    ],
+    "examples": [
+      {
+        "origin": "Stow <strong class=\"target-word\">baggage</strong> under the seat in front of you.",
+        "meaning": "수하물은 앞 좌석 밑에 보관하십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-803kmh4pd-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "destination",
+    "meanings": [
+      "목적지"
+    ],
+    "examples": [
+      {
+        "origin": "Travel agents can provide information about a travel <strong class=\"target-word\">destination</strong>.",
+        "meaning": "여행사 직원들은 여행 목적지에 대한 정보를 제공해 줄 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-7xxl57pwk-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "missing",
+    "meanings": [
+      "분실된",
+      "없어진"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">missing</strong> luggage will be sent to the hotel when it is found.",
+        "meaning": "분실된 짐은 발견 시 호텔로 보내질 것입니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-3e3swr4l6-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "locate",
+    "meanings": [
+      "(위치를) 찾아내다",
+      "~을 위치시키다"
+    ],
+    "examples": [
+      {
+        "origin": "Airline staff have tried to <strong class=\"target-word\">locate</strong> the lost luggage.",
+        "meaning": "항공사 직원들은 잃어버린 짐을 찾으려 노력했다."
+      },
+      {
+        "origin": "International Arrivals is <strong class=\"target-word\">located</strong> on the next level.",
+        "meaning": "국제선 입국장은 다음 층에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-2sebu37c0-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "approximately",
+    "meanings": [
+      "대략"
+    ],
+    "examples": [
+      {
+        "origin": "A nonstop flight takes <strong class=\"target-word\">approximately</strong> 13 hours.",
+        "meaning": "직항은 대략 13시간이 걸린다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-1dgovs4d7-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "duty",
+    "meanings": [
+      "세금",
+      "관세",
+      "직무",
+      "의무"
+    ],
+    "examples": [
+      {
+        "origin": "Passengers must pay <strong class=\"target-word\">duty</strong> on goods worth more than $500.",
+        "meaning": "승객들은 500달러 이상의 물품에 대해 관세를 지불해야 한다."
+      },
+      {
+        "origin": "Security personnel are on <strong class=\"target-word\">duty</strong> at the airport around the clock.",
+        "meaning": "공항에는 보안 직원들이 24시간 내내 근무 중이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-sxyetcg2x-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "process",
+    "meanings": [
+      "처리하다",
+      "과정",
+      "절차"
+    ],
+    "examples": [
+      {
+        "origin": "The entire airline ticketing <strong class=\"target-word\">process</strong> can be done online.",
+        "meaning": "모든 항공권 예약 과정은 온라인으로 처리될 수 있다."
+      },
+      {
+        "origin": "The Chinese embassy <strong class=\"target-word\">processes</strong> tourist visas.",
+        "meaning": "중국 대사관은 관광 비자를 처리한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-p0ewvwzxy-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "board",
+    "meanings": [
+      "탑승하다",
+      "이사회",
+      "위원회"
+    ],
+    "examples": [
+      {
+        "origin": "Business class passengers were invited to <strong class=\"target-word\">board</strong> the plane first.",
+        "meaning": "비즈니스석 승객들이 먼저 비행기에 탑승하도록 권유받았다."
+      },
+      {
+        "origin": "Tourism Scotland's <strong class=\"target-word\">board</strong> of directors approved the budget proposal.",
+        "meaning": "Tourism Scotland사의 이사회는 예산안을 승인했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-h312u6re6-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "comfortable",
+    "meanings": [
+      "편안한"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">comfortable</strong> lounges at the airport are available for all travelers.",
+        "meaning": "공항 내 편안한 라운지들은 모든 여행객들이 이용 가능하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-i17ub8lqg-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "declare",
+    "meanings": [
+      "(세관에서) 신고하다"
+    ],
+    "examples": [
+      {
+        "origin": "Travelers must <strong class=\"target-word\">declare</strong> any taxable goods upon arrival.",
+        "meaning": "여행객들은 도착 시 모든 과세 품목을 신고해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-p3uv46uhf-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "specify",
+    "meanings": [
+      "명시하다"
+    ],
+    "examples": [
+      {
+        "origin": "Air-Tours <strong class=\"target-word\">specifies</strong> that each passenger can bring only one carry-on bag.",
+        "meaning": "Air-Tours사는 각 승객이 단 하나의 휴대용 가방만 가져올 수 있다고 명시한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-cqh0r9ge6-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "depart",
+    "meanings": [
+      "출발하다"
+    ],
+    "examples": [
+      {
+        "origin": "The flight will <strong class=\"target-word\">depart</strong> from gate 12.",
+        "meaning": "비행기는 12번 게이트에서 출발할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-eni8b2uqj-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "emergency",
+    "meanings": [
+      "비상 사태"
+    ],
+    "examples": [
+      {
+        "origin": "The pilot demonstrated the <strong class=\"target-word\">emergency</strong> procedures for the passengers.",
+        "meaning": "조종사는 승객들에게 비상 절차를 시연해 보였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-58583br11-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "passenger",
+    "meanings": [
+      "승객"
+    ],
+    "examples": [
+      {
+        "origin": "All <strong class=\"target-word\">passengers</strong> are requested to remain seated.",
+        "meaning": "모든 승객들은 자리에 앉아 있기를 요청받는다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-6ixw9ujt8-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "outgoing",
+    "meanings": [
+      "(장소를) 출발하는",
+      "나가는",
+      "외향적인"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">outgoing</strong> flights are listed on the monitors.",
+        "meaning": "출발편 비행기들이 모니터에 기재되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-5t9te92mx-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "tightly",
+    "meanings": [
+      "단단히",
+      "꽉"
+    ],
+    "examples": [
+      {
+        "origin": "Make sure your seat belt is <strong class=\"target-word\">tightly</strong> fastened.",
+        "meaning": "좌석 벨트가 단단히 조여졌는지 확인하십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-z54s9oux7-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "tour",
+    "meanings": [
+      "(공장·시설 등의) 견학",
+      "짧은 여행"
+    ],
+    "examples": [
+      {
+        "origin": "A guided <strong class=\"target-word\">tour</strong> of the airport's control tower is available.",
+        "meaning": "공항의 관제탑 가이드 견학이 가능하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-65sti7rjw-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "carrier",
+    "meanings": [
+      "항공사",
+      "운송 회사",
+      "운반기"
+    ],
+    "examples": [
+      {
+        "origin": "The largest <strong class=\"target-word\">carrier</strong> in the country is based in the capital city.",
+        "meaning": "그 나라에서 가장 큰 항공사는 수도에 본사를 두고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-azsrbwleu-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "customs",
+    "meanings": [
+      "세관"
+    ],
+    "examples": [
+      {
+        "origin": "All travelers must go through <strong class=\"target-word\">customs</strong> before entering the country.",
+        "meaning": "모든 여행객들은 입국하기 전에 세관을 통과해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-xpz09jovg-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "brochure",
+    "meanings": [
+      "(안내·광고용) 책자",
+      "브로슈어"
+    ],
+    "examples": [
+      {
+        "origin": "Information about tours can be found in the <strong class=\"target-word\">brochure</strong>.",
+        "meaning": "관광에 대한 정보는 책자에서 찾을 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-oar9lv4s2-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "fill out/in",
+    "meanings": [
+      "(서식 등에) 기입하다",
+      "채우다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <strong class=\"target-word\">fill out</strong> the customs declaration form below.",
+        "meaning": "아래의 세관 신고서를 작성해 주십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-g8mo8h5j5-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "prohibit",
+    "meanings": [
+      "금지하다"
+    ],
+    "examples": [
+      {
+        "origin": "Smoking is strictly <strong class=\"target-word\">prohibited</strong> in the airport terminal.",
+        "meaning": "공항 터미널에서의 흡연은 엄격히 금지되어 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-4afvyofo9-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "delay",
+    "meanings": [
+      "지연",
+      "연기",
+      "미루다",
+      "지연시키다"
+    ],
+    "examples": [
+      {
+        "origin": "The flight was <strong class=\"target-word\">delayed</strong> due to bad weather conditions.",
+        "meaning": "비행기는 악천후 때문에 지연되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-3slsztqw4-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "amenity",
+    "meanings": [
+      "편의 시설"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel counts its nearby fitness center as a major <strong class=\"target-word\">amenity</strong>.",
+        "meaning": "그 호텔은 인근의 피트니스 센터를 주요 편의 시설로 간주한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-zcqz0240e-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "hospitality",
+    "meanings": [
+      "환대",
+      "친절"
+    ],
+    "examples": [
+      {
+        "origin": "The locals are famous for their <strong class=\"target-word\">hospitality</strong> to visitors.",
+        "meaning": "그 지역 사람들은 방문객들에 대한 환대로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-0y3optnxh-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "indulge",
+    "meanings": [
+      "탐닉하다",
+      "마음껏 하다"
+    ],
+    "examples": [
+      {
+        "origin": "While on vacation, you can <strong class=\"target-word\">indulge</strong> in various water sports.",
+        "meaning": "휴가를 즐길 때, 여러분은 다양한 수상 스포츠를 마음껏 할 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-kbge98j8t-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "proximity",
+    "meanings": [
+      "근접함"
+    ],
+    "examples": [
+      {
+        "origin": "The hotel is in close <strong class=\"target-word\">proximity</strong> to the shopping distrit.",
+        "meaning": "그 호텔은 쇼핑 구역과 아주 가까운 거리에 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-41v1izqft-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "unlimited",
+    "meanings": [
+      "무제한의"
+    ],
+    "examples": [
+      {
+        "origin": "Guests have <strong class=\"target-word\">unlimited</strong> access to the hotel's pool and spa.",
+        "meaning": "손님들은 호텔의 수영장과 스파를 무제한으로 이용할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-zz00uyc8c-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "concierge",
+    "meanings": [
+      "안내인",
+      "컨시어지"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">concierge</strong> at the hotel can help with tour bookings.",
+        "meaning": "호텔 안내인이 관광 예약을 도와줄 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-iayad5ax4-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "prior",
+    "meanings": [
+      "사전의",
+      "이전의"
+    ],
+    "examples": [
+      {
+        "origin": "<strong class=\"target-word\">Prior</strong> notice is required for cancellations of hotel reservations.",
+        "meaning": "호텔 예약 취소 시에는 사전 통지가 요구된다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-bvngs76w0-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "shuttle",
+    "meanings": [
+      "셔틀 버스",
+      "정기 왕복 노선"
+    ],
+    "examples": [
+      {
+        "origin": "A free <strong class=\"target-word\">shuttle</strong> is available between the airport and the hotel.",
+        "meaning": "공항과 호텔 간에 무료 셔틀 이용이 가능합니다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-g2sb4k8tr-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "underway",
+    "meanings": [
+      "진행 중인"
+    ],
+    "examples": [
+      {
+        "origin": "Renovations to the airport terminal are currently <strong class=\"target-word\">underway</strong>.",
+        "meaning": "공항 터미널 보수 작업이 현재 진행 중이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-zfexcs8eh-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "valid",
+    "meanings": [
+      "유효한"
+    ],
+    "examples": [
+      {
+        "origin": "Make sure you have a <strong class=\"target-word\">valid</strong> passport before you travel.",
+        "meaning": "여행하기 전에 유효한 여권을 소지하고 있는지 확인하십시오."
+      }
+    ]
+  },
+  {
+    "id": "1769583910892-uuwsdntz6-1769583910892",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.892573Z",
+    "updatedAt": "2026-01-28T07:05:10.892573Z",
+    "dictionaryId": null,
+    "origin": "vehicle",
+    "meanings": [
+      "탈것",
+      "차량"
+    ],
+    "examples": [
+      {
+        "origin": "Rent a <strong class=\"target-word\">vehicle</strong> and see the city at your own pace.",
+        "meaning": "차량을 빌려서 여러분의 속도에 맞춰 도시를 구경해 보세요."
+      }
+    ]
+  }
+]

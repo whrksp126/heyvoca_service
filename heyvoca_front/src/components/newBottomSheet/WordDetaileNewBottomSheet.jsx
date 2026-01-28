@@ -143,7 +143,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                     className="inline-block cursor-pointer"
                     style={{ willChange: 'transform' }}
                   >
-                    {example.origin}
+                    <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                   </motion.span>
                 </span>
                 <span className="text-[14px] font-[400] text-[#111]">

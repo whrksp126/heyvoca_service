@@ -1,0 +1,517 @@
+[
+  {
+    "id": "1769583910815-01poksqw0-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "alternative energy",
+    "meanings": [
+      "대체 에너지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ucdunjp90-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "exhaust fumes",
+    "meanings": [
+      "배기가스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-631wrnl35-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "hazardous waste",
+    "meanings": [
+      "유해 폐기물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-igbxxezpb-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "public transportation",
+    "meanings": [
+      "대중교통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-0gdm82yn0-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "atmosphere",
+    "meanings": [
+      "대기",
+      "분위기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-oi2s27za0-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "congestion",
+    "meanings": [
+      "혼잡"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-td3kd75hg-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "ecology",
+    "meanings": [
+      "생태계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-rd801wf4o-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "penalty",
+    "meanings": [
+      "벌금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-d5pymgih0-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "proximity",
+    "meanings": [
+      "가까움"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-w4yilbzqs-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "resource",
+    "meanings": [
+      "자원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-tipdtoxf4-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "sustainable",
+    "meanings": [
+      "지속 가능한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-fp1q8r7c8-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "urban",
+    "meanings": [
+      "도시의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-nutxw56ss-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "be aware of",
+    "meanings": [
+      "~을 알고 있다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-e8snmf1zp-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "be crowded with",
+    "meanings": [
+      "~로 붐비다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-dwhqxgbjg-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "carpool",
+    "meanings": [
+      "함께 차를 타다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-e107pm78l-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "conservatory",
+    "meanings": [
+      "온실",
+      "예술 학교"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-4wrd15sw8-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "dispose of",
+    "meanings": [
+      "~을 처분하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-s2iobm7pz-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "environmental awareness",
+    "meanings": [
+      "환경 의식"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-f3eystol4-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "get to work",
+    "meanings": [
+      "직장에 가다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ckidk58oa-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "heavy traffic",
+    "meanings": [
+      "심한 교통 정체"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ehnwh0h2c-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "instead of",
+    "meanings": [
+      "~ 대신에"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-nn5z4p3ec-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "natural habitat",
+    "meanings": [
+      "천연 서식지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ezny5nii7-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "on a regular basis",
+    "meanings": [
+      "정기적으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-l585m2vyy-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "parking permit",
+    "meanings": [
+      "주차 허가증"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-67n5f34b1-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "rush hour",
+    "meanings": [
+      "교통 혼잡 시간대"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ih87d5247-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "shortcut",
+    "meanings": [
+      "지름길"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-ji4v9p0vc-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "toxic waste",
+    "meanings": [
+      "유독 폐기물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-wlnrz42rb-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "unlimited access",
+    "meanings": [
+      "무제한 입장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-1gvn0r8sr-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "vehicle",
+    "meanings": [
+      "탈것",
+      "차량"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-biuk89i9r-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "vital",
+    "meanings": [
+      "중요한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-yivv2amci-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "waste disposal",
+    "meanings": [
+      "쓰레기 처리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910815-xot7uk5gc-1769583910815",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.815717Z",
+    "updatedAt": "2026-01-28T07:05:10.815717Z",
+    "dictionaryId": null,
+    "origin": "withstand",
+    "meanings": [
+      "견디다"
+    ],
+    "examples": []
+  }
+]

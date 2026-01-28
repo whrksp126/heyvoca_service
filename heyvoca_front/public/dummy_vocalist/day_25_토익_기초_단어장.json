@@ -1,0 +1,453 @@
+[
+  {
+    "id": "1769583910833-5ue9lf7lg-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "air cushion",
+    "meanings": [
+      "에어 쿠션"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-sf36c644x-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "back seat",
+    "meanings": [
+      "뒷좌석"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-e9tco8ple-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "bicycle lane",
+    "meanings": [
+      "자전거 전용 차선"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-3y6cgghx8-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "car repair shop",
+    "meanings": [
+      "자동차 수리점"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-te9vpozln-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "careless",
+    "meanings": [
+      "부주의한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-ein3our1z-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "check into a hotel",
+    "meanings": [
+      "호텔에 투숙하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-u5lad2m4p-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "commuter train",
+    "meanings": [
+      "통근 열차"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-k1x60oo51-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "container ship",
+    "meanings": [
+      "컨테이너선"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-hc5n9wejm-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "crosswalk",
+    "meanings": [
+      "횡단보도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-qk5enxchl-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "curb",
+    "meanings": [
+      "도로 경계석"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-df86246iz-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "dock",
+    "meanings": [
+      "부두",
+      "부두에 대다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-0c6bex8pb-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "driver's license",
+    "meanings": [
+      "운전면허증"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-kh0vsszlb-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "flat tire",
+    "meanings": [
+      "펑크 난 타이어"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-iveohivhl-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "gas station",
+    "meanings": [
+      "주유소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-ved9afsz1-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "honk a horn",
+    "meanings": [
+      "경적을 울리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-g3y106qtg-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "look into",
+    "meanings": [
+      "~을 조사하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-5030gjsh8-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "one-way street",
+    "meanings": [
+      "일방통행로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-ic9g9ppou-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "pass by",
+    "meanings": [
+      "~을 지나가다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-33i8tbol0-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "pedestrian",
+    "meanings": [
+      "보행자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-w9an35u7v-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "public transportation",
+    "meanings": [
+      "대중교통"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-xau3x47vd-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "bus terminal",
+    "meanings": [
+      "버스 터미널"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-2ut6z55hd-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "exhaust system",
+    "meanings": [
+      "배기 시스템"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-gmtmdyp2t-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "fine",
+    "meanings": [
+      "벌금"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-b2ko74xj7-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "freight",
+    "meanings": [
+      "화물",
+      "운송"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-64wf36h3m-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "garage",
+    "meanings": [
+      "차고",
+      "주차장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-4k90cbkm5-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "intersection",
+    "meanings": [
+      "교차로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-sgqqajnx9-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "license plate",
+    "meanings": [
+      "번호판"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910833-kaz447s10-1769583910833",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.833849Z",
+    "updatedAt": "2026-01-28T07:05:10.833849Z",
+    "dictionaryId": null,
+    "origin": "traffic light",
+    "meanings": [
+      "신호등"
+    ],
+    "examples": []
+  }
+]

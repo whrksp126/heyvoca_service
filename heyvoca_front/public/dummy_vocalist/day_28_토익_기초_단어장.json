@@ -1,0 +1,457 @@
+[
+  {
+    "id": "1769583910840-ofgqj0xbz-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "armchair",
+    "meanings": [
+      "안락의자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-wryw8fdwn-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "ceiling",
+    "meanings": [
+      "천장"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-7is244ogm-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "cleanup",
+    "meanings": [
+      "대청소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-qhu3jmwk5-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "decoration",
+    "meanings": [
+      "장식",
+      "장식물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-9gxh4hmsi-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "fence",
+    "meanings": [
+      "울타리"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-kgr8gr031-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "floor",
+    "meanings": [
+      "바닥"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-b7woaexgr-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "frame",
+    "meanings": [
+      "틀",
+      "액자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-mnjda685p-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "furniture",
+    "meanings": [
+      "가구"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-6juc9e56x-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "garage",
+    "meanings": [
+      "차고"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-m6hpr5qj0-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "heating system",
+    "meanings": [
+      "난방 시스템"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-mmwefc10o-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "lobby",
+    "meanings": [
+      "로비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-8o2wosvt1-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "remodeling",
+    "meanings": [
+      "주택 개조"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-vpvae1l8r-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "rooftop",
+    "meanings": [
+      "지붕",
+      "옥상"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-o06oj3du7-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "rope",
+    "meanings": [
+      "밧줄",
+      "로프"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-n7ao1a9j4-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "stick",
+    "meanings": [
+      "막대기",
+      "지팡이"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-uq33ufe3u-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "tank",
+    "meanings": [
+      "(물·가스 등의) 탱크"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-rdkw7arzg-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "veranda",
+    "meanings": [
+      "베란다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-q3dhqcxk7-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "desktop",
+    "meanings": [
+      "탁상용의",
+      "데스크톱 컴퓨터"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-w8gymcgtq-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "dwell",
+    "meanings": [
+      "거주하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-wu9dtwo8i-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "fireplace",
+    "meanings": [
+      "(벽)난로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-emzqcxdzy-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "heat",
+    "meanings": [
+      "열기",
+      "뜨겁게 만들다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-gpp04ynwx-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "homemade",
+    "meanings": [
+      "집에서 만든"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-i2ko48awv-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "homeowner",
+    "meanings": [
+      "주택 소유자"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-e5lxkrhx8-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "inhabit",
+    "meanings": [
+      "거주하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-vwml10p9t-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "lighten",
+    "meanings": [
+      "밝게 하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-lkt4ae3tu-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "neighbor",
+    "meanings": [
+      "이웃"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-su2hety37-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "urban",
+    "meanings": [
+      "도시의 (↔ rural)"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910840-6xjoqi8mh-1769583910840",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.840796Z",
+    "updatedAt": "2026-01-28T07:05:10.840796Z",
+    "dictionaryId": null,
+    "origin": "washing machine",
+    "meanings": [
+      "세탁기"
+    ],
+    "examples": []
+  }
+]

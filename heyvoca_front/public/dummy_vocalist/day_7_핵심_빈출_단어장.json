@@ -1,0 +1,919 @@
+[
+  {
+    "id": "1769583910837-b7e1ntzcb-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "survey",
+    "meanings": [
+      "설문 조사",
+      "(설문) 조사하다"
+    ],
+    "examples": [
+      {
+        "origin": "Customer <span class=\"target-word\">surveys</span> help to improve product quality.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-vdgw2rqin-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "analysis",
+    "meanings": [
+      "분석"
+    ],
+    "examples": [
+      {
+        "origin": "The latest market <span class=\"target-word\">analysis</span> shows an increase in used car purchases.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-v62232no2-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "respondent",
+    "meanings": [
+      "응답자"
+    ],
+    "examples": [
+      {
+        "origin": "Almost all survey <span class=\"target-word\">respondents</span> rated the product highly.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-7sxlbtc7m-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "monopoly",
+    "meanings": [
+      "(상품의) 독점",
+      "전매"
+    ],
+    "examples": [
+      {
+        "origin": "Panatronic has a virtual <span class=\"target-word\">monopoly</span> on the manufacture of digital recorders.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-m0s90fqyj-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "competition",
+    "meanings": [
+      "경쟁"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Competition</span> in the game software market has increased.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-p5h3vtgct-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "consistently",
+    "meanings": [
+      "항상",
+      "일관되게"
+    ],
+    "examples": [
+      {
+        "origin": "The factory has <span class=\"target-word\">consistently</span> provided the highest grade products.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-oorn2wg1s-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "demand",
+    "meanings": [
+      "수요",
+      "요구하다"
+    ],
+    "examples": [
+      {
+        "origin": "The company could not meet the increased <span class=\"target-word\">demand</span> for mobile devices.",
+        "meaning": ""
+      },
+      {
+        "origin": "Mr. Hawkesby <span class=\"target-word\">demanded</span> that the clause be removed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-i9s937i0i-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "do one's utmost",
+    "meanings": [
+      "전력을 다하다"
+    ],
+    "examples": [
+      {
+        "origin": "Sun Manufacturing <span class=\"target-word\">does its utmost</span> to ensure the quality of its products.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-d0n50sp7n-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "expand",
+    "meanings": [
+      "확장하다",
+      "확대하다"
+    ],
+    "examples": [
+      {
+        "origin": "Brahe Optics has <span class=\"target-word\">expanded</span> its marketing and sales division.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-y2revzp2x-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "advanced",
+    "meanings": [
+      "고급의",
+      "진보한",
+      "앞선"
+    ],
+    "examples": [
+      {
+        "origin": "Modern cell phones are very <span class=\"target-word\">advanced</span> compared to those from a decade ago.",
+        "meaning": ""
+      },
+      {
+        "origin": "The company is already in the <span class=\"target-word\">advanced</span> stages of the product design.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-y8c8ikf69-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "postpone",
+    "meanings": [
+      "연기하다",
+      "뒤로 미루다"
+    ],
+    "examples": [
+      {
+        "origin": "Organizers <span class=\"target-word\">postponed</span> the conference on management strategies because of bad weather.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-4ojsj81pl-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "additional",
+    "meanings": [
+      "추가의",
+      "부가적인"
+    ],
+    "examples": [
+      {
+        "origin": "Several investors decided to purchase <span class=\"target-word\">additional</span> stocks.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-xr6pwkawf-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "appreciate",
+    "meanings": [
+      "고맙게 생각하다",
+      "높이 평가하다",
+      "감상하다"
+    ],
+    "examples": [
+      {
+        "origin": "Benson Co. <span class=\"target-word\">appreciates</span> your continued business.",
+        "meaning": ""
+      },
+      {
+        "origin": "The supervisor <span class=\"target-word\">appreciated</span> Gloria's excellent organizing skills.",
+        "meaning": ""
+      },
+      {
+        "origin": "The gallery was filled with people <span class=\"target-word\">appreciating</span> the masterpieces.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-32zwkh357-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "demonstration",
+    "meanings": [
+      "설명",
+      "드러냄",
+      "시연"
+    ],
+    "examples": [
+      {
+        "origin": "The salesclerk offered to provide a <span class=\"target-word\">demonstration</span> on how to use the photocopier.",
+        "meaning": ""
+      },
+      {
+        "origin": "The short software <span class=\"target-word\">demonstration</span> showed how much money the business could save.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-eulhxi3fc-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "buy",
+    "meanings": [
+      "사다",
+      "구입하다"
+    ],
+    "examples": [
+      {
+        "origin": "The acquisitions department <span class=\"target-word\">buys</span> all of the office equipment.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-j7fkro7ne-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "examine",
+    "meanings": [
+      "조사하다"
+    ],
+    "examples": [
+      {
+        "origin": "Research and Development will <span class=\"target-word\">examine</span> food consumption trends in foreign markets.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-bmeay3bqk-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "effective",
+    "meanings": [
+      "효과적인",
+      "(법률 등이) 발효되는",
+      "시행되는"
+    ],
+    "examples": [
+      {
+        "origin": "An <span class=\"target-word\">effective</span> advertising campaign is one that people remember for a long time.",
+        "meaning": ""
+      },
+      {
+        "origin": "Increased tax deductions will be <span class=\"target-word\">effective</span> as of June 1.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-0oy0g2byy-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "like",
+    "meanings": [
+      "좋아하다"
+    ],
+    "examples": [
+      {
+        "origin": "Consumers <span class=\"target-word\">like</span> products that look high-end but are less expensive.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-nauc2tpap-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "especially",
+    "meanings": [
+      "특히"
+    ],
+    "examples": [
+      {
+        "origin": "Manufacturers of large vehicles are facing an <span class=\"target-word\">especially</span> difficult year for sales.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-ni4lnxxv5-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "closely",
+    "meanings": [
+      "면밀히",
+      "엄밀히"
+    ],
+    "examples": [
+      {
+        "origin": "Marketing departments monitor the latest trends <span class=\"target-word\">closely</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-4ft4eqvkj-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "reserve",
+    "meanings": [
+      "예약하다",
+      "지정하다",
+      "보존하다"
+    ],
+    "examples": [
+      {
+        "origin": "The secretary will <span class=\"target-word\">reserve</span> hotel rooms for anyone going to the convention.",
+        "meaning": ""
+      },
+      {
+        "origin": "Some funds have been <span class=\"target-word\">reserved</span> to pay for the banquet.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-2jni17nvf-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "cooperate",
+    "meanings": [
+      "협력하다",
+      "협동하다"
+    ],
+    "examples": [
+      {
+        "origin": "The two companies <span class=\"target-word\">cooperated</span> on developing the promotional campaign for the new spring collection.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-r8f8hpxdn-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "very",
+    "meanings": [
+      "매우",
+      "대단히",
+      "아주"
+    ],
+    "examples": [
+      {
+        "origin": "The survey was <span class=\"target-word\">very</span> effective at identifying the target market.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-6ac98jhh9-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "consecutive",
+    "meanings": [
+      "연속적인"
+    ],
+    "examples": [
+      {
+        "origin": "The Barkley Company achieved high sales growth for the third <span class=\"target-word\">consecutive</span> year.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-qppr5jo1d-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "expectation",
+    "meanings": [
+      "예상",
+      "기대"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">expectation</span> is that costs will be cut.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-ysq6s0u6c-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "publicize",
+    "meanings": [
+      "공표하다",
+      "광고하다",
+      "선전하다"
+    ],
+    "examples": [
+      {
+        "origin": "New regulations are <span class=\"target-word\">publicized</span> on the government Web site.",
+        "meaning": ""
+      },
+      {
+        "origin": "The hospital <span class=\"target-word\">publicized</span> its newly built wing to attract more patients.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-2c2rb22ay-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "raise",
+    "meanings": [
+      "높이다",
+      "올리다",
+      "(의문을) 제기하다"
+    ],
+    "examples": [
+      {
+        "origin": "We used mass-mailing methods to <span class=\"target-word\">raise</span> awareness of our brand.",
+        "meaning": ""
+      },
+      {
+        "origin": "The president <span class=\"target-word\">raised</span> questions about the quality of the new product.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-gki5khd8x-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "extremely",
+    "meanings": [
+      "극도로",
+      "대단히"
+    ],
+    "examples": [
+      {
+        "origin": "Internet service providers struggle to survive in today's <span class=\"target-word\">extremely</span> competitive market.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-hhla1d587-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "affect",
+    "meanings": [
+      "~에 영향을 미치다",
+      "불리하게 작용하다"
+    ],
+    "examples": [
+      {
+        "origin": "The frozen-food industry can <span class=\"target-word\">affect</span> the canned goods market.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-b175k392x-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "target",
+    "meanings": [
+      "목표",
+      "목표로 삼다"
+    ],
+    "examples": [
+      {
+        "origin": "Sales for this quarter are right on <span class=\"target-word\">target</span>.",
+        "meaning": ""
+      },
+      {
+        "origin": "The advertisement <span class=\"target-word\">targets</span> the age range of 25-40 years.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-641kbymiz-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "campaign",
+    "meanings": [
+      "운동",
+      "캠페인"
+    ],
+    "examples": [
+      {
+        "origin": "The mayor's election <span class=\"target-word\">campaign</span> focused on his strong record in office.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910837-5ag2p8g9x-1769583910837",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "probable",
+    "meanings": [
+      "개연성이 높은",
+      "유망한"
+    ],
+    "examples": [
+      {
+        "origin": "One of the <span class=\"target-word\">probable</span> causes for low sales was the lack of promotion.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-oywmf7d18-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "focus",
+    "meanings": [
+      "집중시키다",
+      "집중하다",
+      "초점"
+    ],
+    "examples": [
+      {
+        "origin": "Management decided to <span class=\"target-word\">focus</span> resources on expanding its business.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-8fc08cwo1-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "seasonal",
+    "meanings": [
+      "계절의",
+      "계절적인"
+    ],
+    "examples": [
+      {
+        "origin": "The sugarcane industry is vulnerable to <span class=\"target-word\">seasonal</span> variations.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-s46ja8gny-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "impact",
+    "meanings": [
+      "영향",
+      "충격"
+    ],
+    "examples": [
+      {
+        "origin": "Price fluctuations had a major <span class=\"target-word\">impact</span> on the market.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-x39lgaxop-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "comparison",
+    "meanings": [
+      "비표"
+    ],
+    "examples": [
+      {
+        "origin": "Online advertising is cheaper in <span class=\"target-word\">comparison</span> with television.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-xd49w0leh-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "gap",
+    "meanings": [
+      "격차"
+    ],
+    "examples": [
+      {
+        "origin": "Severe deficits can occur when there is a huge <span class=\"target-word\">gap</span> between exports and imports.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-pklp09cxd-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "mounting",
+    "meanings": [
+      "증가하는",
+      "오르는"
+    ],
+    "examples": [
+      {
+        "origin": "There is <span class=\"target-word\">mounting</span> pressure from management to increase productivity.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-k07ctgaoi-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "reflective",
+    "meanings": [
+      "반영하는"
+    ],
+    "examples": [
+      {
+        "origin": "Shrinking profits are <span class=\"target-word\">reflective</span> of the current state of the company.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910838-crmonxmjm-1769583910838",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.837939Z",
+    "updatedAt": "2026-01-28T07:05:10.837939Z",
+    "dictionaryId": null,
+    "origin": "meeting",
+    "meanings": [
+      "회의"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">meeting</span> was postponed because of a scheduling conflict.",
+        "meaning": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,933 @@
+[
+  {
+    "id": "1769583910881-8dvqfzaz8-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "announce",
+    "meanings": [
+      "발표하다",
+      "알리다"
+    ],
+    "examples": [
+      {
+        "origin": "We were able to <strong class=\"target-word\">accomplish</strong> our goals through hard work and dedication.",
+        "meaning": "우리는 노력과 헌신을 통해 우리의 목표를 달성할 수 있었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-o47n55rt8-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "interested",
+    "meanings": [
+      "관심 있는",
+      "관계가 있는"
+    ],
+    "examples": [
+      {
+        "origin": "She is <strong class=\"target-word\">accomplished</strong> in several different fields of marketing.",
+        "meaning": "그녀는 마케팅의 몇몇 다른 분야에서 기량이 뛰어나다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-ocs6uib12-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "active",
+    "meanings": [
+      "적극적인",
+      "활발한"
+    ],
+    "examples": [
+      {
+        "origin": "The manager will <strong class=\"target-word\">adjust</strong> the schedule to accommodate everyone.",
+        "meaning": "관리자는 모든 사람의 편의를 도모하기 위해 일정을 조정할 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-dc473pn3i-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "accept",
+    "meanings": [
+      "받아들이다",
+      "수락하다"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">adjustment</strong> of the budget was necessary due to rising costs.",
+        "meaning": "비용 상승 때문에 예산 조정이 필요했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-1xjcvuk03-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "foresee",
+    "meanings": [
+      "예견하다",
+      "내다보다"
+    ],
+    "examples": [
+      {
+        "origin": "I <strong class=\"target-word\">agree</strong> with your assessment of the market situation.",
+        "meaning": "시장 상황에 대한 당신의 평가에 동의한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-bleeeij0c-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "expansion",
+    "meanings": [
+      "확장",
+      "팽창"
+    ],
+    "examples": [
+      {
+        "origin": "expand v. 확장하다",
+        "meaning": ""
+      },
+      {
+        "origin": "expansive adj. 확장적인",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-3hwc5wi1y-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "relocate",
+    "meanings": [
+      "이전하다",
+      "이동하다"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">agreement</strong> was signed by both parties after several rounds of negotiation.",
+        "meaning": "몇 차례의 협상 끝에 양측 모두 그 합의서에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-ma4rdkahg-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "competitor",
+    "meanings": [
+      "경쟁자",
+      "경쟁 업체"
+    ],
+    "examples": [
+      {
+        "origin": "compete v. 경쟁하다",
+        "meaning": ""
+      },
+      {
+        "origin": "competition n. 경쟁",
+        "meaning": ""
+      },
+      {
+        "origin": "competitive adj. 경쟁적인",
+        "meaning": ""
+      },
+      {
+        "origin": "rival",
+        "meaning": "라이벌, 경쟁자"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-rmodvh3am-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "asset",
+    "meanings": [
+      "자산",
+      "재산"
+    ],
+    "examples": [
+      {
+        "origin": "property, estate",
+        "meaning": "재산"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-62pykmfjp-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "contribute",
+    "meanings": [
+      "기여하다",
+      "공헌하다",
+      "기부하다"
+    ],
+    "examples": [
+      {
+        "origin": "Please <strong class=\"target-word\">arrange</strong> a meeting with the overseas clients for next Monday.",
+        "meaning": "다음 주 월요일에 해외 고객들과의 미팅을 잡아 주세요."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-gt0onuzzh-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "dedicated",
+    "meanings": [
+      "전념하는",
+      "헌신적인"
+    ],
+    "examples": [
+      {
+        "origin": "dedicate v. 바치다, 헌신하다",
+        "meaning": ""
+      },
+      {
+        "origin": "dedication n. 헌신",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-woimybd48-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "attend",
+    "meanings": [
+      "참석하다",
+      "출석하다"
+    ],
+    "examples": [
+      {
+        "origin": "All employees are required to <strong class=\"target-word\">attend</strong> the annual safety training workshop.",
+        "meaning": "모든 직원은 연례 안전 교육 워크숍에 참석해야 한다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-2e8texiqs-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "considerable",
+    "meanings": [
+      "상당한"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">audition</strong> for the new musical will be held at the grand theater tomorrow.",
+        "meaning": "새로운 뮤지컬을 위한 오디션이 내일 대극장에서 열릴 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-zl0pa68j4-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "award",
+    "meanings": [
+      "수여하다",
+      "주다",
+      "n. 상"
+    ],
+    "examples": [
+      {
+        "origin": "Ms. Gills <strong class=\"target-word\">awarded</strong> the certificate to the most outstanding employee of the year.",
+        "meaning": "Ms. Gills는 올해의 가장 우수한 직원에게 증명서를 수여했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-k2r5z8bgi-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "backup",
+    "meanings": [
+      "예비",
+      "후원",
+      "adj. 예비의"
+    ],
+    "examples": [
+      {
+        "origin": "Our <strong class=\"target-word\">backup</strong> system is designed to prevent data loss in case of a crash.",
+        "meaning": "우리의 예비 시스템은 충돌 시 데이터 손실을 방지하도록 설계되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-esmqal93o-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "prospective",
+    "meanings": [
+      "잠재적인",
+      "가망 있는"
+    ],
+    "examples": [
+      {
+        "origin": "Our <strong class=\"target-word\">backup</strong> system is designed to prevent data loss in case of a crash.",
+        "meaning": "우리의 예비 시스템은 충돌 시 데이터 손실을 방지하도록 설계되었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-dgrk7sqx2-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "separation",
+    "meanings": [
+      "분리",
+      "구분"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">banquet</strong> to celebrate the company's anniversary was a huge success.",
+        "meaning": "회사 창립 기념일을 축하하기 위한 연회는 큰 성공이었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-pwim6x9yb-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "campaign",
+    "meanings": [
+      "캠페인",
+      "홍보 활동"
+    ],
+    "examples": [
+      {
+        "origin": "The new marketing <strong class=\"target-word\">campaign</strong> has significantly increased our online presence.",
+        "meaning": "새로운 마케팅 캠페인이 우리의 온라인 존재감을 상당히 높였다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-93qxybzix-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "commercial",
+    "meanings": [
+      "상업의",
+      "상업적인",
+      "n. 광고"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">commercial</strong> success of the product exceeded all our expectations.",
+        "meaning": "그 제품의 상업적 성공은 우리의 모든 기대를 뛰어넘었다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-5fhiccf2t-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "waive",
+    "meanings": [
+      "(권리 등을) 포기하다",
+      "적용하지 않다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910881-71vpnxcfk-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "competition",
+    "meanings": [
+      "경쟁"
+    ],
+    "examples": [
+      {
+        "origin": "The <strong class=\"target-word\">competition</strong> between the two tech giants is becoming more intense.",
+        "meaning": "두 기술 거물 기업 간의 경쟁이 더욱 치열해지고 있다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-q4qbfnzrz-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "consecutive",
+    "meanings": [
+      "연속적인"
+    ],
+    "examples": [
+      {
+        "origin": "The company has recorded profits for five <strong class=\"target-word\">consecutive</strong> years.",
+        "meaning": "그 회사는 5년 연속으로 수익을 기록했다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-5kkkkvo6s-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "consist",
+    "meanings": [
+      "~로 이루어지다",
+      "구성되다"
+    ],
+    "examples": [
+      {
+        "origin": "The new committee will <strong class=\"target-word\">consist</strong> of representatives from each department.",
+        "meaning": "새로운 위원회는 각 부서의 대표자들로 구성될 것이다."
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-enp7moi1j-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "informed",
+    "meanings": [
+      "잘 아는",
+      "유식한"
+    ],
+    "examples": [
+      {
+        "origin": "inform v. 알리다",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-fvmpeomoe-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "representative",
+    "meanings": [
+      "대표자",
+      "직원"
+    ],
+    "examples": [
+      {
+        "origin": "represent v. 대표하다",
+        "meaning": ""
+      },
+      {
+        "origin": "agent",
+        "meaning": "대리인, 직원"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-xwgpdilkt-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "reveal",
+    "meanings": [
+      "드러내다",
+      "밝히다"
+    ],
+    "examples": [
+      {
+        "origin": "revelation n. 폭로",
+        "meaning": ""
+      },
+      {
+        "origin": "disclose",
+        "meaning": "공개하다"
+      },
+      {
+        "origin": "conceal",
+        "meaning": "숨기다"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-n07u8wmhp-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "unfavorable",
+    "meanings": [
+      "불리한"
+    ],
+    "examples": [
+      {
+        "origin": "adverse",
+        "meaning": "불리한, 적대적인"
+      },
+      {
+        "origin": "favorable 유리한",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-ka1211tk0-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "vibrant",
+    "meanings": [
+      "활기찬",
+      "생기 넘치는"
+    ],
+    "examples": [
+      {
+        "origin": "lively, energetic",
+        "meaning": "활기찬"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-zq4ktnbt6-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "yield",
+    "meanings": [
+      "(수익 등을) 내다",
+      "양도하다"
+    ],
+    "examples": [
+      {
+        "origin": "produce, give",
+        "meaning": "내다, 생산하다"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-58wnqq7r2-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "adversely",
+    "meanings": [
+      "불리하게",
+      "반대로"
+    ],
+    "examples": [
+      {
+        "origin": "adverse adj. 불리한, 반대의",
+        "meaning": ""
+      },
+      {
+        "origin": "negatively",
+        "meaning": "부정적으로"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-20detdf9s-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "aggressive",
+    "meanings": [
+      "적극적인",
+      "공격적인"
+    ],
+    "examples": [
+      {
+        "origin": "aggressively adv. 적극적으로",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-awq44ieqb-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "assign",
+    "meanings": [
+      "할당하다",
+      "배정하다"
+    ],
+    "examples": [
+      {
+        "origin": "assignment n. 업무, 과제",
+        "meaning": ""
+      },
+      {
+        "origin": "allocate",
+        "meaning": "할당하다"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-hfl5y4tgj-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "circumstance",
+    "meanings": [
+      "상황",
+      "정황"
+    ],
+    "examples": [
+      {
+        "origin": "situation",
+        "meaning": "상황"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-8nky31cwu-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "contingency",
+    "meanings": [
+      "불상사",
+      "만일의 사태"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910881-hmgpa2ize-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "contract",
+    "meanings": [
+      "계약(서)",
+      "v. 계약하다",
+      "수축하다"
+    ],
+    "examples": [
+      {
+        "origin": "contractor n. 계약자, 하청업체",
+        "meaning": ""
+      },
+      {
+        "origin": "agreement",
+        "meaning": "합의, 계약"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-wkp754hk6-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "depend",
+    "meanings": [
+      "~에게 의존하다",
+      "~에 달려 있다"
+    ],
+    "examples": [
+      {
+        "origin": "dependent adj. 의존하는",
+        "meaning": ""
+      },
+      {
+        "origin": "dependence n. 의존",
+        "meaning": ""
+      },
+      {
+        "origin": "rely",
+        "meaning": "의지하다"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-xlpgb6b5t-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "diversify",
+    "meanings": [
+      "다각화하다",
+      "다양하게 만들다"
+    ],
+    "examples": [
+      {
+        "origin": "diversification n. 다각화, 다양화",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-3r0tt6jt9-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "impact",
+    "meanings": [
+      "영향",
+      "충격"
+    ],
+    "examples": [
+      {
+        "origin": "influence",
+        "meaning": "영향"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-j9xeyxzfs-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "implement",
+    "meanings": [
+      "이행하다",
+      "실행하다"
+    ],
+    "examples": [
+      {
+        "origin": "implementation n. 이행, 실행",
+        "meaning": ""
+      },
+      {
+        "origin": "execute, carry out",
+        "meaning": "실행하다"
+      }
+    ]
+  },
+  {
+    "id": "1769583910881-311inrcb3-1769583910881",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.881456Z",
+    "updatedAt": "2026-01-28T07:05:10.881456Z",
+    "dictionaryId": null,
+    "origin": "outlook",
+    "meanings": [
+      "전망",
+      "견해"
+    ],
+    "examples": [
+      {
+        "origin": "prospect, view",
+        "meaning": "전망"
+      }
+    ]
+  }
+]

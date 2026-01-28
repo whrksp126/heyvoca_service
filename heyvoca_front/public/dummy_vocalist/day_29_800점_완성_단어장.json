@@ -1,0 +1,1156 @@
+[
+  {
+    "id": "1769583910812-vnmni0t25-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "acid rain",
+    "meanings": [
+      "산성비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-lposye3wr-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "alternative energy",
+    "meanings": [
+      "대체 에너지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-az32savng-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "atmospheric pressure",
+    "meanings": [
+      "기압"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-r4x5482bt-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be sensitive to",
+    "meanings": [
+      "~에 민감하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-g8nmqe127-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "breathable air",
+    "meanings": [
+      "호흡할 수 있는 공기"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-1gevmmkkf-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "carbon footprint",
+    "meanings": [
+      "탄소 발자국"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-ij2o9jhn2-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "climate change",
+    "meanings": [
+      "기후 변화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-cxyz7jwa8-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "coastal region",
+    "meanings": [
+      "해안 지역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-r3rouwxfs-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "colorful",
+    "meanings": [
+      "다채로운"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-105ccn1je-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "conservationist",
+    "meanings": [
+      "환경 보호 활동가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-k9tx6uy1j-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "definitely",
+    "meanings": [
+      "분명히",
+      "확실히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-2y0jyf235-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "disposable items",
+    "meanings": [
+      "일회용품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-mfh0m828y-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "ecological system",
+    "meanings": [
+      "생태계"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-105vh5tft-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "energy consumption",
+    "meanings": [
+      "에너지 소비"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-9aexfg916-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "environmentally friendly",
+    "meanings": [
+      "친환경적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-as95jujdy-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "exhaust fumes",
+    "meanings": [
+      "배기가스"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-amix0ewwl-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "flood warning",
+    "meanings": [
+      "홍수 경보"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-3atw3lb5j-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "global warming",
+    "meanings": [
+      "지구 온난화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-8ialbp7cj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "greenhouse effect",
+    "meanings": [
+      "온실 효과"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-xhrn2tr0n-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "hazardous waste",
+    "meanings": [
+      "유해 폐기물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-a4w74wb2h-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "highly effective",
+    "meanings": [
+      "매우 효과적인"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-01or8upkj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "in harmony with",
+    "meanings": [
+      "~과 조화를 이루어"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-0m95gup2t-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "industrial waste",
+    "meanings": [
+      "산업 폐기물"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-7eai29c6p-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "landfill site",
+    "meanings": [
+      "쓰레기 매립지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-cm6dgwg8p-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "natural resource",
+    "meanings": [
+      "천연자원"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-c5z5fyu0z-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "nature reserve",
+    "meanings": [
+      "자연 보호 구역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-e7zxu6nkg-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "on a large scale",
+    "meanings": [
+      "대규모로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-iihztf21q-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "organic farming",
+    "meanings": [
+      "유기농업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-8nky2i29f-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "ozone layer",
+    "meanings": [
+      "오존층"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-mslwqs4q3-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "pollute the ocean",
+    "meanings": [
+      "바다를 오염시키다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-ww04al62x-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "power plant",
+    "meanings": [
+      "발전소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-3gcjxfpzj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "protect nature",
+    "meanings": [
+      "자연을 보호하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-6ymwama2u-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "rare species",
+    "meanings": [
+      "희귀종"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-kfixxiuo4-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "recycling bin",
+    "meanings": [
+      "재활용 수거함"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-7gafm5sky-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "renewable energy",
+    "meanings": [
+      "재생 가능 에너지"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-h0jhm6m6s-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "save electricity",
+    "meanings": [
+      "전기를 아끼다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-9vlw2uzec-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "solar panel",
+    "meanings": [
+      "태양광 패널"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-ku7t0xgma-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "sustainable development",
+    "meanings": [
+      "지속 가능한 개발"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-6tpnc1siy-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "take action",
+    "meanings": [
+      "조치를 취하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-m2ixwaln7-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "threatened with extinction",
+    "meanings": [
+      "멸종 위기에 처한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-njoe9d59q-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "toxic chemicals",
+    "meanings": [
+      "독성 화학 물질"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-p0bszrlpx-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "unpredictable weather",
+    "meanings": [
+      "예측 불가능한 날씨"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-li2378t8f-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "waste reduction",
+    "meanings": [
+      "폐기물 감축"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-8f44qx5n8-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "water purification",
+    "meanings": [
+      "수질 정화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-u3nng0kwv-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "wildlife sanctuary",
+    "meanings": [
+      "야생 동물 보호 구역"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-q5prfw3j1-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "wind turbine",
+    "meanings": [
+      "풍력 터빈"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-4tu2qdiqv-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "zero emissions",
+    "meanings": [
+      "무배출"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-j15w403cr-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be ashamed of",
+    "meanings": [
+      "~을 부끄러워하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-r4meebzl4-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be bored with",
+    "meanings": [
+      "~에 지루해하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-gxg45t2at-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be crowded with",
+    "meanings": [
+      "~으로 붐비다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-cpubddvn9-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be filled with",
+    "meanings": [
+      "~으로 가득 차다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-b18ln0npj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be proud of",
+    "meanings": [
+      "~을 자랑스러워하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-st7dglcvy-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be satisfied with",
+    "meanings": [
+      "~에 만족하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-yzem47o9s-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "be worried about",
+    "meanings": [
+      "~에 대해 걱정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-j5qekw5fx-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "bring up a topic",
+    "meanings": [
+      "화제를 꺼내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-if2dki9od-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "call off a meeting",
+    "meanings": [
+      "회의를 취소하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-pzq6ropah-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "check out a book",
+    "meanings": [
+      "책을 대출하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-exszo42vc-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "come across",
+    "meanings": [
+      "우연히 발견하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-qo227pwbz-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "count on",
+    "meanings": [
+      "의지하다",
+      "믿다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-grjr7wqpl-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "cut down on",
+    "meanings": [
+      "~을 줄이다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-8li4427j9-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "do one's best",
+    "meanings": [
+      "최선을 다하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-1lep2fv0z-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "fall behind",
+    "meanings": [
+      "뒤처지다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-97rtzutbh-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "fill out a form",
+    "meanings": [
+      "서식을 작성하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-fewgt3las-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "get along with",
+    "meanings": [
+      "~와 잘 지내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-rb8fbiyk0-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "get over a cold",
+    "meanings": [
+      "감기를 이겨내다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-75kh9avhj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "give up hope",
+    "meanings": [
+      "희망을 포기하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-kotkummpk-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "go through a process",
+    "meanings": [
+      "과정을 거치다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-cvs2wwi4p-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "hold on a second",
+    "meanings": [
+      "잠시만 기다리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-fbtxtb5mi-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "keep up with",
+    "meanings": [
+      "~을 따라잡다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-qpxodfon7-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "look forward to",
+    "meanings": [
+      "~을 고대하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-uvfdqjxpc-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "make a decision",
+    "meanings": [
+      "결정을 내리다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910812-lpgj9s2tj-1769583910812",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.811997Z",
+    "updatedAt": "2026-01-28T07:05:10.811997Z",
+    "dictionaryId": null,
+    "origin": "take part in",
+    "meanings": [
+      "~에 참가하다"
+    ],
+    "examples": []
+  }
+]

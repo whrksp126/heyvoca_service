@@ -1,0 +1,534 @@
+[
+  {
+    "id": "1769583910893-0mzmrqsft-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "commonplace",
+    "meanings": [
+      "평범한 일",
+      "흔한 일",
+      "평범한",
+      "흔한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-4bp7w0g6p-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "protective smock",
+    "meanings": [
+      "보호 작업복"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-ct8k0vywt-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "testimony",
+    "meanings": [
+      "증언"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-tlreyd1uk-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "accordance",
+    "meanings": [
+      "일치",
+      "조화"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-jj36m8zae-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "crucial",
+    "meanings": [
+      "중요한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-ey97z5vvo-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "deviation",
+    "meanings": [
+      "일탈",
+      "탈선"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-g3w6imezt-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "effortlessly",
+    "meanings": [
+      "힘들지 않게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-2lfjqr8xj-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "in observance of",
+    "meanings": [
+      "~을 기념하여"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-vvtby3qhd-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "inadvertently",
+    "meanings": [
+      "무심코",
+      "우연히"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-fypk69n80-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "judicial",
+    "meanings": [
+      "사법의",
+      "재판의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-krhuuocg5-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "justification",
+    "meanings": [
+      "정당한 이유"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-w1usad7xl-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "keenly",
+    "meanings": [
+      "날카롭게",
+      "예민하게"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-xoryilmk9-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "lawsuit",
+    "meanings": [
+      "소송",
+      "고소"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-ie1lha02y-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "mundane",
+    "meanings": [
+      "일상적인",
+      "재미없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-1f36cvvl6-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "off-limits",
+    "meanings": [
+      "출입 금지의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-wmxnbauv9-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "ordinance",
+    "meanings": [
+      "법령",
+      "명령"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-wvrz7ne0b-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "pulled",
+    "meanings": [
+      "철회된",
+      "철수한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-wa6zzp2uk-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "reprimand",
+    "meanings": [
+      "비난하다",
+      "질책하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-lq0et6xi4-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "resolution",
+    "meanings": [
+      "결의(안)",
+      "결정",
+      "해상도"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-sdk7mkewb-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "stiff",
+    "meanings": [
+      "뻣뻣한",
+      "경직된"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-y0z862j84-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "substantiate",
+    "meanings": [
+      "입증하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-02ebl4f1s-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "trespass",
+    "meanings": [
+      "(남의 토지에) 침입하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-1z7h3coj6-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "violate",
+    "meanings": [
+      "위반하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-wrxfk6zoy-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "at the discretion of",
+    "meanings": [
+      "~의 재량으로"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-97hign4ic-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "bound",
+    "meanings": [
+      "의무가 있는",
+      "꼭 ~하게 되어 있는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-2jzlxuhfd-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "circumscribe",
+    "meanings": [
+      "~을 제한하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-w4yaaz3r8-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "enactment",
+    "meanings": [
+      "입법",
+      "법령"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-fbg7wik45-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "impeccable",
+    "meanings": [
+      "결점 없는"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-hwe2zwmy5-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "infringement",
+    "meanings": [
+      "침해"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-580e5uwoq-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "legitimate",
+    "meanings": [
+      "합법적인",
+      "적법한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-d37uxmjz8-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "petition",
+    "meanings": [
+      "진정서",
+      "탄원서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910893-o3j3486zj-1769583910893",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.893291Z",
+    "updatedAt": "2026-01-28T07:05:10.893291Z",
+    "dictionaryId": null,
+    "origin": "when it comes to",
+    "meanings": [
+      "~에 관해서는"
+    ],
+    "examples": []
+  }
+]

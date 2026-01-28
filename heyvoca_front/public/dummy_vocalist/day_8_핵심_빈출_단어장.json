@@ -1,0 +1,934 @@
+[
+  {
+    "id": "1769583910854-9gifahlzq-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "advertisement",
+    "meanings": [
+      "광고"
+    ],
+    "examples": [
+      {
+        "origin": "Sales have been propelled by the new <span class=\"target-word\">advertisement</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-7xwidqdy1-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "marginal",
+    "meanings": [
+      "약간의",
+      "주변의"
+    ],
+    "examples": [
+      {
+        "origin": "Customers showed only <span class=\"target-word\">marginal</span> interest in the new tablet computer.",
+        "meaning": ""
+      },
+      {
+        "origin": "The maintenance department decorated the <span class=\"target-word\">marginal</span> area of the company premises.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-donuppaue-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "customer",
+    "meanings": [
+      "고객"
+    ],
+    "examples": [
+      {
+        "origin": "Telephone representatives should make the needs of <span class=\"target-word\">customers</span> their priority.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-g517sv31z-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "influence",
+    "meanings": [
+      "~에 영향을 주다",
+      "영향"
+    ],
+    "examples": [
+      {
+        "origin": "Demand for housing directly <span class=\"target-word\">influences</span> the cost of homes.",
+        "meaning": ""
+      },
+      {
+        "origin": "Product reviews have a profound <span class=\"target-word\">influence</span> on sales.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-3tsne7z73-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "instantly",
+    "meanings": [
+      "즉각적으로",
+      "즉시"
+    ],
+    "examples": [
+      {
+        "origin": "The brand logo should be <span class=\"target-word\">instantly</span> recognizable.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-wwvflrhry-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "creative",
+    "meanings": [
+      "창조적인",
+      "독창적인"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Beaumont came up with a <span class=\"target-word\">creative</span> idea.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-mycxn37c2-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "aggressively",
+    "meanings": [
+      "적극적으로"
+    ],
+    "examples": [
+      {
+        "origin": "The best sales representatives <span class=\"target-word\">aggressively</span> seek out potential clients.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-zijsn3s8t-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "aim",
+    "meanings": [
+      "~을 겨누다",
+      "목표",
+      "목적"
+    ],
+    "examples": [
+      {
+        "origin": "Sport Apparel developed athletic gear <span class=\"target-word\">aimed</span> at teenagers.",
+        "meaning": ""
+      },
+      {
+        "origin": "The division head will outline the <span class=\"target-word\">aims</span> of the marketing strategy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-zjl6cbgzw-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "strategy",
+    "meanings": [
+      "전략"
+    ],
+    "examples": [
+      {
+        "origin": "Management's <span class=\"target-word\">strategy</span> for expansion has been successful.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-iiae8q2z3-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "indicate",
+    "meanings": [
+      "보여주다",
+      "나타내다"
+    ],
+    "examples": [
+      {
+        "origin": "Studies <span class=\"target-word\">indicate</span> that consumers prefer attractively packaged products.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-xxhp9xetz-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "attract",
+    "meanings": [
+      "끌다",
+      "유인하다"
+    ],
+    "examples": [
+      {
+        "origin": "The automaker is making an effort to <span class=\"target-word\">attract</span> younger buyers.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-l4dtcraqg-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "experience",
+    "meanings": [
+      "경험",
+      "체험",
+      "체험하다",
+      "경험하다"
+    ],
+    "examples": [
+      {
+        "origin": "All of the invited guests had a pleasant <span class=\"target-word\">experience</span> at the store opening.",
+        "meaning": ""
+      },
+      {
+        "origin": "Customers can <span class=\"target-word\">experience</span> the new service free for a limited time.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-regazaxax-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "analyze",
+    "meanings": [
+      "분석하다",
+      "분석적으로 검토하다"
+    ],
+    "examples": [
+      {
+        "origin": "Researchers were asked to <span class=\"target-word\">analyze</span> the survey data.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-17f69iv68-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "introduce",
+    "meanings": [
+      "(신제품을) 발표하다",
+      "소개하다"
+    ],
+    "examples": [
+      {
+        "origin": "ElectroLife <span class=\"target-word\">introduced</span> a new line of vacuum cleaners.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-5v558i0qu-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "advise",
+    "meanings": [
+      "조언해 주다",
+      "충고하다"
+    ],
+    "examples": [
+      {
+        "origin": "Coburn Law Firm <span class=\"target-word\">advises</span> clients on intellectual property matters.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-zrxcsaexb-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "subscribe",
+    "meanings": [
+      "구독하다"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Subscribing</span> to the monthly fashion magazine costs only $40 a year.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-4avnl4u7t-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "absence",
+    "meanings": [
+      "부재",
+      "결근",
+      "결석"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">absence</span> of competition will help product sales.",
+        "meaning": ""
+      },
+      {
+        "origin": "Staff members must strictly observe the new policy on <span class=\"target-word\">absences</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-psvnjguc5-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "means",
+    "meanings": [
+      "방법",
+      "수단"
+    ],
+    "examples": [
+      {
+        "origin": "Direct surveys are one <span class=\"target-word\">means</span> of gathering consumer feedback.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-44zbt8qn9-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "prefer",
+    "meanings": [
+      "(다른 것보다) ~을 더 좋아하다",
+      "선호하다"
+    ],
+    "examples": [
+      {
+        "origin": "Customers <span class=\"target-word\">prefer</span> Luster Shampoo to any other competing brand.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-19s4jhdtm-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "advantage",
+    "meanings": [
+      "이점",
+      "강점"
+    ],
+    "examples": [
+      {
+        "origin": "One <span class=\"target-word\">advantage</span> of consumer testing is the development of marketing insight.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-4aoe1dd4q-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "forward",
+    "meanings": [
+      "앞으로",
+      "(물건·정보를) 보내다"
+    ],
+    "examples": [
+      {
+        "origin": "Our company's research program has moved <span class=\"target-word\">forward</span> substantially.",
+        "meaning": ""
+      },
+      {
+        "origin": "Please <span class=\"target-word\">forward</span> your e-mail to the accounting manager.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-b18treygc-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "contemporary",
+    "meanings": [
+      "동시대의",
+      "현대의",
+      "당대의"
+    ],
+    "examples": [
+      {
+        "origin": "Advertising messages change over time to reflect <span class=\"target-word\">contemporary</span> attitudes.",
+        "meaning": ""
+      },
+      {
+        "origin": "The fashion brand's <span class=\"target-word\">contemporary</span> look appeals to young consumers.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-flb5ldskr-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "discussion",
+    "meanings": [
+      "토론",
+      "토의"
+    ],
+    "examples": [
+      {
+        "origin": "A <span class=\"target-word\">discussion</span> was held to decide how to promote the product.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-dbxn942bp-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "initial",
+    "meanings": [
+      "처음의",
+      "최초의"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Initial</span> findings show that customers are satisfied with the service.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-q0b52mhj4-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "steadily",
+    "meanings": [
+      "착실하게",
+      "꾸준히"
+    ],
+    "examples": [
+      {
+        "origin": "Ron <span class=\"target-word\">steadily</span> answered investors' questions about his business idea.",
+        "meaning": ""
+      },
+      {
+        "origin": "Product sales <span class=\"target-word\">steadily</span> increased as time passed.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-64ewou9jo-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "necessarily",
+    "meanings": [
+      "반드시"
+    ],
+    "examples": [
+      {
+        "origin": "Increased production does not <span class=\"target-word\">necessarily</span> lead to greater revenues.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-qdrx95pxq-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "resolve",
+    "meanings": [
+      "(문제 등을) 해결하다"
+    ],
+    "examples": [
+      {
+        "origin": "The new facial cream promises to <span class=\"target-word\">resolve</span> 90 percent of common skin problems.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-91bgydvpa-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "detect",
+    "meanings": [
+      "간파하다",
+      "탐지하다"
+    ],
+    "examples": [
+      {
+        "origin": "Only a few people <span class=\"target-word\">detected</span> any actual differences between the two models.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-indi30jby-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "intensify",
+    "meanings": [
+      "강화하다",
+      "중대하다",
+      "강렬하게 만들다"
+    ],
+    "examples": [
+      {
+        "origin": "The movie studio <span class=\"target-word\">intensified</span> its promotional activities to draw in a wider audience.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-edgwmu3j8-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "favorably",
+    "meanings": [
+      "호의적으로",
+      "순조롭게"
+    ],
+    "examples": [
+      {
+        "origin": "The product demonstration was <span class=\"target-word\">favorably</span> received by consumers.",
+        "meaning": ""
+      },
+      {
+        "origin": "Earnings continue to develop <span class=\"target-word\">favorably</span>.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-vyn6o3uxq-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "cover",
+    "meanings": [
+      "포함하다",
+      "지불하다",
+      "덮다"
+    ],
+    "examples": [
+      {
+        "origin": "The rental deposit <span class=\"target-word\">covers</span> the cost of repairing damage to the equipment.",
+        "meaning": ""
+      },
+      {
+        "origin": "The firm's budget is large enough to <span class=\"target-word\">cover</span> marketing expenses for a year.",
+        "meaning": ""
+      },
+      {
+        "origin": "The car was <span class=\"target-word\">covered</span> by a sheet before being unveiled at the launch.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-99zenwzlu-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "less",
+    "meanings": [
+      "보다 적은",
+      "덜한"
+    ],
+    "examples": [
+      {
+        "origin": "<span class=\"target-word\">Less</span> competition among insurance companies led to higher premiums.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-o5wsw93v8-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "majority",
+    "meanings": [
+      "대부분",
+      "대다수"
+    ],
+    "examples": [
+      {
+        "origin": "The <span class=\"target-word\">majority</span> of registered clients pay their dues regularly.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-51four2a2-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "adopt",
+    "meanings": [
+      "채택하다"
+    ],
+    "examples": [
+      {
+        "origin": "Plenty of research must be done before <span class=\"target-word\">adopting</span> a particular marketing strategy.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-2q0vzy2sx-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "largely",
+    "meanings": [
+      "주로",
+      "대부분"
+    ],
+    "examples": [
+      {
+        "origin": "Public reaction to the charity foundation was <span class=\"target-word\">largely</span> positive.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-x48ka3r4a-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "disregard",
+    "meanings": [
+      "소홀히 하다",
+      "무시하다"
+    ],
+    "examples": [
+      {
+        "origin": "The company should not <span class=\"target-word\">disregard</span> customers' opinions if it wants to improve the service quality.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-weacjtb0v-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "effort",
+    "meanings": [
+      "노력"
+    ],
+    "examples": [
+      {
+        "origin": "TV commercials were run in an <span class=\"target-word\">effort</span> to broaden consumer awareness of new brands.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-i1b0b6k2b-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "incentive",
+    "meanings": [
+      "혜택",
+      "장려금"
+    ],
+    "examples": [
+      {
+        "origin": "Financial <span class=\"target-word\">incentives</span> such as coupons may encourage purchases.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-h2vgkj7bn-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "need",
+    "meanings": [
+      "필요",
+      "요구",
+      "욕구",
+      "~할 필요가 있다"
+    ],
+    "examples": [
+      {
+        "origin": "The company is in <span class=\"target-word\">need</span> of an untapped market.",
+        "meaning": ""
+      },
+      {
+        "origin": "The vehicle was designed to meet the <span class=\"target-word\">needs</span> of daily commuters.",
+        "meaning": ""
+      },
+      {
+        "origin": "We <span class=\"target-word\">need</span> to scrutinize each transaction for potential errors.",
+        "meaning": ""
+      }
+    ]
+  },
+  {
+    "id": "1769583910854-i40wrpcin-1769583910854",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.854716Z",
+    "updatedAt": "2026-01-28T07:05:10.854716Z",
+    "dictionaryId": null,
+    "origin": "mastermind",
+    "meanings": [
+      "(계획 등의) 입안자",
+      "지도자"
+    ],
+    "examples": [
+      {
+        "origin": "Mr. Dane is the <span class=\"target-word\">mastermind</span> behind the innovative design.",
+        "meaning": ""
+      }
+    ]
+  }
+]

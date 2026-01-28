@@ -1,0 +1,472 @@
+[
+  {
+    "id": "1769583910830-u19hol09p-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "ability",
+    "meanings": [
+      "능력"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-dtm6ccabc-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "arrive",
+    "meanings": [
+      "도착하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-bris2303c-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "base",
+    "meanings": [
+      "기초",
+      "토대"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-wnkjhwhhh-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "build",
+    "meanings": [
+      "세우다",
+      "짓다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-fqel80jbj-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "careful",
+    "meanings": [
+      "주의 깊은"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-mthdo4j29-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "center",
+    "meanings": [
+      "중심",
+      "중앙"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-t9sivyaeh-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "chance",
+    "meanings": [
+      "기회",
+      "우연"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-5s8vjvns1-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "choose",
+    "meanings": [
+      "선택하다",
+      "뽑다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-vrquwxeo7-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "collect",
+    "meanings": [
+      "수집하다",
+      "모으다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-8k3bfxo5f-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "common",
+    "meanings": [
+      "공통의",
+      "흔한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-acuhc9fp8-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "decide",
+    "meanings": [
+      "결정하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-e2z0oudos-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "early",
+    "meanings": [
+      "이른",
+      "adv. 일찍"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-k07sk6ws5-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "famous",
+    "meanings": [
+      "유명한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-7b1hdnn0d-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "final",
+    "meanings": [
+      "최종의",
+      "마지막의"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-bqj9dq35q-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "group",
+    "meanings": [
+      "그룹",
+      "단체"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-r38wytc7l-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "hiring",
+    "meanings": [
+      "고용",
+      "채용"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-ust1jwlsg-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "increase",
+    "meanings": [
+      "증가하다",
+      "n. 증가"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-z7i9vwp1e-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "join",
+    "meanings": [
+      "~에 가입하다",
+      "합류하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-0aagnh7ut-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "leader",
+    "meanings": [
+      "지도자",
+      "대표"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-fiwkdgl68-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "main",
+    "meanings": [
+      "주요한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-gxq2iggev-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "model",
+    "meanings": [
+      "모델",
+      "모형"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-3f0b96t4z-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "open",
+    "meanings": [
+      "열다",
+      "adj. 열린"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-ond3lqgf0-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "over",
+    "meanings": [
+      "~위에",
+      "~을 넘어서"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-p4fzlohzb-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "part",
+    "meanings": [
+      "부분",
+      "일부",
+      "부품"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-0cab4xbz3-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "simple",
+    "meanings": [
+      "단순한"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-exo1bba98-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "task",
+    "meanings": [
+      "일",
+      "과업"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-qegww6f2d-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "try",
+    "meanings": [
+      "시도하다",
+      "노력하다"
+    ],
+    "examples": []
+  },
+  {
+    "id": "1769583910830-m90jcbq07-1769583910830",
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": null,
+    "lastStudyDate": null,
+    "createdAt": "2026-01-28T07:05:10.830599Z",
+    "updatedAt": "2026-01-28T07:05:10.830599Z",
+    "dictionaryId": null,
+    "origin": "world",
+    "meanings": [
+      "세계",
+      "세상"
+    ],
+    "examples": []
+  }
+]
