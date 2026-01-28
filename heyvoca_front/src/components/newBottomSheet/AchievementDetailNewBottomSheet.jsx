@@ -38,16 +38,32 @@ const getAchievementBackgroundStyle = (level) => {
 const getAchievementTextStyle = (level) => {
     if (level >= 10) {
         return {
-            background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+            background: 'linear-gradient(135deg, #FF8DD4 15%, #CD8DFF 50%, #74D5FF 85%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            color: 'transparent',
         };
-    } else if (level >= 6) {
-        return { color: '#F2D252' };
-    } else if (level >= 3) {
-        return { color: '#C0C0C0' };
+    } else if (level >= 7) {
+        return {
+            background: 'linear-gradient(154deg, #FFDE71 30%, #FFD04D 61%, #FFF2C6 68%, #FFE17D 78%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+        };
+    } else if (level >= 4) {
+        return {
+            background: 'linear-gradient(154deg, #D4D4D4 30%, #C4C4C4 61%, #F2F2F2 68%, #C5C5C5 78%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+        };
+    } else if (level >= 1) {
+        return {
+            background: 'linear-gradient(154deg, #EAAA7D 29%, #E2A173 62%, #F4C4A3 69%, #EDB38B 80%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+        };
     } else {
         return { color: '#D3A686' };
     }
@@ -110,7 +126,10 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                 </h1>
 
                 {/* 업적 타입 탭 - 가로 스크롤 */}
-                <div className="flex gap-[10px] overflow-x-auto scrollbar-hide">
+                <div
+                    className="flex gap-[10px] items-start overflow-x-auto overflow-y-hidden w-full min-h-[85px] pb-[10px] scrollbar-hide"
+                    style={{ touchAction: 'pan-x' }}
+                >
                     {achievementTypes.map((type) => {
                         const userLevel = getUserAchievementLevel(type);
                         const isActive = activeTab === type;
@@ -162,17 +181,22 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                 >
                                     {/* 레벨 번호 및 목표 */}
                                     <div className="flex items-center gap-[8px] flex-1">
-                                        <span
-                                            className="text-[16px] font-[700] tracking-[-0.24px] w-[40px]"
+                                        <div
+                                            className="text-[16px] font-[700] tracking-[-0.24px] w-[44px] flex items-baseline justify-start"
                                             style={{
-                                                ...getAchievementTextStyle(levelInfo.level),
                                                 fontFamily: 'Cafe24Ssurround, sans-serif',
-                                                textShadow: '0px 0px 3px rgba(0,0,0,0.1)'
+                                                // 레벨 1 이상일 때 하얀 외곽선 효과 적용 (그라데이션 텍스트 호환을 위해 filter 사용)
+                                                ...(levelInfo.level >= 1 ? {
+                                                    filter: 'drop-shadow(-1px -1px 0 #fff) drop-shadow(1px -1px 0 #fff) drop-shadow(-1px 1px 0 #fff) drop-shadow(1px 1px 0 #fff)'
+                                                } : {
+                                                    textShadow: '-1.2px -1.2px 0 #fff, 1.2px -1.2px 0 #fff, -1.2px 1.2px 0 #fff, 1.2px 1.2px 0 #fff'
+                                                }),
+                                                ...getAchievementTextStyle(levelInfo.level)
                                             }}
                                         >
                                             <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>Lv.</span>
                                             {String(levelInfo.level).padStart(2, '0')}
-                                        </span>
+                                        </div>
 
                                         {/* 목표 설명 */}
                                         <span className="text-[13px] font-[400] text-[#333] tracking-[-0.26px] leading-[1.5]">

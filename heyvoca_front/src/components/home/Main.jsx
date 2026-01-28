@@ -269,7 +269,7 @@ const Main = () => {
       { selectedType: goalType },
       {
         isBackdropClickClosable: true,
-        isDragToCloseEnabled: true
+        isDragToCloseEnabled: false
       }
     );
   }

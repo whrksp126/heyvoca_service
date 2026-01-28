@@ -297,7 +297,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     updateWordState(sheetId, wordId, updateData);
     setIsFetching(false);
-    setPendingUpdateSheetIds(prev => prev.add(sheetId));
+    setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
 
     const isNotLastQuestion = progressIndex !== testQuestions.length - 1;
 

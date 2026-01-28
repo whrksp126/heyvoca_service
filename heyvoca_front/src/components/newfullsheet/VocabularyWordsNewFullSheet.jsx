@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, SpeakerHigh, Plant, Carrot, EggCrack, Leaf, CaretDown } from '@phosphor-icons/react';
+import { PencilSimple, CaretLeft, Plus, Trash, CaretDown } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -20,77 +20,7 @@ const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
 const MAX_RENDERED_ITEMS = 100; // DOM에 최대 렌더링할 아이템 개수 (성능 최적화)
 const ITEM_HEIGHT_ESTIMATE = 120; // 각 아이템의 예상 높이 (px)
 
-// 암기 상태 판단 함수
-const getMemoryState = (word) => {
-  const repetition = word.repetition ?? 0;
-  const interval = word.interval ?? 0;
-  const ef = word.ef ?? 2.5;
 
-  // 미학습: repetition === 0 && interval === 0
-  if (repetition === 0 && interval === 0) {
-    return {
-      type: 'unlearned',
-      label: '미학습',
-      icon: EggCrack,
-      color: '#9D835A',
-      borderColor: '#9D835A',
-      bgColor: '#FFFCF3'
-    };
-  }
-
-  // 암기율 계산
-  let score = 0;
-  score += repetition * 15;
-  score += interval * 2;
-  score += (ef - 1.3) * 20;
-  const percent = Math.max(0, Math.min(100, Math.round(score)));
-
-  // repetition === 0이지만 interval > 0인 경우 (학습 시도했지만 틀린 상태)는 단기로 분류
-  if (repetition === 0 && interval > 0) {
-    return {
-      type: 'shortTerm',
-      label: '단기암기',
-      icon: Leaf,
-      color: '#77CE4F',
-      borderColor: '#77CE4F',
-      bgColor: '#F2FFEB'
-    };
-  }
-
-  // 단기 암기 (0-29%)
-  if (percent < 30) {
-    return {
-      type: 'shortTerm',
-      label: '단기암기',
-      icon: Leaf,
-      color: '#77CE4F',
-      borderColor: '#77CE4F',
-      bgColor: '#F2FFEB'
-    };
-  }
-
-  // 중기 암기 (30-69%)
-  if (percent < 70) {
-    return {
-      type: 'mediumTerm',
-      label: '중기암기',
-      icon: Plant,
-      color: '#38CE38',
-      borderColor: '#38CE38',
-      bgColor: '#EBFFEE'
-    };
-  }
-
-  // 장기 암기 (70-100%)
-  return {
-    type: 'longTerm',
-    label: '장기암기',
-    icon: Carrot,
-    color: '#F68300',
-    borderColor: '#F68300',
-    bgColor: '#FFF8E8'
-  };
-};
 
 const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -363,14 +293,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       bg-white
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-      {/* Header */}
-      <div className="
-        relative
-        flex items-center justify-between
-        h-[55px] 
-        pt-[20px] px-[16px] pb-[14px]
-      ">
-        <div className="flex items-center gap-[4px]">
+      {/* Header - h-58.5px matches Figma */}
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '58.5px',
+          padding: '20px 16px 14px 16px'
+        }}
+      >
+        <div className="flex items-center gap-[10px]">
           <motion.button
             onClick={() => {
               vibrate({ duration: 5 });
@@ -396,378 +330,429 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           >
             <CaretLeft size={24} />
           </motion.button>
-          <h1 className="
-            text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
-          ">
+          <h1 style={{
+            fontSize: '18px',
+            fontWeight: 700,
+            color: '#111',
+            letterSpacing: '-0.36px',
+            fontFamily: "'Pretendard Variable', sans-serif"
+          }}>
             {vocabularySheet.title}
           </h1>
         </div>
-        <div
-          className="
-            flex items-center gap-[8px]
-            text-[#CCC] dark:text-[#fff]
-          "
-        >
-          {/* 
-          <motion.button 
-            className="
-            rounded-[20px]
-              text-[#FF8DD4] text-[20px]
-            "
-            variants={buttonVariants}
-            whileTap="tap"
-            transition={{ 
-              type: "spring", 
-              stiffness: 500, 
-              damping: 15
-            }}
-            onClick={handleEditClick}
-            aria-label="단어장 편집"
-          >
-            <PencilSimple />
-          </motion.button> 
-          */}
+
+        <div className="flex items-center gap-[10px]">
           <motion.button
-            className="
-            rounded-[20px]
-              text-[#FF8DD4] text-[20px]
-            "
+            style={{
+              width: '20px',
+              height: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#FF8DD4'
+            }}
             variants={buttonVariants}
             whileTap="tap"
-            transition={{
-              type: "spring",
-              stiffness: 500,
-              damping: 15
-            }}
-            onClick={handleAddClick}
-            aria-label="새 단어 추가"
+            onClick={handleEditClick}
+            aria-label="단어장 수정"
           >
-            <Plus />
+            <PencilSimple size={20} weight="light" />
           </motion.button>
+
+          <div className="relative">
+            <motion.button
+              style={{
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#FF8DD4'
+              }}
+              variants={buttonVariants}
+              whileTap="tap"
+              onClick={handleAddClick}
+              aria-label="새 단어 추가"
+            >
+              <Plus size={20} weight="light" />
+            </motion.button>
+
+            {/* Tooltip when empty - Positioned relative to the 20x20 button container */}
+            {vocabularySheet?.words?.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  position: 'absolute',
+                  top: '33.75px',
+                  right: '-4px',
+                  width: '97px',
+                  height: '30px',
+                  backgroundColor: '#FF8DD4',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0 10px',
+                  zIndex: 20,
+                  pointerEvents: 'none',
+                  fontFamily: "'Pretendard Variable', sans-serif"
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    right: '8px',
+                    width: 0,
+                    height: 0,
+                    borderLeft: '6px solid transparent',
+                    borderRight: '6px solid transparent',
+                    borderBottom: '13px solid #FF8DD4'
+                  }}
+                />
+                <span style={{
+                  color: 'white',
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  lineHeight: 1.4,
+                  letterSpacing: '-0.24px',
+                  whiteSpace: 'nowrap'
+                }}>
+                  눌러서 단어 추가
+                </span>
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Filter & Study Section */}
-      <div className="flex items-center justify-between px-[16px] py-[10px]">
-        {/* Sort Dropdown */}
-        <div className="relative">
-          <button
-            onClick={() => {
-              vibrate({ duration: 5 });
-              setShowSortDropdown(!showSortDropdown);
-            }}
+      {vocabularySheet?.words?.length > 0 && (
+        <div className="flex items-center justify-between px-[16px] py-[10px]">
+          {/* Sort Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                vibrate({ duration: 5 });
+                setShowSortDropdown(!showSortDropdown);
+              }}
+              className="
+                flex items-center justify-between
+                w-[120px] h-[35px]
+                px-[15px]
+                bg-white
+                border-[0.5px] border-[#CCC] rounded-[6px]
+              "
+            >
+              <span className="text-[14px] font-[400] text-[#111]">
+                {sortLabels[sortBy] || '정렬'}
+              </span>
+              <CaretDown size={14} color="#111" />
+            </button>
+
+            <AnimatePresence>
+              {showSortDropdown && (
+                <>
+                  <div
+                    className="fixed inset-0 z-[10]"
+                    onClick={() => setShowSortDropdown(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="
+                      absolute top-[40px] left-0
+                      w-[120px]
+                      bg-white
+                      border border-[#ccc] rounded-[6px]
+                      shadow-lg
+                      z-[11]
+                      overflow-hidden
+                    "
+                  >
+                    {Object.entries(sortLabels).map(([key, label]) => (
+                      <button
+                        key={key}
+                        onClick={() => {
+                          vibrate({ duration: 5 });
+                          setSortBy(key);
+                          setShowSortDropdown(false);
+                        }}
+                        className={`
+                          w-full h-[40px]
+                          px-[15px]
+                          text-left text-[13px]
+                          ${sortBy === key ? 'text-[#FF8DD4] font-[600]' : 'text-[#666]'}
+                          hover:bg-[#F5F5F5]
+                          transition-colors
+                        `}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Study Button */}
+          <motion.button
+            onClick={handleStudyClick}
+            whileTap={{ scale: 0.95 }}
             className="
-              flex items-center justify-between
-              w-[120px] h-[35px]
-              px-[15px]
+              flex items-center justify-center
+              h-[35px] px-[15px]
               bg-white
-              border border-[#ccc] rounded-[6px]
+              border-[0.5px] border-[#FF8DD4] rounded-[6px]
             "
           >
-            <span className="text-[14px] font-[400] text-[#111]">
-              {sortLabels[sortBy] || '정렬'}
+            <span className="text-[14px] font-[700] text-[#FF8DD4]">
+              이 단어장으로 학습
             </span>
-            <CaretDown size={14} color="#111" />
-          </button>
-
-          <AnimatePresence>
-            {showSortDropdown && (
-              <>
-                <div
-                  className="fixed inset-0 z-[10]"
-                  onClick={() => setShowSortDropdown(false)}
-                />
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="
-                    absolute top-[40px] left-0
-                    w-[120px]
-                    bg-white
-                    border border-[#ccc] rounded-[6px]
-                    shadow-lg
-                    z-[11]
-                    overflow-hidden
-                  "
-                >
-                  {Object.entries(sortLabels).map(([key, label]) => (
-                    <button
-                      key={key}
-                      onClick={() => {
-                        vibrate({ duration: 5 });
-                        setSortBy(key);
-                        setShowSortDropdown(false);
-                      }}
-                      className={`
-                        w-full h-[40px]
-                        px-[15px]
-                        text-left text-[13px]
-                        ${sortBy === key ? 'text-[#FF8DD4] font-[600]' : 'text-[#666]'}
-                        hover:bg-[#F5F5F5]
-                        transition-colors
-                      `}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
+          </motion.button>
         </div>
-
-        {/* Study Button */}
-        <motion.button
-          onClick={handleStudyClick}
-          whileTap={{ scale: 0.95 }}
-          className="
-            flex items-center justify-center
-            h-[35px] px-[15px]
-            bg-white
-            border border-[#FF8DD4] rounded-[6px]
-          "
-        >
-          <span className="text-[14px] font-[700] text-[#FF8DD4]">
-            이 단어장으로 학습
-          </span>
-        </motion.button>
-      </div>
+      )}
 
       {/* Content */}
       <div
         ref={scrollContainerRef}
-        className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto"
+        className="flex flex-col flex-1 overflow-y-auto"
         style={{
           overscrollBehaviorY: 'auto',
           WebkitOverflowScrolling: 'touch',
-          overscrollBehaviorX: 'contain'
+          overscrollBehaviorX: 'contain',
+          fontFamily: "'Pretendard Variable', sans-serif"
         }}
       >
-        {/* 상단 패딩 (스크롤 위치 보정) */}
-        {visibleRange.start > 0 && (
-          <div style={{ height: visibleRange.start * ITEM_HEIGHT_ESTIMATE }} />
-        )}
-
-        {displayedWords.map((item, localIndex) => {
-          return (
-            <li
-              key={item.id}
-              className="
-                flex gap-[10px] items-start
-                p-[20px]
-                rounded-[12px]
-                bg-[#F5F5F5]
-              "
-              onClick={() => handleCardClick(item.id)}
-            >
-
-              <div
-                className="
-                  flex flex-col gap-[10px] flex-1
-                "
-              >
-                <div className="flex flex-wrap">
-                  <h3
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      getTextSound(item.origin, "en");
-                    }}
-                    className="
-                      text-[16px] font-[700] text-[#111]
-                      cursor-pointer relative
-                      overflow-hidden
-                      break-words 
-                    "
-                  >
-                    {item.origin}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap">
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      getTextSound(item.meanings.join(", "), "ko");
-                    }}
-                    className="
-                      text-[12px] font-[400] text-[#111]
-                      cursor-pointer relative
-                      overflow-hidden
-                      break-words
-                    "
-                  >
-                    {item.meanings.join(", ")}
-                  </span>
-                </div>
-              </div>
-              <div>
-                {(() => {
-                  const memoryState = getMemoryState(item);
-                  const IconComponent = memoryState.icon;
-                  return (
-                    <div
-                      className="
-                        flex items-center gap-[3px]
-                        w-[max-content]
-                        py-[3px] px-[5px]
-                        border rounded-[3px]
-                        text-[10px] font-[600]
-                      "
-                      style={{
-                        borderColor: memoryState.borderColor,
-                        backgroundColor: memoryState.bgColor,
-                        color: memoryState.color
-                      }}
-                    >
-                      <IconComponent size={10} weight="fill" />
-                      <span>{memoryState.label}</span>
-                    </div>
-                  );
-                })()}
-              </div>
-
-              {/* 
-              <div className="
-                flex gap-[8px]
-              text-[#FF8DD4] text-[20px]
-              ">
-                <button onClick={() => getTextSound(item.origin, "en")}>
-                  <SpeakerHigh weight="fill" />
-                </button>
-              </div> 
-              */}
-            </li>
-          )
-        })}
-
-        {/* 하단 패딩 (스크롤 위치 보정) */}
-        {visibleRange.end < allDisplayedWords.length && (
-          <div style={{ height: (allDisplayedWords.length - visibleRange.end) * ITEM_HEIGHT_ESTIMATE }} />
-        )}
-
-        {/* 로딩 인디케이터 */}
-        {hasMore && isLoadingMore && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              duration: 0.3,
-              ease: [0.4, 0, 0.2, 1]
-            }}
-            className="
-              flex flex-col items-center justify-center
-              py-[24px] px-[20px]
-              gap-[12px]
-            "
-          >
-            {/* 점들 애니메이션 */}
-            <div className="flex items-center gap-[6px]">
-              {[0, 1, 2].map((index) => (
+        {vocabularySheet?.words?.length === 0 ? (
+          <div className="flex flex-col items-center flex-1" style={{ paddingTop: '166.5px' }}>
+            {/* Animated 8-bar spinner graphic - matches 'spinner 1' size (70x70) */}
+            <div style={{
+              position: 'relative',
+              width: '70px',
+              height: '70px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '15px'
+            }}>
+              {[...Array(8)].map((_, i) => (
                 <motion.div
-                  key={index}
-                  className="
-                    w-[8px] h-[8px]
-                    rounded-full
-                  "
+                  key={i}
                   style={{
-                    background: 'linear-gradient(135deg, #FF8DD4 0%, #FF69C6 100%)',
-                    boxShadow: '0 2px 8px rgba(255, 141, 212, 0.4)'
+                    position: 'absolute',
+                    width: '4px',
+                    height: '14px',
+                    borderRadius: '4px',
+                    backgroundColor: '#FF8DD4',
+                    transformOrigin: '50% 50%',
+                    transform: `rotate(${i * 45}deg) translateY(-22px)`
                   }}
                   animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.5, 1, 0.5]
+                    opacity: [0.15, 1, 0.15],
                   }}
                   transition={{
                     duration: 1.2,
                     repeat: Infinity,
-                    delay: index * 0.2,
-                    ease: "easeInOut"
+                    delay: i * 0.15,
+                    ease: "linear"
                   }}
                 />
               ))}
             </div>
 
-            {/* 텍스트 */}
-            <motion.span
-              className="
-                text-[13px] font-[400]
-                text-[#999]
-              "
-              animate={{
-                opacity: [0.6, 1, 0.6]
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              새로운 단어를 불러오는 중...
-            </motion.span>
-          </motion.div>
-        )}
-
-
-
-
-        {/* {sortedVocabularySheets.map((item, index) => {
-          return (
-            <li
-              key={item.id}
-              style={{ backgroundColor: item.color.background }}
-              className="
-                flex gap-[15px] items-start
-                p-[20px]
-                rounded-[12px]
-              "
-            >
-              <div 
-              className="
-                top
-                flex flex-col
-                w-full
-              "
-            >
-              <h3 className="text-[16px] font-[700]">{item.title}</h3>
-              <span className="text-[10px] font-[400] text-[#999]">{item.memorized}/{item.total}</span>
+            {/* Empty Text - text-16px, tracking-[-0.32px] */}
+            <div style={{
+              textAlign: 'center',
+              fontSize: '16px',
+              lineHeight: 1.4,
+              letterSpacing: '-0.32px',
+              marginBottom: '20px',
+              fontFamily: "'Pretendard Variable', sans-serif"
+            }}>
+              <p style={{ fontWeight: 400, color: '#111', margin: 0 }}>아직 추가된 단어가 없어요!</p>
+              <p style={{ margin: 0 }}>
+                <span style={{ fontWeight: 700, color: '#FF8DD4' }}>단어</span>
+                <span style={{ fontWeight: 400, color: '#111' }}>를 추가해보세요 🤗</span>
+              </p>
             </div>
 
-            <div className="flex items-center gap-[8px]">
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants(item.color.sub)}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
+            {/* Add Button - 136x40, rounded-8px */}
+            <motion.button
+              onClick={handleAddClick}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '5px',
+                width: '136px',
+                height: '40px',
+                backgroundColor: '#FF8DD4',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              <Plus size={16} color="white" weight="light" />
+              <span style={{
+                color: 'white',
+                fontSize: '14px',
+                fontWeight: 700,
+                letterSpacing: '-0.28px',
+                fontFamily: "'Pretendard Variable', sans-serif"
+              }}>
+                단어 추가하기
+              </span>
+            </motion.button>
+          </div>
+        ) : (
+          <>
+            {/* 상단 패딩 (스크롤 위치 보정) */}
+            {visibleRange.start > 0 && (
+              <div style={{ height: visibleRange.start * ITEM_HEIGHT_ESTIMATE }} />
+            )}
+
+            {displayedWords.map((item, localIndex) => {
+
+
+              return (
+                <div
+                  key={item.id}
+                  className="
+                    flex flex-col gap-[10px] items-start
+                    p-[20px] mx-[16px] mb-[10px]
+                    rounded-[12px]
+                    bg-[#F5F5F5]
+                    cursor-pointer
+                  "
+                  onClick={() => handleCardClick(item.id)}
+                >
+                  <div className="flex justify-between items-center w-full">
+                    <div className="flex items-center gap-[5px]">
+                      <h3
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          getTextSound(item.origin, "en");
+                        }}
+                        className="
+                          text-[16px] font-[700] text-[#111]
+                          tracking-[-0.32px]
+                          cursor-pointer relative
+                          overflow-hidden
+                          break-words 
+                        "
+                      >
+                        {item.origin}
+                      </h3>
+                    </div>
+
+                    <MemorizationStatus
+                      repetition={item.repetition}
+                      interval={item.interval}
+                      ef={item.ef}
+                      nextReview={item.nextReview}
+                      wordId={item.id}
+                      useRandomMessages={false}
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap w-full">
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        getTextSound(item.meanings.join(", "), "ko");
+                      }}
+                      className="
+                        text-[12px] font-normal text-[#333]
+                        tracking-[-0.24px]
+                        cursor-pointer relative
+                        overflow-hidden
+                        break-words
+                      "
+                    >
+                      {item.meanings.join(", ")}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* 하단 패딩 (스크롤 위치 보정) */}
+            {visibleRange.end < allDisplayedWords.length && (
+              <div style={{ height: (allDisplayedWords.length - visibleRange.end) * ITEM_HEIGHT_ESTIMATE }} />
+            )}
+
+            {/* 로딩 인디케이터 */}
+            {hasMore && isLoadingMore && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.4, 0, 0.2, 1]
                 }}
-                onClick={() => handleEditClick(item.id, index)}
-                aria-label="단어장 편집"
+                className="
+                  flex flex-col items-center justify-center
+                  py-[24px] px-[20px]
+                  gap-[12px]
+                "
               >
-                <PencilSimple size={18} color={item.color.main} />
-              </motion.button>
-              <motion.button 
-                className={`rounded-[20px]`}
-                variants={getButtonVariants('#ff00004d')}
-                whileTap="tap"
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 15
-                }}
-                onClick={() => handleDeleteClick(item.id, index)}
-                aria-label="단어장 삭제"
-              >
-                <Trash size={18} color="red" />
-              </motion.button>
-            </div>
-          </li>
-        )})} */}
+                {/* 점들 애니메이션 */}
+                <div className="flex items-center gap-[6px]">
+                  {[0, 1, 2].map((index) => (
+                    <motion.div
+                      key={index}
+                      className="
+                        w-[8px] h-[8px]
+                        rounded-full
+                      "
+                      style={{
+                        background: 'linear-gradient(135deg, #FF8DD4 0%, #FF69C6 100%)',
+                        boxShadow: '0 2px 8px rgba(255, 141, 212, 0.4)'
+                      }}
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.5, 1, 0.5]
+                      }}
+                      transition={{
+                        duration: 1.2,
+                        repeat: Infinity,
+                        delay: index * 0.2,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* 텍스트 */}
+                <motion.span
+                  className="
+                    text-[13px] font-[400]
+                    text-[#999]
+                  "
+                  animate={{
+                    opacity: [0.6, 1, 0.6]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  새로운 단어를 불러오는 중...
+                </motion.span>
+              </motion.div>
+            )}
+          </>
+        )
+        }
       </div>
-    </div>
+    </div >
   );
 };
 

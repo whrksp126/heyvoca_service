@@ -1,6 +1,6 @@
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export const MAX_TEST_VOCABULARY_COUNT = 30;
+export const MAX_TEST_VOCABULARY_COUNT = 1000;
 export const MIN_TEST_VOCABULARY_COUNT = 4;
 
 // SM-2 알고리즘 기준 학습 상태 정의
@@ -8,8 +8,8 @@ export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
   SHORT_TERM: 'shortTerm',     // 단기 복습 (간격 10일 미만)
-  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 10일 이상 50일 미만)
-  LONG_TERM: 'longTerm'        // 장기 복습 (간격 50일 이상)
+  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 10일 이상 60일 미만)
+  LONG_TERM: 'longTerm'        // 장기 복습 (간격 60일 이상)
 };
 
 /**
@@ -42,10 +42,10 @@ export function getWordMemoryState(word) {
   // 간격(Interval) 날짜를 우선 기준으로 분류하되, 점수 체계와 호환성 유지
   if (interval < 10) {
     return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (10일 미만)
-  } else if (interval < 50) {
-    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (10일~49일)
+  } else if (interval < 60) {
+    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (10일~59일)
   } else {
-    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (50일 이상)
+    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (60일 이상)
   }
 }
 

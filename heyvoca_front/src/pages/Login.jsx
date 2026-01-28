@@ -33,10 +33,7 @@ const Login = () => {
 
   // React Compiler가 자동으로 useCallback 처리
   const handleAppGoogleAuth = async (data) => {
-    console.log(`앱 구글 OAuth 정보 받음: ${JSON.stringify(data)}`);
-
     const { googleId, email, name, status } = data;
-
     // 필수 정보 검증
     if (!googleId || !email || !name || !status) {
       console.error(`앱에서 받은 구글 사용자 정보가 불완전합니다: ${JSON.stringify(data)}`);
@@ -44,12 +41,8 @@ const Login = () => {
     }
 
     try {
-      console.log(`앱 로그인 처리 시작: ${JSON.stringify({ googleId, email, name, status })}`);
-
       const result = await Login({ googleId, email, name, status });
-
       if (result.success) {
-        console.log(`앱 로그인 성공`);
         navigate('/');
       } else {
         console.log(`앱 로그인 실패`);

@@ -111,15 +111,7 @@ export const UserProvider = ({ children }) => {
       if (result.code != 200) return;
 
       // 보석 업데이트 내용 적용
-      if (result.data.gem && result.data.gem.after > result.data.gem.before) {
-        if (window.overlayContext?.showAwaitOverlay) {
-          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
-            gemCount: result.data.gem.after - result.data.gem.before,
-            title: "학습 보상!",
-            description: "학습 완료 보석이 지급되었습니다."
-          });
-        }
-      }
+      // (StudyResult.jsx에서 처리하므로 여기서 오버레이를 띄우지 않음)
 
       setUserProfile(prevProfile => ({
         ...prevProfile,
@@ -152,12 +144,7 @@ export const UserProvider = ({ children }) => {
 
       // 업적 업데이트 (새로 완료된 업적이 있는 경우)
       if (result.data.goals && result.data.goals.length > 0) {
-        // 업적 오버레이 표시
-        if (window.overlayContext?.showAwaitOverlay) {
-          result.data.goals.forEach(goal => {
-            window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
-          });
-        }
+        // 업적 오버레이 표시 (StudyResult.jsx에서 처리하므로 여기서 오버레이를 띄우지 않음)
 
         setUserMainPage(prevMainPage => {
           const existingGoals = prevMainPage.goals || [];

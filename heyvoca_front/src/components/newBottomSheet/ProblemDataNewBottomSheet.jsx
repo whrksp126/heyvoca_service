@@ -123,7 +123,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                           className="inline-block cursor-pointer"
                           style={{ willChange: 'transform' }}
                         >
-                          {example.origin}
+                          <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                         </motion.span>
                       </p>
                       <p className="text-[12px] font-[400] text-[#333]">
@@ -238,7 +238,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                               className="inline-block cursor-pointer"
                               style={{ willChange: 'transform' }}
                             >
-                              {example.origin}
+                              <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                             </motion.span>
                           </p>
                           <p className="text-[12px] font-[400] text-[#333]">

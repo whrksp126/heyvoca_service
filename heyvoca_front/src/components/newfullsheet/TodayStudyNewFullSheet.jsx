@@ -11,7 +11,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { InsufficientWordsNewBottomSheet } from '../newBottomSheet/InsufficientWordsNewBottomSheet';
 import { NoTodayStudyWordsNewBottomSheet } from '../newBottomSheet/NoTodayStudyWordsNewBottomSheet';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 const TodayStudyNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -25,7 +25,7 @@ const TodayStudyNewFullSheet = () => {
 
   // 오늘의 학습에 사용 가능한 단어 개수 계산 (TakeTest.jsx의 setupTestQuestions 로직과 동일)
   // React Compiler가 자동으로 memoization 처리
-  const allWords = vocabularySheets.flatMap(sheet => 
+  const allWords = vocabularySheets.flatMap(sheet =>
     (sheet.words || []).map(word => ({
       ...word,
       vocabularySheetId: sheet.id
@@ -35,14 +35,14 @@ const TodayStudyNewFullSheet = () => {
   // 현재 날짜 (시간 제거, 날짜만 비교)
   const now = new Date();
   now.setHours(0, 0, 0, 0);
-  
+
   // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
   const unlearnedWords = allWords.filter(word => {
     const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
     const interval = word.memoryState?.interval ?? word.interval ?? 0;
     return (!word.nextReview || word.nextReview === null) && repetition === 0 && interval === 0;
   });
-  
+
   // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
   const overdueWords = allWords.filter(word => {
     if (!word.nextReview) return false;
@@ -96,7 +96,7 @@ const TodayStudyNewFullSheet = () => {
   // availableWordCount가 변경되면 wordCount도 업데이트
   useEffect(() => {
     const maxCount = Math.min(availableWordCount, MAX_TEST_VOCABULARY_COUNT);
-    
+
     if (availableWordCount < MIN_TEST_VOCABULARY_COUNT) {
       setShowWarning(true);
       setWordCount(MIN_TEST_VOCABULARY_COUNT);
@@ -114,7 +114,7 @@ const TodayStudyNewFullSheet = () => {
       }
     }
   }, [availableWordCount]);
-  
+
 
   useEffect(() => {
     console.log(recentStudy);
@@ -203,24 +203,24 @@ const TodayStudyNewFullSheet = () => {
 
     await updateRecentStudy('today', {
       ...recentStudy['today'],
-      progress_index : null,
+      progress_index: null,
       type: 'today',
       status: null,
       study_data: null,
-      updated_at : null,
-      created_at : null,
+      updated_at: null,
+      created_at: null,
     });
     closeNewFullSheet();
-    navigate('/take-test', { 
-      state: { 
-        data: { 
-          count : finalWordCount,
+    navigate('/take-test', {
+      state: {
+        data: {
+          count: finalWordCount,
           vocabularySheetId: "all",
           memoryState: "unlearned",
           questionType: "multipleChoice",
-        }, 
+        },
         testType: 'today'
-      } 
+      }
     });
   }
 
@@ -237,7 +237,7 @@ const TodayStudyNewFullSheet = () => {
         h-[55px] 
         pt-[20px] px-[10px] pb-[14px]
       ">
-        
+
         <motion.button
           onClick={() => {
             vibrate({ duration: 5 });
@@ -250,17 +250,17 @@ const TodayStudyNewFullSheet = () => {
             p-[4px]
             rounded-[8px]
           "
-          whileHover={{ 
+          whileHover={{
             backgroundColor: 'rgba(0, 0, 0, 0.05)',
             scale: 1.05
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             backgroundColor: 'rgba(0, 0, 0, 0.1)'
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
         >
@@ -282,9 +282,9 @@ const TodayStudyNewFullSheet = () => {
 
       <div className="flex flex-col items-center justify-center h-full gap-[20px] p-[20px]">
         <div className="flex items-center justify-center w-full h-[300px] rounded-[20px]"
-        style={{
-          background: 'linear-gradient(135deg, rgba(255, 185, 233, 1) 0%, rgba(255, 185, 233, 1) 40%, rgba(255, 221, 242, 1) 100%)',
-        }}
+          style={{
+            background: 'linear-gradient(135deg, rgba(255, 185, 233, 1) 0%, rgba(255, 185, 233, 1) 40%, rgba(255, 221, 242, 1) 100%)',
+          }}
         >
           <img src={HeyQuestionImg} alt="heyQuestionImg" className="h-[160px]" />
           <div className="flex flex-col gap-[25px]">
@@ -296,31 +296,40 @@ const TodayStudyNewFullSheet = () => {
                text-[14px] font-[600] text-[#111]
                shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)]
              ">
-              <span>오늘은 몇 개 단어를<br/>공부해볼까요?</span> 
+              <span>오늘은 몇 개 단어를<br />공부해볼까요?</span>
               <img src={SpeechBubbleTailImg} alt="speechBubbleTailImg" className="absolute top-[100%] h-[11px]" />
             </div>
             <div className="relative flex justify-end">
-              <motion.input 
-                type="text" 
+              <motion.input
+                type="text"
                 inputMode="numeric"
-                value={wordCount} 
+                value={wordCount}
                 onChange={(e) => {
                   vibrate({ duration: 5 });
                   const inputValue = e.target.value.replace(/[^0-9]/g, '');
                   const maxCount = Math.min(availableWordCount, MAX_TEST_VOCABULARY_COUNT);
-                  
+
                   if (inputValue === '') {
                     setWordCount(0);
                     setShowWarning(true); // 0 < MIN_TEST_VOCABULARY_COUNT이므로 경고 표시
                   } else {
                     const value = parseInt(inputValue);
-                    // 최대값 제한
-                    const finalValue = Math.min(value, maxCount);
-                    setWordCount(finalValue);
-                    setShowWarning(finalValue < MIN_TEST_VOCABULARY_COUNT || finalValue > maxCount);
+                    const maxCount = Math.min(availableWordCount, MAX_TEST_VOCABULARY_COUNT);
+
+                    if (value > maxCount) {
+                      // 최대값 초과 시 최대값으로 고정하되 경고 표시
+                      setWordCount(maxCount);
+                      setShowWarning(true);
+                    } else if (value < MIN_TEST_VOCABULARY_COUNT) {
+                      setWordCount(value);
+                      setShowWarning(true);
+                    } else {
+                      setWordCount(value);
+                      setShowWarning(false);
+                    }
                   }
                 }}
-                className= {`
+                className={`
                   w-[120px] h-[45px]
                   pr-[36px]
                   border-[1px] border-[#ccc]
@@ -330,7 +339,7 @@ const TodayStudyNewFullSheet = () => {
                   outline-none
                   ${showWarning ? 'border-red-500' : 'border-[#ccc]'}
                 `}
-                whileFocus={{ 
+                whileFocus={{
                   scale: 1.02,
                   boxShadow: "0px 0px 8px rgba(255, 141, 212, 0.3)"
                 }}
@@ -345,8 +354,8 @@ const TodayStudyNewFullSheet = () => {
               />
               <AnimatePresence>
                 {showWarning && (
-                  <motion.div 
-                    className="absolute top-[100%] right-0 text-start flex justify-start items-start gap-[4px] w-[200px]"
+                  <motion.div
+                    className="absolute top-[100%] right-0 text-start flex justify-start items-start gap-[4px] w-[120px] mt-[10px]"
                     initial={{ opacity: 0, y: -10, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.9 }}
@@ -354,14 +363,14 @@ const TodayStudyNewFullSheet = () => {
                   >
                     <WarningCircle size={14} weight="fill" className="text-red-500" />
                     <span className="text-red-500 text-[12px] font-medium">
-                      {wordCount < MIN_TEST_VOCABULARY_COUNT 
-                        ? `최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 입력해주세요` 
-                        : `최대 ${Math.min(availableWordCount, MAX_TEST_VOCABULARY_COUNT)}개까지만 입력 가능합니다`}
+                      {wordCount < MIN_TEST_VOCABULARY_COUNT
+                        ? `최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 부터 입력해주세요`
+                        : `최대 ${availableWordCount}개 까지만 입력 가능합니다`}
                     </span>
                   </motion.div>
                 )}
               </AnimatePresence>
-              <motion.span 
+              <motion.span
                 className="absolute top-[50%] right-[15px] translate-y-[-50%] text-[16px] font-[700] text-[#111]"
                 animate={{
                   color: showWarning ? "#ef4444" : "#111"
@@ -373,7 +382,7 @@ const TodayStudyNewFullSheet = () => {
             </div>
           </div>
         </div>
-        <motion.button 
+        <motion.button
           disabled={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT}
           className={`
             w-full h-[50px] rounded-[8px] text-[16px] font-[700]
@@ -381,9 +390,9 @@ const TodayStudyNewFullSheet = () => {
           `}
           whileHover={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 1.02 }}
           whileTap={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 0.98 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
+          transition={{
+            type: "spring",
+            stiffness: 400,
             damping: 17
           }}
           onClick={() => {
@@ -394,7 +403,6 @@ const TodayStudyNewFullSheet = () => {
           시작하기
         </motion.button>
       </div>
-    
 
     </div>
   );

@@ -11,19 +11,13 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
       return 'unlearned';
     }
 
-    // 암기율 계산
-    let score = 0;
-    score += repetition * 15;
-    score += interval * 2;
-    score += (ef - 1.3) * 20;
-    const percent = Math.max(0, Math.min(100, Math.round(score)));
-
-    if (percent < 30) {
-      return 'leaf';
-    } else if (percent < 70) {
-      return 'plant';
+    // 암기율 계산 (common.jsx의 기준과 맞춤)
+    if (interval < 10) {
+      return 'leaf';   // 단기 (10일 미만)
+    } else if (interval < 60) {
+      return 'plant';  // 중기 (10일~59일)
     } else {
-      return 'carrot';
+      return 'carrot'; // 장기 (60일 이상)
     }
   };
 

@@ -58,6 +58,20 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: auto; /* Allow clicks if needed */
+}
+
+a {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* 입력 요소는 선택 가능하도록 예외 처리 */
 input,
 textarea {
