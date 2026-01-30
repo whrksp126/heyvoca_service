@@ -103,6 +103,7 @@ const HomeScreen = () => {
           injectedJavaScript={`
             (function() {
               document.documentElement.style.setProperty('--status-bar-height', '${statusBarHeight}px');
+              document.documentElement.style.setProperty('--safe-area-bottom', '${insets.bottom}px');
               window.alert = function(message) {
                 window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'alert', message: message }));
               };

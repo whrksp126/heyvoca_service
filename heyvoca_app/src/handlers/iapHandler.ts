@@ -4,9 +4,9 @@ import { appAsyncStore, getCookieFromAsyncStorage } from '../utils/asyncStorage'
 import Config from 'react-native-config';
 const BACK_URL = Config.BACK_URL;
 
-import { 
-  initConnection, 
-  purchaseUpdatedListener, 
+import {
+  initConnection,
+  purchaseUpdatedListener,
   purchaseErrorListener,
   requestPurchase,
   finishTransaction,
@@ -24,7 +24,7 @@ let purchaseErrorSubscription: any = null;
 const requestTokenRefresh = async (): Promise<boolean> => {
   try {
     console.log('웹의 refreshUserToken() 함수 호출 중...');
-    
+
     if (!currentWebViewRef?.current) {
       console.error('WebView ref가 없습니다');
       return false;
@@ -51,10 +51,10 @@ const requestTokenRefresh = async (): Promise<boolean> => {
 
     // 웹뷰에서 스크립트 실행 (반환값 없이)
     currentWebViewRef.current.injectJavaScript(script);
-    
+
     // 웹이 토큰 갱신하고 AsyncStorage에 저장할 시간 대기 (3초)
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
     console.log('✅ 토큰 갱신 대기 완료');
     return true;
   } catch (error) {
@@ -89,7 +89,7 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
 
     // AsyncStorage에서 userAccessToken 쿠키 가져오기
     const accessToken = await getCookieFromAsyncStorage('userAccessToken');
-    
+
     console.log('AsyncStorage에서 가져온 accessToken:', accessToken);
 
     if (!accessToken) {
@@ -98,7 +98,7 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
 
     // 서버 API 엔드포인트 (실제 서버 주소로 변경 필요)
     const serverUrl = `${BACK_URL}/purchase/verify`;
-    
+
     const receiptData = {
       // 기본 구매 정보
       productId: purchase.productId,
@@ -106,7 +106,7 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
       transactionId: purchase.id, // Android에서는 id 필드 사용
       transactionDate: purchase.transactionDate,
       platform: purchase.platform || Platform.OS,
-      
+
       // 플랫폼별 영수증 데이터
       ...(Platform.OS === 'ios' ? {
         // iOS App Store 영수증 검증용 (JWS 형식)
@@ -146,12 +146,12 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
     // 401 에러 처리: 토큰 만료
     if (response.status === 401) {
       console.log('401 에러: 액세스 토큰 만료');
-      
+
       // 재시도 횟수 체크 (최대 1번만 재시도)
       if (retryCount >= 1) {
         console.error('토큰 갱신 후에도 401 에러 발생');
-        return { 
-          success: false, 
+        return {
+          success: false,
           error: '인증 실패: 로그인이 필요합니다',
           needsRetry: false
         };
@@ -160,16 +160,16 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
       // 웹의 전역 함수로 토큰 갱신 요청
       console.log('웹에 토큰 갱신 요청...');
       const refreshSuccess = await requestTokenRefresh();
-      
+
       if (!refreshSuccess) {
         console.error('토큰 갱신 실패');
-        return { 
-          success: false, 
+        return {
+          success: false,
           error: '토큰 갱신 실패',
           needsRetry: false
         };
       }
-      
+
       // 갱신된 토큰으로 재시도
       console.log('토큰 갱신 완료, 재시도 중...');
       return verifyPurchaseWithServer(purchase, retryCount + 1);
@@ -182,16 +182,16 @@ const verifyPurchaseWithServer = async (purchase: Purchase, retryCount = 0): Pro
     } else {
       const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
       console.error('서버 검증 실패:', response.status, errorData);
-      return { 
-        success: false, 
+      return {
+        success: false,
         error: errorData.error || '서버 검증 실패',
         needsRetry: false
       };
     }
   } catch (error: any) {
     console.error('서버 검증 요청 실패:', error);
-    return { 
-      success: false, 
+    return {
+      success: false,
       error: error.message || '네트워크 오류',
       needsRetry: false
     };
@@ -206,13 +206,13 @@ const initializeIAP = async (webViewRef: any) => {
     }
 
     currentWebViewRef = webViewRef;
-    
+
     console.log('인앱 결제 초기화 중...');
-    
+
     // IAP 연결 초기화
     await initConnection();
     console.log('인앱 결제 연결 성공!');
-    
+
     // 구매 업데이트 리스너 설정
     purchaseUpdateSubscription = purchaseUpdatedListener(
       (purchase: Purchase) => {
@@ -231,7 +231,7 @@ const initializeIAP = async (webViewRef: any) => {
 
     isInitialized = true;
     console.log('IAP 초기화 완료');
-    
+
     return true;
   } catch (error: any) {
     console.error('IAP 초기화 에러:', error);
@@ -261,10 +261,10 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
     // 1단계: 서버에서 영수증 검증
     console.log('서버 검증 시작...');
     const serverResult = await verifyPurchaseWithServer(purchase);
-    
+
     if (!serverResult.success) {
       console.error('서버 검증 실패:', serverResult.error);
-      
+
       // 서버 검증 실패 시 웹으로 에러 전송
       const errorData = {
         type: 'iap_purchase_error',
@@ -273,13 +273,13 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
           message: serverResult.error || '서버 검증 실패'
         }
       };
-      
+
       if (currentWebViewRef?.current) {
         currentWebViewRef.current.postMessage(JSON.stringify(errorData));
       }
       return;
     }
-    
+
     console.log('서버 검증 성공:', serverResult.data);
 
     // 2단계: 구매 완료 처리 (소모품)
@@ -289,7 +289,7 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
     });
     console.log('구매 완료 처리 성공');
 
-    
+
     // 3단계: 웹으로 성공 결과 전송 (서버 검증 결과 포함)
     const successData = {
       type: 'iap_purchase_success',
@@ -297,15 +297,15 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
         ...serverResult.data,
       }
     };
-    
+
     if (currentWebViewRef?.current) {
       currentWebViewRef.current.postMessage(JSON.stringify(successData));
     }
     console.log('결제 성공 데이터 전송:', successData);
-    
+
   } catch (error: any) {
     console.error('구매 완료 처리 실패:', error);
-    
+
     // 웹으로 실패 결과 전송
     const errorData = {
       type: 'iap_purchase_error',
@@ -314,7 +314,7 @@ const handlePurchaseUpdate = async (purchase: Purchase) => {
         message: error instanceof Error ? error.message : '알 수 없는 오류'
       }
     };
-    
+
     if (currentWebViewRef?.current) {
       currentWebViewRef.current.postMessage(JSON.stringify(errorData));
     }
@@ -332,7 +332,7 @@ const handlePurchaseError = (error: PurchaseError) => {
       message: error.message
     }
   };
-  
+
   if (currentWebViewRef?.current) {
     currentWebViewRef.current.postMessage(JSON.stringify(errorData));
   }
@@ -342,14 +342,14 @@ const handlePurchaseError = (error: PurchaseError) => {
 export const executePurchase = async (itemId: string, webViewRef: any) => {
   console.log('executePurchase 시작');
   console.log('itemId:', itemId);
-  
+
   try {
     // IAP 초기화 확인
     const initialized = await initializeIAP(webViewRef);
     if (!initialized) {
       throw new Error('인앱결제 초기화 실패');
     }
-    
+
     console.log('requestPurchase 호출 시작');
     // 구매 요청
     await requestPurchase({
@@ -363,19 +363,19 @@ export const executePurchase = async (itemId: string, webViewRef: any) => {
       },
       type: 'in-app',
     });
-    
+
     console.log('requestPurchase 호출 완료');
-    
+
     // 웹으로 구매 시작 알림
     webViewRef.current.postMessage(JSON.stringify({
       type: 'iap_purchase_started',
       data: { itemId }
     }));
     console.log('구매 시작 알림 전송');
-    
+
   } catch (error: any) {
     console.error('구매 실행 실패:', error);
-    
+
     // 웹으로 실패 결과 전송
     webViewRef.current.postMessage(JSON.stringify({
       type: 'iap_purchase_error',

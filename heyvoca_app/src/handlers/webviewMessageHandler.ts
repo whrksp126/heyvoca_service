@@ -74,14 +74,58 @@ const handleWebViewMessage = async (
         break;
 
       case 'vibrate':
-        const { duration, cancel } = messageData.props || {};
+        const { duration, cancel, type: hapticType } = messageData.props || {};
 
         if (cancel === true) {
           Vibration.cancel();
           break;
         }
 
-        // 진동 실행: duration(ms)만큼 1회 진동
+        // react-native-haptic-feedback 사용 (더 정교한 손맛을 위해)
+        let HapticFeedback;
+        // 네이티브 모듈이 실제로 존재하는지 먼저 확인 (런타임 에러 방지)
+        const { NativeModules } = require('react-native');
+        const hasNativeModule = NativeModules.RNHapticFeedback ||
+          (global as any).nativeModuleProxy?.RNHapticFeedback ||
+          (global as any).__turboModuleProxy; // TurboModule 가능성 체크
+
+        if (hasNativeModule) {
+          try {
+            HapticFeedback = require('react-native-haptic-feedback').default;
+          } catch (e) {
+            console.warn('HapticFeedback 라이브러리를 불러올 수 없습니다.');
+          }
+        }
+
+        if (HapticFeedback) {
+          const options = {
+            enableVibrateFallback: true,
+            ignoreAndroidSystemSettings: false,
+          };
+
+          // 1. 명시적인 hapticType이 있는 경우
+          if (hapticType) {
+            try {
+              HapticFeedback.trigger(hapticType, options);
+              break;
+            } catch (e) {
+              console.warn('Haptic trigger failed', e);
+            }
+          }
+
+          // 2. 기존 duration: 5와 같은 짧은 진동을 고품질 햅틱으로 자동 매핑 (iOS 위주)
+          if (Platform.OS === 'ios' && duration > 0 && duration <= 10) {
+            try {
+              // 'selection'보다 조금 더 확실한 '손맛'을 위해 'impactLight'로 변경
+              HapticFeedback.trigger('impactLight', options);
+              break;
+            } catch (e) {
+              console.warn('Haptic trigger failed', e);
+            }
+          }
+        }
+
+        // 기본 진동 (하위 호환성 또는 라이브러리 부재 시)
         const vibrateDuration = duration && typeof duration === 'number' ? duration : 400;
 
         if (Platform.OS === 'ios') {
