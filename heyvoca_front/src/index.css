@@ -22,6 +22,8 @@
   -webkit-tap-highlight-color: transparent;
   --height-header: 55px;
   --height-bottom-nav: 70px;
+  --status-bar-height: 0px;
+  --safe-area-bottom: 0px;
 }
 
 html,
@@ -63,7 +65,8 @@ img {
   -webkit-user-select: none;
   -webkit-user-drag: none;
   user-select: none;
-  pointer-events: auto; /* Allow clicks if needed */
+  pointer-events: auto;
+  /* Allow clicks if needed */
 }
 
 a {

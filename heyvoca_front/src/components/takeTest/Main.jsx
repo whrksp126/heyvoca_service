@@ -125,6 +125,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
     if (resultIndex === userSelected) {
+      vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
       setTimeout(() => {
         setIsCorrect(true);
@@ -133,6 +134,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
+      vibrate({ type: 'notificationError' });
       playErrorSound();
       setTimeout(() => {
         setIsCorrect(false);
@@ -181,6 +183,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 정답/오답 설정과 동시에 프로그레스바 증가
     let q = 0;
     if (resultIndex === index) {
+      vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
       setTimeout(() => {
         setIsCorrect(true);
@@ -189,6 +192,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       testQuestions[progressIndex].userResultIndex = index;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
+      vibrate({ type: 'notificationError' });
       playErrorSound();
       setTimeout(() => {
         setIsCorrect(false);

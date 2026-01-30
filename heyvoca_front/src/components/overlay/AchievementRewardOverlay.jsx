@@ -60,6 +60,10 @@ const getAchievementTextStyle = (level) => {
 const AchievementRewardOverlay = ({ goal }) => {
     const { resolveOverlay } = useOverlayActions();
 
+    React.useEffect(() => {
+        vibrate({ type: 'notificationSuccess' });
+    }, []);
+
     const handleConfirm = () => {
         vibrate({ duration: 5 });
         resolveOverlay({ confirmed: true });

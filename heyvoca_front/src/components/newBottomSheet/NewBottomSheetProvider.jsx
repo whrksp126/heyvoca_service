@@ -89,6 +89,7 @@ export const NewBottomSheetProvider = () => {
                 >
                   <div className="">
                     <newBottomSheet.component {...newBottomSheet.props} />
+                    <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
                   </div>
                 </motion.div>
               );
@@ -119,6 +120,7 @@ export const NewBottomSheetProvider = () => {
               >
                 <div className="">
                   <newBottomSheet.component {...newBottomSheet.props} />
+                  <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
                 </div>
               </motion.div>
             );

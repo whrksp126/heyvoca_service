@@ -7,14 +7,14 @@ export function getDevicePlatform() {
   const isAppWebView = userAgent.includes('HeyVoca');
 
   if (isAppWebView) {
-    if(userAgent.includes('Android')) {
+    if (userAgent.includes('Android')) {
       return 'android';
-    } else if(userAgent.includes('iOS')) {
+    } else if (userAgent.includes('iOS')) {
       return 'ios';
     } else {
       return 'app';
     }
-  }else{
+  } else {
     return 'web';
   }
 }
@@ -62,7 +62,7 @@ function createWebToast(message) {
     pointer-events: none;
   `;
   document.body.appendChild(toast);
-  
+
   setTimeout(() => {
     toast.style.opacity = '0';
     toast.style.transition = 'opacity 0.3s';
@@ -78,7 +78,7 @@ export async function showToast(message) {
     createWebToast(message);
   } else {
     // Android/iOS에서는 WEBVIEW_API_MAP 사용
-    await window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'showToast', 'props': {message: message}}));
+    await window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'showToast', 'props': { message: message } }));
   }
 }
 
@@ -110,11 +110,11 @@ export async function vibrate(props = null) {
   } else {
     // 앱 환경에서는 ReactNativeWebView를 통해 네이티브에 요청
     if (window.ReactNativeWebView) {
-      // props가 없거나 빈 객체면 기본 진동 (props 없이 type만 전송)
-      const hasProps = props && (props.duration || props.cancel);
-      
+      // props가 없거나 빈 객체면 기본 진동
+      const hasProps = props && (props.duration || props.cancel || props.type);
+
       if (hasProps) {
-        // duration 또는 cancel이 있는 경우: props 포함
+        // duration, cancel 또는 type이 있는 경우: props 포함
         await window.ReactNativeWebView.postMessage(JSON.stringify({
           type: 'vibrate',
           props: props
@@ -134,7 +134,7 @@ export async function closeApp() {
   if (getDevicePlatform() === 'web') {
     window.close();
   } else {
-    await window.ReactNativeWebView.postMessage(JSON.stringify({'type': 'closeApp'}));
+    await window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'closeApp' }));
   }
 }
 
@@ -168,7 +168,7 @@ export async function launchGoogleWithdraw() {
   }
 }
 
-export async function getDeviceOs(){
+export async function getDeviceOs() {
   if (getDevicePlatform() === 'web') {
     return 'web';
   } else {
@@ -188,28 +188,28 @@ let appExitTimeout = null;
 // 안드로이드 onBackPressed에서 호출되는 함수
 export function onBackPressed() {
   const currentPath = AppHistory.getCurrentPath();
-  
+
   if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
     window.newBottomSheetContext.popNewBottomSheet();
     return;
   }
-  
-  
+
+
   if (window.newFullSheetContext && window.newFullSheetContext.stack.length > 0) {
     window.newFullSheetContext.popNewFullSheet();
     return;
   }
-  
+
   // 5. 앱 종료가 필요한 상황인지 확인 (정규식 사용)
   const shouldExitApp = /^\/(home|vocabulary-sheets|book-store|class|mypage)\/?$/.test(currentPath);
-  
+
   if (shouldExitApp) {
     // 앱 종료가 필요한 상황에서는 더블탭 방식
     if (!appExitPressed) {
       // 첫 번째 뒤로가기: 토스트 표시
       appExitPressed = true;
       showToast('한번 더 뒤로가기를 누르면 앱이 종료됩니다.');
-      
+
       // 3초 후 초기화
       appExitTimeout = setTimeout(() => {
         appExitPressed = false;

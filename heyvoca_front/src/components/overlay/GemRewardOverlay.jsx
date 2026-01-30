@@ -9,6 +9,10 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "보상이 정상적으로 지급되었습니다." }) => {
     const { resolveOverlay } = useOverlayActions();
 
+    React.useEffect(() => {
+        vibrate({ type: 'notificationSuccess' });
+    }, []);
+
     const handleConfirm = () => {
         vibrate({ duration: 5 });
         resolveOverlay({ confirmed: true });
