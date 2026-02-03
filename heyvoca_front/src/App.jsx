@@ -31,12 +31,12 @@ import { GemAnimationProvider } from './context/GemAnimationContext';
 
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
-  apiKey: "AIzaSyDSZP_N-z8Kste8M8K92Nj5zPqetJ5nEdQ",
-  authDomain: "heyvoca-466916.firebaseapp.com",
-  projectId: "heyvoca-466916",
-  storageBucket: "heyvoca-466916.firebasestorage.app",
-  messagingSenderId: "584113926081",
-  appId: "1:584113926081:web:f7e5f95645d233b7084940"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const FirebaseApp = initializeApp(firebaseConfig);
