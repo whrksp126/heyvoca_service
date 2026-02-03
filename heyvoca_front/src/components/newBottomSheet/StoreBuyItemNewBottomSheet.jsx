@@ -8,7 +8,7 @@ import postMessageManager from '../../utils/postMessageManager';
 // Hook 제거 - 직접 컴포넌트 사용
 
 
-export const StoreBuyItemNewBottomSheet = ({options}) => {
+export const StoreBuyItemNewBottomSheet = ({ options }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isLoading, setIsLoading] = useState(true);
@@ -27,10 +27,10 @@ export const StoreBuyItemNewBottomSheet = ({options}) => {
     // 결제 성공 콜백 등록
     const handlePurchaseSuccess = (data) => {
       console.log(`🎯 결제 성공 데이터 전체: ${JSON.stringify(data, null, 2)}`);
-      
+
       // 실제 젬 데이터는 serverResponse.data 안에 있음
       const serverData = data.data.data;
-      
+
       if (serverData) {
         console.log(`🎯 서버 데이터: ${JSON.stringify(serverData, null, 2)}`);
         setPurchaseResult(serverData);
@@ -61,29 +61,29 @@ export const StoreBuyItemNewBottomSheet = ({options}) => {
   }, []);
 
   const onConfirm = useCallback(() => {
-    // 모달 먼저 닫기
-    handleClose();
-    
-    // 모달이 닫힌 후 전역 애니메이션 시작
+    // 1. 애니메이션 즉시 시작 (바텀시트가 열려 있는 상태에서)
+    triggerFlyingAnimation({
+      imageUrl: options.image_url,
+      quantity: purchaseResult?.quantity || 1,
+      startPoint: { type: 'position', value: 'center-bottom' },
+      endPoint: { type: 'element', value: '#gem-counter' }, // 보석 카운터로 날아감
+      animationPreset: 'gem-burst', // 원하는 프리셋 선택 가능
+      duration: 1.2,
+      delay: 0.1,
+      onStart: () => {
+        console.log('💎 보석 애니메이션 시작!');
+      },
+      onComplete: () => {
+        // 애니메이션 완료 후 카운트 업데이트
+        setUserProfile(prevProfile => ({ ...prevProfile, gem_cnt: purchaseResult?.total_gems }));
+        console.log('✅ 보석 애니메이션 완료!');
+      }
+    });
+
+    // 2. 애니메이션이 시작된 후 약간의 시차를 두고 모달 닫기
     setTimeout(() => {
-      triggerFlyingAnimation({
-        imageUrl: options.image_url,
-        quantity: purchaseResult?.quantity || 1,
-        startPoint: { type: 'position', value: 'center-bottom' },
-        endPoint: { type: 'element', value: '#gem-counter' }, // 보석 카운터로 날아감
-        animationPreset: 'gem-burst', // 원하는 프리셋 선택 가능
-        duration: 1.2,
-        delay: 0.1,
-        onStart: () => {
-          console.log('💎 보석 애니메이션 시작!');
-        },
-        onComplete: () => {
-          // 애니메이션 완료 후 카운트 업데이트
-          setUserProfile(prevProfile => ({...prevProfile, gem_cnt: purchaseResult?.total_gems}));
-          console.log('✅ 보석 애니메이션 완료!');
-        }
-      });
-    }, 300); // 모달 닫히는 애니메이션 후
+      handleClose();
+    }, 500);
   }, [purchaseResult, options, setUserProfile, triggerFlyingAnimation]);
 
   return (
@@ -120,13 +120,13 @@ export const StoreBuyItemNewBottomSheet = ({options}) => {
             </>
           )}
         </div>
-        
+
         <div className="
           absolute bottom-0 left-0 right-0
           flex items-center justify-between gap-[15px] p-[20px]
           bg-[#fff]/80 backdrop-blur-[1px]
         ">
-          <motion.button 
+          <motion.button
             className={`
               flex-1
               h-[45px]
@@ -134,11 +134,11 @@ export const StoreBuyItemNewBottomSheet = ({options}) => {
               text-[#fff] text-[16px] font-[700]
               bg-[#FF8DD4]
             `}
-            onClick={purchaseResult?.verified ?  onConfirm : handleClose}
+            onClick={purchaseResult?.verified ? onConfirm : handleClose}
             whileTap={{ scale: 0.95 }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 500, 
+            transition={{
+              type: "spring",
+              stiffness: 500,
               damping: 15
             }}
             disabled={isLoading}

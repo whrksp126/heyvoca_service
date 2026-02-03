@@ -26,6 +26,7 @@ import { VocabularyProvider } from './context/VocabularyContext';
 import { UserProvider } from './context/UserContext';
 import { OverlayContextProvider, OverlayStateContext, OverlayActionsContext } from './context/OverlayContext';
 import { OverlayProvider } from './components/overlay/OverlayProvider';
+import { GemAnimationProvider } from './context/GemAnimationContext';
 
 
 import { initializeApp } from "firebase/app";
@@ -107,7 +108,9 @@ function App() {
           <NewFullSheetContextProvider>
             <NewBottomSheetContextProvider>
               <OverlayContextProvider>
-                <AppWithContexts />
+                <GemAnimationProvider>
+                  <AppWithContexts />
+                </GemAnimationProvider>
               </OverlayContextProvider>
             </NewBottomSheetContextProvider>
           </NewFullSheetContextProvider>
