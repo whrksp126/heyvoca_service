@@ -128,9 +128,96 @@ def google_oauth_app():
         
         return response
 
+
     except Exception as e:
         print('== login_google 에러 == ', e)
         return jsonify({'code': 400, 'message': '로그인 처리 오류'}), 400
+
+
+# --------------------------------------------------------------------------------
+# 개발자 로그인 (Local ONLY)
+# --------------------------------------------------------------------------------
+@auth_bp.route('/dev-login', methods=['POST'])
+def dev_login():
+    # 1. 환경 확인 (Local 환경에서만 동작)
+    if os.getenv('FLASK_CONFIG') != 'local':
+        return jsonify({'code': 403, 'message': 'For local environment only'}), 403
+
+    data = request.json
+    email = data.get('email')
+    
+    if not email:
+        return jsonify({'code': 400, 'message': '이메일이 필요합니다.'}), 400
+
+    try:
+        # 2. 사용자 조회
+        user = User.query.filter_by(email=email).first()
+        
+        if user is None:
+            # 3. 신규 사용자 생성 (Developer)
+            user = User(
+                level_id=None,
+                email=email,
+                google_id=None,
+                apple_id=None,
+                username=None,
+                name='Developer',
+                phone=None,
+                refresh_token='',
+                code='',
+                book_cnt=3,
+                gem_cnt=1000, # 개발 편의를 위해 보석 넉넉히 지급
+                set_goal_cnt=3,
+                last_logged_at=None
+            )
+            # 개발용 계정임을 표시하기 위한 로직이 필요하다면 추가 (현재는 별도 플래그 없음)
+            
+            db.session.add(user)
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Dev User Creation Error: {e}")
+                return jsonify({'code': 400, 'message': '사용자 생성 실패'}), 400
+
+        # 4. 토큰 발급
+        access_token = generate_access_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email)
+
+        # 5. Refresh Token 저장
+        user.refresh_token = refresh_token
+        user.last_logged_at = datetime.now(tz=KST)
+        db.session.add(user)
+        db.session.commit()
+
+        # 6. 응답 생성
+        response = make_response(jsonify({
+            "code": 200,
+            "status": "success",
+            "accessToken": access_token,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "name": getattr(user, "name", "Developer"),
+            }
+        }), 200)
+
+        # 쿠키 설정 (Local 환경이므로 secure=False)
+        response.set_cookie(
+            'refresh_token',
+            refresh_token,
+            httponly=True,
+            secure=False, 
+            samesite='Lax',
+            max_age=60*60*24*30
+        )
+
+        return response
+
+    except Exception as e:
+        print('== dev_login 에러 == ', e)
+        return jsonify({'code': 500, 'message': '서버 오류'}), 500
+
 
 
 # --------------------------------------------------------------------------------
