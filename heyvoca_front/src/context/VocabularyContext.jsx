@@ -1,6 +1,21 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { useUser } from './UserContext';
 import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
+import {
+  getUserDictionaryApi,
+  createUserDictionaryWordApi,
+  updateUserDictionaryWordApi,
+  updateUserBookWordApi,
+  deleteUserDictionaryWordApi,
+  deleteWordFromVocaBookApi
+} from '../api/userDictionary';
+import {
+  getVocaBooksApi,
+  getVocaBookDetailApi,
+  createVocaBookApi,
+  updateVocaBookApi,
+  deleteVocaBookApi
+} from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
@@ -10,65 +25,41 @@ const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
   const { isLogin, isLoginChecked, setUserProfile } = useUser();
 
-  const [vocabularySheets, setVocabularySheets] = useState([]);
-  const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
-  const [errorVocabularySheets, setErrorVocabularySheets] = useState(null);
-  const [bookStore, setBookStore] = useState([]);
-  const [isBookStoreLoading, setIsBookStoreLoading] = useState(true);
-  const [errorBookStore, setErrorBookStore] = useState(null);
-  const [recentStudy, setRecentStudy] = useState({});
-  const [isRecentStudyLoading, setIsRecentStudyLoading] = useState(true);
-  const [errorRecentStudy, setErrorRecentStudy] = useState(null);
+  // [REF] vocabularySheets is now derived from vocaBooks and userDictionary
+  const vocabularySheets = useMemo(() => {
+    if (!vocaBooks.length) return [];
 
-  const [delayedWords, setDelayedWords] = useState([]);
+    return vocaBooks.map(book => {
+      // Find all words that belong to this book
+      const words = Object.values(userDictionary)
+        .filter(word =>
+          word.vocaBooks && word.vocaBooks.some(vb => String(vb.vocaBookId) === String(book.vocaBookId))
+        )
+        .map(word => {
+          // Merge book-specific info (like meanings if overridden)
+          const bookInfo = word.vocaBooks.find(vb => String(vb.vocaBookId) === String(book.vocaBookId));
+          return {
+            ...word,
+            ...bookInfo,
+            id: word.vocaIndexId // Ensure compatibility if components use 'id'
+          };
+        });
 
-
-  // 전체 통계 계산
-  const statistics = useMemo(() => {
-    const total = vocabularySheets.reduce((acc, sheet) => acc + sheet.total, 0);
-    const memorized = vocabularySheets.reduce((acc, sheet) => acc + sheet.memorized, 0);
-    const totalSheets = vocabularySheets.length;
-
-    return {
-      total,
-      memorized,
-      totalSheets,
-      progressPercentage: total > 0 ? Math.round((memorized / total) * 100) : 0
-    };
-  }, [vocabularySheets]);
-
-  // 최근 업데이트된 단어장 가져오기
-  const getRecentVocabularySheets = useCallback((limit = 5) => {
-    return [...vocabularySheets]
-      .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-      .slice(0, limit);
-  }, [vocabularySheets]);
-
-  // 학습 진도율로 정렬된 단어장 가져오기
-  const getProgressSortedSheets = useCallback(() => {
-    return [...vocabularySheets]
-      .sort((a, b) => {
-        const progressA = (a.memorized / a.total) * 100;
-        const progressB = (b.memorized / b.total) * 100;
-        return progressB - progressA;
-      });
-  }, [vocabularySheets]);
-
-  // 특정 진도율 이하의 단어장 가져오기 (복습이 필요한 단어장)
-  const getNeedsReviewSheets = useCallback((threshold = 50) => {
-    return vocabularySheets.filter(sheet => {
-      const progress = (sheet.memorized / sheet.total) * 100;
-      return progress < threshold;
+      return {
+        ...book,
+        id: book.vocaBookId, // Compatibility
+        total: words.length,
+        memorized: words.filter(w => w.repetition > 0).length, // Approximate memorized count
+        words: words
+      };
     });
-  }, [vocabularySheets]);
+  }, [vocaBooks, userDictionary]);
 
-  // 모든 단어장 데이터 불러오기
+  // [UPDATED] 모든 단어장 데이터 불러오기 (New APIs)
   const fetchVocabularySheets = useCallback(async () => {
     try {
       setIsVocabularySheetsLoading(true);
-      const result = await getUserVocabularySheetsApi();
-      if (result.code != 200) return alert('단어장 데이터를 불러오는데 실패했습니다.');
-      setVocabularySheets(result.data);
+      await Promise.all([fetchVocaBooks(), fetchUserDictionary()]);
       setErrorVocabularySheets(null);
     } catch (err) {
       setErrorVocabularySheets('단어장 데이터를 불러오는데 실패했습니다.');
@@ -76,7 +67,7 @@ export const VocabularyProvider = ({ children }) => {
     } finally {
       setIsVocabularySheetsLoading(false);
     }
-  }, []);
+  }, [fetchVocaBooks, fetchUserDictionary]);
 
   // 모든 단어장 조회
   const getVocabularySheets = useCallback(() => {
@@ -84,35 +75,30 @@ export const VocabularyProvider = ({ children }) => {
   }, [vocabularySheets]);
 
 
-  // 단어장 추가
+  // [UPDATED] 단어장 추가
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
-      const result = await addUserVocabularySheetApi(newVocabulary);
-      if (!result || result.code != 200 || !result.data) {
+      const result = await createVocaBookApi(newVocabulary);
+      if (!result || result.code != 201 || !result.data) {
         const errorMessage = result?.message || '단어장 추가에 실패했습니다.';
         alert(errorMessage);
         throw new Error(errorMessage);
       }
-      newVocabulary.id = result.data.id
-      newVocabulary.createdAt = result.data.createdAt
-      newVocabulary.updatedAt = result.data.createdAt
-      newVocabulary.bookstore_id = null;
-      newVocabulary.memorized = 0;
-      newVocabulary.total = 0;
-      newVocabulary.words = [];
 
-      setVocabularySheets(prev => [...prev, newVocabulary]);
+      const newBook = result.data;
+
+      setVocaBooks(prev => [...prev, newBook]);
 
       // 서버에서 반환된 최신 단어장 개수 업데이트
-      if (result.data.book_cnt !== undefined) {
-        setUserProfile(prev => ({ ...prev, book_cnt: result.data.book_cnt }));
+      if (newBook.book_cnt !== undefined) {
+        setUserProfile(prev => ({ ...prev, book_cnt: newBook.book_cnt }));
       }
 
       // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
-      if (result.data.goals && result.data.goals.length > 0) {
+      if (newBook.goals && newBook.goals.length > 0) {
         // 업적 오버레이 표시
         if (window.overlayContext?.showAwaitOverlay) {
-          result.data.goals.forEach(goal => {
+          newBook.goals.forEach(goal => {
             window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
           });
         }
@@ -123,7 +109,7 @@ export const VocabularyProvider = ({ children }) => {
             const existingGoals = prevMainPage.goals || [];
             const updatedGoals = [...existingGoals];
 
-            result.data.goals.forEach(newGoal => {
+            newBook.goals.forEach(newGoal => {
               const existingIndex = updatedGoals.findIndex(g => g.type === newGoal.type);
               if (existingIndex >= 0) {
                 updatedGoals[existingIndex] = {
@@ -150,10 +136,10 @@ export const VocabularyProvider = ({ children }) => {
       }
 
       // 보석 업데이트 및 오버레이 표시 - 나중에 표시
-      if (result.data.gem && result.data.gem.after > result.data.gem.before) {
+      if (newBook.gem && newBook.gem.after > newBook.gem.before) {
         if (window.overlayContext?.showAwaitOverlay) {
           window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
-            gemCount: result.data.gem.after - result.data.gem.before,
+            gemCount: newBook.gem.after - newBook.gem.before,
             title: "업적 달성 보상!",
             description: "독서왕 업적 달성 보석이 지급되었습니다."
           });
@@ -161,153 +147,108 @@ export const VocabularyProvider = ({ children }) => {
 
         setUserProfile(prev => ({
           ...prev,
-          gem_cnt: result.data.gem.after,
+          gem_cnt: newBook.gem.after,
         }));
       }
 
-      return newVocabulary;
+      return newBook;
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
-  }, [vocabularySheets]);
+  }, []);
 
-  // 단어장 수정
+  // [UPDATED] 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {
     try {
-      const result = await updateUserVocabularySheetApi(id, updates);
-      if (result.code != 200) return alert('단어장 수정에 실패했습니다.');
-      setVocabularySheets(prev =>
-        prev.map(sheet =>
-          sheet.id === id
-            ? {
-              ...sheet,
-              ...updates,
-              updatedAt: result.data.updatedAt
-            }
-            : sheet
-        )
-      );
+      return await updateVocaBook(id, updates);
     } catch (err) {
       setErrorVocabularySheets('단어장 수정에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [updateVocaBook]);
 
-  // 단어장 수정(로컬만 업데이트)
+  // [UPDATED] 단어장 수정(로컬만 업데이트)
   const updateVocabularySheetState = useCallback((id, updates) => {
-    setVocabularySheets(prev =>
-      prev.map(sheet =>
-        sheet.id === id
-          ? { ...sheet, ...updates, updatedAt: new Date().toISOString() }
-          : sheet
+    setVocaBooks(prev =>
+      prev.map(book =>
+        book.vocaBookId === id
+          ? { ...book, ...updates, updatedAt: new Date().toISOString() }
+          : book
       )
     );
   }, []);
 
-  // 단어장 수정(서버)
+  // [UPDATED] 단어장 수정(서버)
   const updateVocabularySheetServer = useCallback(async (id) => {
     try {
-      const updates = vocabularySheets.find(sheet => sheet.id === id);
-      const result = await updateUserVocabularySheetApi(id, updates);
-      if (result.code != 200) return alert('단어장 수정에 실패했습니다.');
+      const book = vocaBooks.find(b => String(b.vocaBookId) === String(id));
+      if (!book) return;
+
+      const { title, color } = book;
+      await updateVocaBook(id, { title, color });
+
     } catch (err) {
       setErrorVocabularySheets('단어장 수정에 실패했습니다.');
       throw err;
     }
-  }, [vocabularySheets]);
+  }, [vocaBooks, updateVocaBook]);
 
-  // 단어장 삭제
+  // [UPDATED] 단어장 삭제
   const deleteVocabularySheet = useCallback(async (id) => {
     try {
-      const result = await deleteUserVocabularySheetApi(id);
-      if (result.code != 200) return alert('단어장 삭제에 실패했습니다.');
-      setVocabularySheets(prev => prev.filter(sheet => sheet.id !== id));
+      return await deleteVocaBook(id);
     } catch (err) {
       setErrorVocabularySheets('단어장 삭제에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [deleteVocaBook]);
 
   // 특정 단어장 조회
   const getVocabularySheet = useCallback((id) => {
-    return vocabularySheets.find(sheet => sheet.id === id);
+    // vocabularySheets is now memoized, so find works as before
+    // id should be compared with compatible types
+    return vocabularySheets.find(sheet => String(sheet.id) === String(id));
   }, [vocabularySheets]);
 
-  // 단어 추가
+  // [UPDATED] 단어 추가
   const addWord = useCallback(async (sheetId, word) => {
     try {
-      const newWordData = {
-        id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`,
-        ef: 2.5,
-        repetition: 0,
-        interval: 0,
-        nextReview: null,
-        lastStudyDate: null,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        ...word,
-      };
-      const vocabularySheet = getVocabularySheet(sheetId);
-      console.log(`sheetId: ${sheetId}`);
-      console.log(`vocabularySheet: ${JSON.stringify(vocabularySheet)}`);
-      await updateVocabularySheet(sheetId, {
-        total: vocabularySheet.words.length + 1,
-        words: [...vocabularySheet.words, newWordData],
-      });
-      return newWordData;
+      return await addUserDictionaryWord(sheetId, word);
     } catch (err) {
       setErrorVocabularySheets('단어 추가에 실패했습니다.');
       throw err;
     }
-  }, [vocabularySheets]);
+  }, [addUserDictionaryWord]);
 
-  // 단어 수정
+  // [UPDATED] 단어 수정 (사전 수정으로 처리)
   const updateWord = useCallback(async (sheetId, wordId, updates) => {
     try {
-      const copyVocabularySheet = getVocabularySheet(sheetId);
-      const updatedWord = { ...copyVocabularySheet.words.find(word => word.id === wordId), ...updates, updatedAt: new Date().toISOString() };
-      const copyWords = copyVocabularySheet.words.map(word => word.id === wordId ? updatedWord : word);
-      await updateVocabularySheet(sheetId, { words: copyWords });
-      return updatedWord;
+      return await updateUserDictionaryWord(wordId, updates);
     } catch (err) {
       setErrorVocabularySheets('단어 수정에 실패했습니다.');
       throw err;
     }
-  }, [vocabularySheets]);
+  }, [updateUserDictionaryWord]);
 
-  // 단어 수정(로컬만 업데이트)
+  // [UPDATED] 단어 수정(로컬만 업데이트)
   const updateWordState = useCallback((sheetId, wordId, updates) => {
-    setVocabularySheets(prev =>
-      prev.map(sheet => {
-        if (sheet.id !== sheetId) return sheet;
-
-        const updatedWords = sheet.words.map(word =>
-          word.id === wordId
-            ? { ...word, ...updates, updatedAt: new Date().toISOString() }
-            : word
-        );
-
-        return {
-          ...sheet,
-          words: updatedWords,
-          updatedAt: new Date().toISOString()
-        };
-      })
-    );
+    setUserDictionary(prev => ({
+      ...prev,
+      [wordId]: { ...prev[wordId], ...updates }
+    }));
   }, []);
 
-  // 단어 삭제
+  // [UPDATED] 단어 삭제
   const deleteWord = useCallback(async (sheetId, wordId) => {
     try {
-      const copyVocabularySheet = getVocabularySheet(sheetId);
-      const copyWords = copyVocabularySheet.words.filter(word => word.id !== wordId);
-      await updateVocabularySheet(sheetId, { total: copyWords.length, words: copyWords });
+      await deleteWordFromVocaBookApi(wordId, sheetId);
+      fetchUserDictionary(); // Refresh to update relationships
     } catch (err) {
       setErrorVocabularySheets('단어 삭제에 실패했습니다.');
       throw err;
     }
-  }, [vocabularySheets]);
+  }, [fetchUserDictionary]);
 
   // 특정 단어장 단어 조회
   const getWord = useCallback((sheetId, wordId) => {
@@ -416,10 +357,11 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
-  // 퀴즐렛 업로드 후 백엔드에서 생성된 단어장을 로컬 state에 추가
-  const addVocabularySheetFromBackend = useCallback((vocabularySheet) => {
+  // 퀴즐렛 업로드 후 백엔드에서 생성된 단어장을 로컬 state에 추가 (리패치로 처리)
+  const addVocabularySheetFromBackend = useCallback(async (vocabularySheet) => {
     try {
-      setVocabularySheets(prev => [...prev, vocabularySheet]);
+      // 데이터 무결성을 위해 전체 리로드
+      await Promise.all([fetchVocaBooks(), fetchUserDictionary()]);
 
       // 서버에서 반환된 최신 단어장 개수 업데이트 (퀴즐렛 등)
       if (vocabularySheet.book_cnt !== undefined) {
@@ -431,7 +373,7 @@ export const VocabularyProvider = ({ children }) => {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [fetchVocaBooks, fetchUserDictionary]);
 
   // 최근 학습 데이터 조회
   const getRecentStudy = useCallback(() => {
@@ -506,6 +448,179 @@ export const VocabularyProvider = ({ children }) => {
     return words;
   }, [vocabularySheets]);
 
+  // [NEW] 사용자 사전 데이터 불러오기
+  const fetchUserDictionary = useCallback(async () => {
+    try {
+      setIsUserDictionaryLoading(true);
+      const result = await getUserDictionaryApi();
+      if (result.code === 200) {
+        // 배열을 Map 객체로 변환 (ID 기반 빠른 조회를 위해)
+        const dictionaryMap = {};
+        result.data.forEach(word => {
+          dictionaryMap[word.vocaIndexId] = word;
+        });
+        setUserDictionary(dictionaryMap);
+      } else {
+        console.error('사용자 사전 로드 실패:', result);
+      }
+    } catch (err) {
+      console.error('fetchUserDictionary 오류:', err);
+    } finally {
+      setIsUserDictionaryLoading(false);
+    }
+  }, []);
+
+  // [NEW] 단어장(Books) 데이터 불러오기
+  const fetchVocaBooks = useCallback(async () => {
+    try {
+      setIsVocaBooksLoading(true);
+      const result = await getVocaBooksApi();
+      if (result.code === 200) {
+        setVocaBooks(result.data);
+      } else {
+        console.error('단어장 목록 로드 실패:', result);
+      }
+    } catch (err) {
+      console.error('fetchVocaBooks 오류:', err);
+    } finally {
+      setIsVocaBooksLoading(false);
+    }
+  }, []);
+
+  // [NEW] 사용자 사전 단어 추가
+  const addUserDictionaryWord = useCallback(async (vocaBookId, wordData) => {
+    try {
+      const payload = { ...wordData, vocaBookId };
+      const result = await createUserDictionaryWordApi(payload);
+
+      if (result.code === 201 && result.data) {
+        const newWord = result.data;
+        setUserDictionary(prev => ({
+          ...prev,
+          [newWord.vocaIndexId]: newWord
+        }));
+        // 단어장이 업데이트 되었을 수 있으므로 재조회 (필요시 최적화)
+        fetchVocaBooks();
+        return newWord;
+      } else {
+        throw new Error(result.message || '단어 추가 실패');
+      }
+    } catch (err) {
+      console.error('addUserDictionaryWord 오류:', err);
+      throw err;
+    }
+  }, [fetchVocaBooks]);
+
+  // [NEW] 사용자 사전 단어 수정
+  const updateUserDictionaryWord = useCallback(async (vocaIndexId, updates) => {
+    try {
+      const result = await updateUserDictionaryWordApi(vocaIndexId, updates);
+      if (result.code === 200 && result.data) {
+        setUserDictionary(prev => ({
+          ...prev,
+          [vocaIndexId]: result.data
+        }));
+        return result.data;
+      }
+    } catch (err) {
+      console.error('updateUserDictionaryWord 오류:', err);
+      throw err;
+    }
+  }, []);
+
+  // [NEW] 사용자 단어장 내 단어 정보(의미/예문) 수정
+  const updateUserBookWord = useCallback(async (vocaIndexId, vocaBookId, updates) => {
+    try {
+      const result = await updateUserBookWordApi(vocaIndexId, vocaBookId, updates);
+      if (result.code === 200 && result.data) {
+        // userDictionary 내의 해당 단어 정보(vocaBooks 배열) 갱신
+        setUserDictionary(prev => {
+          const word = prev[vocaIndexId];
+          if (!word) return prev;
+
+          // vocaBooks 배열 내에서 현재 단어장 정보 찾아서 업데이트
+          // API 응답이 전체 단어 객체인지, 수정된 부분만 오는지에 따라 다르지만
+          // 여기서는 안전하게 전체 단어를 다시 fetch 하거나, 일단 result.data를 믿고 병합
+          // 명세상 result.data가 단어장 정보.
+          const newVocaBooks = word.vocaBooks.map(book =>
+            String(book.vocaBookId) === String(vocaBookId) ? { ...book, ...result.data } : book
+          );
+
+          return {
+            ...prev,
+            [vocaIndexId]: { ...word, vocaBooks: newVocaBooks }
+          };
+        });
+        return result.data;
+      }
+    } catch (err) {
+      console.error('updateUserBookWord 오류:', err);
+      throw err;
+    }
+  }, []);
+
+  // [NEW] 사용자 사전 단어 삭제 (전체 삭제)
+  const deleteUserDictionaryWord = useCallback(async (vocaIndexId) => {
+    try {
+      const result = await deleteUserDictionaryWordApi(vocaIndexId);
+      if (result.code === 204) {
+        setUserDictionary(prev => {
+          const newState = { ...prev };
+          delete newState[vocaIndexId];
+          return newState;
+        });
+        // 연관된 단어장 정보도 갱신 필요할 수 있음
+        fetchVocaBooks();
+      }
+    } catch (err) {
+      console.error('deleteUserDictionaryWord 오류:', err);
+      throw err;
+    }
+  }, [fetchVocaBooks]);
+
+  // [NEW] 단어장 생성
+  const createVocaBook = useCallback(async (data) => {
+    try {
+      const result = await createVocaBookApi(data);
+      if (result.code === 201 && result.data) {
+        setVocaBooks(prev => [...prev, result.data]);
+        return result.data;
+      }
+    } catch (err) {
+      console.error('createVocaBook 오류:', err);
+      throw err;
+    }
+  }, []);
+
+  // [NEW] 단어장 수정
+  const updateVocaBook = useCallback(async (vocaBookId, updates) => {
+    try {
+      const result = await updateVocaBookApi(vocaBookId, updates);
+      if (result.code === 200 && result.data) {
+        setVocaBooks(prev => prev.map(book => book.vocaBookId === vocaBookId ? result.data : book));
+        return result.data;
+      }
+    } catch (err) {
+      console.error('updateVocaBook 오류:', err);
+      throw err;
+    }
+  }, []);
+
+  // [NEW] 단어장 삭제
+  const deleteVocaBook = useCallback(async (vocaBookId) => {
+    try {
+      const result = await deleteVocaBookApi(vocaBookId);
+      if (result.code === 204) {
+        setVocaBooks(prev => prev.filter(book => book.vocaBookId !== vocaBookId));
+      }
+    } catch (err) {
+      console.error('deleteVocaBook 오류:', err);
+      throw err;
+    }
+  }, []);
+
+
+
   // 앱 시작시 데이터 로드 (로그인 상태 확인 후)
   useEffect(() => {
     if (isLogin && isLoginChecked) {
@@ -514,7 +629,10 @@ export const VocabularyProvider = ({ children }) => {
           await Promise.all([
             fetchVocabularySheets(),
             fetchBookStore(),
-            fetchRecentStudy()
+            fetchRecentStudy(),
+            // [NEW] 새로운 데이터 로드
+            fetchUserDictionary(),
+            fetchVocaBooks()
           ]);
         } catch (error) {
           console.error('❌ [VOCABULARY] 데이터 로드 중 오류 발생:', error);
@@ -570,6 +688,24 @@ export const VocabularyProvider = ({ children }) => {
     setDelayedWords,
     getDelayedWords,
     updateDelayedWords,
+
+    // [NEW] Exports
+    userDictionary,
+    vocaBooks,
+    isUserDictionaryLoading,
+    isVocaBooksLoading,
+    fetchUserDictionary,
+    fetchVocaBooks,
+    setUserDictionary, // 필요 시 외부에서 상태 업데이트용
+    setVocaBooks,
+    addUserDictionaryWord,
+    updateUserDictionaryWord,
+    updateUserBookWord,
+    deleteUserDictionaryWord,
+    createVocaBook,
+    updateVocaBook,
+    deleteVocaBook,
+
   };
 
   return (
