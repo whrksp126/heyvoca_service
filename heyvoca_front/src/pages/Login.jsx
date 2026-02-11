@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
@@ -116,6 +116,7 @@ const Login = () => {
   }
 
 
+
   useEffect(() => {
     const container = document.getElementById("lottie-container");
     if (container) {
@@ -131,6 +132,25 @@ const Login = () => {
   }, []);
 
 
+  // 개발자 로그인 state
+  const [devEmail, setDevEmail] = useState('dev@example.com');
+  const { DevLogin } = useUser();
+  const isLocal = import.meta.env.VITE_ENV === 'local';
+
+  const handleDevLogin = async () => {
+    if (!devEmail) {
+      alert('이메일을 입력해주세요.');
+      return;
+    }
+    const result = await DevLogin({ email: devEmail });
+    if (result.success) {
+      navigate('/');
+    } else {
+      alert(result.message || '로그인 실패');
+    }
+  };
+
+
   return (
     <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
@@ -138,7 +158,7 @@ const Login = () => {
         id="lottie-container"
         className="w-[240px] absolute top-[150px] left-1/2 transform -translate-x-1/2"
       ></div>
-      <div className="absolute bottom-[140px] w-[300px] left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+      <div className="absolute bottom-[100px] w-[300px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
         <button
           className="flex items-center justify-center w-full bg-white border border-[#CCCCCC] rounded-md py-[13.5px] px-5 text-black text-[15px] font-medium gap-2"
           onClick={clickGoogleOauth}
@@ -148,12 +168,32 @@ const Login = () => {
         </button>
         {!isAndroid && (
           <button
-            className="flex items-center justify-center w-full bg-black border border-black rounded-md py-[13.5px] px-5 text-white text-[15px] font-medium gap-2 mt-[10px]"
+            className="flex items-center justify-center w-full bg-black border border-black rounded-md py-[13.5px] px-5 text-white text-[15px] font-medium gap-2"
             onClick={clickAppleOauth}
           >
             <AppleLogo size={20} weight="fill" color="#FFFFFF" />
             <span>Apple로 로그인</span>
           </button>
+        )}
+
+        {/* 개발자 로그인 (Local Env Only) */}
+        {isLocal && (
+          <div className="w-full mt-4 p-4 border-t border-gray-300 flex flex-col gap-2">
+            <p className="text-xs text-center text-gray-500 font-bold">DEVELOPER ONLY</p>
+            <input
+              type="email"
+              placeholder="dev@example.com"
+              value={devEmail}
+              onChange={(e) => setDevEmail(e.target.value)}
+              className="w-full p-2 border border-gray-400 rounded text-sm"
+            />
+            <button
+              onClick={handleDevLogin}
+              className="w-full bg-gray-600 text-white py-2 rounded text-sm hover:bg-gray-700"
+            >
+              Dev Login
+            </button>
+          </div>
         )}
       </div>
     </div>

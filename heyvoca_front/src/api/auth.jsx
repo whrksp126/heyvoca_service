@@ -17,6 +17,7 @@ export const loginApi = async ({ googleId, email, name }) => {
   }
 }
 
+
 // Apple 로그인 API
 export const appleLoginApi = async ({ identityToken, fullName, email }) => {
   const url = `${backendUrl}/auth/apple/oauth/app`;
@@ -33,6 +34,21 @@ export const appleLoginApi = async ({ identityToken, fullName, email }) => {
     console.error('appleLoginApi 오류:', error);
   }
 }
+
+// 개발자 로그인 API (Local Only)
+export const devLoginApi = async ({ email }) => {
+  const url = `${backendUrl}/auth/dev-login`;
+  const method = 'POST';
+  const fetchData = { email };
+  try {
+    const result = await fetchDataAsync(url, method, fetchData);
+    return result;
+  } catch (error) {
+    console.error('devLoginApi 오류:', error);
+    throw error;
+  }
+}
+
 
 // 사용자 기본 정보 업데이트 API
 export const updateUserInfoApi = async ({ username, level_id }) => {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform } from '../utils/osFunction';
-import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi } from '../api/auth';
+import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi, devLoginApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi, getAchievementCriteriaApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
 import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
@@ -374,6 +374,39 @@ export const UserProvider = ({ children }) => {
     }
   }, []); // loginApi 의존성 제거
 
+  // 개발자 로그인 처리 함수 (Local Only)
+  const DevLogin = useCallback(async ({ email }) => {
+    try {
+      const result = await devLoginApi({ email });
+      if (!result || result.code !== 200) {
+        return { success: false, message: result?.message || '로그인 실패' };
+      }
+
+      const accessToken = result.accessToken;
+      setCookie('userAccessToken', accessToken);
+
+      const userName = result.user.name || 'Developer';
+
+      setAuth({
+        user: {
+          name: userName,
+          email: email,
+        }
+      });
+      setIsLogin(true);
+      setIsLoginChecked(true);
+
+      const userProfileResult = await fetchUserProfile();
+      if (userProfileResult.success) {
+        setUserProfile(userProfileResult.userProfile);
+      }
+      return { success: true, accessToken };
+    } catch (error) {
+      console.error('Dev Login Error:', error);
+      return { success: false, message: '서버 오류' };
+    }
+  }, []);
+
   // 구글 로그인 클릭 처리 (웹/앱 자동 구분)
   const clickGoogleOauth = useCallback(() => {
     const device_type = getDevicePlatform();
@@ -597,6 +630,8 @@ export const UserProvider = ({ children }) => {
     AppleLogin,
     clickGoogleOauth,
     clickAppleOauth,
+    clickAppleOauth,
+    DevLogin,
     checkLoginStatus,
     performLogout,
     performWithdraw,
