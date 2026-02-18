@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -927,7 +927,25 @@ def withdraw():
                 (InviteMap.inviter_id == user_id) | (InviteMap.invitee_id == user_id)
             ).delete()
             
-            # 3. UserVocaBook 삭제 (사용자 단어장)
+            # 3-1. UserVocaBookMap 삭제 (사용자 단어장 내 단어 매핑)
+            # UserVocaBook이 삭제되기 전에 먼저 삭제되어야 함 (CASCADE 설정이 없을 수 있으므로 명시적 삭제)
+            # UserVocaBookMap은 user_voca_book_id를 외래키로 가짐
+            # 따라서 UserVocaBook을 먼저 조회해서 ID 목록을 가져오거나, join delete를 수행해야 함
+            
+            # 먼저 사용자의 모든 단어장 ID 조회
+            user_voca_book_ids = db.session.query(UserVocaBook.id).filter(UserVocaBook.user_id == user_id).all()
+            user_voca_book_ids = [row[0] for row in user_voca_book_ids]
+            
+            if user_voca_book_ids:
+                # 해당 단어장들에 속한 맵핑 삭제
+                db.session.query(UserVocaBookMap).filter(UserVocaBookMap.user_voca_book_id.in_(user_voca_book_ids)).delete(synchronize_session=False)
+
+            # 3-2. UserVoca 삭제 (사용자 단어)
+            # UserVoca는 user_id를 외래키로 가짐
+            # UserVocaBookMap에서 user_voca_id를 참조할 수 있으므로, Map 삭제 후 삭제 안전
+            db.session.query(UserVoca).filter(UserVoca.user_id == user_id).delete()
+
+            # 3-3. UserVocaBook 삭제 (사용자 단어장)
             db.session.query(UserVocaBook).filter(UserVocaBook.user_id == user_id).delete()
             
             # 4. CheckIn 삭제 (출석 체크)

@@ -93,6 +93,8 @@ def create_voca_index():
         return jsonify({'code': 400, 'message': '단어(origin)는 필수입니다.'}), 400
     if not voca_book_id:
         return jsonify({'code': 400, 'message': '단어장 ID(vocaBookId)는 필수입니다.'}), 400
+    if not sm2:
+        return jsonify({'code': 400, 'message': 'SM2 데이터(sm2)는 필수입니다.'}), 400
 
     try:
         # 단어장 존재 확인
@@ -123,7 +125,7 @@ def create_voca_index():
             user_voca.word = origin
             user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
             user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-            user_voca.data = json.dumps(sm2, ensure_ascii=False) if sm2 else None
+            user_voca.data = json.dumps(sm2, ensure_ascii=False)
             db.session.add(user_voca)
             db.session.flush()  # ID 할당
 
@@ -260,6 +262,71 @@ def delete_voca_index(vocaIndexId):
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': f'단어 삭제 중 오류가 발생했습니다: {str(e)}'}), 500
+
+
+# 사용자 단어장 단어 연결 (이미 존재하는 단어를 단어장에 추가)
+@voca_indexs_bp.route('/<int:vocaIndexId>/vocaBooks/<vocaBookId>', methods=['POST'])
+@jwt_required
+def link_voca_index_book(vocaIndexId, vocaBookId):
+    user_id = UUID(g.user_id)
+    req = request.get_json()
+
+    # 단어 존재 및 소유권 확인
+    user_voca = db.session.query(UserVoca).filter(
+        UserVoca.id == vocaIndexId,
+        UserVoca.user_id == user_id
+    ).first()
+
+    if not user_voca:
+        return jsonify({'code': 404, 'message': '해당 단어를 찾을 수 없습니다.'}), 404
+
+    # 단어장 존재 및 소유권 확인
+    voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == UUID(str(vocaBookId)),
+        UserVocaBook.user_id == user_id
+    ).first()
+
+    if not voca_book:
+        return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
+
+    # 이미 매핑되어 있는지 확인
+    existing_map = db.session.query(UserVocaBookMap).filter(
+        UserVocaBookMap.user_voca_id == vocaIndexId,
+        UserVocaBookMap.user_voca_book_id == UUID(str(vocaBookId))
+    ).first()
+
+    if existing_map:
+        return jsonify({'code': 409, 'message': '이미 해당 단어장에 등록된 단어입니다.'}), 409
+
+    try:
+        meanings = req.get('meanings', [])
+        examples = req.get('examples', [])
+
+        # 1. 새 매핑 생성
+        book_map = UserVocaBookMap()
+        book_map.user_voca_book_id = UUID(str(vocaBookId))
+        book_map.user_voca_id = user_voca.id
+        book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+        book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
+        db.session.add(book_map)
+
+        # 2. 기존 UserVoca에 데이터 병합 (누적)
+        if meanings:
+            user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+        if examples:
+            user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+        
+        db.session.commit()
+
+        # 응답 데이터 구성 (프론트엔드 형식에 맞게)
+        # build_voca_index_response는 전체 정보를 반환하지만, 여기서는 연결된 결과(UserVoca 정보)를 
+        # 리턴하여 프론트에서 업데이트할 수 있게 함.
+        return jsonify({'code': 201, 'data': build_voca_index_response(user_voca)}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': f'단어 연결 중 오류가 발생했습니다: {str(e)}'}), 500
+
 
 
 # 사용자 단어장 단어 삭제 (특정 단어장에서만 제거)
