@@ -11,6 +11,7 @@ import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.s
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
 import { getTextSound } from '../../utils/common';
+import MemorizationStatus from '../common/MemorizationStatus';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -278,14 +279,24 @@ const StudyResult = () => {
                     <X size={24} weight="bold" className='text-[#FF585B]' />
                   )}
                   <div className='flex flex-col flex-1 gap-[5px]'>
-                    <h3 className="text-[16px] font-[700]">
-                      <span
-                        onClick={() => getTextSound(question.origin, "en")}
-                        className="cursor-pointer"
-                      >
-                        {question.origin}
-                      </span>
-                    </h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-[16px] font-[700]">
+                        <span
+                          onClick={() => getTextSound(question.origin, "en")}
+                          className="cursor-pointer"
+                        >
+                          {question.origin}
+                        </span>
+                      </h3>
+                      <MemorizationStatus
+                        repetition={question.sm2?.repetition ?? question.repetition ?? 0}
+                        interval={question.sm2?.interval ?? question.interval ?? 0}
+                        ef={question.sm2?.ef ?? question.ef ?? 2.5}
+                        nextReview={question.sm2?.nextReview ?? question.nextReview}
+                        wordId={question.id}
+                        useRandomMessages={false}
+                      />
+                    </div>
                     <p className="text-[12px] font-[400] whitespace-pre-wrap">
                       <span
                         onClick={() => getTextSound(question.meanings.join(", "), "ko")}

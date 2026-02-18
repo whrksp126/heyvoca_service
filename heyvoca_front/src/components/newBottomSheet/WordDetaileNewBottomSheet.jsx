@@ -67,9 +67,10 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
           <div className="flex items-center justify-between">
             <div>
               <MemorizationStatus
-                repetition={word.repetition}
-                interval={word.interval}
-                ef={word.ef}
+                repetition={word.sm2?.repetition ?? word.repetition ?? 0}
+                interval={word.sm2?.interval ?? word.interval ?? 0}
+                ef={word.sm2?.ef ?? word.ef ?? 2.5}
+                nextReview={word.sm2?.nextReview ?? word.nextReview}
               />
             </div>
             <div className="flex items-center gap-[8px]">

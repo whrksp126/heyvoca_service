@@ -32,7 +32,7 @@ const getDisplayMeanings = (meanings) => {
   return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, testType }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isCorrect, setIsCorrect] = useState(null);
@@ -156,17 +156,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
 
     const newState = updateSM2({
-      ef: testQuestions[progressIndex].ef,
-      repetition: testQuestions[progressIndex].repetition,
-      interval: testQuestions[progressIndex].interval,
-      nextReview: testQuestions[progressIndex].nextReview,
-      lastStudyDate: testQuestions[progressIndex].lastStudyDate
+      ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+      repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+      interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+      nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+      lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate
     }, q, {
       testType: testType,
       today: new Date()
     });
 
     Object.assign(testQuestions[progressIndex], newState);
+    // [NEW] sm2 객체도 업데이트 (결과 페이지에서 최신 데이터 사용하도록)
+    testQuestions[progressIndex].sm2 = {
+      ...testQuestions[progressIndex].sm2,
+      ...newState
+    };
     setUpdateType(newState.updateType); // 업데이트 타입 저장
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
@@ -203,17 +208,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
 
     const newState = updateSM2({
-      ef: testQuestions[progressIndex].ef,
-      repetition: testQuestions[progressIndex].repetition,
-      interval: testQuestions[progressIndex].interval,
-      nextReview: testQuestions[progressIndex].nextReview,
-      lastStudyDate: testQuestions[progressIndex].lastStudyDate
+      ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+      repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+      interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+      nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+      lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate
     }, q, {
       testType: testType,
       today: new Date()
     });
 
     Object.assign(testQuestions[progressIndex], newState);
+    // [NEW] sm2 객체도 업데이트 (결과 페이지에서 최신 데이터 사용하도록)
+    testQuestions[progressIndex].sm2 = {
+      ...testQuestions[progressIndex].sm2,
+      ...newState
+    };
     setUpdateType(newState.updateType); // 업데이트 타입 저장
     setProgressBarIndex(progressBarIndex + 1);
     setIsAnswered(true);
@@ -232,8 +242,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       interval: isSuspicious.interval,
       nextReview: isSuspicious.nextReview,
       repetition: isSuspicious.repetition,
-      // memoryState 객체도 함께 업데이트
-      memoryState: {
+      // sm2 객체도 함께 업데이트
+      sm2: {
         ef: isSuspicious.ef,
         repetition: isSuspicious.repetition,
         interval: isSuspicious.interval,
@@ -289,8 +299,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       interval: testQuestions[progressIndex].interval,
       nextReview: testQuestions[progressIndex].nextReview,
       lastStudyDate: testQuestions[progressIndex].lastStudyDate,
-      // memoryState 객체도 함께 업데이트
-      memoryState: {
+      // sm2 객체도 함께 업데이트
+      sm2: {
         ef: testQuestions[progressIndex].ef,
         repetition: testQuestions[progressIndex].repetition,
         interval: testQuestions[progressIndex].interval,
@@ -302,6 +312,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     updateWordState(sheetId, wordId, updateData);
     setIsFetching(false);
     setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
+    // [NEW] 변경된 단어 저장큐에 추가
+    setPendingUpdateWords(prev => {
+      const newMap = new Map(prev);
+      newMap.set(wordId, { sheetId, wordId, updateData });
+      return newMap;
+    });
 
     const isNotLastQuestion = progressIndex !== testQuestions.length - 1;
 
@@ -535,11 +551,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     <MemorizationStatus
                       key={progressIndex}
                       wordId={testQuestions[progressIndex].id}
-                      repetition={testQuestions[progressIndex].repetition}
-                      interval={testQuestions[progressIndex].interval}
-                      ef={testQuestions[progressIndex].ef}
+                      repetition={testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0}
+                      interval={testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0}
+                      ef={testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5}
                       isCorrect={isCorrect}
-                      nextReview={testQuestions[progressIndex].nextReview}
+                      nextReview={testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview}
                       useRandomMessages={isCorrect !== null}
                       updateType={updateType}
                     />

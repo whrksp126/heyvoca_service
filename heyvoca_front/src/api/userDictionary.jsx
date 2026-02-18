@@ -49,6 +49,18 @@ export const updateUserBookWordApi = async (vocaIndexId, vocaBookId, updates) =>
     throw error;
   }
 };
+// 사용자 단어장 단어 연결 (기존 단어를 단어장에 추가)
+export const linkUserDictionaryWordApi = async (vocaIndexId, vocaBookId, data) => {
+  const url = `${backendUrl}/vocaIndexs/${vocaIndexId}/vocaBooks/${vocaBookId}`;
+  const method = 'POST';
+  try {
+    return await fetchDataAsync(url, method, data);
+  } catch (error) {
+    console.error('linkUserDictionaryWordApi 오류:', error);
+    throw error;
+  }
+};
+
 
 // 사용자 사전 단어 삭제
 export const deleteUserDictionaryWordApi = async (vocaIndexId) => {

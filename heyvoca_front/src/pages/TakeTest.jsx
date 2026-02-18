@@ -14,7 +14,7 @@ const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { state } = useLocation();
-  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets, updateWord } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
@@ -22,6 +22,8 @@ const TakeTest = () => {
   const navigate = useNavigate();
   // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
+  // 업데이트해야 할 단어 아이디와 데이터를 저장할 Map (중복 방지, 마지막 상태 저장)
+  const [pendingUpdateWords, setPendingUpdateWords] = useState(new Map());
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -60,23 +62,26 @@ const TakeTest = () => {
 
     // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
     const unlearnedWords = allWords.filter(word => {
-      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-      const interval = word.memoryState?.interval ?? word.interval ?? 0;
-      return (!word.nextReview || word.nextReview === null) && repetition === 0 && interval === 0;
+      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
+      const interval = word.sm2?.interval ?? word.interval ?? 0;
+      const nextReview = word.sm2?.nextReview ?? word.nextReview;
+      return (!nextReview || nextReview === null) && repetition === 0 && interval === 0;
     });
 
     // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
     const overdueWords = allWords.filter(word => {
-      if (!word.nextReview) return false;
-      const nextReviewDate = new Date(word.nextReview);
+      const nextReview = word.sm2?.nextReview ?? word.nextReview;
+      if (!nextReview) return false;
+      const nextReviewDate = new Date(nextReview);
       nextReviewDate.setHours(0, 0, 0, 0);
       return nextReviewDate < now;
     });
 
     // 3. 오늘 학습 예정 단어들 (nextReview가 오늘인 것들)
     const todayScheduledWords = allWords.filter(word => {
-      if (!word.nextReview) return false;
-      const nextReviewDate = new Date(word.nextReview);
+      const nextReview = word.sm2?.nextReview ?? word.nextReview;
+      if (!nextReview) return false;
+      const nextReviewDate = new Date(nextReview);
       nextReviewDate.setHours(0, 0, 0, 0);
       return nextReviewDate.getTime() === now.getTime();
     });
@@ -330,19 +335,39 @@ const TakeTest = () => {
 
   // React Compiler가 자동으로 useCallback 처리
   const updateVocabularySheetAndRecentStudyData = async () => {
-    if (pendingUpdateSheetIds.size > 0) {
-      // 학습 데이터 업데이트!
-      const sheetIds = Array.from(pendingUpdateSheetIds);
-      pendingUpdateSheetIds.clear();
-      await Promise.all(sheetIds.map(async sheetId => {
-        await updateVocabularySheetServer(sheetId);
-      }));
+    try {
+      // 1. 단어장 메타데이터 업데이트 (기존 로직)
+      if (pendingUpdateSheetIds.size > 0) {
+        const sheetIds = Array.from(pendingUpdateSheetIds);
+        pendingUpdateSheetIds.clear(); // Clear immediately to prevent double updates
+        await Promise.all(sheetIds.map(async sheetId => {
+          await updateVocabularySheetServer(sheetId);
+        }));
+      }
 
-      // 학습 기록 업데이트!
+      // 2. [NEW] 개별 단어 업데이트 (암기 상태 저장)
+      if (pendingUpdateWords.size > 0) {
+        console.log(`Sending updates for ${pendingUpdateWords.size} words...`);
+        const wordsToUpdate = Array.from(pendingUpdateWords.values());
+        pendingUpdateWords.clear(); // Clear immediately
+
+        await Promise.all(wordsToUpdate.map(async ({ sheetId, wordId, updateData }) => {
+          try {
+            await updateWord(sheetId, wordId, { sm2: updateData.sm2 });
+          } catch (error) {
+            console.error(`Failed to update word ${wordId}:`, error);
+          }
+        }));
+      }
+
+      // 3. 학습 기록(RecentStudy) 업데이트
       await updateRecentStudyServer(state.testType);
 
-      // 최신 단어장 데이터 다시 가져오기
+      // 4. 최신 단어장 데이터 다시 가져오기
       await fetchVocabularySheets();
+
+    } catch (error) {
+      console.error('Error updating study data:', error);
     }
   };
 
@@ -377,6 +402,7 @@ const TakeTest = () => {
           progressIndex={progressIndex}
           setProgressIndex={setProgressIndex}
           setPendingUpdateSheetIds={setPendingUpdateSheetIds}
+          setPendingUpdateWords={setPendingUpdateWords}
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
         />
       </div>

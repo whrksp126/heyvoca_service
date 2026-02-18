@@ -38,23 +38,26 @@ const TodayStudyNewFullSheet = () => {
 
   // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
   const unlearnedWords = allWords.filter(word => {
-    const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-    const interval = word.memoryState?.interval ?? word.interval ?? 0;
-    return (!word.nextReview || word.nextReview === null) && repetition === 0 && interval === 0;
+    const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
+    const interval = word.sm2?.interval ?? word.interval ?? 0;
+    const nextReview = word.sm2?.nextReview ?? word.nextReview;
+    return (!nextReview || nextReview === null) && repetition === 0 && interval === 0;
   });
 
   // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
   const overdueWords = allWords.filter(word => {
-    if (!word.nextReview) return false;
-    const nextReviewDate = new Date(word.nextReview);
+    const nextReview = word.sm2?.nextReview ?? word.nextReview;
+    if (!nextReview) return false;
+    const nextReviewDate = new Date(nextReview);
     nextReviewDate.setHours(0, 0, 0, 0);
     return nextReviewDate < now;
   });
 
   // 3. 오늘 학습 예정 단어들 (nextReview가 오늘인 것들)
   const todayScheduledWords = allWords.filter(word => {
-    if (!word.nextReview) return false;
-    const nextReviewDate = new Date(word.nextReview);
+    const nextReview = word.sm2?.nextReview ?? word.nextReview;
+    if (!nextReview) return false;
+    const nextReviewDate = new Date(nextReview);
     nextReviewDate.setHours(0, 0, 0, 0);
     return nextReviewDate.getTime() === now.getTime();
   });

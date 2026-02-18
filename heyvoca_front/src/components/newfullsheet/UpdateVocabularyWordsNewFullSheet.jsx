@@ -105,7 +105,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
           </motion.button>
           <h1 className="
             text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
+            text-layout-black dark:text-[#fff]
           ">
             {vocabularySheet.title}
           </h1>
@@ -168,9 +168,9 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       spans.forEach((span, index) => {
                         span.animate(
                           [
-                            { color: "#111", offset: 0 },
+                            { color: "var(--layout-black)", offset: 0 },
                             { color: "#FFFFFF", offset: 0.5 },
-                            { color: "#111", offset: 1 }
+                            { color: "var(--layout-black)", offset: 1 }
                           ],
                           {
                             duration: 1000,
@@ -188,7 +188,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       damping: 20
                     }}
                     className="
-                      text-[16px] font-[700] text-[#111]
+                      text-[16px] font-[700] text-layout-black
                       cursor-pointer relative
                       overflow-hidden
                       break-words 
@@ -198,7 +198,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                     {item.origin.split('').map((char, index) => (
                       <motion.span
                         key={index}
-                        initial={{ color: "#111" }}
+                        initial={{ color: "var(--layout-black)" }}
                         className="inline-block"
                       >
                         {char}
@@ -215,9 +215,9 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       spans.forEach((span, index) => {
                         span.animate(
                           [
-                            { color: "#111", offset: 0 },
+                            { color: "var(--layout-black)", offset: 0 },
                             { color: "#FFFFFF", offset: 0.5 },
-                            { color: "#111", offset: 1 }
+                            { color: "var(--layout-black)", offset: 1 }
                           ],
                           {
                             duration: 1000,
@@ -235,7 +235,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       damping: 20
                     }}
                     className="
-                      text-[12px] font-[400] text-[#111]
+                      text-[12px] font-[400] text-layout-black
                       cursor-pointer relative
                       overflow-hidden
                       break-words
@@ -245,7 +245,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                     {item.meanings.join(", ").split('').map((char, index) => (
                       <motion.span
                         key={index}
-                        initial={{ color: "#111" }}
+                        initial={{ color: "var(--layout-black)" }}
                         className="inline-block"
                       >
                         {char}

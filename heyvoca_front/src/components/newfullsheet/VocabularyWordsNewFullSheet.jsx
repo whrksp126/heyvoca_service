@@ -651,10 +651,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     </div>
 
                     <MemorizationStatus
-                      repetition={item.repetition}
-                      interval={item.interval}
-                      ef={item.ef}
-                      nextReview={item.nextReview}
+                      repetition={item.sm2?.repetition ?? item.repetition ?? 0}
+                      interval={item.sm2?.interval ?? item.interval ?? 0}
+                      ef={item.sm2?.ef ?? item.ef ?? 2.5}
+                      nextReview={item.sm2?.nextReview ?? item.nextReview}
                       wordId={item.id}
                       useRandomMessages={false}
                     />

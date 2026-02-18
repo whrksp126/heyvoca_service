@@ -148,7 +148,14 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
               )}
             </div>
             <div>
-              <MemorizationStatus repetition={correctOption.repetition} interval={correctOption.interval} ef={correctOption.ef} />
+              <MemorizationStatus
+                repetition={correctOption.sm2?.repetition ?? correctOption.repetition ?? 0}
+                interval={correctOption.sm2?.interval ?? correctOption.interval ?? 0}
+                ef={correctOption.sm2?.ef ?? correctOption.ef ?? 2.5}
+                nextReview={correctOption.sm2?.nextReview ?? correctOption.nextReview}
+                wordId={correctOption.id}
+                useRandomMessages={false}
+              />
             </div>
           </div>
         </div>
@@ -263,7 +270,14 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   )}
                 </div>
                 <div>
-                  <MemorizationStatus repetition={option.repetition} interval={option.interval} ef={option.ef} />
+                  <MemorizationStatus
+                    repetition={option.sm2?.repetition ?? option.repetition ?? 0}
+                    interval={option.sm2?.interval ?? option.interval ?? 0}
+                    ef={option.sm2?.ef ?? option.ef ?? 2.5}
+                    nextReview={option.sm2?.nextReview ?? option.nextReview}
+                    wordId={option.id}
+                    useRandomMessages={false}
+                  />
                 </div>
               </div>
             ))}

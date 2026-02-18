@@ -135,9 +135,9 @@ const Main = () => {
     if (!sheet.words || !Array.isArray(sheet.words)) return acc;
 
     const learningWordsCount = sheet.words.filter(word => {
-      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-      const interval = word.memoryState?.interval ?? word.interval ?? 0;
-      const nextReview = word.memoryState?.nextReview ?? word.nextReview;
+      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
+      const interval = word.sm2?.interval ?? word.interval ?? 0;
+      const nextReview = word.sm2?.nextReview ?? word.nextReview;
 
       // 학습 기록이 있는 단어: repetition > 0 또는 interval > 0 또는 nextReview가 있음
       return repetition > 0 || interval > 0 || (nextReview !== null && nextReview !== undefined);
@@ -175,7 +175,7 @@ const Main = () => {
 
     const words = delayedWords.map(word => ({
       id: word.id,
-      nextReviewAt: new Date(word.nextReview).getTime()
+      nextReviewAt: new Date(word.sm2?.nextReview ?? word.nextReview).getTime()
     }));
     return shouldShowDot(words, now, lastSeen);
   })();

@@ -6,6 +6,7 @@ import {
   createUserDictionaryWordApi,
   updateUserDictionaryWordApi,
   updateUserBookWordApi,
+  linkUserDictionaryWordApi,
   deleteUserDictionaryWordApi,
   deleteWordFromVocaBookApi
 } from '../api/userDictionary';
@@ -126,29 +127,67 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
-  // [NEW] 사용자 사전 단어 추가
+  // [NEW] 사용자 사전 단어 추가 (또는 연결)
   const addUserDictionaryWord = useCallback(async (vocaBookId, wordData) => {
     try {
-      const payload = { ...wordData, vocaBookId };
-      const result = await createUserDictionaryWordApi(payload);
+      // 1. 이미 존재하는 단어인지 확인 (origin 기준)
+      const existingWord = Object.values(userDictionary).find(w => w.origin === wordData.origin);
 
-      if (result.code === 201 && result.data) {
-        const newWord = result.data;
-        setUserDictionary(prev => ({
-          ...prev,
-          [newWord.vocaIndexId]: newWord
-        }));
-        // 단어장이 업데이트 되었을 수 있으므로 재조회 (필요시 최적화)
-        fetchVocaBooks();
-        return newWord;
+      if (existingWord) {
+        // 이미 존재하면 -> 연결 (Link)
+        const result = await linkUserDictionaryWordApi(existingWord.vocaIndexId, vocaBookId, {
+          meanings: wordData.meanings,
+          examples: wordData.examples
+        });
+
+        if (result.code === 201 && result.data) {
+          // 상태 업데이트 (기존 단어 정보 갱신)
+          const updatedWord = result.data;
+          setUserDictionary(prev => ({
+            ...prev,
+            [updatedWord.vocaIndexId]: updatedWord
+          }));
+          fetchVocaBooks(); // 단어장 목록 갱신
+          return updatedWord;
+        } else if (result.code === 409) {
+          throw new Error('이미 해당 단어장에 등록된 단어입니다.');
+        } else {
+          throw new Error(result.message || '단어 연결 실패');
+        }
+
       } else {
-        throw new Error(result.message || '단어 추가 실패');
+        // 존재하지 않으면 -> 생성 (Create)
+        const payload = {
+          ...wordData,
+          vocaBookId,
+          sm2: wordData.sm2 || {
+            repetition: 0,
+            interval: 0,
+            ef: 2.5,
+            nextReview: null,
+            lastStudyDate: null,
+            beforeScheduleCount: 0
+          }
+        };
+        const result = await createUserDictionaryWordApi(payload);
+
+        if (result.code === 201 && result.data) {
+          const newWord = result.data;
+          setUserDictionary(prev => ({
+            ...prev,
+            [newWord.vocaIndexId]: newWord
+          }));
+          fetchVocaBooks();
+          return newWord;
+        } else {
+          throw new Error(result.message || '단어 추가 실패');
+        }
       }
     } catch (err) {
       console.error('addUserDictionaryWord 오류:', err);
       throw err;
     }
-  }, [fetchVocaBooks]);
+  }, [userDictionary, fetchVocaBooks]);
 
   // [NEW] 사용자 사전 단어 수정
   const updateUserDictionaryWord = useCallback(async (vocaIndexId, updates) => {
@@ -445,13 +484,24 @@ export const VocabularyProvider = ({ children }) => {
   // [UPDATED] 단어 삭제
   const deleteWord = useCallback(async (sheetId, wordId) => {
     try {
-      await deleteWordFromVocaBookApi(wordId, sheetId);
+      // 1. userDictionary에서 해당 단어 정보 확인
+      const word = userDictionary[wordId];
+
+      // 단어가 없거나 vocaBooks 정보가 없으면 안전하게 매핑 삭제 시도
+      if (!word || !word.vocaBooks || word.vocaBooks.length <= 1) {
+        // 이 단어장에만 있거나 정보가 불확실하면 -> 단어 자체 삭제 (Cascade로 매핑도 삭제됨)
+        await deleteUserDictionaryWordApi(wordId);
+      } else {
+        // 다른 단어장에도 포함되어 있다면 -> 현재 단어장에서만 매핑 삭제
+        await deleteWordFromVocaBookApi(wordId, sheetId);
+      }
+
       fetchUserDictionary(); // Refresh to update relationships
     } catch (err) {
       setErrorVocabularySheets('단어 삭제에 실패했습니다.');
       throw err;
     }
-  }, [fetchUserDictionary]);
+  }, [userDictionary, fetchUserDictionary]);
 
   // 특정 단어장 단어 조회
   const getWord = useCallback((sheetId, wordId) => {
@@ -642,7 +692,8 @@ export const VocabularyProvider = ({ children }) => {
     let words = [];
     vocabularySheets.forEach(sheet => {
       sheet.words.forEach(word => {
-        if (word.nextReview !== null && new Date(word.nextReview) < new Date()) {
+        const nextReview = word.sm2?.nextReview ?? word.nextReview;
+        if (nextReview !== null && nextReview !== undefined && new Date(nextReview) < new Date()) {
           words.push(word);
         }
       });
