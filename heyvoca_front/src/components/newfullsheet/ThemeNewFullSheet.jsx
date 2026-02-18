@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
-import { CaretLeft } from '@phosphor-icons/react';
+import { CaretLeft, Check } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useTheme } from '../../context/ThemeContext';
 import { motion } from 'framer-motion';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 const ThemeNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
+  const { theme, setTheme } = useTheme();
+
+  const themeOptions = [
+    { value: 'light', label: '라이트 모드' },
+    { value: 'dark', label: '다크 모드' },
+    { value: 'system', label: '시스템 설정' },
+  ];
+
+  const handleThemeChange = (newTheme) => {
+    vibrate({ duration: 5 });
+    setTheme(newTheme);
+  };
 
   return (
-    <div className="flex flex-col h-full w-full bg-white">
+    <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
       <div className="
@@ -28,20 +41,20 @@ const ThemeNewFullSheet = () => {
               popNewFullSheet();
             }}
             className="
-              text-[#CCC] dark:text-[#fff]
+              text-layout-gray-200 dark:text-layout-white
               rounded-[8px]
             "
-            whileHover={{ 
+            whileHover={{
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
               scale: 1.05
             }}
-            whileTap={{ 
+            whileTap={{
               scale: 0.95,
               backgroundColor: 'rgba(0, 0, 0, 0.1)'
             }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
+            transition={{
+              type: "spring",
+              stiffness: 400,
               damping: 17
             }}
           >
@@ -49,7 +62,7 @@ const ThemeNewFullSheet = () => {
           </motion.button>
           <h1 className="
             text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
+            text-layout-black 
           ">
           </h1>
         </div>
@@ -57,22 +70,37 @@ const ThemeNewFullSheet = () => {
             absolute
             left-1/2 -translate-x-1/2
             text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
+            text-layout-black dark:text-layout-white
           ">
-            테마
-          </h1>
+          테마
+        </h1>
         <div
           className="
             flex items-center gap-[8px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
           "
         >
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
-
+      <div className="flex flex-col flex-1 py-[10px] overflow-y-auto">
+        <ul className="w-full m-0 p-0 list-none">
+          {themeOptions.map((option) => (
+            <li
+              key={option.value}
+              onClick={() => handleThemeChange(option.value)}
+              className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark cursor-pointer"
+            >
+              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
+                {option.label}
+              </span>
+              {theme === option.value && (
+                <Check weight="bold" className="text-[20px] text-primary-main-600" />
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

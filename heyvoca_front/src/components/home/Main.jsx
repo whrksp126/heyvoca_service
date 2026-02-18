@@ -280,7 +280,7 @@ const Main = () => {
         h-screen
       "
       style={{
-        background: 'linear-gradient(to bottom, #FF69C6 0%, #FF70D4 22%, #FFFFFF 42%)',
+        background: 'linear-gradient(to bottom, #FF69C6 0%, #FF70D4 22%, var(--layout-bg) 42%)',
       }}
     >
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
@@ -295,9 +295,9 @@ const Main = () => {
             handleBellButtonClick();
           }}>
             {showDot ? (
-              <IconBellRingingFill width={18} height={18} className="text-[#fff]" />
+              <IconBellRingingFill width={18} height={18} className="text-layout-white" />
             ) : (
-              <IconBell width={18} height={18} className="text-[#fff]" />
+              <IconBell width={18} height={18} className="text-layout-white" />
             )}
 
             {/* 툴팁 - 알림 상태일 때는 항상 표시, 일반 상태일 때는 토글 */}
@@ -311,7 +311,7 @@ const Main = () => {
                   py-[5px] px-[10px]
                   mt-[5px] 
                   rounded-[8px]
-                  bg-[#fff]
+                  bg-layout-white
                   shadow-[0_0_4px_rgba(0,0,0,0.25)]
                 "
                   // 툴팁 열기/닫기 애니메이션
@@ -355,7 +355,7 @@ const Main = () => {
                   }}
                 >
                   <span
-                    className="text-[#111] text-[14px] font-[400]"
+                    className="text-layout-black text-[14px] font-[400]"
                     dangerouslySetInnerHTML={{
                       __html: overdueCount > 0
                         ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요!`
@@ -371,7 +371,7 @@ const Main = () => {
             handleStoreButtonClick();
           }}>
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-            <span className="text-[#fff] text-[14px] font-bold">{userProfile.gem_cnt}</span>
+            <span className="text-layout-white text-[14px] font-bold">{userProfile.gem_cnt}</span>
           </div>
         </div>
       </div>
@@ -386,7 +386,7 @@ const Main = () => {
           px-[16px] py-[10px]
         ">
           <h2 className="
-            text-[#fff] text-[24px]
+            text-layout-white text-[24px]
           ">
             <strong>{userProfile.username}</strong>님,<br />
             <strong>{total}개</strong><br />
@@ -415,7 +415,7 @@ const Main = () => {
               absolute top-[3px] left-[3px] right-[3px] bottom-[3px] z-[1]
               flex items-center justify-center
               rounded-[7px]
-              bg-white
+              bg-layout-white dark:bg-layout-black
             ">
               <span className="
                 text-transparent bg-clip-text
@@ -437,10 +437,10 @@ const Main = () => {
             rounded-[12px]
             bg-primary-main-600 
           ">
-            <h2 className="text-[#fff] text-[16px] font-[700]">데일리 미션</h2>
+            <h2 className="text-layout-white dark:text-layout-black text-[16px] font-[700]">데일리 미션</h2>
             <div className="flex flex-col flex-1 gap-[8px]">
               <div className="flex justify-between">
-                <span className="text-[#fff] text-[12px] font-[600]">접속하기</span>
+                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">접속하기</span>
                 <div className={`
                   flex items-center justify-center 
                   w-[60px] h-[20px] 
@@ -448,15 +448,15 @@ const Main = () => {
                   rounded-[5px] 
                   text-[10px] font-[700]
                   ${todayStatus.attendCompleted
-                    ? 'text-[#fff] bg-[#E569B7]'
-                    : 'text-primary-main-600 bg-[#fff]'
+                    ? 'text-layout-white dark:text-layout-black bg-[#E569B7]'
+                    : 'text-primary-main-600 bg-layout-white'
                   }
                 `}>
                   {todayStatus.attendCompleted ? '완료' : '미완료'}
                 </div>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#fff] text-[12px] font-[600]">오늘의 학습</span>
+                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">오늘의 학습</span>
                 <div className={`
                   flex items-center justify-center 
                   w-[60px] h-[20px] 
@@ -464,8 +464,8 @@ const Main = () => {
                   rounded-[5px] 
                   text-[10px] font-[700]
                   ${todayStatus.dailyMissionCompleted
-                    ? 'text-[#fff] bg-[#E569B7]'
-                    : 'text-primary-main-600 bg-[#fff]'
+                    ? 'text-layout-white dark:text-layout-black bg-[#E569B7]'
+                    : 'text-primary-main-600 bg-layout-white'
                   }
                 `}>
                   {todayStatus.dailyMissionCompleted ? '완료' : '미완료'}
@@ -478,20 +478,20 @@ const Main = () => {
             flex flex-col gap-[20px]
             px-[15px] py-[12px]
             rounded-[12px]
-            bg-[#FFEFFA] 
+            bg-primary-main-100 
           ">
-            <h2 className="text-[#111] text-[16px] font-[700]">출석체크</h2>
+            <h2 className="text-layout-black text-[16px] font-[700]">출석체크</h2>
             <div className="flex justify-between">
               {userMainPage?.dates?.map((item, index) => (
                 <div key={index} className="flex flex-col gap-[10px] items-center">
-                  <h3 className="text-[#111] text-[12px] font-[600]">{item.date}</h3>
+                  <h3 className="text-layout-black text-[12px] font-[600]">{item.date}</h3>
                   {(item.attend && item.daily_mission) && (
                     <div className="w-[30px] h-[30px] flex items-center justify-center">
                       <div className="flex items-center justify-center w-[24px] h-[24px] 
                       bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                       rounded-[50%]
                     ">
-                        <Heart size={12} weight="fill" color="#fff" />
+                        <Heart size={12} weight="fill" color="var(--layout-white)" />
                       </div>
                     </div>
                   )}
@@ -513,9 +513,9 @@ const Main = () => {
             flex flex-col gap-[20px]
             px-[15px] py-[12px]
             rounded-[12px]
-            bg-[#F6EFFF] 
+            bg-secondary-purple-100 
           ">
-            <h2 className="text-[#111] text-[16px] font-[700]">나의 업적</h2>
+            <h2 className="text-layout-black text-[16px] font-[700]">나의 업적</h2>
             <div className="grid grid-cols-3 gap-y-4 justify-items-center">
               {userMainPage?.goals?.map((goal, idx) => (
                 <div
@@ -538,14 +538,14 @@ const Main = () => {
                           absolute bottom-[0] left-[50%] 
                           translate-x-[-50%]
                           text-[16px] font-[700]
-                          [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                          [text-shadow:_-1.2px_-1.2px_0_var(--layout-white),_1.2px_-1.2px_0_var(--layout-white),_-1.2px_1.2px_0_var(--layout-white),_1.2px_1.2px_0_var(--layout-white)]
                         "
                       style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
                     >
                       <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
                     </span>
                   </div>
-                  <span className="text-[#111] text-[12px] font-[600]">
+                  <span className="text-layout-black text-[12px] font-[600]">
                     {goal.type}
                   </span>
                 </div>

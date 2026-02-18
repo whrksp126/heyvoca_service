@@ -317,7 +317,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">테스트 설정</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">테스트 설정</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -332,8 +332,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] text-center
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black text-center
+            dark:text-layout-white
             "
           >
             문제 유형
@@ -349,7 +349,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   h-[45px]
                   px-[15px]
                   border-[1px] rounded-[8px]
-                  ${questionType === type ? 'border-primary-main-600' : 'border-[#ccc]'}
+                  ${questionType === type ? 'border-primary-main-600' : 'border-layout-gray-200'}
                 `}
                 onClick={() => {
                   inputRefs.current[`questionType`][index]?.focus();
@@ -368,7 +368,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   hidden
                 />
                 {questionType === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
-                <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
+                <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
                   {getQuestionTypeLabel(type)}
                 </span>
               </label>
@@ -383,8 +383,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] text-center
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black text-center
+            dark:text-layout-white
             "
           >
             암기 상태(복습 지연 우선)
@@ -403,7 +403,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                     px-[15px]
                     border-[1px] rounded-[8px]
                     ${isDisabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
-                    ${memoryState === type ? 'border-primary-main-600' : 'border-[#ccc]'}
+                    ${memoryState === type ? 'border-primary-main-600' : 'border-layout-gray-200'}
                     ${isDisabled ? 'border-[#e0e0e0]' : ''}
                   `}
                   onClick={() => {
@@ -432,7 +432,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                     hidden
                   />
                   {memoryState === type && !isDisabled && <Check size={18} weight="bold" className="text-primary-main-600" />}
-                  <span className={`text-[16px] font-[700] ${memoryState === type && !isDisabled ? 'text-primary-main-600' : isDisabled ? 'text-[#bbb]' : 'text-[#ccc]'}`}>
+                  <span className={`text-[16px] font-[700] ${memoryState === type && !isDisabled ? 'text-primary-main-600' : isDisabled ? 'text-[#bbb]' : 'text-layout-gray-200'}`}>
                     {getMemoryStateLabel(type)}
                   </span>
                   <span className={`text-[12px] font-[500] ${memoryState === type && !isDisabled ? 'text-primary-main-600' : isDisabled ? 'text-[#bbb]' : 'text-[#999]'}`}>
@@ -465,8 +465,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] text-center
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black text-center
+            dark:text-layout-white
             "
           >
             문제 개수
@@ -478,7 +478,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-primary-main-600 text-primary-main-600'}
+                ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
@@ -498,7 +498,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
               ref={el => inputRefs.current['count'] = el}
               min={MIN_TEST_VOCABULARY_COUNT}
               max={Math.min(currentMemoryStateCount, maxVocabularyCount)}
-              className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-primary-main-600 text-center outline-none focus:border-primary-main-600 transition-colors"
+              className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-primary-main-600 text-center outline-none bg-layout-white dark:bg-layout-black focus:border-primary-main-600 transition-colors"
               onChange={e => {
                 vibrate({ duration: 5 });
                 setCountFun(Number(e.target.value));
@@ -511,7 +511,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-[#ccc] text-[#ccc]' : 'border-primary-main-600 text-primary-main-600'}
+                ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
@@ -535,8 +535,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -554,8 +554,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             flex-1
             h-[45px]
             rounded-[8px]
-            text-[#fff] text-[16px] font-[700]
-            ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT ? 'bg-[#ccc] cursor-not-allowed' : 'bg-primary-main-600'}
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
+            ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT ? 'bg-layout-gray-200 cursor-not-allowed' : 'bg-primary-main-600'}
           `}
           onClick={() => {
             // 선택한 암기 상태의 단어 개수 확인

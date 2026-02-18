@@ -251,8 +251,8 @@ const StudyResult = () => {
             flex items-end justify-center
             w-full h-[55px]
             px-[16px] py-[14px]
-            bg-[#fff] 
-            dark:bg-[#111]
+            bg-layout-white 
+            dark:bg-layout-black
           '>
             <div className="center">
               <h2 className='text-[18px] font-[700] leading-[21px]'>
@@ -283,7 +283,7 @@ const StudyResult = () => {
                       <h3 className="text-[16px] font-[700]">
                         <span
                           onClick={() => getTextSound(question.origin, "en")}
-                          className="cursor-pointer"
+                          className="text-layout-black cursor-pointer"
                         >
                           {question.origin}
                         </span>
@@ -300,7 +300,7 @@ const StudyResult = () => {
                     <p className="text-[12px] font-[400] whitespace-pre-wrap">
                       <span
                         onClick={() => getTextSound(question.meanings.join(", "), "ko")}
-                        className="cursor-pointer"
+                        className="text-layout-gray-500 cursor-pointer"
                       >
                         {question.meanings.join(', ')}
                       </span>
@@ -317,7 +317,7 @@ const StudyResult = () => {
               p-[16px] py-[20px]
             "
             style={{
-              background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, .5) 100%)'
+              background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-bg) 100%)'
             }}
           >
             {testType !== "today" && (
@@ -326,8 +326,8 @@ const StudyResult = () => {
                     flex-1
                     h-[45px]
                     rounded-[8px]
-                    bg-[#ccc]
-                    text-[#fff] text-[16px] font-[700]
+                    bg-layout-gray-200
+                    text-layout-white dark:text-layout-black text-[16px] font-[700]
                   "
                 onClick={() => {
                   vibrate({ duration: 5 });
@@ -347,7 +347,7 @@ const StudyResult = () => {
                   h-[45px]
                   rounded-[8px]
                   bg-primary-main-600
-                  text-[#fff] text-[16px] font-[700]
+                  text-layout-white dark:text-layout-black text-[16px] font-[700]
                 "
               onClick={() => {
                 vibrate({ duration: 5 });
@@ -519,7 +519,7 @@ const StudyResult = () => {
                 translate-x-[-50%]
                 text-[16px] font-[700]
                 font-family: 'Cafe24Ssurround', sans-serif;
-                [text-shadow:_-1.2px_-1.2px_0_#fff,_1.2px_-1.2px_0_#fff,_-1.2px_1.2px_0_#fff,_1.2px_1.2px_0_#fff]
+                [text-shadow:_-1.2px_-1.2px_0_var(--layout-white),_1.2px_-1.2px_0_var(--layout-white),_-1.2px_1.2px_0_var(--layout-white),_1.2px_1.2px_0_var(--layout-white)]
               "
               style={getAchievementTextStyle(goalLevel)}
             >
@@ -599,8 +599,8 @@ const StudyResult = () => {
           flex items-end justify-center
           w-full h-[55px]
           px-[16px] py-[14px]
-          bg-[#fff] 
-          dark:bg-[#111]
+          bg-layout-white 
+          dark:bg-layout-black
           z-20
         '>
           <div className="center">
@@ -681,7 +681,7 @@ const StudyResult = () => {
                 z-10
               "
               style={{
-                background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, .5) 100%)'
+                background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-bg) 100%)'
               }}
             >
               <motion.button
@@ -690,7 +690,7 @@ const StudyResult = () => {
                   h-[45px]
                   rounded-[8px]
                   bg-primary-main-600
-                  text-[#fff] text-[16px] font-[700]
+                  text-layout-white dark:text-layout-black text-[16px] font-[700]
                 "
                 onClick={() => {
                   vibrate({ duration: 5 });

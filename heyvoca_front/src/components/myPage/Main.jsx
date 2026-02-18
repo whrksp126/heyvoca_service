@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useTheme } from '../../context/ThemeContext';
 import { vibrate } from '../../utils/osFunction';
 // import Account from './Account';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
 // import PushNotifications from './PushNotifications';
 import AccountNewFullSheet from '../newFullSheet/AccountNewFullSheet';
-// import ThemeNewFullSheet from '../newFullSheet/ThemeNewFullSheet';
+import ThemeNewFullSheet from '../newFullSheet/ThemeNewFullSheet';
 // import ExampleSettingsNewFullSheet from '../newFullSheet/ExampleSettingsNewFullSheet';
 // import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
 
@@ -20,6 +21,7 @@ const Main = () => {
   const { userProfile } = useUser();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
+  const { isDark } = useTheme();
 
 
 
@@ -32,13 +34,13 @@ const Main = () => {
     });
   }
 
-  // // 테마
-  // const handleThemeClick = () => {
-  //   pushNewFullSheet(ThemeNewFullSheet, {}, {
-  //     smFull: true,
-  //     closeOnBackdropClick: true
-  //   });
-  // }
+  // 테마
+  const handleThemeClick = () => {
+    pushNewFullSheet(ThemeNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
 
   // // 예문 설정
   // const handleExampleSettingsClick = () => {
@@ -110,17 +112,17 @@ const Main = () => {
         )} 
         */}
 
-        {/* <li onClick={handleThemeClick} 
-              className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
-            <div className="flex items-center gap-2">
-              <SunDim weight="fill" className="text-[20px] text-primary-main-600" />
-              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">테마</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-normal text-[#999]">{isDark ? "다크" : "라이트"}</span>
-              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
-            </div>
-          </li> */}
+        <li onClick={handleThemeClick}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <SunDim weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">테마</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-normal text-[#999]">{isDark ? "다크" : "라이트"}</span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
 
         {/* <li onClick={handleExampleSettingsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
             <div className="flex items-center gap-2">

@@ -31,7 +31,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
 
   if (isVocabularySheetsLoading) {
     return (
-      <div className="flex items-center justify-center h-full w-full bg-white">
+      <div className="flex items-center justify-center h-full w-full bg-layout-white dark:bg-layout-black">
         <p>로딩 중...</p>
       </div>
     );
@@ -51,7 +51,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-white">
+    <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
       <div className="
@@ -69,7 +69,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
             p-[4px]
             rounded-[8px]
           "
@@ -91,13 +91,13 @@ const UpdateVocabularySheetNewFullSheet = () => {
         </motion.button>
         <h1 className="
           text-[18px] font-[700]
-          text-[#111] dark:text-[#fff]
+          text-layout-black dark:text-layout-white
         ">단어장 편집</h1>
         <div
           className="
             absolute top-[18px] right-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
           "
         >
         </div>

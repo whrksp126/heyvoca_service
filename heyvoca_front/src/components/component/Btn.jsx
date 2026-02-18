@@ -3,18 +3,18 @@ import React from 'react';
 
 import { motion } from "framer-motion";
 
-const Btn = ({ text, color='cyan', onClick=()=>{}, disabled }) => {
+const Btn = ({ text, color = 'cyan', onClick = () => { }, disabled }) => {
   let buttonColorClass;
-  if(color === 'cyan'){
-    buttonColorClass = 'bg-cyan-500 text-white active:bg-cyan-600 border-b-cyan-100';
+  if (color === 'cyan') {
+    buttonColorClass = 'bg-cyan-500 text-layout-white active:bg-cyan-600 border-b-cyan-100';
   }
-  if(color === 'white'){
-    buttonColorClass = 'bg-white text-cyan-500 active:bg-gray-50 ';
+  if (color === 'white') {
+    buttonColorClass = 'bg-layout-white text-cyan-500 active:bg-gray-50 ';
   }
-  if(color === 'red'){
-    buttonColorClass = 'bg-red-500 text-white active:bg-red-600 border-b-red-100'
+  if (color === 'red') {
+    buttonColorClass = 'bg-red-500 text-layout-white active:bg-red-600 border-b-red-100'
   }
-  if(disabled) {
+  if (disabled) {
     buttonColorClass = 'border-b-gray-100 bg-gray-200 text-gray-300'
   }
   return (
@@ -37,7 +37,7 @@ const Btn = ({ text, color='cyan', onClick=()=>{}, disabled }) => {
           ${disabled ? 'cursor-not-allowed pointer-events-none' : ``}
 
         `}
-        disabled={disabled} 
+        disabled={disabled}
         onClick={onClick}
       >
         {text}

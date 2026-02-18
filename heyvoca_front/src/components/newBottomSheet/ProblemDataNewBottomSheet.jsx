@@ -32,7 +32,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어 확인</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어 확인</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -44,7 +44,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
       ">
         {/* 정답 단어 섹션 */}
         <div className="flex flex-col gap-[10px]">
-          <h2 className="text-[14px] font-[600] text-[#111]">정답 단어</h2>
+          <h2 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">정답 단어</h2>
           <div className="
             flex gap-[10px] items-start
             p-[20px]
@@ -84,7 +84,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
               <div className="flex flex-wrap">
                 <span
                   className="
-                    text-[12px] font-[400] text-[#333]
+                    text-[12px] font-[400] text-layout-gray-500
                     relative
                     overflow-hidden
                     break-words
@@ -110,7 +110,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                 <div className="flex flex-col gap-[8px]">
                   {correctOption.examples.map((example, index) => (
                     <div key={`correct_example_${index}`} className="flex flex-col">
-                      <p className="text-[12px] font-[400] text-[#333]">
+                      <p className="text-[12px] font-[400] text-layout-gray-500">
                         <motion.span
                           onClick={() => getTextSound(example.origin, "en")}
                           whileHover={{ scale: 1.02 }}
@@ -126,7 +126,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                           <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                         </motion.span>
                       </p>
-                      <p className="text-[12px] font-[400] text-[#333]">
+                      <p className="text-[12px] font-[400] text-layout-gray-500">
                         <motion.span
                           onClick={() => getTextSound(example.meaning, "ko")}
                           whileHover={{ scale: 1.02 }}
@@ -162,7 +162,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
 
         {/* 보기 단어 섹션 */}
         <div className="flex flex-col gap-[10px]">
-          <h2 className="text-[14px] font-[600] text-[#111]">보기 단어</h2>
+          <h2 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">보기 단어</h2>
           <div className="flex flex-col gap-[10px]">
             {otherOptions.map((option, index) => (
               <div key={`option_${option.id}_${index}`}
@@ -170,7 +170,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   flex gap-[10px] items-start
                   p-[20px]
                   rounded-[12px]
-                  bg-[#F5F5F5]
+                  bg-layout-gray-50
                 "
               >
                 <div
@@ -181,7 +181,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   <div className="flex flex-wrap">
                     <h3
                       className="
-                        text-[16px] font-[700] text-[#111]
+                        text-[16px] font-[700] text-layout-black
                         relative
                         overflow-hidden
                         break-words 
@@ -206,7 +206,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   <div className="flex flex-wrap">
                     <span
                       className="
-                        text-[12px] font-[400] text-[#111]
+                        text-[12px] font-[400] text-layout-black
                         relative
                         overflow-hidden
                         break-words
@@ -232,7 +232,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                     <div className="flex flex-col gap-[8px]">
                       {option.examples.map((example, exIndex) => (
                         <div key={`option_example_${index}_${exIndex}`} className="flex flex-col">
-                          <p className="text-[12px] font-[400] text-[#333]">
+                          <p className="text-[12px] font-[400] text-layout-gray-500">
                             <motion.span
                               onClick={() => getTextSound(example.origin, "en")}
                               whileHover={{ scale: 1.02 }}
@@ -248,7 +248,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                               <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                             </motion.span>
                           </p>
-                          <p className="text-[12px] font-[400] text-[#333]">
+                          <p className="text-[12px] font-[400] text-layout-gray-500">
                             <motion.span
                               onClick={() => getTextSound(example.meaning, "ko")}
                               whileHover={{ scale: 1.02 }}
@@ -287,15 +287,15 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
       <div className="
         absolute bottom-0 left-0 right-0
         flex items-center justify-between gap-[15px] p-[20px]
-        bg-[#fff]/80 backdrop-blur-[1px]
+        bg-layout-white/80 backdrop-blur-[1px]
       ">
         <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

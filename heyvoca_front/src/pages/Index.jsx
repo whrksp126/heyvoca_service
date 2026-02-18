@@ -60,7 +60,7 @@ const Index = () => {
   // 인증 확인 중이면 로딩 표시
   if (isCheckingAuth) {
     return (
-      <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+      <div className="bg-primary-main-100 w-full h-screen absolute top-0 left-0 flex flex-col items-center">
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <div
           id="lottie-container"
@@ -71,7 +71,7 @@ const Index = () => {
   }
 
   return (
-    <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+    <div className="bg-primary-main-100 w-full h-screen absolute top-0 left-0 flex flex-col items-center">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         id="lottie-container"

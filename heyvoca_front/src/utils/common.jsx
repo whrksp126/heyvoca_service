@@ -473,7 +473,7 @@ export const analyzeLearningPattern = (wordState, q) => {
         {
           type: "mistake",
           text: "실수에요, 알고 있어요",
-          color: "bg-[#ccc]",
+          color: "bg-layout-gray-200",
 
         },
         {
@@ -497,7 +497,7 @@ export const analyzeLearningPattern = (wordState, q) => {
         {
           type: "mistake",
           text: "사실 몰랐어요",
-          color: "bg-[#ccc]",
+          color: "bg-layout-gray-200",
         },
         {
           type: "normal",

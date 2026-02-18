@@ -68,7 +68,7 @@
 //           <motion.button
 //             onClick={handleBack}
 //             className="
-//               text-[#CCC] dark:text-[#fff]
+//               text-[#CCC] dark:text-layout-white
 //               rounded-[8px]
 //             "
 //             whileHover={{ 
@@ -89,7 +89,7 @@
 //           </motion.button>
 //           <h1 className="
 //             text-[18px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">
 //             {vocabularySheet.title}
 //           </h1>
@@ -97,7 +97,7 @@
 //         <div
 //           className="
 //             flex items-center gap-[8px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //           {/* 
@@ -149,7 +149,7 @@
 //                 flex gap-[10px] items-start
 //                 p-[20px]
 //                 rounded-[12px]
-//                 bg-[#F5F5F5]
+//                 bg-layout-gray-50
 //               "
 //             >
               
@@ -167,9 +167,9 @@
 //                       spans.forEach((span, index) => {
 //                         span.animate(
 //                           [
-//                             { color: "#111", offset: 0 },
+//                             { color: "var(--layout-black)", offset: 0 },
 //                             { color: "#FFFFFF", offset: 0.5 },
-//                             { color: "#111", offset: 1 }
+//                             { color: "var(--layout-black)", offset: 1 }
 //                           ],
 //                           { 
 //                             duration: 1000, 
@@ -187,7 +187,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[16px] font-[700] text-[#111]
+//                       text-[16px] font-[700] text-layout-black
 //                       cursor-pointer relative
 //                       overflow-hidden
 //                       break-words 
@@ -197,7 +197,7 @@
 //                     {item.origin.split('').map((char, index) => (
 //                       <motion.span
 //                         key={index}
-//                         initial={{ color: "#111" }}
+//                         initial={{ color: "var(--layout-black)" }}
 //                         className="inline-block"
 //                       >
 //                         {char}
@@ -214,9 +214,9 @@
 //                       spans.forEach((span, index) => {
 //                         span.animate(
 //                           [
-//                             { color: "#111", offset: 0 },
+//                             { color: "var(--layout-black)", offset: 0 },
 //                             { color: "#FFFFFF", offset: 0.5 },
-//                             { color: "#111", offset: 1 }
+//                             { color: "var(--layout-black)", offset: 1 }
 //                           ],
 //                           { 
 //                             duration: 1000, 
@@ -234,7 +234,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-[#111]
+//                       text-[12px] font-[400] text-layout-black
 //                       cursor-pointer relative
 //                       overflow-hidden
 //                       break-words
@@ -244,7 +244,7 @@
 //                     {item.meanings.join(", ").split('').map((char, index) => (
 //                       <motion.span
 //                         key={index}
-//                         initial={{ color: "#111" }}
+//                         initial={{ color: "var(--layout-black)" }}
 //                         className="inline-block"
 //                       >
 //                         {char}

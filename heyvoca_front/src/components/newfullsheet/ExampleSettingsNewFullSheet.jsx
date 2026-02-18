@@ -3,7 +3,7 @@ import { CaretLeft } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 const ExampleSettingsNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -12,7 +12,7 @@ const ExampleSettingsNewFullSheet = () => {
   const { popNewFullSheet } = useNewFullSheetActions();
 
   return (
-    <div className="flex flex-col h-full w-full bg-white">
+    <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
       <div className="
@@ -28,20 +28,20 @@ const ExampleSettingsNewFullSheet = () => {
               popNewFullSheet();
             }}
             className="
-              text-[#CCC] dark:text-[#fff]
+              text-layout-gray-200 dark:text-layout-white
               rounded-[8px]
             "
-            whileHover={{ 
+            whileHover={{
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
               scale: 1.05
             }}
-            whileTap={{ 
+            whileTap={{
               scale: 0.95,
               backgroundColor: 'rgba(0, 0, 0, 0.1)'
             }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
+            transition={{
+              type: "spring",
+              stiffness: 400,
               damping: 17
             }}
           >
@@ -49,7 +49,7 @@ const ExampleSettingsNewFullSheet = () => {
           </motion.button>
           <h1 className="
             text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
+            text-layout-black 
           ">
           </h1>
         </div>
@@ -57,14 +57,14 @@ const ExampleSettingsNewFullSheet = () => {
             absolute
             left-1/2 -translate-x-1/2
             text-[18px] font-[700]
-            text-[#111] dark:text-[#fff]
+            text-layout-black dark:text-layout-white
           ">
-            예문 설정
-          </h1>
+          예문 설정
+        </h1>
         <div
           className="
             flex items-center gap-[8px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
           "
         >
         </div>

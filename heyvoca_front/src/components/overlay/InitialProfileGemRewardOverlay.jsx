@@ -99,7 +99,7 @@ const InitialProfileGemRewardOverlay = ({ gemCount, onConfirm }) => {
                             transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
                             className="flex flex-col items-center gap-[12px]"
                         >
-                            <p className="text-[30px] font-[900] text-[#FFFFFF] tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                            <p className="text-[30px] font-[900] text-layout-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
                                 보석 <span className="text-primary-main-600">{gemCount}개</span> 획득!
                             </p>
                             <p className="text-[18px] font-[500] text-[#FFFFFF]/80 text-center leading-[1.4] drop-shadow-[0_1px_5px_rgba(0,0,0,0.2)]">
@@ -130,7 +130,7 @@ const InitialProfileGemRewardOverlay = ({ gemCount, onConfirm }) => {
                         w-full h-[50px]
                         bg-primary-main-600
                         rounded-[8px]
-                        text-[#FFFFFF] font-[17px] font-[700]
+                        text-layout-white font-[17px] font-[700]
                         shadow-md shadow--primary-main-600/20
                     "
                 >

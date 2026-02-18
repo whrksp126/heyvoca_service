@@ -21,7 +21,7 @@ const MakeStudyData = ({ endInitialProfile }) => {
       flex flex-col items-center justify-center
       w-full h-screen 
       p-[20px]
-      bg-[#FFEFFA]
+      bg-primary-main-100
     ">
       <div className="
         flex flex-col items-center
@@ -30,7 +30,7 @@ const MakeStudyData = ({ endInitialProfile }) => {
         <div
           className="
             px-[15px] py-[12px]
-            bg-[#fff]
+            bg-layout-white
             rounded-[10px]
             font-[16px] font-[600]
           "

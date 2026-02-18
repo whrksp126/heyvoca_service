@@ -61,7 +61,7 @@
 //           className="
 //             absolute top-[18px] left-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //             p-[4px]
 //             rounded-[8px]
 //           "
@@ -83,13 +83,13 @@
 //         </motion.button>
 //         <h1 className="
 //           text-[18px] font-[700]
-//           text-[#111] dark:text-[#fff]
+//           text-layout-black dark:text-layout-white
 //         ">단어장 편집</h1>
 //         <div
 //           className="
 //             absolute top-[18px] right-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //         </div>

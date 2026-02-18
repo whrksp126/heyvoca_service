@@ -203,8 +203,8 @@
 //         >
 //           <h3 
 //             className="
-//               text-[14px] font-[700] text-[#111] text-center
-//             dark:text-[#fff]
+//               text-[14px] font-[700] text-layout-black text-center
+//             dark:text-layout-white
 //             "
 //           >
 //             문제 유형
@@ -220,7 +220,7 @@
 //                   h-[45px]
 //                   px-[15px]
 //                   border-[1px] rounded-[8px]
-//                   ${questionType === type ? 'border--primary-main-600' : 'border-[#ccc]'}
+//                   ${questionType === type ? 'border--primary-main-600' : 'border-layout-gray-200'}
 //                 `}
 //                 onClick={() => {
 //                   inputRefs.current[`questionType`][index]?.focus();
@@ -236,7 +236,7 @@
 //                   hidden 
 //                 />
 //                 {questionType === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
-//                 <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
+//                 <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
 //                   {getQuestionTypeLabel(type)}
 //                 </span>
 //               </label>
@@ -250,8 +250,8 @@
 //         >
 //           <h3 
 //             className="
-//               text-[14px] font-[700] text-[#111] text-center
-//             dark:text-[#fff]
+//               text-[14px] font-[700] text-layout-black text-center
+//             dark:text-layout-white
 //             "
 //           >
 //             암기 상태(복습 지연 우선)
@@ -266,7 +266,7 @@
 //                   h-[45px]
 //                   px-[15px]
 //                   border-[1px] rounded-[8px]
-//                   ${memoryState === type ? 'border--primary-main-600' : 'border-[#ccc]'}
+//                   ${memoryState === type ? 'border--primary-main-600' : 'border-layout-gray-200'}
 //                 `}
 //                 onClick={() => inputRefs.current[`memoryState`][index]?.focus()}
 //               >
@@ -280,7 +280,7 @@
 //                   hidden 
 //                 />
 //                 {memoryState === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
-//                 <span className={`text-[16px] font-[700] ${memoryState === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
+//                 <span className={`text-[16px] font-[700] ${memoryState === type ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
 //                   {getMemoryStateLabel(type)}
 //                 </span>
 //               </label>
@@ -296,8 +296,8 @@
 //         >
 //           <h3 
 //             className="
-//               text-[14px] font-[700] text-[#111] text-center
-//             dark:text-[#fff]
+//               text-[14px] font-[700] text-layout-black text-center
+//             dark:text-layout-white
 //             "
 //           >
 //             문제 개수
@@ -308,7 +308,7 @@
 //                 flex items-center justify-center
 //                 w-[40px] h-[40px]
 //                 border-[1px] rounded-[8px]
-//                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border--primary-main-600 text-primary-main-600'}
+//                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-layout-gray-200 text-layout-gray-200' : 'border--primary-main-600 text-primary-main-600'}
 //               `}
 //               onClick={() => setCountFun(count - 1)}
 //               disabled={count <= MIN_TEST_VOCABULARY_COUNT}
@@ -329,7 +329,7 @@
 //                 flex items-center justify-center
 //                 w-[40px] h-[40px]
 //                 border-[1px] rounded-[8px]
-//                 ${count >= maxVocabularyCount ? 'border-[#ccc] text-[#ccc]' : 'border--primary-main-600 text-primary-main-600'}
+//                 ${count >= maxVocabularyCount ? 'border-layout-gray-200 text-layout-gray-200' : 'border--primary-main-600 text-primary-main-600'}
 //               `}
 //               onClick={() => setCountFun(count + 1)}
 //               disabled={count >= maxVocabularyCount}
@@ -345,8 +345,8 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#ccc]
-//             text-[#fff] text-[16px] font-[700]
+//             bg-layout-gray-200
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onCancel}
 //           whileTap={{ scale: 0.95 }}
@@ -362,7 +362,7 @@
 //             h-[45px]
 //             rounded-[8px]
 //             bg-primary-main-600
-//             text-[#fff] text-[16px] font-[700]
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={() => onSet(getTestSetupData())}
 //           whileTap={{ scale: 0.95 }}

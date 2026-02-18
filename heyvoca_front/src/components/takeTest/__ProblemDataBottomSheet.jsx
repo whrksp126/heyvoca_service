@@ -79,15 +79,15 @@
 //       <div className="
 //         absolute bottom-0 left-0 right-0
 //         flex items-center justify-between gap-[15px] p-[20px]
-//         bg-[#fff]/80 backdrop-blur-[1px]
+//         bg-layout-white/80 backdrop-blur-[1px]
 //       ">
 //         <motion.button 
 //           className="
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#ccc]
-//             text-[#fff] text-[16px] font-[700]
+//             bg-layout-gray-200
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onCancel}
 //           whileTap={{ scale: 0.95 }}

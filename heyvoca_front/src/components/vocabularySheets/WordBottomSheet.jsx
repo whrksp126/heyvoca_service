@@ -293,8 +293,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
             >
               단어장
@@ -320,8 +320,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                   transition-colors
                   appearance-none
                   ${id ? false : true ?
-                      'border-[#CCCCCC] bg-[#F5F5F5] text-[#999999]' :
-                      'border-[#ccc] text-[#111] focus:border-primary-main-600'
+                      'border-layout-gray-200 bg-layout-gray-50 text-layout-gray-400' :
+                      'border-layout-gray-200 text-layout-black focus:border-primary-main-600'
                     }
                 `}
                 >
@@ -334,7 +334,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                     </option>
                   ))}
                 </select>
-                <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-[#ccc] text-[18px]">
+                <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-layout-gray-200 text-[18px]">
                   <CaretDown />
                 </div>
               </div>
@@ -347,8 +347,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
             >
               단어<strong className="text-primary-main-600">*</strong>
@@ -366,8 +366,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 className="
                 w-full h-[45px]
                 px-[15px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[14px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -380,7 +380,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
               )}
             </div>
             {wordSearchResults && wordSearchResults.length > 0 && (
-              <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-[#FFEFFA] overflow-y-auto">
+              <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 overflow-y-auto">
                 {wordSearchResults.map(({ word, meanings, examples }, index) => (
                   <li
                     key={index}
@@ -390,7 +390,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                       handleWordSelect({ word, meanings, examples });
                     }}
                   >
-                    <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
+                    <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                       {word.split('').map((char, i) => {
                         const searchWord = wordInputRef.current.value.toLowerCase();
                         const currentWord = word.toLowerCase();
@@ -399,11 +399,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                           i >= startIndex &&
                           i < startIndex + searchWord.length;
                         return (
-                          <span key={i} style={{ color: isHighlighted ? 'var(--primary-main-600)' : '#111' }}>{char}</span>
+                          <span key={i} style={{ color: isHighlighted ? 'var(--primary-main-600)' : 'var(--layout-black)' }}>{char}</span>
                         );
                       })}
                     </span>
-                    <p className="text-[11px] font-[400] text-[#111] dark:text-[#fff]">{meanings.join(', ')}</p>
+                    <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white">{meanings.join(', ')}</p>
                   </li>
                 ))}
               </ul>
@@ -416,8 +416,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
             >
               의미<strong className="text-primary-main-600">*</strong>
@@ -438,8 +438,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 className="
                 w-full h-[45px]
                 px-[15px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[14px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -455,8 +455,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             <div className="flex justify-between items-center">
               <h3
                 className="
-                text-[14px] font-[700] text-[#111] 
-              dark:text-[#fff]
+                text-[14px] font-[700] text-layout-black 
+              dark:text-layout-white
               "
               >
                 예문
@@ -489,11 +489,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 flex flex-col gap-[5px] 
                 p-[15px] 
                 rounded-[8px]
-                bg-[#FFEFFA]
+                bg-primary-main-100
               "
                 >
                   <div className="flex items-center justify-between">
-                    <h2 className="text-[14px] font-[600] text-[#000] dark:text-[#fff]">
+                    <h2 className="text-[14px] font-[600] text-[#000] dark:text-layout-white">
                       {index + 1}
                     </h2>
                     <div className="
@@ -527,7 +527,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                     </div>
                   </div>
                   <div>
-                    <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
+                    <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                       <span>
                         {origin && wordInputRef.current ?
                           origin.split(wordInputRef.current).map((part, i, arr) => (
@@ -559,8 +559,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
             onClick={() => {
               vibrate({ duration: 5 });
@@ -579,7 +579,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
             onClick={() => {
               vibrate({ duration: 5 });
@@ -612,7 +612,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-            <h1 className="text-[18px] font-[700]">예문 {exampleSetType.setType === "add" ? "추가" : "수정"}</h1>
+            <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">예문 {exampleSetType.setType === "add" ? "추가" : "수정"}</h1>
           </div>
           <div className="right"></div>
         </div>
@@ -629,8 +629,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
             >
               {exampleSetType.exampleIndex}.
@@ -648,8 +648,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 className="
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[16px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[16px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -668,8 +668,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 className="
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[16px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[16px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -690,8 +690,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
             onClick={() => {
               vibrate({ duration: 5 });
@@ -714,7 +714,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
             onClick={() => {
               vibrate({ duration: 5 });
@@ -760,7 +760,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
 //         pt-[40px] px-[20px] pb-[10px]
 //       ">
 //         <h3 className="text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
-//         <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
+//         <p className="text-[14px] font-[400] text-layout-black">삭제 후에는 복구가 불가능해요 😢</p>
 //       </div>
 //       <div className="flex items-center justify-between gap-[15px] p-[20px]">
 //         <motion.button 
@@ -768,8 +768,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#ccc]
-//             text-[#fff] text-[16px] font-[700]
+//             bg-layout-gray-200
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onCancel}
 //           whileTap={{ scale: 0.95 }}
@@ -785,7 +785,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
 //             h-[45px]
 //             rounded-[8px]
 //             bg-primary-main-600
-//             text-[#fff] text-[16px] font-[700]
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={() => onDelete({vocabularyId, id})}
 //           whileTap={{ scale: 0.95 }}

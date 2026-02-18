@@ -152,7 +152,7 @@ const Login = () => {
 
 
   return (
-    <div className="bg-[#FFEFFA] w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+    <div className="bg-primary-main-100 w-full h-screen absolute top-0 left-0 flex flex-col items-center">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         id="lottie-container"
@@ -160,7 +160,7 @@ const Login = () => {
       ></div>
       <div className="absolute bottom-[100px] w-[300px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
         <button
-          className="flex items-center justify-center w-full bg-white border border-[#CCCCCC] rounded-md py-[13.5px] px-5 text-black text-[15px] font-medium gap-2"
+          className="flex items-center justify-center w-full bg-layout-white border border-layout-gray-200 rounded-md py-[13.5px] px-5 text-black text-[15px] font-medium gap-2"
           onClick={clickGoogleOauth}
         >
           <img src={googleLogo} alt="Google Logo" className="h-[18px]" />
@@ -168,7 +168,7 @@ const Login = () => {
         </button>
         {!isAndroid && (
           <button
-            className="flex items-center justify-center w-full bg-black border border-black rounded-md py-[13.5px] px-5 text-white text-[15px] font-medium gap-2"
+            className="flex items-center justify-center w-full bg-black border border-black rounded-md py-[13.5px] px-5 text-layout-white text-[15px] font-medium gap-2"
             onClick={clickAppleOauth}
           >
             <AppleLogo size={20} weight="fill" color="#FFFFFF" />
@@ -189,7 +189,7 @@ const Login = () => {
             />
             <button
               onClick={handleDevLogin}
-              className="w-full bg-gray-600 text-white py-2 rounded text-sm hover:bg-gray-700"
+              className="w-full bg-gray-600 text-layout-white py-2 rounded text-sm hover:bg-gray-700"
             >
               Dev Login
             </button>

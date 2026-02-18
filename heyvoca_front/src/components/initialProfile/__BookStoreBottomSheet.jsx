@@ -56,7 +56,7 @@
 //         <div className="flex flex-col gap-[5px]">
 //           <div className="
 //             flex items-center gap-[5px]
-//             text-[16px] font-[700] text-[#111]
+//             text-[16px] font-[700] text-layout-black
 //           ">
 //             {vocabularySheet.category && (
 //               <div 
@@ -66,7 +66,7 @@
 //               className="
 //                 py-[3px] px-[6px]
 //                 rounded-[50px]
-//                 text-[8px] font-[700] text-[#fff]
+//                 text-[8px] font-[700] text-layout-white
 //               "
 //             >
 //                 {vocabularySheet.category} 
@@ -74,7 +74,7 @@
 //             )}
 //             {vocabularySheet.name}
 //           </div>
-//           <div className="text-[12px] font-[400] text-[#111]">
+//           <div className="text-[12px] font-[400] text-layout-black">
 //             {vocabularySheet.words.length}개의 단어
 //           </div>
 //         </div>
@@ -112,7 +112,7 @@
 //                     damping: 20
 //                   }}
 //                   className="
-//                     text-[16px] font-[700] text-[#111]
+//                     text-[16px] font-[700] text-layout-black
 //                     cursor-pointer
 //                     break-words 
 //                   "
@@ -134,7 +134,7 @@
 //                     damping: 20
 //                   }}
 //                   className="
-//                     text-[12px] font-[400] text-[#111]
+//                     text-[12px] font-[400] text-layout-black
 //                     cursor-pointer
 //                     break-words
 //                   "
@@ -158,7 +158,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-[#111]
+//                       text-[12px] font-[400] text-layout-black
 //                       cursor-pointer
 //                       break-words
 //                     "
@@ -180,7 +180,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-[#111]
+//                       text-[12px] font-[400] text-layout-black
 //                       cursor-pointer
 //                       break-words
 //                     "
@@ -218,8 +218,8 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#ccc]
-//             text-[#fff] text-[16px] font-[700]
+//             bg-layout-gray-200
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onCancel}
 //           whileTap={{ scale: 0.95 }}
@@ -237,7 +237,7 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             text-[#fff] text-[16px] font-[700]
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onSet}
 //           whileTap={{ scale: 0.95 }}

@@ -38,7 +38,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
       <div className="
         flex items-center justify-center h-full
         sm:max-w-[500px] sm:h-[90vh] sm:rounded-[20px] sm:overflow-hidden
-        bg-white dark:bg-[#111]
+        bg-layout-white dark:bg-layout-black
       ">
         <p>로딩 중...</p>
       </div>
@@ -67,7 +67,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
   return (
     <div className="
       flex flex-col h-full
-      bg-white
+      bg-layout-white dark:bg-layout-black
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -84,7 +84,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
               popNewFullSheet();
             }}
             className="
-              text-[#CCC] dark:text-[#fff]
+              text-layout-gray-200 dark:text-layout-white
               rounded-[8px]
             "
             whileHover={{
@@ -105,7 +105,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
           </motion.button>
           <h1 className="
             text-[18px] font-[700]
-            text-layout-black dark:text-[#fff]
+            text-layout-black 
           ">
             {vocabularySheet.title}
           </h1>
@@ -113,7 +113,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
         <div
           className="
             flex items-center gap-[8px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
           "
         >
           <motion.button
@@ -149,7 +149,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                 flex gap-[10px] items-start
                 p-[20px]
                 rounded-[12px]
-                bg-[#F5F5F5]
+                bg-layout-gray-50
               "
             >
 
@@ -169,7 +169,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                         span.animate(
                           [
                             { color: "var(--layout-black)", offset: 0 },
-                            { color: "#FFFFFF", offset: 0.5 },
+                            { color: "var(--layout-white)", offset: 0.5 },
                             { color: "var(--layout-black)", offset: 1 }
                           ],
                           {
@@ -216,7 +216,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                         span.animate(
                           [
                             { color: "var(--layout-black)", offset: 0 },
-                            { color: "#FFFFFF", offset: 0.5 },
+                            { color: "var(--layout-white)", offset: 0.5 },
                             { color: "var(--layout-black)", offset: 1 }
                           ],
                           {

@@ -71,9 +71,9 @@ export const LoadVocabularyNewBottomSheet = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-[30px] items-center p-[20px] pb-[40px] bg-white dark:bg-[#111]">
+    <div className="flex flex-col gap-[30px] items-center p-[20px] pb-[40px] bg-white dark:bg-layout-black">
       {/* Header */}
-      <h1 className="text-[18px] font-bold text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+      <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
         단어장 불러오기
       </h1>
 
@@ -87,7 +87,7 @@ export const LoadVocabularyNewBottomSheet = () => {
               className="
                                 flex items-center justify-center gap-[8px]
                                 w-full h-[45px]
-                                bg-white dark:bg-[#1A1A1A]
+                                bg-layout-white dark:bg-[#1A1A1A]
                                 border border-primary-main-600 border-solid
                                 rounded-[8px]
                                 text-primary-main-600 font-bold text-[16px] tracking-[-0.32px]

@@ -4,7 +4,7 @@ const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className={`
         fixed inset-0 
         flex flex-col justify-end
@@ -15,13 +15,13 @@ const Modal = ({ isOpen, onClose, children }) => {
       `}
       onClick={onClose}
     >
-      <div 
+      <div
         className={`
           relative
           flex flex-col gap-[30px]
           min-h-[160px] max-h-[calc(100vh-50px)]
           h-auto p-5
-          bg-white dark:bg-[#111]
+          bg-layout-white dark:bg-layout-black
           rounded-t-[12px]
           transform
           ${isOpen ? 'animate-modal-show' : 'translate-y-full'}

@@ -15,7 +15,7 @@ const getColorSet = (mainColor) => {
     case '#FF70D4': return {
       main: "#FF70D4",
       sub: "#FF70D44d",
-      background: "#FFEFFA"
+      background: "var(--primary-main-100)"
     };
     case '#CD8DFF': return {
       main: "#CD8DFF",
@@ -40,7 +40,7 @@ const getColorSet = (mainColor) => {
     default: return {
       main: "#FF70D4",
       sub: "#FF70D44d",
-      background: "#FFEFFA"
+      background: "var(--primary-main-100)"
     };
   }
 };
@@ -177,14 +177,14 @@ const Main = () => {
       width: '100%',
       height: '100vh',
       overflow: 'hidden',
-      backgroundColor: '#FFEFFA'
+      backgroundColor: 'var(--primary-main-100)'
     }}>
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div className="
         flex flex-col items-center justify-between
         w-full h-[calc(100vh-var(--status-bar-height))]
         p-[20px]
-        bg-[#FFEFFA]
+        bg-primary-main-100
       ">
         <div></div>
         <div className="
@@ -194,7 +194,7 @@ const Main = () => {
           <div
             className="
               px-[15px] py-[12px]
-              bg-[#fff]
+              bg-layout-white
               rounded-[10px]
               font-[16px] font-[600]
             "

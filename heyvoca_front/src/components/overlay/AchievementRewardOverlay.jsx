@@ -152,7 +152,7 @@ const AchievementRewardOverlay = ({ goal }) => {
                                         absolute bottom-[0] left-[50%] 
                                         translate-x-[-50%]
                                         text-[16px] font-[700]
-                                        [text-shadow:_-1.2px_-1.2px_0_#fff,1.2px_-1.2px_0_#fff,-1.2px_1.2px_0_#fff,1.2px_1.2px_0_#fff]
+                                        [text-shadow:_-1.2px_-1.2px_0_var(--layout-white),1.2px_-1.2px_0_var(--layout-white),-1.2px_1.2px_0_var(--layout-white),1.2px_1.2px_0_var(--layout-white)]
                                     "
                                     style={{ ...getAchievementTextStyle(goalLevel), fontFamily: 'Cafe24Ssurround, sans-serif' }}
                                 >
@@ -167,7 +167,7 @@ const AchievementRewardOverlay = ({ goal }) => {
                             transition={{ delay: 0.5, duration: 0.5 }}
                             className="flex flex-col items-center gap-[12px]"
                         >
-                            <p className="text-[20px] font-[700] text-[#FFFFFF] text-center whitespace-pre-wrap">
+                            <p className="text-[20px] font-[700] text-layout-white text-center whitespace-pre-wrap">
                                 <strong className="text-primary-main-600">{goalType} {goalLevel}레벨</strong>을 달성했어요!
                             </p>
                         </motion.div>
@@ -183,7 +183,7 @@ const AchievementRewardOverlay = ({ goal }) => {
                             w-full h-[45px]
                             bg-primary-main-600
                             rounded-[8px]
-                            text-[#FFFFFF] text-[16px] font-[700]
+                            text-layout-white text-[16px] font-[700]
                         "
                     >
                         확인

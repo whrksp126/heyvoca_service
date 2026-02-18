@@ -22,7 +22,7 @@
 //           className="
 //             fixed top-0 right-0
 //             w-full h-full
-//             bg-white dark:bg-[#111]
+//             bg-white dark:bg-layout-black
 //             z-50
 //           "
 //         >

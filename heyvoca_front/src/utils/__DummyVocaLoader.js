@@ -2,7 +2,7 @@ import { getUserVocabularySheetsApi, deleteUserVocabularySheetApi, addUserVocabu
 
 const COLOR_MAP = {
     '800점': { main: '#6B8AFF', sub: '#6B8AFF4d', background: '#EFF2FF' }, // Blue
-    '900점': { main: '#FF70D4', sub: '#FF70D44d', background: '#FFEFFA' }, // Pink
+    '900점': { main: '#FF70D4', sub: '#FF70D44d', background: 'var(--primary-main-100)' }, // Pink
     '토익 기초': { main: '#5CD97C', sub: '#5CD97C4d', background: '#EFFFEE' }, // Green
     '핵심 빈출': { main: '#FFB85C', sub: '#FFB85C4d', background: '#FFF7EF' }, // Orange
 };

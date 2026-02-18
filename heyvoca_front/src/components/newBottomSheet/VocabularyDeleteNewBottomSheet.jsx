@@ -54,7 +54,7 @@ export const VocabularyDeleteNewBottomSheet = () => {
     return (
         <div className="flex flex-col">
             <div className="flex flex-col gap-[15px] items-center justify-center pt-[40px] px-[20px] pb-[10px]">
-                <h3 className="text-[18px] font-bold text-[#111] dark:text-[#fff]">
+                <h3 className="text-[18px] font-bold text-layout-black dark:text-layout-white">
                     단어장을 정말 삭제하시겠어요?
                 </h3>
                 <p className="text-[14px] font-normal text-[#666] dark:text-[#999]">
@@ -64,14 +64,14 @@ export const VocabularyDeleteNewBottomSheet = () => {
 
             <div className="flex items-center justify-between gap-[15px] p-[20px]">
                 <motion.button
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#ccc] text-white text-[16px] font-bold"
+                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-bold"
                     onClick={handleCancel}
                     whileTap={{ scale: 0.95 }}
                 >
                     취소
                 </motion.button>
                 <motion.button
-                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white text-[16px] font-bold"
+                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-bold"
                     onClick={handleConfirm}
                     whileTap={{ scale: 0.95 }}
                 >

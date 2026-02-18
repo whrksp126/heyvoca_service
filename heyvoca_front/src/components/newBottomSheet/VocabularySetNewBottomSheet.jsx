@@ -15,12 +15,12 @@ export const VOCABULARY_COLORS = [
 
 const getColorSet = (mainColor) => {
     switch (mainColor) {
-        case '#FF70D4': return { main: "#FF70D4", sub: "#FF70D44d", background: "#FFEFFA" };
+        case '#FF70D4': return { main: "#FF70D4", sub: "#FF70D44d", background: "var(--primary-main-100)" };
         case '#CD8DFF': return { main: "#CD8DFF", sub: "#CD8DFF4d", background: "#F8E6FF" };
         case '#74D5FF': return { main: "#74D5FF", sub: "#74D5FF4d", background: "#EAF6FF" };
         case '#42F98B': return { main: "#42F98B", sub: "#42F98B4d", background: "#E6FFE9" };
         case '#FFBD3C': return { main: "#FFBD3C", sub: "#FFBD3C4d", background: "#FFF8E6" };
-        default: return { main: "#FF70D4", sub: "#FF70D44d", background: "#FFEFFA" };
+        default: return { main: "#FF70D4", sub: "#FF70D44d", background: "var(--primary-main-100)" };
     }
 };
 
@@ -107,7 +107,7 @@ export const VocabularySetNewBottomSheet = ({ initialData }) => {
     return (
         <div className="flex flex-col">
             <div className="flex items-center justify-center p-[20px] pb-[0px]">
-                <h1 className="text-[18px] font-bold text-[#111] dark:text-[#fff]">
+                <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">
                     단어장 {initialData.id ? "수정" : "생성"}
                 </h1>
             </div>
@@ -115,19 +115,19 @@ export const VocabularySetNewBottomSheet = ({ initialData }) => {
             <div className="flex flex-col gap-[30px] p-[20px]">
                 {/* 이름 입력 */}
                 <div className="flex flex-col gap-[8px]">
-                    <h3 className="text-[14px] font-bold text-[#111] dark:text-[#fff]">단어장 이름</h3>
+                    <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">단어장 이름</h3>
                     <input
                         ref={nameInputRef}
                         defaultValue={initialData.title}
                         type="text"
                         placeholder="단어장 이름을 입력하세요"
-                        className="w-full h-[45px] px-[15px] border border-[#ccc] rounded-[8px] font-normal text-[14px] text-[#111] outline-none focus:border-primary-main-600 transition-colors"
+                        className="w-full h-[45px] px-[15px] border border-layout-gray-200 rounded-[8px] font-normal text-[14px] text-layout-black outline-none focus:border-primary-main-600 transition-colors"
                     />
                 </div>
 
                 {/* 색상 선택 */}
                 <div className="flex flex-col gap-[8px]">
-                    <h3 className="text-[14px] font-bold text-[#111] dark:text-[#fff]">단어장 색상</h3>
+                    <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">단어장 색상</h3>
                     <div className="flex items-center justify-between">
                         {VOCABULARY_COLORS.map((color) => {
                             const isSelected = currentColor === color.value;
@@ -160,14 +160,14 @@ export const VocabularySetNewBottomSheet = ({ initialData }) => {
             {/* 버튼 구역 */}
             <div className="flex items-center justify-between gap-[15px] p-[20px]">
                 <motion.button
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#ccc] text-white text-[16px] font-bold"
+                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-white dark:text-layout-black text-[16px] font-bold"
                     onClick={handleCancel}
                     whileTap={{ scale: 0.95 }}
                 >
                     취소
                 </motion.button>
                 <motion.button
-                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white text-[16px] font-bold"
+                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white dark:text-layout-black text-[16px] font-bold"
                     onClick={handleSubmit}
                     whileTap={{ scale: 0.95 }}
                 >

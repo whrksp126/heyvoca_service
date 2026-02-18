@@ -1,12 +1,12 @@
 /* Pink custom scrollbar for vocabulary search results */
 .scrollbar-pink {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-main-600) #FFEFFA;
+  scrollbar-color: var(--primary-main-600) var(--primary-main-100);
 }
 
 .scrollbar-pink::-webkit-scrollbar {
   width: 8px;
-  background: #FFEFFA;
+  background: var(--primary-main-100);
 }
 
 .scrollbar-pink::-webkit-scrollbar-thumb {
@@ -15,5 +15,5 @@
 }
 
 .scrollbar-pink::-webkit-scrollbar-track {
-  background: #FFEFFA;
+  background: var(--primary-main-100);
 }

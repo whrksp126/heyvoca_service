@@ -175,7 +175,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어장 미리보기</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어장 미리보기</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -196,7 +196,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
         <div className="flex flex-col gap-[5px]">
           <div className="
             flex items-center gap-[5px]
-            text-[16px] font-[700] text-[#111]
+            text-[16px] font-[700] text-layout-black dark:text-layout-white
           ">
             {vocabularySheet.category && (
               <div
@@ -206,7 +206,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                 className="
                 py-[3px] px-[6px]
                 rounded-[50px]
-                text-[8px] font-[700] text-[#fff]
+                text-[8px] font-[700] text-layout-white
               "
               >
                 {vocabularySheet.category}
@@ -214,7 +214,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
             )}
             {vocabularySheet.name}
           </div>
-          <div className="text-[12px] font-[400] text-[#111]">
+          <div className="text-[12px] font-[400] text-layout-black">
             {vocabularySheet.words.length}개의 단어
           </div>
         </div>
@@ -259,7 +259,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                         damping: 20
                       }}
                       className="
-                    text-[16px] font-[700] text-[#111]
+                    text-[16px] font-[700] text-layout-black
                     cursor-pointer
                     break-words 
                   "
@@ -281,7 +281,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                         damping: 20
                       }}
                       className="
-                    text-[12px] font-[400] text-[#111]
+                    text-[12px] font-[400] text-layout-black
                     cursor-pointer
                     break-words
                   "
@@ -305,7 +305,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                             damping: 20
                           }}
                           className="
-                      text-[12px] font-[400] text-[#111]
+                      text-[12px] font-[400] text-layout-black
                       cursor-pointer
                       break-words
                     "
@@ -327,7 +327,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                             damping: 20
                           }}
                           className="
-                      text-[12px] font-[400] text-[#111]
+                      text-[12px] font-[400] text-layout-black
                       cursor-pointer
                       break-words
                     "
@@ -437,8 +437,8 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -459,7 +459,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
             flex-1
             h-[45px]
             rounded-[8px]
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

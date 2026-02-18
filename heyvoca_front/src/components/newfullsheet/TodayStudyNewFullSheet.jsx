@@ -230,7 +230,7 @@ const TodayStudyNewFullSheet = () => {
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-white
+      bg-layout-white dark:bg-layout-black
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -249,7 +249,7 @@ const TodayStudyNewFullSheet = () => {
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
             p-[4px]
             rounded-[8px]
           "
@@ -271,13 +271,13 @@ const TodayStudyNewFullSheet = () => {
         </motion.button>
         <h1 className="
           text-[18px] font-[700]
-          text-[#111] dark:text-[#fff]
+          text-layout-black dark:text-layout-white
         ">오늘의 학습</h1>
         <div
           className="
             absolute top-[18px] right-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
           "
         >
         </div>
@@ -295,8 +295,8 @@ const TodayStudyNewFullSheet = () => {
                relative 
                px-[15px] py-[12px] mb-[11px] 
                rounded-[10px] 
-               bg-[#fff] 
-               text-[14px] font-[600] text-[#111]
+               bg-layout-white 
+               text-[14px] font-[600] text-layout-black dark:text-layout-white
                shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)]
              ">
               <span>오늘은 몇 개 단어를<br />공부해볼까요?</span>
@@ -335,12 +335,12 @@ const TodayStudyNewFullSheet = () => {
                 className={`
                   w-[120px] h-[45px]
                   pr-[36px]
-                  border-[1px] border-[#ccc]
+                  border-[1px] border-layout-gray-200
                   rounded-[8px]
                   text-end 
                   text-[24px] font-[700] text-primary-main-600
                   outline-none
-                  ${showWarning ? 'border-red-500' : 'border-[#ccc]'}
+                  ${showWarning ? 'border-red-500' : 'border-layout-gray-200'}
                 `}
                 whileFocus={{
                   scale: 1.02,
@@ -348,7 +348,7 @@ const TodayStudyNewFullSheet = () => {
                 }}
                 animate={{
                   scale: showWarning ? [1, 1.02, 1] : 1,
-                  borderColor: showWarning ? "#ef4444" : "#ccc"
+                  borderColor: showWarning ? "#ef4444" : "var(--layout-gray-200)"
                 }}
                 transition={{
                   scale: { duration: 0.2 },
@@ -374,9 +374,9 @@ const TodayStudyNewFullSheet = () => {
                 )}
               </AnimatePresence>
               <motion.span
-                className="absolute top-[50%] right-[15px] translate-y-[-50%] text-[16px] font-[700] text-[#111]"
+                className="absolute top-[50%] right-[15px] translate-y-[-50%] text-[16px] font-[700] text-layout-black"
                 animate={{
-                  color: showWarning ? "#ef4444" : "#111"
+                  color: showWarning ? "#ef4444" : "var(--layout-black)"
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -389,7 +389,7 @@ const TodayStudyNewFullSheet = () => {
           disabled={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT}
           className={`
             w-full h-[50px] rounded-[8px] text-[16px] font-[700]
-            ${showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? 'border-[1px] border-[#ccc] text-[#ccc] bg-[transparent] cursor-not-allowed' : 'text-[#fff] bg-primary-main-600'}
+            ${showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? 'border-[1px] border-layout-gray-200 text-layout-gray-200 bg-[transparent] cursor-not-allowed' : 'text-layout-white bg-primary-main-600'}
           `}
           whileHover={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 1.02 }}
           whileTap={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 0.98 }}

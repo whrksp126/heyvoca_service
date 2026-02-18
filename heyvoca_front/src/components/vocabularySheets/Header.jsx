@@ -45,13 +45,13 @@ const Header = () => {
       flex items-center justify-between
       w-full h-[55px]
       px-[16px] py-[14px]
-      bg-[#fff] 
-      dark:bg-[#111]
+      bg-layout-white 
+      dark:bg-layout-black
     '>
       <div className="left">
         <h2
           className="
-            text-[16px] font-[400] text-[#000] dark:text-[#fff]
+            text-[16px] font-[400] text-[#000] dark:text-layout-white
           "
         >
           <strong className="

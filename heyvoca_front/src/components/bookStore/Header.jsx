@@ -23,8 +23,8 @@ const Header = () => {
       flex items-center justify-center
       w-full h-[55px]
       px-[16px] py-[14px]
-      bg-[#fff] 
-      dark:bg-[#111]
+      bg-layout-white 
+      dark:bg-layout-black
     '>
       <div className="center">
         <h2 className='text-[16px] font-[700]'>
@@ -35,9 +35,9 @@ const Header = () => {
         vibrate({ duration: 5 });
         handleStoreButtonClick();
       }}>
-          <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-          <span className="text-[#111111] text-[16px] font-[600]">{userProfile.gem_cnt}</span>
-        </div>
+        <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
+        <span className="text-layout-black dark:text-layout-white text-[16px] font-[600]">{userProfile.gem_cnt}</span>
+      </div>
     </div>
   );
 };

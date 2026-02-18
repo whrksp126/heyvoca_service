@@ -100,7 +100,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
               <div className="flex items-center justify-center w-[80px] h-[80px]">
                 <div className="animate-spin rounded-full h-[40px] w-[40px] border-b-2 border--primary-main-600"></div>
               </div>
-              <div className="text-[18px] font-[700] text-[#111]">스토어 결제 진행 중...</div>
+              <div className="text-[18px] font-[700] text-layout-black">스토어 결제 진행 중...</div>
             </>
           )}
 
@@ -114,7 +114,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
           {purchaseResult?.verified && (
             <>
               <img src={options.image_url} alt="" className="w-[80px] h-[80px]" />
-              <div className="text-[18px] font-[700] text-[#111] text-center">
+              <div className="text-[18px] font-[700] text-layout-black text-center">
                 <strong className="text-primary-main-600">보석 {purchaseResult?.gem_added}개</strong>를 구매 완료!
               </div>
             </>
@@ -124,14 +124,14 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
         <div className="
           absolute bottom-0 left-0 right-0
           flex items-center justify-between gap-[15px] p-[20px]
-          bg-[#fff]/80 backdrop-blur-[1px]
+          bg-layout-white/80 backdrop-blur-[1px]
         ">
           <motion.button
             className={`
               flex-1
               h-[45px]
               rounded-[8px]
-              text-[#fff] text-[16px] font-[700]
+              text-layout-white text-[16px] font-[700]
               bg-primary-main-600
             `}
             onClick={purchaseResult?.verified ? onConfirm : handleClose}
@@ -159,7 +159,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
                 >•</motion.span>
               </span>
             ) : (
-              <span className="text-[16px] font-[700] text-[#fff]">확인</span>
+              <span className="text-[16px] font-[700] text-layout-white">확인</span>
             )}
           </motion.button>
         </div>

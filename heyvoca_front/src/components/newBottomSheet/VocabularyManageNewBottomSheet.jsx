@@ -101,7 +101,7 @@ export const VocabularyManageNewBottomSheet = () => {
     <div className="flex flex-col items-center gap-[30px] p-[20px]">
       {/* Header Info */}
       <div className="flex flex-col items-center justify-center gap-[5px] w-full text-center">
-        <h1 className="text-[18px] font-bold text-[#111] dark:text-[#fff] tracking-[-0.36px]">
+        <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white tracking-[-0.36px]">
           단어장 추가
         </h1>
         <p className="text-[12px] font-medium text-[#999] tracking-[-0.24px]">
@@ -119,7 +119,7 @@ export const VocabularyManageNewBottomSheet = () => {
               className="
                 flex items-center justify-center gap-[8px]
                 w-full h-[45px] px-[15px]
-                bg-white dark:bg-[#111]
+                bg-layout-white dark:bg-layout-black
                 border border--primary-main-600 border-solid rounded-[8px]
                 transition-colors
               "

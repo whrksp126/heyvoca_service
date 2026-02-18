@@ -24,7 +24,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-[#FFEFFA]
+      bg-primary-main-100
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -42,7 +42,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
             p-[4px]
             rounded-[8px]
           "
@@ -68,7 +68,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
         flex flex-col items-center justify-between
         w-full h-[calc(100vh-var(--status-bar-height)-55px)]
         p-[20px]
-        bg-[#FFEFFA]
+        bg-primary-main-100
       ">
         <div></div>
         <div className="
@@ -78,7 +78,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
           <div
             className="
               px-[15px] py-[12px]
-              bg-[#fff]
+              bg-layout-white
               rounded-[10px]
               font-[16px] font-[600]
             "
@@ -106,7 +106,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
             w-full h-[45px]
             bg-primary-main-600
             rounded-[8px]
-            text-[#FFFFFF] font-[16px] font-[700]
+            text-layout-white font-[16px] font-[700]
             ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
           `}
           onClick={async () => {

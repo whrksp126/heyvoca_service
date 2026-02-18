@@ -177,7 +177,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어장 미리보기</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어장 미리보기</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -198,7 +198,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
         <div className="flex flex-col gap-[5px]">
           <div className="
             flex items-center gap-[5px]
-            text-[16px] font-[700] text-[#111]
+            text-[16px] font-[700] text-layout-black dark:text-layout-white
           ">
             {bookStoreVocabularySheet.category && (
               <div
@@ -208,7 +208,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                 className="
                 py-[3px] px-[6px]
                 rounded-[50px]
-                text-[8px] font-[700] text-[#fff]
+                text-[8px] font-[700] text-layout-white
               "
               >
                 {bookStoreVocabularySheet.category}
@@ -216,7 +216,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
             )}
             {bookStoreVocabularySheet.name}
           </div>
-          <div className="text-[12px] font-[400] text-[#111]">
+          <div className="text-[12px] font-[400] text-layout-black">
             {bookStoreVocabularySheet.words.length}개의 단어
           </div>
         </div>
@@ -250,7 +250,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                   <div className="flex flex-wrap">
                     <h3
                       className="
-                    text-[16px] font-[700] text-[#111]
+                    text-[16px] font-[700] text-layout-black
                     break-words 
                   "
                       id={`word-${item.id}`}
@@ -274,7 +274,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                   <div className="flex flex-wrap">
                     <span
                       className="
-                    text-[12px] font-[400] text-[#111]
+                    text-[12px] font-[400] text-layout-black
                     break-words
                   "
                       id={`meaning-${item.id}`}
@@ -300,7 +300,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                       <div className="flex flex-wrap">
                         <p
                           className="
-                      text-[12px] font-[400] text-[#111]
+                      text-[12px] font-[400] text-layout-black
                       break-words
                     "
                           id={`example-${item.id}-${example_index}`}
@@ -324,7 +324,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                       <div className="flex flex-wrap">
                         <p
                           className="
-                      text-[12px] font-[400] text-[#111]
+                      text-[12px] font-[400] text-layout-black
                       break-words
                     "
                           id={`example-${item.id}-${example_index}-meaning`}
@@ -446,8 +446,8 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -468,7 +468,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
             flex-1
             h-[45px]
             rounded-[8px]
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

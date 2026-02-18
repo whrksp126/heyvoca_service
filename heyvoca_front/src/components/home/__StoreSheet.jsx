@@ -32,7 +32,7 @@
 //           className="
 //             absolute top-[18px] left-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //             p-[4px]
 //             rounded-[8px]
 //           "
@@ -54,13 +54,13 @@
 //         </motion.button>
 //         <h1 className="
 //           text-[18px] font-[700]
-//           text-[#111] dark:text-[#fff]
+//           text-layout-black dark:text-layout-white
 //         ">상점</h1>
 //         <div
 //           className="
 //             absolute top-[18px] right-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //           <div 
@@ -68,7 +68,7 @@
 //             className="flex gap-[5px] items-center"
 //           >
 //             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-//             <span className="text-[#111] text-[16px] font-bold">{userProfile.gem_cnt}</span>
+//             <span className="text-layout-black text-[16px] font-bold">{userProfile.gem_cnt}</span>
 //           </div>
 //         </div>
 //       </div>
@@ -81,11 +81,11 @@
 //           <img src={gem.image_url} alt="" className="w-[80px] h-[80px]" />
 //           {gem.bonus > 0 && (
 //           <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-primary-main-600">
-//             <span className="text-[10px] font-[600] text-[#fff]">+{gem.bonus}</span>
+//             <span className="text-[10px] font-[600] text-layout-white">+{gem.bonus}</span>
 //           </div>
 //           )}
 //           <div className="flex flex-col gap-[3px]">
-//             <h1 className="text-[14px] font-[600] text-[#111]">{gem.name}</h1>
+//             <h1 className="text-[14px] font-[600] text-layout-black">{gem.name}</h1>
 //             <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price}</span>
 //           </div>
 //         </div>

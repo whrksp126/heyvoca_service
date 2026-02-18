@@ -65,12 +65,12 @@ export const NewBottomSheetProvider = () => {
                     fixed 
                     max-h-[90vh]
                     rounded-t-2xl 
-                    bg-white dark:bg-[#111]
+                    bg-layout-white dark:bg-layout-black
                     overflow-hidden
                     after:content-[''] 
                     after:absolute after:left-0 after:right-0 after:bottom-[-100vh] 
                     after:h-[101vh] 
-                    after:bg-white dark:after:bg-[#111]
+                    after:bg-layout-white dark:after:bg-layout-black
                   "
                   initial={phase === 'enter' ? { y: '100%' } : { y: 0 }}
                   animate={{ y: phase === 'exit' ? '100%' : 0 }}
@@ -103,11 +103,11 @@ export const NewBottomSheetProvider = () => {
                   fixed 
                   max-h-[90vh]
                   rounded-t-2xl 
-                  bg-white 
+                  bg-layout-white 
                   after:content-[''] 
                   after:absolute after:left-0 after:right-0 after:bottom-[-100vh] 
                   after:h-[101vh] 
-                  after:bg-white
+                  after:bg-layout-white
                 "
                 initial={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
                 animate={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}

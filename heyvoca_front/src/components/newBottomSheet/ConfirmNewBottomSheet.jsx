@@ -24,7 +24,7 @@ export const ConfirmNewBottomSheet = ({ title, btns }) => {
         pt-[40px] p-[20px] pb-[105px]
         overflow-y-auto
       ">
-        <h3 className="text-center text-[18px] font-[700]">
+        <h3 className="text-center text-[18px] font-[700] text-layout-black dark:text-layout-white">
           {title}
         </h3>
       </div>
@@ -38,8 +38,8 @@ export const ConfirmNewBottomSheet = ({ title, btns }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -58,7 +58,7 @@ export const ConfirmNewBottomSheet = ({ title, btns }) => {
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

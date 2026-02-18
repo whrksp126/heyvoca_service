@@ -69,7 +69,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
         <div className="flex flex-col gap-[30px] items-center pt-[40px] pb-[20px] px-[20px] relative">
             {/* 타이틀 구역 */}
             <div className="w-full flex flex-col items-center justify-center">
-                <h1 className="text-[18px] font-bold leading-[1.4] text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+                <h1 className="text-[18px] font-bold leading-[1.4] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
                     {packageName}를 구매할까요?
                 </h1>
             </div>
@@ -81,7 +81,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
                         vibrate({ duration: 5 });
                         popNewBottomSheet();
                     }}
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#ccc] text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center"
+                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center"
                     whileTap={{ scale: 0.95 }}
                 >
                     취소

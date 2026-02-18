@@ -93,14 +93,14 @@ const Main = () => {
                         w-[max-content]
                         px-[6px] py-[3px]
                         rounded-[20px]
-                        text-[8px] font-[700] text-[#fff]
+                        text-[8px] font-[700] text-layout-white
                       `}
                     >{item.category}</div>
                   )}
-                  <h2 className="font-[700] text-[16px] text-[#111]">{item.name}</h2>
+                  <h2 className="font-[700] text-[16px] text-layout-black">{item.name}</h2>
                 </div>
                 <div className="flex items-end justify-between">
-                  <span className="flex items-center gap-[2px] text-[14px] font-[600] text-[#111]">
+                  <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
                     <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
                   </span>
                   <div

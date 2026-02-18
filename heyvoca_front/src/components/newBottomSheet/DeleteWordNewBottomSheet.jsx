@@ -25,8 +25,8 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
         flex flex-col gap-[15px] items-center justify-center 
         pt-[40px] px-[20px] pb-[10px]
       ">
-        <h3 className="text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
-        <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
+        <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
+        <p className="text-layout-black dark:text-layout-white text-[14px] font-[400]">삭제 후에는 복구가 불가능해요 😢</p>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
         <motion.button
@@ -34,8 +34,8 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -54,7 +54,7 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

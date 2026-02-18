@@ -26,13 +26,13 @@ export const VocabularyLimitNewBottomSheet = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-[30px] p-[20px] pt-[40px] pb-[20px] bg-white dark:bg-[#111]">
+        <div className="flex flex-col items-center gap-[30px] p-[20px] pt-[40px] pb-[20px] bg-layout-white dark:bg-layout-black">
             {/* Header Info */}
             <div className="flex flex-col items-center justify-center gap-[15px] w-full text-center">
-                <p className="text-[18px] font-bold text-[#111] dark:text-[#fff] tracking-[-0.36px]">
+                <p className="text-[18px] font-bold text-layout-black dark:text-layout-white tracking-[-0.36px]">
                     추가 가능 단어장이 부족해요😢
                 </p>
-                <p className="text-[14px] font-normal text-[#111] dark:text-[#eee] tracking-[-0.28px]">
+                <p className="text-[14px] font-normal text-layout-black dark:text-[#eee] tracking-[-0.28px]">
                     상점에서 단어장을 구매하세요.
                 </p>
             </div>
@@ -42,7 +42,7 @@ export const VocabularyLimitNewBottomSheet = () => {
                 <motion.button
                     className="
             flex-[1] h-[45px] 
-            bg-[#ccc] dark:bg-[#333] 
+            bg-layout-gray-200 dark:bg-layout-gray-500 
             rounded-[8px] 
             flex items-center justify-center
           "
@@ -50,7 +50,7 @@ export const VocabularyLimitNewBottomSheet = () => {
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 500, damping: 15 }}
                 >
-                    <span className="text-[16px] font-bold text-white tracking-[-0.32px]">
+                    <span className="text-[16px] font-bold text-layout-white tracking-[-0.32px]">
                         취소
                     </span>
                 </motion.button>
@@ -65,7 +65,7 @@ export const VocabularyLimitNewBottomSheet = () => {
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 500, damping: 15 }}
                 >
-                    <span className="text-[16px] font-bold text-white tracking-[-0.32px]">
+                    <span className="text-[16px] font-bold text-layout-white tracking-[-0.32px]">
                         상점 열기
                     </span>
                 </motion.button>

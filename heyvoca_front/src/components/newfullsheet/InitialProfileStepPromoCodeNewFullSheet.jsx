@@ -106,7 +106,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
     };
 
     return (
-        <div className="flex flex-col h-full w-full bg-[#FFEFFA]">
+        <div className="flex flex-col h-full w-full bg-primary-main-100">
             <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
             <div className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
                 <motion.button
@@ -114,44 +114,44 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                         vibrate({ duration: 5 });
                         popNewFullSheet();
                     }}
-                    className="absolute top-[18px] left-[10px] flex items-center gap-[4px] text-[#CCC] p-[4px] rounded-[8px]"
+                    className="absolute top-[18px] left-[10px] flex items-center gap-[4px] text-layout-gray-200 p-[4px] rounded-[8px]"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
                     <CaretLeft size={24} />
                 </motion.button>
             </div>
-            <div className="relative flex flex-col items-center gap-[45px] justify-end w-full h-[calc(100vh-var(--status-bar-height)-55px)] p-[20px] bg-[#FFEFFA]">
+            <div className="relative flex flex-col items-center gap-[45px] justify-end w-full h-[calc(100vh-var(--status-bar-height)-55px)] p-[20px] bg-primary-main-100">
                 <div className="absolute top-[35px] left-[50%] translate-x-[-50%] flex flex-col items-center gap-[10px]">
                     <div
-                        className="w-[max-content] px-[20px] py-[14px] rounded-[14px] font-[18px] font-[700] bg-[#fff] text-center relative"
+                        className="w-[max-content] px-[20px] py-[14px] rounded-[14px] font-[18px] font-[700] bg-layout-white text-center relative"
                         style={{ boxShadow: '0px 4px 12px 0px rgba(0,0,0,0.08)' }}
                     >
                         초대 코드가 있다면 입력해 주세요!
                         {/* 말풍선 꼬리 */}
-                        <div className="absolute bottom-[-8px] right-[40px] w-[16px] h-[16px] bg-white rotate-45" style={{ boxShadow: '4px 4px 12px 0px rgba(0,0,0,0.02)' }}></div>
+                        <div className="absolute bottom-[-8px] right-[40px] w-[16px] h-[16px] bg-layout-white dark:bg-layout-black rotate-45" style={{ boxShadow: '4px 4px 12px 0px rgba(0,0,0,0.02)' }}></div>
                     </div>
                     <img src={HeyCharacter} alt="logo" className="w-[200px]" />
                 </div>
                 <div className="relative w-full">
-                    <div className="relative flex flex-col items-center gap-[15px] w-full bg-[#FFEFFA]">
+                    <div className="relative flex flex-col items-center gap-[15px] w-full bg-primary-main-100">
                         <input
                             type="text"
                             placeholder="초대 코드를 입력해주세요"
                             ref={codeRef}
-                            className="w-full h-[55px] rounded-[10px] bg-[#fff] border-[1px] border-[#ccc] px-[20px] text-[18px] focus:outline-none focus:border-primary-main-600 focus:ring-2 focus:ring-primary-main-600/20"
+                            className="w-full h-[55px] rounded-[10px] bg-layout-white border-[1px] border-layout-gray-200 px-[20px] text-[18px] focus:outline-none focus:border-primary-main-600 focus:ring-2 focus:ring-primary-main-600/20"
                             autoComplete="off"
                             onKeyDown={handleKeyDown}
                         />
                         <div className="flex w-full gap-[12px]">
                             <motion.button
                                 whileTap={{ scale: 0.98 }}
-                                className="flex-1 h-[55px] rounded-[10px] bg-[#ccc] text-[#fff] font-[20px] font-[700]"
+                                className="flex-1 h-[55px] rounded-[10px] bg-layout-gray-200 text-layout-white font-[20px] font-[700]"
                                 onClick={handleSkipBtn}
                             >없음</motion.button>
                             <motion.button
                                 whileTap={{ scale: 0.98 }}
-                                className="flex-1 h-[55px] rounded-[10px] bg-primary-main-600 text-[#fff] font-[20px] font-[700]"
+                                className="flex-1 h-[55px] rounded-[10px] bg-primary-main-600 text-layout-white font-[20px] font-[700]"
                                 onClick={handleNextBtn}
                             >입력</motion.button>
                         </div>

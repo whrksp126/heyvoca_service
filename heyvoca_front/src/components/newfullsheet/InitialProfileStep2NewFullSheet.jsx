@@ -95,7 +95,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-[#FFEFFA]
+      bg-primary-main-100
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -113,7 +113,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
           className="
             absolute top-[18px] left-[10px]
             flex items-center gap-[4px]
-            text-[#CCC] dark:text-[#fff]
+            text-layout-gray-200 dark:text-layout-white
             p-[4px]
             rounded-[8px]
             
@@ -140,7 +140,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
         flex flex-col items-center gap-[45px] justify-end 
         w-full h-[calc(100vh-var(--status-bar-height)-55px)]
         p-[20px]
-        bg-[#FFEFFA]
+        bg-primary-main-100
       ">
         <div className="
             absolute top-[35px] left-[50%] translate-x-[-50%]
@@ -153,7 +153,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
                 px-[15px] py-[12px]
                 rounded-[10px]
                 font-[16px] font-[600]
-                bg-[#fff]
+                bg-layout-white
               "
             style={{ boxShadow: '0px 0px 4px 0px rgba(0,0,0,0.15)' }}
           >
@@ -175,7 +175,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
             relative
             flex flex-col items-center gap-[15px]
             w-full
-            bg-[#FFEFFA]
+            bg-primary-main-100
           ">
             <input type="text" placeholder="닉네임을 입력해주세요(8자 이내)"
               id="name"
@@ -185,8 +185,8 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
               className="
                 w-full h-[50px]
                 rounded-[8px]
-                bg-[#fff]
-                border-[1px] border-[#ccc]
+                bg-layout-white
+                border-[1px] border-layout-gray-200
                 px-[15px]
                 font-[16px] font-[400]
                 transition-all duration-200
@@ -218,7 +218,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
                 w-full h-[50px]
                 rounded-[8px]
                 bg-primary-main-600
-                text-[#fff] font-[16px] font-[700]
+                text-layout-white font-[16px] font-[700]
               "
               onClick={handleNextBtn}
             >다음</motion.button>

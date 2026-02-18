@@ -57,8 +57,8 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             {exampleIndex}.
@@ -76,8 +76,8 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
               className="
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[16px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[16px] text-layout-black
                 outline-none
                 focus:border-primary-main-600
                 transition-colors
@@ -96,8 +96,8 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
               className="
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[16px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[16px] text-layout-black
                 outline-none
                 focus:border-primary-main-600
                 transition-colors
@@ -118,8 +118,8 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -138,7 +138,7 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             if (setType === "add") {

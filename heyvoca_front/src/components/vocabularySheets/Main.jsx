@@ -108,7 +108,7 @@ const Main = () => {
         pt-[30px] px-[20px] pb-[20px]
         mb-[15px]
         rounded-[12px]
-        bg-[#FFEFFA]
+        bg-primary-main-100
       ">
         <div
           className="
@@ -174,7 +174,7 @@ const Main = () => {
                   w-full
                 "
                 >
-                  <h3 className="text-[16px] font-[700]">{item.title}</h3>
+                  <h3 className="text-[16px] font-[700] text-layout-black">{item.title}</h3>
                   <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
                 </div>
 

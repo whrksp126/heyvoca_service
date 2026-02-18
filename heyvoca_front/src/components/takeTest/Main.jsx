@@ -454,7 +454,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     flex items-center justify-center flex-1
                     w-full
                     rounded-[12px]
-                    bg-[#F5F5F5]
+                    bg-layout-gray-50
                   `}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -465,7 +465,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   <h2 className="
                     relative z-[1]
                     max-w-[90%]
-                    text-[28px] font-[700] text-[#111] text-center
+                    text-[28px] font-[700] text-layout-black text-center
                   ">
 
                     {/* <div className="
@@ -537,7 +537,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     className="
                       absolute bottom-[15px] left-[15px]
                       rounded-[8px] p-[5px]
-                      text-[#ccc]
+                      text-layout-gray-200
                     "
                   >
                     <SpeakerHigh size={22} weight="fill" />
@@ -603,7 +603,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     } else if (isCorrect === null && userSelected == index) {
                       btnStyle = 'border-primary-main-600 text-primary-main-600';
                     } else {
-                      btnStyle = 'border-[#CCCCCC] text-[#111]';
+                      btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
                     }
 
                     return (
@@ -663,8 +663,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     className={`
                     w-full h-[45px]
                     rounded-[8px]
-                    text-[16px] text-[#FFF] font-[700] 
-                    ${userSelected !== null ? "bg-primary-main-600" : "bg-[#CCC]"}
+                    text-[16px] text-layout-white dark:text-layout-black font-[700] 
+                    ${userSelected !== null ? "bg-primary-main-600" : "bg-layout-gray-200"}
                   `}
                   >
                     확인
@@ -699,16 +699,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           >
             <div className="
             flex flex-col items-center gap-[10px]
-            text-[#FFF] text-[14px] font-[700]
+            text-layout-white text-[14px] font-[700]
           ">
               {iconComponentMap[isSuspicious.icon]}
               <span className="
-              text-[#111] text-[16px] font-[600]
+              text-layout-black text-[16px] font-[600]
             ">
                 {isSuspicious.message}
               </span>
               <span className="
-              text-[#111] text-[14px] font-[400]
+              text-layout-black text-[14px] font-[400]
             ">
                 암기 상태를 수정하시겠습니까?
               </span>
@@ -726,7 +726,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     flex-1
                     h-[45px]
                     rounded-[8px]
-                    text-[#fff] text-[16px] font-[700]
+                    text-layout-white text-[16px] font-[700]
                     ${btn.color}
                   `}
                     whileTap={{ scale: 0.95 }}

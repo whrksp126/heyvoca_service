@@ -31,7 +31,7 @@
 //           <motion.button
 //             onClick={handleBack}
 //             className="
-//               text-[#CCC] dark:text-[#fff]
+//               text-[#CCC] dark:text-layout-white
 //               rounded-[8px]
 //             "
 //             whileHover={{ 
@@ -52,7 +52,7 @@
 //           </motion.button>
 //           <h1 className="
 //             text-[18px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">
 //           </h1>
 //         </div>
@@ -60,39 +60,39 @@
 //             absolute
 //             left-1/2 -translate-x-1/2
 //             text-[18px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">
 //             계정
 //           </h1>
 //         <div
 //           className="
 //             flex items-center gap-[8px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //         </div>
 //       </div>
 
 //       {/* Content */}
-//         <div className="flex flex-col gap-[10px] bg-[#F5F5F5] dark:bg-[#111]">
+//         <div className="flex flex-col gap-[10px] bg-layout-gray-50 dark:bg-layout-black">
 //           <ul className="flex flex-col">
-//             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-[#fff] dark:bg-[#111]">
-//                 <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">로그인 방식</h2>
+//             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">
+//                 <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">로그인 방식</h2>
 //                 <div className="flex items-center gap-[5px]">
 //                   <img src={google} alt="google" className="inline-block w-[16px] h-[16px]" />
 //                   <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">Google 로그인</span>
 //                 </div>
 //             </li>
-//             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] bg-[#fff] dark:bg-[#111]">
-//                 <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">계정 이메일</h2>
+//             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] bg-layout-white dark:bg-layout-black">
+//                 <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">계정 이메일</h2>
 //                 <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">{userProfile?.email || "로그인 필요"}</span>
 //             </li>
 //           </ul>
-//           <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-[#fff] dark:bg-[#111]"
+//           <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black"
 //             onClick={handleLogout}
 //           >
-//               <h2 className="text-[16px] font-[700] text-[#111] dark:text-[#fff]">로그아웃</h2>
-//               <SignOut size={20} className="text-[#ccc] dark:text-[#ccc]" />
+//               <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">로그아웃</h2>
+//               <SignOut size={20} className="text-layout-gray-200 dark:text-layout-gray-200" />
 //           </li>
 
 //         </div>

@@ -21,7 +21,7 @@
 //           <motion.button
 //             onClick={handleBack}
 //             className="
-//               text-[#CCC] dark:text-[#fff]
+//               text-[#CCC] dark:text-layout-white
 //               rounded-[8px]
 //             "
 //             whileHover={{ 
@@ -42,7 +42,7 @@
 //           </motion.button>
 //           <h1 className="
 //             text-[18px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">
 //           </h1>
 //         </div>
@@ -50,14 +50,14 @@
 //             absolute
 //             left-1/2 -translate-x-1/2
 //             text-[18px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">
 //             예문 설정
 //           </h1>
 //         <div
 //           className="
 //             flex items-center gap-[8px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //         </div>

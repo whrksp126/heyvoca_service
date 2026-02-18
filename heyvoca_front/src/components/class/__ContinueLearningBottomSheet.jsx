@@ -56,8 +56,8 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#ccc]
-//             text-[#fff] text-[16px] font-[700]
+//             bg-layout-gray-200
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={onCancel}
 //           whileTap={{ scale: 0.95 }}
@@ -73,7 +73,7 @@
 //             h-[45px]
 //             rounded-[8px]
 //             bg--primary-main-600
-//             text-[#fff] text-[16px] font-[700]
+//             text-layout-white text-[16px] font-[700]
 //           "
 //           onClick={() => onSet()}
 //           whileTap={{ scale: 0.95 }}

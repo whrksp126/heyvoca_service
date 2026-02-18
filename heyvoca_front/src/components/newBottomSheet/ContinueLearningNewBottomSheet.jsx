@@ -32,7 +32,7 @@ export const ContinueLearningNewBottomSheet = ({ onCancel, onSet }) => {
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">최근 학습</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">최근 학습</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -48,8 +48,8 @@ export const ContinueLearningNewBottomSheet = ({ onCancel, onSet }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -68,7 +68,7 @@ export const ContinueLearningNewBottomSheet = ({ onCancel, onSet }) => {
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

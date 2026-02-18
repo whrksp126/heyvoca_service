@@ -26,7 +26,7 @@ const Main = () => {
   // React Compiler가 자동으로 useCallback 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Test account validation
     if (formData.email === 'test' && formData.password === 'test') {
       setToken('test_session_token');
@@ -37,7 +37,7 @@ const Main = () => {
   };
 
   return (
-    <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-md p-6 bg-layout-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">로그인</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

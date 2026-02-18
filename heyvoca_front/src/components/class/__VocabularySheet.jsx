@@ -63,7 +63,7 @@
 //           className="
 //             absolute top-[18px] left-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //             p-[4px]
 //             rounded-[8px]
 //           "
@@ -85,13 +85,13 @@
 //         </motion.button>
 //         <h1 className="
 //           text-[18px] font-[700]
-//           text-[#111] dark:text-[#fff]
+//           text-layout-black dark:text-layout-white
 //         ">단어장 선택</h1>
 //         <div
 //           className="
 //             absolute top-[18px] right-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //         </div>
@@ -125,14 +125,14 @@
 //             >
 //               <h2 className="
 //               flex items-center gap-[10px]
-//               text-[16px] font-[700] text-[#111]
+//               text-[16px] font-[700] text-layout-black
 //             ">
 //               <div 
 //                 className="
 //                   flex items-center justify-center
 //                   w-[22px] h-[22px]
 //                   rounded-[5px]
-//                   text-[#fff] text-[10px] font-[700]
+//                   text-layout-white text-[10px] font-[700]
 //                 "
 //                 style={{ background: 'linear-gradient(160deg,rgba(255, 141, 212, 1) 10%, rgba(205, 141, 255, 1) 50%, rgba(116, 213, 255, 1) 90%)' }}
 //               >
@@ -212,7 +212,7 @@
 //                     }}
 //                     className="
 //                       absolute top-[50%] right-[8px]
-//                       text-[10px] font-[600] text-[#fff]
+//                       text-[10px] font-[600] text-layout-white
 //                     ">
 //                     {progress}%
 //                   </span>

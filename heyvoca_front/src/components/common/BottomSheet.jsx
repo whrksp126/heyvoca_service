@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const BottomSheet = ({ 
-  isOpen, 
+const BottomSheet = ({
+  isOpen,
   onClose,
   isExitComplete,
   onExitComplete,
-  children, 
+  children,
   isBackdropClickClosable = true,
-  isDragToCloseEnabled = true 
+  isDragToCloseEnabled = true
 }) => {
   const handleBackdropClick = () => {
     if (isBackdropClickClosable) {
@@ -23,29 +23,29 @@ const BottomSheet = ({
   };
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={()=>{
-      if(isExitComplete) onExitComplete()
+    <AnimatePresence mode="wait" onExitComplete={() => {
+      if (isExitComplete) onExitComplete()
     }}>
       {isOpen && (
         <>
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-black/50 z-[1000]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleBackdropClick}
           />
-          <motion.div 
+          <motion.div
             className="
               left-0 right-0 bottom-0 z-[1001] 
               fixed 
               max-h-[90vh]
               rounded-t-2xl 
-              bg-white 
+              bg-layout-white 
               after:content-[''] 
               after:absolute after:left-0 after:right-0 after:bottom-[-100vh] 
               after:h-[101vh] 
-              after:bg-white
+              after:bg-layout-white
             "
             initial={{ y: '100%' }}
             animate={{ y: 0 }}

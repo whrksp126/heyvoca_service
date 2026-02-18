@@ -30,7 +30,7 @@ export const StorePurchaseResultNewBottomSheet = ({ options }) => {
                         className={`object-contain ${success ? 'w-full h-full' : 'w-[50px] h-[45px] opacity-80'}`}
                     />
                 </div>
-                <h1 className="text-[18px] font-bold leading-[1.4] text-[#111] dark:text-[#fff] text-center tracking-[-0.36px]">
+                <h1 className="text-[18px] font-bold leading-[1.4] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
                     {success ? (
                         <>
                             <span className="text-primary-main-600">{packageName}</span> 구매 완료!

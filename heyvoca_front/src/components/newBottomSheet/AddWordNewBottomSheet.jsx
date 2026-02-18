@@ -259,7 +259,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어 {id ? "수정" : "추가"}</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어 {id ? "수정" : "추가"}</h1>
           {/* 
           <button
             type="button"
@@ -291,8 +291,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             단어장
@@ -322,8 +322,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   transition-colors
                   appearance-none
                   ${id ? false : true ?
-                    'border-[#CCCCCC] bg-[#F5F5F5] text-[#999999]' :
-                    'border-[#ccc] text-[#111] focus:border--primary-main-600'
+                    'border-layout-gray-200 bg-layout-gray-50 text-[#999999]' :
+                    'border-layout-gray-200 text-layout-black focus:border--primary-main-600'
                   }
                 `}
               >
@@ -336,7 +336,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   </option>
                 ))}
               </select>
-              <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-[#ccc] text-[18px]">
+              <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-layout-gray-200 text-[18px]">
                 <CaretDown />
               </div>
             </div>
@@ -349,8 +349,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             단어<strong className="text-primary-main-600">*</strong>
@@ -372,8 +372,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
               className="
                 w-full h-[45px]
                 px-[15px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[14px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -386,7 +386,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
             )}
           </div>
           {wordSearchResults && wordSearchResults.length > 0 && (
-            <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-[#FFEFFA] overflow-y-auto">
+            <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 overflow-y-auto">
               {wordSearchResults.map(({ word, meanings, examples }, index) => (
                 <li
                   key={index}
@@ -396,7 +396,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                     handleWordSelect({ word, meanings, examples });
                   }}
                 >
-                  <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
+                  <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                     {word.split('').map((char, i) => {
                       const searchWord = wordInputRef.current.value.toLowerCase();
                       const currentWord = word.toLowerCase();
@@ -405,11 +405,11 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                         i >= startIndex &&
                         i < startIndex + searchWord.length;
                       return (
-                        <span key={i} style={{ color: isHighlighted ? '#FF70D4' : '#111' }}>{char}</span>
+                        <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black)' }}>{char}</span>
                       );
                     })}
                   </span>
-                  <p className="text-[11px] font-[400] text-[#111] dark:text-[#fff] self-center">{meanings.join(', ')}</p>
+                  <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white self-center">{meanings.join(', ')}</p>
                 </li>
               ))}
             </ul>
@@ -422,8 +422,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             의미<strong className="text-primary-main-600">*</strong>
@@ -448,8 +448,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
               className="
                 w-full h-[45px]
                 px-[15px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[14px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -465,8 +465,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
           <div className="flex justify-between items-center">
             <h3
               className="
-                text-[14px] font-[700] text-[#111] 
-              dark:text-[#fff]
+                text-[14px] font-[700] text-layout-black 
+              dark:text-layout-white
               "
             >
               예문
@@ -517,11 +517,11 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                 flex flex-col gap-[5px] 
                 p-[15px] 
                 rounded-[8px]
-                bg-[#FFEFFA]
+                bg-primary-main-100
               "
               >
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[14px] font-[600] text-[#000] dark:text-[#fff]">
+                  <h2 className="text-[14px] font-[600] text-[#000] dark:text-layout-white">
                     {index + 1}
                   </h2>
                   <div className="
@@ -573,7 +573,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   </div>
                 </div>
                 <div>
-                  <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
+                  <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                     <span
                       className="cursor-pointer"
                       onClick={() => getTextSound(origin, "en")}
@@ -604,8 +604,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -624,7 +624,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -670,8 +670,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-[#111] 
-  //           dark:text-[#fff]
+  //             text-[14px] font-[700] text-layout-black 
+  //           dark:text-layout-white
   //           "
   //         >
   //           단어장
@@ -697,8 +697,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //                 transition-colors
   //                 appearance-none
   //                 ${id ? false : true ? 
-  //                   'border-[#CCCCCC] bg-[#F5F5F5] text-[#999999]' : 
-  //                   'border-[#ccc] text-[#111] focus:border--primary-main-600'
+  //                   'border-[#CCCCCC] bg-layout-gray-50 text-[#999999]' : 
+  //                   'border-layout-gray-200 text-layout-black focus:border--primary-main-600'
   //                 }
   //               `}
   //             >
@@ -711,7 +711,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //                 </option>
   //               ))}
   //             </select>
-  //             <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-[#ccc] text-[18px]">
+  //             <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-layout-gray-200 text-[18px]">
   //               <CaretDown />
   //             </div>
   //           </div>
@@ -724,8 +724,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-[#111] 
-  //           dark:text-[#fff]
+  //             text-[14px] font-[700] text-layout-black 
+  //           dark:text-layout-white
   //           "
   //         >
   //           단어<strong className="text-primary-main-600">*</strong>
@@ -743,8 +743,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //             className="
   //               w-full h-[45px]
   //               px-[15px]
-  //               border-[1px] border-[#ccc] rounded-[8px]
-  //               font-[400] text-[14px] text-[#111]
+  //               border-[1px] border-layout-gray-200 rounded-[8px]
+  //               font-[400] text-[14px] text-layout-black
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -757,14 +757,14 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //           )}
   //         </div>
   //         {wordSearchResults && wordSearchResults.length > 0 && (
-  //           <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-[#FFEFFA] overflow-y-auto">
+  //           <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 overflow-y-auto">
   //             {wordSearchResults.map(({word, meanings, examples}, index) => (
   //               <li
   //                 key={index}
   //                 className="flex gap-[10px] pb-[10px] last:pb-0 last:border-b-0 border-b-[1px] border-[#DDDDDD] cursor-pointer"
   //                 onClick={() => handleWordSelect({ word, meanings, examples })}
   //               >
-  //                 <span className="text-[14px] font-[700] text-[#111] dark:text-[#fff]">
+  //                 <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
   //                   {word.split('').map((char, i) => {
   //                     const searchWord = wordInputRef.current.value.toLowerCase();
   //                     const currentWord = word.toLowerCase();
@@ -773,11 +773,11 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //                       i >= startIndex && 
   //                       i < startIndex + searchWord.length;
   //                     return (
-  //                       <span key={i} style={{ color: isHighlighted ? '#FF70D4' : '#111' }}>{char}</span>
+  //                       <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black)' }}>{char}</span>
   //                     );
   //                   })}
   //                 </span>
-  //                 <p className="text-[11px] font-[400] text-[#111] dark:text-[#fff]">{meanings.join(', ')}</p>
+  //                 <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white">{meanings.join(', ')}</p>
   //               </li>
   //             ))}
   //           </ul>
@@ -790,8 +790,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-[#111] 
-  //           dark:text-[#fff]
+  //             text-[14px] font-[700] text-layout-black 
+  //           dark:text-layout-white
   //           "
   //         >
   //           의미<strong className="text-primary-main-600">*</strong>
@@ -812,8 +812,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //             className="
   //               w-full h-[45px]
   //               px-[15px]
-  //               border-[1px] border-[#ccc] rounded-[8px]
-  //               font-[400] text-[14px] text-[#111]
+  //               border-[1px] border-layout-gray-200 rounded-[8px]
+  //               font-[400] text-[14px] text-layout-black
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -829,8 +829,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //         <div className="flex justify-between items-center">
   //           <h3 
   //             className="
-  //               text-[14px] font-[700] text-[#111] 
-  //             dark:text-[#fff]
+  //               text-[14px] font-[700] text-layout-black 
+  //             dark:text-layout-white
   //             "
   //           >
   //             예문
@@ -867,11 +867,11 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //               flex flex-col gap-[5px] 
   //               p-[15px] 
   //               rounded-[8px]
-  //               bg-[#FFEFFA]
+  //               bg-primary-main-100
   //             "
   //           >
   //             <div className="flex items-center justify-between">
-  //               <h2 className="text-[14px] font-[600] text-[#000] dark:text-[#fff]">
+  //               <h2 className="text-[14px] font-[600] text-[#000] dark:text-layout-white">
   //                 {index + 1}
   //               </h2>
   //               <div className="
@@ -908,7 +908,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //               </div>
   //             </div>
   //             <div>
-  //               <p className="text-[14px] font-[400] text-[#111] dark:text-[#fff]">
+  //               <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
   //                 <span>
   //                 {origin && wordInputRef.current ? 
   //                   origin.split(wordInputRef.current).map((part, i, arr) => (
@@ -940,8 +940,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //           flex-1
   //           h-[45px]
   //           rounded-[8px]
-  //           bg-[#ccc]
-  //           text-[#fff] text-[16px] font-[700]
+  //           bg-layout-gray-200
+  //           text-layout-white text-[16px] font-[700]
   //         "
   //         onClick={handleClose}
   //         whileTap={{ scale: 0.95 }}
@@ -957,7 +957,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //           h-[45px]
   //           rounded-[8px]
   //           bg-primary-main-600
-  //           text-[#fff] text-[16px] font-[700]
+  //           text-layout-white text-[16px] font-[700]
   //         "
   //         onClick={() =>  currentStateRef.current.mode === "add" 
   //           ? 
@@ -1019,8 +1019,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-[#111] 
-  //           dark:text-[#fff]
+  //             text-[14px] font-[700] text-layout-black 
+  //           dark:text-layout-white
   //           "
   //         >
   //           {exampleSetType.exampleIndex}.
@@ -1038,8 +1038,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //             className="
   //               w-full h-[45px] min-h-[45px] max-h-[135px]
   //               px-[15px] py-[10px]
-  //               border-[1px] border-[#ccc] rounded-[8px]
-  //               font-[400] text-[16px] text-[#111]
+  //               border-[1px] border-layout-gray-200 rounded-[8px]
+  //               font-[400] text-[16px] text-layout-black
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -1058,8 +1058,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //             className="
   //               w-full h-[45px] min-h-[45px] max-h-[135px]
   //               px-[15px] py-[10px]
-  //               border-[1px] border-[#ccc] rounded-[8px]
-  //               font-[400] text-[16px] text-[#111]
+  //               border-[1px] border-layout-gray-200 rounded-[8px]
+  //               font-[400] text-[16px] text-layout-black
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -1080,8 +1080,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //           flex-1
   //           h-[45px]
   //           rounded-[8px]
-  //           bg-[#ccc]
-  //           text-[#fff] text-[16px] font-[700]
+  //           bg-layout-gray-200
+  //           text-layout-white text-[16px] font-[700]
   //         "
   //         onClick={() => setExampleSetType({
   //           isExampleSet: false,
@@ -1101,7 +1101,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   //           h-[45px]
   //           rounded-[8px]
   //           bg-primary-main-600
-  //           text-[#fff] text-[16px] font-[700]
+  //           text-layout-white text-[16px] font-[700]
   //         "
   //         onClick={() => {
   //           if(exampleSetType.setType === "add") {

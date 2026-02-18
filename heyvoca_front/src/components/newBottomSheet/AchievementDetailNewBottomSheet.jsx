@@ -117,11 +117,11 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
     };
 
     return (
-        <div className="relative bg-white">
+        <div className="relative bg-layout-white dark:bg-layout-black">
             {/* 컨텐츠 구역 */}
             <div className="flex flex-col gap-[20px] p-[20px] pb-[100px] overflow-y-auto max-h-[calc(90vh-47px)] h-full">
                 {/* 헤더 */}
-                <h1 className="text-[18px] font-[700] text-[#111] text-center tracking-[-0.36px]">
+                <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
                     업적 달성 기준
                 </h1>
 
@@ -154,7 +154,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                         style={getAchievementBackgroundStyle(userLevel)}
                                     />
                                 </div>
-                                <span className="text-[12px] font-[600] text-[#111] text-center w-[60px]">
+                                <span className="text-[12px] font-[600] text-layout-black dark:text-layout-white text-center w-[60px]">
                                     {type}
                                 </span>
                             </motion.div>
@@ -163,9 +163,9 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                 </div>
 
                 {/* 리스트 영역 - 연한 보라색 배경 */}
-                <div className="flex flex-col gap-[15px] p-[20px] bg-[#F6EFFF] rounded-[12px]">
+                <div className="flex flex-col gap-[15px] p-[20px] bg-secondary-purple-100 rounded-[12px]">
                     {/* 선택된 업적 이름 */}
-                    <h2 className="text-[16px] font-[700] text-[#111] tracking-[-0.32px]">
+                    <h2 className="text-[16px] font-[700] text-layout-black tracking-[-0.32px]">
                         {activeTab}
                     </h2>
 
@@ -187,9 +187,9 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                                 fontFamily: 'Cafe24Ssurround, sans-serif',
                                                 // 레벨 1 이상일 때 하얀 외곽선 효과 적용 (그라데이션 텍스트 호환을 위해 filter 사용)
                                                 ...(levelInfo.level >= 1 ? {
-                                                    filter: 'drop-shadow(-1px -1px 0 #fff) drop-shadow(1px -1px 0 #fff) drop-shadow(-1px 1px 0 #fff) drop-shadow(1px 1px 0 #fff)'
+                                                    filter: 'drop-shadow(-1px -1px 0 var(--layout-white)) drop-shadow(1px -1px 0 var(--layout-white)) drop-shadow(-1px 1px 0 var(--layout-white)) drop-shadow(1px 1px 0 var(--layout-white))'
                                                 } : {
-                                                    textShadow: '-1.2px -1.2px 0 #fff, 1.2px -1.2px 0 #fff, -1.2px 1.2px 0 #fff, 1.2px 1.2px 0 #fff'
+                                                    textShadow: '-1.2px -1.2px 0 var(--layout-white), 1.2px -1.2px 0 var(--layout-white), -1.2px 1.2px 0 var(--layout-white), 1.2px 1.2px 0 var(--layout-white)'
                                                 }),
                                                 ...getAchievementTextStyle(levelInfo.level)
                                             }}
@@ -199,7 +199,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                         </div>
 
                                         {/* 목표 설명 */}
-                                        <span className="text-[13px] font-[400] text-[#333] tracking-[-0.26px] leading-[1.5]">
+                                        <span className="text-[13px] font-[400] text-layout-gray-500 tracking-[-0.26px] leading-[1.5]">
                                             {levelInfo.goal}
                                         </span>
                                     </div>
@@ -221,7 +221,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                                 style={{ backgroundColor: '#EAD2FF' }}
                                             >
                                                 <img src={gem} alt="보석" className="w-[13px] h-[12px]" />
-                                                <span className="text-[11px] font-[500] text-[#111] text-center tracking-[-0.22px] leading-[1.4]">
+                                                <span className="text-[11px] font-[500] text-layout-black text-center tracking-[-0.22px] leading-[1.4]">
                                                     {levelInfo.reward}
                                                 </span>
                                             </div>
@@ -235,9 +235,9 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
             </div>
 
             {/* 하단 버튼 구역 (고정) */}
-            <div className="absolute bottom-0 left-0 right-0 p-[20px] bg-white">
+            <div className="absolute bottom-0 left-0 right-0 p-[20px] bg-layout-white dark:bg-layout-black">
                 <motion.button
-                    className="w-full h-[45px] bg-[#CCC] text-white rounded-[8px] text-[16px] font-[700]"
+                    className="w-full h-[45px] bg-layout-gray-200 text-layout-white rounded-[8px] text-[16px] font-[700]"
                     onClick={handleClose}
                     whileTap={{ scale: 0.98 }}
                     transition={{

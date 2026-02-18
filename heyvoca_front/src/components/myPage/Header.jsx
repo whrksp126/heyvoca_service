@@ -10,8 +10,8 @@ const Header = () => {
       w-full h-[55px]
       px-[16px] py-[14px]
       border-b-[1px] border-[#ddd]
-      bg-[#fff] 
-      dark:bg-[#111]
+      bg-layout-white 
+      dark:bg-layout-black
     '>
       <div className="left">
         

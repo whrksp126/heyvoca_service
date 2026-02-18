@@ -18,7 +18,7 @@ const getColorSet = (mainColor) => {
     case '#FF70D4': return {
       main: "#FF70D4",
       sub: "#FF70D44d",
-      background: "#FFEFFA"
+      background: "var(--primary-main-100)"
     };
     case '#CD8DFF': return {
       main: "#CD8DFF",
@@ -43,7 +43,7 @@ const getColorSet = (mainColor) => {
     default: return {
       main: "#FF70D4",
       sub: "#FF70D44d",
-      background: "#FFEFFA"
+      background: "var(--primary-main-100)"
     };
   }
 };
@@ -193,7 +193,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
           flex items-center justify-center
           p-[20px] pb-[0px]
           ">
-          <h1 className="text-[18px] font-[700]">단어장 {id ? "수정" : "추가"}</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어장 {id ? "수정" : "추가"}</h1>
         </div>
         <div className="right"></div>
       </div>
@@ -208,8 +208,8 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             단어장 이름
@@ -223,8 +223,8 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
               className="
                 w-full h-[45px]
                 px-[15px]
-                border-[1px] border-[#ccc] rounded-[8px]
-                font-[400] text-[14px] text-[#111]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black
                 outline-none
                 focus:border-primary-main-600
                 transition-colors
@@ -239,8 +239,8 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
         >
           <h3
             className="
-              text-[14px] font-[700] text-[#111] 
-            dark:text-[#fff]
+              text-[14px] font-[700] text-layout-black 
+            dark:text-layout-white
             "
           >
             단어장 색상
@@ -283,7 +283,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
                     <Check
                       weight="bold"
                       className="
-                        w-[15px] h-[15px] text-[#fff]
+                        w-[15px] h-[15px] text-layout-white
                         absolute
                       "
                     />
@@ -300,8 +300,8 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -320,7 +320,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -345,8 +345,8 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
         flex flex-col gap-[15px] items-center justify-center 
         pt-[40px] px-[20px] pb-[10px]
       ">
-        <h3 className="text-[18px] font-[700]">단어장을 정말 삭제하시겠어요?</h3>
-        <p className="text-[14px] font-[400] text-[#111]">삭제 후에는 복구가 불가능해요 😢</p>
+        <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">단어장을 정말 삭제하시겠어요?</h3>
+        <p className="text-layout-black dark:text-layout-white text-[14px] font-[400]">삭제 후에는 복구가 불가능해요 😢</p>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
         <motion.button
@@ -354,8 +354,8 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#ccc]
-            text-[#fff] text-[16px] font-[700]
+            bg-layout-gray-200
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -374,7 +374,7 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-[#fff] text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

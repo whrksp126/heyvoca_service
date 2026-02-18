@@ -117,20 +117,20 @@ const Main = () => {
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
           border-[1px] border-primary-main-600 rounded-[12px]
-          bg-[#FFEFFA]
+          bg-primary-main-100
         ">
           <div className="
             flex flex-col items-center justify-center gap-[10px]
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-[#111]
+              text-[22px] font-[700] text-layout-black
             ">
               <div className="
                 flex items-center justify-center
                 w-[22px] h-[22px]
                 rounded-[5px]
-                text-[#fff]
+                text-layout-white
                 bg-primary-main-600
               ">
                 <Brain size={12} weight="fill" />
@@ -139,7 +139,7 @@ const Main = () => {
             </h2>
             <p
               className="
-                text-[13px] font-[400] text-[#111] text-center
+                text-[13px] font-[400] text-layout-black text-center
               "
             >자주 틀리거나<br />잊어버린 단어 위주로 복습해요!</p>
           </div>
@@ -149,7 +149,7 @@ const Main = () => {
               w-full h-[45px]
               rounded-[8px]
               bg-primary-main-600
-              text-[#fff] text-[17px] font-[700]
+              text-layout-white text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
             onClick={() => {
@@ -164,20 +164,20 @@ const Main = () => {
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
           border-[1px] border-[#CD8DFF] rounded-[12px]
-          bg-[#F6EFFF]
+          bg-secondary-purple-100
         ">
           <div className="
             flex flex-col items-center justify-center gap-[10px]
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-[#111]
+              text-[22px] font-[700] text-layout-black
             ">
               <div className="
                 flex items-center justify-center
                 w-[22px] h-[22px]
                 rounded-[5px]
-                text-[#fff]
+                text-layout-white
                 bg-[#CD8DFF]
               ">
                 <Lightbulb size={12} weight="fill" />
@@ -186,7 +186,7 @@ const Main = () => {
             </h2>
             <p
               className="
-                text-[13px] font-[400] text-[#111] text-center
+                text-[13px] font-[400] text-layout-black text-center
               "
             >나의 단어 실력을<br />테스트로 점검해보세요!</p>
           </div>
@@ -196,7 +196,7 @@ const Main = () => {
               w-full h-[45px]
               rounded-[8px]
               bg-[#CD8DFF]
-              text-[#fff] text-[17px] font-[700]
+              text-layout-white text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
             onClick={() => {
@@ -227,14 +227,14 @@ const Main = () => {
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-[#111]
+              text-[22px] font-[700] text-layout-black
             ">
               <div 
                 className="
                   flex items-center justify-center
                   w-[22px] h-[22px]
                   rounded-[5px]
-                  text-[#fff] text-[10px] font-[700]
+                  text-layout-white text-[10px] font-[700]
                 "
                 style={{ background: 'linear-gradient(160deg,rgba(255, 141, 212, 1) 10%, rgba(205, 141, 255, 1) 50%, rgba(116, 213, 255, 1) 90%)' }}
               >
@@ -244,7 +244,7 @@ const Main = () => {
             </h2>
             <p 
               className="
-                text-[13px] font-[400] text-[#111] text-center
+                text-[13px] font-[400] text-layout-black text-center
               "
             >
               나의 단어 실력을<br />
@@ -256,7 +256,7 @@ const Main = () => {
               flex items-center justify-center
               w-full h-[45px]
               rounded-[8px]
-              text-[#fff] text-[17px] font-[700]
+              text-layout-white text-[17px] font-[700]
             "
             style={{ background: 'linear-gradient(160deg,rgba(255, 141, 212, 1) 10%, rgba(205, 141, 255, 1) 50%, rgba(116, 213, 255, 1) 90%)' }}
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}

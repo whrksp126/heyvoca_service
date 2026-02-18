@@ -49,7 +49,7 @@
 //           className="
 //             absolute top-[18px] left-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //             p-[4px]
 //             rounded-[8px]
 //           "
@@ -71,13 +71,13 @@
 //         </motion.button>
 //         <h1 className="
 //           text-[18px] font-[700]
-//           text-[#111] dark:text-[#fff]
+//           text-layout-black dark:text-layout-white
 //         ">테스트 설정</h1>
 //         <div
 //           className="
 //             absolute top-[18px] right-[10px]
 //             flex items-center gap-[4px]
-//             text-[#CCC] dark:text-[#fff]
+//             text-[#CCC] dark:text-layout-white
 //           "
 //         >
 //         </div>
@@ -92,7 +92,7 @@
 //             w-[280px] h-[297px]
 //             p-[30px]
 //             border border--primary-main-600 rounded-[12px]
-//             bg-[#FFEFFA]
+//             bg-primary-main-100
 //           "
 //           whileHover={{
 //             scale: 1.05
@@ -105,7 +105,7 @@
 //           <Cards size={32} weight="fill" className="text--primary-main-600" />
 //           <h2 className="
 //             text-[22px] font-[700]
-//             text-[#111] dark:text-[#fff]
+//             text-layout-black dark:text-layout-white
 //           ">사지 선다</h2>
 //         </motion.li>
 //       </ul>

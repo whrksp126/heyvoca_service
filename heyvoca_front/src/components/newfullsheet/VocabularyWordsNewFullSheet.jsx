@@ -14,6 +14,7 @@ import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
@@ -24,6 +25,9 @@ const ITEM_HEIGHT_ESTIMATE = 120; // 각 아이템의 예상 높이 (px)
 
 const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  const { isDark } = useTheme();
+
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
@@ -244,7 +248,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       <div className="
         flex items-center justify-center h-full
         sm:max-w-[500px] sm:h-[90vh] sm:rounded-[20px] sm:overflow-hidden
-        bg-white dark:bg-[#111]
+        bg-layout-white dark:bg-layout-black
       ">
         <p>로딩 중...</p>
       </div>
@@ -290,7 +294,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-white
+      bg-layout-white dark:bg-layout-black
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header - h-58.5px matches Figma */}
@@ -311,7 +315,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               popNewFullSheet();
             }}
             className="
-              text-[#CCC] dark:text-[#fff]
+              text-layout-gray-200 dark:text-layout-white
               rounded-[8px]
             "
             whileHover={{
@@ -330,13 +334,9 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           >
             <CaretLeft size={24} />
           </motion.button>
-          <h1 style={{
-            fontSize: '18px',
-            fontWeight: 700,
-            color: '#111',
-            letterSpacing: '-0.36px',
-            fontFamily: "'Pretendard Variable', sans-serif"
-          }}>
+          <h1
+            className="text-[18px] font-bold  text-layout-black dark:text-layout-white"
+          >
             {vocabularySheet.title}
           </h1>
         </div>
@@ -441,14 +441,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 flex items-center justify-between
                 w-[120px] h-[35px]
                 px-[15px]
-                bg-white
-                border-[0.5px] border-[#CCC] rounded-[6px]
+                bg-layout-white dark:bg-layout-black
+                border-[0.5px] border-layout-gray-200 rounded-[6px]
               "
             >
-              <span className="text-[14px] font-[400] text-[#111]">
+              <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                 {sortLabels[sortBy] || '정렬'}
               </span>
-              <CaretDown size={14} color="#111" />
+              {isDark ? (
+                <CaretDown size={14} color="var(--layout-white)" />
+              ) : (
+                <CaretDown size={14} color="var(--layout-black)" />
+              )}
             </button>
 
             <AnimatePresence>
@@ -465,8 +469,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     className="
                       absolute top-[40px] left-0
                       w-[120px]
-                      bg-white
-                      border border-[#ccc] rounded-[6px]
+                      bg-layout-white dark:bg-layout-black
+                      border border-layout-gray-200 rounded-[6px]
                       shadow-lg
                       z-[11]
                       overflow-hidden
@@ -485,7 +489,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           px-[15px]
                           text-left text-[13px]
                           ${sortBy === key ? 'text-primary-main-600 font-[600]' : 'text-[#666]'}
-                          hover:bg-[#F5F5F5]
+                          hover:bg-layout-gray-50
                           transition-colors
                         `}
                       >
@@ -505,7 +509,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             className="
               flex items-center justify-center
               h-[35px] px-[15px]
-              bg-white
+              bg-layout-white dark:bg-layout-black
               border-[0.5px] border-primary-main-600 rounded-[6px]
             "
           >
@@ -573,10 +577,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               marginBottom: '20px',
               fontFamily: "'Pretendard Variable', sans-serif"
             }}>
-              <p style={{ fontWeight: 400, color: '#111', margin: 0 }}>아직 추가된 단어가 없어요!</p>
+              <p style={{ fontWeight: 400, color: 'var(--layout-black)', margin: 0 }}>아직 추가된 단어가 없어요!</p>
               <p style={{ margin: 0 }}>
                 <span style={{ fontWeight: 700, color: '#FF70D4' }}>단어</span>
-                <span style={{ fontWeight: 400, color: '#111' }}>를 추가해보세요 🤗</span>
+                <span style={{ fontWeight: 400, color: 'var(--layout-black)' }}>를 추가해보세요 🤗</span>
               </p>
             </div>
 
@@ -626,7 +630,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     flex flex-col gap-[10px] items-start
                     p-[20px] mx-[16px] mb-[10px]
                     rounded-[12px]
-                    bg-[#F5F5F5]
+                    bg-layout-gray-50
                     cursor-pointer
                   "
                   onClick={() => handleCardClick(item.id)}
@@ -639,7 +643,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           getTextSound(item.origin, "en");
                         }}
                         className="
-                          text-[16px] font-[700] text-[#111]
+                          text-[16px] font-[700] text-layout-black
                           tracking-[-0.32px]
                           cursor-pointer relative
                           overflow-hidden
@@ -667,7 +671,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                         getTextSound(item.meanings.join(", "), "ko");
                       }}
                       className="
-                        text-[12px] font-normal text-[#333]
+                        text-[12px] font-normal text-layout-gray-500
                         tracking-[-0.24px]
                         cursor-pointer relative
                         overflow-hidden
