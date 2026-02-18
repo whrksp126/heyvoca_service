@@ -461,3 +461,64 @@ class GemLog(db.Model):
         self.balance_after = balance_after
 
 ### 보석 로그용 ###
+
+
+### 재편성된 단어장 ###
+class AdminVocaBook(db.Model):
+    __tablename__ = 'admin_voca_book'
+    id = Column(Integer, primary_key=True)
+    book_nm = Column(String(255), nullable=False)
+    language = Column(String(50), nullable=False)
+    source = Column(String(100), nullable=False)
+    category = Column(String(100), nullable=True)
+    username = Column(String(100), nullable=True)
+    word_count = Column(Integer, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
+
+    # 관계 정의
+    voca_books = relationship("AdminVocaBookMap")
+
+
+class AdminVocaBookMap(db.Model):
+    __tablename__ = 'admin_voca_book_map'
+    id = Column(Integer, primary_key=True)
+    voca_id = Column(Integer, ForeignKey('voca.id'))
+    book_id = Column(Integer, ForeignKey('admin_voca_book.id'))
+    level = Column(Integer, nullable=True)
+    voca_meanings = Column(TEXT, nullable=True)
+    voca_examples = Column(TEXT, nullable=True)
+
+    # 관계 정의
+    voca = relationship("Voca")
+    voca_book = relationship("AdminVocaBook")
+
+
+class UserVocaBookMap(db.Model):
+    __tablename__ = 'user_voca_book_map'
+    id = Column(Integer, primary_key=True)
+    user_voca_book_id = Column(BinaryUUID, ForeignKey('user_voca_book.id'))
+    user_voca_id = Column(Integer, ForeignKey('user_voca.id'))
+    level = Column(Integer, nullable=True)
+    voca_meanings = Column(TEXT, nullable=True, comment='admin 사전의 voca일 경우 null')
+    voca_examples = Column(TEXT, nullable=True, comment='admin 사전의 voca일 경우 null')
+    memory_status = Column(TEXT, nullable=True)
+
+    # 관계 정의
+    user_voca_book = relationship("UserVocaBook")
+    user_voca = relationship("UserVoca")
+
+
+class UserVoca(db.Model):
+    __tablename__ = 'user_voca'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    voca_id = Column(Integer, ForeignKey('voca.id'), nullable=True)
+    word = Column(String(255), nullable=True)
+    voca_meanings = Column(TEXT, nullable=True)
+    voca_examples = Column(TEXT, nullable=True)
+    data = Column(TEXT, nullable=True)
+
+    # 관계 정의
+    user = relationship("User")
+    voca = relationship("Voca")
+### 재편성된 단어장 ###

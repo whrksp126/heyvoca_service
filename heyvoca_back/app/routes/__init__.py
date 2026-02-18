@@ -10,6 +10,8 @@ version_bp = Blueprint('version', __name__, url_prefix='/version')
 user_voca_book_bp = Blueprint('user_voca_book', __name__, url_prefix='/user_voca_book')
 purchase_bp = Blueprint('purchase', __name__, url_prefix='/purchase')
 ocr_bp = Blueprint('ocr', __name__, url_prefix='/ocr')
+voca_indexs_bp = Blueprint('voca_indexs', __name__, url_prefix='/vocaIndexs')
+voca_books_bp = Blueprint('voca_books', __name__, url_prefix='/vocaBooks')
 
 from app.routes import auth
 from app.routes import search
@@ -21,3 +23,5 @@ from app.routes import version
 from app.routes import user_voca_book
 from app.routes import purchase
 from app.routes import ocr
+from app.routes import voca_indexs
+from app.routes import voca_books
