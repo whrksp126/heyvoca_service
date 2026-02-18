@@ -119,8 +119,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
           <motion.button
             className="
               h-[30px] px-[12px]
-              border border-[#FF8DD4] rounded-[6px]
-              text-[#FF8DD4] text-[13px] font-[700]
+              border-primary-main-600 text-primary-main-600 text-[13px] font-[700]
             "
             whileHover={{
               backgroundColor: 'rgba(255, 141, 212, 0.1)',
@@ -257,12 +256,12 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
               </div>
               <div className="
                 flex gap-[8px]
-              text-[#FF8DD4] text-[20px]
+              text-primary-main-600 text-[20px]
               ">
                 <motion.button
                   className="
                   rounded-[20px]
-                    text-[#FF8DD4] text-[20px]
+                    text-primary-main-600 text-[20px]
                   "
                   variants={buttonVariants}
                   whileTap="tap"

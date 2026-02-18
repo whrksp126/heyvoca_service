@@ -88,9 +88,9 @@ export const LoadVocabularyNewBottomSheet = () => {
                                 flex items-center justify-center gap-[8px]
                                 w-full h-[45px]
                                 bg-white dark:bg-[#1A1A1A]
-                                border border-[#ff8dd4] border-solid
+                                border border-primary-main-600 border-solid
                                 rounded-[8px]
-                                text-[#ff8dd4] font-bold text-[16px] tracking-[-0.32px]
+                                text-primary-main-600 font-bold text-[16px] tracking-[-0.32px]
                             "
               onClick={item.onClick}
               whileTap={{ scale: 0.98 }}

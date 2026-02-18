@@ -46,7 +46,7 @@ const getAchievementBackgroundStyle = (level) => {
   if (level >= 10) {
     // 레벨 10 이상: 그라데이션
     return {
-      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+      background: 'linear-gradient(135deg, #FF70D4 0%, #CD8DFF 50%, #74D5FF 100%)',
     };
   } else if (level >= 6) {
     // 레벨 6~9: 노란색
@@ -72,7 +72,7 @@ const getAchievementTextStyle = (level) => {
     // 레벨 10 이상: 그라데이션 글자 (배경과 동일)
     return {
       fontFamily: 'Cafe24Ssurround',
-      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+      background: 'linear-gradient(135deg, #FF70D4 0%, #CD8DFF 50%, #74D5FF 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
@@ -280,7 +280,7 @@ const Main = () => {
         h-screen
       "
       style={{
-        background: 'linear-gradient(to bottom, #FF69C6 0%, #FF8DD4 22%, #FFFFFF 42%)',
+        background: 'linear-gradient(to bottom, #FF69C6 0%, #FF70D4 22%, #FFFFFF 42%)',
       }}
     >
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
@@ -435,7 +435,7 @@ const Main = () => {
             flex items-start gap-[50px]
             px-[15px] py-[12px]
             rounded-[12px]
-            bg-[#FF8DD4] 
+            bg-primary-main-600 
           ">
             <h2 className="text-[#fff] text-[16px] font-[700]">데일리 미션</h2>
             <div className="flex flex-col flex-1 gap-[8px]">
@@ -449,7 +449,7 @@ const Main = () => {
                   text-[10px] font-[700]
                   ${todayStatus.attendCompleted
                     ? 'text-[#fff] bg-[#E569B7]'
-                    : 'text-[#FF8DD4] bg-[#fff]'
+                    : 'text-primary-main-600 bg-[#fff]'
                   }
                 `}>
                   {todayStatus.attendCompleted ? '완료' : '미완료'}
@@ -465,7 +465,7 @@ const Main = () => {
                   text-[10px] font-[700]
                   ${todayStatus.dailyMissionCompleted
                     ? 'text-[#fff] bg-[#E569B7]'
-                    : 'text-[#FF8DD4] bg-[#fff]'
+                    : 'text-primary-main-600 bg-[#fff]'
                   }
                 `}>
                   {todayStatus.dailyMissionCompleted ? '완료' : '미완료'}
@@ -497,11 +497,11 @@ const Main = () => {
                   )}
                   {(item.attend && !item.daily_mission) && (
                     <div className="w-[30px] h-[30px] flex items-center justify-center">
-                      <CheckCircle size={30} weight="fill" color="#FF8DD4" />
+                      <CheckCircle size={30} weight="fill" color="#FF70D4" />
                     </div>
                   )}
                   {(!item.attend && !item.daily_mission) && (
-                    <CircleDashed size={30} color="#FF8DD4" />
+                    <CircleDashed size={30} color="#FF70D4" />
                   )}
                 </div>
               ))}

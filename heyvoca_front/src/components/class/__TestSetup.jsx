@@ -91,7 +91,7 @@
 //             flex flex-col items-center justify-center gap-[10px]
 //             w-[280px] h-[297px]
 //             p-[30px]
-//             border border-[#FF8DD4] rounded-[12px]
+//             border border--primary-main-600 rounded-[12px]
 //             bg-[#FFEFFA]
 //           "
 //           whileHover={{
@@ -102,7 +102,7 @@
 //           }}
 //           onClick={() => handleCardClick(QUESTION_TYPE_MAP.MULTIPLE_CHOICE)}
 //         >
-//           <Cards size={32} weight="fill" className="text-[#FF8DD4]" />
+//           <Cards size={32} weight="fill" className="text--primary-main-600" />
 //           <h2 className="
 //             text-[22px] font-[700]
 //             text-[#111] dark:text-[#fff]

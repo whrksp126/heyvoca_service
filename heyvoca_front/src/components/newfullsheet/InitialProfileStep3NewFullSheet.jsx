@@ -195,8 +195,8 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               border-[2px] rounded-[8px]
               font-[16px] font-[700]
               ${selectedLevel === 1
-                  ? 'border-[#FF8DD4] text-[#FF8DD4] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,141,212,0.3)]'
-                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-[#FF8DD4] hover:text-[#FF8DD4] focus:border-[#FF8DD4] focus:text-[#FF8DD4]'
+                  ? 'border-primary-main-600 text-primary-main-600 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
+                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(1)}
@@ -217,8 +217,8 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               border-[2px] rounded-[8px]
               font-[16px] font-[700]
               ${selectedLevel === 2
-                  ? 'border-[#FF8DD4] text-[#FF8DD4] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,141,212,0.3)]'
-                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-[#FF8DD4] hover:text-[#FF8DD4] focus:border-[#FF8DD4] focus:text-[#FF8DD4]'
+                  ? 'border-primary-main-600 text-primary-main-600 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
+                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(2)}
@@ -239,8 +239,8 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               border-[2px] rounded-[8px]
               font-[16px] font-[700]
               ${selectedLevel === 3
-                  ? 'border-[#FF8DD4] text-[#FF8DD4] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,141,212,0.3)]'
-                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-[#FF8DD4] hover:text-[#FF8DD4] focus:border-[#FF8DD4] focus:text-[#FF8DD4]'
+                  ? 'border-primary-main-600 text-primary-main-600 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
+                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(3)}
@@ -261,8 +261,8 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               border-[2px] rounded-[8px]
               font-[16px] font-[700]
               ${selectedLevel === 4
-                  ? 'border-[#FF8DD4] text-[#FF8DD4] bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,141,212,0.3)]'
-                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-[#FF8DD4] hover:text-[#FF8DD4] focus:border-[#FF8DD4] focus:text-[#FF8DD4]'
+                  ? 'border-primary-main-600 text-primary-main-600 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
+                  : 'border-[#CCCCCC] text-[#111111] bg-[#FFFFFF] hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(4)}
@@ -288,7 +288,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
             className={`
             w-full h-[50px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] font-[16px] font-[700]
             ${!selectedLevel ? 'opacity-50 cursor-not-allowed' : ''}
           `}

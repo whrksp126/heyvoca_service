@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
-export const ConfirmNewBottomSheet = ({title, btns}) => {
+export const ConfirmNewBottomSheet = ({ title, btns }) => {
   "use memo";
   const { resolveNewBottomSheet } = useNewBottomSheetActions();
 
@@ -33,7 +33,7 @@ export const ConfirmNewBottomSheet = ({title, btns}) => {
         flex items-center justify-between gap-[15px] 
         p-[20px]
       ">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -46,18 +46,18 @@ export const ConfirmNewBottomSheet = ({title, btns}) => {
             handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >{btns?.cancel || "취소"}</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
@@ -65,9 +65,9 @@ export const ConfirmNewBottomSheet = ({title, btns}) => {
             handleConfirm();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >{btns?.confirm || "확인"}</motion.button>

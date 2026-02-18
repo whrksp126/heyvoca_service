@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
-export const AlertNewBottomSheet = ({title, btns}) => {
+export const AlertNewBottomSheet = ({ title, btns }) => {
   "use memo";
   const { resolveNewBottomSheet } = useNewBottomSheetActions();
 
@@ -28,19 +28,19 @@ export const AlertNewBottomSheet = ({title, btns}) => {
         flex items-center justify-center
         p-[20px]
       ">
-        <motion.button 
+        <motion.button
           className="
             w-full
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={handleConfirm}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >{btns?.confirm || "확인"}</motion.button>

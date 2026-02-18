@@ -220,7 +220,7 @@
 //                   h-[45px]
 //                   px-[15px]
 //                   border-[1px] rounded-[8px]
-//                   ${questionType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+//                   ${questionType === type ? 'border--primary-main-600' : 'border-[#ccc]'}
 //                 `}
 //                 onClick={() => {
 //                   inputRefs.current[`questionType`][index]?.focus();
@@ -235,8 +235,8 @@
 //                   ref={el => inputRefs.current[`questionType`][index] = el}
 //                   hidden 
 //                 />
-//                 {questionType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-//                 <span className={`text-[16px] font-[700] ${questionType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+//                 {questionType === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
+//                 <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
 //                   {getQuestionTypeLabel(type)}
 //                 </span>
 //               </label>
@@ -266,7 +266,7 @@
 //                   h-[45px]
 //                   px-[15px]
 //                   border-[1px] rounded-[8px]
-//                   ${memoryState === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+//                   ${memoryState === type ? 'border--primary-main-600' : 'border-[#ccc]'}
 //                 `}
 //                 onClick={() => inputRefs.current[`memoryState`][index]?.focus()}
 //               >
@@ -279,8 +279,8 @@
 //                   ref={el => inputRefs.current[`memoryState`][index] = el}
 //                   hidden 
 //                 />
-//                 {memoryState === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-//                 <span className={`text-[16px] font-[700] ${memoryState === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+//                 {memoryState === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
+//                 <span className={`text-[16px] font-[700] ${memoryState === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
 //                   {getMemoryStateLabel(type)}
 //                 </span>
 //               </label>
@@ -308,7 +308,7 @@
 //                 flex items-center justify-center
 //                 w-[40px] h-[40px]
 //                 border-[1px] rounded-[8px]
-//                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+//                 ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border--primary-main-600 text-primary-main-600'}
 //               `}
 //               onClick={() => setCountFun(count - 1)}
 //               disabled={count <= MIN_TEST_VOCABULARY_COUNT}
@@ -320,7 +320,7 @@
 //               ref={el => inputRefs.current['count'] = el}
 //               min={MIN_TEST_VOCABULARY_COUNT}
 //               max={maxVocabularyCount}
-//               className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-[#FF8DD4] text-center outline-none focus:border-[#FF8DD4] transition-colors"
+//               className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-primary-main-600 text-center outline-none focus:border--primary-main-600 transition-colors"
 //               onChange={e => setCountFun(Number(e.target.value))}
 //               value={count}
 //             />
@@ -329,7 +329,7 @@
 //                 flex items-center justify-center
 //                 w-[40px] h-[40px]
 //                 border-[1px] rounded-[8px]
-//                 ${count >= maxVocabularyCount ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+//                 ${count >= maxVocabularyCount ? 'border-[#ccc] text-[#ccc]' : 'border--primary-main-600 text-primary-main-600'}
 //               `}
 //               onClick={() => setCountFun(count + 1)}
 //               disabled={count >= maxVocabularyCount}
@@ -361,7 +361,7 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#FF8DD4]
+//             bg-primary-main-600
 //             text-[#fff] text-[16px] font-[700]
 //           "
 //           onClick={() => onSet(getTestSetupData())}

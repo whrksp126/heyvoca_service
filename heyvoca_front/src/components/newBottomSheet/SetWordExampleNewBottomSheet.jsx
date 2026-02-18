@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { showToast, vibrate } from '../../utils/osFunction';
-const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, resolve}) => {
+const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex = 1, resolve }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [examplesState, setExamplesState] = useState(examples || []);
@@ -16,7 +16,7 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
   const handleSave = () => {
     const origin = exampleOriginInputRef.current?.value.trim() || '';
     const meaning = exampleMeaningInputRef.current?.value.trim() || '';
-    if(origin === '' || meaning === '') {
+    if (origin === '' || meaning === '') {
       showToast('예문을 입력하세요');
       return;
     }
@@ -50,12 +50,12 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
         p-[20px] pb-[105px]
         overflow-y-auto
       ">
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] 
             dark:text-[#fff]
@@ -64,7 +64,7 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
             {exampleIndex}.
           </h3>
           <div>
-            <textarea 
+            <textarea
               ref={exampleOriginInputRef}
               defaultValue={setType === "add" ? '' : examplesState[exampleIndex - 1]?.origin}
               onChange={e => {
@@ -79,12 +79,12 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
                 border-[1px] border-[#ccc] rounded-[8px]
                 font-[400] text-[16px] text-[#111]
                 outline-none
-                focus:border-[#FF8DD4]
+                focus:border-primary-main-600
                 transition-colors
                 resize-none overflow-hidden
               "
             />
-            <textarea 
+            <textarea
               ref={exampleMeaningInputRef}
               defaultValue={setType === "add" ? '' : examplesState[exampleIndex - 1]?.meaning}
               onChange={e => {
@@ -99,7 +99,7 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
                 border-[1px] border-[#ccc] rounded-[8px]
                 font-[400] text-[16px] text-[#111]
                 outline-none
-                focus:border-[#FF8DD4]
+                focus:border-primary-main-600
                 transition-colors
                 resize-none overflow-hidden
               "
@@ -113,7 +113,7 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
         flex items-center justify-between gap-[15px] 
         p-[20px]
       ">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -126,28 +126,28 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
             handleCancel();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
-            if(setType === "add") {
-              setExamplesState([...examplesState, { 
+            if (setType === "add") {
+              setExamplesState([...examplesState, {
                 origin: exampleOriginInputRef.current.value,
                 meaning: exampleMeaningInputRef.current.value
               }]);
             } else {
-              setExamplesState(examplesState.map((example, index) => 
+              setExamplesState(examplesState.map((example, index) =>
                 index === exampleIndex - 1 ? {
                   ...example,
                   origin: exampleOriginInputRef.current.value,
@@ -158,9 +158,9 @@ const SetWordExampleNewBottomSheet = ({examples, setType="add", exampleIndex=1, 
             handleSave();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >{setType === "add" ? "추가" : "수정"}</motion.button>

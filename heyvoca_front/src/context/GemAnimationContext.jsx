@@ -172,7 +172,7 @@ export const FlyingAnimationProvider = ({ children }) => {
                     onError={() => console.error('❌ Gem image load failed:', animationData.imageUrl)}
                   />
                   {/* 디버그 및 로딩 실패 대비 가시성 레이어 */}
-                  <div className="absolute inset-0 border-[3px] border-[#FF8DD4] rounded-full opacity-30 animate-ping" style={{ animationDuration: '0.5s' }} />
+                  <div className="absolute inset-0 border-[3px] border-primary-main-600 rounded-full opacity-30 animate-ping" style={{ animationDuration: '0.5s' }} />
                 </motion.div>
               );
             })}

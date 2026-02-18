@@ -34,8 +34,8 @@ const Layout = ({ children }) => {
         .scroll-container: index.css에 정의됨. 
         내부 스크롤을 활성화하고 외부(body) 스크롤은 막혀있음.
       */}
-      <div className="scroll-container min-h-screen bg-background dark:bg-background-dark
-                      text-primary dark:text-primary-dark
+      <div className="scroll-container min-h-screen bg-layout-white dark:bg-layout-black
+                      text-layout-black dark:text-layout-white
                       transition-colors duration-200">
         {children}
       </div>

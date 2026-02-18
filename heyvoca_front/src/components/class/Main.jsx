@@ -47,7 +47,7 @@ const Main = () => {
   const handleStartClick = (testType) => {
     console.log("???testType", testType);
     const isLearning = recentStudy[testType]?.status === "learning";
-    if(isLearning){
+    if (isLearning) {
       // 이어학습 유무 확인
       pushNewBottomSheet(
         LearningInfoNewBottomSheet,
@@ -78,13 +78,13 @@ const Main = () => {
         }
       );
       return;
-    }else{
+    } else {
 
       pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
         smFull: true,
         closeOnBackdropClick: true
       });
-  
+
     }
 
     return;
@@ -106,7 +106,7 @@ const Main = () => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="p-[16px]"
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
@@ -116,7 +116,7 @@ const Main = () => {
         <li className="
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
-          border-[1px] border-[#FF8DD4] rounded-[12px]
+          border-[1px] border-primary-main-600 rounded-[12px]
           bg-[#FFEFFA]
         ">
           <div className="
@@ -131,24 +131,24 @@ const Main = () => {
                 w-[22px] h-[22px]
                 rounded-[5px]
                 text-[#fff]
-                bg-[#FF8DD4]
+                bg-primary-main-600
               ">
                 <Brain size={12} weight="fill" />
               </div>
               학습
             </h2>
-            <p 
+            <p
               className="
                 text-[13px] font-[400] text-[#111] text-center
               "
             >자주 틀리거나<br />잊어버린 단어 위주로 복습해요!</p>
           </div>
-          <motion.button 
+          <motion.button
             className="
               flex items-center justify-center
               w-full h-[45px]
               rounded-[8px]
-              bg-[#FF8DD4]
+              bg-primary-main-600
               text-[#fff] text-[17px] font-[700]
             "
             whileTap={{ scale: 0.96, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}
@@ -184,13 +184,13 @@ const Main = () => {
               </div>
               테스트
             </h2>
-            <p 
+            <p
               className="
                 text-[13px] font-[400] text-[#111] text-center
               "
             >나의 단어 실력을<br />테스트로 점검해보세요!</p>
           </div>
-          <motion.button 
+          <motion.button
             className="
               flex items-center justify-center
               w-full h-[45px]
@@ -266,7 +266,7 @@ const Main = () => {
           </motion.button>
         </li>
         */}
-        
+
       </ul>
     </motion.div>
   );

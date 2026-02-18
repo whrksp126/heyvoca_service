@@ -390,14 +390,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         w-full h-[16px]
         mb-[15px]
         rounded-[50px]
-        bg-[#FF8DD44d]
+        bg-primary-main-600/30
         overflow-hidden
       ">
         <motion.div
           className="
             h-[100%]
             rounded-[50px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
           "
           initial={{ width: "0%" }}
           animate={{
@@ -567,7 +567,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       className="
                       absolute bottom-[15px] right-[15px]
                       rounded-[8px] p-[5px]
-                      text-[#FF8DD4]
+                      text-primary-main-600
                     "
                     >
                       <BookOpenText size={22} weight="duotone" />
@@ -585,7 +585,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     } else if (isCorrect === false && userSelected === index) {
                       btnStyle = 'border-[#FF585B] text-[#FF585B] bg-[#FFEBEC]';
                     } else if (isCorrect === null && userSelected == index) {
-                      btnStyle = 'border-[#FF8DD4] text-[#FF8DD4]';
+                      btnStyle = 'border-primary-main-600 text-primary-main-600';
                     } else {
                       btnStyle = 'border-[#CCCCCC] text-[#111]';
                     }
@@ -648,7 +648,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     w-full h-[45px]
                     rounded-[8px]
                     text-[16px] text-[#FFF] font-[700] 
-                    ${userSelected !== null ? "bg-[#FF8DD4]" : "bg-[#CCC]"}
+                    ${userSelected !== null ? "bg-primary-main-600" : "bg-[#CCC]"}
                   `}
                   >
                     확인

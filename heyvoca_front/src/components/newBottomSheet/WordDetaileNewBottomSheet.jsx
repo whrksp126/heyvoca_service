@@ -79,7 +79,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                   handleEdit();
                 }}
               >
-                <PencilSimple size={18} color="#FF8DD4" />
+                <PencilSimple size={18} color="#FF70D4" />
               </motion.button>
               <motion.button
                 onClick={() => {

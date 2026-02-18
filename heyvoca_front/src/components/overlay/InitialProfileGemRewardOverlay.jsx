@@ -100,7 +100,7 @@ const InitialProfileGemRewardOverlay = ({ gemCount, onConfirm }) => {
                             className="flex flex-col items-center gap-[12px]"
                         >
                             <p className="text-[30px] font-[900] text-[#FFFFFF] tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
-                                보석 <span className="text-[#FF8DD4]">{gemCount}개</span> 획득!
+                                보석 <span className="text-primary-main-600">{gemCount}개</span> 획득!
                             </p>
                             <p className="text-[18px] font-[500] text-[#FFFFFF]/80 text-center leading-[1.4] drop-shadow-[0_1px_5px_rgba(0,0,0,0.2)]">
                                 초대 코드 보너스 보상이<br />
@@ -128,10 +128,10 @@ const InitialProfileGemRewardOverlay = ({ gemCount, onConfirm }) => {
                     onClick={handleConfirm}
                     className="
                         w-full h-[50px]
-                        bg-[#FF8DD4]
+                        bg-primary-main-600
                         rounded-[8px]
                         text-[#FFFFFF] font-[17px] font-[700]
-                        shadow-md shadow-[#FF8DD4]/20
+                        shadow-md shadow--primary-main-600/20
                     "
                 >
                     확인

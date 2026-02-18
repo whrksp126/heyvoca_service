@@ -107,7 +107,7 @@
 //             flex-1
 //             h-[45px]
 //             rounded-[8px]
-//             bg-[#FF8DD4]
+//             bg-primary-main-600
 //             text-[#fff] text-[16px] font-[700]
 //           "
 //           onClick={() => onSet()}

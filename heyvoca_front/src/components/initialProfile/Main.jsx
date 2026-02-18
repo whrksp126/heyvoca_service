@@ -12,9 +12,9 @@ import InitialProfileGemRewardOverlay from '../overlay/InitialProfileGemRewardOv
 
 const getColorSet = (mainColor) => {
   switch (mainColor) {
-    case '#FF8DD4': return {
-      main: "#FF8DD4",
-      sub: "#FF8DD44d",
+    case '#FF70D4': return {
+      main: "#FF70D4",
+      sub: "#FF70D44d",
       background: "#FFEFFA"
     };
     case '#CD8DFF': return {
@@ -38,8 +38,8 @@ const getColorSet = (mainColor) => {
       background: "#FFF8E6"
     };
     default: return {
-      main: "#FF8DD4",
-      sub: "#FF8DD44d",
+      main: "#FF70D4",
+      sub: "#FF70D44d",
       background: "#FFEFFA"
     };
   }
@@ -84,7 +84,7 @@ const Main = () => {
       // 단순 단어장 추가
       const vocabularySheet = await addVocabularySheet({
         title: profile.vocabook.name,
-        color: getColorSet('#FF8DD4'),
+        color: getColorSet('#FF70D4'),
       });
 
       // 단어장 내 단어 추가
@@ -220,7 +220,7 @@ const Main = () => {
           }}
           className="
             w-full h-[45px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             rounded-[8px]
             text-[#FFFFFF] font-[16px] font-[700]
           "

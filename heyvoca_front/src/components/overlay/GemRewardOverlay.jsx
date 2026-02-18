@@ -103,7 +103,7 @@ const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "�
                             className="flex flex-col items-center gap-[12px]"
                         >
                             <p className="text-[30px] font-[900] text-[#FFFFFF] tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
-                                보석 <span className="text-[#FF8DD4]">{gemCount}개</span> 획득!
+                                보석 <span className="text-primary-main-600">{gemCount}개</span> 획득!
                             </p>
                             <div className="flex flex-col items-center">
                                 <span className="text-[18px] font-[500] text-[#FFFFFF]/80 text-center leading-[1.4] drop-shadow-[0_1px_5px_rgba(0,0,0,0.2)]">{title}</span>
@@ -120,7 +120,7 @@ const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "�
                         onClick={handleConfirm}
                         className="
                             w-full h-[45px]
-                            bg-[#FF8DD4]
+                            bg-primary-main-600
                             rounded-[8px]
                             text-[#FFFFFF] text-[16px] font-[700]
                         "

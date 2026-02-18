@@ -79,7 +79,7 @@ function getOriginFilterTypeLabel(type) {
   }
 }
 
-export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType}) => {
+export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType }) => {
   const [questionType, setQuestionType] = useState('multipleChoice');
   const [memoryState, setMemoryState] = useState('all');
   const [errorMessage, setErrorMessage] = useState('');
@@ -108,7 +108,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
   // 암기 상태별 단어 개수 계산
   const memoryStateCounts = useMemo(() => {
     let allWords = [];
-    
+
     if (vocabularySheetId !== "all") {
       const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
       if (vocabularySheet) {
@@ -200,21 +200,21 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       return;
     }
 
-    if(recentStudy.status === "learning") {
+    if (recentStudy.status === "learning") {
 
     }
 
     // MEMO : testType : test, exam, today
     await updateRecentStudy(testTypeData, {
       ...recentStudy[testTypeData],
-      progress_index : null,
+      progress_index: null,
       type: testTypeData,
       status: null,
       study_data: null,
-      updated_at : null,
-      created_at : null,
+      updated_at: null,
+      created_at: null,
     });
-    
+
     clearNewBottomSheetStack();
     clearNewFullSheetStack();
     navigate('/take-test', { state: { data, testType: testTypeData } });
@@ -223,13 +223,13 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
   // React Compiler가 자동으로 useCallback 처리
   const setCountFun = (value) => {
     const maxCount = Math.min(currentMemoryStateCount, maxVocabularyCount);
-    if(value < MIN_TEST_VOCABULARY_COUNT){
+    if (value < MIN_TEST_VOCABULARY_COUNT) {
       inputRefs.current['count'].value = MIN_TEST_VOCABULARY_COUNT;
       setCount(MIN_TEST_VOCABULARY_COUNT);
-    }else if(value > maxCount){
+    } else if (value > maxCount) {
       inputRefs.current['count'].value = maxCount;
       setCount(maxCount);
-    }else{
+    } else {
       inputRefs.current['count'].value = value;
       setCount(value);
     }
@@ -249,7 +249,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
     setCount(prevCount => {
       const maxCount = Math.min(currentMemoryStateCount, maxVocabularyCount);
       const newValue = prevCount + incrementValue;
-      
+
       if (newValue < MIN_TEST_VOCABULARY_COUNT) {
         return MIN_TEST_VOCABULARY_COUNT;
       } else if (newValue > maxCount) {
@@ -269,7 +269,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
         setCount(prevCount => {
           const maxCount = Math.min(currentMemoryStateCount, maxVocabularyCount);
           const newValue = prevCount + incrementValue;
-          
+
           if (newValue < MIN_TEST_VOCABULARY_COUNT) {
             return MIN_TEST_VOCABULARY_COUNT;
           } else if (newValue > maxCount) {
@@ -308,7 +308,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
       count: count
     }
   };
-  
+
   return (
     <div className="">
       <div>
@@ -325,12 +325,12 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
         flex flex-col gap-[30px]
         p-[20px]
       ">
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] text-center
             dark:text-[#fff]
@@ -341,7 +341,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
           <div className="grid grid-cols-2 gap-[10px]">
             {/* {['origin', 'meanings', 'cross', 'random'].map((type, index) => ( */}
             {['multipleChoice'].map((type, index) => (
-              <label 
+              <label
                 key={type}
                 htmlFor={type}
                 className={`
@@ -349,39 +349,39 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                   h-[45px]
                   px-[15px]
                   border-[1px] rounded-[8px]
-                  ${questionType === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                  ${questionType === type ? 'border-primary-main-600' : 'border-[#ccc]'}
                 `}
                 onClick={() => {
                   inputRefs.current[`questionType`][index]?.focus();
                 }}
               >
-                <input 
-                  id={type} 
-                  type="radio" 
-                  name="questionType" 
+                <input
+                  id={type}
+                  type="radio"
+                  name="questionType"
                   checked={questionType === type}
                   onChange={() => {
                     vibrate({ duration: 5 });
                     setQuestionType(type);
                   }}
                   ref={el => inputRefs.current[`questionType`][index] = el}
-                  hidden 
+                  hidden
                 />
-                {questionType === type && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                <span className={`text-[16px] font-[700] ${questionType === type ? 'text-[#FF8DD4]' : 'text-[#ccc]'}`}>
+                {questionType === type && <Check size={18} weight="bold" className="text-primary-main-600" />}
+                <span className={`text-[16px] font-[700] ${questionType === type ? 'text-primary-main-600' : 'text-[#ccc]'}`}>
                   {getQuestionTypeLabel(type)}
                 </span>
               </label>
             ))}
-          </div> 
+          </div>
         </div>
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px]
             relative
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] text-center
             dark:text-[#fff]
@@ -394,7 +394,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
               const count = memoryStateCounts[type] || 0;
               const isDisabled = count < MIN_TEST_VOCABULARY_COUNT;
               return (
-                <label 
+                <label
                   key={type}
                   htmlFor={type}
                   className={`
@@ -403,7 +403,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                     px-[15px]
                     border-[1px] rounded-[8px]
                     ${isDisabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
-                    ${memoryState === type ? 'border-[#FF8DD4]' : 'border-[#ccc]'}
+                    ${memoryState === type ? 'border-primary-main-600' : 'border-[#ccc]'}
                     ${isDisabled ? 'border-[#e0e0e0]' : ''}
                   `}
                   onClick={() => {
@@ -414,10 +414,10 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                     inputRefs.current[`memoryState`][index]?.focus();
                   }}
                 >
-                  <input 
-                    id={type} 
-                    type="radio" 
-                    name="memoryState" 
+                  <input
+                    id={type}
+                    type="radio"
+                    name="memoryState"
                     checked={memoryState === type}
                     onChange={() => {
                       if (isDisabled) {
@@ -429,13 +429,13 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
                     }}
                     disabled={isDisabled}
                     ref={el => inputRefs.current[`memoryState`][index] = el}
-                    hidden 
+                    hidden
                   />
-                  {memoryState === type && !isDisabled && <Check size={18} weight="bold" className="text-[#FF8DD4]" />}
-                  <span className={`text-[16px] font-[700] ${memoryState === type && !isDisabled ? 'text-[#FF8DD4]' : isDisabled ? 'text-[#bbb]' : 'text-[#ccc]'}`}>
+                  {memoryState === type && !isDisabled && <Check size={18} weight="bold" className="text-primary-main-600" />}
+                  <span className={`text-[16px] font-[700] ${memoryState === type && !isDisabled ? 'text-primary-main-600' : isDisabled ? 'text-[#bbb]' : 'text-[#ccc]'}`}>
                     {getMemoryStateLabel(type)}
                   </span>
-                  <span className={`text-[12px] font-[500] ${memoryState === type && !isDisabled ? 'text-[#FF8DD4]' : isDisabled ? 'text-[#bbb]' : 'text-[#999]'}`}>
+                  <span className={`text-[12px] font-[500] ${memoryState === type && !isDisabled ? 'text-primary-main-600' : isDisabled ? 'text-[#bbb]' : 'text-[#999]'}`}>
                     ({count})
                   </span>
                 </label>
@@ -455,15 +455,15 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
               </motion.p>
             )}
           </AnimatePresence>
-        </div> 
+        </div>
 
 
-        <div 
+        <div
           className="
             flex justify-between flex-col gap-[8px] 
           "
         >
-          <h3 
+          <h3
             className="
               text-[14px] font-[700] text-[#111] text-center
             dark:text-[#fff]
@@ -472,13 +472,13 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             문제 개수
           </h3>
           <div className="flex items-center justify-center gap-[10px]">
-            <motion.button 
+            <motion.button
               className={`
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+                ${count <= MIN_TEST_VOCABULARY_COUNT ? 'border-[#ccc] text-[#ccc]' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
@@ -493,25 +493,25 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             >
               <Minus size={18} />
             </motion.button>
-            <input 
-              type="number" 
+            <input
+              type="number"
               ref={el => inputRefs.current['count'] = el}
               min={MIN_TEST_VOCABULARY_COUNT}
               max={Math.min(currentMemoryStateCount, maxVocabularyCount)}
-              className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-[#FF8DD4] text-center outline-none focus:border-[#FF8DD4] transition-colors"
+              className="w-[100px] h-[40px] px-[15px] border-[1px] border-[transparent] rounded-[8px] font-[700] text-[24px] text-primary-main-600 text-center outline-none focus:border-primary-main-600 transition-colors"
               onChange={e => {
                 vibrate({ duration: 5 });
                 setCountFun(Number(e.target.value));
               }}
               value={count}
             />
-            <motion.button 
+            <motion.button
               className={`
                 flex items-center justify-center
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-[#ccc] text-[#ccc]' : 'border-[#FF8DD4] text-[#FF8DD4]'}
+                ${count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-[#ccc] text-[#ccc]' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation(); // 바텀 시트의 드래그 이벤트 전파 막기
@@ -530,7 +530,7 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
         </div>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -543,19 +543,19 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
             onCancel || handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className={`
             flex-1
             h-[45px]
             rounded-[8px]
             text-[#fff] text-[16px] font-[700]
-            ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT ? 'bg-[#ccc] cursor-not-allowed' : 'bg-[#FF8DD4]'}
+            ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT ? 'bg-[#ccc] cursor-not-allowed' : 'bg-primary-main-600'}
           `}
           onClick={() => {
             // 선택한 암기 상태의 단어 개수 확인
@@ -572,16 +572,16 @@ export const TestSetupNewBottomSheet = ({onCancel, onSet, maxVocabularyCount, vo
 
             const data = getTestSetupData();
             if (onSet) {
-              onSet({...data, vocabularySheetId: vocabularySheetId, testType: testType});
+              onSet({ ...data, vocabularySheetId: vocabularySheetId, testType: testType });
             } else {
-              handleStartTest({...data, vocabularySheetId: vocabularySheetId, testType: testType});
+              handleStartTest({ ...data, vocabularySheetId: vocabularySheetId, testType: testType });
             }
           }}
           disabled={currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT}
           whileTap={currentMemoryStateCount >= MIN_TEST_VOCABULARY_COUNT ? { scale: 0.95 } : {}}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >시작</motion.button>

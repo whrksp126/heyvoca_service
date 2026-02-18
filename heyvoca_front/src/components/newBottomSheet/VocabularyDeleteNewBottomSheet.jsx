@@ -71,7 +71,7 @@ export const VocabularyDeleteNewBottomSheet = () => {
                     취소
                 </motion.button>
                 <motion.button
-                    className="flex-1 h-[45px] rounded-[8px] bg-[#FF8DD4] text-white text-[16px] font-bold"
+                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white text-[16px] font-bold"
                     onClick={handleConfirm}
                     whileTap={{ scale: 0.95 }}
                 >

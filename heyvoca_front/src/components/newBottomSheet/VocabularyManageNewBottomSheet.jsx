@@ -120,7 +120,7 @@ export const VocabularyManageNewBottomSheet = () => {
                 flex items-center justify-center gap-[8px]
                 w-full h-[45px] px-[15px]
                 bg-white dark:bg-[#111]
-                border border-[#FF8DD4] border-solid rounded-[8px]
+                border border--primary-main-600 border-solid rounded-[8px]
                 transition-colors
               "
               onClick={item.onClick}
@@ -134,9 +134,9 @@ export const VocabularyManageNewBottomSheet = () => {
               <IconComponent
                 size={18}
                 weight="bold"
-                className="text-[#FF8DD4]"
+                className="text-primary-main-600"
               />
-              <span className="text-[16px] font-bold text-[#FF8DD4] tracking-[-0.32px]">
+              <span className="text-[16px] font-bold text-primary-main-600 tracking-[-0.32px]">
                 {item.text}
               </span>
             </motion.button>

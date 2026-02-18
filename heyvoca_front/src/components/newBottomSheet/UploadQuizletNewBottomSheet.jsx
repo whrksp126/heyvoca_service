@@ -7,7 +7,7 @@ import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 
 export const VOCABULARY_COLORS = [
-  { id: 'color-1', value: '#FF8DD4' },
+  { id: 'color-1', value: '#FF70D4' },
   { id: 'color-2', value: '#CD8DFF' },
   { id: 'color-3', value: '#74D5FF' },
   { id: 'color-4', value: '#42F98B' },
@@ -16,12 +16,12 @@ export const VOCABULARY_COLORS = [
 
 const getColorSet = (mainColor) => {
   switch (mainColor) {
-    case '#FF8DD4': return { main: "#FF8DD4", sub: "#FF8DD44d", background: "#FFEFFA" };
+    case '#FF70D4': return { main: "#FF70D4", sub: "#FF70D44d", background: "#FFEFFA" };
     case '#CD8DFF': return { main: "#CD8DFF", sub: "#CD8DFF4d", background: "#F8E6FF" };
     case '#74D5FF': return { main: "#74D5FF", sub: "#74D5FF4d", background: "#EAF6FF" };
     case '#42F98B': return { main: "#42F98B", sub: "#42F98B4d", background: "#E6FFE9" };
     case '#FFBD3C': return { main: "#FFBD3C", sub: "#FFBD3C4d", background: "#FFF8E6" };
-    default: return { main: "#FF8DD4", sub: "#FF8DD44d", background: "#FFEFFA" };
+    default: return { main: "#FF70D4", sub: "#FF70D44d", background: "#FFEFFA" };
   }
 };
 
@@ -117,7 +117,7 @@ export const UploadQuizletNewBottomSheet = () => {
               w-full h-[45px] px-[15px]
               border border-[#ccc] rounded-[8px]
               font-normal text-[14px] text-[#111]
-              outline-none focus:border-[#FF8DD4]
+              outline-none focus:border-primary-main-600
               transition-colors
             "
           />
@@ -166,7 +166,7 @@ export const UploadQuizletNewBottomSheet = () => {
               border border-[#ccc] rounded-[8px]
               font-normal text-[14px] text-[#111]
               outline-none resize-none
-              focus:border-[#FF8DD4]
+              focus:border--primary-main-600
               transition-colors
             "
           />
@@ -182,7 +182,7 @@ export const UploadQuizletNewBottomSheet = () => {
           취소
         </motion.button>
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-[#FF8DD4] text-white text-[16px] font-bold disabled:opacity-50"
+          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white text-[16px] font-bold disabled:opacity-50"
           disabled={!text.trim() || isUploading}
           onClick={() => {
             vibrate({ duration: 5 });

@@ -55,7 +55,7 @@ const Header = () => {
           "
         >
           <strong className="
-            text-[#FF8DD4] font-[700]
+            text-primary-main-600 font-[700]
           ">{userProfile.username}</strong>의 단어장
         </h2>
       </div>
@@ -67,7 +67,7 @@ const Header = () => {
           <motion.button
             className="
             rounded-[20px]
-              text-[#FF8DD4] text-[20px]
+              text-primary-main-600 text-[20px]
             "
             variants={buttonVariants}
             whileTap="tap"
@@ -87,7 +87,7 @@ const Header = () => {
           <motion.button
             className="
             rounded-[20px]
-              text-[#FF8DD4] text-[20px]
+              text-primary-main-600 text-[20px]
             "
             variants={buttonVariants}
             whileTap="tap"

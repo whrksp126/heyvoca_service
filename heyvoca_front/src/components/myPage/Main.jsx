@@ -70,14 +70,14 @@ const Main = () => {
         }}
           className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
           <div className="flex items-center gap-2">
-            <UserCircle weight="fill" className="text-[20px] text-heyvocaPink" />
-            <span className="text-[16px] font-bold text-primary dark:text-primary-dark">계정</span>
+            <UserCircle weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">계정</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="text-[12px] font-normal text-[#999]">
               {userProfile?.email || "로그인 필요"}
             </span>
-            <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
         </li>
 
@@ -113,34 +113,34 @@ const Main = () => {
         {/* <li onClick={handleThemeClick} 
               className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
             <div className="flex items-center gap-2">
-              <SunDim weight="fill" className="text-[20px] text-heyvocaPink" />
-              <span className="text-[16px] font-bold text-primary dark:text-primary-dark">테마</span>
+              <SunDim weight="fill" className="text-[20px] text-primary-main-600" />
+              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">테마</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[12px] font-normal text-[#999]">{isDark ? "다크" : "라이트"}</span>
-              <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
+              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
             </div>
           </li> */}
 
         {/* <li onClick={handleExampleSettingsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
             <div className="flex items-center gap-2">
-              <TextAlignJustify weight="fill" className="text-[20px] text-[#FF8DD4]" />
-              <span className="text-[16px] font-bold text-primary dark:text-primary-dark">예문 설정</span>
+              <TextAlignJustify weight="fill" className="text-[20px] text-primary-main-600" />
+              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">예문 설정</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[12px] font-normal text-[#999]">항상 보기</span>
-              <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
+              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
             </div>
           </li> */}
 
         {/* <li onClick={handlePushNotificationsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
             <div className="flex items-center gap-2">
-              <Bell weight="fill" className="text-[20px] text-[#FF8DD4]" />
-              <span className="text-[16px] font-bold text-primary dark:text-primary-dark">푸시 알림</span>
+              <Bell weight="fill" className="text-[20px] text-primary-main-600" />
+              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">푸시 알림</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[12px] font-normal text-[#999]">on</span> 
-              <CaretRight className="text-[20px] text-primary dark:text-primary-dark" />
+              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
             </div>
           </li> */}
       </ul>

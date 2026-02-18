@@ -37,7 +37,7 @@ const getAchievementBackgroundStyle = (level) => {
   if (level >= 10) {
     // 레벨 10 이상: 그라데이션
     return {
-      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+      background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)',
     };
   } else if (level >= 6) {
     // 레벨 6~9: 노란색
@@ -62,7 +62,7 @@ const getAchievementTextStyle = (level) => {
   if (level >= 10) {
     // 레벨 10 이상: 그라데이션 글자 (배경과 동일)
     return {
-      background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+      background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
@@ -335,7 +335,7 @@ const StudyResult = () => {
                   flex-1
                   h-[45px]
                   rounded-[8px]
-                  bg-[#FF8DD4]
+                  bg-primary-main-600
                   text-[#fff] text-[16px] font-[700]
                 "
               onClick={() => {
@@ -406,7 +406,7 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-[#FF8DD4]'>단어 {currentScreen.data.totalCnt}개</strong>를 학습했어요!
+            <strong className='text-primary-main-600'>단어 {currentScreen.data.totalCnt}개</strong>를 학습했어요!
           </motion.p>
         </div>
       );
@@ -452,7 +452,7 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-[#FF8DD4]'>데일리 미션</strong>을 완료했어요!
+            <strong className='text-primary-main-600'>데일리 미션</strong>을 완료했어요!
           </motion.p>
         </div>
       );
@@ -524,7 +524,7 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-[#FF8DD4]'>{goalType} {goalLevel}레벨</strong>을 달성했어요!
+            <strong className='text-primary-main-600'>{goalType} {goalLevel}레벨</strong>을 달성했어요!
           </motion.p>
         </div>
       );
@@ -570,7 +570,7 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-[#FF8DD4]'>보석 {currentScreen.data.gemCount}개</strong>를 획득했어요!
+            <strong className='text-primary-main-600'>보석 {currentScreen.data.gemCount}개</strong>를 획득했어요!
           </motion.p>
         </div>
       );
@@ -678,7 +678,7 @@ const StudyResult = () => {
                   w-full
                   h-[45px]
                   rounded-[8px]
-                  bg-[#FF8DD4]
+                  bg-primary-main-600
                   text-[#fff] text-[16px] font-[700]
                 "
                 onClick={() => {

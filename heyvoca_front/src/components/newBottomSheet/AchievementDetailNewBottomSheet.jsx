@@ -24,7 +24,7 @@ const ACHIEVEMENT_IMAGES = {
 // 레벨별 배경 색상
 const getAchievementBackgroundStyle = (level) => {
     if (level >= 10) {
-        return { background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)' };
+        return { background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)' };
     } else if (level >= 6) {
         return { backgroundColor: '#F2D252' };
     } else if (level >= 3) {
@@ -38,7 +38,7 @@ const getAchievementBackgroundStyle = (level) => {
 const getAchievementTextStyle = (level) => {
     if (level >= 10) {
         return {
-            background: 'linear-gradient(135deg, #FF8DD4 15%, #CD8DFF 50%, #74D5FF 85%)',
+            background: 'linear-gradient(135deg, var(--primary-main-600) 15%, #CD8DFF 50%, #74D5FF 85%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',

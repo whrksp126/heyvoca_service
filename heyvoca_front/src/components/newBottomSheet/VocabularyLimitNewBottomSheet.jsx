@@ -57,7 +57,7 @@ export const VocabularyLimitNewBottomSheet = () => {
                 <motion.button
                     className="
             flex-[1] h-[45px] 
-            bg-[#ff8dd4] 
+            bg-primary-main-600 
             rounded-[8px] 
             flex items-center justify-center
           "

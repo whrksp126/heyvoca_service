@@ -104,7 +104,7 @@
 //           <motion.button 
 //             className="
 //             rounded-[20px]
-//               text-[#FF8DD4] text-[20px]
+//               text-primary-main-600 text-[20px]
 //             "
 //             variants={buttonVariants}
 //             whileTap="tap"
@@ -122,7 +122,7 @@
 //           <motion.button 
 //             className="
 //             rounded-[20px]
-//               text-[#FF8DD4] text-[20px]
+//               text-primary-main-600 text-[20px]
 //             "
 //             variants={buttonVariants}
 //             whileTap="tap"
@@ -260,7 +260,7 @@
 //               {/* 
 //               <div className="
 //                 flex gap-[8px]
-//               text-[#FF8DD4] text-[20px]
+//               text-primary-main-600 text-[20px]
 //               ">
 //                 <button onClick={() => getTextSound(item.origin, "en")}>
 //                   <SpeakerHigh weight="fill" />

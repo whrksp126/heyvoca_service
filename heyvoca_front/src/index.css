@@ -24,6 +24,72 @@
   --height-bottom-nav: 70px;
   --status-bar-height: 0px;
   --safe-area-bottom: 0px;
+
+  /* Figma Colors */
+  --primary-main-600: #FF70D4;
+  --primary-main-500: #FF88DC;
+  --primary-main-400: #FFAAE6;
+  --primary-main-300: #FFBDEB;
+  --primary-main-200: #FFD7F3;
+  --primary-main-100: #FFEEFA;
+  --primary-main-50: #FFF4FC;
+
+  --secondary-blue-600: #2E90FA;
+  --secondary-blue-500: #53B1FD;
+  --secondary-blue-400: #84CAFF;
+  --secondary-blue-300: #B2DDFF;
+  --secondary-blue-200: #D1E9FF;
+  --secondary-blue-100: #EFF8FF;
+  --secondary-blue-50: #F5FAFF;
+
+  --secondary-purple-600: #7A5AF8;
+  --secondary-purple-500: #9B8AFB;
+  --secondary-purple-400: #BDB4FE;
+  --secondary-purple-300: #D9D6FE;
+  --secondary-purple-200: #EBE9FE;
+  --secondary-purple-100: #F4F3FF;
+  --secondary-purple-50: #FAFAFF;
+
+  --secondary-yellow-600: #FB6514;
+  --secondary-yellow-500: #FD853A;
+  --secondary-yellow-400: #FEB273;
+  --secondary-yellow-300: #FDDCAB;
+  --secondary-yellow-200: #FFEAD5;
+  --secondary-yellow-100: #FFF8E5;
+  --secondary-yellow-50: #FFFAF5;
+
+  --secondary-mint-600: #FB6514;
+  --secondary-mint-500: #FD853A;
+  --secondary-mint-400: #FEB273;
+  --secondary-mint-300: #FDDCAB;
+  --secondary-mint-200: #FFEAD5;
+  --secondary-mint-100: #FFF8E5;
+  --secondary-mint-50: #FFFAF5;
+
+  --status-success-600: #12B76A;
+  --status-success-500: #32D583;
+  --status-success-400: #6CE9A6;
+  --status-success-300: #A6F4C5;
+  --status-success-200: #D1FADF;
+  --status-success-100: #ECFDF3;
+  --status-success-50: #F6FEF9;
+
+  --status-error-600: #FA5145;
+  --status-error-500: #F97066;
+  --status-error-400: #FDA29B;
+  --status-error-300: #FECDCA;
+  --status-error-200: #FEE4E2;
+  --status-error-100: #FEF3F2;
+  --status-error-50: #FFFBFA;
+
+  --layout-black: #111111;
+  --layout-white: #ffffff;
+  --layout-gray-500: #404040;
+  --layout-gray-400: #7B7B7B;
+  --layout-gray-300: #999999;
+  --layout-gray-200: #CCCCCC;
+  --layout-gray-100: #DDDDDD;
+  --layout-gray-50: #F5F5F5;
 }
 
 html,

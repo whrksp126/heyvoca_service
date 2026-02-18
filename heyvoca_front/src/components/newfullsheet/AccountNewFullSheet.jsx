@@ -209,7 +209,7 @@ const AccountNewFullSheet = () => {
                 handleCopyInviteCode();
               }}>
                 <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">{userProfile?.invite_code || "-"}</span>
-                <Copy size={14} className="text-[#FF8DD4] dark:text-[#FF8DD4]" />
+                <Copy size={14} className="text-primary-main-600 dark:text-primary-main-600" />
 
               </div>
             </div>

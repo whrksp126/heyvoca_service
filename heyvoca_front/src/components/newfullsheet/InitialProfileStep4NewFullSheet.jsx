@@ -104,7 +104,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
           }}
           className={`
             w-full h-[45px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             rounded-[8px]
             text-[#FFFFFF] font-[16px] font-[700]
             ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}

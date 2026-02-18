@@ -349,7 +349,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#FF8DD4'
+              color: 'var(--primary-main-600)'
             }}
             variants={buttonVariants}
             whileTap="tap"
@@ -367,7 +367,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#FF8DD4'
+                color: 'var(--primary-main-600)'
               }}
               variants={buttonVariants}
               whileTap="tap"
@@ -388,7 +388,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                   right: '-4px',
                   width: '97px',
                   height: '30px',
-                  backgroundColor: '#FF8DD4',
+                  backgroundColor: 'var(--primary-main-600)',
                   borderRadius: '6px',
                   display: 'flex',
                   alignItems: 'center',
@@ -408,7 +408,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     height: 0,
                     borderLeft: '6px solid transparent',
                     borderRight: '6px solid transparent',
-                    borderBottom: '13px solid #FF8DD4'
+                    borderBottom: '13px solid var(--primary-main-600)'
                   }}
                 />
                 <span style={{
@@ -484,7 +484,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           w-full h-[40px]
                           px-[15px]
                           text-left text-[13px]
-                          ${sortBy === key ? 'text-[#FF8DD4] font-[600]' : 'text-[#666]'}
+                          ${sortBy === key ? 'text-primary-main-600 font-[600]' : 'text-[#666]'}
                           hover:bg-[#F5F5F5]
                           transition-colors
                         `}
@@ -506,10 +506,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               flex items-center justify-center
               h-[35px] px-[15px]
               bg-white
-              border-[0.5px] border-[#FF8DD4] rounded-[6px]
+              border-[0.5px] border-primary-main-600 rounded-[6px]
             "
           >
-            <span className="text-[14px] font-[700] text-[#FF8DD4]">
+            <span className="text-[14px] font-[700] text-primary-main-600">
               이 단어장으로 학습
             </span>
           </motion.button>
@@ -547,7 +547,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     width: '4px',
                     height: '14px',
                     borderRadius: '4px',
-                    backgroundColor: '#FF8DD4',
+                    backgroundColor: 'var(--primary-main-600)',
                     transformOrigin: '50% 50%',
                     transform: `rotate(${i * 45}deg) translateY(-22px)`
                   }}
@@ -575,7 +575,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             }}>
               <p style={{ fontWeight: 400, color: '#111', margin: 0 }}>아직 추가된 단어가 없어요!</p>
               <p style={{ margin: 0 }}>
-                <span style={{ fontWeight: 700, color: '#FF8DD4' }}>단어</span>
+                <span style={{ fontWeight: 700, color: '#FF70D4' }}>단어</span>
                 <span style={{ fontWeight: 400, color: '#111' }}>를 추가해보세요 🤗</span>
               </p>
             </div>
@@ -591,7 +591,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 gap: '5px',
                 width: '136px',
                 height: '40px',
-                backgroundColor: '#FF8DD4',
+                backgroundColor: 'var(--primary-main-600)',
                 borderRadius: '8px',
                 border: 'none',
                 cursor: 'pointer'
@@ -712,7 +712,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                         rounded-full
                       "
                       style={{
-                        background: 'linear-gradient(135deg, #FF8DD4 0%, #FF69C6 100%)',
+                        background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #FF69C6 100%)',
                         boxShadow: '0 2px 8px rgba(255, 141, 212, 0.4)'
                       }}
                       animate={{

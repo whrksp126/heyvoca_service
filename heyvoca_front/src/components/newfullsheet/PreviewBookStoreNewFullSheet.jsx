@@ -399,7 +399,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                         rounded-full
                       "
                     style={{
-                      background: 'linear-gradient(135deg, #FF8DD4 0%, #FF69C6 100%)',
+                      background: 'linear-gradient(135deg, #FF70D4 0%, #FF69C6 100%)',
                       boxShadow: '0 2px 8px rgba(255, 141, 212, 0.4)'
                     }}
                     animate={{

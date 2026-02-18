@@ -98,7 +98,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
           {isLoading && (
             <>
               <div className="flex items-center justify-center w-[80px] h-[80px]">
-                <div className="animate-spin rounded-full h-[40px] w-[40px] border-b-2 border-[#FF8DD4]"></div>
+                <div className="animate-spin rounded-full h-[40px] w-[40px] border-b-2 border--primary-main-600"></div>
               </div>
               <div className="text-[18px] font-[700] text-[#111]">스토어 결제 진행 중...</div>
             </>
@@ -115,7 +115,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
             <>
               <img src={options.image_url} alt="" className="w-[80px] h-[80px]" />
               <div className="text-[18px] font-[700] text-[#111] text-center">
-                <strong className="text-[#FF8DD4]">보석 {purchaseResult?.gem_added}개</strong>를 구매 완료!
+                <strong className="text-primary-main-600">보석 {purchaseResult?.gem_added}개</strong>를 구매 완료!
               </div>
             </>
           )}
@@ -132,7 +132,7 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
               h-[45px]
               rounded-[8px]
               text-[#fff] text-[16px] font-[700]
-              bg-[#FF8DD4]
+              bg-primary-main-600
             `}
             onClick={purchaseResult?.verified ? onConfirm : handleClose}
             whileTap={{ scale: 0.95 }}

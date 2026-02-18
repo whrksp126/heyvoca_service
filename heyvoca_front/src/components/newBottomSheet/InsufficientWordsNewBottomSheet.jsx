@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNavigate } from 'react-router-dom';
-import { vibrate } from '../../utils/osFunction'; 
-export const InsufficientWordsNewBottomSheet = ({title}) => {
+import { vibrate } from '../../utils/osFunction';
+export const InsufficientWordsNewBottomSheet = ({ title }) => {
   "use memo";
-  
+
   const { clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { closeNewFullSheet } = useNewFullSheetActions();
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export const InsufficientWordsNewBottomSheet = ({title}) => {
         flex items-center gap-[10px]
         p-[20px]
       ">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -58,18 +58,18 @@ export const InsufficientWordsNewBottomSheet = ({title}) => {
             handleAddVocabulary();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >홈으로</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
@@ -77,9 +77,9 @@ export const InsufficientWordsNewBottomSheet = ({title}) => {
             handleGoToBookStore();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >서점 보러가기</motion.button>

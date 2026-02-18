@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 // Hook 제거 - 직접 컴포넌트 사용
 
 
-export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
+export const ContinueLearningNewBottomSheet = ({ onCancel, onSet }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -43,7 +43,7 @@ export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
 
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -56,18 +56,18 @@ export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
             onCancel || handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >취소</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
@@ -75,9 +75,9 @@ export const ContinueLearningNewBottomSheet = ({onCancel, onSet}) => {
             handleSet();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >이어하기</motion.button>

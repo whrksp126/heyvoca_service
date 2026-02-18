@@ -13,9 +13,8 @@ const BottomNav = () => {
         fixed bottom-0 
         w-full 
         border-t border-border 
-        bg-background 
-
-        dark:bg-background-dark 
+        bg-layout-white 
+        dark:bg-layout-black 
         dark:border-border-dark
         "
     >
@@ -29,14 +28,14 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-background dark:bg-background-dark
+              flex flex-col items-center bg-layout-white dark:bg-layout-black
             "
           >
             <House
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/home' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/home' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/home' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/home' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               홈
             </span>
@@ -51,14 +50,14 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-background dark:bg-background-dark
+              flex flex-col items-center bg-layout-white dark:bg-layout-black
             "
           >
             <Notepad
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/vocabulary-sheets' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/vocabulary-sheets' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               단어장
             </span>
@@ -73,14 +72,14 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-background dark:bg-background-dark
+              flex flex-col items-center bg-layout-white dark:bg-layout-black
             "
           >
             <Storefront
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/book-store' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/book-store' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               서점
             </span>
@@ -95,12 +94,12 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-background dark:bg-background-dark">
+              flex flex-col items-center bg-layout-white dark:bg-layout-black">
             <Exam
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/class' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/class' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/class' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/class' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               학습
             </span>
@@ -117,14 +116,14 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-background dark:bg-background-dark
+              flex flex-col items-center bg-layout-white dark:bg-layout-black
             "
           >
             <User
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/mypage' ? 'text-heyvocaPink' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/mypage' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/mypage' ? 'text-heyvocaPink font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/mypage' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               마이페이지
             </span>

@@ -157,7 +157,7 @@
 //                   border-[1px] border-[#ccc]
 //                   rounded-[8px]
 //                   text-end 
-//                   text-[24px] font-[700] text-[#FF8DD4]
+//                   text-[24px] font-[700] text--primary-main-600
 //                   outline-none
 //                   ${showWarning ? 'border-red-500' : 'border-[#ccc]'}
 //                 `}
@@ -206,7 +206,7 @@
 //           disabled={showWarning}
 //           className={`
 //             w-full h-[50px] rounded-[8px] text-[16px] font-[700]
-//             ${showWarning ? 'border-[1px] border-[#ccc] text-[#ccc] bg-[transparent] cursor-not-allowed' : 'text-[#fff] bg-[#FF8DD4]'}
+//             ${showWarning ? 'border-[1px] border-[#ccc] text-[#ccc] bg-[transparent] cursor-not-allowed' : 'text-[#fff] bg-primary-main-600'}
 //           `}
 //           whileHover={showWarning ? {} : { scale: 1.02 }}
 //           whileTap={showWarning ? {} : { scale: 0.98 }}

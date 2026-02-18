@@ -139,7 +139,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                             type="text"
                             placeholder="초대 코드를 입력해주세요"
                             ref={codeRef}
-                            className="w-full h-[55px] rounded-[10px] bg-[#fff] border-[1px] border-[#ccc] px-[20px] text-[18px] focus:outline-none focus:border-[#FF8DD4] focus:ring-2 focus:ring-[#FF8DD4]/20"
+                            className="w-full h-[55px] rounded-[10px] bg-[#fff] border-[1px] border-[#ccc] px-[20px] text-[18px] focus:outline-none focus:border-primary-main-600 focus:ring-2 focus:ring-primary-main-600/20"
                             autoComplete="off"
                             onKeyDown={handleKeyDown}
                         />
@@ -151,7 +151,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                             >없음</motion.button>
                             <motion.button
                                 whileTap={{ scale: 0.98 }}
-                                className="flex-1 h-[55px] rounded-[10px] bg-[#FF8DD4] text-[#fff] font-[20px] font-[700]"
+                                className="flex-1 h-[55px] rounded-[10px] bg-primary-main-600 text-[#fff] font-[20px] font-[700]"
                                 onClick={handleNextBtn}
                             >입력</motion.button>
                         </div>

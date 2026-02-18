@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
-import { vibrate } from '../../utils/osFunction'; 
+import { vibrate } from '../../utils/osFunction';
 
 // import { useFullSheet } from '../../context/FullSheetContext';
 // import VocabularySheet from './VocabularySheet';
@@ -11,7 +11,7 @@ import { vibrate } from '../../utils/osFunction';
 
 
 
-export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
+export const LearningInfoNewBottomSheet = ({ onCancel, onSet, testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -24,7 +24,7 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
 
   const handleSet = () => {
     if (onSet) {
-      onSet({testType});
+      onSet({ testType });
     }
   };
 
@@ -54,7 +54,7 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
         </div>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
@@ -66,18 +66,18 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
             onCancel ? onCancel() : handleClose();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >새로 시작</motion.button>
-        <motion.button 
+        <motion.button
           className="
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
@@ -85,9 +85,9 @@ export const LearningInfoNewBottomSheet = ({onCancel, onSet, testType}) => {
             handleSet();
           }}
           whileTap={{ scale: 0.95 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
+          transition={{
+            type: "spring",
+            stiffness: 500,
             damping: 15
           }}
         >이어학습</motion.button>

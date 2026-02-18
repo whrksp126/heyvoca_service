@@ -6,7 +6,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { vibrate } from '../../utils/osFunction';
 
 export const VOCABULARY_COLORS = [
-  { id: 'color-1', value: '#FF8DD4' },
+  { id: 'color-1', value: '#FF70D4' },
   { id: 'color-2', value: '#CD8DFF' },
   { id: 'color-3', value: '#74D5FF' },
   { id: 'color-4', value: '#42F98B' },
@@ -15,9 +15,9 @@ export const VOCABULARY_COLORS = [
 
 const getColorSet = (mainColor) => {
   switch (mainColor) {
-    case '#FF8DD4': return {
-      main: "#FF8DD4",
-      sub: "#FF8DD44d",
+    case '#FF70D4': return {
+      main: "#FF70D4",
+      sub: "#FF70D44d",
       background: "#FFEFFA"
     };
     case '#CD8DFF': return {
@@ -41,8 +41,8 @@ const getColorSet = (mainColor) => {
       background: "#FFF8E6"
     };
     default: return {
-      main: "#FF8DD4",
-      sub: "#FF8DD44d",
+      main: "#FF70D4",
+      sub: "#FF70D44d",
       background: "#FFEFFA"
     };
   }
@@ -226,7 +226,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
                 border-[1px] border-[#ccc] rounded-[8px]
                 font-[400] text-[14px] text-[#111]
                 outline-none
-                focus:border-[#FF8DD4]
+                focus:border-primary-main-600
                 transition-colors
               "
             />
@@ -319,7 +319,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {
@@ -373,7 +373,7 @@ export const DeleteVocabularySheet = ({ id, onCancel, onDelete }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg-[#FF8DD4]
+            bg-primary-main-600
             text-[#fff] text-[16px] font-[700]
           "
           onClick={() => {

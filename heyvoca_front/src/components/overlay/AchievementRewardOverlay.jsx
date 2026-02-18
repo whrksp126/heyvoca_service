@@ -28,7 +28,7 @@ const ACHIEVEMENT_IMAGES = {
 // 레벨별 배경 색상 및 스타일
 const getAchievementBackgroundStyle = (level) => {
     if (level >= 10) {
-        return { background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)' };
+        return { background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)' };
     } else if (level >= 6) {
         return { backgroundColor: '#F2D252' };
     } else if (level >= 3) {
@@ -42,7 +42,7 @@ const getAchievementBackgroundStyle = (level) => {
 const getAchievementTextStyle = (level) => {
     if (level >= 10) {
         return {
-            background: 'linear-gradient(135deg, #FF8DD4 0%, #CD8DFF 50%, #74D5FF 100%)',
+            background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -168,7 +168,7 @@ const AchievementRewardOverlay = ({ goal }) => {
                             className="flex flex-col items-center gap-[12px]"
                         >
                             <p className="text-[20px] font-[700] text-[#FFFFFF] text-center whitespace-pre-wrap">
-                                <strong className="text-[#FF8DD4]">{goalType} {goalLevel}레벨</strong>을 달성했어요!
+                                <strong className="text-primary-main-600">{goalType} {goalLevel}레벨</strong>을 달성했어요!
                             </p>
                         </motion.div>
                     </div>
@@ -181,7 +181,7 @@ const AchievementRewardOverlay = ({ goal }) => {
                         onClick={handleConfirm}
                         className="
                             w-full h-[45px]
-                            bg-[#FF8DD4]
+                            bg-primary-main-600
                             rounded-[8px]
                             text-[#FFFFFF] text-[16px] font-[700]
                         "

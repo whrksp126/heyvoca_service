@@ -86,13 +86,13 @@ const StoreNewFullSheet = () => {
             >
               <img src={gem.image_url} alt="" className="w-[80px] h-[80px]" />
               {gem.bonus > 0 && (
-                <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-[#FF8DD4]">
+                <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-primary-main-600">
                   <span className="text-[10px] font-[600] text-[#fff]">+{gem.bonus}</span>
                 </div>
               )}
               <div className="flex flex-col gap-[3px]">
                 <h1 className="text-[14px] font-[600] text-[#111]">{gem.name}</h1>
-                <span className="text-center text-[14px] font-[700] text-[#FF8DD4]">₩ {gem.price}</span>
+                <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price}</span>
               </div>
             </div>
           ))}
@@ -107,9 +107,9 @@ const StoreNewFullSheet = () => {
               <img src={pkg.image} alt="" className="w-[80px] h-[80px] object-contain" />
               <div className="flex flex-col gap-[3px] items-center">
                 <h1 className="text-[14px] font-[600] text-[#111]">{pkg.packageName}</h1>
-                <div className="flex items-center gap-[4px] px-[12px] py-[4px] bg-[#FF8DD4]/10 rounded-[6px]">
+                <div className="flex items-center gap-[4px] px-[12px] py-[4px] bg-primary-main-600/10 rounded-[6px]">
                   <img src={gem} alt="heart" className="w-[14px] h-[12px]" />
-                  <span className="text-[14px] font-[700] text-[#FF8DD4]">{pkg.cost}</span>
+                  <span className="text-[14px] font-[700] text-primary-main-600">{pkg.cost}</span>
                 </div>
               </div>
             </div>

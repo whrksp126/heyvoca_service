@@ -191,10 +191,10 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
                 font-[16px] font-[400]
                 transition-all duration-200
                 focus:outline-none
-                focus:border-[#FF8DD4]
+                focus:border-primary-main-600
                 focus:ring-2
-                focus:ring-[#FF8DD4]/20
-                hover:border-[#FF8DD4]/50
+                focus:ring-primary-main-600/20
+                hover:border-primary-main-600/50
               "
               autoComplete="off"
               onKeyDown={handleKeyDown}
@@ -217,7 +217,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
               className="
                 w-full h-[50px]
                 rounded-[8px]
-                bg-[#FF8DD4]
+                bg-primary-main-600
                 text-[#fff] font-[16px] font-[700]
               "
               onClick={handleNextBtn}

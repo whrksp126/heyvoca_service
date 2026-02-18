@@ -80,13 +80,13 @@
 //         >
 //           <img src={gem.image_url} alt="" className="w-[80px] h-[80px]" />
 //           {gem.bonus > 0 && (
-//           <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-[#FF8DD4]">
+//           <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-primary-main-600">
 //             <span className="text-[10px] font-[600] text-[#fff]">+{gem.bonus}</span>
 //           </div>
 //           )}
 //           <div className="flex flex-col gap-[3px]">
 //             <h1 className="text-[14px] font-[600] text-[#111]">{gem.name}</h1>
-//             <span className="text-center text-[14px] font-[700] text-[#FF8DD4]">₩ {gem.price}</span>
+//             <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price}</span>
 //           </div>
 //         </div>
 //         ))}
