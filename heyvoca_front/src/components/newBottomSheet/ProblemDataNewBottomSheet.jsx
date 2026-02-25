@@ -49,7 +49,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
             flex gap-[10px] items-start
             p-[20px]
             rounded-[12px]
-            bg-[#E4FFE8]
+            bg-status-success-100
           ">
             <div
               className="
@@ -59,7 +59,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
               <div className="flex flex-wrap">
                 <h3
                   className="
-                    text-[16px] font-[700] text-[#09C92C]
+                    text-[16px] font-[700] text-status-success-600
                     relative
                     overflow-hidden
                     break-words 

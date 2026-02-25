@@ -100,7 +100,7 @@ const Main = () => {
                   <h2 className="font-[700] text-[16px] text-layout-black">{item.name}</h2>
                 </div>
                 <div className="flex items-end justify-between">
-                  <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
+                  <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black">
                     <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
                   </span>
                   <div

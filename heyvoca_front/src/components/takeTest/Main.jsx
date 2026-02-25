@@ -406,7 +406,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         w-full h-[16px]
         mb-[15px]
         rounded-[50px]
-        bg-primary-main-600/30
+        bg-primary-main-100
         overflow-hidden
       ">
         <motion.div
@@ -492,7 +492,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             }}
                             style={{ willChange: 'transform, opacity' }}
                           >
-                            <Circle size={150} weight="bold" className="text-[#39E859]" />
+                            <Circle size={150} weight="bold" className="text-status-success-500" />
                           </motion.div>
                         )}
                         {isCorrect === false && (
@@ -508,7 +508,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             }}
                             style={{ willChange: 'transform, opacity' }}
                           >
-                            <X size={150} weight="bold" className="text-[#F26A6A]" />
+                            <X size={150} weight="bold" className="text-status-error-500" />
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -597,9 +597,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";
                     if (isCorrect !== null && testQuestions[progressIndex].resultIndex == index) {
-                      btnStyle = 'border-[#17E937] text-[#17E937] bg-[#E4FFE8]';
+                      btnStyle = 'border-status-success-500 text-status-success-600 bg-status-success-100';
                     } else if (isCorrect === false && userSelected === index) {
-                      btnStyle = 'border-[#FF585B] text-[#FF585B] bg-[#FFEBEC]';
+                      btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100';
                     } else if (isCorrect === null && userSelected == index) {
                       btnStyle = 'border-primary-main-600 text-primary-main-600';
                     } else {

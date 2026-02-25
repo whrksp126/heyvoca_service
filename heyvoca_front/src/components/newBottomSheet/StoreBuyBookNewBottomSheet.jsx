@@ -81,7 +81,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
                         vibrate({ duration: 5 });
                         popNewBottomSheet();
                     }}
-                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center"
+                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-white font-bold text-[16px] text-layout-white dark:text-layout-black flex items-center justify-center"
                     whileTap={{ scale: 0.95 }}
                 >
                     취소
@@ -89,7 +89,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
                 <motion.button
                     onClick={handleBuy}
                     disabled={isLoading}
-                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white font-bold text-[16px] tracking-[-0.32px] flex items-center justify-center gap-[3px]"
+                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white font-bold text-[16px] text-layout-white dark:text-layout-black flex items-center justify-center gap-[3px]"
                     whileTap={{ scale: 0.95 }}
                 >
                     {isLoading ? (

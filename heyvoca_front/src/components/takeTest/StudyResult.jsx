@@ -12,6 +12,7 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 import { vibrate } from '../../utils/osFunction';
 import { getTextSound } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
+import { useTheme } from '../../context/ThemeContext';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -90,6 +91,7 @@ const getAchievementTextStyle = (level) => {
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
+  const { isDark } = useTheme();
   const { recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();
@@ -270,13 +272,13 @@ const StudyResult = () => {
               flex flex-col items-center gap-[10px] 
               px-[20px] py-[15px]
               rounded-[12px]
-              ${question.isCorrect ? 'bg-[#E4FFE8]' : 'bg-[#FFEBEC]'}  
+              ${question.isCorrect ? 'bg-status-success-100' : 'bg-status-error-100'}  
             `}>
                 <div className='flex flex-1 items-center gap-[10px] w-full'>
                   {question.isCorrect ? (
-                    <Circle size={24} weight="bold" className='text-[#17E937]' />
+                    <Circle size={24} weight="bold" className='text-status-success-500' />
                   ) : (
-                    <X size={24} weight="bold" className='text-[#FF585B]' />
+                    <X size={24} weight="bold" className='text-status-error-500' />
                   )}
                   <div className='flex flex-col flex-1 gap-[5px]'>
                     <div className="flex items-center justify-between">
@@ -317,7 +319,7 @@ const StudyResult = () => {
               p-[16px] py-[20px]
             "
             style={{
-              background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-bg) 100%)'
+              background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}`
             }}
           >
             {testType !== "today" && (
@@ -681,7 +683,7 @@ const StudyResult = () => {
                 z-10
               "
               style={{
-                background: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-bg) 100%)'
+                background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%'}`
               }}
             >
               <motion.button

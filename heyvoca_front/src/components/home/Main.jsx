@@ -26,6 +26,7 @@ import { vibrate } from '../../utils/osFunction';
 
 // import StoreSheet from './StoreSheet';
 // import TodayStudySheet from './TodayStudySheet';
+import { useTheme } from '../../context/ThemeContext';
 import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
 import TodayStudyNewFullSheet from '../newFullSheet/TodayStudyNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -104,6 +105,7 @@ const Main = () => {
 
   const navigate = useNavigate();
   const { userMainPage, userProfile } = useUser();
+  const { isDark } = useTheme();
   const { vocabularySheets, isVocabularySheetsLoading, updateDelayedWords, getDelayedWords } = useVocabulary();
   const [now, setNow] = useState(Date.now());
   const [lastSeen, setLastSeen] = useState(getLastSeenTime());
@@ -280,7 +282,7 @@ const Main = () => {
         h-screen
       "
       style={{
-        background: 'linear-gradient(to bottom, #FF69C6 0%, #FF70D4 22%, var(--layout-bg) 42%)',
+        background: `linear-gradient(to bottom, #FF69C6 0%, #FF70D4 22%, ${isDark ? 'var(--layout-black)' : 'var(--layout-white)'} 42%)`,
       }}
     >
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>

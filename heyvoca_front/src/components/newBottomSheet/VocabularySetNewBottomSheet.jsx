@@ -6,21 +6,21 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { vibrate } from '../../utils/osFunction';
 
 export const VOCABULARY_COLORS = [
-    { id: 'color-1', value: '#FF70D4' },
-    { id: 'color-2', value: '#CD8DFF' },
-    { id: 'color-3', value: '#74D5FF' },
-    { id: 'color-4', value: '#42F98B' },
-    { id: 'color-5', value: '#FFBD3C' },
+    { id: 'color-1', value: 'var(--primary-main-500)' },
+    { id: 'color-2', value: 'var(--secondary-purple-500)' },
+    { id: 'color-3', value: 'var(--secondary-blue-500)' },
+    { id: 'color-4', value: 'var(--secondary-mint-500)' },
+    { id: 'color-5', value: 'var(--secondary-yellow-500)' },
 ];
 
 const getColorSet = (mainColor) => {
     switch (mainColor) {
-        case '#FF70D4': return { main: "#FF70D4", sub: "#FF70D44d", background: "var(--primary-main-100)" };
-        case '#CD8DFF': return { main: "#CD8DFF", sub: "#CD8DFF4d", background: "#F8E6FF" };
-        case '#74D5FF': return { main: "#74D5FF", sub: "#74D5FF4d", background: "#EAF6FF" };
-        case '#42F98B': return { main: "#42F98B", sub: "#42F98B4d", background: "#E6FFE9" };
-        case '#FFBD3C': return { main: "#FFBD3C", sub: "#FFBD3C4d", background: "#FFF8E6" };
-        default: return { main: "#FF70D4", sub: "#FF70D44d", background: "var(--primary-main-100)" };
+        case 'var(--primary-main-500)': return { main: "var(--primary-main-500)", sub: "var(--primary-main-200)", background: "var(--primary-main-100)" };
+        case 'var(--secondary-purple-500)': return { main: "var(--secondary-purple-500)", sub: "var(--secondary-purple-200)", background: "var(--secondary-purple-100)" };
+        case 'var(--secondary-blue-500)': return { main: "var(--secondary-blue-500)", sub: "var(--secondary-blue-200)", background: "var(--secondary-blue-100)" };
+        case 'var(--secondary-mint-500)': return { main: "var(--secondary-mint-500)", sub: "var(--secondary-mint-200)", background: "var(--secondary-mint-100)" };
+        case 'var(--secondary-yellow-500)': return { main: "var(--secondary-yellow-500)", sub: "var(--secondary-yellow-200)", background: "var(--secondary-yellow-100)" };
+        default: return { main: "var(--primary-main-500)", sub: "var(--primary-main-200)", background: "var(--primary-main-100)" };
     }
 };
 

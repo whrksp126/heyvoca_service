@@ -555,10 +555,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               marginBottom: '20px',
               fontFamily: "'Pretendard Variable', sans-serif"
             }}>
-              <p style={{ fontWeight: 400, color: 'var(--layout-black)', margin: 0 }}>아직 추가된 단어가 없어요!</p>
+              <p style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}`, margin: 0 }}>아직 추가된 단어가 없어요!</p>
               <p style={{ margin: 0 }}>
-                <span style={{ fontWeight: 700, color: '#FF70D4' }}>단어</span>
-                <span style={{ fontWeight: 400, color: 'var(--layout-black)' }}>를 추가해보세요 🤗</span>
+                <span style={{ fontWeight: 700, color: 'var(--primary-main-500)' }}>단어</span>
+                <span style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}` }}>를 추가해보세요 🤗</span>
               </p>
             </div>
 
@@ -579,14 +579,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                 cursor: 'pointer'
               }}
             >
-              <Plus size={16} color="white" weight="light" />
-              <span style={{
-                color: 'white',
-                fontSize: '14px',
-                fontWeight: 700,
-                letterSpacing: '-0.28px',
-                fontFamily: "'Pretendard Variable', sans-serif"
-              }}>
+              <Plus size={16} color={isDark ? 'var(--layout-black)' : 'var(--layout-white)'} weight="light" />
+              <span
+                className="text-[14px] font-[700] text-layout-white dark:text-layout-black"
+              >
                 단어 추가하기
               </span>
             </motion.button>

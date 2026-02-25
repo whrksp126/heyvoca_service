@@ -43,6 +43,7 @@ export const LearningInfoNewBottomSheet = ({ onCancel, onSet, testType }) => {
       <div className="
         flex flex-col gap-[30px]
         p-[20px]
+        text-layout-black dark:text-layout-white
       ">
         <div className="flex flex-col gap-[10px]">
           <h2 className="text-[18px] font-[700] text-center">
