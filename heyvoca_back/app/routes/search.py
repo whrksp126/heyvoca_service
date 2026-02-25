@@ -248,45 +248,56 @@ def search_bookstore_all():
 
     # MySQL용 JSON 그룹화 쿼리
     query = text("""
-        SELECT 
-            bs.id AS bookstore_id, 
-            bs.name AS bookstore_name, 
-            bs.downloads, 
-            bs.category, 
-            bs.color, 
+        SELECT
+            bs.id AS bookstore_id,
+            bs.name AS bookstore_name,
+            bs.downloads,
+            bs.category,
+            bs.color,
             bs.hide,
             bs.gem,
 
-            -- 단어 목록을 JSON 배열로 변환
+            -- 단어 목록을 JSON 배열로 변환 (구 voca_book 경로 + 신 admin_voca_book 경로 모두 포함)
             COALESCE(JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', v.id,
-                    'origin', v.word,
-                    'pronunciation', v.pronunciation,
-                    'meanings', (
-                        SELECT JSON_ARRAYAGG(vm.meaning) 
-                        FROM voca_meaning_map vmm 
-                        JOIN voca_meaning vm ON vmm.meaning_id = vm.id 
-                        WHERE vmm.voca_id = v.id
-                    ),
-                    'examples', (
-                        SELECT JSON_ARRAYAGG(
-                            JSON_OBJECT(
-                                'origin', ve.exam_en, 
-                                'meaning', ve.exam_ko
+                IF(COALESCE(v_old.id, v_new.id) IS NOT NULL,
+                    JSON_OBJECT(
+                        'id', COALESCE(v_old.id, v_new.id),
+                        'origin', COALESCE(v_old.word, v_new.word),
+                        'pronunciation', COALESCE(v_old.pronunciation, v_new.pronunciation),
+                        'meanings', CASE
+                            WHEN v_old.id IS NOT NULL THEN (
+                                SELECT JSON_ARRAYAGG(vm.meaning)
+                                FROM voca_meaning_map vmm
+                                JOIN voca_meaning vm ON vmm.meaning_id = vm.id
+                                WHERE vmm.voca_id = v_old.id
                             )
-                        )
-                        FROM voca_example_map vem
-                        JOIN voca_example ve ON vem.example_id = ve.id
-                        WHERE vem.voca_id = v.id
-                    )
+                            ELSE CAST(avbm.voca_meanings AS JSON)
+                        END,
+                        'examples', CASE
+                            WHEN v_old.id IS NOT NULL THEN (
+                                SELECT JSON_ARRAYAGG(
+                                    JSON_OBJECT('origin', ve.exam_en, 'meaning', ve.exam_ko)
+                                )
+                                FROM voca_example_map vem
+                                JOIN voca_example ve ON vem.example_id = ve.id
+                                WHERE vem.voca_id = v_old.id
+                            )
+                            ELSE CAST(avbm.voca_examples AS JSON)
+                        END
+                    ),
+                    NULL
                 )
             ), JSON_ARRAY()) AS words
 
         FROM bookstore bs
+        -- 구 경로
         LEFT JOIN voca_book vb ON bs.book_id = vb.id
         LEFT JOIN voca_book_map vbm ON vb.id = vbm.book_id
-        LEFT JOIN voca v ON vbm.voca_id = v.id
+        LEFT JOIN voca v_old ON vbm.voca_id = v_old.id
+        -- 신 경로
+        LEFT JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
+        LEFT JOIN admin_voca_book_map avbm ON avb.id = avbm.book_id
+        LEFT JOIN voca v_new ON avbm.voca_id = v_new.id
         GROUP BY bs.id
     """)
 

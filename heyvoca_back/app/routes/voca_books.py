@@ -4,7 +4,7 @@ from flask import request, jsonify, g
 from uuid import UUID, uuid4
 
 from app.routes import voca_books_bp
-from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca
+from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
 
@@ -94,6 +94,7 @@ def create_voca_book():
     title = req.get('title')
     color = req.get('color')
     voca_list = req.get('vocaList', [])
+    bookstore_id = req.get('bookstoreId')
 
     if not title:
         return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
@@ -102,7 +103,7 @@ def create_voca_book():
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
-            bookstore_id=None,
+            bookstore_id=bookstore_id,
             color=json.dumps(color, ensure_ascii=False) if color else json.dumps({'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'}),
             name=title,
             total_word_cnt=0,
@@ -113,7 +114,47 @@ def create_voca_book():
         db.session.add(voca_book)
         db.session.flush()  # ID 할당
 
+        # bookstoreId가 있으면 admin_voca_book_map에서 단어 자동 복사
+        if bookstore_id:
+            bookstore = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+            if bookstore and bookstore.admin_voca_book_id:
+                admin_maps = db.session.query(AdminVocaBookMap).filter(
+                    AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
+                ).all()
+                for admin_map in admin_maps:
+                    if not admin_map.voca:
+                        continue
+                    meanings = json.loads(admin_map.voca_meanings) if admin_map.voca_meanings else []
+                    examples = json.loads(admin_map.voca_examples) if admin_map.voca_examples else []
+
+                    user_voca = db.session.query(UserVoca).filter(
+                        UserVoca.user_id == user_id,
+                        UserVoca.word == admin_map.voca.word
+                    ).first()
+
+                    if user_voca:
+                        user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+                        user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+                    else:
+                        user_voca = UserVoca()
+                        user_voca.user_id = user_id
+                        user_voca.word = admin_map.voca.word
+                        user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+                        user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
+                        db.session.add(user_voca)
+                        db.session.flush()
+
+                    book_map = UserVocaBookMap()
+                    book_map.user_voca_book_id = voca_book.id
+                    book_map.user_voca_id = user_voca.id
+                    book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+                    book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
+                    db.session.add(book_map)
+
+                voca_list = []  # 서점 단어장은 vocaList 무시
+
         # vocaList가 있으면 각 단어에 대해 UserVoca + UserVocaBookMap 생성
+        added_count = 0
         for item in voca_list:
             origin = item.get('origin')
             meanings = item.get('meanings', [])
@@ -151,9 +192,15 @@ def create_voca_book():
             book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
             book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
             db.session.add(book_map)
+            added_count += 1
 
-        # 단어 수 업데이트
-        voca_book.total_word_cnt = len(voca_list)
+        # 단어 수 업데이트 (서점 경로는 admin_maps 수, vocaList 경로는 added_count)
+        if bookstore_id and not voca_list:
+            voca_book.total_word_cnt = db.session.query(UserVocaBookMap).filter(
+                UserVocaBookMap.user_voca_book_id == voca_book.id
+            ).count()
+        else:
+            voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
 
         db.session.commit()

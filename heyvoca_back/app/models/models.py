@@ -206,9 +206,11 @@ class Bookstore(db.Model):
     level = Column(String(50), nullable=True)
     level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
+    admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=False)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
+    admin_voca_book = relationship("AdminVocaBook")
 
 
 ##############
