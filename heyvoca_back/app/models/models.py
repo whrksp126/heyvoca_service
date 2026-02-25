@@ -478,7 +478,7 @@ class AdminVocaBook(db.Model):
     updated_at = Column(DateTime, nullable=True)
 
     # 관계 정의
-    voca_books = relationship("AdminVocaBookMap")
+    voca_books = relationship("AdminVocaBookMap", back_populates="voca_book")
 
 
 class AdminVocaBookMap(db.Model):
