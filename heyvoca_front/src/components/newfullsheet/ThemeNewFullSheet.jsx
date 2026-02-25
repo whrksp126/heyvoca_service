@@ -89,17 +89,17 @@ const ThemeNewFullSheet = () => {
                 damping: 30
               }}
               className="relative w-[26px] h-[26px] bg-white rounded-full flex items-center justify-center shadow-md"
-              style={{
-                x: isDark ? 28 : 0
+              animate={{
+                x: isDark ? 0 : 28
               }}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 {isDark ? (
                   <motion.div
                     key="moon"
-                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
                     transition={{ duration: 0.2 }}
                   >
                     <Moon weight="bold" size={16} className="text-layout-black" />
