@@ -93,7 +93,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             </div>
           </div>
           <div className="flex flex-wrap">
-            <h3 className="text-[20px] font-[700] text-layout-black">
+            <h3 className="text-[20px] font-[700] text-layout-black dark:text-layout-white">
               <motion.span
                 onClick={() => getTextSound(word.origin, "en")}
                 whileHover={{ scale: 1.02 }}
@@ -111,7 +111,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             </h3>
           </div>
           <div className="flex flex-wrap">
-            <span className="text-[14px] font-[400] text-layout-black">
+            <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
               <motion.span
                 onClick={() => getTextSound(word.meanings.join(", "), "ko")}
                 whileHover={{ scale: 1.02 }}
@@ -131,7 +131,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
           {
             word.examples?.map((example, index) => (
               <div key={`${id}-${index}`} className="flex flex-col">
-                <span className="text-[14px] font-[400] text-layout-black">
+                <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                   <motion.span
                     onClick={() => getTextSound(example.origin, "en")}
                     whileHover={{ scale: 1.02 }}
@@ -147,7 +147,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                     <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                   </motion.span>
                 </span>
-                <span className="text-[14px] font-[400] text-layout-black">
+                <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                   <motion.span
                     onClick={() => getTextSound(example.meaning, "ko")}
                     whileHover={{ scale: 1.02 }}

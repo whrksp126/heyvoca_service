@@ -1,27 +1,21 @@
-import React, { useState } from 'react';
-import { CaretLeft, Check } from '@phosphor-icons/react';
+import React from 'react';
+import { CaretLeft, Sun, Moon } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useTheme } from '../../context/ThemeContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { vibrate } from '../../utils/osFunction';
 
 const ThemeNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, isDark } = useTheme();
 
-  const themeOptions = [
-    { value: 'light', label: '라이트 모드' },
-    { value: 'dark', label: '다크 모드' },
-    { value: 'system', label: '시스템 설정' },
-  ];
-
-  const handleThemeChange = (newTheme) => {
+  const handleToggleTheme = () => {
     vibrate({ duration: 5 });
-    setTheme(newTheme);
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
   };
 
   return (
@@ -60,11 +54,6 @@ const ThemeNewFullSheet = () => {
           >
             <CaretLeft size={24} />
           </motion.button>
-          <h1 className="
-            text-[18px] font-[700]
-            text-layout-black 
-          ">
-          </h1>
         </div>
         <h1 className="
             absolute
@@ -74,33 +63,62 @@ const ThemeNewFullSheet = () => {
           ">
           테마
         </h1>
-        <div
-          className="
-            flex items-center gap-[8px]
-            text-layout-gray-200 dark:text-layout-white
-          "
-        >
-        </div>
+        <div className="w-[24px]"></div> {/* Spacer for symmetry */}
       </div>
 
       {/* Content */}
       <div className="flex flex-col flex-1 py-[10px] overflow-y-auto">
-        <ul className="w-full m-0 p-0 list-none">
-          {themeOptions.map((option) => (
-            <li
-              key={option.value}
-              onClick={() => handleThemeChange(option.value)}
-              className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark cursor-pointer"
+        <div
+          onClick={handleToggleTheme}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark cursor-pointer"
+        >
+          <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
+            테마 설정
+          </span>
+
+          {/* Toggle Button */}
+          <div className={`
+            relative w-[60px] h-[32px] rounded-full p-[3px] transition-colors duration-300
+            ${isDark ? 'bg-layout-gray-500' : 'bg-primary-main-600'}
+          `}>
+            <motion.div
+              layout
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 30
+              }}
+              className="relative w-[26px] h-[26px] bg-white rounded-full flex items-center justify-center shadow-md"
+              style={{
+                x: isDark ? 28 : 0
+              }}
             >
-              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
-                {option.label}
-              </span>
-              {theme === option.value && (
-                <Check weight="bold" className="text-[20px] text-primary-main-600" />
-              )}
-            </li>
-          ))}
-        </ul>
+              <AnimatePresence mode="wait">
+                {isDark ? (
+                  <motion.div
+                    key="moon"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Moon weight="bold" size={16} className="text-layout-black" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="sun"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Sun weight="bold" size={16} className="text-primary-main-600" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </div>
   );

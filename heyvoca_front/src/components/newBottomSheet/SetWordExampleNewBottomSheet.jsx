@@ -40,7 +40,7 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
           flex items-center justify-center
           p-[20px] pb-[0px]
         ">
-          <h1 className="text-[18px] font-[700]">예문 {setType === "add" ? "추가" : "수정"}</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">예문 {setType === "add" ? "추가" : "수정"}</h1>
         </div>
         <div className="right"></div>
       </div>

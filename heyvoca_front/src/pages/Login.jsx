@@ -133,7 +133,7 @@ const Login = () => {
 
 
   // 개발자 로그인 state
-  const [devEmail, setDevEmail] = useState('dev@example.com');
+  const [devEmail, setDevEmail] = useState('test@test.com');
   const { DevLogin } = useUser();
   const isLocal = import.meta.env.VITE_ENV === 'local';
 
@@ -182,10 +182,10 @@ const Login = () => {
             <p className="text-xs text-center text-gray-500 font-bold">DEVELOPER ONLY</p>
             <input
               type="email"
-              placeholder="dev@example.com"
+              placeholder="test@test.com"
               value={devEmail}
               onChange={(e) => setDevEmail(e.target.value)}
-              className="w-full p-2 border border-gray-400 rounded text-sm"
+              className="w-full p-2 border border-gray-400 rounded text-sm text-layout-black"
             />
             <button
               onClick={handleDevLogin}

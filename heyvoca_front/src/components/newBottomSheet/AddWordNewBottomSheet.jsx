@@ -521,7 +521,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
               "
               >
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[14px] font-[600] text-[#000] dark:text-layout-white">
+                  <h2 className="text-[14px] font-[600] text-layout-black">
                     {index + 1}
                   </h2>
                   <div className="
@@ -573,7 +573,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   </div>
                 </div>
                 <div>
-                  <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
+                  <p className="text-[14px] font-[400] text-layout-black">
                     <span
                       className="cursor-pointer"
                       onClick={() => getTextSound(origin, "en")}

@@ -296,7 +296,7 @@ const TodayStudyNewFullSheet = () => {
                px-[15px] py-[12px] mb-[11px] 
                rounded-[10px] 
                bg-layout-white 
-               text-[14px] font-[600] text-layout-black dark:text-layout-white
+               text-[14px] font-[600] text-layout-black
                shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)]
              ">
               <span>오늘은 몇 개 단어를<br />공부해볼까요?</span>
@@ -389,7 +389,7 @@ const TodayStudyNewFullSheet = () => {
           disabled={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT}
           className={`
             w-full h-[50px] rounded-[8px] text-[16px] font-[700]
-            ${showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? 'border-[1px] border-layout-gray-200 text-layout-gray-200 bg-[transparent] cursor-not-allowed' : 'text-layout-white bg-primary-main-600'}
+            ${showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? 'border-[1px] border-layout-gray-200 text-layout-gray-200 bg-[transparent] cursor-not-allowed' : 'text-layout-white dark:text-layout-black bg-primary-main-600'}
           `}
           whileHover={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 1.02 }}
           whileTap={showWarning || availableWordCount < MIN_TEST_VOCABULARY_COUNT ? {} : { scale: 0.98 }}

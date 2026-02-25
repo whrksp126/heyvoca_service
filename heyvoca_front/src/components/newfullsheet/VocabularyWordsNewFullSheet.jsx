@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { PencilSimple, CaretLeft, Plus, Trash, CaretDown } from '@phosphor-icons/react';
+import { CaretLeft, Plus, Trash, CaretDown } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -255,12 +255,6 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     );
   }
 
-  const handleEditClick = () => {
-    pushNewFullSheet(UpdateVocabularyWordsNewFullSheet, { id }, {
-      smFull: true,
-      closeOnBackdropClick: true
-    });
-  };
 
   const handleAddClick = () => {
     vibrate({ duration: 5 });
@@ -342,22 +336,6 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         </div>
 
         <div className="flex items-center gap-[10px]">
-          <motion.button
-            style={{
-              width: '20px',
-              height: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--primary-main-600)'
-            }}
-            variants={buttonVariants}
-            whileTap="tap"
-            onClick={handleEditClick}
-            aria-label="단어장 수정"
-          >
-            <PencilSimple size={20} weight="light" />
-          </motion.button>
 
           <div className="relative">
             <motion.button
