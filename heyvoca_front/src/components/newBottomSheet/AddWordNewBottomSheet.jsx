@@ -598,6 +598,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
         absolute bottom-0 left-0 right-0
         flex items-center justify-between gap-[15px] 
         p-[20px]
+        bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
       ">
         <motion.button
           className="

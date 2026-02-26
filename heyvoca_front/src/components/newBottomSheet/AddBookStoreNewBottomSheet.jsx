@@ -133,8 +133,8 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
             flex-1
             h-[45px]
             rounded-[8px]
-            bg--primary-main-600
-            text-layout-white text-[16px] font-[700]
+            bg-primary-main-600
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });

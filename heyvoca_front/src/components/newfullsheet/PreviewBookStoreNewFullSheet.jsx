@@ -183,42 +183,46 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
       {/* Header */}
       <div className="
         relative
-        flex items-center justify-center
-        h-[55px] 
-        pt-[20px] px-[10px] pb-[14px]
+        flex items-center justify-between
+        h-[65px] 
+        pt-[20px] px-[16px] pb-[14px]
       ">
-        <motion.button
-          onClick={() => {
-            vibrate({ duration: 5 });
-            handleClose();
-          }}
-          className="
-            absolute top-[18px] left-[10px]
-            flex items-center gap-[4px]
-            text-layout-gray-200 dark:text-layout-white
-            p-[4px]
-            rounded-[8px]
-          "
-          whileHover={{
-            backgroundColor: 'rgba(0, 0, 0, 0.05)',
-            scale: 1.05
-          }}
-          whileTap={{
-            scale: 0.95,
-            backgroundColor: 'rgba(0, 0, 0, 0.1)'
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17
-          }}
-        >
-          <CaretLeft size={24} />
-        </motion.button>
+        <div className="flex items-center gap-[4px]">
+          <motion.button
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleClose();
+            }}
+            className="
+              text-layout-gray-200 dark:text-layout-white
+              rounded-[8px]
+            "
+            whileHover={{
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              scale: 1.05
+            }}
+            whileTap={{
+              scale: 0.95,
+              backgroundColor: 'rgba(0, 0, 0, 0.1)'
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17
+            }}
+          >
+            <CaretLeft size={24} />
+          </motion.button>
+        </div>
         <h1 className="
-          text-[18px] font-[700]
-          text-layout-black dark:text-layout-white
-        ">단어장 미리보기</h1>
+            absolute
+            left-1/2 -translate-x-1/2
+            text-[18px] font-[700]
+            text-layout-black dark:text-layout-white
+          ">
+          단어장 미리보기
+        </h1>
+        <div className="w-[24px]"></div> {/* Spacer for symmetry */}
       </div>
 
       <div
@@ -226,7 +230,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
         className="
           flex flex-col gap-[10px]
           flex-1
-          p-[20px] pb-[105px]
+          p-[20px] pt-[0px] pb-[105px]
           overflow-y-auto
         "
         style={{
@@ -256,7 +260,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
             )}
             {bookStoreVocabularySheet.name}
           </div>
-          <div className="text-[12px] font-[400] text-layout-black">
+          <div className="text-[12px] font-[400] text-layout-black dark:text-layout-white">
             {bookStoreVocabularySheet.words.length}개의 단어
           </div>
         </div>
@@ -440,8 +444,9 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
       <div className="
         absolute bottom-0 left-0 right-0
         flex items-center justify-between gap-[15px] 
-        p-[20px]
-        bg-layout-white dark:bg-layout-black
+        p-[20px] pt-[50px]
+        bg-gradient-to-b from-transparent to-layout-white
+        dark:to-layout-black
       ">
         <motion.button
           className="

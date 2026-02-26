@@ -235,7 +235,11 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
             </div>
 
             {/* 하단 버튼 구역 (고정) */}
-            <div className="absolute bottom-0 left-0 right-0 p-[20px] bg-layout-white dark:bg-layout-black">
+            <div className="
+                absolute bottom-0 left-0 right-0 
+                p-[20px] pt-[50px] 
+                bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+            ">
                 <motion.button
                     className="w-full h-[45px] bg-layout-gray-200 text-layout-white dark:text-layout-black rounded-[8px] text-[16px] font-[700]"
                     onClick={handleClose}

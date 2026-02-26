@@ -265,7 +265,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                           damping: 20
                         }}
                         className="inline-block cursor-pointer"
-                        style={{ 调节willChange: 'transform' }}
+                        style={{ willChange: 'transform' }}
                       >
                         {item.origin}
                       </motion.span>

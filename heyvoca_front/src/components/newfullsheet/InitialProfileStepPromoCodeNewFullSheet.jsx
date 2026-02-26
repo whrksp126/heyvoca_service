@@ -129,7 +129,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                     >
                         초대 코드가 있다면 입력해 주세요!
                         {/* 말풍선 꼬리 */}
-                        <div className="absolute bottom-[-8px] right-[40px] w-[16px] h-[16px] bg-layout-white dark:bg-layout-black rotate-45" style={{ boxShadow: '4px 4px 12px 0px rgba(0,0,0,0.02)' }}></div>
+                        <div className="absolute bottom-[-8px] right-[40px] w-[16px] h-[16px] bg-layout-white rotate-45" style={{ boxShadow: '4px 4px 12px 0px rgba(0,0,0,0.02)' }}></div>
                     </div>
                     <img src={HeyCharacter} alt="logo" className="w-[200px]" />
                 </div>

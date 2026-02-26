@@ -13,9 +13,10 @@ const BottomNav = () => {
         fixed bottom-0 
         w-full 
         border-t border-border 
-        bg-layout-white 
-        dark:bg-layout-black 
+        bg-layout-white/90 
+        dark:bg-layout-black/90 
         dark:border-border-dark
+        backdrop-blur-md
         "
     >
       <ul className="flex justify-around items-center h-[70px] max-w-md mx-auto">
@@ -28,7 +29,7 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-layout-white dark:bg-layout-black
+              flex flex-col items-center
             "
           >
             <House
@@ -50,7 +51,7 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-layout-white dark:bg-layout-black
+              flex flex-col items-center
             "
           >
             <Notepad
@@ -72,7 +73,7 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-layout-white dark:bg-layout-black
+              flex flex-col items-center
             "
           >
             <Storefront
@@ -94,7 +95,7 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-layout-white dark:bg-layout-black">
+              flex flex-col items-center">
             <Exam
               weight="fill"
               className={`w-6 h-6 ${location.pathname === '/class' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
@@ -116,7 +117,7 @@ const BottomNav = () => {
         >
           <div
             className="
-              flex flex-col items-center bg-layout-white dark:bg-layout-black
+              flex flex-col items-center
             "
           >
             <User

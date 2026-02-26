@@ -389,14 +389,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     borderBottom: '13px solid var(--primary-main-600)'
                   }}
                 />
-                <span style={{
-                  color: 'white',
-                  fontSize: '12px',
-                  fontWeight: 400,
-                  lineHeight: 1.4,
-                  letterSpacing: '-0.24px',
-                  whiteSpace: 'nowrap'
-                }}>
+                <span
+                  className="text-layout-white dark:text-layout-black text-[12px] font-[400] leading-[1.4] tracking-[-0.24px] whitespace-nowrap">
                   눌러서 단어 추가
                 </span>
               </motion.div>

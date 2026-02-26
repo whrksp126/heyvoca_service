@@ -233,6 +233,10 @@ const StudyResult = () => {
 
     // 학습 결과 화면 (마지막 화면)
     if (currentScreen.type === 'result') {
+      const totalQuestions = testQuestions.length;
+      const correctQuestions = testQuestions.filter(q => q.isCorrect).length;
+      const score = Math.round((correctQuestions / totalQuestions) * 100);
+
       return (
         <motion.div
           key={currentScreenIndex}
@@ -245,7 +249,7 @@ const StudyResult = () => {
             damping: 30,
             duration: 0.5
           }}
-          className='relative flex flex-col h-[100dvh]'
+          className='relative flex flex-col h-[100dvh] bg-layout-white dark:bg-layout-black'
         >
           <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
           <div className='
@@ -253,8 +257,6 @@ const StudyResult = () => {
             flex items-end justify-center
             w-full h-[55px]
             px-[16px] py-[14px]
-            bg-layout-white 
-            dark:bg-layout-black
           '>
             <div className="center">
               <h2 className='text-[18px] font-[700] leading-[21px]'>
@@ -262,55 +264,114 @@ const StudyResult = () => {
               </h2>
             </div>
           </div>
-          <div className='
-            flex flex-col flex-1 gap-[10px] 
-            p-[20px] pb-[85px]
-            overflow-y-auto
-          '>
-            {testQuestions.map((question, index) => (
-              <div key={index} className={`
-              flex flex-col items-center gap-[10px] 
-              px-[20px] py-[15px]
-              rounded-[12px]
-              ${question.isCorrect ? 'bg-status-success-100' : 'bg-status-error-100'}  
-            `}>
-                <div className='flex flex-1 items-center gap-[10px] w-full'>
-                  {question.isCorrect ? (
-                    <Circle size={24} weight="bold" className='text-status-success-500' />
-                  ) : (
-                    <X size={24} weight="bold" className='text-status-error-500' />
+
+          <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[100px]'>
+            {/* 프로그레스 서클 영역 */}
+            <div className='flex flex-col items-center justify-center py-[40px]'>
+              <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
+                {/* SVG 영역: 반시계 방향을 위해 scaleY(-1)과 rotate(-90) 적용 */}
+                <svg
+                  className='absolute w-full h-full transform -rotate-90 -scale-y-100'
+                  viewBox="0 0 238 238"
+                >
+                  {/* 안쪽 배경 회색 원 (프로그레스 바가 지나갈 길) */}
+                  <circle
+                    cx="119"
+                    cy="119"
+                    r="104.8"
+                    fill="none"
+                    stroke="var(--layout-gray-50)"
+                    strokeWidth="28.4"
+                  />
+                  {/* 실제 핑크색 프로그레스 바 (반시계 방향으로 채워짐) */}
+                  {correctQuestions > 0 && (
+                    <motion.circle
+                      cx="119"
+                      cy="119"
+                      r="104.8"
+                      fill="none"
+                      stroke="var(--primary-main-600)"
+                      strokeWidth="28.4"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: correctQuestions / totalQuestions }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                    />
                   )}
-                  <div className='flex flex-col flex-1 gap-[5px]'>
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-[16px] font-[700]">
-                        <span
-                          onClick={() => getTextSound(question.origin, "en")}
-                          className="text-layout-black cursor-pointer"
-                        >
-                          {question.origin}
-                        </span>
-                      </h3>
-                      <MemorizationStatus
-                        repetition={question.sm2?.repetition ?? question.repetition ?? 0}
-                        interval={question.sm2?.interval ?? question.interval ?? 0}
-                        ef={question.sm2?.ef ?? question.ef ?? 2.5}
-                        nextReview={question.sm2?.nextReview ?? question.nextReview}
-                        wordId={question.id}
-                        useRandomMessages={false}
-                      />
-                    </div>
-                    <p className="text-[12px] font-[400] whitespace-pre-wrap">
-                      <span
-                        onClick={() => getTextSound(question.meanings.join(", "), "ko")}
-                        className="text-layout-gray-500 cursor-pointer"
-                      >
-                        {question.meanings.join(', ')}
-                      </span>
-                    </p>
-                  </div>
+                </svg>
+                {/* 중앙 텍스트 */}
+                <div className='flex flex-col items-center justify-center z-10'>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    className='text-[36px] font-[700] text-primary-main-600'
+                  >
+                    {score}점
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1, duration: 0.5 }}
+                  >
+                    <span className='text-[14px] font-[700] text-primary-main-600'>{correctQuestions}</span>
+                    <span className='text-[14px] font-[400] text-layout-gray-200'>/{totalQuestions}</span>
+                  </motion.div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* 단어 목록 영역 */}
+            <div className='flex flex-col gap-[12px] px-[20px]'>
+              {testQuestions.map((question, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2 + (index * 0.1) }}
+                  className={`
+                    flex flex-col gap-[10px] 
+                    px-[20px] py-[18px]
+                    rounded-[12px]
+                    ${question.isCorrect ? 'bg-status-success-100' : 'bg-status-error-50'}  
+                  `}
+                >
+                  <div className='flex items-center gap-[10px]'>
+                    <div className='flex-shrink-0'>
+                      {question.isCorrect ? (
+                        <Circle size={24} weight="bold" className='text-status-success-500' />
+                      ) : (
+                        <X size={24} weight="bold" className='text-status-error-500' />
+                      )}
+                    </div>
+                    <div className='flex flex-col flex-1 gap-[5px]'>
+                      <div className="flex items-center justify-between">
+                        <h3
+                          onClick={() => getTextSound(question.origin, "en")}
+                          className="text-[16px] font-[700] text-layout-black cursor-pointer"
+                        >
+                          {question.origin}
+                        </h3>
+                        <MemorizationStatus
+                          repetition={question.sm2?.repetition ?? question.repetition ?? 0}
+                          interval={question.sm2?.interval ?? question.interval ?? 0}
+                          ef={question.sm2?.ef ?? question.ef ?? 2.5}
+                          nextReview={question.sm2?.nextReview ?? question.nextReview}
+                          wordId={question.id}
+                          useRandomMessages={false}
+                        />
+                      </div>
+                      <p
+                        onClick={() => getTextSound(question.meanings.join(", "), "ko")}
+                        className="text-[12px] font-[400] text-layout-gray-400 cursor-pointer"
+                      >
+                        {question.meanings.join(', ')}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
           <div
             className="
@@ -597,12 +658,10 @@ const StudyResult = () => {
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         {/* 고정 헤더 */}
         <div className='
-          relative
+          absolute top-0 left-0
           flex items-end justify-center
           w-full h-[55px]
           px-[16px] py-[14px]
-          bg-layout-white 
-          dark:bg-layout-black
           z-20
         '>
           <div className="center">
@@ -624,7 +683,7 @@ const StudyResult = () => {
               damping: 30,
               duration: 0.5
             }}
-            className='relative flex flex-col flex-1 overflow-hidden'
+            className='relative flex flex-col flex-1 pt-[55px] overflow-hidden'
           >
             {/* 컨텐츠 영역 */}
             <div className='

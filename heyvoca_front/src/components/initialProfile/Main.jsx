@@ -195,6 +195,7 @@ const Main = () => {
             className="
               px-[15px] py-[12px]
               bg-layout-white
+              text-layout-black
               rounded-[10px]
               font-[16px] font-[600]
             "

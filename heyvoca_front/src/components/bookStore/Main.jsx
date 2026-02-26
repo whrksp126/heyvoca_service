@@ -1,19 +1,21 @@
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Plus } from "@phosphor-icons/react";
-import { useNewBottomSheetActions } from "../../context/NewBottomSheetContext";
-import { PreviewBookStoreNewBottomSheet } from "../newBottomSheet/PreviewBookStoreNewBottomSheet";
+import { useNewFullSheetActions } from "../../context/NewFullSheetContext";
+import { PreviewBookStoreNewFullSheet } from "../newFullSheet/PreviewBookStoreNewFullSheet";
 import { vibrate } from '../../utils/osFunction';
-// import { PreviewBookStoreNewFullSheet } from "../newFullSheet/PreviewBookStoreNewFullSheet";
-// import { useNewFullSheetActions } from "../../context/NewFullSheetContext";
+import { getBookStoreDetailApi } from "../../api/bookStore";
 import gem from "../../assets/images/gem.png";
+
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { isBookStoreLoading, bookStore, getBookStoreVocabularySheet } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
-  // const { pushNewFullSheet } = useNewFullSheetActions();
+  const { pushNewFullSheet } = useNewFullSheetActions();
+
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
   if (isBookStoreLoading) {
     return (
@@ -22,30 +24,29 @@ const Main = () => {
       </div>
     );
   }
-
   // React Compiler가 자동으로 useCallback 처리
-  const handleBookStoreClick = (id) => {
-    const bookStoreVocabularySheet = getBookStoreVocabularySheet(id);
-    pushNewBottomSheet(
-      PreviewBookStoreNewBottomSheet,
-      {
-        bookStoreVocabularySheet: bookStoreVocabularySheet
-      },
-      {
-        isBackdropClickClosable: true,
-        isDragToCloseEnabled: false
+  const handleBookStoreClick = async (id) => {
+    try {
+      setIsLoadingDetail(true);
+      const result = await getBookStoreDetailApi(id);
+
+      if (result && result.code === 200) {
+        const bookStoreVocabularySheet = result.data;
+        pushNewFullSheet(
+          PreviewBookStoreNewFullSheet,
+          {
+            bookStoreVocabularySheet: bookStoreVocabularySheet
+          }
+        );
+      } else {
+        alert('단어장 정보를 가져오는데 실패했습니다.');
       }
-    );
-    // pushNewFullSheet(
-    //   PreviewBookStoreNewFullSheet,
-    //   {
-    //     bookStoreVocabularySheet: bookStoreVocabularySheet
-    //   },
-    //   {
-    //     smFull: true,
-    //     closeOnBackdropClick: true
-    //   }
-    // );
+    } catch (error) {
+      console.error('서점 상세 조회 오류:', error);
+      alert('오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoadingDetail(false);
+    }
   };
 
   return (
@@ -124,6 +125,32 @@ const Main = () => {
         </ul>
       </div>
       <div className="bottom"></div>
+
+      {/* 상세 정보 로딩 오버레이 */}
+      <AnimatePresence>
+        {isLoadingDetail && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="
+              absolute inset-0 z-[100]
+              flex items-center justify-center
+              bg-layout-white/60 dark:bg-layout-black/60
+              backdrop-blur-[2px]
+            "
+          >
+            <div className="flex flex-col items-center gap-[10px]">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="w-[30px] h-[30px] border-[3px] border-primary-main-600 border-t-transparent rounded-full"
+              />
+              <p className="text-[14px] font-[600] text-layout-black dark:text-layout-white">정보를 가져오는 중...</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

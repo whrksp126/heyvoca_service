@@ -331,6 +331,28 @@ export const VocabularyProvider = ({ children }) => {
 
       setVocaBooks(prev => [...prev, newBook]);
 
+      // [NEW] 서버에서 반환된 단어들을 userDictionary에 즉시 반영
+      if (newBook.vocas && newBook.vocas.length > 0) {
+        setUserDictionary(prev => {
+          const newDict = { ...prev };
+          newBook.vocas.forEach(voca => {
+            // voca.vocaIndexId를 키로 사용하여 저장
+            newDict[voca.vocaIndexId] = {
+              ...voca,
+              // UserVoca 구조에 맞게 매핑 (필요 시)
+              vocaBooks: [{
+                vocaBookId: newBook.vocaBookId,
+                title: newBook.title,
+                color: newBook.color,
+                meanings: voca.meanings,
+                examples: voca.examples
+              }]
+            };
+          });
+          return newDict;
+        });
+      }
+
       // 서버에서 반환된 최신 단어장 개수 업데이트
       if (newBook.book_cnt !== undefined) {
         setUserProfile(prev => ({ ...prev, book_cnt: newBook.book_cnt }));
@@ -579,36 +601,23 @@ export const VocabularyProvider = ({ children }) => {
   // 서점의 단어장 내 단어장에 추가
   const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
     try {
-      const newVocabularySheet = await addVocabularySheet({
-        bookstore_id: vocabularySheet.id,
+      // One-Shot 처리를 위해 단어 목록을 포함하여 요청
+      await addVocabularySheet({
+        bookstoreId: vocabularySheet.id,
         title: vocabularySheet.name,
         color: vocabularySheet.color,
+        vocaList: vocabularySheet.words.map(word => ({
+          origin: word.origin,
+          meanings: word.meanings,
+          examples: word.examples,
+          vocaId: word.id // 서점 프리뷰에서의 id는 admin_voca_id임
+        }))
       });
-      await updateVocabularySheet(newVocabularySheet.id, {
-        total: vocabularySheet.words.length,
-        words: vocabularySheet.words.map((word, index) => {
-          return {
-            id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-            dictionaryId: word.id,
-            origin: word.origin,
-            meanings: word.meanings,
-            examples: word.examples,
-            pronunciation: word.pronunciation,
-            ef: 2.5,
-            repetition: 0,
-            interval: 0,
-            nextReview: null,
-            lastStudyDate: null,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }
-        }),
-      })
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [addVocabularySheet]);
 
   // 퀴즐렛 업로드 후 백엔드에서 생성된 단어장을 로컬 state에 추가 (리패치로 처리)
   const addVocabularySheetFromBackend = useCallback(async (vocabularySheet) => {
@@ -742,10 +751,7 @@ export const VocabularyProvider = ({ children }) => {
           await Promise.all([
             fetchVocabularySheets(),
             fetchBookStore(),
-            fetchRecentStudy(),
-            // [NEW] 새로운 데이터 로드
-            fetchUserDictionary(),
-            fetchVocaBooks()
+            fetchRecentStudy()
           ]);
         } catch (error) {
           console.error('❌ [VOCABULARY] 데이터 로드 중 오류 발생:', error);
