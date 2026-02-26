@@ -65,13 +65,41 @@ def build_voca_index_response(user_voca):
 @voca_indexs_bp.route('', methods=['GET'])
 @jwt_required
 def get_voca_indexs():
+    from sqlalchemy.orm import joinedload
     user_id = UUID(g.user_id)
 
-    user_vocas = db.session.query(UserVoca).filter(
+    # N+1 문제 해결을 위해 book_maps와 연관된 user_voca_book을 함께 로드
+    user_vocas = db.session.query(UserVoca).options(
+        joinedload(UserVoca.book_maps).joinedload(UserVocaBookMap.user_voca_book)
+    ).filter(
         UserVoca.user_id == user_id
     ).all()
 
-    data = [build_voca_index_response(uv) for uv in user_vocas]
+    data = []
+    for uv in user_vocas:
+        sm2 = json.loads(uv.data) if uv.data else None
+        
+        voca_books = []
+        for m in uv.book_maps:
+            # m.user_voca_book은 이미 joinedload로 가져온 상태
+            book = m.user_voca_book
+            meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
+            examples = json.loads(m.voca_examples) if m.voca_examples else []
+            
+            voca_books.append({
+                'vocaBookId': str(m.user_voca_book_id),
+                'meanings': meanings,
+                'examples': examples,
+                'createdAt': (book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book and book.created_at else None,
+                'updatedAt': (book.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book and book.updated_at else None,
+            })
+
+        data.append({
+            'origin': uv.word,
+            'vocaIndexId': uv.id,
+            'sm2': sm2,
+            'vocaBooks': voca_books,
+        })
 
     return jsonify({'code': 200, 'data': data}), 200
 
@@ -353,9 +381,20 @@ def delete_voca_index_book(vocaIndexId, vocaBookId):
         return jsonify({'code': 404, 'message': '해당 단어장 매핑을 찾을 수 없습니다.'}), 404
 
     try:
+        # 1. 매핑 삭제
         db.session.delete(book_map)
-        db.session.commit()
+        db.session.flush()
 
+        # 2. 다른 단어장에도 등록되어 있는지 확인
+        exists_other = db.session.query(UserVocaBookMap).filter(
+            UserVocaBookMap.user_voca_id == vocaIndexId
+        ).first()
+
+        # 3. 고아 단어라면 사용자 사전(UserVoca)에서도 삭제
+        if not exists_other:
+            db.session.delete(user_voca)
+
+        db.session.commit()
         return jsonify({'code': 204, 'message': '단어장 데이터 삭제 성공'}), 200
 
     except Exception as e:

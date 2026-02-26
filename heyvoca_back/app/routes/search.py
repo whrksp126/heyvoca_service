@@ -240,13 +240,10 @@ def get_unicode_range_for_initial(char):
 
 
 ## 서점 데이터 API
-# bookstore, voca, voca_meaning, voca_example 테이블의 모든 데이터를 가져옴
-# @cache.cached(timeout=600, query_string=True)  # 60초 캐싱
+# bookstore, admin_voca_book, admin_voca_book_map 테이블의 데이터를 가져옴
 @search_bp.route('/bookstore', methods=['GET'])
 def search_bookstore_all():
-    #start_time = time.time()
-
-    # MySQL용 JSON 그룹화 쿼리
+    # MySQL용 쿼리 (단어 목록 제외)
     query = text("""
         SELECT
             bs.id AS bookstore_id,
@@ -256,48 +253,9 @@ def search_bookstore_all():
             bs.color,
             bs.hide,
             bs.gem,
-
-            -- 단어 목록을 JSON 배열로 변환 (구 voca_book 경로 + 신 admin_voca_book 경로 모두 포함)
-            COALESCE(JSON_ARRAYAGG(
-                IF(COALESCE(v_old.id, v_new.id) IS NOT NULL,
-                    JSON_OBJECT(
-                        'id', COALESCE(v_old.id, v_new.id),
-                        'origin', COALESCE(v_old.word, v_new.word),
-                        'pronunciation', COALESCE(v_old.pronunciation, v_new.pronunciation),
-                        'meanings', CASE
-                            WHEN v_old.id IS NOT NULL THEN (
-                                SELECT JSON_ARRAYAGG(vm.meaning)
-                                FROM voca_meaning_map vmm
-                                JOIN voca_meaning vm ON vmm.meaning_id = vm.id
-                                WHERE vmm.voca_id = v_old.id
-                            )
-                            ELSE CAST(avbm.voca_meanings AS JSON)
-                        END,
-                        'examples', CASE
-                            WHEN v_old.id IS NOT NULL THEN (
-                                SELECT JSON_ARRAYAGG(
-                                    JSON_OBJECT('origin', ve.exam_en, 'meaning', ve.exam_ko)
-                                )
-                                FROM voca_example_map vem
-                                JOIN voca_example ve ON vem.example_id = ve.id
-                                WHERE vem.voca_id = v_old.id
-                            )
-                            ELSE CAST(avbm.voca_examples AS JSON)
-                        END
-                    ),
-                    NULL
-                )
-            ), JSON_ARRAY()) AS words
-
+            COALESCE(avb.word_count, 0) AS word_count
         FROM bookstore bs
-        -- 구 경로
-        LEFT JOIN voca_book vb ON bs.book_id = vb.id
-        LEFT JOIN voca_book_map vbm ON vb.id = vbm.book_id
-        LEFT JOIN voca v_old ON vbm.voca_id = v_old.id
-        -- 신 경로
-        LEFT JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
-        LEFT JOIN admin_voca_book_map avbm ON avb.id = avbm.book_id
-        LEFT JOIN voca v_new ON avbm.voca_id = v_new.id
+        JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
         GROUP BY bs.id
     """)
 
@@ -307,126 +265,78 @@ def search_bookstore_all():
     # 결과 가공
     final_results = []
     for row in rows:
-        words = json.loads(row.words) if row.words else []
-        
+        # color 처리
+        color_data = row.color
+        if isinstance(color_data, str):
+            color_data = json.loads(color_data)
+
         final_results.append({
             "id": row.bookstore_id,
             "name": row.bookstore_name,
             "downloads": row.downloads,
             "category": row.category,
-            "color": json.loads(row.color) if row.color else {},
+            "color": color_data,
             "hide": row.hide,
-            "words": words,
-            "gem": row.gem
+            "gem": row.gem,
+            "vocaCount": row.word_count
         })
-    #temp = final_results[0]
-
-    # 실행 시간 측정
-    #end_time = time.time()
-    #execution_time = end_time - start_time
-    #print(f"API 실행 시간: {execution_time:.3f}초")
 
     return jsonify({'code': 200, 'data': final_results}), 200
 
 
-
-
-
-
-
-# Redis 클라이언트 설정
-cache = redis.StrictRedis(
-    host=os.getenv('REDIS_HOST', 'redis'),
-    port=int(os.getenv('REDIS_PORT', 6379)),
-    db=0,
-    decode_responses=True
-)
-
-# 단어장 캐시 키 생성 함수
-def generate_cache_key_for_bookstore(bookstore_id):
-    return f"bookstore_{bookstore_id}"
-
-@search_bp.route('/bookstore2', methods=['GET'])
-def search_bookstore_all2():
-    bookstore_items = db.session.query(Bookstore).all()
-    bookstore_ids = [item.id for item in bookstore_items]
+## 서점 단어장 상세 데이터 API
+@search_bp.route('/bookstore/<int:bookstoreId>', methods=['GET'])
+def get_bookstore_detail(bookstoreId):
+    # 서점 및 연결된 단어장 정보 조회
+    bookstore = db.session.query(Bookstore).filter_by(id=bookstoreId).first()
     
-    final_results = []
-    # 각 서점에 대해 캐시 조회
-    for bookstore_id in bookstore_ids:
-        cache_key = generate_cache_key_for_bookstore(bookstore_id)
-        
-        # Redis에서 캐시 조회
-        cached_data = cache.get(cache_key)
-        
-        if cached_data:
-            # 캐시된 데이터가 있으면 바로 사용
-            bookstore_data = json.loads(cached_data)
-        else:
-            # 캐시된 데이터가 없으면 DB에서 조회
-            query = text("""
-                SELECT 
-                    bs.id AS bookstore_id, 
-                    bs.name AS bookstore_name, 
-                    bs.downloads, 
-                    bs.category, 
-                    bs.color, 
-                    bs.hide,
-                    COALESCE(JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'id', v.id,
-                            'word', v.word,
-                            'pronunciation', v.pronunciation,
-                            'meaning', (
-                                SELECT JSON_ARRAYAGG(vm.meaning) 
-                                FROM voca_meaning_map vmm 
-                                JOIN voca_meaning vm ON vmm.meaning_id = vm.id 
-                                WHERE vmm.voca_id = v.id
-                            ),
-                            'examples', (
-                                SELECT JSON_ARRAYAGG(
-                                    JSON_OBJECT(
-                                        'origin', ve.exam_en, 
-                                        'meaning', ve.exam_ko
-                                    )
-                                )
-                                FROM voca_example_map vem
-                                JOIN voca_example ve ON vem.example_id = ve.id
-                                WHERE vem.voca_id = v.id
-                            )
-                        )
-                    ), JSON_ARRAY()) AS words
-                FROM bookstore bs
-                LEFT JOIN voca_book vb ON bs.book_id = vb.id
-                LEFT JOIN voca_book_map vbm ON vb.id = vbm.book_id
-                LEFT JOIN voca v ON vbm.voca_id = v.id
-                WHERE bs.id = :bookstore_id
-                GROUP BY bs.id
-            """)
-            
-            # 데이터 조회
-            rows = db.session.execute(query, {'bookstore_id': bookstore_id}).fetchall()
-            
-            bookstore_data = []
-            for row in rows:
-                words = json.loads(row.words) if row.words else []
-                bookstore_data.append({
-                    "id": row.bookstore_id,
-                    "name": row.bookstore_name,
-                    "downloads": row.downloads,
-                    "category": row.category,
-                    "color": json.loads(row.color) if row.color else {},
-                    "hide": row.hide,
-                    "words": words
-                })
-            
-            # 조회된 데이터를 캐시 저장 (24시간 동안 유효)
-            cache.setex(cache_key, 86400, json.dumps(bookstore_data))
-        
-        # 최종 결과에 추가
-        final_results.append(bookstore_data)
-    
-    return jsonify({'code': 200, 'data': final_results}), 200
+    if not bookstore:
+        return jsonify({'code': 404, 'message': '해당하는 서점이 없습니다.'}), 404
+
+    # 단어 목록 조회
+    query = text("""
+        SELECT
+            v.id,
+            v.word AS origin,
+            v.pronunciation,
+            CAST(avbm.voca_meanings AS JSON) AS meanings,
+            CAST(avbm.voca_examples AS JSON) AS examples
+        FROM admin_voca_book_map avbm
+        JOIN voca v ON avbm.voca_id = v.id
+        WHERE avbm.book_id = :admin_voca_book_id
+    """)
+
+    rows = db.session.execute(query, {'admin_voca_book_id': bookstore.admin_voca_book_id}).fetchall()
+
+    # 결과 가공
+    vocas = []
+    for row in rows:
+        vocas.append({
+            "id": row.id,
+            "origin": row.origin,
+            "pronunciation": row.pronunciation,
+            "meanings": json.loads(row.meanings) if row.meanings else [],
+            "examples": json.loads(row.examples) if row.examples else []
+        })
+
+    # color 처리
+    color_data = bookstore.color
+    if isinstance(color_data, str):
+        color_data = json.loads(color_data)
+
+    return jsonify({
+        'code': 200,
+        'data': {
+            "id": bookstore.id,
+            "name": bookstore.name,
+            "category": bookstore.category,
+            "downloads": bookstore.downloads,
+            "gem": bookstore.gem,
+            "color": color_data,
+            "vocaCount": bookstore.admin_voca_book.word_count,
+            "words": vocas
+        }
+    }), 200
 
 
 # 서점 다운로드 수 증가

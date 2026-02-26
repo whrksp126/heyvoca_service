@@ -269,6 +269,9 @@ class UserVocaBook(db.Model):
     voca_list = Column(TEXT, nullable=True, default=None)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
+    
+    voca_maps = relationship("UserVocaBookMap", back_populates="user_voca_book", cascade="all, delete-orphan")
+
 
     def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
         self.user_id = user_id
@@ -506,8 +509,9 @@ class UserVocaBookMap(db.Model):
     memory_status = Column(TEXT, nullable=True)
 
     # 관계 정의
-    user_voca_book = relationship("UserVocaBook")
-    user_voca = relationship("UserVoca")
+    user_voca_book = relationship("UserVocaBook", back_populates="voca_maps")
+    user_voca = relationship("UserVoca", back_populates="book_maps")
+
 
 
 class UserVoca(db.Model):
@@ -523,4 +527,6 @@ class UserVoca(db.Model):
     # 관계 정의
     user = relationship("User")
     voca = relationship("Voca")
+    book_maps = relationship("UserVocaBookMap", back_populates="user_voca", cascade="all, delete-orphan")
+
 ### 재편성된 단어장 ###

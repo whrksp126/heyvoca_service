@@ -692,10 +692,11 @@ def level_voca_list():
     
     # 색상 세트 리스트
     COLOR_SETS = [
-        {"main": "#FF8DD4", "sub": "#FFD2EF", "background": "#FFEFFA"},
-        {"main": "#CD8DFF", "sub": "#EAD2FF", "background": "#F6EFFF"},
-        {"main": "#74D5FF", "sub": "#C6ECFF", "background": "#EAF6FF"},
-        {"main": "#42F98B", "sub": "#B2FDCC", "background": "#E2FFE8"},
+        {"main": "var(--primary-main-500)", "sub": "var(--primary-main-200)", "background": "var(--primary-main-100)"},
+        {"main": "var(--secondary-purple-500)", "sub": "var(--secondary-purple-200)", "background": "var(--secondary-purple-100)"},
+        {"main": "var(--secondary-blue-500)", "sub": "var(--secondary-blue-200)", "background": "var(--secondary-blue-100)"},
+        {"main": "var(--secondary-yellow-500)", "sub": "var(--secondary-yellow-200)", "background": "var(--secondary-yellow-100)"},
+        {"main": "var(--secondary-mint-500)", "sub": "var(--secondary-mint-200)", "background": "var(--secondary-mint-100)"},
     ]
 
     data = []
@@ -854,9 +855,28 @@ def dev_login():
 
     try:
         user = User.query.filter_by(email=email).first()
-
+        
         if user is None:
-            return jsonify({'code': 404, 'message': '존재하지 않는 계정입니다.'}), 404
+            if email == 'test@test.com':
+                # 자동 회원가입 처리
+                user = User(
+                    level_id=None,
+                    email=email,
+                    google_id=None,
+                    username=None,
+                    name='테스트',
+                    phone=None,
+                    last_logged_at=None,
+                    refresh_token='',
+                    code='',
+                    book_cnt=3,
+                    gem_cnt=0,
+                    set_goal_cnt=3
+                )
+                db.session.add(user)
+                db.session.commit()
+            else:
+                return jsonify({'code': 404, 'message': '존재하지 않는 계정입니다.'}), 404
 
         # JWT 발급
         access_token = generate_access_token(user.id, user.email)
