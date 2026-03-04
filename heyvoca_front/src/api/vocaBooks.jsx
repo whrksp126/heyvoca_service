@@ -91,3 +91,31 @@ export const uploadExcelApi = async (file, title, color) => {
     throw error;
   }
 };
+
+// CSV 파일 업로드로 단어장 생성
+export const uploadCsvApi = async (file, title, color) => {
+  const url = `${backendUrl}/vocaBooks/upload/csv`;
+  const method = 'POST';
+  const data = {
+    json_data: { title, color },
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    // Response 객체인 경우 (에러 응답) 응답 본문 읽기
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadCsvApi 오류:', error);
+    throw error;
+  }
+};

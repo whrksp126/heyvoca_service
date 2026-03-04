@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Check, FileXls, UploadSimple, X } from '@phosphor-icons/react';
+import { Check, FileCsv, UploadSimple, X } from '@phosphor-icons/react';
 import { vibrate } from '../../utils/osFunction';
-import { uploadExcelApi } from '../../api/vocaBooks';
+import { uploadCsvApi } from '../../api/vocaBooks';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 
@@ -28,13 +28,13 @@ const getColorSet = (mainColor) => {
 /**
  * 전용 호출 훅
  */
-export const useUploadExcelNewBottomSheet = () => {
+export const useUploadCsvNewBottomSheet = () => {
   const { pushAwaitNewBottomSheet } = useNewBottomSheet();
   const { addVocabularySheetFromBackend } = useVocabulary();
 
-  const showUploadExcelNewBottomSheet = useCallback(async () => {
+  const showUploadCsvNewBottomSheet = useCallback(async () => {
     const resultData = await pushAwaitNewBottomSheet(
-      UploadExcelNewBottomSheet,
+      UploadCsvNewBottomSheet,
       {},
       {
         isBackdropClickClosable: true,
@@ -45,7 +45,7 @@ export const useUploadExcelNewBottomSheet = () => {
     if (resultData) {
       try {
         await addVocabularySheetFromBackend(resultData);
-        alert('Excel 데이터가 성공적으로 추가되었습니다.');
+        alert('CSV 데이터가 성공적으로 추가되었습니다.');
         return true;
       } catch (error) {
         console.error('단어장 추가 실패:', error);
@@ -56,10 +56,10 @@ export const useUploadExcelNewBottomSheet = () => {
     return false;
   }, [pushAwaitNewBottomSheet, addVocabularySheetFromBackend]);
 
-  return { showUploadExcelNewBottomSheet };
+  return { showUploadCsvNewBottomSheet };
 };
 
-export const UploadExcelNewBottomSheet = () => {
+export const UploadCsvNewBottomSheet = () => {
   const { resolveNewBottomSheet } = useNewBottomSheet();
   const [title, setTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -93,7 +93,7 @@ export const UploadExcelNewBottomSheet = () => {
     try {
       setIsUploading(true);
       const color = getColorSet(currentColor);
-      const result = await uploadExcelApi(selectedFile, title, color);
+      const result = await uploadCsvApi(selectedFile, title, color);
 
       if (result && (result.code === 200 || result.code === 201)) {
         resolveNewBottomSheet(result.data);
@@ -102,7 +102,7 @@ export const UploadExcelNewBottomSheet = () => {
         alert(errorMessage);
       }
     } catch (error) {
-      console.error('Excel 업로드 오류:', error);
+      console.error('CSV 업로드 오류:', error);
       alert('업로드 중 오류가 발생했습니다.');
     } finally {
       setIsUploading(false);
@@ -117,7 +117,7 @@ export const UploadExcelNewBottomSheet = () => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-center p-[20px] pb-[0px]">
-        <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">EXCEL 파일 불러오기</h1>
+        <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">CSV 파일 불러오기</h1>
       </div>
 
       <div className="flex flex-col gap-[30px] p-[20px]">
@@ -181,7 +181,7 @@ export const UploadExcelNewBottomSheet = () => {
           <input
             ref={fileInputRef}
             type="file"
-            accept=".xlsx,.xls"
+            accept=".csv"
             onChange={handleFileSelect}
             className="hidden"
           />
@@ -201,7 +201,7 @@ export const UploadExcelNewBottomSheet = () => {
               whileTap={{ scale: 0.98 }}
             >
               <UploadSimple size={24} weight="bold" />
-              <span className="text-[13px]">.xlsx 또는 .xls 파일을 선택하세요</span>
+              <span className="text-[13px]">.csv 파일을 선택하세요</span>
             </motion.button>
           ) : (
             <div className="
@@ -212,7 +212,7 @@ export const UploadExcelNewBottomSheet = () => {
               bg-layout-white dark:bg-layout-black
             ">
               <div className="flex items-center gap-[8px] flex-1 min-w-0">
-                <FileXls size={20} weight="bold" className="text-primary-main-600 shrink-0" />
+                <FileCsv size={20} weight="bold" className="text-primary-main-600 shrink-0" />
                 <span className="text-[13px] text-layout-black dark:text-layout-white truncate">
                   {selectedFile.name}
                 </span>
