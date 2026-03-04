@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Table, FileCsv, FilePlus } from '@phosphor-icons/react';
+import { Table, FileCsv, FilePlus, FileXls } from '@phosphor-icons/react';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useUploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
+import { useUploadExcelNewBottomSheet } from './UploadExcelNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
@@ -12,6 +13,7 @@ export const LoadVocabularyNewBottomSheet = () => {
   "use memo";
   const { popNewBottomSheet } = useNewBottomSheet();
   const { showUploadQuizletNewBottomSheet } = useUploadQuizletNewBottomSheet();
+  const { showUploadExcelNewBottomSheet } = useUploadExcelNewBottomSheet();
   const { userProfile } = useUser();
 
   const showQuizletUploadBottomSheet = useCallback(async () => {
@@ -38,6 +40,30 @@ export const LoadVocabularyNewBottomSheet = () => {
     }
   }, [popNewBottomSheet, showUploadQuizletNewBottomSheet, userProfile]);
 
+  const showExcelUploadBottomSheet = useCallback(async () => {
+    // 단어장 생성 가능 여부 확인
+    try {
+      const result = await userBookCntCheckApi();
+      const canAddBook = result?.data?.can_add_book;
+      if (result.code != 200) {
+        alert('단어장 개수 확인에 실패했습니다.');
+        return;
+      }
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
+        return;
+      }
+
+      // 현재 바텀시트 닫기
+      popNewBottomSheet();
+      // Excel 업로드 바텀시트 열기
+      showUploadExcelNewBottomSheet();
+    } catch (error) {
+      console.error('단어장 개수 체크 실패:', error);
+      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
+    }
+  }, [popNewBottomSheet, showUploadExcelNewBottomSheet, userProfile]);
+
   const menuItems = [
     {
       id: 'load-google-sheets',
@@ -47,6 +73,15 @@ export const LoadVocabularyNewBottomSheet = () => {
         vibrate({ duration: 5 });
         // TODO: 구글 스프레드시트 불러오기 기능 구현
         console.log('구글 스프레드시트 불러오기');
+      }
+    },
+    {
+      id: 'load-excel',
+      text: 'EXCEL 파일 불러오기',
+      icon: FileXls,
+      onClick: () => {
+        vibrate({ duration: 5 });
+        showExcelUploadBottomSheet();
       }
     },
     {
