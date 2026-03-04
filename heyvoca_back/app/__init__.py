@@ -85,7 +85,9 @@ def create_app():
   from app.routes.user_voca_book import user_voca_book_bp
   from app.routes.purchase import purchase_bp
   from app.routes.ocr import ocr_bp
-  
+  from app.routes.voca_indexs import voca_indexs_bp
+  from app.routes.voca_books import voca_books_bp
+
   app.register_blueprint(auth_bp)
   app.register_blueprint(search_bp)
   app.register_blueprint(tts_bp)
@@ -96,4 +98,6 @@ def create_app():
   app.register_blueprint(user_voca_book_bp)
   app.register_blueprint(purchase_bp)
   app.register_blueprint(ocr_bp)
+  app.register_blueprint(voca_indexs_bp)
+  app.register_blueprint(voca_books_bp)
   return app

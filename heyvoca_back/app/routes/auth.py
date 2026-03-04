@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -770,37 +770,63 @@ def level_voca_list():
     if not level:
         return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
     
-    filtered_voca_list = db.session.query(Bookstore)\
-                    .filter(Bookstore.level_id == level)\
-                    .filter(Bookstore.hide == 'N')\
-                    .order_by(Bookstore.downloads.desc()) \
-                    .limit(4)\
-                    .all()
+    # 레벨 매핑 (클라이언트 레벨 -> 서버 폴더명 & AdminVocaBook ID)
+    # level=1(초등), 2(중등), 3(고등), 4(대학생)
+    LEVEL_MAP = {
+        "1": {"folder": "elementary", "id": 10},
+        "2": {"folder": "middle", "id": 11},
+        "3": {"folder": "high", "id": 12},
+        "4": {"folder": "university", "id": 13}
+    }
     
-    # 색상 세트 리스트
-    COLOR_SETS = [
-        {"main": "#FF8DD4", "sub": "#FFD2EF", "background": "#FFEFFA"},
-        {"main": "#CD8DFF", "sub": "#EAD2FF", "background": "#F6EFFF"},
-        {"main": "#74D5FF", "sub": "#C6ECFF", "background": "#EAF6FF"},
-        {"main": "#42F98B", "sub": "#B2FDCC", "background": "#E2FFE8"},
-    ]
-
-    data = []
-    for idx, vocabook in enumerate(filtered_voca_list):
-        data.append({
-            'id' : vocabook.id,
-            'name' : vocabook.name,
-            'download': vocabook.downloads,
-            'category': vocabook.category,
-            'color' : COLOR_SETS[idx], # 인덱스 순서대로 색상 할당
+    mapping = LEVEL_MAP.get(str(level))
+    if not mapping:
+        return jsonify({'code': 404, 'message': '해당 레벨의 데이터를 찾을 수 없습니다.'}), 404
+    
+    try:
+        from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
+        
+        # AdminVocaBook 정보 조회
+        admin_book = AdminVocaBook.query.get(mapping['id'])
+        if not admin_book:
+            return jsonify({'code': 404, 'message': '해당 레벨의 단어장 정보를 찾을 수 없습니다.'}), 404
+        
+        # 해당 단어장에 연결된 단어 리스트 조회
+        admin_maps = db.session.query(AdminVocaBookMap, Voca)\
+            .join(Voca, AdminVocaBookMap.voca_id == Voca.id)\
+            .filter(AdminVocaBookMap.book_id == mapping['id'])\
+            .order_by(AdminVocaBookMap.id.asc())\
+            .all()
+        
+        voca_list = []
+        for amap, voca in admin_maps:
+            voca_list.append({
+                "origin": voca.word,
+                "meanings": json.loads(amap.voca_meanings) if amap.voca_meanings else [],
+                "examples": json.loads(amap.voca_examples) if amap.voca_examples else [],
+                "voca_id": voca.id
+            })
+            
+        # 프론트엔드 기대 형식에 맞게 데이터 구성
+        data = {
+            "id": admin_book.id,
+            "title": admin_book.book_nm,
+            "color": {
+                "main": "var(--primary-main-500)",
+                "sub": "var(--primary-main-200)",
+                "background": "var(--primary-main-100)"
+            },
+            "vocaList": voca_list
+        }
+        
+        return jsonify({
+            'code': 200, 
+            'data': [data]
         })
-    
-    # 더미
-    # current_dir = os.path.dirname(os.path.abspath(__file__))
-    # json_path = os.path.join(current_dir, 'dummy_dict.json')
-    # with open(json_path, 'r', encoding='utf-8') as f:
-    #     all_data = json.load(f)
-    return jsonify({'code':200, 'data': data})
+        
+    except Exception as e:
+        print(f"Error in level_voca_list (Full DB): {e}")
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @auth_bp.route('/login', methods=['POST'])
@@ -924,6 +950,81 @@ def test_token_status():
         return jsonify({'error': str(e)}), 400
 
 
+# -------------------
+# 개발자 로그인 (Local Only)
+# -------------------
+@auth_bp.route('/dev-login', methods=['POST'])
+def dev_login():
+    # local 환경에서만 허용
+    if os.getenv('FLASK_CONFIG') != 'local':
+        return jsonify({'code': 403, 'message': '허용되지 않는 환경입니다.'}), 403
+
+    data = request.json
+    email = data.get('email')
+
+    if not email:
+        return jsonify({'code': 400, 'message': '이메일을 입력해주세요.'}), 400
+
+    try:
+        user = User.query.filter_by(email=email).first()
+        
+        if user is None:
+            if email == 'test@test.com':
+                # 자동 회원가입 처리
+                user = User(
+                    level_id=None,
+                    email=email,
+                    google_id=None,
+                    username=None,
+                    name='테스트',
+                    phone=None,
+                    last_logged_at=None,
+                    refresh_token='',
+                    code='',
+                    book_cnt=3,
+                    gem_cnt=0,
+                    set_goal_cnt=3
+                )
+                db.session.add(user)
+                db.session.commit()
+            else:
+                return jsonify({'code': 404, 'message': '존재하지 않는 계정입니다.'}), 404
+
+        # JWT 발급
+        access_token = generate_access_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email)
+
+        user.refresh_token = refresh_token
+        db.session.commit()
+
+        response = make_response(jsonify({
+            "code": 200,
+            "status": "success",
+            "accessToken": access_token,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "name": getattr(user, "name", None),
+            }
+        }), 200)
+
+        is_local = os.getenv('FLASK_CONFIG') == 'local'
+        response.set_cookie(
+            'refresh_token',
+            refresh_token,
+            httponly=True,
+            secure=not is_local,
+            samesite='Lax',
+            max_age=60*60*24*30
+        )
+        return response
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Dev Login Error: {e}")
+        return jsonify({'code': 500, 'message': '로그인 처리 중 오류가 발생했습니다.'}), 500
+
+
 @auth_bp.route('/withdraw', methods=['DELETE'])
 @jwt_required
 def withdraw():
@@ -958,7 +1059,25 @@ def withdraw():
                 (InviteMap.inviter_id == user_id) | (InviteMap.invitee_id == user_id)
             ).delete()
             
-            # 3. UserVocaBook 삭제 (사용자 단어장)
+            # 3-1. UserVocaBookMap 삭제 (사용자 단어장 내 단어 매핑)
+            # UserVocaBook이 삭제되기 전에 먼저 삭제되어야 함 (CASCADE 설정이 없을 수 있으므로 명시적 삭제)
+            # UserVocaBookMap은 user_voca_book_id를 외래키로 가짐
+            # 따라서 UserVocaBook을 먼저 조회해서 ID 목록을 가져오거나, join delete를 수행해야 함
+            
+            # 먼저 사용자의 모든 단어장 ID 조회
+            user_voca_book_ids = db.session.query(UserVocaBook.id).filter(UserVocaBook.user_id == user_id).all()
+            user_voca_book_ids = [row[0] for row in user_voca_book_ids]
+            
+            if user_voca_book_ids:
+                # 해당 단어장들에 속한 맵핑 삭제
+                db.session.query(UserVocaBookMap).filter(UserVocaBookMap.user_voca_book_id.in_(user_voca_book_ids)).delete(synchronize_session=False)
+
+            # 3-2. UserVoca 삭제 (사용자 단어)
+            # UserVoca는 user_id를 외래키로 가짐
+            # UserVocaBookMap에서 user_voca_id를 참조할 수 있으므로, Map 삭제 후 삭제 안전
+            db.session.query(UserVoca).filter(UserVoca.user_id == user_id).delete()
+
+            # 3-3. UserVocaBook 삭제 (사용자 단어장)
             db.session.query(UserVocaBook).filter(UserVocaBook.user_id == user_id).delete()
             
             # 4. CheckIn 삭제 (출석 체크)
