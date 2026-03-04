@@ -1,5 +1,5 @@
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+export const nodeEnv = import.meta.env.VITE_ENV;
 export const MAX_TEST_VOCABULARY_COUNT = 1000;
 export const MIN_TEST_VOCABULARY_COUNT = 4;
 

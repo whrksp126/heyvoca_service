@@ -6,7 +6,7 @@ import googleLogo from '../assets/images/google_logo.png';
 import '../index.css';
 import { useUser } from '../context/UserContext';
 import { AppleLogo } from '@phosphor-icons/react';
-import { getValueFromURL } from '../utils/common';
+import { getValueFromURL, nodeEnv } from '../utils/common';
 import postMessageManager from '../utils/postMessageManager';
 import { getDevicePlatform } from '../utils/osFunction';
 
@@ -135,7 +135,8 @@ const Login = () => {
   // 개발자 로그인 state
   const [devEmail, setDevEmail] = useState('test@test.com');
   const { DevLogin } = useUser();
-  const isLocal = import.meta.env.VITE_ENV === 'local';
+  const isLocal = nodeEnv === 'local';
+  console.log("nodeEnv", nodeEnv);
 
   const handleDevLogin = async () => {
     if (!devEmail) {

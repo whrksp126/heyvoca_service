@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-      platforms: 
+      platforms:
         - linux/amd64
     ports:
       - "3002:3000"
@@ -16,7 +16,6 @@ services:
     networks:
       - heyvoca_front_dev_network
     restart: unless-stopped
-
 
 networks:
   heyvoca_front_dev_network:

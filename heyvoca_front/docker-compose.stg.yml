@@ -6,16 +6,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.stg
-      platforms: [linux/amd64]
-      args:                           # ← 빌드 타임에만 쓰임 (Vite용)
+      platforms: [ linux/amd64 ]
+      args:
+        # ← 빌드 타임에만 쓰임 (Vite용)
         VITE_BACKEND_URL: https://stg-heyvoca-back.ghmate.com
         VITE_DEBUG: "false"
+        VITE_ENV: staging
         NODE_ENV: staging
     ports:
       - "3001:80"
     restart: unless-stopped
-
-
 
 # version: '3.8'
 

@@ -6,16 +6,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      platforms: [linux/amd64]
-      args:                           # ← 빌드 타임에만 쓰임 (Vite용)
+      platforms: [ linux/amd64 ]
+      args:
+        # ← 빌드 타임에만 쓰임 (Vite용)
         VITE_BACKEND_URL: https://heyvoca-back.ghmate.com
         VITE_DEBUG: "false"
+        VITE_ENV: production
         NODE_ENV: production
     ports:
       - "3000:80"
     restart: unless-stopped
-
-
 
 # version: '3.8'
 
