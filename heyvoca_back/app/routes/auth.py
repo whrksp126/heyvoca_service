@@ -951,80 +951,8 @@ def test_token_status():
 
 
 # -------------------
-# 개발자 로그인 (Local Only)
+# 회원 탈퇴
 # -------------------
-@auth_bp.route('/dev-login', methods=['POST'])
-def dev_login():
-    # local 환경에서만 허용
-    if os.getenv('FLASK_CONFIG') != 'local':
-        return jsonify({'code': 403, 'message': '허용되지 않는 환경입니다.'}), 403
-
-    data = request.json
-    email = data.get('email')
-
-    if not email:
-        return jsonify({'code': 400, 'message': '이메일을 입력해주세요.'}), 400
-
-    try:
-        user = User.query.filter_by(email=email).first()
-        
-        if user is None:
-            if email == 'test@test.com':
-                # 자동 회원가입 처리
-                user = User(
-                    level_id=None,
-                    email=email,
-                    google_id=None,
-                    username=None,
-                    name='테스트',
-                    phone=None,
-                    last_logged_at=None,
-                    refresh_token='',
-                    code='',
-                    book_cnt=3,
-                    gem_cnt=0,
-                    set_goal_cnt=3
-                )
-                db.session.add(user)
-                db.session.commit()
-            else:
-                return jsonify({'code': 404, 'message': '존재하지 않는 계정입니다.'}), 404
-
-        # JWT 발급
-        access_token = generate_access_token(user.id, user.email)
-        refresh_token = generate_refresh_token(user.id, user.email)
-
-        user.refresh_token = refresh_token
-        db.session.commit()
-
-        response = make_response(jsonify({
-            "code": 200,
-            "status": "success",
-            "accessToken": access_token,
-            "user": {
-                "id": user.id,
-                "email": user.email,
-                "name": getattr(user, "name", None),
-            }
-        }), 200)
-
-        is_local = os.getenv('FLASK_CONFIG') == 'local'
-        response.set_cookie(
-            'refresh_token',
-            refresh_token,
-            httponly=True,
-            secure=not is_local,
-            samesite='Lax',
-            max_age=60*60*24*30
-        )
-        return response
-
-    except Exception as e:
-        db.session.rollback()
-        print(f"Dev Login Error: {e}")
-        return jsonify({'code': 500, 'message': '로그인 처리 중 오류가 발생했습니다.'}), 500
-
-
 @auth_bp.route('/withdraw', methods=['DELETE'])
 @jwt_required
 def withdraw():
