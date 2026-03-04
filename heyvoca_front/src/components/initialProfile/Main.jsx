@@ -81,36 +81,21 @@ const Main = () => {
       };
       await updateUserProfile(updates);
 
-      // 단순 단어장 추가
+      // 단어장 원샷(One-shot) 생성: 단어 리스트를 포함하여 한 번에 생성
       const vocabularySheet = await addVocabularySheet({
-        title: profile.vocabook.name,
-        color: getColorSet('#FF70D4'),
+        title: profile.vocabook.title, // 'name' 대신 'title' 사용
+        color: profile.vocabook.color || getColorSet('#FF70D4'),
+        vocaList: profile.vocabook.vocaList.map((word) => {
+          return {
+            origin: word.origin,
+            meanings: word.meanings,
+            examples: word.examples,
+            vocaId: word.voca_id || word.id, // DB 연동된 voca_id 사용
+          };
+        }),
       });
 
-      // 단어장 내 단어 추가
-      await updateVocabularySheet(
-        vocabularySheet.id,
-        {
-          words: profile.vocabook.words.map((word, index) => {
-            return {
-              id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
-              dictionaryId: word.id,
-              origin: word.origin,
-              meanings: word.meanings,
-              examples: word.examples,
-              pronunciation: word.pronunciation,
-              ef: 2.5,
-              repetition: 0,
-              interval: 0,
-              nextReview: null,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            };
-          }),
-          total: profile.vocabook.words.length,
-        }
-      );
-      console.log("단어장 저장 완료");
+      console.log("단어장 저장 완료:", vocabularySheet.title);
     } catch (error) {
       console.error('데이터 저장 중 오류 발생:', error);
     }

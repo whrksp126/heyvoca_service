@@ -43,14 +43,8 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
       const result = await fetchDataAsync(url, method, fetchData, false, null);
 
       if (result.code == 200) {
-        const levelBookList = result.data.map((item) => {
-          const bookId = item.id
-          const vocabularySheet = getBookStoreVocabularySheet(bookId)
-          return {
-            ...item,
-            ...vocabularySheet
-          }
-        })
+        // API에서 받은 고품질 데이터를 그대로 사용 (서점 리스트와 별개로 동작)
+        const levelBookList = result.data;
 
         // 첫 번째 항목을 자동으로 선택하고 step4를 FullSheet로 열기
         if (levelBookList.length > 0) {
