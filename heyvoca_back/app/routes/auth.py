@@ -683,38 +683,63 @@ def level_voca_list():
     if not level:
         return jsonify({'code': 400, 'message': '요청 데이터가 없습니다.'}), 400
     
-    filtered_voca_list = db.session.query(Bookstore)\
-                    .filter(Bookstore.level_id == level)\
-                    .filter(Bookstore.hide == 'N')\
-                    .order_by(Bookstore.downloads.desc()) \
-                    .limit(4)\
-                    .all()
+    # 레벨 매핑 (클라이언트 레벨 -> 서버 폴더명 & AdminVocaBook ID)
+    # level=1(초등), 2(중등), 3(고등), 4(대학생)
+    LEVEL_MAP = {
+        "1": {"folder": "elementary", "id": 10},
+        "2": {"folder": "middle", "id": 11},
+        "3": {"folder": "high", "id": 12},
+        "4": {"folder": "university", "id": 13}
+    }
     
-    # 색상 세트 리스트
-    COLOR_SETS = [
-        {"main": "var(--primary-main-500)", "sub": "var(--primary-main-200)", "background": "var(--primary-main-100)"},
-        {"main": "var(--secondary-purple-500)", "sub": "var(--secondary-purple-200)", "background": "var(--secondary-purple-100)"},
-        {"main": "var(--secondary-blue-500)", "sub": "var(--secondary-blue-200)", "background": "var(--secondary-blue-100)"},
-        {"main": "var(--secondary-yellow-500)", "sub": "var(--secondary-yellow-200)", "background": "var(--secondary-yellow-100)"},
-        {"main": "var(--secondary-mint-500)", "sub": "var(--secondary-mint-200)", "background": "var(--secondary-mint-100)"},
-    ]
-
-    data = []
-    for idx, vocabook in enumerate(filtered_voca_list):
-        data.append({
-            'id' : vocabook.id,
-            'name' : vocabook.name,
-            'download': vocabook.downloads,
-            'category': vocabook.category,
-            'color' : COLOR_SETS[idx], # 인덱스 순서대로 색상 할당
+    mapping = LEVEL_MAP.get(str(level))
+    if not mapping:
+        return jsonify({'code': 404, 'message': '해당 레벨의 데이터를 찾을 수 없습니다.'}), 404
+    
+    try:
+        from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
+        
+        # AdminVocaBook 정보 조회
+        admin_book = AdminVocaBook.query.get(mapping['id'])
+        if not admin_book:
+            return jsonify({'code': 404, 'message': '해당 레벨의 단어장 정보를 찾을 수 없습니다.'}), 404
+        
+        # 해당 단어장에 연결된 단어 리스트 조회
+        admin_maps = db.session.query(AdminVocaBookMap, Voca)\
+            .join(Voca, AdminVocaBookMap.voca_id == Voca.id)\
+            .filter(AdminVocaBookMap.book_id == mapping['id'])\
+            .order_by(AdminVocaBookMap.id.asc())\
+            .all()
+        
+        voca_list = []
+        for amap, voca in admin_maps:
+            voca_list.append({
+                "origin": voca.word,
+                "meanings": json.loads(amap.voca_meanings) if amap.voca_meanings else [],
+                "examples": json.loads(amap.voca_examples) if amap.voca_examples else [],
+                "voca_id": voca.id
+            })
+            
+        # 프론트엔드 기대 형식에 맞게 데이터 구성
+        data = {
+            "id": admin_book.id,
+            "title": admin_book.book_nm,
+            "color": {
+                "main": "var(--primary-main-500)",
+                "sub": "var(--primary-main-200)",
+                "background": "var(--primary-main-100)"
+            },
+            "vocaList": voca_list
+        }
+        
+        return jsonify({
+            'code': 200, 
+            'data': [data]
         })
-    
-    # 더미
-    # current_dir = os.path.dirname(os.path.abspath(__file__))
-    # json_path = os.path.join(current_dir, 'dummy_dict.json')
-    # with open(json_path, 'r', encoding='utf-8') as f:
-    #     all_data = json.load(f)
-    return jsonify({'code':200, 'data': data})
+        
+    except Exception as e:
+        print(f"Error in level_voca_list (Full DB): {e}")
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @auth_bp.route('/login', methods=['POST'])
