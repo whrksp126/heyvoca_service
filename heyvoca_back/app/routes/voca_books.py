@@ -294,24 +294,52 @@ def upload_excel_voca_book():
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
 
-        # 첫 행이 헤더인지 자동 감지 (W, M, EE, EK 등의 헤더)
-        first_row = [str(v).strip().upper() for v in df.iloc[0].tolist() if pd.notna(v)]
+        # 첫 행이 헤더인지 자동 감지
+        first_row_raw = df.iloc[0].tolist()
+        first_row_upper = [str(v).strip().upper() if pd.notna(v) else '' for v in first_row_raw]
         header_keywords = {'W', 'M', 'EE', 'EK', 'WORD', 'MEANING', 'EXAMPLE', '단어', '뜻', '예문'}
-        is_header = any(val in header_keywords for val in first_row)
+        is_header = any(val in header_keywords for val in first_row_upper)
+
+        # 열 인덱스 기본값 (헤더 없을 때 위치 기반)
+        col_word, col_meaning, col_ee, col_ek = 0, 1, 2, 3
+
         if is_header:
+            # 헤더 이름으로 열 인덱스 동적 매핑
+            col_word = col_meaning = col_ee = col_ek = None
+            for i, val in enumerate(first_row_upper):
+                if val in ('W', 'WORD', '단어'):
+                    col_word = i
+                elif val in ('M', 'MEANING', '뜻'):
+                    col_meaning = i
+                elif val in ('EE', 'EXAMPLE', '예문'):
+                    col_ee = i
+                elif val in ('EK',):
+                    col_ek = i
+
+            if col_word is None:
+                return jsonify({'code': 400, 'message': '헤더에 단어(W) 열이 없습니다. W 헤더를 추가하거나, 헤더 없이 1열에 단어를 입력해주세요.'}), 400
+            if col_meaning is None:
+                return jsonify({'code': 400, 'message': '헤더에 뜻(M) 열이 없습니다. M 헤더를 추가하거나, 헤더 없이 2열에 뜻을 입력해주세요.'}), 400
+
             df = df.iloc[1:]  # 헤더 행 스킵
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 유효한 단어 데이터가 없습니다.'}), 400
 
-        # 파싱: 1열=단어(W), 2열=뜻(M), 3열=영어예문(EE), 4열=예문뜻(EK)
+        def get_cell(row, col_idx):
+            if col_idx is None or col_idx >= len(row):
+                return ''
+            val = row.iloc[col_idx]
+            return str(val).strip() if pd.notna(val) else ''
+
+        # 파싱: W=단어(필수), M=뜻(필수), EE=영어예문(선택), EK=예문뜻(선택)
         parsed_items = []
         skipped_count = 0
         for idx, row in df.iterrows():
-            word = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ''
-            meaning = str(row.iloc[1]).strip() if len(row) > 1 and pd.notna(row.iloc[1]) else ''
-            example_en = str(row.iloc[2]).strip() if len(row) > 2 and pd.notna(row.iloc[2]) else ''
-            example_ko = str(row.iloc[3]).strip() if len(row) > 3 and pd.notna(row.iloc[3]) else ''
+            word = get_cell(row, col_word)
+            meaning = get_cell(row, col_meaning)
+            example_en = get_cell(row, col_ee)
+            example_ko = get_cell(row, col_ek)
 
             if not word or not meaning:
                 skipped_count += 1
@@ -327,7 +355,8 @@ def upload_excel_voca_book():
             })
 
         if not parsed_items:
-            return jsonify({'code': 400, 'message': '파싱된 단어가 없습니다. 파일 형식을 확인해주세요. (1열: 단어, 2열: 뜻, 3열: 영어예문, 4열: 예문뜻)'}), 400
+            return jsonify({'code': 400, 'message': '파싱된 단어가 없습니다. 파일 형식을 확인해주세요. (W: 단어, M: 뜻, EE: 영어예문, EK: 예문뜻)'}), 400
+
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(
@@ -404,6 +433,183 @@ def upload_excel_voca_book():
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': f'Excel 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+
+
+# CSV 파일 업로드로 단어장 생성
+@voca_books_bp.route('/upload/csv', methods=['POST'])
+@jwt_required
+def upload_csv_voca_book():
+    user_id = UUID(g.user_id)
+
+    # FormData에서 파일 및 JSON 데이터 수신
+    file = request.files.get('file')
+    json_data_str = request.form.get('json_data', '{}')
+
+    try:
+        json_data = json.loads(json_data_str)
+    except json.JSONDecodeError:
+        return jsonify({'code': 400, 'message': 'JSON 데이터 형식이 올바르지 않습니다.'}), 400
+
+    title = json_data.get('title')
+    color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+
+    # 검증
+    if not file:
+        return jsonify({'code': 400, 'message': '파일이 첨부되지 않았습니다.'}), 400
+    if not title:
+        return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
+
+    # 파일 확장자 확인
+    filename = file.filename or ''
+    if not filename.lower().endswith('.csv'):
+        return jsonify({'code': 400, 'message': '지원하지 않는 파일 형식입니다. .csv 파일을 업로드해주세요.'}), 400
+
+    try:
+        # CSV 파일 파싱
+        file_bytes = file.read()
+        df = pd.read_csv(io.BytesIO(file_bytes), header=None, encoding='utf-8')
+
+        if df.empty:
+            return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
+
+        # 첫 행이 헤더인지 자동 감지
+        first_row_raw = df.iloc[0].tolist()
+        first_row_upper = [str(v).strip().upper() if pd.notna(v) else '' for v in first_row_raw]
+        header_keywords = {'W', 'M', 'EE', 'EK', 'WORD', 'MEANING', 'EXAMPLE', '단어', '뜻', '예문'}
+        is_header = any(val in header_keywords for val in first_row_upper)
+
+        # 열 인덱스 기본값 (헤더 없을 때 위치 기반)
+        col_word, col_meaning, col_ee, col_ek = 0, 1, 2, 3
+
+        if is_header:
+            # 헤더 이름으로 열 인덱스 동적 매핑
+            col_word = col_meaning = col_ee = col_ek = None
+            for i, val in enumerate(first_row_upper):
+                if val in ('W', 'WORD', '단어'):
+                    col_word = i
+                elif val in ('M', 'MEANING', '뜻'):
+                    col_meaning = i
+                elif val in ('EE', 'EXAMPLE', '예문'):
+                    col_ee = i
+                elif val in ('EK',):
+                    col_ek = i
+
+            if col_word is None:
+                return jsonify({'code': 400, 'message': '헤더에 단어(W) 열이 없습니다. W 헤더를 추가하거나, 헤더 없이 1열에 단어를 입력해주세요.'}), 400
+            if col_meaning is None:
+                return jsonify({'code': 400, 'message': '헤더에 뜻(M) 열이 없습니다. M 헤더를 추가하거나, 헤더 없이 2열에 뜻을 입력해주세요.'}), 400
+
+            df = df.iloc[1:]  # 헤더 행 스킵
+
+        if df.empty:
+            return jsonify({'code': 400, 'message': '파일에 유효한 단어 데이터가 없습니다.'}), 400
+
+        def get_cell(row, col_idx):
+            if col_idx is None or col_idx >= len(row):
+                return ''
+            val = row.iloc[col_idx]
+            return str(val).strip() if pd.notna(val) else ''
+
+        # 파싱: W=단어(필수), M=뜻(필수), EE=영어예문(선택), EK=예문뜻(선택)
+        parsed_items = []
+        skipped_count = 0
+        for idx, row in df.iterrows():
+            word = get_cell(row, col_word)
+            meaning = get_cell(row, col_meaning)
+            example_en = get_cell(row, col_ee)
+            example_ko = get_cell(row, col_ek)
+
+            if not word or not meaning:
+                skipped_count += 1
+                continue  # 단어 또는 뜻이 없으면 스킵
+
+            meanings = [m.strip() for m in meaning.split(',') if m.strip()]
+            examples = [{'origin': example_en, 'meaning': example_ko}] if example_en else []
+
+            parsed_items.append({
+                'origin': word,
+                'meanings': meanings,
+                'examples': examples,
+            })
+
+        if not parsed_items:
+            return jsonify({'code': 400, 'message': '파싱된 단어가 없습니다. 파일 형식을 확인해주세요. (W: 단어, M: 뜻, EE: 영어예문, EK: 예문뜻)'}), 400
+
+        # UserVocaBook 생성
+        voca_book = UserVocaBook(
+            user_id=user_id,
+            bookstore_id=None,
+            color=json.dumps(color, ensure_ascii=False),
+            name=title,
+            total_word_cnt=0,
+            memorized_word_cnt=0,
+            voca_list=None,
+            updated_at=None
+        )
+        db.session.add(voca_book)
+        db.session.flush()
+
+        # SM2 초기값
+        default_sm2 = {
+            "ef": 2.5,
+            "repetition": 0,
+            "interval": 0,
+            "nextReview": None,
+            "lastStudyDate": None,
+            "beforeScheduleCount": 0
+        }
+
+        # 각 단어에 대해 UserVoca + UserVocaBookMap 생성
+        added_count = 0
+        for item in parsed_items:
+            origin = item['origin']
+            meanings = item['meanings']
+            examples = item['examples']
+
+            # 같은 단어가 UserVoca에 이미 있는지 확인
+            user_voca = db.session.query(UserVoca).filter(
+                UserVoca.user_id == user_id,
+                UserVoca.word == origin
+            ).first()
+
+            if user_voca:
+                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+            else:
+                user_voca = UserVoca()
+                user_voca.user_id = user_id
+                user_voca.voca_id = None
+                user_voca.word = origin
+                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
+                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
+                db.session.add(user_voca)
+                db.session.flush()
+
+            # UserVocaBookMap 생성
+            book_map = UserVocaBookMap()
+            book_map.user_voca_book_id = voca_book.id
+            book_map.user_voca_id = user_voca.id
+            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
+            db.session.add(book_map)
+            added_count += 1
+
+        # 단어 수 업데이트
+        voca_book.total_word_cnt = added_count
+        voca_book.updated_at = datetime.datetime.utcnow()
+
+        db.session.commit()
+
+        return jsonify({
+            'code': 201,
+            'message': f'{added_count}개의 단어가 추가되었습니다.',
+            'data': build_voca_book_response(voca_book)
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': f'CSV 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
 
 
 # 단어장 수정
