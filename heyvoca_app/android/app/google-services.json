@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "584113926081",
+    "project_id": "heyvoca-466916",
+    "storage_bucket": "heyvoca-466916.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584113926081:android:8be8fed740110ee9084940",
+        "android_client_info": {
+          "package_name": "com.ghmate.heyvoca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584113926081-r7ep0ghn6qll92kg4jiok263h37qkq4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ghmate.heyvoca",
+            "certificate_hash": "2a7de3036581b5672a01b43b25195c64b19c9acf"
+          }
+        },
+        {
+          "client_id": "584113926081-1ufuc8plu3t7r1ocktfum6v5vect13lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD05qdSOtQ0Lvftb36Sk8zUQmiPpeGFp5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584113926081-1ufuc8plu3t7r1ocktfum6v5vect13lp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "584113926081-no8unvtm9s5lbli7se02m54pakac320l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ghmate.heyvoca"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ import { signInWithGoogle, signOutWithGoogle } from '../oauth/googleAuth';
 import { signInWithApple } from '../oauth/appleAuth';
 import { executePurchase } from '../handlers/iapHandler';
 import { saveCookieToAsyncStorage } from '../utils/asyncStorage';
+import messaging from '@react-native-firebase/messaging';
 
 const handleWebViewMessage = async (
   event: { nativeEvent: { data: string } },
@@ -18,6 +19,31 @@ const handleWebViewMessage = async (
     const messageData = JSON.parse(event.nativeEvent.data);
 
     switch (messageData.type) {
+      case 'requestFcmToken':
+        try {
+          // iOS에서 getToken 호출 전 필수 단계
+          if (Platform.OS === 'ios') {
+            await messaging().registerDeviceForRemoteMessages();
+          }
+
+          const authStatus = await messaging().requestPermission();
+          const enabled =
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+          if (enabled) {
+            const token = await messaging().getToken();
+            console.log('FCM Token:', token);
+            webViewRef.current?.postMessage(
+              JSON.stringify({ type: 'fcm_token_received', token })
+            );
+          } else {
+            console.log('FCM permission denied');
+          }
+        } catch (error) {
+          console.error('FCM Token error:', error);
+        }
+        break;
       case 'launchGoogleAuth':
         signInWithGoogle(webViewRef);
         break;
