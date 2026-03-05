@@ -81,3 +81,7 @@ yarn-error.log
 .env.local
 
 android/app/keystore.properties
+android/app/google-services.json
+ios/heyvoca/GoogleService-Info.plist
+ios/GoogleService-Info.plist
+ios/.plist
