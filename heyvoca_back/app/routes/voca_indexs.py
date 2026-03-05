@@ -49,8 +49,6 @@ def build_voca_index_response(user_voca):
             'vocaBookId': str(m.user_voca_book_id),
             'meanings': meanings,
             'examples': examples,
-            'createdAt': (m.user_voca_book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if m.user_voca_book and m.user_voca_book.created_at else None,
-            'updatedAt': (m.user_voca_book.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if m.user_voca_book and m.user_voca_book.updated_at else None,
         })
 
     return {
@@ -58,6 +56,8 @@ def build_voca_index_response(user_voca):
         'vocaIndexId': user_voca.id,
         'sm2': sm2,
         'vocaBooks': voca_books,
+        'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
+        'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
     }
 
 
@@ -90,8 +90,6 @@ def get_voca_indexs():
                 'vocaBookId': str(m.user_voca_book_id),
                 'meanings': meanings,
                 'examples': examples,
-                'createdAt': (book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book and book.created_at else None,
-                'updatedAt': (book.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book and book.updated_at else None,
             })
 
         data.append({
@@ -99,6 +97,8 @@ def get_voca_indexs():
             'vocaIndexId': uv.id,
             'sm2': sm2,
             'vocaBooks': voca_books,
+            'createdAt': (uv.created_at).isoformat() + 'Z' if uv.created_at else None,
+            'updatedAt': (uv.updated_at).isoformat() + 'Z' if uv.updated_at else None,
         })
 
     return jsonify({'code': 200, 'data': data}), 200
@@ -143,9 +143,10 @@ def create_voca_index():
             # 기존 단어에 meanings/examples 누적 merge
             user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
             user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            # SM2 업데이트 (새 값이 있으면)
             if sm2:
                 user_voca.data = json.dumps(sm2, ensure_ascii=False)
+            
+            user_voca.updated_at = datetime.datetime.utcnow()
         else:
             # 새 UserVoca 생성
             user_voca = UserVoca()
@@ -194,6 +195,7 @@ def update_voca_index(vocaIndexId):
         if sm2:
             user_voca.data = json.dumps(sm2, ensure_ascii=False)
 
+        user_voca.updated_at = datetime.datetime.utcnow()
         db.session.commit()
 
         return jsonify({'code': 200, 'data': build_voca_index_response(user_voca)}), 200
@@ -251,7 +253,6 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
             'meanings': response_meanings,
             'examples': response_examples,
             'createdAt': (book_map.user_voca_book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book_map.user_voca_book and book_map.user_voca_book.created_at else None,
-            'updatedAt': (book_map.user_voca_book.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book_map.user_voca_book and book_map.user_voca_book.updated_at else None,
         }
 
         return jsonify({'code': 200, 'data': data}), 200

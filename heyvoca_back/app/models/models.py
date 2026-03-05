@@ -523,10 +523,22 @@ class UserVoca(db.Model):
     voca_meanings = Column(TEXT, nullable=True)
     voca_examples = Column(TEXT, nullable=True)
     data = Column(TEXT, nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None)
 
     # 관계 정의
     user = relationship("User")
     voca = relationship("Voca")
     book_maps = relationship("UserVocaBookMap", back_populates="user_voca", cascade="all, delete-orphan")
+
+    def __init__(self, user_id=None, voca_id=None, word=None, voca_meanings=None, voca_examples=None, data=None):
+        self.user_id = user_id
+        self.voca_id = voca_id
+        self.word = word
+        self.voca_meanings = voca_meanings
+        self.voca_examples = voca_examples
+        self.data = data
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
 
 ### 재편성된 단어장 ###

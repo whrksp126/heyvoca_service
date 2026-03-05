@@ -33,8 +33,8 @@ def build_vocas_for_book(voca_book_id):
             'sm2': sm2,
             'meanings': meanings,
             'examples': examples,
-            'createdAt': (m.user_voca_book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if m.user_voca_book and m.user_voca_book.created_at else None,
-            'updatedAt': (m.user_voca_book.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if m.user_voca_book and m.user_voca_book.updated_at else None,
+            'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
+            'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
         })
 
     return vocas
@@ -87,8 +87,8 @@ def get_voca_books():
                 'sm2': sm2,
                 'meanings': meanings,
                 'examples': examples,
-                'createdAt': (vb.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if vb.created_at else None,
-                'updatedAt': (vb.updated_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if vb.updated_at else None,
+                'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
+                'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
             })
 
         data.append({
@@ -152,95 +152,146 @@ def create_voca_book():
             updated_at=None
         )
         db.session.add(voca_book)
-        db.session.flush()  # ID 할당
+        db.session.flush()
+
+        # vocaList가 있으면 벌크 처리로 최적화
+        if voca_list:
+            # 1. 기존 UserVoca 한 번에 조회
+            origins = [item.get('origin') for item in voca_list if item.get('origin')]
+            existing_vocas = db.session.query(UserVoca).filter(
+                UserVoca.user_id == user_id,
+                UserVoca.word.in_(origins)
+            ).all()
+            user_voca_dict = {uv.word: uv for uv in existing_vocas}
+
+            user_vocas_to_add = []
+            user_vocas_to_update = []
+            
+            # 2. UserVoca 분류 (추가 vs 수정)
+            for item in voca_list:
+                origin = item.get('origin')
+                if not origin: continue
+                
+                meanings = item.get('meanings', [])
+                examples = item.get('examples', [])
+                sm2 = item.get('sm2')
+                voca_id = item.get('vocaId')
+
+                if origin in user_voca_dict:
+                    uv = user_voca_dict[origin]
+                    uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
+                    uv.voca_examples = merge_examples(uv.voca_examples, examples)
+                    if not uv.voca_id and voca_id:
+                        uv.voca_id = voca_id
+                    uv.updated_at = datetime.datetime.utcnow()
+                    if sm2:
+                        uv.data = json.dumps(sm2, ensure_ascii=False)
+                    user_vocas_to_update.append(uv)
+                else:
+                    new_uv = UserVoca(
+                        user_id=user_id,
+                        voca_id=voca_id,
+                        word=origin,
+                        voca_meanings=json.dumps(meanings, ensure_ascii=False),
+                        voca_examples=json.dumps(examples, ensure_ascii=False),
+                        data=json.dumps(sm2, ensure_ascii=False) if sm2 else None
+                    )
+                    user_vocas_to_add.append(new_uv)
+
+            # 새 UserVoca 삽입 및 ID 확보
+            if user_vocas_to_add:
+                db.session.add_all(user_vocas_to_add)
+                db.session.flush()
+                # 딕셔너리에 새로 추가된 객체들 병합
+                for uv in user_vocas_to_add:
+                    user_voca_dict[uv.word] = uv
+
+            # 3. UserVocaBookMap 벌크 데이터 구성
+            book_maps_data = []
+            for item in voca_list:
+                origin = item.get('origin')
+                if origin not in user_voca_dict: continue
+                
+                uv = user_voca_dict[origin]
+                book_maps_data.append({
+                    'user_voca_book_id': voca_book.id,
+                    'user_voca_id': uv.id,
+                    'voca_meanings': json.dumps(item.get('meanings', []), ensure_ascii=False),
+                    'voca_examples': json.dumps(item.get('examples', []), ensure_ascii=False)
+                })
+
+            if book_maps_data:
+                db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
+            
+            added_count = len(voca_list)
 
         # bookstoreId가 있고 vocaList가 없으면 admin_voca_book_map에서 단어 자동 복사
-        if bookstore_id and not voca_list:
+        elif bookstore_id:
             bookstore = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
             if bookstore and bookstore.admin_voca_book_id:
                 admin_maps = db.session.query(AdminVocaBookMap).filter(
                     AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
                 ).all()
+                
+                # 1. 기존 UserVoca 조회
+                admin_words = [m.voca.word for m in admin_maps if m.voca]
+                existing_vocas = db.session.query(UserVoca).filter(
+                    UserVoca.user_id == user_id,
+                    UserVoca.word.in_(admin_words)
+                ).all()
+                user_voca_dict = {uv.word: uv for uv in existing_vocas}
+
+                user_vocas_to_add = []
+                
+                # 2. UserVoca 분류
                 for admin_map in admin_maps:
-                    if not admin_map.voca:
-                        continue
+                    if not admin_map.voca: continue
+                    word = admin_map.voca.word
                     meanings = json.loads(admin_map.voca_meanings) if admin_map.voca_meanings else []
                     examples = json.loads(admin_map.voca_examples) if admin_map.voca_examples else []
 
-                    user_voca = db.session.query(UserVoca).filter(
-                        UserVoca.user_id == user_id,
-                        UserVoca.word == admin_map.voca.word
-                    ).first()
-
-                    if user_voca:
-                        user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                        user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-                        if not user_voca.voca_id and admin_map.voca_id:
-                            user_voca.voca_id = admin_map.voca_id
+                    if word in user_voca_dict:
+                        uv = user_voca_dict[word]
+                        uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
+                        uv.voca_examples = merge_examples(uv.voca_examples, examples)
+                        if not uv.voca_id and admin_map.voca_id:
+                            uv.voca_id = admin_map.voca_id
+                        uv.updated_at = datetime.datetime.utcnow()
                     else:
-                        user_voca = UserVoca()
-                        user_voca.user_id = user_id
-                        user_voca.voca_id = admin_map.voca_id
-                        user_voca.word = admin_map.voca.word
-                        user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                        user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                        db.session.add(user_voca)
-                        db.session.flush()
+                        new_uv = UserVoca(
+                            user_id=user_id,
+                            voca_id=admin_map.voca_id,
+                            word=word,
+                            voca_meanings=json.dumps(meanings, ensure_ascii=False),
+                            voca_examples=json.dumps(examples, ensure_ascii=False)
+                        )
+                        user_vocas_to_add.append(new_uv)
 
-                    book_map = UserVocaBookMap()
-                    book_map.user_voca_book_id = voca_book.id
-                    book_map.user_voca_id = user_voca.id
-                    book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                    book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-                    db.session.add(book_map)
-
-                added_count = len(admin_maps)
-
-        # vocaList가 있으면 각 단어에 대해 UserVoca + UserVocaBookMap 생성
-        elif voca_list:
-            added_count = 0
-            for item in voca_list:
-                origin = item.get('origin')
-                meanings = item.get('meanings', [])
-                examples = item.get('examples', [])
-                sm2 = item.get('sm2')
-                voca_id = item.get('vocaId') # admin 사전의 단어 ID
-
-                if not origin:
-                    continue
-
-                # 같은 단어가 UserVoca에 이미 있는지 확인
-                user_voca = db.session.query(UserVoca).filter(
-                    UserVoca.user_id == user_id,
-                    UserVoca.word == origin
-                ).first()
-
-                if user_voca:
-                    user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                    user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-                    if not user_voca.voca_id and voca_id:
-                        user_voca.voca_id = voca_id
-                    if sm2:
-                        user_voca.data = json.dumps(sm2, ensure_ascii=False)
-                else:
-                    user_voca = UserVoca()
-                    user_voca.user_id = user_id
-                    user_voca.voca_id = voca_id
-                    user_voca.word = origin
-                    user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                    user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                    user_voca.data = json.dumps(sm2, ensure_ascii=False) if sm2 else None
-                    db.session.add(user_voca)
+                if user_vocas_to_add:
+                    db.session.add_all(user_vocas_to_add)
                     db.session.flush()
+                    for uv in user_vocas_to_add:
+                        user_voca_dict[uv.word] = uv
 
-                # UserVocaBookMap 생성
-                book_map = UserVocaBookMap()
-                book_map.user_voca_book_id = voca_book.id
-                book_map.user_voca_id = user_voca.id
-                book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-                db.session.add(book_map)
-                added_count += 1
+                # 3. Map 데이터 구성
+                book_maps_data = []
+                for admin_map in admin_maps:
+                    if not admin_map.voca: continue
+                    word = admin_map.voca.word
+                    uv = user_voca_dict[word]
+                    book_maps_data.append({
+                        'user_voca_book_id': voca_book.id,
+                        'user_voca_id': uv.id,
+                        'voca_meanings': admin_map.voca_meanings,
+                        'voca_examples': admin_map.voca_examples
+                    })
+                
+                if book_maps_data:
+                    db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
+                
+                added_count = len(admin_maps)
+            else:
+                added_count = 0
         else:
             added_count = 0
 
