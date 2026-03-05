@@ -100,4 +100,9 @@ def create_app():
   app.register_blueprint(ocr_bp)
   app.register_blueprint(voca_indexs_bp)
   app.register_blueprint(voca_books_bp)
+
+  # FCM 스케줄러 시작
+  from app.routes.fcm import create_scheduler
+  create_scheduler(app)
+
   return app

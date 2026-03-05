@@ -111,11 +111,13 @@ class UserHasToken(db.Model):
     user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
     token = Column(String(256), primary_key=True, nullable=False)
     is_message_allowed = Column(Boolean, nullable=False, default=True)
+    is_marketing_allowed = Column(Boolean, nullable=False, default=False)
 
-    def __init__(self, user_id, token, is_message_allowed):
+    def __init__(self, user_id, token, is_message_allowed=True, is_marketing_allowed=False):
         self.user_id = user_id
         self.token = token
         self.is_message_allowed = is_message_allowed
+        self.is_marketing_allowed = is_marketing_allowed
 
 
 class InviteMap(db.Model):
