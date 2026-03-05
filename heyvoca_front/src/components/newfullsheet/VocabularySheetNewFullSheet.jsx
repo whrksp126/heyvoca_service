@@ -25,7 +25,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
     );
   }
 
-  // 암기 상태별 단어 개수 계산 함수 (암기율 계산 방식 사용)
+  // 암기 상태별 단어 개수 계산 함수 (MemorizationStatus와 동일한 로직)
   const calculateMemorizationStats = (words) => {
     if (!words || words.length === 0) {
       return { unlearned: 0, shortTerm: 0, mediumTerm: 0, longTerm: 0 };
@@ -33,33 +33,26 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
 
     const stats = {
       unlearned: 0,   // 미학습 (repetition === 0 && interval === 0)
-      shortTerm: 0,   // 단기 암기 (암기율 0-29%)
-      mediumTerm: 0,  // 중기 암기 (암기율 30-69%)
-      longTerm: 0     // 장기 암기 (암기율 70-100%)
+      shortTerm: 0,   // 단기 암기 (interval < 10)
+      mediumTerm: 0,  // 중기 암기 (interval < 60)
+      longTerm: 0     // 장기 암기 (interval >= 60)
     };
 
     words.forEach(word => {
-      // 미학습 상태 체크
-      const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-      const interval = word.memoryState?.interval ?? word.interval ?? 0;
+      // sm2 필드 또는 기본 필드에서 데이터 추출
+      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
+      const interval = word.sm2?.interval ?? word.interval ?? 0;
 
+      // 미학습 상태 체크 (한 번도 학습하지 않은 단어)
       if (repetition === 0 && interval === 0) {
         stats.unlearned++;
         return;
       }
 
-      // 암기율 계산 (MemorizationStatus와 동일한 로직)
-      const ef = word.memoryState?.ef ?? word.ef ?? 2.5;
-      let score = 0;
-      score += repetition * 15;
-      score += interval * 2;
-      score += (ef - 1.3) * 20;
-      const percent = Math.max(0, Math.min(100, Math.round(score)));
-
-      // 퍼센트에 따라 분류
-      if (percent < 30) {
+      // 암기 상태 판단 (MemorizationStatus.jsx 기준)
+      if (interval < 10) {
         stats.shortTerm++;
-      } else if (percent < 70) {
+      } else if (interval < 60) {
         stats.mediumTerm++;
       } else {
         stats.longTerm++;

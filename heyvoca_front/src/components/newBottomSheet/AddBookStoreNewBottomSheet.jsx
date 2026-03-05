@@ -17,7 +17,8 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   const { popNewBottomSheet, clearStack, closeNewBottomSheet } = useNewBottomSheetActions();
   const { getUserProfile, setUserProfile } = useUser();
   const [alertType, setAlertType] = useState(null);
-  const { pushNewFullSheet } = useNewFullSheetActions();
+  const [isAdding, setIsAdding] = useState(false);
+  const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
   useEffect(() => {
     const userProfile = getUserProfile();
     if (bookStoreVocabularySheet.gem == 0) {
@@ -31,6 +32,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
 
   // React Compiler가 자동으로 useCallback 처리
   const handleClose = () => {
+    if (isAdding) return; // 추가 중에는 닫기 방지
     if (alertType == "unavailable") {
       closeNewBottomSheet();
     } else {
@@ -39,7 +41,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   };
 
   const handleSet = async () => {
-    if (!alertType) return;
+    if (!alertType || isAdding) return;
     if (alertType == "unavailable") {
       closeNewBottomSheet();
       pushNewFullSheet(StoreNewFullSheet, {}, {
@@ -48,23 +50,36 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       });
       return;
     }
-    if (alertType == "available") {
-      // 보석 차감 후 단어장 추가
-      // 백엔드에서 bookstore_id를 받아서 자동으로 description을 생성함
-      const result = await deductGemApi({
-        gem_cnt: bookStoreVocabularySheet.gem,
-        bookstore_id: bookStoreVocabularySheet.id
-      });
-      if (!result || result.code != 200) return showToast("보석 차감에 실패했습니다.");
-      setUserProfile(prevProfile => ({ ...prevProfile, gem_cnt: result.data.remaining_gem_cnt }));
-    }
+
+    setIsAdding(true);
     try {
+      if (alertType == "available") {
+        // 보석 차감 후 단어장 추가
+        // 백엔드에서 bookstore_id를 받아서 자동으로 description을 생성함
+        const result = await deductGemApi({
+          gem_cnt: bookStoreVocabularySheet.gem,
+          bookstore_id: bookStoreVocabularySheet.id
+        });
+        if (!result || result.code != 200) {
+          showToast("보석 차감에 실패했습니다.");
+          setIsAdding(false);
+          return;
+        }
+        setUserProfile(prevProfile => ({ ...prevProfile, gem_cnt: result.data.remaining_gem_cnt }));
+      }
+
       await addBookStoreVocabularySheet(bookStoreVocabularySheet);
       clearStack();
+      // 단어장 추가 성공 후 미리보기 풀시트도 닫기
+      setTimeout(() => {
+        popNewFullSheet();
+      }, 300);
     } catch (error) {
       console.error('단어장 추가 실패:', error);
       const errorMessage = error?.message || '단어장 추가에 실패했습니다.';
       showToast(errorMessage);
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -80,7 +95,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
           whitespace-normal
           break-words
         ">
-            ${bookStoreVocabularySheet.name}을 내 단언 장에 추가하시겠어요?
+            {bookStoreVocabularySheet.name}을 내 단어장에 추가하시겠어요?
           </h3>
         }
         {alertType == "unavailable" &&
@@ -110,18 +125,21 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
         <motion.button
-          className="
+          disabled={isAdding}
+          className={`
             flex-1
             h-[45px]
             rounded-[8px]
             bg-layout-gray-200
             text-layout-white dark:text-layout-black text-[16px] font-[700]
-          "
+            ${isAdding ? 'opacity-30' : ''}
+          `}
           onClick={() => {
+            if (isAdding) return;
             vibrate({ duration: 5 });
             handleClose();
           }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={isAdding ? {} : { scale: 0.95 }}
           transition={{
             type: "spring",
             stiffness: 500,
@@ -129,24 +147,48 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
           }}
         >취소</motion.button>
         <motion.button
-          className="
+          disabled={isAdding}
+          className={`
+            relative
             flex-1
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
             text-layout-white dark:text-layout-black text-[16px] font-[700]
-          "
+            ${isAdding ? 'opacity-70 pointer-events-none' : ''}
+          `}
           onClick={() => {
+            if (isAdding) return;
             vibrate({ duration: 5 });
             handleSet();
           }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={isAdding ? {} : { scale: 0.95 }}
           transition={{
             type: "spring",
             stiffness: 500,
             damping: 15
           }}
-        >{alertType == "unavailable" ? "상점으로 이동" : "추가"}</motion.button>
+        >
+          {isAdding ? (
+            <div className="flex items-center justify-center h-full">
+              <motion.div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  border: "3px solid rgba(255, 255, 255, 0.3)",
+                  borderTop: "3px solid #fff",
+                  borderRadius: "50%"
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </div>
+          ) : (alertType == "unavailable" ? "상점으로 이동" : "추가")}
+        </motion.button>
       </div>
     </div>
   );

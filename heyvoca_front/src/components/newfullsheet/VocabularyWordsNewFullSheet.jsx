@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { CaretLeft, Plus, Trash, CaretDown } from '@phosphor-icons/react';
+import { CaretLeft, Plus, Trash, CaretDown, CaretUp } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -51,6 +51,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const displayCountRef = useRef(displayCount);
   const hasMoreRef = useRef(false);
   const lastScrollTopRef = useRef(0);
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const topBtnTimerRef = useRef(null);
 
   // ref 업데이트
   useEffect(() => {
@@ -168,6 +170,21 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       }
     }
 
+    // Top 버튼 표시 제어: 300px 이상 스크롤 시 표시
+    if (currentScrollTop > 300) {
+      setShowTopBtn(true);
+      // 기존 타이머 클리어
+      if (topBtnTimerRef.current) {
+        clearTimeout(topBtnTimerRef.current);
+      }
+      // 2초 뒤 숨김 처리
+      topBtnTimerRef.current = setTimeout(() => {
+        setShowTopBtn(false);
+      }, 2000);
+    } else {
+      setShowTopBtn(false);
+    }
+
     const distanceFromBottom = scrollHeight - currentScrollTop - clientHeight;
     const currentHasMore = hasMoreRef.current;
     const currentDisplayCount = displayCountRef.current;
@@ -221,10 +238,13 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     return () => {
       container.removeEventListener('scroll', handleScroll);
 
-      // cleanup 시 raf 취소
+      // cleanup 시 raf 및 타이머 취소
       if (rafIdRef.current !== null) {
         cancelAnimationFrame(rafIdRef.current);
         rafIdRef.current = null;
+      }
+      if (topBtnTimerRef.current) {
+        clearTimeout(topBtnTimerRef.current);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -331,7 +351,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           <h1
             className="text-[18px] font-bold  text-layout-black dark:text-layout-white"
           >
-            {vocabularySheet.title}
+            {vocabularySheet.title} ({vocabularySheet?.words?.length || 0})
           </h1>
         </div>
 
@@ -724,6 +744,37 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         )
         }
       </div>
+
+      {/* Top 버튼 */}
+      <AnimatePresence>
+        {showTopBtn && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              scrollContainerRef.current?.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+            }}
+            className="
+              fixed right-[20px] bottom-[30px]
+              flex items-center justify-center
+              w-[44px] h-[44px]
+              rounded-full
+              bg-primary-main-600
+              text-layout-white
+              shadow-[0_4px_12px_rgba(255,112,212,0.4)]
+              z-[50]
+            "
+          >
+            <CaretUp size={24} weight="bold" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div >
   );
 };

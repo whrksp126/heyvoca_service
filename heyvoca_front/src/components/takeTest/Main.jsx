@@ -299,6 +299,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       interval: testQuestions[progressIndex].interval,
       nextReview: testQuestions[progressIndex].nextReview,
       lastStudyDate: testQuestions[progressIndex].lastStudyDate,
+      updatedAt: new Date().toISOString(),
       // sm2 객체도 함께 업데이트
       sm2: {
         ef: testQuestions[progressIndex].ef,

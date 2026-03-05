@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SpeakerHigh, CaretLeft } from '@phosphor-icons/react';
-import { motion } from 'framer-motion';
+import { SpeakerHigh, CaretLeft, CaretUp } from '@phosphor-icons/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBottomSheet';
+import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useVocabulary } from '../../context/VocabularyContext';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -20,6 +22,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { vocabularySheets } = useVocabulary();
 
   // 무한 스크롤을 위한 state
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -89,6 +92,38 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
     ? displayCount < bookStoreVocabularySheet.words.length
     : false;
 
+  // React Compiler가 자동으로 useCallback 처리
+  const handleClose = () => {
+    popNewFullSheet();
+  };
+
+  const handleAdd = async () => {
+    // 이미 보유 중인 단어장인지 확인
+    const isAlreadyOwned = vocabularySheets.some(
+      sheet => String(sheet.vocaBookStoreId) === String(bookStoreVocabularySheet.id)
+    );
+
+    if (isAlreadyOwned) {
+      vibrate({ duration: 10 });
+      pushNewBottomSheet(AlertNewBottomSheet, {
+        title: '이미 보유 중인 단어장입니다.'
+      }, {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      });
+      return;
+    }
+
+    pushNewBottomSheet(AddBookStoreNewBottomSheet, { bookStoreVocabularySheet }, {
+      hideUnderlying: true,
+      isBackdropClickClosable: false,
+      isDragToCloseEnabled: true
+    });
+  };
+
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const topBtnTimerRef = useRef(null);
+
   // 스크롤 핸들러 (ref 사용으로 클로저 문제 해결)
   const handleScroll = () => {
     const container = scrollContainerRef.current;
@@ -114,6 +149,21 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
       }
     }
 
+    // Top 버튼 표시 제어: 300px 이상 스크롤 시 표시
+    if (currentScrollTop > 300) {
+      setShowTopBtn(true);
+      // 기존 타이머 클리어
+      if (topBtnTimerRef.current) {
+        clearTimeout(topBtnTimerRef.current);
+      }
+      // 2초 뒤 숨김 처리
+      topBtnTimerRef.current = setTimeout(() => {
+        setShowTopBtn(false);
+      }, 2000);
+    } else {
+      setShowTopBtn(false);
+    }
+
     const distanceFromBottom = scrollHeight - currentScrollTop - clientHeight;
     const currentHasMore = hasMoreRef.current;
     const currentDisplayCount = displayCountRef.current;
@@ -135,6 +185,21 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
     }
   };
 
+  // 스크롤 이벤트 리스너 등록 (handleScroll 의존성 제거로 불필요한 재등록 방지)
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      if (topBtnTimerRef.current) {
+        clearTimeout(topBtnTimerRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // handleScroll을 의존성에서 제거하여 불필요한 재등록 방지
+
   // displayCount가 업데이트되면 로딩 상태 해제
   useEffect(() => {
     if (isLoadingMore) {
@@ -146,31 +211,6 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
       return () => clearTimeout(timer);
     }
   }, [displayCount, isLoadingMore]);
-
-  // 스크롤 이벤트 리스너 등록 (handleScroll 의존성 제거로 불필요한 재등록 방지)
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // handleScroll을 의존성에서 제거하여 불필요한 재등록 방지
-
-  // React Compiler가 자동으로 useCallback 처리
-  const handleClose = () => {
-    popNewFullSheet();
-  };
-
-  const handleAdd = async () => {
-    pushNewBottomSheet(AddBookStoreNewBottomSheet, { bookStoreVocabularySheet }, {
-      hideUnderlying: true,
-      isBackdropClickClosable: false,
-      isDragToCloseEnabled: true
-    });
-  };
 
   return (
     <div className="
@@ -219,8 +259,9 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
             left-1/2 -translate-x-1/2
             text-[18px] font-[700]
             text-layout-black dark:text-layout-white
+            whitespace-nowrap overflow-hidden text-ellipsis max-w-[60%]
           ">
-          단어장 미리보기
+          단어장 미리보기 ({bookStoreVocabularySheet?.words?.length || 0})
         </h1>
         <div className="w-[24px]"></div> {/* Spacer for symmetry */}
       </div>
@@ -489,7 +530,39 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
           }}
         >추가</motion.button>
       </div>
+
+      {/* Top 버튼 */}
+      <AnimatePresence>
+        {showTopBtn && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              scrollContainerRef.current?.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+            }}
+            className="
+              fixed right-[20px] bottom-[110px]
+              flex items-center justify-center
+              w-[44px] h-[44px]
+              rounded-full
+              bg-primary-main-600
+              text-layout-white
+              shadow-[0_4px_12px_rgba(255,112,212,0.4)]
+              z-[50]
+            "
+          >
+            <CaretUp size={24} weight="bold" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
 
