@@ -12,8 +12,8 @@ import { vibrate } from '../../utils/osFunction';
 // import PushNotifications from './PushNotifications';
 import AccountNewFullSheet from '../newFullSheet/AccountNewFullSheet';
 import ThemeNewFullSheet from '../newFullSheet/ThemeNewFullSheet';
-// import ExampleSettingsNewFullSheet from '../newFullSheet/ExampleSettingsNewFullSheet';
-// import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
+import ExampleSettingsNewFullSheet from '../newFullSheet/ExampleSettingsNewFullSheet';
+import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -42,21 +42,21 @@ const Main = () => {
     });
   }
 
-  // // 예문 설정
-  // const handleExampleSettingsClick = () => {
-  //   pushNewFullSheet(ExampleSettingsNewFullSheet, {}, {
-  //     smFull: true,
-  //     closeOnBackdropClick: true
-  //   });
-  // }
+  // 예문 설정
+  const handleExampleSettingsClick = () => {
+    pushNewFullSheet(ExampleSettingsNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
 
-  // // 푸시 알림
-  // const handlePushNotificationsClick = () => {
-  //   pushNewFullSheet(PushNotificationsNewFullSheet, {}, {
-  //     smFull: true,
-  //     closeOnBackdropClick: true
-  //   });
-  // }
+  // 푸시 알림
+  const handlePushNotificationsClick = () => {
+    pushNewFullSheet(PushNotificationsNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
 
   return (
     <motion.main
@@ -124,7 +124,7 @@ const Main = () => {
           </div>
         </li>
 
-        {/* <li onClick={handleExampleSettingsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
+        {/* <li onClick={handleExampleSettingsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd] dark:border-border-dark">
             <div className="flex items-center gap-2">
               <TextAlignJustify weight="fill" className="text-[20px] text-primary-main-600" />
               <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">예문 설정</span>
@@ -135,16 +135,16 @@ const Main = () => {
             </div>
           </li> */}
 
-        {/* <li onClick={handlePushNotificationsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd]">
-            <div className="flex items-center gap-2">
-              <Bell weight="fill" className="text-[20px] text-primary-main-600" />
-              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">푸시 알림</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-normal text-[#999]">on</span> 
-              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
-            </div>
-          </li> */}
+        <li onClick={handlePushNotificationsClick} className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <Bell weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">푸시 알림</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-normal text-[#999] dark:text-gray-400">설정</span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
       </ul>
     </motion.main>
   );

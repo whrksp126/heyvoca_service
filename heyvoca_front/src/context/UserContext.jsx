@@ -23,6 +23,9 @@ export const UserProvider = ({ children }) => {
   const [achievementCriteria, setAchievementCriteria] = useState({});
   const [isAchievementCriteriaLoading, setIsAchievementCriteriaLoading] = useState(false);
 
+  // 현재 기기의 FCM 토큰 보관
+  const [fcmToken, setFcmToken] = useState(null);
+
   // 로그인 상태 관리
   const fetchUserMainPage = useCallback(async () => {
     try {
@@ -267,6 +270,57 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  // 프론트엔드에 저장된 FCM 토큰을 백엔드로 전송
+  const saveFcmTokenToBackend = useCallback(async (token) => {
+    if (!token) return;
+    try {
+      const url = `${backendUrl}/fcm/save_token`;
+      const result = await fetchDataAsync(url, 'POST', { fcm_token: token });
+      if (result.code === 200) {
+        console.log('FCM 토큰 백엔드 저장 성공');
+      }
+    } catch (error) {
+      console.error('FCM 토큰 백엔드 저장 실패:', error);
+    }
+  }, []);
+
+  // 로그아웃 기기에 대한 토큰 삭제
+  const deleteFcmTokenFromBackend = useCallback(async (token) => {
+    if (!token) return;
+    try {
+      const url = `${backendUrl}/fcm/delete_token`;
+      const result = await fetchDataAsync(url, 'POST', { fcm_token: token });
+      if (result.code === 200) {
+        console.log('FCM 토큰 백엔드 삭제 성공');
+      }
+    } catch (error) {
+      console.error('FCM 토큰 백엔드 삭제 실패:', error);
+    }
+  }, []);
+
+  // 앱에서 온 FCM 토큰 처리 리스너
+  useEffect(() => {
+    const handleFcmToken = (data) => {
+      console.log('FCM token received from RN:', data.token);
+      if (data.token) {
+        setFcmToken(data.token);
+        // 만약 이미 로그인 상태라면 즉시 서버로 보냄
+        if (isLogin && isLoginChecked) {
+          saveFcmTokenToBackend(data.token);
+        }
+      }
+    };
+
+    postMessageManager.setupFcmToken(handleFcmToken);
+
+    // 앱 시작 시 RN(네이티브)에게 토큰을 달라고 요청
+    postMessageManager.sendMessageToReactNative('requestFcmToken', {});
+
+    return () => {
+      postMessageManager.removeFcmToken();
+    };
+  }, [isLogin, isLoginChecked, saveFcmTokenToBackend]);
+
   // 로그인 처리 함수 (매개변수로 받은 정보로 로그인 처리)
   const Login = useCallback(async ({ googleId, email, name, status }) => {
     try {
@@ -439,6 +493,11 @@ export const UserProvider = ({ children }) => {
       if (result.code !== 200) {
         console.error('로그아웃 API 실패:', result);
         return { success: false, error: '로그아웃 API 실패' };
+      }
+
+      // 로그아웃 성공 시 서버에 내 기기의 FCM 토큰 삭제 요청
+      if (fcmToken) {
+        await deleteFcmTokenFromBackend(fcmToken);
       }
 
       // 쿠키에서 accessToken 제거
@@ -645,6 +704,9 @@ export const UserProvider = ({ children }) => {
     achievementCriteria,
     isAchievementCriteriaLoading,
     fetchAchievementCriteria,
+
+    // FCM
+    fcmToken,
   };
 
   return (

@@ -193,19 +193,28 @@ class PostMessageManager {
   }
 
   /**
-   * 단어 추가 콜백 등록
-   * @param {Function} callback - 단어 추가 처리 콜백 함수
+   * 특정 메시지 타입에 대한 리스너 등록
+   * @param {string} messageType - 메시지 타입
+   * @param {Function} callback - 콜백 함수
    */
-  setupAddWord(callback) {
-    this.init();
-    this.addListener('addWord', callback);
+  addListener(messageType, callback) {
+    this.listeners.set(messageType, callback);
   }
 
   /**
-   * 단어 추가 콜백 제거
+   * FCM 토큰 수신 콜백 등록
+   * @param {Function} callback - FCM 토큰 처리 콜백 함수
    */
-  removeAddWord() {
-    this.removeListener('addWord');
+  setupFcmToken(callback) {
+    this.init();
+    this.addListener('fcm_token_received', callback);
+  }
+
+  /**
+   * FCM 토큰 수신 콜백 제거
+   */
+  removeFcmToken() {
+    this.removeListener('fcm_token_received');
   }
 
   /**
