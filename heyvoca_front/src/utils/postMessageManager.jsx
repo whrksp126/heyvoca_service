@@ -293,11 +293,9 @@ class PostMessageManager {
         // alert('메시지 전송 완료');
       } else {
         console.warn('⚠️ React Native WebView 환경이 아닙니다. 메시지 전송이 불가능합니다.');
-        alert('메시지 전송 실패');
       }
     } catch (error) {
       console.error('❌ React Native 메시지 전송 실패:', error);
-      alert('메시지 전송 실패');
     }
   }
 
