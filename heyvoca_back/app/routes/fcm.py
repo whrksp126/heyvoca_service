@@ -315,7 +315,6 @@ def send_study_reminder_9pm(app):
 
 
 
-
 def create_scheduler(app):
     # Gunicorn 다중 워커 환경에서 스케줄러 중복 실행 방지를 위한 소켓 락 사용
     import socket
