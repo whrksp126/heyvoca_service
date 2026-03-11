@@ -1,39 +1,30 @@
-# CLAUDE.md
+# CLAUDE.md — heyvoca_back
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+heyvoca_service 모노레포의 Flask 백엔드. `heyvoca_service/` 루트에서 통합 compose로 실행.
 
 ## Commands
 
+모든 명령은 `heyvoca_service/` 루트에서 실행:
+
 ```bash
-# 로컬 개발 환경 실행 (포트 5003)
-docker compose -f docker-compose.local.yml up --build
-
-# 백그라운드 실행
+# 로컬 개발 환경 실행 (전체 스택: front + back + nginx + mysql + redis)
 docker compose -f docker-compose.local.yml up --build -d
-
-# 컨테이너 중지
-docker compose -f docker-compose.local.yml down
 
 # 로그 확인
 docker logs -f heyvoca_back_local
 
 # 컨테이너 내부 진입
 docker exec -it heyvoca_back_local sh
+
+# 종료
+docker compose -f docker-compose.local.yml down
 ```
 
-### Docker Hub 이미지 푸시
+### 서버 배포 (heyvoca_service/ 루트에서)
 ```bash
-docker push whrksp126/heyvoca_back:local   # local
-docker push whrksp126/heyvoca_back:dev     # dev
-docker push whrksp126/heyvoca_back:stg     # stg
-docker push whrksp126/heyvoca_back:prod    # prod
-```
-
-### 서버 적용
-```bash
-sudo systemctl restart heyvoca_back_dev    # dev
-sudo systemctl restart heyvoca_back_stg    # stg
-sudo systemctl restart heyvoca_back_prod   # prod
+./deploy.sh dev    # dev 배포
+./deploy.sh stg    # stg 배포
+./deploy.sh prod   # prod 배포
 ```
 
 ## Architecture
@@ -65,14 +56,12 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 
 ## Environments
 
-| Env  | Branch  | Compose file              | Port |
-|------|---------|---------------------------|------|
-| local | local  | docker-compose.local.yml  | 5003 |
-| dev  | dev     | docker-compose.dev.yml    | 5000 |
-| stg  | staging | docker-compose.stg.yml    | 5000 |
-| prod | main    | docker-compose.yml        | 5000 |
-
-**Git 흐름:** `local` → `dev` → `staging` → `main`
+| Env   | Compose file              | Port | URL                                   |
+|-------|---------------------------|------|---------------------------------------|
+| local | docker-compose.local.yml  | 5003 | http://{YOUR_LOCAL_IP}:5003           |
+| dev   | docker-compose.dev.yml    | 5000 | https://dev-heyvoca-back.ghmate.com   |
+| stg   | docker-compose.stg.yml    | 5000 | https://stg-heyvoca-back.ghmate.com   |
+| prod  | docker-compose.yml        | 5000 | https://heyvoca-back.ghmate.com       |
 
 ## Key Environment Variables
 - `FLASK_CONFIG` – `local` | `development` | `staging` | `production`
