@@ -1,0 +1,19 @@
+services:
+  nginx:
+    container_name: nginx_proxy
+    image: nginx:1.27-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./www:/srv/www:ro
+      - ./certs:/etc/nginx/certs:ro
+    restart: always
+    networks:
+      - nginx_proxy
+
+networks:
+  nginx_proxy:
+    name: nginx_proxy
+    driver: bridge

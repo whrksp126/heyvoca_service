@@ -1,0 +1,73 @@
+version: '3.8'
+
+# ─── Production 환경 ───
+# nginx가 아래 두 도메인을 라우팅:
+#   heyvoca-front.ghmate.com → front:80
+#   heyvoca-back.ghmate.com  → back:5000
+
+services:
+  front:
+    container_name: heyvoca_front_prod
+    image: whrksp126/heyvoca_front:prod
+    build:
+      context: ./heyvoca_front
+      dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+      args:
+        VITE_BACKEND_URL: https://heyvoca-back.ghmate.com
+        VITE_DEBUG: "false"
+        VITE_ENV: production
+        NODE_ENV: production
+    networks:
+      - heyvoca_prod
+      - nginx_proxy
+    restart: always
+
+  back:
+    container_name: heyvoca_back_prod
+    image: whrksp126/heyvoca_back:prod
+    build:
+      context: ./heyvoca_back
+      dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+    env_file:
+      - ./heyvoca_back/.env
+    networks:
+      - heyvoca_prod
+      - nginx_proxy
+    depends_on:
+      - mysql
+      - redis
+    restart: always
+
+  mysql:
+    container_name: heyvoca_mysql_prod
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-heyvoca}
+      MYSQL_USER: ${MYSQL_USER:-voca}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_prod_data:/var/lib/mysql
+    networks:
+      - heyvoca_prod
+    restart: always
+
+  redis:
+    container_name: heyvoca_redis_prod
+    image: redis:latest
+    networks:
+      - heyvoca_prod
+    restart: always
+
+networks:
+  heyvoca_prod:
+    driver: bridge
+  nginx_proxy:
+    external: true
+
+volumes:
+  mysql_prod_data:

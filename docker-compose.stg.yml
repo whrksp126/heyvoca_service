@@ -1,0 +1,73 @@
+version: '3.8'
+
+# ─── Staging 환경 ───
+# nginx가 아래 두 도메인을 라우팅:
+#   stg-heyvoca-front.ghmate.com → front:80
+#   stg-heyvoca-back.ghmate.com  → back:5000
+
+services:
+  front:
+    container_name: heyvoca_front_stg
+    image: whrksp126/heyvoca_front:stg
+    build:
+      context: ./heyvoca_front
+      dockerfile: Dockerfile.stg
+      platforms:
+        - linux/amd64
+      args:
+        VITE_BACKEND_URL: https://stg-heyvoca-back.ghmate.com
+        VITE_DEBUG: "false"
+        VITE_ENV: staging
+        NODE_ENV: staging
+    networks:
+      - heyvoca_stg
+      - nginx_proxy
+    restart: always
+
+  back:
+    container_name: heyvoca_back_stg
+    image: whrksp126/heyvoca_back:stg
+    build:
+      context: ./heyvoca_back
+      dockerfile: Dockerfile.stg
+      platforms:
+        - linux/amd64
+    env_file:
+      - ./heyvoca_back/.env.stg
+    networks:
+      - heyvoca_stg
+      - nginx_proxy
+    depends_on:
+      - mysql
+      - redis
+    restart: always
+
+  mysql:
+    container_name: heyvoca_mysql_stg
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-heyvoca}
+      MYSQL_USER: ${MYSQL_USER:-voca}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_stg_data:/var/lib/mysql
+    networks:
+      - heyvoca_stg
+    restart: always
+
+  redis:
+    container_name: heyvoca_redis_stg
+    image: redis:latest
+    networks:
+      - heyvoca_stg
+    restart: always
+
+networks:
+  heyvoca_stg:
+    driver: bridge
+  nginx_proxy:
+    external: true
+
+volumes:
+  mysql_stg_data:
