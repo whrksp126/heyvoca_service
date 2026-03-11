@@ -3,8 +3,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// NODE_ENV: local | development | staging | production
-const NODE_ENV = process.env.NODE_ENV || 'local'
+// VITE_ENV: local | development | staging | production
+// NODE_ENV는 Vite가 dev 실행 시 'development'로 덮어쓰므로 VITE_ENV 사용
+const NODE_ENV = process.env.VITE_ENV || 'local'
 
 // 도메인 매핑 (HMR용)
 const domainMap = {
