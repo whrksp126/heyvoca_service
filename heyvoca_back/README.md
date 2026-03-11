@@ -1,0 +1,320 @@
+### 로컬(local) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_local
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_local
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:local
+
+## local 환경 실행
+docker compose -f docker-compose.local.yml up --build
+
+## local 환경 실행 (백그라운드)
+docker compose -f docker-compose.local.yml up --build -d
+
+## local 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## local 허브에 local 태그로 푸쉬
+docker push whrksp126/heyvoca_back:local
+
+---
+
+### 데브(dev) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_dev
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_dev
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:dev
+
+## dev 환경 실행
+docker compose -f docker-compose.dev.yml up --build
+
+## dev 환경 실행 (백그라운드)
+docker compose -f docker-compose.dev.yml up --build -d
+
+## dev 환경 실행 컨테이너 중지
+docker compose -f docker-compose.dev.yml down
+
+## dev 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 dev 태그로 푸쉬
+docker push whrksp126/heyvoca_back:dev
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_dev
+
+---
+
+### 스테이징(stg) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_stg
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_stg
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:stg
+
+## stg 환경 실행
+docker compose -f docker-compose.stg.yml up --build
+
+## stg 환경 실행 (백그라운드)
+docker compose -f docker-compose.stg.yml up --build -d
+
+## stg 환경 실행 컨테이너 중지
+docker compose -f docker-compose.stg.yml down
+
+## stg 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 stg 태그로 푸쉬
+docker push whrksp126/heyvoca_back:stg
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_stg
+
+---
+
+### 프로덕션(prod) 개발 환경
+
+## 컨테이너 중지(필요시)
+docker stop heyvoca_back_prod
+
+## 컨테이너 삭제(필요시)
+docker rm heyvoca_back_prod
+
+## 이미지 삭제(필요시)
+docker rmi whrksp126/heyvoca_back:prod
+
+## prod 환경 실행
+docker compose -f docker-compose.yml up --build
+
+## prod 환경 실행 (백그라운드)
+docker compose -f docker-compose.yml up --build -d
+
+## prod 환경 실행 컨테이너 중지
+docker compose -f docker-compose.yml down
+
+## prod 환경의 이미지 확인
+docker images | grep heyvoca_back
+
+## 도커 허브에 prod 태그로 푸쉬
+docker push whrksp126/heyvoca_back:prod
+
+## 서버 적용
+sudo systemctl restart heyvoca_back_prod
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 📌 **프로젝트 README (Docker 기반 개발 및 배포 가이드)**
+🚀 **이 문서는 프로젝트의 개발 및 배포 프로세스를 정리한 가이드입니다.**  
+✅ **Git, Docker, CI/CD, 배포 단계까지 모두 포함**  
+✅ **개발자가 쉽게 동일한 환경에서 개발하고, 테스트 및 배포할 수 있도록 구성됨**  
+
+---
+
+## **📂 1. 프로젝트 구조**
+### **📌 Git 브랜치 구조**
+```text
+main       # 실제 서비스 운영 (배포용)
+staging    # QA 테스트 환경 (실제 서비스 배포 전 검증)
+dev        # 서버 개발 환경 (서버에서 개발 및 테스트)
+local      # 개발자가 로컬에서 테스트하는 환경 (Docker 활용)
+```
+✅ **개발 및 배포 흐름:**  
+1. **개발자는 로컬에서 개발 (`local`)**  
+2. **개발이 완료되면 `dev`로 PR (서버 개발 환경 테스트)**  
+3. **서버에서 테스트 후 `staging`으로 PR (QA 테스트 진행)**  
+4. **QA 완료 후 `main`으로 PR (실제 배포 진행)**  
+
+---
+
+## **🛠 2. 개발 환경 세팅 방법 (로컬)**
+### **1️⃣ Git 클론 후 환경 변수 세팅**
+```sh
+git clone https://github.com/whrksp126/heyvoca_back.git
+git checkout local
+.env.local  # 환경 변수 파일 관리자 문의
+```
+
+### **2️⃣ Docker Hub에서 이미지 다운로드**
+✅ **도커 다운로드 필수!:**  
+```sh
+docker pull whrksp126/heyvoca_back:local
+```
+
+### **3️⃣ 로컬 개발 환경 실행 (`docker-compose.local.yml` 사용)**
+```sh
+docker-compose -f docker-compose.local.yml up -d
+```
+✅ 실행 완료 후 **http://localhost:5003** 에서 개발 환경 접속 가능  
+✅ 코드 변경 시 **자동 반영됨** (`volumes` 설정 덕분)  
+
+---
+
+## **📝 3. 개발 & 테스트 방법**
+### **📌 1️⃣ 실행 중인 컨테이너 확인**
+```sh
+docker ps
+```
+
+### **📌 2️⃣ 실시간 로그 확인**
+```sh
+docker logs -f heyvoca_back_local
+```
+
+### **📌 3️⃣ 컨테이너 내부 진입 (셸 실행)**
+```sh
+docker exec -it heyvoca_back_local sh
+```
+
+### **📌 4️⃣ 개발 테스트 완료 후 컨테이너 정리**
+```sh
+docker-compose -f docker-compose.local.yml down
+```
+
+---
+
+## **🚀 4. `Docker Hub` 업데이트 방법**
+**✅ 새로운 코드 반영 후 Docker Hub에 `local` 태그 업데이트**
+```sh
+docker build -t whrksp126/heyvoca_back:local .
+docker push whrksp126/heyvoca_back:local
+```
+**✅ 다른 개발자가 변경된 이미지 적용**
+```sh
+docker pull whrksp126/heyvoca_back:local
+docker-compose -f docker-compose.local.yml up -d
+```
+
+---
+
+## **🚀 5. `GitHub` 및 `GitHub Actions` 적용 방법**
+### **📌 1️⃣ `local` 브랜치에서 `dev`로 코드 푸쉬**
+```sh
+git checkout -b feature/your-feature
+git add .
+git commit -m "Add new feature"
+git push origin feature/your-feature
+```
+✅ **GitHub에서 PR (Pull Request) 생성 후 `dev` 브랜치로 머지**  
+
+---
+
+## **🌍 6. 서버에 `dev` 브랜치 적용 (`GitHub Actions`)**
+✅ **GitHub Actions가 `dev` 브랜치에 푸쉬될 때 자동 배포하도록 설정**  
+
+📌 **`dev` 환경 적용 후 서버에서 확인**
+```sh
+ssh user@server
+cd /var/www/your-project
+git pull origin dev
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+✅ **http://dev.yourproject.com 에서 서버 개발 환경 확인 가능**  
+
+---
+
+## **🧪 7. QA (`staging`) 및 배포 (`main`) 프로세스**
+### **📌 1️⃣ `dev`에서 `staging`으로 PR 후 QA 진행**
+```sh
+git checkout staging
+git merge dev
+git push origin staging
+```
+✅ GitHub Actions에서 `staging` 환경 자동 배포됨  
+✅ `http://staging.yourproject.com` 에서 QA 진행  
+
+### **📌 2️⃣ `staging`에서 `main`으로 PR 후 최종 배포**
+```sh
+git checkout main
+git merge staging
+git push origin main
+```
+✅ `GitHub Actions`가 `main`에 푸쉬 시 서버에 자동 배포  
+
+---
+
+## **🔥 최종 정리: 개발 ~ 배포 흐름**
+| 단계 | 작업 내용 | 실행 명령어 |
+|------|------|------|
+| **1️⃣ 로컬 개발** | `docker-compose.local.yml` 실행 | `docker-compose -f docker-compose.local.yml up -d` |
+| **2️⃣ 개발 완료** | `local` → `dev`로 PR | `git push origin feature/your-feature` |
+| **3️⃣ 서버 개발 환경 적용** | `GitHub Actions` 통해 자동 배포 | `http://dev.yourproject.com` |
+| **4️⃣ QA 테스트** | `staging` 브랜치로 PR 및 배포 | `http://staging.yourproject.com` |
+| **5️⃣ 실제 배포** | `main` 브랜치로 머지 및 배포 | `http://yourproject.com` |
+
+✅ **이제 개발자는 손쉽게 로컬 환경을 설정하고, 동일한 과정으로 배포할 수 있음!** 🚀🔥
+
+---
+
+## **💎 8. 인앱결제 시스템**
+
+### **📌 구매 관련 기능**
+- **영수증 검증**: iOS App Store, Android Google Play 영수증 검증
+- **상품 관리**: 보석 구매 상품 정보 관리
+- **구매 기록**: 사용자 구매 내역 저장 및 조회
+- **보석 지급**: 구매 성공 시 자동으로 사용자 보석 지급
+
+### **📌 API 엔드포인트**
+| 메서드 | 엔드포인트 | 설명 | 인증 |
+|--------|------------|------|------|
+| `POST` | `/purchase/verify` | 영수증 검증 및 구매 처리 | ✅ |
+| `GET` | `/purchase/history` | 사용자 구매 내역 조회 | ✅ |
+| `GET` | `/purchase/products` | 상품 목록 조회 | ❌ |
+
+### **📌 데이터베이스 테이블**
+- **`product`**: 상품 정보 (보석 수량, 가격, 플랫폼 등)
+- **`purchase`**: 구매 기록 (거래 ID, 영수증 데이터, 보석 수량 등)
+
+### **📌 상품 데이터 초기화**
+```bash
+# 상품 데이터를 DB에 추가
+python init_products.py
+```
+
+### **📌 환경 변수 설정**
+```env
+# Apple App Store
+APPLE_SHARED_SECRET=your_shared_secret
+APPLE_APP_STORE_CONNECT_KEY_ID=your_key_id
+APPLE_APP_STORE_CONNECT_ISSUER_ID=your_issuer_id
+APPLE_APP_STORE_CONNECT_PRIVATE_KEY=your_private_key
+
+# Google Play Console
+GOOGLE_PLAY_SERVICE_ACCOUNT_KEY=path/to/service_account.json
+```
+
+### **📌 구매 플로우**
+1. **앱에서 결제 완료** → 영수증 데이터 생성
+2. **백엔드로 영수증 전송** → `/purchase/verify` API 호출
+3. **스토어 검증** → Apple/Google 서버에서 영수증 검증
+4. **상품 정보 확인** → DB에서 상품 정보 조회
+5. **중복 구매 검증** → 동일 거래 ID 중복 처리 방지
+6. **구매 기록 저장** → `purchase` 테이블에 기록 저장
+7. **보석 지급** → 사용자 `gem_cnt` 업데이트
+8. **응답 반환** → 구매 완료 및 보석 수량 정보 반환
