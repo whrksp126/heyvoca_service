@@ -17,7 +17,7 @@ import MyPage from './pages/myPage';
 // import { BottomSheetProvider } from './context/BottomSheetContext';
 // import { FullSheetProvider } from './context/FullSheetContext';
 import { NewFullSheetProvider as NewFullSheetContextProvider, NewFullSheetContext, NewFullSheetActionsContext } from './context/NewFullSheetContext';
-import { NewFullSheetProvider } from './components/newFullSheet/NewFullSheetProvider';
+import { NewFullSheetProvider } from './components/newfullsheet/NewFullSheetProvider';
 
 import { NewBottomSheetProvider as NewBottomSheetContextProvider, NewBottomSheetContext, NewBottomSheetActionsContext } from './context/NewBottomSheetContext';
 import { NewBottomSheetProvider } from './components/newBottomSheet/NewBottomSheetProvider';
