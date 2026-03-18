@@ -164,11 +164,6 @@ const AccountNewFullSheet = () => {
           >
             <CaretLeft size={24} />
           </motion.button>
-          <h1 className="
-            text-[18px] font-[700]
-            text-layout-black
-          ">
-          </h1>
         </div>
         <h1 className="
             absolute

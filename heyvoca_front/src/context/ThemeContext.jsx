@@ -32,6 +32,13 @@ export const ThemeProvider = ({ children }) => {
         root.classList.remove('dark');
         setIsDark(false);
       }
+
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'setStatusBarStyle',
+          style: effectiveTheme === 'dark' ? 'light-content' : 'dark-content',
+        }));
+      }
     };
 
     applyTheme();

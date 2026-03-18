@@ -7,6 +7,41 @@ import { vibrate } from '../../utils/osFunction';
 import { useUser } from '../../context/UserContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 
+const ToggleSwitch = ({ checked, onChange, label, description }) => (
+  <li
+    className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] dark:border-border-dark bg-layout-white dark:bg-layout-black"
+    onClick={onChange}
+  >
+    <div className="flex flex-col gap-[4px]">
+      <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
+        {label}
+      </span>
+      {description && (
+        <span className="text-[13px] text-layout-gray-200 dark:text-layout-white/60 leading-tight">
+          {description}
+        </span>
+      )}
+    </div>
+    <button
+      onClick={(e) => e.stopPropagation()}
+      className={`
+        relative inline-flex h-[28px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent
+        transition-colors duration-200 ease-in-out focus:outline-none
+        ${checked ? 'bg-primary-main-500' : 'bg-layout-gray-100 dark:bg-layout-gray-300'}
+      `}
+    >
+      <span className="sr-only">Toggle {label}</span>
+      <span
+        className={`
+          pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-layout-white shadow ring-0
+          transition duration-200 ease-in-out
+          ${checked ? 'translate-x-[22px]' : 'translate-x-0'}
+        `}
+      />
+    </button>
+  </li>
+);
+
 const PushNotificationsNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -79,38 +114,6 @@ const PushNotificationsNewFullSheet = () => {
     }
   };
 
-  const ToggleSwitch = ({ checked, onChange, label, description }) => (
-    <div className="flex items-center justify-between py-[16px] border-b border-border dark:border-border-dark last:border-0">
-      <div className="flex flex-col gap-[4px] pr-[16px]">
-        <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
-          {label}
-        </span>
-        {description && (
-          <span className="text-[13px] text-layout-gray-200 dark:text-layout-white/60 leading-tight">
-            {description}
-          </span>
-        )}
-      </div>
-      <button
-        onClick={onChange}
-        className={`
-          relative inline-flex h-[28px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent 
-          transition-colors duration-200 ease-in-out focus:outline-none
-          ${checked ? 'bg-primary-main-500' : 'bg-layout-gray-100 dark:bg-layout-gray-300'}
-        `}
-      >
-        <span className="sr-only">Toggle {label}</span>
-        <span
-          className={`
-            pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-layout-white shadow ring-0 
-            transition duration-200 ease-in-out
-            ${checked ? 'translate-x-[22px]' : 'translate-x-0'}
-          `}
-        />
-      </button>
-    </div>
-  );
-
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
@@ -118,8 +121,10 @@ const PushNotificationsNewFullSheet = () => {
       <div className="
         relative
         flex items-center justify-between
-        h-[55px] 
+        h-[55px]
         pt-[20px] px-[16px] pb-[14px]
+        border-b border-[#ddd]
+        bg-layout-white dark:bg-layout-black
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
@@ -147,11 +152,6 @@ const PushNotificationsNewFullSheet = () => {
           >
             <CaretLeft size={24} />
           </motion.button>
-          <h1 className="
-            text-[18px] font-[700]
-            text-layout-black 
-          ">
-          </h1>
         </div>
         <h1 className="
             absolute
@@ -161,38 +161,30 @@ const PushNotificationsNewFullSheet = () => {
           ">
           알림 설정
         </h1>
-        <div
-          className="
-            flex items-center gap-[8px]
-            text-layout-gray-200 dark:text-layout-white
-          "
-        >
-        </div>
+        <div className="flex items-center gap-[8px] text-layout-gray-200 dark:text-layout-white"></div>
       </div>
 
-
       {/* Content */}
-      <div className="flex flex-col flex-1 py-[10px] px-[20px] overflow-y-auto">
+      <div className="flex flex-col gap-[10px] bg-layout-gray-50 dark:bg-layout-black">
         {isLoading ? (
-          <div className="flex justify-center items-center py-10">
+          <div className="flex justify-center items-center py-10 bg-layout-white dark:bg-layout-black">
             <CircleNotch className="animate-spin text-primary-main-500" size={32} />
           </div>
         ) : (
-          <div className="flex flex-col">
+          <ul className="flex flex-col">
             <ToggleSwitch
               label="학습 유도 알림"
               description="오후 1시와 저녁 9시에 오늘의 남은 학습량을 알려드립니다."
               checked={isStudyAllowed}
               onChange={handleToggleStudy}
             />
-
             <ToggleSwitch
               label="마케팅 혜택 알림"
               description="이벤트, 할인 혜택, 업데이트 등 유용한 소식을 보내드립니다."
               checked={isMarketingAllowed}
               onChange={handleToggleMarketing}
             />
-          </div>
+          </ul>
         )}
       </div>
     </div>
@@ -200,4 +192,3 @@ const PushNotificationsNewFullSheet = () => {
 };
 
 export default PushNotificationsNewFullSheet;
-

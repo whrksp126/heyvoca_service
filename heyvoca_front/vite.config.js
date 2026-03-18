@@ -21,10 +21,10 @@ if (NODE_ENV === 'development') allowedHosts.push(domainMap.development)
 if (NODE_ENV === 'staging') allowedHosts.push(domainMap.staging)
 if (NODE_ENV === 'production') allowedHosts.push(domainMap.production)
 
-// HMR: 로컬은 ws+localhost, 그 외는 wss+도메인:443
+// HMR: 로컬은 nginx 외부 포트(3100)로 WS, 그 외는 wss+도메인:443
 const hmr =
   NODE_ENV === 'local'
-    ? true
+    ? { clientPort: 3100 }
     : {
         protocol: 'wss',
         host: domainMap[NODE_ENV] || domainMap.development,

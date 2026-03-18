@@ -27,6 +27,7 @@ const ThemeNewFullSheet = () => {
         flex items-center justify-between
         h-[55px] 
         pt-[20px] px-[16px] pb-[14px]
+        border-b border-[#ddd]
       ">
         <div className="flex items-center gap-[4px]">
           <motion.button
@@ -63,7 +64,13 @@ const ThemeNewFullSheet = () => {
           ">
           테마
         </h1>
-        <div className="w-[24px]"></div> {/* Spacer for symmetry */}
+        <div
+          className="
+            flex items-center gap-[8px]
+            text-layout-gray-200 dark:text-layout-white
+          "
+        >
+        </div>
       </div>
 
       {/* Content */}
@@ -78,7 +85,7 @@ const ThemeNewFullSheet = () => {
 
           {/* Toggle Button */}
           <div className={`
-            relative w-[60px] h-[32px] rounded-full p-[3px] transition-colors duration-300
+            relative w-[60px] h-[32px] rounded-full p-[3px] transition-colors duration-300 overflow-hidden
             ${isDark ? 'bg-layout-gray-500' : 'bg-primary-main-600'}
           `}>
             <motion.div

@@ -657,13 +657,16 @@ const StudyResult = () => {
       <div className='relative flex flex-col h-[100dvh]'>
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         {/* 고정 헤더 */}
-        <div className='
-          absolute top-0 left-0
-          flex items-end justify-center
-          w-full h-[55px]
-          px-[16px] py-[14px]
-          z-20
-        '>
+        <div
+          className='
+            absolute left-0
+            flex items-end justify-center
+            w-full h-[55px]
+            px-[16px] py-[14px]
+            z-20
+          '
+          style={{ top: 'var(--status-bar-height)' }}
+        >
           <div className="center">
             <h2 className='text-[18px] font-[700] leading-[21px]'>
               학습 결과
