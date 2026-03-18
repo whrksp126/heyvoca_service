@@ -6,7 +6,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 // import { useFullSheet } from '../../context/FullSheetContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import VocabularyWords from './VocabularyWords';
-import VocabularyWordsNewFullSheet from '../newFullSheet/VocabularyWordsNewFullSheet';
+import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import note_ring from '../../assets/images/note_ring.png';
 import { vibrate } from '../../utils/osFunction';
 

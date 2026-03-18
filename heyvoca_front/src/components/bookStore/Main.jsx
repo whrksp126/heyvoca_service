@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Plus } from "@phosphor-icons/react";
 import { useNewFullSheetActions } from "../../context/NewFullSheetContext";
-import { PreviewBookStoreNewFullSheet } from "../newFullSheet/PreviewBookStoreNewFullSheet";
+import { PreviewBookStoreNewFullSheet } from "../newfullsheet/PreviewBookStoreNewFullSheet";
 import { vibrate } from '../../utils/osFunction';
 import { getBookStoreDetailApi } from "../../api/bookStore";
 import gem from "../../assets/images/gem.png";

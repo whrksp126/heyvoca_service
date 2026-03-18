@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 // import UpdateVocabularySheet from './UpdateVocabularySheet';
-import UpdateVocabularySheetNewFullSheet from '../newFullSheet/UpdateVocabularySheetNewFullSheet';
+import UpdateVocabularySheetNewFullSheet from '../newfullsheet/UpdateVocabularySheetNewFullSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';

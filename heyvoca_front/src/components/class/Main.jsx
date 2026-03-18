@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 // import VocabularySheet from './VocabularySheet';
-import VocabularySheetNewFullSheet from '../newFullSheet/VocabularySheetNewFullSheet';
+import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
 // import TestSetup from './TestSetup';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';

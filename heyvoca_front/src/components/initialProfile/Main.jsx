@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
-import InitialProfileStep2NewFullSheet from '../newFullSheet/InitialProfileStep2NewFullSheet';
+import InitialProfileStep2NewFullSheet from '../newfullsheet/InitialProfileStep2NewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNavigate } from 'react-router-dom';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';

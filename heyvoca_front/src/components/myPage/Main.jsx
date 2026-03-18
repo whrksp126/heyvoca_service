@@ -10,10 +10,10 @@ import { vibrate } from '../../utils/osFunction';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
 // import PushNotifications from './PushNotifications';
-import AccountNewFullSheet from '../newFullSheet/AccountNewFullSheet';
-import ThemeNewFullSheet from '../newFullSheet/ThemeNewFullSheet';
-import ExampleSettingsNewFullSheet from '../newFullSheet/ExampleSettingsNewFullSheet';
-import PushNotificationsNewFullSheet from '../newFullSheet/PushNotificationsNewFullSheet';
+import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
+import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
+import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
+import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화

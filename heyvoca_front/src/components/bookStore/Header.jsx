@@ -2,7 +2,7 @@ import React from 'react';
 import gem from "../../assets/images/gem.png";
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
+import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
 const Header = () => {

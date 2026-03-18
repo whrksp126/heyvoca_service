@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
+import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { deductGemApi } from '../../api/auth';
 import { showToast } from '../../utils/osFunction';

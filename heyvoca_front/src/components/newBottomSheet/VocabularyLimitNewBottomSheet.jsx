@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
-import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
+import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
 export const VocabularyLimitNewBottomSheet = () => {

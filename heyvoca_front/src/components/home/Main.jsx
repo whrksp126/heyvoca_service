@@ -27,8 +27,8 @@ import { vibrate } from '../../utils/osFunction';
 // import StoreSheet from './StoreSheet';
 // import TodayStudySheet from './TodayStudySheet';
 import { useTheme } from '../../context/ThemeContext';
-import StoreNewFullSheet from '../newFullSheet/StoreNewFullSheet';
-import TodayStudyNewFullSheet from '../newFullSheet/TodayStudyNewFullSheet';
+import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
+import TodayStudyNewFullSheet from '../newfullsheet/TodayStudyNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 
