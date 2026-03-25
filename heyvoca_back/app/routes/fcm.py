@@ -334,30 +334,6 @@ def create_scheduler(app):
     scheduler.add_job(lambda: send_study_reminder_1pm(app), CronTrigger(hour=13, minute=0))
     scheduler.add_job(lambda: send_study_reminder_9pm(app), CronTrigger(hour=21, minute=0))
 
-    # ============================================================
-    # [LOCAL TEST ONLY] 20초 간격 테스트 알림 — 배포 전 반드시 제거
-    # 제거 방법: 이 블록(주석 포함) 전체 삭제
-    # ============================================================
-    import os as _os
-    if _os.environ.get('FLASK_CONFIG') == 'local':
-        from apscheduler.triggers.interval import IntervalTrigger
-        _test_toggle = {'count': 0}
-
-        def _send_test_notification(toggle=_test_toggle):
-            if toggle['count'] % 2 == 0:
-                send_study_reminder_1pm(app)
-                print("[TEST FCM] 1PM 알림 발송")
-            else:
-                send_study_reminder_9pm(app)
-                print("[TEST FCM] 9PM 알림 발송")
-            toggle['count'] += 1
-
-        scheduler.add_job(_send_test_notification, IntervalTrigger(seconds=40))
-        print("[TEST FCM] 로컬 테스트 알림 스케줄러 등록 (40초 간격, 1PM/9PM 교대)")
-    # ============================================================
-    # [/LOCAL TEST ONLY]
-    # ============================================================
-
     scheduler.start()
 
     atexit.register(lambda: scheduler.shutdown())
