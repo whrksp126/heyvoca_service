@@ -49,6 +49,8 @@ ssh -i "$SSH_KEY" -p "$SSH_PORT" "${SSH_USER}@${SSH_HOST}" "
     git pull
     echo '>>> docker build & up...'
     docker compose -p ${PROJECT_NAME} -f ${COMPOSE_FILE} up --build -d front back
+    echo '>>> nginx reload (IP 캐시 갱신)...'
+    docker exec nginx_proxy nginx -s reload
 "
 
 if [ $? -eq 0 ]; then
