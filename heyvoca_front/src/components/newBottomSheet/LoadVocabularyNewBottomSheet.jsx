@@ -5,10 +5,11 @@ import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useUploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
 import { useUploadExcelNewBottomSheet } from './UploadExcelNewBottomSheet';
 import { useUploadCsvNewBottomSheet } from './UploadCsvNewBottomSheet';
-import { useVocabulary } from '../../context/VocabularyContext';
+import { useUploadGoogleSheetNewBottomSheet } from './UploadGoogleSheetNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, getDevicePlatform } from '../../utils/osFunction';
+import postMessageManager from '../../utils/postMessageManager';
 
 export const LoadVocabularyNewBottomSheet = () => {
   "use memo";
@@ -16,8 +17,54 @@ export const LoadVocabularyNewBottomSheet = () => {
   const { showUploadQuizletNewBottomSheet } = useUploadQuizletNewBottomSheet();
   const { showUploadExcelNewBottomSheet } = useUploadExcelNewBottomSheet();
   const { showUploadCsvNewBottomSheet } = useUploadCsvNewBottomSheet();
+  const { showUploadGoogleSheetNewBottomSheet } = useUploadGoogleSheetNewBottomSheet();
   const { userProfile } = useUser();
 
+  /**
+   * 구글 스프레드시트 불러오기
+   */
+  const showGoogleSheetUpload = useCallback(async () => {
+    try {
+      const result = await userBookCntCheckApi();
+      const canAddBook = result?.data?.can_add_book;
+      if (result.code != 200) {
+        alert('단어장 개수 확인에 실패했습니다.');
+        return;
+      }
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
+        return;
+      }
+
+      const platform = getDevicePlatform();
+      if (platform === 'web') {
+        alert('구글 스프레드시트 불러오기는 앱에서만 사용할 수 있습니다.');
+        return;
+      }
+
+      // 앱에 구글 시트 인증 요청
+      postMessageManager.setupGoogleSheetAuth((data) => {
+        postMessageManager.removeGoogleSheetAuth();
+
+        if (data.status === 200 && data.accessToken) {
+          // 현재 바텀시트 닫고 구글 시트 바텀시트 열기
+          popNewBottomSheet();
+          showUploadGoogleSheetNewBottomSheet(data.accessToken);
+        } else {
+          alert('구글 스프레드시트 인증에 실패했습니다. 다시 시도해주세요.');
+        }
+      });
+
+      postMessageManager.sendMessageToReactNative('launchGoogleSheetAuth');
+    } catch (error) {
+      console.error('구글 스프레드시트 불러오기 실패:', error);
+      alert('구글 스프레드시트 불러오기에 실패했습니다. 다시 시도해주세요.');
+    }
+  }, [popNewBottomSheet, showUploadGoogleSheetNewBottomSheet, userProfile]);
+
+  /**
+   * 퀴즐렛 데이터 업로드
+   */
   const showQuizletUploadBottomSheet = useCallback(async () => {
     // 단어장 생성 가능 여부 확인
     try {
@@ -42,6 +89,9 @@ export const LoadVocabularyNewBottomSheet = () => {
     }
   }, [popNewBottomSheet, showUploadQuizletNewBottomSheet, userProfile]);
 
+  /**
+   * 엑셀 파일 업로드
+   */
   const showExcelUploadBottomSheet = useCallback(async () => {
     // 단어장 생성 가능 여부 확인
     try {
@@ -66,6 +116,9 @@ export const LoadVocabularyNewBottomSheet = () => {
     }
   }, [popNewBottomSheet, showUploadExcelNewBottomSheet, userProfile]);
 
+  /**
+   * CSV 파일 업로드
+   */
   const showCsvUploadBottomSheet = useCallback(async () => {
     // 단어장 생성 가능 여부 확인
     try {
@@ -97,8 +150,7 @@ export const LoadVocabularyNewBottomSheet = () => {
       icon: Table,
       onClick: () => {
         vibrate({ duration: 5 });
-        // TODO: 구글 스프레드시트 불러오기 기능 구현
-        console.log('구글 스프레드시트 불러오기');
+        showGoogleSheetUpload();
       }
     },
     {

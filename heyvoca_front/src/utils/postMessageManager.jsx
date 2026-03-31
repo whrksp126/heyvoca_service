@@ -170,6 +170,22 @@ class PostMessageManager {
   }
 
   /**
+   * 구글 스프레드시트 인증 콜백 등록
+   * @param {Function} callback - 구글 시트 accessToken 처리 콜백 함수
+   */
+  setupGoogleSheetAuth(callback) {
+    this.init();
+    this.addListener('google_sheet_auth_callback', callback);
+  }
+
+  /**
+   * 구글 스프레드시트 인증 콜백 제거
+   */
+  removeGoogleSheetAuth() {
+    this.removeListener('google_sheet_auth_callback');
+  }
+
+  /**
    * OCR 결과 콜백 등록
    * @param {Function} callback - OCR 결과 처리 콜백 함수
    */

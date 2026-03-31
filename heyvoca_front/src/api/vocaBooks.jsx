@@ -92,6 +92,68 @@ export const uploadExcelApi = async (file, title, color) => {
   }
 };
 
+// 구글 Drive에서 스프레드시트 목록 조회
+export const fetchGoogleSheetListApi = async (accessToken) => {
+  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent("mimeType='application/vnd.google-apps.spreadsheet' and trashed=false")}&fields=${encodeURIComponent('files(id,name,modifiedTime)')}&orderBy=modifiedTime desc&pageSize=50`;
+  try {
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      return { code: response.status, message: error.error?.message || '스프레드시트 목록 조회에 실패했습니다.' };
+    }
+    const data = await response.json();
+    return { code: 200, data: data.files || [] };
+  } catch (error) {
+    console.error('fetchGoogleSheetListApi 오류:', error);
+    return { code: 500, message: '스프레드시트 목록 조회 중 오류가 발생했습니다.' };
+  }
+};
+
+// 구글 스프레드시트의 시트 탭 목록 조회
+export const fetchGoogleSheetTabsApi = async (accessToken, spreadsheetId) => {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?fields=sheets.properties`;
+  try {
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      return { code: response.status, message: error.error?.message || '시트 정보 조회에 실패했습니다.' };
+    }
+    const data = await response.json();
+    const sheets = (data.sheets || []).map((s) => ({
+      sheetId: s.properties.sheetId,
+      title: s.properties.title,
+    }));
+    return { code: 200, data: sheets };
+  } catch (error) {
+    console.error('fetchGoogleSheetTabsApi 오류:', error);
+    return { code: 500, message: '시트 정보 조회 중 오류가 발생했습니다.' };
+  }
+};
+
+// 구글 스프레드시트 데이터 조회
+export const fetchGoogleSheetDataApi = async (accessToken, spreadsheetId, sheetTitle) => {
+  const range = encodeURIComponent(sheetTitle);
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`;
+  try {
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      return { code: response.status, message: error.error?.message || '시트 데이터 조회에 실패했습니다.' };
+    }
+    const data = await response.json();
+    return { code: 200, data: data.values || [] };
+  } catch (error) {
+    console.error('fetchGoogleSheetDataApi 오류:', error);
+    return { code: 500, message: '시트 데이터 조회 중 오류가 발생했습니다.' };
+  }
+};
+
 // CSV 파일 업로드로 단어장 생성
 export const uploadCsvApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/csv`;
