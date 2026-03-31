@@ -186,6 +186,22 @@ class PostMessageManager {
   }
 
   /**
+   * 앱에서 단어 추가 콜백 등록
+   * @param {Function} callback - 단어 추가 처리 콜백 함수
+   */
+  setupAddWord(callback) {
+    this.init();
+    this.addListener('addWord', callback);
+  }
+
+  /**
+   * 앱에서 단어 추가 콜백 제거
+   */
+  removeAddWord() {
+    this.removeListener('addWord');
+  }
+
+  /**
    * OCR 결과 콜백 등록
    * @param {Function} callback - OCR 결과 처리 콜백 함수
    */
