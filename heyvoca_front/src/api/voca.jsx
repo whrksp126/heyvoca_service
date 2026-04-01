@@ -103,3 +103,31 @@ export const uploadQuizletApi = async (quizletText, title) => {
     throw error;
   }
 }
+
+// 퀴즐렛 PDF 업로드 API
+export const uploadQuizletPdfApi = async (file, title, color) => {
+  const url = `${backendUrl}/vocaBooks/upload/quizlet-pdf`;
+  const method = 'POST';
+  const data = {
+    json_data: { title, color },
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    // Response 객체인 경우 (에러 응답) 응답 본문 읽기
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadQuizletPdfApi 오류:', error);
+    throw error;
+  }
+}
