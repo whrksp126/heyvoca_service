@@ -296,7 +296,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     pushNewBottomSheet(TestSetupNewBottomSheet, {
       vocabularySheetId: id,
       maxVocabularyCount: vocabularySheet.words.length,
-      testType: 'test'
+      testType: 'exam'
     }, {
       smFull: true,
       closeOnBackdropClick: true

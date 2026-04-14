@@ -194,26 +194,34 @@ const Main = () => {
                 {/* 암기 상태별 단어 개수 표시 */}
                 <div className="flex items-center gap-[12px] flex-wrap">
                   <div className="flex items-center gap-[4px]">
-                    <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
-                    <span className="text-[13px] font-[600] text-[#9D835A]">
+                    <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3]">
+                      <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
+                    </div>
+                    <span className="text-[11px] font-[500] text-[#9D835A]">
                       {memorizationStats.unlearned || 0}
                     </span>
                   </div>
                   <div className="flex items-center gap-[4px]">
-                    <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
-                    <span className="text-[13px] font-[600] text-[#77CE4F]">
+                    <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB]">
+                      <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
+                    </div>
+                    <span className="text-[11px] font-[500] text-[#77CE4F]">
                       {memorizationStats.leaf || 0}
                     </span>
                   </div>
                   <div className="flex items-center gap-[4px]">
-                    <Plant size={16} weight="fill" className="text-[#38CE38]" />
-                    <span className="text-[13px] font-[600] text-[#38CE38]">
+                    <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE]">
+                      <Plant size={8} weight="fill" className="text-[#38CE38]" />
+                    </div>
+                    <span className="text-[11px] font-[500] text-[#38CE38]">
                       {memorizationStats.plant || 0}
                     </span>
                   </div>
                   <div className="flex items-center gap-[4px]">
-                    <Carrot size={16} weight="fill" className="text-[#F68300]" />
-                    <span className="text-[13px] font-[600] text-[#F68300]">
+                    <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8]">
+                      <Carrot size={8} weight="fill" className="text-[#F68300]" />
+                    </div>
+                    <span className="text-[11px] font-[500] text-[#F68300]">
                       {memorizationStats.carrot || 0}
                     </span>
                   </div>

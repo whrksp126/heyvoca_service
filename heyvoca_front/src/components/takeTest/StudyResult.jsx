@@ -96,7 +96,17 @@ const StudyResult = () => {
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const testQuestions = state.testQuestions;
+  // cardMatch 세트는 words 배열을 개별 단어로 flatten
+  const testQuestions = state.testQuestions.flatMap(q => {
+    if (q.questionType === 'cardMatch') {
+      return q.words.map(word => ({
+        ...word,
+        isCorrect: q.isCorrect,
+        questionType: 'cardMatch',
+      }));
+    }
+    return q;
+  });
   const testType = state.testType;
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
@@ -115,7 +125,6 @@ const StudyResult = () => {
     const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
     try {
       const result = await updateUserHistory({
-        'today_study_complete': testType === "today" ? true : false,
         'correct_cnt': correctCnt,
         'incorrect_cnt': incorrectCnt
       })
@@ -181,7 +190,7 @@ const StudyResult = () => {
 
   useEffect(() => {
     if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "learning") {
-      navigate('/class');
+      navigate('/home');
     }
   }, [isRecentStudyLoading]);
 
@@ -221,7 +230,7 @@ const StudyResult = () => {
   }
 
   const onClickEndStudy = async () => {
-    testType === "today" ? navigate('/home') : navigate('/class');
+    navigate('/home');
   }
 
   // 화면별 렌더링
@@ -353,10 +362,10 @@ const StudyResult = () => {
                           {question.origin}
                         </h3>
                         <MemorizationStatus
-                          repetition={question.sm2?.repetition ?? question.repetition ?? 0}
-                          interval={question.sm2?.interval ?? question.interval ?? 0}
-                          ef={question.sm2?.ef ?? question.ef ?? 2.5}
-                          nextReview={question.sm2?.nextReview ?? question.nextReview}
+                          repetition={question.repetition ?? question.sm2?.repetition ?? 0}
+                          interval={question.interval ?? question.sm2?.interval ?? 0}
+                          ef={question.ef ?? question.sm2?.ef ?? 2.5}
+                          nextReview={question.nextReview ?? question.sm2?.nextReview}
                           wordId={question.id}
                           useRandomMessages={false}
                         />
@@ -383,8 +392,7 @@ const StudyResult = () => {
               background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}`
             }}
           >
-            {testType !== "today" && (
-              <motion.button
+            <motion.button
                 className="
                     flex-1
                     h-[45px]
@@ -403,7 +411,6 @@ const StudyResult = () => {
                   damping: 15
                 }}
               >테스트 다시 하기</motion.button>
-            )}
             <motion.button
               className="
                   flex-1

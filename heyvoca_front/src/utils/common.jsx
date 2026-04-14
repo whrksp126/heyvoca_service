@@ -7,10 +7,26 @@ export const MIN_TEST_VOCABULARY_COUNT = 4;
 export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
+  OVERDUE: 'overdue',          // 복습 지연 (nextReview < 오늘)
   SHORT_TERM: 'shortTerm',     // 단기 복습 (간격 10일 미만)
   MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 10일 이상 60일 미만)
   LONG_TERM: 'longTerm'        // 장기 복습 (간격 60일 이상)
 };
+
+/**
+ * 단어가 복습 지연 상태인지 판별 (nextReview < 오늘)
+ * @param {Object} word
+ * @returns {boolean}
+ */
+export function isWordOverdue(word) {
+  const nextReview = word.sm2?.nextReview ?? word.nextReview;
+  if (!nextReview) return false;
+  const d = new Date(nextReview);
+  d.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d < today;
+}
 
 /**
  * 단어의 암기 상태를 판단하는 함수 (암기율 계산 방식)
@@ -22,10 +38,10 @@ export const MEMORY_STATES = {
  * @returns {string} - 암기 상태 (unlearned, shortTerm, mediumTerm, longTerm)
  */
 export function getWordMemoryState(word) {
-  // memoryState 객체가 있는 경우 우선 사용
-  const repetition = word.memoryState?.repetition ?? word.repetition ?? 0;
-  const interval = word.memoryState?.interval ?? word.interval ?? 0;
-  const ef = word.memoryState?.ef ?? word.ef ?? 2.5;
+  // sm2 객체 → memoryState 객체 → 직접 필드 순으로 참조
+  const repetition = word.sm2?.repetition ?? word.memoryState?.repetition ?? word.repetition ?? 0;
+  const interval = word.sm2?.interval ?? word.memoryState?.interval ?? word.interval ?? 0;
+  const ef = word.sm2?.ef ?? word.memoryState?.ef ?? word.ef ?? 2.5;
 
   // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
   if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
@@ -184,14 +200,19 @@ export const getValueFromURL = (param) => {
 let currentTTSAudio = null;
 let currentAudioUrl = null;
 let currentRequestId = 0;
+let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
 
 export const getTextSound = async (text, lang) => {
-  // 즉시 기존 오디오 중단
+  // 즉시 기존 오디오 중단 + 이전 Promise resolve (대기 중인 호출 해제)
   if (currentTTSAudio) {
     currentTTSAudio.pause();
     currentTTSAudio.currentTime = 0;
     currentTTSAudio.src = '';
     currentTTSAudio = null;
+  }
+  if (currentAudioResolve) {
+    currentAudioResolve();
+    currentAudioResolve = null;
   }
 
   // 이전 blob URL 정리
@@ -215,7 +236,6 @@ export const getTextSound = async (text, lang) => {
 
     // 요청이 완료되었지만, 이미 새로운 요청이 와서 이 요청이 무효화된 경우
     if (requestId !== currentRequestId) {
-      // 이전 요청이므로 종료 (blob은 자동으로 가비지 컬렉션됨)
       return;
     }
 
@@ -232,34 +252,56 @@ export const getTextSound = async (text, lang) => {
 
     currentTTSAudio = audio;
 
-    // Add ended event handler to cleanup
-    audio.addEventListener('ended', () => {
-      // 이 요청의 오디오가 끝났는지 확인
-      if (currentTTSAudio === audio) {
-        URL.revokeObjectURL(audioUrl);
-        currentAudioUrl = null;
-        currentTTSAudio = null;
-      }
-    });
+    // 오디오 재생 완료까지 기다리는 Promise 반환
+    return new Promise((resolve) => {
+      currentAudioResolve = resolve;
 
-    audio.play().catch(err => {
-      console.error('오디오 재생 실패:', err);
-      // 재생 실패 시 정리
-      if (currentTTSAudio === audio) {
-        URL.revokeObjectURL(audioUrl);
-        currentAudioUrl = null;
-        currentTTSAudio = null;
-      }
+      const cleanup = () => {
+        if (currentTTSAudio === audio) {
+          URL.revokeObjectURL(audioUrl);
+          currentAudioUrl = null;
+          currentTTSAudio = null;
+        }
+        if (currentAudioResolve === resolve) {
+          currentAudioResolve = null;
+        }
+        resolve();
+      };
+
+      audio.addEventListener('ended', cleanup);
+      audio.addEventListener('error', cleanup);
+
+      audio.play().catch(err => {
+        console.error('오디오 재생 실패:', err);
+        cleanup();
+      });
     });
   } catch (error) {
     console.error('TTS 요청 실패:', error);
-    // 요청 실패 시에도 이전 요청인지 확인
     if (requestId === currentRequestId) {
       currentTTSAudio = null;
       currentAudioUrl = null;
     }
   }
 }
+
+export const stopCurrentSound = () => {
+  if (currentTTSAudio) {
+    currentTTSAudio.pause();
+    currentTTSAudio.currentTime = 0;
+    currentTTSAudio.src = '';
+    currentTTSAudio = null;
+  }
+  if (currentAudioResolve) {
+    currentAudioResolve();
+    currentAudioResolve = null;
+  }
+  if (currentAudioUrl) {
+    URL.revokeObjectURL(currentAudioUrl);
+    currentAudioUrl = null;
+  }
+  currentRequestId++;
+};
 
 /**
  * 예정일 전 학습 횟수에 따른 ef 보너스 계산

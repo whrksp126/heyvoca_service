@@ -8,9 +8,11 @@ import Login from './pages/Login';
 import InitialProfile from './pages/InitialProfile';
 import VocabularySheets from './pages/VocabularySheets';
 import BookStore from './pages/BookStore';
+import Dictionary from './pages/Dictionary';
 import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
+import Study from './pages/Study';
 
 import MyPage from './pages/myPage';
 
@@ -39,10 +41,12 @@ const AppLayout = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
       <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
+      <Route path="/dictionary" element={<Dictionary />} />
       <Route path="/book-store" element={<BookStore />} />
       <Route path="/class" element={<Class />} />
       <Route path="/take-test" element={<TakeTest />} />
       <Route path="/take-test/result" element={<StudyResult />} />
+      <Route path="/study" element={<Study />} />
 
       <Route path="/mypage" element={<MyPage />} />
 

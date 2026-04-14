@@ -3,10 +3,11 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
+import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
-import { MEMORY_STATES, getWordMemoryState } from '../utils/common';
+import { MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 
@@ -41,19 +42,28 @@ const TakeTest = () => {
   const setupTestQuestions = (targetMemoryState, vocabularySheetId, count, testType) => {
     let allWords = [];
 
-    if (vocabularySheetId !== "all") {
-      const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
-      if (vocabularySheet) {
-        allWords = vocabularySheet.words;
-      }
-    } else {
-      // 전체 단어장 선택 시 vocabularySheetId를 각 단어에 추가
+    if (vocabularySheetId === "all") {
       allWords = vocabularySheets.flatMap(sheet =>
         sheet.words.map(word => ({
           ...word,
           vocabularySheetId: sheet.id
         }))
       );
+    } else if (Array.isArray(vocabularySheetId)) {
+      const idSet = new Set(vocabularySheetId);
+      allWords = vocabularySheets
+        .filter(sheet => idSet.has(sheet.id))
+        .flatMap(sheet =>
+          sheet.words.map(word => ({
+            ...word,
+            vocabularySheetId: sheet.id
+          }))
+        );
+    } else {
+      const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
+      if (vocabularySheet) {
+        allWords = vocabularySheet.words;
+      }
     }
 
     // 현재 날짜 (시간 제거, 날짜만 비교)
@@ -122,9 +132,15 @@ const TakeTest = () => {
     // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어 중 복습 우선 + 나머지 랜덤
     else if (testType === 'test' || testType === 'exam') {
       // 1. 먼저 사용자가 선택한 필터(상태)에 맞는 단어들을 거름
-      const filteredByState = targetMemoryState === MEMORY_STATES.ALL
+      const targetStates = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
+      const filteredByState = targetStates.includes(MEMORY_STATES.ALL)
         ? allWords
-        : allWords.filter(word => getWordMemoryState(word) === targetMemoryState);
+        : allWords.filter(word =>
+            targetStates.some(state => {
+              if (state === MEMORY_STATES.OVERDUE) return isWordOverdue(word);
+              return !isWordOverdue(word) && getWordMemoryState(word) === state;
+            })
+          );
 
       // 2. 필터링된 단어들 중에서 '복습 지연' 및 '오늘 예정' 단어 추출
       const overdueInFilter = filteredByState.filter(word => {
@@ -168,26 +184,70 @@ const TakeTest = () => {
       selectedWords = shuffleArray(selectedWords);
     }
 
-    // 문제 생성
-    return selectedWords
-      .map(word => {
-        const otherWords = allWords.filter(w => w.id !== word.id);
-        const randomOptions = otherWords
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3);
-        const options = [word, ...randomOptions];
-        const shuffledOptions = options.sort(() => Math.random() - 0.5);
-        const resultIndex = shuffledOptions.findIndex(w => w.id === word.id);
+    // questionType은 배열 (다중 선택 가능)
+    const questionTypesArr = Array.isArray(state.data.questionType)
+      ? state.data.questionType
+      : [state.data.questionType];
 
-        return {
-          ...word,
-          options: shuffledOptions,
-          resultIndex,
-          questionType: state.data.questionType,
-          vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
-          isCorrect: null,
-        };
-      });
+    // 단어에 vocabularySheetId 보장
+    const wordsWithSheetId = selectedWords.map(word => ({
+      ...word,
+      vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
+    }));
+
+    // multipleChoice 계열 단일 문제 생성 헬퍼
+    const createMultipleChoiceQuestion = (word, questionType = 'multipleChoice') => {
+      const otherWords = allWords.filter(w => w.id !== word.id);
+      const randomOptions = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
+      const options = [word, ...randomOptions].sort(() => Math.random() - 0.5);
+      const resultIndex = options.findIndex(w => w.id === word.id);
+      return {
+        ...word,
+        options,
+        resultIndex,
+        questionType,
+        isCorrect: null,
+      };
+    };
+
+    // 단일 타입
+    if (questionTypesArr.length === 1) {
+      const plugin = getQuestionType(questionTypesArr[0]);
+      if (plugin?.setupQuestions) {
+        return plugin.setupQuestions(wordsWithSheetId, allWords);
+      }
+      return wordsWithSheetId.map(word => createMultipleChoiceQuestion(word, questionTypesArr[0]));
+    }
+
+    // 다중 타입: 슬라이드마다 랜덤으로 타입을 배치
+    const shuffledWords = shuffleArray([...wordsWithSheetId]);
+    const allQuestions = [];
+    let wordIdx = 0;
+
+    while (wordIdx < shuffledWords.length) {
+      // 슬라이드마다 랜덤 타입 선택
+      const randomType = questionTypesArr[Math.floor(Math.random() * questionTypesArr.length)];
+      const plugin = getQuestionType(randomType);
+
+      if (plugin?.setupQuestions) {
+        const remaining = shuffledWords.length - wordIdx;
+        if (remaining >= 2) {
+          // 최대 4개, 최소 2개 — 나머지는 setupQuestions 내부에서 유동 분배
+          const chunkSize = Math.min(4, remaining);
+          const chunk = shuffledWords.slice(wordIdx, wordIdx + chunkSize);
+          allQuestions.push(...plugin.setupQuestions(chunk, allWords));
+          wordIdx += chunkSize;
+        } else {
+          // 1개 남으면 multipleChoice fallback
+          allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], randomType));
+          wordIdx++;
+        }
+      } else {
+        allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], randomType));
+        wordIdx++;
+      }
+    }
+    return allQuestions;
   };
 
   useEffect(() => {

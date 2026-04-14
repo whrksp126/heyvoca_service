@@ -1,6 +1,7 @@
 import json
 import datetime
 import io
+import tempfile
 import pandas as pd
 from flask import request, jsonify, g
 from uuid import UUID, uuid4
@@ -9,6 +10,7 @@ from app.routes import voca_books_bp
 from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
+from app.routes.user_voca_book import parse_quizlet_pdf
 
 
 def build_vocas_for_book(voca_book_id):
@@ -661,6 +663,132 @@ def upload_csv_voca_book():
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': f'CSV 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+
+
+# 퀴즐렛 PDF 업로드로 단어장 생성
+@voca_books_bp.route('/upload/quizlet-pdf', methods=['POST'])
+@jwt_required
+def upload_quizlet_pdf_voca_book():
+    user_id = UUID(g.user_id)
+
+    file = request.files.get('file')
+    json_data_str = request.form.get('json_data', '{}')
+
+    try:
+        json_data = json.loads(json_data_str)
+    except json.JSONDecodeError:
+        return jsonify({'code': 400, 'message': 'JSON 데이터 형식이 올바르지 않습니다.'}), 400
+
+    title = json_data.get('title')
+    color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+
+    if not file:
+        return jsonify({'code': 400, 'message': '파일이 첨부되지 않았습니다.'}), 400
+    if not title:
+        return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
+    if not file.filename.lower().endswith('.pdf'):
+        return jsonify({'code': 400, 'message': 'PDF 파일만 업로드할 수 있습니다.'}), 400
+
+    # 파일 크기 체크 (2MB)
+    file.seek(0, 2)
+    file_size = file.tell()
+    file.seek(0)
+    if file_size > 2 * 1024 * 1024:
+        return jsonify({'code': 400, 'message': '파일 크기는 2MB 이하만 가능합니다.'}), 400
+
+    try:
+        # PDF 파싱 (user_voca_book.py의 함수 재사용)
+        parsed_items, failed_lines = parse_quizlet_pdf(file)
+
+        if not parsed_items:
+            return jsonify({
+                'code': 400,
+                'message': '파싱된 단어가 없습니다. 퀴즐렛에서 저장한 PDF인지 확인해주세요.'
+            }), 400
+
+        # UserVocaBook 생성
+        voca_book = UserVocaBook(
+            user_id=user_id,
+            bookstore_id=None,
+            color=json.dumps(color, ensure_ascii=False),
+            name=title,
+            total_word_cnt=0,
+            memorized_word_cnt=0,
+            voca_list=None,
+            updated_at=None
+        )
+        db.session.add(voca_book)
+        db.session.flush()
+
+        # SM2 초기값
+        default_sm2 = {
+            "ef": 2.5,
+            "repetition": 0,
+            "interval": 0,
+            "nextReview": None,
+            "lastStudyDate": None,
+            "beforeScheduleCount": 0
+        }
+
+        added_count = 0
+        for item in parsed_items:
+            origin = item['word']
+            meanings = [m.strip() for m in item['meaning'].split(',') if m.strip()]
+            examples = []
+
+            # 기존 UserVoca 여부 확인
+            user_voca = db.session.query(UserVoca).filter(
+                UserVoca.user_id == user_id,
+                UserVoca.word == origin
+            ).first()
+
+            if user_voca:
+                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+            else:
+                user_voca = UserVoca()
+                user_voca.user_id = user_id
+                user_voca.voca_id = None
+                user_voca.word = origin
+                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
+                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
+                db.session.add(user_voca)
+                db.session.flush()
+
+            # UserVocaBookMap 생성 (같은 단어 중복 방지)
+            existing_map = db.session.query(UserVocaBookMap).filter(
+                UserVocaBookMap.user_voca_book_id == voca_book.id,
+                UserVocaBookMap.user_voca_id == user_voca.id
+            ).first()
+            if existing_map:
+                continue  # PDF 내 중복 단어 스킵
+
+            book_map = UserVocaBookMap()
+            book_map.user_voca_book_id = voca_book.id
+            book_map.user_voca_id = user_voca.id
+            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
+            db.session.add(book_map)
+            added_count += 1
+
+        voca_book.total_word_cnt = added_count
+        voca_book.updated_at = datetime.datetime.utcnow()
+        db.session.commit()
+
+        message = f'{added_count}개의 단어가 추가되었습니다.'
+        if failed_lines:
+            message += f' ({len(failed_lines)}개 라인 파싱 실패)'
+
+        return jsonify({
+            'code': 201,
+            'message': message,
+            'data': build_voca_book_response(voca_book)
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': f'PDF 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
 
 
 # 단어장 수정
