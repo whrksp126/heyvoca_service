@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Table, FileCsv, FilePlus, FileXls } from '@phosphor-icons/react';
+import { Table, FileCsv, FilePlus, FileXls, FilePdf } from '@phosphor-icons/react';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useUploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
+import { useUploadQuizletPdfNewBottomSheet } from './UploadQuizletPdfNewBottomSheet';
 import { useUploadExcelNewBottomSheet } from './UploadExcelNewBottomSheet';
 import { useUploadCsvNewBottomSheet } from './UploadCsvNewBottomSheet';
 import { useUploadGoogleSheetNewBottomSheet } from './UploadGoogleSheetNewBottomSheet';
@@ -18,6 +19,7 @@ export const LoadVocabularyNewBottomSheet = () => {
   const { showUploadExcelNewBottomSheet } = useUploadExcelNewBottomSheet();
   const { showUploadCsvNewBottomSheet } = useUploadCsvNewBottomSheet();
   const { showUploadGoogleSheetNewBottomSheet } = useUploadGoogleSheetNewBottomSheet();
+  const { showUploadQuizletPdfNewBottomSheet } = useUploadQuizletPdfNewBottomSheet();
   const { userProfile } = useUser();
 
   /**
@@ -143,6 +145,30 @@ export const LoadVocabularyNewBottomSheet = () => {
     }
   }, [popNewBottomSheet, showUploadCsvNewBottomSheet, userProfile]);
 
+  /**
+   * 퀴즐렛 PDF 업로드
+   */
+  const showQuizletPdfUploadBottomSheet = useCallback(async () => {
+    try {
+      const result = await userBookCntCheckApi();
+      const canAddBook = result?.data?.can_add_book;
+      if (result.code != 200) {
+        alert('단어장 개수 확인에 실패했습니다.');
+        return;
+      }
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
+        return;
+      }
+
+      popNewBottomSheet();
+      showUploadQuizletPdfNewBottomSheet();
+    } catch (error) {
+      console.error('단어장 개수 체크 실패:', error);
+      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
+    }
+  }, [popNewBottomSheet, showUploadQuizletPdfNewBottomSheet, userProfile]);
+
   const menuItems = [
     {
       id: 'load-google-sheets',
@@ -169,6 +195,15 @@ export const LoadVocabularyNewBottomSheet = () => {
       onClick: () => {
         vibrate({ duration: 5 });
         showCsvUploadBottomSheet();
+      }
+    },
+    {
+      id: 'load-quizlet-pdf',
+      text: '퀴즐렛 PDF 불러오기',
+      icon: FilePdf,
+      onClick: () => {
+        vibrate({ duration: 5 });
+        showQuizletPdfUploadBottomSheet();
       }
     },
     {
