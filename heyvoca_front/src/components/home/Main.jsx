@@ -28,7 +28,7 @@ import { vibrate } from '../../utils/osFunction';
 // import TodayStudySheet from './TodayStudySheet';
 import { useTheme } from '../../context/ThemeContext';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
-import TodayStudyNewFullSheet from '../newfullsheet/TodayStudyNewFullSheet';
+import StudyNewFullSheet from '../newfullsheet/StudyNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 
@@ -253,15 +253,10 @@ const Main = () => {
   }
 
   const handleTodayStudyButtonClick = () => {
-    if (todayStatus.dailyMissionCompleted) {
-      navigate('/class');
-    } else {
-      // 미완료 상태라면 기존처럼 TodayStudyNewFullSheet 열기
-      pushNewFullSheet(TodayStudyNewFullSheet, {}, {
-        smFull: true,
-        closeOnBackdropClick: true
-      });
-    }
+    pushNewFullSheet(StudyNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
   }
 
   const handleAchievementClick = (goalType) => {
@@ -424,7 +419,7 @@ const Main = () => {
                 bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                 text-[16px] font-[800]
               ">
-                {todayStatus.dailyMissionCompleted ? '학습하기' : '오늘의 학습하기'}
+                {todayStatus.dailyMissionCompleted ? '학습하기' : '학습하기'}
               </span>
             </button>
           </motion.div>
@@ -458,7 +453,7 @@ const Main = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">오늘의 학습</span>
+                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">학습하기</span>
                 <div className={`
                   flex items-center justify-center 
                   w-[60px] h-[20px] 

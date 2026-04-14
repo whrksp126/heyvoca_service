@@ -68,7 +68,7 @@ const Header = ({ testType, onBackClick }) => {
       </div>
       <div className="center">
         <h2 className='text-[18px] font-[700] leading-[21px]'>
-          {testType === "today" ? "오늘의 학습" : testType === "test" ? "학습" : "테스트"}
+          테스트
         </h2>
       </div>
       <div className="right">

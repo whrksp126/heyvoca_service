@@ -3,17 +3,14 @@ from app import db
 from app.routes import mainpage_bp
 from app.utils.jwt_utils import jwt_required
 from uuid import UUID
-from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
+from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, VocaMeaning, VocaExample, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
 from app.routes.common import register_gem_log
 from datetime import datetime, timedelta
 from sqlalchemy import func, and_
-from sqlalchemy.orm import aliased
 from sqlalchemy.exc import IntegrityError
 
 import io
 import json
-
-import random
 
 
 
@@ -326,7 +323,6 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
 @jwt_required
 def api_user_study_history():
     data = request.json
-    today_study_complete = data['today_study_complete']
     correct_cnt = int(data.get('correct_cnt') or 0)
     incorrect_cnt = int(data.get('incorrect_cnt') or 0)
 
@@ -337,27 +333,26 @@ def api_user_study_history():
     user = db.session.query(User).filter(User.id == user_id).first()
     user.xp += add_xp
 
-    # 2. 오늘의 미션 업데이트
+    # 2. 데일리 미션 업데이트 (어떤 학습이든 완료하면 달성)
     is_today_study_complete = False
-    if today_study_complete:
-        today = (datetime.utcnow() + timedelta(hours=9)).date()
-        checkin = db.session.query(CheckIn)\
-                    .filter(CheckIn.user_id == user_id)\
-                    .filter(CheckIn.attendence_date == today)\
-                    .first()
-        
-        # checkin이 없으면 생성
-        if not checkin:
-            checkin = CheckIn(
-                user_id=user_id,
-                attendence_date=today,
-                today_study_complete=True
-            )
-            db.session.add(checkin)
-            is_today_study_complete = True
-        elif checkin.today_study_complete == False:
-            is_today_study_complete = True
-            checkin.today_study_complete = True
+    today = (datetime.utcnow() + timedelta(hours=9)).date()
+    checkin = db.session.query(CheckIn)\
+                .filter(CheckIn.user_id == user_id)\
+                .filter(CheckIn.attendence_date == today)\
+                .first()
+
+    # checkin이 없으면 생성
+    if not checkin:
+        checkin = CheckIn(
+            user_id=user_id,
+            attendence_date=today,
+            today_study_complete=True
+        )
+        db.session.add(checkin)
+        is_today_study_complete = True
+    elif checkin.today_study_complete == False:
+        is_today_study_complete = True
+        checkin.today_study_complete = True
 
     # 4. 업적(암기왕, 노력왕, 끈기왕) 업데이트
     # 암기왕: 만점일 때만 업데이트 (모든 문제를 맞췄을 때만)
@@ -454,7 +449,7 @@ def api_user_study_history():
                 'before': user.gem_cnt - add_gem,
                 'after': user.gem_cnt
             },
-            'today_study_complete': today_study_complete,
+            'today_study_complete': True,
             'goals': goals
         }
     }
@@ -540,102 +535,6 @@ def user_book_cnt_check():
         }
     })
 
-
-@mainpage_bp.route('/today_study_recommend', methods=['GET'])
-@jwt_required
-def api_today_study_recommend():
-    word_count = request.args.get('word_count', 10, type=int)
-    user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
-
-    uvb = aliased(UserVocaBook)
-
-    # 유저가 가진 단어 제외 (origin 배열 기준 정확 매칭)
-    json_origin_arr = func.json_extract(func.coalesce(uvb.voca_list, '[]'), '$[*].origin')
-    not_owned = ~db.session.query(uvb.id).filter(
-        uvb.user_id == user_id,
-        func.json_contains(json_origin_arr, func.json_quote(Voca.word)) == 1
-    ).exists()
-
-    # 피벗 스캔 + 단어 id 확보
-    min_id, max_id = db.session.query(func.min(Voca.id), func.max(Voca.id)).one()
-
-    pivot = random.randint(int(min_id), int(max_id))
-
-    # 오버샘플 팩터: 중복/필터 손실 고려해서 넉넉히
-    oversample = max(6, word_count // 2)
-    target = word_count * oversample
-
-    # 1차: pivot 이상에서 voca_id만 수집
-    ids_head = (
-        db.session.query(Voca.id)
-        .filter(not_owned, Voca.id >= pivot)
-        .limit(target)
-        .all()
-    )
-    ids = [i[0] for i in ids_head]
-
-    # 부족하면 pivot 미만에서 보충
-    if len(ids) < target:
-        need = target - len(ids)
-        ids_tail = (
-            db.session.query(Voca.id)
-            .filter(not_owned, Voca.id < pivot)
-            .limit(need)
-            .all()
-        )
-        ids += [i[0] for i in ids_tail]
-
-    # 중복 제거
-    uniq_ids = []
-    voca_set = set()
-    for vid in ids:
-        if vid not in voca_set:
-            voca_set.add(vid)
-            uniq_ids.append(vid)
-        if len(uniq_ids) == target:
-            break
-
-    # 최종 단어 조회
-    # ---> 받을 단어 dict 만 확인해서 변경하기!!!!!
-    # 1) 단어별로 book_id 하나만 선택하는 서브쿼리 (MIN 사용)
-    book_pick_subq = (
-        db.session.query(
-            VocaBookMap.voca_id.label('v_id'),
-            func.min(VocaBookMap.book_id).label('book_id')
-        )
-        .filter(VocaBookMap.voca_id.in_(uniq_ids))
-        .group_by(VocaBookMap.voca_id)
-        .subquery()
-    )
-
-    # 2) Voca 상세 + 선택된 book_id 조인 후, 최종 word_count개만 반환
-    rows = (
-        db.session.query(
-            Voca.id.label('word_id'),
-            Voca.word.label('word'),                # 네 모델에서 단어 문자열 컬럼명 (예: word/origin 등)
-            Voca.pronunciation.label('pronunciation'),
-            Voca.meanings.label('meanings'),        # JSON/Text라면 그대로 전달하거나 json.loads 처리
-            Voca.examples.label('examples'),        # 예문(리스트/JSON/Text) 컬럼
-            book_pick_subq.c.book_id.label('bookstore_id')
-        )
-        .join(book_pick_subq, book_pick_subq.c.v_id == Voca.id)
-        .limit(word_count)
-        .all()
-    )
-
-    # 3) API 응답 포맷 구성
-    data = []
-    for r in rows:
-        data.append({
-            'word_id': r.word_id,
-            'bookstore_id': r.store_id if hasattr(r, 'store_id') else r.bookstore_id,  # 네 컬럼명에 맞춰 조정
-            'word': r.word,
-            'pronunciation': r.pronunciation,
-            'meanings': r.meanings,
-            'examples': r.examples
-        })
-
-    return {'code': 200, 'data': data}
 
 
 @mainpage_bp.route('/products', methods=['GET'])

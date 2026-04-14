@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import TestSetup from '../class/TestSetup';
@@ -7,15 +7,21 @@ import { motion } from 'framer-motion';
 import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
+import { StudySetupNewBottomSheet } from '../newBottomSheet/StudySetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useNavigate } from 'react-router-dom';
 
 const VocabularySheetNewFullSheet = ({ testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { popNewFullSheet } = useNewFullSheetActions();
+  const { popNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const navigate = useNavigate();
+
+  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [selectedIds, setSelectedIds] = useState(new Set());
 
   if (isVocabularySheetsLoading) {
     return (
@@ -68,17 +74,48 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
     new Date(b.updatedAt) - new Date(a.updatedAt)
   );
 
-  const handleCardClick = (id, index) => {
-    console.log("testType", testType);
-    if (id === "all") {
-      const maxVocabularyCount = vocabularySheets.reduce((sum, sheet) => sum + (sheet.words?.length || 0), 0);
-      if (maxVocabularyCount < MIN_TEST_VOCABULARY_COUNT) return alert(`전체 단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
+  const handleAllClick = () => {
+    vibrate({ duration: 5 });
+    setSelectedIds(new Set());
+    setIsAllSelected(prev => !prev);
+  };
+
+  const handleCardClick = (id) => {
+    vibrate({ duration: 5 });
+    setIsAllSelected(false);
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const handleConfirm = () => {
+    vibrate({ duration: 5 });
+
+    const sheetId = isAllSelected ? "all" : Array.from(selectedIds);
+
+    let selectedWords = [];
+    if (isAllSelected) {
+      selectedWords = vocabularySheets.flatMap(s => s.words || []);
+    } else {
+      selectedWords = vocabularySheets
+        .filter(s => selectedIds.has(s.id))
+        .flatMap(s => s.words || []);
+    }
+
+    const totalWords = selectedWords.length;
+
+    if (totalWords < MIN_TEST_VOCABULARY_COUNT) {
+      return alert(`단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
+    }
+
+    if (testType === 'study') {
       pushNewBottomSheet(
-        TestSetupNewBottomSheet,
+        StudySetupNewBottomSheet,
         {
-          maxVocabularyCount: maxVocabularyCount,
-          vocabularySheetId: id,
-          testType: testType
+          maxVocabularyCount: totalWords,
+          vocabularySheetId: sheetId,
         },
         {
           isBackdropClickClosable: false,
@@ -86,25 +123,28 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         }
       );
       return;
-    } else {
-      const words = sortedVocabularySheets.find(vocabularySheet => vocabularySheet.id === id).words;
-      const vocabularySheetLength = words.length;
-      if (vocabularySheetLength < MIN_TEST_VOCABULARY_COUNT) return alert(`단어장에 단어가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
-      const maxVocabularyCount = vocabularySheetLength;
-      pushNewBottomSheet(
-        TestSetupNewBottomSheet,
-        {
-          maxVocabularyCount: maxVocabularyCount,
-          vocabularySheetId: id,
-          testType: testType
-        },
-        {
-          isBackdropClickClosable: false,
-          isDragToCloseEnabled: true
-        }
-      );
     }
+
+    pushNewBottomSheet(
+      TestSetupNewBottomSheet,
+      {
+        maxVocabularyCount: totalWords,
+        vocabularySheetId: sheetId,
+        testType: testType
+      },
+      {
+        isBackdropClickClosable: false,
+        isDragToCloseEnabled: true
+      }
+    );
   };
+
+  const isConfirmActive = isAllSelected || selectedIds.size > 0;
+  const confirmLabel = isAllSelected
+    ? '전체 단어장 선택'
+    : selectedIds.size > 0
+      ? `단어장 ${selectedIds.size}개 선택`
+      : '선택';
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
@@ -113,7 +153,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
       <div className="
         relative
         flex items-center justify-center
-        h-[55px] 
+        h-[55px]
         pt-[20px] px-[10px] pb-[14px]
       ">
 
@@ -163,20 +203,22 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto"
       >
         <motion.li
-          style={{
+          style={isAllSelected ? {
+            background: 'linear-gradient(160deg,rgba(255, 239, 250, 1) 10%, rgba(246, 239, 255, 1) 50%, rgba(246, 239, 255, 1) 90%) padding-box, linear-gradient(to right, #FF88DC, #9B8AFB, #53B1FD) border-box',
+            border: '1px solid transparent',
+          } : {
             background: 'linear-gradient(160deg,rgba(255, 239, 250, 1) 10%, rgba(246, 239, 255, 1) 50%, rgba(246, 239, 255, 1) 90%)',
+            border: '1px solid transparent',
           }}
-          className="
+          className={`
                 flex flex-col gap-[15px]
                 p-[20px]
                 rounded-[12px]
                 cursor-pointer
-
-              "
-          onClick={() => {
-            vibrate({ duration: 5 });
-            handleCardClick("all");
-          }}
+                transition-all
+                ${selectedIds.size > 0 ? 'opacity-50' : 'opacity-100'}
+              `}
+          onClick={handleAllClick}
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.04 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -209,20 +251,25 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         </motion.li>
         {sortedVocabularySheets.map((item) => {
           const memorizationStats = calculateMemorizationStats(item.words || []);
+          const isSelected = selectedIds.has(item.id);
           return (
             <motion.li
               key={item.id}
-              style={{ backgroundColor: item.color.background }}
-              className="
+              style={{
+                backgroundColor: item.color.background,
+                ...(isSelected && { border: `1px solid ${item.color.main}` })
+              }}
+              className={`
                 flex flex-col gap-[15px]
                 p-[20px]
                 rounded-[12px]
                 cursor-pointer
-              "
-              onClick={() => {
-                vibrate({ duration: 5 });
-                handleCardClick(item.id);
-              }}
+                border-[1px]
+                transition-all
+                border-transparent
+                ${isAllSelected ? 'opacity-50' : 'opacity-100'}
+              `}
+              onClick={() => handleCardClick(item.id)}
               whileTap={{ scale: 0.96 }}
               whileHover={{ scale: 1.04 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -241,26 +288,34 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
               {/* 암기 상태별 단어 개수 표시 */}
               <div className="flex items-center gap-[12px] flex-wrap">
                 <div className="flex items-center gap-[4px]">
-                  <EggCrack size={16} weight="fill" className="text-[#9D835A]" />
-                  <span className="text-[13px] font-[600] text-[#9D835A]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3]">
+                    <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
+                  </div>
+                  <span className="text-[11px] font-[500] text-[#9D835A]">
                     {memorizationStats.unlearned || 0}
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <Leaf size={16} weight="fill" className="text-[#77CE4F]" />
-                  <span className="text-[13px] font-[600] text-[#77CE4F]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB]">
+                    <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
+                  </div>
+                  <span className="text-[11px] font-[500] text-[#77CE4F]">
                     {memorizationStats.shortTerm || 0}
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <Plant size={16} weight="fill" className="text-[#38CE38]" />
-                  <span className="text-[13px] font-[600] text-[#38CE38]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE]">
+                    <Plant size={8} weight="fill" className="text-[#38CE38]" />
+                  </div>
+                  <span className="text-[11px] font-[500] text-[#38CE38]">
                     {memorizationStats.mediumTerm || 0}
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <Carrot size={16} weight="fill" className="text-[#F68300]" />
-                  <span className="text-[13px] font-[600] text-[#F68300]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8]">
+                    <Carrot size={8} weight="fill" className="text-[#F68300]" />
+                  </div>
+                  <span className="text-[11px] font-[500] text-[#F68300]">
                     {memorizationStats.longTerm || 0}
                   </span>
                 </div>
@@ -285,9 +340,25 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
           )
         })}
       </ul>
+
+      {/* 하단 고정 확인 버튼 */}
+      <div className="px-[16px] pt-[8px] pb-[16px] shrink-0">
+        <motion.button
+          disabled={!isConfirmActive}
+          onClick={handleConfirm}
+          className={`
+            w-full h-[52px] rounded-[12px] text-[16px] font-[700] text-layout-white
+            transition-colors
+            ${isConfirmActive ? 'bg-primary-main-600' : 'bg-layout-gray-200'}
+          `}
+          whileTap={isConfirmActive ? { scale: 0.97 } : {}}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          {confirmLabel}
+        </motion.button>
+      </div>
     </div>
   );
 };
 
 export default VocabularySheetNewFullSheet;
-

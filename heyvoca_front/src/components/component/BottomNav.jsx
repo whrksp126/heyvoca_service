@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Notepad, Storefront, Exam, User, House } from "@phosphor-icons/react";
+import { Notepad, Storefront, User, House, BookBookmark } from "@phosphor-icons/react";
 import { vibrate } from '../../utils/osFunction';
 
 const BottomNav = () => {
@@ -67,6 +67,28 @@ const BottomNav = () => {
         <li
           onClick={() => {
             vibrate({ duration: 5 });
+            navigate('/dictionary');
+          }}
+          className="flex items-center justify-center flex-1 w-full h-full"
+        >
+          <div
+            className="
+              flex flex-col items-center
+            "
+          >
+            <BookBookmark
+              weight="fill"
+              className={`w-6 h-6 ${location.pathname === '/dictionary' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+            />
+            <span className={`text-[10px] mt-1 ${location.pathname === '/dictionary' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+              }`}>
+              사전
+            </span>
+          </div>
+        </li>
+        <li
+          onClick={() => {
+            vibrate({ duration: 5 });
             navigate('/book-store');
           }}
           className="flex items-center justify-center flex-1 w-full h-full"
@@ -83,26 +105,6 @@ const BottomNav = () => {
             <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
               서점
-            </span>
-          </div>
-        </li>
-        <li
-          onClick={() => {
-            vibrate({ duration: 5 });
-            navigate('/class');
-          }}
-          className="flex items-center justify-center flex-1 w-full h-full"
-        >
-          <div
-            className="
-              flex flex-col items-center">
-            <Exam
-              weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/class' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
-            />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/class' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
-              }`}>
-              학습
             </span>
           </div>
         </li>

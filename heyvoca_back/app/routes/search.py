@@ -239,6 +239,51 @@ def get_unicode_range_for_initial(char):
 ##############
 
 
+## 서점 단어 검색 API (사전 페이지 전용)
+@search_bp.route('/bookstore/word', methods=['GET'])
+def search_bookstore_word():
+    partial_word = request.args.get('word')
+    if not partial_word or len(partial_word) < 2:
+        return jsonify({'code': 400, 'message': '잘못된 요청'}), 400
+
+    search_pattern = f'{partial_word}%'
+
+    query = text("""
+        SELECT
+            bs.id AS bookstore_id,
+            bs.name AS bookstore_name,
+            bs.color,
+            v.word,
+            v.pronunciation,
+            GROUP_CONCAT(DISTINCT vm.meaning ORDER BY vm.id SEPARATOR '|||') AS meanings
+        FROM bookstore bs
+        JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
+        JOIN admin_voca_book_map avbm ON avb.id = avbm.book_id
+        JOIN voca v ON avbm.voca_id = v.id
+        LEFT JOIN voca_meaning_map vmm ON v.id = vmm.voca_id
+        LEFT JOIN voca_meaning vm ON vmm.meaning_id = vm.id
+        WHERE v.word LIKE :pattern
+          AND bs.hide = 0
+        GROUP BY bs.id, v.id
+        LIMIT 10
+    """)
+    results = db.session.execute(query, {'pattern': search_pattern}).fetchall()
+
+    data = []
+    for row in results:
+        meanings = row.meanings.split('|||') if row.meanings else []
+        data.append({
+            'bookstore_id': row.bookstore_id,
+            'bookstore_name': row.bookstore_name,
+            'color': row.color,
+            'word': row.word,
+            'pronunciation': row.pronunciation,
+            'meanings': meanings
+        })
+
+    return jsonify({'code': 200, 'data': data}), 200
+
+
 ## 서점 데이터 API
 # bookstore, admin_voca_book, admin_voca_book_map 테이블의 데이터를 가져옴
 @search_bp.route('/bookstore', methods=['GET'])

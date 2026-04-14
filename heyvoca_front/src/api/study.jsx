@@ -42,11 +42,10 @@ export const getUserGoalsApi = async () => {
 
 
 // 사용자 학습 기록 업데이트 API
-export const updateUserStudyHistoryApi = async ({ today_study_complete, correct_cnt, incorrect_cnt }) => {
+export const updateUserStudyHistoryApi = async ({ correct_cnt, incorrect_cnt }) => {
   const url = `${backendUrl}/mainpage/user_study_history`;
   const method = 'POST';
   const fetchData = {
-    'today_study_complete': today_study_complete,
     'correct_cnt': correct_cnt,
     'incorrect_cnt': incorrect_cnt
   }

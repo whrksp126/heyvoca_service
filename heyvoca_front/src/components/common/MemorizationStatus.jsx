@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null }) => {
+const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false }) => {
   // 암기 상태 판단 함수
   const getMemoryState = () => {
     // 진짜 미학습 상태 체크 (한 번도 학습하지 않은 단어)
@@ -374,14 +374,77 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
 
   const styles = getStateStyles(memoryState, isCorrect, nextReview);
 
-  // 정적 컴포넌트 (isCorrect가 null일 때)
-  if (isCorrect === null) {
+  const [showText, setShowText] = useState(false);
+  const textTimerRef = useRef(null);
+
+  const handleClick = () => {
+    if (textTimerRef.current) clearTimeout(textTimerRef.current);
+    setShowText(true);
+    textTimerRef.current = setTimeout(() => setShowText(false), 2000);
+  };
+
+  useEffect(() => () => {
+    if (textTimerRef.current) clearTimeout(textTimerRef.current);
+  }, []);
+
+  // 아이콘만 표시 (iconOnly 모드)
+  if (iconOnly) {
     return (
       <div className={`
-        flex items-center gap-[3px] 
+        w-[18px] h-[18px]
+        flex items-center justify-center
+        border rounded-full
+        ${styles.border} ${styles.bg} ${styles.text}
+      `}>
+        {styles.icon}
+      </div>
+    );
+  }
+
+  // 정적 컴포넌트 (isCorrect가 null일 때)
+  if (isCorrect === null) {
+    if (clickable) {
+      return (
+        <motion.div
+          onClick={handleClick}
+          className={`
+            inline-flex items-center justify-center
+            w-[18px] h-[18px]
+            m-[auto] px-[4px]
+            border rounded-[18px]
+            text-[10px] font-[600]
+            cursor-pointer
+            overflow-hidden
+            ${styles.border} ${styles.text} ${styles.bg}
+          `}
+          initial={false}
+          transition={{ duration: 0.25, ease: 'easeInOut' }}
+        >
+          <span className="flex-shrink-0 flex items-center">{styles.icon}</span>
+          <AnimatePresence>
+            {showText && (
+              <motion.span
+                key="status-text"
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: 'auto' }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                style={{ whiteSpace: 'nowrap', overflow: 'hidden', marginLeft: 4 }}
+              >
+                {statusText}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      );
+    }
+
+    return (
+      <div className={`
+        flex items-center gap-[3px]
         w-[max-content]
         py-[3px] px-[5px]
-        border rounded-[3px]
+        border rounded-[50px]
         text-[10px] font-[600]
         ${styles.border} ${styles.text} ${styles.bg}
       `}>

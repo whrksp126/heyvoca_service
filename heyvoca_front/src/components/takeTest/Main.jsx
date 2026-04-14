@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Circle, X, SpeakerHigh, BookOpenText, WarningCircle, HandsClapping } from "@phosphor-icons/react";
+import { Circle, X, BookOpenText, WarningCircle, HandsClapping, Leaf, Plant, Carrot, EggCrack, SpeakerHigh } from "@phosphor-icons/react";
 import { getTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -10,12 +10,41 @@ import { updateSM2, analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
+import { getQuestionType } from '../../plugins/questionTypes';
 
 
 const iconComponentMap = {
   WarningCircle: <WarningCircle size={32} weight="fill" color="#F26A6A" />,
   HandsClapping: <HandsClapping size={32} weight="fill" color="#39E859" />,
 }
+
+const getMemoryStateName = (interval, repetition) => {
+  if (repetition === 0 && interval === 0) return '미학습';
+  if (interval < 10) return '단기 암기';
+  if (interval < 60) return '중기 암기';
+  return '장기 암기';
+};
+
+const getMemoryStateKey = (interval, repetition) => {
+  if (repetition === 0 && interval === 0) return 'unlearned';
+  if (interval < 10) return 'leaf';
+  if (interval < 60) return 'plant';
+  return 'carrot';
+};
+
+const stateIconMap = {
+  unlearned: <EggCrack size={10} weight="fill" />,
+  leaf: <Leaf size={10} weight="fill" />,
+  plant: <Plant size={10} weight="fill" />,
+  carrot: <Carrot size={10} weight="fill" />,
+};
+
+const stateColorMap = {
+  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3]' },
+  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB]' },
+  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE]' },
+  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8]' },
+};
 
 // meanings가 여러 개면 랜덤하게 2~3개만 선택 (중복 제거)
 const getDisplayMeanings = (meanings) => {
@@ -41,6 +70,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
@@ -50,6 +80,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isSuspicious, setIsSuspicious] = useState(null);
 
   const [tempSm2, setTempSm2] = useState(null);
+  const [prevMemoryState, setPrevMemoryState] = useState(null);
+  const [memoryStateChange, setMemoryStateChange] = useState(null);
 
   const navigate = useNavigate();
 
@@ -77,13 +109,25 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     console.log("testType,", testType);
   }, [])
 
-  // 문제가 변경될 때마다 텍스트 읽기
+  // 문제가 변경될 때마다 텍스트 읽기 (cardMatch는 제외 - 단어 클릭 시 재생)
   useEffect(() => {
+    setIsSpeaking(false);
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
-      const textToRead = question.origin;
-      const lang = "en";
-      getTextSound(textToRead, lang);
+      if (!['cardMatch', 'cardMatchListening'].includes(question.questionType) && question.origin) {
+        (async () => {
+          setIsSpeaking(true);
+          try {
+            await getTextSound(question.origin, "en");
+          } finally {
+            setIsSpeaking(false);
+          }
+        })();
+      }
+      const rep = question.sm2?.repetition ?? question.repetition ?? 0;
+      const intv = question.sm2?.interval ?? question.interval ?? 0;
+      setPrevMemoryState(getMemoryStateKey(intv, rep));
+      setMemoryStateChange(null);
     }
     startTimeRef.current = Date.now();
     endTimeRef.current = null; // 항상 초기화!
@@ -127,18 +171,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (resultIndex === userSelected) {
       vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
-      setTimeout(() => {
-        setIsCorrect(true);
-      }, 200);
+      setIsCorrect(true);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
       vibrate({ type: 'notificationError' });
       playErrorSound();
-      setTimeout(() => {
-        setIsCorrect(false);
-      }, 50);
+      setIsCorrect(false);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = userSelected;
       q = 0;
@@ -173,6 +213,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       ...newState
     };
     setUpdateType(newState.updateType); // 업데이트 타입 저장
+    // 암기 상태 변화 감지
+    const newStateKey = getMemoryStateKey(newState.interval, newState.repetition);
+    if (prevMemoryState && prevMemoryState !== newStateKey) {
+      const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+      setMemoryStateChange({
+        from: stateNameMap[prevMemoryState],
+        to: stateNameMap[newStateKey],
+        stateKey: newStateKey
+      });
+    }
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
     setIsAnswered(true);
@@ -190,18 +240,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (resultIndex === index) {
       vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
-      setTimeout(() => {
-        setIsCorrect(true);
-      }, 200);
+      setIsCorrect(true);
       testQuestions[progressIndex].isCorrect = true;
       testQuestions[progressIndex].userResultIndex = index;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0
     } else {
       vibrate({ type: 'notificationError' });
       playErrorSound();
-      setTimeout(() => {
-        setIsCorrect(false);
-      }, 200);
+      setIsCorrect(false);
       testQuestions[progressIndex].isCorrect = false;
       testQuestions[progressIndex].userResultIndex = index;
       q = 0;
@@ -225,6 +271,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       ...newState
     };
     setUpdateType(newState.updateType); // 업데이트 타입 저장
+    // 암기 상태 변화 감지
+    const newStateKeyExam = getMemoryStateKey(newState.interval, newState.repetition);
+    if (prevMemoryState && prevMemoryState !== newStateKeyExam) {
+      const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+      setMemoryStateChange({
+        from: stateNameMap[prevMemoryState],
+        to: stateNameMap[newStateKeyExam],
+        stateKey: newStateKeyExam
+      });
+    }
     setProgressBarIndex(progressBarIndex + 1);
     setIsAnswered(true);
 
@@ -262,11 +318,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   // React Compiler가 자동으로 useCallback 처리
   // 문제 읽기
-  const handleClickTTS = () => {
+  const handleClickTTS = async () => {
     const question = testQuestions[progressIndex];
     const textToRead = question.origin;
     const lang = "en";
-    getTextSound(textToRead, lang);
+    setIsSpeaking(true);
+    try {
+      await getTextSound(textToRead, lang);
+    } finally {
+      setIsSpeaking(false);
+    }
   }
 
   // React Compiler가 자동으로 useCallback 처리
@@ -339,6 +400,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       setIsAnswered(false);
       setIsStay(false);
       setUpdateType(null); // 업데이트 타입 초기화
+      setMemoryStateChange(null); // 암기 상태 변화 초기화
     }
 
 
@@ -368,6 +430,43 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // }  
   }
 
+  // 플러그인 컴포넌트용 완료 콜백 (cardMatch 등)
+  const handlePluginComplete = (results) => {
+    results.forEach(({ sheetId, wordId, updateData }) => {
+      updateWordState(sheetId, wordId, updateData);
+      setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
+      setPendingUpdateWords(prev => {
+        const map = new Map(prev);
+        map.set(wordId, { sheetId, wordId, updateData });
+        return map;
+      });
+    });
+
+    const isNotLastQuestion = progressIndex !== testQuestions.length - 1;
+    // cardMatch는 모두 정답 처리 완료 시 호출되므로 isCorrect는 세트 기준 true
+    testQuestions[progressIndex].isCorrect = results.every(r => r.isCorrect);
+
+    updateRecentStudyState({
+      [testType]: {
+        ...recentStudy[testType],
+        progress_index: isNotLastQuestion ? progressIndex + 1 : null,
+        status: isNotLastQuestion ? "learning" : "end",
+        study_data: testQuestions,
+        updated_at: new Date().toISOString(),
+      }
+    });
+
+    if (isNotLastQuestion) {
+      setProgressIndex(progressIndex + 1);
+      setIsCorrect(null);
+      setUserSelected(null);
+      setIsAnswered(false);
+      setIsStay(false);
+      setUpdateType(null);
+      setMemoryStateChange(null);
+    }
+  };
+
   const slideVariants = {
     enter: (direction) => ({
       x: direction > 0 ? '100%' : '-100%',
@@ -389,10 +488,80 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     ease: [0.4, 0, 0.2, 1] // cubic-bezier for smoother animation
   };
 
+  // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
+  // 전체 단어/카드 수 (cardMatch 세트는 words.length, 나머지는 1)
+  const totalWordCount = testQuestions.reduce((sum, q) =>
+    ['cardMatch', 'cardMatchListening'].includes(q.questionType) ? sum + (q.words?.length ?? 4) : sum + 1, 0
+  );
+
+  const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
+  if (currentPlugin?.component) {
+    const PluginComponent = currentPlugin.component;
+    return (
+      <motion.div
+        className="
+          flex flex-col
+          h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
+          px-[16px] pt-[5px] pb-[20px]
+        "
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={optimizedTransition}
+        style={{ willChange: 'transform, opacity' }}
+      >
+        <motion.div className="
+          relative
+          w-full h-[16px]
+          mb-[15px]
+          rounded-[50px]
+          bg-primary-main-100
+          overflow-hidden
+        ">
+          <motion.div
+            className="h-[100%] rounded-[50px] bg-primary-main-600"
+            initial={{ width: "0%" }}
+            animate={{ width: `${Math.floor(progressBarIndex / totalWordCount * 100)}%` }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            style={{ willChange: 'width' }}
+          />
+          <span className="
+            absolute right-[10px] top-[50%] translate-y-[-50%]
+            text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
+          ">
+            {Math.floor(progressBarIndex)}/{totalWordCount}
+          </span>
+        </motion.div>
+        <div className="relative flex h-full overflow-hidden">
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.div
+              key={progressIndex}
+              custom={1}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              style={{ willChange: 'transform, opacity' }}
+              className="w-full h-full absolute"
+            >
+              <PluginComponent
+                question={testQuestions[progressIndex]}
+                testType={testType}
+                onComplete={handlePluginComplete}
+                onCardMatched={() => setProgressBarIndex(prev => prev + 1)}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className="
-        flex flex-col 
+        flex flex-col
         h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
         px-[16px] pt-[5px] pb-[20px]
       "
@@ -418,7 +587,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           "
           initial={{ width: "0%" }}
           animate={{
-            width: `${Math.floor((progressBarIndex) / testQuestions.length * 100)}%`
+            width: `${Math.floor(progressBarIndex / totalWordCount * 100)}%`
           }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ willChange: 'width' }}
@@ -427,7 +596,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           absolute right-[10px] top-[50%] translate-y-[-50%]
           text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
         ">
-          {progressBarIndex}/{testQuestions.length}
+          {progressBarIndex}/{totalWordCount}
         </span>
       </motion.div>
 
@@ -447,7 +616,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             style={{ willChange: 'transform, opacity' }}
             className="flex flex-col gap-[15px] w-full h-full absolute"
           >
-            {testQuestions[progressIndex]?.questionType === "multipleChoice" && (
+            {['multipleChoice', 'multipleChoiceListening'].includes(testQuestions[progressIndex]?.questionType) && (
               <>
                 <motion.div
                   className={`
@@ -456,114 +625,189 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     w-full
                     rounded-[12px]
                     bg-layout-gray-50
+                    cursor-pointer
                   `}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
+                  whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                   style={{ willChange: 'transform, opacity' }}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    handleClickTTS();
+                  }}
                 >
 
-                  <h2 className="
-                    relative z-[1]
-                    max-w-[90%]
-                    text-[28px] font-[700] text-layout-black text-center
-                  ">
-
-                    {/* <div className="
-                      absolute bottom-[100%] left-[50%] z-[-1] translate-x-[-50%]
-                      text-[12px] font-[400] text-[#7B7B7B]
-                    ">
-                      <MemorizationStatus repetition={testQuestions[progressIndex].repetition} interval={testQuestions[progressIndex].interval} ef={testQuestions[progressIndex].ef} />
-                    </div> */}
-                    <div className="
-                      absolute top-[50%] left-[50%] z-[-1]
-                      translate-x-[-50%] translate-y-[-50%]
-                    ">
-                      <AnimatePresence>
-                        {isCorrect === true && (
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 600,
-                              damping: 25,
-                              duration: 0.3
-                            }}
-                            style={{ willChange: 'transform, opacity' }}
-                          >
-                            <Circle size={150} weight="bold" className="text-status-success-500" />
-                          </motion.div>
-                        )}
-                        {isCorrect === false && (
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 600,
-                              damping: 25,
-                              duration: 0.3
-                            }}
-                            style={{ willChange: 'transform, opacity' }}
-                          >
-                            <X size={150} weight="bold" className="text-status-error-500" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                    {testQuestions[progressIndex].origin}
-                  </h2>
-                  <motion.button
-                    onClick={() => {
-                      vibrate({ duration: 5 });
-                      handleClickTTS();
-                    }}
-                    whileHover={{
-                      backgroundColor: 'rgba(204, 204, 204, 0.1)',
-                      scale: 1.05
-                    }}
-                    whileTap={{
-                      scale: 0.95,
-                      backgroundColor: 'rgba(204, 204, 204, 0.2)'
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 17
-                    }}
-                    style={{ willChange: 'transform, background-color' }}
-                    className="
-                      absolute bottom-[15px] left-[15px]
-                      rounded-[8px] p-[5px]
-                      text-layout-gray-200
-                    "
-                  >
-                    <SpeakerHigh size={22} weight="fill" />
-                  </motion.button>
+                  {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김) */}
+                  {isCorrect !== null && (
                   <div className="
-                    absolute bottom-[15px] left-[50%] translate-x-[-50%]
+                    absolute top-[15px] left-[50%] translate-x-[-50%]
                     flex items-center justify-center
-                    h-[32px]
-                    text-[12px] font-[400] text-[#7B7B7B]
+                    z-[2]
+                    whitespace-nowrap
                   ">
-                    <MemorizationStatus
-                      key={progressIndex}
-                      wordId={testQuestions[progressIndex].id}
-                      repetition={testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0}
-                      interval={testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0}
-                      ef={testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5}
-                      isCorrect={isCorrect}
-                      nextReview={testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview}
-                      useRandomMessages={isCorrect !== null}
-                      updateType={updateType}
-                    />
+                    {memoryStateChange ? (
+                      <motion.div
+                        className={`
+                          flex items-center gap-[3px]
+                          py-[3px] px-[8px]
+                          border rounded-[50px]
+                          text-[10px] font-[600]
+                          overflow-hidden
+                          whitespace-nowrap
+                          ${stateColorMap[memoryStateChange.stateKey]?.border ?? 'border-[#38CE38]'}
+                          ${stateColorMap[memoryStateChange.stateKey]?.text ?? 'text-[#38CE38]'}
+                          ${stateColorMap[memoryStateChange.stateKey]?.bg ?? 'bg-[#EBFFEE]'}
+                        `}
+                        initial={{ maxWidth: 28 }}
+                        animate={{ maxWidth: 300 }}
+                        transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                      >
+                        <span className="flex-shrink-0">{stateIconMap[memoryStateChange.stateKey]}</span>
+                        <motion.span
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2, duration: 0.25 }}
+                        >
+                          암기 상태가 {memoryStateChange.to}로 변경되었어요!
+                        </motion.span>
+                      </motion.div>
+                    ) : (
+                      (() => {
+                        const rep = testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0;
+                        const intv = testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0;
+                        const stateKey = getMemoryStateKey(intv, rep);
+                        const colors = stateColorMap[stateKey];
+                        return (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.15 }}
+                            className={`
+                              flex items-center justify-center
+                              w-[18px] h-[18px]
+                              border rounded-[18px]
+                              ${colors.border} ${colors.text} ${colors.bg}
+                            `}
+                          >
+                            {stateIconMap[stateKey]}
+                          </motion.div>
+                        );
+                      })()
+                    )}
                   </div>
+                  )}
+
+                  {testQuestions[progressIndex].questionType === 'multipleChoiceListening' && !isAnswered ? (
+                    /* 듣기 모드: 채점 전 스피커 아이콘 */
+                    <div className="relative flex items-center justify-center">
+                      {/* 재생 중 ripple 애니메이션 */}
+                      {isSpeaking && (
+                        <>
+                          <motion.div
+                            className="absolute rounded-full border-2 border-primary-main-600"
+                            initial={{ width: 60, height: 60, opacity: 0.7 }}
+                            animate={{ width: 110, height: 110, opacity: 0 }}
+                            transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
+                          />
+                          <motion.div
+                            className="absolute rounded-full border-2 border-primary-main-600"
+                            initial={{ width: 60, height: 60, opacity: 0.7 }}
+                            animate={{ width: 110, height: 110, opacity: 0 }}
+                            transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
+                          />
+                        </>
+                      )}
+                      <motion.div
+                        animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+                        transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
+                      >
+                        <SpeakerHigh
+                          size={60}
+                          weight="fill"
+                          className={isSpeaking ? "text-primary-main-600" : "text-layout-gray-300"}
+                        />
+                      </motion.div>
+                    </div>
+                  ) : (
+                    <h2 className="
+                      relative z-[1]
+                      max-w-[90%]
+                      text-[28px] font-[700] text-layout-black text-center
+                    ">
+
+                      <div className="
+                        absolute top-[50%] left-[50%] z-[-1]
+                        translate-x-[-50%] translate-y-[-50%]
+                      ">
+                        <AnimatePresence>
+                          {isCorrect === true && (
+                            <motion.div
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0, opacity: 0 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 600,
+                                damping: 25,
+                                duration: 0.3
+                              }}
+                              style={{ willChange: 'transform, opacity' }}
+                            >
+                              <Circle size={150} weight="bold" className="text-status-success-500" />
+                            </motion.div>
+                          )}
+                          {isCorrect === false && (
+                            <motion.div
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0, opacity: 0 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 600,
+                                damping: 25,
+                                duration: 0.3
+                              }}
+                              style={{ willChange: 'transform, opacity' }}
+                            >
+                              <X size={150} weight="bold" className="text-status-error-500" />
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                      {testQuestions[progressIndex].origin}
+                    </h2>
+                  )}
+                  {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
+                  {isCorrect !== null && (() => {
+                    const nextReviewDate = testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview;
+                    if (!nextReviewDate) return null;
+                    const parts = nextReviewDate.includes('T') ? null : nextReviewDate.split('-');
+                    const date = parts
+                      ? new Date(parts[0], parts[1] - 1, parts[2])
+                      : new Date(nextReviewDate);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    date.setHours(0, 0, 0, 0);
+                    const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
+                    const text = daysDiff <= 0 ? '오늘 복습 예정' : `${daysDiff}일 후 복습 예정`;
+                    return (
+                      <div className="absolute bottom-[15px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2]">
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                          className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
+                        >
+                          {text}
+                        </motion.div>
+                      </div>
+                    );
+                  })()}
                   {testType === "test" && isAnswered && (
                     <motion.button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         vibrate({ duration: 5 });
                         handleClickProblemHintData();
                       }}
@@ -602,7 +846,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     } else if (isCorrect === false && userSelected === index) {
                       btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100';
                     } else if (isCorrect === null && userSelected == index) {
-                      btnStyle = 'border-primary-main-600 text-primary-main-600';
+                      btnStyle = 'border-primary-main-600 bg-primary-main-50 text-layout-black dark:text-layout-white';
                     } else {
                       btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
                     }
@@ -646,7 +890,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   })}
 
                 </div>
-                {(testType === "test" || testType === "today") && (
+                {testType === "test" && (
                   <motion.button
                     onClick={() => {
                       vibrate({ duration: 5 });
