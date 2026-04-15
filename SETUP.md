@@ -38,8 +38,10 @@ cd heyvoca_service
 heyvoca_service/
 └── db/
     └── backups/
-        └── full_20260311.sql   ← 여기
+        └── full_20260416.sql   ← 여기
 ```
+
+> 반드시 **최신 덤프 파일**을 받아야 합니다. 날짜가 다르면 파일명을 맞게 수정하세요.
 
 ---
 
@@ -55,22 +57,13 @@ docker compose -f docker-compose.local.yml up --build -d
 
 ### 4-2. DB 초기 데이터 복원 (최초 1회)
 
-```bash
-docker exec -i heyvoca_mysql_local bash -c "mysql -u root -pGhmateRootMySQL\!@34 heyvoca" < db/backups/full_20260311.sql
-```
-
-> `!` 때문에 반드시 위 형식 그대로 사용. 일반 `-p` 방식으로 하면 에러.
-
-### 4-3. DB 마이그레이션 기준점 설정 (최초 1회)
-
-DB 복원 직후 한 번만 실행:
+MySQL이 준비될 때까지 약 10초 후 실행:
 
 ```bash
-docker exec heyvoca_back_local flask db stamp head
+docker exec -i heyvoca_mysql_local mysql -u root -prootpassword heyvoca < db/backups/full_20260416.sql
 ```
 
-이 명령어는 "현재 DB가 이미 최신 마이그레이션 상태임"을 표시합니다.  
-이후 새 마이그레이션이 생기면 컨테이너 재시작 시 자동으로 적용됩니다.
+완료되면 끝입니다. 별도 마이그레이션 명령어는 필요 없습니다.
 
 ---
 
