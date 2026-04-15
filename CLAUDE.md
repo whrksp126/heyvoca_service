@@ -257,6 +257,48 @@ docker compose -f docker-compose.local.yml down
 
 ---
 
+## DB 마이그레이션 (Flask-Migrate)
+
+스키마 변경은 반드시 마이그레이션 파일로 관리. 컨테이너 시작 시 자동으로 `flask db upgrade` 실행.
+
+### 스키마 변경 워크플로우
+
+```bash
+# 1. models.py 수정 후
+docker exec -it heyvoca_back_local bash
+flask db migrate -m "변경 내용 설명"  # 마이그레이션 파일 자동 생성
+flask db upgrade                       # 로컬 DB에 적용
+exit
+
+# 2. git commit (migrations/ 폴더 반드시 포함)
+git add heyvoca_back/migrations/
+git commit -m "db: 변경 내용 설명"
+git push
+
+# 3. 배포 → 서버 컨테이너 재시작 시 자동 적용
+./deploy.sh dev
+```
+
+### 새 팀원 최초 세팅
+
+```bash
+# DB 복원 후 stamp (이미 있는 테이블 재생성 방지)
+docker exec -i heyvoca_mysql_local bash -c "mysql -u root -pGhmateRootMySQL\!@34 heyvoca" < db/backups/full_20260311.sql
+docker exec -it heyvoca_back_local bash
+flask db stamp head
+exit
+```
+
+### 유용한 명령어
+
+```bash
+docker exec -it heyvoca_back_local bash -c "flask db current"   # 현재 버전
+docker exec -it heyvoca_back_local bash -c "flask db history"   # 히스토리
+docker exec -it heyvoca_back_local bash -c "flask db downgrade" # 롤백
+```
+
+---
+
 ## 서버 배포
 
 ### 배포 방식 (환경별 차이)

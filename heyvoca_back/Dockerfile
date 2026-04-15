@@ -14,4 +14,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+ENV FLASK_APP=run.py
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:5000", "run:app"]
