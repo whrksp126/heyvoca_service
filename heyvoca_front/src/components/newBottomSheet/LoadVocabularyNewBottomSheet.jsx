@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Table, FileCsv, FilePlus, FileXls, FilePdf } from '@phosphor-icons/react';
+import { Table, FileCsv, FilePlus, FileXls, FilePdf, FileArrowUp } from '@phosphor-icons/react';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useUploadQuizletNewBottomSheet } from './UploadQuizletNewBottomSheet';
 import { useUploadQuizletPdfNewBottomSheet } from './UploadQuizletPdfNewBottomSheet';
 import { useUploadExcelNewBottomSheet } from './UploadExcelNewBottomSheet';
 import { useUploadCsvNewBottomSheet } from './UploadCsvNewBottomSheet';
 import { useUploadGoogleSheetNewBottomSheet } from './UploadGoogleSheetNewBottomSheet';
+import { useUploadAnkiNewBottomSheet } from './UploadAnkiNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate, getDevicePlatform } from '../../utils/osFunction';
@@ -20,6 +21,7 @@ export const LoadVocabularyNewBottomSheet = () => {
   const { showUploadCsvNewBottomSheet } = useUploadCsvNewBottomSheet();
   const { showUploadGoogleSheetNewBottomSheet } = useUploadGoogleSheetNewBottomSheet();
   const { showUploadQuizletPdfNewBottomSheet } = useUploadQuizletPdfNewBottomSheet();
+  const { showUploadAnkiNewBottomSheet } = useUploadAnkiNewBottomSheet();
   const { userProfile } = useUser();
 
   /**
@@ -169,6 +171,30 @@ export const LoadVocabularyNewBottomSheet = () => {
     }
   }, [popNewBottomSheet, showUploadQuizletPdfNewBottomSheet, userProfile]);
 
+  /**
+   * Anki 단어장 업로드
+   */
+  const showAnkiUploadBottomSheet = useCallback(async () => {
+    try {
+      const result = await userBookCntCheckApi();
+      const canAddBook = result?.data?.can_add_book;
+      if (result.code != 200) {
+        alert('단어장 개수 확인에 실패했습니다.');
+        return;
+      }
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
+        return;
+      }
+
+      popNewBottomSheet();
+      showUploadAnkiNewBottomSheet();
+    } catch (error) {
+      console.error('단어장 개수 체크 실패:', error);
+      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
+    }
+  }, [popNewBottomSheet, showUploadAnkiNewBottomSheet, userProfile]);
+
   const menuItems = [
     {
       id: 'load-google-sheets',
@@ -213,6 +239,15 @@ export const LoadVocabularyNewBottomSheet = () => {
       onClick: () => {
         vibrate({ duration: 5 });
         showQuizletUploadBottomSheet();
+      }
+    },
+    {
+      id: 'load-anki',
+      text: 'Anki 단어장 불러오기',
+      icon: FileArrowUp,
+      onClick: () => {
+        vibrate({ duration: 5 });
+        showAnkiUploadBottomSheet();
       }
     }
   ];

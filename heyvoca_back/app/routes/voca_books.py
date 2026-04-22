@@ -1,8 +1,12 @@
 import json
 import datetime
 import io
+import re
 import tempfile
+import zipfile
+import sqlite3
 import pandas as pd
+from html import unescape as html_unescape
 from flask import request, jsonify, g
 from uuid import UUID, uuid4
 
@@ -873,3 +877,399 @@ def delete_voca_book(vocaBookId):
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': f'단어장 삭제 중 오류가 발생했습니다: {str(e)}'}), 500
+
+
+# ──────────────────────────────────────────────
+# Anki (.apkg) 업로드
+# ──────────────────────────────────────────────
+
+def _clean_anki_field(raw, keep_html=False):
+    """안키 필드 값 정리.
+    - [sound:...], <img ...> 미디어 참조 제거
+    - {{c1::answer::hint}} cloze → answer 로 변환
+    - keep_html=False 이면 HTML 태그도 모두 제거
+    - HTML 엔티티 디코딩
+    """
+    if not raw:
+        return ''
+    text = raw
+
+    # 미디어 참조 제거
+    text = re.sub(r'\[sound:[^\]]*\]', '', text)
+    text = re.sub(r'<img[^>]*>', '', text)
+
+    # cloze deletion: {{c1::answer::hint}} → answer
+    text = re.sub(r'\{\{c\d+::(.*?)(?:::[^}]*)?\}\}', r'\1', text)
+
+    if not keep_html:
+        # <br>, <br/> → 공백
+        text = re.sub(r'<br\s*/?>', ' ', text, flags=re.IGNORECASE)
+        # 나머지 HTML 태그 제거
+        text = re.sub(r'<[^>]+>', '', text)
+
+    # HTML 엔티티 디코딩
+    text = html_unescape(text)
+
+    # 연속 공백 정리
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+
+def _parse_apkg(file_bytes):
+    """
+    .apkg 바이트 → { deckName, noteTypes: [{ noteTypeId, noteTypeName, fields, noteCount, samples }] }
+    구버전(anki2: col.models JSON)과 신버전(anki21: notetypes 테이블) 모두 지원.
+    """
+    tmp_dir = tempfile.mkdtemp()
+    try:
+        # ZIP 해제
+        with zipfile.ZipFile(io.BytesIO(file_bytes)) as zf:
+            zf.extractall(tmp_dir)
+
+        # SQLite DB 파일 찾기
+        import os
+        db_path = None
+        for name in ('collection.anki21', 'collection.anki2', 'collection.anki21b'):
+            candidate = os.path.join(tmp_dir, name)
+            if os.path.exists(candidate):
+                db_path = candidate
+                break
+
+        if db_path is None:
+            raise ValueError('apkg 파일에서 Anki 데이터베이스를 찾을 수 없습니다.')
+
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+
+        # ── 노트 타입(모델) 정보 추출 ──
+        models = {}  # { mid: { name, fields: [field_name, ...] } }
+
+        # 신버전: notetypes 테이블 존재 여부 확인
+        table_check = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='notetypes'"
+        ).fetchone()
+
+        if table_check:
+            # 신버전 (anki21)
+            for row in conn.execute("SELECT id, name, config FROM notetypes"):
+                mid = row['id']
+                nt_name = row['name']
+                # fields 테이블에서 필드 목록 가져오기
+                fields_rows = conn.execute(
+                    "SELECT name FROM fields WHERE ntid=? ORDER BY ord", (mid,)
+                ).fetchall()
+                if fields_rows:
+                    field_names = [r['name'] for r in fields_rows]
+                else:
+                    field_names = []
+                models[mid] = {'name': nt_name, 'fields': field_names}
+        else:
+            # 구버전 (anki2): col 테이블의 models JSON 컬럼
+            col_row = conn.execute("SELECT models FROM col").fetchone()
+            if col_row:
+                models_json = json.loads(col_row['models'])
+                for mid_str, model_data in models_json.items():
+                    mid = int(mid_str)
+                    nt_name = model_data.get('name', 'Unknown')
+                    field_names = [f['name'] for f in model_data.get('flds', [])]
+                    models[mid] = {'name': nt_name, 'fields': field_names}
+
+        if not models:
+            raise ValueError('노트 타입 정보를 찾을 수 없습니다.')
+
+        # ── 덱 이름 추출 ──
+        deck_name = 'Anki Deck'
+        deck_check = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='decks'"
+        ).fetchone()
+        if deck_check:
+            deck_row = conn.execute("SELECT name FROM decks LIMIT 1").fetchone()
+            if deck_row:
+                deck_name = deck_row['name']
+        else:
+            col_row = conn.execute("SELECT decks FROM col").fetchone()
+            if col_row:
+                decks_json = json.loads(col_row['decks'])
+                for did, d in decks_json.items():
+                    if did != '1':  # 1 = Default 덱, 실제 덱 우선
+                        deck_name = d.get('name', deck_name)
+                        break
+
+        # ── 노트 데이터 추출 ──
+        notes_by_mid = {}  # { mid: [ {field_name: value, ...}, ... ] }
+        for row in conn.execute("SELECT mid, flds FROM notes"):
+            mid = row['mid']
+            if mid not in models:
+                continue
+            field_values = row['flds'].split('\x1f')
+            field_names = models[mid]['fields']
+            note_dict = {}
+            for i, fname in enumerate(field_names):
+                note_dict[fname] = field_values[i] if i < len(field_values) else ''
+            notes_by_mid.setdefault(mid, []).append(note_dict)
+
+        conn.close()
+
+        # ── 응답 구성 ──
+        note_types = []
+        for mid, model_info in models.items():
+            notes = notes_by_mid.get(mid, [])
+            if not notes:
+                continue  # 노트가 없는 타입은 제외
+            # 샘플 5개 (HTML 제거하여 미리보기용)
+            samples = []
+            for n in notes[:5]:
+                samples.append({k: _clean_anki_field(v) for k, v in n.items()})
+
+            note_types.append({
+                'noteTypeId': mid,
+                'noteTypeName': model_info['name'],
+                'fields': model_info['fields'],
+                'noteCount': len(notes),
+                'samples': samples,
+            })
+
+        return {'deckName': deck_name, 'noteTypes': note_types}
+
+    finally:
+        import shutil
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+
+# 안키 미리보기 (파싱)
+@voca_books_bp.route('/upload/anki/preview', methods=['POST'])
+@jwt_required
+def upload_anki_preview():
+    file = request.files.get('file')
+    if not file:
+        return jsonify({'code': 400, 'message': '파일이 첨부되지 않았습니다.'}), 400
+
+    filename = file.filename or ''
+    if not filename.lower().endswith('.apkg'):
+        return jsonify({'code': 400, 'message': '지원하지 않는 파일 형식입니다. .apkg 파일을 업로드해주세요.'}), 400
+
+    try:
+        file_bytes = file.read()
+        result = _parse_apkg(file_bytes)
+
+        if not result['noteTypes']:
+            return jsonify({'code': 400, 'message': '파일에 단어 데이터가 없습니다.'}), 400
+
+        return jsonify({'code': 200, 'data': result}), 200
+
+    except ValueError as e:
+        return jsonify({'code': 400, 'message': str(e)}), 400
+    except Exception as e:
+        return jsonify({'code': 500, 'message': f'Anki 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+
+
+# 안키 최종 업로드 (필드 매핑 적용하여 단어장 생성)
+@voca_books_bp.route('/upload/anki', methods=['POST'])
+@jwt_required
+def upload_anki_voca_book():
+    user_id = UUID(g.user_id)
+
+    file = request.files.get('file')
+    json_data_str = request.form.get('json_data', '{}')
+
+    try:
+        json_data = json.loads(json_data_str)
+    except json.JSONDecodeError:
+        return jsonify({'code': 400, 'message': 'JSON 데이터 형식이 올바르지 않습니다.'}), 400
+
+    title = json_data.get('title')
+    color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    mapping = json_data.get('mapping', {})
+    selected_note_type_id = json_data.get('selectedNoteTypeId')
+
+    # 검증
+    if not file:
+        return jsonify({'code': 400, 'message': '파일이 첨부되지 않았습니다.'}), 400
+    if not title:
+        return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
+    if not mapping.get('word') or not mapping.get('meaning'):
+        return jsonify({'code': 400, 'message': '영단어(word)와 뜻(meaning) 필드 매핑은 필수입니다.'}), 400
+
+    filename = file.filename or ''
+    if not filename.lower().endswith('.apkg'):
+        return jsonify({'code': 400, 'message': '지원하지 않는 파일 형식입니다. .apkg 파일을 업로드해주세요.'}), 400
+
+    try:
+        file_bytes = file.read()
+        parsed = _parse_apkg(file_bytes)
+
+        # 선택된 노트 타입 찾기
+        target_nt = None
+        for nt in parsed['noteTypes']:
+            if nt['noteTypeId'] == selected_note_type_id:
+                target_nt = nt
+                break
+
+        if target_nt is None:
+            # 노트 타입이 1개면 자동 선택
+            if len(parsed['noteTypes']) == 1:
+                target_nt = parsed['noteTypes'][0]
+            else:
+                return jsonify({'code': 400, 'message': '노트 타입을 선택해주세요.'}), 400
+
+        # 매핑 필드명
+        field_word = mapping['word']
+        field_meaning = mapping['meaning']
+        field_pronunciation = mapping.get('pronunciation')
+        field_example = mapping.get('example')
+        field_example_meaning = mapping.get('exampleMeaning')
+
+        # 원본 노트 다시 파싱 (샘플이 아닌 전체 데이터)
+        tmp_dir = tempfile.mkdtemp()
+        try:
+            with zipfile.ZipFile(io.BytesIO(file_bytes)) as zf:
+                zf.extractall(tmp_dir)
+
+            import os
+            db_path = None
+            for name in ('collection.anki21', 'collection.anki2', 'collection.anki21b'):
+                candidate = os.path.join(tmp_dir, name)
+                if os.path.exists(candidate):
+                    db_path = candidate
+                    break
+
+            conn = sqlite3.connect(db_path)
+            field_names = target_nt['fields']
+            mid = target_nt['noteTypeId']
+
+            parsed_items = []
+            for row in conn.execute("SELECT flds FROM notes WHERE mid=?", (mid,)):
+                field_values = row[0].split('\x1f')
+                note = {}
+                for i, fname in enumerate(field_names):
+                    note[fname] = field_values[i] if i < len(field_values) else ''
+
+                # 매핑 적용
+                word = _clean_anki_field(note.get(field_word, ''))
+                meaning = _clean_anki_field(note.get(field_meaning, ''))
+
+                if not word or not meaning:
+                    continue
+
+                meanings = [m.strip() for m in meaning.split(',') if m.strip()]
+
+                examples = []
+                if field_example and note.get(field_example, '').strip():
+                    ex_origin = _clean_anki_field(note[field_example], keep_html=True)
+                    ex_meaning = ''
+                    if field_example_meaning and note.get(field_example_meaning, '').strip():
+                        ex_meaning = _clean_anki_field(note[field_example_meaning])
+                    examples = [{'origin': ex_origin, 'meaning': ex_meaning}]
+
+                item = {
+                    'origin': word,
+                    'meanings': meanings,
+                    'examples': examples,
+                }
+
+                # 발음이 매핑되어 있으면 origin에 추가하지 않고 별도 보관 (향후 확장용)
+                # 현재 heyvoca 구조에서 pronunciation은 UserVoca에 별도 컬럼 없으므로
+                # 뜻 앞에 붙여서 저장하는 방식으로 처리
+                if field_pronunciation and note.get(field_pronunciation, '').strip():
+                    pron = _clean_anki_field(note[field_pronunciation])
+                    meanings.insert(0, f'[{pron}]')
+
+                parsed_items.append(item)
+
+            conn.close()
+        finally:
+            import shutil
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+
+        if not parsed_items:
+            return jsonify({'code': 400, 'message': '매핑 결과 유효한 단어가 없습니다. 필드 매핑을 확인해주세요.'}), 400
+
+        # 중복 단어 병합 (같은 origin을 가진 노트들의 뜻/예문을 합침)
+        merged = {}
+        for item in parsed_items:
+            key = item['origin']
+            if key in merged:
+                existing = merged[key]
+                for m in item['meanings']:
+                    if m not in existing['meanings']:
+                        existing['meanings'].append(m)
+                for ex in item['examples']:
+                    if ex not in existing['examples']:
+                        existing['examples'].append(ex)
+            else:
+                merged[key] = item
+        parsed_items = list(merged.values())
+
+        # UserVocaBook 생성 (기존 CSV 업로드와 동일한 패턴)
+        voca_book = UserVocaBook(
+            user_id=user_id,
+            bookstore_id=None,
+            color=json.dumps(color, ensure_ascii=False),
+            name=title,
+            total_word_cnt=0,
+            memorized_word_cnt=0,
+            voca_list=None,
+            updated_at=None
+        )
+        db.session.add(voca_book)
+        db.session.flush()
+
+        default_sm2 = {
+            "ef": 2.5,
+            "repetition": 0,
+            "interval": 0,
+            "nextReview": None,
+            "lastStudyDate": None,
+            "beforeScheduleCount": 0
+        }
+
+        added_count = 0
+        for item in parsed_items:
+            origin = item['origin']
+            meanings = item['meanings']
+            examples = item['examples']
+
+            user_voca = db.session.query(UserVoca).filter(
+                UserVoca.user_id == user_id,
+                UserVoca.word == origin
+            ).first()
+
+            if user_voca:
+                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+            else:
+                user_voca = UserVoca()
+                user_voca.user_id = user_id
+                user_voca.voca_id = None
+                user_voca.word = origin
+                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
+                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
+                db.session.add(user_voca)
+                db.session.flush()
+
+            book_map = UserVocaBookMap()
+            book_map.user_voca_book_id = voca_book.id
+            book_map.user_voca_id = user_voca.id
+            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
+            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
+            db.session.add(book_map)
+            added_count += 1
+
+        voca_book.total_word_cnt = added_count
+        voca_book.updated_at = datetime.datetime.utcnow()
+
+        db.session.commit()
+
+        return jsonify({
+            'code': 201,
+            'message': f'{added_count}개의 단어가 추가되었습니다.',
+            'data': build_voca_book_response(voca_book)
+        }), 201
+
+    except ValueError as e:
+        db.session.rollback()
+        return jsonify({'code': 400, 'message': str(e)}), 400
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': f'Anki 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
