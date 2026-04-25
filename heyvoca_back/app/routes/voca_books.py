@@ -351,34 +351,27 @@ def upload_excel_voca_book():
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
 
-        # 첫 행이 헤더인지 자동 감지
+        # 1행은 반드시 헤더(W, M 필수 / EE, EK 선택)
         first_row_raw = df.iloc[0].tolist()
         first_row_upper = [str(v).strip().upper() if pd.notna(v) else '' for v in first_row_raw]
-        header_keywords = {'W', 'M', 'EE', 'EK', 'WORD', 'MEANING', 'EXAMPLE', '단어', '뜻', '예문'}
-        is_header = any(val in header_keywords for val in first_row_upper)
 
-        # 열 인덱스 기본값 (헤더 없을 때 위치 기반)
-        col_word, col_meaning, col_ee, col_ek = 0, 1, 2, 3
+        col_word = col_meaning = col_ee = col_ek = None
+        for i, val in enumerate(first_row_upper):
+            if val in ('W', 'WORD', '단어'):
+                col_word = i
+            elif val in ('M', 'MEANING', '뜻'):
+                col_meaning = i
+            elif val in ('EE', 'EXAMPLE', '예문'):
+                col_ee = i
+            elif val in ('EK',):
+                col_ek = i
 
-        if is_header:
-            # 헤더 이름으로 열 인덱스 동적 매핑
-            col_word = col_meaning = col_ee = col_ek = None
-            for i, val in enumerate(first_row_upper):
-                if val in ('W', 'WORD', '단어'):
-                    col_word = i
-                elif val in ('M', 'MEANING', '뜻'):
-                    col_meaning = i
-                elif val in ('EE', 'EXAMPLE', '예문'):
-                    col_ee = i
-                elif val in ('EK',):
-                    col_ek = i
+        if col_word is None:
+            return jsonify({'code': 400, 'message': '1행 헤더에 단어(W) 열이 없습니다. 양식 가이드를 확인해주세요.'}), 400
+        if col_meaning is None:
+            return jsonify({'code': 400, 'message': '1행 헤더에 뜻(M) 열이 없습니다. 양식 가이드를 확인해주세요.'}), 400
 
-            if col_word is None:
-                return jsonify({'code': 400, 'message': '헤더에 단어(W) 열이 없습니다. W 헤더를 추가하거나, 헤더 없이 1열에 단어를 입력해주세요.'}), 400
-            if col_meaning is None:
-                return jsonify({'code': 400, 'message': '헤더에 뜻(M) 열이 없습니다. M 헤더를 추가하거나, 헤더 없이 2열에 뜻을 입력해주세요.'}), 400
-
-            df = df.iloc[1:]  # 헤더 행 스킵
+        df = df.iloc[1:]  # 헤더 행 스킵
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 유효한 단어 데이터가 없습니다.'}), 400
@@ -529,34 +522,27 @@ def upload_csv_voca_book():
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
 
-        # 첫 행이 헤더인지 자동 감지
+        # 1행은 반드시 헤더(W, M 필수 / EE, EK 선택)
         first_row_raw = df.iloc[0].tolist()
         first_row_upper = [str(v).strip().upper() if pd.notna(v) else '' for v in first_row_raw]
-        header_keywords = {'W', 'M', 'EE', 'EK', 'WORD', 'MEANING', 'EXAMPLE', '단어', '뜻', '예문'}
-        is_header = any(val in header_keywords for val in first_row_upper)
 
-        # 열 인덱스 기본값 (헤더 없을 때 위치 기반)
-        col_word, col_meaning, col_ee, col_ek = 0, 1, 2, 3
+        col_word = col_meaning = col_ee = col_ek = None
+        for i, val in enumerate(first_row_upper):
+            if val in ('W', 'WORD', '단어'):
+                col_word = i
+            elif val in ('M', 'MEANING', '뜻'):
+                col_meaning = i
+            elif val in ('EE', 'EXAMPLE', '예문'):
+                col_ee = i
+            elif val in ('EK',):
+                col_ek = i
 
-        if is_header:
-            # 헤더 이름으로 열 인덱스 동적 매핑
-            col_word = col_meaning = col_ee = col_ek = None
-            for i, val in enumerate(first_row_upper):
-                if val in ('W', 'WORD', '단어'):
-                    col_word = i
-                elif val in ('M', 'MEANING', '뜻'):
-                    col_meaning = i
-                elif val in ('EE', 'EXAMPLE', '예문'):
-                    col_ee = i
-                elif val in ('EK',):
-                    col_ek = i
+        if col_word is None:
+            return jsonify({'code': 400, 'message': '1행 헤더에 단어(W) 열이 없습니다. 양식 가이드를 확인해주세요.'}), 400
+        if col_meaning is None:
+            return jsonify({'code': 400, 'message': '1행 헤더에 뜻(M) 열이 없습니다. 양식 가이드를 확인해주세요.'}), 400
 
-            if col_word is None:
-                return jsonify({'code': 400, 'message': '헤더에 단어(W) 열이 없습니다. W 헤더를 추가하거나, 헤더 없이 1열에 단어를 입력해주세요.'}), 400
-            if col_meaning is None:
-                return jsonify({'code': 400, 'message': '헤더에 뜻(M) 열이 없습니다. M 헤더를 추가하거나, 헤더 없이 2열에 뜻을 입력해주세요.'}), 400
-
-            df = df.iloc[1:]  # 헤더 행 스킵
+        df = df.iloc[1:]  # 헤더 행 스킵
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 유효한 단어 데이터가 없습니다.'}), 400

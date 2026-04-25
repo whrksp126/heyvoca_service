@@ -33,35 +33,26 @@ const getColorSet = (mainColor) => {
 /**
  * 구글 시트 데이터를 파싱하여 vocaList 형식으로 변환
  * 백엔드 voca_books.py의 Excel 파싱 로직과 동일한 규칙
+ * 1행은 반드시 헤더(W, M 필수 / EE, EK 선택)여야 함
  */
 const parseSheetDataToVocaList = (rows) => {
-  if (!rows || rows.length === 0) return [];
+  if (!rows || rows.length === 0) return { error: '시트가 비어 있습니다.' };
 
-  // 첫 행이 헤더인지 자동 감지
-  const headerKeywords = new Set(['W', 'M', 'EE', 'EK', 'WORD', 'MEANING', 'EXAMPLE', '단어', '뜻', '예문']);
   const firstRow = rows[0].map((v) => (v || '').toString().trim().toUpperCase());
-  const isHeader = firstRow.some((val) => headerKeywords.has(val));
 
-  // 열 인덱스 매핑
-  let colWord = 0, colMeaning = 1, colEe = 2, colEk = 3;
-  let dataStartIndex = 0;
+  let colWord = null, colMeaning = null, colEe = null, colEk = null;
+  firstRow.forEach((val, i) => {
+    if (['W', 'WORD', '단어'].includes(val)) colWord = i;
+    else if (['M', 'MEANING', '뜻'].includes(val)) colMeaning = i;
+    else if (['EE', 'EXAMPLE', '예문'].includes(val)) colEe = i;
+    else if (val === 'EK') colEk = i;
+  });
 
-  if (isHeader) {
-    colWord = colMeaning = colEe = colEk = null;
-    firstRow.forEach((val, i) => {
-      if (['W', 'WORD', '단어'].includes(val)) colWord = i;
-      else if (['M', 'MEANING', '뜻'].includes(val)) colMeaning = i;
-      else if (['EE', 'EXAMPLE', '예문'].includes(val)) colEe = i;
-      else if (val === 'EK') colEk = i;
-    });
-
-    if (colWord === null) return { error: '헤더에 단어(W) 열이 없습니다.' };
-    if (colMeaning === null) return { error: '헤더에 뜻(M) 열이 없습니다.' };
-    dataStartIndex = 1;
-  }
+  if (colWord === null) return { error: '1행 헤더에 단어(W) 열이 없습니다.' };
+  if (colMeaning === null) return { error: '1행 헤더에 뜻(M) 열이 없습니다.' };
 
   const vocaList = [];
-  for (let i = dataStartIndex; i < rows.length; i++) {
+  for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
     const word = (colWord !== null && row[colWord]) ? row[colWord].toString().trim() : '';
     const meaning = (colMeaning !== null && row[colMeaning]) ? row[colMeaning].toString().trim() : '';
@@ -227,7 +218,7 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
         return;
       }
       if (!parsed.length) {
-        alert('시트에 유효한 단어 데이터가 없습니다.\n\n스프레드시트 양식을 확인해주세요.\n- 1행 헤더: W(단어), M(뜻), EE(예문), EK(예문 뜻)\n- W(단어)와 M(뜻)은 필수입니다.');
+        alert('시트에 유효한 단어 데이터가 없습니다.\n\n2행부터 단어 데이터를 입력했는지 확인해주세요.\n- W(단어)와 M(뜻)은 필수입니다.');
         return;
       }
 
