@@ -61,6 +61,11 @@ const parseSheetDataToVocaList = (rows) => {
 
     if (!word || !meaning) continue;
 
+    if (word.length > 50) {
+      const preview = word.length > 30 ? `${word.slice(0, 30)}…` : word;
+      return { error: `단어(W) 열에 50자를 초과하는 값이 있습니다 (${word.length}자): "${preview}". 단어는 50자를 넘지 않도록 해주세요.` };
+    }
+
     const meanings = meaning.split(',').map((m) => m.trim()).filter(Boolean);
     const examples = exampleEn ? [{ origin: exampleEn, meaning: exampleKo }] : [];
 

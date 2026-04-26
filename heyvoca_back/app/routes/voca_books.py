@@ -1,8 +1,11 @@
+import os
 import json
+import shutil
 import datetime
 import io
 import re
 import tempfile
+import traceback
 import zipfile
 import sqlite3
 import pandas as pd
@@ -15,6 +18,127 @@ from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Books
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
 from app.routes.user_voca_book import parse_quizlet_pdf
+
+
+# 단어(word) 길이 정책: 영단어가 50자를 넘는 경우는 사실상 없으므로,
+# 50자 초과는 "문장이 word로 매핑됐다"고 간주하고 즉시 거부한다.
+WORD_MAX_LEN = 50
+
+# SM2 학습 알고리즘 초기값
+DEFAULT_SM2 = {
+    "ef": 2.5,
+    "repetition": 0,
+    "interval": 0,
+    "nextReview": None,
+    "lastStudyDate": None,
+    "beforeScheduleCount": 0,
+}
+
+
+def validate_word_lengths(parsed_items):
+    """
+    파싱된 단어 리스트를 검증한다.
+    개별 단어가 50자(WORD_MAX_LEN)를 초과하면 거부.
+    문제가 없으면 None, 있으면 (status_code, message) 튜플을 반환한다.
+    """
+    if not parsed_items:
+        return None
+
+    for item in parsed_items:
+        origin = (item.get('origin') or '').strip()
+        if not origin:
+            continue
+        if len(origin) > WORD_MAX_LEN:
+            preview = origin[:30] + ('…' if len(origin) > 30 else '')
+            return (
+                400,
+                f'단어 필드에 너무 긴 값이 있습니다 ({len(origin)}자): "{preview}". '
+                f'단어는 {WORD_MAX_LEN}자를 넘지 않도록 해주세요.'
+            )
+
+    return None
+
+
+def read_csv_with_encoding_fallback(file_bytes):
+    """
+    CSV 파일을 인코딩 fallback과 함께 읽는다.
+    1순위 utf-8-sig (BOM 포함 UTF-8), 2순위 cp949 (한국 엑셀 기본 저장 인코딩).
+    둘 다 실패하면 마지막 예외를 그대로 raise.
+    """
+    last_error = None
+    for encoding in ('utf-8-sig', 'cp949'):
+        try:
+            return pd.read_csv(io.BytesIO(file_bytes), header=None, encoding=encoding)
+        except (UnicodeDecodeError, UnicodeError) as e:
+            last_error = e
+            continue
+    raise last_error
+
+
+def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
+    """
+    파싱된 단어 리스트를 UserVoca / UserVocaBookMap에 벌크로 저장한다.
+    같은 단어가 이미 UserVoca에 있으면 meanings/examples를 병합한다.
+    반환값은 실제로 추가된 매핑 개수.
+    """
+    if not parsed_items:
+        return 0
+
+    origins = [item['origin'] for item in parsed_items if item.get('origin')]
+    existing_vocas = db.session.query(UserVoca).filter(
+        UserVoca.user_id == user_id,
+        UserVoca.word.in_(origins)
+    ).all()
+    user_voca_dict = {uv.word: uv for uv in existing_vocas}
+
+    new_user_vocas = []
+    now = datetime.datetime.utcnow()
+
+    for item in parsed_items:
+        origin = item['origin']
+        meanings = item.get('meanings', [])
+        examples = item.get('examples', [])
+
+        if origin in user_voca_dict:
+            uv = user_voca_dict[origin]
+            uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
+            uv.voca_examples = merge_examples(uv.voca_examples, examples)
+            uv.updated_at = now
+        else:
+            uv = UserVoca(
+                user_id=user_id,
+                voca_id=None,
+                word=origin,
+                voca_meanings=json.dumps(meanings, ensure_ascii=False),
+                voca_examples=json.dumps(examples, ensure_ascii=False),
+                data=json.dumps(DEFAULT_SM2, ensure_ascii=False),
+            )
+            new_user_vocas.append(uv)
+            user_voca_dict[origin] = uv
+
+    if new_user_vocas:
+        db.session.add_all(new_user_vocas)
+        db.session.flush()
+
+    book_maps_data = []
+    seen_voca_ids = set()
+    for item in parsed_items:
+        origin = item['origin']
+        uv = user_voca_dict.get(origin)
+        if not uv or uv.id in seen_voca_ids:
+            continue
+        seen_voca_ids.add(uv.id)
+        book_maps_data.append({
+            'user_voca_book_id': voca_book_id,
+            'user_voca_id': uv.id,
+            'voca_meanings': json.dumps(item.get('meanings', []), ensure_ascii=False),
+            'voca_examples': json.dumps(item.get('examples', []), ensure_ascii=False),
+        })
+
+    if book_maps_data:
+        db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
+
+    return len(book_maps_data)
 
 
 def build_vocas_for_book(voca_book_id):
@@ -144,6 +268,13 @@ def create_voca_book():
 
     if not title:
         return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
+
+    # 단어 길이 검증 (개별 255자 / 평균 50자)
+    if voca_list:
+        invalid = validate_word_lengths(voca_list)
+        if invalid:
+            status, msg = invalid
+            return jsonify({'code': status, 'message': msg}), status
 
     try:
         # UserVocaBook 생성
@@ -309,9 +440,10 @@ def create_voca_book():
 
         return jsonify({'code': 201, 'data': build_voca_book_response(voca_book)}), 201
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어장 생성 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '단어장 생성 중 오류가 발생했습니다.'}), 500
 
 
 # Excel 파일 업로드로 단어장 생성
@@ -396,6 +528,7 @@ def upload_excel_voca_book():
                 continue  # 단어 또는 뜻이 없으면 스킵
 
             meanings = [m.strip() for m in meaning.split(',') if m.strip()]
+            # EE(영어 예문)가 비면 예문 자체를 만들지 않는다. EK만 단독 입력은 무시.
             examples = [{'origin': example_en, 'meaning': example_ko}] if example_en else []
 
             parsed_items.append({
@@ -407,6 +540,11 @@ def upload_excel_voca_book():
         if not parsed_items:
             return jsonify({'code': 400, 'message': '파싱된 단어가 없습니다. 파일 형식을 확인해주세요. (W: 단어, M: 뜻, EE: 영어예문, EK: 예문뜻)'}), 400
 
+        # 단어 길이 검증 (개별 255자 / 평균 50자)
+        invalid = validate_word_lengths(parsed_items)
+        if invalid:
+            status, msg = invalid
+            return jsonify({'code': status, 'message': msg}), status
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(
@@ -422,53 +560,8 @@ def upload_excel_voca_book():
         db.session.add(voca_book)
         db.session.flush()
 
-        # SM2 초기값
-        default_sm2 = {
-            "ef": 2.5,
-            "repetition": 0,
-            "interval": 0,
-            "nextReview": None,
-            "lastStudyDate": None,
-            "beforeScheduleCount": 0
-        }
+        added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
 
-        # 각 단어에 대해 UserVoca + UserVocaBookMap 생성
-        added_count = 0
-        for item in parsed_items:
-            origin = item['origin']
-            meanings = item['meanings']
-            examples = item['examples']
-
-            # 같은 단어가 UserVoca에 이미 있는지 확인
-            user_voca = db.session.query(UserVoca).filter(
-                UserVoca.user_id == user_id,
-                UserVoca.word == origin
-            ).first()
-
-            if user_voca:
-                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            else:
-                user_voca = UserVoca()
-                user_voca.user_id = user_id
-                user_voca.voca_id = None
-                user_voca.word = origin
-                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
-                db.session.add(user_voca)
-                db.session.flush()
-
-            # UserVocaBookMap 생성
-            book_map = UserVocaBookMap()
-            book_map.user_voca_book_id = voca_book.id
-            book_map.user_voca_id = user_voca.id
-            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-            db.session.add(book_map)
-            added_count += 1
-
-        # 단어 수 업데이트
         voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
 
@@ -480,9 +573,10 @@ def upload_excel_voca_book():
             'data': build_voca_book_response(voca_book)
         }), 201
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'Excel 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': 'Excel 파일 처리 중 오류가 발생했습니다.'}), 500
 
 
 # CSV 파일 업로드로 단어장 생성
@@ -515,9 +609,15 @@ def upload_csv_voca_book():
         return jsonify({'code': 400, 'message': '지원하지 않는 파일 형식입니다. .csv 파일을 업로드해주세요.'}), 400
 
     try:
-        # CSV 파일 파싱
+        # CSV 파일 파싱 (UTF-8 → CP949 순서로 인코딩 fallback)
         file_bytes = file.read()
-        df = pd.read_csv(io.BytesIO(file_bytes), header=None, encoding='utf-8')
+        try:
+            df = read_csv_with_encoding_fallback(file_bytes)
+        except (UnicodeDecodeError, UnicodeError):
+            return jsonify({
+                'code': 400,
+                'message': 'CSV 파일의 인코딩을 인식할 수 없습니다. UTF-8 또는 CP949(엑셀 한국어 기본)로 저장해주세요.'
+            }), 400
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
@@ -567,6 +667,7 @@ def upload_csv_voca_book():
                 continue  # 단어 또는 뜻이 없으면 스킵
 
             meanings = [m.strip() for m in meaning.split(',') if m.strip()]
+            # EE(영어 예문)가 비면 예문 자체를 만들지 않는다. EK만 단독 입력은 무시.
             examples = [{'origin': example_en, 'meaning': example_ko}] if example_en else []
 
             parsed_items.append({
@@ -577,6 +678,12 @@ def upload_csv_voca_book():
 
         if not parsed_items:
             return jsonify({'code': 400, 'message': '파싱된 단어가 없습니다. 파일 형식을 확인해주세요. (W: 단어, M: 뜻, EE: 영어예문, EK: 예문뜻)'}), 400
+
+        # 단어 길이 검증 (개별 255자 / 평균 50자)
+        invalid = validate_word_lengths(parsed_items)
+        if invalid:
+            status, msg = invalid
+            return jsonify({'code': status, 'message': msg}), status
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(
@@ -592,53 +699,8 @@ def upload_csv_voca_book():
         db.session.add(voca_book)
         db.session.flush()
 
-        # SM2 초기값
-        default_sm2 = {
-            "ef": 2.5,
-            "repetition": 0,
-            "interval": 0,
-            "nextReview": None,
-            "lastStudyDate": None,
-            "beforeScheduleCount": 0
-        }
+        added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
 
-        # 각 단어에 대해 UserVoca + UserVocaBookMap 생성
-        added_count = 0
-        for item in parsed_items:
-            origin = item['origin']
-            meanings = item['meanings']
-            examples = item['examples']
-
-            # 같은 단어가 UserVoca에 이미 있는지 확인
-            user_voca = db.session.query(UserVoca).filter(
-                UserVoca.user_id == user_id,
-                UserVoca.word == origin
-            ).first()
-
-            if user_voca:
-                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            else:
-                user_voca = UserVoca()
-                user_voca.user_id = user_id
-                user_voca.voca_id = None
-                user_voca.word = origin
-                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
-                db.session.add(user_voca)
-                db.session.flush()
-
-            # UserVocaBookMap 생성
-            book_map = UserVocaBookMap()
-            book_map.user_voca_book_id = voca_book.id
-            book_map.user_voca_id = user_voca.id
-            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-            db.session.add(book_map)
-            added_count += 1
-
-        # 단어 수 업데이트
         voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
 
@@ -650,9 +712,10 @@ def upload_csv_voca_book():
             'data': build_voca_book_response(voca_book)
         }), 201
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'CSV 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': 'CSV 파일 처리 중 오류가 발생했습니다.'}), 500
 
 
 # 퀴즐렛 PDF 업로드로 단어장 생성
@@ -688,13 +751,23 @@ def upload_quizlet_pdf_voca_book():
 
     try:
         # PDF 파싱 (user_voca_book.py의 함수 재사용)
-        parsed_items, failed_lines = parse_quizlet_pdf(file)
+        parsed_raw, failed_lines = parse_quizlet_pdf(file)
 
-        if not parsed_items:
+        if not parsed_raw:
             return jsonify({
                 'code': 400,
                 'message': '파싱된 단어가 없습니다. 퀴즐렛에서 저장한 PDF인지 확인해주세요.'
             }), 400
+
+        # 헬퍼 입력 형식(origin/meanings/examples)으로 정규화
+        parsed_items = [
+            {
+                'origin': item['word'],
+                'meanings': [m.strip() for m in item['meaning'].split(',') if m.strip()],
+                'examples': [],
+            }
+            for item in parsed_raw
+        ]
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(
@@ -710,57 +783,7 @@ def upload_quizlet_pdf_voca_book():
         db.session.add(voca_book)
         db.session.flush()
 
-        # SM2 초기값
-        default_sm2 = {
-            "ef": 2.5,
-            "repetition": 0,
-            "interval": 0,
-            "nextReview": None,
-            "lastStudyDate": None,
-            "beforeScheduleCount": 0
-        }
-
-        added_count = 0
-        for item in parsed_items:
-            origin = item['word']
-            meanings = [m.strip() for m in item['meaning'].split(',') if m.strip()]
-            examples = []
-
-            # 기존 UserVoca 여부 확인
-            user_voca = db.session.query(UserVoca).filter(
-                UserVoca.user_id == user_id,
-                UserVoca.word == origin
-            ).first()
-
-            if user_voca:
-                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            else:
-                user_voca = UserVoca()
-                user_voca.user_id = user_id
-                user_voca.voca_id = None
-                user_voca.word = origin
-                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
-                db.session.add(user_voca)
-                db.session.flush()
-
-            # UserVocaBookMap 생성 (같은 단어 중복 방지)
-            existing_map = db.session.query(UserVocaBookMap).filter(
-                UserVocaBookMap.user_voca_book_id == voca_book.id,
-                UserVocaBookMap.user_voca_id == user_voca.id
-            ).first()
-            if existing_map:
-                continue  # PDF 내 중복 단어 스킵
-
-            book_map = UserVocaBookMap()
-            book_map.user_voca_book_id = voca_book.id
-            book_map.user_voca_id = user_voca.id
-            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-            db.session.add(book_map)
-            added_count += 1
+        added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
 
         voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
@@ -776,9 +799,10 @@ def upload_quizlet_pdf_voca_book():
             'data': build_voca_book_response(voca_book)
         }), 201
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'PDF 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': 'PDF 파일 처리 중 오류가 발생했습니다.'}), 500
 
 
 # 단어장 수정
@@ -812,9 +836,10 @@ def update_voca_book(vocaBookId):
 
         return jsonify({'code': 200, 'data': build_voca_book_response(voca_book)}), 200
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어장 수정 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '단어장 수정 중 오류가 발생했습니다.'}), 500
 
 
 # 단어장 삭제
@@ -860,9 +885,10 @@ def delete_voca_book(vocaBookId):
         db.session.commit()
         return jsonify({'code': 204, 'message': '단어장 삭제 성공'}), 200
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어장 삭제 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '단어장 삭제 중 오류가 발생했습니다.'}), 500
 
 
 # ──────────────────────────────────────────────
@@ -913,7 +939,6 @@ def _parse_apkg(file_bytes):
             zf.extractall(tmp_dir)
 
         # SQLite DB 파일 찾기
-        import os
         db_path = None
         for name in ('collection.anki21', 'collection.anki2', 'collection.anki21b'):
             candidate = os.path.join(tmp_dir, name)
@@ -1007,18 +1032,35 @@ def _parse_apkg(file_bytes):
             for n in notes[:5]:
                 samples.append({k: _clean_anki_field(v) for k, v in n.items()})
 
+            # 필드별 길이 통계 (전체 노트 기준): 매핑 단계에서 평균 길이 가드 검증용
+            field_stats = {}
+            for fname in model_info['fields']:
+                lengths = []
+                for n in notes:
+                    cleaned = _clean_anki_field(n.get(fname, ''))
+                    if cleaned:
+                        lengths.append(len(cleaned))
+                if lengths:
+                    field_stats[fname] = {
+                        'avgLen': sum(lengths) / len(lengths),
+                        'maxLen': max(lengths),
+                        'nonEmptyCount': len(lengths),
+                    }
+                else:
+                    field_stats[fname] = {'avgLen': 0, 'maxLen': 0, 'nonEmptyCount': 0}
+
             note_types.append({
                 'noteTypeId': mid,
                 'noteTypeName': model_info['name'],
                 'fields': model_info['fields'],
                 'noteCount': len(notes),
                 'samples': samples,
+                'fieldStats': field_stats,
             })
 
         return {'deckName': deck_name, 'noteTypes': note_types}
 
     finally:
-        import shutil
         shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
@@ -1045,8 +1087,9 @@ def upload_anki_preview():
 
     except ValueError as e:
         return jsonify({'code': 400, 'message': str(e)}), 400
-    except Exception as e:
-        return jsonify({'code': 500, 'message': f'Anki 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+    except Exception:
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': 'Anki 파일 처리 중 오류가 발생했습니다.'}), 500
 
 
 # 안키 최종 업로드 (필드 매핑 적용하여 단어장 생성)
@@ -1111,7 +1154,6 @@ def upload_anki_voca_book():
             with zipfile.ZipFile(io.BytesIO(file_bytes)) as zf:
                 zf.extractall(tmp_dir)
 
-            import os
             db_path = None
             for name in ('collection.anki21', 'collection.anki2', 'collection.anki21b'):
                 candidate = os.path.join(tmp_dir, name)
@@ -1164,7 +1206,6 @@ def upload_anki_voca_book():
 
             conn.close()
         finally:
-            import shutil
             shutil.rmtree(tmp_dir, ignore_errors=True)
 
         if not parsed_items:
@@ -1186,6 +1227,12 @@ def upload_anki_voca_book():
                 merged[key] = item
         parsed_items = list(merged.values())
 
+        # 단어 길이 검증 (개별 255자 / 평균 50자)
+        invalid = validate_word_lengths(parsed_items)
+        if invalid:
+            status, msg = invalid
+            return jsonify({'code': status, 'message': msg}), status
+
         # UserVocaBook 생성 (기존 CSV 업로드와 동일한 패턴)
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -1200,47 +1247,7 @@ def upload_anki_voca_book():
         db.session.add(voca_book)
         db.session.flush()
 
-        default_sm2 = {
-            "ef": 2.5,
-            "repetition": 0,
-            "interval": 0,
-            "nextReview": None,
-            "lastStudyDate": None,
-            "beforeScheduleCount": 0
-        }
-
-        added_count = 0
-        for item in parsed_items:
-            origin = item['origin']
-            meanings = item['meanings']
-            examples = item['examples']
-
-            user_voca = db.session.query(UserVoca).filter(
-                UserVoca.user_id == user_id,
-                UserVoca.word == origin
-            ).first()
-
-            if user_voca:
-                user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
-                user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            else:
-                user_voca = UserVoca()
-                user_voca.user_id = user_id
-                user_voca.voca_id = None
-                user_voca.word = origin
-                user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-                user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-                user_voca.data = json.dumps(default_sm2, ensure_ascii=False)
-                db.session.add(user_voca)
-                db.session.flush()
-
-            book_map = UserVocaBookMap()
-            book_map.user_voca_book_id = voca_book.id
-            book_map.user_voca_id = user_voca.id
-            book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-            book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-            db.session.add(book_map)
-            added_count += 1
+        added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
 
         voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
@@ -1256,6 +1263,7 @@ def upload_anki_voca_book():
     except ValueError as e:
         db.session.rollback()
         return jsonify({'code': 400, 'message': str(e)}), 400
-    except Exception as e:
+    except Exception:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'Anki 파일 처리 중 오류가 발생했습니다: {str(e)}'}), 500
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': 'Anki 파일 처리 중 오류가 발생했습니다.'}), 500

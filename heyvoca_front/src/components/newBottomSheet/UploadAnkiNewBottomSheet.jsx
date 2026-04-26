@@ -225,14 +225,22 @@ export const UploadAnkiNewBottomSheet = () => {
       return '뜻(meaning) 필드에 유효한 값이 없습니다. 다른 필드를 선택해주세요.';
     }
 
-    // word 평균 길이 체크 (문장을 word에 매핑한 경우)
-    const wordLengths = samples
-      .map(s => (s[mapping.word] || '').replace(/<[^>]+>/g, '').replace(/\[sound:[^\]]*\]/g, '').trim().length)
-      .filter(l => l > 0);
-    if (wordLengths.length > 0) {
-      const avgLen = wordLengths.reduce((a, b) => a + b, 0) / wordLengths.length;
-      if (avgLen > 50) {
-        return '영단어(word) 필드의 값이 너무 깁니다. 문장이 아닌 단어 필드를 선택해주세요.';
+    // word 길이 체크: 50자 초과 즉시 거부 (영단어가 50자를 넘는 경우는 사실상 없음)
+    // 백엔드가 내려준 전체 노트 기준 통계(fieldStats)를 우선 사용한다.
+    // 통계가 없는 구버전 응답은 샘플 5개로 폴백.
+    const fieldStats = selectedNoteType?.fieldStats || null;
+    const stat = fieldStats ? fieldStats[mapping.word] : null;
+
+    if (stat && stat.nonEmptyCount > 0) {
+      if (stat.maxLen > 50) {
+        return `영단어(word) 필드에 50자를 초과하는 값이 있습니다 (최대 ${stat.maxLen}자). 단어는 50자를 넘지 않도록 해주세요.`;
+      }
+    } else {
+      const overLen = samples
+        .map(s => (s[mapping.word] || '').replace(/<[^>]+>/g, '').replace(/\[sound:[^\]]*\]/g, '').trim().length)
+        .find(l => l > 50);
+      if (overLen) {
+        return `영단어(word) 필드에 50자를 초과하는 값이 있습니다 (${overLen}자). 단어는 50자를 넘지 않도록 해주세요.`;
       }
     }
 
