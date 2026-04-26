@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1329,
+    "origin": "corner",
+    "examples": [
+      {
+        "exam_en": "She sat in the <strong class=\"target-word\">corner</strong> of the room.",
+        "exam_ko": "그녀는 방 <strong class=\"target-word\">구석</strong>에 앉았다."
+      },
+      {
+        "exam_en": "He turned the <strong class=\"target-word\">corner</strong> and disappeared.",
+        "exam_ko": "그는 <strong class=\"target-word\">모퉁이</strong>를 돌아 사라졌다."
+      }
+    ]
+  },
+  {
+    "id": 1330,
+    "origin": "these",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">These</strong> are yours.",
+        "exam_ko": "<strong class=\"target-word\">이것들</strong>은 당신 것입니다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">These</strong> were the days of great development.",
+        "exam_ko": "<strong class=\"target-word\">그 시절</strong>은 비약적으로 발전하는 나날이었다."
+      }
+    ]
+  },
+  {
+    "id": 1331,
+    "origin": "taste",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">tasted</strong> the food carefully.",
+        "exam_ko": "그녀는 음식을 조심스럽게 <strong class=\"target-word\">맛보았다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Taste</strong> the soup and add salt if needed.",
+        "exam_ko": "수프를 <strong class=\"target-word\">맛보고</strong> 필요하면 소금을 추가해라."
+      }
+    ]
+  },
+  {
+    "id": 1333,
+    "origin": "those",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Those</strong> who were present spoke up.",
+        "exam_ko": "참석한 <strong class=\"target-word\">사람들</strong>이 발언했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Those</strong> chosen will receive a prize.",
+        "exam_ko": "선발된 <strong class=\"target-word\">사람들</strong>은 상을 받을 것이다."
+      }
+    ]
+  },
+  {
+    "id": 1335,
+    "origin": "meat",
+    "examples": [
+      {
+        "exam_en": "The frozen <strong class=\"target-word\">meat</strong> needs to thaw first.",
+        "exam_ko": "냉동 <strong class=\"target-word\">고기</strong>는 먼저 해동해야 한다."
+      },
+      {
+        "exam_en": "They opened a can of <strong class=\"target-word\">meat</strong> for dinner.",
+        "exam_ko": "그들은 저녁으로 통조림 <strong class=\"target-word\">고기</strong>를 땄다."
+      }
+    ]
+  },
+  {
+    "id": 1336,
+    "origin": "enough",
+    "examples": [
+      {
+        "exam_en": "We have <strong class=\"target-word\">enough</strong> water for the trip.",
+        "exam_ko": "여행에 충분한 물이 <strong class=\"target-word\">충분히</strong> 있다."
+      },
+      {
+        "exam_en": "I've had <strong class=\"target-word\">enough</strong> problems for one day.",
+        "exam_ko": "하루에 <strong class=\"target-word\">충분할 만큼</strong> 고생을 했다."
+      }
+    ]
+  },
+  {
+    "id": 1337,
+    "origin": "gallon",
+    "examples": [
+      {
+        "exam_en": "This car gets 35 miles per <strong class=\"target-word\">gallon</strong>.",
+        "exam_ko": "이 차는 <strong class=\"target-word\">갤런</strong>당 35마일을 달린다."
+      },
+      {
+        "exam_en": "They sweated <strong class=\"target-word\">gallons</strong> in the summer heat.",
+        "exam_ko": "그들은 여름 더위에 땀을 <strong class=\"target-word\">갤런</strong>이나 흘렸다."
+      }
+    ]
+  },
+  {
+    "id": 1338,
+    "origin": "color",
+    "examples": [
+      {
+        "exam_en": "The rainbow shows many <strong class=\"target-word\">colors</strong> at once.",
+        "exam_ko": "무지개는 한 번에 여러 <strong class=\"target-word\">빛깔</strong>을 보여준다."
+      },
+      {
+        "exam_en": "This paint is a <strong class=\"target-word\">color</strong> between brown and red.",
+        "exam_ko": "이 페인트는 갈색과 적색 사이의 <strong class=\"target-word\">색</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1339,
+    "origin": "style",
+    "examples": [
+      {
+        "exam_en": "The buildings show different <strong class=\"target-word\">styles</strong> of architecture.",
+        "exam_ko": "건물들은 다양한 건축 <strong class=\"target-word\">양식</strong>을 보여준다."
+      },
+      {
+        "exam_en": "She prefers a modern <strong class=\"target-word\">style</strong> of design.",
+        "exam_ko": "그녀는 현대적 디자인 <strong class=\"target-word\">스타일</strong>을 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 1340,
+    "origin": "both",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Both</strong> brothers passed the exam.",
+        "exam_ko": "<strong class=\"target-word\">두</strong> 형제 모두 시험에 합격했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Both</strong> his parents attended the ceremony.",
+        "exam_ko": "그의 <strong class=\"target-word\">양친 모두</strong> 행사에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 1341,
+    "origin": "yet",
+    "examples": [
+      {
+        "exam_en": "I don't know anything <strong class=\"target-word\">yet</strong>.",
+        "exam_ko": "<strong class=\"target-word\">아직</strong> 아무것도 모릅니다."
+      },
+      {
+        "exam_en": "Don't start <strong class=\"target-word\">yet</strong>.",
+        "exam_ko": "<strong class=\"target-word\">아직</strong> 출발하지 마라."
+      }
+    ]
+  },
+  {
+    "id": 1342,
+    "origin": "ago",
+    "examples": [
+      {
+        "exam_en": "He left a few minutes <strong class=\"target-word\">ago</strong>.",
+        "exam_ko": "그는 몇 분 <strong class=\"target-word\">전에</strong> 떠났다."
+      },
+      {
+        "exam_en": "That happened a long time <strong class=\"target-word\">ago</strong>.",
+        "exam_ko": "그것은 오래 <strong class=\"target-word\">전에</strong> 일어났다."
+      }
+    ]
+  },
+  {
+    "id": 1343,
+    "origin": "ketchup",
+    "examples": [
+      {
+        "exam_en": "She poured <strong class=\"target-word\">ketchup</strong> on her fries.",
+        "exam_ko": "그녀는 감자튀김에 <strong class=\"target-word\">케첩</strong>을 뿌렸다."
+      },
+      {
+        "exam_en": "He made homemade tomato <strong class=\"target-word\">ketchup</strong> from scratch.",
+        "exam_ko": "그는 직접 토마토 <strong class=\"target-word\">케첩</strong>을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1344,
+    "origin": "lady",
+    "examples": [
+      {
+        "exam_en": "She is not quite a <strong class=\"target-word\">lady</strong> in her manners.",
+        "exam_ko": "그녀는 행동이 도무지 <strong class=\"target-word\">숙녀</strong>답지 않다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">lady</strong> by birth.",
+        "exam_ko": "그녀는 태생부터 <strong class=\"target-word\">귀부인</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1345,
+    "origin": "prawn",
+    "examples": [
+      {
+        "exam_en": "They served a <strong class=\"target-word\">prawn</strong> cocktail as a starter.",
+        "exam_ko": "그들은 전채로 <strong class=\"target-word\">참새우</strong> 칵테일을 내왔다."
+      },
+      {
+        "exam_en": "He went to the sea to catch <strong class=\"target-word\">prawns</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">새우</strong>를 잡으러 바다로 갔다."
+      }
+    ]
+  },
+  {
+    "id": 1346,
+    "origin": "fried",
+    "examples": [
+      {
+        "exam_en": "They ordered <strong class=\"target-word\">fried</strong> chicken for dinner.",
+        "exam_ko": "그들은 저녁으로 <strong class=\"target-word\">프라이드</strong> 치킨을 주문했다."
+      },
+      {
+        "exam_en": "She ate <strong class=\"target-word\">fried</strong> rice for lunch.",
+        "exam_ko": "그녀는 점심으로 <strong class=\"target-word\">볶음</strong> 밥을 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 1347,
+    "origin": "actually",
+    "examples": [
+      {
+        "exam_en": "Did he <strong class=\"target-word\">actually</strong> attack you or just threaten you?",
+        "exam_ko": "그가 <strong class=\"target-word\">실제로</strong> 너를 때렸느냐, 아니면 위협만 했느냐?"
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">actually</strong> began to cry.",
+        "exam_ko": "그는 <strong class=\"target-word\">정말로</strong> 울기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 1348,
+    "origin": "recommend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">recommended</strong> the dictionary to his student.",
+        "exam_ko": "그는 학생에게 그 사전을 <strong class=\"target-word\">추천했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">recommended</strong> an applicant for the position.",
+        "exam_ko": "그녀는 그 직책에 지원자를 <strong class=\"target-word\">천거했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1349,
+    "origin": "beer",
+    "examples": [
+      {
+        "exam_en": "He ordered a cold lager <strong class=\"target-word\">beer</strong> at the bar.",
+        "exam_ko": "그는 바에서 차가운 저장 <strong class=\"target-word\">맥주</strong>를 주문했다."
+      },
+      {
+        "exam_en": "She prefers draft <strong class=\"target-word\">beer</strong> over bottled ones.",
+        "exam_ko": "그녀는 병맥주보다 생 <strong class=\"target-word\">맥주</strong>를 더 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 1350,
+    "origin": "some",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Some</strong> boy left his bag in the classroom.",
+        "exam_ko": "<strong class=\"target-word\">어떤</strong> 남자아이가 교실에 가방을 두고 갔다."
+      },
+      {
+        "exam_en": "There must be <strong class=\"target-word\">some</strong> mistake in the report.",
+        "exam_ko": "보고서에 <strong class=\"target-word\">어떤</strong> 실수가 있음에 틀림없다."
+      }
+    ]
+  }
+]

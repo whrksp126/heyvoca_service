@@ -1,0 +1,286 @@
+[
+  {
+    "id": 7400,
+    "origin": "nuance",
+    "examples": [
+      {
+        "exam_en": "She caught every <strong class=\"target-word\">nuance</strong> of his tone.",
+        "exam_ko": "그녀는 그의 말투의 미묘한 <strong class=\"target-word\">뉘앙스</strong>를 모두 알아챘다."
+      },
+      {
+        "exam_en": "His writing is filled with <strong class=\"target-word\">nuanced</strong> descriptions.",
+        "exam_ko": "그의 글에는 <strong class=\"target-word\">미묘한</strong> 표현이 가득하다."
+      }
+    ]
+  },
+  {
+    "id": 7401,
+    "origin": "stink",
+    "examples": [
+      {
+        "exam_en": "The dirty refrigerator <strong class=\"target-word\">stinks</strong> badly.",
+        "exam_ko": "더러운 냉장고에서 심하게 <strong class=\"target-word\">악취가 난다</strong>."
+      },
+      {
+        "exam_en": "The garbage <strong class=\"target-word\">stank</strong> up the entire room.",
+        "exam_ko": "쓰레기가 방 전체에 <strong class=\"target-word\">악취를 풍겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7404,
+    "origin": "brutal",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">brutal</strong> toward the animals.",
+        "exam_ko": "그는 동물들에게 <strong class=\"target-word\">잔인하게</strong> 굴었다."
+      },
+      {
+        "exam_en": "The workers endured <strong class=\"target-word\">brutal</strong> winter weather.",
+        "exam_ko": "노동자들은 <strong class=\"target-word\">혹독한</strong> 겨울 날씨를 견뎌냈다."
+      }
+    ]
+  },
+  {
+    "id": 7405,
+    "origin": "puppet",
+    "examples": [
+      {
+        "exam_en": "She acted like a <strong class=\"target-word\">puppet</strong> in others' hands.",
+        "exam_ko": "그녀는 남의 손에 놀아나는 <strong class=\"target-word\">꼭두각시</strong>처럼 행동했다."
+      },
+      {
+        "exam_en": "The country was ruled by a <strong class=\"target-word\">puppet</strong> regime.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">괴뢰</strong> 정권의 지배를 받았다."
+      },
+      {
+        "exam_en": "Children loved watching the <strong class=\"target-word\">puppet</strong> show.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">인형</strong> 공연 보는 것을 좋아했다."
+      }
+    ]
+  },
+  {
+    "id": 7406,
+    "origin": "sublime",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">sublime</strong> self-sacrifice moved everyone.",
+        "exam_ko": "그의 <strong class=\"target-word\">숭고한</strong> 자기희생은 모두를 감동시켰다."
+      },
+      {
+        "exam_en": "The mountain scenery was truly <strong class=\"target-word\">sublime</strong>.",
+        "exam_ko": "산악 풍경은 정말 <strong class=\"target-word\">웅장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7408,
+    "origin": "blighter",
+    "examples": [
+      {
+        "exam_en": "He felt sorry for the poor <strong class=\"target-word\">blighter</strong>.",
+        "exam_ko": "그는 그 불쌍한 <strong class=\"target-word\">녀석</strong>이 안쓰러웠다."
+      },
+      {
+        "exam_en": "You lucky <strong class=\"target-word\">blighter</strong>!",
+        "exam_ko": "이 재수 좋은 <strong class=\"target-word\">놈</strong>!"
+      }
+    ]
+  },
+  {
+    "id": 7410,
+    "origin": "lump",
+    "examples": [
+      {
+        "exam_en": "She shaped a <strong class=\"target-word\">lump</strong> of clay into a bowl.",
+        "exam_ko": "그녀는 점토 <strong class=\"target-word\">덩어리</strong>를 그릇 모양으로 빚었다."
+      },
+      {
+        "exam_en": "How many <strong class=\"target-word\">lumps</strong> do you want in your coffee?",
+        "exam_ko": "커피에 각설탕 <strong class=\"target-word\">몇 개</strong> 넣어드릴까요?"
+      }
+    ]
+  },
+  {
+    "id": 7412,
+    "origin": "tune",
+    "examples": [
+      {
+        "exam_en": "He whistled a familiar <strong class=\"target-word\">tune</strong> on his way home.",
+        "exam_ko": "그는 집에 오는 길에 익숙한 <strong class=\"target-word\">멜로디</strong>를 휘파람으로 불었다."
+      },
+      {
+        "exam_en": "She hummed an old <strong class=\"target-word\">tune</strong> quietly.",
+        "exam_ko": "그녀는 조용히 옛 <strong class=\"target-word\">가락</strong>을 흥얼거렸다."
+      }
+    ]
+  },
+  {
+    "id": 7413,
+    "origin": "medley",
+    "examples": [
+      {
+        "exam_en": "His mind was full of a <strong class=\"target-word\">medley</strong> of thoughts.",
+        "exam_ko": "그의 마음은 잡다한 생각의 <strong class=\"target-word\">뒤섞임</strong>으로 가득했다."
+      },
+      {
+        "exam_en": "The band played a <strong class=\"target-word\">medley</strong> of classic songs.",
+        "exam_ko": "밴드는 고전 곡들의 <strong class=\"target-word\">메들리</strong>를 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 7414,
+    "origin": "ivory",
+    "examples": [
+      {
+        "exam_en": "The figurine was made of artificial <strong class=\"target-word\">ivory</strong>.",
+        "exam_ko": "그 작은 조각상은 인조 <strong class=\"target-word\">상아</strong>로 만들어졌다."
+      },
+      {
+        "exam_en": "She loves tickling the <strong class=\"target-word\">ivories</strong> every evening.",
+        "exam_ko": "그녀는 매일 저녁 <strong class=\"target-word\">피아노 건반</strong>을 두드리는 것을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 7415,
+    "origin": "tickle",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">tickled</strong> his ribs and made him laugh.",
+        "exam_ko": "그녀는 그의 옆구리를 <strong class=\"target-word\">간질여서</strong> 웃게 했다."
+      },
+      {
+        "exam_en": "The dish <strong class=\"target-word\">tickled</strong> her palate delightfully.",
+        "exam_ko": "그 요리는 그녀의 미각을 기분 좋게 <strong class=\"target-word\">자극했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7418,
+    "origin": "sneer",
+    "examples": [
+      {
+        "exam_en": "The manager <strong class=\"target-word\">sneered</strong> at my suggestion.",
+        "exam_ko": "지배인은 내 제안을 <strong class=\"target-word\">비웃었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sneered</strong> out a retort in anger.",
+        "exam_ko": "그는 화가 나서 <strong class=\"target-word\">비웃는 투로</strong> 대꾸했다."
+      }
+    ]
+  },
+  {
+    "id": 7419,
+    "origin": "seep",
+    "examples": [
+      {
+        "exam_en": "Blood <strong class=\"target-word\">seeped</strong> through the bandages.",
+        "exam_ko": "붕대에서 피가 <strong class=\"target-word\">배어 나왔다</strong>."
+      },
+      {
+        "exam_en": "Water <strong class=\"target-word\">seeped</strong> into the basement after the rain.",
+        "exam_ko": "비가 온 후 물이 지하실로 <strong class=\"target-word\">스며들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7420,
+    "origin": "rebellion",
+    "examples": [
+      {
+        "exam_en": "The army crushed the <strong class=\"target-word\">rebellion</strong> within days.",
+        "exam_ko": "군대는 며칠 만에 <strong class=\"target-word\">반란</strong>을 진압했다."
+      },
+      {
+        "exam_en": "Teenagers often go through a phase of <strong class=\"target-word\">rebellion</strong>.",
+        "exam_ko": "십대들은 종종 <strong class=\"target-word\">반항</strong>의 시기를 겪는다."
+      }
+    ]
+  },
+  {
+    "id": 7421,
+    "origin": "forbidden",
+    "examples": [
+      {
+        "exam_en": "Photography is strictly <strong class=\"target-word\">forbidden</strong> inside the hall.",
+        "exam_ko": "홀 안에서 사진 촬영은 엄격히 <strong class=\"target-word\">금지되어 있습니다</strong>."
+      },
+      {
+        "exam_en": "Smoking is <strong class=\"target-word\">forbidden</strong> in the building.",
+        "exam_ko": "건물 안에서 흡연은 <strong class=\"target-word\">금지되어 있습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7422,
+    "origin": "despicable",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">despicable</strong> actions led to his isolation.",
+        "exam_ko": "그의 <strong class=\"target-word\">비열한</strong> 행동으로 인해 그는 고립되었다."
+      },
+      {
+        "exam_en": "It was <strong class=\"target-word\">despicable</strong> to lie to his own friends.",
+        "exam_ko": "자신의 친구들에게 거짓말하는 것은 <strong class=\"target-word\">비열한</strong> 짓이었다."
+      }
+    ]
+  },
+  {
+    "id": 7423,
+    "origin": "gosh",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Gosh</strong>, I completely forgot about the meeting.",
+        "exam_ko": "<strong class=\"target-word\">이런</strong>, 회의를 완전히 깜빡했어."
+      },
+      {
+        "exam_en": "Oh, <strong class=\"target-word\">gosh</strong>! That was a close call.",
+        "exam_ko": "아, <strong class=\"target-word\">세상에</strong>! 정말 위험할 뻔했네."
+      }
+    ]
+  },
+  {
+    "id": 7424,
+    "origin": "breeze",
+    "examples": [
+      {
+        "exam_en": "There was not much of a <strong class=\"target-word\">breeze</strong> that afternoon.",
+        "exam_ko": "그날 오후에는 <strong class=\"target-word\">바람</strong>이 거의 없었다."
+      },
+      {
+        "exam_en": "The argument kicked up quite a <strong class=\"target-word\">breeze</strong>.",
+        "exam_ko": "그 말다툼은 꽤 큰 <strong class=\"target-word\">소동</strong>을 일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 7425,
+    "origin": "smolder",
+    "examples": [
+      {
+        "exam_en": "His eyes <strong class=\"target-word\">smoldered</strong> with rage.",
+        "exam_ko": "그의 눈은 분노로 <strong class=\"target-word\">이글거렸다</strong>."
+      },
+      {
+        "exam_en": "Resentment <strong class=\"target-word\">smoldered</strong> within her for years.",
+        "exam_ko": "분노가 수년간 그녀 안에서 <strong class=\"target-word\">속으로 타올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7426,
+    "origin": "destiny",
+    "examples": [
+      {
+        "exam_en": "She believed she could shape her own <strong class=\"target-word\">destiny</strong>.",
+        "exam_ko": "그녀는 자신만의 <strong class=\"target-word\">운명</strong>을 개척할 수 있다고 믿었다."
+      },
+      {
+        "exam_en": "He felt that meeting her was his <strong class=\"target-word\">destiny</strong>.",
+        "exam_ko": "그는 그녀를 만난 것이 자신의 <strong class=\"target-word\">운명</strong>이라고 느꼈다."
+      }
+    ]
+  }
+]

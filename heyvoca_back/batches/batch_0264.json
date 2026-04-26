@@ -1,0 +1,602 @@
+[
+  {
+    "id": 26838,
+    "word": "acquiesce",
+    "exam_en": "Despite his disagreement, he eventually <strong class=\"target-word\">acquiesce</strong>d to their demands.",
+    "exam_ko": "그의 반대에도 불구하고, 결국 그는 그들의 요구에 <strong class=\"target-word\">동의했다</strong>."
+  },
+  {
+    "id": 26839,
+    "word": "revere",
+    "exam_en": "The community deeply <strong class=\"target-word\">revere</strong>s their wise elders.",
+    "exam_ko": "그 지역사회는 어르신들을 깊이 <strong class=\"target-word\">존경한다</strong>."
+  },
+  {
+    "id": 26840,
+    "word": "outstrip",
+    "exam_en": "The rapid technological advancements have the potential to <strong class=\"target-word\">outstrip</strong> our ability to adapt, challenging society to keep pace with the changes.",
+    "exam_ko": "급속한 기술 발전은 우리의 적응 능력을 <strong class=\"target-word\">앞지르게</strong> 되어 사회가 변화에 보조를 맞추는 데 어려움을 겪을 가능성이 있다."
+  },
+  {
+    "id": 26841,
+    "word": "comments",
+    "exam_en": "Users on the online forum can freely share their <strong class=\"target-word\">comments</strong>.",
+    "exam_ko": "온라인 포럼의 사용자는 자신의 <strong class=\"target-word\">의견</strong>을 자유롭게 공유할 수 있다."
+  },
+  {
+    "id": 26842,
+    "word": "complacence",
+    "exam_en": "The company's <strong class=\"target-word\">complacence</strong> in the face of growing competition ultimately led to its downfall.",
+    "exam_ko": "점점 치열해져 가는 경쟁에 직면하여 회사의 <strong class=\"target-word\">자기만족</strong>이 결국 몰락을 초래했다."
+  },
+  {
+    "id": 26843,
+    "word": "haphazard",
+    "exam_en": "The items on the shelf were arranged in a <strong class=\"target-word\">haphazard</strong> manner.",
+    "exam_ko": "선반 위의 물건들은 <strong class=\"target-word\">무질서하게</strong> 정돈되어 있었다."
+  },
+  {
+    "id": 26844,
+    "word": "quell",
+    "exam_en": "The police worked quickly to <strong class=\"target-word\">quell</strong> the protest before it turned violent.",
+    "exam_ko": "경찰은 시위가 폭력으로 전환되기 전에 빠르게 <strong class=\"target-word\">진압했다</strong>."
+  },
+  {
+    "id": 26845,
+    "word": "doable",
+    "exam_en": "Finishing the project by Friday seems <strong class=\"target-word\">doable</strong> if we all work together.",
+    "exam_ko": "우리 모두 함께 일한다면 금요일까지 프로젝트를 완료할 수 <strong class=\"target-word\">있어</strong> 보인다."
+  },
+  {
+    "id": 26846,
+    "word": "eloquent",
+    "exam_en": "She delivered an <strong class=\"target-word\">eloquent</strong> speech that captivated the audience.",
+    "exam_ko": "그녀는 청중을 매료시킨 <strong class=\"target-word\">유창한</strong> 연설을 했다."
+  },
+  {
+    "id": 26847,
+    "word": "hapless",
+    "exam_en": "The <strong class=\"target-word\">hapless</strong> victim of the accident suffered serious injuries.",
+    "exam_ko": "사고의 <strong class=\"target-word\">불운한</strong> 희생자는 심각한 부상을 입었다."
+  },
+  {
+    "id": 26848,
+    "word": "paragon",
+    "exam_en": "The royal family could be relied upon as <strong class=\"target-word\">paragon</strong>s of etiquette.",
+    "exam_ko": "왕실은 <strong class=\"target-word\">예절의 귀감</strong>으로 여겨질 수 있다."
+  },
+  {
+    "id": 26849,
+    "word": "tenacious",
+    "exam_en": "Despite numerous setbacks, she remained <strong class=\"target-word\">tenacious</strong> and never gave up.",
+    "exam_ko": "수많은 좌절에도 불구하고, 그녀는 <strong class=\"target-word\">끈질기게</strong> 포기하지 않았다."
+  },
+  {
+    "id": 26850,
+    "word": "premise",
+    "exam_en": "The idea that there is life on other planets is the central <strong class=\"target-word\">premise</strong> of the novel.",
+    "exam_ko": "다른 행성에 생명체가 있다는 견해가 소설의 중심 <strong class=\"target-word\">전제</strong>이다."
+  },
+  {
+    "id": 26851,
+    "word": "vicarious",
+    "exam_en": "She got a <strong class=\"target-word\">vicarious</strong> thrill out of watching her daughter score the winning jump.",
+    "exam_ko": "그녀는 딸이 우승을 결정짓는 점프를 하는 것을 보며 <strong class=\"target-word\">대리 만족</strong>을 느꼈다."
+  },
+  {
+    "id": 26852,
+    "word": "deference",
+    "exam_en": "She showed <strong class=\"target-word\">deference</strong> to her elders by bowing respectfully.",
+    "exam_ko": "그녀는 예의 바르고 공손하게 인사하여 어르신들에게 <strong class=\"target-word\">공경</strong>을 표했다."
+  },
+  {
+    "id": 26853,
+    "word": "ambidextrous",
+    "exam_en": "She amazed everyone with her <strong class=\"target-word\">ambidextrous</strong> skills, effortlessly using both hands to write and draw.",
+    "exam_ko": "그녀는 <strong class=\"target-word\">양손잡이</strong> 능력으로 글쓰기와 그림 그리기를 손쉽게 할 수 있어 모두를 놀라게 했다."
+  },
+  {
+    "id": 26854,
+    "word": "annex",
+    "exam_en": "The country decided to <strong class=\"target-word\">annex</strong> the neighboring territory, expanding its borders and asserting its control over the region.",
+    "exam_ko": "그 나라는 이웃 지역을 합병하기로 <strong class=\"target-word\">결정하여</strong> 국경을 넓히고 그 지역에 대한 통제력을 강화했다."
+  },
+  {
+    "id": 26855,
+    "word": "dovish",
+    "exam_en": "Republicans have become far more <strong class=\"target-word\">dovish</strong> on that conflict and in how they view the United States' role in the world more generally.",
+    "exam_ko": "공화당원들은 이러한 (우크라) 분쟁과 세계에서 미국의 역할을 더 일반적으로 바라보는 시각에서 훨씬 더 <strong class=\"target-word\">온건파적인</strong> 입장을 취하고 있다.)"
+  },
+  {
+    "id": 26856,
+    "word": "abreast",
+    "exam_en": "The three of them walked <strong class=\"target-word\">abreast</strong> along a narrow road consisting of no more than two bare strips of dirt in the grass.",
+    "exam_ko": "세 사람은 풀밭에서 두 줄도 안되는 맨 흙으로 <strong class=\"target-word\">이루어진</strong> 좁은 길을 따라 나란히 걸었다."
+  },
+  {
+    "id": 26857,
+    "word": "intercession",
+    "exam_en": "Through the <strong class=\"target-word\">intercession</strong> of the secretary of state with the king these bad restrictions were removed.",
+    "exam_ko": "통해 중재를 국무장관이 <strong class=\"target-word\">국왕과</strong> 나쁜 제한들이 폐지되었다."
+  },
+  {
+    "id": 26858,
+    "word": "fervent",
+    "exam_en": "She expressed her <strong class=\"target-word\">fervent</strong> support for the cause.",
+    "exam_ko": "그녀는 그 원인에 <strong class=\"target-word\">열정적인</strong> 지지를 표명했다."
+  },
+  {
+    "id": 26859,
+    "word": "submission",
+    "exam_en": "The occupying troops demanded complete <strong class=\"target-word\">submission</strong> from the remaining civilians.",
+    "exam_ko": "점령군은 남은 <strong class=\"target-word\">민간인들에게</strong> 완전한 복종을 요구했다."
+  },
+  {
+    "id": 26860,
+    "word": "pragmatic",
+    "exam_en": "He approached the problem in a <strong class=\"target-word\">pragmatic</strong> manner, focusing on practical solutions.",
+    "exam_ko": "그는 <strong class=\"target-word\">실용적인</strong> 방식으로 문제에 접근하여 실제적인 해결책에 초점을 두었다."
+  },
+  {
+    "id": 26861,
+    "word": "benevolent",
+    "exam_en": "The philanthropist's <strong class=\"target-word\">benevolent</strong> acts have touched many lives.",
+    "exam_ko": "그 박애주의자의 <strong class=\"target-word\">자비로운</strong> 행동은 많은 사람들의 삶에 영향을 주었다."
+  },
+  {
+    "id": 26862,
+    "word": "bizarre",
+    "exam_en": "The artist created a <strong class=\"target-word\">bizarre</strong> sculpture that challenged conventional ideas of beauty.",
+    "exam_ko": "예술가는 아름다움에 대한 <strong class=\"target-word\">전통적인</strong> 생각에 도전하는 기괴한 조각품을 만들었다."
+  },
+  {
+    "id": 26863,
+    "word": "labyrinth",
+    "exam_en": "Navigating through the <strong class=\"target-word\">labyrinth</strong> of the old castle was a challenging task.",
+    "exam_ko": "오래된 성의 미로를 통과하는 것은 <strong class=\"target-word\">도전적인</strong> 일이었다."
+  },
+  {
+    "id": 26864,
+    "word": "slimy",
+    "exam_en": "The deep valley is a minefield of lethal snakes, <strong class=\"target-word\">slimy</strong> rock, and erratic riverbeds, that challenge most adults.",
+    "exam_ko": "깊은 계곡은 치명적인 뱀, <strong class=\"target-word\">끈적끈적한</strong> 바위, 불규칙한 강바닥의 지뢰밭으로 대부분의 성인들에게 도전장을 내밀고 많은 사람들을 지치게 한다."
+  },
+  {
+    "id": 26865,
+    "word": "aberration",
+    "exam_en": "The sudden change in his behavior was an <strong class=\"target-word\">aberration</strong>.",
+    "exam_ko": "그가 한 행동의 <strong class=\"target-word\">갑작스러운</strong> 변화는 일탈이었다."
+  },
+  {
+    "id": 26866,
+    "word": "equanimity",
+    "exam_en": "She received the news with surprising <strong class=\"target-word\">equanimity</strong>.",
+    "exam_ko": "그녀는 <strong class=\"target-word\">놀랍도록</strong> 침착하게 그 소식을 접했다."
+  },
+  {
+    "id": 26867,
+    "word": "abjure",
+    "exam_en": "After witnessing the tragic consequences of violence, she made a firm decision to <strong class=\"target-word\">abjure</strong> aggression and promote peaceful resolutions.",
+    "exam_ko": "폭력의 비참한 결과를 목격한 후, 그녀는 <strong class=\"target-word\">적극적인</strong> 공격을 포기하고 평화로운 해결책을 추진하기로 확고한 결심을 했다."
+  },
+  {
+    "id": 26868,
+    "word": "abode",
+    "exam_en": "After selecting from among its furniture and objects, she wished to transport to her other <strong class=\"target-word\">abode</strong>.",
+    "exam_ko": "가구와 물건을 <strong class=\"target-word\">골라내서</strong> 그녀는 다른 거처로 옮기고 싶어했다."
+  },
+  {
+    "id": 26869,
+    "word": "lethargic",
+    "exam_en": "After a long day at work, he felt <strong class=\"target-word\">lethargic</strong> and unmotivated.",
+    "exam_ko": "긴 <strong class=\"target-word\">하루</strong> 일한 후 그는 무기력하고 동기부여가 없는 기분이 들었다."
+  },
+  {
+    "id": 26870,
+    "word": "recusal",
+    "exam_en": "<strong class=\"target-word\">Recusal</strong> became a highly debated topic in politics during the Trump administration, with many questioning whether it was necessary for officials to distance themselves from certain decisions and investigations.",
+    "exam_ko": "'기피'는 트럼프 행정부에서 정치적으로 매우 논란이 되는 주제가 <strong class=\"target-word\">되었으며</strong>, 공무원이 특정 결정과 조사에서 거리를 두는 것이 타당한지 여부에 대해 많은 사람들이 의문을 제기했다."
+  },
+  {
+    "id": 26871,
+    "word": "haggle",
+    "exam_en": "When shopping at the flea market, it's common to <strong class=\"target-word\">haggle</strong> over prices.",
+    "exam_ko": "벼룩 시장에서 <strong class=\"target-word\">쇼핑할</strong> 때는 가격을 깎는 것이 흔하다."
+  },
+  {
+    "id": 26872,
+    "word": "dismay",
+    "exam_en": "The sudden cancellation of the event filled me with <strong class=\"target-word\">dismay</strong>.",
+    "exam_ko": "<strong class=\"target-word\">갑작스러운</strong> 행사 취소로 나는 실망감이 가득 찼다."
+  },
+  {
+    "id": 26873,
+    "word": "ornate",
+    "exam_en": "The palace was adorned with <strong class=\"target-word\">ornate</strong> decorations and intricate designs.",
+    "exam_ko": "궁전은 화려한 장식과 정교한 디자인으로 <strong class=\"target-word\">장식되어</strong> 있었다."
+  },
+  {
+    "id": 26874,
+    "word": "persevere",
+    "exam_en": "Despite the challenges, she continued to <strong class=\"target-word\">persevere</strong> and achieve her goals.",
+    "exam_ko": "어려움에도 <strong class=\"target-word\">불구하고</strong>, 그녀는 계속해서 끈기를 갖고 목표를 달성했다."
+  },
+  {
+    "id": 26875,
+    "word": "abstruse",
+    "exam_en": "What is the good of a husband who can make <strong class=\"target-word\">abstruse</strong> mathematical calculations?",
+    "exam_ko": "<strong class=\"target-word\">난처한</strong> 수학적 계산을 할 수있는 남편의 장점은 무엇입니까?"
+  },
+  {
+    "id": 26876,
+    "word": "nuance",
+    "exam_en": "The author's writing was filled with <strong class=\"target-word\">nuance</strong>d descriptions.",
+    "exam_ko": "그 작가의 글에는 <strong class=\"target-word\">미묘한</strong> 표현이 가득했다."
+  },
+  {
+    "id": 26877,
+    "word": "amethyst",
+    "exam_en": "She wore a stunning necklace adorned with a beautiful <strong class=\"target-word\">amethyst</strong> pendant, reflecting the purple hues in the sunlight.",
+    "exam_ko": "그녀는 <strong class=\"target-word\">아름다운</strong> 자수정 목걸이를 멋지게 차고 있었는데, 태양빛에 비춰져 보라빛 빛깔을 비추고 있었다."
+  },
+  {
+    "id": 26878,
+    "word": "ubiquitous",
+    "exam_en": "Smartphones have become <strong class=\"target-word\">ubiquitous</strong> in today's society.",
+    "exam_ko": "스마트폰은 오늘날 사회에서 무척 흔하게 <strong class=\"target-word\">사용되고</strong> 있다."
+  },
+  {
+    "id": 26879,
+    "word": "unassailable",
+    "exam_en": "His argument was supported by solid evidence and was <strong class=\"target-word\">unassailable</strong>.",
+    "exam_ko": "그의 주장은 확실한 증거에 의해 <strong class=\"target-word\">뒷받침되었고</strong> 반박의 여지가 없었다."
+  },
+  {
+    "id": 26880,
+    "word": "yearn",
+    "exam_en": "He <strong class=\"target-word\">yearn</strong>ed for adventure and longed to travel the world.",
+    "exam_ko": "그는 모험을 <strong class=\"target-word\">갈망하며</strong> 세계 여행을 그리워했다."
+  },
+  {
+    "id": 26881,
+    "word": "ubiquity",
+    "exam_en": "The <strong class=\"target-word\">ubiquity</strong> of social media has changed the way we communicate.",
+    "exam_ko": "소셜 미디어의 보편성은 우리의 <strong class=\"target-word\">의사소통</strong> 방식을 바꾸었다."
+  },
+  {
+    "id": 26882,
+    "word": "jargon",
+    "exam_en": "The article was filled with technical <strong class=\"target-word\">jargon</strong> that was hard to understand.",
+    "exam_ko": "그 기사는 <strong class=\"target-word\">이해하기</strong> 어려운 전문 용어로 가득 차 있었다."
+  },
+  {
+    "id": 26883,
+    "word": "arrogance",
+    "exam_en": "When the guardsman rose, the <strong class=\"target-word\">arrogance</strong> was gone from his face, replaced by anger.",
+    "exam_ko": "경비병이 일어났을 때 그의 얼굴에서 오만함이 <strong class=\"target-word\">사라지고</strong>  대신 분노로 바뀌었다."
+  },
+  {
+    "id": 26884,
+    "word": "antiseptic",
+    "exam_en": "This <strong class=\"target-word\">antiseptic</strong> treatment can be used for all but flowers.",
+    "exam_ko": "이 <strong class=\"target-word\">방부제</strong> 처리는 꽃을 제외한 모든 것에 사용할 수 있다."
+  },
+  {
+    "id": 26885,
+    "word": "nostalgia",
+    "exam_en": "Looking at old photographs filled him with <strong class=\"target-word\">nostalgia</strong> for his childhood.",
+    "exam_ko": "옛 사진을 보는 것은 <strong class=\"target-word\">그에게</strong> 어린 시절에 대한 향수를 불러 일으켰다."
+  },
+  {
+    "id": 26886,
+    "word": "mellifluous",
+    "exam_en": "Her voice was <strong class=\"target-word\">mellifluous</strong>, soothing everyone who heard it.",
+    "exam_ko": "그녀의 목소리는 <strong class=\"target-word\">달콤하고</strong> 듣는 사람들을 안심시켰다."
+  },
+  {
+    "id": 26887,
+    "word": "honor",
+    "exam_en": "I fought side by side with his older brother years ago at the end of the war; I know the type of <strong class=\"target-word\">honor</strong> that runs in his family.",
+    "exam_ko": "나는 몇 년 전에 전쟁이 끝날 때 그의 형과 나란히 싸웠다. 나는 그의 집안에 어떤 명예가 <strong class=\"target-word\">흐르는지</strong> 알고 있다."
+  },
+  {
+    "id": 26888,
+    "word": "bride",
+    "exam_en": "I have a diamond ring adorning my finger, just as a <strong class=\"target-word\">bride</strong> might wear!",
+    "exam_ko": "나는 마치 신부가 착용한 것처럼 내 손가락을 장식하는 <strong class=\"target-word\">다이아몬드</strong> 반지를 끼고 있어!"
+  },
+  {
+    "id": 26889,
+    "word": "spiral",
+    "exam_en": "A <strong class=\"target-word\">spiral</strong> staircase provides a unique design inside the building.",
+    "exam_ko": "<strong class=\"target-word\">나선형</strong> 계단은 건물 내부에 독특한 디자인을 제공한다."
+  },
+  {
+    "id": 26890,
+    "word": "revenue",
+    "exam_en": "The company's annual <strong class=\"target-word\">revenue</strong> increased up to 50% due to the TV CF advetisement.",
+    "exam_ko": "TV CF광고 때문에 그 회사의 연간 수입은 <strong class=\"target-word\">50%까지</strong> 증가했다."
+  },
+  {
+    "id": 26891,
+    "word": "absolutely",
+    "exam_en": "You must be <strong class=\"target-word\">absolutely</strong> silent or the birds won't appear.",
+    "exam_ko": "당신은 절대 <strong class=\"target-word\">침묵해야</strong> 해. 그렇지 않으면 새들이 나타나지 않을 거야."
+  },
+  {
+    "id": 26892,
+    "word": "luminous",
+    "exam_en": "The moon cast a <strong class=\"target-word\">luminous</strong> glow over the lake.",
+    "exam_ko": "달은 <strong class=\"target-word\">호수</strong> 위에 환한 빛을 비췄다."
+  },
+  {
+    "id": 26893,
+    "word": "riddled",
+    "exam_en": "The report was <strong class=\"target-word\">riddled</strong> with errors and inaccuracies.",
+    "exam_ko": "그 보고서는 오류와 <strong class=\"target-word\">부정확한</strong> 내용으로 가득 차 있었다."
+  },
+  {
+    "id": 26894,
+    "word": "garrulous",
+    "exam_en": "The <strong class=\"target-word\">garrulous</strong> old man shared countless stories from his past.",
+    "exam_ko": "<strong class=\"target-word\">수다스러운</strong> 노인은 자신의 과거부터 있었던 무수한 이야기를 나눴다."
+  },
+  {
+    "id": 26895,
+    "word": "abstaining",
+    "exam_en": "Less than 7 percent of these people are successful after one year of <strong class=\"target-word\">abstaining</strong> from smoking.",
+    "exam_ko": "이 <strong class=\"target-word\">사람들</strong> 중 7퍼센트 미만이 1년 동안 금연을 한 후에 성공한다."
+  },
+  {
+    "id": 26896,
+    "word": "belligerent",
+    "exam_en": "The <strong class=\"target-word\">belligerent</strong> countries engaged in a long-lasting war.",
+    "exam_ko": "<strong class=\"target-word\">호전적인</strong> 나라들은 오랜 전쟁을 벌였다."
+  },
+  {
+    "id": 26897,
+    "word": "abstraction",
+    "exam_en": "The artist's painting was an <strong class=\"target-word\">abstraction</strong> of emotions, using bold strokes and vibrant colors.",
+    "exam_ko": "그 화가의 그림은 감정의 추상화로, <strong class=\"target-word\">대담한</strong> 획과 화려한 색상을 사용했다."
+  },
+  {
+    "id": 26898,
+    "word": "hypocrisy",
+    "exam_en": "His actions were filled with <strong class=\"target-word\">hypocrisy</strong>, contradicting his words.",
+    "exam_ko": "그의 행동은 말과 모순되는 위선으로 <strong class=\"target-word\">가득차</strong> 있었다."
+  },
+  {
+    "id": 26899,
+    "word": "brass",
+    "exam_en": "His <strong class=\"target-word\">brass</strong> instruments have lost nothing of their ancient nobility.",
+    "exam_ko": "그의 금관악기는 고대의 고귀함을 조금도 <strong class=\"target-word\">잃지</strong> 않았다."
+  },
+  {
+    "id": 26900,
+    "word": "acumen",
+    "exam_en": "Her business <strong class=\"target-word\">acumen</strong> is evident in her successful ventures.",
+    "exam_ko": "그녀의 <strong class=\"target-word\">비즈니스</strong> 총명함은 성공한 사업에서 드러난다."
+  },
+  {
+    "id": 26901,
+    "word": "bear",
+    "exam_en": "Black people continue to <strong class=\"target-word\">bear</strong> the brunt of most racial violence.",
+    "exam_ko": "흑인들은 대부분의 인종적 폭력에 <strong class=\"target-word\">계속해서</strong> 정면으로 맞서고 있다."
+  },
+  {
+    "id": 26902,
+    "word": "utilization",
+    "exam_en": "The efficient <strong class=\"target-word\">utilization</strong> of resources is essential for sustainable development and environmental conservation.",
+    "exam_ko": "자원의 <strong class=\"target-word\">효율적인</strong> 활용은 지속 가능한 발전과 환경 보전에 필수적이다."
+  },
+  {
+    "id": 26903,
+    "word": "viable",
+    "exam_en": "The business plan seemed <strong class=\"target-word\">viable</strong> and had a good chance of success.",
+    "exam_ko": "그 사업 계획은 실행 <strong class=\"target-word\">가능해</strong> 보였고 성공할 가능성이 충분했다."
+  },
+  {
+    "id": 26904,
+    "word": "tangible",
+    "exam_en": "Concrete actions and visible results provide <strong class=\"target-word\">tangible</strong> evidence of progress.",
+    "exam_ko": "<strong class=\"target-word\">구체적인</strong> 행동과 눈에 보이는 결과는 진전의 구체적인 증거를 제공한다."
+  },
+  {
+    "id": 26905,
+    "word": "whimsy",
+    "exam_en": "The children's book was filled with <strong class=\"target-word\">whimsy</strong> and enchanting illustrations.",
+    "exam_ko": "어린이 책은 <strong class=\"target-word\">변덕스러움과</strong> 매혹적인 일러스트로 가득 차 있었다."
+  },
+  {
+    "id": 26906,
+    "word": "trepidation",
+    "exam_en": "He entered the haunted house with <strong class=\"target-word\">trepidation</strong>, unsure of what awaited him.",
+    "exam_ko": "그는 무엇이 그를 <strong class=\"target-word\">기다리고</strong> 있는지 확신하지 못한 채 공포에 질려 유령의 집으로 들어갔다."
+  },
+  {
+    "id": 26907,
+    "word": "deleterious",
+    "exam_en": "Smoking has <strong class=\"target-word\">deleterious</strong> effects on one's health.",
+    "exam_ko": "흡연은 건강에 <strong class=\"target-word\">해로운</strong> 영향을 미친다."
+  },
+  {
+    "id": 26908,
+    "word": "pandemic",
+    "exam_en": "The global community faced a major challenge in dealing with the COVID-19 <strong class=\"target-word\">pandemic</strong>.",
+    "exam_ko": "<strong class=\"target-word\">글로벌</strong> 커뮤니티는 코로나19 팬데믹(세계적 유행병)을 대처하는 데 있어 큰 도전에 직면했다."
+  },
+  {
+    "id": 26909,
+    "word": "ignite",
+    "exam_en": "A single spark can <strong class=\"target-word\">ignite</strong> a wildfire, spreading rapidly through dry forests.",
+    "exam_ko": "작은 불꽃 하나가 마른 숲을 통해 <strong class=\"target-word\">빠르게</strong> 퍼져 대형 산불을 일으킬 수 있다."
+  },
+  {
+    "id": 26910,
+    "word": "naturalize",
+    "exam_en": "Some introduced plants can <strong class=\"target-word\">naturalize</strong> in a new environment and become part of the local ecosystem.",
+    "exam_ko": "<strong class=\"target-word\">일부</strong> 도입된 식물은 새로운 환경에 적응하여 지역 생태계의 일부가 될 수 있다."
+  },
+  {
+    "id": 26911,
+    "word": "aboard",
+    "exam_en": "Once <strong class=\"target-word\">aboard</strong> my flight I spent the next several hours squeezed between a talkative sailor and a woman with a fussy child.",
+    "exam_ko": "비행기에 탑승하자 마자, <strong class=\"target-word\">수다스러운</strong> 승무원과 안달하는 아이와 함께 있는 여인 사이에서 쭈그리고 앉아 몇 시간을 보냈다."
+  },
+  {
+    "id": 26912,
+    "word": "languish",
+    "exam_en": "The flowers <strong class=\"target-word\">languish</strong>ed in the scorching heat without water.",
+    "exam_ko": "꽃들은 물 주지 않는 <strong class=\"target-word\">뜨거운</strong> 날씨에 시들었다."
+  },
+  {
+    "id": 26913,
+    "word": "transient",
+    "exam_en": "The <strong class=\"target-word\">transient</strong> nature of life reminds us to cherish every moment.",
+    "exam_ko": "삶의 덧없는 성질은 <strong class=\"target-word\">우리에게</strong> 모든 순간을 소중히 여기라고 상기시킨다."
+  },
+  {
+    "id": 26914,
+    "word": "nascent",
+    "exam_en": "The company was still in its <strong class=\"target-word\">nascent</strong> stage but showed great potential.",
+    "exam_ko": "그 회사는 <strong class=\"target-word\">아직</strong> 초기 단계에 있었지만 큰 잠재력을 보였다."
+  },
+  {
+    "id": 26915,
+    "word": "complacent",
+    "exam_en": "His <strong class=\"target-word\">complacent</strong> attitude prevented him from striving for improvement.",
+    "exam_ko": "그는 현실 <strong class=\"target-word\">안주적인</strong> 태도로 인해 그의 발전을 위해 노력하지 않았다."
+  },
+  {
+    "id": 26916,
+    "word": "chide",
+    "exam_en": "The teacher had to <strong class=\"target-word\">chide</strong> the students for not doing their homework.",
+    "exam_ko": "선생님은 <strong class=\"target-word\">학생들에게</strong> 숙제를 하지 않아서 꾸짖어야 했다."
+  },
+  {
+    "id": 26917,
+    "word": "bombastic",
+    "exam_en": "The politician's speech was filled with <strong class=\"target-word\">bombastic</strong> rhetoric.",
+    "exam_ko": "그 정치인의 연설은 허풍으로 <strong class=\"target-word\">가득</strong> 차 있었다."
+  },
+  {
+    "id": 26918,
+    "word": "dement",
+    "exam_en": "The elderly person is gradually <strong class=\"target-word\">dement</strong>ing, so the family is doing their best to preserve his memories.",
+    "exam_ko": "노인은 점차 기억력을 <strong class=\"target-word\">잃어가고</strong> 있어서 가족은 그의 기억을 보존하기 위해 최선을 다하고 있다."
+  },
+  {
+    "id": 26919,
+    "word": "crisscross",
+    "exam_en": "Within minutes, the first obstacle route which <strong class=\"target-word\">crisscross</strong>es the road and rivers is clear.",
+    "exam_ko": "몇 분 안에 도로와 강을 <strong class=\"target-word\">교차하는</strong> 첫 번째 장애물 경로가 분명히 있다."
+  },
+  {
+    "id": 26920,
+    "word": "accordance",
+    "exam_en": "Their actions were in <strong class=\"target-word\">accordance</strong> with the rules and regulations of the organization.",
+    "exam_ko": "그들의 행동은 조직의 <strong class=\"target-word\">규칙과</strong> 규정에 따랐다."
+  },
+  {
+    "id": 26921,
+    "word": "kinship",
+    "exam_en": "There is a strong <strong class=\"target-word\">kinship</strong> between the two families.",
+    "exam_ko": "두 <strong class=\"target-word\">가족</strong> 사이에는 강한 친족 유대감이 있다."
+  },
+  {
+    "id": 26922,
+    "word": "arrogant",
+    "exam_en": "You tried to tell me, but I was too <strong class=\"target-word\">arrogant</strong> to believe it could happen to me.",
+    "exam_ko": "당신은 했지만, <strong class=\"target-word\">말하려고</strong> 내게 나는 너무 오만해서 믿지 않았다. 그런 일이 일어날 거라고  내게"
+  },
+  {
+    "id": 26923,
+    "word": "umpteenth",
+    "exam_en": "They're showing \"The Wizard of Oz\" for the <strong class=\"target-word\">umpteenth</strong> time.",
+    "exam_ko": "그들은 \"오즈의 마법사\"를 몇 <strong class=\"target-word\">번째인지</strong> 모를 정도로 여러 번 보여주고 있다."
+  },
+  {
+    "id": 26924,
+    "word": "abridged",
+    "exam_en": "I prefer reading the <strong class=\"target-word\">abridged</strong> version of classic novels.",
+    "exam_ko": "나는 <strong class=\"target-word\">고전</strong> 소설의 요약판을 읽는 것을 선호한다."
+  },
+  {
+    "id": 26925,
+    "word": "initiative",
+    "exam_en": "His power of <strong class=\"target-word\">initiative</strong> in politics was very small, and the range of political ground that he could cover was strictly limited.",
+    "exam_ko": "정치에서 그의 주도적 영향력은 매우 작았고, 그가 다룰 수 있는 정치적 기반의 범위는 <strong class=\"target-word\">엄격하게</strong> 제한되었다."
+  },
+  {
+    "id": 26926,
+    "word": "tattoo",
+    "exam_en": "Having a visible <strong class=\"target-word\">tattoo</strong> is no longer seen as the taboo it once was.",
+    "exam_ko": "눈에 보이는 문신을 하는 것은 더 이상 예전의 금기사항으로 <strong class=\"target-word\">보여지지</strong> 않는다."
+  },
+  {
+    "id": 26927,
+    "word": "scheme",
+    "exam_en": "The company devised a new marketing <strong class=\"target-word\">scheme</strong> to attract more customers.",
+    "exam_ko": "회사는 더 많은 고객을 <strong class=\"target-word\">유치하기</strong> 위해 새로운 마케팅 계획을 세웠다."
+  },
+  {
+    "id": 26928,
+    "word": "obfuscate",
+    "exam_en": "The politician used complex language to <strong class=\"target-word\">obfuscate</strong> the issue.",
+    "exam_ko": "그 정치인은 문제를 <strong class=\"target-word\">흐릿하게</strong> 만들기 위해 복잡한 언어를 사용했다."
+  },
+  {
+    "id": 26929,
+    "word": "spruce",
+    "exam_en": "He decided to <strong class=\"target-word\">spruce</strong> up his apartment by adding some new furniture.",
+    "exam_ko": "그는 새 가구 몇 개를 <strong class=\"target-word\">추가하여</strong> 아파트를 꾸미기로 결정했다."
+  },
+  {
+    "id": 26930,
+    "word": "opaque",
+    "exam_en": "The window was covered with an <strong class=\"target-word\">opaque</strong> curtain, blocking the sunlight.",
+    "exam_ko": "창문은 햇빛을 막기 위해 <strong class=\"target-word\">불투명한</strong> 커튼으로 가려져 있었다."
+  },
+  {
+    "id": 26931,
+    "word": "stickler",
+    "exam_en": "He was a <strong class=\"target-word\">stickler</strong> for grammar and corrected every minor mistake.",
+    "exam_ko": "그는 문법에 대해 <strong class=\"target-word\">까다로워서</strong> 작은 실수마다 고칩니다."
+  },
+  {
+    "id": 26932,
+    "word": "ruffle",
+    "exam_en": "A gentle <strong class=\"target-word\">ruffle</strong> of the leaves in the breeze created a soothing sound.",
+    "exam_ko": "바람에 <strong class=\"target-word\">부드럽게</strong> 흐트러지는 잎들이 차분한 소리를 만들었다."
+  },
+  {
+    "id": 26933,
+    "word": "palette",
+    "exam_en": "Artists use a variety of colors on their <strong class=\"target-word\">palette</strong> to create vibrant paintings.",
+    "exam_ko": "화가들은 <strong class=\"target-word\">생동감</strong> 있는 그림을 만들기 위해 팔레트에 다양한 색을 사용한다."
+  },
+  {
+    "id": 26934,
+    "word": "facilitate",
+    "exam_en": "The new software is designed to <strong class=\"target-word\">facilitate</strong> collaboration among team members.",
+    "exam_ko": "<strong class=\"target-word\">새로운</strong> 소프트웨어는 팀원들 간의 협업을 촉진하기 위해 설계되었다."
+  },
+  {
+    "id": 26935,
+    "word": "hierarchy",
+    "exam_en": "The organization had a clear <strong class=\"target-word\">hierarchy</strong> with defined roles.",
+    "exam_ko": "그 조직은 <strong class=\"target-word\">정해진</strong> 역할이 있는 명확한 계층 구조를 가지고 있었다."
+  },
+  {
+    "id": 26936,
+    "word": "scabbard",
+    "exam_en": "The <strong class=\"target-word\">scabbard</strong> protected the sword's blade from damage.",
+    "exam_ko": "칼집은 칼날을 <strong class=\"target-word\">손상으로부터</strong> 보호했다."
+  },
+  {
+    "id": 26937,
+    "word": "supine",
+    "exam_en": "Lying <strong class=\"target-word\">supine</strong> on the grass, he gazed up at the clear blue sky.",
+    "exam_ko": "풀밭에 누워 <strong class=\"target-word\">청명한</strong> 파란 하늘을 올려다보았다."
+  }
+]

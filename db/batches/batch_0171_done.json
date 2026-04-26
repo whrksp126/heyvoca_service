@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3717,
+    "origin": "company",
+    "examples": [
+      {
+        "exam_en": "She felt safe in the <strong class=\"target-word\">company</strong> of her friends.",
+        "exam_ko": "그녀는 친구들의 <strong class=\"target-word\">동행</strong> 속에서 안전함을 느꼈다."
+      },
+      {
+        "exam_en": "He enjoyed the <strong class=\"target-word\">company</strong> of his colleagues.",
+        "exam_ko": "그는 동료들과 함께하는 <strong class=\"target-word\">시간</strong>을 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 3718,
+    "origin": "committee",
+    "examples": [
+      {
+        "exam_en": "The steering <strong class=\"target-word\">committee</strong> approved the new policy.",
+        "exam_ko": "운영 <strong class=\"target-word\">위원회</strong>가 새 정책을 승인했다."
+      },
+      {
+        "exam_en": "She was elected to the finance <strong class=\"target-word\">committee</strong>.",
+        "exam_ko": "그녀는 재무 <strong class=\"target-word\">위원회</strong>에 선출되었다."
+      }
+    ]
+  },
+  {
+    "id": 3719,
+    "origin": "colony",
+    "examples": [
+      {
+        "exam_en": "A large foreign <strong class=\"target-word\">colony</strong> settled in Seoul.",
+        "exam_ko": "대규모 외국인 <strong class=\"target-word\">거류민단</strong>이 서울에 정착했다."
+      },
+      {
+        "exam_en": "Artists gathered to form a creative <strong class=\"target-word\">colony</strong>.",
+        "exam_ko": "예술가들이 모여 창작 <strong class=\"target-word\">집단촌</strong>을 형성했다."
+      }
+    ]
+  },
+  {
+    "id": 3720,
+    "origin": "coffee",
+    "examples": [
+      {
+        "exam_en": "She ordered a strong <strong class=\"target-word\">coffee</strong> after lunch.",
+        "exam_ko": "그녀는 점심 후 진한 <strong class=\"target-word\">커피</strong>를 주문했다."
+      },
+      {
+        "exam_en": "He prefers black <strong class=\"target-word\">coffee</strong> without any milk.",
+        "exam_ko": "그는 우유 없이 블랙 <strong class=\"target-word\">커피</strong>를 즐긴다."
+      }
+    ]
+  },
+  {
+    "id": 3721,
+    "origin": "cloud",
+    "examples": [
+      {
+        "exam_en": "Dark <strong class=\"target-word\">clouds</strong> gathered before the storm.",
+        "exam_ko": "폭풍 전에 짙은 <strong class=\"target-word\">구름</strong>이 모여들었다."
+      },
+      {
+        "exam_en": "Every <strong class=\"target-word\">cloud</strong> has a silver lining.",
+        "exam_ko": "모든 <strong class=\"target-word\">구름</strong>에는 밝은 면이 있다."
+      }
+    ]
+  },
+  {
+    "id": 3722,
+    "origin": "cloth",
+    "examples": [
+      {
+        "exam_en": "She bought a yard of fine <strong class=\"target-word\">cloth</strong>.",
+        "exam_ko": "그녀는 고운 <strong class=\"target-word\">천</strong> 한 야드를 샀다."
+      },
+      {
+        "exam_en": "He wiped the table with a damp <strong class=\"target-word\">cloth</strong>.",
+        "exam_ko": "그는 젖은 <strong class=\"target-word\">천</strong>으로 테이블을 닦았다."
+      }
+    ]
+  },
+  {
+    "id": 3723,
+    "origin": "clock",
+    "examples": [
+      {
+        "exam_en": "She set the <strong class=\"target-word\">clock</strong> by the noon siren.",
+        "exam_ko": "그녀는 정오 사이렌에 맞춰 <strong class=\"target-word\">시계</strong>를 맞췄다."
+      },
+      {
+        "exam_en": "He moved the <strong class=\"target-word\">clock</strong> ahead by ten minutes.",
+        "exam_ko": "그는 <strong class=\"target-word\">시계</strong>를 10분 앞당겼다."
+      }
+    ]
+  },
+  {
+    "id": 3724,
+    "origin": "clash",
+    "examples": [
+      {
+        "exam_en": "The demonstrators <strong class=\"target-word\">clashed</strong> with police downtown.",
+        "exam_ko": "시위대가 시내에서 경찰과 <strong class=\"target-word\">충돌했다</strong>."
+      },
+      {
+        "exam_en": "The two armies <strong class=\"target-word\">clashed</strong> near the border.",
+        "exam_ko": "양군은 국경 부근에서 <strong class=\"target-word\">격돌했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3725,
+    "origin": "city",
+    "examples": [
+      {
+        "exam_en": "He moved to a big <strong class=\"target-word\">city</strong> for work.",
+        "exam_ko": "그는 일 때문에 대 <strong class=\"target-word\">도시</strong>로 이사했다."
+      },
+      {
+        "exam_en": "Seoul is the capital <strong class=\"target-word\">city</strong> of Korea.",
+        "exam_ko": "서울은 한국의 수도 <strong class=\"target-word\">도시</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3726,
+    "origin": "circle",
+    "examples": [
+      {
+        "exam_en": "She drew a perfect <strong class=\"target-word\">circle</strong> on the board.",
+        "exam_ko": "그녀는 칠판에 완벽한 <strong class=\"target-word\">원</strong>을 그렸다."
+      },
+      {
+        "exam_en": "The students sat in a <strong class=\"target-word\">circle</strong> during the lesson.",
+        "exam_ko": "학생들은 수업 중에 <strong class=\"target-word\">원형</strong>으로 앉았다."
+      }
+    ]
+  },
+  {
+    "id": 3727,
+    "origin": "chest",
+    "examples": [
+      {
+        "exam_en": "He felt a sharp pain in his <strong class=\"target-word\">chest</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">가슴</strong>에 날카로운 통증을 느꼈다."
+      },
+      {
+        "exam_en": "She stored old letters in a wooden <strong class=\"target-word\">chest</strong>.",
+        "exam_ko": "그녀는 오래된 편지들을 나무 <strong class=\"target-word\">상자</strong>에 보관했다."
+      }
+    ]
+  },
+  {
+    "id": 3728,
+    "origin": "chemistry",
+    "examples": [
+      {
+        "exam_en": "He studied applied <strong class=\"target-word\">chemistry</strong> at university.",
+        "exam_ko": "그는 대학에서 응용 <strong class=\"target-word\">화학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "Organic <strong class=\"target-word\">chemistry</strong> is a complex subject.",
+        "exam_ko": "유기 <strong class=\"target-word\">화학</strong>은 복잡한 학문이다."
+      }
+    ]
+  },
+  {
+    "id": 3729,
+    "origin": "cheese",
+    "examples": [
+      {
+        "exam_en": "She added two pieces of <strong class=\"target-word\">cheese</strong> to the sandwich.",
+        "exam_ko": "그녀는 샌드위치에 <strong class=\"target-word\">치즈</strong> 두 쪽을 넣었다."
+      },
+      {
+        "exam_en": "He placed a slice of <strong class=\"target-word\">cheese</strong> on the bread.",
+        "exam_ko": "그는 빵 위에 <strong class=\"target-word\">치즈</strong> 한 조각을 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 3730,
+    "origin": "champion",
+    "examples": [
+      {
+        "exam_en": "She became the reigning <strong class=\"target-word\">champion</strong> after the tournament.",
+        "exam_ko": "그녀는 토너먼트 후 현 <strong class=\"target-word\">챔피언</strong>이 되었다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">champion</strong> of women's rights.",
+        "exam_ko": "그는 여성 인권의 <strong class=\"target-word\">옹호자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3731,
+    "origin": "chairman",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">chairman</strong> opened the board meeting.",
+        "exam_ko": "<strong class=\"target-word\">의장</strong>이 이사회를 개회했다."
+      },
+      {
+        "exam_en": "He was elected <strong class=\"target-word\">chairman</strong> of the steering committee.",
+        "exam_ko": "그는 운영 위원회의 <strong class=\"target-word\">의장</strong>으로 선출되었다."
+      }
+    ]
+  },
+  {
+    "id": 3732,
+    "origin": "century",
+    "examples": [
+      {
+        "exam_en": "A quarter of a <strong class=\"target-word\">century</strong> has passed since then.",
+        "exam_ko": "그 이후로 4반 <strong class=\"target-word\">세기</strong>가 지났다."
+      },
+      {
+        "exam_en": "Many inventions changed life in the 20th <strong class=\"target-word\">century</strong>.",
+        "exam_ko": "많은 발명품들이 20 <strong class=\"target-word\">세기</strong>의 삶을 바꿨다."
+      }
+    ]
+  },
+  {
+    "id": 3733,
+    "origin": "center",
+    "examples": [
+      {
+        "exam_en": "The vase stood at the <strong class=\"target-word\">center</strong> of the table.",
+        "exam_ko": "꽃병이 테이블 <strong class=\"target-word\">중앙</strong>에 놓여 있었다."
+      },
+      {
+        "exam_en": "She stood in the <strong class=\"target-word\">center</strong> of the room.",
+        "exam_ko": "그녀는 방 한 <strong class=\"target-word\">가운데</strong>에 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3734,
+    "origin": "cat",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">cat</strong> sat quietly on the windowsill.",
+        "exam_ko": "<strong class=\"target-word\">고양이</strong>가 창틀에 조용히 앉아 있었다."
+      },
+      {
+        "exam_en": "She adopted a stray <strong class=\"target-word\">cat</strong> from the shelter.",
+        "exam_ko": "그녀는 보호소에서 길 잃은 <strong class=\"target-word\">고양이</strong>를 입양했다."
+      }
+    ]
+  },
+  {
+    "id": 3735,
+    "origin": "case",
+    "examples": [
+      {
+        "exam_en": "This is a classic <strong class=\"target-word\">case</strong> of food poisoning.",
+        "exam_ko": "이것은 식중독의 전형적인 <strong class=\"target-word\">사례</strong>이다."
+      },
+      {
+        "exam_en": "I need to buy a new pencil <strong class=\"target-word\">case</strong>.",
+        "exam_ko": "나는 새 필통 <strong class=\"target-word\">케이스</strong>를 사야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3736,
+    "origin": "card",
+    "examples": [
+      {
+        "exam_en": "She handed him her business <strong class=\"target-word\">card</strong>.",
+        "exam_ko": "그녀는 그에게 명함 <strong class=\"target-word\">카드</strong>를 건넸다."
+      },
+      {
+        "exam_en": "He showed his membership <strong class=\"target-word\">card</strong> at the entrance.",
+        "exam_ko": "그는 입구에서 회원 <strong class=\"target-word\">카드</strong>를 제시했다."
+      }
+    ]
+  }
+]

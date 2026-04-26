@@ -2,17 +2,16 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { backendUrl, fetchDataAsync, getTextSound } from '../../utils/common';
+import { backendUrl, fetchDataAsync, getTextSound, stripHtmlTags } from '../../utils/common';
 import { CaretDown, Plus, Pencil, Trash } from '@phosphor-icons/react';
 import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
-import postMessageManager from '../../utils/postMessageManager';
-import { IconCamera } from '../../assets/svg/icon';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
+import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
 
 const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = null }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { addWord, updateWord, getWord, deleteWord, vocabularySheets } = useVocabulary();
+  const { addWord, updateWord, getWord, deleteWord, vocabularySheets, userDictionary } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, pushAwaitNewBottomSheet, clearStack } = useNewBottomSheetActions();
 
@@ -64,18 +63,35 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   // 단어 추가 함수
   const handleAdd = useCallback(async () => {
     try {
-      const newWord = {
-        dictionaryId: currentStateRef.current.dictionaryId,
-        origin: currentStateRef.current.origin,
-        meanings: currentStateRef.current.meanings,
-        examples: currentStateRef.current.examples
-      };
-      await addWord(currentStateRef.current.vocabularyId, newWord);
+      const { vocabularyId: currentVocaId, origin, meanings, examples, dictionaryId } = currentStateRef.current;
+      const newWord = { dictionaryId, origin, meanings, examples };
+
+      const existingWord = Object.values(userDictionary).find(w => w.origin === origin);
+      if (existingWord) {
+        const inCurrentBook = existingWord.vocaBooks?.some(
+          vb => String(vb.vocaBookId) === String(currentVocaId)
+        );
+
+        if (inCurrentBook) {
+          showToast('이미 해당 단어장에 등록된 단어입니다.');
+          return;
+        }
+
+        const confirmed = await pushAwaitNewBottomSheet(ConfirmNewBottomSheet, {
+          title: '이미 학습 중인 단어 입니다.\n추가하시겠습니까?',
+          subTitle: '동일한 암기 상태를 공유합니다.',
+          btns: { cancel: '취소', confirm: '추가' },
+        }, { hideUnderlying: true });
+        if (!confirmed) return;
+      }
+
+      await addWord(currentVocaId, newWord);
       handleClose();
     } catch (error) {
       console.error('단어 추가 실패:', error);
+      showToast('단어 추가에 실패했습니다.');
     }
-  }, [handleClose, addWord]);
+  }, [handleClose, addWord, userDictionary, pushAwaitNewBottomSheet]);
 
   // 단어 수정 함수
   const handleEdit = useCallback(async () => {
@@ -165,94 +181,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
     setExamplesState(examples);
   };
 
-  // 앱에서 단어 추가 메시지 처리 핸들러
-  const handleAddWordFromApp = useCallback((message) => {
-
-    const { data } = message;
-    if (data) {
-      // 단어 설정
-      const word = data.word || '';
-      // 의미 추출 (meanings 배열에서 meaning 값들만 추출)
-      const meanings = data.meanings ? data.meanings.map(m => m.meaning) : [];
-      // 예문 변환 (exam_en -> origin, exam_ko -> meaning)
-      const examples = data.examples ? data.examples.map(e => ({
-        origin: e.exam_en,
-        meaning: e.exam_ko
-      })) : [];
-
-      // 기존 handleWordSelect 로직 재사용
-      setWordSearchResults(null);
-      currentStateRef.current = {
-        ...currentStateRef.current,
-        origin: word,
-        meanings: meanings,
-        examples: examples
-      };
-      if (wordInputRef.current) {
-        wordInputRef.current.value = word;
-      }
-      if (meaningsInputRef.current) {
-        meaningsInputRef.current.value = meanings.join(', ');
-      }
-      setExamplesState(examples);
-    }
-  }, []);
-
-  // OCR 결과 처리 핸들러
-  const handleOCRResult = useCallback(async (message) => {
-    if (message.data.words && message.data.words.length > 0) {
-      try {
-        // 백엔드로 OCR 데이터 전송 (전처리 및 DB 확인)
-        const response = await fetchDataAsync(
-          `${backendUrl}/ocr/words`,
-          'POST',
-          {
-            words: message.data.words
-          },
-          false
-        );
-
-        if (response.code === 200) {
-          // 백엔드에서 전처리된 결과 리스트를 앱에 전달 (word, meaning만)
-          const matched_words = response.data.matched_words;
-
-          // 처리된 데이터를 앱으로 전달
-          postMessageManager.sendMessageToReactNative('filteredWords', matched_words);
-
-        } else {
-          console.error('백엔드 OCR 처리 실패:', response);
-          alert('OCR 처리에 실패했습니다.');
-        }
-      } catch (error) {
-        console.error('OCR 데이터 전송 오류:', error);
-        alert('OCR 데이터 전송 중 오류가 발생했습니다.');
-      }
-    }
-  }, []);
-
-  // OCR 결과 리스너 등록
-  useEffect(() => {
-    postMessageManager.setupOCRResult(handleOCRResult);
-
-    // 컴포넌트 언마운트 시 리스너 제거
-    return () => {
-      postMessageManager.removeOCRResult();
-    };
-  }, [handleOCRResult]);
-
-  // addWord 리스너 등록
-  useEffect(() => {
-    postMessageManager.setupAddWord(handleAddWordFromApp);
-
-    // 컴포넌트 언마운트 시 리스너 제거
-    return () => {
-      postMessageManager.removeAddWord();
-    };
-  }, [handleAddWordFromApp]);
-
-
   return (
-    <div className="relative h-full">
+    <div className="relative">
       <div>
         <div className="left"></div>
         <div className="
@@ -260,27 +190,12 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
           p-[20px] pb-[0px]
           ">
           <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">단어 {id ? "수정" : "추가"}</h1>
-          {/* 
-          <button
-            type="button"
-            className="
-              absolute right-[20px]
-              inline-flex items-center justify-center
-              w-[29px] h-[26px]
-            "
-            onClick={() => {
-              postMessageManager.sendMessageToReactNative('openCamera', vocabularyId);
-            }}
-          >
-            <IconCamera width={29} height={26} className="text-primary-main-600" />
-          </button> 
-          */}
         </div>
         <div className="right"></div>
       </div>
       <div className="
         flex flex-col gap-[15px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         p-[20px] pb-[105px]
         overflow-y-auto
       ">
@@ -576,14 +491,14 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   <p className="text-[14px] font-[400] text-layout-black">
                     <span
                       className="cursor-pointer"
-                      onClick={() => getTextSound(origin, "en")}
+                      onClick={() => getTextSound(stripHtmlTags(origin), "en")}
                     >
                       <span dangerouslySetInnerHTML={{ __html: origin }} />
                     </span>
                     <br />
                     <span
                       className="cursor-pointer"
-                      onClick={() => getTextSound(meaning, "ko")}
+                      onClick={() => getTextSound(stripHtmlTags(meaning), "ko")}
                     >
                       {meaning}
                     </span>

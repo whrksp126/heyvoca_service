@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5215,
+    "origin": "bent",
+    "examples": [
+      {
+        "exam_en": "The old nail was <strong class=\"target-word\">bent</strong> and unusable.",
+        "exam_ko": "그 낡은 못은 <strong class=\"target-word\">구부러져</strong> 쓸 수 없었다."
+      },
+      {
+        "exam_en": "She walked <strong class=\"target-word\">bent</strong> with age.",
+        "exam_ko": "그녀는 나이로 인해 <strong class=\"target-word\">구부정하게</strong> 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 5216,
+    "origin": "management",
+    "examples": [
+      {
+        "exam_en": "Good <strong class=\"target-word\">management</strong> keeps the team on track.",
+        "exam_ko": "좋은 <strong class=\"target-word\">경영</strong>이 팀을 올바른 방향으로 이끈다."
+      },
+      {
+        "exam_en": "She studied business <strong class=\"target-word\">management</strong> at university.",
+        "exam_ko": "그녀는 대학에서 경영 <strong class=\"target-word\">관리</strong>를 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 5217,
+    "origin": "learning",
+    "examples": [
+      {
+        "exam_en": "He is a man of deep <strong class=\"target-word\">learning</strong> in history.",
+        "exam_ko": "그는 역사에 조예가 깊은 <strong class=\"target-word\">학식</strong>을 갖춘 사람이다."
+      },
+      {
+        "exam_en": "A little <strong class=\"target-word\">learning</strong> is a dangerous thing.",
+        "exam_ko": "얕은 <strong class=\"target-word\">지식</strong>은 오히려 위험하다."
+      }
+    ]
+  },
+  {
+    "id": 5218,
+    "origin": "laughing",
+    "examples": [
+      {
+        "exam_en": "She could hear <strong class=\"target-word\">laughing</strong> from the next room.",
+        "exam_ko": "그녀는 옆방에서 <strong class=\"target-word\">웃음소리</strong>를 들을 수 있었다."
+      },
+      {
+        "exam_en": "He struggled to hold back his <strong class=\"target-word\">laughing</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">웃음</strong>을 참으려 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 5219,
+    "origin": "dam",
+    "examples": [
+      {
+        "exam_en": "They built a <strong class=\"target-word\">dam</strong> across the river.",
+        "exam_ko": "그들은 강을 가로질러 <strong class=\"target-word\">댐</strong>을 세웠다."
+      },
+      {
+        "exam_en": "The workers <strong class=\"target-word\">dammed</strong> the river to control flooding.",
+        "exam_ko": "공사 인부들은 홍수를 막기 위해 강을 <strong class=\"target-word\">댐으로 막았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5220,
+    "origin": "struck",
+    "examples": [
+      {
+        "exam_en": "The workers occupied the <strong class=\"target-word\">struck</strong> factory for three days.",
+        "exam_ko": "노동자들은 <strong class=\"target-word\">파업 중인</strong> 공장을 사흘 동안 점거했다."
+      },
+      {
+        "exam_en": "Lightning <strong class=\"target-word\">struck</strong> the tall tree in the yard.",
+        "exam_ko": "번개가 마당의 큰 나무를 <strong class=\"target-word\">강타했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5221,
+    "origin": "studied",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">studied</strong> smile that seemed unnatural.",
+        "exam_ko": "그는 부자연스러워 보이는 <strong class=\"target-word\">꾸민</strong> 미소를 지었다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">studied</strong> indifference failed to convince anyone.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">의도적인</strong> 무관심은 아무도 납득시키지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 5222,
+    "origin": "finding",
+    "examples": [
+      {
+        "exam_en": "The team made a great <strong class=\"target-word\">finding</strong> in the lab.",
+        "exam_ko": "팀은 실험실에서 중요한 <strong class=\"target-word\">발견</strong>을 해냈다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">findings</strong> of the committee were released today.",
+        "exam_ko": "위원회의 <strong class=\"target-word\">조사 결과</strong>가 오늘 발표되었다."
+      }
+    ]
+  },
+  {
+    "id": 5223,
+    "origin": "riding",
+    "examples": [
+      {
+        "exam_en": "She wore <strong class=\"target-word\">riding</strong> boots to the stable.",
+        "exam_ko": "그녀는 마구간에 <strong class=\"target-word\">승마</strong>용 부츠를 신고 갔다."
+      },
+      {
+        "exam_en": "He enjoys <strong class=\"target-word\">riding</strong> horses every weekend.",
+        "exam_ko": "그는 매 주말 말을 <strong class=\"target-word\">타는</strong> 것을 즐긴다."
+      }
+    ]
+  },
+  {
+    "id": 5224,
+    "origin": "falling",
+    "examples": [
+      {
+        "exam_en": "Scientists measured the speed of a <strong class=\"target-word\">falling</strong> object.",
+        "exam_ko": "과학자들이 <strong class=\"target-word\">낙하하는</strong> 물체의 속도를 측정했다."
+      },
+      {
+        "exam_en": "Investors were worried about the <strong class=\"target-word\">falling</strong> market.",
+        "exam_ko": "투자자들은 <strong class=\"target-word\">하락하는</strong> 시장을 걱정했다."
+      }
+    ]
+  },
+  {
+    "id": 5225,
+    "origin": "apart",
+    "examples": [
+      {
+        "exam_en": "The old toy came <strong class=\"target-word\">apart</strong> in his hands.",
+        "exam_ko": "낡은 장난감이 그의 손 안에서 <strong class=\"target-word\">산산조각</strong>이 났다."
+      },
+      {
+        "exam_en": "He broke the cardboard box <strong class=\"target-word\">apart</strong> with ease.",
+        "exam_ko": "그는 골판지 상자를 쉽게 <strong class=\"target-word\">산산이 부쉈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5227,
+    "origin": "presence",
+    "examples": [
+      {
+        "exam_en": "Scientists doubt the <strong class=\"target-word\">presence</strong> of life on Mars.",
+        "exam_ko": "과학자들은 화성에 생물이 <strong class=\"target-word\">존재한다</strong>는 것을 의심한다."
+      },
+      {
+        "exam_en": "She made her <strong class=\"target-word\">presence</strong> felt in every meeting.",
+        "exam_ko": "그녀는 모든 회의에서 자신의 <strong class=\"target-word\">존재감</strong>을 드러냈다."
+      }
+    ]
+  },
+  {
+    "id": 5228,
+    "origin": "kernel",
+    "examples": [
+      {
+        "exam_en": "There is a <strong class=\"target-word\">kernel</strong> of truth in what he said.",
+        "exam_ko": "그가 한 말에는 진실의 <strong class=\"target-word\">핵심</strong>이 담겨 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">kernel</strong> of the story is a simple moral lesson.",
+        "exam_ko": "이야기의 <strong class=\"target-word\">요점</strong>은 단순한 교훈이다."
+      }
+    ]
+  },
+  {
+    "id": 5229,
+    "origin": "chosen",
+    "examples": [
+      {
+        "exam_en": "Only a <strong class=\"target-word\">chosen</strong> few were invited to the event.",
+        "exam_ko": "<strong class=\"target-word\">선택된</strong> 소수만이 그 행사에 초대받았다."
+      },
+      {
+        "exam_en": "He excelled in his <strong class=\"target-word\">chosen</strong> field of study.",
+        "exam_ko": "그는 자신이 <strong class=\"target-word\">선택한</strong> 학문 분야에서 두각을 나타냈다."
+      }
+    ]
+  },
+  {
+    "id": 5230,
+    "origin": "outlook",
+    "examples": [
+      {
+        "exam_en": "My house has a wonderful <strong class=\"target-word\">outlook</strong> on the sea.",
+        "exam_ko": "우리 집에서는 멋진 바다 <strong class=\"target-word\">전망</strong>이 보인다."
+      },
+      {
+        "exam_en": "His positive <strong class=\"target-word\">outlook</strong> on life inspires everyone.",
+        "exam_ko": "삶에 대한 그의 긍정적인 <strong class=\"target-word\">관점</strong>은 모두에게 영감을 준다."
+      }
+    ]
+  },
+  {
+    "id": 5231,
+    "origin": "throne",
+    "examples": [
+      {
+        "exam_en": "The king delivered a speech from the <strong class=\"target-word\">throne</strong>.",
+        "exam_ko": "왕은 <strong class=\"target-word\">왕좌</strong>에서 연설을 했다."
+      },
+      {
+        "exam_en": "The prince was next in line for the <strong class=\"target-word\">throne</strong>.",
+        "exam_ko": "왕자는 <strong class=\"target-word\">왕위</strong> 계승 서열 1위였다."
+      }
+    ]
+  },
+  {
+    "id": 5232,
+    "origin": "intended",
+    "examples": [
+      {
+        "exam_en": "She introduced him as her <strong class=\"target-word\">intended</strong> husband.",
+        "exam_ko": "그녀는 그를 자신의 <strong class=\"target-word\">장래의</strong> 남편으로 소개했다."
+      },
+      {
+        "exam_en": "The remark was <strong class=\"target-word\">intended</strong> as a joke.",
+        "exam_ko": "그 발언은 농담으로 <strong class=\"target-word\">의도된</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 5233,
+    "origin": "spent",
+    "examples": [
+      {
+        "exam_en": "It was a well-<strong class=\"target-word\">spent</strong> afternoon at the museum.",
+        "exam_ko": "박물관에서의 유익하게 <strong class=\"target-word\">보낸</strong> 오후였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">spent</strong> runner collapsed at the finish line.",
+        "exam_ko": "<strong class=\"target-word\">지쳐버린</strong> 주자는 결승선에서 쓰러졌다."
+      }
+    ]
+  },
+  {
+    "id": 5234,
+    "origin": "breaking",
+    "examples": [
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">breaking</strong> into the house.",
+        "exam_ko": "그는 집에 <strong class=\"target-word\">침입한</strong> 혐의로 체포되었다."
+      },
+      {
+        "exam_en": "The ice is <strong class=\"target-word\">breaking</strong> near the shore.",
+        "exam_ko": "해안 근처 얼음이 <strong class=\"target-word\">부서지고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 5235,
+    "origin": "error",
+    "examples": [
+      {
+        "exam_en": "The pilot made a grave <strong class=\"target-word\">error</strong> in judgment.",
+        "exam_ko": "조종사는 심각한 판단 <strong class=\"target-word\">오류</strong>를 저질렀다."
+      },
+      {
+        "exam_en": "There was an <strong class=\"target-word\">error</strong> in the calculation.",
+        "exam_ko": "계산에 <strong class=\"target-word\">잘못</strong>이 있었다."
+      }
+    ]
+  }
+]

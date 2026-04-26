@@ -1,0 +1,282 @@
+[
+  {
+    "id": 7174,
+    "origin": "sedate",
+    "examples": [
+      {
+        "exam_en": "She was a <strong class=\"target-word\">sedate</strong> young lady at the event.",
+        "exam_ko": "그녀는 행사에서 <strong class=\"target-word\">얌전한</strong> 젊은 숙녀였다."
+      },
+      {
+        "exam_en": "He maintained a <strong class=\"target-word\">sedate</strong> appearance throughout.",
+        "exam_ko": "그는 내내 <strong class=\"target-word\">침착한</strong> 태도를 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 7175,
+    "origin": "scavenge",
+    "examples": [
+      {
+        "exam_en": "Dogs were <strong class=\"target-word\">scavenging</strong> for food in the trash.",
+        "exam_ko": "개들이 쓰레기통에서 먹이를 <strong class=\"target-word\">뒤지고</strong> 있었다."
+      },
+      {
+        "exam_en": "Vultures <strong class=\"target-word\">scavenge</strong> for carrion across the plains.",
+        "exam_ko": "독수리는 평원에서 썩은 고기를 <strong class=\"target-word\">찾아다닌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7177,
+    "origin": "intestinal",
+    "examples": [
+      {
+        "exam_en": "The doctor examined the <strong class=\"target-word\">intestinal</strong> wall carefully.",
+        "exam_ko": "의사는 <strong class=\"target-word\">장</strong> 벽을 세심히 검사했다."
+      },
+      {
+        "exam_en": "The child was treated for an <strong class=\"target-word\">intestinal</strong> worm infection.",
+        "exam_ko": "그 아이는 <strong class=\"target-word\">장내</strong> 기생충 감염으로 치료를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 7184,
+    "origin": "gut",
+    "examples": [
+      {
+        "exam_en": "Surgery was needed to repair the large <strong class=\"target-word\">gut</strong>.",
+        "exam_ko": "대<strong class=\"target-word\">장</strong>을 치료하기 위해 수술이 필요했다."
+      },
+      {
+        "exam_en": "The patient had pain in the blind <strong class=\"target-word\">gut</strong> area.",
+        "exam_ko": "환자는 <strong class=\"target-word\">맹장</strong> 부위에 통증을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 7185,
+    "origin": "spew",
+    "examples": [
+      {
+        "exam_en": "When the pipe burst, water <strong class=\"target-word\">spewed</strong> out everywhere.",
+        "exam_ko": "파이프가 터지자 물이 사방으로 <strong class=\"target-word\">분출되었다</strong>."
+      },
+      {
+        "exam_en": "The volcano <strong class=\"target-word\">spewed</strong> ash into the sky.",
+        "exam_ko": "화산이 하늘로 화산재를 <strong class=\"target-word\">뿜어냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7186,
+    "origin": "tout",
+    "examples": [
+      {
+        "exam_en": "He went door to door <strong class=\"target-word\">touting</strong> for votes.",
+        "exam_ko": "그는 문마다 돌아다니며 투표를 <strong class=\"target-word\">권유하고</strong> 다녔다."
+      },
+      {
+        "exam_en": "The show is being widely <strong class=\"target-word\">touted</strong> as Broadway's best.",
+        "exam_ko": "그 쇼는 브로드웨이 최고라고 요란하게 <strong class=\"target-word\">선전되고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 7187,
+    "origin": "squeamish",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">squeamish</strong> at the sight of blood.",
+        "exam_ko": "그녀는 피를 보자 <strong class=\"target-word\">역겨움</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "Some people are <strong class=\"target-word\">squeamish</strong> about worms.",
+        "exam_ko": "벌레만 봐도 <strong class=\"target-word\">구역질</strong>이 나는 사람들이 있다."
+      }
+    ]
+  },
+  {
+    "id": 7189,
+    "origin": "belie",
+    "examples": [
+      {
+        "exam_en": "Her smile <strong class=\"target-word\">belied</strong> her true feelings.",
+        "exam_ko": "그녀의 미소는 진짜 감정을 <strong class=\"target-word\">감추었다</strong>."
+      },
+      {
+        "exam_en": "The report <strong class=\"target-word\">belied</strong> the actual conditions there.",
+        "exam_ko": "그 보고서는 실제 상황을 <strong class=\"target-word\">왜곡했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7190,
+    "origin": "guru",
+    "examples": [
+      {
+        "exam_en": "She consulted a fitness <strong class=\"target-word\">guru</strong> for advice.",
+        "exam_ko": "그녀는 조언을 구하러 피트니스 <strong class=\"target-word\">전문가</strong>를 찾아갔다."
+      },
+      {
+        "exam_en": "He is known as a tech <strong class=\"target-word\">guru</strong> in the industry.",
+        "exam_ko": "그는 업계에서 기술 <strong class=\"target-word\">구루</strong>로 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 7191,
+    "origin": "belittle",
+    "examples": [
+      {
+        "exam_en": "He tends to <strong class=\"target-word\">belittle</strong> his own achievements.",
+        "exam_ko": "그는 자신의 성과를 <strong class=\"target-word\">낮추는</strong> 경향이 있다."
+      },
+      {
+        "exam_en": "He never misses a chance to <strong class=\"target-word\">belittle</strong> my work.",
+        "exam_ko": "그는 내 일을 <strong class=\"target-word\">하찮게</strong> 만들 기회를 절대 놓치지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 7192,
+    "origin": "stigmatize",
+    "examples": [
+      {
+        "exam_en": "They tried to <strong class=\"target-word\">stigmatize</strong> him as a traitor.",
+        "exam_ko": "그들은 그에게 배신자라는 <strong class=\"target-word\">누명을 씌우려</strong> 했다."
+      },
+      {
+        "exam_en": "Society should not <strong class=\"target-word\">stigmatize</strong> people with mental illness.",
+        "exam_ko": "사회는 정신 질환자를 <strong class=\"target-word\">낙인찍어서는</strong> 안 된다."
+      }
+    ]
+  },
+  {
+    "id": 7194,
+    "origin": "disseminate",
+    "examples": [
+      {
+        "exam_en": "The program aims to <strong class=\"target-word\">disseminate</strong> knowledge widely.",
+        "exam_ko": "그 프로그램은 지식을 널리 <strong class=\"target-word\">보급하는</strong> 것을 목표로 한다."
+      },
+      {
+        "exam_en": "Social media helps <strong class=\"target-word\">disseminate</strong> information quickly.",
+        "exam_ko": "소셜 미디어는 정보를 빠르게 <strong class=\"target-word\">전파하는</strong> 데 도움을 준다."
+      }
+    ]
+  },
+  {
+    "id": 7196,
+    "origin": "wardrobe",
+    "examples": [
+      {
+        "exam_en": "She has a large <strong class=\"target-word\">wardrobe</strong> full of clothes.",
+        "exam_ko": "그녀는 옷으로 가득 찬 큰 <strong class=\"target-word\">옷장</strong>을 갖고 있다."
+      },
+      {
+        "exam_en": "He updated his entire <strong class=\"target-word\">wardrobe</strong> for the new job.",
+        "exam_ko": "그는 새 직장을 위해 <strong class=\"target-word\">옷가지</strong>를 전부 새로 장만했다."
+      }
+    ]
+  },
+  {
+    "id": 7197,
+    "origin": "shore",
+    "examples": [
+      {
+        "exam_en": "An abandoned ship lay upon the deserted <strong class=\"target-word\">shore</strong>.",
+        "exam_ko": "버려진 배가 인적 없는 <strong class=\"target-word\">해변</strong>에 놓여 있었다."
+      },
+      {
+        "exam_en": "The boat drifted close to <strong class=\"target-word\">shore</strong> after the storm.",
+        "exam_ko": "폭풍 후 배는 <strong class=\"target-word\">물가</strong> 가까이 떠밀려 왔다."
+      }
+    ]
+  },
+  {
+    "id": 7200,
+    "origin": "clamor",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">clamor</strong> of the party guests filled the hall.",
+        "exam_ko": "파티 손님들의 <strong class=\"target-word\">떠들썩한 소리</strong>가 홀을 가득 채웠다."
+      },
+      {
+        "exam_en": "There was a public <strong class=\"target-word\">clamor</strong> for the minister's resignation.",
+        "exam_ko": "장관의 사임을 요구하는 <strong class=\"target-word\">함성</strong>이 거셌다."
+      }
+    ]
+  },
+  {
+    "id": 7201,
+    "origin": "vex",
+    "examples": [
+      {
+        "exam_en": "His constant demands for money <strong class=\"target-word\">vexed</strong> his wife.",
+        "exam_ko": "그의 끊임없는 돈 요구가 아내를 <strong class=\"target-word\">화나게</strong> 했다."
+      },
+      {
+        "exam_en": "The noise from construction <strong class=\"target-word\">vexed</strong> the residents.",
+        "exam_ko": "공사 소음이 주민들을 <strong class=\"target-word\">괴롭혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7202,
+    "origin": "vexation",
+    "examples": [
+      {
+        "exam_en": "She left the room in <strong class=\"target-word\">vexation</strong> after the argument.",
+        "exam_ko": "그녀는 언쟁 후 <strong class=\"target-word\">신경질</strong>이 난 채 방을 나갔다."
+      },
+      {
+        "exam_en": "To my <strong class=\"target-word\">vexation</strong>, the car wouldn't start this morning.",
+        "exam_ko": "<strong class=\"target-word\">난처하게도</strong> 오늘 아침 차에 시동이 걸리지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 7204,
+    "origin": "deduct",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">deducts</strong> tax directly from your salary.",
+        "exam_ko": "회사는 급여에서 세금을 직접 <strong class=\"target-word\">공제한다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">deducted</strong> ten percent from his monthly pay.",
+        "exam_ko": "그들은 그의 월급에서 10퍼센트를 <strong class=\"target-word\">차감했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7205,
+    "origin": "glaring",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">glaring</strong> sunlight made it hard to see.",
+        "exam_ko": "<strong class=\"target-word\">눈부신</strong> 햇빛 때문에 앞이 잘 보이지 않았다."
+      },
+      {
+        "exam_en": "The report contained a <strong class=\"target-word\">glaring</strong> lie.",
+        "exam_ko": "그 보고서에는 <strong class=\"target-word\">빤한</strong> 거짓말이 담겨 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7206,
+    "origin": "dodge",
+    "examples": [
+      {
+        "exam_en": "He managed to <strong class=\"target-word\">dodge</strong> the ball at the last second.",
+        "exam_ko": "그는 마지막 순간에 공을 <strong class=\"target-word\">피했다</strong>."
+      },
+      {
+        "exam_en": "The politician tried to <strong class=\"target-word\">dodge</strong> the reporter's question.",
+        "exam_ko": "그 정치인은 기자의 질문을 <strong class=\"target-word\">따돌리려</strong> 했다."
+      }
+    ]
+  }
+]

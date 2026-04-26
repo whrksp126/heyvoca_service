@@ -1,0 +1,246 @@
+[
+  {
+    "id": 10640,
+    "origin": "concurrent",
+    "examples": [
+      {
+        "exam_en": "The army launched a <strong class=\"target-word\">concurrent</strong> attack on all fronts.",
+        "exam_ko": "군대는 전 전선에 <strong class=\"target-word\">동시</strong> 공격을 개시했다."
+      },
+      {
+        "exam_en": "The doctor prescribed <strong class=\"target-word\">concurrent</strong> treatments for the patient.",
+        "exam_ko": "의사는 환자에게 <strong class=\"target-word\">병행</strong> 치료법을 처방했다."
+      }
+    ]
+  },
+  {
+    "id": 10642,
+    "origin": "density",
+    "examples": [
+      {
+        "exam_en": "The city has a very high population <strong class=\"target-word\">density</strong>.",
+        "exam_ko": "그 도시는 인구 <strong class=\"target-word\">밀도</strong>가 매우 높다."
+      }
+    ]
+  },
+  {
+    "id": 10644,
+    "origin": "unleaded",
+    "examples": [
+      {
+        "exam_en": "Most modern cars run on <strong class=\"target-word\">unleaded</strong> fuel.",
+        "exam_ko": "대부분의 현대 차량은 <strong class=\"target-word\">무연</strong> 연료로 운행된다."
+      },
+      {
+        "exam_en": "She always fills her car with <strong class=\"target-word\">unleaded</strong> gas.",
+        "exam_ko": "그녀는 항상 차에 <strong class=\"target-word\">무연</strong> 가솔린을 넣는다."
+      }
+    ]
+  },
+  {
+    "id": 10645,
+    "origin": "frightful",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">frightful</strong> noise woke everyone up.",
+        "exam_ko": "<strong class=\"target-word\">소름 끼치는</strong> 소리가 모두를 깨웠다."
+      },
+      {
+        "exam_en": "We had a <strong class=\"target-word\">frightful</strong> time during the trip.",
+        "exam_ko": "여행 중에 정말 <strong class=\"target-word\">끔찍한</strong> 시간을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 10646,
+    "origin": "distraction",
+    "examples": [
+      {
+        "exam_en": "He loved her to <strong class=\"target-word\">distraction</strong>.",
+        "exam_ko": "그는 그녀를 미칠 듯이 <strong class=\"target-word\">제정신을 잃을 만큼</strong> 사랑했다."
+      },
+      {
+        "exam_en": "The noise drove him to <strong class=\"target-word\">distraction</strong>.",
+        "exam_ko": "소음이 그를 <strong class=\"target-word\">미칠 지경</strong>으로 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 10647,
+    "origin": "curvature",
+    "examples": [
+      {
+        "exam_en": "The doctor found a <strong class=\"target-word\">curvature</strong> in his spine.",
+        "exam_ko": "의사는 그의 척추에서 <strong class=\"target-word\">만곡</strong>을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 10649,
+    "origin": "congested",
+    "examples": [
+      {
+        "exam_en": "They moved away from the <strong class=\"target-word\">congested</strong> urban area.",
+        "exam_ko": "그들은 <strong class=\"target-word\">혼잡한</strong> 도심 지역을 떠났다."
+      },
+      {
+        "exam_en": "The street was <strong class=\"target-word\">congested</strong> with rush-hour traffic.",
+        "exam_ko": "거리는 출퇴근 차량으로 <strong class=\"target-word\">혼잡했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10650,
+    "origin": "slang",
+    "examples": [
+      {
+        "exam_en": "Teenagers often use <strong class=\"target-word\">slang</strong> in conversation.",
+        "exam_ko": "십 대들은 대화에서 <strong class=\"target-word\">속어</strong>를 자주 사용한다."
+      },
+      {
+        "exam_en": "Soldiers developed their own <strong class=\"target-word\">slang</strong> during the war.",
+        "exam_ko": "군인들은 전쟁 중에 자신들만의 <strong class=\"target-word\">은어</strong>를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 10651,
+    "origin": "poisoning",
+    "examples": [
+      {
+        "exam_en": "She suffered from food <strong class=\"target-word\">poisoning</strong> after dinner.",
+        "exam_ko": "그녀는 저녁 식사 후 식<strong class=\"target-word\">중독</strong>으로 고생했다."
+      }
+    ]
+  },
+  {
+    "id": 10652,
+    "origin": "sturdy",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">sturdy</strong> soldier marched without complaint.",
+        "exam_ko": "<strong class=\"target-word\">씩씩한</strong> 군인은 불평 없이 행군했다."
+      },
+      {
+        "exam_en": "The little fellow has <strong class=\"target-word\">sturdy</strong> legs.",
+        "exam_ko": "그 꼬마는 <strong class=\"target-word\">튼튼한</strong> 다리를 가지고 있다."
+      },
+      {
+        "exam_en": "They built a <strong class=\"target-word\">sturdy</strong> fence around the yard.",
+        "exam_ko": "그들은 마당 주위에 <strong class=\"target-word\">견고한</strong> 울타리를 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 10654,
+    "origin": "achy",
+    "examples": [
+      {
+        "exam_en": "I feel <strong class=\"target-word\">achy</strong> all over today.",
+        "exam_ko": "오늘 온몸이 <strong class=\"target-word\">쑤신다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10655,
+    "origin": "aching",
+    "examples": [
+      {
+        "exam_en": "She went to bed with an <strong class=\"target-word\">aching</strong> heart.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">아픈</strong> 마음을 안고 잠자리에 들었다."
+      }
+    ]
+  },
+  {
+    "id": 10656,
+    "origin": "allergic",
+    "examples": [
+      {
+        "exam_en": "He had a severe <strong class=\"target-word\">allergic</strong> reaction to the medicine.",
+        "exam_ko": "그는 약에 심한 <strong class=\"target-word\">알레르기</strong> 반응을 보였다."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">allergic</strong> to pollen in spring.",
+        "exam_ko": "나는 봄에 꽃가루에 <strong class=\"target-word\">알레르기가</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 10657,
+    "origin": "haughty",
+    "examples": [
+      {
+        "exam_en": "She walked in with a <strong class=\"target-word\">haughty</strong> air.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">거만한</strong> 태도로 걸어 들어왔다."
+      }
+    ]
+  },
+  {
+    "id": 10659,
+    "origin": "faucet",
+    "examples": [
+      {
+        "exam_en": "Please turn off the <strong class=\"target-word\">faucet</strong> after washing your hands.",
+        "exam_ko": "손을 씻고 나서 <strong class=\"target-word\">수도꼭지</strong>를 잠가 주세요."
+      }
+    ]
+  },
+  {
+    "id": 10660,
+    "origin": "matrimonial",
+    "examples": [
+      {
+        "exam_en": "They sought legal help for their <strong class=\"target-word\">matrimonial</strong> dispute.",
+        "exam_ko": "그들은 <strong class=\"target-word\">부부간의</strong> 분쟁을 위해 법적 도움을 구했다."
+      }
+    ]
+  },
+  {
+    "id": 10661,
+    "origin": "irrecoverable",
+    "examples": [
+      {
+        "exam_en": "The company wrote off the <strong class=\"target-word\">irrecoverable</strong> debt.",
+        "exam_ko": "회사는 <strong class=\"target-word\">회수 불능</strong>의 빚을 손실로 처리했다."
+      },
+      {
+        "exam_en": "The fire caused <strong class=\"target-word\">irrecoverable</strong> damage to the museum.",
+        "exam_ko": "화재는 박물관에 <strong class=\"target-word\">돌이킬 수 없는</strong> 손해를 입혔다."
+      }
+    ]
+  },
+  {
+    "id": 10662,
+    "origin": "reenter",
+    "examples": [
+      {
+        "exam_en": "The spacecraft <strong class=\"target-word\">reentered</strong> the atmosphere safely.",
+        "exam_ko": "우주선은 대기권으로 안전하게 <strong class=\"target-word\">재돌입했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10663,
+    "origin": "shuttle",
+    "examples": [
+      {
+        "exam_en": "The bus <strong class=\"target-word\">shuttles</strong> travelers between the airport and the hotel.",
+        "exam_ko": "버스가 여행자를 공항과 호텔 사이에서 <strong class=\"target-word\">왕복 운행</strong>한다."
+      }
+    ]
+  },
+  {
+    "id": 10664,
+    "origin": "onward",
+    "examples": [
+      {
+        "exam_en": "From now <strong class=\"target-word\">onward</strong>, she decided to study every day.",
+        "exam_ko": "지금부터 <strong class=\"target-word\">앞으로</strong>, 그녀는 매일 공부하기로 결심했다."
+      },
+      {
+        "exam_en": "The team moved <strong class=\"target-word\">onward</strong> despite the setback.",
+        "exam_ko": "팀은 좌절에도 불구하고 <strong class=\"target-word\">전진했다</strong>."
+      }
+    ]
+  }
+]

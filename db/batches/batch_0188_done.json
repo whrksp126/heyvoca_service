@@ -1,0 +1,270 @@
+[
+  {
+    "id": 4233,
+    "origin": "barrel",
+    "examples": [
+      {
+        "exam_en": "The store had a <strong class=\"target-word\">barrel</strong> of apples out front.",
+        "exam_ko": "가게 앞에 사과 <strong class=\"target-word\">통</strong>이 하나 놓여 있었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">barreled</strong> down the highway at full speed.",
+        "exam_ko": "그는 전속력으로 고속도로를 <strong class=\"target-word\">질주했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4234,
+    "origin": "fetal",
+    "examples": [
+      {
+        "exam_en": "The doctor monitored the <strong class=\"target-word\">fetal</strong> heartbeat closely.",
+        "exam_ko": "의사는 <strong class=\"target-word\">태아의</strong> 심장 박동을 주의 깊게 관찰했다."
+      },
+      {
+        "exam_en": "She curled into a <strong class=\"target-word\">fetal</strong> position to sleep.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">태아</strong> 자세로 웅크리고 잠들었다."
+      }
+    ]
+  },
+  {
+    "id": 4235,
+    "origin": "psychology",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">psychology</strong> at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">심리학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "Understanding mob <strong class=\"target-word\">psychology</strong> helps predict crowd behavior.",
+        "exam_ko": "군중 <strong class=\"target-word\">심리학</strong>을 이해하면 군중 행동을 예측하는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 4236,
+    "origin": "bull",
+    "examples": [
+      {
+        "exam_en": "The angry <strong class=\"target-word\">bull</strong> charged across the field.",
+        "exam_ko": "성난 <strong class=\"target-word\">황소</strong>가 들판을 가로질러 돌진했다."
+      },
+      {
+        "exam_en": "You must grab the <strong class=\"target-word\">bull</strong> by the horns.",
+        "exam_ko": "<strong class=\"target-word\">황소</strong>의 뿔을 잡아야 한다 (어려운 문제에 정면으로 맞서야 한다)."
+      }
+    ]
+  },
+  {
+    "id": 4237,
+    "origin": "bit",
+    "examples": [
+      {
+        "exam_en": "She ate a <strong class=\"target-word\">bit</strong> of bread for breakfast.",
+        "exam_ko": "그녀는 아침으로 빵을 <strong class=\"target-word\">조금</strong> 먹었다."
+      },
+      {
+        "exam_en": "He gave me a <strong class=\"target-word\">bit</strong> of advice before the interview.",
+        "exam_ko": "그는 면접 전에 나에게 <strong class=\"target-word\">한 마디</strong> 조언을 해줬다."
+      }
+    ]
+  },
+  {
+    "id": 4238,
+    "origin": "drill",
+    "examples": [
+      {
+        "exam_en": "He used an electric <strong class=\"target-word\">drill</strong> to hang the shelf.",
+        "exam_ko": "그는 선반을 달기 위해 전동 <strong class=\"target-word\">드릴</strong>을 사용했다."
+      },
+      {
+        "exam_en": "The school held a fire <strong class=\"target-word\">drill</strong> this morning.",
+        "exam_ko": "학교에서 오늘 아침 소방 <strong class=\"target-word\">훈련</strong>을 실시했다."
+      }
+    ]
+  },
+  {
+    "id": 4239,
+    "origin": "hunter",
+    "examples": [
+      {
+        "exam_en": "The leopard is a skillful <strong class=\"target-word\">hunter</strong>.",
+        "exam_ko": "표범은 능숙한 <strong class=\"target-word\">사냥꾼</strong>이다."
+      },
+      {
+        "exam_en": "He is a fame <strong class=\"target-word\">hunter</strong> who craves recognition.",
+        "exam_ko": "그는 인정받기를 갈망하는 명예 <strong class=\"target-word\">추구자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4242,
+    "origin": "led",
+    "examples": [
+      {
+        "exam_en": "The country adopted an export-<strong class=\"target-word\">led</strong> growth strategy.",
+        "exam_ko": "그 나라는 수출 <strong class=\"target-word\">주도</strong>의 성장 전략을 채택했다."
+      }
+    ]
+  },
+  {
+    "id": 4243,
+    "origin": "putty",
+    "examples": [
+      {
+        "exam_en": "She was like <strong class=\"target-word\">putty</strong> in his hands.",
+        "exam_ko": "그녀는 그의 손 안에 있는 <strong class=\"target-word\">찰흙</strong> 같았다 (그가 시키는 대로 했다)."
+      }
+    ]
+  },
+  {
+    "id": 4245,
+    "origin": "charcoal",
+    "examples": [
+      {
+        "exam_en": "The artist drew the portrait in <strong class=\"target-word\">charcoal</strong>.",
+        "exam_ko": "화가는 <strong class=\"target-word\">목탄</strong>으로 초상화를 그렸다."
+      }
+    ]
+  },
+  {
+    "id": 4246,
+    "origin": "clay",
+    "examples": [
+      {
+        "exam_en": "The potter shaped the <strong class=\"target-word\">clay</strong> into a bowl.",
+        "exam_ko": "도예가는 <strong class=\"target-word\">점토</strong>를 그릇 모양으로 빚었다."
+      },
+      {
+        "exam_en": "Bricks are made from fired <strong class=\"target-word\">clay</strong>.",
+        "exam_ko": "벽돌은 구운 <strong class=\"target-word\">점토</strong>로 만들어진다."
+      }
+    ]
+  },
+  {
+    "id": 4248,
+    "origin": "dilemma",
+    "examples": [
+      {
+        "exam_en": "His question put me in a <strong class=\"target-word\">dilemma</strong>.",
+        "exam_ko": "그의 질문이 나를 <strong class=\"target-word\">딜레마</strong>에 빠뜨렸다."
+      },
+      {
+        "exam_en": "She faced a <strong class=\"target-word\">dilemma</strong> between obeying her father and marrying him.",
+        "exam_ko": "그녀는 아버지에게 순종하느냐 그와 결혼하느냐의 <strong class=\"target-word\">딜레마</strong>에 처했다."
+      },
+      {
+        "exam_en": "He tried hard to resolve the long-standing <strong class=\"target-word\">dilemma</strong>.",
+        "exam_ko": "그는 오래된 <strong class=\"target-word\">딜레마</strong>를 해결하려 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 4249,
+    "origin": "division",
+    "examples": [
+      {
+        "exam_en": "The constitution requires a <strong class=\"target-word\">division</strong> of powers.",
+        "exam_ko": "헌법은 권력의 <strong class=\"target-word\">분립</strong>을 요구한다."
+      },
+      {
+        "exam_en": "The river forms the <strong class=\"target-word\">division</strong> between the two countries.",
+        "exam_ko": "그 강은 두 나라 사이의 <strong class=\"target-word\">경계</strong>를 이룬다."
+      },
+      {
+        "exam_en": "I was stationed at the 180th Infantry <strong class=\"target-word\">Division</strong>.",
+        "exam_ko": "나는 육군 180 보병 <strong class=\"target-word\">사단</strong>에 배치되었다."
+      }
+    ]
+  },
+  {
+    "id": 4250,
+    "origin": "habitable",
+    "examples": [
+      {
+        "exam_en": "Scientists search for <strong class=\"target-word\">habitable</strong> planets beyond Earth.",
+        "exam_ko": "과학자들은 지구 너머의 <strong class=\"target-word\">거주 가능한</strong> 행성을 탐색한다."
+      }
+    ]
+  },
+  {
+    "id": 4251,
+    "origin": "herbal",
+    "examples": [
+      {
+        "exam_en": "She drinks <strong class=\"target-word\">herbal</strong> tea every evening.",
+        "exam_ko": "그녀는 매일 저녁 <strong class=\"target-word\">허브</strong> 차를 마신다."
+      },
+      {
+        "exam_en": "He relies on <strong class=\"target-word\">herbal</strong> medicine to treat his cold.",
+        "exam_ko": "그는 감기 치료에 <strong class=\"target-word\">한방</strong> 약을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 4255,
+    "origin": "swine",
+    "examples": [
+      {
+        "exam_en": "Don't cast pearls before <strong class=\"target-word\">swine</strong>.",
+        "exam_ko": "<strong class=\"target-word\">돼지</strong> 앞에 진주를 던지지 마라."
+      },
+      {
+        "exam_en": "The farmer raised <strong class=\"target-word\">swine</strong> on his small farm.",
+        "exam_ko": "농부는 작은 농장에서 <strong class=\"target-word\">돼지</strong>를 길렀다."
+      }
+    ]
+  },
+  {
+    "id": 4256,
+    "origin": "august",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">august</strong> statesman addressed the nation calmly.",
+        "exam_ko": "<strong class=\"target-word\">위엄 있는</strong> 정치가가 차분하게 국민에게 연설했다."
+      },
+      {
+        "exam_en": "The judge spoke with an <strong class=\"target-word\">august</strong> tone.",
+        "exam_ko": "판사는 <strong class=\"target-word\">위엄 있는</strong> 어조로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 4257,
+    "origin": "phrase",
+    "examples": [
+      {
+        "exam_en": "A noun <strong class=\"target-word\">phrase</strong> acts as the subject of a sentence.",
+        "exam_ko": "명사 <strong class=\"target-word\">구</strong>는 문장의 주어 역할을 한다."
+      },
+      {
+        "exam_en": "In a <strong class=\"target-word\">phrase</strong>, the project was a great success.",
+        "exam_ko": "한마디로 말하면 그 프로젝트는 큰 성공이었다."
+      }
+    ]
+  },
+  {
+    "id": 4258,
+    "origin": "seasonal",
+    "examples": [
+      {
+        "exam_en": "Many farms rely on <strong class=\"target-word\">seasonal</strong> workers during harvest.",
+        "exam_ko": "많은 농장이 수확철에 <strong class=\"target-word\">계절</strong> 노동자에 의존한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Seasonal</strong> storms hit the coast every summer.",
+        "exam_ko": "<strong class=\"target-word\">계절성</strong> 폭풍이 매년 여름 해안을 강타한다."
+      }
+    ]
+  },
+  {
+    "id": 4259,
+    "origin": "senator",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">senator</strong> proposed a new education bill.",
+        "exam_ko": "<strong class=\"target-word\">상원 의원</strong>이 새로운 교육 법안을 발의했다."
+      }
+    ]
+  }
+]

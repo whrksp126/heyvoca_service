@@ -1,0 +1,226 @@
+[
+  {
+    "id": 23535,
+    "origin": "battering",
+    "examples": [
+      {
+        "exam_en": "take a battering",
+        "exam_ko": "타격을 받다."
+      }
+    ]
+  },
+  {
+    "id": 23536,
+    "origin": "upswing",
+    "examples": [
+      {
+        "exam_en": "an upswing in student enrollment",
+        "exam_ko": "학생 수의 현저한 증가"
+      },
+      {
+        "exam_en": "Business activity is on the upswing.",
+        "exam_ko": "상업 활동은 크게 상승하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 23562,
+    "origin": "geocentric",
+    "examples": [
+      {
+        "exam_en": "a geocentric theory of the universe",
+        "exam_ko": "천동설(天動說)."
+      }
+    ]
+  },
+  {
+    "id": 23573,
+    "origin": "wrack",
+    "examples": [
+      {
+        "exam_en": "go to wrack and ruin",
+        "exam_ko": "파멸하다."
+      }
+    ]
+  },
+  {
+    "id": 23576,
+    "origin": "contra",
+    "examples": [
+      {
+        "exam_en": "pro and contra",
+        "exam_ko": "찬부 양면에서."
+      },
+      {
+        "exam_en": "pros and contras",
+        "exam_ko": "찬부 양론[투표]."
+      }
+    ]
+  },
+  {
+    "id": 23578,
+    "origin": "airy",
+    "examples": [
+      {
+        "exam_en": "a nice airy room",
+        "exam_ko": "상당히 통풍이 잘 되는 방"
+      },
+      {
+        "exam_en": "an airy hillside",
+        "exam_ko": "바람이 잘 통하는 산허리."
+      }
+    ]
+  },
+  {
+    "id": 23591,
+    "origin": "excretory",
+    "examples": [
+      {
+        "exam_en": "excretory organs",
+        "exam_ko": "배설 기관[관]."
+      }
+    ]
+  },
+  {
+    "id": 23599,
+    "origin": "azure",
+    "examples": [
+      {
+        "exam_en": "the azure sky",
+        "exam_ko": "푸른 하늘."
+      },
+      {
+        "exam_en": "She wore a dress of azure.",
+        "exam_ko": "그녀는 푸른색 옷을 입고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 23603,
+    "origin": "marauding",
+    "examples": [
+      {
+        "exam_en": "a marauding gang",
+        "exam_ko": "비적(匪賊)."
+      }
+    ]
+  },
+  {
+    "id": 23606,
+    "origin": "ravening",
+    "examples": [
+      {
+        "exam_en": "ravening wolves",
+        "exam_ko": "굶주림에 날뛰는 늑대."
+      }
+    ]
+  },
+  {
+    "id": 23611,
+    "origin": "ireful",
+    "examples": [
+      {
+        "exam_en": "an ireful glance",
+        "exam_ko": "화난 눈초리."
+      }
+    ]
+  },
+  {
+    "id": 23618,
+    "origin": "inferential",
+    "examples": [
+      {
+        "exam_en": "inferential proof",
+        "exam_ko": "추정에 의한 증명."
+      }
+    ]
+  },
+  {
+    "id": 23623,
+    "origin": "salivary",
+    "examples": [
+      {
+        "exam_en": "salivary glands",
+        "exam_ko": "타액선."
+      }
+    ]
+  },
+  {
+    "id": 23634,
+    "origin": "multistory",
+    "examples": [
+      {
+        "exam_en": "a multistory parking lot",
+        "exam_ko": "다층식 주차장, 입체주차장."
+      }
+    ]
+  },
+  {
+    "id": 23646,
+    "origin": "spectacularly",
+    "examples": [
+      {
+        "exam_en": "Most of his movies had been spectacularly successful.",
+        "exam_ko": "대부분의 그의 영화는 대단히 성공적이었다."
+      }
+    ]
+  },
+  {
+    "id": 23648,
+    "origin": "offshore",
+    "examples": [
+      {
+        "exam_en": "an offshore breeze",
+        "exam_ko": "앞바다를 향해 부는 바람"
+      },
+      {
+        "exam_en": "offshore fisheries",
+        "exam_ko": "근해 어업."
+      }
+    ]
+  },
+  {
+    "id": 23649,
+    "origin": "anhydrous",
+    "examples": [
+      {
+        "exam_en": "anhydrous salts",
+        "exam_ko": "무수염."
+      }
+    ]
+  },
+  {
+    "id": 23651,
+    "origin": "rickets",
+    "examples": [
+      {
+        "exam_en": "Rickets is not contagious. ",
+        "exam_ko": "구루병은 전염성이 없다."
+      },
+      {
+        "exam_en": "Rickets is not contagious.",
+        "exam_ko": "구루병은 전염성이 없다."
+      }
+    ]
+  },
+  {
+    "id": 23659,
+    "origin": "matrilineal",
+    "examples": [
+      {
+        "exam_en": "a matrilineal society",
+        "exam_ko": "모계 사회."
+      }
+    ]
+  },
+  {
+    "id": 23671,
+    "origin": "comeback",
+    "examples": [
+      {
+        "exam_en": "stage a comeback",
+        "exam_ko": "(선수·배우 등이) 인기를 만회하다."
+      }
+    ]
+  }
+]

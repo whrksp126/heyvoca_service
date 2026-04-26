@@ -53,7 +53,7 @@ const Main = () => {
     <motion.div
       className="
         flex flex-col 
-        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav)-var(--status-bar-height))]
+        h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         px-[16px] py-[10px]
         overflow-y-auto
       "

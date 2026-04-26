@@ -1,0 +1,290 @@
+[
+  {
+    "id": 10279,
+    "origin": "remarkably",
+    "examples": [
+      {
+        "exam_en": "This winter is <strong class=\"target-word\">remarkably</strong> cold.",
+        "exam_ko": "이번 겨울은 <strong class=\"target-word\">유달리</strong> 춥다."
+      },
+      {
+        "exam_en": "She finished the job <strong class=\"target-word\">remarkably</strong> well.",
+        "exam_ko": "그녀는 일을 <strong class=\"target-word\">아주 훌륭히</strong> 마쳤다."
+      }
+    ]
+  },
+  {
+    "id": 10281,
+    "origin": "assumed",
+    "examples": [
+      {
+        "exam_en": "He wore an <strong class=\"target-word\">assumed</strong> air of importance.",
+        "exam_ko": "그는 <strong class=\"target-word\">겉으로만 거만한 체하는</strong> 태도를 보였다."
+      },
+      {
+        "exam_en": "She traveled under an <strong class=\"target-word\">assumed</strong> name.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가명</strong>을 쓰고 여행했다."
+      }
+    ]
+  },
+  {
+    "id": 10282,
+    "origin": "resort",
+    "examples": [
+      {
+        "exam_en": "Many people <strong class=\"target-word\">resort</strong> to that park on weekends.",
+        "exam_ko": "많은 사람들이 주말에 그 공원을 <strong class=\"target-word\">자주 찾는다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">resorted</strong> to the inn every evening.",
+        "exam_ko": "그는 매일 저녁 그 술집에 <strong class=\"target-word\">자주 드나들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10284,
+    "origin": "telescope",
+    "examples": [
+      {
+        "exam_en": "He watched the stars through a <strong class=\"target-word\">telescope</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">망원경</strong>으로 별을 관찰했다."
+      },
+      {
+        "exam_en": "The documentary <strong class=\"target-word\">telescoped</strong> her life into two hours.",
+        "exam_ko": "그 다큐멘터리는 그녀의 생애를 두 시간으로 <strong class=\"target-word\">집약했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10289,
+    "origin": "lottery",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">lottery</strong> ticket on her way home.",
+        "exam_ko": "그녀는 집에 오는 길에 <strong class=\"target-word\">복권</strong>을 샀다."
+      },
+      {
+        "exam_en": "He won the <strong class=\"target-word\">lottery</strong> last week.",
+        "exam_ko": "그는 지난주에 <strong class=\"target-word\">복권</strong>에 당첨되었다."
+      }
+    ]
+  },
+  {
+    "id": 10291,
+    "origin": "laborer",
+    "examples": [
+      {
+        "exam_en": "He works as a seasonal <strong class=\"target-word\">laborer</strong> on the farm.",
+        "exam_ko": "그는 농장에서 계절 <strong class=\"target-word\">노동자</strong>로 일한다."
+      },
+      {
+        "exam_en": "The factory hired many <strong class=\"target-word\">laborers</strong> this year.",
+        "exam_ko": "공장은 올해 많은 <strong class=\"target-word\">노동자</strong>를 고용했다."
+      }
+    ]
+  },
+  {
+    "id": 10295,
+    "origin": "adverb",
+    "examples": [
+      {
+        "exam_en": "She learned how to use an <strong class=\"target-word\">adverb</strong> phrase correctly.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">부사</strong>구를 올바르게 사용하는 법을 배웠다."
+      },
+      {
+        "exam_en": "\"Quickly\" is an <strong class=\"target-word\">adverb</strong> that modifies verbs.",
+        "exam_ko": "\"quickly\"는 동사를 수식하는 <strong class=\"target-word\">부사</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 10296,
+    "origin": "misfortune",
+    "examples": [
+      {
+        "exam_en": "She was a woman in <strong class=\"target-word\">misfortune</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">역경</strong>에 처한 여자였다."
+      },
+      {
+        "exam_en": "By <strong class=\"target-word\">misfortune</strong>, he missed the last train.",
+        "exam_ko": "<strong class=\"target-word\">불행히도</strong> 그는 막차를 놓쳤다."
+      }
+    ]
+  },
+  {
+    "id": 10297,
+    "origin": "rout",
+    "examples": [
+      {
+        "exam_en": "The general put the enemy to <strong class=\"target-word\">rout</strong>.",
+        "exam_ko": "장군은 적을 <strong class=\"target-word\">완패</strong>시켰다."
+      },
+      {
+        "exam_en": "Our soldiers <strong class=\"target-word\">routed</strong> the enemy completely.",
+        "exam_ko": "우리 군은 적을 완전히 <strong class=\"target-word\">궤멸시켰다</strong>."
+      },
+      {
+        "exam_en": "The home team suffered a total <strong class=\"target-word\">rout</strong>.",
+        "exam_ko": "홈팀은 완전한 <strong class=\"target-word\">대패</strong>를 당했다."
+      }
+    ]
+  },
+  {
+    "id": 10298,
+    "origin": "ascend",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">ascended</strong> to the roof of the building.",
+        "exam_ko": "그들은 건물 지붕으로 <strong class=\"target-word\">올라갔다</strong>."
+      },
+      {
+        "exam_en": "A faint sound <strong class=\"target-word\">ascended</strong> from downstairs.",
+        "exam_ko": "아래층에서 희미한 소리가 <strong class=\"target-word\">들려왔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10299,
+    "origin": "globe",
+    "examples": [
+      {
+        "exam_en": "The teacher pointed to the terrestrial <strong class=\"target-word\">globe</strong>.",
+        "exam_ko": "선생님은 지구 <strong class=\"target-word\">지구본</strong>을 가리켰다."
+      },
+      {
+        "exam_en": "Her music is loved all over the <strong class=\"target-word\">globe</strong>.",
+        "exam_ko": "그녀의 음악은 <strong class=\"target-word\">전세계</strong>에서 사랑받는다."
+      }
+    ]
+  },
+  {
+    "id": 10300,
+    "origin": "itch",
+    "examples": [
+      {
+        "exam_en": "He scratched his <strong class=\"target-word\">itching</strong> foot.",
+        "exam_ko": "그는 <strong class=\"target-word\">가려운</strong> 발을 긁었다."
+      },
+      {
+        "exam_en": "My back <strong class=\"target-word\">itches</strong> all the time.",
+        "exam_ko": "내 등이 계속 <strong class=\"target-word\">가렵다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10301,
+    "origin": "reaction",
+    "examples": [
+      {
+        "exam_en": "There was a strong <strong class=\"target-word\">reaction</strong> against militarism.",
+        "exam_ko": "군국주의에 대한 강한 <strong class=\"target-word\">반발</strong>이 있었다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">reaction</strong> to the news surprised everyone.",
+        "exam_ko": "그 소식에 대한 그의 <strong class=\"target-word\">반응</strong>이 모두를 놀라게 했다."
+      },
+      {
+        "exam_en": "The chemical <strong class=\"target-word\">reaction</strong> produced heat.",
+        "exam_ko": "화학 <strong class=\"target-word\">반응</strong>이 열을 발생시켰다."
+      }
+    ]
+  },
+  {
+    "id": 10302,
+    "origin": "hopefully",
+    "examples": [
+      {
+        "exam_en": "She smiled <strong class=\"target-word\">hopefully</strong> at the good news.",
+        "exam_ko": "그녀는 좋은 소식에 <strong class=\"target-word\">희망을 가지고</strong> 웃었다."
+      },
+      {
+        "exam_en": "He asked <strong class=\"target-word\">hopefully</strong> if he passed the exam.",
+        "exam_ko": "그는 시험에 합격했는지 <strong class=\"target-word\">기대하며</strong> 물었다."
+      }
+    ]
+  },
+  {
+    "id": 10303,
+    "origin": "horrendous",
+    "examples": [
+      {
+        "exam_en": "The city faced <strong class=\"target-word\">horrendous</strong> traffic this morning.",
+        "exam_ko": "도시는 오늘 아침 <strong class=\"target-word\">끔찍한</strong> 교통 체증을 겪었다."
+      },
+      {
+        "exam_en": "They dealt with <strong class=\"target-word\">horrendous</strong> problems all year.",
+        "exam_ko": "그들은 일년 내내 <strong class=\"target-word\">해결하기 어려운</strong> 문제들을 다뤘다."
+      }
+    ]
+  },
+  {
+    "id": 10304,
+    "origin": "nut",
+    "examples": [
+      {
+        "exam_en": "He cracked a <strong class=\"target-word\">nut</strong> with his hands.",
+        "exam_ko": "그는 손으로 <strong class=\"target-word\">나무 열매</strong>를 쪼갰다."
+      },
+      {
+        "exam_en": "You need to use your <strong class=\"target-word\">nut</strong> to solve this.",
+        "exam_ko": "이걸 해결하려면 <strong class=\"target-word\">머리</strong>를 써야 한다."
+      }
+    ]
+  },
+  {
+    "id": 10306,
+    "origin": "concentration",
+    "examples": [
+      {
+        "exam_en": "There is a high <strong class=\"target-word\">concentration</strong> of population in the city.",
+        "exam_ko": "도시에는 높은 인구 <strong class=\"target-word\">집중</strong>이 있다."
+      },
+      {
+        "exam_en": "The telescope revealed a <strong class=\"target-word\">concentration</strong> of stars.",
+        "exam_ko": "망원경은 별들의 <strong class=\"target-word\">집단</strong>을 보여주었다."
+      }
+    ]
+  },
+  {
+    "id": 10307,
+    "origin": "unfriendly",
+    "examples": [
+      {
+        "exam_en": "They were concerned about an <strong class=\"target-word\">unfriendly</strong> country nearby.",
+        "exam_ko": "그들은 근처의 <strong class=\"target-word\">적대적인</strong> 나라를 걱정했다."
+      },
+      {
+        "exam_en": "The policy was <strong class=\"target-word\">unfriendly</strong> to immigrants.",
+        "exam_ko": "그 정책은 이민자들에게 <strong class=\"target-word\">우호적이지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10310,
+    "origin": "fairness",
+    "examples": [
+      {
+        "exam_en": "In <strong class=\"target-word\">fairness</strong>, we must hear both sides.",
+        "exam_ko": "<strong class=\"target-word\">공평하게</strong> 보아, 우리는 양쪽 이야기를 들어야 한다."
+      },
+      {
+        "exam_en": "The judge ruled with <strong class=\"target-word\">fairness</strong> and clarity.",
+        "exam_ko": "판사는 <strong class=\"target-word\">공정함</strong>과 명확함으로 판결했다."
+      }
+    ]
+  },
+  {
+    "id": 10312,
+    "origin": "plod",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">plodded</strong> along the road with great fatigue.",
+        "exam_ko": "그는 몹시 지친 몸으로 길을 <strong class=\"target-word\">터벅터벅 걸어갔다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">plodded</strong> away at her books every night.",
+        "exam_ko": "그녀는 매일 밤 책을 <strong class=\"target-word\">열심히 파고들었다</strong>."
+      }
+    ]
+  }
+]

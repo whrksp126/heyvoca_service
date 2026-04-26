@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3530,
+    "origin": "minister",
+    "examples": [
+      {
+        "exam_en": "She was appointed as the <strong class=\"target-word\">Minister</strong> of Education.",
+        "exam_ko": "그녀는 교육부 <strong class=\"target-word\">장관</strong>으로 임명되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">minister</strong> gave a speech in parliament.",
+        "exam_ko": "<strong class=\"target-word\">장관</strong>이 의회에서 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": 3531,
+    "origin": "mine",
+    "examples": [
+      {
+        "exam_en": "That bag is <strong class=\"target-word\">mine</strong>, not yours.",
+        "exam_ko": "저 가방은 <strong class=\"target-word\">내 것</strong>이야, 네 것이 아니야."
+      },
+      {
+        "exam_en": "Workers spent years digging in the <strong class=\"target-word\">mine</strong>.",
+        "exam_ko": "광부들은 수년간 <strong class=\"target-word\">광산</strong>에서 채굴했다."
+      }
+    ]
+  },
+  {
+    "id": 3532,
+    "origin": "million",
+    "examples": [
+      {
+        "exam_en": "The company earned five <strong class=\"target-word\">million</strong> dollars last year.",
+        "exam_ko": "그 회사는 지난해 500만 <strong class=\"target-word\">달러</strong>를 벌었다."
+      },
+      {
+        "exam_en": "A few <strong class=\"target-word\">million</strong> people watched the broadcast.",
+        "exam_ko": "수 <strong class=\"target-word\">백만</strong> 명이 방송을 시청했다."
+      }
+    ]
+  },
+  {
+    "id": 3533,
+    "origin": "method",
+    "examples": [
+      {
+        "exam_en": "The teacher used an oral <strong class=\"target-word\">method</strong> in class.",
+        "exam_ko": "선생님은 수업에서 구두 교수 <strong class=\"target-word\">방법</strong>을 사용했다."
+      },
+      {
+        "exam_en": "They introduced a new <strong class=\"target-word\">method</strong> of teaching English.",
+        "exam_ko": "그들은 새로운 영어 교육 <strong class=\"target-word\">방법</strong>을 도입했다."
+      }
+    ]
+  },
+  {
+    "id": 3534,
+    "origin": "message",
+    "examples": [
+      {
+        "exam_en": "He sent a congratulatory <strong class=\"target-word\">message</strong> to the team.",
+        "exam_ko": "그는 팀에 축하 <strong class=\"target-word\">메시지</strong>를 보냈다."
+      },
+      {
+        "exam_en": "Do you want me to leave a <strong class=\"target-word\">message</strong>?",
+        "exam_ko": "<strong class=\"target-word\">메시지</strong> 남겨드릴까요?"
+      }
+    ]
+  },
+  {
+    "id": 3535,
+    "origin": "mercy",
+    "examples": [
+      {
+        "exam_en": "The soldiers fought without <strong class=\"target-word\">mercy</strong>.",
+        "exam_ko": "병사들은 <strong class=\"target-word\">자비</strong> 없이 싸웠다."
+      },
+      {
+        "exam_en": "The prisoner begged for <strong class=\"target-word\">mercy</strong> before the judge.",
+        "exam_ko": "죄수는 판사 앞에서 <strong class=\"target-word\">자비</strong>를 구했다."
+      }
+    ]
+  },
+  {
+    "id": 3536,
+    "origin": "memory",
+    "examples": [
+      {
+        "exam_en": "She has a photographic <strong class=\"target-word\">memory</strong> for faces.",
+        "exam_ko": "그녀는 얼굴에 대한 사진 같은 <strong class=\"target-word\">기억력</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "He has a poor <strong class=\"target-word\">memory</strong> for names.",
+        "exam_ko": "그는 이름에 대한 <strong class=\"target-word\">기억력</strong>이 나쁘다."
+      }
+    ]
+  },
+  {
+    "id": 3537,
+    "origin": "member",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Members</strong> receive a discount at the store.",
+        "exam_ko": "<strong class=\"target-word\">회원</strong>은 매장에서 할인을 받는다."
+      },
+      {
+        "exam_en": "Every <strong class=\"target-word\">member</strong> of the family joined the trip.",
+        "exam_ko": "가족 <strong class=\"target-word\">구성원</strong> 모두가 여행에 참여했다."
+      }
+    ]
+  },
+  {
+    "id": 3538,
+    "origin": "mayor",
+    "examples": [
+      {
+        "exam_en": "The deputy <strong class=\"target-word\">mayor</strong> signed the document.",
+        "exam_ko": "부 <strong class=\"target-word\">시장</strong>이 서류에 서명했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">mayor</strong> announced a new city project.",
+        "exam_ko": "<strong class=\"target-word\">시장</strong>이 새로운 도시 사업을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 3539,
+    "origin": "map",
+    "examples": [
+      {
+        "exam_en": "She bought a detailed <strong class=\"target-word\">map</strong> of the city.",
+        "exam_ko": "그녀는 도시의 상세한 <strong class=\"target-word\">지도</strong>를 샀다."
+      },
+      {
+        "exam_en": "We stopped to consult the <strong class=\"target-word\">map</strong> at the corner.",
+        "exam_ko": "우리는 모퉁이에서 <strong class=\"target-word\">지도</strong>를 살펴보려고 멈췄다."
+      }
+    ]
+  },
+  {
+    "id": 3540,
+    "origin": "many",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Many</strong> people witnessed the accident.",
+        "exam_ko": "<strong class=\"target-word\">많은</strong> 사람들이 그 사고를 목격했다."
+      },
+      {
+        "exam_en": "There aren't <strong class=\"target-word\">many</strong> tourists here.",
+        "exam_ko": "여기에는 관광객이 <strong class=\"target-word\">많지</strong> 않다."
+      }
+    ]
+  },
+  {
+    "id": 3541,
+    "origin": "man",
+    "examples": [
+      {
+        "exam_en": "He is a single <strong class=\"target-word\">man</strong> living alone.",
+        "exam_ko": "그는 혼자 사는 독신 <strong class=\"target-word\">남성</strong>이다."
+      },
+      {
+        "exam_en": "A young <strong class=\"target-word\">man</strong> helped her cross the street.",
+        "exam_ko": "젊은 <strong class=\"target-word\">남자</strong>가 그녀가 길을 건너도록 도와줬다."
+      }
+    ]
+  },
+  {
+    "id": 3542,
+    "origin": "majority",
+    "examples": [
+      {
+        "exam_en": "In the <strong class=\"target-word\">majority</strong> of cases, it works well.",
+        "exam_ko": "대부분의 경우 <strong class=\"target-word\">대다수</strong>는 잘 작동한다."
+      },
+      {
+        "exam_en": "She spent the <strong class=\"target-word\">majority</strong> of the day reading.",
+        "exam_ko": "그녀는 하루의 <strong class=\"target-word\">대부분</strong>을 독서로 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 3543,
+    "origin": "mail",
+    "examples": [
+      {
+        "exam_en": "Please send the documents by <strong class=\"target-word\">mail</strong>.",
+        "exam_ko": "서류를 <strong class=\"target-word\">우편</strong>으로 보내주세요."
+      },
+      {
+        "exam_en": "She sent the package by air <strong class=\"target-word\">mail</strong>.",
+        "exam_ko": "그녀는 소포를 항공 <strong class=\"target-word\">우편</strong>으로 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 3544,
+    "origin": "magazine",
+    "examples": [
+      {
+        "exam_en": "She subscribes to a weekly <strong class=\"target-word\">magazine</strong>.",
+        "exam_ko": "그녀는 주간 <strong class=\"target-word\">잡지</strong>를 구독한다."
+      },
+      {
+        "exam_en": "He read a <strong class=\"target-word\">magazine</strong> article on economics.",
+        "exam_ko": "그는 경제에 관한 <strong class=\"target-word\">잡지</strong> 기사를 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 3545,
+    "origin": "machine",
+    "examples": [
+      {
+        "exam_en": "She fixed the sewing <strong class=\"target-word\">machine</strong> herself.",
+        "exam_ko": "그녀는 재봉 <strong class=\"target-word\">기계</strong>를 직접 고쳤다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">machine</strong> is moving around your head.",
+        "exam_ko": "<strong class=\"target-word\">기계</strong>가 머리 주변을 돌아갈 겁니다."
+      }
+    ]
+  },
+  {
+    "id": 3546,
+    "origin": "luck",
+    "examples": [
+      {
+        "exam_en": "Finding that job was a real piece of <strong class=\"target-word\">luck</strong>.",
+        "exam_ko": "그 일자리를 구한 것은 정말 <strong class=\"target-word\">행운</strong>이었다."
+      },
+      {
+        "exam_en": "Winning the lottery is just the <strong class=\"target-word\">luck</strong> of the draw.",
+        "exam_ko": "복권 당첨은 그냥 추첨 <strong class=\"target-word\">운</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3547,
+    "origin": "life",
+    "examples": [
+      {
+        "exam_en": "He believes in eternal <strong class=\"target-word\">life</strong> after death.",
+        "exam_ko": "그는 사후 영원한 <strong class=\"target-word\">삶</strong>을 믿는다."
+      },
+      {
+        "exam_en": "Scientists study the origin of <strong class=\"target-word\">life</strong> on Earth.",
+        "exam_ko": "과학자들은 지구 <strong class=\"target-word\">생명</strong>의 기원을 연구한다."
+      }
+    ]
+  },
+  {
+    "id": 3548,
+    "origin": "library",
+    "examples": [
+      {
+        "exam_en": "She returned the books to the public <strong class=\"target-word\">library</strong>.",
+        "exam_ko": "그녀는 공공 <strong class=\"target-word\">도서관</strong>에 책을 반납했다."
+      },
+      {
+        "exam_en": "This book is a must for every family <strong class=\"target-word\">library</strong>.",
+        "exam_ko": "이 책은 모든 가정 <strong class=\"target-word\">서재</strong>에 꼭 있어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3549,
+    "origin": "letter",
+    "examples": [
+      {
+        "exam_en": "Write your name starting with an initial <strong class=\"target-word\">letter</strong>.",
+        "exam_ko": "이름을 머리글자 <strong class=\"target-word\">글자</strong>로 시작해서 써라."
+      },
+      {
+        "exam_en": "Please write your name in capital <strong class=\"target-word\">letters</strong>.",
+        "exam_ko": "이름을 대문자로 <strong class=\"target-word\">써</strong>주세요."
+      }
+    ]
+  }
+]

@@ -1,0 +1,202 @@
+[
+  {
+    "id": 51524,
+    "origin": "eccentic",
+    "examples": [
+      {
+        "exam_en": "You have a screw loose eccentric idea.",
+        "exam_ko": "너 정말 정신 나간 생각을 가지고 있구나!!"
+      }
+    ]
+  },
+  {
+    "id": 51525,
+    "origin": "uncensorable",
+    "examples": [
+      {
+        "exam_en": "Block chain deals with uncensorable and permanent information about food or medicine.",
+        "exam_ko": "블록 체인은 약이나 음식에 관한 (검열해서) 삭제되지 않고 영구적인 정보를 다룬다."
+      }
+    ]
+  },
+  {
+    "id": 51538,
+    "origin": "media",
+    "examples": [
+      {
+        "exam_en": "Her sad story was fully reported in the national media.",
+        "exam_ko": "그녀의 슬픈 이야기는 전국 매체에 완전히 보도되었다"
+      }
+    ]
+  },
+  {
+    "id": 51551,
+    "origin": "trickshot",
+    "examples": [
+      {
+        "exam_en": "I want to see trickshot content at this TV station.",
+        "exam_ko": "나는 이 테레비젼 방송에서 묘기 골프를 보고싶다."
+      }
+    ]
+  },
+  {
+    "id": 51554,
+    "origin": "golftel",
+    "examples": [
+      {
+        "exam_en": "This golftel enjoys a large patronage these days.",
+        "exam_ko": "요즘 이 골프텔은 단골손님이 많다."
+      }
+    ]
+  },
+  {
+    "id": 51555,
+    "origin": "tee",
+    "examples": [
+      {
+        "exam_en": "The tee is yours.",
+        "exam_ko": "당신이 티샷하실 차례입니다."
+      }
+    ]
+  },
+  {
+    "id": 51557,
+    "origin": "clubhead",
+    "examples": [
+      {
+        "exam_en": "The only way to get the clubhead to swing truely is to stroke very softly, smoothly, and slowly.",
+        "exam_ko": "클럽헤드가 잘 스윙이 되게 하는 가유일한 방법은 부드럽게, 편안하게, 천천히 치는 것이다."
+      }
+    ]
+  },
+  {
+    "id": 51558,
+    "origin": "miss-shot",
+    "examples": [
+      {
+        "exam_en": "I made a miss-shot.",
+        "exam_ko": "잘 못 쳤어요."
+      }
+    ]
+  },
+  {
+    "id": 51559,
+    "origin": "hole-in-one",
+    "examples": [
+      {
+        "exam_en": "How many hole-in-ones have you had so far?",
+        "exam_ko": "홀인원은 지금까지 몇 번 해 봤나요?"
+      }
+    ]
+  },
+  {
+    "id": 51560,
+    "origin": "putterhead",
+    "examples": [
+      {
+        "exam_en": "Make sure your putterhead is square to your target line at impact.",
+        "exam_ko": "퍼터를 칠 때 목표선과 너의 퍼터헤드가 직각이 되도록 반드시 확인하세요."
+      }
+    ]
+  },
+  {
+    "id": 51561,
+    "origin": "clubface",
+    "examples": [
+      {
+        "exam_en": "The reason you're hitting a lot of slices is because your clubface is open at impact.",
+        "exam_ko": "슬라이스가 나오는 이유는 당신의 클럽페이스가 타격시 열린 상태이기 때문이예요."
+      }
+    ]
+  },
+  {
+    "id": 51562,
+    "origin": "bogey-free",
+    "examples": [
+      {
+        "exam_en": "She enjoyed a bogey-free round and was confident of another good performance.",
+        "exam_ko": "그녀는 보기가 없는 라운드를 즐겼기에 다른 좋은 성과에도 자신이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 51565,
+    "origin": "katusa",
+    "examples": [
+      {
+        "exam_en": "I had served in KATUSA for 2 years.",
+        "exam_ko": "나는 2 년간 카투사로 군 복무를 했다"
+      }
+    ]
+  },
+  {
+    "id": 51567,
+    "origin": "pt",
+    "examples": [
+      {
+        "exam_en": "I will enroll in the PT program in the army to improve my fitness.",
+        "exam_ko": "나는 체력을 향상하고자 부대내의 운동 훈련 프로그램에 등록할 것이다."
+      }
+    ]
+  },
+  {
+    "id": 51569,
+    "origin": "wmd",
+    "examples": [
+      {
+        "exam_en": "I have a strong belief that there were WMD.",
+        "exam_ko": "나는 거기에 대량 살상 무기가 있다고 매우 확신한다."
+      }
+    ]
+  },
+  {
+    "id": 51578,
+    "origin": "weaponry",
+    "examples": [
+      {
+        "exam_en": "The soldiers are heavily armed with state-of-the-art weaponry.",
+        "exam_ko": "군인들은 최첨단 무기로 중무장하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 51582,
+    "origin": "underripe",
+    "examples": [
+      {
+        "exam_en": "I like this underripe banana.",
+        "exam_ko": "나는 이 덜익은 바나나를 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 51583,
+    "origin": "stir-fry",
+    "examples": [
+      {
+        "exam_en": "Please stir-fry this meat in the big pan in a small amount of oil.",
+        "exam_ko": "기름을 조금 넣고 이 큰 팬에 고기를 볶으세요."
+      }
+    ]
+  },
+  {
+    "id": 51584,
+    "origin": "decanting",
+    "examples": [
+      {
+        "exam_en": "You have to know that decanting matures the taste of young wines.",
+        "exam_ko": "디캔팅은 덜 익은 와인의 맛을 성숙시킨다는 것을 알아야 한다."
+      }
+    ]
+  },
+  {
+    "id": 51595,
+    "origin": "corked",
+    "examples": [
+      {
+        "exam_en": "Corked wine was contaminated by this chemical material.",
+        "exam_ko": "코르크 마개를 한 와인은 이 화학 물질로 오염되었다."
+      }
+    ]
+  }
+]

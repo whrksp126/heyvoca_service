@@ -1,0 +1,250 @@
+[
+  {
+    "id": 17274,
+    "origin": "borderline",
+    "examples": [
+      {
+        "exam_en": "a borderline case",
+        "exam_ko": "이도 저도 아닌 경우[사건]"
+      },
+      {
+        "exam_en": "borderline remarks",
+        "exam_ko": "음담패설에 가까운 말."
+      }
+    ]
+  },
+  {
+    "id": 17281,
+    "origin": "burly",
+    "examples": [
+      {
+        "exam_en": "a burly bodyguard",
+        "exam_ko": "건장한 수행원."
+      }
+    ]
+  },
+  {
+    "id": 17284,
+    "origin": "panache",
+    "examples": [
+      {
+        "exam_en": "with panache",
+        "exam_ko": "당당하게"
+      },
+      {
+        "exam_en": "have a panache",
+        "exam_ko": "당당하다, 관록이 있다."
+      }
+    ]
+  },
+  {
+    "id": 17285,
+    "origin": "bluster",
+    "examples": [
+      {
+        "exam_en": "A typhoon blustered over the land.",
+        "exam_ko": "태풍이 그 지역을 휩쓸었다."
+      },
+      {
+        "exam_en": "bluster out threats",
+        "exam_ko": "소리를 질러 위협하다."
+      }
+    ]
+  },
+  {
+    "id": 17286,
+    "origin": "questionable",
+    "examples": [
+      {
+        "exam_en": "questionable conduct",
+        "exam_ko": "미심쩍은[수상한] 행위."
+      },
+      {
+        "exam_en": "a questionable statement",
+        "exam_ko": "의심스러운 진술"
+      }
+    ]
+  },
+  {
+    "id": 17290,
+    "origin": "droopy",
+    "examples": [
+      {
+        "exam_en": "a dog with droopy ears",
+        "exam_ko": "귀가 처진 개."
+      }
+    ]
+  },
+  {
+    "id": 17292,
+    "origin": "critically",
+    "examples": [
+      {
+        "exam_en": "critically important",
+        "exam_ko": "결정적으로 중요한."
+      },
+      {
+        "exam_en": "be critically ill",
+        "exam_ko": "(환자가) 위독하다."
+      }
+    ]
+  },
+  {
+    "id": 17294,
+    "origin": "spar",
+    "examples": [
+      {
+        "exam_en": "a sparring partner",
+        "exam_ko": "연습시합의상대자."
+      },
+      {
+        "exam_en": "spar with one's enemy",
+        "exam_ko": "적과 싸우다."
+      }
+    ]
+  },
+  {
+    "id": 17304,
+    "origin": "rewind",
+    "examples": [
+      {
+        "exam_en": "He rewound the tape on a tape recorder.",
+        "exam_ko": "그는 녹음기의 테이프를 다시 감았다."
+      }
+    ]
+  },
+  {
+    "id": 17306,
+    "origin": "slurp",
+    "examples": [
+      {
+        "exam_en": "The mother asked her little boy not to slurp his soup.",
+        "exam_ko": "엄마는 어린 아들에게 수프를 후루룩거리며 먹지 말라고 했다."
+      }
+    ]
+  },
+  {
+    "id": 17308,
+    "origin": "blush",
+    "examples": [
+      {
+        "exam_en": "a blushing bride",
+        "exam_ko": "수줍어하는 신부"
+      },
+      {
+        "exam_en": "blush  to one's collar bones",
+        "exam_ko": "목까지 빨개지다"
+      }
+    ]
+  },
+  {
+    "id": 17311,
+    "origin": "pastoral",
+    "examples": [
+      {
+        "exam_en": "a pastoral people",
+        "exam_ko": "유목민."
+      },
+      {
+        "exam_en": "The Pastoral Symphony",
+        "exam_ko": "전원 교향곡(Beethoven의 교향곡 제6번)."
+      }
+    ]
+  },
+  {
+    "id": 17313,
+    "origin": "corps",
+    "examples": [
+      {
+        "exam_en": "the signal corps",
+        "exam_ko": "통신 병과"
+      },
+      {
+        "exam_en": "the US Marine Corps",
+        "exam_ko": "미국 해병대."
+      }
+    ]
+  },
+  {
+    "id": 17317,
+    "origin": "shimmer",
+    "examples": [
+      {
+        "exam_en": "The water shimmered in the moonlight.",
+        "exam_ko": "수면은 달빛에 어른거렸다."
+      }
+    ]
+  },
+  {
+    "id": 17323,
+    "origin": "powwow",
+    "examples": [
+      {
+        "exam_en": "a family powwow",
+        "exam_ko": "가족 회의."
+      }
+    ]
+  },
+  {
+    "id": 17328,
+    "origin": "wrestle",
+    "examples": [
+      {
+        "exam_en": "He wrestled with his father.",
+        "exam_ko": "그는 아빠와 레슬링을 했다."
+      },
+      {
+        "exam_en": "wrestle for a prize",
+        "exam_ko": "상을 타려고 분투하다."
+      }
+    ]
+  },
+  {
+    "id": 17329,
+    "origin": "pajamas",
+    "examples": [
+      {
+        "exam_en": "a suit of pajamas",
+        "exam_ko": "파자마 한 벌(※상의는 top, jacket, 하의는 bottoms, pants, trousers라고 함)"
+      },
+      {
+        "exam_en": "a man in pajamas",
+        "exam_ko": "파자마를 입은 남자."
+      }
+    ]
+  },
+  {
+    "id": 17334,
+    "origin": "frost",
+    "examples": [
+      {
+        "exam_en": "a late frost",
+        "exam_ko": "(봄의) 늦서리"
+      },
+      {
+        "exam_en": "windows covered with frost",
+        "exam_ko": "온통 서리가 앉은 창문"
+      }
+    ]
+  },
+  {
+    "id": 17337,
+    "origin": "hydro",
+    "examples": [
+      {
+        "exam_en": "hydroacoustic",
+        "exam_ko": "수중 음향의."
+      }
+    ]
+  },
+  {
+    "id": 17338,
+    "origin": "psychiatrist",
+    "examples": [
+      {
+        "exam_en": "a practicing psychiatrist",
+        "exam_ko": "정신과 개업의."
+      }
+    ]
+  }
+]

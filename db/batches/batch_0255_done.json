@@ -1,0 +1,246 @@
+[
+  {
+    "id": 6183,
+    "origin": "twitch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">twitched</strong> his sleeve to get his attention.",
+        "exam_ko": "그녀는 주의를 끌기 위해 그의 소매를 <strong class=\"target-word\">잡아당겼다</strong>."
+      },
+      {
+        "exam_en": "His eye <strong class=\"target-word\">twitched</strong> nervously during the exam.",
+        "exam_ko": "시험 중에 그의 눈이 긴장으로 <strong class=\"target-word\">실룩거렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6184,
+    "origin": "harness",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">harnessed</strong> solar energy to power the village.",
+        "exam_ko": "그들은 마을에 전력을 공급하기 위해 태양 에너지를 <strong class=\"target-word\">활용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6187,
+    "origin": "dip",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">dipped</strong> her bread into the soup.",
+        "exam_ko": "그녀는 빵을 수프에 <strong class=\"target-word\">담갔다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">dipped</strong> his foot into the pool.",
+        "exam_ko": "그는 웅덩이에 발을 잠깐 <strong class=\"target-word\">담갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6189,
+    "origin": "alley",
+    "examples": [
+      {
+        "exam_en": "The cat hid in the dark <strong class=\"target-word\">alley</strong> behind the store.",
+        "exam_ko": "고양이는 가게 뒤 어두운 <strong class=\"target-word\">골목</strong>에 숨었다."
+      }
+    ]
+  },
+  {
+    "id": 6193,
+    "origin": "unbearable",
+    "examples": [
+      {
+        "exam_en": "The stench from the trash was <strong class=\"target-word\">unbearable</strong>.",
+        "exam_ko": "쓰레기에서 나는 악취가 <strong class=\"target-word\">참을 수 없었다</strong>."
+      },
+      {
+        "exam_en": "The summer heat was <strong class=\"target-word\">unbearable</strong> this year.",
+        "exam_ko": "올해 여름 더위는 <strong class=\"target-word\">참기 어려웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6194,
+    "origin": "conformity",
+    "examples": [
+      {
+        "exam_en": "His behavior is in <strong class=\"target-word\">conformity</strong> with his words.",
+        "exam_ko": "그는 언행이 <strong class=\"target-word\">일치한다</strong>."
+      },
+      {
+        "exam_en": "The team maintained design <strong class=\"target-word\">conformity</strong> across all products.",
+        "exam_ko": "팀은 모든 제품에 걸쳐 디자인 <strong class=\"target-word\">일관성</strong>을 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 6195,
+    "origin": "wag",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">wagged</strong> her finger at the naughty child.",
+        "exam_ko": "그녀는 장난꾸러기 아이에게 손가락을 <strong class=\"target-word\">흔들었다</strong>."
+      },
+      {
+        "exam_en": "The dog <strong class=\"target-word\">wagged</strong> its tail when its owner came home.",
+        "exam_ko": "개는 주인이 집에 오자 꼬리를 <strong class=\"target-word\">흔들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6197,
+    "origin": "wiry",
+    "examples": [
+      {
+        "exam_en": "She has <strong class=\"target-word\">wiry</strong> hair that is hard to style.",
+        "exam_ko": "그녀는 손질하기 어려운 <strong class=\"target-word\">빳빳한</strong> 머리카락을 가졌다."
+      },
+      {
+        "exam_en": "The gymnast had a small but <strong class=\"target-word\">wiry</strong> body.",
+        "exam_ko": "그 체조선수는 작지만 <strong class=\"target-word\">강인한</strong> 몸을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 6198,
+    "origin": "tang",
+    "examples": [
+      {
+        "exam_en": "The sauce had a sharp <strong class=\"target-word\">tang</strong> of vinegar.",
+        "exam_ko": "소스에서 식초의 톡 쏘는 <strong class=\"target-word\">강한 맛</strong>이 났다."
+      },
+      {
+        "exam_en": "The sea air had a salty <strong class=\"target-word\">tang</strong> to it.",
+        "exam_ko": "바닷바람에는 짭짤한 <strong class=\"target-word\">냄새</strong>가 배어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6199,
+    "origin": "sniff",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sniffed</strong> the flower before picking it.",
+        "exam_ko": "그녀는 꽃을 꺾기 전에 향기를 <strong class=\"target-word\">맡았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sniffed</strong> at the offer and walked away.",
+        "exam_ko": "그는 그 제안을 <strong class=\"target-word\">비웃으며</strong> 자리를 떴다."
+      }
+    ]
+  },
+  {
+    "id": 6201,
+    "origin": "slobber",
+    "examples": [
+      {
+        "exam_en": "The baby <strong class=\"target-word\">slobbered</strong> milk all over the table.",
+        "exam_ko": "아기는 식탁 위에 온통 우유를 <strong class=\"target-word\">흘렸다</strong>."
+      },
+      {
+        "exam_en": "The dog <strong class=\"target-word\">slobbered</strong> on my hand after eating.",
+        "exam_ko": "개는 밥을 먹고 나서 내 손에 <strong class=\"target-word\">침을 흘렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6203,
+    "origin": "maul",
+    "examples": [
+      {
+        "exam_en": "Her book was <strong class=\"target-word\">mauled</strong> by the critics.",
+        "exam_ko": "그녀의 책은 비평가들에게 <strong class=\"target-word\">혹평을 받았다</strong>."
+      },
+      {
+        "exam_en": "The bear <strong class=\"target-word\">mauled</strong> the hiker in the forest.",
+        "exam_ko": "곰이 숲에서 등산객을 <strong class=\"target-word\">공격했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6204,
+    "origin": "longevity",
+    "examples": [
+      {
+        "exam_en": "A healthy diet contributes to <strong class=\"target-word\">longevity</strong>.",
+        "exam_ko": "건강한 식습관은 <strong class=\"target-word\">장수</strong>에 기여한다."
+      }
+    ]
+  },
+  {
+    "id": 6211,
+    "origin": "gamy",
+    "examples": [
+      {
+        "exam_en": "The venison stew had a strong <strong class=\"target-word\">gamy</strong> smell.",
+        "exam_ko": "사슴고기 스튜에서 강한 <strong class=\"target-word\">야생 특유의</strong> 냄새가 났다."
+      }
+    ]
+  },
+  {
+    "id": 6214,
+    "origin": "buttock",
+    "examples": [
+      {
+        "exam_en": "He injured his left <strong class=\"target-word\">buttock</strong> after falling.",
+        "exam_ko": "그는 넘어지면서 왼쪽 <strong class=\"target-word\">엉덩이</strong>를 다쳤다."
+      }
+    ]
+  },
+  {
+    "id": 6215,
+    "origin": "acrobat",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">acrobat</strong> performed a breathtaking flip on stage.",
+        "exam_ko": "<strong class=\"target-word\">곡예사</strong>가 무대에서 숨 막히는 공중제비를 선보였다."
+      }
+    ]
+  },
+  {
+    "id": 6217,
+    "origin": "vowel",
+    "examples": [
+      {
+        "exam_en": "English has five basic <strong class=\"target-word\">vowels</strong>: a, e, i, o, u.",
+        "exam_ko": "영어에는 a, e, i, o, u 다섯 개의 기본 <strong class=\"target-word\">모음</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 6218,
+    "origin": "vigilant",
+    "examples": [
+      {
+        "exam_en": "The security guard remained <strong class=\"target-word\">vigilant</strong> throughout the night.",
+        "exam_ko": "경비원은 밤새 <strong class=\"target-word\">방심하지 않고</strong> 경계를 늦추지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 6219,
+    "origin": "vocation",
+    "examples": [
+      {
+        "exam_en": "She regards teaching as her true <strong class=\"target-word\">vocation</strong>.",
+        "exam_ko": "그녀는 가르치는 일을 진정한 <strong class=\"target-word\">천직</strong>으로 여긴다."
+      },
+      {
+        "exam_en": "He made lecturing his <strong class=\"target-word\">vocation</strong> after retiring.",
+        "exam_ko": "그는 은퇴 후 강연을 자신의 <strong class=\"target-word\">직업</strong>으로 삼았다."
+      }
+    ]
+  },
+  {
+    "id": 6220,
+    "origin": "surveillance",
+    "examples": [
+      {
+        "exam_en": "The suspect was kept under constant <strong class=\"target-word\">surveillance</strong>.",
+        "exam_ko": "용의자는 지속적인 <strong class=\"target-word\">감시</strong>를 받았다."
+      }
+    ]
+  }
+]

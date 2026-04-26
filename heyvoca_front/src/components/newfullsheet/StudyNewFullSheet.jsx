@@ -6,6 +6,7 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
+import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
@@ -14,8 +15,56 @@ const StudyNewFullSheet = () => {
 
   const navigate = useNavigate();
   const { popNewFullSheet, pushNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
-  const { pushNewBottomSheet, popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
-  const { recentStudy } = useVocabulary();
+  const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
+  const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
+
+  const startFreshQuickReview = async () => {
+    const allWords = vocabularySheets.flatMap(sheet => sheet.words);
+    const count = Math.min(14, allWords.length);
+
+    if (count < 4) {
+      const toBookStore = await pushAwaitNewBottomSheet(
+        ConfirmNewBottomSheet,
+        {
+          title: (
+            <>
+              단어가 부족해요.<br />
+              상점에서 단어장을 추가해보세요!
+            </>
+          ),
+          btns: { confirm: "상점 가기", cancel: "취소" }
+        },
+        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+      );
+      if (toBookStore) {
+        closeNewFullSheet();
+        navigate('/book-store');
+      }
+      return;
+    }
+
+    await updateRecentStudy('quick', {
+      progress_index: null,
+      type: 'quick',
+      status: null,
+      study_data: null,
+      updated_at: null,
+      created_at: null,
+    });
+
+    closeNewFullSheet();
+    navigate('/take-test', {
+      state: {
+        testType: 'quick',
+        data: {
+          questionType: ['multipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'cardMatch', 'cardMatchListening'],
+          vocabularySheetId: "all",
+          memoryState: null,
+          count,
+        }
+      }
+    });
+  };
 
   const handleTestClick = () => {
     vibrate({ duration: 5 });
@@ -72,9 +121,43 @@ const StudyNewFullSheet = () => {
       },
       darkBorderStyle: null,
       chevronColor: 'var(--secondary-blue-600)',
-      onClick: () => {
+      onClick: async () => {
         vibrate({ duration: 5 });
-        alert('개발 중');
+
+        const isLearning = recentStudy['quick']?.status === "learning";
+        if (isLearning) {
+          const resume = await pushAwaitNewBottomSheet(
+            ConfirmNewBottomSheet,
+            {
+              title: (
+                <>
+                  진행 중인 빠른 복습이 있어요.<br />
+                  이어서 하시겠어요?
+                </>
+              ),
+              btns: { confirm: "이어서 하기", cancel: "새로 시작" }
+            },
+            { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+          );
+          if (resume) {
+            const allWords = vocabularySheets.flatMap(sheet => sheet.words);
+            closeNewFullSheet();
+            navigate('/take-test', {
+              state: {
+                testType: 'quick',
+                data: {
+                  questionType: ['multipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'cardMatch', 'cardMatchListening'],
+                  vocabularySheetId: "all",
+                  memoryState: null,
+                  count: Math.min(14, allWords.length),
+                }
+              }
+            });
+            return;
+          }
+        }
+
+        startFreshQuickReview();
       },
     },
     {
@@ -118,7 +201,7 @@ const StudyNewFullSheet = () => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }} />
 
       {/* Header */}
-      <div className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
+      <div data-page-header className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
         <motion.button
           onClick={() => {
             vibrate({ duration: 5 });

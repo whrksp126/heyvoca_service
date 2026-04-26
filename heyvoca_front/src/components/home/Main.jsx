@@ -1,6 +1,6 @@
 // src/components/home/main
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
@@ -18,9 +18,6 @@ import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-import { IconBell, IconBellRingingFill } from '../../assets/svg/icon';
-import { getLastSeenTime, setLastSeenTime } from '../../utils/badgeStorage';
-import { shouldShowDot, getOverdueCount } from '../../utils/badgeCalc';
 import { vibrate } from '../../utils/osFunction';
 
 
@@ -106,11 +103,7 @@ const Main = () => {
   const navigate = useNavigate();
   const { userMainPage, userProfile } = useUser();
   const { isDark } = useTheme();
-  const { vocabularySheets, isVocabularySheetsLoading, updateDelayedWords, getDelayedWords } = useVocabulary();
-  const [now, setNow] = useState(Date.now());
-  const [lastSeen, setLastSeen] = useState(getLastSeenTime());
-  const [delayedWords, setDelayedWords] = useState([]);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const { vocabularySheets } = useVocabulary();
 
   // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
@@ -152,49 +145,6 @@ const Main = () => {
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
-  // 시간이 흐르면 상태가 바뀌니까 가벼운 폴링(60초)
-  useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 60_000);
-    return () => clearInterval(t);
-  }, []);
-
-  // 앱으로 다시 돌아올 때 즉시 갱신
-  useEffect(() => {
-    const onFocus = () => setNow(Date.now());
-    window.addEventListener('focus', onFocus);
-    document.addEventListener('visibilitychange', onFocus);
-    return () => {
-      window.removeEventListener('focus', onFocus);
-      document.removeEventListener('visibilitychange', onFocus);
-    };
-  }, []);
-
-  // React Compiler가 자동으로 메모이제이션 처리
-  // 빨간 점 표시 여부 계산
-  const showDot = (() => {
-    // delayedWords가 없거나 로딩 중이면 false
-    if (!delayedWords || delayedWords.length === 0) return false;
-
-    const words = delayedWords.map(word => ({
-      id: word.id,
-      nextReviewAt: new Date(word.sm2?.nextReview ?? word.nextReview).getTime()
-    }));
-    return shouldShowDot(words, now, lastSeen);
-  })();
-
-  // React Compiler가 자동으로 메모이제이션 처리
-  // 기한 지난 단어 개수 계산
-  const overdueCount = (() => {
-    // delayedWords가 없거나 로딩 중이면 0
-    if (!delayedWords || delayedWords.length === 0) return 0;
-
-    const words = delayedWords.map(word => ({
-      id: word.id,
-      nextReviewAt: new Date(word.nextReview).getTime()
-    }));
-    return getOverdueCount(words, now);
-  })();
-
   const { fetchUserCheckin } = useUser();
 
   // 홈 화면 진입 시 출석 체크 호출
@@ -202,54 +152,12 @@ const Main = () => {
     fetchUserCheckin();
   }, []);
 
-  // 복습 지연 단어 목록 업데이트 (데이터 로딩 완료 후에만 실행)
-  useEffect(() => {
-    // 로딩 중이거나 vocabularySheets가 비어있으면 실행하지 않음
-    if (isVocabularySheetsLoading || !vocabularySheets || vocabularySheets.length === 0) return;
-    const currentDelayedWords = updateDelayedWords();
-    setDelayedWords(currentDelayedWords);
-  }, [vocabularySheets, isVocabularySheetsLoading]);
-
-  // 알림 상태가 변경되면 툴팁 자동 숨김
-  useEffect(() => {
-    if (!showDot) {
-      setShowTooltip(false);
-    }
-  }, [showDot]);
-
-  // 툴팁 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showTooltip && !event.target.closest('.relative')) {
-        setShowTooltip(false);
-      }
-    };
-
-    if (showTooltip) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
-    }
-  }, [showTooltip]);
-
   // React Compiler가 자동으로 useCallback 처리
   const handleStoreButtonClick = () => {
     pushNewFullSheet(StoreNewFullSheet, {}, {
       smFull: true,
       closeOnBackdropClick: true
     });
-  }
-
-  const handleBellButtonClick = () => {
-    // 알림 상태인 경우: 클릭하면 알림 해제 + 툴팁 토글
-    if (showDot) {
-      const currentTime = Date.now();
-      setLastSeen(currentTime);
-      setLastSeenTime(currentTime); // 로컬스토리지에도 저장
-      setShowTooltip(!showTooltip);
-    } else {
-      // 일반 상태인 경우: 툴팁 토글만
-      setShowTooltip(!showTooltip);
-    }
   }
 
   const handleTodayStudyButtonClick = () => {
@@ -287,82 +195,6 @@ const Main = () => {
       ">
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[8px] items-center">
-          <div className="relative flex items-center" onClick={() => {
-            vibrate({ duration: 5 });
-            handleBellButtonClick();
-          }}>
-            {showDot ? (
-              <IconBellRingingFill width={18} height={18} className="text-layout-white" />
-            ) : (
-              <IconBell width={18} height={18} className="text-layout-white" />
-            )}
-
-            {/* 툴팁 - 알림 상태일 때는 항상 표시, 일반 상태일 때는 토글 */}
-            <AnimatePresence>
-              {(showDot || showTooltip) && (
-                <motion.div
-                  className="
-                  absolute top-[100%] right-[0] z-[1]
-                  flex items-center
-                  w-[max-content]
-                  py-[5px] px-[10px]
-                  mt-[5px] 
-                  rounded-[8px]
-                  bg-layout-white
-                  shadow-[0_0_4px_rgba(0,0,0,0.25)]
-                "
-                  // 툴팁 열기/닫기 애니메이션
-                  initial={{
-                    opacity: 0,
-                    scale: 0.8,
-                    y: -10
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    // 알림 상태일 때만 깜빡이는 애니메이션 추가
-                    ...(showDot ? {
-                      opacity: [1, 0.7, 1],
-                      scale: [1, 1.05, 1],
-                    } : {})
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.8,
-                    y: -10
-                  }}
-                  transition={{
-                    // 기본 열기/닫기 애니메이션
-                    duration: 0.3,
-                    ease: "easeOut",
-                    // 알림 상태일 때 깜빡이는 애니메이션
-                    ...(showDot ? {
-                      opacity: {
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      },
-                      scale: {
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }
-                    } : {})
-                  }}
-                >
-                  <span
-                    className="text-layout-black text-[14px] font-[400]"
-                    dangerouslySetInnerHTML={{
-                      __html: overdueCount > 0
-                        ? `복습 기간이 지난 단어가 <strong>${overdueCount}</strong>개 있어요!`
-                        : '알림이 없습니다'
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
           <div className="flex gap-[5px] items-center" onClick={() => {
             vibrate({ duration: 5 });
             handleStoreButtonClick();

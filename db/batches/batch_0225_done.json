@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5237,
+    "origin": "whom",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Whom</strong> did you call last night?",
+        "exam_ko": "어젯밤에 <strong class=\"target-word\">누구에게</strong> 전화했나요?"
+      },
+      {
+        "exam_en": "With <strong class=\"target-word\">whom</strong> did you stay during the trip?",
+        "exam_ko": "여행 중에 <strong class=\"target-word\">누구와 함께</strong> 머물렀나요?"
+      }
+    ]
+  },
+  {
+    "id": 5239,
+    "origin": "darkness",
+    "examples": [
+      {
+        "exam_en": "She walked home alone in the <strong class=\"target-word\">darkness</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">어둠</strong> 속에서 혼자 집으로 걸어갔다."
+      },
+      {
+        "exam_en": "The power outage plunged the city into <strong class=\"target-word\">darkness</strong>.",
+        "exam_ko": "정전으로 도시가 <strong class=\"target-word\">암흑</strong>에 잠겼다."
+      }
+    ]
+  },
+  {
+    "id": 5240,
+    "origin": "script",
+    "examples": [
+      {
+        "exam_en": "The title was written in italic <strong class=\"target-word\">script</strong>.",
+        "exam_ko": "제목은 이탤릭 <strong class=\"target-word\">서체</strong>로 쓰여 있었다."
+      },
+      {
+        "exam_en": "She wrote the <strong class=\"target-word\">script</strong> for a comedy show.",
+        "exam_ko": "그녀는 코미디 쇼의 <strong class=\"target-word\">대본</strong>을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 5241,
+    "origin": "tone",
+    "examples": [
+      {
+        "exam_en": "He spoke in a sharp, loud <strong class=\"target-word\">tone</strong>.",
+        "exam_ko": "그는 날카롭고 큰 <strong class=\"target-word\">어조</strong>로 말했다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">tone</strong> softened as she apologized.",
+        "exam_ko": "그녀는 사과하면서 <strong class=\"target-word\">어조</strong>가 부드러워졌다."
+      }
+    ]
+  },
+  {
+    "id": 5243,
+    "origin": "telling",
+    "examples": [
+      {
+        "exam_en": "The boxer landed a <strong class=\"target-word\">telling</strong> blow to the jaw.",
+        "exam_ko": "권투선수는 턱에 <strong class=\"target-word\">유효한</strong> 일격을 날렸다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">telling</strong> remark that changed the debate.",
+        "exam_ko": "그녀는 토론을 바꿔놓는 <strong class=\"target-word\">설득력 있는</strong> 발언을 했다."
+      }
+    ]
+  },
+  {
+    "id": 5244,
+    "origin": "beneath",
+    "examples": [
+      {
+        "exam_en": "The subway rumbled <strong class=\"target-word\">beneath</strong> the busy street.",
+        "exam_ko": "지하철이 번잡한 거리 <strong class=\"target-word\">아래에서</strong> 요란하게 달렸다."
+      },
+      {
+        "exam_en": "He hid the letter <strong class=\"target-word\">beneath</strong> his pillow.",
+        "exam_ko": "그는 편지를 베개 <strong class=\"target-word\">밑에</strong> 숨겼다."
+      }
+    ]
+  },
+  {
+    "id": 5245,
+    "origin": "slightly",
+    "examples": [
+      {
+        "exam_en": "He was bleeding <strong class=\"target-word\">slightly</strong> from the cut.",
+        "exam_ko": "그는 상처에서 <strong class=\"target-word\">약간</strong> 피가 나고 있었다."
+      },
+      {
+        "exam_en": "It has gotten <strong class=\"target-word\">slightly</strong> colder this week.",
+        "exam_ko": "이번 주에 날씨가 <strong class=\"target-word\">조금</strong> 추워졌다."
+      }
+    ]
+  },
+  {
+    "id": 5246,
+    "origin": "somebody",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Somebody</strong> left their bag on the bus.",
+        "exam_ko": "<strong class=\"target-word\">누군가</strong> 버스에 가방을 두고 내렸다."
+      },
+      {
+        "exam_en": "We need <strong class=\"target-word\">somebody</strong> younger to do the job.",
+        "exam_ko": "그 일을 하려면 더 젊은 <strong class=\"target-word\">사람</strong>이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 5248,
+    "origin": "onto",
+    "examples": [
+      {
+        "exam_en": "She climbed <strong class=\"target-word\">onto</strong> the horse carefully.",
+        "exam_ko": "그녀는 조심스럽게 말 <strong class=\"target-word\">위로</strong> 올라탔다."
+      },
+      {
+        "exam_en": "He put the book <strong class=\"target-word\">onto</strong> the shelf.",
+        "exam_ko": "그는 책을 선반 <strong class=\"target-word\">위에</strong> 올려놓았다."
+      }
+    ]
+  },
+  {
+    "id": 5249,
+    "origin": "returned",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">returned</strong> soldier struggled to adjust to civilian life.",
+        "exam_ko": "<strong class=\"target-word\">귀환한</strong> 병사는 민간인 생활에 적응하는 데 어려움을 겪었다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">returned</strong> the borrowed book to the library.",
+        "exam_ko": "그녀는 빌린 책을 도서관에 <strong class=\"target-word\">반납했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5250,
+    "origin": "received",
+    "examples": [
+      {
+        "exam_en": "The professor challenged the <strong class=\"target-word\">received</strong> theory of grammar.",
+        "exam_ko": "교수는 문법의 <strong class=\"target-word\">통용되는</strong> 이론에 이의를 제기했다."
+      },
+      {
+        "exam_en": "He questioned the <strong class=\"target-word\">received</strong> wisdom of the industry.",
+        "exam_ko": "그는 업계의 <strong class=\"target-word\">일반적으로 통하는</strong> 상식에 의문을 품었다."
+      }
+    ]
+  },
+  {
+    "id": 5251,
+    "origin": "serial",
+    "examples": [
+      {
+        "exam_en": "The drama was broadcast as a six-part <strong class=\"target-word\">serial</strong>.",
+        "exam_ko": "그 드라마는 6부작 <strong class=\"target-word\">연속극</strong>으로 방영되었다."
+      },
+      {
+        "exam_en": "She never missed the morning drama <strong class=\"target-word\">serial</strong>.",
+        "exam_ko": "그녀는 아침 드라마 <strong class=\"target-word\">연속극</strong>을 한 번도 빠뜨리지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 5252,
+    "origin": "survival",
+    "examples": [
+      {
+        "exam_en": "Nature follows the rule of <strong class=\"target-word\">survival</strong> of the fittest.",
+        "exam_ko": "자연은 적자 <strong class=\"target-word\">생존</strong>의 법칙을 따른다."
+      },
+      {
+        "exam_en": "The old custom is a <strong class=\"target-word\">survival</strong> from ancient times.",
+        "exam_ko": "그 오래된 관습은 고대로부터 내려온 <strong class=\"target-word\">유물</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5253,
+    "origin": "learned",
+    "examples": [
+      {
+        "exam_en": "The conference was attended by many <strong class=\"target-word\">learned</strong> men.",
+        "exam_ko": "그 학회에는 많은 <strong class=\"target-word\">학식 있는</strong> 사람들이 참석했다."
+      },
+      {
+        "exam_en": "She is deeply <strong class=\"target-word\">learned</strong> in the works of Shakespeare.",
+        "exam_ko": "그녀는 셰익스피어 작품에 깊이 <strong class=\"target-word\">정통해</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 5255,
+    "origin": "packet",
+    "examples": [
+      {
+        "exam_en": "The courier delivered a postal <strong class=\"target-word\">packet</strong> this morning.",
+        "exam_ko": "택배기사가 오늘 아침 우편 <strong class=\"target-word\">소포</strong>를 배달했다."
+      },
+      {
+        "exam_en": "She tied the <strong class=\"target-word\">packet</strong> of postcards with a ribbon.",
+        "exam_ko": "그녀는 엽서 <strong class=\"target-word\">묶음</strong>을 리본으로 묶었다."
+      }
+    ]
+  },
+  {
+    "id": 5256,
+    "origin": "mask",
+    "examples": [
+      {
+        "exam_en": "The catcher wore a baseball <strong class=\"target-word\">mask</strong> during the game.",
+        "exam_ko": "포수는 경기 중에 야구 <strong class=\"target-word\">마스크</strong>를 착용했다."
+      },
+      {
+        "exam_en": "Everyone wore a flu <strong class=\"target-word\">mask</strong> on public transit.",
+        "exam_ko": "모두가 대중교통에서 독감 <strong class=\"target-word\">마스크</strong>를 착용했다."
+      }
+    ]
+  },
+  {
+    "id": 5257,
+    "origin": "beginning",
+    "examples": [
+      {
+        "exam_en": "She read the novel from <strong class=\"target-word\">beginning</strong> to end in one day.",
+        "exam_ko": "그녀는 소설을 하루 만에 <strong class=\"target-word\">처음</strong>부터 끝까지 읽었다."
+      },
+      {
+        "exam_en": "The project starts at the <strong class=\"target-word\">beginning</strong> of next month.",
+        "exam_ko": "그 프로젝트는 다음 달 <strong class=\"target-word\">초</strong>에 시작된다."
+      }
+    ]
+  },
+  {
+    "id": 5259,
+    "origin": "mode",
+    "examples": [
+      {
+        "exam_en": "Cycling is his preferred <strong class=\"target-word\">mode</strong> of transport.",
+        "exam_ko": "자전거 타기는 그가 선호하는 이동 <strong class=\"target-word\">방식</strong>이다."
+      },
+      {
+        "exam_en": "Different cultures have different <strong class=\"target-word\">modes</strong> of thought.",
+        "exam_ko": "문화마다 서로 다른 사고 <strong class=\"target-word\">방식</strong>을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 5261,
+    "origin": "traveling",
+    "examples": [
+      {
+        "exam_en": "She packed her <strong class=\"target-word\">traveling</strong> kit the night before.",
+        "exam_ko": "그녀는 전날 밤에 <strong class=\"target-word\">여행용</strong> 용품을 챙겼다."
+      },
+      {
+        "exam_en": "He met his <strong class=\"target-word\">traveling</strong> companion at the airport.",
+        "exam_ko": "그는 공항에서 <strong class=\"target-word\">여행</strong> 동반자를 만났다."
+      }
+    ]
+  },
+  {
+    "id": 5262,
+    "origin": "syntax",
+    "examples": [
+      {
+        "exam_en": "The student studied the <strong class=\"target-word\">syntax</strong> of French grammar.",
+        "exam_ko": "학생은 프랑스어 문법의 <strong class=\"target-word\">통어론</strong>을 공부했다."
+      },
+      {
+        "exam_en": "Understanding <strong class=\"target-word\">syntax</strong> is key to learning a language.",
+        "exam_ko": "<strong class=\"target-word\">구문</strong>을 이해하는 것이 언어 학습의 핵심이다."
+      }
+    ]
+  }
+]

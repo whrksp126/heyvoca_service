@@ -1,0 +1,226 @@
+[
+  {
+    "id": 27091,
+    "origin": "inefficiency",
+    "examples": [
+      {
+        "exam_en": "be discharged for inefficiency",
+        "exam_ko": "무능력으로 면직되다."
+      }
+    ]
+  },
+  {
+    "id": 27092,
+    "origin": "pleasurable",
+    "examples": [
+      {
+        "exam_en": "a pleasurable impression",
+        "exam_ko": "좋은 인상"
+      },
+      {
+        "exam_en": "a pleasurable experience",
+        "exam_ko": "유쾌한 경험"
+      }
+    ]
+  },
+  {
+    "id": 27096,
+    "origin": "unsophisticated",
+    "examples": [
+      {
+        "exam_en": "She is very unsophisticated.",
+        "exam_ko": "그녀는 매우 순진하다."
+      }
+    ]
+  },
+  {
+    "id": 27097,
+    "origin": "uninspired",
+    "examples": [
+      {
+        "exam_en": "an uninspired performance",
+        "exam_ko": "지루한 공연."
+      }
+    ]
+  },
+  {
+    "id": 27102,
+    "origin": "batten",
+    "examples": [
+      {
+        "exam_en": "batten on one's parents",
+        "exam_ko": "부모의 돈으로 살아가다."
+      },
+      {
+        "exam_en": "And as an aid to drilling, make a simple template from a length of batten.",
+        "exam_ko": "그리고 구멍 뚫는 보조물로, 작은 각목을 길이로 잘라 간단한 견본을 만드세요."
+      }
+    ]
+  },
+  {
+    "id": 27103,
+    "origin": "bate",
+    "examples": [
+      {
+        "exam_en": "with bated breath",
+        "exam_ko": "숨을 죽이고."
+      }
+    ]
+  },
+  {
+    "id": 27105,
+    "origin": "behoove",
+    "examples": [
+      {
+        "exam_en": "It behooves him to think for himself.",
+        "exam_ko": "그는 스스로 생각해봐야 한다."
+      },
+      {
+        "exam_en": "It would behoove you to be kind to him.",
+        "exam_ko": "그에게 친절히 해줄 만도 한데."
+      }
+    ]
+  },
+  {
+    "id": 27107,
+    "origin": "beautify",
+    "examples": [
+      {
+        "exam_en": "Flowers beautify a garden.",
+        "exam_ko": "꽃이 정원을 아름답게 장식하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 27117,
+    "origin": "catechism",
+    "examples": [
+      {
+        "exam_en": "put a person through his catechism",
+        "exam_ko": "남에게 질문 공세로 따지다."
+      }
+    ]
+  },
+  {
+    "id": 27139,
+    "origin": "fleck",
+    "examples": [
+      {
+        "exam_en": "brown cloth with flecks of red",
+        "exam_ko": "붉은 반점이 있는 갈색 옷."
+      },
+      {
+        "exam_en": "a fleck of dust",
+        "exam_ko": "작은 먼지."
+      }
+    ]
+  },
+  {
+    "id": 27145,
+    "origin": "generality",
+    "examples": [
+      {
+        "exam_en": "speak in generalities",
+        "exam_ko": "일반적으로 말하다."
+      },
+      {
+        "exam_en": "the generality of students",
+        "exam_ko": "대다수의 학생들."
+      }
+    ]
+  },
+  {
+    "id": 27147,
+    "origin": "habitue",
+    "examples": [
+      {
+        "exam_en": "a habitue of pubs",
+        "exam_ko": "술집의 단골."
+      }
+    ]
+  },
+  {
+    "id": 27149,
+    "origin": "gentry",
+    "examples": [
+      {
+        "exam_en": "these gentry",
+        "exam_ko": "이런 패거리[무리]들."
+      }
+    ]
+  },
+  {
+    "id": 27151,
+    "origin": "hustings",
+    "examples": [
+      {
+        "exam_en": "on the hustings",
+        "exam_ko": "선거 연설 중에, 유세 중에."
+      }
+    ]
+  },
+  {
+    "id": 27170,
+    "origin": "magisterial",
+    "examples": [
+      {
+        "exam_en": "magisterial authority",
+        "exam_ko": "엄연한 권위."
+      }
+    ]
+  },
+  {
+    "id": 27179,
+    "origin": "mulct",
+    "examples": [
+      {
+        "exam_en": "mulct a person  ten dollars",
+        "exam_ko": "남에게 10달러의 벌금을 과하다."
+      },
+      {
+        "exam_en": "be mulcted of one's money",
+        "exam_ko": "돈을 사취당하다."
+      }
+    ]
+  },
+  {
+    "id": 27183,
+    "origin": "murrain",
+    "examples": [
+      {
+        "exam_en": "A murrain take  you!",
+        "exam_ko": "염병할 놈!"
+      }
+    ]
+  },
+  {
+    "id": 27189,
+    "origin": "obliging",
+    "examples": [
+      {
+        "exam_en": "He was very obliging to his customers.",
+        "exam_ko": "그는 손님에게 매우 친절했다."
+      }
+    ]
+  },
+  {
+    "id": 27191,
+    "origin": "oblate",
+    "examples": [
+      {
+        "exam_en": "an oblate sphere",
+        "exam_ko": "편구."
+      }
+    ]
+  },
+  {
+    "id": 27201,
+    "origin": "penultimate",
+    "examples": [
+      {
+        "exam_en": "That pizz was penultimate.",
+        "exam_ko": "저 피자 끝내 줬다."
+      }
+    ]
+  }
+]

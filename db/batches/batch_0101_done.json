@@ -1,0 +1,290 @@
+[
+  {
+    "id": 2085,
+    "origin": "elegant",
+    "examples": [
+      {
+        "exam_en": "She writes in an <strong class=\"target-word\">elegant</strong> style.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">격조 있는</strong> 문체로 글을 쓴다."
+      },
+      {
+        "exam_en": "She has <strong class=\"target-word\">elegant</strong> manners.",
+        "exam_ko": "그 여자는 몸가짐이 <strong class=\"target-word\">우아하다</strong>."
+      },
+      {
+        "exam_en": "She wore an <strong class=\"target-word\">elegant</strong> dress to the event.",
+        "exam_ko": "그녀는 행사에 <strong class=\"target-word\">우아한</strong> 드레스를 입고 왔다."
+      }
+    ]
+  },
+  {
+    "id": 2086,
+    "origin": "lesser",
+    "examples": [
+      {
+        "exam_en": "They are considered <strong class=\"target-word\">lesser</strong> nations in global politics.",
+        "exam_ko": "그들은 국제 정치에서 <strong class=\"target-word\">약소</strong> 국가로 여겨진다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">lesser</strong> figure in the art world.",
+        "exam_ko": "그는 미술계에서 <strong class=\"target-word\">덜 알려진</strong> 인물이다."
+      }
+    ]
+  },
+  {
+    "id": 2087,
+    "origin": "steep",
+    "examples": [
+      {
+        "exam_en": "The trail has a <strong class=\"target-word\">steep</strong> slope near the top.",
+        "exam_ko": "등산로는 정상 근처에서 <strong class=\"target-word\">가파른</strong> 경사가 있다."
+      },
+      {
+        "exam_en": "She climbed a <strong class=\"target-word\">steep</strong> flight of stairs.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가파른</strong> 계단을 올라갔다."
+      }
+    ]
+  },
+  {
+    "id": 2088,
+    "origin": "intensive",
+    "examples": [
+      {
+        "exam_en": "They held an <strong class=\"target-word\">intensive</strong> discussion about the plan.",
+        "exam_ko": "그들은 계획에 대해 <strong class=\"target-word\">집중적인</strong> 토론을 벌였다."
+      },
+      {
+        "exam_en": "She enrolled in an <strong class=\"target-word\">intensive</strong> language program.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">집중</strong> 어학 프로그램에 등록했다."
+      }
+    ]
+  },
+  {
+    "id": 2089,
+    "origin": "casual",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">casual</strong> meeting between old friends.",
+        "exam_ko": "그것은 옛 친구들 사이의 <strong class=\"target-word\">우연한</strong> 만남이었다."
+      },
+      {
+        "exam_en": "He made a <strong class=\"target-word\">casual</strong> mistake during the test.",
+        "exam_ko": "그는 시험 중에 <strong class=\"target-word\">부주의한</strong> 실수를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2090,
+    "origin": "tropical",
+    "examples": [
+      {
+        "exam_en": "The island is covered with <strong class=\"target-word\">tropical</strong> vegetation.",
+        "exam_ko": "그 섬은 <strong class=\"target-word\">열대</strong> 식물로 덮여 있다."
+      },
+      {
+        "exam_en": "They keep <strong class=\"target-word\">tropical</strong> fish in their aquarium.",
+        "exam_ko": "그들은 수족관에 <strong class=\"target-word\">열대어</strong>를 기른다."
+      }
+    ]
+  },
+  {
+    "id": 2091,
+    "origin": "lonely",
+    "examples": [
+      {
+        "exam_en": "He lived a <strong class=\"target-word\">lonely</strong> life in the mountains.",
+        "exam_ko": "그는 산속에서 <strong class=\"target-word\">고독한</strong> 삶을 살았다."
+      },
+      {
+        "exam_en": "I felt <strong class=\"target-word\">lonely</strong> among the crowds.",
+        "exam_ko": "나는 군중 속에서 <strong class=\"target-word\">고독함</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">lonely</strong> after moving to a new city.",
+        "exam_ko": "그녀는 새 도시로 이사한 후 <strong class=\"target-word\">외로움</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 2092,
+    "origin": "partial",
+    "examples": [
+      {
+        "exam_en": "We observed a <strong class=\"target-word\">partial</strong> eclipse of the sun.",
+        "exam_ko": "우리는 <strong class=\"target-word\">부분</strong> 일식을 관찰했다."
+      },
+      {
+        "exam_en": "The troops made a <strong class=\"target-word\">partial</strong> withdrawal from the area.",
+        "exam_ko": "군대는 그 지역에서 <strong class=\"target-word\">일부</strong> 철수했다."
+      },
+      {
+        "exam_en": "One denture is complete and the other is <strong class=\"target-word\">partial</strong>.",
+        "exam_ko": "하나는 완전 틀니이고 다른 하나는 <strong class=\"target-word\">부분</strong> 틀니다."
+      }
+    ]
+  },
+  {
+    "id": 2093,
+    "origin": "preliminary",
+    "examples": [
+      {
+        "exam_en": "All applicants must pass the <strong class=\"target-word\">preliminary</strong> tests.",
+        "exam_ko": "모든 지원자는 <strong class=\"target-word\">예비</strong> 시험을 통과해야 한다."
+      },
+      {
+        "exam_en": "The speaker made a few <strong class=\"target-word\">preliminary</strong> remarks.",
+        "exam_ko": "발표자는 몇 가지 <strong class=\"target-word\">서두</strong> 발언을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2094,
+    "origin": "concrete",
+    "examples": [
+      {
+        "exam_en": "Can you give a <strong class=\"target-word\">concrete</strong> example of the problem?",
+        "exam_ko": "그 문제의 <strong class=\"target-word\">구체적인</strong> 예를 들어줄 수 있나요?"
+      },
+      {
+        "exam_en": "We need <strong class=\"target-word\">concrete</strong> plans to move forward.",
+        "exam_ko": "앞으로 나아가기 위한 <strong class=\"target-word\">실질적인</strong> 계획이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2095,
+    "origin": "alleged",
+    "examples": [
+      {
+        "exam_en": "He was the <strong class=\"target-word\">alleged</strong> thief in the case.",
+        "exam_ko": "그는 그 사건의 <strong class=\"target-word\">혐의를 받고 있는</strong> 도둑이었다."
+      }
+    ]
+  },
+  {
+    "id": 2096,
+    "origin": "assistant",
+    "examples": [
+      {
+        "exam_en": "She works as an <strong class=\"target-word\">assistant</strong> to the president.",
+        "exam_ko": "그녀는 회장의 <strong class=\"target-word\">보좌역</strong>으로 일한다."
+      },
+      {
+        "exam_en": "This app acts as an <strong class=\"target-word\">assistant</strong> to memory.",
+        "exam_ko": "이 앱은 기억을 도와주는 <strong class=\"target-word\">보조 도구</strong>로 작동한다."
+      }
+    ]
+  },
+  {
+    "id": 2097,
+    "origin": "delicate",
+    "examples": [
+      {
+        "exam_en": "Babies have very <strong class=\"target-word\">delicate</strong> skin.",
+        "exam_ko": "아기들은 매우 <strong class=\"target-word\">섬세한</strong> 피부를 가지고 있다."
+      },
+      {
+        "exam_en": "The flowers had a <strong class=\"target-word\">delicate</strong> fragrance.",
+        "exam_ko": "그 꽃들은 <strong class=\"target-word\">은은한</strong> 향기를 풍겼다."
+      }
+    ]
+  },
+  {
+    "id": 2098,
+    "origin": "mild",
+    "examples": [
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">mild</strong> answer to his criticism.",
+        "exam_ko": "그녀는 그의 비판에 <strong class=\"target-word\">온화한</strong> 대답을 했다."
+      },
+      {
+        "exam_en": "He spoke in a <strong class=\"target-word\">mild</strong> tone of voice.",
+        "exam_ko": "그는 <strong class=\"target-word\">부드러운</strong> 목소리로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 2099,
+    "origin": "occupational",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Occupational</strong> troops remained in the city after the war.",
+        "exam_ko": "<strong class=\"target-word\">점령</strong> 군대는 전쟁 후에도 도시에 머물렀다."
+      },
+      {
+        "exam_en": "She handled the complaint with an <strong class=\"target-word\">occupational</strong> air.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">직업적인</strong> 태도로 민원을 처리했다."
+      }
+    ]
+  },
+  {
+    "id": 2100,
+    "origin": "excessive",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Excessive</strong> tension can harm your health.",
+        "exam_ko": "<strong class=\"target-word\">지나친</strong> 긴장은 건강을 해칠 수 있다."
+      },
+      {
+        "exam_en": "The tuition at this school is <strong class=\"target-word\">excessive</strong>.",
+        "exam_ko": "이 학교의 수업료는 <strong class=\"target-word\">너무 비싸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2101,
+    "origin": "progressive",
+    "examples": [
+      {
+        "exam_en": "She is known as a <strong class=\"target-word\">progressive</strong> thinker.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">진취적인</strong> 사상가로 알려져 있다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">progressive</strong> legislator who supports reform.",
+        "exam_ko": "그는 개혁을 지지하는 <strong class=\"target-word\">진보적인</strong> 입법자다."
+      }
+    ]
+  },
+  {
+    "id": 2103,
+    "origin": "exceptional",
+    "examples": [
+      {
+        "exam_en": "Snow in April was <strong class=\"target-word\">exceptional</strong> this year.",
+        "exam_ko": "올해 4월의 눈은 <strong class=\"target-word\">이례적이었다</strong>."
+      },
+      {
+        "exam_en": "She is an <strong class=\"target-word\">exceptional</strong> linguist.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">탁월한</strong> 언어학자다."
+      }
+    ]
+  },
+  {
+    "id": 2104,
+    "origin": "integrated",
+    "examples": [
+      {
+        "exam_en": "They moved into an <strong class=\"target-word\">integrated</strong> neighborhood.",
+        "exam_ko": "그들은 <strong class=\"target-word\">인종 통합</strong> 지역으로 이사했다."
+      }
+    ]
+  },
+  {
+    "id": 2105,
+    "origin": "striking",
+    "examples": [
+      {
+        "exam_en": "The enemy was within <strong class=\"target-word\">striking</strong> distance.",
+        "exam_ko": "적은 <strong class=\"target-word\">공격</strong> 사정권 안에 있었다."
+      },
+      {
+        "exam_en": "She is a woman of <strong class=\"target-word\">striking</strong> beauty.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">눈에 띄는</strong> 미인이다."
+      },
+      {
+        "exam_en": "The painting has <strong class=\"target-word\">striking</strong> colors and bold brushstrokes.",
+        "exam_ko": "그 그림은 <strong class=\"target-word\">강렬한</strong> 색상과 대담한 붓터치를 갖고 있다."
+      }
+    ]
+  }
+]

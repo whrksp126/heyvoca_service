@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1264,
+    "origin": "death",
+    "examples": [
+      {
+        "exam_en": "He died a <strong class=\"target-word\">natural death</strong> at home.",
+        "exam_ko": "그는 집에서 <strong class=\"target-word\">자연사</strong>했다."
+      },
+      {
+        "exam_en": "She suffered a <strong class=\"target-word\">painful death</strong> from the illness.",
+        "exam_ko": "그녀는 병으로 <strong class=\"target-word\">고통스러운 죽음</strong>을 맞이했다."
+      }
+    ]
+  },
+  {
+    "id": 1265,
+    "origin": "blind",
+    "examples": [
+      {
+        "exam_en": "He studied at a <strong class=\"target-word\">blind</strong> school nearby.",
+        "exam_ko": "그는 근처 <strong class=\"target-word\">맹인</strong>학교에서 공부했다."
+      },
+      {
+        "exam_en": "The program provides education for the <strong class=\"target-word\">blind</strong>.",
+        "exam_ko": "그 프로그램은 <strong class=\"target-word\">맹인</strong>을 위한 교육을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 1266,
+    "origin": "adolescent",
+    "examples": [
+      {
+        "exam_en": "He had typical <strong class=\"target-word\">adolescent</strong> yearnings for adventure.",
+        "exam_ko": "그는 모험에 대한 전형적인 <strong class=\"target-word\">청소년기</strong>의 동경을 품고 있었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">adolescent</strong> struggled to find his identity.",
+        "exam_ko": "그 <strong class=\"target-word\">청소년</strong>은 자신의 정체성을 찾으려 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 1268,
+    "origin": "mug",
+    "examples": [
+      {
+        "exam_en": "She wrapped her hands around a warm <strong class=\"target-word\">mug</strong> of cocoa.",
+        "exam_ko": "그녀는 따뜻한 코코아 <strong class=\"target-word\">머그컵</strong>을 두 손으로 감쌌다."
+      },
+      {
+        "exam_en": "He made a funny face and everyone laughed at his <strong class=\"target-word\">mug</strong>.",
+        "exam_ko": "그가 웃긴 표정을 짓자 모두가 그의 <strong class=\"target-word\">낯짝</strong>을 보고 웃었다."
+      }
+    ]
+  },
+  {
+    "id": 1269,
+    "origin": "envy",
+    "examples": [
+      {
+        "exam_en": "He betrayed his friend out of <strong class=\"target-word\">envy</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">시기심</strong>에서 친구를 배신했다."
+      },
+      {
+        "exam_en": "Her success excited everyone's <strong class=\"target-word\">envy</strong>.",
+        "exam_ko": "그녀의 성공은 모두의 <strong class=\"target-word\">부러움</strong>을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1270,
+    "origin": "fantastic",
+    "examples": [
+      {
+        "exam_en": "The artist created <strong class=\"target-word\">fantastic</strong> designs no one had imagined.",
+        "exam_ko": "그 예술가는 아무도 상상하지 못한 <strong class=\"target-word\">기상천외한</strong> 디자인을 만들었다."
+      },
+      {
+        "exam_en": "She had <strong class=\"target-word\">fantastic</strong> terrors every night.",
+        "exam_ko": "그녀는 매일 밤 <strong class=\"target-word\">까닭 없는</strong> 공포에 시달렸다."
+      }
+    ]
+  },
+  {
+    "id": 1271,
+    "origin": "name",
+    "examples": [
+      {
+        "exam_en": "Please write your personal <strong class=\"target-word\">name</strong> on the form.",
+        "exam_ko": "양식에 개인 <strong class=\"target-word\">이름</strong>을 적어 주세요."
+      },
+      {
+        "exam_en": "She kept her maiden <strong class=\"target-word\">name</strong> after marriage.",
+        "exam_ko": "그녀는 결혼 후에도 결혼 전 <strong class=\"target-word\">이름</strong>을 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 1272,
+    "origin": "mistake",
+    "examples": [
+      {
+        "exam_en": "He made a <strong class=\"target-word\">mistake</strong> in his calculations.",
+        "exam_ko": "그는 계산에서 <strong class=\"target-word\">실수</strong>를 했다."
+      },
+      {
+        "exam_en": "She made the <strong class=\"target-word\">mistake</strong> of trusting him too much.",
+        "exam_ko": "그녀는 그를 너무 믿는 <strong class=\"target-word\">실수</strong>를 저질렀다."
+      }
+    ]
+  },
+  {
+    "id": 1273,
+    "origin": "ridiculous",
+    "examples": [
+      {
+        "exam_en": "The manager proposed a <strong class=\"target-word\">ridiculous</strong> scheme.",
+        "exam_ko": "그 매니저는 <strong class=\"target-word\">어처구니없는</strong> 계획을 제안했다."
+      },
+      {
+        "exam_en": "He looked <strong class=\"target-word\">ridiculous</strong> in that oversized costume.",
+        "exam_ko": "그는 그 너무 큰 의상을 입고 <strong class=\"target-word\">우스꽝스러워</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 1274,
+    "origin": "direction",
+    "examples": [
+      {
+        "exam_en": "People ran in all <strong class=\"target-word\">directions</strong> after the alarm.",
+        "exam_ko": "경보가 울리자 사람들이 <strong class=\"target-word\">사방팔방</strong>으로 달아났다."
+      },
+      {
+        "exam_en": "The car turned and went in the opposite <strong class=\"target-word\">direction</strong>.",
+        "exam_ko": "차는 방향을 바꿔 <strong class=\"target-word\">반대 방향</strong>으로 갔다."
+      }
+    ]
+  },
+  {
+    "id": 1275,
+    "origin": "street",
+    "examples": [
+      {
+        "exam_en": "The parade moved along the main <strong class=\"target-word\">street</strong>.",
+        "exam_ko": "퍼레이드는 중심 <strong class=\"target-word\">거리</strong>를 따라 이동했다."
+      },
+      {
+        "exam_en": "I met an old friend on the <strong class=\"target-word\">street</strong> today.",
+        "exam_ko": "나는 오늘 <strong class=\"target-word\">거리</strong>에서 오랜 친구를 만났다."
+      }
+    ]
+  },
+  {
+    "id": 1276,
+    "origin": "overpass",
+    "examples": [
+      {
+        "exam_en": "They built a new <strong class=\"target-word\">overpass</strong> above the highway.",
+        "exam_ko": "그들은 고속도로 위에 새 <strong class=\"target-word\">육교</strong>를 건설했다."
+      },
+      {
+        "exam_en": "He managed to <strong class=\"target-word\">overpass</strong> every obstacle in his path.",
+        "exam_ko": "그는 자신의 길에 놓인 모든 장애를 <strong class=\"target-word\">극복해냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1277,
+    "origin": "convenient",
+    "examples": [
+      {
+        "exam_en": "The bag comes in a <strong class=\"target-word\">convenient</strong> size for travel.",
+        "exam_ko": "그 가방은 여행에 <strong class=\"target-word\">알맞은</strong> 크기로 나온다."
+      },
+      {
+        "exam_en": "Please suggest a <strong class=\"target-word\">convenient</strong> time for the meeting.",
+        "exam_ko": "회의에 <strong class=\"target-word\">알맞은</strong> 시간을 제안해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1278,
+    "origin": "more",
+    "examples": [
+      {
+        "exam_en": "Could I have <strong class=\"target-word\">more</strong> wine, please?",
+        "exam_ko": "와인을 <strong class=\"target-word\">더</strong> 주시겠어요?"
+      },
+      {
+        "exam_en": "Ten or <strong class=\"target-word\">more</strong> students signed up for the class.",
+        "exam_ko": "열 명 <strong class=\"target-word\">이상</strong>의 학생이 수업에 등록했다."
+      }
+    ]
+  },
+  {
+    "id": 1279,
+    "origin": "perfect",
+    "examples": [
+      {
+        "exam_en": "The detective investigated a <strong class=\"target-word\">perfect</strong> crime with no clues.",
+        "exam_ko": "형사는 단서가 없는 <strong class=\"target-word\">완전</strong> 범죄를 수사했다."
+      },
+      {
+        "exam_en": "The artist made a <strong class=\"target-word\">perfect</strong> reproduction of the painting.",
+        "exam_ko": "그 예술가는 그림의 <strong class=\"target-word\">정확한</strong> 복사본을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1280,
+    "origin": "connection",
+    "examples": [
+      {
+        "exam_en": "The study revealed a <strong class=\"target-word\">connection</strong> between crime and poverty.",
+        "exam_ko": "그 연구는 범죄와 빈곤 사이의 <strong class=\"target-word\">연관성</strong>을 밝혔다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">connection</strong> between the two events.",
+        "exam_ko": "그녀는 두 사건 사이의 <strong class=\"target-word\">연관성</strong>을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 1281,
+    "origin": "child",
+    "examples": [
+      {
+        "exam_en": "The school celebrated <strong class=\"target-word\">Children</strong>'s Day with activities.",
+        "exam_ko": "학교는 다양한 행사로 <strong class=\"target-word\">어린이</strong>날을 축하했다."
+      },
+      {
+        "exam_en": "The government invested more in <strong class=\"target-word\">child</strong> welfare.",
+        "exam_ko": "정부는 <strong class=\"target-word\">아동</strong> 복지에 더 많이 투자했다."
+      }
+    ]
+  },
+  {
+    "id": 1282,
+    "origin": "fare",
+    "examples": [
+      {
+        "exam_en": "I paid a taxi <strong class=\"target-word\">fare</strong> to get home.",
+        "exam_ko": "나는 집에 가려고 택시 <strong class=\"target-word\">요금</strong>을 냈다."
+      },
+      {
+        "exam_en": "Students can get a reduced <strong class=\"target-word\">fare</strong> on public transit.",
+        "exam_ko": "학생들은 대중교통에서 할인 <strong class=\"target-word\">요금</strong>을 받을 수 있다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">fared</strong> well in the latest election.",
+        "exam_ko": "그들은 최근 선거에서 <strong class=\"target-word\">좋은 성과를 거뒀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1283,
+    "origin": "adult",
+    "examples": [
+      {
+        "exam_en": "Every <strong class=\"target-word\">adult</strong> person must carry an ID card.",
+        "exam_ko": "모든 <strong class=\"target-word\">성인</strong>은 신분증을 지참해야 한다."
+      },
+      {
+        "exam_en": "This theater only shows <strong class=\"target-word\">adult</strong> movies.",
+        "exam_ko": "이 극장은 <strong class=\"target-word\">성인용</strong> 영화만 상영한다."
+      }
+    ]
+  },
+  {
+    "id": 1284,
+    "origin": "station",
+    "examples": [
+      {
+        "exam_en": "I waited for her at the bus <strong class=\"target-word\">station</strong>.",
+        "exam_ko": "나는 버스 <strong class=\"target-word\">터미널</strong>에서 그녀를 기다렸다."
+      },
+      {
+        "exam_en": "The train <strong class=\"target-word\">station</strong> was crowded on the holiday.",
+        "exam_ko": "연휴에 기차 <strong class=\"target-word\">역</strong>은 붐볐다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+[
+  {
+    "id": 4822,
+    "origin": "plop",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">plopped</strong> down on the chair.",
+        "exam_ko": "그는 의자에 <strong class=\"target-word\">털썩</strong> 앉았다."
+      },
+      {
+        "exam_en": "The stone <strong class=\"target-word\">plopped</strong> into the pond.",
+        "exam_ko": "돌멩이가 연못에 <strong class=\"target-word\">퐁당</strong> 떨어졌다."
+      },
+      {
+        "exam_en": "Can you <strong class=\"target-word\">plop</strong> some ice into my drink?",
+        "exam_ko": "음료에 얼음을 <strong class=\"target-word\">퐁당</strong> 넣어 줄래요?"
+      }
+    ]
+  },
+  {
+    "id": 4823,
+    "origin": "sailing",
+    "examples": [
+      {
+        "exam_en": "They went <strong class=\"target-word\">sailing</strong> on the lake.",
+        "exam_ko": "그들은 호수에서 <strong class=\"target-word\">항해</strong>를 즐겼다."
+      },
+      {
+        "exam_en": "It took seven days of <strong class=\"target-word\">sailing</strong> to reach New York.",
+        "exam_ko": "뉴욕까지 7일간의 <strong class=\"target-word\">항해</strong>가 걸렸다."
+      }
+    ]
+  },
+  {
+    "id": 4826,
+    "origin": "directly",
+    "examples": [
+      {
+        "exam_en": "She went <strong class=\"target-word\">directly</strong> to the heart of the problem.",
+        "exam_ko": "그녀는 문제의 핵심으로 <strong class=\"target-word\">단숨에</strong> 다가갔다."
+      },
+      {
+        "exam_en": "The road leads <strong class=\"target-word\">directly</strong> to town.",
+        "exam_ko": "그 길은 도시로 <strong class=\"target-word\">곧바로</strong> 통한다."
+      }
+    ]
+  },
+  {
+    "id": 4827,
+    "origin": "hatch",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">hatched</strong> the eggs artificially.",
+        "exam_ko": "그들은 알을 인공적으로 <strong class=\"target-word\">부화시켰다</strong>."
+      },
+      {
+        "exam_en": "The duck <strong class=\"target-word\">hatched</strong> five ducklings.",
+        "exam_ko": "오리가 새끼 다섯 마리를 <strong class=\"target-word\">깠다</strong>."
+      },
+      {
+        "exam_en": "Astronauts repaired the <strong class=\"target-word\">hatch</strong> on the space station.",
+        "exam_ko": "우주비행사들이 우주 정거장의 <strong class=\"target-word\">출입구</strong>를 수리했다."
+      }
+    ]
+  },
+  {
+    "id": 4830,
+    "origin": "refrigerate",
+    "examples": [
+      {
+        "exam_en": "These fruits don't need to be <strong class=\"target-word\">refrigerated</strong>.",
+        "exam_ko": "이 과일들은 <strong class=\"target-word\">냉장 보관</strong>이 필요 없다."
+      }
+    ]
+  },
+  {
+    "id": 4832,
+    "origin": "whatever",
+    "examples": [
+      {
+        "exam_en": "Do <strong class=\"target-word\">whatever</strong> you want.",
+        "exam_ko": "하고 싶은 것은 <strong class=\"target-word\">무엇이든</strong> 하세요."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Whatever</strong> has a beginning also has an end.",
+        "exam_ko": "시작이 있는 것은 <strong class=\"target-word\">모두</strong> 끝이 있다."
+      }
+    ]
+  },
+  {
+    "id": 4833,
+    "origin": "beard",
+    "examples": [
+      {
+        "exam_en": "He has a thick <strong class=\"target-word\">beard</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">턱수염</strong>이 무성하다."
+      },
+      {
+        "exam_en": "He decided to grow a <strong class=\"target-word\">beard</strong> this winter.",
+        "exam_ko": "그는 이번 겨울에 <strong class=\"target-word\">턱수염</strong>을 기르기로 했다."
+      }
+    ]
+  },
+  {
+    "id": 4834,
+    "origin": "diary",
+    "examples": [
+      {
+        "exam_en": "She keeps a <strong class=\"target-word\">diary</strong> every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">일기</strong>를 쓴다."
+      },
+      {
+        "exam_en": "He wrote his thoughts in his <strong class=\"target-word\">diary</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">일기</strong>에 자신의 생각을 적었다."
+      }
+    ]
+  },
+  {
+    "id": 4835,
+    "origin": "hardly",
+    "examples": [
+      {
+        "exam_en": "There is <strong class=\"target-word\">hardly</strong> any time left.",
+        "exam_ko": "시간이 <strong class=\"target-word\">거의</strong> 남지 않았다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Hardly</strong> anybody knew it.",
+        "exam_ko": "<strong class=\"target-word\">거의</strong> 아무도 그것을 알지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 4838,
+    "origin": "ostrich",
+    "examples": [
+      {
+        "exam_en": "He has the digestion of an <strong class=\"target-word\">ostrich</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">타조</strong>처럼 위장이 튼튼하다."
+      },
+      {
+        "exam_en": "The government followed an <strong class=\"target-word\">ostrich</strong> policy.",
+        "exam_ko": "정부는 <strong class=\"target-word\">타조</strong> 같은 현실 도피 정책을 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 4839,
+    "origin": "silently",
+    "examples": [
+      {
+        "exam_en": "She left the room <strong class=\"target-word\">silently</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">아무 말 없이</strong> 방을 나섰다."
+      },
+      {
+        "exam_en": "It appeared <strong class=\"target-word\">silently</strong> out of the dusk.",
+        "exam_ko": "그것은 해질 무렵 <strong class=\"target-word\">조용히</strong> 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 4840,
+    "origin": "soar",
+    "examples": [
+      {
+        "exam_en": "The jet <strong class=\"target-word\">soared</strong> into the clouds.",
+        "exam_ko": "제트기가 구름 속으로 <strong class=\"target-word\">날아올랐다</strong>."
+      },
+      {
+        "exam_en": "A hawk was <strong class=\"target-word\">soaring</strong> in the sky above.",
+        "exam_ko": "매가 하늘을 <strong class=\"target-word\">활공하고</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4842,
+    "origin": "typhoon",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Typhoons</strong> are so powerful that they sink ships.",
+        "exam_ko": "<strong class=\"target-word\">태풍</strong>의 위력은 대단해서 배도 침몰시킨다."
+      },
+      {
+        "exam_en": "Residents evacuated as the <strong class=\"target-word\">typhoon</strong> approached.",
+        "exam_ko": "<strong class=\"target-word\">태풍</strong>이 접근하자 주민들이 대피했다."
+      }
+    ]
+  },
+  {
+    "id": 4843,
+    "origin": "birdie",
+    "examples": [
+      {
+        "exam_en": "He scored a <strong class=\"target-word\">birdie</strong> on the third hole.",
+        "exam_ko": "그는 세 번째 홀에서 <strong class=\"target-word\">버디</strong>를 기록했다."
+      }
+    ]
+  },
+  {
+    "id": 4845,
+    "origin": "foul",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">foul</strong> odor came from the garbage.",
+        "exam_ko": "쓰레기에서 <strong class=\"target-word\">악취</strong>가 났다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">foul</strong> breath made everyone step back.",
+        "exam_ko": "그의 <strong class=\"target-word\">구린</strong> 입김에 모두 뒤로 물러섰다."
+      }
+    ]
+  },
+  {
+    "id": 4846,
+    "origin": "gate",
+    "examples": [
+      {
+        "exam_en": "Education is a <strong class=\"target-word\">gate</strong> to success.",
+        "exam_ko": "교육은 성공으로 가는 <strong class=\"target-word\">문</strong>이다."
+      },
+      {
+        "exam_en": "They walked through the <strong class=\"target-word\">gate</strong> together.",
+        "exam_ko": "그들은 함께 <strong class=\"target-word\">문</strong>을 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 4848,
+    "origin": "pitcher",
+    "examples": [
+      {
+        "exam_en": "Little <strong class=\"target-word\">pitchers</strong> have long ears.",
+        "exam_ko": "애들은 <strong class=\"target-word\">귀</strong>가 밝다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Pitchers</strong> have ears.",
+        "exam_ko": "낮말은 새가 <strong class=\"target-word\">듣는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4851,
+    "origin": "tag",
+    "examples": [
+      {
+        "exam_en": "Check the price <strong class=\"target-word\">tag</strong> before buying.",
+        "exam_ko": "구매 전에 가격 <strong class=\"target-word\">태그</strong>를 확인하세요."
+      },
+      {
+        "exam_en": "She attached a baggage <strong class=\"target-word\">tag</strong> to her suitcase.",
+        "exam_ko": "그녀는 여행 가방에 수화물 <strong class=\"target-word\">태그</strong>를 달았다."
+      }
+    ]
+  },
+  {
+    "id": 4852,
+    "origin": "theft",
+    "examples": [
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">theft</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">절도</strong> 혐의로 체포됐다."
+      }
+    ]
+  },
+  {
+    "id": 4853,
+    "origin": "definitely",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">definitely</strong> answered the question.",
+        "exam_ko": "그녀는 질문에 <strong class=\"target-word\">명확하게</strong> 답했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">definitely</strong> refused the offer.",
+        "exam_ko": "그는 제안을 <strong class=\"target-word\">딱 잘라</strong> 거절했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+[
+  {
+    "id": 4795,
+    "origin": "naples",
+    "examples": [
+      {
+        "exam_en": "She finally visited <strong class=\"target-word\">Naples</strong> after years of dreaming.",
+        "exam_ko": "그녀는 오랜 꿈 끝에 마침내 <strong class=\"target-word\">나폴리</strong>를 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 4796,
+    "origin": "scholarly",
+    "examples": [
+      {
+        "exam_en": "He published his findings in a <strong class=\"target-word\">scholarly</strong> journal.",
+        "exam_ko": "그는 <strong class=\"target-word\">학술</strong> 저널에 자신의 연구 결과를 발표했다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">scholarly</strong> woman who studies English literature.",
+        "exam_ko": "그녀는 영문학을 연구하는 <strong class=\"target-word\">학구적인</strong> 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 4797,
+    "origin": "stationery",
+    "examples": [
+      {
+        "exam_en": "The letter was written on <strong class=\"target-word\">stationery</strong> embossed with the hotel's name.",
+        "exam_ko": "편지는 호텔 이름이 양각된 <strong class=\"target-word\">편지지</strong>에 쓰여 있었다."
+      },
+      {
+        "exam_en": "She bought pens and notebooks at a <strong class=\"target-word\">stationery</strong> shop.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">문방구</strong>에서 펜과 공책을 샀다."
+      },
+      {
+        "exam_en": "He always keeps quality <strong class=\"target-word\">stationery</strong> on his desk.",
+        "exam_ko": "그는 항상 책상 위에 고급 <strong class=\"target-word\">문구류</strong>를 갖춰 놓는다."
+      }
+    ]
+  },
+  {
+    "id": 4798,
+    "origin": "throwaway",
+    "examples": [
+      {
+        "exam_en": "They used a <strong class=\"target-word\">throwaway</strong> camera for the trip.",
+        "exam_ko": "그들은 여행에 <strong class=\"target-word\">일회용</strong> 카메라를 사용했다."
+      },
+      {
+        "exam_en": "He prefers <strong class=\"target-word\">throwaway</strong> pens over expensive ones.",
+        "exam_ko": "그는 비싼 펜보다 <strong class=\"target-word\">일회용</strong> 볼펜을 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 4799,
+    "origin": "apt",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">apt</strong> to forget important details.",
+        "exam_ko": "그녀는 중요한 세부 사항을 잘 <strong class=\"target-word\">잊어버리는</strong> 경향이 있다."
+      },
+      {
+        "exam_en": "Iron is <strong class=\"target-word\">apt</strong> to rust.",
+        "exam_ko": "철은 녹슬기 <strong class=\"target-word\">쉽다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4800,
+    "origin": "attraction",
+    "examples": [
+      {
+        "exam_en": "Reading holds no <strong class=\"target-word\">attraction</strong> for him.",
+        "exam_ko": "그에게는 독서가 아무런 <strong class=\"target-word\">매력</strong>도 없다."
+      },
+      {
+        "exam_en": "She has lots of personal <strong class=\"target-word\">attractions</strong>.",
+        "exam_ko": "그녀는 개인적인 <strong class=\"target-word\">매력</strong>이 넘친다."
+      }
+    ]
+  },
+  {
+    "id": 4802,
+    "origin": "doorway",
+    "examples": [
+      {
+        "exam_en": "She stood in the <strong class=\"target-word\">doorway</strong> and waved goodbye.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">출입구</strong>에 서서 손을 흔들며 작별 인사를 했다."
+      },
+      {
+        "exam_en": "Hard work is a <strong class=\"target-word\">doorway</strong> to fame.",
+        "exam_ko": "열심히 노력하는 것이 명성으로 가는 <strong class=\"target-word\">문</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4803,
+    "origin": "garlic",
+    "examples": [
+      {
+        "exam_en": "She added a clove of <strong class=\"target-word\">garlic</strong> to the sauce.",
+        "exam_ko": "그녀는 소스에 <strong class=\"target-word\">마늘</strong> 한 쪽을 넣었다."
+      },
+      {
+        "exam_en": "It looks like a bulb of <strong class=\"target-word\">garlic</strong>.",
+        "exam_ko": "<strong class=\"target-word\">마늘</strong> 알 같이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 4804,
+    "origin": "hut",
+    "examples": [
+      {
+        "exam_en": "They took shelter in a small <strong class=\"target-word\">hut</strong> during the storm.",
+        "exam_ko": "그들은 폭풍이 치는 동안 작은 <strong class=\"target-word\">오두막</strong>에서 피신했다."
+      }
+    ]
+  },
+  {
+    "id": 4805,
+    "origin": "nowadays",
+    "examples": [
+      {
+        "exam_en": "People are more health-conscious <strong class=\"target-word\">nowadays</strong>.",
+        "exam_ko": "<strong class=\"target-word\">오늘날</strong>에는 사람들이 이전보다 건강에 더 신경을 쓴다."
+      },
+      {
+        "exam_en": "Kids <strong class=\"target-word\">nowadays</strong> spend too much time on screens.",
+        "exam_ko": "<strong class=\"target-word\">요즘</strong> 아이들은 화면 앞에서 너무 많은 시간을 보낸다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Nowadays</strong>, many people work from home.",
+        "exam_ko": "<strong class=\"target-word\">요즘</strong>에는 많은 사람들이 재택근무를 한다."
+      }
+    ]
+  },
+  {
+    "id": 4806,
+    "origin": "organization",
+    "examples": [
+      {
+        "exam_en": "They formed a central <strong class=\"target-word\">organization</strong> to coordinate efforts.",
+        "exam_ko": "그들은 활동을 조율하기 위해 중앙 <strong class=\"target-word\">조직</strong>을 구성했다."
+      },
+      {
+        "exam_en": "OPEC is an <strong class=\"target-word\">organization</strong> of petroleum exporting countries.",
+        "exam_ko": "OPEC은 석유 수출국들의 <strong class=\"target-word\">기구</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4807,
+    "origin": "revenge",
+    "examples": [
+      {
+        "exam_en": "He sought to <strong class=\"target-word\">revenge</strong> himself on his old enemy.",
+        "exam_ko": "그는 숙적에게 <strong class=\"target-word\">복수</strong>하려 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">revenged</strong> his dead father.",
+        "exam_ko": "그는 죽은 아버지의 원수를 <strong class=\"target-word\">갚았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4808,
+    "origin": "dizzy",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">dizzy</strong> after spinning around.",
+        "exam_ko": "그녀는 빙글빙글 돌고 나서 <strong class=\"target-word\">어지러움</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "I'm <strong class=\"target-word\">dizzy</strong>.",
+        "exam_ko": "나 <strong class=\"target-word\">어지러워</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4810,
+    "origin": "menu",
+    "examples": [
+      {
+        "exam_en": "The restaurant offers a fixed <strong class=\"target-word\">menu</strong> at lunchtime.",
+        "exam_ko": "그 식당은 점심에 고정 <strong class=\"target-word\">메뉴</strong>를 제공한다."
+      },
+      {
+        "exam_en": "She studied the <strong class=\"target-word\">menu</strong> before ordering.",
+        "exam_ko": "그녀는 주문하기 전에 <strong class=\"target-word\">메뉴</strong>를 살펴봤다."
+      }
+    ]
+  },
+  {
+    "id": 4814,
+    "origin": "chore",
+    "examples": [
+      {
+        "exam_en": "He does household <strong class=\"target-word\">chores</strong> every weekend.",
+        "exam_ko": "그는 매주 주말마다 집안 <strong class=\"target-word\">허드렛일</strong>을 한다."
+      }
+    ]
+  },
+  {
+    "id": 4816,
+    "origin": "grain",
+    "examples": [
+      {
+        "exam_en": "The farmer walked through a field of <strong class=\"target-word\">grain</strong>.",
+        "exam_ko": "농부는 <strong class=\"target-word\">곡물</strong> 밭을 걸어갔다."
+      },
+      {
+        "exam_en": "This year's <strong class=\"target-word\">grain</strong> harvest was better than expected.",
+        "exam_ko": "올해의 <strong class=\"target-word\">곡물</strong> 수확은 예상보다 좋았다."
+      }
+    ]
+  },
+  {
+    "id": 4817,
+    "origin": "graze",
+    "examples": [
+      {
+        "exam_en": "Sheep were <strong class=\"target-word\">grazing</strong> peacefully in the pasture.",
+        "exam_ko": "양들이 목초지에서 평화롭게 <strong class=\"target-word\">풀을 뜯고</strong> 있었다."
+      },
+      {
+        "exam_en": "The farmer let his cattle <strong class=\"target-word\">graze</strong> the field all morning.",
+        "exam_ko": "농부는 가축들이 오전 내내 들판에서 <strong class=\"target-word\">풀을 뜯어먹게</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 4818,
+    "origin": "grumble",
+    "examples": [
+      {
+        "exam_en": "Don't <strong class=\"target-word\">grumble</strong> about your food.",
+        "exam_ko": "음식에 대해 <strong class=\"target-word\">투덜대지</strong> 마라."
+      },
+      {
+        "exam_en": "He always <strong class=\"target-word\">grumbles</strong> when he has too much work.",
+        "exam_ko": "그는 일이 너무 많으면 항상 <strong class=\"target-word\">불평한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4819,
+    "origin": "hay",
+    "examples": [
+      {
+        "exam_en": "That ain't <strong class=\"target-word\">hay</strong>.",
+        "exam_ko": "그건 적은 돈이 아니다 (거액이다). — \"<strong class=\"target-word\">건초</strong>\"에서 비롯된 관용 표현"
+      },
+      {
+        "exam_en": "The farmers stored the <strong class=\"target-word\">hay</strong> in the barn before winter.",
+        "exam_ko": "농부들은 겨울 전에 <strong class=\"target-word\">건초</strong>를 헛간에 보관했다."
+      }
+    ]
+  },
+  {
+    "id": 4820,
+    "origin": "mood",
+    "examples": [
+      {
+        "exam_en": "She came to work in a good <strong class=\"target-word\">mood</strong> today.",
+        "exam_ko": "그녀는 오늘 좋은 <strong class=\"target-word\">기분</strong>으로 출근했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">mood</strong> changes easily depending on the weather.",
+        "exam_ko": "그의 <strong class=\"target-word\">기분</strong>은 날씨에 따라 쉽게 바뀐다."
+      }
+    ]
+  }
+]

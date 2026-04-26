@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4032,
+    "origin": "classification",
+    "examples": [
+      {
+        "exam_en": "The library uses a strict <strong class=\"target-word\">classification</strong> system.",
+        "exam_ko": "도서관은 엄격한 <strong class=\"target-word\">분류</strong> 체계를 사용한다."
+      },
+      {
+        "exam_en": "Soil <strong class=\"target-word\">classification</strong> depends on mineral content.",
+        "exam_ko": "토양 <strong class=\"target-word\">분류</strong>는 광물 함유량에 따라 달라진다."
+      }
+    ]
+  },
+  {
+    "id": 4033,
+    "origin": "classified",
+    "examples": [
+      {
+        "exam_en": "The document was marked as <strong class=\"target-word\">classified</strong> by the agency.",
+        "exam_ko": "그 문서는 기관에 의해 <strong class=\"target-word\">기밀</strong>로 분류되었다."
+      },
+      {
+        "exam_en": "She found a job through a <strong class=\"target-word\">classified</strong> ad.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">구인</strong> 광고를 통해 일자리를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 4035,
+    "origin": "prospect",
+    "examples": [
+      {
+        "exam_en": "The company has strong business <strong class=\"target-word\">prospects</strong> this year.",
+        "exam_ko": "그 회사는 올해 사업 <strong class=\"target-word\">전망</strong>이 밝다."
+      },
+      {
+        "exam_en": "He chose a job with excellent future <strong class=\"target-word\">prospects</strong>.",
+        "exam_ko": "그는 미래 <strong class=\"target-word\">전망</strong>이 훌륭한 직업을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 4036,
+    "origin": "carrier",
+    "examples": [
+      {
+        "exam_en": "The truck works as a car <strong class=\"target-word\">carrier</strong> on the highway.",
+        "exam_ko": "그 트럭은 고속도로에서 차량 <strong class=\"target-word\">운반차</strong>로 사용된다."
+      },
+      {
+        "exam_en": "A dozen jets took off from the aircraft <strong class=\"target-word\">carrier</strong>.",
+        "exam_ko": "열두 대의 전투기가 항공 <strong class=\"target-word\">모함</strong>에서 이륙했다."
+      }
+    ]
+  },
+  {
+    "id": 4038,
+    "origin": "emission",
+    "examples": [
+      {
+        "exam_en": "The new car meets all <strong class=\"target-word\">emission</strong> standards.",
+        "exam_ko": "새 차는 모든 <strong class=\"target-word\">배출</strong> 기준을 충족한다."
+      },
+      {
+        "exam_en": "Steel mills release sulfur <strong class=\"target-word\">emissions</strong> into the air.",
+        "exam_ko": "제강소는 황 <strong class=\"target-word\">배출물</strong>을 대기로 방출한다."
+      }
+    ]
+  },
+  {
+    "id": 4039,
+    "origin": "fossil",
+    "examples": [
+      {
+        "exam_en": "Scientists discovered a rare dinosaur <strong class=\"target-word\">fossil</strong>.",
+        "exam_ko": "과학자들이 희귀한 공룡 <strong class=\"target-word\">화석</strong>을 발견했다."
+      },
+      {
+        "exam_en": "The coelacanth is called a living <strong class=\"target-word\">fossil</strong>.",
+        "exam_ko": "실러캔스는 살아 있는 <strong class=\"target-word\">화석</strong>이라 불린다."
+      }
+    ]
+  },
+  {
+    "id": 4040,
+    "origin": "heritage",
+    "examples": [
+      {
+        "exam_en": "The temple is part of our national <strong class=\"target-word\">heritage</strong>.",
+        "exam_ko": "그 사원은 우리 국가 <strong class=\"target-word\">유산</strong>의 일부이다."
+      },
+      {
+        "exam_en": "They are proud of their cultural <strong class=\"target-word\">heritage</strong>.",
+        "exam_ko": "그들은 자신들의 문화적 <strong class=\"target-word\">유산</strong>을 자랑스러워한다."
+      }
+    ]
+  },
+  {
+    "id": 4041,
+    "origin": "hydrogen",
+    "examples": [
+      {
+        "exam_en": "Water is made of oxygen and <strong class=\"target-word\">hydrogen</strong>.",
+        "exam_ko": "물은 산소와 <strong class=\"target-word\">수소</strong>로 이루어져 있다."
+      },
+      {
+        "exam_en": "The bus runs on <strong class=\"target-word\">hydrogen</strong> fuel cells.",
+        "exam_ko": "그 버스는 <strong class=\"target-word\">수소</strong> 연료 전지로 운행된다."
+      }
+    ]
+  },
+  {
+    "id": 4042,
+    "origin": "motive",
+    "examples": [
+      {
+        "exam_en": "Police are still investigating the <strong class=\"target-word\">motive</strong> for the crime.",
+        "exam_ko": "경찰은 아직도 범행 <strong class=\"target-word\">동기</strong>를 조사 중이다."
+      },
+      {
+        "exam_en": "Profit was the principal <strong class=\"target-word\">motive</strong> behind the decision.",
+        "exam_ko": "이익이 그 결정 뒤에 있는 주된 <strong class=\"target-word\">동기</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 4046,
+    "origin": "volcanic",
+    "examples": [
+      {
+        "exam_en": "The region has intense <strong class=\"target-word\">volcanic</strong> activity.",
+        "exam_ko": "그 지역은 강렬한 <strong class=\"target-word\">화산</strong> 활동이 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Volcanic</strong> ash covered the nearby town.",
+        "exam_ko": "<strong class=\"target-word\">화산재</strong>가 인근 마을을 뒤덮었다."
+      }
+    ]
+  },
+  {
+    "id": 4047,
+    "origin": "coffin",
+    "examples": [
+      {
+        "exam_en": "The soldiers carried the <strong class=\"target-word\">coffin</strong> slowly.",
+        "exam_ko": "군인들이 천천히 <strong class=\"target-word\">관</strong>을 운반했다."
+      },
+      {
+        "exam_en": "They lowered the <strong class=\"target-word\">coffin</strong> into the ground.",
+        "exam_ko": "그들은 <strong class=\"target-word\">관</strong>을 땅속으로 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 4049,
+    "origin": "feast",
+    "examples": [
+      {
+        "exam_en": "The family prepared a <strong class=\"target-word\">feast</strong> for the holiday.",
+        "exam_ko": "가족들이 명절을 위해 <strong class=\"target-word\">잔치</strong>를 준비했다."
+      },
+      {
+        "exam_en": "Easter is a movable <strong class=\"target-word\">feast</strong> on the calendar.",
+        "exam_ko": "부활절은 달력에서 이동 <strong class=\"target-word\">축제일</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4050,
+    "origin": "vendor",
+    "examples": [
+      {
+        "exam_en": "The street <strong class=\"target-word\">vendor</strong> sells fresh vegetables daily.",
+        "exam_ko": "거리의 <strong class=\"target-word\">행상인</strong>은 매일 신선한 채소를 판다."
+      },
+      {
+        "exam_en": "We chose a reliable software <strong class=\"target-word\">vendor</strong>.",
+        "exam_ko": "우리는 믿을 수 있는 소프트웨어 <strong class=\"target-word\">업체</strong>를 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 4051,
+    "origin": "cent",
+    "examples": [
+      {
+        "exam_en": "I don't have a single <strong class=\"target-word\">cent</strong> left.",
+        "exam_ko": "<strong class=\"target-word\">한 푼</strong>도 남지 않았다."
+      },
+      {
+        "exam_en": "The item costs fifty <strong class=\"target-word\">cents</strong>.",
+        "exam_ko": "그 물건은 50<strong class=\"target-word\">센트</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4052,
+    "origin": "hog",
+    "examples": [
+      {
+        "exam_en": "He ate like a <strong class=\"target-word\">hog</strong> at the dinner table.",
+        "exam_ko": "그는 저녁 식탁에서 <strong class=\"target-word\">돼지</strong>처럼 먹었다."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">hog</strong> all the snacks for yourself.",
+        "exam_ko": "간식을 혼자 <strong class=\"target-word\">독차지</strong>하지 마라."
+      }
+    ]
+  },
+  {
+    "id": 4053,
+    "origin": "least",
+    "examples": [
+      {
+        "exam_en": "She chose the option with the <strong class=\"target-word\">least</strong> risk.",
+        "exam_ko": "그녀는 위험이 <strong class=\"target-word\">가장 적은</strong> 선택지를 골랐다."
+      },
+      {
+        "exam_en": "At <strong class=\"target-word\">least</strong> ten people attended the meeting.",
+        "exam_ko": "<strong class=\"target-word\">적어도</strong> 열 명이 회의에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 4054,
+    "origin": "lollipop",
+    "examples": [
+      {
+        "exam_en": "The child slowly licked a <strong class=\"target-word\">lollipop</strong>.",
+        "exam_ko": "아이가 천천히 <strong class=\"target-word\">막대 사탕</strong>을 핥았다."
+      },
+      {
+        "exam_en": "She bought a strawberry <strong class=\"target-word\">lollipop</strong> at the store.",
+        "exam_ko": "그녀는 가게에서 딸기 <strong class=\"target-word\">막대 사탕</strong>을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 4055,
+    "origin": "nevermind",
+    "examples": [
+      {
+        "exam_en": "Pay it no <strong class=\"target-word\">nevermind</strong>.",
+        "exam_ko": "<strong class=\"target-word\">괘념</strong>하지 마라."
+      },
+      {
+        "exam_en": "It's no <strong class=\"target-word\">nevermind</strong> of yours.",
+        "exam_ko": "그건 네가 <strong class=\"target-word\">신경 쓸</strong> 일이 아니다."
+      }
+    ]
+  },
+  {
+    "id": 4056,
+    "origin": "stunt",
+    "examples": [
+      {
+        "exam_en": "Lack of food may <strong class=\"target-word\">stunt</strong> the child's growth.",
+        "exam_ko": "식량 부족은 아이의 성장을 <strong class=\"target-word\">저해할</strong> 수 있다."
+      },
+      {
+        "exam_en": "A harsh climate <strong class=\"target-word\">stunted</strong> the trees.",
+        "exam_ko": "거친 기후가 나무들의 성장을 <strong class=\"target-word\">방해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4057,
+    "origin": "watchdog",
+    "examples": [
+      {
+        "exam_en": "The group acts as a consumer <strong class=\"target-word\">watchdog</strong>.",
+        "exam_ko": "그 단체는 소비자 <strong class=\"target-word\">감시 기관</strong>으로 활동한다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">watchdog</strong> organization monitors government spending.",
+        "exam_ko": "<strong class=\"target-word\">감시</strong> 단체가 정부 지출을 감독한다."
+      }
+    ]
+  }
+]

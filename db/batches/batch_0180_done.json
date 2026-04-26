@@ -1,0 +1,278 @@
+[
+  {
+    "id": 3997,
+    "origin": "gust",
+    "examples": [
+      {
+        "exam_en": "A sudden <strong class=\"target-word\">gust</strong> blew her hat away.",
+        "exam_ko": "갑작스러운 <strong class=\"target-word\">돌풍</strong>이 그녀의 모자를 날려 버렸다."
+      },
+      {
+        "exam_en": "Strong <strong class=\"target-word\">gusts</strong> swept sand across the road.",
+        "exam_ko": "강한 <strong class=\"target-word\">돌풍</strong>이 도로에 모래를 휩쓸었다."
+      },
+      {
+        "exam_en": "The storm brought fierce <strong class=\"target-word\">gusts</strong> of wind.",
+        "exam_ko": "폭풍은 강한 바람 <strong class=\"target-word\">돌풍</strong>을 동반했다."
+      }
+    ]
+  },
+  {
+    "id": 3998,
+    "origin": "loser",
+    "examples": [
+      {
+        "exam_en": "He is a gracious <strong class=\"target-word\">loser</strong> who congratulated the winner.",
+        "exam_ko": "그는 우승자를 축하한 품위 있는 <strong class=\"target-word\">패자</strong>였다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Losers</strong> are always blamed in the end.",
+        "exam_ko": "<strong class=\"target-word\">패자</strong>는 결국 항상 비난을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 3999,
+    "origin": "bastard",
+    "examples": [
+      {
+        "exam_en": "That <strong class=\"target-word\">bastard</strong> stole my wallet.",
+        "exam_ko": "그 <strong class=\"target-word\">나쁜 놈</strong>이 내 지갑을 훔쳐 갔다."
+      },
+      {
+        "exam_en": "Those <strong class=\"target-word\">bastards</strong> ruined everything.",
+        "exam_ko": "그 <strong class=\"target-word\">나쁜 놈들</strong>이 모든 것을 망쳤다."
+      }
+    ]
+  },
+  {
+    "id": 4000,
+    "origin": "sob",
+    "examples": [
+      {
+        "exam_en": "She began to <strong class=\"target-word\">sob</strong> quietly in the corner.",
+        "exam_ko": "그녀는 구석에서 조용히 <strong class=\"target-word\">흐느껴 울기</strong> 시작했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sobbed</strong> as he told us what had happened.",
+        "exam_ko": "그는 무슨 일이 있었는지 말하면서 <strong class=\"target-word\">흐느꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4001,
+    "origin": "nobility",
+    "examples": [
+      {
+        "exam_en": "He was born into the <strong class=\"target-word\">nobility</strong> and lived in luxury.",
+        "exam_ko": "그는 <strong class=\"target-word\">귀족</strong> 가문에서 태어나 호화롭게 살았다."
+      },
+      {
+        "exam_en": "She married into the <strong class=\"target-word\">nobility</strong> at a young age.",
+        "exam_ko": "그녀는 젊은 나이에 <strong class=\"target-word\">귀족</strong> 집안으로 시집갔다."
+      }
+    ]
+  },
+  {
+    "id": 4006,
+    "origin": "zealot",
+    "examples": [
+      {
+        "exam_en": "The religious <strong class=\"target-word\">zealot</strong> refused to compromise his beliefs.",
+        "exam_ko": "그 종교적 <strong class=\"target-word\">광신자</strong>는 자신의 믿음을 타협하기를 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 4007,
+    "origin": "acting",
+    "examples": [
+      {
+        "exam_en": "She served as the <strong class=\"target-word\">acting</strong> manager while he was away.",
+        "exam_ko": "그가 자리를 비운 동안 그녀가 <strong class=\"target-word\">대리</strong> 부장을 맡았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">acting</strong> principal held a staff meeting today.",
+        "exam_ko": "<strong class=\"target-word\">대리</strong> 교장이 오늘 교직원 회의를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 4008,
+    "origin": "emphasis",
+    "examples": [
+      {
+        "exam_en": "The teacher laid <strong class=\"target-word\">emphasis</strong> on reading every day.",
+        "exam_ko": "선생님은 매일 독서하는 것에 <strong class=\"target-word\">강조</strong>를 두었다."
+      },
+      {
+        "exam_en": "The course places <strong class=\"target-word\">emphasis</strong> on practical skills.",
+        "exam_ko": "그 과정은 실용적인 기술에 <strong class=\"target-word\">중점</strong>을 둔다."
+      }
+    ]
+  },
+  {
+    "id": 4010,
+    "origin": "rome",
+    "examples": [
+      {
+        "exam_en": "When in <strong class=\"target-word\">Rome</strong>, do as the Romans do.",
+        "exam_ko": "<strong class=\"target-word\">로마</strong>에 가면 로마 사람처럼 행동하라."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Rome</strong> was not built in a day.",
+        "exam_ko": "<strong class=\"target-word\">로마</strong>는 하루아침에 이루어지지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 4013,
+    "origin": "author",
+    "examples": [
+      {
+        "exam_en": "She is a well-known <strong class=\"target-word\">author</strong> of detective novels.",
+        "exam_ko": "그녀는 유명한 탐정 소설 <strong class=\"target-word\">작가</strong>다."
+      },
+      {
+        "exam_en": "You have many <strong class=\"target-word\">authors</strong> represented on your shelves.",
+        "exam_ko": "당신의 책장에는 많은 <strong class=\"target-word\">작가</strong>의 작품이 꽂혀 있군요."
+      }
+    ]
+  },
+  {
+    "id": 4014,
+    "origin": "eventually",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">eventually</strong> succeeded in show business.",
+        "exam_ko": "<strong class=\"target-word\">마침내</strong> 그는 연예계에서 성공했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Eventually</strong>, they got divorced.",
+        "exam_ko": "<strong class=\"target-word\">결국</strong> 그들은 이혼했다."
+      }
+    ]
+  },
+  {
+    "id": 4016,
+    "origin": "properly",
+    "examples": [
+      {
+        "exam_en": "The fax machine didn't work <strong class=\"target-word\">properly</strong>.",
+        "exam_ko": "팩스가 <strong class=\"target-word\">제대로</strong> 작동하지 않았다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Properly</strong> speaking, this is not a valid argument.",
+        "exam_ko": "<strong class=\"target-word\">정확히</strong> 말하면, 이것은 유효한 주장이 아니다."
+      }
+    ]
+  },
+  {
+    "id": 4017,
+    "origin": "technique",
+    "examples": [
+      {
+        "exam_en": "Modern management <strong class=\"target-word\">techniques</strong> improve team efficiency.",
+        "exam_ko": "현대 경영 <strong class=\"target-word\">기법</strong>은 팀 효율성을 향상시킨다."
+      },
+      {
+        "exam_en": "She studied the <strong class=\"target-word\">techniques</strong> of film-making at school.",
+        "exam_ko": "그녀는 학교에서 영화 제작 <strong class=\"target-word\">기술</strong>을 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 4018,
+    "origin": "contagious",
+    "examples": [
+      {
+        "exam_en": "The doctor said the disease is highly <strong class=\"target-word\">contagious</strong>.",
+        "exam_ko": "의사는 그 병이 매우 <strong class=\"target-word\">전염성이 강하다</strong>고 말했다."
+      },
+      {
+        "exam_en": "Her laughter was so <strong class=\"target-word\">contagious</strong> that everyone smiled.",
+        "exam_ko": "그녀의 웃음은 너무 <strong class=\"target-word\">전염성이 강해서</strong> 모두가 미소 지었다."
+      }
+    ]
+  },
+  {
+    "id": 4019,
+    "origin": "aerobic",
+    "examples": [
+      {
+        "exam_en": "She does <strong class=\"target-word\">aerobic</strong> exercise every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">유산소</strong> 운동을 한다."
+      }
+    ]
+  },
+  {
+    "id": 4020,
+    "origin": "combination",
+    "examples": [
+      {
+        "exam_en": "Exercise in <strong class=\"target-word\">combination</strong> with diet helps you lose weight.",
+        "exam_ko": "식이요법과 <strong class=\"target-word\">결합된</strong> 운동이 체중 감량에 도움이 된다."
+      },
+      {
+        "exam_en": "Blue and yellow make a good color <strong class=\"target-word\">combination</strong>.",
+        "exam_ko": "파란색과 노란색은 좋은 색상 <strong class=\"target-word\">조합</strong>을 만든다."
+      }
+    ]
+  },
+  {
+    "id": 4021,
+    "origin": "jet",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">jet</strong> of water shot from the broken pipe.",
+        "exam_ko": "부러진 파이프에서 물 <strong class=\"target-word\">분출</strong>이 뿜어져 나왔다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Jets</strong> of water shot out of the fountain.",
+        "exam_ko": "분수에서 물 <strong class=\"target-word\">줄기</strong>가 뿜어져 나왔다."
+      }
+    ]
+  },
+  {
+    "id": 4022,
+    "origin": "superintendent",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">superintendent</strong> oversees all public schools in the district.",
+        "exam_ko": "<strong class=\"target-word\">교육감</strong>은 지역 내 모든 공립학교를 감독한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">superintendent</strong> reviewed the contractor's work on site.",
+        "exam_ko": "<strong class=\"target-word\">감리</strong>가 현장에서 시공자의 작업을 검토했다."
+      }
+    ]
+  },
+  {
+    "id": 4029,
+    "origin": "sin",
+    "examples": [
+      {
+        "exam_en": "Christians believe that original <strong class=\"target-word\">sin</strong> affects all people.",
+        "exam_ko": "기독교인들은 원래 <strong class=\"target-word\">죄</strong>가 모든 사람에게 영향을 미친다고 믿는다."
+      },
+      {
+        "exam_en": "He confessed his <strong class=\"target-word\">sins</strong> to the priest.",
+        "exam_ko": "그는 신부에게 자신의 <strong class=\"target-word\">죄</strong>를 고백했다."
+      }
+    ]
+  },
+  {
+    "id": 4030,
+    "origin": "antibiotic",
+    "examples": [
+      {
+        "exam_en": "The doctor told her to take <strong class=\"target-word\">antibiotics</strong> for a week.",
+        "exam_ko": "의사는 그녀에게 일주일 동안 <strong class=\"target-word\">항생제</strong>를 복용하라고 말했다."
+      },
+      {
+        "exam_en": "He prescribed <strong class=\"target-word\">antibiotics</strong> to treat the infection.",
+        "exam_ko": "그는 감염 치료를 위해 <strong class=\"target-word\">항생제</strong>를 처방했다."
+      }
+    ]
+  }
+]

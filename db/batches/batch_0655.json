@@ -1,0 +1,242 @@
+[
+  {
+    "id": 23873,
+    "origin": "textured",
+    "examples": [
+      {
+        "exam_en": "smooth-textured cloth",
+        "exam_ko": "부드럽게 짠 천."
+      }
+    ]
+  },
+  {
+    "id": 23878,
+    "origin": "familial",
+    "examples": [
+      {
+        "exam_en": "familial left-handedness",
+        "exam_ko": "유전적인 왼손 사용."
+      }
+    ]
+  },
+  {
+    "id": 23880,
+    "origin": "beaker",
+    "examples": [
+      {
+        "exam_en": "a beaker of gin",
+        "exam_ko": "큰 잔 한 잔의 진."
+      }
+    ]
+  },
+  {
+    "id": 23882,
+    "origin": "consulting",
+    "examples": [
+      {
+        "exam_en": "a consulting engineer",
+        "exam_ko": "고문 기사"
+      },
+      {
+        "exam_en": "a consulting lawyer",
+        "exam_ko": "고문 변호사."
+      }
+    ]
+  },
+  {
+    "id": 23883,
+    "origin": "standby",
+    "examples": [
+      {
+        "exam_en": "a standby player",
+        "exam_ko": "대기 선수"
+      },
+      {
+        "exam_en": "standby pay",
+        "exam_ko": "대기 수당."
+      }
+    ]
+  },
+  {
+    "id": 23887,
+    "origin": "abscission",
+    "examples": [
+      {
+        "exam_en": "The leaves showed signs of abscission as they detached from the tree branches in preparation for winter.",
+        "exam_ko": "가을이 다가오면서 나뭇가지에서 떨어지는 잎들이 이탈 징후를 보였다."
+      }
+    ]
+  },
+  {
+    "id": 23889,
+    "origin": "unquestionably",
+    "examples": [
+      {
+        "exam_en": "she is unquestionably our best player.",
+        "exam_ko": "그녀는 의심할 바 없이 우리의 최고 선수이다."
+      }
+    ]
+  },
+  {
+    "id": 23893,
+    "origin": "banns",
+    "examples": [
+      {
+        "exam_en": "call the banns",
+        "exam_ko": "(교회에서) 결혼 예고를 하다"
+      },
+      {
+        "exam_en": "forbid the banns",
+        "exam_ko": "예고된 결혼에 이의를 제기하다."
+      }
+    ]
+  },
+  {
+    "id": 23901,
+    "origin": "optic",
+    "examples": [
+      {
+        "exam_en": "the optic nerve",
+        "exam_ko": "시신경"
+      },
+      {
+        "exam_en": "an optic angle",
+        "exam_ko": "시각(視角)."
+      }
+    ]
+  },
+  {
+    "id": 23903,
+    "origin": "thatch",
+    "examples": [
+      {
+        "exam_en": "The house had a roof of thatch.",
+        "exam_ko": "그 집은 초가집이었다."
+      }
+    ]
+  },
+  {
+    "id": 23904,
+    "origin": "orchestrate",
+    "examples": [
+      {
+        "exam_en": "orchestrate the campaign against the Government",
+        "exam_ko": "반정부 운동을 통일적으로 전개하다"
+      },
+      {
+        "exam_en": "orchestrate a nationwide campaign",
+        "exam_ko": "전국적인 운동을 조직하다."
+      }
+    ]
+  },
+  {
+    "id": 23906,
+    "origin": "downhill",
+    "examples": [
+      {
+        "exam_en": "go downhill",
+        "exam_ko": "악화하다, 쇠퇴하다."
+      },
+      {
+        "exam_en": "in the downhill of one's life",
+        "exam_ko": "만년에."
+      }
+    ]
+  },
+  {
+    "id": 23908,
+    "origin": "rater",
+    "examples": [
+      {
+        "exam_en": "All the athletes in this tournament are first-raters.",
+        "exam_ko": "이 토너먼트 시합의 경기자들은 모두 일류급이다."
+      }
+    ]
+  },
+  {
+    "id": 23909,
+    "origin": "homemade",
+    "examples": [
+      {
+        "exam_en": "a homemade style of writing",
+        "exam_ko": "미숙한 글 솜씨"
+      },
+      {
+        "exam_en": "a homemade pie",
+        "exam_ko": "손으로 만든 파이"
+      }
+    ]
+  },
+  {
+    "id": 23933,
+    "origin": "covering",
+    "examples": [
+      {
+        "exam_en": "a covering for a chair",
+        "exam_ko": "의자 덮개"
+      },
+      {
+        "exam_en": "a thin covering of ice",
+        "exam_ko": "얇게 덮인 얼음."
+      }
+    ]
+  },
+  {
+    "id": 23938,
+    "origin": "distinguishing",
+    "examples": [
+      {
+        "exam_en": "a distinguishing feature",
+        "exam_ko": "특징 있는 생김새."
+      }
+    ]
+  },
+  {
+    "id": 23946,
+    "origin": "acoustics",
+    "examples": [
+      {
+        "exam_en": "the acoustics of the concert hall",
+        "exam_ko": "연주회장의 음향 효과."
+      }
+    ]
+  },
+  {
+    "id": 23969,
+    "origin": "inorganic",
+    "examples": [
+      {
+        "exam_en": "inorganic nature",
+        "exam_ko": "무생물계."
+      },
+      {
+        "exam_en": "inorganic fertilizer",
+        "exam_ko": "무기 비료."
+      }
+    ]
+  },
+  {
+    "id": 23979,
+    "origin": "lecturer",
+    "examples": [
+      {
+        "exam_en": "a lecturer in English at Harvard University",
+        "exam_ko": "하버드 대학 영어 강사."
+      }
+    ]
+  },
+  {
+    "id": 23981,
+    "origin": "proximate",
+    "examples": [
+      {
+        "exam_en": "proximate responsibility",
+        "exam_ko": "직접적인 책임"
+      },
+      {
+        "exam_en": "The stolen car was found proximate to the scene of the crime.",
+        "exam_ko": "도난 당한 차가 발견된 곳은 범행 현장에서 가까웠다."
+      }
+    ]
+  }
+]

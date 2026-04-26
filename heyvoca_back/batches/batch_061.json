@@ -1,0 +1,602 @@
+[
+  {
+    "id": 5986,
+    "word": "once",
+    "exam_en": "<strong class=\"target-word\">once</strong> a week",
+    "exam_ko": "1<strong class=\"target-word\">주일에</strong> 한 번"
+  },
+  {
+    "id": 5987,
+    "word": "on",
+    "exam_en": "a child <strong class=\"target-word\">on</strong> his back",
+    "exam_ko": "<strong class=\"target-word\">등에</strong> 업힌 아이"
+  },
+  {
+    "id": 5988,
+    "word": "on",
+    "exam_en": "a fly <strong class=\"target-word\">on</strong> the ceiling",
+    "exam_ko": "<strong class=\"target-word\">천장에</strong> 붙은 파리"
+  },
+  {
+    "id": 5989,
+    "word": "oil",
+    "exam_en": "animal <strong class=\"target-word\">oil</strong>",
+    "exam_ko": "동물[식물]성 <strong class=\"target-word\">기름</strong>"
+  },
+  {
+    "id": 5990,
+    "word": "oil",
+    "exam_en": "essential <strong class=\"target-word\">oil</strong>",
+    "exam_ko": "<strong class=\"target-word\">정유</strong>(精油)"
+  },
+  {
+    "id": 5991,
+    "word": "officer",
+    "exam_en": "a commissioned <strong class=\"target-word\">officer</strong>",
+    "exam_ko": "<strong class=\"target-word\">장교</strong>"
+  },
+  {
+    "id": 5992,
+    "word": "officer",
+    "exam_en": "a military <strong class=\"target-word\">officer</strong>",
+    "exam_ko": "육군[해군] <strong class=\"target-word\">장교</strong>"
+  },
+  {
+    "id": 5993,
+    "word": "office",
+    "exam_en": "an <strong class=\"target-word\">office</strong> worker",
+    "exam_ko": "<strong class=\"target-word\">사무직원</strong>, 회사원(※여성임을 나타낼 때는 a female office worker라고 함)"
+  },
+  {
+    "id": 5994,
+    "word": "office",
+    "exam_en": "the manager's <strong class=\"target-word\">office</strong>",
+    "exam_ko": "<strong class=\"target-word\">지배인실</strong>"
+  },
+  {
+    "id": 5995,
+    "word": "offensive",
+    "exam_en": "an <strong class=\"target-word\">offensive</strong> manner",
+    "exam_ko": "<strong class=\"target-word\">무례한</strong> 태도[표현]"
+  },
+  {
+    "id": 5996,
+    "word": "offensive",
+    "exam_en": "an <strong class=\"target-word\">offensive</strong> remark",
+    "exam_ko": "비위에 거슬리는 말[남을 <strong class=\"target-word\">속타게</strong> 하는 버릇]"
+  },
+  {
+    "id": 5997,
+    "word": "of",
+    "exam_en": "a mile  east <strong class=\"target-word\">of</strong> here",
+    "exam_ko": "여기서 1마일 <strong class=\"target-word\">동쪽</strong>으로"
+  },
+  {
+    "id": 5998,
+    "word": "of",
+    "exam_en": "within a mile <strong class=\"target-word\">of</strong> my house",
+    "exam_ko": "내 집에서 1마일[<strong class=\"target-word\">걸어</strong>서 10분] 이내의 곳에"
+  },
+  {
+    "id": 5999,
+    "word": "ocean",
+    "exam_en": "the Atlantic <strong class=\"target-word\">Ocean</strong>",
+    "exam_ko": "<strong class=\"target-word\">대서</strong>[태평, 북극, 남극]양(※Ocean은 생략 가능)."
+  },
+  {
+    "id": 6000,
+    "word": "ocean",
+    "exam_en": "an <strong class=\"target-word\">ocean</strong> of wheat",
+    "exam_ko": "<strong class=\"target-word\">끝없는</strong> 밀밭[혼란]"
+  },
+  {
+    "id": 6001,
+    "word": "number",
+    "exam_en": "an even <strong class=\"target-word\">number</strong>",
+    "exam_ko": "짝[홀] <strong class=\"target-word\">번호</strong>"
+  },
+  {
+    "id": 6002,
+    "word": "number",
+    "exam_en": "cardinal  <strong class=\"target-word\">number</strong>",
+    "exam_ko": "<strong class=\"target-word\">기수</strong>[서수](사)"
+  },
+  {
+    "id": 6003,
+    "word": "now",
+    "exam_en": "He is working in London <strong class=\"target-word\">now</strong>.",
+    "exam_ko": "그는 지금 런던에서 <strong class=\"target-word\">근무</strong>하고 있다."
+  },
+  {
+    "id": 6004,
+    "word": "now",
+    "exam_en": "We must start  <strong class=\"target-word\">now</strong>",
+    "exam_ko": "지금 당장 시작해야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 6005,
+    "word": "not",
+    "exam_en": "He will <strong class=\"target-word\">not</strong> go.",
+    "exam_ko": "그는 가지 않을 <strong class=\"target-word\">것이다</strong>"
+  },
+  {
+    "id": 6006,
+    "word": "not",
+    "exam_en": "It is <strong class=\"target-word\">not</strong> so difficult as you think.",
+    "exam_ko": "네가 생각하는 만큼 어렵지는 <strong class=\"target-word\">않다</strong>"
+  },
+  {
+    "id": 6007,
+    "word": "nose",
+    "exam_en": "the tip of the <strong class=\"target-word\">nose</strong>",
+    "exam_ko": "<strong class=\"target-word\">코끝</strong>"
+  },
+  {
+    "id": 6008,
+    "word": "nose",
+    "exam_en": "big <strong class=\"target-word\">nose</strong>",
+    "exam_ko": "<strong class=\"target-word\">높은</strong> 코(※*high nose라고는 하지 않음)"
+  },
+  {
+    "id": 6009,
+    "word": "north",
+    "exam_en": "a cool breeze from the <strong class=\"target-word\">north</strong>",
+    "exam_ko": "<strong class=\"target-word\">북쪽으로부터의</strong> 시원한 산들바람"
+  },
+  {
+    "id": 6010,
+    "word": "north",
+    "exam_en": "I was born in a small village in the <strong class=\"target-word\">north</strong> of France.",
+    "exam_ko": "나는 프랑스 북부의 한 작은 마을에서 <strong class=\"target-word\">태어났다</strong>(※(미)에서는 보통 in northern France 또는 in the northern part of France를 씀)"
+  },
+  {
+    "id": 6011,
+    "word": "noon",
+    "exam_en": "at  <strong class=\"target-word\">noon</strong>",
+    "exam_ko": "<strong class=\"target-word\">정오</strong>(정각)에."
+  },
+  {
+    "id": 6012,
+    "word": "noon",
+    "exam_en": "just[shortly] after <strong class=\"target-word\">noon</strong>",
+    "exam_ko": "<strong class=\"target-word\">정오</strong> 직후에"
+  },
+  {
+    "id": 6013,
+    "word": "noise",
+    "exam_en": "strange <strong class=\"target-word\">noise</strong>",
+    "exam_ko": "이상한 <strong class=\"target-word\">소리</strong>"
+  },
+  {
+    "id": 6014,
+    "word": "noise",
+    "exam_en": "the <strong class=\"target-word\">noise</strong> of an automobile factory",
+    "exam_ko": "자동차 공장의 <strong class=\"target-word\">소음</strong>"
+  },
+  {
+    "id": 6015,
+    "word": "no",
+    "exam_en": "\"Will you go?\" \"<strong class=\"target-word\">No</strong>,I won't.\"",
+    "exam_ko": "「<strong class=\"target-word\">갈래</strong>?」 「아니, 안 갈래.」"
+  },
+  {
+    "id": 6016,
+    "word": "no",
+    "exam_en": "\"Can't you play tennis?\" \"<strong class=\"target-word\">No</strong>, I can't.\"",
+    "exam_ko": "「테니스를 못 치시오?」 「예, <strong class=\"target-word\">못</strong> 칩니다.」"
+  },
+  {
+    "id": 6017,
+    "word": "nine",
+    "exam_en": "the <strong class=\"target-word\">nine</strong> of spades",
+    "exam_ko": "스페이드의 <strong class=\"target-word\">9</strong>."
+  },
+  {
+    "id": 6018,
+    "word": "nine",
+    "exam_en": "the front <strong class=\"target-word\">nine</strong>",
+    "exam_ko": "<strong class=\"target-word\">전반</strong>[후반]의 9홀."
+  },
+  {
+    "id": 6019,
+    "word": "night",
+    "exam_en": "last <strong class=\"target-word\">night</strong>",
+    "exam_ko": "<strong class=\"target-word\">간밤</strong>, 어제 저녁"
+  },
+  {
+    "id": 6020,
+    "word": "night",
+    "exam_en": "the <strong class=\"target-word\">night</strong> before last",
+    "exam_ko": "<strong class=\"target-word\">그저께</strong> 밤"
+  },
+  {
+    "id": 6021,
+    "word": "next",
+    "exam_en": "the <strong class=\"target-word\">next</strong> five games",
+    "exam_ko": "<strong class=\"target-word\">다음의</strong> 다섯 시합[페이지]"
+  },
+  {
+    "id": 6022,
+    "word": "next",
+    "exam_en": "the <strong class=\"target-word\">next</strong> world",
+    "exam_ko": "<strong class=\"target-word\">내세</strong>"
+  },
+  {
+    "id": 6023,
+    "word": "news",
+    "exam_en": "bad <strong class=\"target-word\">news</strong>",
+    "exam_ko": "<strong class=\"target-word\">나쁜</strong> 소식, 흉보"
+  },
+  {
+    "id": 6024,
+    "word": "news",
+    "exam_en": "ten big items of <strong class=\"target-word\">news</strong>",
+    "exam_ko": "10대 <strong class=\"target-word\">뉴스</strong>"
+  },
+  {
+    "id": 6025,
+    "word": "never",
+    "exam_en": "He's <strong class=\"target-word\">never</strong> been to china.",
+    "exam_ko": "그는 중국에 <strong class=\"target-word\">가본 적이 없다</strong>"
+  },
+  {
+    "id": 6026,
+    "word": "never",
+    "exam_en": "I'll <strong class=\"target-word\">never</strong> forget your kindness.",
+    "exam_ko": "친절은 언제까지나[결코] 잊지 <strong class=\"target-word\">않겠습니다</strong>"
+  },
+  {
+    "id": 6027,
+    "word": "nerve",
+    "exam_en": "autonomic <strong class=\"target-word\">nerve</strong>",
+    "exam_ko": "자율 <strong class=\"target-word\">신경</strong>"
+  },
+  {
+    "id": 6028,
+    "word": "nerve",
+    "exam_en": "optic <strong class=\"target-word\">nerve</strong>",
+    "exam_ko": "<strong class=\"target-word\">시신경</strong>"
+  },
+  {
+    "id": 6029,
+    "word": "neck",
+    "exam_en": "a short <strong class=\"target-word\">neck</strong>",
+    "exam_ko": "<strong class=\"target-word\">짧은</strong>[가는, 굵은] 목"
+  },
+  {
+    "id": 6030,
+    "word": "neck",
+    "exam_en": "the nape of the <strong class=\"target-word\">neck</strong>",
+    "exam_ko": "<strong class=\"target-word\">목덜미</strong>"
+  },
+  {
+    "id": 6031,
+    "word": "nation",
+    "exam_en": "the French <strong class=\"target-word\">nation</strong>",
+    "exam_ko": "<strong class=\"target-word\">국민</strong>"
+  },
+  {
+    "id": 6032,
+    "word": "nation",
+    "exam_en": "the voice of the <strong class=\"target-word\">nation</strong>",
+    "exam_ko": "<strong class=\"target-word\">국민</strong>의 목소리"
+  },
+  {
+    "id": 6033,
+    "word": "my",
+    "exam_en": "<strong class=\"target-word\">my</strong> wallet",
+    "exam_ko": "<strong class=\"target-word\">내</strong> 지갑"
+  },
+  {
+    "id": 6034,
+    "word": "my",
+    "exam_en": "<strong class=\"target-word\">my</strong> promise",
+    "exam_ko": "<strong class=\"target-word\">내가</strong> 한 약속(※「나」는 promise의 의미상의 주어)"
+  },
+  {
+    "id": 6035,
+    "word": "music",
+    "exam_en": "instrumental <strong class=\"target-word\">music</strong>",
+    "exam_ko": "<strong class=\"target-word\">기악</strong>[성악]"
+  },
+  {
+    "id": 6036,
+    "word": "music",
+    "exam_en": "classical <strong class=\"target-word\">music</strong>",
+    "exam_ko": "<strong class=\"target-word\">고전</strong> 음악(※*classic music이라고는 하지 않음)."
+  },
+  {
+    "id": 6037,
+    "word": "much",
+    "exam_en": "<strong class=\"target-word\">much</strong> money",
+    "exam_ko": "<strong class=\"target-word\">많은</strong> 돈[비, 지식]"
+  },
+  {
+    "id": 6038,
+    "word": "much",
+    "exam_en": "There is <strong class=\"target-word\">much</strong> beast and some devil in man.",
+    "exam_ko": "인간에게는 <strong class=\"target-word\">강한</strong> 수성(獸性)과 어느 정도의 마성(魔性)이 내재해 있다"
+  },
+  {
+    "id": 6039,
+    "word": "movie",
+    "exam_en": "Hollywood <strong class=\"target-word\">movie</strong>",
+    "exam_ko": "<strong class=\"target-word\">할리우드</strong> 영화"
+  },
+  {
+    "id": 6040,
+    "word": "movie",
+    "exam_en": "independent <strong class=\"target-word\">movie</strong>",
+    "exam_ko": "인디펜던트 <strong class=\"target-word\">영화</strong>"
+  },
+  {
+    "id": 6041,
+    "word": "mouth",
+    "exam_en": "close one's <strong class=\"target-word\">mouth</strong>",
+    "exam_ko": "<strong class=\"target-word\">입</strong>을 닫다[말을 중단하다]"
+  },
+  {
+    "id": 6042,
+    "word": "mouth",
+    "exam_en": "fill one's <strong class=\"target-word\">mouth</strong> with",
+    "exam_ko": "…으로 <strong class=\"target-word\">입</strong>을 채우다, 입에 …을 가득 집어넣다"
+  },
+  {
+    "id": 6043,
+    "word": "mountain",
+    "exam_en": "a volcanic <strong class=\"target-word\">mountain</strong>",
+    "exam_ko": "<strong class=\"target-word\">화산</strong>"
+  },
+  {
+    "id": 6044,
+    "word": "mountain",
+    "exam_en": "the Appalachian <strong class=\"target-word\">Mountain</strong>s",
+    "exam_ko": "<strong class=\"target-word\">애팔래치아</strong> 산맥"
+  },
+  {
+    "id": 6045,
+    "word": "mother",
+    "exam_en": "a <strong class=\"target-word\">mother</strong> of three children",
+    "exam_ko": "세 아이의 <strong class=\"target-word\">어머니</strong>"
+  },
+  {
+    "id": 6046,
+    "word": "mother",
+    "exam_en": "She is  a <strong class=\"target-word\">mother</strong> to me.",
+    "exam_ko": "그녀는 내게 <strong class=\"target-word\">어머니</strong>처럼 대해 주신다"
+  },
+  {
+    "id": 6047,
+    "word": "morning",
+    "exam_en": "this <strong class=\"target-word\">morning</strong>",
+    "exam_ko": "<strong class=\"target-word\">오늘</strong>[내일, 어제] 아침"
+  },
+  {
+    "id": 6048,
+    "word": "morning",
+    "exam_en": "on Sunday <strong class=\"target-word\">morning</strong>",
+    "exam_ko": "<strong class=\"target-word\">일요일</strong> 아침에(※(미)에서는 on이 종종 생략됨)"
+  },
+  {
+    "id": 6049,
+    "word": "moon",
+    "exam_en": "the phases of the <strong class=\"target-word\">moon</strong>",
+    "exam_ko": "<strong class=\"target-word\">달의</strong> 위상"
+  },
+  {
+    "id": 6050,
+    "word": "moon",
+    "exam_en": "age of the <strong class=\"target-word\">moon</strong>",
+    "exam_ko": "<strong class=\"target-word\">월령</strong>(月齡)"
+  },
+  {
+    "id": 6051,
+    "word": "money",
+    "exam_en": "paper <strong class=\"target-word\">money</strong>",
+    "exam_ko": "(미·비격식) <strong class=\"target-word\">지폐</strong>"
+  },
+  {
+    "id": 6052,
+    "word": "money",
+    "exam_en": "standard <strong class=\"target-word\">money</strong>",
+    "exam_ko": "<strong class=\"target-word\">본위</strong>[보조] 화폐"
+  },
+  {
+    "id": 6053,
+    "word": "mob",
+    "exam_en": "<strong class=\"target-word\">mob</strong> psychology",
+    "exam_ko": "<strong class=\"target-word\">군중</strong> 심리"
+  },
+  {
+    "id": 6054,
+    "word": "mob",
+    "exam_en": "<strong class=\"target-word\">mob</strong> rule",
+    "exam_ko": "(정당한 정부·법에 의하지 않은) <strong class=\"target-word\">폭도에</strong> 의한 지배"
+  },
+  {
+    "id": 6055,
+    "word": "mist",
+    "exam_en": "a thick <strong class=\"target-word\">mist</strong>",
+    "exam_ko": "<strong class=\"target-word\">짙은</strong> 안개"
+  },
+  {
+    "id": 6056,
+    "word": "mist",
+    "exam_en": "veiled in a <strong class=\"target-word\">mist</strong>",
+    "exam_ko": "<strong class=\"target-word\">안개</strong> 속에 가려져"
+  },
+  {
+    "id": 6057,
+    "word": "minute",
+    "exam_en": "five <strong class=\"target-word\">minute</strong>s to seven",
+    "exam_ko": "7시 5<strong class=\"target-word\">분</strong>전"
+  },
+  {
+    "id": 6058,
+    "word": "minute",
+    "exam_en": "ten <strong class=\"target-word\">minute</strong>s past eight",
+    "exam_ko": "8시 10<strong class=\"target-word\">분</strong>"
+  },
+  {
+    "id": 6059,
+    "word": "minor",
+    "exam_en": "a <strong class=\"target-word\">minor</strong> party",
+    "exam_ko": "<strong class=\"target-word\">소수당</strong>"
+  },
+  {
+    "id": 6060,
+    "word": "minor",
+    "exam_en": "<strong class=\"target-word\">minor</strong> faults",
+    "exam_ko": "<strong class=\"target-word\">사소한</strong> 과실"
+  },
+  {
+    "id": 6061,
+    "word": "minister",
+    "exam_en": "the <strong class=\"target-word\">Minister</strong> of Education",
+    "exam_ko": "<strong class=\"target-word\">교육부</strong>[국방부] 장관"
+  },
+  {
+    "id": 6062,
+    "word": "minister",
+    "exam_en": "the <strong class=\"target-word\">Minister</strong> of the Crown",
+    "exam_ko": "(영) 각 <strong class=\"target-word\">내상</strong>(閣內相)"
+  },
+  {
+    "id": 6063,
+    "word": "mine",
+    "exam_en": "a friend of <strong class=\"target-word\">mine</strong>",
+    "exam_ko": "내 <strong class=\"target-word\">친구</strong>(※my friend가 특정한 친구를 가리키는 데 대하여, a friend of mine은 친구들 중에서 불특정한 한 사람을 가리킴)"
+  },
+  {
+    "id": 6064,
+    "word": "mine",
+    "exam_en": "That's <strong class=\"target-word\">mine</strong>.",
+    "exam_ko": "그것은 내 <strong class=\"target-word\">것이다</strong>"
+  },
+  {
+    "id": 6065,
+    "word": "million",
+    "exam_en": "five and a half <strong class=\"target-word\">million</strong>",
+    "exam_ko": "<strong class=\"target-word\">오백오십만</strong>"
+  },
+  {
+    "id": 6066,
+    "word": "million",
+    "exam_en": "a few <strong class=\"target-word\">million</strong>",
+    "exam_ko": "<strong class=\"target-word\">수백만</strong>."
+  },
+  {
+    "id": 6067,
+    "word": "method",
+    "exam_en": "the oral <strong class=\"target-word\">method</strong>",
+    "exam_ko": "<strong class=\"target-word\">구두</strong> 교수법"
+  },
+  {
+    "id": 6068,
+    "word": "method",
+    "exam_en": "a new <strong class=\"target-word\">method</strong> of teaching",
+    "exam_ko": "<strong class=\"target-word\">새로운</strong> 교육 방법"
+  },
+  {
+    "id": 6069,
+    "word": "message",
+    "exam_en": "a congratulatory <strong class=\"target-word\">message</strong>",
+    "exam_ko": "<strong class=\"target-word\">축전</strong>, 축사"
+  },
+  {
+    "id": 6070,
+    "word": "message",
+    "exam_en": "a <strong class=\"target-word\">message</strong> pad",
+    "exam_ko": "<strong class=\"target-word\">메모장</strong>"
+  },
+  {
+    "id": 6071,
+    "word": "mercy",
+    "exam_en": "without <strong class=\"target-word\">mercy</strong>",
+    "exam_ko": "<strong class=\"target-word\">가차없이</strong>"
+  },
+  {
+    "id": 6072,
+    "word": "mercy",
+    "exam_en": "beg for <strong class=\"target-word\">mercy</strong>",
+    "exam_ko": "자비를 <strong class=\"target-word\">구하다</strong>"
+  },
+  {
+    "id": 6073,
+    "word": "memory",
+    "exam_en": "a photographic <strong class=\"target-word\">memory</strong>",
+    "exam_ko": "사진과 같이 정확한 <strong class=\"target-word\">기억</strong>"
+  },
+  {
+    "id": 6074,
+    "word": "memory",
+    "exam_en": "a man of short <strong class=\"target-word\">memory</strong>",
+    "exam_ko": "<strong class=\"target-word\">기억력이</strong> 둔한[좋은] 사람"
+  },
+  {
+    "id": 6075,
+    "word": "member",
+    "exam_en": "a <strong class=\"target-word\">member</strong> discount",
+    "exam_ko": "<strong class=\"target-word\">회원</strong> 할인"
+  },
+  {
+    "id": 6076,
+    "word": "member",
+    "exam_en": "a <strong class=\"target-word\">member</strong> of the family",
+    "exam_ko": "<strong class=\"target-word\">가족</strong>[클럽]의 한 사람"
+  },
+  {
+    "id": 6077,
+    "word": "mayor",
+    "exam_en": "a deputy <strong class=\"target-word\">mayor</strong>",
+    "exam_ko": "<strong class=\"target-word\">부시</strong>[읍, 면]장"
+  },
+  {
+    "id": 6078,
+    "word": "map",
+    "exam_en": "a detailed <strong class=\"target-word\">map</strong>",
+    "exam_ko": "<strong class=\"target-word\">자세한</strong>[대강의] 지도"
+  },
+  {
+    "id": 6079,
+    "word": "map",
+    "exam_en": "consult a <strong class=\"target-word\">map</strong>",
+    "exam_ko": "지도를 <strong class=\"target-word\">살펴보다</strong>"
+  },
+  {
+    "id": 6080,
+    "word": "many",
+    "exam_en": "<strong class=\"target-word\">Many</strong> people witnessed the accident.",
+    "exam_ko": "많은 사람들이 그 사고를 <strong class=\"target-word\">목격했다</strong>"
+  },
+  {
+    "id": 6081,
+    "word": "many",
+    "exam_en": "There aren't <strong class=\"target-word\">many</strong> tourists here.",
+    "exam_ko": "여기에는 관광객이 많지 <strong class=\"target-word\">않다</strong>"
+  },
+  {
+    "id": 6082,
+    "word": "man",
+    "exam_en": "a single <strong class=\"target-word\">man</strong>",
+    "exam_ko": "<strong class=\"target-word\">독신</strong>[기혼]남"
+  },
+  {
+    "id": 6083,
+    "word": "man",
+    "exam_en": "a young <strong class=\"target-word\">man</strong>",
+    "exam_ko": "<strong class=\"target-word\">젊은</strong>[중년] 남성"
+  },
+  {
+    "id": 6084,
+    "word": "majority",
+    "exam_en": "in the <strong class=\"target-word\">majority</strong> of cases",
+    "exam_ko": "<strong class=\"target-word\">보통은</strong>, 대개(는)"
+  },
+  {
+    "id": 6085,
+    "word": "majority",
+    "exam_en": "spend the <strong class=\"target-word\">majority</strong> of the day doing nothing",
+    "exam_ko": "아무 일도 않고 하루의 대부분을 <strong class=\"target-word\">보내다</strong>"
+  }
+]

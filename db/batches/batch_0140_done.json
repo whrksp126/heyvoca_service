@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3026,
+    "origin": "phobia",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">phobia</strong> about flying.",
+        "exam_ko": "그녀는 비행에 대한 <strong class=\"target-word\">공포증</strong>이 있다."
+      },
+      {
+        "exam_en": "He developed a <strong class=\"target-word\">phobia</strong> of crowded places.",
+        "exam_ko": "그는 붐비는 장소에 대한 <strong class=\"target-word\">공포증</strong>이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 3028,
+    "origin": "dolly",
+    "examples": [
+      {
+        "exam_en": "He moved the boxes using a <strong class=\"target-word\">dolly</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">손수레</strong>를 사용해 상자들을 옮겼다."
+      },
+      {
+        "exam_en": "The camera <strong class=\"target-word\">dollied</strong> in for a close-up shot.",
+        "exam_ko": "카메라가 클로즈업 촬영을 위해 <strong class=\"target-word\">돌리로 접근했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3029,
+    "origin": "expression",
+    "examples": [
+      {
+        "exam_en": "The law protects freedom of <strong class=\"target-word\">expression</strong>.",
+        "exam_ko": "법은 <strong class=\"target-word\">표현</strong>의 자유를 보호한다."
+      },
+      {
+        "exam_en": "The book was moving beyond <strong class=\"target-word\">expression</strong>.",
+        "exam_ko": "그 책은 형언할 수 없을 정도로 감동적이었다, 말로 <strong class=\"target-word\">표현</strong>하기 어려울 만큼."
+      }
+    ]
+  },
+  {
+    "id": 3030,
+    "origin": "convenience",
+    "examples": [
+      {
+        "exam_en": "They married for <strong class=\"target-word\">convenience</strong>, not for love.",
+        "exam_ko": "그들은 사랑이 아닌 <strong class=\"target-word\">편의</strong>를 위해 결혼했다."
+      },
+      {
+        "exam_en": "Please reply at your <strong class=\"target-word\">convenience</strong>.",
+        "exam_ko": "편하실 때 답장해 주세요, 당신의 <strong class=\"target-word\">편의</strong>에 맞게."
+      }
+    ]
+  },
+  {
+    "id": 3031,
+    "origin": "rarely",
+    "examples": [
+      {
+        "exam_en": "Englishmen <strong class=\"target-word\">rarely</strong> talk to strangers on trains.",
+        "exam_ko": "영국인들은 기차에서 낯선 사람에게 <strong class=\"target-word\">좀처럼</strong> 말을 걸지 않는다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rarely</strong> misses her morning workout.",
+        "exam_ko": "그녀는 아침 운동을 <strong class=\"target-word\">거의</strong> 빠지지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 3032,
+    "origin": "dreary",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">dreary</strong> December day with no sunshine.",
+        "exam_ko": "햇빛 한 점 없는 <strong class=\"target-word\">음산한</strong> 12월의 날이었다."
+      },
+      {
+        "exam_en": "Addressing envelopes all day is <strong class=\"target-word\">dreary</strong> work.",
+        "exam_ko": "하루 종일 봉투에 주소를 쓰는 일은 <strong class=\"target-word\">따분한</strong> 작업이다."
+      }
+    ]
+  },
+  {
+    "id": 3034,
+    "origin": "munch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">munched</strong> on an apple during the break.",
+        "exam_ko": "그녀는 쉬는 시간에 사과를 <strong class=\"target-word\">우적우적 씹어 먹었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">munched</strong> popcorn while watching the movie.",
+        "exam_ko": "그는 영화를 보면서 팝콘을 <strong class=\"target-word\">오독오독 먹었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3036,
+    "origin": "readjust",
+    "examples": [
+      {
+        "exam_en": "He stopped to <strong class=\"target-word\">readjust</strong> the rearview mirror.",
+        "exam_ko": "그는 백미러를 <strong class=\"target-word\">다시 조정하기</strong> 위해 멈췄다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">readjusted</strong> her tie before the interview.",
+        "exam_ko": "그녀는 면접 전에 넥타이를 <strong class=\"target-word\">바로잡았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3038,
+    "origin": "association",
+    "examples": [
+      {
+        "exam_en": "She joined the Parent-Teacher <strong class=\"target-word\">Association</strong> this year.",
+        "exam_ko": "그녀는 올해 학부모-교사 <strong class=\"target-word\">협회</strong>에 가입했다."
+      },
+      {
+        "exam_en": "He leads the student <strong class=\"target-word\">association</strong> at school.",
+        "exam_ko": "그는 학교에서 학생 <strong class=\"target-word\">자치회</strong>를 이끌고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3040,
+    "origin": "citizenship",
+    "examples": [
+      {
+        "exam_en": "Some countries allow dual <strong class=\"target-word\">citizenship</strong>.",
+        "exam_ko": "일부 국가는 이중 <strong class=\"target-word\">국적</strong>을 허용한다."
+      },
+      {
+        "exam_en": "She worked hard to acquire American <strong class=\"target-word\">citizenship</strong>.",
+        "exam_ko": "그녀는 미국 <strong class=\"target-word\">시민권</strong>을 얻기 위해 열심히 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 3041,
+    "origin": "citizen",
+    "examples": [
+      {
+        "exam_en": "He became a naturalized American <strong class=\"target-word\">citizen</strong>.",
+        "exam_ko": "그는 귀화한 미국 <strong class=\"target-word\">시민</strong>이 되었다."
+      },
+      {
+        "exam_en": "Every <strong class=\"target-word\">citizen</strong> has the right to vote.",
+        "exam_ko": "모든 <strong class=\"target-word\">시민</strong>은 투표할 권리가 있다."
+      }
+    ]
+  },
+  {
+    "id": 3042,
+    "origin": "elder",
+    "examples": [
+      {
+        "exam_en": "I have an <strong class=\"target-word\">elder</strong> brother who lives abroad.",
+        "exam_ko": "나는 해외에 사는 <strong class=\"target-word\">형</strong>이 있다."
+      },
+      {
+        "exam_en": "He is the <strong class=\"target-word\">elder</strong> of the two sons.",
+        "exam_ko": "그는 두 아들 중 <strong class=\"target-word\">형</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3043,
+    "origin": "routine",
+    "examples": [
+      {
+        "exam_en": "Morning exercise is part of her daily <strong class=\"target-word\">routine</strong>.",
+        "exam_ko": "아침 운동은 그녀의 일상 <strong class=\"target-word\">루틴</strong>의 일부다."
+      },
+      {
+        "exam_en": "They followed the <strong class=\"target-word\">routine</strong> without any changes.",
+        "exam_ko": "그들은 변경 없이 기존 <strong class=\"target-word\">절차</strong>를 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 3044,
+    "origin": "immigrant",
+    "examples": [
+      {
+        "exam_en": "Many <strong class=\"target-word\">immigrants</strong> from Korea settled in Los Angeles.",
+        "exam_ko": "많은 한국 출신 <strong class=\"target-word\">이민자</strong>들이 로스앤젤레스에 정착했다."
+      },
+      {
+        "exam_en": "The police arrested an illegal <strong class=\"target-word\">immigrant</strong> at the border.",
+        "exam_ko": "경찰은 국경에서 불법 <strong class=\"target-word\">입국자</strong>를 체포했다."
+      }
+    ]
+  },
+  {
+    "id": 3045,
+    "origin": "surgery",
+    "examples": [
+      {
+        "exam_en": "She considered cosmetic <strong class=\"target-word\">surgery</strong> to fix her nose.",
+        "exam_ko": "그녀는 코를 고치기 위해 성형 <strong class=\"target-word\">수술</strong>을 고려했다."
+      },
+      {
+        "exam_en": "The doctor recommended immediate <strong class=\"target-word\">surgery</strong>.",
+        "exam_ko": "의사는 즉각적인 <strong class=\"target-word\">수술</strong>을 권고했다."
+      }
+    ]
+  },
+  {
+    "id": 3047,
+    "origin": "riveting",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">riveting</strong> book about World War II.",
+        "exam_ko": "그것은 2차 세계대전에 관한 <strong class=\"target-word\">흥미진진한</strong> 책이었다."
+      },
+      {
+        "exam_en": "The documentary was so <strong class=\"target-word\">riveting</strong> I watched it twice.",
+        "exam_ko": "그 다큐멘터리는 너무 <strong class=\"target-word\">몰입감 있어서</strong> 두 번 봤다."
+      }
+    ]
+  },
+  {
+    "id": 3048,
+    "origin": "esteem",
+    "examples": [
+      {
+        "exam_en": "He was highly <strong class=\"target-word\">esteemed</strong> for his scholarship.",
+        "exam_ko": "그는 학식으로 높이 <strong class=\"target-word\">평가받았다</strong>."
+      },
+      {
+        "exam_en": "I did not <strong class=\"target-word\">esteem</strong> him to be reliable.",
+        "exam_ko": "나는 그를 믿을 만하다고 <strong class=\"target-word\">생각하지</strong> 않았다."
+      }
+    ]
+  },
+  {
+    "id": 3049,
+    "origin": "subsidy",
+    "examples": [
+      {
+        "exam_en": "The government provides <strong class=\"target-word\">subsidies</strong> to local farmers.",
+        "exam_ko": "정부는 지역 농민들에게 <strong class=\"target-word\">보조금</strong>을 지원한다."
+      },
+      {
+        "exam_en": "The energy <strong class=\"target-word\">subsidy</strong> was cut by the new policy.",
+        "exam_ko": "새 정책으로 에너지 <strong class=\"target-word\">보조금</strong>이 삭감되었다."
+      }
+    ]
+  },
+  {
+    "id": 3050,
+    "origin": "extent",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">extent</strong> of the damage was greater than expected.",
+        "exam_ko": "피해의 <strong class=\"target-word\">범위</strong>는 예상보다 훨씬 컸다."
+      },
+      {
+        "exam_en": "No one knows the full <strong class=\"target-word\">extent</strong> of his reading.",
+        "exam_ko": "그의 독서 <strong class=\"target-word\">범위</strong>를 아무도 완전히 알지 못한다."
+      }
+    ]
+  },
+  {
+    "id": 3052,
+    "origin": "cutback",
+    "examples": [
+      {
+        "exam_en": "The factory made a <strong class=\"target-word\">cutback</strong> in production last month.",
+        "exam_ko": "공장은 지난달 생산 <strong class=\"target-word\">삭감</strong>을 단행했다."
+      },
+      {
+        "exam_en": "Budget <strong class=\"target-word\">cutbacks</strong> forced the school to reduce staff.",
+        "exam_ko": "예산 <strong class=\"target-word\">삭감</strong>으로 학교는 직원을 줄여야 했다."
+      }
+    ]
+  }
+]

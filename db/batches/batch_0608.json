@@ -1,0 +1,238 @@
+[
+  {
+    "id": 20547,
+    "origin": "ensconce",
+    "examples": [
+      {
+        "exam_en": "He comfortably ensconced himself in the sofa.",
+        "exam_ko": "그는 소파에 편안하게 앉았다."
+      }
+    ]
+  },
+  {
+    "id": 20548,
+    "origin": "scintillate",
+    "examples": [
+      {
+        "exam_en": "a novel that scintillates with passion",
+        "exam_ko": "열정이 번뜩이는 소설."
+      },
+      {
+        "exam_en": "scintillate a brilliant pun",
+        "exam_ko": "번뜩이는 재담을 쏟아놓다."
+      }
+    ]
+  },
+  {
+    "id": 20550,
+    "origin": "sluggard",
+    "examples": [
+      {
+        "exam_en": "The sluggard spent most of his days lounging on the couch and avoiding any form of work.",
+        "exam_ko": "게으름뱅이는 대부분의 날을 소파에서 뒹굴며 보내고 어떠한 일도 피하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 20551,
+    "origin": "avouch",
+    "examples": [
+      {
+        "exam_en": "avouch one's innocence",
+        "exam_ko": "자기는 결백하다고 주장하다."
+      },
+      {
+        "exam_en": "avouch oneself  a coward",
+        "exam_ko": "비겁자임을 인정하다."
+      }
+    ]
+  },
+  {
+    "id": 20552,
+    "origin": "clamber",
+    "examples": [
+      {
+        "exam_en": "clamber up an escarpment",
+        "exam_ko": "벼랑을 기어오르다."
+      },
+      {
+        "exam_en": "The baby clambered onto the sofa.",
+        "exam_ko": "아기는 소파 위로 기어올라갔다."
+      }
+    ]
+  },
+  {
+    "id": 20553,
+    "origin": "beatific",
+    "examples": [
+      {
+        "exam_en": "a beatific look",
+        "exam_ko": "행복에 넘친 얼굴."
+      }
+    ]
+  },
+  {
+    "id": 20558,
+    "origin": "salubrious",
+    "examples": [
+      {
+        "exam_en": "salubrious living conditions",
+        "exam_ko": "건강에 좋은 생활 환경"
+      },
+      {
+        "exam_en": "They live in a very salubrious area.",
+        "exam_ko": "그들은 기후가 매우 좋은 곳에서 산다."
+      }
+    ]
+  },
+  {
+    "id": 20560,
+    "origin": "primp",
+    "examples": [
+      {
+        "exam_en": "primp oneself",
+        "exam_ko": "맵시내다."
+      }
+    ]
+  },
+  {
+    "id": 20561,
+    "origin": "asunder",
+    "examples": [
+      {
+        "exam_en": "The storm split the sail asunder.",
+        "exam_ko": "폭풍으로 돛이 갈가리 찢기었다."
+      },
+      {
+        "exam_en": "The sheep were driven asunder.",
+        "exam_ko": "양들은 쫓기어 뿔뿔이 흩어졌다."
+      }
+    ]
+  },
+  {
+    "id": 20564,
+    "origin": "filigree",
+    "examples": [
+      {
+        "exam_en": "silver filigree jewellery",
+        "exam_ko": "은선 세공 장신구."
+      }
+    ]
+  },
+  {
+    "id": 20567,
+    "origin": "dapper",
+    "examples": [
+      {
+        "exam_en": "be dapper in dress",
+        "exam_ko": "옷이 세련되다"
+      },
+      {
+        "exam_en": "look dapper",
+        "exam_ko": "말쑥해 보이다."
+      }
+    ]
+  },
+  {
+    "id": 20568,
+    "origin": "bravado",
+    "examples": [
+      {
+        "exam_en": "out of bravado",
+        "exam_ko": "허세를 부려."
+      }
+    ]
+  },
+  {
+    "id": 20569,
+    "origin": "forswear",
+    "examples": [
+      {
+        "exam_en": "He forswore smoking.",
+        "exam_ko": "그는 담배를 맹세코 끊었다."
+      }
+    ]
+  },
+  {
+    "id": 20573,
+    "origin": "chasm",
+    "examples": [
+      {
+        "exam_en": "a chasm in one's history",
+        "exam_ko": "경력의 공백."
+      },
+      {
+        "exam_en": "the chasm between rich and poor people",
+        "exam_ko": "부유한 사람들과 가난한 사람들 사이의 단절"
+      }
+    ]
+  },
+  {
+    "id": 20574,
+    "origin": "quash",
+    "examples": [
+      {
+        "exam_en": "quash a revolt",
+        "exam_ko": "반란을 진압하다."
+      },
+      {
+        "exam_en": "quash a former law",
+        "exam_ko": "이전의 법률을 폐지하다"
+      }
+    ]
+  },
+  {
+    "id": 20575,
+    "origin": "soporific",
+    "examples": [
+      {
+        "exam_en": "have a soporific effect",
+        "exam_ko": "최면[수면] 효과가 있다."
+      }
+    ]
+  },
+  {
+    "id": 20576,
+    "origin": "slur",
+    "examples": [
+      {
+        "exam_en": "slur over the fact that",
+        "exam_ko": "…한 사실에 대해 해야 할 언급을 하지 않다."
+      },
+      {
+        "exam_en": "He took too much medicine and started to slur his words.",
+        "exam_ko": "그는 약을 너무 많이 먹어서 불분명하게 말하기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 20579,
+    "origin": "hireling",
+    "examples": [
+      {
+        "exam_en": "The hireling fleeth, because he is an hireling, and careth not for the sheep.",
+        "exam_ko": "그는 삯군이요, 양을 돌보지 않는 고로, 양을 버리고 달아나는 것이다."
+      }
+    ]
+  },
+  {
+    "id": 20583,
+    "origin": "postscript",
+    "examples": [
+      {
+        "exam_en": "Please add my compliments in postscript.",
+        "exam_ko": "추신으로 내 안부를 전해 주십시오."
+      }
+    ]
+  },
+  {
+    "id": 20585,
+    "origin": "multifarious",
+    "examples": [
+      {
+        "exam_en": "multifarious interests",
+        "exam_ko": "다방면에 걸친 흥미."
+      }
+    ]
+  }
+]

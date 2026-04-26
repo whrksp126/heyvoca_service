@@ -32,7 +32,7 @@ export const InsufficientWordsNewBottomSheet = ({ title }) => {
     <div className="relative">
       <div className="
         flex flex-col gap-[10px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         pt-[40px] p-[20px] pb-[105px]
         overflow-y-auto
       ">

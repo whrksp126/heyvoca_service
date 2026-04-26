@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2370,
+    "origin": "awful",
+    "examples": [
+      {
+        "exam_en": "The weather was <strong class=\"target-word\">awful</strong> during the trip.",
+        "exam_ko": "여행 중 날씨가 <strong class=\"target-word\">끔찍했다</strong>."
+      },
+      {
+        "exam_en": "He had an <strong class=\"target-word\">awful</strong> headache all day.",
+        "exam_ko": "그는 하루 종일 <strong class=\"target-word\">심한</strong> 두통을 앓았다."
+      }
+    ]
+  },
+  {
+    "id": 2371,
+    "origin": "stable",
+    "examples": [
+      {
+        "exam_en": "The patient's condition remained <strong class=\"target-word\">stable</strong> overnight.",
+        "exam_ko": "환자의 상태는 밤새 <strong class=\"target-word\">안정적</strong>으로 유지되었다."
+      },
+      {
+        "exam_en": "These dancers are from the same <strong class=\"target-word\">stable</strong>.",
+        "exam_ko": "이 댄서들은 같은 <strong class=\"target-word\">소속사</strong> 출신이다."
+      }
+    ]
+  },
+  {
+    "id": 2372,
+    "origin": "constitutional",
+    "examples": [
+      {
+        "exam_en": "Freedom of speech is a <strong class=\"target-word\">constitutional</strong> right.",
+        "exam_ko": "언론의 자유는 <strong class=\"target-word\">헌법상</strong> 권리이다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">constitutional</strong> weakness for sweets.",
+        "exam_ko": "그는 <strong class=\"target-word\">체질적으로</strong> 단것에 약하다."
+      }
+    ]
+  },
+  {
+    "id": 2373,
+    "origin": "satisfied",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">satisfied</strong> with my life.",
+        "exam_ko": "나는 내 인생에 <strong class=\"target-word\">만족한다</strong>."
+      },
+      {
+        "exam_en": "She was not <strong class=\"target-word\">satisfied</strong> with the result.",
+        "exam_ko": "그녀는 결과에 <strong class=\"target-word\">만족하지</strong> 못했다."
+      }
+    ]
+  },
+  {
+    "id": 2374,
+    "origin": "conscious",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">conscious</strong> of her own mistakes.",
+        "exam_ko": "그녀는 자신의 실수를 <strong class=\"target-word\">의식하고</strong> 있었다."
+      },
+      {
+        "exam_en": "Man is a <strong class=\"target-word\">conscious</strong> being.",
+        "exam_ko": "인간은 <strong class=\"target-word\">의식</strong>을 가진 존재이다."
+      }
+    ]
+  },
+  {
+    "id": 2375,
+    "origin": "developing",
+    "examples": [
+      {
+        "exam_en": "Aid was sent to <strong class=\"target-word\">developing</strong> countries.",
+        "exam_ko": "<strong class=\"target-word\">개발 도상</strong>국들에 원조가 전달되었다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">developing</strong> a new mobile app.",
+        "exam_ko": "그녀는 새로운 모바일 앱을 <strong class=\"target-word\">개발하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 2376,
+    "origin": "holy",
+    "examples": [
+      {
+        "exam_en": "Jerusalem is considered a <strong class=\"target-word\">holy</strong> city.",
+        "exam_ko": "예루살렘은 <strong class=\"target-word\">성스러운</strong> 도시로 여겨진다."
+      },
+      {
+        "exam_en": "They visited a <strong class=\"target-word\">holy</strong> shrine in the mountains.",
+        "exam_ko": "그들은 산속의 <strong class=\"target-word\">신성한</strong> 성지를 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 2377,
+    "origin": "smooth",
+    "examples": [
+      {
+        "exam_en": "Her skin feels very <strong class=\"target-word\">smooth</strong> to the touch.",
+        "exam_ko": "그녀의 피부는 손에 닿으면 매우 <strong class=\"target-word\">매끄럽다</strong>."
+      },
+      {
+        "exam_en": "The flight was <strong class=\"target-word\">smooth</strong> without any turbulence.",
+        "exam_ko": "비행은 난기류 없이 <strong class=\"target-word\">순조로웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2378,
+    "origin": "dominant",
+    "examples": [
+      {
+        "exam_en": "She became the <strong class=\"target-word\">dominant</strong> figure in the industry.",
+        "exam_ko": "그녀는 업계에서 <strong class=\"target-word\">지배적인</strong> 인물이 되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">dominant</strong> party won the election easily.",
+        "exam_ko": "<strong class=\"target-word\">제1</strong>당이 선거에서 쉽게 승리했다."
+      }
+    ]
+  },
+  {
+    "id": 2379,
+    "origin": "theoretical",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">theoretical</strong> explanation of the phenomenon.",
+        "exam_ko": "그는 현상에 대해 <strong class=\"target-word\">이론적인</strong> 설명을 제시했다."
+      },
+      {
+        "exam_en": "The course covers <strong class=\"target-word\">theoretical</strong> linguistics.",
+        "exam_ko": "이 과정은 <strong class=\"target-word\">이론</strong> 언어학을 다룬다."
+      }
+    ]
+  },
+  {
+    "id": 2380,
+    "origin": "outstanding",
+    "examples": [
+      {
+        "exam_en": "She is an <strong class=\"target-word\">outstanding</strong> painter in her generation.",
+        "exam_ko": "그녀는 자신의 세대에서 <strong class=\"target-word\">뛰어난</strong> 화가이다."
+      },
+      {
+        "exam_en": "There are still several <strong class=\"target-word\">outstanding</strong> issues to resolve.",
+        "exam_ko": "아직 해결해야 할 <strong class=\"target-word\">미결</strong> 문제들이 있다."
+      }
+    ]
+  },
+  {
+    "id": 2381,
+    "origin": "pink",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">pink</strong> dress to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">분홍색</strong> 드레스를 입었다."
+      },
+      {
+        "exam_en": "The baby's cheeks turned <strong class=\"target-word\">pink</strong> in the cold.",
+        "exam_ko": "추위에 아기의 볼이 <strong class=\"target-word\">발갛게</strong> 변했다."
+      }
+    ]
+  },
+  {
+    "id": 2382,
+    "origin": "clinical",
+    "examples": [
+      {
+        "exam_en": "She works as a <strong class=\"target-word\">clinical</strong> psychologist at a hospital.",
+        "exam_ko": "그녀는 병원에서 <strong class=\"target-word\">임상</strong> 심리학자로 일한다."
+      },
+      {
+        "exam_en": "The drug passed all <strong class=\"target-word\">clinical</strong> trials successfully.",
+        "exam_ko": "그 약은 모든 <strong class=\"target-word\">임상</strong> 시험을 성공적으로 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 2383,
+    "origin": "minimum",
+    "examples": [
+      {
+        "exam_en": "Keep the noise to a <strong class=\"target-word\">minimum</strong> during the exam.",
+        "exam_ko": "시험 중에는 소음을 <strong class=\"target-word\">최소한</strong>으로 줄여라."
+      },
+      {
+        "exam_en": "The project was completed at <strong class=\"target-word\">minimum</strong> cost.",
+        "exam_ko": "프로젝트는 <strong class=\"target-word\">최소</strong> 비용으로 완료되었다."
+      }
+    ]
+  },
+  {
+    "id": 2384,
+    "origin": "honest",
+    "examples": [
+      {
+        "exam_en": "She is known as an <strong class=\"target-word\">honest</strong> person.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">정직한</strong> 사람으로 알려져 있다."
+      },
+      {
+        "exam_en": "Please be <strong class=\"target-word\">honest</strong> about your feelings.",
+        "exam_ko": "당신의 감정에 대해 <strong class=\"target-word\">솔직하게</strong> 말해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 2385,
+    "origin": "related",
+    "examples": [
+      {
+        "exam_en": "Chemistry is closely <strong class=\"target-word\">related</strong> to biology.",
+        "exam_ko": "화학은 생물학과 밀접하게 <strong class=\"target-word\">관련되어</strong> 있다."
+      },
+      {
+        "exam_en": "Internet-<strong class=\"target-word\">related</strong> crimes have increased recently.",
+        "exam_ko": "최근 인터넷 <strong class=\"target-word\">관련</strong> 범죄가 증가했다."
+      }
+    ]
+  },
+  {
+    "id": 2386,
+    "origin": "extraordinary",
+    "examples": [
+      {
+        "exam_en": "He showed <strong class=\"target-word\">extraordinary</strong> talent from an early age.",
+        "exam_ko": "그는 어린 나이부터 <strong class=\"target-word\">놀라운</strong> 재능을 보였다."
+      },
+      {
+        "exam_en": "It was an <strong class=\"target-word\">extraordinary</strong> achievement for the team.",
+        "exam_ko": "그것은 팀에게 <strong class=\"target-word\">보기 드문</strong> 성취였다."
+      }
+    ]
+  },
+  {
+    "id": 2387,
+    "origin": "plain",
+    "examples": [
+      {
+        "exam_en": "The sign was in <strong class=\"target-word\">plain</strong> view on the wall.",
+        "exam_ko": "표지판이 벽에 <strong class=\"target-word\">분명하게</strong> 보였다."
+      },
+      {
+        "exam_en": "She prefers <strong class=\"target-word\">plain</strong> clothes over flashy ones.",
+        "exam_ko": "그녀는 화려한 옷보다 <strong class=\"target-word\">수수한</strong> 옷을 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 2388,
+    "origin": "visible",
+    "examples": [
+      {
+        "exam_en": "The stars were <strong class=\"target-word\">visible</strong> on that clear night.",
+        "exam_ko": "맑은 밤에 별들이 <strong class=\"target-word\">보였다</strong>."
+      },
+      {
+        "exam_en": "Only <strong class=\"target-word\">visible</strong> light reaches our eyes directly.",
+        "exam_ko": "<strong class=\"target-word\">가시</strong> 광선만이 우리 눈에 직접 도달한다."
+      }
+    ]
+  },
+  {
+    "id": 2389,
+    "origin": "accurate",
+    "examples": [
+      {
+        "exam_en": "The report gave an <strong class=\"target-word\">accurate</strong> account of the incident.",
+        "exam_ko": "보고서는 사건을 <strong class=\"target-word\">정확하게</strong> 기술했다."
+      },
+      {
+        "exam_en": "Your watch isn't <strong class=\"target-word\">accurate</strong>.",
+        "exam_ko": "네 시계 시간이 <strong class=\"target-word\">정확하지</strong> 않아."
+      }
+    ]
+  }
+]

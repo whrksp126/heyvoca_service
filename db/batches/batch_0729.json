@@ -1,0 +1,226 @@
+[
+  {
+    "id": 36705,
+    "origin": "venomously",
+    "examples": [
+      {
+        "exam_en": "He spoke venomously about his ex-wife who had run off with another man.",
+        "exam_ko": "그는 악의에 차서 다른 남자와 달아난 전 부인에 대하여 말을 했다."
+      }
+    ]
+  },
+  {
+    "id": 36738,
+    "origin": "bestrew",
+    "examples": [
+      {
+        "exam_en": "bestrew the path with flowers",
+        "exam_ko": "길에 꽃을 뿌리다"
+      },
+      {
+        "exam_en": "Red flowers bestrewed the meadow.",
+        "exam_ko": "붉은 꽃이 목초지에 여기저기 피어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 36762,
+    "origin": "unsheathe",
+    "examples": [
+      {
+        "exam_en": "unsheathe one's sword",
+        "exam_ko": "칼을 뽑다; 전쟁을 시작하다."
+      }
+    ]
+  },
+  {
+    "id": 36763,
+    "origin": "heeled",
+    "examples": [
+      {
+        "exam_en": "high-heeled shoes",
+        "exam_ko": "하이힐 구두."
+      },
+      {
+        "exam_en": "the best-heeled family",
+        "exam_ko": "가장 유복한 가족."
+      }
+    ]
+  },
+  {
+    "id": 36770,
+    "origin": "indwell",
+    "examples": [
+      {
+        "exam_en": "a power indwelling in God",
+        "exam_ko": "신에게 내재하는 힘."
+      }
+    ]
+  },
+  {
+    "id": 36815,
+    "origin": "wicker",
+    "examples": [
+      {
+        "exam_en": "a wicker chair",
+        "exam_ko": "등의자"
+      },
+      {
+        "exam_en": "a wicker basket",
+        "exam_ko": "작은 가지로 만든 바구니."
+      }
+    ]
+  },
+  {
+    "id": 36827,
+    "origin": "pugilistic",
+    "examples": [
+      {
+        "exam_en": "He had a pugilistic attitude, always ready for a fight.",
+        "exam_ko": "그는 언제나 싸울 준비가 되어 있는 투쟁적인 태도를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 36852,
+    "origin": "heavyweight",
+    "examples": [
+      {
+        "exam_en": "the world heavyweight title",
+        "exam_ko": "세계 헤비급 타이틀."
+      }
+    ]
+  },
+  {
+    "id": 36868,
+    "origin": "soapbox",
+    "examples": [
+      {
+        "exam_en": "get on one's soapbox",
+        "exam_ko": "(비격식) 자기 주장을 내세우다."
+      },
+      {
+        "exam_en": "a soapbox orator",
+        "exam_ko": "가두 연설자."
+      }
+    ]
+  },
+  {
+    "id": 36894,
+    "origin": "intercostal",
+    "examples": [
+      {
+        "exam_en": "intercostal muscles",
+        "exam_ko": "늑간 근육"
+      },
+      {
+        "exam_en": "intercostal nerves",
+        "exam_ko": "늑간 신경."
+      }
+    ]
+  },
+  {
+    "id": 36902,
+    "origin": "orthostatic",
+    "examples": [
+      {
+        "exam_en": "orthostatic hypotension",
+        "exam_ko": "기립성 저혈압[단백뇨]."
+      }
+    ]
+  },
+  {
+    "id": 36935,
+    "origin": "ville",
+    "examples": [
+      {
+        "exam_en": "la Ville lumière",
+        "exam_ko": "빛의 도시(Paris)."
+      },
+      {
+        "exam_en": "dullsville",
+        "exam_ko": "몹시 지루한 것."
+      }
+    ]
+  },
+  {
+    "id": 36965,
+    "origin": "wordiness",
+    "examples": [
+      {
+        "exam_en": "Having a long, verbose paragraph does not necessarily mean that it is meaningful. You can help to eliminate wordiness by writing in active tense, as opposed to passive tense.",
+        "exam_ko": "길고 장황한 단락이 있다고해서 반드시 의미가있는 것은 아닙니다.반대로 수동형 시제를 능동형으로 작성하여 장황함을 없앨 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 36997,
+    "origin": "semilunar",
+    "examples": [
+      {
+        "exam_en": "a semilunar valve",
+        "exam_ko": "(심장의) 반월판(瓣)."
+      }
+    ]
+  },
+  {
+    "id": 37024,
+    "origin": "migrating",
+    "examples": [
+      {
+        "exam_en": "a migrating balloon",
+        "exam_ko": "자유기구(自由氣球)."
+      }
+    ]
+  },
+  {
+    "id": 37060,
+    "origin": "odoriferous",
+    "examples": [
+      {
+        "exam_en": "an odoriferous flower",
+        "exam_ko": "향기로운 꽃."
+      }
+    ]
+  },
+  {
+    "id": 37075,
+    "origin": "bloodcurdling",
+    "examples": [
+      {
+        "exam_en": "bloodcurdling stories",
+        "exam_ko": "소름끼치는 이야기."
+      }
+    ]
+  },
+  {
+    "id": 37088,
+    "origin": "viselike",
+    "examples": [
+      {
+        "exam_en": "a viselike grip",
+        "exam_ko": "억세게 쥐기."
+      }
+    ]
+  },
+  {
+    "id": 37093,
+    "origin": "truss",
+    "examples": [
+      {
+        "exam_en": "truss up a duck",
+        "exam_ko": "오리의 날개를 몸뚱이에 동여매다."
+      }
+    ]
+  },
+  {
+    "id": 37101,
+    "origin": "hex",
+    "examples": [
+      {
+        "exam_en": "in hex",
+        "exam_ko": "16진법[진수]으로."
+      }
+    ]
+  }
+]

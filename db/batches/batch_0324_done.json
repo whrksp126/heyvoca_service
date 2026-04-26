@@ -1,0 +1,262 @@
+[
+  {
+    "id": 8294,
+    "origin": "habitual",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">habitual</strong> liar.",
+        "exam_ko": "그는 <strong class=\"target-word\">상습적인</strong> 거짓말쟁이다."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">habitual</strong> routine every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">습관적인</strong> 루틴이 있다."
+      }
+    ]
+  },
+  {
+    "id": 8295,
+    "origin": "habitation",
+    "examples": [
+      {
+        "exam_en": "The house is not fit for <strong class=\"target-word\">habitation</strong>.",
+        "exam_ko": "그 집은 <strong class=\"target-word\">거주</strong>에 적합하지 않다."
+      },
+      {
+        "exam_en": "The cabin showed no signs of human <strong class=\"target-word\">habitation</strong>.",
+        "exam_ko": "그 오두막에는 사람이 <strong class=\"target-word\">거주한</strong> 흔적이 없었다."
+      }
+    ]
+  },
+  {
+    "id": 8296,
+    "origin": "subconscious",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">subconscious</strong> wish to succeed.",
+        "exam_ko": "그녀는 성공하고 싶은 <strong class=\"target-word\">잠재의식적인</strong> 바람이 있었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">subconscious</strong> mind forgets nothing.",
+        "exam_ko": "<strong class=\"target-word\">잠재의식</strong>은 아무것도 잊지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 8297,
+    "origin": "consciousness",
+    "examples": [
+      {
+        "exam_en": "He lost <strong class=\"target-word\">consciousness</strong> after the accident.",
+        "exam_ko": "그는 사고 후 <strong class=\"target-word\">의식</strong>을 잃었다."
+      },
+      {
+        "exam_en": "The class raised her political <strong class=\"target-word\">consciousness</strong>.",
+        "exam_ko": "그 수업은 그녀의 정치적 <strong class=\"target-word\">의식</strong>을 높여주었다."
+      }
+    ]
+  },
+  {
+    "id": 8298,
+    "origin": "absentee",
+    "examples": [
+      {
+        "exam_en": "Several <strong class=\"target-word\">absentees</strong> missed the final exam.",
+        "exam_ko": "몇몇 <strong class=\"target-word\">결석자들</strong>이 기말시험을 놓쳤다."
+      },
+      {
+        "exam_en": "The flu caused many <strong class=\"target-word\">absentees</strong> this week.",
+        "exam_ko": "독감으로 이번 주 <strong class=\"target-word\">결석자</strong>가 많이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 8300,
+    "origin": "essentially",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">essentially</strong> a very kind person.",
+        "exam_ko": "그는 <strong class=\"target-word\">본질적으로</strong> 매우 친절한 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 8301,
+    "origin": "essence",
+    "examples": [
+      {
+        "exam_en": "Freedom is the <strong class=\"target-word\">essence</strong> of democracy.",
+        "exam_ko": "자유는 민주주의의 <strong class=\"target-word\">본질</strong>이다."
+      },
+      {
+        "exam_en": "He seemed the <strong class=\"target-word\">essence</strong> of conventionality.",
+        "exam_ko": "그는 인습의 <strong class=\"target-word\">화신</strong> 같았다."
+      }
+    ]
+  },
+  {
+    "id": 8302,
+    "origin": "consensus",
+    "examples": [
+      {
+        "exam_en": "The team finally reached a <strong class=\"target-word\">consensus</strong>.",
+        "exam_ko": "팀은 마침내 <strong class=\"target-word\">합의</strong>에 도달했다."
+      },
+      {
+        "exam_en": "One member broke the <strong class=\"target-word\">consensus</strong> unexpectedly.",
+        "exam_ko": "한 구성원이 갑자기 <strong class=\"target-word\">합의</strong>를 깨뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 8303,
+    "origin": "consent",
+    "examples": [
+      {
+        "exam_en": "She gladly <strong class=\"target-word\">consented</strong> to the request.",
+        "exam_ko": "그녀는 그 요청에 기꺼이 <strong class=\"target-word\">동의했다</strong>."
+      },
+      {
+        "exam_en": "He did not <strong class=\"target-word\">consent</strong> to her coming here.",
+        "exam_ko": "그는 그녀가 이곳에 오는 것에 <strong class=\"target-word\">동의하지</strong> 않았다."
+      }
+    ]
+  },
+  {
+    "id": 8304,
+    "origin": "sentimental",
+    "examples": [
+      {
+        "exam_en": "She kept the ring for <strong class=\"target-word\">sentimental</strong> reasons.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">감정적인</strong> 이유로 반지를 간직했다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">sentimental</strong> attachment to his old home.",
+        "exam_ko": "그는 옛집에 <strong class=\"target-word\">정서적</strong> 애착을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 8305,
+    "origin": "sentiment",
+    "examples": [
+      {
+        "exam_en": "Public <strong class=\"target-word\">sentiment</strong> shifted against the policy.",
+        "exam_ko": "그 정책에 대한 여론의 <strong class=\"target-word\">정서</strong>가 바뀌었다."
+      },
+      {
+        "exam_en": "He expressed his <strong class=\"target-word\">sentiments</strong> about the topic.",
+        "exam_ko": "그는 그 주제에 대한 자신의 <strong class=\"target-word\">소감</strong>을 말했다."
+      }
+    ]
+  },
+  {
+    "id": 8309,
+    "origin": "recreate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">recreates</strong> himself with golf after work.",
+        "exam_ko": "그는 퇴근 후 골프로 <strong class=\"target-word\">기분을 전환한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8311,
+    "origin": "creativity",
+    "examples": [
+      {
+        "exam_en": "The artist showed remarkable <strong class=\"target-word\">creativity</strong> in her work.",
+        "exam_ko": "그 예술가는 작품에서 놀라운 <strong class=\"target-word\">창의력</strong>을 발휘했다."
+      }
+    ]
+  },
+  {
+    "id": 8312,
+    "origin": "creation",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">creation</strong> of new jobs is a top priority.",
+        "exam_ko": "새 일자리 <strong class=\"target-word\">창출</strong>이 최우선 과제다."
+      },
+      {
+        "exam_en": "Scientists studied the <strong class=\"target-word\">creation</strong> of new species.",
+        "exam_ko": "과학자들은 신종의 <strong class=\"target-word\">발생</strong>을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 8313,
+    "origin": "symphony",
+    "examples": [
+      {
+        "exam_en": "The orchestra performed Beethoven's Ninth <strong class=\"target-word\">Symphony</strong>.",
+        "exam_ko": "오케스트라는 베토벤의 9번 <strong class=\"target-word\">교향곡</strong>을 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 8318,
+    "origin": "unfetter",
+    "examples": [
+      {
+        "exam_en": "The new policy will <strong class=\"target-word\">unfetter</strong> trade between nations.",
+        "exam_ko": "새 정책은 국가 간 교역을 <strong class=\"target-word\">자유롭게 할</strong> 것이다."
+      },
+      {
+        "exam_en": "Directors are almost <strong class=\"target-word\">unfettered</strong> in exercising their powers.",
+        "exam_ko": "이사들은 권한을 행사하는 데 거의 <strong class=\"target-word\">제약이 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8319,
+    "origin": "fetter",
+    "examples": [
+      {
+        "exam_en": "The prisoner was kept in <strong class=\"target-word\">fetters</strong>.",
+        "exam_ko": "죄수는 <strong class=\"target-word\">족쇄</strong>에 묶여 있었다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">fettered</strong> by superstition his whole life.",
+        "exam_ko": "그는 평생 미신에 <strong class=\"target-word\">속박되어</strong> 살았다."
+      }
+    ]
+  },
+  {
+    "id": 8320,
+    "origin": "foothold",
+    "examples": [
+      {
+        "exam_en": "The company gained a <strong class=\"target-word\">foothold</strong> in the Asian market.",
+        "exam_ko": "그 회사는 아시아 시장에서 <strong class=\"target-word\">발판</strong>을 마련했다."
+      },
+      {
+        "exam_en": "It is hard to get a <strong class=\"target-word\">foothold</strong> as a movie star.",
+        "exam_ko": "영화배우로서 <strong class=\"target-word\">자리를 잡기</strong>란 쉽지 않다."
+      }
+    ]
+  },
+  {
+    "id": 8321,
+    "origin": "football",
+    "examples": [
+      {
+        "exam_en": "Italian <strong class=\"target-word\">football</strong> fans packed the stadium.",
+        "exam_ko": "이탈리아 <strong class=\"target-word\">축구</strong> 팬들이 경기장을 가득 채웠다."
+      },
+      {
+        "exam_en": "They used the issue as a political <strong class=\"target-word\">football</strong>.",
+        "exam_ko": "그들은 그 문제를 정치적 <strong class=\"target-word\">흥정거리</strong>로 이용했다."
+      }
+    ]
+  },
+  {
+    "id": 8322,
+    "origin": "footstep",
+    "examples": [
+      {
+        "exam_en": "He heard soft <strong class=\"target-word\">footsteps</strong> coming up the stairs.",
+        "exam_ko": "그는 계단을 올라오는 가벼운 <strong class=\"target-word\">발소리</strong>를 들었다."
+      }
+    ]
+  }
+]

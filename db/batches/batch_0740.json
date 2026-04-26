@@ -1,0 +1,222 @@
+[
+  {
+    "id": 40284,
+    "origin": "quoit",
+    "examples": [
+      {
+        "exam_en": "Quoits is being playing.",
+        "exam_ko": "쇠고리 던지기를 하고 있다."
+      },
+      {
+        "exam_en": "The quoits are heavy.",
+        "exam_ko": "이 쇠고리들은 무겁다."
+      }
+    ]
+  },
+  {
+    "id": 40300,
+    "origin": "enshroud",
+    "examples": [
+      {
+        "exam_en": "The whole city was enshrouded in mist.",
+        "exam_ko": "온 도시가 안개에 싸여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 40314,
+    "origin": "scarper",
+    "examples": [
+      {
+        "exam_en": "scarper without paying bill",
+        "exam_ko": "돈을 안내고 도망가다."
+      }
+    ]
+  },
+  {
+    "id": 40319,
+    "origin": "veined",
+    "examples": [
+      {
+        "exam_en": "veined amber",
+        "exam_ko": "줄무늬가 있는 호박."
+      }
+    ]
+  },
+  {
+    "id": 40343,
+    "origin": "garbed",
+    "examples": [
+      {
+        "exam_en": "a red-garbed woman",
+        "exam_ko": "빨간색 옷을 입은 여자."
+      }
+    ]
+  },
+  {
+    "id": 40351,
+    "origin": "luxuriate",
+    "examples": [
+      {
+        "exam_en": "luxuriate in the glory of fame",
+        "exam_ko": "명성이라는 영광을 즐기다."
+      }
+    ]
+  },
+  {
+    "id": 40365,
+    "origin": "locution",
+    "examples": [
+      {
+        "exam_en": "a Cockney locution",
+        "exam_ko": "런던 말씨."
+      }
+    ]
+  },
+  {
+    "id": 40415,
+    "origin": "unforgiving",
+    "examples": [
+      {
+        "exam_en": "The terrain is unforgiving, and the steep climb is particularly punishing on him.",
+        "exam_ko": "그 지형은 그에게 힘들고, 가파른 오르막길은 특히 그에게 가혹합니다."
+      }
+    ]
+  },
+  {
+    "id": 40416,
+    "origin": "windward",
+    "examples": [
+      {
+        "exam_en": "an excellent windward boat",
+        "exam_ko": "바람을 잘 거슬러 나가는 배"
+      },
+      {
+        "exam_en": "the Windward islands",
+        "exam_ko": "바람맞이 섬"
+      }
+    ]
+  },
+  {
+    "id": 40422,
+    "origin": "tarsal",
+    "examples": [
+      {
+        "exam_en": "tarsal bones",
+        "exam_ko": "발목뼈, 족근골."
+      }
+    ]
+  },
+  {
+    "id": 40424,
+    "origin": "metacarpal",
+    "examples": [
+      {
+        "exam_en": "a metacarpal bone",
+        "exam_ko": "장골(掌骨)."
+      }
+    ]
+  },
+  {
+    "id": 40428,
+    "origin": "palatine",
+    "examples": [
+      {
+        "exam_en": "a count palatine",
+        "exam_ko": "팔라틴 백작."
+      }
+    ]
+  },
+  {
+    "id": 40444,
+    "origin": "sacking",
+    "examples": [
+      {
+        "exam_en": "The company announced the sacking of several employees due to the restructuring of the organization.",
+        "exam_ko": "회사는 조직 개편으로 인해 여러 직원을 해고하겠다고 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 40463,
+    "origin": "pleurisy",
+    "examples": [
+      {
+        "exam_en": "dry pleurisy",
+        "exam_ko": "건성[습성]늑막염."
+      }
+    ]
+  },
+  {
+    "id": 40529,
+    "origin": "bareboat",
+    "examples": [
+      {
+        "exam_en": "a bareboat charter",
+        "exam_ko": "나용선 계약."
+      }
+    ]
+  },
+  {
+    "id": 40537,
+    "origin": "quadruplicate",
+    "examples": [
+      {
+        "exam_en": "a quadruplicate document",
+        "exam_ko": "네 통 복사한[네 통째의] 서류."
+      },
+      {
+        "exam_en": "type a document in quadruplicate",
+        "exam_ko": "문서를 네 통 타자치다."
+      }
+    ]
+  },
+  {
+    "id": 40540,
+    "origin": "insurable",
+    "examples": [
+      {
+        "exam_en": "insurable property",
+        "exam_ko": "피보험 재산"
+      },
+      {
+        "exam_en": "insurable value",
+        "exam_ko": "보험가액."
+      }
+    ]
+  },
+  {
+    "id": 40543,
+    "origin": "hereto",
+    "examples": [
+      {
+        "exam_en": "attached hereto",
+        "exam_ko": "여기에 첨부하여. (또는 hereunto)"
+      },
+      {
+        "exam_en": "WHEREAS the Principal has entered into various construction contracts (the \"Contracts\") with various entities (the \"Obligees\") for the conctruction of various projects(the \"Projects\") as more fully set forth in a List of the Contracts and Bonds attached hereto as Exhibit 2;",
+        "exam_ko": "본인은 여기 Exhibit 2 첨부된 계약과 협약 리스트에 상세히 명시된 바와 같이 다양한 건설 프로젝트에 다양한 기업들과 다양한 건설계약에 참여해 왔다는 사실에 비추어"
+      }
+    ]
+  },
+  {
+    "id": 40552,
+    "origin": "greengrocer",
+    "examples": [
+      {
+        "exam_en": "I bought some onions at the greengrocer's.",
+        "exam_ko": "청과물상에서 양파 몇 개를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 40600,
+    "origin": "keynesian",
+    "examples": [
+      {
+        "exam_en": "Keynesian economics",
+        "exam_ko": "케인스 경제학."
+      }
+    ]
+  }
+]

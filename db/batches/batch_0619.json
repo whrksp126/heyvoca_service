@@ -1,0 +1,238 @@
+[
+  {
+    "id": 21119,
+    "origin": "ceaseless",
+    "examples": [
+      {
+        "exam_en": "ceaseless rain",
+        "exam_ko": "끊임없는 비[노력]."
+      }
+    ]
+  },
+  {
+    "id": 21124,
+    "origin": "somatic",
+    "examples": [
+      {
+        "exam_en": "somatic cells",
+        "exam_ko": "체세포."
+      }
+    ]
+  },
+  {
+    "id": 21125,
+    "origin": "disjunctive",
+    "examples": [
+      {
+        "exam_en": "a disjunctive conjunction",
+        "exam_ko": "이접적 접속사(either… or, although, but or 등)"
+      },
+      {
+        "exam_en": "a disjunctive adverb",
+        "exam_ko": "이접적 부사(else, other wise, or else 등)."
+      }
+    ]
+  },
+  {
+    "id": 21126,
+    "origin": "unfamiliar",
+    "examples": [
+      {
+        "exam_en": "an unfamiliar face",
+        "exam_ko": "잘 모르는 얼굴[사람]"
+      },
+      {
+        "exam_en": "His name was unfamiliar to me.",
+        "exam_ko": "그의 이름은 나에게 낯설었다"
+      }
+    ]
+  },
+  {
+    "id": 21129,
+    "origin": "husbandry",
+    "examples": [
+      {
+        "exam_en": "animal husbandry",
+        "exam_ko": "축산(학)"
+      },
+      {
+        "exam_en": "dairy husbandry",
+        "exam_ko": "낙농(업)."
+      }
+    ]
+  },
+  {
+    "id": 21133,
+    "origin": "serviceable",
+    "examples": [
+      {
+        "exam_en": "a serviceable pair of shoes",
+        "exam_ko": "오래 신을 수 있는 신발 한 켤레."
+      }
+    ]
+  },
+  {
+    "id": 21138,
+    "origin": "dwelling",
+    "examples": [
+      {
+        "exam_en": "a portable dwelling",
+        "exam_ko": "(트럭으로 운반되는) 이동식 주택"
+      },
+      {
+        "exam_en": "a model dwelling",
+        "exam_ko": "모델 주택."
+      }
+    ]
+  },
+  {
+    "id": 21139,
+    "origin": "indistinguishable",
+    "examples": [
+      {
+        "exam_en": "The three sisters are indistinguishable.",
+        "exam_ko": "그 세 자매는 분간할 수 없을 정도로 닮았다."
+      },
+      {
+        "exam_en": "Why, no, you ruinous butt, you whoreson indistinguishable cur, no.",
+        "exam_ko": "아니, 이 망할 놈, 분간 못할 저주에 걸린 놈이."
+      }
+    ]
+  },
+  {
+    "id": 21140,
+    "origin": "trickery",
+    "examples": [
+      {
+        "exam_en": "by trickery",
+        "exam_ko": "책략을 써서."
+      }
+    ]
+  },
+  {
+    "id": 21141,
+    "origin": "ensign",
+    "examples": [
+      {
+        "exam_en": "a blue ensign",
+        "exam_ko": "영국 해군 예비함[상선, 군함]기."
+      },
+      {
+        "exam_en": "an ensign of surrender",
+        "exam_ko": "항복의 상징."
+      }
+    ]
+  },
+  {
+    "id": 21143,
+    "origin": "distend",
+    "examples": [
+      {
+        "exam_en": "The starving children had distended stomach.",
+        "exam_ko": "기아 아동들은 복부가 부풀어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 21144,
+    "origin": "descant",
+    "examples": [
+      {
+        "exam_en": "descant recorder",
+        "exam_ko": "소프라노 리코더(최고음의 것)."
+      }
+    ]
+  },
+  {
+    "id": 21149,
+    "origin": "condign",
+    "examples": [
+      {
+        "exam_en": "For his crime the prisoner received condign punishment. ",
+        "exam_ko": "그 범행에 대해서 그 죄수는 당연한 벌을 받았다."
+      },
+      {
+        "exam_en": "For his crime the prisoner received condign punishment.",
+        "exam_ko": "그 범행에 대해서 그 죄수는 당연한 벌을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 21151,
+    "origin": "bounteous",
+    "examples": [
+      {
+        "exam_en": "a man of bounteous nature",
+        "exam_ko": "관대한 성품의 사람."
+      }
+    ]
+  },
+  {
+    "id": 21152,
+    "origin": "wry",
+    "examples": [
+      {
+        "exam_en": "a wry look",
+        "exam_ko": "찡그린 얼굴."
+      }
+    ]
+  },
+  {
+    "id": 21153,
+    "origin": "appellation",
+    "examples": [
+      {
+        "exam_en": "Appellation d’origine Controlee (AOC) was enacted in France.",
+        "exam_ko": "프랑스에서는 와인 원산지 명칭 통제가 법제화되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 21154,
+    "origin": "antipodes",
+    "examples": [
+      {
+        "exam_en": "Our antipodes are working while we are sleeping.",
+        "exam_ko": "우리가 자고 있는 동안에 지구의 반대쪽 사람들은 일하고 있다."
+      },
+      {
+        "exam_en": "The antipodes of love is hatred.",
+        "exam_ko": "사랑의 반대는 미움이다."
+      }
+    ]
+  },
+  {
+    "id": 21155,
+    "origin": "affiance",
+    "examples": [
+      {
+        "exam_en": "I am affianced to her.",
+        "exam_ko": "그녀와 약혼 중이다."
+      }
+    ]
+  },
+  {
+    "id": 21156,
+    "origin": "adjure",
+    "examples": [
+      {
+        "exam_en": "The judge adjured me to answer truthfully.",
+        "exam_ko": "판사는 나에게 사실대로 답변할 것을 명했다."
+      }
+    ]
+  },
+  {
+    "id": 21157,
+    "origin": "adduce",
+    "examples": [
+      {
+        "exam_en": "adduce a passage",
+        "exam_ko": "어떤 대목을 인용하다"
+      },
+      {
+        "exam_en": "Can you adduce any reason for your strange behaviour?",
+        "exam_ko": "당신의 이상한 행동에 대하여 어떤 이유라도 댈 수 있습니까?"
+      }
+    ]
+  }
+]

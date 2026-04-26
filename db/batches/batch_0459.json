@@ -1,0 +1,270 @@
+[
+  {
+    "id": 13358,
+    "origin": "unacknowledged",
+    "examples": [
+      {
+        "exam_en": "an unacknowledged crime",
+        "exam_ko": "자백을 받지 못한 범죄[과실 등]"
+      },
+      {
+        "exam_en": "an unacknowledged greeting",
+        "exam_ko": "응답을 받지 못한 인사."
+      }
+    ]
+  },
+  {
+    "id": 13359,
+    "origin": "gulp",
+    "examples": [
+      {
+        "exam_en": "gulp down a drink",
+        "exam_ko": "꿀꺽 꿀꺽 마시다"
+      },
+      {
+        "exam_en": "gulp back one's fear",
+        "exam_ko": "무서움을 참다."
+      }
+    ]
+  },
+  {
+    "id": 13360,
+    "origin": "coarse",
+    "examples": [
+      {
+        "exam_en": "coarse salt",
+        "exam_ko": "굵은 소금"
+      },
+      {
+        "exam_en": "coarse sand",
+        "exam_ko": "굵은 모래."
+      }
+    ]
+  },
+  {
+    "id": 13362,
+    "origin": "incontinence",
+    "examples": [
+      {
+        "exam_en": "the incontinence of speech",
+        "exam_ko": "수다스러움, 요설"
+      },
+      {
+        "exam_en": "the incontinence of urine",
+        "exam_ko": "[의학] 요(尿) 실금."
+      }
+    ]
+  },
+  {
+    "id": 13365,
+    "origin": "sideline",
+    "examples": [
+      {
+        "exam_en": "Jane is a doctor, but she does a bit of writing as a sideline.",
+        "exam_ko": "제인은 의사지만 그녀는 부업으로 약간의 글을 쓴다."
+      }
+    ]
+  },
+  {
+    "id": 13366,
+    "origin": "travail",
+    "examples": [
+      {
+        "exam_en": "a woman in travail",
+        "exam_ko": "진통이 시작된 여자."
+      }
+    ]
+  },
+  {
+    "id": 13369,
+    "origin": "hew",
+    "examples": [
+      {
+        "exam_en": "hew down a large tree",
+        "exam_ko": "큰 나무를 잘라 넘어뜨리다."
+      },
+      {
+        "exam_en": "hew a small boat from wood",
+        "exam_ko": "나무를 잘라 작은 배를 만들다"
+      }
+    ]
+  },
+  {
+    "id": 13370,
+    "origin": "purposeful",
+    "examples": [
+      {
+        "exam_en": "a purposeful character",
+        "exam_ko": "과단성 있는 성격."
+      },
+      {
+        "exam_en": "a purposeful smile",
+        "exam_ko": "의미심장한 미소."
+      }
+    ]
+  },
+  {
+    "id": 13371,
+    "origin": "infirmity",
+    "examples": [
+      {
+        "exam_en": "infirmities of age",
+        "exam_ko": "노환, 노령에 따른 여러 가지 병."
+      },
+      {
+        "exam_en": "the infirmities of old age",
+        "exam_ko": "노년의 병약."
+      }
+    ]
+  },
+  {
+    "id": 13373,
+    "origin": "loathe",
+    "examples": [
+      {
+        "exam_en": "I loathe snakes.",
+        "exam_ko": "뱀은 질색이다"
+      },
+      {
+        "exam_en": "I loathe having to get up so early in the morning.",
+        "exam_ko": "아침에 그렇게 일찍 일어나는 것을 싫어한다"
+      }
+    ]
+  },
+  {
+    "id": 13376,
+    "origin": "elusive",
+    "examples": [
+      {
+        "exam_en": "an elusive idea",
+        "exam_ko": "알기 어려운 생각"
+      },
+      {
+        "exam_en": "an elusive personality",
+        "exam_ko": "파악할 수 없는 성격"
+      }
+    ]
+  },
+  {
+    "id": 13377,
+    "origin": "ecstasy",
+    "examples": [
+      {
+        "exam_en": "in an ecstasy of delight",
+        "exam_ko": "기뻐서 어쩔 줄 몰라"
+      },
+      {
+        "exam_en": "be thrown into ecstasies over",
+        "exam_ko": "…에 빠져 있다."
+      }
+    ]
+  },
+  {
+    "id": 13381,
+    "origin": "sanctify",
+    "examples": [
+      {
+        "exam_en": "God blessed the seventh day, and sanctified it.",
+        "exam_ko": "하나님은 일곱째 날을 복주사 거룩하게 하시니라＜[성서] 창세기 2:3＞."
+      },
+      {
+        "exam_en": "sanctify one's soul",
+        "exam_ko": "마음을 깨끗이 하다."
+      }
+    ]
+  },
+  {
+    "id": 13382,
+    "origin": "vilify",
+    "examples": [
+      {
+        "exam_en": "The politician was vilified in the newspapers as a criminal.",
+        "exam_ko": "그 정치인은 신문에서 범죄자로 비난받았다."
+      }
+    ]
+  },
+  {
+    "id": 13383,
+    "origin": "entrench",
+    "examples": [
+      {
+        "exam_en": "He entrenched himself in a cave.",
+        "exam_ko": "그는 동굴에 몸을 단단히 숨겼다"
+      },
+      {
+        "exam_en": "He's completely entrenched in his political views.",
+        "exam_ko": "그는 정견이 확립되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 13385,
+    "origin": "cliquish",
+    "examples": [
+      {
+        "exam_en": "a cliquish fashion",
+        "exam_ko": "배타적인 풍조."
+      }
+    ]
+  },
+  {
+    "id": 13387,
+    "origin": "frivolous",
+    "examples": [
+      {
+        "exam_en": "a frivolous argument",
+        "exam_ko": "하찮은 논의."
+      },
+      {
+        "exam_en": "frivolous behavior",
+        "exam_ko": "경박한 행위[성격]."
+      }
+    ]
+  },
+  {
+    "id": 13388,
+    "origin": "frivol",
+    "examples": [
+      {
+        "exam_en": "He frivoled away his time.",
+        "exam_ko": "그는 시간을 시시하게 낭비했다."
+      }
+    ]
+  },
+  {
+    "id": 13389,
+    "origin": "ephemeral",
+    "examples": [
+      {
+        "exam_en": "ephemeral insects",
+        "exam_ko": "하루살이 곤충"
+      },
+      {
+        "exam_en": "ephemeral flowers",
+        "exam_ko": "하루살이 꽃"
+      },
+      {
+        "exam_en": "ephemeral insects ",
+        "exam_ko": "하루살이 곤충"
+      },
+      {
+        "exam_en": "ephemeral flowers ",
+        "exam_ko": "하루살이 꽃"
+      },
+      {
+        "exam_en": "The beauty of cherry blossoms is ephemeral, lasting only a short time.",
+        "exam_ko": "벚꽃의 아름다움은 일시적이며 짧은 시간 동안만 지속된다."
+      }
+    ]
+  },
+  {
+    "id": 13390,
+    "origin": "galvanize",
+    "examples": [
+      {
+        "exam_en": "It galvanized her into action.",
+        "exam_ko": "그것에 자극 받아 그녀는 행동을 개시했다."
+      }
+    ]
+  }
+]

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 
-export const ConfirmNewBottomSheet = ({ title, btns }) => {
+export const ConfirmNewBottomSheet = ({ title, subTitle, btns }) => {
   "use memo";
   const { resolveNewBottomSheet } = useNewBottomSheetActions();
 
@@ -20,13 +20,18 @@ export const ConfirmNewBottomSheet = ({ title, btns }) => {
 
       <div className="
         flex flex-col gap-[10px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         pt-[40px] p-[20px] pb-[105px]
         overflow-y-auto
       ">
-        <h3 className="text-center text-[18px] font-[700] text-layout-black dark:text-layout-white">
+        <h3 className="text-center text-[18px] font-[700] text-layout-black dark:text-layout-white whitespace-pre-line">
           {title}
         </h3>
+        {subTitle && (
+          <p className="text-center text-[13px] text-layout-gray-400 dark:text-layout-gray-500">
+            {subTitle}
+          </p>
+        )}
       </div>
       <div className="
         absolute bottom-0 left-0 right-0

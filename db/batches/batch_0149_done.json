@@ -1,0 +1,270 @@
+[
+  {
+    "id": 3267,
+    "origin": "backup",
+    "examples": [
+      {
+        "exam_en": "There was a long traffic <strong class=\"target-word\">backup</strong> on the highway.",
+        "exam_ko": "고속도로에서 긴 교통 <strong class=\"target-word\">정체</strong>가 있었다."
+      },
+      {
+        "exam_en": "Always keep a <strong class=\"target-word\">backup</strong> supply of batteries.",
+        "exam_ko": "항상 배터리 <strong class=\"target-word\">예비품</strong>을 챙겨두어라."
+      }
+    ]
+  },
+  {
+    "id": 3270,
+    "origin": "telltale",
+    "examples": [
+      {
+        "exam_en": "The detective found a <strong class=\"target-word\">telltale</strong> fingerprint at the scene.",
+        "exam_ko": "형사는 현장에서 <strong class=\"target-word\">모든 것을 드러내는</strong> 지문을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 3271,
+    "origin": "tale",
+    "examples": [
+      {
+        "exam_en": "He told a <strong class=\"target-word\">tale</strong> of his heroic exploits.",
+        "exam_ko": "그는 자신의 영웅적인 <strong class=\"target-word\">이야기</strong>를 들려주었다."
+      },
+      {
+        "exam_en": "She carried <strong class=\"target-word\">tales</strong> about her coworker to the boss.",
+        "exam_ko": "그녀는 동료에 대한 <strong class=\"target-word\">고자질</strong>을 상사에게 했다."
+      }
+    ]
+  },
+  {
+    "id": 3272,
+    "origin": "flower",
+    "examples": [
+      {
+        "exam_en": "She decorated the table with an artificial <strong class=\"target-word\">flower</strong>.",
+        "exam_ko": "그녀는 테이블을 조화로 꾸몄다. 그것은 인공 <strong class=\"target-word\">꽃</strong>이었다."
+      },
+      {
+        "exam_en": "He gave her a fresh <strong class=\"target-word\">flower</strong> from the garden.",
+        "exam_ko": "그는 정원에서 신선한 <strong class=\"target-word\">꽃</strong>을 그녀에게 주었다."
+      }
+    ]
+  },
+  {
+    "id": 3273,
+    "origin": "cutoff",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">cutoff</strong> point for applications is Friday.",
+        "exam_ko": "지원서 접수 <strong class=\"target-word\">마감</strong> 시점은 금요일이다."
+      }
+    ]
+  },
+  {
+    "id": 3274,
+    "origin": "zero",
+    "examples": [
+      {
+        "exam_en": "The product of 40 and 20 contains two <strong class=\"target-word\">zeros</strong>.",
+        "exam_ko": "40과 20의 곱에는 <strong class=\"target-word\">영</strong>이 두 개 붙는다."
+      },
+      {
+        "exam_en": "The experiment was conducted at absolute <strong class=\"target-word\">zero</strong>.",
+        "exam_ko": "그 실험은 절대 <strong class=\"target-word\">영도</strong>에서 진행되었다."
+      }
+    ]
+  },
+  {
+    "id": 3275,
+    "origin": "yours",
+    "examples": [
+      {
+        "exam_en": "Is this hat <strong class=\"target-word\">yours</strong>?",
+        "exam_ko": "이 모자는 <strong class=\"target-word\">당신 것</strong>입니까?"
+      },
+      {
+        "exam_en": "The victory is <strong class=\"target-word\">yours</strong>.",
+        "exam_ko": "승리는 <strong class=\"target-word\">너희들의 것</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3276,
+    "origin": "your",
+    "examples": [
+      {
+        "exam_en": "Please know <strong class=\"target-word\">your</strong> rights as a citizen.",
+        "exam_ko": "<strong class=\"target-word\">당신의</strong> 시민으로서의 권리를 알아야 한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Your</strong> discharge from the company surprised everyone.",
+        "exam_ko": "회사에서 <strong class=\"target-word\">네가</strong> 해고된 일은 모두를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 3277,
+    "origin": "you",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">You</strong> and I should work together on this.",
+        "exam_ko": "<strong class=\"target-word\">너</strong>와 나는 함께 이 일을 해야 한다."
+      },
+      {
+        "exam_en": "I want all of <strong class=\"target-word\">you</strong> to listen carefully.",
+        "exam_ko": "<strong class=\"target-word\">너희들</strong> 모두 잘 들어주길 바란다."
+      }
+    ]
+  },
+  {
+    "id": 3278,
+    "origin": "yes",
+    "examples": [
+      {
+        "exam_en": "\"Do you want this pen?\" \"<strong class=\"target-word\">Yes</strong>, I do.\"",
+        "exam_ko": "\"이 펜 갖고 싶어?\" \"<strong class=\"target-word\">응</strong>, 갖고 싶어.\""
+      },
+      {
+        "exam_en": "\"Don't you like grapes?\" \"<strong class=\"target-word\">Yes</strong>, I do.\"",
+        "exam_ko": "\"포도는 싫어?\" \"<strong class=\"target-word\">아니</strong>, 좋아해.\""
+      }
+    ]
+  },
+  {
+    "id": 3279,
+    "origin": "year",
+    "examples": [
+      {
+        "exam_en": "He plans to travel abroad this <strong class=\"target-word\">year</strong>.",
+        "exam_ko": "그는 올 <strong class=\"target-word\">해</strong>에 해외여행을 계획하고 있다."
+      },
+      {
+        "exam_en": "She graduated the next <strong class=\"target-word\">year</strong>.",
+        "exam_ko": "그녀는 그 이듬 <strong class=\"target-word\">해</strong>에 졸업했다."
+      }
+    ]
+  },
+  {
+    "id": 3280,
+    "origin": "wreck",
+    "examples": [
+      {
+        "exam_en": "The crew worked hard to save the ship from <strong class=\"target-word\">wreck</strong>.",
+        "exam_ko": "선원들은 배를 <strong class=\"target-word\">난파</strong>에서 구하기 위해 애썼다."
+      },
+      {
+        "exam_en": "The car was a total <strong class=\"target-word\">wreck</strong> after the accident.",
+        "exam_ko": "사고 후 그 차는 완전한 <strong class=\"target-word\">잔해</strong>가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 3281,
+    "origin": "worse",
+    "examples": [
+      {
+        "exam_en": "These old customs are <strong class=\"target-word\">worse</strong> than useless.",
+        "exam_ko": "이 오래된 관습들은 무익한 것보다 <strong class=\"target-word\">더 나쁘다</strong>."
+      },
+      {
+        "exam_en": "The situation got <strong class=\"target-word\">worse</strong> after the storm.",
+        "exam_ko": "폭풍 이후 상황은 <strong class=\"target-word\">더 악화되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3282,
+    "origin": "world",
+    "examples": [
+      {
+        "exam_en": "She is truly a citizen of the <strong class=\"target-word\">world</strong>.",
+        "exam_ko": "그녀는 진정한 <strong class=\"target-word\">세계</strong> 시민이다."
+      },
+      {
+        "exam_en": "Columbus sailed to the New <strong class=\"target-word\">World</strong> in 1492.",
+        "exam_ko": "콜럼버스는 1492년에 신<strong class=\"target-word\">대륙</strong>으로 항해했다."
+      }
+    ]
+  },
+  {
+    "id": 3283,
+    "origin": "wool",
+    "examples": [
+      {
+        "exam_en": "The blanket is as soft as <strong class=\"target-word\">wool</strong>.",
+        "exam_ko": "그 담요는 <strong class=\"target-word\">양털</strong>처럼 부드럽다."
+      },
+      {
+        "exam_en": "The sweater is made of pure <strong class=\"target-word\">wool</strong>.",
+        "exam_ko": "그 스웨터는 순수한 <strong class=\"target-word\">울</strong>로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 3284,
+    "origin": "wood",
+    "examples": [
+      {
+        "exam_en": "Oak is a very hard <strong class=\"target-word\">wood</strong>.",
+        "exam_ko": "참나무는 매우 단단한 <strong class=\"target-word\">목재</strong>이다."
+      },
+      {
+        "exam_en": "The table is made of <strong class=\"target-word\">wood</strong>.",
+        "exam_ko": "그 테이블은 <strong class=\"target-word\">나무</strong>로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 3285,
+    "origin": "woman",
+    "examples": [
+      {
+        "exam_en": "A brave <strong class=\"target-word\">woman</strong> saved the child from the fire.",
+        "exam_ko": "용감한 <strong class=\"target-word\">여자</strong>가 불 속에서 아이를 구했다."
+      },
+      {
+        "exam_en": "A young <strong class=\"target-word\">woman</strong> entered the room.",
+        "exam_ko": "젊은 <strong class=\"target-word\">여자</strong>가 방에 들어왔다."
+      }
+    ]
+  },
+  {
+    "id": 3286,
+    "origin": "with",
+    "examples": [
+      {
+        "exam_en": "She had dinner <strong class=\"target-word\">with</strong> a close friend last night.",
+        "exam_ko": "그녀는 어젯밤 친한 친구<strong class=\"target-word\">와</strong> 저녁을 먹었다."
+      },
+      {
+        "exam_en": "She is living <strong class=\"target-word\">with</strong> her mother.",
+        "exam_ko": "그녀는 어머니<strong class=\"target-word\">와 함께</strong> 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3287,
+    "origin": "wire",
+    "examples": [
+      {
+        "exam_en": "The electrician replaced the old copper <strong class=\"target-word\">wire</strong>.",
+        "exam_ko": "전기 기술자가 낡은 구리 <strong class=\"target-word\">전선</strong>을 교체했다."
+      }
+    ]
+  },
+  {
+    "id": 3288,
+    "origin": "winter",
+    "examples": [
+      {
+        "exam_en": "It was a black <strong class=\"target-word\">winter</strong> with no snow at all.",
+        "exam_ko": "눈이 전혀 내리지 않는 <strong class=\"target-word\">겨울</strong>이었다."
+      },
+      {
+        "exam_en": "The roads are icy in <strong class=\"target-word\">winter</strong>.",
+        "exam_ko": "<strong class=\"target-word\">겨울</strong>에는 도로가 얼어붙는다."
+      }
+    ]
+  }
+]

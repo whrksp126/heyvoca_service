@@ -3,6 +3,13 @@ export const nodeEnv = import.meta.env.VITE_ENV;
 export const MAX_TEST_VOCABULARY_COUNT = 1000;
 export const MIN_TEST_VOCABULARY_COUNT = 4;
 
+export const stripHtmlTags = (html) => {
+  if (html == null) return '';
+  if (typeof html !== 'string') return String(html);
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
+};
+
 // SM-2 알고리즘 기준 학습 상태 정의
 export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)

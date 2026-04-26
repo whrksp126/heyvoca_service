@@ -1,0 +1,258 @@
+[
+  {
+    "id": 10494,
+    "origin": "seemly",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">seemly</strong> behavior impressed everyone at the event.",
+        "exam_ko": "그의 <strong class=\"target-word\">품위 있는</strong> 행동은 행사에서 모두를 감동시켰다."
+      },
+      {
+        "exam_en": "His conduct was far from <strong class=\"target-word\">seemly</strong>.",
+        "exam_ko": "그의 행위는 <strong class=\"target-word\">품위</strong>와는 거리가 멀었다."
+      }
+    ]
+  },
+  {
+    "id": 10495,
+    "origin": "unseemly",
+    "examples": [
+      {
+        "exam_en": "He told an <strong class=\"target-word\">unseemly</strong> joke at the funeral.",
+        "exam_ko": "그는 장례식에서 <strong class=\"target-word\">어울리지 않는</strong> 농담을 했다."
+      }
+    ]
+  },
+  {
+    "id": 10496,
+    "origin": "solemn",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">solemn</strong> expression during the ceremony.",
+        "exam_ko": "그녀는 행사 내내 <strong class=\"target-word\">엄숙한</strong> 표정을 지었다."
+      },
+      {
+        "exam_en": "The church played <strong class=\"target-word\">solemn</strong> music at the memorial.",
+        "exam_ko": "교회는 추모식에서 <strong class=\"target-word\">장엄한</strong> 음악을 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 10498,
+    "origin": "trinket",
+    "examples": [
+      {
+        "exam_en": "She brought back a small <strong class=\"target-word\">trinket</strong> from her trip.",
+        "exam_ko": "그녀는 여행에서 작은 <strong class=\"target-word\">장식품</strong>을 가져왔다."
+      }
+    ]
+  },
+  {
+    "id": 10500,
+    "origin": "deserted",
+    "examples": [
+      {
+        "exam_en": "They found a <strong class=\"target-word\">deserted</strong> temple deep in the forest.",
+        "exam_ko": "그들은 숲 깊숙이 <strong class=\"target-word\">인기척 없는</strong> 절을 발견했다."
+      },
+      {
+        "exam_en": "The city streets were <strong class=\"target-word\">deserted</strong> late at night.",
+        "exam_ko": "늦은 밤 도시의 거리는 <strong class=\"target-word\">텅 비어</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 10501,
+    "origin": "capsize",
+    "examples": [
+      {
+        "exam_en": "The strong current caused the canoe to <strong class=\"target-word\">capsize</strong>.",
+        "exam_ko": "강한 물살이 카누를 <strong class=\"target-word\">뒤집히게</strong> 했다."
+      },
+      {
+        "exam_en": "The boat <strong class=\"target-word\">capsized</strong> during the sudden storm.",
+        "exam_ko": "배는 갑작스러운 폭풍에 <strong class=\"target-word\">전복되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10502,
+    "origin": "aboard",
+    "examples": [
+      {
+        "exam_en": "There were 93 people <strong class=\"target-word\">aboard</strong> the jetliner.",
+        "exam_ko": "제트 여객기에는 93명이 <strong class=\"target-word\">탑승해</strong> 있었다."
+      },
+      {
+        "exam_en": "She went <strong class=\"target-word\">aboard</strong> the ship before departure.",
+        "exam_ko": "그녀는 출발 전에 배에 <strong class=\"target-word\">올라탔다</strong>."
+      },
+      {
+        "exam_en": "Once <strong class=\"target-word\">aboard</strong>, he found his seat quickly.",
+        "exam_ko": "<strong class=\"target-word\">탑승하자마자</strong> 그는 빠르게 자리를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 10503,
+    "origin": "snub",
+    "examples": [
+      {
+        "exam_en": "She coldly <strong class=\"target-word\">snubbed</strong> all of her classmates.",
+        "exam_ko": "그녀는 모든 급우들을 냉정하게 <strong class=\"target-word\">무시했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">snubbed</strong> her invitation without any explanation.",
+        "exam_ko": "그는 아무런 설명 없이 그녀의 초대를 <strong class=\"target-word\">무시했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10505,
+    "origin": "disgruntled",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Disgruntled</strong> workers gathered outside the office.",
+        "exam_ko": "<strong class=\"target-word\">불만을 품은</strong> 직원들이 사무실 밖에 모였다."
+      },
+      {
+        "exam_en": "The customers sounded <strong class=\"target-word\">disgruntled</strong> about the long wait.",
+        "exam_ko": "고객들은 긴 대기 시간에 <strong class=\"target-word\">불만스러워하는</strong> 목소리를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 10506,
+    "origin": "strand",
+    "examples": [
+      {
+        "exam_en": "The ship was <strong class=\"target-word\">stranded</strong> on the rocks after the storm.",
+        "exam_ko": "폭풍이 지나간 후 배는 암초에 <strong class=\"target-word\">좌초되었다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">stranded</strong> penniless in a strange city.",
+        "exam_ko": "그는 낯선 도시에서 무일푼으로 <strong class=\"target-word\">오도 가도 못하게 됐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10507,
+    "origin": "displace",
+    "examples": [
+      {
+        "exam_en": "The workers <strong class=\"target-word\">displaced</strong> the furniture to repaint the walls.",
+        "exam_ko": "작업자들은 벽을 다시 칠하기 위해 가구의 위치를 <strong class=\"target-word\">옮겼다</strong>."
+      },
+      {
+        "exam_en": "Many families were <strong class=\"target-word\">displaced</strong> by the fire.",
+        "exam_ko": "많은 가족들이 화재로 인해 <strong class=\"target-word\">집을 잃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10509,
+    "origin": "coveted",
+    "examples": [
+      {
+        "exam_en": "Entertainer is the most <strong class=\"target-word\">coveted</strong> career among young people.",
+        "exam_ko": "연예인은 젊은이들이 가장 <strong class=\"target-word\">갈망하는</strong> 직업이다."
+      }
+    ]
+  },
+  {
+    "id": 10510,
+    "origin": "intercourse",
+    "examples": [
+      {
+        "exam_en": "They were charged with illicit <strong class=\"target-word\">intercourse</strong>.",
+        "exam_ko": "그들은 불법 <strong class=\"target-word\">성관계</strong>로 기소되었다."
+      },
+      {
+        "exam_en": "The two countries maintained peaceful <strong class=\"target-word\">intercourse</strong> for decades.",
+        "exam_ko": "두 나라는 수십 년간 평화로운 <strong class=\"target-word\">교류</strong>를 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 10511,
+    "origin": "abstaining",
+    "examples": [
+      {
+        "exam_en": "Few people succeed after <strong class=\"target-word\">abstaining</strong> from smoking for a year.",
+        "exam_ko": "1년간 <strong class=\"target-word\">금연을 지속한</strong> 후 성공하는 사람은 드물다."
+      }
+    ]
+  },
+  {
+    "id": 10514,
+    "origin": "appraise",
+    "examples": [
+      {
+        "exam_en": "The expert was asked to <strong class=\"target-word\">appraise</strong> the deceased person's estate.",
+        "exam_ko": "전문가는 고인의 재산을 <strong class=\"target-word\">평가해</strong> 달라는 요청을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 10516,
+    "origin": "engrave",
+    "examples": [
+      {
+        "exam_en": "His features are <strong class=\"target-word\">engraved</strong> on my mind.",
+        "exam_ko": "그의 모습은 내 마음속 깊이 <strong class=\"target-word\">새겨져</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 10517,
+    "origin": "abduction",
+    "examples": [
+      {
+        "exam_en": "The police investigated a child <strong class=\"target-word\">abduction</strong> case.",
+        "exam_ko": "경찰은 아동 <strong class=\"target-word\">납치</strong> 사건을 수사했다."
+      }
+    ]
+  },
+  {
+    "id": 10518,
+    "origin": "retaliate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">retaliated</strong> against those who had injured him.",
+        "exam_ko": "그는 자신에게 해를 끼친 사람들에게 <strong class=\"target-word\">보복했다</strong>."
+      },
+      {
+        "exam_en": "The army <strong class=\"target-word\">retaliated</strong> against the enemy attack.",
+        "exam_ko": "군은 적의 공격에 <strong class=\"target-word\">보복했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10521,
+    "origin": "indignity",
+    "examples": [
+      {
+        "exam_en": "She suffered a great <strong class=\"target-word\">indignity</strong> in front of her peers.",
+        "exam_ko": "그녀는 동료들 앞에서 큰 <strong class=\"target-word\">모욕</strong>을 당했다."
+      },
+      {
+        "exam_en": "He subjected her to a public <strong class=\"target-word\">indignity</strong>.",
+        "exam_ko": "그는 그녀에게 공개적으로 <strong class=\"target-word\">모욕감</strong>을 주었다."
+      }
+    ]
+  },
+  {
+    "id": 10522,
+    "origin": "bonanza",
+    "examples": [
+      {
+        "exam_en": "The startup turned out to be a real business <strong class=\"target-word\">bonanza</strong>.",
+        "exam_ko": "그 스타트업은 진정한 사업상의 <strong class=\"target-word\">횡재</strong>로 판명되었다."
+      },
+      {
+        "exam_en": "The sale was a shopping <strong class=\"target-word\">bonanza</strong> for bargain hunters.",
+        "exam_ko": "그 세일은 알뜰 쇼핑족에게 <strong class=\"target-word\">뜻밖의 행운</strong>이었다."
+      }
+    ]
+  }
+]

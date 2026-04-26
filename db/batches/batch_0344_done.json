@@ -1,0 +1,266 @@
+[
+  {
+    "id": 8980,
+    "origin": "salvation",
+    "examples": [
+      {
+        "exam_en": "The minister prayed for her <strong class=\"target-word\">salvation</strong>.",
+        "exam_ko": "목사는 그녀의 <strong class=\"target-word\">구원</strong>을 위해 기도했다."
+      }
+    ]
+  },
+  {
+    "id": 8981,
+    "origin": "glory",
+    "examples": [
+      {
+        "exam_en": "The soldier returned home covered in <strong class=\"target-word\">glory</strong>.",
+        "exam_ko": "그 병사는 <strong class=\"target-word\">영예</strong>에 싸여 귀환했다."
+      },
+      {
+        "exam_en": "She worked hard to gain <strong class=\"target-word\">glory</strong> for her team.",
+        "exam_ko": "그녀는 팀을 위해 <strong class=\"target-word\">영광</strong>을 얻으려 열심히 일했다."
+      }
+    ]
+  },
+  {
+    "id": 8982,
+    "origin": "defer",
+    "examples": [
+      {
+        "exam_en": "The trip was <strong class=\"target-word\">deferred</strong> for a week.",
+        "exam_ko": "여행은 1주일 <strong class=\"target-word\">연기</strong>되었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">deferred</strong> publishing the secret report.",
+        "exam_ko": "그는 비밀 보고서 공표를 <strong class=\"target-word\">미루었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8984,
+    "origin": "authenticity",
+    "examples": [
+      {
+        "exam_en": "The expert checked the <strong class=\"target-word\">authenticity</strong> of the document.",
+        "exam_ko": "전문가는 문서의 <strong class=\"target-word\">진위</strong>를 검토했다."
+      }
+    ]
+  },
+  {
+    "id": 8985,
+    "origin": "irrespective",
+    "examples": [
+      {
+        "exam_en": "The event proceeds <strong class=\"target-word\">irrespective</strong> of the weather.",
+        "exam_ko": "행사는 날씨에 <strong class=\"target-word\">관계없이</strong> 진행된다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Irrespective</strong> of the dangers, I want to climb that mountain.",
+        "exam_ko": "위험에 <strong class=\"target-word\">상관없이</strong> 저 산에 오르고 싶다."
+      }
+    ]
+  },
+  {
+    "id": 8986,
+    "origin": "disposable",
+    "examples": [
+      {
+        "exam_en": "She used <strong class=\"target-word\">disposable</strong> chopsticks at the restaurant.",
+        "exam_ko": "그녀는 식당에서 <strong class=\"target-word\">일회용</strong> 젓가락을 사용했다."
+      },
+      {
+        "exam_en": "Paper napkins are <strong class=\"target-word\">disposable</strong>.",
+        "exam_ko": "종이 냅킨은 <strong class=\"target-word\">일회용</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8987,
+    "origin": "changeover",
+    "examples": [
+      {
+        "exam_en": "The company made a <strong class=\"target-word\">changeover</strong> to a new tax system.",
+        "exam_ko": "회사는 새로운 세제로 <strong class=\"target-word\">전환</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 8988,
+    "origin": "entrant",
+    "examples": [
+      {
+        "exam_en": "She was a hopeful <strong class=\"target-word\">entrant</strong> to the university.",
+        "exam_ko": "그녀는 대학 입학을 희망하는 <strong class=\"target-word\">지원자</strong>였다."
+      },
+      {
+        "exam_en": "Each <strong class=\"target-word\">entrant</strong> must submit a completed form.",
+        "exam_ko": "각 <strong class=\"target-word\">참가자</strong>는 완성된 양식을 제출해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 8989,
+    "origin": "unveil",
+    "examples": [
+      {
+        "exam_en": "The suspect finally <strong class=\"target-word\">unveiled</strong> himself to the police.",
+        "exam_ko": "용의자는 마침내 경찰에게 정체를 <strong class=\"target-word\">드러냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8990,
+    "origin": "meanwhile",
+    "examples": [
+      {
+        "exam_en": "It had grown dark in the <strong class=\"target-word\">meanwhile</strong>.",
+        "exam_ko": "그 <strong class=\"target-word\">동안에</strong> 어두워졌다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Meanwhile</strong>, she prepared dinner in the kitchen.",
+        "exam_ko": "<strong class=\"target-word\">그 사이에</strong> 그녀는 주방에서 저녁을 준비했다."
+      }
+    ]
+  },
+  {
+    "id": 8991,
+    "origin": "diagram",
+    "examples": [
+      {
+        "exam_en": "The teacher drew a tree <strong class=\"target-word\">diagram</strong> on the board.",
+        "exam_ko": "선생님은 칠판에 분지 <strong class=\"target-word\">도표</strong>를 그렸다."
+      },
+      {
+        "exam_en": "She studied the <strong class=\"target-word\">diagram</strong> of the car engine.",
+        "exam_ko": "그녀는 자동차 엔진의 <strong class=\"target-word\">설계도</strong>를 살펴봤다."
+      }
+    ]
+  },
+  {
+    "id": 8993,
+    "origin": "lavatory",
+    "examples": [
+      {
+        "exam_en": "He stopped to use the public <strong class=\"target-word\">lavatory</strong>.",
+        "exam_ko": "그는 공중 <strong class=\"target-word\">화장실</strong>을 이용하려고 멈췄다."
+      },
+      {
+        "exam_en": "She went to the <strong class=\"target-word\">lavatory</strong> to wash her hands.",
+        "exam_ko": "그녀는 손을 씻으러 <strong class=\"target-word\">화장실</strong>에 갔다."
+      }
+    ]
+  },
+  {
+    "id": 8995,
+    "origin": "heaven",
+    "examples": [
+      {
+        "exam_en": "The stars shone brightly in the <strong class=\"target-word\">heavens</strong>.",
+        "exam_ko": "별들이 <strong class=\"target-word\">하늘</strong>에서 밝게 빛났다."
+      },
+      {
+        "exam_en": "She looked up into the <strong class=\"target-word\">heavens</strong> and prayed.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">하늘</strong>을 올려다보며 기도했다."
+      }
+    ]
+  },
+  {
+    "id": 8997,
+    "origin": "hero",
+    "examples": [
+      {
+        "exam_en": "He was celebrated as a national <strong class=\"target-word\">hero</strong>.",
+        "exam_ko": "그는 국민적 <strong class=\"target-word\">영웅</strong>으로 칭송받았다."
+      },
+      {
+        "exam_en": "The crowd made a <strong class=\"target-word\">hero</strong> of the young soldier.",
+        "exam_ko": "군중은 그 젊은 병사를 <strong class=\"target-word\">영웅</strong>으로 대접했다."
+      }
+    ]
+  },
+  {
+    "id": 8999,
+    "origin": "monkey",
+    "examples": [
+      {
+        "exam_en": "The boys were <strong class=\"target-word\">monkeying</strong> about and one got hurt.",
+        "exam_ko": "남자아이들이 <strong class=\"target-word\">장난치다가</strong> 한 명이 다쳤다."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">monkey</strong> around with my important papers.",
+        "exam_ko": "내 중요 서류를 <strong class=\"target-word\">만지작거리지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 9000,
+    "origin": "tire",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">tired</strong> out by his long journey.",
+        "exam_ko": "그는 긴 여행으로 몹시 <strong class=\"target-word\">지쳐</strong> 있었다."
+      },
+      {
+        "exam_en": "Her constant complaints <strong class=\"target-word\">tired</strong> everyone around her.",
+        "exam_ko": "그녀의 끊임없는 불평이 주변 사람들을 <strong class=\"target-word\">지치게</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 9001,
+    "origin": "sadness",
+    "examples": [
+      {
+        "exam_en": "There was an air of <strong class=\"target-word\">sadness</strong> about her.",
+        "exam_ko": "그녀에게는 <strong class=\"target-word\">슬픔</strong>의 기운이 감돌았다."
+      },
+      {
+        "exam_en": "His voice was tinged with <strong class=\"target-word\">sadness</strong>.",
+        "exam_ko": "그의 목소리에는 <strong class=\"target-word\">슬픔</strong>이 배어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 9002,
+    "origin": "happiness",
+    "examples": [
+      {
+        "exam_en": "Your smile always brings me <strong class=\"target-word\">happiness</strong>.",
+        "exam_ko": "당신의 미소는 항상 나에게 <strong class=\"target-word\">행복</strong>을 준다."
+      },
+      {
+        "exam_en": "My <strong class=\"target-word\">happiness</strong> in life depends on your love.",
+        "exam_ko": "내 삶의 <strong class=\"target-word\">행복</strong>은 당신의 사랑에 달려 있다."
+      }
+    ]
+  },
+  {
+    "id": 9005,
+    "origin": "plantation",
+    "examples": [
+      {
+        "exam_en": "They worked on a large coffee <strong class=\"target-word\">plantation</strong>.",
+        "exam_ko": "그들은 대규모 커피 <strong class=\"target-word\">농장</strong>에서 일했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Plantation</strong> songs were sung by workers in the fields.",
+        "exam_ko": "<strong class=\"target-word\">농장</strong> 노래는 들판에서 일하는 노동자들이 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 9007,
+    "origin": "wow",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">wowed</strong> her with a diamond ring.",
+        "exam_ko": "그는 다이아몬드 반지로 그녀를 <strong class=\"target-word\">감탄하게</strong> 했다."
+      },
+      {
+        "exam_en": "The performance <strong class=\"target-word\">wowed</strong> the entire audience.",
+        "exam_ko": "공연은 관객 전체를 <strong class=\"target-word\">열광시켰다</strong>."
+      }
+    ]
+  }
+]

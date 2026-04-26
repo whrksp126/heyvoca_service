@@ -1,0 +1,262 @@
+[
+  {
+    "id": 4260,
+    "origin": "exploded",
+    "examples": [
+      {
+        "exam_en": "The manual includes an <strong class=\"target-word\">exploded</strong> diagram of the engine.",
+        "exam_ko": "설명서에는 엔진의 <strong class=\"target-word\">분해</strong> 조립도가 포함되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 4261,
+    "origin": "humid",
+    "examples": [
+      {
+        "exam_en": "The region has a very <strong class=\"target-word\">humid</strong> climate.",
+        "exam_ko": "그 지역은 매우 <strong class=\"target-word\">눅눅한</strong> 기후를 가지고 있다."
+      },
+      {
+        "exam_en": "It was a hot and <strong class=\"target-word\">humid</strong> day.",
+        "exam_ko": "그날은 덥고 <strong class=\"target-word\">습한</strong> 날이었다."
+      }
+    ]
+  },
+  {
+    "id": 4263,
+    "origin": "pillow",
+    "examples": [
+      {
+        "exam_en": "She put the picture under her <strong class=\"target-word\">pillow</strong>.",
+        "exam_ko": "그녀는 그 사진을 <strong class=\"target-word\">베개</strong> 밑에 놓았다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pillowed</strong> her head on his shoulder.",
+        "exam_ko": "그녀는 머리를 그의 어깨에 <strong class=\"target-word\">기댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4266,
+    "origin": "monsoon",
+    "examples": [
+      {
+        "exam_en": "The dry <strong class=\"target-word\">monsoon</strong> blows from the north in winter.",
+        "exam_ko": "겨울에는 북쪽에서 건조한 <strong class=\"target-word\">계절풍</strong>이 분다."
+      },
+      {
+        "exam_en": "The wet <strong class=\"target-word\">monsoon</strong> brings heavy rain every summer.",
+        "exam_ko": "여름 <strong class=\"target-word\">계절풍</strong>은 매년 많은 비를 가져온다."
+      }
+    ]
+  },
+  {
+    "id": 4267,
+    "origin": "nature",
+    "examples": [
+      {
+        "exam_en": "Philosophers have long debated the <strong class=\"target-word\">nature</strong> of humankind.",
+        "exam_ko": "철학자들은 오랫동안 인간의 <strong class=\"target-word\">본질</strong>에 대해 논의해 왔다."
+      },
+      {
+        "exam_en": "Greed seems to be a part of human <strong class=\"target-word\">nature</strong>.",
+        "exam_ko": "탐욕은 인간 <strong class=\"target-word\">본성</strong>의 일부인 것 같다."
+      }
+    ]
+  },
+  {
+    "id": 4268,
+    "origin": "statistics",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Statistics</strong> is taught in some colleges.",
+        "exam_ko": "<strong class=\"target-word\">통계학</strong>은 몇몇 대학에서 가르친다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Statistics</strong> show that the population is growing fast.",
+        "exam_ko": "<strong class=\"target-word\">통계</strong>에 따르면 인구가 빠르게 증가하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4270,
+    "origin": "participation",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">participation</strong> in the event was voluntary.",
+        "exam_ko": "그의 행사 <strong class=\"target-word\">참가</strong>는 자발적이었다."
+      }
+    ]
+  },
+  {
+    "id": 4272,
+    "origin": "sensation",
+    "examples": [
+      {
+        "exam_en": "He lost all <strong class=\"target-word\">sensation</strong> in his left hand.",
+        "exam_ko": "그는 왼손의 모든 <strong class=\"target-word\">감각</strong>을 잃었다."
+      },
+      {
+        "exam_en": "Traveling alone gave her a <strong class=\"target-word\">sensation</strong> of freedom.",
+        "exam_ko": "혼자 여행하는 것이 그녀에게 자유의 <strong class=\"target-word\">감각</strong>을 주었다."
+      }
+    ]
+  },
+  {
+    "id": 4273,
+    "origin": "crop",
+    "examples": [
+      {
+        "exam_en": "Farmers grow green <strong class=\"target-word\">crops</strong> in this valley.",
+        "exam_ko": "농부들은 이 계곡에서 채소 <strong class=\"target-word\">작물</strong>을 재배한다."
+      },
+      {
+        "exam_en": "The standing <strong class=\"target-word\">crops</strong> were damaged by the flood.",
+        "exam_ko": "자라고 있는 <strong class=\"target-word\">농작물</strong>이 홍수로 피해를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 4275,
+    "origin": "reversible",
+    "examples": [
+      {
+        "exam_en": "The scientists studied a <strong class=\"target-word\">reversible</strong> chemical reaction.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">가역</strong> 화학 반응을 연구했다."
+      },
+      {
+        "exam_en": "Fortunately, the damage was <strong class=\"target-word\">reversible</strong>.",
+        "exam_ko": "다행히 그 피해는 <strong class=\"target-word\">되돌릴 수 있는</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 4277,
+    "origin": "assessment",
+    "examples": [
+      {
+        "exam_en": "The accountant completed the tax <strong class=\"target-word\">assessment</strong> last week.",
+        "exam_ko": "회계사는 지난주에 세금 <strong class=\"target-word\">평가</strong>를 완료했다."
+      },
+      {
+        "exam_en": "The city conducted an environmental <strong class=\"target-word\">assessment</strong>.",
+        "exam_ko": "시는 환경 <strong class=\"target-word\">평가</strong>를 실시했다."
+      }
+    ]
+  },
+  {
+    "id": 4278,
+    "origin": "barely",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">barely</strong> escaped disaster.",
+        "exam_ko": "그는 <strong class=\"target-word\">가까스로</strong> 재난을 모면했다."
+      },
+      {
+        "exam_en": "We have <strong class=\"target-word\">barely</strong> enough money to last the weekend.",
+        "exam_ko": "우리는 <strong class=\"target-word\">겨우</strong> 주말까지 지낼 돈밖에 없다."
+      }
+    ]
+  },
+  {
+    "id": 4279,
+    "origin": "mandatory",
+    "examples": [
+      {
+        "exam_en": "The company enforces a <strong class=\"target-word\">mandatory</strong> retirement age.",
+        "exam_ko": "그 회사는 <strong class=\"target-word\">의무적인</strong> 정년을 시행한다."
+      },
+      {
+        "exam_en": "In that school, English composition is <strong class=\"target-word\">mandatory</strong>.",
+        "exam_ko": "그 학교에서는 영작문이 <strong class=\"target-word\">의무적으로</strong> 부과된다."
+      }
+    ]
+  },
+  {
+    "id": 4280,
+    "origin": "narrowly",
+    "examples": [
+      {
+        "exam_en": "Two airliners <strong class=\"target-word\">narrowly</strong> escaped a midair collision.",
+        "exam_ko": "두 여객기는 공중 충돌을 <strong class=\"target-word\">아슬아슬하게</strong> 모면했다."
+      },
+      {
+        "exam_en": "The judge interpreted the law <strong class=\"target-word\">narrowly</strong>.",
+        "exam_ko": "판사는 법률을 <strong class=\"target-word\">엄격하게</strong> 해석했다."
+      }
+    ]
+  },
+  {
+    "id": 4282,
+    "origin": "overhead",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Overhead</strong> was a cloud.",
+        "exam_ko": "<strong class=\"target-word\">하늘</strong>에는 구름이 떠 있었다."
+      },
+      {
+        "exam_en": "There is a plane <strong class=\"target-word\">overhead</strong>.",
+        "exam_ko": "<strong class=\"target-word\">머리 위에</strong> 비행기가 날고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4283,
+    "origin": "overrun",
+    "examples": [
+      {
+        "exam_en": "The barbarians <strong class=\"target-word\">overran</strong> the province.",
+        "exam_ko": "야만인들이 그 지방을 <strong class=\"target-word\">마구 짓밟았다</strong>."
+      },
+      {
+        "exam_en": "The abandoned fields were <strong class=\"target-word\">overrun</strong> with weeds.",
+        "exam_ko": "버려진 밭은 잡초로 <strong class=\"target-word\">뒤덮여</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4284,
+    "origin": "partially",
+    "examples": [
+      {
+        "exam_en": "The project was only <strong class=\"target-word\">partially</strong> successful.",
+        "exam_ko": "그 계획은 <strong class=\"target-word\">부분적으로</strong>만 성공했다."
+      }
+    ]
+  },
+  {
+    "id": 4285,
+    "origin": "pliable",
+    "examples": [
+      {
+        "exam_en": "I want a sweet, <strong class=\"target-word\">pliable</strong>, obedient wife.",
+        "exam_ko": "나는 상냥하고 <strong class=\"target-word\">유순하며</strong> 고분고분한 아내를 원한다."
+      }
+    ]
+  },
+  {
+    "id": 4286,
+    "origin": "poignant",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">poignant</strong> regret over her decision.",
+        "exam_ko": "그녀는 자신의 결정에 대해 <strong class=\"target-word\">통렬한</strong> 후회를 느꼈다."
+      },
+      {
+        "exam_en": "The pastor gave a <strong class=\"target-word\">poignant</strong> sermon that moved everyone.",
+        "exam_ko": "목사는 모두를 감동시키는 <strong class=\"target-word\">마음을 울리는</strong> 설교를 했다."
+      }
+    ]
+  },
+  {
+    "id": 4287,
+    "origin": "preceding",
+    "examples": [
+      {
+        "exam_en": "Please refer to the <strong class=\"target-word\">preceding</strong> chapter for details.",
+        "exam_ko": "자세한 내용은 <strong class=\"target-word\">앞</strong> 장을 참조하십시오."
+      }
+    ]
+  }
+]

@@ -1,0 +1,250 @@
+[
+  {
+    "id": 19341,
+    "origin": "endue",
+    "examples": [
+      {
+        "exam_en": "a girl endued with rare beauty",
+        "exam_ko": "보기 드문 아름다움을 타고난 소녀."
+      }
+    ]
+  },
+  {
+    "id": 19342,
+    "origin": "dower",
+    "examples": [
+      {
+        "exam_en": "He was dowered with good looks.",
+        "exam_ko": "그의 잘생긴 용모는 타고난 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 19343,
+    "origin": "addle",
+    "examples": [
+      {
+        "exam_en": "I think the shock had addled her brain.",
+        "exam_ko": "그 충격으로 그녀의 머리가 멍해진 것으로 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 19345,
+    "origin": "deciding",
+    "examples": [
+      {
+        "exam_en": "the deciding vote",
+        "exam_ko": "결승 투표."
+      }
+    ]
+  },
+  {
+    "id": 19346,
+    "origin": "incarnate",
+    "examples": [
+      {
+        "exam_en": "the devil incarnate",
+        "exam_ko": "악마의 화신."
+      },
+      {
+        "exam_en": "honesty incarnate",
+        "exam_ko": "정직의 화신."
+      }
+    ]
+  },
+  {
+    "id": 19349,
+    "origin": "protrude",
+    "examples": [
+      {
+        "exam_en": "protruding eyes",
+        "exam_ko": "퉁방울눈[뻐드렁니]"
+      },
+      {
+        "exam_en": "His belly protrudes.",
+        "exam_ko": "그는 배불뚝이다."
+      }
+    ]
+  },
+  {
+    "id": 19350,
+    "origin": "tract",
+    "examples": [
+      {
+        "exam_en": "a marshy tract",
+        "exam_ko": "늪지대"
+      },
+      {
+        "exam_en": "He lives in a public housing tract.",
+        "exam_ko": "그는 공영 주택지에 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 19351,
+    "origin": "seethe",
+    "examples": [
+      {
+        "exam_en": "the seething waves",
+        "exam_ko": "거품이 일고 있는 파도."
+      },
+      {
+        "exam_en": "the seething mob at the station",
+        "exam_ko": "역에 들끓고 있는 군중"
+      }
+    ]
+  },
+  {
+    "id": 19352,
+    "origin": "temperament",
+    "examples": [
+      {
+        "exam_en": "a nervous temperament",
+        "exam_ko": "신경질적인[변덕스러운] 성질."
+      },
+      {
+        "exam_en": "a sanguine temperament",
+        "exam_ko": "다혈[담즙, 점액, 흑담즙]질."
+      }
+    ]
+  },
+  {
+    "id": 19353,
+    "origin": "apportion",
+    "examples": [
+      {
+        "exam_en": "apportion an equal amount to each person",
+        "exam_ko": "각자에게 같은 액수를 배분하다"
+      },
+      {
+        "exam_en": "The property was apportioned equally among the heirs.",
+        "exam_ko": "재산은 상속인들에게 고루 분배되었다."
+      }
+    ]
+  },
+  {
+    "id": 19354,
+    "origin": "exigency",
+    "examples": [
+      {
+        "exam_en": "economic exigency",
+        "exam_ko": "경제상의 급무"
+      },
+      {
+        "exam_en": "in this exigency",
+        "exam_ko": "이 긴급 상황에서."
+      }
+    ]
+  },
+  {
+    "id": 19355,
+    "origin": "culpable",
+    "examples": [
+      {
+        "exam_en": "culpable negligence",
+        "exam_ko": "[법률] 중과실."
+      }
+    ]
+  },
+  {
+    "id": 19357,
+    "origin": "primeval",
+    "examples": [
+      {
+        "exam_en": "primeval forms of life",
+        "exam_ko": "원시 생물."
+      }
+    ]
+  },
+  {
+    "id": 19362,
+    "origin": "brood",
+    "examples": [
+      {
+        "exam_en": "a brood of chickens",
+        "exam_ko": "한배의 병아리."
+      },
+      {
+        "exam_en": "a brood mare",
+        "exam_ko": "씨암말."
+      }
+    ]
+  },
+  {
+    "id": 19363,
+    "origin": "vacillate",
+    "examples": [
+      {
+        "exam_en": "His pulse vacillated.",
+        "exam_ko": "그의 맥박이 고르지 않게 되었다."
+      },
+      {
+        "exam_en": "a tendency to vacillate",
+        "exam_ko": "우유부단한 성향"
+      },
+      {
+        "exam_en": "When making important decisions, it's not wise to vacillate between options for too long.",
+        "exam_ko": "중요한 결정을 내릴 때는 너무 오래 선택지 사이를 망설이는 것은 현명하지 않다."
+      }
+    ]
+  },
+  {
+    "id": 19365,
+    "origin": "bridle",
+    "examples": [
+      {
+        "exam_en": "give a horse the bridle",
+        "exam_ko": "말의 고삐를 늦추다; (비유) 멋대로 하게 내버려두다."
+      },
+      {
+        "exam_en": "put a bridle on one's tongue",
+        "exam_ko": "입을 다물다, 말을 삼가다."
+      }
+    ]
+  },
+  {
+    "id": 19367,
+    "origin": "ignoble",
+    "examples": [
+      {
+        "exam_en": "ignoble thoughts",
+        "exam_ko": "야비한 생각."
+      }
+    ]
+  },
+  {
+    "id": 19369,
+    "origin": "ethereal",
+    "examples": [
+      {
+        "exam_en": "ethereal beauty",
+        "exam_ko": "이 세상 것이라고 생각되지 않는 아름다움."
+      }
+    ]
+  },
+  {
+    "id": 19372,
+    "origin": "dichotomy",
+    "examples": [
+      {
+        "exam_en": "This line of development underlines the base/superstructure dichotomy and reduces consciousness to a simple reflection of the material base of society.",
+        "exam_ko": "이 개발 라인은 기본 / 상부 구조 이분법을 강조하고 사회의 물질적 기반을 간단히 반영하여 생각을 줄입니다."
+      }
+    ]
+  },
+  {
+    "id": 19373,
+    "origin": "sensational",
+    "examples": [
+      {
+        "exam_en": "a sensational movie",
+        "exam_ko": "선정적인[아슬아슬한] 영화."
+      },
+      {
+        "exam_en": "It's just sensational that he succeeded.",
+        "exam_ko": "그가 성공했다니 놀랍군."
+      }
+    ]
+  }
+]

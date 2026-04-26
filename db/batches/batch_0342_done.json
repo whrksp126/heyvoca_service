@@ -1,0 +1,266 @@
+[
+  {
+    "id": 8918,
+    "origin": "saloon",
+    "examples": [
+      {
+        "exam_en": "They played pool at the local <strong class=\"target-word\">saloon</strong>.",
+        "exam_ko": "그들은 동네 <strong class=\"target-word\">당구장</strong>에서 당구를 쳤다."
+      },
+      {
+        "exam_en": "She got her hair cut at the <strong class=\"target-word\">saloon</strong> downtown.",
+        "exam_ko": "그녀는 시내 <strong class=\"target-word\">미용실</strong>에서 머리를 잘랐다."
+      }
+    ]
+  },
+  {
+    "id": 8919,
+    "origin": "upward",
+    "examples": [
+      {
+        "exam_en": "She gazed <strong class=\"target-word\">upward</strong> at the night sky.",
+        "exam_ko": "그녀는 밤하늘을 <strong class=\"target-word\">올려다보았다</strong>."
+      },
+      {
+        "exam_en": "He happened to look <strong class=\"target-word\">upward</strong> at that moment.",
+        "exam_ko": "그는 그 순간 위를 <strong class=\"target-word\">올려다보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8920,
+    "origin": "squad",
+    "examples": [
+      {
+        "exam_en": "The officers waited in the <strong class=\"target-word\">squad</strong> room.",
+        "exam_ko": "경찰관들은 <strong class=\"target-word\">대기실</strong>에서 기다렸다."
+      },
+      {
+        "exam_en": "The drug <strong class=\"target-word\">squad</strong> raided the warehouse.",
+        "exam_ko": "마약 <strong class=\"target-word\">특수반</strong>이 창고를 급습했다."
+      }
+    ]
+  },
+  {
+    "id": 8922,
+    "origin": "ramble",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">rambled</strong> through the woods all afternoon.",
+        "exam_ko": "우리는 오후 내내 숲 속을 <strong class=\"target-word\">산책했다</strong>."
+      },
+      {
+        "exam_en": "He loves to <strong class=\"target-word\">ramble</strong> about the countryside.",
+        "exam_ko": "그는 전원을 <strong class=\"target-word\">거니는</strong> 것을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 8923,
+    "origin": "twilight",
+    "examples": [
+      {
+        "exam_en": "They arrived at the village at <strong class=\"target-word\">twilight</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">해질녘</strong>에 마을에 도착했다."
+      },
+      {
+        "exam_en": "He retired in the <strong class=\"target-word\">twilight</strong> of his life.",
+        "exam_ko": "그는 인생의 <strong class=\"target-word\">황혼기</strong>에 은퇴했다."
+      }
+    ]
+  },
+  {
+    "id": 8925,
+    "origin": "prototype",
+    "examples": [
+      {
+        "exam_en": "The Iliad is the <strong class=\"target-word\">prototype</strong> of all epic poems.",
+        "exam_ko": "일리아드는 모든 서사시의 <strong class=\"target-word\">원형</strong>이다."
+      },
+      {
+        "exam_en": "This design served as the <strong class=\"target-word\">prototype</strong> for modern bridges.",
+        "exam_ko": "이 설계는 현대 교량의 <strong class=\"target-word\">원형</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 8926,
+    "origin": "turnover",
+    "examples": [
+      {
+        "exam_en": "The company had a high staff <strong class=\"target-word\">turnover</strong> last year.",
+        "exam_ko": "회사는 작년에 직원 <strong class=\"target-word\">교체율</strong>이 높았다."
+      },
+      {
+        "exam_en": "The restaurant had a fast <strong class=\"target-word\">turnover</strong> of customers.",
+        "exam_ko": "그 레스토랑은 손님 <strong class=\"target-word\">회전</strong>이 빨랐다."
+      }
+    ]
+  },
+  {
+    "id": 8927,
+    "origin": "refreshment",
+    "examples": [
+      {
+        "exam_en": "They stopped to take <strong class=\"target-word\">refreshments</strong> after the hike.",
+        "exam_ko": "그들은 하이킹 후 <strong class=\"target-word\">간단한 식사</strong>를 하려고 멈췄다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Refreshments</strong> will be provided at the event.",
+        "exam_ko": "행사에서 <strong class=\"target-word\">다과</strong>가 제공될 예정이다."
+      }
+    ]
+  },
+  {
+    "id": 8929,
+    "origin": "occurrence",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">occurrence</strong> of an earthquake surprised everyone.",
+        "exam_ko": "지진의 <strong class=\"target-word\">발생</strong>은 모두를 놀라게 했다."
+      },
+      {
+        "exam_en": "Rain is a common <strong class=\"target-word\">occurrence</strong> in this region.",
+        "exam_ko": "이 지역에서 비는 흔한 <strong class=\"target-word\">현상</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8930,
+    "origin": "beast",
+    "examples": [
+      {
+        "exam_en": "The hunters tracked wild <strong class=\"target-word\">beasts</strong> through the forest.",
+        "exam_ko": "사냥꾼들은 숲에서 야생 <strong class=\"target-word\">야수</strong>를 추적했다."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">beasts</strong> of the forest came out at night.",
+        "exam_ko": "숲의 많은 <strong class=\"target-word\">짐승</strong>들이 밤에 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 8931,
+    "origin": "memorandum",
+    "examples": [
+      {
+        "exam_en": "She made a <strong class=\"target-word\">memorandum</strong> of the meeting details.",
+        "exam_ko": "그녀는 회의 내용을 <strong class=\"target-word\">메모</strong>해 두었다."
+      },
+      {
+        "exam_en": "He kept a <strong class=\"target-word\">memorandum</strong> of all important dates.",
+        "exam_ko": "그는 모든 중요한 날짜를 <strong class=\"target-word\">비망록</strong>에 기록했다."
+      }
+    ]
+  },
+  {
+    "id": 8934,
+    "origin": "snappy",
+    "examples": [
+      {
+        "exam_en": "She walked at a <strong class=\"target-word\">snappy</strong> pace down the street.",
+        "exam_ko": "그녀는 거리를 <strong class=\"target-word\">활기차게</strong> 걸었다."
+      },
+      {
+        "exam_en": "He is always a <strong class=\"target-word\">snappy</strong> dresser at work.",
+        "exam_ko": "그는 직장에서 항상 <strong class=\"target-word\">옷을 멋지게 입는</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 8936,
+    "origin": "engineering",
+    "examples": [
+      {
+        "exam_en": "She studied civil <strong class=\"target-word\">engineering</strong> at university.",
+        "exam_ko": "그녀는 대학에서 토목 <strong class=\"target-word\">공학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "He works in mechanical <strong class=\"target-word\">engineering</strong>.",
+        "exam_ko": "그는 기계 <strong class=\"target-word\">공학</strong> 분야에서 일한다."
+      }
+    ]
+  },
+  {
+    "id": 8939,
+    "origin": "magnate",
+    "examples": [
+      {
+        "exam_en": "He became a financial <strong class=\"target-word\">magnate</strong> in his forties.",
+        "exam_ko": "그는 40대에 재계의 <strong class=\"target-word\">거물</strong>이 되었다."
+      },
+      {
+        "exam_en": "The oil <strong class=\"target-word\">magnate</strong> donated to the charity.",
+        "exam_ko": "석유 <strong class=\"target-word\">재벌</strong>이 자선단체에 기부했다."
+      }
+    ]
+  },
+  {
+    "id": 8940,
+    "origin": "forceful",
+    "examples": [
+      {
+        "exam_en": "The senator gave a <strong class=\"target-word\">forceful</strong> speech to the crowd.",
+        "exam_ko": "상원의원은 군중에게 <strong class=\"target-word\">힘찬</strong> 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": 8941,
+    "origin": "adjustment",
+    "examples": [
+      {
+        "exam_en": "The mechanic made an <strong class=\"target-word\">adjustment</strong> to the brake.",
+        "exam_ko": "정비사가 브레이크를 <strong class=\"target-word\">조정</strong>했다."
+      },
+      {
+        "exam_en": "She made a few <strong class=\"target-word\">adjustments</strong> to the plan.",
+        "exam_ko": "그녀는 계획에 몇 가지 <strong class=\"target-word\">수정</strong>을 가했다."
+      }
+    ]
+  },
+  {
+    "id": 8943,
+    "origin": "triplet",
+    "examples": [
+      {
+        "exam_en": "She gave birth to <strong class=\"target-word\">triplets</strong> last spring.",
+        "exam_ko": "그녀는 지난봄에 <strong class=\"target-word\">세쌍둥이</strong>를 낳았다."
+      }
+    ]
+  },
+  {
+    "id": 8944,
+    "origin": "descendant",
+    "examples": [
+      {
+        "exam_en": "He is a direct <strong class=\"target-word\">descendant</strong> of Shakespeare.",
+        "exam_ko": "그는 셰익스피어의 직계 <strong class=\"target-word\">자손</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8945,
+    "origin": "landmark",
+    "examples": [
+      {
+        "exam_en": "The Statue of Liberty is a famous <strong class=\"target-word\">landmark</strong> in America.",
+        "exam_ko": "자유의 여신상은 미국의 유명한 <strong class=\"target-word\">랜드마크</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8947,
+    "origin": "dash",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">dashed</strong> the mirror to pieces in anger.",
+        "exam_ko": "그는 화가 나서 거울을 <strong class=\"target-word\">박살냈다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">dashed</strong> the plate to the floor.",
+        "exam_ko": "그녀는 접시를 마룻바닥에 <strong class=\"target-word\">내던졌다</strong>."
+      }
+    ]
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "id": 629,
+    "origin": "voyage",
+    "examples": [
+      {
+        "exam_en": "They began a long <strong class=\"target-word\">voyage</strong> across the ocean.",
+        "exam_ko": "그들은 대양을 가로지르는 긴 <strong class=\"target-word\">항해</strong>를 시작했다."
+      },
+      {
+        "exam_en": "The ship returned safely after its <strong class=\"target-word\">voyage</strong>.",
+        "exam_ko": "배는 <strong class=\"target-word\">항해</strong>를 마치고 안전하게 돌아왔다."
+      }
+    ]
+  },
+  {
+    "id": 630,
+    "origin": "stripe",
+    "examples": [
+      {
+        "exam_en": "The flag has red and white <strong class=\"target-word\">stripes</strong>.",
+        "exam_ko": "그 깃발에는 빨간색과 흰색 <strong class=\"target-word\">줄무늬</strong>가 있다."
+      },
+      {
+        "exam_en": "He wore a shirt with blue <strong class=\"target-word\">stripes</strong>.",
+        "exam_ko": "그는 파란 <strong class=\"target-word\">줄무늬</strong>가 있는 셔츠를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 631,
+    "origin": "stress",
+    "examples": [
+      {
+        "exam_en": "She placed great <strong class=\"target-word\">stress</strong> on honesty.",
+        "exam_ko": "그녀는 정직함에 큰 <strong class=\"target-word\">중점</strong>을 두었다."
+      },
+      {
+        "exam_en": "He felt <strong class=\"target-word\">stress</strong> from economic hardship.",
+        "exam_ko": "그는 경제적 어려움으로 <strong class=\"target-word\">스트레스</strong>를 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 632,
+    "origin": "stream",
+    "examples": [
+      {
+        "exam_en": "A small <strong class=\"target-word\">stream</strong> flows through the village.",
+        "exam_ko": "작은 <strong class=\"target-word\">개울</strong>이 마을을 가로질러 흐른다."
+      },
+      {
+        "exam_en": "They had a picnic near a <strong class=\"target-word\">stream</strong> in the forest.",
+        "exam_ko": "그들은 숲 속 <strong class=\"target-word\">개울</strong> 근처에서 소풍을 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 633,
+    "origin": "stomach",
+    "examples": [
+      {
+        "exam_en": "He was diagnosed with <strong class=\"target-word\">stomach</strong> cancer.",
+        "exam_ko": "그는 <strong class=\"target-word\">위</strong>암 진단을 받았다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">stomach</strong> hurt after eating spicy food.",
+        "exam_ko": "매운 음식을 먹은 후 그녀의 <strong class=\"target-word\">위</strong>가 아팠다."
+      }
+    ]
+  },
+  {
+    "id": 634,
+    "origin": "stair",
+    "examples": [
+      {
+        "exam_en": "She climbed the <strong class=\"target-word\">stairs</strong> to the third floor.",
+        "exam_ko": "그녀는 3층까지 <strong class=\"target-word\">계단</strong>을 올라갔다."
+      },
+      {
+        "exam_en": "He tripped on the top <strong class=\"target-word\">stair</strong> and fell.",
+        "exam_ko": "그는 맨 위 <strong class=\"target-word\">계단</strong>에서 발이 걸려 넘어졌다."
+      }
+    ]
+  },
+  {
+    "id": 635,
+    "origin": "stage",
+    "examples": [
+      {
+        "exam_en": "The project is at an early <strong class=\"target-word\">stage</strong>.",
+        "exam_ko": "그 프로젝트는 초기 <strong class=\"target-word\">단계</strong>에 있다."
+      },
+      {
+        "exam_en": "We must solve this problem at this <strong class=\"target-word\">stage</strong>.",
+        "exam_ko": "우리는 이 <strong class=\"target-word\">단계</strong>에서 문제를 해결해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 636,
+    "origin": "square",
+    "examples": [
+      {
+        "exam_en": "She drew a <strong class=\"target-word\">square</strong> on the paper.",
+        "exam_ko": "그녀는 종이에 <strong class=\"target-word\">정사각형</strong>을 그렸다."
+      },
+      {
+        "exam_en": "The table has a <strong class=\"target-word\">square</strong> surface.",
+        "exam_ko": "그 테이블은 <strong class=\"target-word\">정사각형</strong> 표면을 가지고 있다."
+      },
+      {
+        "exam_en": "They met at the town <strong class=\"target-word\">square</strong> every morning.",
+        "exam_ko": "그들은 매일 아침 마을 <strong class=\"target-word\">광장</strong>에서 만났다."
+      }
+    ]
+  },
+  {
+    "id": 637,
+    "origin": "robber",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">robber</strong> was caught by police.",
+        "exam_ko": "<strong class=\"target-word\">강도</strong>는 경찰에게 붙잡혔다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">robber</strong> broke into the store at night.",
+        "exam_ko": "<strong class=\"target-word\">강도</strong>가 밤에 가게에 침입했다."
+      }
+    ]
+  },
+  {
+    "id": 638,
+    "origin": "riddle",
+    "examples": [
+      {
+        "exam_en": "The teacher posed a <strong class=\"target-word\">riddle</strong> to the class.",
+        "exam_ko": "선생님은 반 학생들에게 <strong class=\"target-word\">수수께끼</strong>를 냈다."
+      },
+      {
+        "exam_en": "He always speaks in <strong class=\"target-word\">riddles</strong>.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">수수께끼</strong> 같은 말을 한다."
+      }
+    ]
+  },
+  {
+    "id": 639,
+    "origin": "resource",
+    "examples": [
+      {
+        "exam_en": "The country has many natural <strong class=\"target-word\">resources</strong>.",
+        "exam_ko": "그 나라는 많은 천연 <strong class=\"target-word\">자원</strong>을 보유하고 있다."
+      },
+      {
+        "exam_en": "They worked to develop new <strong class=\"target-word\">resources</strong>.",
+        "exam_ko": "그들은 새로운 <strong class=\"target-word\">자원</strong>을 개발하기 위해 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 640,
+    "origin": "republic",
+    "examples": [
+      {
+        "exam_en": "India became a <strong class=\"target-word\">republic</strong> in 1950.",
+        "exam_ko": "인도는 1950년에 <strong class=\"target-word\">공화국</strong>이 되었다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">republic</strong> is governed by elected representatives.",
+        "exam_ko": "<strong class=\"target-word\">공화국</strong>은 선출된 대표자들이 통치한다."
+      }
+    ]
+  },
+  {
+    "id": 641,
+    "origin": "relay",
+    "examples": [
+      {
+        "exam_en": "The workers operate in <strong class=\"target-word\">relay</strong> shifts.",
+        "exam_ko": "직원들은 <strong class=\"target-word\">교대</strong> 근무로 일한다."
+      },
+      {
+        "exam_en": "Will you <strong class=\"target-word\">relay</strong> the message to her?",
+        "exam_ko": "그 메시지를 그녀에게 <strong class=\"target-word\">전달해</strong> 주시겠습니까?"
+      }
+    ]
+  },
+  {
+    "id": 642,
+    "origin": "rein",
+    "examples": [
+      {
+        "exam_en": "The rider pulled on the <strong class=\"target-word\">reins</strong> to stop the horse.",
+        "exam_ko": "기수는 말을 멈추기 위해 <strong class=\"target-word\">고삐</strong>를 당겼다."
+      },
+      {
+        "exam_en": "He held the <strong class=\"target-word\">reins</strong> tightly during the ride.",
+        "exam_ko": "그는 말을 타는 동안 <strong class=\"target-word\">고삐</strong>를 꽉 잡았다."
+      }
+    ]
+  },
+  {
+    "id": 643,
+    "origin": "quiz",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">quizzed</strong> students on math.",
+        "exam_ko": "선생님은 학생들에게 수학 <strong class=\"target-word\">시험</strong>을 보게 했다."
+      },
+      {
+        "exam_en": "Police <strong class=\"target-word\">quizzed</strong> the suspect about the theft.",
+        "exam_ko": "경찰은 절도 사건에 대해 용의자를 <strong class=\"target-word\">심문했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 644,
+    "origin": "quarter",
+    "examples": [
+      {
+        "exam_en": "He arrived a <strong class=\"target-word\">quarter</strong> hour early.",
+        "exam_ko": "그는 15분, 즉 <strong class=\"target-word\">4분의 1</strong>시간 일찍 도착했다."
+      },
+      {
+        "exam_en": "She divided the melon into four <strong class=\"target-word\">quarters</strong>.",
+        "exam_ko": "그녀는 멜론을 네 <strong class=\"target-word\">등분</strong>으로 잘랐다."
+      }
+    ]
+  },
+  {
+    "id": 645,
+    "origin": "quality",
+    "examples": [
+      {
+        "exam_en": "Patience is an important <strong class=\"target-word\">quality</strong> for a leader.",
+        "exam_ko": "인내심은 지도자에게 중요한 <strong class=\"target-word\">특성</strong>이다."
+      },
+      {
+        "exam_en": "Is laughter a <strong class=\"target-word\">quality</strong> unique to humans?",
+        "exam_ko": "웃음은 인간만이 가진 <strong class=\"target-word\">특성</strong>인가?"
+      }
+    ]
+  },
+  {
+    "id": 646,
+    "origin": "neighbor",
+    "examples": [
+      {
+        "exam_en": "My <strong class=\"target-word\">neighbor</strong> is very friendly.",
+        "exam_ko": "내 <strong class=\"target-word\">이웃</strong>은 매우 친절하다."
+      },
+      {
+        "exam_en": "Our next-door <strong class=\"target-word\">neighbors</strong> moved out last week.",
+        "exam_ko": "우리 옆집 <strong class=\"target-word\">이웃</strong>이 지난주에 이사 나갔다."
+      }
+    ]
+  },
+  {
+    "id": 647,
+    "origin": "nail",
+    "examples": [
+      {
+        "exam_en": "He hammered a <strong class=\"target-word\">nail</strong> into the wall.",
+        "exam_ko": "그는 벽에 <strong class=\"target-word\">못</strong>을 박았다."
+      },
+      {
+        "exam_en": "She used a tool to remove the <strong class=\"target-word\">nail</strong>.",
+        "exam_ko": "그녀는 도구를 사용해 <strong class=\"target-word\">못</strong>을 뽑았다."
+      }
+    ]
+  },
+  {
+    "id": 648,
+    "origin": "mystery",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">mysteries</strong> of nature fascinate scientists.",
+        "exam_ko": "자연의 <strong class=\"target-word\">신비</strong>는 과학자들을 매혹시킨다."
+      },
+      {
+        "exam_en": "The ocean holds many deep <strong class=\"target-word\">mysteries</strong>.",
+        "exam_ko": "바다는 많은 깊은 <strong class=\"target-word\">신비</strong>를 품고 있다."
+      }
+    ]
+  }
+]

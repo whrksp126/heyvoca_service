@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4768,
+    "origin": "heartless",
+    "examples": [
+      {
+        "exam_en": "The boss made a <strong class=\"target-word\">heartless</strong> decision to cut salaries.",
+        "exam_ko": "상사는 급여를 삭감하는 <strong class=\"target-word\">무자비한</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "She felt he was a <strong class=\"target-word\">heartless</strong> person.",
+        "exam_ko": "그녀는 그가 <strong class=\"target-word\">매정한</strong> 사람이라고 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 4769,
+    "origin": "laughter",
+    "examples": [
+      {
+        "exam_en": "She hid her <strong class=\"target-word\">laughter</strong> behind her hand.",
+        "exam_ko": "그녀는 손으로 <strong class=\"target-word\">웃음</strong>을 감추었다."
+      },
+      {
+        "exam_en": "An outburst of <strong class=\"target-word\">laughter</strong> filled the room.",
+        "exam_ko": "방 안에 폭발적인 <strong class=\"target-word\">웃음</strong>이 터져 나왔다."
+      }
+    ]
+  },
+  {
+    "id": 4770,
+    "origin": "madam",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Madam</strong> Chairman opened the meeting.",
+        "exam_ko": "<strong class=\"target-word\">여</strong> 의장이 회의를 시작했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Madam</strong> President addressed the nation.",
+        "exam_ko": "<strong class=\"target-word\">대통령</strong> 각하께서 국민에게 연설하셨다."
+      }
+    ]
+  },
+  {
+    "id": 4772,
+    "origin": "simply",
+    "examples": [
+      {
+        "exam_en": "To put it <strong class=\"target-word\">simply</strong>, we ran out of money.",
+        "exam_ko": "<strong class=\"target-word\">간단히</strong> 말하자면, 우리는 돈이 떨어졌다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">simply</strong> described the process to the class.",
+        "exam_ko": "그녀는 수업에서 그 과정을 <strong class=\"target-word\">평이하게</strong> 설명했다."
+      }
+    ]
+  },
+  {
+    "id": 4775,
+    "origin": "manner",
+    "examples": [
+      {
+        "exam_en": "He had a strange <strong class=\"target-word\">manner</strong> of speaking.",
+        "exam_ko": "그는 묘한 말투, 즉 독특한 <strong class=\"target-word\">방식</strong>으로 말했다."
+      },
+      {
+        "exam_en": "Please handle it in this <strong class=\"target-word\">manner</strong>.",
+        "exam_ko": "이런 <strong class=\"target-word\">방식</strong>으로 처리해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 4776,
+    "origin": "mannered",
+    "examples": [
+      {
+        "exam_en": "The child was quite ill-<strong class=\"target-word\">mannered</strong> at the table.",
+        "exam_ko": "그 아이는 식탁에서 꽤 예의 <strong class=\"target-word\">없는</strong> 행동을 했다."
+      },
+      {
+        "exam_en": "The essay was written in a <strong class=\"target-word\">mannered</strong> literary style.",
+        "exam_ko": "그 에세이는 격식 차린 <strong class=\"target-word\">문체</strong>로 쓰여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4779,
+    "origin": "trusty",
+    "examples": [
+      {
+        "exam_en": "The knight raised his <strong class=\"target-word\">trusty</strong> sword.",
+        "exam_ko": "기사는 믿음직한 <strong class=\"target-word\">검</strong>을 들어 올렸다."
+      },
+      {
+        "exam_en": "He relied on his <strong class=\"target-word\">trusty</strong> servant for advice.",
+        "exam_ko": "그는 조언을 위해 <strong class=\"target-word\">믿음직한</strong> 하인에게 의존했다."
+      }
+    ]
+  },
+  {
+    "id": 4780,
+    "origin": "vain",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">vain</strong> ambitions led to his downfall.",
+        "exam_ko": "그의 <strong class=\"target-word\">헛된</strong> 야망이 그의 몰락을 불러왔다."
+      },
+      {
+        "exam_en": "Her speech was full of <strong class=\"target-word\">vain</strong> words.",
+        "exam_ko": "그녀의 연설은 내용 없는 <strong class=\"target-word\">공허한</strong> 말로 가득했다."
+      }
+    ]
+  },
+  {
+    "id": 4781,
+    "origin": "accepted",
+    "examples": [
+      {
+        "exam_en": "The judge gave an <strong class=\"target-word\">accepted</strong> explanation of the law.",
+        "exam_ko": "판사는 법률에 대한 이론의 여지 없는 <strong class=\"target-word\">공인된</strong> 설명을 제시했다."
+      },
+      {
+        "exam_en": "These are <strong class=\"target-word\">accepted</strong> theories in the field.",
+        "exam_ko": "이것들은 해당 분야의 <strong class=\"target-word\">정설</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4782,
+    "origin": "archaism",
+    "examples": [
+      {
+        "exam_en": "The poem was full of <strong class=\"target-word\">archaism</strong> to imitate old style.",
+        "exam_ko": "그 시는 고풍스러운 양식을 모방하기 위한 <strong class=\"target-word\">의고체</strong>로 가득했다."
+      },
+      {
+        "exam_en": "The author avoided <strong class=\"target-word\">archaism</strong> to keep writing modern.",
+        "exam_ko": "작가는 글을 현대적으로 유지하기 위해 <strong class=\"target-word\">고어</strong>를 피했다."
+      }
+    ]
+  },
+  {
+    "id": 4783,
+    "origin": "cruelty",
+    "examples": [
+      {
+        "exam_en": "He accepted the <strong class=\"target-word\">cruelty</strong> of fate with silence.",
+        "exam_ko": "그는 운명의 <strong class=\"target-word\">잔인함</strong>을 침묵으로 받아들였다."
+      },
+      {
+        "exam_en": "Laws protect animals from <strong class=\"target-word\">cruelty</strong>.",
+        "exam_ko": "법은 동물을 <strong class=\"target-word\">학대</strong>로부터 보호한다."
+      }
+    ]
+  },
+  {
+    "id": 4784,
+    "origin": "decker",
+    "examples": [
+      {
+        "exam_en": "We rode a double-<strong class=\"target-word\">decker</strong> bus through the city.",
+        "exam_ko": "우리는 도시를 가로질러 2층 <strong class=\"target-word\">버스</strong>를 탔다."
+      },
+      {
+        "exam_en": "He ordered a triple-<strong class=\"target-word\">decker</strong> sandwich for lunch.",
+        "exam_ko": "그는 점심으로 세 겹으로 된 <strong class=\"target-word\">샌드위치</strong>를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 4786,
+    "origin": "enroll",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">enrolled</strong> the new members in the system.",
+        "exam_ko": "그들은 새 회원들을 시스템에 <strong class=\"target-word\">등록했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">enrolled</strong> her son in a swimming class.",
+        "exam_ko": "그녀는 아들을 수영교실에 <strong class=\"target-word\">등록시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4787,
+    "origin": "flavor",
+    "examples": [
+      {
+        "exam_en": "She added spices to give <strong class=\"target-word\">flavor</strong> to the food.",
+        "exam_ko": "그녀는 음식에 <strong class=\"target-word\">풍미</strong>를 더하기 위해 향신료를 넣었다."
+      },
+      {
+        "exam_en": "This soup has a rich <strong class=\"target-word\">flavor</strong>.",
+        "exam_ko": "이 수프는 진한 <strong class=\"target-word\">풍미</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 4788,
+    "origin": "monument",
+    "examples": [
+      {
+        "exam_en": "They built a <strong class=\"target-word\">monument</strong> to honor the king.",
+        "exam_ko": "그들은 왕을 기리기 위해 <strong class=\"target-word\">기념비</strong>를 세웠다."
+      },
+      {
+        "exam_en": "We visited a World War II <strong class=\"target-word\">monument</strong> downtown.",
+        "exam_ko": "우리는 시내에 있는 제2차 세계대전 <strong class=\"target-word\">기념비</strong>를 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 4789,
+    "origin": "regulation",
+    "examples": [
+      {
+        "exam_en": "Drivers must follow traffic <strong class=\"target-word\">regulations</strong>.",
+        "exam_ko": "운전자들은 교통 <strong class=\"target-word\">법규</strong>를 따라야 한다."
+      },
+      {
+        "exam_en": "The company follows strict rules and <strong class=\"target-word\">regulations</strong>.",
+        "exam_ko": "회사는 엄격한 규약과 <strong class=\"target-word\">규정</strong>을 따른다."
+      }
+    ]
+  },
+  {
+    "id": 4790,
+    "origin": "bake",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">baked</strong> bread in the oven every morning.",
+        "exam_ko": "그는 매일 아침 오븐에서 빵을 <strong class=\"target-word\">구웠다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">baked</strong> me a cake for my birthday.",
+        "exam_ko": "그녀는 내 생일에 케이크를 <strong class=\"target-word\">구워주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4791,
+    "origin": "cycle",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">cycle</strong> of seasons repeats every year.",
+        "exam_ko": "계절의 <strong class=\"target-word\">순환</strong>은 매년 반복된다."
+      },
+      {
+        "exam_en": "Economists study the business <strong class=\"target-word\">cycle</strong> theory.",
+        "exam_ko": "경제학자들은 경기 <strong class=\"target-word\">순환</strong> 이론을 연구한다."
+      }
+    ]
+  },
+  {
+    "id": 4792,
+    "origin": "garbage",
+    "examples": [
+      {
+        "exam_en": "Please take out the <strong class=\"target-word\">garbage</strong> tonight.",
+        "exam_ko": "오늘 밤 <strong class=\"target-word\">쓰레기</strong>를 내놓아 주세요."
+      },
+      {
+        "exam_en": "He dumped the <strong class=\"target-word\">garbage</strong> in the wrong bin.",
+        "exam_ko": "그는 <strong class=\"target-word\">쓰레기</strong>를 잘못된 통에 버렸다."
+      }
+    ]
+  },
+  {
+    "id": 4793,
+    "origin": "growl",
+    "examples": [
+      {
+        "exam_en": "The caged lion <strong class=\"target-word\">growled</strong> at the spectators.",
+        "exam_ko": "우리 속의 사자가 구경꾼들을 보고 <strong class=\"target-word\">으르렁거렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">growled</strong> at the request in frustration.",
+        "exam_ko": "그는 짜증스러워서 요청에 <strong class=\"target-word\">투덜거렸다</strong>."
+      }
+    ]
+  }
+]

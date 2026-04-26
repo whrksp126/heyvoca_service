@@ -1,0 +1,266 @@
+[
+  {
+    "id": 4928,
+    "origin": "chocolate",
+    "examples": [
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">chocolate</strong> bar as a gift.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">초콜릿</strong> 바를 선물로 주었다."
+      },
+      {
+        "exam_en": "He prefers dark <strong class=\"target-word\">chocolate</strong> over milk chocolate.",
+        "exam_ko": "그는 밀크 초콜릿보다 다크 <strong class=\"target-word\">초콜릿</strong>을 더 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 4929,
+    "origin": "april",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">April</strong> is the cruelest month.",
+        "exam_ko": "<strong class=\"target-word\">4월</strong>은 가장 잔인한 달이다."
+      }
+    ]
+  },
+  {
+    "id": 4930,
+    "origin": "eve",
+    "examples": [
+      {
+        "exam_en": "The family gathered on Christmas <strong class=\"target-word\">Eve</strong>.",
+        "exam_ko": "가족들은 크리스마스 <strong class=\"target-word\">이브</strong>에 모였다."
+      },
+      {
+        "exam_en": "They watched fireworks on New Year's <strong class=\"target-word\">Eve</strong>.",
+        "exam_ko": "그들은 새해 <strong class=\"target-word\">전날 밤</strong>에 불꽃놀이를 구경했다."
+      }
+    ]
+  },
+  {
+    "id": 4934,
+    "origin": "owl",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">owl</strong> watched silently from the branch.",
+        "exam_ko": "<strong class=\"target-word\">올빼미</strong>가 나뭇가지에서 조용히 지켜봤다."
+      },
+      {
+        "exam_en": "An <strong class=\"target-word\">owl</strong> hooted loudly in the dark forest.",
+        "exam_ko": "<strong class=\"target-word\">올빼미</strong>가 어두운 숲속에서 크게 울었다."
+      }
+    ]
+  },
+  {
+    "id": 4935,
+    "origin": "hunting",
+    "examples": [
+      {
+        "exam_en": "The government banned deer <strong class=\"target-word\">hunting</strong> in the region.",
+        "exam_ko": "정부는 그 지역에서 사슴 <strong class=\"target-word\">사냥</strong>을 금지했다."
+      },
+      {
+        "exam_en": "He enjoyed <strong class=\"target-word\">hunting</strong> in the mountains every autumn.",
+        "exam_ko": "그는 매년 가을마다 산에서 <strong class=\"target-word\">사냥</strong>하는 것을 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 4936,
+    "origin": "shoulder",
+    "examples": [
+      {
+        "exam_en": "She tapped him on the <strong class=\"target-word\">shoulder</strong> to get his attention.",
+        "exam_ko": "그녀는 그의 <strong class=\"target-word\">어깨</strong>를 두드려 주의를 끌었다."
+      },
+      {
+        "exam_en": "He carried the bag over his <strong class=\"target-word\">shoulder</strong>.",
+        "exam_ko": "그는 가방을 <strong class=\"target-word\">어깨</strong>에 메고 다녔다."
+      }
+    ]
+  },
+  {
+    "id": 4937,
+    "origin": "trash",
+    "examples": [
+      {
+        "exam_en": "Some people dump their <strong class=\"target-word\">trash</strong> on the street.",
+        "exam_ko": "<strong class=\"target-word\">쓰레기</strong>를 길에 버리는 사람들도 있다."
+      },
+      {
+        "exam_en": "What you are saying is absolute <strong class=\"target-word\">trash</strong>.",
+        "exam_ko": "네가 하는 이야기는 완전히 <strong class=\"target-word\">쓸모없는 말</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4939,
+    "origin": "scene",
+    "examples": [
+      {
+        "exam_en": "Police arrived quickly at the <strong class=\"target-word\">scene</strong> of the accident.",
+        "exam_ko": "경찰은 사고 <strong class=\"target-word\">현장</strong>에 빠르게 도착했다."
+      },
+      {
+        "exam_en": "She revisited the <strong class=\"target-word\">scenes</strong> of her childhood.",
+        "exam_ko": "그녀는 어린 시절의 <strong class=\"target-word\">장소들</strong>을 다시 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 4940,
+    "origin": "anymore",
+    "examples": [
+      {
+        "exam_en": "This dress doesn't suit her <strong class=\"target-word\">anymore</strong>.",
+        "exam_ko": "이 드레스는 이제 그녀에게 <strong class=\"target-word\">더 이상</strong> 어울리지 않는다."
+      },
+      {
+        "exam_en": "He doesn't work <strong class=\"target-word\">anymore</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">더 이상</strong> 일하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 4941,
+    "origin": "quickly",
+    "examples": [
+      {
+        "exam_en": "She made dinner <strong class=\"target-word\">quickly</strong> before the guests arrived.",
+        "exam_ko": "그녀는 손님들이 오기 전에 <strong class=\"target-word\">빠르게</strong> 저녁을 준비했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">quickly</strong> packed his bag and left.",
+        "exam_ko": "그는 가방을 <strong class=\"target-word\">재빨리</strong> 챙겨서 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 4942,
+    "origin": "allowance",
+    "examples": [
+      {
+        "exam_en": "His parents give him a weekly <strong class=\"target-word\">allowance</strong>.",
+        "exam_ko": "그의 부모님은 그에게 주간 <strong class=\"target-word\">용돈</strong>을 준다."
+      },
+      {
+        "exam_en": "She received a travel <strong class=\"target-word\">allowance</strong> from her company.",
+        "exam_ko": "그녀는 회사로부터 출장 <strong class=\"target-word\">수당</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 4943,
+    "origin": "notebook",
+    "examples": [
+      {
+        "exam_en": "She sometimes carries her <strong class=\"target-word\">notebook</strong> to the office.",
+        "exam_ko": "그녀는 때때로 <strong class=\"target-word\">노트북</strong>을 사무실에 가지고 간다."
+      }
+    ]
+  },
+  {
+    "id": 4944,
+    "origin": "patrol",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">patrol</strong> boat circled the harbor at night.",
+        "exam_ko": "<strong class=\"target-word\">순찰</strong>정이 밤에 항구를 돌았다."
+      },
+      {
+        "exam_en": "Soldiers went on <strong class=\"target-word\">patrol</strong> along the border.",
+        "exam_ko": "군인들은 국경을 따라 <strong class=\"target-word\">순찰</strong>을 돌았다."
+      }
+    ]
+  },
+  {
+    "id": 4946,
+    "origin": "contest",
+    "examples": [
+      {
+        "exam_en": "She won first place in the speech <strong class=\"target-word\">contest</strong>.",
+        "exam_ko": "그녀는 웅변 <strong class=\"target-word\">대회</strong>에서 1등을 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">contest</strong> between the two teams was intense.",
+        "exam_ko": "두 팀 사이의 <strong class=\"target-word\">경쟁</strong>은 치열했다."
+      }
+    ]
+  },
+  {
+    "id": 4947,
+    "origin": "vase",
+    "examples": [
+      {
+        "exam_en": "She placed red roses in a glass <strong class=\"target-word\">vase</strong>.",
+        "exam_ko": "그녀는 유리 <strong class=\"target-word\">꽃병</strong>에 빨간 장미를 꽂았다."
+      }
+    ]
+  },
+  {
+    "id": 4948,
+    "origin": "magnet",
+    "examples": [
+      {
+        "exam_en": "He used a horseshoe <strong class=\"target-word\">magnet</strong> in the experiment.",
+        "exam_ko": "그는 실험에서 말굽 <strong class=\"target-word\">자석</strong>을 사용했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">magnet</strong> pulled the iron filings toward it.",
+        "exam_ko": "<strong class=\"target-word\">자석</strong>이 철가루를 끌어당겼다."
+      }
+    ]
+  },
+  {
+    "id": 4949,
+    "origin": "farm",
+    "examples": [
+      {
+        "exam_en": "She grew up on a fruit <strong class=\"target-word\">farm</strong> in the countryside.",
+        "exam_ko": "그녀는 시골의 과일 <strong class=\"target-word\">농장</strong>에서 자랐다."
+      },
+      {
+        "exam_en": "His family has run the <strong class=\"target-word\">farm</strong> for generations.",
+        "exam_ko": "그의 가족은 대대로 <strong class=\"target-word\">농장</strong>을 운영해 왔다."
+      }
+    ]
+  },
+  {
+    "id": 4950,
+    "origin": "hose",
+    "examples": [
+      {
+        "exam_en": "He watered the garden with a rubber <strong class=\"target-word\">hose</strong>.",
+        "exam_ko": "그는 고무 <strong class=\"target-word\">호스</strong>로 정원에 물을 주었다."
+      },
+      {
+        "exam_en": "These, sir, are our finest <strong class=\"target-word\">hose</strong>.",
+        "exam_ko": "손님, 이것이 저희 점포의 최고급 <strong class=\"target-word\">양말</strong>입니다."
+      }
+    ]
+  },
+  {
+    "id": 4951,
+    "origin": "zoo",
+    "examples": [
+      {
+        "exam_en": "The children visited the <strong class=\"target-word\">zoo</strong> on a field trip.",
+        "exam_ko": "아이들은 현장학습으로 <strong class=\"target-word\">동물원</strong>을 방문했다."
+      },
+      {
+        "exam_en": "This office is a <strong class=\"target-word\">zoo</strong> during lunchtime.",
+        "exam_ko": "점심시간에 이 사무실은 <strong class=\"target-word\">아수라장</strong>이 된다."
+      }
+    ]
+  },
+  {
+    "id": 4953,
+    "origin": "loudly",
+    "examples": [
+      {
+        "exam_en": "She spoke <strong class=\"target-word\">loudly</strong> so everyone could hear her.",
+        "exam_ko": "그녀는 모두가 들을 수 있도록 <strong class=\"target-word\">크게</strong> 말했다."
+      }
+    ]
+  }
+]

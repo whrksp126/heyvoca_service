@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3449,
+    "origin": "program",
+    "examples": [
+      {
+        "exam_en": "I had a full <strong class=\"target-word\">program</strong> ahead of me that day.",
+        "exam_ko": "그날은 <strong class=\"target-word\">일정</strong>이 꽉 차 있었다."
+      },
+      {
+        "exam_en": "They launched a new <strong class=\"target-word\">program</strong> to support students.",
+        "exam_ko": "그들은 학생들을 지원하는 새 <strong class=\"target-word\">프로그램</strong>을 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 3450,
+    "origin": "problem",
+    "examples": [
+      {
+        "exam_en": "Unemployment is a serious social <strong class=\"target-word\">problem</strong>.",
+        "exam_ko": "실업은 심각한 사회적 <strong class=\"target-word\">문제</strong>다."
+      },
+      {
+        "exam_en": "They discussed the <strong class=\"target-word\">problem</strong> of welfare at the meeting.",
+        "exam_ko": "그들은 회의에서 복지 <strong class=\"target-word\">문제</strong>를 논의했다."
+      }
+    ]
+  },
+  {
+    "id": 3451,
+    "origin": "president",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">president</strong> signed the new law yesterday.",
+        "exam_ko": "<strong class=\"target-word\">대통령</strong>이 어제 새 법안에 서명했다."
+      },
+      {
+        "exam_en": "She was elected <strong class=\"target-word\">president</strong> of the company.",
+        "exam_ko": "그녀는 회사 <strong class=\"target-word\">사장</strong>으로 선출되었다."
+      }
+    ]
+  },
+  {
+    "id": 3452,
+    "origin": "power",
+    "examples": [
+      {
+        "exam_en": "This task is beyond my <strong class=\"target-word\">power</strong> to handle alone.",
+        "exam_ko": "이 일은 혼자 처리하기에 내 <strong class=\"target-word\">힘</strong>에 부친다."
+      },
+      {
+        "exam_en": "I will do everything within my <strong class=\"target-word\">power</strong> to help.",
+        "exam_ko": "돕기 위해 내 <strong class=\"target-word\">힘</strong>이 닿는 모든 것을 하겠다."
+      }
+    ]
+  },
+  {
+    "id": 3453,
+    "origin": "powder",
+    "examples": [
+      {
+        "exam_en": "She mixed the <strong class=\"target-word\">powder</strong> into a glass of water.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가루</strong>를 물 한 잔에 섞었다."
+      },
+      {
+        "exam_en": "The rock was ground until it was reduced to <strong class=\"target-word\">powder</strong>.",
+        "exam_ko": "바위는 <strong class=\"target-word\">가루</strong>가 될 때까지 갈렸다."
+      }
+    ]
+  },
+  {
+    "id": 3454,
+    "origin": "potato",
+    "examples": [
+      {
+        "exam_en": "She baked <strong class=\"target-word\">potatoes</strong> in the oven for dinner.",
+        "exam_ko": "그녀는 저녁으로 오븐에서 <strong class=\"target-word\">감자</strong>를 구웠다."
+      },
+      {
+        "exam_en": "He boiled <strong class=\"target-word\">potatoes</strong> and served them with butter.",
+        "exam_ko": "그는 <strong class=\"target-word\">감자</strong>를 삶아 버터와 함께 냈다."
+      }
+    ]
+  },
+  {
+    "id": 3455,
+    "origin": "port",
+    "examples": [
+      {
+        "exam_en": "The city built a large commercial <strong class=\"target-word\">port</strong>.",
+        "exam_ko": "그 도시는 큰 상업 <strong class=\"target-word\">항구</strong>를 건설했다."
+      },
+      {
+        "exam_en": "The ship was still in <strong class=\"target-word\">port</strong> when we arrived.",
+        "exam_ko": "우리가 도착했을 때 배는 아직 <strong class=\"target-word\">항구</strong>에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3456,
+    "origin": "pollute",
+    "examples": [
+      {
+        "exam_en": "Smog has badly <strong class=\"target-word\">polluted</strong> the air in this city.",
+        "exam_ko": "스모그가 이 도시의 공기를 심하게 <strong class=\"target-word\">오염시켰다</strong>."
+      },
+      {
+        "exam_en": "Factories <strong class=\"target-word\">pollute</strong> rivers with harmful chemicals.",
+        "exam_ko": "공장들이 강을 유해 화학물질로 <strong class=\"target-word\">오염시킨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3457,
+    "origin": "politics",
+    "examples": [
+      {
+        "exam_en": "She studies the theory of <strong class=\"target-word\">politics</strong> at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">정치학</strong> 이론을 공부한다."
+      },
+      {
+        "exam_en": "He has been active in <strong class=\"target-word\">politics</strong> for twenty years.",
+        "exam_ko": "그는 이십 년간 <strong class=\"target-word\">정치</strong> 활동을 해왔다."
+      }
+    ]
+  },
+  {
+    "id": 3458,
+    "origin": "policy",
+    "examples": [
+      {
+        "exam_en": "The government announced a new national <strong class=\"target-word\">policy</strong> on education.",
+        "exam_ko": "정부는 교육에 관한 새 국가 <strong class=\"target-word\">정책</strong>을 발표했다."
+      },
+      {
+        "exam_en": "The country's domestic <strong class=\"target-word\">policy</strong> focuses on job creation.",
+        "exam_ko": "그 나라의 국내 <strong class=\"target-word\">정책</strong>은 일자리 창출에 초점을 맞춘다."
+      }
+    ]
+  },
+  {
+    "id": 3459,
+    "origin": "police",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">police</strong> always arrive with their sirens on.",
+        "exam_ko": "<strong class=\"target-word\">경찰</strong>은 언제나 사이렌을 켜고 온다."
+      },
+      {
+        "exam_en": "He called the <strong class=\"target-word\">police</strong> in to investigate the crime.",
+        "exam_ko": "그는 범죄를 조사하기 위해 <strong class=\"target-word\">경찰</strong>을 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 3460,
+    "origin": "poison",
+    "examples": [
+      {
+        "exam_en": "The doctor gave him a small dose of <strong class=\"target-word\">poison</strong> antidote.",
+        "exam_ko": "의사는 그에게 소량의 <strong class=\"target-word\">독</strong> 해독제를 주었다."
+      },
+      {
+        "exam_en": "Some snakes inject a slow-acting <strong class=\"target-word\">poison</strong> into their prey.",
+        "exam_ko": "일부 뱀은 먹이에게 천천히 작용하는 <strong class=\"target-word\">독</strong>을 주입한다."
+      }
+    ]
+  },
+  {
+    "id": 3461,
+    "origin": "pocket",
+    "examples": [
+      {
+        "exam_en": "He kept his phone in his inside <strong class=\"target-word\">pocket</strong>.",
+        "exam_ko": "그는 휴대폰을 안 <strong class=\"target-word\">주머니</strong>에 넣었다."
+      },
+      {
+        "exam_en": "She found coins in every <strong class=\"target-word\">pocket</strong> of her jacket.",
+        "exam_ko": "그녀는 재킷의 모든 <strong class=\"target-word\">주머니</strong>에서 동전을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 3462,
+    "origin": "plenty",
+    "examples": [
+      {
+        "exam_en": "There was <strong class=\"target-word\">plenty</strong> of money left in the account.",
+        "exam_ko": "계좌에 <strong class=\"target-word\">충분한</strong> 돈이 남아 있었다."
+      },
+      {
+        "exam_en": "There were <strong class=\"target-word\">plenty</strong> of apples on the tree.",
+        "exam_ko": "나무에는 사과가 <strong class=\"target-word\">가득</strong> 열려 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3463,
+    "origin": "plastic",
+    "examples": [
+      {
+        "exam_en": "Farmers grow vegetables inside a <strong class=\"target-word\">plastic</strong> greenhouse.",
+        "exam_ko": "농부들은 <strong class=\"target-word\">비닐</strong> 하우스 안에서 채소를 재배한다."
+      },
+      {
+        "exam_en": "She stirred the soup with a <strong class=\"target-word\">plastic</strong> spoon.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">플라스틱</strong> 숟가락으로 수프를 저었다."
+      }
+    ]
+  },
+  {
+    "id": 3464,
+    "origin": "pipe",
+    "examples": [
+      {
+        "exam_en": "A water <strong class=\"target-word\">pipe</strong> burst during the cold night.",
+        "exam_ko": "추운 밤에 수도 <strong class=\"target-word\">파이프</strong>가 파열되었다."
+      },
+      {
+        "exam_en": "Workers repaired the broken sewage <strong class=\"target-word\">pipe</strong> underground.",
+        "exam_ko": "작업자들이 지하의 파손된 하수도 <strong class=\"target-word\">관</strong>을 수리했다."
+      }
+    ]
+  },
+  {
+    "id": 3465,
+    "origin": "pilot",
+    "examples": [
+      {
+        "exam_en": "He trained for years to become an air force <strong class=\"target-word\">pilot</strong>.",
+        "exam_ko": "그는 공군 <strong class=\"target-word\">조종사</strong>가 되기 위해 수년간 훈련했다."
+      },
+      {
+        "exam_en": "The fighter <strong class=\"target-word\">pilot</strong> landed the plane safely.",
+        "exam_ko": "전투기 <strong class=\"target-word\">조종사</strong>가 비행기를 안전하게 착륙시켰다."
+      }
+    ]
+  },
+  {
+    "id": 3466,
+    "origin": "pig",
+    "examples": [
+      {
+        "exam_en": "The farmer raised a little <strong class=\"target-word\">pig</strong> on the farm.",
+        "exam_ko": "농부는 농장에서 새끼 <strong class=\"target-word\">돼지</strong>를 키웠다."
+      },
+      {
+        "exam_en": "They keep <strong class=\"target-word\">pigs</strong> in the barn behind the house.",
+        "exam_ko": "그들은 집 뒤 헛간에서 <strong class=\"target-word\">돼지</strong>를 키운다."
+      }
+    ]
+  },
+  {
+    "id": 3467,
+    "origin": "piece",
+    "examples": [
+      {
+        "exam_en": "He bought a <strong class=\"target-word\">piece</strong> of real estate downtown.",
+        "exam_ko": "그는 도심의 부동산 한 <strong class=\"target-word\">구획</strong>을 샀다."
+      },
+      {
+        "exam_en": "She ate a <strong class=\"target-word\">piece</strong> of pie after lunch.",
+        "exam_ko": "그녀는 점심 후 파이 한 <strong class=\"target-word\">조각</strong>을 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 3468,
+    "origin": "picture",
+    "examples": [
+      {
+        "exam_en": "The garden looked as pretty as a <strong class=\"target-word\">picture</strong>.",
+        "exam_ko": "정원은 <strong class=\"target-word\">그림</strong>처럼 예뻤다."
+      },
+      {
+        "exam_en": "The child drew a <strong class=\"target-word\">picture</strong> of her family.",
+        "exam_ko": "아이는 가족 <strong class=\"target-word\">그림</strong>을 그렸다."
+      }
+    ]
+  }
+]

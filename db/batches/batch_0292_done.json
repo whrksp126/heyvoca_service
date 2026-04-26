@@ -1,0 +1,262 @@
+[
+  {
+    "id": 7261,
+    "origin": "forgo",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">forgo</strong> her usual coffee.",
+        "exam_ko": "그녀는 평소의 커피를 <strong class=\"target-word\">포기하기로</strong> 결심했다."
+      }
+    ]
+  },
+  {
+    "id": 7262,
+    "origin": "wedlock",
+    "examples": [
+      {
+        "exam_en": "The child was born out of <strong class=\"target-word\">wedlock</strong>.",
+        "exam_ko": "그 아이는 <strong class=\"target-word\">혼외</strong>에서 태어났다."
+      },
+      {
+        "exam_en": "Gildong Hong was born outside of <strong class=\"target-word\">wedlock</strong>.",
+        "exam_ko": "홍길동은 <strong class=\"target-word\">혼인</strong> 밖에서 태어났다."
+      }
+    ]
+  },
+  {
+    "id": 7264,
+    "origin": "fleeting",
+    "examples": [
+      {
+        "exam_en": "She felt a <strong class=\"target-word\">fleeting</strong> moment of happiness.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">순간적인</strong> 행복감을 느꼈다."
+      },
+      {
+        "exam_en": "He gave her a <strong class=\"target-word\">fleeting</strong> glance.",
+        "exam_ko": "그는 그녀를 <strong class=\"target-word\">잠깐</strong> 흘끗 보았다."
+      }
+    ]
+  },
+  {
+    "id": 7265,
+    "origin": "deterrent",
+    "examples": [
+      {
+        "exam_en": "The fence served as a <strong class=\"target-word\">deterrent</strong> to trespassers.",
+        "exam_ko": "그 울타리는 침입자들에 대한 <strong class=\"target-word\">억제력</strong>으로 작용했다."
+      },
+      {
+        "exam_en": "Nuclear weapons are considered the ultimate <strong class=\"target-word\">deterrent</strong>.",
+        "exam_ko": "핵무기는 궁극적인 <strong class=\"target-word\">억지력</strong>으로 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 7267,
+    "origin": "succumb",
+    "examples": [
+      {
+        "exam_en": "He refused to <strong class=\"target-word\">succumb</strong> to his enemies.",
+        "exam_ko": "그는 적에게 <strong class=\"target-word\">굴복하기를</strong> 거부했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">succumbed</strong> to temptation and ate the cake.",
+        "exam_ko": "그녀는 유혹에 <strong class=\"target-word\">굴복해</strong> 케이크를 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 7271,
+    "origin": "mortify",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">mortified</strong> by his rude remark.",
+        "exam_ko": "그녀는 그의 무례한 말에 <strong class=\"target-word\">굴욕감을 느꼈다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">mortified</strong> the flesh through fasting.",
+        "exam_ko": "그는 단식을 통해 정욕을 <strong class=\"target-word\">억제했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7272,
+    "origin": "unimpeachable",
+    "examples": [
+      {
+        "exam_en": "The court accepted the <strong class=\"target-word\">unimpeachable</strong> evidence.",
+        "exam_ko": "법원은 <strong class=\"target-word\">반박할 수 없는</strong> 증거를 받아들였다."
+      }
+    ]
+  },
+  {
+    "id": 7274,
+    "origin": "conundrum",
+    "examples": [
+      {
+        "exam_en": "The teacher posed a difficult <strong class=\"target-word\">conundrum</strong> to the class.",
+        "exam_ko": "선생님은 반 학생들에게 어려운 <strong class=\"target-word\">난제</strong>를 제시했다."
+      },
+      {
+        "exam_en": "Solving this <strong class=\"target-word\">conundrum</strong> requires creativity and logic.",
+        "exam_ko": "이 <strong class=\"target-word\">난제</strong>를 해결하려면 창의력과 논리가 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 7276,
+    "origin": "calculus",
+    "examples": [
+      {
+        "exam_en": "She struggled with differential <strong class=\"target-word\">calculus</strong> in college.",
+        "exam_ko": "그녀는 대학에서 미분 <strong class=\"target-word\">계산법</strong>을 어려워했다."
+      }
+    ]
+  },
+  {
+    "id": 7277,
+    "origin": "prep",
+    "examples": [
+      {
+        "exam_en": "He did his <strong class=\"target-word\">prep</strong> before class every day.",
+        "exam_ko": "그는 매일 수업 전에 <strong class=\"target-word\">예습을</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 7278,
+    "origin": "abstinence",
+    "examples": [
+      {
+        "exam_en": "The doctor recommended <strong class=\"target-word\">abstinence</strong> from alcohol.",
+        "exam_ko": "의사는 알코올 <strong class=\"target-word\">절제를</strong> 권고했다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">abstinence</strong> from junk food improved her health.",
+        "exam_ko": "그녀의 정크푸드 <strong class=\"target-word\">절제</strong>가 건강을 향상시켰다."
+      }
+    ]
+  },
+  {
+    "id": 7280,
+    "origin": "unleash",
+    "examples": [
+      {
+        "exam_en": "The hunter <strong class=\"target-word\">unleashed</strong> the hound.",
+        "exam_ko": "사냥꾼은 사냥개를 <strong class=\"target-word\">풀어주었다</strong>."
+      },
+      {
+        "exam_en": "The earthquake <strong class=\"target-word\">unleashed</strong> a massive tidal wave.",
+        "exam_ko": "지진이 거대한 해일을 <strong class=\"target-word\">일으켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7281,
+    "origin": "falter",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">faltered</strong> for a moment before speaking.",
+        "exam_ko": "그녀는 말하기 전에 잠시 <strong class=\"target-word\">머뭇거렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">faltered</strong> through an apology.",
+        "exam_ko": "그는 더듬거리며 <strong class=\"target-word\">우물쭈물</strong> 사과했다."
+      }
+    ]
+  },
+  {
+    "id": 7282,
+    "origin": "gauge",
+    "examples": [
+      {
+        "exam_en": "The rain <strong class=\"target-word\">gauge</strong> showed heavy rainfall last night.",
+        "exam_ko": "우량 <strong class=\"target-word\">계기</strong>는 어젯밤 폭우를 기록했다."
+      },
+      {
+        "exam_en": "A temperature <strong class=\"target-word\">gauge</strong> was mounted on the wall.",
+        "exam_ko": "온도 <strong class=\"target-word\">계기</strong>가 벽에 부착되어 있었다."
+      },
+      {
+        "exam_en": "The mechanic used a <strong class=\"target-word\">gauge</strong> to check tire pressure.",
+        "exam_ko": "기술자는 타이어 압력을 확인하기 위해 <strong class=\"target-word\">게이지를</strong> 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 7283,
+    "origin": "averse",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">averse</strong> to all advice from others.",
+        "exam_ko": "그는 남의 충고를 몹시 <strong class=\"target-word\">싫어한다</strong>."
+      },
+      {
+        "exam_en": "She is deeply <strong class=\"target-word\">averse</strong> to wasting time.",
+        "exam_ko": "그녀는 시간 낭비를 몹시 <strong class=\"target-word\">꺼린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7284,
+    "origin": "ambiguity",
+    "examples": [
+      {
+        "exam_en": "He expressed himself with deliberate <strong class=\"target-word\">ambiguity</strong>.",
+        "exam_ko": "그는 의도적인 <strong class=\"target-word\">모호함</strong>으로 자신을 표현했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">ambiguity</strong> of the poem puzzled many readers.",
+        "exam_ko": "그 시의 <strong class=\"target-word\">다의성</strong>이 많은 독자들을 당혹스럽게 했다."
+      }
+    ]
+  },
+  {
+    "id": 7285,
+    "origin": "grapple",
+    "examples": [
+      {
+        "exam_en": "The two wrestlers <strong class=\"target-word\">grappled</strong> with each other.",
+        "exam_ko": "두 레슬링 선수가 서로 <strong class=\"target-word\">맞붙어 싸웠다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">grappled</strong> with his opponent on the mat.",
+        "exam_ko": "그는 매트 위에서 상대와 <strong class=\"target-word\">맞잡고 겨루었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7286,
+    "origin": "parse",
+    "examples": [
+      {
+        "exam_en": "I can't figure out how to <strong class=\"target-word\">parse</strong> the code.",
+        "exam_ko": "나는 그 코드를 어떻게 <strong class=\"target-word\">분석해야</strong> 할지 모르겠다."
+      }
+    ]
+  },
+  {
+    "id": 7287,
+    "origin": "vibrant",
+    "examples": [
+      {
+        "exam_en": "That painting has <strong class=\"target-word\">vibrant</strong> colors of red and yellow.",
+        "exam_ko": "저 그림은 <strong class=\"target-word\">강렬한</strong> 빨간색과 노란색으로 그려져 있다."
+      },
+      {
+        "exam_en": "They walked down a street <strong class=\"target-word\">vibrant</strong> with energy.",
+        "exam_ko": "그들은 활력이 <strong class=\"target-word\">넘치는</strong> 거리를 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 7288,
+    "origin": "hallmark",
+    "examples": [
+      {
+        "exam_en": "The killing had the <strong class=\"target-word\">hallmarks</strong> of a professional job.",
+        "exam_ko": "그 살인은 전문적인 범행의 <strong class=\"target-word\">특징을</strong> 띠었다."
+      }
+    ]
+  }
+]

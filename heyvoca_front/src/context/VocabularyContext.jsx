@@ -18,6 +18,7 @@ import {
   deleteVocaBookApi
 } from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
+import { showToast } from '../utils/osFunction';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
 import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
@@ -57,13 +58,17 @@ export const VocabularyProvider = ({ children }) => {
           word.vocaBooks && word.vocaBooks.some(vb => String(vb.vocaBookId) === String(book.vocaBookId))
         )
         .map(word => {
-          // Merge book-specific info (like meanings if overridden)
-          const bookInfo = word.vocaBooks.find(vb => String(vb.vocaBookId) === String(book.vocaBookId));
-          return {
-            ...word,
-            ...bookInfo,
-            id: word.vocaIndexId // Ensure compatibility if components use 'id'
-          };
+          // Merge book-specific info (like meanings if overridden).
+          // bookInfo의 값이 null/undefined이거나 빈 배열이면 word의 원본 값을 덮지 않는다.
+          const bookInfo = word.vocaBooks.find(vb => String(vb.vocaBookId) === String(book.vocaBookId)) || {};
+          const merged = { ...word };
+          for (const [k, v] of Object.entries(bookInfo)) {
+            if (v === null || v === undefined) continue;
+            if (Array.isArray(v) && v.length === 0 && Array.isArray(merged[k]) && merged[k].length > 0) continue;
+            merged[k] = v;
+          }
+          merged.id = word.vocaIndexId; // Ensure compatibility if components use 'id'
+          return merged;
         });
 
       return {
@@ -150,7 +155,8 @@ export const VocabularyProvider = ({ children }) => {
           fetchVocaBooks(); // 단어장 목록 갱신
           return updatedWord;
         } else if (result.code === 409) {
-          throw new Error('이미 해당 단어장에 등록된 단어입니다.');
+          showToast('이미 해당 단어장에 등록된 단어입니다.');
+          return null;
         } else {
           throw new Error(result.message || '단어 연결 실패');
         }

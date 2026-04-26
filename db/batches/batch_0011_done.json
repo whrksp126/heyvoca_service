@@ -1,0 +1,298 @@
+[
+  {
+    "id": 203,
+    "origin": "enable",
+    "examples": [
+      {
+        "exam_en": "Good health <strong class=\"target-word\">enabled</strong> him to carry out the plan.",
+        "exam_ko": "건강했기 때문에 그는 그 계획을 <strong class=\"target-word\">수행할 수 있었다</strong>."
+      },
+      {
+        "exam_en": "The scholarship <strong class=\"target-word\">enabled</strong> her to study abroad.",
+        "exam_ko": "장학금이 그녀가 해외에서 공부할 수 <strong class=\"target-word\">있게 해주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 204,
+    "origin": "complete",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">complete</strong> set of dishes.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">완전한</strong> 접시 세트를 구입했다."
+      },
+      {
+        "exam_en": "He read the <strong class=\"target-word\">complete</strong> works of Shakespeare.",
+        "exam_ko": "그는 셰익스피어 <strong class=\"target-word\">전집</strong>을 읽었다."
+      },
+      {
+        "exam_en": "One denture is <strong class=\"target-word\">complete</strong> and the other is partial.",
+        "exam_ko": "하나는 <strong class=\"target-word\">완전</strong>틀니이고 다른 하나는 부분틀니입니다."
+      }
+    ]
+  },
+  {
+    "id": 205,
+    "origin": "cost",
+    "examples": [
+      {
+        "exam_en": "The high <strong class=\"target-word\">cost</strong> of electricity surprised everyone.",
+        "exam_ko": "비싼 전력 <strong class=\"target-word\">비용</strong>이 모두를 놀라게 했다."
+      },
+      {
+        "exam_en": "The total <strong class=\"target-word\">cost</strong> of the scheme exceeded the budget.",
+        "exam_ko": "그 계획의 총 <strong class=\"target-word\">경비</strong>가 예산을 초과했다."
+      }
+    ]
+  },
+  {
+    "id": 206,
+    "origin": "sound",
+    "examples": [
+      {
+        "exam_en": "She heard the <strong class=\"target-word\">sound</strong> of laughter from outside.",
+        "exam_ko": "그녀는 밖에서 웃음 <strong class=\"target-word\">소리</strong>를 들었다."
+      },
+      {
+        "exam_en": "He left the room without a <strong class=\"target-word\">sound</strong>.",
+        "exam_ko": "그는 아무 <strong class=\"target-word\">소리</strong>도 없이 방을 나갔다."
+      }
+    ]
+  },
+  {
+    "id": 207,
+    "origin": "check",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">checked</strong> her steps when she heard the noise.",
+        "exam_ko": "그녀는 소리를 듣고 걸음을 <strong class=\"target-word\">멈췄다</strong>."
+      },
+      {
+        "exam_en": "The dam was built to <strong class=\"target-word\">check</strong> the current of the river.",
+        "exam_ko": "댐은 강물을 <strong class=\"target-word\">막기</strong> 위해 지어졌다."
+      }
+    ]
+  },
+  {
+    "id": 208,
+    "origin": "laugh",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">laughed</strong> out loud at the joke.",
+        "exam_ko": "그들은 농담에 큰 소리로 <strong class=\"target-word\">웃었다</strong>."
+      },
+      {
+        "exam_en": "Everyone <strong class=\"target-word\">laughed</strong> at the funny scene.",
+        "exam_ko": "모두가 재미있는 광경을 보고 <strong class=\"target-word\">웃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 209,
+    "origin": "realize",
+    "examples": [
+      {
+        "exam_en": "She finally <strong class=\"target-word\">realized</strong> her errors and apologized.",
+        "exam_ko": "그녀는 마침내 자신의 실수를 <strong class=\"target-word\">깨닫고</strong> 사과했다."
+      },
+      {
+        "exam_en": "He fully <strong class=\"target-word\">realized</strong> he was the cause of the accident.",
+        "exam_ko": "그는 사고 원인이 자기에게 있음을 충분히 <strong class=\"target-word\">자각했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 210,
+    "origin": "extend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">extended</strong> the measuring tape as far as possible.",
+        "exam_ko": "그는 줄자를 최대한으로 <strong class=\"target-word\">잡아늘였다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">extended</strong> a rope from tree to tree.",
+        "exam_ko": "그들은 나무에서 나무로 로프를 <strong class=\"target-word\">쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 211,
+    "origin": "arise",
+    "examples": [
+      {
+        "exam_en": "She will speak up when the opportunity <strong class=\"target-word\">arises</strong>.",
+        "exam_ko": "기회가 <strong class=\"target-word\">생기면</strong> 그녀는 발언할 것이다."
+      },
+      {
+        "exam_en": "A faint suspicion <strong class=\"target-word\">arose</strong> in his mind.",
+        "exam_ko": "약간의 의혹이 그의 마음속에 <strong class=\"target-word\">일었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 212,
+    "origin": "notice",
+    "examples": [
+      {
+        "exam_en": "Her bright dress attracted everyone's <strong class=\"target-word\">notice</strong>.",
+        "exam_ko": "그녀의 밝은 옷이 모두의 <strong class=\"target-word\">주목</strong>을 끌었다."
+      },
+      {
+        "exam_en": "He tried to avoid <strong class=\"target-word\">notice</strong> by sitting quietly.",
+        "exam_ko": "그는 조용히 앉아 남의 <strong class=\"target-word\">눈길</strong>을 피하려 했다."
+      }
+    ]
+  },
+  {
+    "id": 213,
+    "origin": "define",
+    "examples": [
+      {
+        "exam_en": "A good dictionary <strong class=\"target-word\">defines</strong> words concisely.",
+        "exam_ko": "좋은 사전은 단어를 간결하게 <strong class=\"target-word\">정의한다</strong>."
+      },
+      {
+        "exam_en": "The teacher asked us to accurately <strong class=\"target-word\">define</strong> the term.",
+        "exam_ko": "선생님은 우리에게 그 용어를 정확하게 <strong class=\"target-word\">정의하라고</strong> 했다."
+      },
+      {
+        "exam_en": "It is hard to <strong class=\"target-word\">define</strong> what makes a great leader.",
+        "exam_ko": "훌륭한 지도자를 만드는 것이 무엇인지 <strong class=\"target-word\">정의하기</strong> 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 214,
+    "origin": "fit",
+    "examples": [
+      {
+        "exam_en": "This meal is <strong class=\"target-word\">fit</strong> for a king.",
+        "exam_ko": "이 식사는 왕에게도 <strong class=\"target-word\">어울릴</strong> 만큼 훌륭하다."
+      },
+      {
+        "exam_en": "The weather is <strong class=\"target-word\">fit</strong> for us to go fishing.",
+        "exam_ko": "낚시하러 가기에 <strong class=\"target-word\">알맞은</strong> 날씨다."
+      }
+    ]
+  },
+  {
+    "id": 215,
+    "origin": "examine",
+    "examples": [
+      {
+        "exam_en": "Officers <strong class=\"target-word\">examined</strong> the baggage at the airport.",
+        "exam_ko": "공항 직원들이 수화물을 <strong class=\"target-word\">검사했다</strong>."
+      },
+      {
+        "exam_en": "The detective carefully <strong class=\"target-word\">examined</strong> the records.",
+        "exam_ko": "형사는 기록을 꼼꼼히 <strong class=\"target-word\">조사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 216,
+    "origin": "recognize",
+    "examples": [
+      {
+        "exam_en": "He had to <strong class=\"target-word\">recognize</strong> defeat after the long battle.",
+        "exam_ko": "그는 긴 전투 끝에 패배를 <strong class=\"target-word\">인정해야</strong> 했다."
+      },
+      {
+        "exam_en": "Most countries formally <strong class=\"target-word\">recognized</strong> the new government.",
+        "exam_ko": "대부분의 국가들이 새 정부를 공식적으로 <strong class=\"target-word\">승인했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 217,
+    "origin": "bear",
+    "examples": [
+      {
+        "exam_en": "Mary had <strong class=\"target-word\">borne</strong> three children before turning thirty.",
+        "exam_ko": "메리는 서른 살이 되기 전에 세 아이를 <strong class=\"target-word\">낳았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bore</strong> twins and named them alike.",
+        "exam_ko": "그녀는 쌍둥이를 <strong class=\"target-word\">낳고</strong> 비슷한 이름을 지어주었다."
+      },
+      {
+        "exam_en": "Black people continue to <strong class=\"target-word\">bear</strong> the brunt of most racial violence.",
+        "exam_ko": "흑인들은 대부분의 인종적 폭력에 계속해서 정면으로 <strong class=\"target-word\">맞서고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 218,
+    "origin": "shake",
+    "examples": [
+      {
+        "exam_en": "He felt his house <strong class=\"target-word\">shook</strong> when the trains passed by.",
+        "exam_ko": "그는 열차가 지나갈 때 집이 <strong class=\"target-word\">흔들리는</strong> 것을 느꼈다."
+      },
+      {
+        "exam_en": "The audience <strong class=\"target-word\">shook</strong> with laughter throughout the show.",
+        "exam_ko": "관객들은 공연 내내 웃음으로 <strong class=\"target-word\">몸을 떨었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 219,
+    "origin": "sign",
+    "examples": [
+      {
+        "exam_en": "The score included a sharp <strong class=\"target-word\">sign</strong> on the staff.",
+        "exam_ko": "악보에 샤프 <strong class=\"target-word\">기호</strong>가 표시되어 있었다."
+      },
+      {
+        "exam_en": "An equals <strong class=\"target-word\">sign</strong> connects the two sides of an equation.",
+        "exam_ko": "등호 <strong class=\"target-word\">기호</strong>가 방정식 양쪽을 연결한다."
+      }
+    ]
+  },
+  {
+    "id": 220,
+    "origin": "attend",
+    "examples": [
+      {
+        "exam_en": "Students are required to <strong class=\"target-word\">attend</strong> classes every day.",
+        "exam_ko": "학생들은 매일 수업에 <strong class=\"target-word\">출석해야</strong> 한다."
+      },
+      {
+        "exam_en": "Thousands of fans <strong class=\"target-word\">attended</strong> the outdoor concert.",
+        "exam_ko": "수천 명의 팬들이 야외 음악회에 <strong class=\"target-word\">참석했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 221,
+    "origin": "fly",
+    "examples": [
+      {
+        "exam_en": "The bird <strong class=\"target-word\">flew</strong> away when the cat approached.",
+        "exam_ko": "고양이가 다가오자 새가 <strong class=\"target-word\">날아갔다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">flew</strong> in from New York early this morning.",
+        "exam_ko": "그녀는 오늘 아침 일찍 뉴욕에서 비행기로 <strong class=\"target-word\">도착했다</strong>."
+      },
+      {
+        "exam_en": "Time <strong class=\"target-word\">flies</strong> when you are having fun.",
+        "exam_ko": "즐거울 때는 시간이 <strong class=\"target-word\">날아간다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 222,
+    "origin": "gain",
+    "examples": [
+      {
+        "exam_en": "Our team <strong class=\"target-word\">gained</strong> a victory in the final match.",
+        "exam_ko": "우리 팀은 결승전에서 승리를 <strong class=\"target-word\">얻었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">gained</strong> a fortune through hard work.",
+        "exam_ko": "그는 열심히 일해 큰 돈을 <strong class=\"target-word\">벌었다</strong>."
+      }
+    ]
+  }
+]

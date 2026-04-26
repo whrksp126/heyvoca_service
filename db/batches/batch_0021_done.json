@@ -1,0 +1,282 @@
+[
+  {
+    "id": 404,
+    "origin": "pick",
+    "examples": [
+      {
+        "exam_en": "She carefully <strong class=\"target-word\">picked</strong> her words during the speech.",
+        "exam_ko": "그녀는 연설 중에 신중하게 말을 <strong class=\"target-word\">골랐다</strong>."
+      },
+      {
+        "exam_en": "The host <strong class=\"target-word\">picked</strong> a contestant from the audience.",
+        "exam_ko": "진행자가 청중 중에서 출연자를 <strong class=\"target-word\">뽑았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 405,
+    "origin": "prove",
+    "examples": [
+      {
+        "exam_en": "The lawyer worked hard to <strong class=\"target-word\">prove</strong> his guilt.",
+        "exam_ko": "변호사는 그의 유죄를 <strong class=\"target-word\">입증하기</strong> 위해 열심히 노력했다."
+      },
+      {
+        "exam_en": "The evidence <strong class=\"target-word\">proved</strong> him innocent.",
+        "exam_ko": "그 증거로 그의 결백이 <strong class=\"target-word\">증명되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 406,
+    "origin": "argue",
+    "examples": [
+      {
+        "exam_en": "She tends to <strong class=\"target-word\">argue</strong> with her coworkers.",
+        "exam_ko": "그녀는 동료들과 <strong class=\"target-word\">논쟁하는</strong> 경향이 있다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">argued</strong> over the price for hours.",
+        "exam_ko": "그들은 몇 시간 동안 가격에 대해 <strong class=\"target-word\">언쟁했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 407,
+    "origin": "introduce",
+    "examples": [
+      {
+        "exam_en": "Let me <strong class=\"target-word\">introduce</strong> Mr. Brown to you.",
+        "exam_ko": "브라운 씨를 여러분께 <strong class=\"target-word\">소개합니다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">introduced</strong> himself as Professor Smith.",
+        "exam_ko": "그는 자신을 스미스 교수라고 <strong class=\"target-word\">소개했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 408,
+    "origin": "enter",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">entered</strong> through the front door.",
+        "exam_ko": "그녀는 정문으로 <strong class=\"target-word\">들어갔다</strong>."
+      },
+      {
+        "exam_en": "May I <strong class=\"target-word\">enter</strong>?",
+        "exam_ko": "<strong class=\"target-word\">들어가도</strong> 괜찮습니까?"
+      }
+    ]
+  },
+  {
+    "id": 409,
+    "origin": "point",
+    "examples": [
+      {
+        "exam_en": "The sword has a sharp <strong class=\"target-word\">point</strong> at the tip.",
+        "exam_ko": "그 검은 끝에 날카로운 <strong class=\"target-word\">칼끝</strong>이 있다."
+      },
+      {
+        "exam_en": "The ballet dancers stood on the <strong class=\"target-word\">points</strong> of their toes.",
+        "exam_ko": "발레리나들은 발가락 <strong class=\"target-word\">끝</strong>으로 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 410,
+    "origin": "ensure",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">ensured</strong> a good job for his friend.",
+        "exam_ko": "그는 친구를 위해 좋은 직장을 <strong class=\"target-word\">확보해 주었다</strong>."
+      },
+      {
+        "exam_en": "Take a taxi to <strong class=\"target-word\">ensure</strong> you catch the plane.",
+        "exam_ko": "비행기를 놓치지 않으려면 택시를 타서 <strong class=\"target-word\">확실히</strong> 하세요."
+      }
+    ]
+  },
+  {
+    "id": 411,
+    "origin": "pull",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pulled</strong> the trigger without hesitation.",
+        "exam_ko": "그는 망설임 없이 방아쇠를 <strong class=\"target-word\">당겼다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pulled</strong> the curtain to block the sunlight.",
+        "exam_ko": "그녀는 햇빛을 막으려고 커튼을 <strong class=\"target-word\">잡아당겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 412,
+    "origin": "refer",
+    "examples": [
+      {
+        "exam_en": "The minister often <strong class=\"target-word\">referred</strong> to the Bible.",
+        "exam_ko": "목사는 종종 성서의 말씀을 <strong class=\"target-word\">인용했다</strong>."
+      },
+      {
+        "exam_en": "I never <strong class=\"target-word\">refer</strong> to you by that remark.",
+        "exam_ko": "내 말은 결코 여러분을 <strong class=\"target-word\">언급하는</strong> 것이 아닙니다."
+      }
+    ]
+  },
+  {
+    "id": 413,
+    "origin": "act",
+    "examples": [
+      {
+        "exam_en": "Saving the child was a brave <strong class=\"target-word\">act</strong>.",
+        "exam_ko": "아이를 구한 것은 용감한 <strong class=\"target-word\">행위</strong>였다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">acted</strong> powerfully and moved the audience.",
+        "exam_ko": "그녀는 강렬하게 <strong class=\"target-word\">연기하여</strong> 관객을 감동시켰다."
+      }
+    ]
+  },
+  {
+    "id": 414,
+    "origin": "relate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">related</strong> his experiences to us.",
+        "exam_ko": "그는 자신의 경험담을 우리에게 <strong class=\"target-word\">이야기했다</strong>."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">related</strong> that she survived alone.",
+        "exam_ko": "그녀가 혼자 살아남았다는 말이 <strong class=\"target-word\">전해지고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 415,
+    "origin": "affect",
+    "examples": [
+      {
+        "exam_en": "The divorce <strong class=\"target-word\">affected</strong> every aspect of her life.",
+        "exam_ko": "이혼은 그녀의 모든 생활에 <strong class=\"target-word\">영향을 미쳤다</strong>."
+      },
+      {
+        "exam_en": "The brandy <strong class=\"target-word\">affected</strong> him quickly.",
+        "exam_ko": "브랜디가 그에게 빠르게 <strong class=\"target-word\">영향을 미쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 416,
+    "origin": "manage",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">managed</strong> to visit her despite his busy schedule.",
+        "exam_ko": "그는 바쁜 일정에도 가까스로 그녀를 <strong class=\"target-word\">방문했다</strong>."
+      },
+      {
+        "exam_en": "The two sides <strong class=\"target-word\">managed</strong> a peaceful settlement.",
+        "exam_ko": "쌍방은 가까스로 평화적인 해결을 <strong class=\"target-word\">이루어냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 417,
+    "origin": "identify",
+    "examples": [
+      {
+        "exam_en": "The expert could <strong class=\"target-word\">identify</strong> the handwriting immediately.",
+        "exam_ko": "전문가는 즉시 필적을 <strong class=\"target-word\">감정할</strong> 수 있었다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">identify</strong> yourself before entering.",
+        "exam_ko": "들어가기 전에 이름을 <strong class=\"target-word\">밝혀주세요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 418,
+    "origin": "thank",
+    "examples": [
+      {
+        "exam_en": "I can't <strong class=\"target-word\">thank</strong> you enough.",
+        "exam_ko": "뭐라고 <strong class=\"target-word\">감사해야</strong> 할지 모르겠습니다."
+      },
+      {
+        "exam_en": "You can <strong class=\"target-word\">thank</strong> Tom for this trouble.",
+        "exam_ko": "이 문제는 톰에게 <strong class=\"target-word\">감사해야</strong> 할 일이다."
+      }
+    ]
+  },
+  {
+    "id": 419,
+    "origin": "compare",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">compared</strong> her idea with her colleague's.",
+        "exam_ko": "그녀는 자기 생각을 동료의 생각과 <strong class=\"target-word\">비교했다</strong>."
+      },
+      {
+        "exam_en": "Life may be <strong class=\"target-word\">compared</strong> to a voyage.",
+        "exam_ko": "인생은 항해에 <strong class=\"target-word\">비유할</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 420,
+    "origin": "obtain",
+    "examples": [
+      {
+        "exam_en": "She finally <strong class=\"target-word\">obtained</strong> a job after months of searching.",
+        "exam_ko": "그녀는 몇 달간의 구직 끝에 마침내 일자리를 <strong class=\"target-word\">얻었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">obtained</strong> possession of a stately mansion.",
+        "exam_ko": "그는 당당한 저택을 <strong class=\"target-word\">손에 넣었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 421,
+    "origin": "announce",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">announced</strong> their wedding in the newspaper.",
+        "exam_ko": "그들은 신문에 결혼을 <strong class=\"target-word\">발표했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">announced</strong> his death to a few close friends.",
+        "exam_ko": "그녀는 몇 명의 친한 친구에게만 그의 죽음을 <strong class=\"target-word\">알렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 422,
+    "origin": "note",
+    "examples": [
+      {
+        "exam_en": "He took careful <strong class=\"target-word\">notes</strong> during the lecture.",
+        "exam_ko": "그는 강의 중에 꼼꼼히 <strong class=\"target-word\">메모를 했다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">note</strong> that the deadline is tomorrow.",
+        "exam_ko": "마감일이 내일임을 <strong class=\"target-word\">주목하세요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 423,
+    "origin": "indicate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">indicated</strong> the door without saying a word.",
+        "exam_ko": "그는 아무 말 없이 문을 <strong class=\"target-word\">가리켰다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">indicated</strong> a chair for me to sit in.",
+        "exam_ko": "그녀는 내가 앉을 의자를 <strong class=\"target-word\">가리켰다</strong>."
+      }
+    ]
+  }
+]

@@ -1,0 +1,230 @@
+[
+  {
+    "id": 32000,
+    "origin": "unawares",
+    "examples": [
+      {
+        "exam_en": "He injured his leg unawares.",
+        "exam_ko": "그는 깜빡하다가 다리를 다치고 말았다."
+      },
+      {
+        "exam_en": "take a person unawares",
+        "exam_ko": "남에게 기습을 가하다, 남의 허를 찌르다"
+      }
+    ]
+  },
+  {
+    "id": 32017,
+    "origin": "alphabetical",
+    "examples": [
+      {
+        "exam_en": "in alphabetical order",
+        "exam_ko": "알파벳순으로."
+      }
+    ]
+  },
+  {
+    "id": 32043,
+    "origin": "paperless",
+    "examples": [
+      {
+        "exam_en": "a paperless book",
+        "exam_ko": "전자책"
+      },
+      {
+        "exam_en": "paperless design",
+        "exam_ko": "컴퓨터 설계."
+      }
+    ]
+  },
+  {
+    "id": 32063,
+    "origin": "doss",
+    "examples": [
+      {
+        "exam_en": "doss down in a car",
+        "exam_ko": "차 안에서 자다"
+      },
+      {
+        "exam_en": "doss out",
+        "exam_ko": "노숙하다."
+      }
+    ]
+  },
+  {
+    "id": 32079,
+    "origin": "consumptive",
+    "examples": [
+      {
+        "exam_en": "consumptive fires",
+        "exam_ko": "전소 상태의 화재."
+      }
+    ]
+  },
+  {
+    "id": 32081,
+    "origin": "blooper",
+    "examples": [
+      {
+        "exam_en": "make a blooper",
+        "exam_ko": "큰 실수를 저지르다."
+      }
+    ]
+  },
+  {
+    "id": 32088,
+    "origin": "toed",
+    "examples": [
+      {
+        "exam_en": "pigeon-toed",
+        "exam_ko": "발끝이 안쪽으로 향한"
+      },
+      {
+        "exam_en": "three-toed",
+        "exam_ko": "발가락이 세 개 있는."
+      }
+    ]
+  },
+  {
+    "id": 32091,
+    "origin": "checked",
+    "examples": [
+      {
+        "exam_en": "checked vowels",
+        "exam_ko": "억지 모음(hit의 [i] 등)."
+      }
+    ]
+  },
+  {
+    "id": 32101,
+    "origin": "valuate",
+    "examples": [
+      {
+        "exam_en": "He valuated the land at $10,000.",
+        "exam_ko": "그는 그 토지를 만 달러로 평가했다."
+      }
+    ]
+  },
+  {
+    "id": 32104,
+    "origin": "leisured",
+    "examples": [
+      {
+        "exam_en": "the leisured class",
+        "exam_ko": "유한 계급."
+      }
+    ]
+  },
+  {
+    "id": 32106,
+    "origin": "seeker",
+    "examples": [
+      {
+        "exam_en": "a scientific seeker of the truth",
+        "exam_ko": "진리를 과학적으로 추구하는 사람"
+      },
+      {
+        "exam_en": "a pleasure seeker",
+        "exam_ko": "쾌락을 좇는 사람."
+      }
+    ]
+  },
+  {
+    "id": 32119,
+    "origin": "advantaged",
+    "examples": [
+      {
+        "exam_en": "a financially advantaged family",
+        "exam_ko": "재정적으로 혜택을 받은 가문."
+      }
+    ]
+  },
+  {
+    "id": 32127,
+    "origin": "cooked",
+    "examples": [
+      {
+        "exam_en": "cooked meats",
+        "exam_ko": "조리된 고기."
+      }
+    ]
+  },
+  {
+    "id": 32128,
+    "origin": "corkscrew",
+    "examples": [
+      {
+        "exam_en": "a corkscrew staircase",
+        "exam_ko": "나선형 계단."
+      },
+      {
+        "exam_en": "corkscrew one's way",
+        "exam_ko": "나선 모양으로 나아가다."
+      }
+    ]
+  },
+  {
+    "id": 32136,
+    "origin": "remediable",
+    "examples": [
+      {
+        "exam_en": "The faults in the political system are clearly remediable.",
+        "exam_ko": "정치 제도상의 결함은 분명히 교정될 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 32138,
+    "origin": "principled",
+    "examples": [
+      {
+        "exam_en": "high-principled",
+        "exam_ko": "신조가 고결한[절조가 없는]"
+      },
+      {
+        "exam_en": "a principled basis",
+        "exam_ko": "원리를 갖춘 기반"
+      }
+    ]
+  },
+  {
+    "id": 32248,
+    "origin": "bruit",
+    "examples": [
+      {
+        "exam_en": "It is bruited abroad that",
+        "exam_ko": "…이라는 소문이 나 있다."
+      }
+    ]
+  },
+  {
+    "id": 32253,
+    "origin": "alliterate",
+    "examples": [
+      {
+        "exam_en": "'Might' alliterates with 'main'.",
+        "exam_ko": "might와 main은 두운을 맞춘 것이다."
+      }
+    ]
+  },
+  {
+    "id": 32272,
+    "origin": "foreordain",
+    "examples": [
+      {
+        "exam_en": "He was foreordained to die early.",
+        "exam_ko": "그는 일찍 죽을 운명이었다."
+      }
+    ]
+  },
+  {
+    "id": 32279,
+    "origin": "entrancing",
+    "examples": [
+      {
+        "exam_en": "an entrancing dream",
+        "exam_ko": "황홀한 꿈."
+      }
+    ]
+  }
+]

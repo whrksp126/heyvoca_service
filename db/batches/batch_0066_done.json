@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1371,
+    "origin": "visa",
+    "examples": [
+      {
+        "exam_en": "She applied for a tourist <strong class=\"target-word\">visa</strong>.",
+        "exam_ko": "그녀는 관광 <strong class=\"target-word\">비자</strong>를 신청했다."
+      },
+      {
+        "exam_en": "He was granted a <strong class=\"target-word\">visa</strong> to enter the country.",
+        "exam_ko": "그는 그 나라에 입국하는 <strong class=\"target-word\">비자</strong>를 허가받았다."
+      }
+    ]
+  },
+  {
+    "id": 1372,
+    "origin": "or",
+    "examples": [
+      {
+        "exam_en": "You <strong class=\"target-word\">or</strong> I will be chosen.",
+        "exam_ko": "너 <strong class=\"target-word\">또는</strong> 내가 뽑히게 될 것이다."
+      },
+      {
+        "exam_en": "Tell me the truth, <strong class=\"target-word\">or</strong> I will leave.",
+        "exam_ko": "사실을 말해줘, <strong class=\"target-word\">그렇지 않으면</strong> 나는 떠날 거야."
+      }
+    ]
+  },
+  {
+    "id": 1373,
+    "origin": "month",
+    "examples": [
+      {
+        "exam_en": "She travels abroad once a <strong class=\"target-word\">month</strong>.",
+        "exam_ko": "그녀는 한 달에 한 번 해외로 여행한다."
+      },
+      {
+        "exam_en": "The project will finish within a few <strong class=\"target-word\">months</strong>.",
+        "exam_ko": "그 프로젝트는 몇 <strong class=\"target-word\">달</strong> 이내에 끝날 것이다."
+      }
+    ]
+  },
+  {
+    "id": 1374,
+    "origin": "assist",
+    "examples": [
+      {
+        "exam_en": "The organization <strong class=\"target-word\">assists</strong> people financially.",
+        "exam_ko": "그 기관은 사람들을 재정적으로 <strong class=\"target-word\">지원한다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">assisted</strong> the child with his math homework.",
+        "exam_ko": "그녀는 아이의 수학 숙제를 <strong class=\"target-word\">도와주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1375,
+    "origin": "apartment",
+    "examples": [
+      {
+        "exam_en": "They furnished the <strong class=\"target-word\">apartment</strong> with modern furniture.",
+        "exam_ko": "그들은 <strong class=\"target-word\">아파트</strong>에 현대식 가구를 들여놓았다."
+      },
+      {
+        "exam_en": "He rented an <strong class=\"target-word\">apartment</strong> near the office.",
+        "exam_ko": "그는 사무실 근처에 <strong class=\"target-word\">아파트</strong>를 임차했다."
+      }
+    ]
+  },
+  {
+    "id": 1376,
+    "origin": "curtain",
+    "examples": [
+      {
+        "exam_en": "She drew the <strong class=\"target-word\">curtain</strong> to block the sunlight.",
+        "exam_ko": "그녀는 햇빛을 차단하려고 <strong class=\"target-word\">커튼</strong>을 당겼다."
+      },
+      {
+        "exam_en": "He hung new <strong class=\"target-word\">curtains</strong> in the living room.",
+        "exam_ko": "그는 거실에 새 <strong class=\"target-word\">커튼</strong>을 달았다."
+      }
+    ]
+  },
+  {
+    "id": 1377,
+    "origin": "parking",
+    "examples": [
+      {
+        "exam_en": "He got a fine for illegal <strong class=\"target-word\">parking</strong>.",
+        "exam_ko": "그는 불법 <strong class=\"target-word\">주차</strong>로 벌금을 받았다."
+      },
+      {
+        "exam_en": "The mall offers free <strong class=\"target-word\">parking</strong> for customers.",
+        "exam_ko": "쇼핑몰은 고객들에게 무료 <strong class=\"target-word\">주차</strong>를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 1378,
+    "origin": "really",
+    "examples": [
+      {
+        "exam_en": "We should accept things as they <strong class=\"target-word\">really</strong> are.",
+        "exam_ko": "우리는 사물을 있는 그대로 <strong class=\"target-word\">정말로</strong> 받아들여야 한다."
+      },
+      {
+        "exam_en": "I know how to do it, I <strong class=\"target-word\">really</strong> do.",
+        "exam_ko": "나는 그것을 하는 방법을 알아, <strong class=\"target-word\">정말이야</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1379,
+    "origin": "yesterday",
+    "examples": [
+      {
+        "exam_en": "The accident took place <strong class=\"target-word\">yesterday</strong>.",
+        "exam_ko": "그 사고는 <strong class=\"target-word\">어제</strong> 일어났다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Yesterday</strong> it was very cold.",
+        "exam_ko": "<strong class=\"target-word\">어제</strong>는 매우 추웠다."
+      }
+    ]
+  },
+  {
+    "id": 1380,
+    "origin": "worry",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">worries</strong> a lot about her health.",
+        "exam_ko": "그녀는 건강에 대해 많이 <strong class=\"target-word\">걱정한다</strong>."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">worry</strong> about things you can't control.",
+        "exam_ko": "통제할 수 없는 일에 대해 <strong class=\"target-word\">걱정하지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 1381,
+    "origin": "meeting",
+    "examples": [
+      {
+        "exam_en": "The two sides reached a <strong class=\"target-word\">meeting</strong> of minds.",
+        "exam_ko": "양측은 합의에 도달했다."
+      },
+      {
+        "exam_en": "It was a chance <strong class=\"target-word\">meeting</strong> with an old friend.",
+        "exam_ko": "그것은 옛 친구와의 우연한 <strong class=\"target-word\">만남</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 1382,
+    "origin": "nag",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">nags</strong> his staff about petty details.",
+        "exam_ko": "그는 하잘것없는 일로 부하에게 <strong class=\"target-word\">잔소리한다</strong>."
+      },
+      {
+        "exam_en": "My mother always <strong class=\"target-word\">nags</strong> me to clean my room.",
+        "exam_ko": "어머니는 방을 청소하라고 나에게 항상 <strong class=\"target-word\">잔소리하신다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1383,
+    "origin": "honeymoon",
+    "examples": [
+      {
+        "exam_en": "They chose a tropical island for their <strong class=\"target-word\">honeymoon</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">신혼여행</strong>지로 열대 섬을 선택했다."
+      },
+      {
+        "exam_en": "The couple went on a second <strong class=\"target-word\">honeymoon</strong> for their anniversary.",
+        "exam_ko": "그 부부는 기념일을 맞아 두 번째 <strong class=\"target-word\">허니문</strong>을 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 1384,
+    "origin": "servant",
+    "examples": [
+      {
+        "exam_en": "The mansion employed many domestic <strong class=\"target-word\">servants</strong>.",
+        "exam_ko": "그 저택에는 많은 <strong class=\"target-word\">하인</strong>들이 고용되어 있었다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">servant</strong> girl cleaned the rooms every morning.",
+        "exam_ko": "<strong class=\"target-word\">하녀</strong>가 매일 아침 방들을 청소했다."
+      }
+    ]
+  },
+  {
+    "id": 1385,
+    "origin": "everyday",
+    "examples": [
+      {
+        "exam_en": "Traffic delays are an <strong class=\"target-word\">everyday</strong> occurrence in the city.",
+        "exam_ko": "교통 지체는 도시에서 <strong class=\"target-word\">일상적인</strong> 일이다."
+      },
+      {
+        "exam_en": "She prefers to wear <strong class=\"target-word\">everyday</strong> clothes at home.",
+        "exam_ko": "그녀는 집에서 <strong class=\"target-word\">평상복</strong>을 즐겨 입는다."
+      }
+    ]
+  },
+  {
+    "id": 1386,
+    "origin": "dust",
+    "examples": [
+      {
+        "exam_en": "A thick layer of <strong class=\"target-word\">dust</strong> covered the old furniture.",
+        "exam_ko": "두꺼운 <strong class=\"target-word\">먼지</strong> 층이 오래된 가구를 덮고 있었다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">dusted</strong> the shelves before guests arrived.",
+        "exam_ko": "그녀는 손님이 오기 전에 선반의 <strong class=\"target-word\">먼지를 닦았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1387,
+    "origin": "complain",
+    "examples": [
+      {
+        "exam_en": "Customers <strong class=\"target-word\">complained</strong> about the high prices.",
+        "exam_ko": "고객들은 높은 가격에 대해 <strong class=\"target-word\">불평했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">complained</strong> about the poor treatment she received.",
+        "exam_ko": "그녀는 받은 대우가 나쁘다고 <strong class=\"target-word\">불평했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1388,
+    "origin": "by",
+    "examples": [
+      {
+        "exam_en": "They live in a house <strong class=\"target-word\">by</strong> the river.",
+        "exam_ko": "그들은 강 <strong class=\"target-word\">옆에</strong> 있는 집에 산다."
+      },
+      {
+        "exam_en": "A potted flower stood <strong class=\"target-word\">by</strong> the window.",
+        "exam_ko": "화분 하나가 창문 <strong class=\"target-word\">옆에</strong> 놓여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1389,
+    "origin": "who",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Who</strong> is knocking at the door?",
+        "exam_ko": "문을 두드리는 사람이 <strong class=\"target-word\">누구</strong>니?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Who</strong> do you think you are?",
+        "exam_ko": "도대체 네가 <strong class=\"target-word\">누구</strong>라고 생각하니?"
+      }
+    ]
+  },
+  {
+    "id": 1390,
+    "origin": "well",
+    "examples": [
+      {
+        "exam_en": "Work is going <strong class=\"target-word\">well</strong>.",
+        "exam_ko": "일은 <strong class=\"target-word\">잘</strong> 되어 가고 있다."
+      },
+      {
+        "exam_en": "All's <strong class=\"target-word\">well</strong> that ends well.",
+        "exam_ko": "끝이 <strong class=\"target-word\">좋으면</strong> 만사가 좋다."
+      }
+    ]
+  }
+]

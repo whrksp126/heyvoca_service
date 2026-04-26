@@ -183,7 +183,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
         ref={scrollContainerRef}
         className="
           flex flex-col gap-[10px]
-          max-h-[calc(90vh-47px)] h-full
+          max-h-[calc(90vh-47px)]
           p-[20px] pb-[105px]
           overflow-y-auto
         "

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 649,
+    "origin": "merchant",
+    "examples": [
+      {
+        "exam_en": "He works as an import-export <strong class=\"target-word\">merchant</strong>.",
+        "exam_ko": "그는 수출입 <strong class=\"target-word\">상인</strong>으로 일한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">merchant</strong> sold goods at the market.",
+        "exam_ko": "그 <strong class=\"target-word\">상인</strong>은 시장에서 물건을 팔았다."
+      }
+    ]
+  },
+  {
+    "id": 650,
+    "origin": "medicine",
+    "examples": [
+      {
+        "exam_en": "She took <strong class=\"target-word\">medicine</strong> for her cold.",
+        "exam_ko": "그녀는 감기 <strong class=\"target-word\">약</strong>을 먹었다."
+      },
+      {
+        "exam_en": "He studied <strong class=\"target-word\">medicine</strong> at university.",
+        "exam_ko": "그는 대학에서 <strong class=\"target-word\">의학</strong>을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 651,
+    "origin": "marriage",
+    "examples": [
+      {
+        "exam_en": "They had an arranged <strong class=\"target-word\">marriage</strong>.",
+        "exam_ko": "그들은 중매 <strong class=\"target-word\">결혼</strong>을 했다."
+      },
+      {
+        "exam_en": "Their <strong class=\"target-word\">marriage</strong> lasted fifty years.",
+        "exam_ko": "그들의 <strong class=\"target-word\">결혼</strong>은 50년간 지속되었다."
+      }
+    ]
+  },
+  {
+    "id": 652,
+    "origin": "mankind",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Mankind</strong> has explored every corner of Earth.",
+        "exam_ko": "<strong class=\"target-word\">인류</strong>는 지구의 모든 구석을 탐험했다."
+      },
+      {
+        "exam_en": "Science benefits all of <strong class=\"target-word\">mankind</strong>.",
+        "exam_ko": "과학은 모든 <strong class=\"target-word\">인류</strong>에게 혜택을 준다."
+      }
+    ]
+  },
+  {
+    "id": 653,
+    "origin": "guest",
+    "examples": [
+      {
+        "exam_en": "We invited <strong class=\"target-word\">guests</strong> for Christmas dinner.",
+        "exam_ko": "우리는 크리스마스 저녁 식사에 <strong class=\"target-word\">손님들</strong>을 초대했다."
+      },
+      {
+        "exam_en": "The hotel <strong class=\"target-word\">guest</strong> checked in early.",
+        "exam_ko": "호텔 <strong class=\"target-word\">투숙객</strong>은 일찍 체크인했다."
+      }
+    ]
+  },
+  {
+    "id": 654,
+    "origin": "grace",
+    "examples": [
+      {
+        "exam_en": "Mary danced with <strong class=\"target-word\">grace</strong>.",
+        "exam_ko": "메리는 <strong class=\"target-word\">우아하게</strong> 춤을 추었다."
+      },
+      {
+        "exam_en": "She accepted the award with <strong class=\"target-word\">grace</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">품위 있게</strong> 상을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 655,
+    "origin": "government",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">government</strong> announced a new policy.",
+        "exam_ko": "<strong class=\"target-word\">정부</strong>는 새 정책을 발표했다."
+      },
+      {
+        "exam_en": "The Federal <strong class=\"target-word\">Government</strong> passed the bill.",
+        "exam_ko": "연방 <strong class=\"target-word\">정부</strong>는 법안을 통과시켰다."
+      }
+    ]
+  },
+  {
+    "id": 656,
+    "origin": "ghost",
+    "examples": [
+      {
+        "exam_en": "Children fear the <strong class=\"target-word\">ghost</strong> in the old house.",
+        "exam_ko": "아이들은 오래된 집의 <strong class=\"target-word\">유령</strong>을 두려워한다."
+      },
+      {
+        "exam_en": "He is a mere <strong class=\"target-word\">ghost</strong> of his former self.",
+        "exam_ko": "그는 예전 자신의 <strong class=\"target-word\">그림자</strong>에 불과하다."
+      }
+    ]
+  },
+  {
+    "id": 657,
+    "origin": "gesture",
+    "examples": [
+      {
+        "exam_en": "He made a rude <strong class=\"target-word\">gesture</strong> at the driver.",
+        "exam_ko": "그는 운전자에게 무례한 <strong class=\"target-word\">몸짓</strong>을 했다."
+      },
+      {
+        "exam_en": "She waved as a <strong class=\"target-word\">gesture</strong> of farewell.",
+        "exam_ko": "그녀는 작별의 <strong class=\"target-word\">표시</strong>로 손을 흔들었다."
+      }
+    ]
+  },
+  {
+    "id": 658,
+    "origin": "garage",
+    "examples": [
+      {
+        "exam_en": "They built a double <strong class=\"target-word\">garage</strong> for two cars.",
+        "exam_ko": "그들은 차 두 대를 위한 복식 <strong class=\"target-word\">차고</strong>를 지었다."
+      },
+      {
+        "exam_en": "He parked his car in the <strong class=\"target-word\">garage</strong>.",
+        "exam_ko": "그는 차를 <strong class=\"target-word\">차고</strong>에 주차했다."
+      }
+    ]
+  },
+  {
+    "id": 659,
+    "origin": "foundation",
+    "examples": [
+      {
+        "exam_en": "He laid the <strong class=\"target-word\">foundation</strong> of his fortune early.",
+        "exam_ko": "그는 일찍부터 재산의 <strong class=\"target-word\">기초</strong>를 쌓았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">foundation</strong> of the building was cracked.",
+        "exam_ko": "건물의 <strong class=\"target-word\">토대</strong>가 갈라져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 660,
+    "origin": "folk",
+    "examples": [
+      {
+        "exam_en": "Country <strong class=\"target-word\">folk</strong> live a quiet life.",
+        "exam_ko": "시골 <strong class=\"target-word\">사람들</strong>은 조용한 생활을 한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Folks</strong> disagree on many issues.",
+        "exam_ko": "<strong class=\"target-word\">사람들</strong>은 많은 문제에서 의견이 엇갈린다."
+      }
+    ]
+  },
+  {
+    "id": 661,
+    "origin": "comfort",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">comforted</strong> him after his failure.",
+        "exam_ko": "나는 그의 실패 후 그를 <strong class=\"target-word\">위로했다</strong>."
+      },
+      {
+        "exam_en": "Her words gave me great <strong class=\"target-word\">comfort</strong>.",
+        "exam_ko": "그녀의 말은 나에게 큰 <strong class=\"target-word\">위안</strong>을 주었다."
+      }
+    ]
+  },
+  {
+    "id": 662,
+    "origin": "column",
+    "examples": [
+      {
+        "exam_en": "A bright <strong class=\"target-word\">column</strong> of moonlight lit the room.",
+        "exam_ko": "한 줄기 밝은 달빛 <strong class=\"target-word\">기둥</strong>이 방을 밝혔다."
+      },
+      {
+        "exam_en": "The rain fell in heavy <strong class=\"target-word\">columns</strong>.",
+        "exam_ko": "비가 굵은 <strong class=\"target-word\">줄기</strong>로 쏟아졌다."
+      }
+    ]
+  },
+  {
+    "id": 663,
+    "origin": "coast",
+    "examples": [
+      {
+        "exam_en": "The tour traveled from <strong class=\"target-word\">coast</strong> to coast.",
+        "exam_ko": "그 투어는 <strong class=\"target-word\">해안</strong>에서 해안까지 이동했다."
+      },
+      {
+        "exam_en": "They sailed off the east <strong class=\"target-word\">coast</strong> of the island.",
+        "exam_ko": "그들은 섬의 동쪽 <strong class=\"target-word\">해안</strong> 앞바다를 항해했다."
+      }
+    ]
+  },
+  {
+    "id": 664,
+    "origin": "coal",
+    "examples": [
+      {
+        "exam_en": "The factory burned <strong class=\"target-word\">coal</strong> for energy.",
+        "exam_ko": "공장은 에너지를 위해 <strong class=\"target-word\">석탄</strong>을 태웠다."
+      },
+      {
+        "exam_en": "Hard <strong class=\"target-word\">coal</strong> burns longer than soft coal.",
+        "exam_ko": "무연 <strong class=\"target-word\">석탄</strong>은 연탄보다 오래 탄다."
+      }
+    ]
+  },
+  {
+    "id": 665,
+    "origin": "climate",
+    "examples": [
+      {
+        "exam_en": "Korea has a mild <strong class=\"target-word\">climate</strong> in spring.",
+        "exam_ko": "한국은 봄에 온화한 <strong class=\"target-word\">기후</strong>를 가진다."
+      },
+      {
+        "exam_en": "Scientists warn of rapid <strong class=\"target-word\">climate</strong> change.",
+        "exam_ko": "과학자들은 급격한 <strong class=\"target-word\">기후</strong> 변화를 경고한다."
+      }
+    ]
+  },
+  {
+    "id": 666,
+    "origin": "chalk",
+    "examples": [
+      {
+        "exam_en": "The teacher wrote on the board with <strong class=\"target-word\">chalk</strong>.",
+        "exam_ko": "선생님은 <strong class=\"target-word\">분필</strong>로 칠판에 글씨를 썼다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Chalk</strong> dust covered the classroom floor.",
+        "exam_ko": "<strong class=\"target-word\">분필</strong> 가루가 교실 바닥을 뒤덮었다."
+      }
+    ]
+  },
+  {
+    "id": 667,
+    "origin": "chain",
+    "examples": [
+      {
+        "exam_en": "The dog was tied with a heavy <strong class=\"target-word\">chain</strong>.",
+        "exam_ko": "개는 무거운 <strong class=\"target-word\">쇠사슬</strong>로 묶여 있었다."
+      },
+      {
+        "exam_en": "She wore a gold <strong class=\"target-word\">chain</strong> around her neck.",
+        "exam_ko": "그녀는 목에 금 <strong class=\"target-word\">목걸이</strong>를 걸고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 668,
+    "origin": "ceremony",
+    "examples": [
+      {
+        "exam_en": "They held a simple wedding <strong class=\"target-word\">ceremony</strong>.",
+        "exam_ko": "그들은 간소한 결혼 <strong class=\"target-word\">식</strong>을 올렸다."
+      },
+      {
+        "exam_en": "The graduation <strong class=\"target-word\">ceremony</strong> lasted two hours.",
+        "exam_ko": "졸업 <strong class=\"target-word\">식</strong>은 두 시간 동안 진행되었다."
+      }
+    ]
+  }
+]

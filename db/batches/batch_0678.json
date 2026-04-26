@@ -1,0 +1,234 @@
+[
+  {
+    "id": 26844,
+    "origin": "distantly",
+    "examples": [
+      {
+        "exam_en": "I am distantly related to the Mayor.",
+        "exam_ko": "시장과는 먼 친척 관계이다."
+      }
+    ]
+  },
+  {
+    "id": 26846,
+    "origin": "beep",
+    "examples": [
+      {
+        "exam_en": "Please leave a message after the beep.",
+        "exam_ko": "발신음 후에 용건을 말하시오(※부재중 전화의 응답 메시지)."
+      },
+      {
+        "exam_en": "The computer beeps when you make a mistake.",
+        "exam_ko": "당신이 잘못했을 때 컴퓨터는 삑 소리를 낸다."
+      }
+    ]
+  },
+  {
+    "id": 26850,
+    "origin": "protestation",
+    "examples": [
+      {
+        "exam_en": "make a protestation of one's good faith",
+        "exam_ko": "자기의 성실함을 주장하다."
+      }
+    ]
+  },
+  {
+    "id": 26851,
+    "origin": "grounding",
+    "examples": [
+      {
+        "exam_en": "have a good grounding in English grammar",
+        "exam_ko": "영문법의 기초 지식이 잘 갖추어져 있다."
+      }
+    ]
+  },
+  {
+    "id": 26861,
+    "origin": "commemorative",
+    "examples": [
+      {
+        "exam_en": "a commemorative banquet",
+        "exam_ko": "기념 연회"
+      },
+      {
+        "exam_en": "a commemorative stamp",
+        "exam_ko": "기념 우표."
+      }
+    ]
+  },
+  {
+    "id": 26868,
+    "origin": "opener",
+    "examples": [
+      {
+        "exam_en": "a can opener",
+        "exam_ko": "깡통 따개"
+      },
+      {
+        "exam_en": "a bottle opener",
+        "exam_ko": "병마개 따개, 오프너"
+      }
+    ]
+  },
+  {
+    "id": 26874,
+    "origin": "contestable",
+    "examples": [
+      {
+        "exam_en": "a contestable statement",
+        "exam_ko": "여러 가지로 문제가 될 수 있는 진술."
+      }
+    ]
+  },
+  {
+    "id": 26880,
+    "origin": "visually",
+    "examples": [
+      {
+        "exam_en": "visually impaired",
+        "exam_ko": "시각 장애의."
+      }
+    ]
+  },
+  {
+    "id": 26881,
+    "origin": "urgently",
+    "examples": [
+      {
+        "exam_en": "This child urgently needs a heart donor.",
+        "exam_ko": "이 아이는 심장 기증자를 긴급히 필요로 한다."
+      }
+    ]
+  },
+  {
+    "id": 26886,
+    "origin": "locally",
+    "examples": [
+      {
+        "exam_en": "Much wheat is grown locally.",
+        "exam_ko": "이 근방에서는 밀이 많이 재배되고 있다."
+      },
+      {
+        "exam_en": "There will be hail locally tomorrow.",
+        "exam_ko": "내일 국지적으로 우박이 내릴 것이다."
+      }
+    ]
+  },
+  {
+    "id": 26889,
+    "origin": "cleverly",
+    "examples": [
+      {
+        "exam_en": "He cleverly repaired his bicycle with the few tools he had available.",
+        "exam_ko": "그는 이용할 수 있는 몇 안 되는 연장으로 자기 자전거를 솜씨 있게 수리했다."
+      }
+    ]
+  },
+  {
+    "id": 26893,
+    "origin": "televise",
+    "examples": [
+      {
+        "exam_en": "The President news conference was televised.",
+        "exam_ko": "대통령의 기자회견이 텔레비전으로 방송됐다."
+      },
+      {
+        "exam_en": "The news was televised on the spot.",
+        "exam_ko": "그 뉴스는 현지에서 텔레비전으로 실황 방송되었다."
+      }
+    ]
+  },
+  {
+    "id": 26896,
+    "origin": "banking",
+    "examples": [
+      {
+        "exam_en": "banking capital",
+        "exam_ko": "은행 영업 자금."
+      }
+    ]
+  },
+  {
+    "id": 26898,
+    "origin": "rethink",
+    "examples": [
+      {
+        "exam_en": "You had better rethink that problem.",
+        "exam_ko": "그 문제는 재고하는 것이 좋을 것이다."
+      },
+      {
+        "exam_en": "have a rethink",
+        "exam_ko": "재고하다."
+      }
+    ]
+  },
+  {
+    "id": 26901,
+    "origin": "overshoot",
+    "examples": [
+      {
+        "exam_en": "His self-confidence overshot itself.",
+        "exam_ko": "그는 너무 자신이 지나쳐서 실패했다."
+      }
+    ]
+  },
+  {
+    "id": 26905,
+    "origin": "overhang",
+    "examples": [
+      {
+        "exam_en": "Maple trees overhang our walk.",
+        "exam_ko": "단풍나무가 우리의 산책로 위를 덮고 있다."
+      },
+      {
+        "exam_en": "the excitement which overhung the championship game",
+        "exam_ko": "그 선수권 시합에 충만된 흥분."
+      }
+    ]
+  },
+  {
+    "id": 26916,
+    "origin": "examiner",
+    "examples": [
+      {
+        "exam_en": "The examiner were looking for good technical knowledge.",
+        "exam_ko": "시험관은 훌륭한 전문적 지식을 기대하고 있었다."
+      },
+      {
+        "exam_en": "An examiner can make recommendation, including finding new investors.",
+        "exam_ko": "감사인은 새로운 투자자들을 찾는 것을 포함하여 권고를 할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 26921,
+    "origin": "entirety",
+    "examples": [
+      {
+        "exam_en": "the entirety of one's life",
+        "exam_ko": "전 생애."
+      }
+    ]
+  },
+  {
+    "id": 26937,
+    "origin": "carelessly",
+    "examples": [
+      {
+        "exam_en": "do one's work carelessly",
+        "exam_ko": "일을 소홀히 하다."
+      }
+    ]
+  },
+  {
+    "id": 26942,
+    "origin": "weeklong",
+    "examples": [
+      {
+        "exam_en": "a weeklong trip",
+        "exam_ko": "일주일간의 여행."
+      }
+    ]
+  }
+]

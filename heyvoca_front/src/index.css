@@ -24,6 +24,8 @@
   --height-bottom-nav: 70px;
   --status-bar-height: 0px;
   --safe-area-bottom: 0px;
+  --current-header-height: 55px;
+  --current-bottom-nav-height: 70px;
 
   /* Figma Colors */
   --primary-main-600: #FF70D4;
@@ -162,4 +164,12 @@ textarea {
 
 .target-word {
   font-weight: 700;
+}
+
+/* 모바일 키보드 등장 시 상단 헤더와 하단 네비게이션을 숨긴다.
+   컨텐츠 영역의 높이는 --current-header-height / --current-bottom-nav-height
+   CSS 변수가 0px로 바뀌면서 자동으로 재계산된다. */
+html[data-keyboard-visible="true"] [data-page-header],
+html[data-keyboard-visible="true"] [data-bottom-nav] {
+  display: none;
 }

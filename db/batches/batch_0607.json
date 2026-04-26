@@ -1,0 +1,262 @@
+[
+  {
+    "id": 20502,
+    "origin": "transact",
+    "examples": [
+      {
+        "exam_en": "transact business with a person",
+        "exam_ko": "남과 거래를 하다."
+      }
+    ]
+  },
+  {
+    "id": 20503,
+    "origin": "destructive",
+    "examples": [
+      {
+        "exam_en": "a destructive force",
+        "exam_ko": "파괴력"
+      },
+      {
+        "exam_en": "destructive insects",
+        "exam_ko": "해충."
+      }
+    ]
+  },
+  {
+    "id": 20504,
+    "origin": "skid",
+    "examples": [
+      {
+        "exam_en": "a skid mark",
+        "exam_ko": "(차의) 스키드 마크: (노면에 검게 남은) 타이어가 미끄러진 자국"
+      },
+      {
+        "exam_en": "go into a skid",
+        "exam_ko": "(자동차가) 옆으로 미끄러지다."
+      }
+    ]
+  },
+  {
+    "id": 20506,
+    "origin": "drudgery",
+    "examples": [
+      {
+        "exam_en": "the grind of routine task ",
+        "exam_ko": "단조로운 일의 고역"
+      },
+      {
+        "exam_en": "sheer drudgery ",
+        "exam_ko": "아주 고된 일"
+      },
+      {
+        "exam_en": "the grind of routine task",
+        "exam_ko": "단조로운 일의 고역"
+      },
+      {
+        "exam_en": "sheer drudgery",
+        "exam_ko": "아주 고된 일"
+      }
+    ]
+  },
+  {
+    "id": 20507,
+    "origin": "metropolis",
+    "examples": [
+      {
+        "exam_en": "the Metropolis",
+        "exam_ko": "(영) 런던"
+      },
+      {
+        "exam_en": "a metropolis of religion",
+        "exam_ko": "종교의 중심지"
+      }
+    ]
+  },
+  {
+    "id": 20511,
+    "origin": "idol",
+    "examples": [
+      {
+        "exam_en": "a popular idol",
+        "exam_ko": "대중의 숭배 대상"
+      },
+      {
+        "exam_en": "a fallen idol",
+        "exam_ko": "숭배자를 잃은[인기가 떨어진] 사람"
+      }
+    ]
+  },
+  {
+    "id": 20513,
+    "origin": "redress",
+    "examples": [
+      {
+        "exam_en": "the redress of social abuses",
+        "exam_ko": "사회악의 교정."
+      },
+      {
+        "exam_en": "an injury beyond  redress",
+        "exam_ko": "보상할 수 없을 정도의 손해."
+      },
+      {
+        "exam_en": "After realizing the error in the billing, the company took immediate steps to redress the issue and refund the overcharged amount to its customers.",
+        "exam_ko": "회사는 청구서 오류를 인지한 후 즉시 문제를 시정하고 과청구된 금액을 고객에게 환불하기 위한 조치를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 20516,
+    "origin": "consanguinity",
+    "examples": [
+      {
+        "exam_en": "degrees of consanguinity",
+        "exam_ko": "친등(親等)."
+      }
+    ]
+  },
+  {
+    "id": 20517,
+    "origin": "connubial",
+    "examples": [
+      {
+        "exam_en": "connubial bliss",
+        "exam_ko": "(격식) 결혼 생활의 행복."
+      }
+    ]
+  },
+  {
+    "id": 20519,
+    "origin": "internecine",
+    "examples": [
+      {
+        "exam_en": "an internecine war",
+        "exam_ko": "내전."
+      }
+    ]
+  },
+  {
+    "id": 20522,
+    "origin": "maelstrom",
+    "examples": [
+      {
+        "exam_en": "be sucked into the maelstrom of",
+        "exam_ko": "…의 동란에 휘말려들다."
+      }
+    ]
+  },
+  {
+    "id": 20523,
+    "origin": "loll",
+    "examples": [
+      {
+        "exam_en": "loll in a chair",
+        "exam_ko": "의자에 축 늘어지게 앉다"
+      },
+      {
+        "exam_en": "loll against the fence",
+        "exam_ko": "삐딱하게 담에 기대다."
+      }
+    ]
+  },
+  {
+    "id": 20524,
+    "origin": "apoplexy",
+    "examples": [
+      {
+        "exam_en": "be seized with verbal apoplexy",
+        "exam_ko": "실어증을 동반한 뇌졸중에 걸리다"
+      },
+      {
+        "exam_en": "have a fit of apoplexy",
+        "exam_ko": "뇌졸중을 일으키다."
+      }
+    ]
+  },
+  {
+    "id": 20525,
+    "origin": "pillory",
+    "examples": [
+      {
+        "exam_en": "be in the pillory",
+        "exam_ko": "웃음거리가 되다."
+      }
+    ]
+  },
+  {
+    "id": 20528,
+    "origin": "atrophy",
+    "examples": [
+      {
+        "exam_en": "the atrophy of talent",
+        "exam_ko": "재능의 쇠퇴."
+      }
+    ]
+  },
+  {
+    "id": 20530,
+    "origin": "cozen",
+    "examples": [
+      {
+        "exam_en": "cozen a person  of something",
+        "exam_ko": "남에게서 어떤 것을 속여서 빼앗다"
+      },
+      {
+        "exam_en": "He cozened the honest priest into telling a lie.",
+        "exam_ko": "그는 정직한 신부를 속여 거짓말을 하게 했다."
+      }
+    ]
+  },
+  {
+    "id": 20531,
+    "origin": "coterie",
+    "examples": [
+      {
+        "exam_en": "a literary coterie",
+        "exam_ko": "문학 동인."
+      }
+    ]
+  },
+  {
+    "id": 20533,
+    "origin": "finesse",
+    "examples": [
+      {
+        "exam_en": "the finesse of love",
+        "exam_ko": "사랑의 기교[수법]"
+      },
+      {
+        "exam_en": "with finesse",
+        "exam_ko": "솜씨[수완] 좋게."
+      }
+    ]
+  },
+  {
+    "id": 20535,
+    "origin": "calorific",
+    "examples": [
+      {
+        "exam_en": "calorific value",
+        "exam_ko": "발열량."
+      }
+    ]
+  },
+  {
+    "id": 20544,
+    "origin": "diurnal",
+    "examples": [
+      {
+        "exam_en": "the sun's diurnal course",
+        "exam_ko": "태양의 일주(日周) 코스."
+      },
+      {
+        "exam_en": "diurnal animals",
+        "exam_ko": "주행성 동물."
+      },
+      {
+        "exam_en": "Many animals, such as humans, are diurnal, meaning they are active during the daytime.",
+        "exam_ko": "많은 동물, 예를 들어 인간들은 주간에 활동하는 일행성 동물이다."
+      }
+    ]
+  }
+]

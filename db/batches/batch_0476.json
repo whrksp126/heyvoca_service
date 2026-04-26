@@ -1,0 +1,242 @@
+[
+  {
+    "id": 14092,
+    "origin": "livid",
+    "examples": [
+      {
+        "exam_en": "livid bruises",
+        "exam_ko": "검푸른 멍."
+      },
+      {
+        "exam_en": "He was livid at his son's disobedience.",
+        "exam_ko": "그는 아들의 불효에 격노했다."
+      }
+    ]
+  },
+  {
+    "id": 14098,
+    "origin": "endow",
+    "examples": [
+      {
+        "exam_en": "endow a hospital",
+        "exam_ko": "병원에 기금을 기부하다"
+      },
+      {
+        "exam_en": "endow a scholarship",
+        "exam_ko": "장학 기금을 기부하다"
+      }
+    ]
+  },
+  {
+    "id": 14100,
+    "origin": "wrongful",
+    "examples": [
+      {
+        "exam_en": "a wrongful deed",
+        "exam_ko": "사악한 행위"
+      },
+      {
+        "exam_en": "a wrongful accusation",
+        "exam_ko": "부당한 비난, 시비."
+      }
+    ]
+  },
+  {
+    "id": 14102,
+    "origin": "insensibility",
+    "examples": [
+      {
+        "exam_en": "insensibility to pain",
+        "exam_ko": "통증[추위]에 대한 무감각."
+      }
+    ]
+  },
+  {
+    "id": 14105,
+    "origin": "fraternity",
+    "examples": [
+      {
+        "exam_en": "the medical fraternity",
+        "exam_ko": "의사회."
+      }
+    ]
+  },
+  {
+    "id": 14107,
+    "origin": "wan",
+    "examples": [
+      {
+        "exam_en": "a wan light",
+        "exam_ko": "희미한 빛"
+      },
+      {
+        "exam_en": "a wan smile",
+        "exam_ko": "힘없는 미소."
+      }
+    ]
+  },
+  {
+    "id": 14110,
+    "origin": "drivel",
+    "examples": [
+      {
+        "exam_en": "What are you driveling about?",
+        "exam_ko": "무슨 시시한 말을 지껄이고 있니?"
+      },
+      {
+        "exam_en": "drivel away one's time and energy",
+        "exam_ko": "시간과 정력을 낭비하다."
+      }
+    ]
+  },
+  {
+    "id": 14119,
+    "origin": "emulsion",
+    "examples": [
+      {
+        "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and contaminants by cleaning with solvents, vapor, alkalli, emulsion or steam",
+        "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 오염 물질 제거"
+      }
+    ]
+  },
+  {
+    "id": 14120,
+    "origin": "emulsify",
+    "examples": [
+      {
+        "exam_en": "To emulsify means to mix two ingredients that do not combine easily, such as oil and water.",
+        "exam_ko": "유화한다는 것은 기름과 물과 같이 쉽게 결합되지 않는 두 가지 성분을 혼합하는 것을 의미합니다."
+      }
+    ]
+  },
+  {
+    "id": 14121,
+    "origin": "sufficiently",
+    "examples": [
+      {
+        "exam_en": "eat sufficiently",
+        "exam_ko": "충분히 먹다[자다]"
+      },
+      {
+        "exam_en": "The platform is sufficiently wide to support the entire group.",
+        "exam_ko": "그 정책은 그룹 전원이 지지할 수 있을 만큼 충분한 폭을 갖고 있다."
+      }
+    ]
+  },
+  {
+    "id": 14123,
+    "origin": "solvent",
+    "examples": [
+      {
+        "exam_en": "I'm solvent enough to pay the debt.",
+        "exam_ko": "나는 부채를 갚을 여유가 있다."
+      }
+    ]
+  },
+  {
+    "id": 14125,
+    "origin": "soluble",
+    "examples": [
+      {
+        "exam_en": "soluble coffee",
+        "exam_ko": "인스턴트 커피."
+      }
+    ]
+  },
+  {
+    "id": 14126,
+    "origin": "cosmic",
+    "examples": [
+      {
+        "exam_en": "damage reaching cosmic proportions",
+        "exam_ko": "매우 심한[어마어마한] 피해."
+      }
+    ]
+  },
+  {
+    "id": 14127,
+    "origin": "quantum",
+    "examples": [
+      {
+        "exam_en": "Each man receives his proper quantum.",
+        "exam_ko": "각자는 각기 자기 몫을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 14129,
+    "origin": "infinite",
+    "examples": [
+      {
+        "exam_en": "an invention of infinite value",
+        "exam_ko": "극히 중요한 가치를 지닌 발명."
+      },
+      {
+        "exam_en": "infinite patience",
+        "exam_ko": "무한한 인내심"
+      }
+    ]
+  },
+  {
+    "id": 14134,
+    "origin": "sedimentation",
+    "examples": [
+      {
+        "exam_en": "blood sedimentation rate",
+        "exam_ko": "혈침(血沈) 속도."
+      }
+    ]
+  },
+  {
+    "id": 14135,
+    "origin": "cypress",
+    "examples": [
+      {
+        "exam_en": "Japanese cypress",
+        "exam_ko": "노송나무, 편백."
+      }
+    ]
+  },
+  {
+    "id": 14137,
+    "origin": "sedentary",
+    "examples": [
+      {
+        "exam_en": "a sedentary statue",
+        "exam_ko": "좌상(坐像)."
+      },
+      {
+        "exam_en": "sedentary habits",
+        "exam_ko": "앉아만 지내는 습관."
+      },
+      {
+        "exam_en": "A sedentary job is not good for your health.",
+        "exam_ko": "앉아있는 직업은 건강에 좋지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": 14138,
+    "origin": "rudiment",
+    "examples": [
+      {
+        "exam_en": "the rudiments of arithmetic",
+        "exam_ko": "산수의 기초."
+      },
+      {
+        "exam_en": "the rudiments of a plan",
+        "exam_ko": "계획의 초안."
+      }
+    ]
+  },
+  {
+    "id": 14139,
+    "origin": "chopper",
+    "examples": [
+      {
+        "exam_en": "chopper in",
+        "exam_ko": "헬리콥터로 도착하다."
+      }
+    ]
+  }
+]

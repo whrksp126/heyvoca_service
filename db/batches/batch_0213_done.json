@@ -1,0 +1,266 @@
+[
+  {
+    "id": 4899,
+    "origin": "immigration",
+    "examples": [
+      {
+        "exam_en": "The country saw a wave of <strong class=\"target-word\">immigration</strong> last year.",
+        "exam_ko": "그 나라는 작년에 <strong class=\"target-word\">이민</strong>의 물결을 목격했다."
+      }
+    ]
+  },
+  {
+    "id": 4900,
+    "origin": "emigration",
+    "examples": [
+      {
+        "exam_en": "His depression began after his daughter's <strong class=\"target-word\">emigration</strong>.",
+        "exam_ko": "그의 우울증은 딸의 <strong class=\"target-word\">이민</strong> 이후 시작되었다."
+      }
+    ]
+  },
+  {
+    "id": 4902,
+    "origin": "contaminate",
+    "examples": [
+      {
+        "exam_en": "Automobile fumes <strong class=\"target-word\">contaminate</strong> the air.",
+        "exam_ko": "자동차 배기가스는 공기를 <strong class=\"target-word\">오염시킨다</strong>."
+      },
+      {
+        "exam_en": "The drinking water was <strong class=\"target-word\">contaminated</strong> with gasoline.",
+        "exam_ko": "식수가 휘발유로 <strong class=\"target-word\">오염되었다</strong>."
+      },
+      {
+        "exam_en": "Polluted rainwater can <strong class=\"target-word\">contaminate</strong> the groundwater.",
+        "exam_ko": "오염된 빗물은 지하수를 <strong class=\"target-word\">오염시킬</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 4904,
+    "origin": "throat",
+    "examples": [
+      {
+        "exam_en": "She had a sore <strong class=\"target-word\">throat</strong> all morning.",
+        "exam_ko": "그녀는 오전 내내 <strong class=\"target-word\">목</strong>이 아팠다."
+      },
+      {
+        "exam_en": "He cleared his <strong class=\"target-word\">throat</strong> before speaking.",
+        "exam_ko": "그는 말하기 전에 <strong class=\"target-word\">목</strong>을 가다듬었다."
+      }
+    ]
+  },
+  {
+    "id": 4905,
+    "origin": "particle",
+    "examples": [
+      {
+        "exam_en": "A dust <strong class=\"target-word\">particle</strong> floated in the sunlight.",
+        "exam_ko": "먼지 <strong class=\"target-word\">입자</strong> 하나가 햇빛 속에 떠다녔다."
+      },
+      {
+        "exam_en": "Not a <strong class=\"target-word\">particle</strong> of food was left on the plate.",
+        "exam_ko": "접시에는 음식 <strong class=\"target-word\">조각</strong>조차 남지 않았다."
+      },
+      {
+        "exam_en": "Remove large mortar <strong class=\"target-word\">particles</strong> with a wooden paddle.",
+        "exam_ko": "나무 주걱으로 큰 모르타르 <strong class=\"target-word\">조각</strong>들을 제거하세요."
+      }
+    ]
+  },
+  {
+    "id": 4906,
+    "origin": "perfume",
+    "examples": [
+      {
+        "exam_en": "The garden was filled with the rich <strong class=\"target-word\">perfume</strong> of roses.",
+        "exam_ko": "정원은 장미의 진한 <strong class=\"target-word\">향기</strong>로 가득했다."
+      },
+      {
+        "exam_en": "The flowers had a strong <strong class=\"target-word\">perfume</strong>.",
+        "exam_ko": "그 꽃들은 강한 <strong class=\"target-word\">향기</strong>를 풍겼다."
+      }
+    ]
+  },
+  {
+    "id": 4907,
+    "origin": "humorous",
+    "examples": [
+      {
+        "exam_en": "She told a <strong class=\"target-word\">humorous</strong> story at the party.",
+        "exam_ko": "그녀는 파티에서 <strong class=\"target-word\">재미있는</strong> 이야기를 했다."
+      },
+      {
+        "exam_en": "He is a very <strong class=\"target-word\">humorous</strong> speaker.",
+        "exam_ko": "그는 매우 <strong class=\"target-word\">유머 있는</strong> 이야기꾼이다."
+      }
+    ]
+  },
+  {
+    "id": 4908,
+    "origin": "sore",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">sore</strong> wound took weeks to heal.",
+        "exam_ko": "<strong class=\"target-word\">아픈</strong> 상처가 낫는 데 몇 주가 걸렸다."
+      },
+      {
+        "exam_en": "I have a <strong class=\"target-word\">sore</strong> throat from the cold.",
+        "exam_ko": "감기 때문에 목이 <strong class=\"target-word\">아프다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4909,
+    "origin": "highway",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">highway</strong> patrol stopped speeding drivers.",
+        "exam_ko": "<strong class=\"target-word\">고속도로</strong> 순찰대가 과속 운전자들을 세웠다."
+      },
+      {
+        "exam_en": "They drove along the <strong class=\"target-word\">highway</strong> for hours.",
+        "exam_ko": "그들은 몇 시간 동안 <strong class=\"target-word\">고속도로</strong>를 달렸다."
+      }
+    ]
+  },
+  {
+    "id": 4911,
+    "origin": "possibly",
+    "examples": [
+      {
+        "exam_en": "You have <strong class=\"target-word\">possibly</strong> forgotten all about me.",
+        "exam_ko": "<strong class=\"target-word\">아마</strong> 저를 완전히 잊으셨겠지요."
+      },
+      {
+        "exam_en": "It may <strong class=\"target-word\">possibly</strong> rain today.",
+        "exam_ko": "오늘 비가 <strong class=\"target-word\">올지도</strong> 모른다."
+      }
+    ]
+  },
+  {
+    "id": 4912,
+    "origin": "saturday",
+    "examples": [
+      {
+        "exam_en": "We do our shopping on <strong class=\"target-word\">Saturdays</strong>.",
+        "exam_ko": "우리는 매주 <strong class=\"target-word\">토요일</strong>마다 쇼핑을 한다."
+      }
+    ]
+  },
+  {
+    "id": 4913,
+    "origin": "journalist",
+    "examples": [
+      {
+        "exam_en": "She works as a freelance <strong class=\"target-word\">journalist</strong>.",
+        "exam_ko": "그녀는 프리랜서 <strong class=\"target-word\">기자</strong>로 일한다."
+      },
+      {
+        "exam_en": "A foreign <strong class=\"target-word\">journalist</strong> covered the story.",
+        "exam_ko": "외국 <strong class=\"target-word\">기자</strong>가 그 기사를 취재했다."
+      }
+    ]
+  },
+  {
+    "id": 4916,
+    "origin": "gentleman",
+    "examples": [
+      {
+        "exam_en": "Please bring this <strong class=\"target-word\">gentleman</strong> a glass of beer.",
+        "exam_ko": "이 <strong class=\"target-word\">남자분</strong>에게 맥주를 한 잔 갖다 드리세요."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Gentlemen</strong>, may I have your attention please.",
+        "exam_ko": "<strong class=\"target-word\">여러분</strong>, 주목해 주시기 바랍니다."
+      }
+    ]
+  },
+  {
+    "id": 4917,
+    "origin": "tent",
+    "examples": [
+      {
+        "exam_en": "They pitched a <strong class=\"target-word\">tent</strong> near the river.",
+        "exam_ko": "그들은 강 근처에 <strong class=\"target-word\">천막</strong>을 쳤다."
+      },
+      {
+        "exam_en": "The patient rested inside an oxygen <strong class=\"target-word\">tent</strong>.",
+        "exam_ko": "환자는 산소 <strong class=\"target-word\">천막</strong> 안에서 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 4918,
+    "origin": "onion",
+    "examples": [
+      {
+        "exam_en": "Will you peel the <strong class=\"target-word\">onions</strong> for me?",
+        "exam_ko": "<strong class=\"target-word\">양파</strong> 껍질 좀 벗겨 주겠어요?"
+      }
+    ]
+  },
+  {
+    "id": 4919,
+    "origin": "ginger",
+    "examples": [
+      {
+        "exam_en": "She was dating a fellow <strong class=\"target-word\">ginger</strong>.",
+        "exam_ko": "그녀는 자신처럼 <strong class=\"target-word\">붉은 머리</strong>인 사람과 데이트했다."
+      }
+    ]
+  },
+  {
+    "id": 4921,
+    "origin": "duck",
+    "examples": [
+      {
+        "exam_en": "A domestic <strong class=\"target-word\">duck</strong> swam in the pond.",
+        "exam_ko": "<strong class=\"target-word\">집오리</strong> 한 마리가 연못에서 헤엄쳤다."
+      },
+      {
+        "exam_en": "A wild <strong class=\"target-word\">duck</strong> landed on the lake.",
+        "exam_ko": "야생 <strong class=\"target-word\">오리</strong> 한 마리가 호수에 내려앉았다."
+      }
+    ]
+  },
+  {
+    "id": 4922,
+    "origin": "farmer",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">farmer</strong> owns a large piece of land.",
+        "exam_ko": "그 <strong class=\"target-word\">농부</strong>는 넓은 토지를 소유하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4925,
+    "origin": "umbrella",
+    "examples": [
+      {
+        "exam_en": "She carries a collapsible <strong class=\"target-word\">umbrella</strong> in her bag.",
+        "exam_ko": "그녀는 가방에 접이식 <strong class=\"target-word\">우산</strong>을 넣고 다닌다."
+      },
+      {
+        "exam_en": "He stood under an <strong class=\"target-word\">umbrella</strong> in the rain.",
+        "exam_ko": "그는 빗속에서 <strong class=\"target-word\">우산</strong>을 받고 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4926,
+    "origin": "alike",
+    "examples": [
+      {
+        "exam_en": "Young and old <strong class=\"target-word\">alike</strong> enjoyed the festival.",
+        "exam_ko": "노소를 막론하고 <strong class=\"target-word\">다같이</strong> 축제를 즐겼다."
+      },
+      {
+        "exam_en": "The teacher treats all students <strong class=\"target-word\">alike</strong>.",
+        "exam_ko": "선생님은 모든 학생을 <strong class=\"target-word\">차별 없이</strong> 대한다."
+      }
+    ]
+  }
+]

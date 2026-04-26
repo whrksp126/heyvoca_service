@@ -1,0 +1,242 @@
+[
+  {
+    "id": 23737,
+    "origin": "bobbed",
+    "examples": [
+      {
+        "exam_en": "bobbed hair",
+        "exam_ko": "단발(bob)."
+      }
+    ]
+  },
+  {
+    "id": 23738,
+    "origin": "helping",
+    "examples": [
+      {
+        "exam_en": "a second helping",
+        "exam_ko": "두 그릇째."
+      }
+    ]
+  },
+  {
+    "id": 23740,
+    "origin": "huh",
+    "examples": [
+      {
+        "exam_en": "\"Are you feeling OK?\" \"Huh?\"",
+        "exam_ko": "「기분 괜찮니?」 「뭐라고?」"
+      },
+      {
+        "exam_en": "This is a beautiful, huh?",
+        "exam_ko": "이곳은 아름다운 장소야, 안 그래?"
+      }
+    ]
+  },
+  {
+    "id": 23741,
+    "origin": "nitpick",
+    "examples": [
+      {
+        "exam_en": "You're so nitpicky.",
+        "exam_ko": "뭘 그리 꼬치꼬치 따지니? \n"
+      },
+      {
+        "exam_en": "You're so nitpicky.",
+        "exam_ko": "뭘 그리 꼬치꼬치 따지니?"
+      },
+      {
+        "exam_en": "Don't nitpick.",
+        "exam_ko": "트집좀 잡지마!!"
+      }
+    ]
+  },
+  {
+    "id": 23745,
+    "origin": "whiff",
+    "examples": [
+      {
+        "exam_en": "a whiff of smoke",
+        "exam_ko": "한 번 내뿜는 연기"
+      },
+      {
+        "exam_en": "take the whiff",
+        "exam_ko": "담배를 피우다"
+      }
+    ]
+  },
+  {
+    "id": 23747,
+    "origin": "electrify",
+    "examples": [
+      {
+        "exam_en": "an electrified body",
+        "exam_ko": "대전체."
+      },
+      {
+        "exam_en": "an electrifying performance",
+        "exam_ko": "감동적인 공연."
+      }
+    ]
+  },
+  {
+    "id": 23751,
+    "origin": "logjam",
+    "examples": [
+      {
+        "exam_en": "break a logjam",
+        "exam_ko": "막힌 것을 뚫다."
+      }
+    ]
+  },
+  {
+    "id": 23754,
+    "origin": "echelon",
+    "examples": [
+      {
+        "exam_en": "in echelon",
+        "exam_ko": "제진을 이루고."
+      },
+      {
+        "exam_en": "the first echelon",
+        "exam_ko": "제1공격파."
+      }
+    ]
+  },
+  {
+    "id": 23763,
+    "origin": "calamitous",
+    "examples": [
+      {
+        "exam_en": "The storm's effects on the coastal town were calamitous, causing widespread destruction and hardship.",
+        "exam_ko": "폭풍이 해안 마을에 끼친 영향은 재앙적이었고, 광범위한 파괴와 어려움을 야기시켰다."
+      }
+    ]
+  },
+  {
+    "id": 23765,
+    "origin": "eventful",
+    "examples": [
+      {
+        "exam_en": "an eventful life",
+        "exam_ko": "파란만장한 인생."
+      },
+      {
+        "exam_en": "Last scene of all, That ends this strange eventful history,",
+        "exam_ko": "이 이상하고 파란만장한 역사를 끝내는 마지막 장면"
+      }
+    ]
+  },
+  {
+    "id": 23769,
+    "origin": "sideway",
+    "examples": [
+      {
+        "exam_en": "viewed sideway",
+        "exam_ko": "옆에서 본"
+      },
+      {
+        "exam_en": "look sideway at",
+        "exam_ko": "…을 곁눈질하다, …을 멸시하듯 곁눈으로 보다"
+      }
+    ]
+  },
+  {
+    "id": 23775,
+    "origin": "sunlit",
+    "examples": [
+      {
+        "exam_en": "Her kitchen is a lovely, sunlit room.",
+        "exam_ko": "그녀의 부엌은 예쁘고 햇볕이 가득하다."
+      }
+    ]
+  },
+  {
+    "id": 23780,
+    "origin": "pectoral",
+    "examples": [
+      {
+        "exam_en": "pectoral muscles",
+        "exam_ko": "가슴의 근육."
+      },
+      {
+        "exam_en": "a pectoral cross",
+        "exam_ko": "주교가 가슴에 다는 십자가."
+      }
+    ]
+  },
+  {
+    "id": 23782,
+    "origin": "nova",
+    "examples": [
+      {
+        "exam_en": "a nova in the sky of literature",
+        "exam_ko": "문학계의 새로운 별."
+      }
+    ]
+  },
+  {
+    "id": 23785,
+    "origin": "mating",
+    "examples": [
+      {
+        "exam_en": "the spring mating season",
+        "exam_ko": "봄의 교미기."
+      }
+    ]
+  },
+  {
+    "id": 23795,
+    "origin": "seaman",
+    "examples": [
+      {
+        "exam_en": "a seaman apprentice",
+        "exam_ko": "[미·해군] 1등[2등] 수병."
+      }
+    ]
+  },
+  {
+    "id": 23805,
+    "origin": "guarded",
+    "examples": [
+      {
+        "exam_en": "a guarded statement",
+        "exam_ko": "신중한 진술"
+      },
+      {
+        "exam_en": "in a guarded tone",
+        "exam_ko": "조심스런 어조로"
+      }
+    ]
+  },
+  {
+    "id": 23812,
+    "origin": "cinder",
+    "examples": [
+      {
+        "exam_en": "be burnt to a cinder",
+        "exam_ko": "(케이크 등이) 까맣게 타다."
+      }
+    ]
+  },
+  {
+    "id": 23813,
+    "origin": "causality",
+    "examples": [
+      {
+        "exam_en": "the law of causality",
+        "exam_ko": "인과율."
+      }
+    ]
+  },
+  {
+    "id": 23814,
+    "origin": "attribution",
+    "examples": [
+      {
+        "exam_en": "the attribution of the situation to a variety of historical reasons",
+        "exam_ko": "그 상황을 갖가지 역사적 이유에 의한 것으로 돌리기."
+      }
+    ]
+  }
+]

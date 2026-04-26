@@ -1,0 +1,254 @@
+[
+  {
+    "id": 9366,
+    "origin": "deter",
+    "examples": [
+      {
+        "exam_en": "The downpour <strong class=\"target-word\">deterred</strong> us from playing golf.",
+        "exam_ko": "갑작스러운 호우로 골프 치는 것을 <strong class=\"target-word\">단념했다</strong>."
+      },
+      {
+        "exam_en": "Fear of failure <strong class=\"target-word\">deters</strong> many from trying.",
+        "exam_ko": "실패에 대한 두려움이 많은 사람들을 <strong class=\"target-word\">단념시킨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9367,
+    "origin": "slough",
+    "examples": [
+      {
+        "exam_en": "A snake <strong class=\"target-word\">sloughs</strong> its skin each season.",
+        "exam_ko": "뱀은 매 계절 허물을 <strong class=\"target-word\">벗는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9369,
+    "origin": "covert",
+    "examples": [
+      {
+        "exam_en": "The spy conducted a <strong class=\"target-word\">covert</strong> operation abroad.",
+        "exam_ko": "그 스파이는 해외에서 <strong class=\"target-word\">비밀</strong> 작전을 수행했다."
+      },
+      {
+        "exam_en": "They launched <strong class=\"target-word\">covert</strong> intelligence actions against rivals.",
+        "exam_ko": "그들은 경쟁자들에 대해 <strong class=\"target-word\">비밀</strong> 정보 활동을 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 9370,
+    "origin": "zealous",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">zealous</strong> supporter of the team.",
+        "exam_ko": "그는 그 팀의 <strong class=\"target-word\">열렬한</strong> 지지자이다."
+      },
+      {
+        "exam_en": "She was a <strong class=\"target-word\">zealous</strong> advocate for animal rights.",
+        "exam_ko": "그녀는 동물 권리를 <strong class=\"target-word\">열렬히</strong> 옹호하는 사람이었다."
+      }
+    ]
+  },
+  {
+    "id": 9372,
+    "origin": "asset",
+    "examples": [
+      {
+        "exam_en": "Experience is a great <strong class=\"target-word\">asset</strong> in negotiation.",
+        "exam_ko": "경험은 협상에서 큰 <strong class=\"target-word\">이점</strong>이다."
+      },
+      {
+        "exam_en": "She considers her patience a key <strong class=\"target-word\">asset</strong>.",
+        "exam_ko": "그녀는 인내심을 핵심 <strong class=\"target-word\">강점</strong>으로 여긴다."
+      }
+    ]
+  },
+  {
+    "id": 9374,
+    "origin": "canteen",
+    "examples": [
+      {
+        "exam_en": "We had lunch together in the <strong class=\"target-word\">canteen</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">학생 식당</strong>에서 함께 점심을 먹었다."
+      },
+      {
+        "exam_en": "The soldier filled his <strong class=\"target-word\">canteen</strong> with fresh water.",
+        "exam_ko": "병사는 <strong class=\"target-word\">수통</strong>에 깨끗한 물을 채웠다."
+      }
+    ]
+  },
+  {
+    "id": 9375,
+    "origin": "naughty",
+    "examples": [
+      {
+        "exam_en": "It was <strong class=\"target-word\">naughty</strong> of you to push your brother into the pool.",
+        "exam_ko": "동생을 수영장에 떠밀다니 정말 <strong class=\"target-word\">못된</strong> 짓이었다."
+      },
+      {
+        "exam_en": "He is being <strong class=\"target-word\">naughty</strong> again today.",
+        "exam_ko": "그는 오늘도 <strong class=\"target-word\">말썽을</strong> 피우고 있다."
+      }
+    ]
+  },
+  {
+    "id": 9376,
+    "origin": "maverick",
+    "examples": [
+      {
+        "exam_en": "He is known as a <strong class=\"target-word\">maverick</strong> among politicians.",
+        "exam_ko": "그는 정치인들 사이에서 <strong class=\"target-word\">이단아</strong>로 알려져 있다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">maverick</strong> approach surprised the whole team.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">독불장군</strong> 방식은 팀 전체를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 9377,
+    "origin": "tint",
+    "examples": [
+      {
+        "exam_en": "The sky had a reddish <strong class=\"target-word\">tint</strong> at sunset.",
+        "exam_ko": "일몰 때 하늘은 붉은 <strong class=\"target-word\">빛깔</strong>을 띠었다."
+      },
+      {
+        "exam_en": "She chose a blue <strong class=\"target-word\">tint</strong> for her hair.",
+        "exam_ko": "그녀는 머리카락에 파란 <strong class=\"target-word\">색조</strong>를 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 9378,
+    "origin": "keenly",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">keenly</strong> aware the atmosphere had changed.",
+        "exam_ko": "그녀는 분위기가 바뀌었다는 것을 <strong class=\"target-word\">예민하게</strong> 감지했다."
+      }
+    ]
+  },
+  {
+    "id": 9379,
+    "origin": "promptly",
+    "examples": [
+      {
+        "exam_en": "She arrived <strong class=\"target-word\">promptly</strong> at five o'clock.",
+        "exam_ko": "그녀는 5시 정각에 <strong class=\"target-word\">정확히</strong> 도착했다."
+      },
+      {
+        "exam_en": "Please rinse off the cleaner <strong class=\"target-word\">promptly</strong> with clean water.",
+        "exam_ko": "세척제를 깨끗한 물로 <strong class=\"target-word\">즉시</strong> 헹궈내십시오."
+      }
+    ]
+  },
+  {
+    "id": 9384,
+    "origin": "deodorant",
+    "examples": [
+      {
+        "exam_en": "She applied <strong class=\"target-word\">deodorant</strong> before leaving the house.",
+        "exam_ko": "그녀는 집을 나서기 전에 <strong class=\"target-word\">탈취제</strong>를 발랐다."
+      }
+    ]
+  },
+  {
+    "id": 9385,
+    "origin": "bandage",
+    "examples": [
+      {
+        "exam_en": "The nurse applied a <strong class=\"target-word\">bandage</strong> to his wound.",
+        "exam_ko": "간호사는 그의 상처에 <strong class=\"target-word\">붕대</strong>를 감았다."
+      },
+      {
+        "exam_en": "She put a <strong class=\"target-word\">bandage</strong> on her injured leg.",
+        "exam_ko": "그녀는 다친 다리에 <strong class=\"target-word\">붕대</strong>를 감았다."
+      }
+    ]
+  },
+  {
+    "id": 9386,
+    "origin": "dentist",
+    "examples": [
+      {
+        "exam_en": "I need to go to the <strong class=\"target-word\">dentist</strong> this week.",
+        "exam_ko": "나는 이번 주에 <strong class=\"target-word\">치과</strong>에 가야 한다."
+      }
+    ]
+  },
+  {
+    "id": 9390,
+    "origin": "strongly",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">strongly</strong> resisted the suggestion.",
+        "exam_ko": "나는 그 제안에 <strong class=\"target-word\">강경하게</strong> 저항했다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">strongly</strong> opposed to using violence.",
+        "exam_ko": "그는 폭력 사용에 <strong class=\"target-word\">강력히</strong> 반대한다."
+      }
+    ]
+  },
+  {
+    "id": 9391,
+    "origin": "pronounce",
+    "examples": [
+      {
+        "exam_en": "Can you <strong class=\"target-word\">pronounce</strong> this word correctly?",
+        "exam_ko": "이 단어를 정확하게 <strong class=\"target-word\">발음할</strong> 수 있나요?"
+      },
+      {
+        "exam_en": "How do you <strong class=\"target-word\">pronounce</strong> your name?",
+        "exam_ko": "당신의 이름은 어떻게 <strong class=\"target-word\">발음하나요</strong>?"
+      }
+    ]
+  },
+  {
+    "id": 9394,
+    "origin": "shanghai",
+    "examples": [
+      {
+        "exam_en": "I was <strong class=\"target-word\">shanghaied</strong> into joining the club.",
+        "exam_ko": "나는 클럽 가입을 <strong class=\"target-word\">강요당했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9398,
+    "origin": "walkout",
+    "examples": [
+      {
+        "exam_en": "Workers staged a <strong class=\"target-word\">walkout</strong> over low wages.",
+        "exam_ko": "노동자들은 낮은 임금에 항의해 <strong class=\"target-word\">파업</strong>을 벌였다."
+      }
+    ]
+  },
+  {
+    "id": 9400,
+    "origin": "picking",
+    "examples": [
+      {
+        "exam_en": "The job offered rich <strong class=\"target-word\">pickings</strong> for experienced workers.",
+        "exam_ko": "그 일은 숙련된 노동자들에게 큰 <strong class=\"target-word\">벌이</strong>를 제공했다."
+      },
+      {
+        "exam_en": "The market was easy <strong class=\"target-word\">pickings</strong> for new investors.",
+        "exam_ko": "그 시장은 신규 투자자들에게 쉬운 <strong class=\"target-word\">돈벌이</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 9401,
+    "origin": "unprepared",
+    "examples": [
+      {
+        "exam_en": "I was <strong class=\"target-word\">unprepared</strong> to give a speech.",
+        "exam_ko": "나는 연설을 할 <strong class=\"target-word\">준비가 되어 있지 않았다</strong>."
+      }
+    ]
+  }
+]

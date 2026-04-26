@@ -1,0 +1,258 @@
+[
+  {
+    "id": 15174,
+    "origin": "sanguinary",
+    "examples": [
+      {
+        "exam_en": "a sanguinary battle",
+        "exam_ko": "피비린내 나는 전투."
+      }
+    ]
+  },
+  {
+    "id": 15176,
+    "origin": "stability",
+    "examples": [
+      {
+        "exam_en": "economic stability",
+        "exam_ko": "경제[사회]의 안정성"
+      },
+      {
+        "exam_en": "a man of stability",
+        "exam_ko": "착실한 사람"
+      }
+    ]
+  },
+  {
+    "id": 15182,
+    "origin": "consign",
+    "examples": [
+      {
+        "exam_en": "consign a child to its aunt's care",
+        "exam_ko": "아이를 숙모님이 봐주도록 맡기다"
+      },
+      {
+        "exam_en": "consign one's soul to God",
+        "exam_ko": "영혼을 신에게 맡기다, 죽다"
+      }
+    ]
+  },
+  {
+    "id": 15184,
+    "origin": "shaded",
+    "examples": [
+      {
+        "exam_en": "tree-shaded",
+        "exam_ko": "나무 그늘이 진."
+      }
+    ]
+  },
+  {
+    "id": 15185,
+    "origin": "friction",
+    "examples": [
+      {
+        "exam_en": "have a bit of friction with a person",
+        "exam_ko": "남과 좀 충돌하다"
+      },
+      {
+        "exam_en": "There was friction between the two countries over the border dispute.",
+        "exam_ko": "양국간에 국경 분쟁을 둘러싼 알력이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 15186,
+    "origin": "resigned",
+    "examples": [
+      {
+        "exam_en": "become resigned to losing the game",
+        "exam_ko": "시합에 진다고 체념하다"
+      },
+      {
+        "exam_en": "The children were resigned to their parents' divorce.",
+        "exam_ko": "아이들은 부모의 이혼에 묵묵히 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 15188,
+    "origin": "corrective",
+    "examples": [
+      {
+        "exam_en": "Greed is not necessarily a corrective of sloth.",
+        "exam_ko": "탐욕이 반드시 게으름을 고치는 것은 아니다."
+      },
+      {
+        "exam_en": "Greed is not necessarily a corrective of sloth.",
+        "exam_ko": "탐욕이 반드시 게으름을 고치는 것은 아니다. "
+      }
+    ]
+  },
+  {
+    "id": 15189,
+    "origin": "consignment",
+    "examples": [
+      {
+        "exam_en": "on consignment",
+        "exam_ko": "위탁 판매로."
+      }
+    ]
+  },
+  {
+    "id": 15190,
+    "origin": "anticipation",
+    "examples": [
+      {
+        "exam_en": "with eager anticipation",
+        "exam_ko": "기대로 가슴이 부풀어."
+      }
+    ]
+  },
+  {
+    "id": 15191,
+    "origin": "measured",
+    "examples": [
+      {
+        "exam_en": "a measured response",
+        "exam_ko": "신중한 반응"
+      },
+      {
+        "exam_en": "speak in measured words",
+        "exam_ko": "신중하게 말하다."
+      }
+    ]
+  },
+  {
+    "id": 15195,
+    "origin": "prone",
+    "examples": [
+      {
+        "exam_en": "accident-prone",
+        "exam_ko": "(사람이) 사고를 일으키기 쉬운"
+      },
+      {
+        "exam_en": "an avalanche-prone slope",
+        "exam_ko": "산사태가 발생하기 쉬운 경사면"
+      }
+    ]
+  },
+  {
+    "id": 15197,
+    "origin": "defective",
+    "examples": [
+      {
+        "exam_en": "a defective car",
+        "exam_ko": "결함이 있는 차"
+      },
+      {
+        "exam_en": "a defective product",
+        "exam_ko": "결함이 있는 상품."
+      }
+    ]
+  },
+  {
+    "id": 15207,
+    "origin": "boiled",
+    "examples": [
+      {
+        "exam_en": "boiled eggs",
+        "exam_ko": "삶은 달걀"
+      },
+      {
+        "exam_en": "boiled rice",
+        "exam_ko": "쌀밥."
+      }
+    ]
+  },
+  {
+    "id": 15208,
+    "origin": "bonus",
+    "examples": [
+      {
+        "exam_en": "cost-of-living bonus",
+        "exam_ko": "물가 상승에 따른 특별 수당."
+      }
+    ]
+  },
+  {
+    "id": 15209,
+    "origin": "wherever",
+    "examples": [
+      {
+        "exam_en": "Wherever I go, I always carry some extra cash.",
+        "exam_ko": "나는 어디에 가든지 늘 여분의 현찰을 얼마간 갖고 다닌다(※가정의 뜻을 나타내기 위해 wherever 절 중에 may를 쓸 때도 있음)"
+      },
+      {
+        "exam_en": "She lives in Rosebank, wherever that may be.",
+        "exam_ko": "그녀는 로즈뱅크에 살고 있다. 그곳이 어디인지는 모르겠지만."
+      }
+    ]
+  },
+  {
+    "id": 15210,
+    "origin": "refill",
+    "examples": [
+      {
+        "exam_en": "two refills for a pen",
+        "exam_ko": "펜에 갈아넣는 잉크 2개"
+      },
+      {
+        "exam_en": "\"Give me a refill, please.\" \"You've had three refills already, sir.\"",
+        "exam_ko": "「한 잔 더 따라주세요.」 「벌써 석 잔이나 드셨습니다, 손님.」"
+      }
+    ]
+  },
+  {
+    "id": 15211,
+    "origin": "safely",
+    "examples": [
+      {
+        "exam_en": "drive safely",
+        "exam_ko": "안전하게 운전하다"
+      },
+      {
+        "exam_en": "The jumbo jet arrived at the airport safely.",
+        "exam_ko": "그 점보기는 무사히 공항에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 15213,
+    "origin": "beam",
+    "examples": [
+      {
+        "exam_en": "on the beam",
+        "exam_ko": "(바람 등이) 배의 용골과 직각이 되어, 배의 바로 옆으로"
+      },
+      {
+        "exam_en": "abaft the beam",
+        "exam_ko": "(배의) 바로 옆쪽 뒤[앞으]로."
+      }
+    ]
+  },
+  {
+    "id": 15215,
+    "origin": "drunken",
+    "examples": [
+      {
+        "exam_en": "a drunken sailor",
+        "exam_ko": "술 취한 선원"
+      },
+      {
+        "exam_en": "be in a drunken stupor",
+        "exam_ko": "술에 취해 인사불성이 되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 15216,
+    "origin": "mentor",
+    "examples": [
+      {
+        "exam_en": "A mentor program will be introduced next month.",
+        "exam_ko": "다음 달에 멘토 프로그램이 소개될 것이다."
+      }
+    ]
+  }
+]

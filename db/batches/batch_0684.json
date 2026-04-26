@@ -1,0 +1,246 @@
+[
+  {
+    "id": 27481,
+    "origin": "chowder",
+    "examples": [
+      {
+        "exam_en": "clam chowder",
+        "exam_ko": "대합 차우더."
+      }
+    ]
+  },
+  {
+    "id": 27486,
+    "origin": "undisclosed",
+    "examples": [
+      {
+        "exam_en": "an undisclosed place",
+        "exam_ko": "아무데, 모처(某處)."
+      }
+    ]
+  },
+  {
+    "id": 27493,
+    "origin": "ream",
+    "examples": [
+      {
+        "exam_en": "with reams of invectives",
+        "exam_ko": "갖은 독설을 다하여"
+      },
+      {
+        "exam_en": "She wrote reams of notes.",
+        "exam_ko": "그녀는 많은 수기를 썼다."
+      },
+      {
+        "exam_en": "This task was performed by drilling a small hole and reaming it to the required size.",
+        "exam_ko": "이 작업은 작은 구멍을 뚫고 필요한 크기로 넓힙니다.."
+      }
+    ]
+  },
+  {
+    "id": 27499,
+    "origin": "underweight",
+    "examples": [
+      {
+        "exam_en": "an underweight baby",
+        "exam_ko": "표준 체중에 미달인 아기"
+      },
+      {
+        "exam_en": "He remains underweight and understrength.",
+        "exam_ko": "그는 체중도 체력도 여전히 표준 이하이다"
+      }
+    ]
+  },
+  {
+    "id": 27508,
+    "origin": "aw",
+    "examples": [
+      {
+        "exam_en": "Aw, gee, why do that?",
+        "exam_ko": "저런, 그런 일을 다하다니?"
+      }
+    ]
+  },
+  {
+    "id": 27509,
+    "origin": "spender",
+    "examples": [
+      {
+        "exam_en": "a big spender",
+        "exam_ko": "돈을 헤프게 쓰는 사람."
+      }
+    ]
+  },
+  {
+    "id": 27512,
+    "origin": "heating",
+    "examples": [
+      {
+        "exam_en": "central heating",
+        "exam_ko": "중앙 난방"
+      },
+      {
+        "exam_en": "gas heating",
+        "exam_ko": "가스[증기] 난방."
+      }
+    ]
+  },
+  {
+    "id": 27516,
+    "origin": "someplace",
+    "examples": [
+      {
+        "exam_en": "He had seen it someplace before.",
+        "exam_ko": "그는 전에 어디선가 그것을 본 적이 있었다."
+      },
+      {
+        "exam_en": "Why don't we go some place where it's quieter?",
+        "exam_ko": "조용한 곳으로 가는 게 어때요?"
+      }
+    ]
+  },
+  {
+    "id": 27518,
+    "origin": "nicely",
+    "examples": [
+      {
+        "exam_en": "The room was nicely furnished.",
+        "exam_ko": "그 방은 가구가 잘 갖추어져 있다"
+      },
+      {
+        "exam_en": "The injured man is doing nicely in hospital.",
+        "exam_ko": "부상당한 사람은 병원에서 잘 해 나가고 있다[병이 회복되어 가고 있다]."
+      }
+    ]
+  },
+  {
+    "id": 27522,
+    "origin": "misprint",
+    "examples": [
+      {
+        "exam_en": "a book full of misprints",
+        "exam_ko": "오식투성이인 책."
+      }
+    ]
+  },
+  {
+    "id": 27523,
+    "origin": "supposing",
+    "examples": [
+      {
+        "exam_en": "Supposing the plane is late?",
+        "exam_ko": "만약에 비행기가 늦어지면 어떻게 될까?"
+      },
+      {
+        "exam_en": "Supposing no one had been there?",
+        "exam_ko": "그곳에 아무도 없었다고 한다면 어떻게 되었을까?(※주절의 what would have happened?는 생략됨)."
+      }
+    ]
+  },
+  {
+    "id": 27526,
+    "origin": "filled",
+    "examples": [
+      {
+        "exam_en": "tear-filled eyes",
+        "exam_ko": "눈물이 가득한 눈."
+      }
+    ]
+  },
+  {
+    "id": 27533,
+    "origin": "watery",
+    "examples": [
+      {
+        "exam_en": "a watery deity",
+        "exam_ko": "수신."
+      },
+      {
+        "exam_en": "watery terrain",
+        "exam_ko": "비가 많은 지역"
+      }
+    ]
+  },
+  {
+    "id": 27534,
+    "origin": "crying",
+    "examples": [
+      {
+        "exam_en": "a crying need",
+        "exam_ko": "급한 용무"
+      },
+      {
+        "exam_en": "a crying jag",
+        "exam_ko": "홀짝홀짝 우는 것; 울보"
+      }
+    ]
+  },
+  {
+    "id": 27535,
+    "origin": "knitted",
+    "examples": [
+      {
+        "exam_en": "a knitted fabric",
+        "exam_ko": "니트천."
+      }
+    ]
+  },
+  {
+    "id": 27538,
+    "origin": "appearing",
+    "examples": [
+      {
+        "exam_en": "a youthful-appearing man",
+        "exam_ko": "젊어 보이는 사람."
+      }
+    ]
+  },
+  {
+    "id": 27550,
+    "origin": "putting",
+    "examples": [
+      {
+        "exam_en": "Your putting was as accurate as before.",
+        "exam_ko": "당신의 퍼팅은 예전처럼 정확했어요."
+      }
+    ]
+  },
+  {
+    "id": 27553,
+    "origin": "bunker",
+    "examples": [
+      {
+        "exam_en": "That's the feeling I want in my real bunker shots.",
+        "exam_ko": "나의 벙커 샷에서 내가 원하는 느낌이다."
+      }
+    ]
+  },
+  {
+    "id": 27556,
+    "origin": "inning",
+    "examples": [
+      {
+        "exam_en": "the top  of the inning",
+        "exam_ko": "그 회의 초[말]"
+      },
+      {
+        "exam_en": "go into extra innings",
+        "exam_ko": "연장전으로 들어가다"
+      }
+    ]
+  },
+  {
+    "id": 27559,
+    "origin": "keyboard",
+    "examples": [
+      {
+        "exam_en": "a piano keyboard",
+        "exam_ko": "피아노 건반"
+      },
+      {
+        "exam_en": "a computer keyboard",
+        "exam_ko": "컴퓨터 자판."
+      }
+    ]
+  }
+]

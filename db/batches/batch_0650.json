@@ -1,0 +1,246 @@
+[
+  {
+    "id": 23434,
+    "origin": "shopkeeper",
+    "examples": [
+      {
+        "exam_en": "a nation of shopkeepers",
+        "exam_ko": "상인의 나라(※Napoleon이 영국민을 경멸하여 부른 데서)."
+      }
+    ]
+  },
+  {
+    "id": 23437,
+    "origin": "grime",
+    "examples": [
+      {
+        "exam_en": "windows coated with grime",
+        "exam_ko": "먼지에 뒤덮인 유리창."
+      },
+      {
+        "exam_en": "a face grimed with soot",
+        "exam_ko": "검댕으로 더러워진 얼굴."
+      }
+    ]
+  },
+  {
+    "id": 23443,
+    "origin": "unctuous",
+    "examples": [
+      {
+        "exam_en": "in an unctuous voice",
+        "exam_ko": "간사한 목소리로."
+      },
+      {
+        "exam_en": "The salesman's unctuous demeanor made customers skeptical of his intentions.",
+        "exam_ko": "판매원의 지나친 상냥함은 고객들로 하여금 그의 의도를 의심하게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 23452,
+    "origin": "bogey",
+    "examples": [
+      {
+        "exam_en": "She is a bogey player.",
+        "exam_ko": "그녀는 보기 플레이어다."
+      },
+      {
+        "exam_en": "To add insult to injury, I bogeyed the 18th.",
+        "exam_ko": "설사가상으로 나는 18홀에서 보기를 했다."
+      }
+    ]
+  },
+  {
+    "id": 23456,
+    "origin": "dahlia",
+    "examples": [
+      {
+        "exam_en": "a blue dahlia",
+        "exam_ko": "좀처럼 없는 것."
+      }
+    ]
+  },
+  {
+    "id": 23458,
+    "origin": "welcoming",
+    "examples": [
+      {
+        "exam_en": "welcoming party",
+        "exam_ko": "환영 파티."
+      }
+    ]
+  },
+  {
+    "id": 23459,
+    "origin": "utopian",
+    "examples": [
+      {
+        "exam_en": "a Utopian scheme",
+        "exam_ko": "비현실적인 계획"
+      },
+      {
+        "exam_en": "Utopian socialism",
+        "exam_ko": "공상적 사회주의."
+      }
+    ]
+  },
+  {
+    "id": 23460,
+    "origin": "coincident",
+    "examples": [
+      {
+        "exam_en": "a theory coincident with the facts",
+        "exam_ko": "사실과 부합된 이론"
+      },
+      {
+        "exam_en": "The twins' birthdays are coincident.",
+        "exam_ko": "쌍둥이의 생일은 일치한다"
+      }
+    ]
+  },
+  {
+    "id": 23461,
+    "origin": "canon",
+    "examples": [
+      {
+        "exam_en": "canons of beauty",
+        "exam_ko": "미(美)의 기준"
+      },
+      {
+        "exam_en": "the canons of good behavior",
+        "exam_ko": "예절의 규범."
+      }
+    ]
+  },
+  {
+    "id": 23466,
+    "origin": "undergird",
+    "examples": [
+      {
+        "exam_en": "A strong foundation of education will undergird a successful career in the future.",
+        "exam_ko": "강력한 교육 기반은 미래의 성공적인 경력을 뒷받침할 것이다."
+      }
+    ]
+  },
+  {
+    "id": 23472,
+    "origin": "enrolment",
+    "examples": [
+      {
+        "exam_en": "one's enrolment as a member of a club",
+        "exam_ko": "클럽에의 입회."
+      },
+      {
+        "exam_en": "an enrolment ceremony",
+        "exam_ko": "입학식[입회비]."
+      }
+    ]
+  },
+  {
+    "id": 23473,
+    "origin": "aggressively",
+    "examples": [
+      {
+        "exam_en": "act aggressively",
+        "exam_ko": "적극적으로 행동하다."
+      }
+    ]
+  },
+  {
+    "id": 23474,
+    "origin": "predictably",
+    "examples": [
+      {
+        "exam_en": "Predictably, the new song proved unpopular.",
+        "exam_ko": "예상대로 새 노래는 인기가 없는 것으로 드러났다."
+      }
+    ]
+  },
+  {
+    "id": 23477,
+    "origin": "quantitative",
+    "examples": [
+      {
+        "exam_en": "quantitative indicator",
+        "exam_ko": "(무역의) 수치 목표"
+      },
+      {
+        "exam_en": "quantitative credit control",
+        "exam_ko": "[경제] 금융의 양적 규제"
+      }
+    ]
+  },
+  {
+    "id": 23487,
+    "origin": "seminal",
+    "examples": [
+      {
+        "exam_en": "a seminal book",
+        "exam_ko": "새로운 시대의 획을 긋는 책."
+      },
+      {
+        "exam_en": "seminal fluid",
+        "exam_ko": "정액"
+      }
+    ]
+  },
+  {
+    "id": 23499,
+    "origin": "transitive",
+    "examples": [
+      {
+        "exam_en": "a transitive verb",
+        "exam_ko": "타동사."
+      }
+    ]
+  },
+  {
+    "id": 23500,
+    "origin": "schema",
+    "examples": [
+      {
+        "exam_en": "a rule schema",
+        "exam_ko": "[언어학] 규칙의 형식(축약 표기를 쓴 규칙의 표기)."
+      }
+    ]
+  },
+  {
+    "id": 23509,
+    "origin": "flak",
+    "examples": [
+      {
+        "exam_en": "get a lot of flak",
+        "exam_ko": "격렬한 반대에 부딪히다."
+      }
+    ]
+  },
+  {
+    "id": 23510,
+    "origin": "transference",
+    "examples": [
+      {
+        "exam_en": "a transference of power",
+        "exam_ko": "권력의 이행"
+      },
+      {
+        "exam_en": "thought transference",
+        "exam_ko": "텔레파시, 의사 전달."
+      }
+    ]
+  },
+  {
+    "id": 23531,
+    "origin": "lashed",
+    "examples": [
+      {
+        "exam_en": "long-lashed ",
+        "exam_ko": "속눈썹이 긴"
+      },
+      {
+        "exam_en": "long-lashed",
+        "exam_ko": "속눈썹이 긴"
+      }
+    ]
+  }
+]

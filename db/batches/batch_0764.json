@@ -1,0 +1,206 @@
+[
+  {
+    "id": 49103,
+    "origin": "guns",
+    "examples": [
+      {
+        "exam_en": "After all their training, their guns are like steel.",
+        "exam_ko": "모든 훈련을 받은 후라서 그들의 이두박근이 강철 같다."
+      }
+    ]
+  },
+  {
+    "id": 49122,
+    "origin": "printable",
+    "examples": [
+      {
+        "exam_en": "Her remarks were scarcely printable.",
+        "exam_ko": "그녀의 말은 (거슬려) 문자화할 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 49153,
+    "origin": "backside",
+    "examples": [
+      {
+        "exam_en": "sit  on one's backside",
+        "exam_ko": "게으름 피우다."
+      }
+    ]
+  },
+  {
+    "id": 49205,
+    "origin": "limbed",
+    "examples": [
+      {
+        "exam_en": "crooked-limbed",
+        "exam_ko": "가지가 굽은."
+      }
+    ]
+  },
+  {
+    "id": 49244,
+    "origin": "diddly",
+    "examples": [
+      {
+        "exam_en": "I don't know diddly about baseball.",
+        "exam_ko": "야구에 대해서 아무 것도 모른다."
+      }
+    ]
+  },
+  {
+    "id": 49276,
+    "origin": "bigamous",
+    "examples": [
+      {
+        "exam_en": "a bigamous marriage",
+        "exam_ko": "중혼."
+      }
+    ]
+  },
+  {
+    "id": 49281,
+    "origin": "octo",
+    "examples": [
+      {
+        "exam_en": "octonal",
+        "exam_ko": "8진법의."
+      }
+    ]
+  },
+  {
+    "id": 49295,
+    "origin": "sabaoth",
+    "examples": [
+      {
+        "exam_en": "the Lord of Sabaoth",
+        "exam_ko": "만군의 주, 하느님. cf. [성서] 로마서 9:29, 야고보서 5:4."
+      }
+    ]
+  },
+  {
+    "id": 49296,
+    "origin": "stones",
+    "examples": [
+      {
+        "exam_en": "The stones along the riverbank were smooth from years of erosion.",
+        "exam_ko": "강변의 돌들은 수십 년 동안의 침식으로 매끄러워졌다."
+      }
+    ]
+  },
+  {
+    "id": 49308,
+    "origin": "uncritical",
+    "examples": [
+      {
+        "exam_en": "an uncritical audience",
+        "exam_ko": "비판적이지 않은 청중."
+      },
+      {
+        "exam_en": "an uncritical evaluation",
+        "exam_ko": "적당히 얼버무린 평가"
+      }
+    ]
+  },
+  {
+    "id": 49339,
+    "origin": "backdate",
+    "examples": [
+      {
+        "exam_en": "The pay increase agreed in June will be backdated to January.",
+        "exam_ko": "6월에 합의된 임금 인상은 1월까지 소급된다."
+      }
+    ]
+  },
+  {
+    "id": 49375,
+    "origin": "defrag",
+    "examples": [
+      {
+        "exam_en": "You should defrag your hard disk regularly.",
+        "exam_ko": "하드 디스크를 정기적으로 조각 모으기를 해 주어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 49402,
+    "origin": "permian",
+    "examples": [
+      {
+        "exam_en": "Finno-Ugric",
+        "exam_ko": "제파에 속하는 언어."
+      }
+    ]
+  },
+  {
+    "id": 49408,
+    "origin": "yankee",
+    "examples": [
+      {
+        "exam_en": "Yankee ingenuity",
+        "exam_ko": "양키의 독창성."
+      }
+    ]
+  },
+  {
+    "id": 49453,
+    "origin": "deuterocanonical",
+    "examples": [
+      {
+        "exam_en": "the deuterocanonical books",
+        "exam_ko": "제2정전(구약 성서 중 그리스어역 성서에는 포함되어 있지만 히브리어 성서에는 포함되지 않았던 부분)."
+      }
+    ]
+  },
+  {
+    "id": 49458,
+    "origin": "parthian",
+    "examples": [
+      {
+        "exam_en": "a Parthian glance",
+        "exam_ko": "마지막 일별[눈길]."
+      }
+    ]
+  },
+  {
+    "id": 49465,
+    "origin": "booing",
+    "examples": [
+      {
+        "exam_en": "They started booing.",
+        "exam_ko": "그들은 야유하기 시작했어."
+      }
+    ]
+  },
+  {
+    "id": 49486,
+    "origin": "deontic",
+    "examples": [
+      {
+        "exam_en": "deontic logic",
+        "exam_ko": "의무 논리학(의무·허가·금지 등의 개념을 다룸)."
+      }
+    ]
+  },
+  {
+    "id": 49491,
+    "origin": "reappraisal",
+    "examples": [
+      {
+        "exam_en": "Your plan needs reappraisal.",
+        "exam_ko": "당신의 계획은 재검토를 요한다."
+      }
+    ]
+  },
+  {
+    "id": 49495,
+    "origin": "pash",
+    "examples": [
+      {
+        "exam_en": "have a pash for",
+        "exam_ko": "＜선생 등을＞ 열애하다."
+      }
+    ]
+  }
+]

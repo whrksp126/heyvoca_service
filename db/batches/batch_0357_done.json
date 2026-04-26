@@ -1,0 +1,262 @@
+[
+  {
+    "id": 9464,
+    "origin": "specialist",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">specialist</strong> in education.",
+        "exam_ko": "그녀는 교육 분야의 <strong class=\"target-word\">전문가</strong>다."
+      },
+      {
+        "exam_en": "He works as a women's health <strong class=\"target-word\">specialist</strong>.",
+        "exam_ko": "그는 여성 건강 <strong class=\"target-word\">전문의</strong>로 일한다."
+      }
+    ]
+  },
+  {
+    "id": 9465,
+    "origin": "analyst",
+    "examples": [
+      {
+        "exam_en": "The news <strong class=\"target-word\">analyst</strong> explained the election results.",
+        "exam_ko": "뉴스 <strong class=\"target-word\">해설자</strong>가 선거 결과를 설명했다."
+      }
+    ]
+  },
+  {
+    "id": 9466,
+    "origin": "headed",
+    "examples": [
+      {
+        "exam_en": "The myth described a <strong class=\"target-word\">two-headed</strong> eagle.",
+        "exam_ko": "그 신화는 <strong class=\"target-word\">쌍두</strong> 독수리를 묘사했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">gray-headed</strong> professor greeted the students.",
+        "exam_ko": "<strong class=\"target-word\">백발 머리의</strong> 교수가 학생들에게 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 9467,
+    "origin": "strictly",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">strictly</strong> a gentleman.",
+        "exam_ko": "그는 <strong class=\"target-word\">정말로</strong> 신사다."
+      }
+    ]
+  },
+  {
+    "id": 9468,
+    "origin": "ministry",
+    "examples": [
+      {
+        "exam_en": "He decided to enter the <strong class=\"target-word\">ministry</strong> after college.",
+        "exam_ko": "그는 대학 졸업 후 <strong class=\"target-word\">성직</strong>에 들어가기로 했다."
+      },
+      {
+        "exam_en": "The president formed a new <strong class=\"target-word\">ministry</strong> last week.",
+        "exam_ko": "대통령은 지난주 새 <strong class=\"target-word\">내각</strong>을 구성했다."
+      }
+    ]
+  },
+  {
+    "id": 9469,
+    "origin": "undeclared",
+    "examples": [
+      {
+        "exam_en": "The conflict was an <strong class=\"target-word\">undeclared</strong> war.",
+        "exam_ko": "그 분쟁은 <strong class=\"target-word\">선전 포고 없는</strong> 전쟁이었다."
+      }
+    ]
+  },
+  {
+    "id": 9470,
+    "origin": "fugitive",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">fugitives</strong> fled from Hungary seeking safety.",
+        "exam_ko": "<strong class=\"target-word\">망명자들</strong>이 안전을 찾아 헝가리에서 달아났다."
+      },
+      {
+        "exam_en": "Police captured the <strong class=\"target-word\">fugitive</strong> prisoner at dawn.",
+        "exam_ko": "경찰은 새벽에 <strong class=\"target-word\">탈옥수</strong>를 붙잡았다."
+      }
+    ]
+  },
+  {
+    "id": 9471,
+    "origin": "truthful",
+    "examples": [
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">truthful</strong> account of the incident.",
+        "exam_ko": "그녀는 사건에 대해 <strong class=\"target-word\">솔직한</strong> 설명을 했다."
+      },
+      {
+        "exam_en": "The novel offered a <strong class=\"target-word\">truthful</strong> portrayal of society.",
+        "exam_ko": "그 소설은 사회를 <strong class=\"target-word\">충실하게</strong> 묘사했다."
+      }
+    ]
+  },
+  {
+    "id": 9473,
+    "origin": "frequency",
+    "examples": [
+      {
+        "exam_en": "Scientists studied the <strong class=\"target-word\">frequency</strong> of earthquakes in the region.",
+        "exam_ko": "과학자들은 그 지역 지진의 <strong class=\"target-word\">빈도</strong>를 연구했다."
+      },
+      {
+        "exam_en": "Storms hit the coast with increasing <strong class=\"target-word\">frequency</strong>.",
+        "exam_ko": "폭풍이 점점 더 높은 <strong class=\"target-word\">빈도</strong>로 해안을 강타했다."
+      }
+    ]
+  },
+  {
+    "id": 9474,
+    "origin": "babble",
+    "examples": [
+      {
+        "exam_en": "The two friends <strong class=\"target-word\">babbled</strong> on for hours.",
+        "exam_ko": "두 친구는 여러 시간 <strong class=\"target-word\">재잘거렸다</strong>."
+      },
+      {
+        "exam_en": "The toddler <strong class=\"target-word\">babbled</strong> happily in her crib.",
+        "exam_ko": "아기는 침대에서 즐겁게 <strong class=\"target-word\">옹알이했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9475,
+    "origin": "destruct",
+    "examples": [
+      {
+        "exam_en": "The rocket had a <strong class=\"target-word\">destruct</strong> mechanism for emergencies.",
+        "exam_ko": "로켓에는 비상용 <strong class=\"target-word\">자폭</strong> 장치가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 9477,
+    "origin": "backing",
+    "examples": [
+      {
+        "exam_en": "The board gave the project its full <strong class=\"target-word\">backing</strong>.",
+        "exam_ko": "이사회는 프로젝트에 전면적인 <strong class=\"target-word\">지원</strong>을 했다."
+      },
+      {
+        "exam_en": "She ran for office with party <strong class=\"target-word\">backing</strong>.",
+        "exam_ko": "그녀는 당의 <strong class=\"target-word\">후원</strong>을 받아 선거에 출마했다."
+      }
+    ]
+  },
+  {
+    "id": 9478,
+    "origin": "messy",
+    "examples": [
+      {
+        "exam_en": "The kitchen was too <strong class=\"target-word\">messy</strong> to cook in.",
+        "exam_ko": "부엌이 너무 <strong class=\"target-word\">지저분해서</strong> 요리할 수 없었다."
+      },
+      {
+        "exam_en": "His handwriting is very <strong class=\"target-word\">messy</strong>.",
+        "exam_ko": "그의 글씨는 매우 <strong class=\"target-word\">엉망이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9479,
+    "origin": "edged",
+    "examples": [
+      {
+        "exam_en": "Keep <strong class=\"target-word\">edged</strong> tools away from children.",
+        "exam_ko": "<strong class=\"target-word\">날붙이</strong>는 아이들 손에 닿지 않게 하라."
+      },
+      {
+        "exam_en": "The knife has a <strong class=\"target-word\">sharp-edged</strong> blade.",
+        "exam_ko": "그 칼은 <strong class=\"target-word\">날이 예리한</strong> 날을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 9481,
+    "origin": "sunk",
+    "examples": [
+      {
+        "exam_en": "If they catch you cheating, you are really <strong class=\"target-word\">sunk</strong>.",
+        "exam_ko": "부정 행위가 들키면 넌 정말 <strong class=\"target-word\">끝장이다</strong>."
+      },
+      {
+        "exam_en": "I forgot my keys and now I am <strong class=\"target-word\">sunk</strong>.",
+        "exam_ko": "열쇠를 잊어버려 이제 <strong class=\"target-word\">큰일났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9482,
+    "origin": "extraction",
+    "examples": [
+      {
+        "exam_en": "The factory specializes in the <strong class=\"target-word\">extraction</strong> of iron from ore.",
+        "exam_ko": "그 공장은 광석에서 철을 <strong class=\"target-word\">추출</strong>하는 데 특화되어 있다."
+      },
+      {
+        "exam_en": "He is of Spanish <strong class=\"target-word\">extraction</strong>.",
+        "exam_ko": "그는 스페인계 <strong class=\"target-word\">출신</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 9483,
+    "origin": "reinforcement",
+    "examples": [
+      {
+        "exam_en": "The bridge needs structural <strong class=\"target-word\">reinforcement</strong> before reopening.",
+        "exam_ko": "다리는 재개통 전에 구조적 <strong class=\"target-word\">보강</strong>이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 9484,
+    "origin": "itinerary",
+    "examples": [
+      {
+        "exam_en": "She carefully arranged her travel <strong class=\"target-word\">itinerary</strong>.",
+        "exam_ko": "그녀는 여행 <strong class=\"target-word\">일정</strong>을 꼼꼼하게 짰다."
+      },
+      {
+        "exam_en": "The travel agent planned a detailed <strong class=\"target-word\">itinerary</strong>.",
+        "exam_ko": "그 여행사 직원이 상세한 <strong class=\"target-word\">여행 계획</strong>을 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 9486,
+    "origin": "overeat",
+    "examples": [
+      {
+        "exam_en": "Do not <strong class=\"target-word\">overeat</strong> or you will feel sick.",
+        "exam_ko": "<strong class=\"target-word\">과식</strong>하면 배가 아플 것이다."
+      },
+      {
+        "exam_en": "He tends to <strong class=\"target-word\">overeat</strong> when he is stressed.",
+        "exam_ko": "그는 스트레스를 받으면 <strong class=\"target-word\">과식</strong>하는 경향이 있다."
+      }
+    ]
+  },
+  {
+    "id": 9487,
+    "origin": "cleanse",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Cleanse</strong> the wound with antiseptic.",
+        "exam_ko": "상처를 소독제로 <strong class=\"target-word\">세척하라</strong>."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">cleanse</strong> her heart of old grudges.",
+        "exam_ko": "그녀는 오래된 원한을 마음에서 <strong class=\"target-word\">씻어내려</strong> 했다."
+      }
+    ]
+  }
+]

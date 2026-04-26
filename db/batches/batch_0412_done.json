@@ -1,0 +1,262 @@
+[
+  {
+    "id": 11425,
+    "origin": "meridian",
+    "examples": [
+      {
+        "exam_en": "The map shows the <strong class=\"target-word\">meridian</strong> lines clearly.",
+        "exam_ko": "지도에 <strong class=\"target-word\">자오선</strong>이 선명하게 표시되어 있다."
+      },
+      {
+        "exam_en": "The ship crossed the prime <strong class=\"target-word\">meridian</strong> at noon.",
+        "exam_ko": "배는 정오에 본초 <strong class=\"target-word\">자오선</strong>을 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 11427,
+    "origin": "trajectory",
+    "examples": [
+      {
+        "exam_en": "The ball followed a curved <strong class=\"target-word\">trajectory</strong> through the air.",
+        "exam_ko": "공은 공중에서 곡선 <strong class=\"target-word\">궤도</strong>를 그렸다."
+      }
+    ]
+  },
+  {
+    "id": 11428,
+    "origin": "munition",
+    "examples": [
+      {
+        "exam_en": "The army stored <strong class=\"target-word\">munitions</strong> in the underground depot.",
+        "exam_ko": "군대는 지하 창고에 <strong class=\"target-word\">군수품</strong>을 보관했다."
+      }
+    ]
+  },
+  {
+    "id": 11429,
+    "origin": "variation",
+    "examples": [
+      {
+        "exam_en": "There is a slight <strong class=\"target-word\">variation</strong> in today's temperature.",
+        "exam_ko": "오늘 기온에 약간의 <strong class=\"target-word\">변동</strong>이 있다."
+      },
+      {
+        "exam_en": "She longed for some <strong class=\"target-word\">variation</strong> in her daily routine.",
+        "exam_ko": "그녀는 일상에서 약간의 <strong class=\"target-word\">변화</strong>를 원했다."
+      },
+      {
+        "exam_en": "Minor <strong class=\"target-word\">variations</strong> in size are acceptable in this process.",
+        "exam_ko": "이 과정에서 크기의 작은 <strong class=\"target-word\">오차</strong>는 허용된다."
+      }
+    ]
+  },
+  {
+    "id": 11431,
+    "origin": "stabilization",
+    "examples": [
+      {
+        "exam_en": "There has been some <strong class=\"target-word\">stabilization</strong> in world population recently.",
+        "exam_ko": "최근 세계 인구가 어느 정도 <strong class=\"target-word\">안정화</strong>되었다."
+      }
+    ]
+  },
+  {
+    "id": 11433,
+    "origin": "redundancy",
+    "examples": [
+      {
+        "exam_en": "The company addressed the <strong class=\"target-word\">redundancy</strong> of its workforce.",
+        "exam_ko": "회사는 인력 <strong class=\"target-word\">과잉</strong> 문제를 해결했다."
+      }
+    ]
+  },
+  {
+    "id": 11435,
+    "origin": "serendipity",
+    "examples": [
+      {
+        "exam_en": "Their meeting was a result of pure <strong class=\"target-word\">serendipity</strong>.",
+        "exam_ko": "그들의 만남은 순전한 <strong class=\"target-word\">우연한 행운</strong>의 결과였다."
+      }
+    ]
+  },
+  {
+    "id": 11436,
+    "origin": "renown",
+    "examples": [
+      {
+        "exam_en": "He is a scientist of great <strong class=\"target-word\">renown</strong> in his field.",
+        "exam_ko": "그는 자신의 분야에서 큰 <strong class=\"target-word\">명성</strong>을 가진 과학자다."
+      },
+      {
+        "exam_en": "She won <strong class=\"target-word\">renown</strong> for her groundbreaking research.",
+        "exam_ko": "그녀는 획기적인 연구로 <strong class=\"target-word\">명성</strong>을 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 11437,
+    "origin": "unforeseen",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Unforeseen</strong> delays pushed the project deadline back.",
+        "exam_ko": "<strong class=\"target-word\">예기치 못한</strong> 지연으로 프로젝트 마감이 미뤄졌다."
+      },
+      {
+        "exam_en": "The plan failed due to <strong class=\"target-word\">unforeseen</strong> circumstances.",
+        "exam_ko": "계획은 <strong class=\"target-word\">예기치 못한</strong> 상황으로 실패했다."
+      }
+    ]
+  },
+  {
+    "id": 11440,
+    "origin": "frontier",
+    "examples": [
+      {
+        "exam_en": "The river marks the <strong class=\"target-word\">frontier</strong> between the two countries.",
+        "exam_ko": "강은 두 나라 사이의 <strong class=\"target-word\">국경</strong>을 나타낸다."
+      },
+      {
+        "exam_en": "France has <strong class=\"target-word\">frontiers</strong> with Germany and Spain.",
+        "exam_ko": "프랑스는 독일과 스페인과 <strong class=\"target-word\">국경</strong>을 접하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 11441,
+    "origin": "terribly",
+    "examples": [
+      {
+        "exam_en": "The wound bled <strong class=\"target-word\">terribly</strong>.",
+        "exam_ko": "상처에서 <strong class=\"target-word\">심하게</strong> 출혈이 있었다."
+      },
+      {
+        "exam_en": "I'm <strong class=\"target-word\">terribly</strong> sorry for being late.",
+        "exam_ko": "늦어서 <strong class=\"target-word\">정말</strong> 미안합니다."
+      }
+    ]
+  },
+  {
+    "id": 11445,
+    "origin": "decipher",
+    "examples": [
+      {
+        "exam_en": "Experts worked hard to <strong class=\"target-word\">decipher</strong> the ancient script.",
+        "exam_ko": "전문가들은 고대 문자를 <strong class=\"target-word\">판독하기</strong> 위해 애썼다."
+      },
+      {
+        "exam_en": "I like to <strong class=\"target-word\">decipher</strong> the secret codes in the novel.",
+        "exam_ko": "나는 소설 속 비밀 코드를 <strong class=\"target-word\">해독하는</strong> 것을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 11446,
+    "origin": "glitch",
+    "examples": [
+      {
+        "exam_en": "A software <strong class=\"target-word\">glitch</strong> caused the app to crash.",
+        "exam_ko": "소프트웨어 <strong class=\"target-word\">오류</strong>로 앱이 다운되었다."
+      }
+    ]
+  },
+  {
+    "id": 11447,
+    "origin": "collegiate",
+    "examples": [
+      {
+        "exam_en": "He wore a <strong class=\"target-word\">collegiate</strong> style jacket to the event.",
+        "exam_ko": "그는 행사에 <strong class=\"target-word\">대학생풍</strong> 재킷을 입고 갔다."
+      },
+      {
+        "exam_en": "She used a <strong class=\"target-word\">collegiate</strong> dictionary for her studies.",
+        "exam_ko": "그녀는 공부를 위해 <strong class=\"target-word\">대학생용</strong> 사전을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 11448,
+    "origin": "obstruct",
+    "examples": [
+      {
+        "exam_en": "The tall building <strong class=\"target-word\">obstructs</strong> the view from our window.",
+        "exam_ko": "높은 건물이 우리 창문에서의 전망을 <strong class=\"target-word\">가로막는다</strong>."
+      },
+      {
+        "exam_en": "Fallen trees <strong class=\"target-word\">obstructed</strong> the flow of the river.",
+        "exam_ko": "쓰러진 나무들이 강의 흐름을 <strong class=\"target-word\">방해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11451,
+    "origin": "narration",
+    "examples": [
+      {
+        "exam_en": "The film's <strong class=\"target-word\">narration</strong> guides viewers through the story.",
+        "exam_ko": "영화의 <strong class=\"target-word\">해설</strong>이 관객을 이야기 속으로 안내한다."
+      },
+      {
+        "exam_en": "Direct <strong class=\"target-word\">narration</strong> quotes the speaker's exact words.",
+        "exam_ko": "직접 <strong class=\"target-word\">화법</strong>은 화자의 말을 그대로 인용한다."
+      }
+    ]
+  },
+  {
+    "id": 11452,
+    "origin": "indication",
+    "examples": [
+      {
+        "exam_en": "Rising prices are an <strong class=\"target-word\">indication</strong> of inflation.",
+        "exam_ko": "물가 상승은 인플레이션의 <strong class=\"target-word\">징조</strong>다."
+      },
+      {
+        "exam_en": "His face showed no <strong class=\"target-word\">indication</strong> of what he was thinking.",
+        "exam_ko": "그의 얼굴에는 생각의 <strong class=\"target-word\">기색</strong>이 전혀 없었다."
+      }
+    ]
+  },
+  {
+    "id": 11453,
+    "origin": "hydraulic",
+    "examples": [
+      {
+        "exam_en": "The mechanic repaired the <strong class=\"target-word\">hydraulic</strong> pump on the machine.",
+        "exam_ko": "정비사가 기계의 <strong class=\"target-word\">수압</strong> 펌프를 수리했다."
+      },
+      {
+        "exam_en": "The car uses a <strong class=\"target-word\">hydraulic</strong> brake system for safety.",
+        "exam_ko": "그 차는 안전을 위해 <strong class=\"target-word\">유압</strong> 브레이크 시스템을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 11454,
+    "origin": "erratic",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">erratic</strong> behavior worried his colleagues.",
+        "exam_ko": "그의 <strong class=\"target-word\">불규칙한</strong> 행동이 동료들을 걱정하게 했다."
+      },
+      {
+        "exam_en": "She has been emotionally <strong class=\"target-word\">erratic</strong> lately.",
+        "exam_ko": "그녀는 최근 감정적으로 <strong class=\"target-word\">불안정한</strong> 상태였다."
+      }
+    ]
+  },
+  {
+    "id": 11456,
+    "origin": "distorted",
+    "examples": [
+      {
+        "exam_en": "The media published a <strong class=\"target-word\">distorted</strong> version of the incident.",
+        "exam_ko": "언론은 사건에 대해 <strong class=\"target-word\">왜곡된</strong> 이야기를 보도했다."
+      },
+      {
+        "exam_en": "He acted on a <strong class=\"target-word\">distorted</strong> sense of justice.",
+        "exam_ko": "그는 <strong class=\"target-word\">잘못된</strong> 정의감에 따라 행동했다."
+      }
+    ]
+  }
+]

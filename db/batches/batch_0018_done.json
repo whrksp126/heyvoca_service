@@ -1,0 +1,298 @@
+[
+  {
+    "id": 344,
+    "origin": "royal",
+    "examples": [
+      {
+        "exam_en": "She was born into the <strong class=\"target-word\">royal</strong> family.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">왕실</strong> 가문에서 태어났다."
+      },
+      {
+        "exam_en": "The president received a <strong class=\"target-word\">royal</strong> welcome.",
+        "exam_ko": "대통령은 <strong class=\"target-word\">왕실에서나 볼 법한</strong> 환영을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 345,
+    "origin": "natural",
+    "examples": [
+      {
+        "exam_en": "This product is made from <strong class=\"target-word\">natural</strong> rubber.",
+        "exam_ko": "이 제품은 <strong class=\"target-word\">천연</strong> 고무로 만들어졌다."
+      },
+      {
+        "exam_en": "The ingredients are completely <strong class=\"target-word\">natural</strong>.",
+        "exam_ko": "재료들은 완전히 <strong class=\"target-word\">천연</strong>으로 이루어져 있다."
+      }
+    ]
+  },
+  {
+    "id": 346,
+    "origin": "individual",
+    "examples": [
+      {
+        "exam_en": "Each <strong class=\"target-word\">individual</strong> person has a different opinion.",
+        "exam_ko": "각각의 <strong class=\"target-word\">개인</strong>은 서로 다른 의견을 가진다."
+      },
+      {
+        "exam_en": "She shared her <strong class=\"target-word\">individual</strong> view on the issue.",
+        "exam_ko": "그녀는 그 문제에 대해 <strong class=\"target-word\">개인적인</strong> 견해를 밝혔다."
+      },
+      {
+        "exam_en": "It varies from <strong class=\"target-word\">individual</strong> to individual.",
+        "exam_ko": "그것은 <strong class=\"target-word\">개인</strong>마다 차이가 있다."
+      }
+    ]
+  },
+  {
+    "id": 347,
+    "origin": "nice",
+    "examples": [
+      {
+        "exam_en": "We had a <strong class=\"target-word\">nice</strong> day at the beach.",
+        "exam_ko": "우리는 해변에서 <strong class=\"target-word\">좋은</strong> 하루를 보냈다."
+      },
+      {
+        "exam_en": "The soup has a <strong class=\"target-word\">nice</strong> taste.",
+        "exam_ko": "그 수프는 <strong class=\"target-word\">좋은</strong> 맛이 난다."
+      }
+    ]
+  },
+  {
+    "id": 348,
+    "origin": "french",
+    "examples": [
+      {
+        "exam_en": "The book was translated from <strong class=\"target-word\">French</strong>.",
+        "exam_ko": "그 책은 <strong class=\"target-word\">프랑스어</strong>에서 번역되었다."
+      },
+      {
+        "exam_en": "She speaks <strong class=\"target-word\">French</strong> fluently.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">프랑스어</strong>를 유창하게 말한다."
+      }
+    ]
+  },
+  {
+    "id": 349,
+    "origin": "following",
+    "examples": [
+      {
+        "exam_en": "The magazine has a large <strong class=\"target-word\">following</strong>.",
+        "exam_ko": "그 잡지는 <strong class=\"target-word\">독자</strong>가 많다."
+      },
+      {
+        "exam_en": "Please check the <strong class=\"target-word\">following</strong> page for details.",
+        "exam_ko": "자세한 내용은 <strong class=\"target-word\">다음</strong> 페이지를 확인하세요."
+      }
+    ]
+  },
+  {
+    "id": 350,
+    "origin": "current",
+    "examples": [
+      {
+        "exam_en": "He studies <strong class=\"target-word\">current</strong> English expressions.",
+        "exam_ko": "그는 <strong class=\"target-word\">현대</strong> 영어 표현을 공부한다."
+      },
+      {
+        "exam_en": "The budget covers the <strong class=\"target-word\">current</strong> fiscal year.",
+        "exam_ko": "예산은 <strong class=\"target-word\">현재</strong> 회계 연도를 포함한다."
+      }
+    ]
+  },
+  {
+    "id": 351,
+    "origin": "modern",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Modern</strong> city life can be stressful.",
+        "exam_ko": "<strong class=\"target-word\">현대</strong> 도시 생활은 스트레스가 될 수 있다."
+      },
+      {
+        "exam_en": "Technology has changed greatly in <strong class=\"target-word\">modern</strong> times.",
+        "exam_ko": "<strong class=\"target-word\">현대</strong>에 들어 기술은 크게 변화했다."
+      }
+    ]
+  },
+  {
+    "id": 352,
+    "origin": "labor",
+    "examples": [
+      {
+        "exam_en": "Teaching requires intense mental <strong class=\"target-word\">labor</strong>.",
+        "exam_ko": "가르치는 일은 강도 높은 정신적 <strong class=\"target-word\">노동</strong>을 요구한다."
+      },
+      {
+        "exam_en": "He was sentenced to hard <strong class=\"target-word\">labor</strong> for five years.",
+        "exam_ko": "그는 5년간 중<strong class=\"target-word\">노동</strong> 형을 선고받았다."
+      }
+    ]
+  },
+  {
+    "id": 353,
+    "origin": "legal",
+    "examples": [
+      {
+        "exam_en": "The driver exceeded the <strong class=\"target-word\">legal</strong> speed limit.",
+        "exam_ko": "운전자는 <strong class=\"target-word\">법정</strong> 속도 제한을 초과했다."
+      },
+      {
+        "exam_en": "She is his <strong class=\"target-word\">legal</strong> wife under the law.",
+        "exam_ko": "그녀는 법적으로 그의 <strong class=\"target-word\">법률상</strong> 아내다."
+      }
+    ]
+  },
+  {
+    "id": 354,
+    "origin": "final",
+    "examples": [
+      {
+        "exam_en": "She cried at the <strong class=\"target-word\">final</strong> chapter of the book.",
+        "exam_ko": "그녀는 그 책의 <strong class=\"target-word\">마지막</strong> 장에서 울었다."
+      },
+      {
+        "exam_en": "Winning the championship is his <strong class=\"target-word\">final</strong> goal.",
+        "exam_ko": "우승이 그의 <strong class=\"target-word\">궁극적인</strong> 목표다."
+      }
+    ]
+  },
+  {
+    "id": 355,
+    "origin": "red",
+    "examples": [
+      {
+        "exam_en": "She has beautiful <strong class=\"target-word\">red</strong> hair.",
+        "exam_ko": "그녀는 아름다운 <strong class=\"target-word\">붉은</strong> 머리카락을 가졌다."
+      },
+      {
+        "exam_en": "His face turned <strong class=\"target-word\">red</strong> with embarrassment.",
+        "exam_ko": "그의 얼굴은 당황해서 <strong class=\"target-word\">빨갛게</strong> 되었다."
+      }
+    ]
+  },
+  {
+    "id": 356,
+    "origin": "normal",
+    "examples": [
+      {
+        "exam_en": "His weight is within the <strong class=\"target-word\">normal</strong> range.",
+        "exam_ko": "그의 체중은 <strong class=\"target-word\">정상</strong> 범위 안에 있다."
+      },
+      {
+        "exam_en": "The rainfall is above <strong class=\"target-word\">normal</strong> this year.",
+        "exam_ko": "올해의 강우량은 <strong class=\"target-word\">평균</strong> 이상이다."
+      },
+      {
+        "exam_en": "Things will go back to <strong class=\"target-word\">normal</strong> soon.",
+        "exam_ko": "곧 상황이 <strong class=\"target-word\">정상</strong>으로 돌아올 것이다."
+      }
+    ]
+  },
+  {
+    "id": 357,
+    "origin": "serious",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">serious</strong> expression on her face.",
+        "exam_ko": "그녀의 얼굴에는 <strong class=\"target-word\">진지한</strong> 표정이 담겨 있었다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">serious</strong> about his career goals.",
+        "exam_ko": "그는 자신의 커리어 목표에 <strong class=\"target-word\">진지하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 358,
+    "origin": "previous",
+    "examples": [
+      {
+        "exam_en": "She broke the <strong class=\"target-word\">previous</strong> record by two seconds.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">이전</strong> 기록을 2초 차이로 깼다."
+      },
+      {
+        "exam_en": "Do you have any <strong class=\"target-word\">previous</strong> experience in this field?",
+        "exam_ko": "이 분야에 <strong class=\"target-word\">이전</strong> 경험이 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 359,
+    "origin": "total",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">total</strong> cost came to five hundred dollars.",
+        "exam_ko": "<strong class=\"target-word\">총</strong> 비용은 500달러였다."
+      },
+      {
+        "exam_en": "The accident <strong class=\"target-word\">totaled</strong> his car beyond repair.",
+        "exam_ko": "사고로 그의 차는 수리 불가 수준으로 <strong class=\"target-word\">전손</strong> 처리되었다."
+      },
+      {
+        "exam_en": "Education shapes one's <strong class=\"target-word\">total</strong> personality.",
+        "exam_ko": "교육은 사람의 <strong class=\"target-word\">전인격</strong>을 형성한다."
+      }
+    ]
+  },
+  {
+    "id": 360,
+    "origin": "prime",
+    "examples": [
+      {
+        "exam_en": "Safety is of <strong class=\"target-word\">prime</strong> importance here.",
+        "exam_ko": "여기서 안전은 <strong class=\"target-word\">가장 중요한</strong> 사안이다."
+      },
+      {
+        "exam_en": "Cost is the <strong class=\"target-word\">prime</strong> reason for the delay.",
+        "exam_ko": "비용이 지연의 <strong class=\"target-word\">주요한</strong> 이유다."
+      },
+      {
+        "exam_en": "Workers must <strong class=\"target-word\">prime</strong> the surface before applying sealant.",
+        "exam_ko": "작업자는 실란트 도포 전에 표면에 <strong class=\"target-word\">밑칠</strong>을 해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 361,
+    "origin": "significant",
+    "examples": [
+      {
+        "exam_en": "The anniversary is a <strong class=\"target-word\">significant</strong> date for the family.",
+        "exam_ko": "그 기념일은 가족에게 <strong class=\"target-word\">중요한</strong> 날이다."
+      },
+      {
+        "exam_en": "This success is <strong class=\"target-word\">significant</strong> for your future.",
+        "exam_ko": "이 성공은 당신의 미래에 <strong class=\"target-word\">중대한</strong> 의미를 가진다."
+      }
+    ]
+  },
+  {
+    "id": 362,
+    "origin": "industrial",
+    "examples": [
+      {
+        "exam_en": "The factory exports <strong class=\"target-word\">industrial</strong> products worldwide.",
+        "exam_ko": "그 공장은 <strong class=\"target-word\">산업</strong> 제품을 전 세계로 수출한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Industrial</strong> spying is a serious crime.",
+        "exam_ko": "<strong class=\"target-word\">산업</strong> 스파이 행위는 심각한 범죄다."
+      }
+    ]
+  },
+  {
+    "id": 363,
+    "origin": "sorry",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">sorry</strong> for her loss.",
+        "exam_ko": "그녀의 상실에 <strong class=\"target-word\">안타깝게</strong> 생각한다."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">sorry</strong> about his accident.",
+        "exam_ko": "그가 당한 사고에 대해 <strong class=\"target-word\">마음이 아프다</strong>."
+      }
+    ]
+  }
+]

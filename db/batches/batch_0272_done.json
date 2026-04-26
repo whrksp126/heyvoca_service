@@ -1,0 +1,286 @@
+[
+  {
+    "id": 6727,
+    "origin": "precipitation",
+    "examples": [
+      {
+        "exam_en": "She acted with <strong class=\"target-word\">precipitation</strong> and regretted it.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">경솔하게</strong> 행동하고 후회했다."
+      },
+      {
+        "exam_en": "The annual <strong class=\"target-word\">precipitation</strong> here is very low.",
+        "exam_ko": "이곳의 연간 <strong class=\"target-word\">강수량</strong>은 매우 낮다."
+      }
+    ]
+  },
+  {
+    "id": 6728,
+    "origin": "poultry",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">poultry</strong> is selling well at the market.",
+        "exam_ko": "<strong class=\"target-word\">가금류</strong>는 시장에서 잘 팔리고 있다."
+      },
+      {
+        "exam_en": "They raise <strong class=\"target-word\">poultry</strong> on their family farm.",
+        "exam_ko": "그들은 가족 농장에서 <strong class=\"target-word\">가금류</strong>를 기른다."
+      }
+    ]
+  },
+  {
+    "id": 6729,
+    "origin": "pollen",
+    "examples": [
+      {
+        "exam_en": "She has a severe <strong class=\"target-word\">pollen</strong> allergy every spring.",
+        "exam_ko": "그녀는 매봄 심한 <strong class=\"target-word\">꽃가루</strong> 알레르기가 생긴다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">pollen</strong> count is very high today.",
+        "exam_ko": "오늘 공기 중 <strong class=\"target-word\">꽃가루</strong> 수가 매우 높다."
+      }
+    ]
+  },
+  {
+    "id": 6730,
+    "origin": "pious",
+    "examples": [
+      {
+        "exam_en": "He was a <strong class=\"target-word\">pious</strong> hypocrite who fooled everyone.",
+        "exam_ko": "그는 모두를 속인 <strong class=\"target-word\">신앙심 깊은 척하는</strong> 위선자였다."
+      },
+      {
+        "exam_en": "They sang <strong class=\"target-word\">pious</strong> music at the cathedral.",
+        "exam_ko": "그들은 대성당에서 <strong class=\"target-word\">경건한</strong> 음악을 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 6731,
+    "origin": "pertinent",
+    "examples": [
+      {
+        "exam_en": "Please provide only <strong class=\"target-word\">pertinent</strong> details in your report.",
+        "exam_ko": "보고서에는 <strong class=\"target-word\">관련된</strong> 세부 사항만 포함하세요."
+      },
+      {
+        "exam_en": "His comments were <strong class=\"target-word\">pertinent</strong> to the issue.",
+        "exam_ko": "그의 의견은 문제에 <strong class=\"target-word\">핵심을 찌르는</strong> 것이었다."
+      },
+      {
+        "exam_en": "Perform <strong class=\"target-word\">pertinent</strong> tasks for each part of the assignment.",
+        "exam_ko": "과업의 각 부분에 대해 <strong class=\"target-word\">적절한</strong> 작업을 수행하라."
+      }
+    ]
+  },
+  {
+    "id": 6732,
+    "origin": "persecute",
+    "examples": [
+      {
+        "exam_en": "They have been <strong class=\"target-word\">persecuted</strong> for their beliefs.",
+        "exam_ko": "그들은 신앙 때문에 <strong class=\"target-word\">박해받았다</strong>."
+      },
+      {
+        "exam_en": "The overworked donkeys were <strong class=\"target-word\">persecuted</strong> by their owners.",
+        "exam_ko": "혹사당한 당나귀들은 주인들에게 <strong class=\"target-word\">혹독하게 다루어졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6733,
+    "origin": "perpetual",
+    "examples": [
+      {
+        "exam_en": "The mountain peak is covered with <strong class=\"target-word\">perpetual</strong> snow.",
+        "exam_ko": "그 산봉우리는 <strong class=\"target-word\">영원한</strong> 눈으로 덮여 있다."
+      },
+      {
+        "exam_en": "They wished for <strong class=\"target-word\">perpetual</strong> bliss after the war.",
+        "exam_ko": "그들은 전쟁 후 <strong class=\"target-word\">영원한</strong> 행복을 바랐다."
+      }
+    ]
+  },
+  {
+    "id": 6734,
+    "origin": "perch",
+    "examples": [
+      {
+        "exam_en": "The bird took its <strong class=\"target-word\">perch</strong> on the branch.",
+        "exam_ko": "새는 나뭇가지에 <strong class=\"target-word\">내려앉았다</strong>."
+      },
+      {
+        "exam_en": "She reached the <strong class=\"target-word\">perch</strong> of fame after years of work.",
+        "exam_ko": "그녀는 수년간의 노력 끝에 <strong class=\"target-word\">명성 있는 자리</strong>에 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 6735,
+    "origin": "peninsula",
+    "examples": [
+      {
+        "exam_en": "Korea is a <strong class=\"target-word\">peninsula</strong> between Japan and northeastern China.",
+        "exam_ko": "한국은 일본과 중국 동북쪽 사이에 위치한 <strong class=\"target-word\">반도</strong>이다."
+      },
+      {
+        "exam_en": "The city is located on a narrow <strong class=\"target-word\">peninsula</strong>.",
+        "exam_ko": "그 도시는 좁은 <strong class=\"target-word\">반도</strong> 위에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": 6737,
+    "origin": "overt",
+    "examples": [
+      {
+        "exam_en": "He told an <strong class=\"target-word\">overt</strong> lie in front of everyone.",
+        "exam_ko": "그는 모두 앞에서 <strong class=\"target-word\">명백한</strong> 거짓말을 했다."
+      },
+      {
+        "exam_en": "The protesters showed <strong class=\"target-word\">overt</strong> hostility toward the policy.",
+        "exam_ko": "시위대는 그 정책에 <strong class=\"target-word\">노골적인</strong> 적의를 드러냈다."
+      }
+    ]
+  },
+  {
+    "id": 6738,
+    "origin": "obscure",
+    "examples": [
+      {
+        "exam_en": "The poem has an <strong class=\"target-word\">obscure</strong> meaning that confuses readers.",
+        "exam_ko": "그 시는 독자들을 혼란스럽게 하는 <strong class=\"target-word\">애매한</strong> 의미를 담고 있다."
+      },
+      {
+        "exam_en": "The author wrote in an <strong class=\"target-word\">obscure</strong> style that few understood.",
+        "exam_ko": "그 작가는 이해하기 힘든 <strong class=\"target-word\">난해한</strong> 문체로 글을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 6739,
+    "origin": "oblivious",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">oblivious</strong> of the promises he had made.",
+        "exam_ko": "그는 자신이 한 약속을 <strong class=\"target-word\">잊고 있었다</strong>."
+      },
+      {
+        "exam_en": "He was quite <strong class=\"target-word\">oblivious</strong> of the danger around him.",
+        "exam_ko": "그는 주변의 위험을 전혀 <strong class=\"target-word\">알아채지 못했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6740,
+    "origin": "nurture",
+    "examples": [
+      {
+        "exam_en": "The mentor worked hard to <strong class=\"target-word\">nurture</strong> a promising writer.",
+        "exam_ko": "그 멘토는 장래성 있는 작가를 <strong class=\"target-word\">키우기</strong> 위해 열심히 노력했다."
+      },
+      {
+        "exam_en": "Researchers debate the roles of nature and <strong class=\"target-word\">nurture</strong> in development.",
+        "exam_ko": "연구자들은 발달에서 본성과 <strong class=\"target-word\">양육</strong>의 역할을 논쟁한다."
+      }
+    ]
+  },
+  {
+    "id": 6741,
+    "origin": "notorious",
+    "examples": [
+      {
+        "exam_en": "He was a <strong class=\"target-word\">notorious</strong> gambler in the city.",
+        "exam_ko": "그는 그 도시에서 소문난 <strong class=\"target-word\">악명 높은</strong> 노름꾼이었다."
+      },
+      {
+        "exam_en": "The warlord was <strong class=\"target-word\">notorious</strong> for his cruelty.",
+        "exam_ko": "그 군벌은 잔악무도하기로 <strong class=\"target-word\">악명이 높았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6742,
+    "origin": "notify",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">notify</strong> him of the decision in writing.",
+        "exam_ko": "그에게 결정 사항을 서면으로 <strong class=\"target-word\">통고하세요</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">notified</strong> his family of his death immediately.",
+        "exam_ko": "그들은 즉시 가족에게 그의 사망을 <strong class=\"target-word\">알렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6743,
+    "origin": "municipal",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">municipal</strong> government approved the new budget.",
+        "exam_ko": "<strong class=\"target-word\">시</strong> 정부는 새로운 예산을 승인했다."
+      },
+      {
+        "exam_en": "My children attend the <strong class=\"target-word\">municipal</strong> school nearby.",
+        "exam_ko": "내 아이들은 근처 <strong class=\"target-word\">시립</strong> 학교에 다닌다."
+      }
+    ]
+  },
+  {
+    "id": 6745,
+    "origin": "momentous",
+    "examples": [
+      {
+        "exam_en": "Everyone gathered to hear the <strong class=\"target-word\">momentous</strong> news.",
+        "exam_ko": "모두가 <strong class=\"target-word\">중대한</strong> 소식을 듣기 위해 모였다."
+      },
+      {
+        "exam_en": "The battle was <strong class=\"target-word\">momentous</strong> for the country's future.",
+        "exam_ko": "그 전투는 국가의 미래에 <strong class=\"target-word\">중대한</strong> 의미를 지녔다."
+      }
+    ]
+  },
+  {
+    "id": 6746,
+    "origin": "mitigate",
+    "examples": [
+      {
+        "exam_en": "He took deep breaths to <strong class=\"target-word\">mitigate</strong> his anger.",
+        "exam_ko": "그는 분노를 <strong class=\"target-word\">누그러뜨리기</strong> 위해 깊게 숨을 쉬었다."
+      },
+      {
+        "exam_en": "The new policy aims to <strong class=\"target-word\">mitigate</strong> environmental damage.",
+        "exam_ko": "새 정책은 환경 피해를 <strong class=\"target-word\">완화하는</strong> 것을 목표로 한다."
+      }
+    ]
+  },
+  {
+    "id": 6747,
+    "origin": "mishap",
+    "examples": [
+      {
+        "exam_en": "They completed the trip without any <strong class=\"target-word\">mishap</strong>.",
+        "exam_ko": "그들은 아무런 <strong class=\"target-word\">사고</strong> 없이 여행을 마쳤다."
+      },
+      {
+        "exam_en": "A small <strong class=\"target-word\">mishap</strong> delayed their arrival by an hour.",
+        "exam_ko": "작은 <strong class=\"target-word\">불상사</strong>로 그들의 도착이 한 시간 늦어졌다."
+      }
+    ]
+  },
+  {
+    "id": 6749,
+    "origin": "meticulous",
+    "examples": [
+      {
+        "exam_en": "She was known for her <strong class=\"target-word\">meticulous</strong> attention to detail.",
+        "exam_ko": "그녀는 세부 사항에 <strong class=\"target-word\">세심한</strong> 주의를 기울이기로 유명했다."
+      },
+      {
+        "exam_en": "He kept <strong class=\"target-word\">meticulous</strong> records of every transaction.",
+        "exam_ko": "그는 모든 거래 내역을 <strong class=\"target-word\">꼼꼼하게</strong> 기록했다."
+      }
+    ]
+  }
+]

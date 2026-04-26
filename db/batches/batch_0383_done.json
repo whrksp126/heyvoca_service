@@ -1,0 +1,246 @@
+[
+  {
+    "id": 10434,
+    "origin": "pretended",
+    "examples": [
+      {
+        "exam_en": "He showed only <strong class=\"target-word\">pretended</strong> loyalty to the king.",
+        "exam_ko": "그는 왕에게 <strong class=\"target-word\">겉치레뿐인</strong> 충성을 보였다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pretended</strong> to be sick to skip work.",
+        "exam_ko": "그녀는 출근을 피하려고 아픈 척 <strong class=\"target-word\">가장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10435,
+    "origin": "meddle",
+    "examples": [
+      {
+        "exam_en": "She asked her parents not to <strong class=\"target-word\">meddle</strong> in her affairs.",
+        "exam_ko": "그녀는 부모님에게 자신의 일에 <strong class=\"target-word\">참견하지</strong> 말라고 했다."
+      }
+    ]
+  },
+  {
+    "id": 10436,
+    "origin": "exasperation",
+    "examples": [
+      {
+        "exam_en": "He looked at her in <strong class=\"target-word\">exasperation</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">격노하여</strong> 그녀를 바라보았다."
+      },
+      {
+        "exam_en": "She sighed in <strong class=\"target-word\">exasperation</strong> at the delay.",
+        "exam_ko": "그녀는 지연에 <strong class=\"target-word\">짜증이 나서</strong> 한숨을 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 10437,
+    "origin": "mocking",
+    "examples": [
+      {
+        "exam_en": "He gave her a <strong class=\"target-word\">mocking</strong> smile after the loss.",
+        "exam_ko": "그는 패배 후 그녀에게 <strong class=\"target-word\">비웃는 듯한</strong> 미소를 지었다."
+      }
+    ]
+  },
+  {
+    "id": 10438,
+    "origin": "scornful",
+    "examples": [
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">scornful</strong> smile.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">조롱하는 듯한</strong> 미소를 지었다."
+      },
+      {
+        "exam_en": "He spoke in a <strong class=\"target-word\">scornful</strong> tone.",
+        "exam_ko": "그는 <strong class=\"target-word\">비웃는</strong> 말투로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 10441,
+    "origin": "periphery",
+    "examples": [
+      {
+        "exam_en": "The town sits on the <strong class=\"target-word\">periphery</strong> of the city.",
+        "exam_ko": "그 마을은 도시의 <strong class=\"target-word\">주변부</strong>에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": 10443,
+    "origin": "intimidate",
+    "examples": [
+      {
+        "exam_en": "They tried to <strong class=\"target-word\">intimidate</strong> the parents into paying.",
+        "exam_ko": "그들은 부모를 <strong class=\"target-word\">협박하여</strong> 돈을 내게 하려 했다."
+      }
+    ]
+  },
+  {
+    "id": 10444,
+    "origin": "nemesis",
+    "examples": [
+      {
+        "exam_en": "He finally met his <strong class=\"target-word\">nemesis</strong> in the final round.",
+        "exam_ko": "그는 결승전에서 마침내 자신의 <strong class=\"target-word\">천적</strong>을 만났다."
+      }
+    ]
+  },
+  {
+    "id": 10445,
+    "origin": "whopping",
+    "examples": [
+      {
+        "exam_en": "He told a <strong class=\"target-word\">whopping</strong> lie at the meeting.",
+        "exam_ko": "그는 회의에서 <strong class=\"target-word\">터무니없는</strong> 거짓말을 했다."
+      }
+    ]
+  },
+  {
+    "id": 10446,
+    "origin": "quirky",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">quirky</strong> sense of humor.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">기발한</strong> 유머 감각을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 10448,
+    "origin": "discontent",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">discontent</strong> with her small pay increase.",
+        "exam_ko": "그녀는 봉급이 적게 올라 <strong class=\"target-word\">불만스러웠다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Discontent</strong> grew among the unemployed graduates.",
+        "exam_ko": "실직한 졸업자들 사이에 <strong class=\"target-word\">불만</strong>이 커졌다."
+      }
+    ]
+  },
+  {
+    "id": 10451,
+    "origin": "wither",
+    "examples": [
+      {
+        "exam_en": "The flowers <strong class=\"target-word\">withered</strong> in the cold.",
+        "exam_ko": "꽃은 추위에 <strong class=\"target-word\">시들었다</strong>."
+      },
+      {
+        "exam_en": "His sympathy slowly <strong class=\"target-word\">withered</strong> over time.",
+        "exam_ko": "그의 동정심은 시간이 지나면서 서서히 <strong class=\"target-word\">희박해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10455,
+    "origin": "betrothed",
+    "examples": [
+      {
+        "exam_en": "She introduced him as her <strong class=\"target-word\">betrothed</strong>.",
+        "exam_ko": "그녀는 그를 자신의 <strong class=\"target-word\">약혼자</strong>로 소개했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">betrothed</strong> couple arrived at the ceremony.",
+        "exam_ko": "<strong class=\"target-word\">약혼한</strong> 두 사람이 식장에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 10458,
+    "origin": "exodus",
+    "examples": [
+      {
+        "exam_en": "A mass <strong class=\"target-word\">exodus</strong> followed the government announcement.",
+        "exam_ko": "정부 발표 이후 대규모 <strong class=\"target-word\">집단 이주</strong>가 이어졌다."
+      },
+      {
+        "exam_en": "After the meeting, a gradual <strong class=\"target-word\">exodus</strong> began.",
+        "exam_ko": "회의가 끝나자 사람들이 차츰 <strong class=\"target-word\">빠져나가기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 10459,
+    "origin": "styrofoam",
+    "examples": [
+      {
+        "exam_en": "The package was wrapped in <strong class=\"target-word\">styrofoam</strong>.",
+        "exam_ko": "물건은 <strong class=\"target-word\">스티로폼</strong>으로 포장되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 10460,
+    "origin": "carbonated",
+    "examples": [
+      {
+        "exam_en": "He drinks <strong class=\"target-word\">carbonated</strong> water every morning.",
+        "exam_ko": "그는 매일 아침 <strong class=\"target-word\">탄산</strong>수를 마신다."
+      },
+      {
+        "exam_en": "Kids love <strong class=\"target-word\">carbonated</strong> drinks at parties.",
+        "exam_ko": "아이들은 파티에서 <strong class=\"target-word\">탄산</strong>음료를 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 10461,
+    "origin": "copycat",
+    "examples": [
+      {
+        "exam_en": "She told him to stop being a <strong class=\"target-word\">copycat</strong>.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">흉내쟁이</strong> 짓을 그만하라고 했다."
+      },
+      {
+        "exam_en": "Police warned of a possible <strong class=\"target-word\">copycat</strong> crime.",
+        "exam_ko": "경찰은 <strong class=\"target-word\">모방</strong> 범죄 가능성을 경고했다."
+      }
+    ]
+  },
+  {
+    "id": 10462,
+    "origin": "moderation",
+    "examples": [
+      {
+        "exam_en": "He adopted a <strong class=\"target-word\">moderation</strong> in his attitude.",
+        "exam_ko": "그는 태도에 <strong class=\"target-word\">절제</strong>를 갖추었다."
+      },
+      {
+        "exam_en": "Eating with <strong class=\"target-word\">moderation</strong> keeps you healthy.",
+        "exam_ko": "<strong class=\"target-word\">절제</strong>하며 먹으면 건강을 유지할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 10463,
+    "origin": "retreat",
+    "examples": [
+      {
+        "exam_en": "The army was in full <strong class=\"target-word\">retreat</strong>.",
+        "exam_ko": "군대는 완전히 <strong class=\"target-word\">후퇴</strong>하고 있었다."
+      },
+      {
+        "exam_en": "The team went on a <strong class=\"target-word\">retreat</strong> in the mountains.",
+        "exam_ko": "팀은 산속으로 <strong class=\"target-word\">야유회</strong>를 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 10465,
+    "origin": "eatable",
+    "examples": [
+      {
+        "exam_en": "They shared whatever <strong class=\"target-word\">eatables</strong> they had.",
+        "exam_ko": "그들은 가지고 있던 <strong class=\"target-word\">음식물</strong>을 나눠 먹었다."
+      }
+    ]
+  }
+]

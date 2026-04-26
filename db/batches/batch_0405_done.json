@@ -1,0 +1,262 @@
+[
+  {
+    "id": 11190,
+    "origin": "stimulant",
+    "examples": [
+      {
+        "exam_en": "Coffee is a mild <strong class=\"target-word\">stimulant</strong> that boosts energy.",
+        "exam_ko": "커피는 에너지를 높여주는 가벼운 <strong class=\"target-word\">각성제</strong>다."
+      },
+      {
+        "exam_en": "The tax cut acted as a <strong class=\"target-word\">stimulant</strong> for the economy.",
+        "exam_ko": "세금 감면이 경제의 <strong class=\"target-word\">자극제</strong> 역할을 했다."
+      }
+    ]
+  },
+  {
+    "id": 11193,
+    "origin": "mystic",
+    "examples": [
+      {
+        "exam_en": "The dove carries a <strong class=\"target-word\">mystic</strong> meaning in religion.",
+        "exam_ko": "비둘기는 종교에서 <strong class=\"target-word\">신비로운</strong> 의미를 지닌다."
+      },
+      {
+        "exam_en": "She studied the <strong class=\"target-word\">mystic</strong> arts for years.",
+        "exam_ko": "그녀는 수년간 <strong class=\"target-word\">신비로운</strong> 기술을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 11194,
+    "origin": "charlatan",
+    "examples": [
+      {
+        "exam_en": "The doctor was exposed as a <strong class=\"target-word\">charlatan</strong> with fake credentials.",
+        "exam_ko": "그 의사는 가짜 자격증을 가진 <strong class=\"target-word\">사기꾼</strong>으로 밝혀졌다."
+      }
+    ]
+  },
+  {
+    "id": 11196,
+    "origin": "inalienable",
+    "examples": [
+      {
+        "exam_en": "Freedom of speech is an <strong class=\"target-word\">inalienable</strong> right.",
+        "exam_ko": "언론의 자유는 <strong class=\"target-word\">양도할 수 없는</strong> 권리다."
+      }
+    ]
+  },
+  {
+    "id": 11199,
+    "origin": "gamble",
+    "examples": [
+      {
+        "exam_en": "He likes to <strong class=\"target-word\">gamble</strong> at cards every weekend.",
+        "exam_ko": "그는 매주 주말마다 카드 <strong class=\"target-word\">도박</strong>을 즐긴다."
+      },
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">gamble</strong> her savings on stocks.",
+        "exam_ko": "그녀는 저축한 돈을 주식에 <strong class=\"target-word\">투기</strong>하기로 했다."
+      }
+    ]
+  },
+  {
+    "id": 11201,
+    "origin": "odds",
+    "examples": [
+      {
+        "exam_en": "The game has even <strong class=\"target-word\">odds</strong> for both players.",
+        "exam_ko": "그 게임은 두 선수 모두에게 <strong class=\"target-word\">확률</strong>이 반반이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">odds</strong> of winning were one in ten thousand.",
+        "exam_ko": "당첨될 <strong class=\"target-word\">확률</strong>은 만 분의 일이었다."
+      }
+    ]
+  },
+  {
+    "id": 11202,
+    "origin": "wager",
+    "examples": [
+      {
+        "exam_en": "He placed a <strong class=\"target-word\">wager</strong> of ten dollars on the match.",
+        "exam_ko": "그는 그 경기에 10달러를 <strong class=\"target-word\">걸었다</strong>."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">wager</strong> with her friend over the score.",
+        "exam_ko": "그녀는 점수를 두고 친구와 <strong class=\"target-word\">내기</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 11203,
+    "origin": "discomfort",
+    "examples": [
+      {
+        "exam_en": "Pregnancy can cause various <strong class=\"target-word\">discomforts</strong> in the body.",
+        "exam_ko": "임신은 몸에 여러 가지 <strong class=\"target-word\">불편한 증상</strong>을 유발할 수 있다."
+      },
+      {
+        "exam_en": "She ignored the minor <strong class=\"target-word\">discomforts</strong> and kept working.",
+        "exam_ko": "그녀는 사소한 <strong class=\"target-word\">불쾌한 증상</strong>들을 무시하고 계속 일했다."
+      },
+      {
+        "exam_en": "Please tell me if you feel any <strong class=\"target-word\">discomfort</strong>.",
+        "exam_ko": "만약 <strong class=\"target-word\">불편한 증상</strong>이 있으시면 알려주세요."
+      }
+    ]
+  },
+  {
+    "id": 11204,
+    "origin": "perception",
+    "examples": [
+      {
+        "exam_en": "That scientist studies <strong class=\"target-word\">perception</strong> in animals.",
+        "exam_ko": "그 과학자는 동물의 <strong class=\"target-word\">지각 작용</strong>을 연구한다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">perception</strong> of danger was immediate.",
+        "exam_ko": "그는 즉시 위험을 <strong class=\"target-word\">알아챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11206,
+    "origin": "grease",
+    "examples": [
+      {
+        "exam_en": "There was a blob of <strong class=\"target-word\">grease</strong> on the floor.",
+        "exam_ko": "바닥에 <strong class=\"target-word\">기름</strong> 한 방울이 있었다."
+      },
+      {
+        "exam_en": "He put some <strong class=\"target-word\">grease</strong> on the bike's wheel.",
+        "exam_ko": "그는 자전거 바퀴에 <strong class=\"target-word\">윤활유</strong>를 약간 발랐다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">grease</strong> the pan before pouring the batter.",
+        "exam_ko": "반죽을 붓기 전에 팬에 <strong class=\"target-word\">기름을 칠하세요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11209,
+    "origin": "bombard",
+    "examples": [
+      {
+        "exam_en": "Reporters <strong class=\"target-word\">bombarded</strong> him with questions after the game.",
+        "exam_ko": "경기 후 기자들이 그에게 질문 <strong class=\"target-word\">공세를 퍼부었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11210,
+    "origin": "screening",
+    "examples": [
+      {
+        "exam_en": "All applicants must pass a <strong class=\"target-word\">screening</strong> test first.",
+        "exam_ko": "모든 지원자는 먼저 <strong class=\"target-word\">선발</strong> 시험을 통과해야 한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">screening</strong> committee reviewed each candidate.",
+        "exam_ko": "<strong class=\"target-word\">심사</strong> 위원회가 각 후보를 검토했다."
+      }
+    ]
+  },
+  {
+    "id": 11212,
+    "origin": "cognate",
+    "examples": [
+      {
+        "exam_en": "English \"father\" is <strong class=\"target-word\">cognate</strong> with German \"Vater\".",
+        "exam_ko": "영어의 \"father\"는 독일어의 \"Vater\"와 <strong class=\"target-word\">어원이 같다</strong>."
+      },
+      {
+        "exam_en": "Dutch is <strong class=\"target-word\">cognate</strong> to English and German.",
+        "exam_ko": "네덜란드어는 영어, 독일어와 <strong class=\"target-word\">같은 어족이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11213,
+    "origin": "paraphrase",
+    "examples": [
+      {
+        "exam_en": "She asked him to <strong class=\"target-word\">paraphrase</strong> the main idea.",
+        "exam_ko": "그녀는 그에게 핵심 내용을 <strong class=\"target-word\">바꿔 말하도록</strong> 요청했다."
+      },
+      {
+        "exam_en": "The teacher wrote a <strong class=\"target-word\">paraphrase</strong> of the poem.",
+        "exam_ko": "선생님은 그 시의 <strong class=\"target-word\">주해</strong>를 작성했다."
+      }
+    ]
+  },
+  {
+    "id": 11215,
+    "origin": "thesaurus",
+    "examples": [
+      {
+        "exam_en": "Roget's <strong class=\"target-word\">Thesaurus</strong> is a classic reference book.",
+        "exam_ko": "로제의 <strong class=\"target-word\">유의어 사전</strong>은 고전적인 참고 도서다."
+      },
+      {
+        "exam_en": "Use a <strong class=\"target-word\">thesaurus</strong> to find a better word.",
+        "exam_ko": "<strong class=\"target-word\">유의어 사전</strong>을 사용해 더 나은 단어를 찾아라."
+      }
+    ]
+  },
+  {
+    "id": 11216,
+    "origin": "ruthless",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">ruthless</strong> boss fired staff without warning.",
+        "exam_ko": "<strong class=\"target-word\">냉혹한</strong> 상사는 예고 없이 직원들을 해고했다."
+      }
+    ]
+  },
+  {
+    "id": 11217,
+    "origin": "pry",
+    "examples": [
+      {
+        "exam_en": "He kept <strong class=\"target-word\">prying</strong> into her private life.",
+        "exam_ko": "그는 계속해서 그녀의 사생활을 <strong class=\"target-word\">캐려 했다</strong>."
+      },
+      {
+        "exam_en": "Stop <strong class=\"target-word\">prying</strong> into my personal belongings.",
+        "exam_ko": "내 소지품을 <strong class=\"target-word\">엿보는</strong> 것을 그만해라."
+      }
+    ]
+  },
+  {
+    "id": 11218,
+    "origin": "amnesty",
+    "examples": [
+      {
+        "exam_en": "The president granted <strong class=\"target-word\">amnesty</strong> to political prisoners.",
+        "exam_ko": "대통령은 정치범들에게 <strong class=\"target-word\">사면</strong>을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 11222,
+    "origin": "paternity",
+    "examples": [
+      {
+        "exam_en": "He requested a <strong class=\"target-word\">paternity</strong> test to confirm the father.",
+        "exam_ko": "그는 아버지를 확인하기 위해 <strong class=\"target-word\">친자</strong> 감정을 요청했다."
+      }
+    ]
+  },
+  {
+    "id": 11223,
+    "origin": "antagonize",
+    "examples": [
+      {
+        "exam_en": "His rude tone <strong class=\"target-word\">antagonized</strong> everyone in the room.",
+        "exam_ko": "그의 무례한 말투가 방 안의 모든 사람에게 <strong class=\"target-word\">반감을 샀다</strong>."
+      }
+    ]
+  }
+]

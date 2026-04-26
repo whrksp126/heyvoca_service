@@ -1,0 +1,286 @@
+[
+  {
+    "id": 2148,
+    "origin": "diverse",
+    "examples": [
+      {
+        "exam_en": "The class has students from <strong class=\"target-word\">diverse</strong> backgrounds.",
+        "exam_ko": "그 수업에는 <strong class=\"target-word\">다양한</strong> 배경의 학생들이 있다."
+      },
+      {
+        "exam_en": "She has <strong class=\"target-word\">diverse</strong> interests in music and science.",
+        "exam_ko": "그녀는 음악과 과학에 <strong class=\"target-word\">다채로운</strong> 관심사를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2149,
+    "origin": "elaborate",
+    "examples": [
+      {
+        "exam_en": "The carpet had an <strong class=\"target-word\">elaborate</strong> pattern of flowers.",
+        "exam_ko": "그 카펫에는 꽃의 <strong class=\"target-word\">정교한</strong> 무늬가 있었다."
+      },
+      {
+        "exam_en": "They devised an <strong class=\"target-word\">elaborate</strong> plan to win the game.",
+        "exam_ko": "그들은 게임에서 이기기 위해 <strong class=\"target-word\">치밀한</strong> 계획을 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 2150,
+    "origin": "furious",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">furious</strong> when she found out the truth.",
+        "exam_ko": "그녀는 진실을 알게 되었을 때 <strong class=\"target-word\">몹시 화가 났다</strong>."
+      },
+      {
+        "exam_en": "I was <strong class=\"target-word\">furious</strong> with myself for my lack of courage.",
+        "exam_ko": "용기가 없는 나 자신에게 <strong class=\"target-word\">몹시 화가 났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2151,
+    "origin": "fiscal",
+    "examples": [
+      {
+        "exam_en": "The government announced a new <strong class=\"target-word\">fiscal</strong> policy this year.",
+        "exam_ko": "정부는 올해 새로운 <strong class=\"target-word\">재정</strong> 정책을 발표했다."
+      },
+      {
+        "exam_en": "The country faced a serious <strong class=\"target-word\">fiscal</strong> crisis.",
+        "exam_ko": "그 나라는 심각한 <strong class=\"target-word\">재정</strong> 위기에 처했다."
+      }
+    ]
+  },
+  {
+    "id": 2152,
+    "origin": "burning",
+    "examples": [
+      {
+        "exam_en": "Be careful with the <strong class=\"target-word\">burning</strong> hot water in the pot.",
+        "exam_ko": "냄비 안의 <strong class=\"target-word\">펄펄 끓는</strong> 물을 조심하세요."
+      },
+      {
+        "exam_en": "The forests were <strong class=\"target-word\">burning</strong> with vivid autumn colors.",
+        "exam_ko": "숲은 선명한 단풍으로 <strong class=\"target-word\">타오르듯</strong> 물들었다."
+      }
+    ]
+  },
+  {
+    "id": 2154,
+    "origin": "embarrassed",
+    "examples": [
+      {
+        "exam_en": "He gave an <strong class=\"target-word\">embarrassed</strong> laugh when caught making a mistake.",
+        "exam_ko": "실수를 들켰을 때 그는 <strong class=\"target-word\">겸연쩍은</strong> 웃음을 지었다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">embarrassed</strong> speaking in front of strangers.",
+        "exam_ko": "그녀는 낯선 사람들 앞에서 말할 때 <strong class=\"target-word\">당황스러움을 느꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2155,
+    "origin": "inherent",
+    "examples": [
+      {
+        "exam_en": "Freedom of speech is an <strong class=\"target-word\">inherent</strong> right of all citizens.",
+        "exam_ko": "표현의 자유는 모든 시민의 <strong class=\"target-word\">생득적인</strong> 권리다."
+      },
+      {
+        "exam_en": "He accepted the responsibilities <strong class=\"target-word\">inherent</strong> in the job.",
+        "exam_ko": "그는 그 일에 <strong class=\"target-word\">따르는</strong> 책임을 받아들였다."
+      },
+      {
+        "exam_en": "Do you think racism is taught or <strong class=\"target-word\">inherent</strong> in people?",
+        "exam_ko": "인종차별이 학습되는 것인지, 사람들에게 <strong class=\"target-word\">타고난</strong> 본성인지 생각하니?"
+      }
+    ]
+  },
+  {
+    "id": 2156,
+    "origin": "deliberate",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">deliberate</strong> attempt to mislead the public.",
+        "exam_ko": "그것은 대중을 속으려는 <strong class=\"target-word\">의도적인</strong> 시도였다."
+      },
+      {
+        "exam_en": "The judge ruled it was <strong class=\"target-word\">deliberate</strong> homicide.",
+        "exam_ko": "판사는 그것이 <strong class=\"target-word\">계획적인</strong> 살인이라고 판결했다."
+      }
+    ]
+  },
+  {
+    "id": 2157,
+    "origin": "awake",
+    "examples": [
+      {
+        "exam_en": "The noise <strong class=\"target-word\">awoke</strong> me from my sleep.",
+        "exam_ko": "그 소음이 나를 잠에서 <strong class=\"target-word\">깨웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2158,
+    "origin": "variable",
+    "examples": [
+      {
+        "exam_en": "His mood is <strong class=\"target-word\">variable</strong> and hard to predict.",
+        "exam_ko": "그의 기분은 <strong class=\"target-word\">변덕스러워서</strong> 예측하기 어렵다."
+      },
+      {
+        "exam_en": "The weather is <strong class=\"target-word\">variable</strong> in this part of the country.",
+        "exam_ko": "그 나라의 이쪽 지역은 날씨가 <strong class=\"target-word\">자주 변한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2159,
+    "origin": "unpleasant",
+    "examples": [
+      {
+        "exam_en": "There were <strong class=\"target-word\">unpleasant</strong> smells coming from the kitchen.",
+        "exam_ko": "부엌에서 <strong class=\"target-word\">불쾌한</strong> 냄새가 났다."
+      },
+      {
+        "exam_en": "He is an <strong class=\"target-word\">unpleasant</strong> person who never smiles.",
+        "exam_ko": "그는 절대 웃지 않는 <strong class=\"target-word\">불쾌한</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 2160,
+    "origin": "varied",
+    "examples": [
+      {
+        "exam_en": "She has led a <strong class=\"target-word\">varied</strong> life full of adventures.",
+        "exam_ko": "그녀는 모험으로 가득 찬 <strong class=\"target-word\">파란만장한</strong> 삶을 살았다."
+      },
+      {
+        "exam_en": "The students showed <strong class=\"target-word\">varied</strong> interests in different subjects.",
+        "exam_ko": "학생들은 다양한 과목에 <strong class=\"target-word\">다양한</strong> 흥미를 보였다."
+      }
+    ]
+  },
+  {
+    "id": 2161,
+    "origin": "sacred",
+    "examples": [
+      {
+        "exam_en": "The choir performed <strong class=\"target-word\">sacred</strong> music at the ceremony.",
+        "exam_ko": "합창단은 행사에서 <strong class=\"target-word\">종교</strong> 음악을 연주했다."
+      },
+      {
+        "exam_en": "The Quran is a <strong class=\"target-word\">sacred</strong> text for Muslims.",
+        "exam_ko": "코란은 무슬림에게 <strong class=\"target-word\">성스러운</strong> 경전이다."
+      },
+      {
+        "exam_en": "The temple was considered a <strong class=\"target-word\">sacred</strong> place of worship.",
+        "exam_ko": "그 사원은 <strong class=\"target-word\">신성한</strong> 예배의 장소로 여겨졌다."
+      }
+    ]
+  },
+  {
+    "id": 2162,
+    "origin": "selective",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">selective</strong> about the friends she spends time with.",
+        "exam_ko": "그녀는 함께 시간을 보낼 친구를 <strong class=\"target-word\">까다롭게 고른다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2163,
+    "origin": "inclined",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">inclined</strong> toward swimming as her main sport.",
+        "exam_ko": "그녀는 주 스포츠로 수영을 <strong class=\"target-word\">좋아하는 편이다</strong>."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">inclined</strong> to agree with you on that.",
+        "exam_ko": "그 점에 관해서는 나도 찬성하고 <strong class=\"target-word\">싶은 마음이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2164,
+    "origin": "tender",
+    "examples": [
+      {
+        "exam_en": "The slow-cooked beef was very <strong class=\"target-word\">tender</strong>.",
+        "exam_ko": "천천히 익힌 쇠고기가 매우 <strong class=\"target-word\">연했다</strong>."
+      },
+      {
+        "exam_en": "She spoke with a <strong class=\"target-word\">tender</strong> voice to comfort the child.",
+        "exam_ko": "그녀는 아이를 달래기 위해 <strong class=\"target-word\">다정한</strong> 목소리로 말했다."
+      },
+      {
+        "exam_en": "The design is complete when the project is <strong class=\"target-word\">tendered</strong>.",
+        "exam_ko": "프로젝트가 <strong class=\"target-word\">입찰될</strong> 때 설계는 이미 완료된다."
+      }
+    ]
+  },
+  {
+    "id": 2165,
+    "origin": "hidden",
+    "examples": [
+      {
+        "exam_en": "There were <strong class=\"target-word\">hidden</strong> costs that were not mentioned upfront.",
+        "exam_ko": "사전에 언급되지 않은 <strong class=\"target-word\">숨겨진</strong> 비용이 있었다."
+      },
+      {
+        "exam_en": "Police found a <strong class=\"target-word\">hidden</strong> microphone in the room.",
+        "exam_ko": "경찰은 방 안에서 <strong class=\"target-word\">숨겨진</strong> 마이크를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 2166,
+    "origin": "worthy",
+    "examples": [
+      {
+        "exam_en": "Helping others is a <strong class=\"target-word\">worthy</strong> endeavor.",
+        "exam_ko": "남을 돕는 것은 <strong class=\"target-word\">훌륭한</strong> 노력이다."
+      },
+      {
+        "exam_en": "That act of bravery is <strong class=\"target-word\">worthy</strong> of praise.",
+        "exam_ko": "그 용감한 행동은 칭찬을 받을 <strong class=\"target-word\">만하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2167,
+    "origin": "intermediate",
+    "examples": [
+      {
+        "exam_en": "He holds an <strong class=\"target-word\">intermediate</strong> rank in the organization.",
+        "exam_ko": "그는 조직에서 <strong class=\"target-word\">중간</strong> 계급을 맡고 있다."
+      },
+      {
+        "exam_en": "She signed up for an <strong class=\"target-word\">intermediate</strong> French class.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">중급</strong> 프랑스어 수업을 신청했다."
+      }
+    ]
+  },
+  {
+    "id": 2168,
+    "origin": "fortunate",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">fortunate</strong> to choose the right career path.",
+        "exam_ko": "그녀는 올바른 진로를 선택하는 데 <strong class=\"target-word\">운이 좋았다</strong>."
+      },
+      {
+        "exam_en": "You are <strong class=\"target-word\">fortunate</strong> to have such a supportive family.",
+        "exam_ko": "당신은 그렇게 든든한 가족이 있어 <strong class=\"target-word\">복이 많다</strong>."
+      }
+    ]
+  }
+]

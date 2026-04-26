@@ -1,0 +1,250 @@
+[
+  {
+    "id": 7688,
+    "origin": "smug",
+    "examples": [
+      {
+        "exam_en": "Don't be so <strong class=\"target-word\">smug</strong>; you may have the wrong answer.",
+        "exam_ko": "그렇게 <strong class=\"target-word\">우쭐대지</strong> 마라. 네 답이 틀릴 수도 있으니까."
+      }
+    ]
+  },
+  {
+    "id": 7689,
+    "origin": "dicker",
+    "examples": [
+      {
+        "exam_en": "Do you always <strong class=\"target-word\">dicker</strong> over prices?",
+        "exam_ko": "너는 항상 가격을 <strong class=\"target-word\">흥정하니</strong>?"
+      }
+    ]
+  },
+  {
+    "id": 7690,
+    "origin": "nippy",
+    "examples": [
+      {
+        "exam_en": "Be <strong class=\"target-word\">nippy</strong> or we'll miss the bus.",
+        "exam_ko": "<strong class=\"target-word\">서두르지</strong> 않으면 버스를 놓칠 거야."
+      }
+    ]
+  },
+  {
+    "id": 7691,
+    "origin": "sidetrack",
+    "examples": [
+      {
+        "exam_en": "The worker <strong class=\"target-word\">sidetracked</strong> the train onto a side rail.",
+        "exam_ko": "작업자가 열차를 <strong class=\"target-word\">측선으로 돌렸다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">sidetracked</strong> by the audience's questions.",
+        "exam_ko": "그는 청중의 질문에 <strong class=\"target-word\">옆길로 빗나갔다</strong>."
+      },
+      {
+        "exam_en": "Don't let small details <strong class=\"target-word\">sidetrack</strong> you from the main goal.",
+        "exam_ko": "사소한 세부 사항에 <strong class=\"target-word\">방해받지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 7694,
+    "origin": "glimpse",
+    "examples": [
+      {
+        "exam_en": "She caught a <strong class=\"target-word\">glimpse</strong> of him through the crowd.",
+        "exam_ko": "그녀는 군중 사이로 그를 <strong class=\"target-word\">잠깐 보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7695,
+    "origin": "askance",
+    "examples": [
+      {
+        "exam_en": "She looked <strong class=\"target-word\">askance</strong> at my plan.",
+        "exam_ko": "그녀는 내 계획을 <strong class=\"target-word\">탐탁치 않은 눈으로</strong> 바라보았다."
+      }
+    ]
+  },
+  {
+    "id": 7698,
+    "origin": "broach",
+    "examples": [
+      {
+        "exam_en": "I'll <strong class=\"target-word\">broach</strong> the subject to him at dinner.",
+        "exam_ko": "저녁 식사 때 그에게 그 문제를 <strong class=\"target-word\">꺼내 보겠다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">broached</strong> a keg of beer for the party.",
+        "exam_ko": "그는 파티를 위해 맥주 통의 <strong class=\"target-word\">마개를 땄다</strong>."
+      },
+      {
+        "exam_en": "She finally <strong class=\"target-word\">broached</strong> the topic of her resignation.",
+        "exam_ko": "그녀는 마침내 사직 문제를 <strong class=\"target-word\">꺼냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7699,
+    "origin": "pointer",
+    "examples": [
+      {
+        "exam_en": "This clue was a useful <strong class=\"target-word\">pointer</strong> to the truth.",
+        "exam_ko": "이 단서는 진상을 파악하는 유용한 <strong class=\"target-word\">실마리</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 7701,
+    "origin": "talker",
+    "examples": [
+      {
+        "exam_en": "He is such a fast <strong class=\"target-word\">talker</strong> that I can barely follow.",
+        "exam_ko": "그는 말을 너무 빠르게 하는 <strong class=\"target-word\">사람</strong>이라 따라가기 힘들다."
+      },
+      {
+        "exam_en": "She was always a poor <strong class=\"target-word\">talker</strong> at social events.",
+        "exam_ko": "그녀는 사교 자리에서 늘 말주변이 없는 <strong class=\"target-word\">사람</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 7704,
+    "origin": "puberty",
+    "examples": [
+      {
+        "exam_en": "She reached <strong class=\"target-word\">puberty</strong> at the age of twelve.",
+        "exam_ko": "그녀는 열두 살에 <strong class=\"target-word\">사춘기</strong>에 접어들었다."
+      }
+    ]
+  },
+  {
+    "id": 7705,
+    "origin": "degrading",
+    "examples": [
+      {
+        "exam_en": "He was fired for his <strong class=\"target-word\">degrading</strong> behavior toward colleagues.",
+        "exam_ko": "그는 동료들을 향한 <strong class=\"target-word\">비열한</strong> 행동으로 해고되었다."
+      }
+    ]
+  },
+  {
+    "id": 7706,
+    "origin": "indiscretion",
+    "examples": [
+      {
+        "exam_en": "He spoke without <strong class=\"target-word\">indiscretion</strong> on every occasion.",
+        "exam_ko": "그는 매번 <strong class=\"target-word\">경솔함</strong> 없이 신중하게 말했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">indiscretion</strong> cost him his reputation.",
+        "exam_ko": "그의 <strong class=\"target-word\">경솔함</strong>이 그의 명성을 망쳤다."
+      }
+    ]
+  },
+  {
+    "id": 7707,
+    "origin": "promiscuous",
+    "examples": [
+      {
+        "exam_en": "The article criticized <strong class=\"target-word\">promiscuous</strong> relationships in modern society.",
+        "exam_ko": "그 기사는 현대 사회의 <strong class=\"target-word\">문란한</strong> 관계를 비판했다."
+      },
+      {
+        "exam_en": "He chose books in a <strong class=\"target-word\">promiscuous</strong> manner without any plan.",
+        "exam_ko": "그는 아무 계획 없이 <strong class=\"target-word\">닥치는 대로</strong> 책을 골랐다."
+      }
+    ]
+  },
+  {
+    "id": 7708,
+    "origin": "looker",
+    "examples": [
+      {
+        "exam_en": "He was a regular <strong class=\"target-word\">looker</strong> on TV every evening.",
+        "exam_ko": "그는 매일 저녁 TV를 보는 <strong class=\"target-word\">시청자</strong>였다."
+      },
+      {
+        "exam_en": "Everyone agreed she was a real <strong class=\"target-word\">looker</strong>.",
+        "exam_ko": "모두가 그녀가 정말 <strong class=\"target-word\">미인</strong>이라고 인정했다."
+      }
+    ]
+  },
+  {
+    "id": 7709,
+    "origin": "outset",
+    "examples": [
+      {
+        "exam_en": "He made his position clear at the <strong class=\"target-word\">outset</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">처음부터</strong> 자신의 입장을 분명히 했다."
+      },
+      {
+        "exam_en": "Problems were clear from the <strong class=\"target-word\">outset</strong> of the project.",
+        "exam_ko": "문제는 프로젝트 <strong class=\"target-word\">시작부터</strong> 분명했다."
+      }
+    ]
+  },
+  {
+    "id": 7710,
+    "origin": "clincher",
+    "examples": [
+      {
+        "exam_en": "That argument was the <strong class=\"target-word\">clincher</strong> in the debate.",
+        "exam_ko": "그 주장이 토론에서 <strong class=\"target-word\">결정타</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 7711,
+    "origin": "bash",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bashed</strong> the man on the head with a club.",
+        "exam_ko": "그는 곤봉으로 그 남자의 머리를 <strong class=\"target-word\">후려쳤다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">bashed</strong> the box until it crumpled.",
+        "exam_ko": "그는 상자가 구겨질 때까지 <strong class=\"target-word\">두들겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7712,
+    "origin": "chattel",
+    "examples": [
+      {
+        "exam_en": "Slaves were treated as <strong class=\"target-word\">chattels</strong> in ancient societies.",
+        "exam_ko": "고대 사회에서 노예들은 <strong class=\"target-word\">동산</strong>으로 취급받았다."
+      },
+      {
+        "exam_en": "All his <strong class=\"target-word\">chattels</strong> were sold at the auction.",
+        "exam_ko": "그의 모든 <strong class=\"target-word\">동산</strong>이 경매에서 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": 7713,
+    "origin": "overshadow",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">overshadowed</strong> by his illustrious father.",
+        "exam_ko": "그는 유명한 아버지의 그림자에 <strong class=\"target-word\">가려졌다</strong>."
+      },
+      {
+        "exam_en": "Her parents' divorce <strong class=\"target-word\">overshadowed</strong> her life.",
+        "exam_ko": "부모의 이혼이 그녀의 인생에 <strong class=\"target-word\">어두운 그림자를 드리웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7714,
+    "origin": "mushy",
+    "examples": [
+      {
+        "exam_en": "Don't be so <strong class=\"target-word\">mushy</strong> about the situation.",
+        "exam_ko": "상황에 대해 그렇게 <strong class=\"target-word\">안이하게</strong> 말하지 마라."
+      }
+    ]
+  }
+]

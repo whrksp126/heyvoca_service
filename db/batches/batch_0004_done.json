@@ -1,0 +1,302 @@
+[
+  {
+    "id": 63,
+    "origin": "hurt",
+    "examples": [
+      {
+        "exam_en": "He was badly <strong class=\"target-word\">hurt</strong> in the accident.",
+        "exam_ko": "그는 사고로 크게 <strong class=\"target-word\">다쳤다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">hurt</strong> my arm.",
+        "exam_ko": "나는 팔을 <strong class=\"target-word\">다쳤다</strong>."
+      },
+      {
+        "exam_en": "It might <strong class=\"target-word\">hurt</strong> a little.",
+        "exam_ko": "조금 <strong class=\"target-word\">아프실</strong> 수도 있어요."
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "origin": "keep",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">keeps</strong> all her old letters.",
+        "exam_ko": "그녀는 오래된 편지를 모두 <strong class=\"target-word\">보관한다</strong>."
+      },
+      {
+        "exam_en": "He always <strong class=\"target-word\">keeps</strong> a pen in his pocket.",
+        "exam_ko": "그는 항상 주머니에 펜을 <strong class=\"target-word\">넣고 다닌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "origin": "know",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">know</strong> he is honest.",
+        "exam_ko": "나는 그가 정직하다는 것을 <strong class=\"target-word\">알고 있다</strong>."
+      },
+      {
+        "exam_en": "I didn't <strong class=\"target-word\">know</strong> what to do.",
+        "exam_ko": "나는 어떻게 해야 할지 <strong class=\"target-word\">몰랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "origin": "leave",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">leave</strong> the room quietly.",
+        "exam_ko": "조용히 방에서 <strong class=\"target-word\">나가</strong> 주세요."
+      },
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">leave</strong> her job.",
+        "exam_ko": "그녀는 직장을 <strong class=\"target-word\">그만두기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "Make sure you have everything before <strong class=\"target-word\">leaving</strong> the train.",
+        "exam_ko": "기차에서 <strong class=\"target-word\">내리기</strong> 전에 짐을 챙기세요."
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "origin": "lend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">lent</strong> $25 to his brother.",
+        "exam_ko": "그는 동생에게 25달러를 <strong class=\"target-word\">빌려주었다</strong>."
+      },
+      {
+        "exam_en": "Can you <strong class=\"target-word\">lend</strong> me your bicycle?",
+        "exam_ko": "네 자전거를 <strong class=\"target-word\">빌려줄</strong> 수 있어?"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "origin": "lose",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">lost</strong> a lot of money gambling.",
+        "exam_ko": "그는 도박으로 많은 돈을 <strong class=\"target-word\">잃었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">lost</strong> her job last month.",
+        "exam_ko": "그녀는 지난달에 직장을 <strong class=\"target-word\">잃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "origin": "make",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">made</strong> a small boat from wood.",
+        "exam_ko": "그들은 나무로 작은 보트를 <strong class=\"target-word\">만들었다</strong>."
+      },
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">made</strong> new rules for the class.",
+        "exam_ko": "선생님은 학급을 위한 새 규칙을 <strong class=\"target-word\">만들었다</strong>."
+      },
+      {
+        "exam_en": "The product label shows the <strong class=\"target-word\">make</strong> and model.",
+        "exam_ko": "제품 라벨에는 <strong class=\"target-word\">제조사</strong>와 모델명이 적혀 있다."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "origin": "meet",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">met</strong> him unexpectedly on the street.",
+        "exam_ko": "나는 길에서 그를 뜻밖에 <strong class=\"target-word\">만났다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Meet</strong> me at the hotel at six.",
+        "exam_ko": "6시에 호텔에서 <strong class=\"target-word\">만나자</strong>."
+      },
+      {
+        "exam_en": "We must <strong class=\"target-word\">meet</strong> the requirements on time.",
+        "exam_ko": "우리는 제때에 요건을 <strong class=\"target-word\">충족해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "origin": "pay",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">paid</strong> $100 for the ticket.",
+        "exam_ko": "그는 티켓에 100달러를 <strong class=\"target-word\">지불했다</strong>."
+      },
+      {
+        "exam_en": "She forgot to <strong class=\"target-word\">pay</strong> the tuition.",
+        "exam_ko": "그녀는 수업료를 <strong class=\"target-word\">내는</strong> 것을 잊었다."
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "origin": "put",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">put</strong> down her pen and looked up.",
+        "exam_ko": "그녀는 펜을 <strong class=\"target-word\">내려놓고</strong> 고개를 들었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">put</strong> the letter into the fire.",
+        "exam_ko": "그는 편지를 불속에 <strong class=\"target-word\">넣었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "origin": "quit",
+    "examples": [
+      {
+        "exam_en": "He finally <strong class=\"target-word\">quit</strong> his job last week.",
+        "exam_ko": "그는 마침내 지난주에 직장을 <strong class=\"target-word\">그만뒀다</strong>."
+      },
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">quit</strong> smoking for good.",
+        "exam_ko": "그녀는 담배를 완전히 <strong class=\"target-word\">끊기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "You should have <strong class=\"target-word\">quit</strong> smoking earlier.",
+        "exam_ko": "더 일찍 담배를 <strong class=\"target-word\">끊었어야</strong> 했습니다."
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "origin": "read",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">reads</strong> a book every night before bed.",
+        "exam_ko": "그는 매일 밤 자기 전에 책을 <strong class=\"target-word\">읽는다</strong>."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">reading</strong> Kafka.",
+        "exam_ko": "그녀는 카프카의 작품을 <strong class=\"target-word\">읽고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "origin": "ride",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">rode</strong> around town on her horse.",
+        "exam_ko": "그녀는 말을 타고 마을을 <strong class=\"target-word\">돌아다녔다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">rode</strong> at full gallop across the field.",
+        "exam_ko": "그는 들판을 가로질러 전속력으로 <strong class=\"target-word\">달렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "origin": "say",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">said</strong> hello and waved at me.",
+        "exam_ko": "그녀는 나에게 손을 흔들며 인사를 <strong class=\"target-word\">했다</strong>."
+      },
+      {
+        "exam_en": "\"Who <strong class=\"target-word\">said</strong> so?\" he asked.",
+        "exam_ko": "\"누가 그렇게 <strong class=\"target-word\">말했지</strong>?\" 그가 물었다."
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "origin": "see",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">saw</strong> the plane land on the runway.",
+        "exam_ko": "나는 비행기가 활주로에 착륙하는 것을 <strong class=\"target-word\">보았다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">saw</strong> him sleeping by the roadside.",
+        "exam_ko": "우리는 그가 길가에서 자고 있는 것을 <strong class=\"target-word\">보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "origin": "send",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sent</strong> a package to her friend.",
+        "exam_ko": "그녀는 친구에게 소포를 <strong class=\"target-word\">보냈다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sent</strong> the laundry to the cleaners.",
+        "exam_ko": "그는 세탁물을 세탁소에 <strong class=\"target-word\">보냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "origin": "sell",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">sold</strong> the car at a high price.",
+        "exam_ko": "그는 차를 비싼 값에 <strong class=\"target-word\">팔았다</strong>."
+      },
+      {
+        "exam_en": "Name-brand products are being <strong class=\"target-word\">sold</strong> at a discount.",
+        "exam_ko": "유명 상표 제품이 할인 가격으로 <strong class=\"target-word\">판매되고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "origin": "show",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">show</strong> your ticket at the gate.",
+        "exam_ko": "입구에서 표를 <strong class=\"target-word\">보여</strong> 주세요."
+      },
+      {
+        "exam_en": "He didn't <strong class=\"target-word\">show</strong> his face at the party.",
+        "exam_ko": "그는 파티에 얼굴을 <strong class=\"target-word\">나타내지</strong> 않았다."
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "origin": "sleep",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">slept</strong> well last night.",
+        "exam_ko": "나는 어젯밤에 <strong class=\"target-word\">잘 잤다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slept</strong> like a log after the hike.",
+        "exam_ko": "그는 하이킹 후 <strong class=\"target-word\">푹 잤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "origin": "speak",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">speaks</strong> to her clients in French.",
+        "exam_ko": "그녀는 고객들에게 프랑스어로 <strong class=\"target-word\">말한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">spoke</strong> rapidly during the presentation.",
+        "exam_ko": "그는 발표 중에 빠르게 <strong class=\"target-word\">말했다</strong>."
+      }
+    ]
+  }
+]

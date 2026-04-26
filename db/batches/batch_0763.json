@@ -1,0 +1,234 @@
+[
+  {
+    "id": 48699,
+    "origin": "unsocial",
+    "examples": [
+      {
+        "exam_en": "unsocial hours",
+        "exam_ko": "(사교에 지장이 있는) 정상 근무 외의 노동 시간."
+      }
+    ]
+  },
+  {
+    "id": 48703,
+    "origin": "processional",
+    "examples": [
+      {
+        "exam_en": "a processional cross",
+        "exam_ko": "(행렬의 선두에 가는) 행렬 십자가"
+      },
+      {
+        "exam_en": "a processional hymn",
+        "exam_ko": "행렬 찬송가."
+      }
+    ]
+  },
+  {
+    "id": 48705,
+    "origin": "sos",
+    "examples": [
+      {
+        "exam_en": "send an SOS",
+        "exam_ko": "조난 신호를 송신[수신]하다."
+      }
+    ]
+  },
+  {
+    "id": 48717,
+    "origin": "lodgment",
+    "examples": [
+      {
+        "exam_en": "make a lodgment",
+        "exam_ko": "거점을 확보하다; 확고부동한 지위를 얻다."
+      }
+    ]
+  },
+  {
+    "id": 48730,
+    "origin": "mashup",
+    "examples": [
+      {
+        "exam_en": "These mashups are bringing the news to a new audience.",
+        "exam_ko": "이들 매쉬업이 그 뉴스를 새로운 청중에게 전달해 주고 있다."
+      },
+      {
+        "exam_en": "He creates unique mashups that bring together seemingly impossible combinations.",
+        "exam_ko": "그는 언뜻 보기에 조합이 불가능할 것으로 여겨지는 것들을 함께 묶는 독특한 매쉬업을 만들어낸다."
+      }
+    ]
+  },
+  {
+    "id": 48747,
+    "origin": "stoichiometric",
+    "examples": [
+      {
+        "exam_en": "stoichiometric coefficient",
+        "exam_ko": "화학량론 계수(係數)"
+      },
+      {
+        "exam_en": "stoichiometric number",
+        "exam_ko": "화학량수."
+      }
+    ]
+  },
+  {
+    "id": 48748,
+    "origin": "nothingness",
+    "examples": [
+      {
+        "exam_en": "slip into mental nothingness",
+        "exam_ko": "인사불성에 빠지다."
+      }
+    ]
+  },
+  {
+    "id": 48750,
+    "origin": "inflectional",
+    "examples": [
+      {
+        "exam_en": "an inflectional ending",
+        "exam_ko": "굴절 어미[접사]."
+      },
+      {
+        "exam_en": "an inflectional language",
+        "exam_ko": "굴절어(그리스어·라틴어 등)."
+      }
+    ]
+  },
+  {
+    "id": 48753,
+    "origin": "identikit",
+    "examples": [
+      {
+        "exam_en": "identikit houses",
+        "exam_ko": "엇비슷한 집."
+      }
+    ]
+  },
+  {
+    "id": 48783,
+    "origin": "foursome",
+    "examples": [
+      {
+        "exam_en": "make up a foursome for a game",
+        "exam_ko": "게임을 하기 위해 4명을 구성하다."
+      },
+      {
+        "exam_en": "Mr. Son and his wife made a foursome with Amy and me.",
+        "exam_ko": "손씨와 그의 아내는 나와 Amy와 골프 4 인조 경기를 했다."
+      }
+    ]
+  },
+  {
+    "id": 48838,
+    "origin": "probusiness",
+    "examples": [
+      {
+        "exam_en": "The prime minister wants to create a probusiness culture.",
+        "exam_ko": "수상은 비즈니스에 호의적인 문화를 창조하고자 한다."
+      }
+    ]
+  },
+  {
+    "id": 48847,
+    "origin": "unintelligent",
+    "examples": [
+      {
+        "exam_en": "your senses, unintelligent of our insufficience",
+        "exam_ko": "우리가 부족하다는 것을 이해하지 못하는 당신의 감각"
+      }
+    ]
+  },
+  {
+    "id": 48855,
+    "origin": "toughie",
+    "examples": [
+      {
+        "exam_en": "That Russian course is a toughie.",
+        "exam_ko": "그 러시아어 과정은 여간 어렵지 않다."
+      }
+    ]
+  },
+  {
+    "id": 48923,
+    "origin": "absurdist",
+    "examples": [
+      {
+        "exam_en": "an absurdist play",
+        "exam_ko": "부조리극."
+      }
+    ]
+  },
+  {
+    "id": 48955,
+    "origin": "aborning",
+    "examples": [
+      {
+        "exam_en": "My proposal died aborning.",
+        "exam_ko": "내 제안은 내놓지도 못하고 끝나버렸다."
+      },
+      {
+        "exam_en": "A society is aborning.",
+        "exam_ko": "새로운 사회가 태어나고 있다."
+      }
+    ]
+  },
+  {
+    "id": 48985,
+    "origin": "abient",
+    "examples": [
+      {
+        "exam_en": "an abient response",
+        "exam_ko": "배향적 반응."
+      }
+    ]
+  },
+  {
+    "id": 49017,
+    "origin": "hogan",
+    "examples": [
+      {
+        "exam_en": "She has the best pair of hogans.",
+        "exam_ko": "그녀의 붕긋한 가슴이 제일 멋있다."
+      }
+    ]
+  },
+  {
+    "id": 49023,
+    "origin": "touchdown",
+    "examples": [
+      {
+        "exam_en": "touchdown point",
+        "exam_ko": "착지점"
+      },
+      {
+        "exam_en": "touchdown speed",
+        "exam_ko": "접지 속도."
+      }
+    ]
+  },
+  {
+    "id": 49059,
+    "origin": "backhanded",
+    "examples": [
+      {
+        "exam_en": "a backhanded compliment",
+        "exam_ko": "비꼬는 듯한 찬사."
+      }
+    ]
+  },
+  {
+    "id": 49074,
+    "origin": "ologist",
+    "examples": [
+      {
+        "exam_en": "biologist",
+        "exam_ko": "생물학자"
+      },
+      {
+        "exam_en": "mythologist",
+        "exam_ko": "신화학자."
+      }
+    ]
+  }
+]

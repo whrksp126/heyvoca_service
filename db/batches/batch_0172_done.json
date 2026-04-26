@@ -1,0 +1,286 @@
+[
+  {
+    "id": 3737,
+    "origin": "car",
+    "examples": [
+      {
+        "exam_en": "She travels to work by <strong class=\"target-word\">car</strong> every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">자동차</strong>로 출근한다."
+      },
+      {
+        "exam_en": "He carefully <strong class=\"target-word\">backed</strong> the car into the garage.",
+        "exam_ko": "그는 조심스럽게 차를 차고 안으로 <strong class=\"target-word\">후진시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3738,
+    "origin": "candidate",
+    "examples": [
+      {
+        "exam_en": "She became a Presidential <strong class=\"target-word\">candidate</strong> last year.",
+        "exam_ko": "그녀는 작년에 대통령 <strong class=\"target-word\">후보자</strong>가 되었다."
+      },
+      {
+        "exam_en": "He is the Democratic <strong class=\"target-word\">candidate</strong> for President.",
+        "exam_ko": "그는 민주당 대통령 <strong class=\"target-word\">후보자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3739,
+    "origin": "cancer",
+    "examples": [
+      {
+        "exam_en": "She was diagnosed with breast <strong class=\"target-word\">cancer</strong> last month.",
+        "exam_ko": "그녀는 지난달 유방 <strong class=\"target-word\">암</strong> 진단을 받았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">cancer</strong> patient received treatment at the hospital.",
+        "exam_ko": "<strong class=\"target-word\">암</strong> 환자는 병원에서 치료를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 3740,
+    "origin": "camp",
+    "examples": [
+      {
+        "exam_en": "Thousands of people lived in a refugee <strong class=\"target-word\">camp</strong>.",
+        "exam_ko": "수천 명의 사람들이 난민 <strong class=\"target-word\">수용소</strong>에서 생활했다."
+      },
+      {
+        "exam_en": "They pitched <strong class=\"target-word\">camp</strong> near the river.",
+        "exam_ko": "그들은 강 근처에 <strong class=\"target-word\">천막을 쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3741,
+    "origin": "camera",
+    "examples": [
+      {
+        "exam_en": "She bought an autofocus <strong class=\"target-word\">camera</strong> for the trip.",
+        "exam_ko": "그녀는 여행을 위해 자동 초점 <strong class=\"target-word\">카메라</strong>를 샀다."
+      },
+      {
+        "exam_en": "He loaded the <strong class=\"target-word\">camera</strong> with film before the shoot.",
+        "exam_ko": "그는 촬영 전에 <strong class=\"target-word\">카메라</strong>에 필름을 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 3742,
+    "origin": "cabinet",
+    "examples": [
+      {
+        "exam_en": "The president formed a single-party <strong class=\"target-word\">Cabinet</strong>.",
+        "exam_ko": "대통령은 단독 <strong class=\"target-word\">내각</strong>을 구성했다."
+      },
+      {
+        "exam_en": "The new <strong class=\"target-word\">cabinet</strong> member was appointed yesterday.",
+        "exam_ko": "새 <strong class=\"target-word\">각료</strong>가 어제 임명되었다."
+      }
+    ]
+  },
+  {
+    "id": 3743,
+    "origin": "button",
+    "examples": [
+      {
+        "exam_en": "She wore a coat with a fancy <strong class=\"target-word\">button</strong> on it.",
+        "exam_ko": "그녀는 장식 <strong class=\"target-word\">단추</strong>가 달린 코트를 입었다."
+      },
+      {
+        "exam_en": "He fastened the <strong class=\"target-word\">buttons</strong> on his jacket quickly.",
+        "exam_ko": "그는 재킷의 <strong class=\"target-word\">단추</strong>를 빠르게 채웠다."
+      }
+    ]
+  },
+  {
+    "id": 3744,
+    "origin": "butter",
+    "examples": [
+      {
+        "exam_en": "She spread fresh <strong class=\"target-word\">butter</strong> on the warm bread.",
+        "exam_ko": "그녀는 따뜻한 빵에 신선한 <strong class=\"target-word\">버터</strong>를 발랐다."
+      },
+      {
+        "exam_en": "The recipe calls for artificial <strong class=\"target-word\">butter</strong> instead of real.",
+        "exam_ko": "그 레시피는 진짜 대신 인조 <strong class=\"target-word\">버터</strong>를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 3745,
+    "origin": "but",
+    "examples": [
+      {
+        "exam_en": "He is rich, <strong class=\"target-word\">but</strong> not happy.",
+        "exam_ko": "그는 부자이지만, <strong class=\"target-word\">그러나</strong> 행복하지는 않다."
+      },
+      {
+        "exam_en": "My mother went, <strong class=\"target-word\">but</strong> I did not.",
+        "exam_ko": "어머니는 갔지만, <strong class=\"target-word\">그러나</strong> 나는 가지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 3746,
+    "origin": "business",
+    "examples": [
+      {
+        "exam_en": "He works in the banking <strong class=\"target-word\">business</strong>.",
+        "exam_ko": "그는 은행 <strong class=\"target-word\">업</strong>에 종사한다."
+      },
+      {
+        "exam_en": "She runs a tailoring <strong class=\"target-word\">business</strong> downtown.",
+        "exam_ko": "그녀는 시내에서 양복 재봉 <strong class=\"target-word\">업</strong>을 운영한다."
+      }
+    ]
+  },
+  {
+    "id": 3747,
+    "origin": "bus",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">bus</strong> depot is located near the city center.",
+        "exam_ko": "<strong class=\"target-word\">버스</strong> 터미널은 시내 중심부 근처에 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">bus</strong> fare increased this month.",
+        "exam_ko": "<strong class=\"target-word\">버스</strong> 요금이 이번 달에 인상되었다."
+      }
+    ]
+  },
+  {
+    "id": 3748,
+    "origin": "bullet",
+    "examples": [
+      {
+        "exam_en": "The soldier had <strong class=\"target-word\">bullet</strong> wounds on his arm.",
+        "exam_ko": "그 군인은 팔에 <strong class=\"target-word\">총상</strong>을 입었다."
+      },
+      {
+        "exam_en": "The officer loaded a live <strong class=\"target-word\">bullet</strong> into the gun.",
+        "exam_ko": "그 경찰관은 총에 실제 <strong class=\"target-word\">실탄</strong>을 장전했다."
+      }
+    ]
+  },
+  {
+    "id": 3749,
+    "origin": "building",
+    "examples": [
+      {
+        "exam_en": "The old wooden <strong class=\"target-word\">building</strong> was torn down last year.",
+        "exam_ko": "그 오래된 목조 <strong class=\"target-word\">건물</strong>은 작년에 철거되었다."
+      },
+      {
+        "exam_en": "The architect designed a <strong class=\"target-word\">building</strong> for the new district.",
+        "exam_ko": "건축가는 새 구역을 위한 <strong class=\"target-word\">건물</strong>을 설계했다."
+      }
+    ]
+  },
+  {
+    "id": 3750,
+    "origin": "brother",
+    "examples": [
+      {
+        "exam_en": "His elder <strong class=\"target-word\">brother</strong> teaches at a university.",
+        "exam_ko": "그의 형은 대학교에서 가르친다."
+      },
+      {
+        "exam_en": "Her younger <strong class=\"target-word\">brother</strong> just started middle school.",
+        "exam_ko": "그녀의 남동생은 막 중학교에 입학했다."
+      }
+    ]
+  },
+  {
+    "id": 3751,
+    "origin": "broadcast",
+    "examples": [
+      {
+        "exam_en": "Channel 5 will <strong class=\"target-word\">broadcast</strong> the game at 6 o'clock.",
+        "exam_ko": "채널 5에서 정각 6시에 그 경기를 <strong class=\"target-word\">방송한다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">broadcast</strong> the gossip all over the office.",
+        "exam_ko": "그녀는 사무실 전체에 소문을 <strong class=\"target-word\">퍼뜨렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3752,
+    "origin": "brick",
+    "examples": [
+      {
+        "exam_en": "They built the house out of red <strong class=\"target-word\">brick</strong>.",
+        "exam_ko": "그들은 붉은 <strong class=\"target-word\">벽돌</strong>로 집을 지었다."
+      },
+      {
+        "exam_en": "The critics threw <strong class=\"target-word\">bricks</strong> at the new film.",
+        "exam_ko": "평론가들은 새 영화를 <strong class=\"target-word\">혹평했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3753,
+    "origin": "bread",
+    "examples": [
+      {
+        "exam_en": "She bought a loaf of <strong class=\"target-word\">bread</strong> at the bakery.",
+        "exam_ko": "그녀는 빵집에서 <strong class=\"target-word\">빵</strong> 한 덩어리를 샀다."
+      },
+      {
+        "exam_en": "He ate a hunk of <strong class=\"target-word\">bread</strong> for breakfast.",
+        "exam_ko": "그는 아침으로 <strong class=\"target-word\">빵</strong> 한 조각을 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 3754,
+    "origin": "brass",
+    "examples": [
+      {
+        "exam_en": "She polished the <strong class=\"target-word\">brass</strong> fixtures until they shone.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">놋쇠</strong> 부품들을 빛날 때까지 닦았다."
+      },
+      {
+        "exam_en": "The CIA <strong class=\"target-word\">brass</strong> approved the operation.",
+        "exam_ko": "CIA의 <strong class=\"target-word\">거물들</strong>이 그 작전을 승인했다."
+      },
+      {
+        "exam_en": "The orchestra's <strong class=\"target-word\">brass</strong> instruments sounded magnificent.",
+        "exam_ko": "오케스트라의 <strong class=\"target-word\">금관악기</strong>들은 장엄하게 울려 퍼졌다."
+      }
+    ]
+  },
+  {
+    "id": 3755,
+    "origin": "brain",
+    "examples": [
+      {
+        "exam_en": "The doctor discovered a <strong class=\"target-word\">brain</strong> tumor during the scan.",
+        "exam_ko": "의사는 스캔 중에 <strong class=\"target-word\">뇌</strong>종양을 발견했다."
+      },
+      {
+        "exam_en": "He is a man of great <strong class=\"target-word\">brains</strong> and talent.",
+        "exam_ko": "그는 뛰어난 <strong class=\"target-word\">두뇌</strong>와 재능을 가진 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 3756,
+    "origin": "boycott",
+    "examples": [
+      {
+        "exam_en": "The opposition party decided to <strong class=\"target-word\">boycott</strong> the election.",
+        "exam_ko": "야당은 선거를 <strong class=\"target-word\">보이콧하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "Workers voted to <strong class=\"target-word\">boycott</strong> the company meeting.",
+        "exam_ko": "노동자들은 회사 회의를 <strong class=\"target-word\">거부하기로</strong> 투표했다."
+      }
+    ]
+  }
+]

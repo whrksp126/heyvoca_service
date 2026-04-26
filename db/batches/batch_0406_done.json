@@ -1,0 +1,254 @@
+[
+  {
+    "id": 11224,
+    "origin": "impenetrable",
+    "examples": [
+      {
+        "exam_en": "The jungle is <strong class=\"target-word\">impenetrable</strong> without a guide.",
+        "exam_ko": "안내자 없이 그 정글은 <strong class=\"target-word\">뚫고 들어갈 수 없다</strong>."
+      },
+      {
+        "exam_en": "The fog was <strong class=\"target-word\">impenetrable</strong> on the road.",
+        "exam_ko": "도로의 안개는 <strong class=\"target-word\">한 치 앞도 볼 수 없을 정도였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11225,
+    "origin": "delude",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">deluded</strong> everyone into following him.",
+        "exam_ko": "그는 모든 사람들을 <strong class=\"target-word\">속여서</strong> 자신을 따르게 했다."
+      },
+      {
+        "exam_en": "Stop <strong class=\"target-word\">deluding</strong> yourself about the situation.",
+        "exam_ko": "상황에 대해 스스로를 <strong class=\"target-word\">속이는 것</strong>을 그만해라."
+      }
+    ]
+  },
+  {
+    "id": 11232,
+    "origin": "certified",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">certified</strong> teacher in this state.",
+        "exam_ko": "그녀는 이 주에서 <strong class=\"target-word\">자격증을 취득한</strong> 교사이다."
+      }
+    ]
+  },
+  {
+    "id": 11234,
+    "origin": "propaganda",
+    "examples": [
+      {
+        "exam_en": "The government launched a massive <strong class=\"target-word\">propaganda</strong> campaign.",
+        "exam_ko": "정부는 대대적인 <strong class=\"target-word\">선전</strong> 운동을 시작했다."
+      },
+      {
+        "exam_en": "The film was criticized as pure <strong class=\"target-word\">propaganda</strong>.",
+        "exam_ko": "그 영화는 순수한 <strong class=\"target-word\">선전물</strong>이라는 비판을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 11235,
+    "origin": "pester",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pestered</strong> me with endless questions.",
+        "exam_ko": "그는 끝없는 질문으로 나를 <strong class=\"target-word\">괴롭혔다</strong>."
+      },
+      {
+        "exam_en": "She kept <strong class=\"target-word\">pestering</strong> him to lend her money.",
+        "exam_ko": "그녀는 돈을 빌려달라고 계속 그를 <strong class=\"target-word\">졸랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11236,
+    "origin": "laughingstock",
+    "examples": [
+      {
+        "exam_en": "His mistake made him the <strong class=\"target-word\">laughingstock</strong> of the office.",
+        "exam_ko": "그의 실수로 그는 사무실의 <strong class=\"target-word\">웃음거리</strong>가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 11243,
+    "origin": "overcast",
+    "examples": [
+      {
+        "exam_en": "It was an <strong class=\"target-word\">overcast</strong> day with no sun.",
+        "exam_ko": "햇빛 한 점 없는 <strong class=\"target-word\">흐린</strong> 날이었다."
+      },
+      {
+        "exam_en": "His face looked <strong class=\"target-word\">overcast</strong> after the bad news.",
+        "exam_ko": "나쁜 소식을 들은 후 그의 표정이 <strong class=\"target-word\">침울해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11244,
+    "origin": "objectionable",
+    "examples": [
+      {
+        "exam_en": "The photo was removed for being <strong class=\"target-word\">objectionable</strong>.",
+        "exam_ko": "그 사진은 <strong class=\"target-word\">불쾌하다</strong>는 이유로 삭제되었다."
+      },
+      {
+        "exam_en": "There was an <strong class=\"target-word\">objectionable</strong> smell in the room.",
+        "exam_ko": "방 안에 <strong class=\"target-word\">불쾌한</strong> 냄새가 났다."
+      }
+    ]
+  },
+  {
+    "id": 11245,
+    "origin": "shoestring",
+    "examples": [
+      {
+        "exam_en": "They traveled across Europe on a <strong class=\"target-word\">shoestring</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">아주 적은 돈으로</strong> 유럽을 여행했다."
+      },
+      {
+        "exam_en": "The film was made on a <strong class=\"target-word\">shoestring</strong> budget.",
+        "exam_ko": "그 영화는 <strong class=\"target-word\">극히 적은</strong> 예산으로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 11247,
+    "origin": "allegedly",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">allegedly</strong> stole the documents from the office.",
+        "exam_ko": "그는 사무실에서 서류를 훔쳤다고 <strong class=\"target-word\">주장되고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11248,
+    "origin": "intuitive",
+    "examples": [
+      {
+        "exam_en": "She has an <strong class=\"target-word\">intuitive</strong> sense of what people need.",
+        "exam_ko": "그녀는 사람들이 필요한 것을 <strong class=\"target-word\">직관적으로</strong> 파악한다."
+      },
+      {
+        "exam_en": "The app's design is clean and <strong class=\"target-word\">intuitive</strong>.",
+        "exam_ko": "그 앱의 디자인은 깔끔하고 <strong class=\"target-word\">직관적이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11250,
+    "origin": "accountable",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">accountable</strong> for the accident at work.",
+        "exam_ko": "그는 직장에서 발생한 사고에 <strong class=\"target-word\">책임이 있다</strong>."
+      },
+      {
+        "exam_en": "Leaders must be <strong class=\"target-word\">accountable</strong> to the public.",
+        "exam_ko": "지도자들은 대중에게 <strong class=\"target-word\">책임을 져야 한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11251,
+    "origin": "outbreak",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">outbreak</strong> of war shocked the world.",
+        "exam_ko": "전쟁의 <strong class=\"target-word\">발발</strong>은 세계를 충격에 빠뜨렸다."
+      },
+      {
+        "exam_en": "Doctors responded quickly to the typhoid <strong class=\"target-word\">outbreak</strong>.",
+        "exam_ko": "의사들은 장티푸스 <strong class=\"target-word\">발생</strong>에 신속히 대응했다."
+      }
+    ]
+  },
+  {
+    "id": 11252,
+    "origin": "hurdle",
+    "examples": [
+      {
+        "exam_en": "He cleared every <strong class=\"target-word\">hurdle</strong> in the race.",
+        "exam_ko": "그는 경기에서 모든 <strong class=\"target-word\">허들</strong>을 넘었다."
+      }
+    ]
+  },
+  {
+    "id": 11254,
+    "origin": "thyroid",
+    "examples": [
+      {
+        "exam_en": "She was diagnosed with a <strong class=\"target-word\">thyroid</strong> disorder.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">갑상선</strong> 질환 진단을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 11255,
+    "origin": "canal",
+    "examples": [
+      {
+        "exam_en": "Ships pass through the Suez <strong class=\"target-word\">Canal</strong> every day.",
+        "exam_ko": "배들은 매일 수에즈 <strong class=\"target-word\">운하</strong>를 통과한다."
+      },
+      {
+        "exam_en": "The city is known for its beautiful <strong class=\"target-word\">canals</strong>.",
+        "exam_ko": "그 도시는 아름다운 <strong class=\"target-word\">운하</strong>로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 11256,
+    "origin": "profoundly",
+    "examples": [
+      {
+        "exam_en": "The experience <strong class=\"target-word\">profoundly</strong> changed her outlook.",
+        "exam_ko": "그 경험은 그녀의 세계관을 <strong class=\"target-word\">깊이</strong> 바꾸었다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">profoundly</strong> moved by the speech.",
+        "exam_ko": "그는 그 연설에 <strong class=\"target-word\">깊이</strong> 감동받았다."
+      }
+    ]
+  },
+  {
+    "id": 11257,
+    "origin": "antler",
+    "examples": [
+      {
+        "exam_en": "The deer shed its <strong class=\"target-word\">antlers</strong> every winter.",
+        "exam_ko": "그 사슴은 매년 겨울 <strong class=\"target-word\">뿔</strong>을 떨군다."
+      }
+    ]
+  },
+  {
+    "id": 11258,
+    "origin": "highlight",
+    "examples": [
+      {
+        "exam_en": "Winning the award was the <strong class=\"target-word\">highlight</strong> of her career.",
+        "exam_ko": "수상은 그녀 경력의 <strong class=\"target-word\">하이라이트</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 11259,
+    "origin": "saucer",
+    "examples": [
+      {
+        "exam_en": "She placed the cup on the <strong class=\"target-word\">saucer</strong> carefully.",
+        "exam_ko": "그녀는 조심스럽게 컵을 <strong class=\"target-word\">받침 접시</strong> 위에 놓았다."
+      },
+      {
+        "exam_en": "His eyes went wide as <strong class=\"target-word\">saucers</strong> in surprise.",
+        "exam_ko": "놀란 그의 눈이 <strong class=\"target-word\">접시</strong>처럼 커졌다."
+      }
+    ]
+  }
+]

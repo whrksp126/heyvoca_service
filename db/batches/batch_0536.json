@@ -1,0 +1,242 @@
+[
+  {
+    "id": 17090,
+    "origin": "roadblock",
+    "examples": [
+      {
+        "exam_en": "Sometimes the police check cars at roadblocks.",
+        "exam_ko": "때로 경찰은 바리케이드를 치고 차량을 검문한다."
+      }
+    ]
+  },
+  {
+    "id": 17091,
+    "origin": "knowledgeable",
+    "examples": [
+      {
+        "exam_en": "He is knowledgeable about music.",
+        "exam_ko": "그는 음악에 정통하다."
+      }
+    ]
+  },
+  {
+    "id": 17100,
+    "origin": "firsthand",
+    "examples": [
+      {
+        "exam_en": "firsthand information",
+        "exam_ko": "직접 얻은 정보"
+      },
+      {
+        "exam_en": "This story is based on his firsthand experiences in China.",
+        "exam_ko": "이 이야기는 그가 중국에서 실제로 겪은 일에 기초하고 있다."
+      },
+      {
+        "exam_en": "I got firsthand experience of the event by attending it in person.",
+        "exam_ko": "나는 직접 참석하여 그 사건을 직접 경험했다."
+      }
+    ]
+  },
+  {
+    "id": 17104,
+    "origin": "polo",
+    "examples": [
+      {
+        "exam_en": "a polo player",
+        "exam_ko": "폴로 선수."
+      }
+    ]
+  },
+  {
+    "id": 17107,
+    "origin": "journalism",
+    "examples": [
+      {
+        "exam_en": "enter journalism",
+        "exam_ko": "신문[보도]계에 들어가다, 신문 기자가 되다."
+      }
+    ]
+  },
+  {
+    "id": 17119,
+    "origin": "philharmonic",
+    "examples": [
+      {
+        "exam_en": "a philharmonic society",
+        "exam_ko": "음악 (애호) 협회."
+      },
+      {
+        "exam_en": "a philharmonic concert",
+        "exam_ko": "(음악 협회 주최의) 음악회."
+      }
+    ]
+  },
+  {
+    "id": 17128,
+    "origin": "lurch",
+    "examples": [
+      {
+        "exam_en": "with a lurch",
+        "exam_ko": "쾅 요동쳐서"
+      },
+      {
+        "exam_en": "give a lurch",
+        "exam_ko": "갑자기 기울다."
+      }
+    ]
+  },
+  {
+    "id": 17130,
+    "origin": "totalitarian",
+    "examples": [
+      {
+        "exam_en": "the brutalities of the totalitarian regimes",
+        "exam_ko": "전체주의 체제의 잔인성."
+      }
+    ]
+  },
+  {
+    "id": 17132,
+    "origin": "sectarian",
+    "examples": [
+      {
+        "exam_en": "sectarian differences",
+        "exam_ko": "종파[당파]간의 의견 차이"
+      },
+      {
+        "exam_en": "a sectarian mind",
+        "exam_ko": "파벌심."
+      }
+    ]
+  },
+  {
+    "id": 17151,
+    "origin": "tautology",
+    "examples": [
+      {
+        "exam_en": "\" The reason why\" could be used in a tautology such as \" the reason why I love her is because she is beautiful.\"",
+        "exam_ko": "\" The reason why\"는 \"내가 ㄱ그녀를 사랑하는 이유는 그녀가 아름답기 때문이다\" 처럼 타톨로지로 사용될 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 17153,
+    "origin": "historian",
+    "examples": [
+      {
+        "exam_en": "a military historian.",
+        "exam_ko": "군사사[대통령사] 연구가."
+      }
+    ]
+  },
+  {
+    "id": 17156,
+    "origin": "festoon",
+    "examples": [
+      {
+        "exam_en": "The streets were festooned with flags.",
+        "exam_ko": "거리는 깃발로 장식되었다."
+      }
+    ]
+  },
+  {
+    "id": 17158,
+    "origin": "winded",
+    "examples": [
+      {
+        "exam_en": "short-winded",
+        "exam_ko": "곧 숨이 차는."
+      }
+    ]
+  },
+  {
+    "id": 17159,
+    "origin": "decry",
+    "examples": [
+      {
+        "exam_en": "decry the violence of modern films",
+        "exam_ko": "현대 영화의 폭력성을 공공연히 비난하다."
+      }
+    ]
+  },
+  {
+    "id": 17160,
+    "origin": "declarative",
+    "examples": [
+      {
+        "exam_en": "be declarative of",
+        "exam_ko": "…을 진술하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 17162,
+    "origin": "midway",
+    "examples": [
+      {
+        "exam_en": "the midway point in a trip",
+        "exam_ko": "여행의 중간 지점"
+      },
+      {
+        "exam_en": "midway through the campaign",
+        "exam_ko": "그 운동의 중도에서."
+      }
+    ]
+  },
+  {
+    "id": 17165,
+    "origin": "clef",
+    "examples": [
+      {
+        "exam_en": "C clef",
+        "exam_ko": "다음자리표(가온음자리표)"
+      },
+      {
+        "exam_en": "F clef",
+        "exam_ko": "바음자리표(낮은음자리표)"
+      }
+    ]
+  },
+  {
+    "id": 17166,
+    "origin": "treble",
+    "examples": [
+      {
+        "exam_en": "sell for treble the price",
+        "exam_ko": "3배의 가격으로 팔다"
+      },
+      {
+        "exam_en": "I'll give you treble the original value of that book.",
+        "exam_ko": "그 책을 원래 값의 3배에 사겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 17168,
+    "origin": "dodger",
+    "examples": [
+      {
+        "exam_en": "a tax dodger",
+        "exam_ko": "탈세자"
+      },
+      {
+        "exam_en": "a draft dodger",
+        "exam_ko": "징병 기피자."
+      }
+    ]
+  },
+  {
+    "id": 17169,
+    "origin": "artful",
+    "examples": [
+      {
+        "exam_en": "an artful pun",
+        "exam_ko": "기교 있는 말장난"
+      },
+      {
+        "exam_en": "an artful fellow",
+        "exam_ko": "교활한 놈."
+      }
+    ]
+  }
+]

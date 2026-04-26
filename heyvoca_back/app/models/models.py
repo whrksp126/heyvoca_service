@@ -18,6 +18,7 @@ class RecentStudyType(enum.Enum):
     TEST = "test"      # 학습
     EXAM = "exam"      # 시험
     TODAY = "today"    # 오늘의 학습
+    QUICK = "quick"    # 빠른 복습
 ### enum ###
 
 class BinaryUUID(TypeDecorator):

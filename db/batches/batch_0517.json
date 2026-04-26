@@ -1,0 +1,254 @@
+[
+  {
+    "id": 16056,
+    "origin": "nickname",
+    "examples": [
+      {
+        "exam_en": "give a nickname to",
+        "exam_ko": "…에게 별명을 붙이다"
+      },
+      {
+        "exam_en": "get the nickname of",
+        "exam_ko": "…이라는 별명이 붙다[별명으로 통하다]."
+      }
+    ]
+  },
+  {
+    "id": 16059,
+    "origin": "intentional",
+    "examples": [
+      {
+        "exam_en": "an intentional insult",
+        "exam_ko": "고의적인 모욕"
+      },
+      {
+        "exam_en": "The accident might have been intentional.",
+        "exam_ko": "그 사고는 고의였는지도 모른다."
+      }
+    ]
+  },
+  {
+    "id": 16060,
+    "origin": "diameter",
+    "examples": [
+      {
+        "exam_en": "a circle of 10 meters in diameter",
+        "exam_ko": "지름 10미터의 원."
+      }
+    ]
+  },
+  {
+    "id": 16062,
+    "origin": "quiver",
+    "examples": [
+      {
+        "exam_en": "Her voice was quivering with anger.",
+        "exam_ko": "그녀의 목소리는 너무 화가 나서[흥분해서] 떨리고 있었다."
+      },
+      {
+        "exam_en": "The dog quivered its tail.",
+        "exam_ko": "그 개는 꼬리를 흔들고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 16067,
+    "origin": "dignify",
+    "examples": [
+      {
+        "exam_en": "The conference was dignified by the Pope's presence.",
+        "exam_ko": "그 회의는 교황의 배석으로 무게가 더해졌다."
+      },
+      {
+        "exam_en": "dignify stupidity by calling it bravery",
+        "exam_ko": "어리석음을 그럴듯하게 용감이라 부르다."
+      }
+    ]
+  },
+  {
+    "id": 16068,
+    "origin": "chaperon",
+    "examples": [
+      {
+        "exam_en": "My father is a chaperon at the school dance tonight.",
+        "exam_ko": "우리 아버지가 오늘 밤 학교 댄스 파티에서의 보호자이다."
+      }
+    ]
+  },
+  {
+    "id": 16070,
+    "origin": "hankering",
+    "examples": [
+      {
+        "exam_en": "I have a hankering for a large house with acres of land.",
+        "exam_ko": "넓은 땅이 있는 큰 집을 갖고 싶다."
+      }
+    ]
+  },
+  {
+    "id": 16072,
+    "origin": "subjunctive",
+    "examples": [
+      {
+        "exam_en": "subjunctive past",
+        "exam_ko": "가정법 과거[현재]."
+      }
+    ]
+  },
+  {
+    "id": 16081,
+    "origin": "sabbatical",
+    "examples": [
+      {
+        "exam_en": "Sabbatical leave",
+        "exam_ko": "장기 유급 휴가"
+      },
+      {
+        "exam_en": "The professor is on  Sabbatical in London.",
+        "exam_ko": "교수는 런던에서 휴가 연도를 보내고 있다."
+      }
+    ]
+  },
+  {
+    "id": 16083,
+    "origin": "mousy",
+    "examples": [
+      {
+        "exam_en": "a mousy voice",
+        "exam_ko": "조용한[속삭이는] 목소리."
+      }
+    ]
+  },
+  {
+    "id": 16085,
+    "origin": "addendum",
+    "examples": [
+      {
+        "exam_en": "An addendum is an agreed-upon addition signed by all parties to the original contract. It details the specific terms, clauses, sections etc.",
+        "exam_ko": "부록은 모든 당사자가 최초 계약에 서명 한 합의 된 추가 사항입니다. 특정 용어, 절, 섹션 등을 자세히 설명합니다."
+      }
+    ]
+  },
+  {
+    "id": 16088,
+    "origin": "deference",
+    "examples": [
+      {
+        "exam_en": "blind deference",
+        "exam_ko": "맹종"
+      },
+      {
+        "exam_en": "undue deference to authority",
+        "exam_ko": "권위자에 대한 부당한 맹종."
+      },
+      {
+        "exam_en": "She showed deference to her elders by bowing respectfully.",
+        "exam_ko": "그녀는 예의 바르고 공손하게 인사하여 어르신들에게 공경을 표했다."
+      }
+    ]
+  },
+  {
+    "id": 16089,
+    "origin": "flaunt",
+    "examples": [
+      {
+        "exam_en": "flaunt one's skill",
+        "exam_ko": "자기의 솜씨를 과시하다."
+      }
+    ]
+  },
+  {
+    "id": 16092,
+    "origin": "pretext",
+    "examples": [
+      {
+        "exam_en": "on the pretext of",
+        "exam_ko": "…을 핑계로"
+      },
+      {
+        "exam_en": "on some pretext or other",
+        "exam_ko": "이 핑계 저 핑계로"
+      }
+    ]
+  },
+  {
+    "id": 16104,
+    "origin": "lifelong",
+    "examples": [
+      {
+        "exam_en": "lifelong education",
+        "exam_ko": "평생 교육"
+      },
+      {
+        "exam_en": "lifelong regret",
+        "exam_ko": "평생의 후회."
+      }
+    ]
+  },
+  {
+    "id": 16106,
+    "origin": "standstill",
+    "examples": [
+      {
+        "exam_en": "an economic standstill",
+        "exam_ko": "경제적 정체"
+      },
+      {
+        "exam_en": "be at a standstill",
+        "exam_ko": "정체되어 있다, 정돈 상태에 있다"
+      }
+    ]
+  },
+  {
+    "id": 16107,
+    "origin": "damnation",
+    "examples": [
+      {
+        "exam_en": "curse a person to damnation",
+        "exam_ko": "남을 지옥에 떨어지라고 저주하다"
+      },
+      {
+        "exam_en": "damnation take you!",
+        "exam_ko": "(속어) 이 빌어먹을 놈아!"
+      }
+    ]
+  },
+  {
+    "id": 16116,
+    "origin": "customary",
+    "examples": [
+      {
+        "exam_en": "one's customary exercise",
+        "exam_ko": "언제나 하는 운동"
+      },
+      {
+        "exam_en": "a customary practice",
+        "exam_ko": "관행"
+      }
+    ]
+  },
+  {
+    "id": 16117,
+    "origin": "jockey",
+    "examples": [
+      {
+        "exam_en": "a truck jockey",
+        "exam_ko": "트럭 운전사."
+      },
+      {
+        "exam_en": "jockey one's car into the garage",
+        "exam_ko": "차를 차고에 잘 넣다."
+      }
+    ]
+  },
+  {
+    "id": 16123,
+    "origin": "unsettling",
+    "examples": [
+      {
+        "exam_en": "unsettling news",
+        "exam_ko": "인심을 소란케 하는 뉴스."
+      }
+    ]
+  }
+]

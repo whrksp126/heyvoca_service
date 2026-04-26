@@ -1,0 +1,266 @@
+[
+  {
+    "id": 4094,
+    "origin": "cooperation",
+    "examples": [
+      {
+        "exam_en": "We know we may count on your <strong class=\"target-word\">cooperation</strong>.",
+        "exam_ko": "네가 <strong class=\"target-word\">협력</strong>해 주리라 믿는다."
+      },
+      {
+        "exam_en": "The two countries agreed to promote <strong class=\"target-word\">cooperation</strong>.",
+        "exam_ko": "두 나라는 <strong class=\"target-word\">협력</strong>을 추진하기로 합의했다."
+      }
+    ]
+  },
+  {
+    "id": 4095,
+    "origin": "campus",
+    "examples": [
+      {
+        "exam_en": "Students gathered on <strong class=\"target-word\">campus</strong> for the event.",
+        "exam_ko": "학생들이 행사를 위해 <strong class=\"target-word\">교내</strong>에 모였다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Campus</strong> activities help students build friendships.",
+        "exam_ko": "<strong class=\"target-word\">학교</strong> 활동은 학생들이 우정을 쌓는 데 도움을 준다."
+      }
+    ]
+  },
+  {
+    "id": 4097,
+    "origin": "cooler",
+    "examples": [
+      {
+        "exam_en": "She put the wine in the <strong class=\"target-word\">cooler</strong> before dinner.",
+        "exam_ko": "그녀는 저녁 식사 전에 와인을 <strong class=\"target-word\">냉각기</strong>에 넣었다."
+      },
+      {
+        "exam_en": "He ordered an orange <strong class=\"target-word\">cooler</strong> at the bar.",
+        "exam_ko": "그는 바에서 오렌지 <strong class=\"target-word\">쿨러</strong>를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 4098,
+    "origin": "gneiss",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Gneiss</strong> is commonly used as a building material.",
+        "exam_ko": "<strong class=\"target-word\">편마암</strong>은 건축 자재로 흔히 사용된다."
+      }
+    ]
+  },
+  {
+    "id": 4099,
+    "origin": "humidity",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">humidity</strong> today is very high.",
+        "exam_ko": "오늘의 <strong class=\"target-word\">습도</strong>는 매우 높다."
+      }
+    ]
+  },
+  {
+    "id": 4101,
+    "origin": "shortcut",
+    "examples": [
+      {
+        "exam_en": "She took a <strong class=\"target-word\">shortcut</strong> through the park.",
+        "exam_ko": "그녀는 공원을 통해 <strong class=\"target-word\">지름길</strong>로 갔다."
+      },
+      {
+        "exam_en": "He found a <strong class=\"target-word\">shortcut</strong> to finish the project faster.",
+        "exam_ko": "그는 프로젝트를 더 빨리 끝낼 <strong class=\"target-word\">손쉬운 방법</strong>을 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 4102,
+    "origin": "shutter",
+    "examples": [
+      {
+        "exam_en": "I will close the <strong class=\"target-word\">shutters</strong> before the storm.",
+        "exam_ko": "폭풍 전에 <strong class=\"target-word\">덧문</strong>을 닫겠다."
+      },
+      {
+        "exam_en": "She pressed the <strong class=\"target-word\">shutter</strong> to take the photo.",
+        "exam_ko": "그녀는 사진을 찍기 위해 <strong class=\"target-word\">셔터</strong>를 눌렀다."
+      }
+    ]
+  },
+  {
+    "id": 4104,
+    "origin": "literal",
+    "examples": [
+      {
+        "exam_en": "He provided a <strong class=\"target-word\">literal</strong> translation of the poem.",
+        "exam_ko": "그는 시를 <strong class=\"target-word\">직역</strong>으로 번역했다."
+      },
+      {
+        "exam_en": "She used a <strong class=\"target-word\">literal</strong> style in her writing.",
+        "exam_ko": "그녀는 글에서 <strong class=\"target-word\">문자 그대로의</strong> 문체를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 4105,
+    "origin": "literate",
+    "examples": [
+      {
+        "exam_en": "All employees must be computer-<strong class=\"target-word\">literate</strong> for this job.",
+        "exam_ko": "이 직업은 모든 직원이 컴퓨터 사용에 <strong class=\"target-word\">능숙해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 4108,
+    "origin": "confusion",
+    "examples": [
+      {
+        "exam_en": "The room was in complete <strong class=\"target-word\">confusion</strong> after the party.",
+        "exam_ko": "파티 후 방은 완전히 <strong class=\"target-word\">어질러진</strong> 상태였다."
+      },
+      {
+        "exam_en": "The new policy created <strong class=\"target-word\">confusion</strong> among the staff.",
+        "exam_ko": "새 정책은 직원들 사이에 <strong class=\"target-word\">혼란</strong>을 야기했다."
+      }
+    ]
+  },
+  {
+    "id": 4109,
+    "origin": "worthless",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">worthless</strong> after losing his job.",
+        "exam_ko": "그는 직업을 잃고 나서 <strong class=\"target-word\">쓸모없다</strong>고 느꼈다."
+      },
+      {
+        "exam_en": "The currency is now virtually <strong class=\"target-word\">worthless</strong>.",
+        "exam_ko": "그 통화는 현재 실질적으로 <strong class=\"target-word\">가치가 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4110,
+    "origin": "description",
+    "examples": [
+      {
+        "exam_en": "The sunset was a beautiful sight beyond <strong class=\"target-word\">description</strong>.",
+        "exam_ko": "일몰은 이루 형언할 수 없이 아름다운 <strong class=\"target-word\">묘사</strong> 그 이상이었다."
+      },
+      {
+        "exam_en": "She gave a detailed <strong class=\"target-word\">description</strong> of the house.",
+        "exam_ko": "그녀는 집에 대해 상세한 <strong class=\"target-word\">묘사</strong>를 제공했다."
+      }
+    ]
+  },
+  {
+    "id": 4111,
+    "origin": "explanation",
+    "examples": [
+      {
+        "exam_en": "He offered the remark by way of <strong class=\"target-word\">explanation</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">설명</strong>으로서 그 말을 덧붙였다."
+      },
+      {
+        "exam_en": "She gave an <strong class=\"target-word\">explanation</strong> for her mistake.",
+        "exam_ko": "그녀는 자신의 실수에 대해 <strong class=\"target-word\">설명</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 4112,
+    "origin": "insecure",
+    "examples": [
+      {
+        "exam_en": "The bridge has an <strong class=\"target-word\">insecure</strong> foundation.",
+        "exam_ko": "그 다리는 <strong class=\"target-word\">불안정한</strong> 토대를 가지고 있다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">insecure</strong> about her performance.",
+        "exam_ko": "그녀는 자신의 실력에 대해 <strong class=\"target-word\">자신 없음</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 4113,
+    "origin": "kingdom",
+    "examples": [
+      {
+        "exam_en": "She studied the history of the United <strong class=\"target-word\">Kingdom</strong>.",
+        "exam_ko": "그녀는 영국(연합 <strong class=\"target-word\">왕국</strong>)의 역사를 공부했다."
+      },
+      {
+        "exam_en": "Nepal is known as a mountain <strong class=\"target-word\">kingdom</strong>.",
+        "exam_ko": "네팔은 산악 <strong class=\"target-word\">왕국</strong>으로 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 4115,
+    "origin": "achievement",
+    "examples": [
+      {
+        "exam_en": "The team celebrated a remarkable scientific <strong class=\"target-word\">achievement</strong>.",
+        "exam_ko": "팀은 주목할 만한 과학적 <strong class=\"target-word\">업적</strong>을 축하했다."
+      },
+      {
+        "exam_en": "Winning the award was a great <strong class=\"target-word\">achievement</strong> for her.",
+        "exam_ko": "상을 받는 것은 그녀에게 위대한 <strong class=\"target-word\">업적</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 4117,
+    "origin": "invoke",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">invoked</strong> God's help during the crisis.",
+        "exam_ko": "그는 위기 중에 신의 도움을 <strong class=\"target-word\">기원했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">invoked</strong> the law to protect her rights.",
+        "exam_ko": "그녀는 자신의 권리를 보호하기 위해 법을 <strong class=\"target-word\">발동했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4118,
+    "origin": "bowed",
+    "examples": [
+      {
+        "exam_en": "He stood with a <strong class=\"target-word\">bowed</strong> head in silence.",
+        "exam_ko": "그는 고개를 <strong class=\"target-word\">숙인</strong> 채 조용히 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4119,
+    "origin": "crisp",
+    "examples": [
+      {
+        "exam_en": "The freshly baked cookies were <strong class=\"target-word\">crisp</strong> and delicious.",
+        "exam_ko": "갓 구운 쿠키는 <strong class=\"target-word\">바삭바삭하고</strong> 맛있었다."
+      },
+      {
+        "exam_en": "Her writing had a <strong class=\"target-word\">crisp</strong> and clear style.",
+        "exam_ko": "그녀의 글은 <strong class=\"target-word\">명쾌하고</strong> 명확한 문체였다."
+      }
+    ]
+  },
+  {
+    "id": 4120,
+    "origin": "journey",
+    "examples": [
+      {
+        "exam_en": "They went on a <strong class=\"target-word\">journey</strong> to the mountains.",
+        "exam_ko": "그들은 산으로 <strong class=\"target-word\">여행</strong>을 떠났다."
+      },
+      {
+        "exam_en": "She made a long <strong class=\"target-word\">journey</strong> across the country.",
+        "exam_ko": "그녀는 전국을 가로지르는 긴 <strong class=\"target-word\">여행</strong>을 했다."
+      }
+    ]
+  }
+]

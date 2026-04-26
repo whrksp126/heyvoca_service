@@ -1,0 +1,202 @@
+[
+  {
+    "id": 51330,
+    "origin": "hardscape",
+    "examples": [
+      {
+        "exam_en": "Hardscape is one of the two major subcategories of landscaping, the other being softscape.",
+        "exam_ko": "하드 스케이프는 조경의 두 가지 주요 하위 범주 중 하나이며 다른 하나는 소프트 스케이프입니다."
+      }
+    ]
+  },
+  {
+    "id": 51333,
+    "origin": "diathermal",
+    "examples": [
+      {
+        "exam_en": "A diathermal wall may pass energy as heat by thermal conduction, but not the matter.",
+        "exam_ko": "투열벽은 물질이 아닌 열전도에 의해 에너지를 통과시킨다."
+      }
+    ]
+  },
+  {
+    "id": 51335,
+    "origin": "specification(spec)",
+    "examples": [
+      {
+        "exam_en": "Specofication are the details for the work that needs to be completed in a construction project. These details include information such as materials, the scope of work, installation process, and quality of work.",
+        "exam_ko": "시방서는 건설 프로젝트에서 완료해야하는 작업에 대한 세부 정보입니다. 이러한 세부 사항에는 재료, 작업 범위, 설치 프로세스 및 작업 품질과 같은 정보가 포함됩니다."
+      }
+    ]
+  },
+  {
+    "id": 51336,
+    "origin": "salts",
+    "examples": [
+      {
+        "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and contaminants by cleaning with solvents, vapor, alkalli, emulsion or steam",
+        "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 오염 물질 제거"
+      }
+    ]
+  },
+  {
+    "id": 51338,
+    "origin": "fv",
+    "examples": [
+      {
+        "exam_en": "Perform investment and efficiency analysis in numeric and monetary indicators by undertaking analyses such as net present value(NPV), future value(FV).",
+        "exam_ko": "순 현재 가치 (NPV), 미래 가치 (FV)와 같은 분석을 수행하여 숫자 및 화페로 나타내는 투자 및 효율성 분석을 수행합니다."
+      }
+    ]
+  },
+  {
+    "id": 51340,
+    "origin": "even-textured",
+    "examples": [
+      {
+        "exam_en": "Rake grounds that are neither planted nor paved to a smooth, even-textured surface.",
+        "exam_ko": "식물이 심어지지 않거나 포장되지 않은 땅은 표면이 매그럽고 평평하도록 땅을 고르새요."
+      }
+    ]
+  },
+  {
+    "id": 51342,
+    "origin": "extrados",
+    "examples": [
+      {
+        "exam_en": "The perpendicular distance between the intrados of arch to the extrados of arch is called depth of an arch or height of an arch.",
+        "exam_ko": "아치의 내부 둘레와 겉둘레 사이의 수직 거리를 아치의 깊이 또는 아치의 높이라고 한다."
+      }
+    ]
+  },
+  {
+    "id": 51344,
+    "origin": "château",
+    "examples": [
+      {
+        "exam_en": "A château is a manor house or a country house of nobility or gentry with or without fortifications, originally and still most frequently—in French-",
+        "exam_ko": "샤토 (Château)는 원래 영주 주택 또는, 귀족이나 상류층의 시골 주택으로 여전히 프랑스에는 흔합니다."
+      }
+    ]
+  },
+  {
+    "id": 51346,
+    "origin": "outgrower",
+    "examples": [
+      {
+        "exam_en": "GRM works for local communities, employees, out growers, and other stakeholders",
+        "exam_ko": "GRM(민원처리기관)은 지역 사회, 직원, 게약 재배자 및 기타 이해 관계자를 위해 일합니다."
+      }
+    ]
+  },
+  {
+    "id": 51350,
+    "origin": "ef",
+    "examples": [
+      {
+        "exam_en": "Structural caculations shall be organized as follows: Site specific design criteria including applicable codes, ground snow load, snow importance factor, snow exposure factor etc.",
+        "exam_ko": "구조계산은 다음과 같이 구성되어야 한다: 적용 법규, 지상 적설 하중, 적설 중요도 계수, 적설 노출 계수등을 포함한 장소별 설계 기준"
+      }
+    ]
+  },
+  {
+    "id": 51351,
+    "origin": "sarking",
+    "examples": [
+      {
+        "exam_en": "Sarking material intended to collect and discharge any water that may penetrate a building (commonly described as RFL, or reflective foil laminate). Where Sarking also forms a vapour barrier, the vapour barrier properties must conform to this specification.",
+        "exam_ko": "살킹 자재란 건물에 침투 할 수있는 물 (일반적으로 RFL 또는 반사 호일 라미네이트라고 함)을 수집하고 배출하기 위한 자재이다. Sarking이 증기 장벽을 형성하는 경우 증기 장벽 특성이 시방서를 준수해야합니다."
+      }
+    ]
+  },
+  {
+    "id": 51352,
+    "origin": "water-logged",
+    "examples": [
+      {
+        "exam_en": "Liquefaction takes place when loosely packed, water-logged sediments at or near the ground surface lose their strength in response to strong ground shaking.",
+        "exam_ko": "지면에서 또는 근처에서 느슨하게 채워지고 물에 침착 된 퇴적물이 강한 지진에 반응하여 강도를 잃으면 액화가 발생합니다."
+      }
+    ]
+  },
+  {
+    "id": 51353,
+    "origin": "muntin",
+    "examples": [
+      {
+        "exam_en": "A muntin is a strip of wood or metal separating and holding panes of glass in a window.",
+        "exam_ko": "창살은 유리판을 분리하고 창에 고정하는 목재 또는 금속 조각입니다."
+      }
+    ]
+  },
+  {
+    "id": 51356,
+    "origin": "aci",
+    "examples": [
+      {
+        "exam_en": "1. ACI 117 – Standard Specifications for Tolerances for Concrete Construction and Materials.",
+        "exam_ko": "1. ACI 117 - 콘크리트 건축 및 자재에 대한 공차의 표준 시방"
+      }
+    ]
+  },
+  {
+    "id": 51359,
+    "origin": "a/e",
+    "examples": [
+      {
+        "exam_en": "All caculations shall be reviewed by the A/E.",
+        "exam_ko": "모든 계산서는 건축 엔지니어에 의해 검토되어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 51360,
+    "origin": "micropile",
+    "examples": [
+      {
+        "exam_en": "Micropiles are small diameter piles (up to 300 mm), with the capability of sustaining high loads (compressive loads of over 5000 KN).",
+        "exam_ko": "마이크로 파일은 작은 직경의 파일 (최대 300mm)이며 높은 하중 (5000 KN 이상의 압축 하중)을 유지할 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 51368,
+    "origin": "rft",
+    "examples": [
+      {
+        "exam_en": "Project Specific Requirement(s)-appear in RFT and refer to this document which is the Technical Specification for the project which is the subject of RFT.",
+        "exam_ko": "RFT (입찰 요청)에 프로젝트 별 요구 사항이 나타나고 RFT (입찰 요청) 목적인 프로젝트의 기술 시방서인 이도서를 참조하십시오."
+      }
+    ]
+  },
+  {
+    "id": 51370,
+    "origin": "factory-installed",
+    "examples": [
+      {
+        "exam_en": "For equipment, include the following in addition to the above, as applicable: Wiring diagrams showing factory-installed wiring. Printed performance curves.",
+        "exam_ko": "장비의 경우, 해당되는 경우 위에 추가하여 다음을 포함하십시오. 공장에서 설치된 배선을 보여주는 배선 다이어그램. 인쇄 된 성능 곡선"
+      }
+    ]
+  },
+  {
+    "id": 51371,
+    "origin": "bfs",
+    "examples": [
+      {
+        "exam_en": "Classify blast furnace slag in accordance with ASTM C 989",
+        "exam_ko": "ASTM C 989에 따라 고로 슬래그를 분류하시오."
+      }
+    ]
+  },
+  {
+    "id": 51373,
+    "origin": "crsi",
+    "examples": [
+      {
+        "exam_en": "Founded in 1924, the Concrete Reinforcing Steel Institute (CRSI) is a technical institute and Standards Developing Organization (SDO) that stands as the authoritative resource for information related to steel reinforced concrete construction. CRSI offers many industry-trusted technical publications, standards documents, design aids, reference materials, and educational opportunities.",
+        "exam_ko": "1924 년에 설립 된 CRSI (Concrete Reinforcing Steel Institute)는 철근 콘크리트 구조물 관련 정보에 대한 권위있는 자원 인 기술 연구소 및 표준 개발기구 (SDO)입니다. CRSI는 업계에서 신뢰할 수있는 많은 기술 출판물, 표준 문서, 디자인 보조 도구, 참조 자료 및 교육 기회를 제공합니다"
+      }
+    ]
+  }
+]

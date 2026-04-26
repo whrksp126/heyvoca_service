@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1916,
+    "origin": "line",
+    "examples": [
+      {
+        "exam_en": "She drew four <strong class=\"target-word\">lines</strong> on the paper.",
+        "exam_ko": "그녀는 종이에 <strong class=\"target-word\">선</strong> 네 개를 그었다."
+      },
+      {
+        "exam_en": "He marked a <strong class=\"target-word\">line</strong> to show the boundary.",
+        "exam_ko": "그는 경계를 표시하기 위해 <strong class=\"target-word\">선</strong>을 그었다."
+      }
+    ]
+  },
+  {
+    "id": 1917,
+    "origin": "render",
+    "examples": [
+      {
+        "exam_en": "His achievement <strong class=\"target-word\">rendered</strong> his name famous.",
+        "exam_ko": "그의 업적이 그의 이름을 <strong class=\"target-word\">유명하게 만들었다</strong>."
+      },
+      {
+        "exam_en": "The accident <strong class=\"target-word\">rendered</strong> the machine useless.",
+        "exam_ko": "그 사고로 기계가 <strong class=\"target-word\">쓸모없게 되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1918,
+    "origin": "disturb",
+    "examples": [
+      {
+        "exam_en": "Loud noise <strong class=\"target-word\">disturbed</strong> her concentration.",
+        "exam_ko": "큰 소음이 그녀의 집중을 <strong class=\"target-word\">방해했다</strong>."
+      },
+      {
+        "exam_en": "I'm sorry to <strong class=\"target-word\">disturb</strong> you at this hour.",
+        "exam_ko": "이 시간에 <strong class=\"target-word\">방해해서</strong> 죄송합니다."
+      }
+    ]
+  },
+  {
+    "id": 1919,
+    "origin": "shape",
+    "examples": [
+      {
+        "exam_en": "The monster had the <strong class=\"target-word\">shape</strong> of a human.",
+        "exam_ko": "그 괴물은 사람의 <strong class=\"target-word\">형상</strong>을 하고 있었다."
+      },
+      {
+        "exam_en": "She bought a chocolate in the <strong class=\"target-word\">shape</strong> of a heart.",
+        "exam_ko": "그녀는 하트 <strong class=\"target-word\">모양</strong>의 초콜릿을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1920,
+    "origin": "flee",
+    "examples": [
+      {
+        "exam_en": "Many people <strong class=\"target-word\">fled</strong> from the revolution.",
+        "exam_ko": "많은 사람들이 혁명을 피해 <strong class=\"target-word\">도망쳤다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">fled</strong> the country to find refuge.",
+        "exam_ko": "그들은 피난처를 찾아 나라를 <strong class=\"target-word\">떠났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1921,
+    "origin": "interrupt",
+    "examples": [
+      {
+        "exam_en": "A power failure <strong class=\"target-word\">interrupted</strong> the electric current.",
+        "exam_ko": "정전으로 전류가 <strong class=\"target-word\">끊겼다</strong>."
+      },
+      {
+        "exam_en": "The phone ring <strong class=\"target-word\">interrupted</strong> my thoughts.",
+        "exam_ko": "전화벨이 내 생각을 <strong class=\"target-word\">방해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1922,
+    "origin": "chase",
+    "examples": [
+      {
+        "exam_en": "The dog <strong class=\"target-word\">chased</strong> a rabbit across the field.",
+        "exam_ko": "개가 들판을 가로질러 토끼를 <strong class=\"target-word\">쫓았다</strong>."
+      },
+      {
+        "exam_en": "Police <strong class=\"target-word\">chased</strong> the criminal through the streets.",
+        "exam_ko": "경찰이 거리에서 범인을 <strong class=\"target-word\">추적했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1923,
+    "origin": "copy",
+    "examples": [
+      {
+        "exam_en": "This painting is a <strong class=\"target-word\">copy</strong> of a Picasso work.",
+        "exam_ko": "이 그림은 피카소 작품의 <strong class=\"target-word\">모사본</strong>이다."
+      },
+      {
+        "exam_en": "She made a rough <strong class=\"target-word\">copy</strong> of the document.",
+        "exam_ko": "그녀는 문서의 초안 <strong class=\"target-word\">사본</strong>을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1924,
+    "origin": "leap",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">leaped</strong> over the stream easily.",
+        "exam_ko": "그는 시내를 가볍게 <strong class=\"target-word\">뛰어넘었다</strong>."
+      },
+      {
+        "exam_en": "Look before you <strong class=\"target-word\">leap</strong> into any decision.",
+        "exam_ko": "어떤 결정이든 <strong class=\"target-word\">뛰어들기</strong> 전에 잘 살펴라."
+      }
+    ]
+  },
+  {
+    "id": 1925,
+    "origin": "overlook",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">overlooked</strong> a pronunciation error in the text.",
+        "exam_ko": "그녀는 본문의 발음 오류를 <strong class=\"target-word\">못 보고 넘어갔다</strong>."
+      },
+      {
+        "exam_en": "His merits have been <strong class=\"target-word\">overlooked</strong> for years.",
+        "exam_ko": "그의 장점은 수년간 <strong class=\"target-word\">간과되어</strong> 왔다."
+      }
+    ]
+  },
+  {
+    "id": 1926,
+    "origin": "retirement",
+    "examples": [
+      {
+        "exam_en": "He submitted his voluntary <strong class=\"target-word\">retirement</strong> application.",
+        "exam_ko": "그는 자진 <strong class=\"target-word\">퇴직</strong> 신청서를 제출했다."
+      },
+      {
+        "exam_en": "She reached the age of <strong class=\"target-word\">retirement</strong> last year.",
+        "exam_ko": "그녀는 작년에 <strong class=\"target-word\">정년</strong> 나이가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1927,
+    "origin": "absence",
+    "examples": [
+      {
+        "exam_en": "He applied for a leave of <strong class=\"target-word\">absence</strong> from work.",
+        "exam_ko": "그는 직장에 <strong class=\"target-word\">휴가</strong>를 신청했다."
+      },
+      {
+        "exam_en": "She managed the team during his <strong class=\"target-word\">absence</strong>.",
+        "exam_ko": "그가 <strong class=\"target-word\">없는 동안</strong> 그녀가 팀을 이끌었다."
+      }
+    ]
+  },
+  {
+    "id": 1928,
+    "origin": "conversation",
+    "examples": [
+      {
+        "exam_en": "They had a brisk <strong class=\"target-word\">conversation</strong> over coffee.",
+        "exam_ko": "그들은 커피를 마시며 활발한 <strong class=\"target-word\">대화</strong>를 나눴다."
+      },
+      {
+        "exam_en": "She wanted to continue the <strong class=\"target-word\">conversation</strong> later.",
+        "exam_ko": "그녀는 나중에 <strong class=\"target-word\">대화</strong>를 계속하고 싶었다."
+      }
+    ]
+  },
+  {
+    "id": 1929,
+    "origin": "introduction",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">introduction</strong> of computers changed education.",
+        "exam_ko": "컴퓨터의 <strong class=\"target-word\">도입</strong>이 교육을 바꿔놓았다."
+      },
+      {
+        "exam_en": "He carried a letter of <strong class=\"target-word\">introduction</strong> to the manager.",
+        "exam_ko": "그는 매니저에게 줄 <strong class=\"target-word\">소개장</strong>을 가지고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 1930,
+    "origin": "application",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">application</strong> of this theory is very broad.",
+        "exam_ko": "이 이론의 <strong class=\"target-word\">적용</strong> 범위는 매우 넓다."
+      },
+      {
+        "exam_en": "This word has varied <strong class=\"target-word\">applications</strong> in daily use.",
+        "exam_ko": "이 단어는 일상에서 다양한 <strong class=\"target-word\">용법</strong>으로 쓰인다."
+      }
+    ]
+  },
+  {
+    "id": 1931,
+    "origin": "pension",
+    "examples": [
+      {
+        "exam_en": "He receives a retirement <strong class=\"target-word\">pension</strong> every month.",
+        "exam_ko": "그는 매달 퇴직 <strong class=\"target-word\">연금</strong>을 받는다."
+      },
+      {
+        "exam_en": "She saved money to supplement her <strong class=\"target-word\">pension</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">연금</strong>을 보충하기 위해 저축했다."
+      }
+    ]
+  },
+  {
+    "id": 1932,
+    "origin": "opinion",
+    "examples": [
+      {
+        "exam_en": "She shared a positive <strong class=\"target-word\">opinion</strong> about the plan.",
+        "exam_ko": "그녀는 그 계획에 대해 긍정적인 <strong class=\"target-word\">견해</strong>를 밝혔다."
+      },
+      {
+        "exam_en": "In my <strong class=\"target-word\">opinion</strong>, we should wait longer.",
+        "exam_ko": "내 <strong class=\"target-word\">생각에는</strong> 우리가 더 기다려야 한다."
+      }
+    ]
+  },
+  {
+    "id": 1933,
+    "origin": "greeting",
+    "examples": [
+      {
+        "exam_en": "He gave a clumsy <strong class=\"target-word\">greeting</strong> to the guest.",
+        "exam_ko": "그는 손님에게 어색하게 <strong class=\"target-word\">인사했다</strong>."
+      },
+      {
+        "exam_en": "They exchanged <strong class=\"target-word\">greetings</strong> when they met.",
+        "exam_ko": "그들은 만났을 때 <strong class=\"target-word\">인사</strong>를 주고받았다."
+      }
+    ]
+  },
+  {
+    "id": 1934,
+    "origin": "salary",
+    "examples": [
+      {
+        "exam_en": "His monthly <strong class=\"target-word\">salary</strong> increased this year.",
+        "exam_ko": "그의 월 <strong class=\"target-word\">급여</strong>가 올해 올랐다."
+      },
+      {
+        "exam_en": "She negotiated a higher annual <strong class=\"target-word\">salary</strong>.",
+        "exam_ko": "그녀는 더 높은 연간 <strong class=\"target-word\">연봉</strong>을 협상했다."
+      }
+    ]
+  },
+  {
+    "id": 1935,
+    "origin": "topic",
+    "examples": [
+      {
+        "exam_en": "Current <strong class=\"target-word\">topics</strong> were discussed at the meeting.",
+        "exam_ko": "회의에서 오늘의 <strong class=\"target-word\">화제</strong>들이 논의되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">topics</strong> of the day filled the news.",
+        "exam_ko": "당일의 <strong class=\"target-word\">시사 문제</strong>들이 뉴스를 가득 채웠다."
+      }
+    ]
+  }
+]

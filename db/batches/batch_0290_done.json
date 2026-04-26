@@ -1,0 +1,270 @@
+[
+  {
+    "id": 7207,
+    "origin": "plagiarism",
+    "examples": [
+      {
+        "exam_en": "The student was expelled for <strong class=\"target-word\">plagiarism</strong>.",
+        "exam_ko": "그 학생은 <strong class=\"target-word\">표절</strong>로 퇴학당했다."
+      }
+    ]
+  },
+  {
+    "id": 7208,
+    "origin": "lapse",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">lapse</strong> in judgment cost him the job.",
+        "exam_ko": "그의 판단력 <strong class=\"target-word\">실수</strong>가 일자리를 잃게 했다."
+      },
+      {
+        "exam_en": "She had a temporary <strong class=\"target-word\">lapse</strong> of memory.",
+        "exam_ko": "그녀는 일시적인 기억 <strong class=\"target-word\">실수</strong>를 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 7209,
+    "origin": "crammed",
+    "examples": [
+      {
+        "exam_en": "His schedule was <strong class=\"target-word\">crammed</strong> with meetings all week.",
+        "exam_ko": "그의 일정은 일주일 내내 회의로 <strong class=\"target-word\">꽉 찼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7210,
+    "origin": "foreboding",
+    "examples": [
+      {
+        "exam_en": "She felt a sudden <strong class=\"target-word\">foreboding</strong> before the trip.",
+        "exam_ko": "그녀는 여행 전 갑작스러운 <strong class=\"target-word\">불길한 예감</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "He had a <strong class=\"target-word\">foreboding</strong> that he'd never see her again.",
+        "exam_ko": "그는 그녀를 다시 못 만날 것 같은 <strong class=\"target-word\">예감</strong>이 들었다."
+      }
+    ]
+  },
+  {
+    "id": 7211,
+    "origin": "ominous",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Ominous</strong> black clouds gathered before the storm.",
+        "exam_ko": "폭풍 전에 <strong class=\"target-word\">불길한</strong> 먹구름이 몰려왔다."
+      },
+      {
+        "exam_en": "High unemployment is <strong class=\"target-word\">ominous</strong> for the economy.",
+        "exam_ko": "높은 실업률은 경제에 <strong class=\"target-word\">불길한</strong> 징조다."
+      },
+      {
+        "exam_en": "The dark clouds were an <strong class=\"target-word\">ominous</strong> sign of a storm.",
+        "exam_ko": "어두운 구름은 폭풍의 <strong class=\"target-word\">불길한</strong> 징조였다."
+      }
+    ]
+  },
+  {
+    "id": 7212,
+    "origin": "egregious",
+    "examples": [
+      {
+        "exam_en": "He made an <strong class=\"target-word\">egregious</strong> mistake during the presentation.",
+        "exam_ko": "그는 발표 중 <strong class=\"target-word\">터무니없는</strong> 실수를 저질렀다."
+      },
+      {
+        "exam_en": "The man is an <strong class=\"target-word\">egregious</strong> fool.",
+        "exam_ko": "그 남자는 <strong class=\"target-word\">지독한</strong> 멍청이다."
+      },
+      {
+        "exam_en": "The referee's decision was an <strong class=\"target-word\">egregious</strong> error.",
+        "exam_ko": "심판의 결정은 <strong class=\"target-word\">터무니없는</strong> 실수였다."
+      }
+    ]
+  },
+  {
+    "id": 7213,
+    "origin": "inaugural",
+    "examples": [
+      {
+        "exam_en": "The president delivered his <strong class=\"target-word\">inaugural</strong> address.",
+        "exam_ko": "대통령이 <strong class=\"target-word\">취임</strong> 연설을 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">inaugural</strong> ceremony was held in the morning.",
+        "exam_ko": "<strong class=\"target-word\">개회</strong>식이 오전에 열렸다."
+      },
+      {
+        "exam_en": "The facility was built for the <strong class=\"target-word\">inaugural</strong> Olympic ceremony.",
+        "exam_ko": "시설은 올림픽 <strong class=\"target-word\">개회</strong>식을 위해 건설되었다."
+      }
+    ]
+  },
+  {
+    "id": 7215,
+    "origin": "infiltrate",
+    "examples": [
+      {
+        "exam_en": "Spies had <strong class=\"target-word\">infiltrated</strong> the organization.",
+        "exam_ko": "스파이들이 조직에 <strong class=\"target-word\">잠입했다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">infiltrated</strong> an agent into enemy territory.",
+        "exam_ko": "우리는 적진에 요원을 <strong class=\"target-word\">잠입시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7216,
+    "origin": "incumbent",
+    "examples": [
+      {
+        "exam_en": "It is <strong class=\"target-word\">incumbent</strong> on you to advise him.",
+        "exam_ko": "그에게 충고하는 것이 당신의 <strong class=\"target-word\">의무</strong>이다."
+      },
+      {
+        "exam_en": "I felt it <strong class=\"target-word\">incumbent</strong> upon me to raise the issue.",
+        "exam_ko": "나는 그 문제를 제기해야 할 <strong class=\"target-word\">의무</strong>를 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 7217,
+    "origin": "vie",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">vied</strong> with me for first prize.",
+        "exam_ko": "그는 나와 1등상을 <strong class=\"target-word\">겨루었다</strong>."
+      },
+      {
+        "exam_en": "Her friends <strong class=\"target-word\">vied</strong> with each other to win her favor.",
+        "exam_ko": "그녀의 친구들은 그녀의 환심을 사려고 <strong class=\"target-word\">경쟁했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7220,
+    "origin": "subsidize",
+    "examples": [
+      {
+        "exam_en": "The project is heavily <strong class=\"target-word\">subsidized</strong> by the government.",
+        "exam_ko": "그 프로젝트는 정부로부터 많은 <strong class=\"target-word\">보조금을 받고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7221,
+    "origin": "flatly",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">flatly</strong> refused to help him.",
+        "exam_ko": "그녀는 그를 돕기를 <strong class=\"target-word\">딱 잘라</strong> 거절했다."
+      },
+      {
+        "exam_en": "Many scientists <strong class=\"target-word\">flatly</strong> denied the possibility.",
+        "exam_ko": "많은 과학자들은 그 가능성을 <strong class=\"target-word\">완강히</strong> 부인했다."
+      }
+    ]
+  },
+  {
+    "id": 7222,
+    "origin": "decree",
+    "examples": [
+      {
+        "exam_en": "The emperor issued an imperial <strong class=\"target-word\">decree</strong>.",
+        "exam_ko": "황제가 칙령(<strong class=\"target-word\">勅令</strong>)을 내렸다."
+      },
+      {
+        "exam_en": "The government issued a <strong class=\"target-word\">decree</strong> banning protests.",
+        "exam_ko": "정부는 시위를 금지하는 <strong class=\"target-word\">법령</strong>을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 7223,
+    "origin": "jaded",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">jaded</strong> after years of the same work.",
+        "exam_ko": "그는 수년간의 똑같은 일에 <strong class=\"target-word\">지쳐 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7225,
+    "origin": "tenuous",
+    "examples": [
+      {
+        "exam_en": "The two countries' relationship remained <strong class=\"target-word\">tenuous</strong> despite diplomacy.",
+        "exam_ko": "두 나라 관계는 외교 노력에도 <strong class=\"target-word\">미약한</strong> 상태였다."
+      }
+    ]
+  },
+  {
+    "id": 7228,
+    "origin": "kosher",
+    "examples": [
+      {
+        "exam_en": "They only serve <strong class=\"target-word\">kosher</strong> food at that restaurant.",
+        "exam_ko": "그 식당에서는 <strong class=\"target-word\">정결한</strong> 음식만 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 7229,
+    "origin": "stalk",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">stalked</strong> proudly along the street.",
+        "exam_ko": "그는 거리를 당당하게 <strong class=\"target-word\">활보했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">stalked</strong> out of the room in anger.",
+        "exam_ko": "그녀는 화가 나서 방을 성큼성큼 <strong class=\"target-word\">나갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7230,
+    "origin": "supersede",
+    "examples": [
+      {
+        "exam_en": "Wood-burning stoves have been <strong class=\"target-word\">superseded</strong> by electric stoves.",
+        "exam_ko": "장작 난로는 전기 난로로 <strong class=\"target-word\">대체되었다</strong>."
+      },
+      {
+        "exam_en": "The new law <strong class=\"target-word\">supersedes</strong> all previous regulations.",
+        "exam_ko": "새 법률은 이전의 모든 규정을 <strong class=\"target-word\">대체한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7231,
+    "origin": "havoc",
+    "examples": [
+      {
+        "exam_en": "The storm caused <strong class=\"target-word\">havoc</strong> across the city.",
+        "exam_ko": "폭풍이 도시 전역에 <strong class=\"target-word\">파괴</strong>를 일으켰다."
+      },
+      {
+        "exam_en": "The virus wreaked <strong class=\"target-word\">havoc</strong> on the economy.",
+        "exam_ko": "바이러스는 경제를 <strong class=\"target-word\">엉망진창</strong>으로 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 7232,
+    "origin": "skim",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">skimmed</strong> the grease off the pot of stew.",
+        "exam_ko": "그녀는 스튜 냄비에서 기름기를 <strong class=\"target-word\">걷어냈다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">skimmed</strong> through the report before the meeting.",
+        "exam_ko": "그는 회의 전에 보고서를 <strong class=\"target-word\">대충 훑어봤다</strong>."
+      }
+    ]
+  }
+]

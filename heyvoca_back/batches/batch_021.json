@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1994,
+    "word": "tough",
+    "exam_en": "a steak as <strong class=\"target-word\">tough</strong> as leather",
+    "exam_ko": "<strong class=\"target-word\">가죽처럼</strong> 질긴 스테이크"
+  },
+  {
+    "id": 1995,
+    "word": "finally",
+    "exam_en": "<strong class=\"target-word\">Finally</strong>, are you encouraged by the direction education is taking?",
+    "exam_ko": "마지막으로, 교육이 <strong class=\"target-word\">나아</strong>가는 방향에 확신하나요?"
+  },
+  {
+    "id": 1996,
+    "word": "finally",
+    "exam_en": "The sky turned red, then purple, and <strong class=\"target-word\">finally</strong> black.",
+    "exam_ko": "하늘은 붉은색, 그 다음에는 자주색, 마지막으로 검은색으로 <strong class=\"target-word\">변했다</strong>."
+  },
+  {
+    "id": 1997,
+    "word": "welcome",
+    "exam_en": "<strong class=\"target-word\">Welcome</strong>, friends!",
+    "exam_ko": "여러분 잘 <strong class=\"target-word\">오셨습니다</strong>"
+  },
+  {
+    "id": 1998,
+    "word": "welcome",
+    "exam_en": "<strong class=\"target-word\">Welcome</strong> to Hawaii!",
+    "exam_ko": "(게시) 하와이에 잘 <strong class=\"target-word\">오셨습니다</strong>!"
+  },
+  {
+    "id": 1999,
+    "word": "something",
+    "exam_en": "<strong class=\"target-word\">something</strong> to eat",
+    "exam_ko": "(무언가) <strong class=\"target-word\">먹을</strong>[마실] 것"
+  },
+  {
+    "id": 2000,
+    "word": "something",
+    "exam_en": "<strong class=\"target-word\">something</strong> of that sort",
+    "exam_ko": "<strong class=\"target-word\">무언가</strong> 그런 것"
+  },
+  {
+    "id": 2001,
+    "word": "korean",
+    "exam_en": "the <strong class=\"target-word\">Korean</strong> Peninsula",
+    "exam_ko": "<strong class=\"target-word\">한반도</strong>."
+  },
+  {
+    "id": 2002,
+    "word": "from",
+    "exam_en": "travel <strong class=\"target-word\">from</strong> Paris to London",
+    "exam_ko": "<strong class=\"target-word\">파리에서</strong> 런던까지 여행하다"
+  },
+  {
+    "id": 2003,
+    "word": "from",
+    "exam_en": "get down <strong class=\"target-word\">from</strong> a platform",
+    "exam_ko": "연단에서 <strong class=\"target-word\">내려오다</strong>"
+  },
+  {
+    "id": 2004,
+    "word": "please",
+    "exam_en": "<strong class=\"target-word\">Please</strong> come here.",
+    "exam_ko": "<strong class=\"target-word\">이쪽으로</strong> 오십시오(※문장 끝에 please가 올 때는 앞에 콤마를 씀)"
+  },
+  {
+    "id": 2005,
+    "word": "please",
+    "exam_en": "<strong class=\"target-word\">Please</strong> don't make a noise.",
+    "exam_ko": "좀 <strong class=\"target-word\">조용히</strong> 하시오(*Don't please …이라고 하지 않음)"
+  },
+  {
+    "id": 2006,
+    "word": "what",
+    "exam_en": "<strong class=\"target-word\">What</strong> is your name?",
+    "exam_ko": "<strong class=\"target-word\">무엇</strong>(이름) 이지요?(※이 경우는 보통 My name is Brown.처럼 대답하는데 Who are you?에서는 I am Brown.처럼 대답하는 것이 보통임)"
+  },
+  {
+    "id": 2007,
+    "word": "what",
+    "exam_en": "<strong class=\"target-word\">What</strong>'s the matter?",
+    "exam_ko": "<strong class=\"target-word\">무슨</strong> 일입니까?"
+  },
+  {
+    "id": 2008,
+    "word": "everything",
+    "exam_en": "<strong class=\"target-word\">Everything</strong> in the store is on sale.",
+    "exam_ko": "가게에 있는 것은 모두 팔 <strong class=\"target-word\">물건입니다</strong>"
+  },
+  {
+    "id": 2009,
+    "word": "everything",
+    "exam_en": "He had <strong class=\"target-word\">everything</strong> an executive should have.",
+    "exam_ko": "그는 경영자가 지녀야 하는 조건을 모두 <strong class=\"target-word\">갖추었다</strong>"
+  },
+  {
+    "id": 2010,
+    "word": "weigh",
+    "exam_en": "<strong class=\"target-word\">weigh</strong> flour",
+    "exam_ko": "밀가루의 무게를 <strong class=\"target-word\">달다</strong>"
+  },
+  {
+    "id": 2011,
+    "word": "weigh",
+    "exam_en": "<strong class=\"target-word\">weigh</strong> oneself on a bathroom scale",
+    "exam_ko": "욕실의 체중계로 체중을 <strong class=\"target-word\">재다</strong>"
+  },
+  {
+    "id": 2012,
+    "word": "celery",
+    "exam_en": "two crisp stalks of <strong class=\"target-word\">celery</strong>",
+    "exam_ko": "신선한 <strong class=\"target-word\">셀러리</strong> 두 줄기"
+  },
+  {
+    "id": 2013,
+    "word": "celery",
+    "exam_en": "a head of <strong class=\"target-word\">celery</strong>",
+    "exam_ko": "<strong class=\"target-word\">셀러리</strong> 한 포기."
+  },
+  {
+    "id": 2014,
+    "word": "cabbage",
+    "exam_en": "a head of <strong class=\"target-word\">cabbage</strong>",
+    "exam_ko": "양배추 한 통(※(비격식)에서는 a cabbage<strong class=\"target-word\">라고</strong>도 함)."
+  },
+  {
+    "id": 2015,
+    "word": "egg",
+    "exam_en": "a soft- boiled <strong class=\"target-word\">egg</strong>",
+    "exam_ko": "<strong class=\"target-word\">반숙한</strong>[완숙한] 달걀"
+  },
+  {
+    "id": 2016,
+    "word": "egg",
+    "exam_en": "a coddled <strong class=\"target-word\">egg</strong>",
+    "exam_ko": "<strong class=\"target-word\">반숙한</strong> 달걀"
+  },
+  {
+    "id": 2017,
+    "word": "dozen",
+    "exam_en": "a <strong class=\"target-word\">dozen</strong> beers",
+    "exam_ko": "맥주 <strong class=\"target-word\">1다</strong>스"
+  },
+  {
+    "id": 2018,
+    "word": "dozen",
+    "exam_en": "pack oranges in lots of a <strong class=\"target-word\">dozen</strong> each",
+    "exam_ko": "오렌지를 한 다스씩 <strong class=\"target-word\">담다</strong>"
+  },
+  {
+    "id": 2019,
+    "word": "pair",
+    "exam_en": "a <strong class=\"target-word\">pair</strong> of socks",
+    "exam_ko": "<strong class=\"target-word\">양말</strong> 한 켤레"
+  },
+  {
+    "id": 2019,
+    "word": "sock",
+    "exam_en": "a pair of <strong class=\"target-word\">socks</strong>",
+    "exam_ko": "<strong class=\"target-word\">양말</strong> 한 켤레"
+  },
+  {
+    "id": 2020,
+    "word": "pair",
+    "exam_en": "five <strong class=\"target-word\">pair</strong> of shoes",
+    "exam_ko": "<strong class=\"target-word\">구두</strong> 다섯 켤레(※단수형은 (고어))"
+  },
+  {
+    "id": 2021,
+    "word": "receipt",
+    "exam_en": "make out a <strong class=\"target-word\">receipt</strong> for",
+    "exam_ko": "…의 영수증을 <strong class=\"target-word\">쓰다</strong>"
+  },
+  {
+    "id": 2022,
+    "word": "receipt",
+    "exam_en": "sign a <strong class=\"target-word\">receipt</strong>",
+    "exam_ko": "영수증에 <strong class=\"target-word\">사인하다</strong>"
+  },
+  {
+    "id": 2023,
+    "word": "corner",
+    "exam_en": "in the <strong class=\"target-word\">corner</strong> of the hall",
+    "exam_ko": "홀의 <strong class=\"target-word\">구석에</strong>"
+  },
+  {
+    "id": 2024,
+    "word": "corner",
+    "exam_en": "turn down the <strong class=\"target-word\">corner</strong> of a card",
+    "exam_ko": "카드의 귀퉁이를 <strong class=\"target-word\">접다</strong>."
+  },
+  {
+    "id": 2025,
+    "word": "these",
+    "exam_en": "<strong class=\"target-word\">These</strong> are yours.",
+    "exam_ko": "이것들은 당신 <strong class=\"target-word\">것입니다</strong>."
+  },
+  {
+    "id": 2026,
+    "word": "these",
+    "exam_en": "<strong class=\"target-word\">These</strong> were the days of the great development.",
+    "exam_ko": "그 당시는 비약적으로 발전하는 <strong class=\"target-word\">나날이었다</strong>."
+  },
+  {
+    "id": 2027,
+    "word": "taste",
+    "exam_en": "<strong class=\"target-word\">taste</strong> food",
+    "exam_ko": "<strong class=\"target-word\">시식하다</strong>"
+  },
+  {
+    "id": 2028,
+    "word": "taste",
+    "exam_en": "<strong class=\"target-word\">Taste</strong> the soup for salt and add a little more if it needs it.",
+    "exam_ko": "소금이 적당하게 들어갔는지 간을 보고, <strong class=\"target-word\">필요하다</strong>면 조금 더 넣어라(※보통 진행형은 불가하나 의지 행위를 나타내는 경우는 가능)"
+  },
+  {
+    "id": 2029,
+    "word": "those",
+    "exam_en": "<strong class=\"target-word\">those</strong> present",
+    "exam_ko": "<strong class=\"target-word\">출석자</strong>"
+  },
+  {
+    "id": 2030,
+    "word": "those",
+    "exam_en": "<strong class=\"target-word\">those</strong> chosen",
+    "exam_ko": "<strong class=\"target-word\">뽑힌</strong> 사람"
+  },
+  {
+    "id": 2031,
+    "word": "meat",
+    "exam_en": "frozen <strong class=\"target-word\">meat</strong>",
+    "exam_ko": "<strong class=\"target-word\">냉동</strong> 고기"
+  },
+  {
+    "id": 2032,
+    "word": "meat",
+    "exam_en": "canned <strong class=\"target-word\">meat</strong>",
+    "exam_ko": "<strong class=\"target-word\">통조림</strong> 고기"
+  },
+  {
+    "id": 2033,
+    "word": "enough",
+    "exam_en": "We have <strong class=\"target-word\">enough</strong> water.[＝ We have water <strong class=\"target-word\">enough</strong>.]",
+    "exam_ko": "물[펜]은 충분히 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 2034,
+    "word": "enough",
+    "exam_en": "I've had <strong class=\"target-word\">enough</strong> problems.",
+    "exam_ko": "고생은 이제 <strong class=\"target-word\">지긋지긋하다</strong>"
+  },
+  {
+    "id": 2035,
+    "word": "gallon",
+    "exam_en": "get 35 miles per  <strong class=\"target-word\">gallon</strong>",
+    "exam_ko": "차가 1갤런당 35마일 <strong class=\"target-word\">달리다</strong>."
+  },
+  {
+    "id": 2036,
+    "word": "gallon",
+    "exam_en": "They sweated <strong class=\"target-word\">gallons</strong>.",
+    "exam_ko": "<strong class=\"target-word\">땀을 많이 흘렸다</strong>."
+  },
+  {
+    "id": 2037,
+    "word": "color",
+    "exam_en": "the <strong class=\"target-word\">colors</strong> of the rainbow",
+    "exam_ko": "<strong class=\"target-word\">무지개의</strong> 일곱 빛깔"
+  },
+  {
+    "id": 2038,
+    "word": "color",
+    "exam_en": "a <strong class=\"target-word\">color</strong> between brown and red",
+    "exam_ko": "<strong class=\"target-word\">갈색과</strong> 적색의 중간색"
+  },
+  {
+    "id": 2039,
+    "word": "style",
+    "exam_en": "different <strong class=\"target-word\">styles</strong> of architecture",
+    "exam_ko": "<strong class=\"target-word\">갖가지</strong> 양식의 건축."
+  },
+  {
+    "id": 2040,
+    "word": "style",
+    "exam_en": "(a) modern[classical, traditional] <strong class=\"target-word\">style</strong>",
+    "exam_ko": "<strong class=\"target-word\">현대적</strong>[고전적, 전통적] 양식"
+  },
+  {
+    "id": 2041,
+    "word": "both",
+    "exam_en": "<strong class=\"target-word\">both</strong> brothers",
+    "exam_ko": "그 두 <strong class=\"target-word\">형제</strong>"
+  },
+  {
+    "id": 2042,
+    "word": "both",
+    "exam_en": "<strong class=\"target-word\">both</strong> his parents",
+    "exam_ko": "<strong class=\"target-word\">그의</strong> 양친(※both of his parents라고도 할 수 있음. cf. 『대명사』 1)"
+  },
+  {
+    "id": 2043,
+    "word": "yet",
+    "exam_en": "I don't know anything <strong class=\"target-word\">yet</strong>.",
+    "exam_ko": "아직 아무 것도 <strong class=\"target-word\">모릅니다</strong>"
+  },
+  {
+    "id": 2044,
+    "word": "yet",
+    "exam_en": "Don't start <strong class=\"target-word\">yet</strong>.",
+    "exam_ko": "<strong class=\"target-word\">아직</strong> 출발하지 마라"
+  },
+  {
+    "id": 2045,
+    "word": "ago",
+    "exam_en": "a few minutes <strong class=\"target-word\">ago</strong>",
+    "exam_ko": "몇 분 <strong class=\"target-word\">전에</strong>"
+  },
+  {
+    "id": 2046,
+    "word": "ago",
+    "exam_en": "a long time <strong class=\"target-word\">ago</strong>",
+    "exam_ko": "<strong class=\"target-word\">오래</strong> 전에"
+  },
+  {
+    "id": 2047,
+    "word": "ketchup",
+    "exam_en": "tomato <strong class=\"target-word\">ketchup</strong>",
+    "exam_ko": "<strong class=\"target-word\">토마토케첩</strong>."
+  },
+  {
+    "id": 2048,
+    "word": "lady",
+    "exam_en": "She is not quite a <strong class=\"target-word\">lady</strong>.",
+    "exam_ko": "그녀는 도무지 숙녀가 <strong class=\"target-word\">못된다</strong>"
+  },
+  {
+    "id": 2049,
+    "word": "lady",
+    "exam_en": "She is a <strong class=\"target-word\">lady</strong> by birth.",
+    "exam_ko": "그녀는 양가의 <strong class=\"target-word\">태생이다</strong>."
+  },
+  {
+    "id": 2050,
+    "word": "prawn",
+    "exam_en": "a <strong class=\"target-word\">prawn</strong> cocktail",
+    "exam_ko": "<strong class=\"target-word\">참새우</strong> 칵테일(cf. SHRIMP cocktail)."
+  },
+  {
+    "id": 2051,
+    "word": "prawn",
+    "exam_en": "go <strong class=\"target-word\">prawning</strong>",
+    "exam_ko": "새우 잡으러 <strong class=\"target-word\">가다</strong>."
+  },
+  {
+    "id": 2052,
+    "word": "fried",
+    "exam_en": "<strong class=\"target-word\">fried</strong> chicken",
+    "exam_ko": "<strong class=\"target-word\">프라이드</strong> 치킨; 기름에 튀긴 닭 요리."
+  },
+  {
+    "id": 2053,
+    "word": "actually",
+    "exam_en": "Did he <strong class=\"target-word\">actually</strong> attack you, or just threaten you?",
+    "exam_ko": "<strong class=\"target-word\">그가</strong> 실제로 너를 때렸느냐 아니면 그냥 위협했느냐?"
+  },
+  {
+    "id": 2054,
+    "word": "actually",
+    "exam_en": "He <strong class=\"target-word\">actually</strong> began to cry.",
+    "exam_ko": "그는 정말로 울기 <strong class=\"target-word\">시작했다</strong>."
+  },
+  {
+    "id": 2055,
+    "word": "recommend",
+    "exam_en": "<strong class=\"target-word\">recommend</strong> the dictionary to a person",
+    "exam_ko": "남에게 그 사전을 <strong class=\"target-word\">추천하다</strong>"
+  },
+  {
+    "id": 2056,
+    "word": "recommend",
+    "exam_en": "<strong class=\"target-word\">recommend</strong> an applicant for a job",
+    "exam_ko": "어떤 일에 후보자를 <strong class=\"target-word\">천거하다</strong>"
+  },
+  {
+    "id": 2057,
+    "word": "beer",
+    "exam_en": "lager <strong class=\"target-word\">beer</strong>",
+    "exam_ko": "<strong class=\"target-word\">저장</strong> 맥주"
+  },
+  {
+    "id": 2058,
+    "word": "beer",
+    "exam_en": "draft <strong class=\"target-word\">beer</strong>",
+    "exam_ko": "<strong class=\"target-word\">생맥주</strong>"
+  },
+  {
+    "id": 2059,
+    "word": "some",
+    "exam_en": "<strong class=\"target-word\">some</strong> boy",
+    "exam_ko": "어떤 <strong class=\"target-word\">사내아</strong>이"
+  },
+  {
+    "id": 2060,
+    "word": "some",
+    "exam_en": "<strong class=\"target-word\">some</strong> mistake",
+    "exam_ko": "그 <strong class=\"target-word\">어떤</strong> 잘못"
+  },
+  {
+    "id": 2061,
+    "word": "dessert",
+    "exam_en": "We had apple pie and coffee for <strong class=\"target-word\">dessert</strong>.",
+    "exam_ko": "우리는 디저트로 애플파이와 커피를 <strong class=\"target-word\">먹었다</strong>."
+  },
+  {
+    "id": 2062,
+    "word": "sample",
+    "exam_en": "<strong class=\"target-word\">sample</strong> questions",
+    "exam_ko": "<strong class=\"target-word\">모의</strong> 문제"
+  },
+  {
+    "id": 2063,
+    "word": "sample",
+    "exam_en": "a blood <strong class=\"target-word\">sample</strong>",
+    "exam_ko": "<strong class=\"target-word\">혈액</strong> 표본"
+  },
+  {
+    "id": 2064,
+    "word": "annoying",
+    "exam_en": "How <strong class=\"target-word\">annoying</strong>!",
+    "exam_ko": "<strong class=\"target-word\">정말</strong> 귀찮구나!"
+  },
+  {
+    "id": 2065,
+    "word": "annoying",
+    "exam_en": "It is <strong class=\"target-word\">annoying</strong> that I didn't know about this before.",
+    "exam_ko": "이것을 전에 몰랐다는 것에 약이 <strong class=\"target-word\">오른다</strong>."
+  },
+  {
+    "id": 2066,
+    "word": "another",
+    "exam_en": "in <strong class=\"target-word\">another</strong> three weeks",
+    "exam_ko": "또 3<strong class=\"target-word\">주일</strong> 지나면"
+  },
+  {
+    "id": 2067,
+    "word": "another",
+    "exam_en": "in <strong class=\"target-word\">another</strong> moment",
+    "exam_ko": "<strong class=\"target-word\">다음</strong> 순간, 눈 깜짝할 사이에"
+  },
+  {
+    "id": 2068,
+    "word": "here",
+    "exam_en": "Bring it <strong class=\"target-word\">here</strong> at once.",
+    "exam_ko": "<strong class=\"target-word\">그것을</strong> 당장 이리 가져오너라"
+  },
+  {
+    "id": 2069,
+    "word": "here",
+    "exam_en": "I like it <strong class=\"target-word\">here</strong>.",
+    "exam_ko": "여기[이 토지]가 <strong class=\"target-word\">좋다</strong>"
+  },
+  {
+    "id": 2070,
+    "word": "noisy",
+    "exam_en": "a <strong class=\"target-word\">noisy</strong> engine",
+    "exam_ko": "<strong class=\"target-word\">시끄러운</strong> 소리가 나는 엔진"
+  },
+  {
+    "id": 2071,
+    "word": "noisy",
+    "exam_en": "Don't be <strong class=\"target-word\">noisy</strong>!",
+    "exam_ko": "<strong class=\"target-word\">떠들지</strong> 마라!"
+  },
+  {
+    "id": 2072,
+    "word": "ear",
+    "exam_en": "the external <strong class=\"target-word\">ear</strong>",
+    "exam_ko": "<strong class=\"target-word\">외이</strong>[내이]"
+  },
+  {
+    "id": 2073,
+    "word": "ear",
+    "exam_en": "clean one's <strong class=\"target-word\">ear</strong>",
+    "exam_ko": "귀를 <strong class=\"target-word\">후비다</strong>"
+  },
+  {
+    "id": 2074,
+    "word": "above",
+    "exam_en": "the floor <strong class=\"target-word\">above</strong> ours",
+    "exam_ko": "우리 층의 <strong class=\"target-word\">위층</strong>"
+  },
+  {
+    "id": 2075,
+    "word": "above",
+    "exam_en": "float <strong class=\"target-word\">above</strong> the building",
+    "exam_ko": "건물의 상공에 <strong class=\"target-word\">뜨다</strong>"
+  },
+  {
+    "id": 2076,
+    "word": "trim",
+    "exam_en": "<strong class=\"target-word\">trim</strong> a hedge",
+    "exam_ko": "울타리[잔디, 수염]를 <strong class=\"target-word\">손질하다</strong>"
+  },
+  {
+    "id": 2077,
+    "word": "trim",
+    "exam_en": "have one's hair <strong class=\"target-word\">trimmed</strong>",
+    "exam_ko": "머리를 깎게 <strong class=\"target-word\">하다</strong>"
+  },
+  {
+    "id": 2078,
+    "word": "just",
+    "exam_en": "a <strong class=\"target-word\">just</strong> trial",
+    "exam_ko": "<strong class=\"target-word\">공정한</strong> 재판[중재인]"
+  },
+  {
+    "id": 2079,
+    "word": "just",
+    "exam_en": "be <strong class=\"target-word\">just</strong> in one's decision",
+    "exam_ko": "결정[처리]이 <strong class=\"target-word\">올바르다</strong>"
+  },
+  {
+    "id": 2080,
+    "word": "hair",
+    "exam_en": "a lot of <strong class=\"target-word\">hair</strong>",
+    "exam_ko": "<strong class=\"target-word\">많은</strong> 털"
+  },
+  {
+    "id": 2081,
+    "word": "hair",
+    "exam_en": "have one's <strong class=\"target-word\">hair</strong> done",
+    "exam_ko": "(남을 시켜) 머리를 깎다, 조발하다(※He has his hair cut.은 「그는 (억지로) 머리를 <strong class=\"target-word\">깎였다</strong>」의 의미도 됨)"
+  },
+  {
+    "id": 2082,
+    "word": "usually",
+    "exam_en": "We <strong class=\"target-word\">usually</strong> eat dinner at 7 p.m.",
+    "exam_ko": "우리는 보통 7시에 저녁을 <strong class=\"target-word\">먹는다</strong>"
+  },
+  {
+    "id": 2083,
+    "word": "usually",
+    "exam_en": "Is your friend <strong class=\"target-word\">usually</strong> so rude?",
+    "exam_ko": "네 친구는 평상시 <strong class=\"target-word\">그렇게</strong> 무례하니?"
+  },
+  {
+    "id": 2084,
+    "word": "in",
+    "exam_en": "<strong class=\"target-word\">in</strong> the house",
+    "exam_ko": "<strong class=\"target-word\">집(안)에</strong>"
+  },
+  {
+    "id": 2085,
+    "word": "in",
+    "exam_en": "the largest animal <strong class=\"target-word\">in</strong> the world",
+    "exam_ko": "<strong class=\"target-word\">세계에서</strong> 가장 큰 동물"
+  },
+  {
+    "id": 2086,
+    "word": "as",
+    "exam_en": "<strong class=\"target-word\">as</strong> recently <strong class=\"target-word\">as</strong> last month",
+    "exam_ko": "<strong class=\"target-word\">바로</strong> 지난 달에"
+  },
+  {
+    "id": 2087,
+    "word": "as",
+    "exam_en": "He is <strong class=\"target-word\">as</strong> tall <strong class=\"target-word\">as</strong> you, maybe taller.",
+    "exam_ko": "그는 <strong class=\"target-word\">너하고</strong> 키가 같을 거야, 어쩌면 더 클지도 모르지"
+  },
+  {
+    "id": 2088,
+    "word": "block",
+    "exam_en": "concrete <strong class=\"target-word\">blocks</strong>",
+    "exam_ko": "<strong class=\"target-word\">콘크리트</strong> 블록"
+  },
+  {
+    "id": 2089,
+    "word": "block",
+    "exam_en": "a <strong class=\"target-word\">block</strong> of stone",
+    "exam_ko": "<strong class=\"target-word\">돌덩어리</strong>[나무토막]"
+  },
+  {
+    "id": 2090,
+    "word": "exactly",
+    "exam_en": "<strong class=\"target-word\">exactly</strong> at five o'clock",
+    "exam_ko": "5시 <strong class=\"target-word\">정각에</strong>"
+  },
+  {
+    "id": 2091,
+    "word": "exactly",
+    "exam_en": "What <strong class=\"target-word\">exactly</strong> did he die of?",
+    "exam_ko": "그는 <strong class=\"target-word\">정확하게</strong> 무슨 병으로 죽었습니까?"
+  },
+  {
+    "id": 2092,
+    "word": "bag",
+    "exam_en": "a carry <strong class=\"target-word\">bag</strong>",
+    "exam_ko": "<strong class=\"target-word\">물건을</strong> 넣는 자루"
+  }
+]

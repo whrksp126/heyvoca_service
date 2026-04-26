@@ -1,0 +1,274 @@
+[
+  {
+    "id": 2757,
+    "origin": "bankruptcy",
+    "examples": [
+      {
+        "exam_en": "The company filed for <strong class=\"target-word\">bankruptcy</strong> last year.",
+        "exam_ko": "그 회사는 작년에 <strong class=\"target-word\">파산</strong> 신청을 했다."
+      },
+      {
+        "exam_en": "They avoided <strong class=\"target-word\">bankruptcy</strong> by restructuring their debt.",
+        "exam_ko": "그들은 부채를 재조정해 <strong class=\"target-word\">파산</strong>을 면했다."
+      }
+    ]
+  },
+  {
+    "id": 2758,
+    "origin": "inflation",
+    "examples": [
+      {
+        "exam_en": "High <strong class=\"target-word\">inflation</strong> raised the price of groceries.",
+        "exam_ko": "높은 <strong class=\"target-word\">인플레이션</strong>으로 식료품 가격이 올랐다."
+      },
+      {
+        "exam_en": "The government raised interest rates to control <strong class=\"target-word\">inflation</strong>.",
+        "exam_ko": "정부는 <strong class=\"target-word\">인플레이션</strong>을 억제하기 위해 금리를 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 2759,
+    "origin": "consumer",
+    "examples": [
+      {
+        "exam_en": "The new law strengthens <strong class=\"target-word\">consumer</strong> protection rights.",
+        "exam_ko": "새 법률은 <strong class=\"target-word\">소비자</strong> 보호 권리를 강화한다."
+      }
+    ]
+  },
+  {
+    "id": 2760,
+    "origin": "refund",
+    "examples": [
+      {
+        "exam_en": "Will my fare be <strong class=\"target-word\">refunded</strong>?",
+        "exam_ko": "운임을 <strong class=\"target-word\">돌려받을</strong> 수 있을까요?"
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">refunded</strong> my money.",
+        "exam_ko": "그는 내가 지불한 돈을 <strong class=\"target-word\">환불해</strong> 주었다."
+      }
+    ]
+  },
+  {
+    "id": 2762,
+    "origin": "specialty",
+    "examples": [
+      {
+        "exam_en": "This restaurant <strong class=\"target-word\">specializes</strong> in Italian cuisine.",
+        "exam_ko": "이 식당은 이탈리아 요리를 <strong class=\"target-word\">전문으로</strong> 한다."
+      },
+      {
+        "exam_en": "Art criticism is his <strong class=\"target-word\">specialty</strong>.",
+        "exam_ko": "예술 비평이 그의 <strong class=\"target-word\">전문</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2765,
+    "origin": "surcharge",
+    "examples": [
+      {
+        "exam_en": "The airline added a steep <strong class=\"target-word\">surcharge</strong> for extra baggage.",
+        "exam_ko": "항공사는 추가 수하물에 높은 <strong class=\"target-word\">추징금</strong>을 부과했다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">surcharged</strong> for the extra baggage.",
+        "exam_ko": "그는 추가 화물분에 대해 <strong class=\"target-word\">추징</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2766,
+    "origin": "envelope",
+    "examples": [
+      {
+        "exam_en": "She sent the letter in an airmail <strong class=\"target-word\">envelope</strong>.",
+        "exam_ko": "그녀는 항공 우편용 <strong class=\"target-word\">봉투</strong>에 편지를 넣어 보냈다."
+      },
+      {
+        "exam_en": "He addressed the <strong class=\"target-word\">envelope</strong> before sealing it.",
+        "exam_ko": "그는 <strong class=\"target-word\">봉투</strong>를 봉하기 전에 주소를 적었다."
+      }
+    ]
+  },
+  {
+    "id": 2767,
+    "origin": "parcel",
+    "examples": [
+      {
+        "exam_en": "She carried a huge <strong class=\"target-word\">parcel</strong> of books home.",
+        "exam_ko": "그녀는 큰 책 <strong class=\"target-word\">꾸러미</strong>를 들고 집에 갔다."
+      },
+      {
+        "exam_en": "He wrapped up the <strong class=\"target-word\">parcel</strong> carefully.",
+        "exam_ko": "그는 <strong class=\"target-word\">소포</strong>를 꼼꼼히 꾸렸다."
+      },
+      {
+        "exam_en": "Careful packaging is necessary for a <strong class=\"target-word\">parcel</strong> to arrive safely.",
+        "exam_ko": "<strong class=\"target-word\">소포</strong>가 안전하게 도착하려면 꼼꼼한 포장이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2768,
+    "origin": "admission",
+    "examples": [
+      {
+        "exam_en": "You need an <strong class=\"target-word\">admission</strong> ticket to enter the hall.",
+        "exam_ko": "홀에 입장하려면 <strong class=\"target-word\">입장권</strong>이 필요하다."
+      },
+      {
+        "exam_en": "The country applied for <strong class=\"target-word\">admission</strong> to the U.N.",
+        "exam_ko": "그 나라는 유엔 <strong class=\"target-word\">가입 승인</strong>을 신청했다."
+      }
+    ]
+  },
+  {
+    "id": 2773,
+    "origin": "accelerator",
+    "examples": [
+      {
+        "exam_en": "She pressed the <strong class=\"target-word\">accelerator</strong> to merge onto the highway.",
+        "exam_ko": "그녀는 고속도로에 진입하기 위해 <strong class=\"target-word\">액셀러레이터</strong>를 밟았다."
+      }
+    ]
+  },
+  {
+    "id": 2775,
+    "origin": "bumper",
+    "examples": [
+      {
+        "exam_en": "Farmers celebrated a <strong class=\"target-word\">bumper</strong> crop this season.",
+        "exam_ko": "농부들은 이번 시즌 <strong class=\"target-word\">대풍작</strong>을 기뻐했다."
+      }
+    ]
+  },
+  {
+    "id": 2776,
+    "origin": "horn",
+    "examples": [
+      {
+        "exam_en": "The driver honked the <strong class=\"target-word\">horn</strong> to warn pedestrians.",
+        "exam_ko": "운전자는 보행자에게 경고하려고 <strong class=\"target-word\">경적</strong>을 울렸다."
+      },
+      {
+        "exam_en": "She got on the <strong class=\"target-word\">horn</strong> to call the office.",
+        "exam_ko": "그녀는 사무실에 연락하려고 <strong class=\"target-word\">전화를 걸었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2777,
+    "origin": "brake",
+    "examples": [
+      {
+        "exam_en": "He pressed the <strong class=\"target-word\">brake</strong> pedal hard.",
+        "exam_ko": "그는 <strong class=\"target-word\">브레이크</strong> 페달을 세게 밟았다."
+      },
+      {
+        "exam_en": "The car made a screech when the <strong class=\"target-word\">brakes</strong> were applied.",
+        "exam_ko": "<strong class=\"target-word\">브레이크</strong>를 밟자 차가 끽 하는 소리를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 2778,
+    "origin": "dummy",
+    "examples": [
+      {
+        "exam_en": "The prop was a <strong class=\"target-word\">dummy</strong> gun made of plastic.",
+        "exam_ko": "그 소품은 플라스틱으로 만든 <strong class=\"target-word\">모형</strong> 권총이었다."
+      },
+      {
+        "exam_en": "Children ride a <strong class=\"target-word\">dummy</strong> horse at the fair.",
+        "exam_ko": "아이들은 장터에서 <strong class=\"target-word\">목마</strong>를 탄다."
+      }
+    ]
+  },
+  {
+    "id": 2779,
+    "origin": "sequence",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">sequence</strong> of accidents happened on that road.",
+        "exam_ko": "그 도로에서 일련의 사고가 <strong class=\"target-word\">연달아</strong> 발생했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">sequence</strong> of events led to the crisis.",
+        "exam_ko": "일련의 사건들의 <strong class=\"target-word\">순서</strong>가 위기로 이어졌다."
+      }
+    ]
+  },
+  {
+    "id": 2780,
+    "origin": "overlap",
+    "examples": [
+      {
+        "exam_en": "The carpenter <strong class=\"target-word\">overlapped</strong> the shingles on the roof.",
+        "exam_ko": "목수는 지붕 판자를 <strong class=\"target-word\">겹쳐서</strong> 이었다."
+      },
+      {
+        "exam_en": "His sweater <strong class=\"target-word\">overlaps</strong> the top of his pants.",
+        "exam_ko": "그의 스웨터가 바지 윗부분을 <strong class=\"target-word\">덮는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2781,
+    "origin": "adaptation",
+    "examples": [
+      {
+        "exam_en": "Animals show remarkable <strong class=\"target-word\">adaptation</strong> to their environment.",
+        "exam_ko": "동물들은 환경에 대한 놀라운 <strong class=\"target-word\">적응</strong>력을 보인다."
+      },
+      {
+        "exam_en": "The film is an <strong class=\"target-word\">adaptation</strong> of Zola's novel.",
+        "exam_ko": "그 영화는 졸라의 소설을 <strong class=\"target-word\">각색한</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 2783,
+    "origin": "rehearsal",
+    "examples": [
+      {
+        "exam_en": "The orchestra held a final <strong class=\"target-word\">rehearsal</strong> before the concert.",
+        "exam_ko": "오케스트라는 공연 전 마지막 <strong class=\"target-word\">리허설</strong>을 가졌다."
+      },
+      {
+        "exam_en": "The actors are still in <strong class=\"target-word\">rehearsal</strong> for the play.",
+        "exam_ko": "배우들은 아직 연극 <strong class=\"target-word\">예행 연습</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 2784,
+    "origin": "debut",
+    "examples": [
+      {
+        "exam_en": "The actor made his <strong class=\"target-word\">debut</strong> on stage last night.",
+        "exam_ko": "그 배우는 어젯밤 무대에서 <strong class=\"target-word\">데뷔</strong>했다."
+      },
+      {
+        "exam_en": "The young musician made a successful <strong class=\"target-word\">debut</strong> with her first album.",
+        "exam_ko": "젊은 음악가는 첫 앨범으로 성공적인 <strong class=\"target-word\">데뷔</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2785,
+    "origin": "location",
+    "examples": [
+      {
+        "exam_en": "We found an attractive <strong class=\"target-word\">location</strong> for our camp.",
+        "exam_ko": "우리는 캠프하기에 안성맞춤인 <strong class=\"target-word\">장소</strong>를 찾았다."
+      },
+      {
+        "exam_en": "The map shows the exact <strong class=\"target-word\">location</strong> of the building.",
+        "exam_ko": "지도에 건물의 정확한 <strong class=\"target-word\">위치</strong>가 표시되어 있다."
+      }
+    ]
+  }
+]

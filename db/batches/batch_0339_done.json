@@ -1,0 +1,262 @@
+[
+  {
+    "id": 8813,
+    "origin": "slit",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">slit</strong> the envelope open carefully.",
+        "exam_ko": "그녀는 봉투를 조심스럽게 <strong class=\"target-word\">잘라서</strong> 열었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slit</strong> the fabric into long strips.",
+        "exam_ko": "그는 천을 긴 조각으로 <strong class=\"target-word\">잘랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8817,
+    "origin": "gem",
+    "examples": [
+      {
+        "exam_en": "This painting is a true <strong class=\"target-word\">gem</strong> of the collection.",
+        "exam_ko": "이 그림은 수집품 중의 진정한 <strong class=\"target-word\">일품</strong>이다."
+      },
+      {
+        "exam_en": "He studied the <strong class=\"target-word\">gems</strong> of ancient Greek sculpture.",
+        "exam_ko": "그는 고대 그리스 조각의 <strong class=\"target-word\">걸작들</strong>을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 8819,
+    "origin": "heist",
+    "examples": [
+      {
+        "exam_en": "The gang planned a daring bank <strong class=\"target-word\">heist</strong>.",
+        "exam_ko": "그 일당은 대담한 은행 <strong class=\"target-word\">강도</strong>를 계획했다."
+      }
+    ]
+  },
+  {
+    "id": 8820,
+    "origin": "sequel",
+    "examples": [
+      {
+        "exam_en": "The director released a <strong class=\"target-word\">sequel</strong> to the popular movie.",
+        "exam_ko": "감독은 인기 영화의 <strong class=\"target-word\">속편</strong>을 개봉했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">sequel</strong> was even more successful than the original.",
+        "exam_ko": "<strong class=\"target-word\">속편</strong>은 원작보다 훨씬 더 성공적이었다."
+      }
+    ]
+  },
+  {
+    "id": 8821,
+    "origin": "luster",
+    "examples": [
+      {
+        "exam_en": "His achievements added <strong class=\"target-word\">luster</strong> to his family name.",
+        "exam_ko": "그의 업적은 가문 이름에 <strong class=\"target-word\">광채</strong>를 더했다."
+      }
+    ]
+  },
+  {
+    "id": 8823,
+    "origin": "wanting",
+    "examples": [
+      {
+        "exam_en": "I will make sure that nothing is <strong class=\"target-word\">wanting</strong>.",
+        "exam_ko": "<strong class=\"target-word\">모자라는</strong> 것이 없는지 확인하겠다."
+      },
+      {
+        "exam_en": "He was clearly <strong class=\"target-word\">wanting</strong> in common sense.",
+        "exam_ko": "그는 상식이 분명히 <strong class=\"target-word\">부족했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8826,
+    "origin": "vulgar",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">vulgar</strong> manners offended everyone at the table.",
+        "exam_ko": "그의 <strong class=\"target-word\">상스러운</strong> 태도는 자리에 있는 모든 사람을 불쾌하게 했다."
+      },
+      {
+        "exam_en": "She found his jokes too <strong class=\"target-word\">vulgar</strong> to laugh at.",
+        "exam_ko": "그녀는 그의 농담이 너무 <strong class=\"target-word\">저속해서</strong> 웃을 수가 없었다."
+      }
+    ]
+  },
+  {
+    "id": 8827,
+    "origin": "conspiratorial",
+    "examples": [
+      {
+        "exam_en": "They held <strong class=\"target-word\">conspiratorial</strong> discussions in secret.",
+        "exam_ko": "그들은 비밀리에 <strong class=\"target-word\">음모적인</strong> 논의를 나눴다."
+      }
+    ]
+  },
+  {
+    "id": 8828,
+    "origin": "damned",
+    "examples": [
+      {
+        "exam_en": "They will be eternally <strong class=\"target-word\">damned</strong>.",
+        "exam_ko": "그들은 영원히 지옥으로 <strong class=\"target-word\">떨어질</strong> 것이다."
+      },
+      {
+        "exam_en": "That noise is a <strong class=\"target-word\">damned</strong> nuisance.",
+        "exam_ko": "그 소음은 정말 <strong class=\"target-word\">지긋지긋한</strong> 골칫거리다."
+      }
+    ]
+  },
+  {
+    "id": 8829,
+    "origin": "textile",
+    "examples": [
+      {
+        "exam_en": "The factory produces various <strong class=\"target-word\">textile</strong> fabrics.",
+        "exam_ko": "그 공장은 다양한 <strong class=\"target-word\">직물</strong>을 생산한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">textile</strong> workers went on strike.",
+        "exam_ko": "<strong class=\"target-word\">직물</strong> 노동자들이 파업에 돌입했다."
+      }
+    ]
+  },
+  {
+    "id": 8831,
+    "origin": "anonymity",
+    "examples": [
+      {
+        "exam_en": "The reader preferred <strong class=\"target-word\">anonymity</strong> and refused to share her name.",
+        "exam_ko": "그 독자는 <strong class=\"target-word\">익명</strong>을 선호해서 이름 공개를 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 8834,
+    "origin": "fluorescent",
+    "examples": [
+      {
+        "exam_en": "The office uses <strong class=\"target-word\">fluorescent</strong> lighting throughout.",
+        "exam_ko": "그 사무실은 전체적으로 <strong class=\"target-word\">형광</strong> 조명을 사용한다."
+      },
+      {
+        "exam_en": "She used a <strong class=\"target-word\">fluorescent</strong> dye to mark the sample.",
+        "exam_ko": "그녀는 샘플을 표시하기 위해 <strong class=\"target-word\">형광</strong> 염료를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 8837,
+    "origin": "nil",
+    "examples": [
+      {
+        "exam_en": "Visibility is <strong class=\"target-word\">nil</strong> in the thick fog.",
+        "exam_ko": "짙은 안개 속에서 시계가 <strong class=\"target-word\">제로</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 8841,
+    "origin": "slop",
+    "examples": [
+      {
+        "exam_en": "The waitress <strong class=\"target-word\">slopped</strong> coffee on the table.",
+        "exam_ko": "웨이트리스가 탁자에 커피를 <strong class=\"target-word\">흘렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slopped</strong> the soup carelessly into the bowl.",
+        "exam_ko": "그는 수프를 그릇에 엉성하게 <strong class=\"target-word\">부었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8843,
+    "origin": "setback",
+    "examples": [
+      {
+        "exam_en": "That's a bit of a <strong class=\"target-word\">setback</strong>.",
+        "exam_ko": "그것 때문에 기세가 약간 <strong class=\"target-word\">꺾인</strong> 셈이다."
+      },
+      {
+        "exam_en": "The baseball team suffered its first <strong class=\"target-word\">setback</strong> of the season.",
+        "exam_ko": "그 야구팀은 이번 시즌 첫 <strong class=\"target-word\">패배</strong>를 맛보았다."
+      },
+      {
+        "exam_en": "The project faced a major <strong class=\"target-word\">setback</strong> due to budget cuts.",
+        "exam_ko": "예산 삭감으로 프로젝트가 큰 <strong class=\"target-word\">차질</strong>을 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 8844,
+    "origin": "kitty",
+    "examples": [
+      {
+        "exam_en": "There's little left in the <strong class=\"target-word\">kitty</strong>.",
+        "exam_ko": "이제 <strong class=\"target-word\">예비금</strong>이 얼마 남지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 8845,
+    "origin": "shaken",
+    "examples": [
+      {
+        "exam_en": "\"How's your kid?\" \"Pretty <strong class=\"target-word\">shaken</strong> up, but nothing's broken.\"",
+        "exam_ko": "\"당신 아이 상태가 어때요?\" \"<strong class=\"target-word\">놀랐지만</strong> 부러진 데는 없어요.\""
+      },
+      {
+        "exam_en": "She was badly <strong class=\"target-word\">shaken</strong> by the accident.",
+        "exam_ko": "그녀는 사고로 심하게 <strong class=\"target-word\">동요했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8846,
+    "origin": "wad",
+    "examples": [
+      {
+        "exam_en": "He chewed on a <strong class=\"target-word\">wad</strong> of gum.",
+        "exam_ko": "그는 껌 <strong class=\"target-word\">덩어리</strong>를 씹었다."
+      },
+      {
+        "exam_en": "She stuffed a <strong class=\"target-word\">wad</strong> of cotton into her ears.",
+        "exam_ko": "그녀는 귀를 솜 <strong class=\"target-word\">뭉치</strong>로 틀어막았다."
+      }
+    ]
+  },
+  {
+    "id": 8848,
+    "origin": "unhealthy",
+    "examples": [
+      {
+        "exam_en": "He had an <strong class=\"target-word\">unhealthy</strong> complexion after weeks of stress.",
+        "exam_ko": "몇 주간의 스트레스 이후 그의 안색이 <strong class=\"target-word\">건강하지 못했다</strong>."
+      },
+      {
+        "exam_en": "Eating fast food daily is an <strong class=\"target-word\">unhealthy</strong> habit.",
+        "exam_ko": "매일 패스트푸드를 먹는 것은 <strong class=\"target-word\">건강에 나쁜</strong> 습관이다."
+      }
+    ]
+  },
+  {
+    "id": 8851,
+    "origin": "paralyze",
+    "examples": [
+      {
+        "exam_en": "After the accident she was <strong class=\"target-word\">paralyzed</strong> from the waist down.",
+        "exam_ko": "그 사고 후 그녀는 하반신이 <strong class=\"target-word\">마비되었다</strong>."
+      },
+      {
+        "exam_en": "Heavy snow <strong class=\"target-word\">paralyzed</strong> train services in Seoul.",
+        "exam_ko": "폭설이 서울의 철도 기능을 <strong class=\"target-word\">마비시켰다</strong>."
+      }
+    ]
+  }
+]

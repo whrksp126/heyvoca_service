@@ -1,0 +1,266 @@
+[
+  {
+    "id": 16273,
+    "origin": "privileged",
+    "examples": [
+      {
+        "exam_en": "a privileged parking place",
+        "exam_ko": "전용 주차 구역"
+      },
+      {
+        "exam_en": "the privileged classes",
+        "exam_ko": "특권 계급"
+      }
+    ]
+  },
+  {
+    "id": 16274,
+    "origin": "torrential",
+    "examples": [
+      {
+        "exam_en": "torrential flooding",
+        "exam_ko": "대단한 홍수"
+      },
+      {
+        "exam_en": "a torrential downpour",
+        "exam_ko": "억수 같은 비."
+      }
+    ]
+  },
+  {
+    "id": 16276,
+    "origin": "piracy",
+    "examples": [
+      {
+        "exam_en": "literary piracy",
+        "exam_ko": "저작물의 표절, 해적판의 출판."
+      }
+    ]
+  },
+  {
+    "id": 16277,
+    "origin": "rigor",
+    "examples": [
+      {
+        "exam_en": "The teacher disciplined the students with great rigor.",
+        "exam_ko": "교사는 학생들을 아주 엄하게 훈련했다"
+      },
+      {
+        "exam_en": "He deserves to be punished with the full rigor of the law.",
+        "exam_ko": "그가 아주 엄격한 법에 따라 처벌받는 것은 당연하다."
+      }
+    ]
+  },
+  {
+    "id": 16280,
+    "origin": "wiretap",
+    "examples": [
+      {
+        "exam_en": "The police wiretapped his house.",
+        "exam_ko": "경찰은 그의 집(의 전화)를 도청했다"
+      },
+      {
+        "exam_en": "He wiretapped conversations of Democratic Party officials.",
+        "exam_ko": "그는 민주당 직원들의 대화를 도청했다."
+      }
+    ]
+  },
+  {
+    "id": 16281,
+    "origin": "earnestness",
+    "examples": [
+      {
+        "exam_en": "with great earnestness",
+        "exam_ko": "매우 진지하게"
+      },
+      {
+        "exam_en": "in all earnestness",
+        "exam_ko": "고지식하게."
+      }
+    ]
+  },
+  {
+    "id": 16283,
+    "origin": "prowl",
+    "examples": [
+      {
+        "exam_en": "a wolf prowling for prey",
+        "exam_ko": "먹이를 찾아 헤매는 이리"
+      },
+      {
+        "exam_en": "I heard someone prowling about in the garden.",
+        "exam_ko": "나는 정원에서 누군가가 서성거리고 있는 소리를 들었다."
+      }
+    ]
+  },
+  {
+    "id": 16285,
+    "origin": "unsanitary",
+    "examples": [
+      {
+        "exam_en": "unsanitary conditions",
+        "exam_ko": "비위생적인 환경"
+      }
+    ]
+  },
+  {
+    "id": 16286,
+    "origin": "smoothly",
+    "examples": [
+      {
+        "exam_en": "The snake glided smoothly toward the frog.",
+        "exam_ko": "뱀은 개구리를 향하여 미끄러지듯 나아갔다"
+      },
+      {
+        "exam_en": "Everything went smoothly.",
+        "exam_ko": "모든것이 순조롭게 진행되었다."
+      }
+    ]
+  },
+  {
+    "id": 16287,
+    "origin": "oversleep",
+    "examples": [
+      {
+        "exam_en": "oversleep oneself",
+        "exam_ko": "늦잠 자다."
+      }
+    ]
+  },
+  {
+    "id": 16288,
+    "origin": "dealing",
+    "examples": [
+      {
+        "exam_en": "business dealings",
+        "exam_ko": "상거래"
+      },
+      {
+        "exam_en": "have dealings with",
+        "exam_ko": "…과 거래하다[교제하다, 관계를 가지다]."
+      }
+    ]
+  },
+  {
+    "id": 16289,
+    "origin": "racket",
+    "examples": [
+      {
+        "exam_en": "the racket of the London season",
+        "exam_ko": "런던 사교 시즌의 흥청망청[소란스럽게] 떠들며 놀기"
+      },
+      {
+        "exam_en": "What's the racket?",
+        "exam_ko": "어떻게 된 일이냐?"
+      }
+    ]
+  },
+  {
+    "id": 16292,
+    "origin": "kidding",
+    "examples": [
+      {
+        "exam_en": "Are you kidding?",
+        "exam_ko": "놀리는 거예요?"
+      }
+    ]
+  },
+  {
+    "id": 16296,
+    "origin": "interference",
+    "examples": [
+      {
+        "exam_en": "official interference",
+        "exam_ko": "당국의 간섭"
+      },
+      {
+        "exam_en": "make interference with a person's work",
+        "exam_ko": "남의 일을 방해하다"
+      }
+    ]
+  },
+  {
+    "id": 16297,
+    "origin": "breaker",
+    "examples": [
+      {
+        "exam_en": "a record-breaker",
+        "exam_ko": "기록 갱신자."
+      }
+    ]
+  },
+  {
+    "id": 16306,
+    "origin": "arctic",
+    "examples": [
+      {
+        "exam_en": "the arctic area",
+        "exam_ko": "북극 지방"
+      },
+      {
+        "exam_en": "an arctic expedition",
+        "exam_ko": "북극 탐험."
+      }
+    ]
+  },
+  {
+    "id": 16311,
+    "origin": "hive",
+    "examples": [
+      {
+        "exam_en": "a swarm of bees around a hive",
+        "exam_ko": "벌통 주위의 꿀벌 떼."
+      },
+      {
+        "exam_en": "a hive of industry",
+        "exam_ko": "산업[활동]의 중심지."
+      }
+    ]
+  },
+  {
+    "id": 16314,
+    "origin": "farther",
+    "examples": [
+      {
+        "exam_en": "farther away",
+        "exam_ko": "더 멀리에"
+      },
+      {
+        "exam_en": "\"How much farther should we go?\" \"Just a couple more miles.\"",
+        "exam_ko": "「얼마나 더 가야 되지요?」 「2마일쯤만 더 가면 돼.」"
+      }
+    ]
+  },
+  {
+    "id": 16315,
+    "origin": "sphere",
+    "examples": [
+      {
+        "exam_en": "The earth is not a perfect sphere.",
+        "exam_ko": "지구는 완전히 둥근 물체가 아니다."
+      },
+      {
+        "exam_en": "a sphere of influence",
+        "exam_ko": "세력 범위"
+      },
+      {
+        "exam_en": "The political sphere",
+        "exam_ko": "정치권"
+      }
+    ]
+  },
+  {
+    "id": 16318,
+    "origin": "versus",
+    "examples": [
+      {
+        "exam_en": "plaintiff versus defendant",
+        "exam_ko": "원고 대 피고"
+      },
+      {
+        "exam_en": "the Giants versus the Dodgers",
+        "exam_ko": "자이언트 대 도저스."
+      }
+    ]
+  }
+]

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 16989,
+    "word": "negotiable",
+    "exam_en": "a <strong class=\"target-word\">negotiable</strong> instrument",
+    "exam_ko": "<strong class=\"target-word\">양도</strong> 가능한 증서"
+  },
+  {
+    "id": 16990,
+    "word": "negotiable",
+    "exam_en": "a <strong class=\"target-word\">negotiable</strong> certificate of deposit",
+    "exam_ko": "<strong class=\"target-word\">양도성</strong> 예금 증서."
+  },
+  {
+    "id": 16991,
+    "word": "underfoot",
+    "exam_en": "It is very damp <strong class=\"target-word\">underfoot</strong>.",
+    "exam_ko": "발 밑이 <strong class=\"target-word\">질퍽질퍽하다</strong>."
+  },
+  {
+    "id": 16992,
+    "word": "underfoot",
+    "exam_en": "get <strong class=\"target-word\">underfoot</strong>",
+    "exam_ko": "<strong class=\"target-word\">거치적거리다</strong>."
+  },
+  {
+    "id": 16993,
+    "word": "stringy",
+    "exam_en": "<strong class=\"target-word\">stringy</strong> meat",
+    "exam_ko": "<strong class=\"target-word\">심줄이</strong> 많은 고기."
+  },
+  {
+    "id": 16994,
+    "word": "goodly",
+    "exam_en": "a <strong class=\"target-word\">goodly</strong> gift",
+    "exam_ko": "<strong class=\"target-word\">훌륭한</strong> 선물"
+  },
+  {
+    "id": 16995,
+    "word": "goodly",
+    "exam_en": "a <strong class=\"target-word\">goodly</strong> youth",
+    "exam_ko": "<strong class=\"target-word\">잘생긴</strong> 청년"
+  },
+  {
+    "id": 16996,
+    "word": "tiresome",
+    "exam_en": "a <strong class=\"target-word\">tiresome</strong> sermon",
+    "exam_ko": "<strong class=\"target-word\">지루한</strong> 설교."
+  },
+  {
+    "id": 16997,
+    "word": "tiresome",
+    "exam_en": "It is <strong class=\"target-word\">tiresome</strong> of him to come incognito.",
+    "exam_ko": "이름을 숨기고 <strong class=\"target-word\">오다</strong>니 그자도 마음에 안 드는군."
+  },
+  {
+    "id": 16998,
+    "word": "fiery",
+    "exam_en": "<strong class=\"target-word\">fiery</strong> eyes",
+    "exam_ko": "(화가 나서) <strong class=\"target-word\">이글거리는</strong> 눈"
+  },
+  {
+    "id": 16999,
+    "word": "fiery",
+    "exam_en": "a <strong class=\"target-word\">fiery</strong> taste",
+    "exam_ko": "<strong class=\"target-word\">입안이</strong> 얼얼해지는(매운) 맛."
+  },
+  {
+    "id": 17000,
+    "word": "insusceptible",
+    "exam_en": "<strong class=\"target-word\">insusceptible</strong> to new ideas",
+    "exam_ko": "새로운 생각을 <strong class=\"target-word\">받아</strong>들이지 않는"
+  },
+  {
+    "id": 17001,
+    "word": "insusceptible",
+    "exam_en": "<strong class=\"target-word\">insusceptible</strong> to change",
+    "exam_ko": "변화를 <strong class=\"target-word\">받아</strong>들이지 않는"
+  },
+  {
+    "id": 17002,
+    "word": "debatable",
+    "exam_en": "<strong class=\"target-word\">debatable</strong> issues",
+    "exam_ko": "<strong class=\"target-word\">논쟁할</strong> 만한 문제."
+  },
+  {
+    "id": 17003,
+    "word": "knotty",
+    "exam_en": "<strong class=\"target-word\">knotty</strong> timber",
+    "exam_ko": "<strong class=\"target-word\">옹이투성이의</strong> 목재."
+  },
+  {
+    "id": 17004,
+    "word": "knotty",
+    "exam_en": "a <strong class=\"target-word\">knotty</strong> problem",
+    "exam_ko": "<strong class=\"target-word\">까다</strong>로운 문제."
+  },
+  {
+    "id": 17005,
+    "word": "lukewarm",
+    "exam_en": "<strong class=\"target-word\">lukewarm</strong> coffee",
+    "exam_ko": "<strong class=\"target-word\">미지근한</strong> 커피."
+  },
+  {
+    "id": 17006,
+    "word": "lukewarm",
+    "exam_en": "a <strong class=\"target-word\">lukewarm</strong> response",
+    "exam_ko": "<strong class=\"target-word\">냉담한</strong> 반응."
+  },
+  {
+    "id": 17007,
+    "word": "immaterial",
+    "exam_en": "as <strong class=\"target-word\">immaterial</strong> as a ghost",
+    "exam_ko": "<strong class=\"target-word\">전혀</strong> 실체가 없는."
+  },
+  {
+    "id": 17008,
+    "word": "extraneous",
+    "exam_en": "an <strong class=\"target-word\">extraneous</strong> substance",
+    "exam_ko": "<strong class=\"target-word\">이물질</strong>."
+  },
+  {
+    "id": 17009,
+    "word": "extraneous",
+    "exam_en": "<strong class=\"target-word\">extraneous</strong> aid(or interference)",
+    "exam_ko": "<strong class=\"target-word\">외부에서</strong> 오는 원조(간섭)"
+  },
+  {
+    "id": 17010,
+    "word": "impertinent",
+    "exam_en": "an <strong class=\"target-word\">impertinent</strong> child",
+    "exam_ko": "<strong class=\"target-word\">건방진</strong> 아이[행동]"
+  },
+  {
+    "id": 17011,
+    "word": "impertinent",
+    "exam_en": "be <strong class=\"target-word\">impertinent</strong> to",
+    "exam_ko": "…에 대하여 <strong class=\"target-word\">불손하다</strong>."
+  },
+  {
+    "id": 17012,
+    "word": "insolent",
+    "exam_en": "<strong class=\"target-word\">insolent</strong> behavior",
+    "exam_ko": "<strong class=\"target-word\">무례한</strong> 행동."
+  },
+  {
+    "id": 17013,
+    "word": "dissipated",
+    "exam_en": "a <strong class=\"target-word\">dissipated</strong> person",
+    "exam_ko": "난봉꾼, <strong class=\"target-word\">탕아</strong>."
+  },
+  {
+    "id": 17014,
+    "word": "threadbare",
+    "exam_en": "a <strong class=\"target-word\">threadbare</strong> overcoat",
+    "exam_ko": "<strong class=\"target-word\">낡은</strong> 코트."
+  },
+  {
+    "id": 17015,
+    "word": "threadbare",
+    "exam_en": "a <strong class=\"target-word\">threadbare</strong> existence",
+    "exam_ko": "<strong class=\"target-word\">공허한</strong> 인생."
+  },
+  {
+    "id": 17016,
+    "word": "moribund",
+    "exam_en": "a <strong class=\"target-word\">moribund</strong> lease",
+    "exam_ko": "<strong class=\"target-word\">소멸해</strong> 가는 차용권."
+  },
+  {
+    "id": 17017,
+    "word": "moribund",
+    "exam_en": "a <strong class=\"target-word\">moribund</strong> political party",
+    "exam_ko": "<strong class=\"target-word\">침체해</strong> 있는[부진한] 정당."
+  },
+  {
+    "id": 17018,
+    "word": "discursive",
+    "exam_en": "a <strong class=\"target-word\">discursive</strong> talk",
+    "exam_ko": "<strong class=\"target-word\">종작없는</strong> 이야기."
+  },
+  {
+    "id": 17019,
+    "word": "excursive",
+    "exam_en": "an <strong class=\"target-word\">excursive</strong> talk",
+    "exam_ko": "<strong class=\"target-word\">잡담</strong>"
+  },
+  {
+    "id": 17020,
+    "word": "excursive",
+    "exam_en": "an <strong class=\"target-word\">excursive</strong> reader",
+    "exam_ko": "<strong class=\"target-word\">난독가</strong>."
+  },
+  {
+    "id": 17021,
+    "word": "tangential",
+    "exam_en": "a <strong class=\"target-word\">tangential</strong> plane",
+    "exam_ko": "<strong class=\"target-word\">접평면</strong>."
+  },
+  {
+    "id": 17022,
+    "word": "untoward",
+    "exam_en": "an <strong class=\"target-word\">untoward</strong> wind",
+    "exam_ko": "<strong class=\"target-word\">역풍</strong>"
+  },
+  {
+    "id": 17023,
+    "word": "untoward",
+    "exam_en": "<strong class=\"target-word\">untoward</strong> circumstances",
+    "exam_ko": "<strong class=\"target-word\">역경</strong>."
+  },
+  {
+    "id": 17024,
+    "word": "unbecoming",
+    "exam_en": "an <strong class=\"target-word\">unbecoming</strong> hat",
+    "exam_ko": "<strong class=\"target-word\">어울리지</strong> 않는 모자"
+  },
+  {
+    "id": 17025,
+    "word": "unbecoming",
+    "exam_en": "speech <strong class=\"target-word\">unbecoming</strong>  a lady",
+    "exam_ko": "<strong class=\"target-word\">숙녀답지</strong> 않은 말투"
+  },
+  {
+    "id": 17026,
+    "word": "unparalleled",
+    "exam_en": "her <strong class=\"target-word\">unparalleled</strong> beauty",
+    "exam_ko": "그녀의 비길 데 없는 <strong class=\"target-word\">아름다</strong>움."
+  },
+  {
+    "id": 17027,
+    "word": "unmindful",
+    "exam_en": "He was <strong class=\"target-word\">unmindful</strong> of his duties.",
+    "exam_ko": "그는 자기 의무를 잊고 <strong class=\"target-word\">있었다</strong>."
+  },
+  {
+    "id": 17028,
+    "word": "corrosive",
+    "exam_en": "<strong class=\"target-word\">corrosive</strong> action",
+    "exam_ko": "<strong class=\"target-word\">부식</strong> 작용."
+  },
+  {
+    "id": 17029,
+    "word": "mordant",
+    "exam_en": "a <strong class=\"target-word\">mordant</strong> wit",
+    "exam_ko": "<strong class=\"target-word\">통렬한</strong> 해학[유머, 비판]"
+  },
+  {
+    "id": 17030,
+    "word": "mordant",
+    "exam_en": "a <strong class=\"target-word\">mordant</strong> speaker",
+    "exam_ko": "<strong class=\"target-word\">독설가</strong>."
+  },
+  {
+    "id": 17031,
+    "word": "sultry",
+    "exam_en": "a <strong class=\"target-word\">sultry</strong> afternoon",
+    "exam_ko": "<strong class=\"target-word\">찌는</strong> 듯한 오후"
+  },
+  {
+    "id": 17032,
+    "word": "sultry",
+    "exam_en": "a <strong class=\"target-word\">sultry</strong> climate",
+    "exam_ko": "<strong class=\"target-word\">무더운</strong> 기후."
+  },
+  {
+    "id": 17033,
+    "word": "sulfurous",
+    "exam_en": "<strong class=\"target-word\">sulfurous</strong> gases (springs, smells)",
+    "exam_ko": "<strong class=\"target-word\">유황가스</strong>(온천, 냄새)"
+  },
+  {
+    "id": 17034,
+    "word": "sulfurous",
+    "exam_en": "<strong class=\"target-word\">sulfurous</strong> acid",
+    "exam_ko": "(화학) <strong class=\"target-word\">아황산</strong>"
+  },
+  {
+    "id": 17035,
+    "word": "blistering",
+    "exam_en": "a <strong class=\"target-word\">blistering</strong> sun",
+    "exam_ko": "<strong class=\"target-word\">작열하는</strong> 태양."
+  },
+  {
+    "id": 17036,
+    "word": "blistering",
+    "exam_en": "a <strong class=\"target-word\">blistering</strong> tongue",
+    "exam_ko": "<strong class=\"target-word\">독설</strong>"
+  },
+  {
+    "id": 17037,
+    "word": "virulent",
+    "exam_en": "<strong class=\"target-word\">virulent</strong> serpents",
+    "exam_ko": "<strong class=\"target-word\">독사</strong>."
+  },
+  {
+    "id": 17038,
+    "word": "virulent",
+    "exam_en": "Cholera and smallpox are <strong class=\"target-word\">virulent</strong> diseases.",
+    "exam_ko": "콜레라와 천연두는 전염성이 강하고 치명적인 <strong class=\"target-word\">질병이다</strong>."
+  },
+  {
+    "id": 17039,
+    "word": "unspeakable",
+    "exam_en": "<strong class=\"target-word\">unspeakable</strong> relief",
+    "exam_ko": "<strong class=\"target-word\">말로</strong> 나타낼 수 없는 안도감[슬픔]."
+  },
+  {
+    "id": 17040,
+    "word": "unspeakable",
+    "exam_en": "There was some <strong class=\"target-word\">unspeakable</strong> dialogue in his plays.",
+    "exam_ko": "그의 몇 가지 희곡에는 입에 담을 수 없는 대사가 약간 <strong class=\"target-word\">있었다</strong>."
+  },
+  {
+    "id": 17041,
+    "word": "grievous",
+    "exam_en": "<strong class=\"target-word\">grievous</strong> news",
+    "exam_ko": "<strong class=\"target-word\">비보</strong>"
+  },
+  {
+    "id": 17042,
+    "word": "grievous",
+    "exam_en": "a <strong class=\"target-word\">grievous</strong> parting",
+    "exam_ko": "<strong class=\"target-word\">쓰라린</strong> 이별."
+  },
+  {
+    "id": 17043,
+    "word": "baleful",
+    "exam_en": "She gave me a <strong class=\"target-word\">baleful</strong> stare.",
+    "exam_ko": "그녀는 나를 악의에 찬 시선으로 빤히 <strong class=\"target-word\">쳐다보았다</strong>."
+  },
+  {
+    "id": 17044,
+    "word": "whining",
+    "exam_en": "Stop <strong class=\"target-word\">whining</strong> like a baby.",
+    "exam_ko": "<strong class=\"target-word\">아기처럼</strong> 징징거리지 마."
+  },
+  {
+    "id": 17045,
+    "word": "vexatious",
+    "exam_en": "a <strong class=\"target-word\">vexatious</strong> complication",
+    "exam_ko": "<strong class=\"target-word\">번잡한</strong> 일[골치 아픈 문제]"
+  },
+  {
+    "id": 17046,
+    "word": "vexatious",
+    "exam_en": "a <strong class=\"target-word\">vexatious</strong> question",
+    "exam_ko": "많이 <strong class=\"target-word\">논의되어</strong> 온 문제, 현안."
+  },
+  {
+    "id": 17047,
+    "word": "scratchy",
+    "exam_en": "a <strong class=\"target-word\">scratchy</strong> pen",
+    "exam_ko": "<strong class=\"target-word\">종이에</strong> 긁히는 펜"
+  },
+  {
+    "id": 17048,
+    "word": "scratchy",
+    "exam_en": "a <strong class=\"target-word\">scratchy</strong> record",
+    "exam_ko": "(긁혀서) <strong class=\"target-word\">잡음이</strong> 많은 레코드판"
+  },
+  {
+    "id": 17049,
+    "word": "discriminative",
+    "exam_en": "the <strong class=\"target-word\">discriminative</strong> features of species of birds",
+    "exam_ko": "<strong class=\"target-word\">새의</strong> 각각의 종의 특징."
+  },
+  {
+    "id": 17050,
+    "word": "discriminative",
+    "exam_en": "<strong class=\"target-word\">discriminative</strong> organs",
+    "exam_ko": "<strong class=\"target-word\">식별하는</strong> 감각 기관."
+  },
+  {
+    "id": 17051,
+    "word": "preferential",
+    "exam_en": "a <strong class=\"target-word\">preferential</strong> claim",
+    "exam_ko": "<strong class=\"target-word\">우선되는</strong> 요구"
+  },
+  {
+    "id": 17052,
+    "word": "preferential",
+    "exam_en": "<strong class=\"target-word\">preferential</strong> right",
+    "exam_ko": "<strong class=\"target-word\">선취</strong> 특권, 우선권."
+  },
+  {
+    "id": 17053,
+    "word": "invidious",
+    "exam_en": "an <strong class=\"target-word\">invidious</strong> honor",
+    "exam_ko": "남에게 시샘을 <strong class=\"target-word\">느끼게</strong> 하는 영예"
+  },
+  {
+    "id": 17054,
+    "word": "invidious",
+    "exam_en": "an <strong class=\"target-word\">invidious</strong> remark",
+    "exam_ko": "<strong class=\"target-word\">비위에</strong> 거슬리는 말."
+  },
+  {
+    "id": 17055,
+    "word": "baneful",
+    "exam_en": "a <strong class=\"target-word\">baneful</strong> influence",
+    "exam_ko": "<strong class=\"target-word\">악영향</strong>."
+  },
+  {
+    "id": 17056,
+    "word": "hardy",
+    "exam_en": "Red deer are <strong class=\"target-word\">hardy</strong> animals.",
+    "exam_ko": "붉은 사슴은 강인한 <strong class=\"target-word\">동물이다</strong>."
+  },
+  {
+    "id": 17057,
+    "word": "spry",
+    "exam_en": "My father is eighty, but he is remarkably <strong class=\"target-word\">spry</strong> for his age.",
+    "exam_ko": "나의 아버지는 80이지만 나이에 비해서 대단히 기운차고 <strong class=\"target-word\">활발하다</strong>."
+  },
+  {
+    "id": 17058,
+    "word": "irascible",
+    "exam_en": "an <strong class=\"target-word\">irascible</strong> matron",
+    "exam_ko": "<strong class=\"target-word\">신경질적인</strong> (여)사감."
+  },
+  {
+    "id": 17059,
+    "word": "irascible",
+    "exam_en": "an <strong class=\"target-word\">irascible</strong> reply",
+    "exam_ko": "<strong class=\"target-word\">홧김에</strong> 하는 대답."
+  },
+  {
+    "id": 17060,
+    "word": "choleric",
+    "exam_en": "a <strong class=\"target-word\">choleric</strong> nature",
+    "exam_ko": "<strong class=\"target-word\">화를</strong> 잘 내는 성질."
+  },
+  {
+    "id": 17061,
+    "word": "intolerant",
+    "exam_en": "be <strong class=\"target-word\">intolerant</strong> of bad manners",
+    "exam_ko": "무례함을 견딜 수 <strong class=\"target-word\">없다</strong>."
+  },
+  {
+    "id": 17062,
+    "word": "bigoted",
+    "exam_en": "be <strong class=\"target-word\">bigoted</strong> in one's opinions",
+    "exam_ko": "자기 의견을 <strong class=\"target-word\">고집하다</strong>."
+  },
+  {
+    "id": 17063,
+    "word": "imperfect",
+    "exam_en": "<strong class=\"target-word\">imperfect</strong> color vision",
+    "exam_ko": "<strong class=\"target-word\">색약</strong>(色弱)"
+  },
+  {
+    "id": 17064,
+    "word": "imperfect",
+    "exam_en": "an <strong class=\"target-word\">imperfect</strong> knowledge of Greek",
+    "exam_ko": "<strong class=\"target-word\">그리스어</strong>의 불완전한 지식"
+  },
+  {
+    "id": 17065,
+    "word": "astute",
+    "exam_en": "an <strong class=\"target-word\">astute</strong> investor",
+    "exam_ko": "<strong class=\"target-word\">통찰력이</strong> 있는 투자자"
+  },
+  {
+    "id": 17066,
+    "word": "astute",
+    "exam_en": "an <strong class=\"target-word\">astute</strong> merchandising program",
+    "exam_ko": "<strong class=\"target-word\">빈틈없는</strong> 판매 계획."
+  },
+  {
+    "id": 17067,
+    "word": "shrewd",
+    "exam_en": "be <strong class=\"target-word\">shrewd</strong> about money",
+    "exam_ko": "돈에 <strong class=\"target-word\">약삭빠르다</strong>"
+  },
+  {
+    "id": 17068,
+    "word": "shrewd",
+    "exam_en": "make a <strong class=\"target-word\">shrewd</strong> remark",
+    "exam_ko": "예리한 의견을 <strong class=\"target-word\">말하다</strong>"
+  },
+  {
+    "id": 17069,
+    "word": "jaunty",
+    "exam_en": "with <strong class=\"target-word\">jaunty</strong> step",
+    "exam_ko": "<strong class=\"target-word\">경쾌한</strong> 걸음걸이로."
+  },
+  {
+    "id": 17070,
+    "word": "jaunty",
+    "exam_en": "wear a hat at a <strong class=\"target-word\">jaunty</strong> angle",
+    "exam_ko": "모자를 멋있게 비스듬히 <strong class=\"target-word\">쓰다</strong>."
+  },
+  {
+    "id": 17071,
+    "word": "tepid",
+    "exam_en": "<strong class=\"target-word\">tepid</strong> water",
+    "exam_ko": "(영) <strong class=\"target-word\">미지근한</strong> 물(※같은 뜻의 lukewarm water는 영·미에서 쓰임)."
+  },
+  {
+    "id": 17072,
+    "word": "vapid",
+    "exam_en": "<strong class=\"target-word\">vapid</strong> champagne",
+    "exam_ko": "김 <strong class=\"target-word\">빠진</strong> 샴페인"
+  },
+  {
+    "id": 17073,
+    "word": "vapid",
+    "exam_en": "go <strong class=\"target-word\">vapid</strong>",
+    "exam_ko": "김 <strong class=\"target-word\">빠지다</strong>, 맥 빠지다."
+  },
+  {
+    "id": 17074,
+    "word": "insipid",
+    "exam_en": "an <strong class=\"target-word\">insipid</strong> conversation",
+    "exam_ko": "<strong class=\"target-word\">지루한</strong> 대화."
+  },
+  {
+    "id": 17075,
+    "word": "insipid",
+    "exam_en": "<strong class=\"target-word\">insipid</strong> wine",
+    "exam_ko": "<strong class=\"target-word\">김빠진</strong> 포도주."
+  },
+  {
+    "id": 17076,
+    "word": "prolific",
+    "exam_en": "<strong class=\"target-word\">prolific</strong> plants",
+    "exam_ko": "<strong class=\"target-word\">수확량이</strong> 많은 식물"
+  },
+  {
+    "id": 17077,
+    "word": "prolific",
+    "exam_en": "a family <strong class=\"target-word\">prolific</strong> of children",
+    "exam_ko": "<strong class=\"target-word\">아이를</strong> 많이 낳은 가정"
+  },
+  {
+    "id": 17078,
+    "word": "willful",
+    "exam_en": "<strong class=\"target-word\">willful</strong> murder",
+    "exam_ko": "<strong class=\"target-word\">고의적</strong> 살인"
+  },
+  {
+    "id": 17079,
+    "word": "willful",
+    "exam_en": "<strong class=\"target-word\">willful</strong> distortion of the facts",
+    "exam_ko": "<strong class=\"target-word\">의도적인</strong> 사실의 왜곡."
+  },
+  {
+    "id": 17080,
+    "word": "lurid",
+    "exam_en": "the <strong class=\"target-word\">lurid</strong> sunset",
+    "exam_ko": "<strong class=\"target-word\">불타는</strong> 듯한 석양[하늘]."
+  },
+  {
+    "id": 17081,
+    "word": "lurid",
+    "exam_en": "books with <strong class=\"target-word\">lurid</strong> covers",
+    "exam_ko": "<strong class=\"target-word\">야단스러운</strong> 표지의 책."
+  },
+  {
+    "id": 17082,
+    "word": "shocking",
+    "exam_en": "a <strong class=\"target-word\">shocking</strong> accident",
+    "exam_ko": "소름 끼치는 <strong class=\"target-word\">사고</strong>"
+  },
+  {
+    "id": 17083,
+    "word": "shocking",
+    "exam_en": "<strong class=\"target-word\">shocking</strong> conduct",
+    "exam_ko": "<strong class=\"target-word\">괘씸한</strong> 짓"
+  },
+  {
+    "id": 17084,
+    "word": "sparing",
+    "exam_en": "be <strong class=\"target-word\">sparing</strong> of time",
+    "exam_ko": "시간을 <strong class=\"target-word\">아끼다</strong>"
+  },
+  {
+    "id": 17085,
+    "word": "sparing",
+    "exam_en": "make <strong class=\"target-word\">sparing</strong> use of resources",
+    "exam_ko": "자원을 절약하여 <strong class=\"target-word\">쓰다</strong>"
+  },
+  {
+    "id": 17086,
+    "word": "scotch",
+    "exam_en": "<strong class=\"target-word\">scotch</strong> a rumor",
+    "exam_ko": "소문을 뭉개 <strong class=\"target-word\">없애다</strong>"
+  },
+  {
+    "id": 17087,
+    "word": "scotch",
+    "exam_en": "<strong class=\"target-word\">scotch</strong> a plan",
+    "exam_ko": "계획을 <strong class=\"target-word\">망쳐놓다</strong>."
+  },
+  {
+    "id": 17088,
+    "word": "economical",
+    "exam_en": "an <strong class=\"target-word\">economical</strong> housekeeper",
+    "exam_ko": "<strong class=\"target-word\">알뜰한</strong> 주부"
+  }
+]

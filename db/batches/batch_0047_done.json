@@ -1,0 +1,282 @@
+[
+  {
+    "id": 940,
+    "origin": "doubt",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">doubts</strong> his honesty.",
+        "exam_ko": "그녀는 그의 성실성을 <strong class=\"target-word\">의심한다</strong>."
+      },
+      {
+        "exam_en": "He who knows nothing <strong class=\"target-word\">doubts</strong> nothing.",
+        "exam_ko": "무식한 사람은 아무것도 <strong class=\"target-word\">의심하지</strong> 않는다."
+      }
+    ]
+  },
+  {
+    "id": 941,
+    "origin": "attitude",
+    "examples": [
+      {
+        "exam_en": "He showed an <strong class=\"target-word\">attitude</strong> of arrogance.",
+        "exam_ko": "그는 거만한 <strong class=\"target-word\">태도</strong>를 보였다."
+      },
+      {
+        "exam_en": "Your <strong class=\"target-word\">attitude</strong> of mind affects everything.",
+        "exam_ko": "당신의 심적 <strong class=\"target-word\">태도</strong>가 모든 것에 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 942,
+    "origin": "editorial",
+    "examples": [
+      {
+        "exam_en": "The newspaper carried an <strong class=\"target-word\">editorial</strong> on the issue.",
+        "exam_ko": "신문은 그 사안에 대한 <strong class=\"target-word\">사설</strong>을 실었다."
+      },
+      {
+        "exam_en": "The editor wrote a strong <strong class=\"target-word\">editorial</strong> about the policy.",
+        "exam_ko": "편집장은 그 정책에 대한 강한 <strong class=\"target-word\">사설</strong>을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 943,
+    "origin": "further",
+    "examples": [
+      {
+        "exam_en": "She walked <strong class=\"target-word\">further</strong> away from the crowd.",
+        "exam_ko": "그녀는 군중에게서 <strong class=\"target-word\">더 멀리</strong> 걸어갔다."
+      },
+      {
+        "exam_en": "A little <strong class=\"target-word\">further</strong> on I found another bridge.",
+        "exam_ko": "조금 <strong class=\"target-word\">더 가니</strong> 또 하나의 다리가 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 944,
+    "origin": "detail",
+    "examples": [
+      {
+        "exam_en": "He explained every <strong class=\"target-word\">detail</strong> of the plan.",
+        "exam_ko": "그는 계획의 모든 <strong class=\"target-word\">세부 사항</strong>을 설명했다."
+      },
+      {
+        "exam_en": "Please provide the <strong class=\"target-word\">details</strong> of your experience.",
+        "exam_ko": "당신의 경험에 대한 <strong class=\"target-word\">상세 내역</strong>을 알려주세요."
+      }
+    ]
+  },
+  {
+    "id": 945,
+    "origin": "surrounding",
+    "examples": [
+      {
+        "exam_en": "They live in magnificent <strong class=\"target-word\">surroundings</strong>.",
+        "exam_ko": "그들은 훌륭한 <strong class=\"target-word\">환경</strong>에서 살고 있다."
+      },
+      {
+        "exam_en": "He was too sick to notice his <strong class=\"target-word\">surroundings</strong>.",
+        "exam_ko": "그는 너무 아파서 주변 <strong class=\"target-word\">상황</strong>을 알아채지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 946,
+    "origin": "residence",
+    "examples": [
+      {
+        "exam_en": "The president lives at the official <strong class=\"target-word\">residence</strong>.",
+        "exam_ko": "대통령은 공식 <strong class=\"target-word\">관저</strong>에 거주한다."
+      },
+      {
+        "exam_en": "I changed my <strong class=\"target-word\">residence</strong> recently.",
+        "exam_ko": "최근에 <strong class=\"target-word\">주소</strong>를 변경했다."
+      }
+    ]
+  },
+  {
+    "id": 947,
+    "origin": "donate",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">donate</strong> blood this weekend.",
+        "exam_ko": "그녀는 이번 주말에 <strong class=\"target-word\">헌혈하기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">donated</strong> $1,000 to the orphanage.",
+        "exam_ko": "그는 고아원에 1,000달러를 <strong class=\"target-word\">기부했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 948,
+    "origin": "ingredient",
+    "examples": [
+      {
+        "exam_en": "The chef listed the <strong class=\"target-word\">ingredients</strong> of the soup.",
+        "exam_ko": "요리사는 수프의 <strong class=\"target-word\">재료</strong>를 나열했다."
+      },
+      {
+        "exam_en": "Trust is a key <strong class=\"target-word\">ingredient</strong> in any relationship.",
+        "exam_ko": "신뢰는 모든 관계의 핵심 <strong class=\"target-word\">요소</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 949,
+    "origin": "inspect",
+    "examples": [
+      {
+        "exam_en": "He carefully <strong class=\"target-word\">inspected</strong> the used car.",
+        "exam_ko": "그는 중고차를 꼼꼼히 <strong class=\"target-word\">검사했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">inspected</strong> the china for cracks.",
+        "exam_ko": "그녀는 도자기에 금이 갔는지 <strong class=\"target-word\">점검했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 950,
+    "origin": "security",
+    "examples": [
+      {
+        "exam_en": "The government must protect national <strong class=\"target-word\">security</strong>.",
+        "exam_ko": "정부는 국가 <strong class=\"target-word\">안보</strong>를 지켜야 한다."
+      },
+      {
+        "exam_en": "We showed our pass to the <strong class=\"target-word\">security</strong> guard.",
+        "exam_ko": "우리는 <strong class=\"target-word\">경비원</strong>에게 통행권을 보여주었다."
+      }
+    ]
+  },
+  {
+    "id": 951,
+    "origin": "efficiency",
+    "examples": [
+      {
+        "exam_en": "The new system greatly improved work <strong class=\"target-word\">efficiency</strong>.",
+        "exam_ko": "새 시스템은 업무 <strong class=\"target-word\">능률</strong>을 크게 향상시켰다."
+      },
+      {
+        "exam_en": "Managers always look for ways to promote <strong class=\"target-word\">efficiency</strong>.",
+        "exam_ko": "관리자들은 항상 <strong class=\"target-word\">효율성</strong>을 높일 방법을 찾는다."
+      }
+    ]
+  },
+  {
+    "id": 952,
+    "origin": "increasing",
+    "examples": [
+      {
+        "exam_en": "People are using social media in <strong class=\"target-word\">increasing</strong> numbers.",
+        "exam_ko": "<strong class=\"target-word\">점점 더 많은</strong> 사람들이 소셜 미디어를 사용하고 있다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">increasing</strong> fame surprised everyone.",
+        "exam_ko": "나날이 높아가는 그의 <strong class=\"target-word\">높아지는</strong> 명성이 모두를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 953,
+    "origin": "specialize",
+    "examples": [
+      {
+        "exam_en": "She is a professor <strong class=\"target-word\">specializing</strong> in Russian history.",
+        "exam_ko": "그녀는 러시아 역사를 <strong class=\"target-word\">전공하는</strong> 교수이다."
+      },
+      {
+        "exam_en": "This shop <strong class=\"target-word\">specializes</strong> solely in ballet books.",
+        "exam_ko": "이 상점은 발레 관련 책만을 <strong class=\"target-word\">전문으로 다룬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 954,
+    "origin": "requirement",
+    "examples": [
+      {
+        "exam_en": "She satisfied the entrance <strong class=\"target-word\">requirements</strong> of the university.",
+        "exam_ko": "그녀는 대학 입학 <strong class=\"target-word\">자격 요건</strong>을 갖추었다."
+      },
+      {
+        "exam_en": "He met all of the client's <strong class=\"target-word\">requirements</strong>.",
+        "exam_ko": "그는 고객의 모든 <strong class=\"target-word\">요구 사항</strong>에 응했다."
+      }
+    ]
+  },
+  {
+    "id": 955,
+    "origin": "marine",
+    "examples": [
+      {
+        "exam_en": "The team laid a <strong class=\"target-word\">marine</strong> cable across the ocean.",
+        "exam_ko": "팀은 바다를 가로질러 <strong class=\"target-word\">해저</strong> 케이블을 설치했다."
+      },
+      {
+        "exam_en": "Scientists study <strong class=\"target-word\">marine</strong> animals in the deep sea.",
+        "exam_ko": "과학자들은 심해의 <strong class=\"target-word\">해양</strong> 동물을 연구한다."
+      }
+    ]
+  },
+  {
+    "id": 956,
+    "origin": "temporary",
+    "examples": [
+      {
+        "exam_en": "This is only a <strong class=\"target-word\">temporary</strong> solution.",
+        "exam_ko": "이것은 단지 <strong class=\"target-word\">임시</strong> 해결책일 뿐이다."
+      },
+      {
+        "exam_en": "While waiting, you can get <strong class=\"target-word\">temporary</strong> dentures.",
+        "exam_ko": "기다리는 동안 <strong class=\"target-word\">임시</strong> 틀니를 하실 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 957,
+    "origin": "benefit",
+    "examples": [
+      {
+        "exam_en": "This policy serves the public <strong class=\"target-word\">benefit</strong>.",
+        "exam_ko": "이 정책은 공공 <strong class=\"target-word\">이익</strong>에 기여한다."
+      },
+      {
+        "exam_en": "Regular exercise has many health <strong class=\"target-word\">benefits</strong>.",
+        "exam_ko": "규칙적인 운동은 많은 건강 <strong class=\"target-word\">이점</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 958,
+    "origin": "productive",
+    "examples": [
+      {
+        "exam_en": "She is a very <strong class=\"target-word\">productive</strong> writer.",
+        "exam_ko": "그녀는 매우 <strong class=\"target-word\">다작인</strong> 작가이다."
+      },
+      {
+        "exam_en": "The team had a <strong class=\"target-word\">productive</strong> meeting today.",
+        "exam_ko": "팀은 오늘 <strong class=\"target-word\">성과 있는</strong> 회의를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 959,
+    "origin": "export",
+    "examples": [
+      {
+        "exam_en": "The U.S. <strong class=\"target-word\">exports</strong> goods to many countries.",
+        "exam_ko": "미국은 많은 나라에 상품을 <strong class=\"target-word\">수출한다</strong>."
+      },
+      {
+        "exam_en": "They were arrested for illegally <strong class=\"target-word\">exporting</strong> weapons.",
+        "exam_ko": "그들은 무기를 불법으로 <strong class=\"target-word\">수출한</strong> 혐의로 체포되었다."
+      }
+    ]
+  }
+]

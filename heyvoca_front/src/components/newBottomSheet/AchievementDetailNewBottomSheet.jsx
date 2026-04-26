@@ -119,7 +119,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
     return (
         <div className="relative bg-layout-white dark:bg-layout-black">
             {/* 컨텐츠 구역 */}
-            <div className="flex flex-col gap-[20px] p-[20px] pb-[100px] overflow-y-auto max-h-[calc(90vh-47px)] h-full">
+            <div className="flex flex-col gap-[20px] p-[20px] pb-[100px] overflow-y-auto max-h-[calc(90vh-47px)]">
                 {/* 헤더 */}
                 <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
                     업적 달성 기준

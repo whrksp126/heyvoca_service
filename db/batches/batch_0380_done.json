@@ -1,0 +1,266 @@
+[
+  {
+    "id": 10313,
+    "origin": "umpire",
+    "examples": [
+      {
+        "exam_en": "She was chosen to <strong class=\"target-word\">umpire</strong> the final match.",
+        "exam_ko": "그녀는 결승전을 <strong class=\"target-word\">심판</strong>하도록 선택되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">umpire</strong> called the player out at home plate.",
+        "exam_ko": "<strong class=\"target-word\">심판</strong>은 홈플레이트에서 선수를 아웃으로 선언했다."
+      }
+    ]
+  },
+  {
+    "id": 10318,
+    "origin": "stained",
+    "examples": [
+      {
+        "exam_en": "His shirt was <strong class=\"target-word\">stained</strong> with grease from the engine.",
+        "exam_ko": "그의 셔츠는 엔진 기름으로 <strong class=\"target-word\">더럽혀져</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 10319,
+    "origin": "foliage",
+    "examples": [
+      {
+        "exam_en": "The trail was hidden by the dense <strong class=\"target-word\">foliage</strong>.",
+        "exam_ko": "오솔길은 빽빽한 <strong class=\"target-word\">잎</strong>에 가려져 있었다."
+      },
+      {
+        "exam_en": "We drove to see the autumn <strong class=\"target-word\">foliage</strong> in the mountains.",
+        "exam_ko": "우리는 산의 가을 <strong class=\"target-word\">단풍</strong>을 보러 드라이브했다."
+      }
+    ]
+  },
+  {
+    "id": 10320,
+    "origin": "yell",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">yelled</strong> for help when she saw the accident.",
+        "exam_ko": "그녀는 사고를 보고 큰 소리로 <strong class=\"target-word\">도움을 외쳤다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">yelled</strong> at the top of his lungs during the game.",
+        "exam_ko": "그는 경기 중에 목청껏 <strong class=\"target-word\">소리를 질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10322,
+    "origin": "youthful",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">youthful</strong> energy that inspires everyone around her.",
+        "exam_ko": "그녀는 주변 모든 사람에게 영감을 주는 <strong class=\"target-word\">젊은</strong> 에너지를 가지고 있다."
+      },
+      {
+        "exam_en": "He regrets his <strong class=\"target-word\">youthful</strong> indiscretions from his college days.",
+        "exam_ko": "그는 대학 시절의 <strong class=\"target-word\">젊은 혈기</strong>로 인한 경솔함을 후회한다."
+      }
+    ]
+  },
+  {
+    "id": 10323,
+    "origin": "zeal",
+    "examples": [
+      {
+        "exam_en": "She approached her new job with great <strong class=\"target-word\">zeal</strong>.",
+        "exam_ko": "그녀는 새 직장에 대단한 <strong class=\"target-word\">열의</strong>를 가지고 임했다."
+      }
+    ]
+  },
+  {
+    "id": 10324,
+    "origin": "zoology",
+    "examples": [
+      {
+        "exam_en": "He studies <strong class=\"target-word\">zoology</strong> with a focus on mammal behavior.",
+        "exam_ko": "그는 포유류 행동에 초점을 맞춰 <strong class=\"target-word\">동물학</strong>을 공부한다."
+      }
+    ]
+  },
+  {
+    "id": 10325,
+    "origin": "growth",
+    "examples": [
+      {
+        "exam_en": "The bamboo is known for its rapid <strong class=\"target-word\">growth</strong> rate.",
+        "exam_ko": "대나무는 빠른 <strong class=\"target-word\">성장</strong> 속도로 잘 알려져 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">growth</strong> of tomatoes depends on sunlight and water.",
+        "exam_ko": "토마토의 <strong class=\"target-word\">생장</strong>은 햇빛과 물에 달려 있다."
+      }
+    ]
+  },
+  {
+    "id": 10326,
+    "origin": "indicative",
+    "examples": [
+      {
+        "exam_en": "His calm tone was <strong class=\"target-word\">indicative</strong> of his good nature.",
+        "exam_ko": "그의 차분한 말투는 그의 좋은 성품을 <strong class=\"target-word\">나타내는</strong> 것이었다."
+      },
+      {
+        "exam_en": "The poll is not <strong class=\"target-word\">indicative</strong> of what really goes on.",
+        "exam_ko": "그 여론조사는 실제로 일어나고 있는 것을 <strong class=\"target-word\">나타내지</strong> 않는다."
+      }
+    ]
+  },
+  {
+    "id": 10327,
+    "origin": "deviate",
+    "examples": [
+      {
+        "exam_en": "The driver <strong class=\"target-word\">deviated</strong> from the planned route.",
+        "exam_ko": "운전자는 계획된 경로에서 <strong class=\"target-word\">벗어났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10329,
+    "origin": "bulletin",
+    "examples": [
+      {
+        "exam_en": "It was broadcast in the early morning news <strong class=\"target-word\">bulletin</strong>.",
+        "exam_ko": "그것은 아침 일찍 뉴스 <strong class=\"target-word\">속보</strong>로 방송되었다."
+      }
+    ]
+  },
+  {
+    "id": 10330,
+    "origin": "investigation",
+    "examples": [
+      {
+        "exam_en": "The company is currently under <strong class=\"target-word\">investigation</strong> for fraud.",
+        "exam_ko": "그 회사는 현재 사기 혐의로 <strong class=\"target-word\">조사</strong>를 받고 있다."
+      },
+      {
+        "exam_en": "The police conducted an <strong class=\"target-word\">investigation</strong> into the incident.",
+        "exam_ko": "경찰은 그 사건에 대한 <strong class=\"target-word\">조사</strong>를 실시했다."
+      }
+    ]
+  },
+  {
+    "id": 10331,
+    "origin": "unusually",
+    "examples": [
+      {
+        "exam_en": "Last summer was <strong class=\"target-word\">unusually</strong> hot for this region.",
+        "exam_ko": "지난 여름은 이 지역치고는 <strong class=\"target-word\">유별나게</strong> 더웠다."
+      },
+      {
+        "exam_en": "He is an <strong class=\"target-word\">unusually</strong> dedicated student in our class.",
+        "exam_ko": "그는 우리 반에서 <strong class=\"target-word\">유난히</strong> 성실한 학생이다."
+      }
+    ]
+  },
+  {
+    "id": 10334,
+    "origin": "animation",
+    "examples": [
+      {
+        "exam_en": "She spoke with great <strong class=\"target-word\">animation</strong> about her travel plans.",
+        "exam_ko": "그녀는 여행 계획에 대해 매우 <strong class=\"target-word\">활기차게</strong> 이야기했다."
+      }
+    ]
+  },
+  {
+    "id": 10335,
+    "origin": "prelude",
+    "examples": [
+      {
+        "exam_en": "The argument was a <strong class=\"target-word\">prelude</strong> to a bigger conflict.",
+        "exam_ko": "그 다툼은 더 큰 갈등의 <strong class=\"target-word\">전조</strong>였다."
+      },
+      {
+        "exam_en": "The pianist played a short <strong class=\"target-word\">prelude</strong> before the concert.",
+        "exam_ko": "피아니스트는 공연 전에 짧은 <strong class=\"target-word\">전주곡</strong>을 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 10336,
+    "origin": "optical",
+    "examples": [
+      {
+        "exam_en": "The telescope is an important <strong class=\"target-word\">optical</strong> instrument in astronomy.",
+        "exam_ko": "망원경은 천문학에서 중요한 <strong class=\"target-word\">광학</strong> 기기다."
+      },
+      {
+        "exam_en": "The magician used an <strong class=\"target-word\">optical</strong> illusion to fool the audience.",
+        "exam_ko": "마술사는 <strong class=\"target-word\">시각적</strong> 착각을 이용해 관객을 속였다."
+      }
+    ]
+  },
+  {
+    "id": 10337,
+    "origin": "backwards",
+    "examples": [
+      {
+        "exam_en": "The hummingbird can fly <strong class=\"target-word\">backwards</strong>.",
+        "exam_ko": "벌새는 <strong class=\"target-word\">뒤로</strong> 날 수 있다."
+      },
+      {
+        "exam_en": "He lost his balance and stepped <strong class=\"target-word\">backwards</strong>.",
+        "exam_ko": "그는 균형을 잃고 <strong class=\"target-word\">뒷걸음쳤다</strong>."
+      },
+      {
+        "exam_en": "She read the words <strong class=\"target-word\">backwards</strong> to solve the puzzle.",
+        "exam_ko": "그녀는 퍼즐을 풀기 위해 단어를 <strong class=\"target-word\">거꾸로</strong> 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 10338,
+    "origin": "violin",
+    "examples": [
+      {
+        "exam_en": "She practiced playing the <strong class=\"target-word\">violin</strong> every evening.",
+        "exam_ko": "그녀는 매일 저녁 <strong class=\"target-word\">바이올린</strong> 연습을 했다."
+      },
+      {
+        "exam_en": "He plays first <strong class=\"target-word\">violin</strong> in the city orchestra.",
+        "exam_ko": "그는 시립 오케스트라에서 제1 <strong class=\"target-word\">바이올린</strong>을 연주한다."
+      }
+    ]
+  },
+  {
+    "id": 10339,
+    "origin": "upstairs",
+    "examples": [
+      {
+        "exam_en": "The children are playing <strong class=\"target-word\">upstairs</strong> in their room.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">위층</strong> 방에서 놀고 있다."
+      },
+      {
+        "exam_en": "She went <strong class=\"target-word\">upstairs</strong> to get a book from the shelf.",
+        "exam_ko": "그녀는 책장에서 책을 꺼내러 <strong class=\"target-word\">위층으로</strong> 올라갔다."
+      }
+    ]
+  },
+  {
+    "id": 10341,
+    "origin": "tony",
+    "examples": [
+      {
+        "exam_en": "They moved into a <strong class=\"target-word\">tony</strong> neighborhood near the city center.",
+        "exam_ko": "그들은 도심 근처의 <strong class=\"target-word\">고급</strong> 동네로 이사했다."
+      },
+      {
+        "exam_en": "He always dresses in a <strong class=\"target-word\">tony</strong> style at every event.",
+        "exam_ko": "그는 모든 행사에서 항상 <strong class=\"target-word\">멋진</strong> 스타일로 차려입는다."
+      },
+      {
+        "exam_en": "The restaurant had a <strong class=\"target-word\">tony</strong> atmosphere with elegant decor.",
+        "exam_ko": "그 레스토랑은 우아한 장식으로 <strong class=\"target-word\">고급스러운</strong> 분위기를 풍겼다."
+      }
+    ]
+  }
+]

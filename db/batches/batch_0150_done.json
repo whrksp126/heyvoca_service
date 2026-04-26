@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3289,
+    "origin": "wing",
+    "examples": [
+      {
+        "exam_en": "The bird spread its <strong class=\"target-word\">wings</strong> and flew away.",
+        "exam_ko": "새는 <strong class=\"target-word\">날개</strong>를 펼치고 날아갔다."
+      },
+      {
+        "exam_en": "The party's left <strong class=\"target-word\">wing</strong> pushed for bolder reform.",
+        "exam_ko": "당의 좌<strong class=\"target-word\">익</strong>은 더 과감한 개혁을 촉구했다."
+      }
+    ]
+  },
+  {
+    "id": 3290,
+    "origin": "wine",
+    "examples": [
+      {
+        "exam_en": "She poured a glass of red <strong class=\"target-word\">wine</strong> for each guest.",
+        "exam_ko": "그녀는 손님마다 레드 <strong class=\"target-word\">와인</strong>을 한 잔씩 따랐다."
+      },
+      {
+        "exam_en": "He brought a bottle of <strong class=\"target-word\">wine</strong> to the dinner party.",
+        "exam_ko": "그는 저녁 파티에 <strong class=\"target-word\">와인</strong> 한 병을 가져왔다."
+      }
+    ]
+  },
+  {
+    "id": 3291,
+    "origin": "window",
+    "examples": [
+      {
+        "exam_en": "She sat by the <strong class=\"target-word\">window</strong> and watched the rain.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">창문</strong> 옆에 앉아 빗소리를 들었다."
+      },
+      {
+        "exam_en": "He looked out the <strong class=\"target-word\">window</strong> at the garden.",
+        "exam_ko": "그는 <strong class=\"target-word\">창문</strong> 너머 정원을 바라보았다."
+      }
+    ]
+  },
+  {
+    "id": 3292,
+    "origin": "wife",
+    "examples": [
+      {
+        "exam_en": "John introduced his <strong class=\"target-word\">wife</strong> to his colleagues.",
+        "exam_ko": "존은 동료들에게 자신의 <strong class=\"target-word\">아내</strong>를 소개했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">wife</strong> joined him at the officers' club event.",
+        "exam_ko": "그의 <strong class=\"target-word\">아내</strong>는 장교 클럽 행사에 함께 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 3293,
+    "origin": "why",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Why</strong> do you think so?",
+        "exam_ko": "<strong class=\"target-word\">왜</strong> 그렇게 생각하니?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Why</strong> wasn't he at the meeting yesterday?",
+        "exam_ko": "그는 <strong class=\"target-word\">왜</strong> 어제 회의에 나오지 않았지?"
+      }
+    ]
+  },
+  {
+    "id": 3294,
+    "origin": "while",
+    "examples": [
+      {
+        "exam_en": "Please wait a <strong class=\"target-word\">while</strong> until I finish.",
+        "exam_ko": "내가 끝낼 때까지 잠시<strong class=\"target-word\"> 동안</strong> 기다려 줘."
+      },
+      {
+        "exam_en": "She read a book <strong class=\"target-word\">while</strong> waiting for the bus.",
+        "exam_ko": "그녀는 버스를 기다리는 <strong class=\"target-word\">동안</strong> 책을 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 3295,
+    "origin": "which",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Which</strong> of these do you want?",
+        "exam_ko": "이것들 중 <strong class=\"target-word\">어느 것</strong>을 원하니?"
+      },
+      {
+        "exam_en": "Give me one of those; I don't care <strong class=\"target-word\">which</strong>.",
+        "exam_ko": "그 중 하나를 주세요, <strong class=\"target-word\">어느 것</strong>이든 상관없어요."
+      }
+    ]
+  },
+  {
+    "id": 3296,
+    "origin": "where",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Where</strong> do you work?",
+        "exam_ko": "<strong class=\"target-word\">어디서</strong> 일하고 계십니까?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Where</strong> am I on the map?",
+        "exam_ko": "지도에서 나는 <strong class=\"target-word\">어디에</strong> 있습니까?"
+      }
+    ]
+  },
+  {
+    "id": 3297,
+    "origin": "when",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">When</strong> did you graduate from high school?",
+        "exam_ko": "<strong class=\"target-word\">언제</strong> 고등학교를 졸업했니?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">When</strong> did you promise to meet him?",
+        "exam_ko": "그와 만나기로 약속한 것은 <strong class=\"target-word\">언제</strong>였니?"
+      }
+    ]
+  },
+  {
+    "id": 3298,
+    "origin": "wheel",
+    "examples": [
+      {
+        "exam_en": "The driver gripped the steering <strong class=\"target-word\">wheel</strong> tightly.",
+        "exam_ko": "운전자는 핸들<strong class=\"target-word\">(휠)</strong>을 꽉 쥐었다."
+      },
+      {
+        "exam_en": "The cart had a broken <strong class=\"target-word\">wheel</strong> that needed replacing.",
+        "exam_ko": "수레의 <strong class=\"target-word\">바퀴</strong>가 부러져 교체가 필요했다."
+      }
+    ]
+  },
+  {
+    "id": 3299,
+    "origin": "wheat",
+    "examples": [
+      {
+        "exam_en": "Farmers planted <strong class=\"target-word\">wheat</strong> across the wide fields.",
+        "exam_ko": "농부들은 넓은 들판에 <strong class=\"target-word\">밀</strong>을 심었다."
+      },
+      {
+        "exam_en": "The region is known for growing high-quality <strong class=\"target-word\">wheat</strong>.",
+        "exam_ko": "그 지역은 고품질 <strong class=\"target-word\">밀</strong> 재배로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 3300,
+    "origin": "west",
+    "examples": [
+      {
+        "exam_en": "The sun set slowly in the <strong class=\"target-word\">west</strong>.",
+        "exam_ko": "태양은 천천히 <strong class=\"target-word\">서쪽</strong>으로 졌다."
+      },
+      {
+        "exam_en": "The historic capital was in the <strong class=\"target-word\">west</strong> of China.",
+        "exam_ko": "그 역사적인 도시는 중국 <strong class=\"target-word\">서쪽</strong>에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3301,
+    "origin": "week",
+    "examples": [
+      {
+        "exam_en": "The report is due at the end of this <strong class=\"target-word\">week</strong>.",
+        "exam_ko": "보고서는 이번 <strong class=\"target-word\">주</strong> 말까지 제출해야 한다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">week</strong> from today is my birthday.",
+        "exam_ko": "오늘부터 일 <strong class=\"target-word\">주일</strong> 뒤가 내 생일이다."
+      }
+    ]
+  },
+  {
+    "id": 3302,
+    "origin": "weather",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">weather</strong> conditions are dangerous for driving today.",
+        "exam_ko": "오늘 <strong class=\"target-word\">날씨</strong> 상태가 운전하기 위험하다."
+      },
+      {
+        "exam_en": "The forecast warns of unusual <strong class=\"target-word\">weather</strong> this weekend.",
+        "exam_ko": "예보에 따르면 이번 주말에 이상 <strong class=\"target-word\">기후</strong>가 나타날 것이라 한다."
+      }
+    ]
+  },
+  {
+    "id": 3303,
+    "origin": "weapon",
+    "examples": [
+      {
+        "exam_en": "The treaty banned the use of nuclear <strong class=\"target-word\">weapons</strong>.",
+        "exam_ko": "조약은 핵<strong class=\"target-word\">무기</strong> 사용을 금지했다."
+      },
+      {
+        "exam_en": "The suspect was arrested while carrying a deadly <strong class=\"target-word\">weapon</strong>.",
+        "exam_ko": "용의자는 흉기<strong class=\"target-word\">(무기)</strong>를 소지한 채 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 3304,
+    "origin": "we",
+    "examples": [
+      {
+        "exam_en": "If you stay in town, <strong class=\"target-word\">we</strong> might have dinner together.",
+        "exam_ko": "당신이 도시에 머문다면 <strong class=\"target-word\">우리</strong>는 함께 저녁을 먹을 텐데요."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">We</strong> Koreans value family ties deeply.",
+        "exam_ko": "<strong class=\"target-word\">우리</strong> 한국인들은 가족 유대를 소중히 여긴다."
+      }
+    ]
+  },
+  {
+    "id": 3305,
+    "origin": "way",
+    "examples": [
+      {
+        "exam_en": "There is only one <strong class=\"target-word\">way</strong> into the building.",
+        "exam_ko": "건물로 들어가는 <strong class=\"target-word\">통로</strong>는 하나뿐이다."
+      },
+      {
+        "exam_en": "They chose the honest <strong class=\"target-word\">way</strong> to solve the problem.",
+        "exam_ko": "그들은 문제를 해결하는 정직한 <strong class=\"target-word\">방법</strong>을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 3306,
+    "origin": "water",
+    "examples": [
+      {
+        "exam_en": "She drinks eight glasses of <strong class=\"target-word\">water</strong> every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">물</strong>을 여덟 잔 마신다."
+      },
+      {
+        "exam_en": "The campers found fresh <strong class=\"target-word\">water</strong> near the river.",
+        "exam_ko": "캠핑객들은 강 근처에서 맑은 <strong class=\"target-word\">물</strong>을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 3307,
+    "origin": "wall",
+    "examples": [
+      {
+        "exam_en": "They built a high <strong class=\"target-word\">wall</strong> around the property.",
+        "exam_ko": "그들은 부지 주변에 높은 <strong class=\"target-word\">벽</strong>을 세웠다."
+      },
+      {
+        "exam_en": "She hung a painting on the <strong class=\"target-word\">wall</strong> of the living room.",
+        "exam_ko": "그녀는 거실 <strong class=\"target-word\">벽</strong>에 그림을 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 3308,
+    "origin": "wage",
+    "examples": [
+      {
+        "exam_en": "He earns a <strong class=\"target-word\">wage</strong> of forty dollars a week.",
+        "exam_ko": "그는 주당 40달러의 <strong class=\"target-word\">임금</strong>을 받는다."
+      },
+      {
+        "exam_en": "Workers demanded a higher minimum <strong class=\"target-word\">wage</strong>.",
+        "exam_ko": "노동자들은 더 높은 최저 <strong class=\"target-word\">임금</strong>을 요구했다."
+      }
+    ]
+  }
+]

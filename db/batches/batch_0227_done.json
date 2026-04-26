@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5292,
+    "origin": "sword",
+    "examples": [
+      {
+        "exam_en": "The knight carried a <strong class=\"target-word\">sword</strong> at his side.",
+        "exam_ko": "기사는 옆에 <strong class=\"target-word\">검</strong>을 차고 있었다."
+      },
+      {
+        "exam_en": "Justice can be a double-edged <strong class=\"target-word\">sword</strong>.",
+        "exam_ko": "정의는 양날의 <strong class=\"target-word\">검</strong>이 될 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 5293,
+    "origin": "setting",
+    "examples": [
+      {
+        "exam_en": "The novel has a rural <strong class=\"target-word\">setting</strong> in the 1800s.",
+        "exam_ko": "그 소설은 1800년대 농촌을 <strong class=\"target-word\">배경</strong>으로 한다."
+      },
+      {
+        "exam_en": "The social <strong class=\"target-word\">setting</strong> shaped her personality.",
+        "exam_ko": "사회적 <strong class=\"target-word\">환경</strong>이 그녀의 성격을 형성했다."
+      }
+    ]
+  },
+  {
+    "id": 5294,
+    "origin": "built",
+    "examples": [
+      {
+        "exam_en": "The bridge was solidly <strong class=\"target-word\">built</strong> to last centuries.",
+        "exam_ko": "그 다리는 수백 년을 견디도록 튼튼하게 <strong class=\"target-word\">지어졌다</strong>."
+      },
+      {
+        "exam_en": "He is a well-<strong class=\"target-word\">built</strong> man who works out daily.",
+        "exam_ko": "그는 매일 운동하는 체격이 좋은 <strong class=\"target-word\">남자</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 5295,
+    "origin": "lying",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">lying</strong> scoundrel who can't be trusted.",
+        "exam_ko": "그는 믿을 수 없는 <strong class=\"target-word\">거짓말하는</strong> 악당이다."
+      },
+      {
+        "exam_en": "That <strong class=\"target-word\">lying</strong> rumor spread quickly through town.",
+        "exam_ko": "그 <strong class=\"target-word\">근거 없는</strong> 소문은 마을에 빠르게 퍼졌다."
+      }
+    ]
+  },
+  {
+    "id": 5296,
+    "origin": "knowing",
+    "examples": [
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">knowing</strong> look across the room.",
+        "exam_ko": "그녀는 방 너머에서 그에게 <strong class=\"target-word\">알고 있다는</strong> 눈빛을 보냈다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">knowing</strong> dog found the hidden treat quickly.",
+        "exam_ko": "그 <strong class=\"target-word\">영리한</strong> 개는 숨겨진 간식을 빠르게 찾아냈다."
+      }
+    ]
+  },
+  {
+    "id": 5297,
+    "origin": "speaking",
+    "examples": [
+      {
+        "exam_en": "The data provides <strong class=\"target-word\">speaking</strong> evidence of the trend.",
+        "exam_ko": "그 데이터는 추세를 <strong class=\"target-word\">명확히 말해 주는</strong> 증거를 제공한다."
+      },
+      {
+        "exam_en": "The portrait is a <strong class=\"target-word\">speaking</strong> likeness of her grandfather.",
+        "exam_ko": "그 초상화는 그녀의 할아버지와 <strong class=\"target-word\">꼭 닮은</strong> 그림이다."
+      }
+    ]
+  },
+  {
+    "id": 5301,
+    "origin": "keeping",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">keeping</strong> of a wedding anniversary is a cherished tradition.",
+        "exam_ko": "결혼 기념일을 <strong class=\"target-word\">기념하는 것</strong>은 소중한 전통이다."
+      },
+      {
+        "exam_en": "Your documents are in safe <strong class=\"target-word\">keeping</strong> at the office.",
+        "exam_ko": "당신의 서류는 사무실에 안전하게 <strong class=\"target-word\">보관</strong>되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 5304,
+    "origin": "empire",
+    "examples": [
+      {
+        "exam_en": "The British <strong class=\"target-word\">Empire</strong> once ruled many nations.",
+        "exam_ko": "대영 <strong class=\"target-word\">제국</strong>은 한때 많은 나라를 지배했다."
+      },
+      {
+        "exam_en": "He built an oil <strong class=\"target-word\">empire</strong> from scratch.",
+        "exam_ko": "그는 처음부터 석유 <strong class=\"target-word\">왕국</strong>을 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 5305,
+    "origin": "entry",
+    "examples": [
+      {
+        "exam_en": "She finally gained <strong class=\"target-word\">entry</strong> into the exclusive club.",
+        "exam_ko": "그녀는 마침내 그 고급 클럽에 <strong class=\"target-word\">가입</strong>이 허가됐다."
+      },
+      {
+        "exam_en": "The thief forced an <strong class=\"target-word\">entry</strong> into the building.",
+        "exam_ko": "도둑은 건물에 강제로 <strong class=\"target-word\">침입했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5306,
+    "origin": "evening",
+    "examples": [
+      {
+        "exam_en": "Let's meet this <strong class=\"target-word\">evening</strong> for dinner.",
+        "exam_ko": "오늘 <strong class=\"target-word\">저녁</strong>에 저녁 식사를 하러 만나자."
+      },
+      {
+        "exam_en": "She called me tomorrow <strong class=\"target-word\">evening</strong> to confirm the plan.",
+        "exam_ko": "그녀는 계획을 확인하려고 내일 <strong class=\"target-word\">저녁</strong>에 전화했다."
+      }
+    ]
+  },
+  {
+    "id": 5307,
+    "origin": "broke",
+    "examples": [
+      {
+        "exam_en": "The firm has gone <strong class=\"target-word\">broke</strong> after years of losses.",
+        "exam_ko": "회사는 수년간의 손실 끝에 <strong class=\"target-word\">파산했다</strong>."
+      },
+      {
+        "exam_en": "I spent all my money and I'm completely <strong class=\"target-word\">broke</strong>.",
+        "exam_ko": "돈을 다 써서 완전히 <strong class=\"target-word\">빈털터리</strong>가 됐다."
+      }
+    ]
+  },
+  {
+    "id": 5309,
+    "origin": "core",
+    "examples": [
+      {
+        "exam_en": "Trust is the <strong class=\"target-word\">core</strong> of every strong relationship.",
+        "exam_ko": "신뢰는 모든 강한 관계의 <strong class=\"target-word\">핵심</strong>이다."
+      },
+      {
+        "exam_en": "Math and science are <strong class=\"target-word\">core</strong> subjects in this program.",
+        "exam_ko": "수학과 과학은 이 프로그램의 <strong class=\"target-word\">필수</strong> 과목이다."
+      }
+    ]
+  },
+  {
+    "id": 5310,
+    "origin": "mission",
+    "examples": [
+      {
+        "exam_en": "The British <strong class=\"target-word\">mission</strong> in Washington handles diplomatic affairs.",
+        "exam_ko": "워싱턴 주재 영국 <strong class=\"target-word\">대사관</strong>은 외교 업무를 담당한다."
+      },
+      {
+        "exam_en": "They dispatched an economic <strong class=\"target-word\">mission</strong> to India last year.",
+        "exam_ko": "그들은 지난해 인도에 경제 <strong class=\"target-word\">사절단</strong>을 파견했다."
+      }
+    ]
+  },
+  {
+    "id": 5311,
+    "origin": "importance",
+    "examples": [
+      {
+        "exam_en": "This is a matter of great <strong class=\"target-word\">importance</strong> to our team.",
+        "exam_ko": "이것은 우리 팀에 매우 큰 <strong class=\"target-word\">중요성</strong>을 지닌 문제이다."
+      },
+      {
+        "exam_en": "The meeting has <strong class=\"target-word\">importance</strong> for our future plans.",
+        "exam_ko": "그 회의는 우리의 미래 계획에 <strong class=\"target-word\">중요하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5312,
+    "origin": "hearing",
+    "examples": [
+      {
+        "exam_en": "He gave the proposal an attentive <strong class=\"target-word\">hearing</strong>.",
+        "exam_ko": "그는 그 제안을 주의 깊게 <strong class=\"target-word\">경청했다</strong>."
+      },
+      {
+        "exam_en": "She lost her sense of <strong class=\"target-word\">hearing</strong> after the accident.",
+        "exam_ko": "그녀는 사고 후 <strong class=\"target-word\">청각</strong>을 잃었다."
+      }
+    ]
+  },
+  {
+    "id": 5315,
+    "origin": "afternoon",
+    "examples": [
+      {
+        "exam_en": "I have a meeting this <strong class=\"target-word\">afternoon</strong> at three.",
+        "exam_ko": "오늘 <strong class=\"target-word\">오후</strong> 3시에 회의가 있다."
+      },
+      {
+        "exam_en": "She arrived in the late <strong class=\"target-word\">afternoon</strong> just before dinner.",
+        "exam_ko": "그녀는 저녁 식사 직전 <strong class=\"target-word\">오후</strong> 늦게 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 5316,
+    "origin": "void",
+    "examples": [
+      {
+        "exam_en": "The earth was without form, and <strong class=\"target-word\">void</strong>.",
+        "exam_ko": "땅이 혼돈하고 <strong class=\"target-word\">공허하였다</strong>."
+      },
+      {
+        "exam_en": "This bond is null and <strong class=\"target-word\">void</strong> under current law.",
+        "exam_ko": "이 증서는 현행법에 따라 완전히 <strong class=\"target-word\">무효</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5318,
+    "origin": "dial",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">dialed</strong> his number but he didn't answer.",
+        "exam_ko": "그녀는 그의 번호를 <strong class=\"target-word\">돌렸지만</strong> 그는 받지 않았다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">dialed</strong> his favorite radio station every morning.",
+        "exam_ko": "그는 매일 아침 즐겨 듣는 라디오 방송에 <strong class=\"target-word\">다이얼을 맞췄다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5319,
+    "origin": "motion",
+    "examples": [
+      {
+        "exam_en": "Newton discovered the laws of <strong class=\"target-word\">motion</strong>.",
+        "exam_ko": "뉴턴은 <strong class=\"target-word\">운동</strong>의 법칙을 발견했다."
+      },
+      {
+        "exam_en": "The car came to a stop after rapid <strong class=\"target-word\">motion</strong>.",
+        "exam_ko": "차는 빠른 <strong class=\"target-word\">운동</strong> 후 멈췄다."
+      }
+    ]
+  },
+  {
+    "id": 5320,
+    "origin": "clothing",
+    "examples": [
+      {
+        "exam_en": "Food, <strong class=\"target-word\">clothing</strong>, and shelter are basic human needs.",
+        "exam_ko": "음식, <strong class=\"target-word\">의복</strong>, 주거는 인간의 기본 욕구이다."
+      },
+      {
+        "exam_en": "She packed a few pieces of <strong class=\"target-word\">clothing</strong> for the trip.",
+        "exam_ko": "그녀는 여행을 위해 몇 벌의 <strong class=\"target-word\">옷</strong>을 챙겼다."
+      }
+    ]
+  }
+]

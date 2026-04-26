@@ -33,7 +33,7 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
     resolveNewBottomSheet({ cancelled: true });
   };
   return (
-    <div className="relative h-full">
+    <div className="relative">
       <div>
         <div className="left"></div>
         <div className="
@@ -46,7 +46,7 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
       </div>
       <div className="
         flex flex-col gap-[15px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         p-[20px] pb-[105px]
         overflow-y-auto
       ">

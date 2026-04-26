@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1695,
+    "origin": "expose",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">exposed</strong> himself to ridicule.",
+        "exam_ko": "그는 스스로를 <strong class=\"target-word\">비웃음에 노출시켰다</strong>."
+      },
+      {
+        "exam_en": "Many people were <strong class=\"target-word\">exposed</strong> to danger.",
+        "exam_ko": "많은 사람들이 위험에 <strong class=\"target-word\">노출되어</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1696,
+    "origin": "whisper",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">whispered</strong> the secret to her friend.",
+        "exam_ko": "그녀는 친구에게 비밀을 <strong class=\"target-word\">귓속말로 전했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">whispered</strong> to him to come in.",
+        "exam_ko": "그에게 들어오라고 <strong class=\"target-word\">살짝 말했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1697,
+    "origin": "split",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">split</strong> the log with an axe.",
+        "exam_ko": "그는 도끼로 통나무를 <strong class=\"target-word\">쪼갰다</strong>."
+      },
+      {
+        "exam_en": "The earthquake has <strong class=\"target-word\">split</strong> the tanks open.",
+        "exam_ko": "지진으로 탱크가 <strong class=\"target-word\">파열되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1698,
+    "origin": "negotiate",
+    "examples": [
+      {
+        "exam_en": "The government <strong class=\"target-word\">negotiated</strong> for peace with the rebels.",
+        "exam_ko": "정부는 반란군들과 평화 <strong class=\"target-word\">교섭을 했다</strong>."
+      },
+      {
+        "exam_en": "The union <strong class=\"target-word\">negotiated</strong> with the company about wages.",
+        "exam_ko": "노동 조합은 임금에 관해 회사측과 <strong class=\"target-word\">협상했다</strong>."
+      },
+      {
+        "exam_en": "Both sides finally <strong class=\"target-word\">negotiated</strong> a settlement.",
+        "exam_ko": "양측은 마침내 합의안을 <strong class=\"target-word\">협상해 냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1699,
+    "origin": "mount",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">mounted</strong> the hill before sunrise.",
+        "exam_ko": "그들은 해뜨기 전에 언덕을 <strong class=\"target-word\">올랐다</strong>."
+      },
+      {
+        "exam_en": "The soldier <strong class=\"target-word\">mounted</strong> his horse and rode away.",
+        "exam_ko": "군인은 말에 <strong class=\"target-word\">올라타고</strong> 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 1700,
+    "origin": "found",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">found</strong> a five-pound note on the street.",
+        "exam_ko": "길에서 5파운드 지폐를 <strong class=\"target-word\">발견했다</strong>."
+      },
+      {
+        "exam_en": "His body has not been <strong class=\"target-word\">found</strong>.",
+        "exam_ko": "그의 시체는 <strong class=\"target-word\">발견되지</strong> 않았다."
+      }
+    ]
+  },
+  {
+    "id": 1701,
+    "origin": "sweep",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">swept</strong> the floor clean after dinner.",
+        "exam_ko": "그녀는 저녁 식사 후 바닥을 깨끗이 <strong class=\"target-word\">쓸었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">swept</strong> the hearth before lighting the fire.",
+        "exam_ko": "그는 불을 피우기 전에 벽난로를 <strong class=\"target-word\">청소했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1702,
+    "origin": "distribute",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">distributed</strong> textbooks to all students.",
+        "exam_ko": "선생님은 모든 학생들에게 교과서를 <strong class=\"target-word\">배부했다</strong>."
+      },
+      {
+        "exam_en": "The organization <strong class=\"target-word\">distributed</strong> food to the homeless.",
+        "exam_ko": "그 단체는 노숙자들에게 음식을 <strong class=\"target-word\">나눠줬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1703,
+    "origin": "capture",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">captured</strong> the thief near the station.",
+        "exam_ko": "경찰은 역 근처에서 도둑을 <strong class=\"target-word\">잡았다</strong>."
+      },
+      {
+        "exam_en": "The Democratic Party <strong class=\"target-word\">captured</strong> 70％ of the vote.",
+        "exam_ko": "민주당은 총 투표수의 70％를 <strong class=\"target-word\">획득했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1704,
+    "origin": "award",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">awarded</strong> a scholarship for her research.",
+        "exam_ko": "그녀는 연구 업적으로 장학금을 <strong class=\"target-word\">수여받았다</strong>."
+      },
+      {
+        "exam_en": "The Nobel prize for literature was <strong class=\"target-word\">awarded</strong> to William Faulkner.",
+        "exam_ko": "윌리엄 포크너에게 노벨 문학상이 <strong class=\"target-word\">수여되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1705,
+    "origin": "phone",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">phoned</strong> her mother every Sunday.",
+        "exam_ko": "그녀는 매주 일요일 어머니에게 <strong class=\"target-word\">전화했다</strong>."
+      },
+      {
+        "exam_en": "He answered the <strong class=\"target-word\">phone</strong> on the first ring.",
+        "exam_ko": "그는 첫 번째 벨에 <strong class=\"target-word\">전화를</strong> 받았다."
+      }
+    ]
+  },
+  {
+    "id": 1706,
+    "origin": "tackle",
+    "examples": [
+      {
+        "exam_en": "He bought new fishing <strong class=\"target-word\">tackle</strong> for the trip.",
+        "exam_ko": "그는 여행을 위해 새 낚시 <strong class=\"target-word\">도구</strong>를 샀다."
+      },
+      {
+        "exam_en": "The government is <strong class=\"target-word\">tackling</strong> environmental problems seriously.",
+        "exam_ko": "정부는 환경문제에 진지하게 <strong class=\"target-word\">몰두해</strong> 있다."
+      },
+      {
+        "exam_en": "We need to <strong class=\"target-word\">tackle</strong> this problem together.",
+        "exam_ko": "우리는 이 문제를 함께 <strong class=\"target-word\">해결해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 1707,
+    "origin": "assure",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">assured</strong> me of his help.",
+        "exam_ko": "그는 반드시 원조하겠다고 나에게 <strong class=\"target-word\">확언했다</strong>."
+      },
+      {
+        "exam_en": "Teddy will come, I <strong class=\"target-word\">assure</strong> you.",
+        "exam_ko": "테디는 올 거야, <strong class=\"target-word\">장담해</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1708,
+    "origin": "exceed",
+    "examples": [
+      {
+        "exam_en": "The driver <strong class=\"target-word\">exceeded</strong> the speed limit on the highway.",
+        "exam_ko": "운전자는 고속도로에서 제한 속도를 <strong class=\"target-word\">초과했다</strong>."
+      },
+      {
+        "exam_en": "The cost <strong class=\"target-word\">exceeded</strong> our original budget.",
+        "exam_ko": "비용이 우리의 원래 예산을 <strong class=\"target-word\">초과했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1709,
+    "origin": "slide",
+    "examples": [
+      {
+        "exam_en": "The child <strong class=\"target-word\">slid</strong> down the river bank.",
+        "exam_ko": "아이가 강둑을 <strong class=\"target-word\">미끄러져 내려갔다</strong>."
+      },
+      {
+        "exam_en": "The drawer <strong class=\"target-word\">slides</strong> open smoothly.",
+        "exam_ko": "서랍이 부드럽게 <strong class=\"target-word\">미끄러져</strong> 열린다."
+      }
+    ]
+  },
+  {
+    "id": 1710,
+    "origin": "transform",
+    "examples": [
+      {
+        "exam_en": "The city was <strong class=\"target-word\">transformed</strong> into a battlefield.",
+        "exam_ko": "그 도시는 싸움터로 <strong class=\"target-word\">변했다</strong>."
+      },
+      {
+        "exam_en": "The dress completely <strong class=\"target-word\">transformed</strong> her appearance.",
+        "exam_ko": "그 드레스는 그녀의 외모를 완전히 <strong class=\"target-word\">바꿔놓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1711,
+    "origin": "qualify",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">qualified</strong> to teach music at school.",
+        "exam_ko": "그녀는 학교에서 음악을 가르칠 <strong class=\"target-word\">자격이 있다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">qualified</strong> as a doctor after six years.",
+        "exam_ko": "그는 6년 후에 의사 <strong class=\"target-word\">자격을 취득했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1712,
+    "origin": "cease",
+    "examples": [
+      {
+        "exam_en": "The soldiers were ordered to <strong class=\"target-word\">cease</strong> fire immediately.",
+        "exam_ko": "군인들은 즉시 사격을 <strong class=\"target-word\">중지하라는</strong> 명령을 받았다."
+      },
+      {
+        "exam_en": "It rained all day without <strong class=\"target-word\">ceasing</strong>.",
+        "exam_ko": "하루종일 끊임없이 비가 <strong class=\"target-word\">내렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1713,
+    "origin": "concern",
+    "examples": [
+      {
+        "exam_en": "Don't <strong class=\"target-word\">concern</strong> yourself with such trivialities.",
+        "exam_ko": "그런 시시한 일에 <strong class=\"target-word\">관여하지</strong> 마라."
+      },
+      {
+        "exam_en": "I am not <strong class=\"target-word\">concerned</strong> with it.",
+        "exam_ko": "그것과는 아무 <strong class=\"target-word\">관계도 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1714,
+    "origin": "advance",
+    "examples": [
+      {
+        "exam_en": "The captain <strong class=\"target-word\">advanced</strong> his troops toward the enemy.",
+        "exam_ko": "지휘관은 부대를 적 쪽으로 <strong class=\"target-word\">전진시켰다</strong>."
+      },
+      {
+        "exam_en": "The army <strong class=\"target-word\">advanced</strong> rapidly across the border.",
+        "exam_ko": "군대는 국경을 넘어 빠르게 <strong class=\"target-word\">전진했다</strong>."
+      }
+    ]
+  }
+]

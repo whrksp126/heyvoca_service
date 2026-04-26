@@ -1,0 +1,258 @@
+[
+  {
+    "id": 7105,
+    "origin": "wield",
+    "examples": [
+      {
+        "exam_en": "The knight <strong class=\"target-word\">wielded</strong> a sword in battle.",
+        "exam_ko": "기사는 전투에서 검을 <strong class=\"target-word\">휘둘렀다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">wields</strong> great authority in the company.",
+        "exam_ko": "그녀는 회사에서 강한 권한을 <strong class=\"target-word\">행사한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7106,
+    "origin": "behest",
+    "examples": [
+      {
+        "exam_en": "He acted at the king's <strong class=\"target-word\">behest</strong>.",
+        "exam_ko": "그는 왕의 <strong class=\"target-word\">명령</strong>에 따라 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 7107,
+    "origin": "contingent",
+    "examples": [
+      {
+        "exam_en": "The plan is <strong class=\"target-word\">contingent</strong> on everyone's cooperation.",
+        "exam_ko": "계획은 모두의 협력 여부에 <strong class=\"target-word\">달려 있다</strong>."
+      },
+      {
+        "exam_en": "The budget includes <strong class=\"target-word\">contingent</strong> expenses for emergencies.",
+        "exam_ko": "예산에는 비상시를 위한 <strong class=\"target-word\">예비</strong> 비용이 포함된다."
+      }
+    ]
+  },
+  {
+    "id": 7108,
+    "origin": "legislature",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">legislature</strong> passed a new tax law.",
+        "exam_ko": "<strong class=\"target-word\">입법부</strong>가 새로운 세금 법안을 통과시켰다."
+      }
+    ]
+  },
+  {
+    "id": 7109,
+    "origin": "amass",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">amassed</strong> a great deal of knowledge.",
+        "exam_ko": "그는 방대한 지식을 <strong class=\"target-word\">축적했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7110,
+    "origin": "ilk",
+    "examples": [
+      {
+        "exam_en": "I avoid politicians and their <strong class=\"target-word\">ilk</strong>.",
+        "exam_ko": "나는 정치인들과 그 <strong class=\"target-word\">부류</strong>를 피한다."
+      }
+    ]
+  },
+  {
+    "id": 7111,
+    "origin": "embolden",
+    "examples": [
+      {
+        "exam_en": "Her smile <strong class=\"target-word\">emboldened</strong> him to speak to her.",
+        "exam_ko": "그녀의 미소가 그에게 말을 걸 <strong class=\"target-word\">용기를 주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7112,
+    "origin": "whitewash",
+    "examples": [
+      {
+        "exam_en": "His statement was just a <strong class=\"target-word\">whitewash</strong> of his mistakes.",
+        "exam_ko": "그의 발언은 실수를 덮으려는 <strong class=\"target-word\">은폐</strong>에 불과했다."
+      },
+      {
+        "exam_en": "The report tried to <strong class=\"target-word\">whitewash</strong> the corruption scandal.",
+        "exam_ko": "보고서는 부패 스캔들을 <strong class=\"target-word\">은폐하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 7113,
+    "origin": "vandalism",
+    "examples": [
+      {
+        "exam_en": "The building was damaged by <strong class=\"target-word\">vandalism</strong> overnight.",
+        "exam_ko": "건물이 밤새 <strong class=\"target-word\">기물 파손</strong>으로 훼손되었다."
+      },
+      {
+        "exam_en": "The forest is protected against <strong class=\"target-word\">vandalism</strong> and overuse.",
+        "exam_ko": "이 숲은 <strong class=\"target-word\">기물 파손</strong>과 남용으로부터 보호된다."
+      }
+    ]
+  },
+  {
+    "id": 7114,
+    "origin": "astounding",
+    "examples": [
+      {
+        "exam_en": "The team made <strong class=\"target-word\">astounding</strong> progress this year.",
+        "exam_ko": "팀은 올해 <strong class=\"target-word\">놀라운</strong> 발전을 이루었다."
+      }
+    ]
+  },
+  {
+    "id": 7116,
+    "origin": "pervasive",
+    "examples": [
+      {
+        "exam_en": "Social media has a <strong class=\"target-word\">pervasive</strong> influence on youth.",
+        "exam_ko": "소셜 미디어는 청소년에게 <strong class=\"target-word\">광범위한</strong> 영향을 미친다."
+      },
+      {
+        "exam_en": "Fear became <strong class=\"target-word\">pervasive</strong> throughout the community.",
+        "exam_ko": "두려움이 지역사회 전반에 <strong class=\"target-word\">만연해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7120,
+    "origin": "enshrine",
+    "examples": [
+      {
+        "exam_en": "Freedom of speech is <strong class=\"target-word\">enshrined</strong> in the constitution.",
+        "exam_ko": "언론의 자유는 헌법에 <strong class=\"target-word\">명문화되어 있다</strong>."
+      },
+      {
+        "exam_en": "Her memory is <strong class=\"target-word\">enshrined</strong> in our hearts forever.",
+        "exam_ko": "그녀의 기억은 우리 마음속에 영원히 <strong class=\"target-word\">새겨져 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7122,
+    "origin": "acrobatic",
+    "examples": [
+      {
+        "exam_en": "The performers showcased <strong class=\"target-word\">acrobatic</strong> dance moves.",
+        "exam_ko": "공연자들은 <strong class=\"target-word\">곡예</strong> 댄스 동작을 선보였다."
+      },
+      {
+        "exam_en": "The gymnast displayed impressive <strong class=\"target-word\">acrobatic</strong> feats.",
+        "exam_ko": "체조 선수는 인상적인 <strong class=\"target-word\">곡예</strong> 기술을 선보였다."
+      }
+    ]
+  },
+  {
+    "id": 7123,
+    "origin": "memoir",
+    "examples": [
+      {
+        "exam_en": "She published her <strong class=\"target-word\">memoir</strong> after retiring.",
+        "exam_ko": "그녀는 은퇴 후 <strong class=\"target-word\">회고록</strong>을 출판했다."
+      }
+    ]
+  },
+  {
+    "id": 7124,
+    "origin": "impervious",
+    "examples": [
+      {
+        "exam_en": "Our tent was <strong class=\"target-word\">impervious</strong> to the rain.",
+        "exam_ko": "우리 천막은 빗물에 <strong class=\"target-word\">스며들지 않았다</strong>."
+      },
+      {
+        "exam_en": "He seems <strong class=\"target-word\">impervious</strong> to criticism from others.",
+        "exam_ko": "그는 타인의 비판에 <strong class=\"target-word\">아랑곳하지 않는</strong> 것 같다."
+      },
+      {
+        "exam_en": "The coating makes the surface <strong class=\"target-word\">impervious</strong> to water.",
+        "exam_ko": "코팅이 표면을 물에 <strong class=\"target-word\">침투되지 않게</strong> 만든다."
+      }
+    ]
+  },
+  {
+    "id": 7126,
+    "origin": "overhaul",
+    "examples": [
+      {
+        "exam_en": "They need to <strong class=\"target-word\">overhaul</strong> the entire business strategy.",
+        "exam_ko": "그들은 전체 사업 전략을 <strong class=\"target-word\">전면 재검토</strong>해야 한다."
+      },
+      {
+        "exam_en": "I had my car <strong class=\"target-word\">overhauled</strong> at the garage.",
+        "exam_ko": "나는 차고에서 차를 <strong class=\"target-word\">정비</strong>받았다."
+      }
+    ]
+  },
+  {
+    "id": 7130,
+    "origin": "tycoon",
+    "examples": [
+      {
+        "exam_en": "He became an oil <strong class=\"target-word\">tycoon</strong> in his forties.",
+        "exam_ko": "그는 40대에 석유 <strong class=\"target-word\">재벌</strong>이 되었다."
+      },
+      {
+        "exam_en": "A media <strong class=\"target-word\">tycoon</strong> bought the largest newspaper chain.",
+        "exam_ko": "미디어 <strong class=\"target-word\">재벌</strong>이 최대 신문 체인을 인수했다."
+      }
+    ]
+  },
+  {
+    "id": 7131,
+    "origin": "rectify",
+    "examples": [
+      {
+        "exam_en": "We must <strong class=\"target-word\">rectify</strong> the error before the deadline.",
+        "exam_ko": "마감 전에 오류를 <strong class=\"target-word\">바로잡아야</strong> 한다."
+      },
+      {
+        "exam_en": "The company acted quickly to <strong class=\"target-word\">rectify</strong> the situation.",
+        "exam_ko": "회사는 상황을 <strong class=\"target-word\">수정하기</strong> 위해 빠르게 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 7133,
+    "origin": "fag",
+    "examples": [
+      {
+        "exam_en": "He was completely <strong class=\"target-word\">fagged</strong> out after the long hike.",
+        "exam_ko": "긴 하이킹 후 그는 완전히 <strong class=\"target-word\">녹초가 되었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">fagged</strong> at her homework all night.",
+        "exam_ko": "그녀는 밤새 숙제를 <strong class=\"target-word\">열심히 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7134,
+    "origin": "retard",
+    "examples": [
+      {
+        "exam_en": "Bad weather is <strong class=\"target-word\">retarding</strong> road repair progress.",
+        "exam_ko": "악천후가 도로 보수 진척을 <strong class=\"target-word\">방해하고 있다</strong>."
+      },
+      {
+        "exam_en": "A visitor <strong class=\"target-word\">retarded</strong> my departure at the last moment.",
+        "exam_ko": "막 떠나려는 순간 손님이 와서 내 출발이 <strong class=\"target-word\">늦어졌다</strong>."
+      }
+    ]
+  }
+]

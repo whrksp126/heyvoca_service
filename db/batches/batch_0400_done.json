@@ -1,0 +1,250 @@
+[
+  {
+    "id": 11001,
+    "origin": "reverence",
+    "examples": [
+      {
+        "exam_en": "He shows deep <strong class=\"target-word\">reverence</strong> for his elders.",
+        "exam_ko": "그는 어른들에게 깊은 <strong class=\"target-word\">경의</strong>를 표한다."
+      },
+      {
+        "exam_en": "The monk was held in great <strong class=\"target-word\">reverence</strong> by villagers.",
+        "exam_ko": "그 수도사는 마을 사람들에게 큰 <strong class=\"target-word\">공경</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 11003,
+    "origin": "cursed",
+    "examples": [
+      {
+        "exam_en": "What <strong class=\"target-word\">cursed</strong> weather we are having!",
+        "exam_ko": "정말 <strong class=\"target-word\">지독한</strong> 날씨군!"
+      }
+    ]
+  },
+  {
+    "id": 11004,
+    "origin": "pane",
+    "examples": [
+      {
+        "exam_en": "She replaced the broken <strong class=\"target-word\">pane</strong> of glass.",
+        "exam_ko": "그녀는 깨진 유리 <strong class=\"target-word\">판</strong>을 교체했다."
+      }
+    ]
+  },
+  {
+    "id": 11006,
+    "origin": "wholesale",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Wholesale</strong> is cheaper than retail.",
+        "exam_ko": "<strong class=\"target-word\">도매</strong>가 소매보다 싸다."
+      },
+      {
+        "exam_en": "He runs a <strong class=\"target-word\">wholesale</strong> business downtown.",
+        "exam_ko": "그는 시내에서 <strong class=\"target-word\">도매</strong> 사업을 운영한다."
+      }
+    ]
+  },
+  {
+    "id": 11008,
+    "origin": "rod",
+    "examples": [
+      {
+        "exam_en": "She hung the curtains on a new <strong class=\"target-word\">rod</strong>.",
+        "exam_ko": "그녀는 새 <strong class=\"target-word\">막대</strong>에 커튼을 걸었다."
+      },
+      {
+        "exam_en": "The teacher raised the <strong class=\"target-word\">rod</strong> to discipline the student.",
+        "exam_ko": "선생님은 학생을 훈육하려고 <strong class=\"target-word\">회초리</strong>를 들었다."
+      },
+      {
+        "exam_en": "He used a fishing <strong class=\"target-word\">rod</strong> to catch a big fish.",
+        "exam_ko": "그는 큰 물고기를 잡기 위해 낚싯<strong class=\"target-word\">대</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 11009,
+    "origin": "calamity",
+    "examples": [
+      {
+        "exam_en": "The flood was a <strong class=\"target-word\">calamity</strong> for the village.",
+        "exam_ko": "홍수는 마을에 큰 <strong class=\"target-word\">재앙</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 11012,
+    "origin": "stricken",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">stricken</strong> animal lay helpless on the ground.",
+        "exam_ko": "<strong class=\"target-word\">다친</strong> 동물이 땅에 무기력하게 누워 있었다."
+      },
+      {
+        "exam_en": "She was grief-<strong class=\"target-word\">stricken</strong> after losing her dog.",
+        "exam_ko": "그녀는 강아지를 잃고 슬픔에 <strong class=\"target-word\">사로잡혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11013,
+    "origin": "leakage",
+    "examples": [
+      {
+        "exam_en": "Information <strong class=\"target-word\">leakage</strong> can harm the company badly.",
+        "exam_ko": "정보 <strong class=\"target-word\">유출</strong>은 회사에 큰 피해를 줄 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 11014,
+    "origin": "reactor",
+    "examples": [
+      {
+        "exam_en": "The nuclear <strong class=\"target-word\">reactor</strong> was shut down safely.",
+        "exam_ko": "핵 <strong class=\"target-word\">반응로</strong>는 안전하게 가동이 중단되었다."
+      }
+    ]
+  },
+  {
+    "id": 11015,
+    "origin": "armistice",
+    "examples": [
+      {
+        "exam_en": "Both sides signed an <strong class=\"target-word\">armistice</strong> agreement.",
+        "exam_ko": "양측은 <strong class=\"target-word\">휴전</strong> 협정에 서명했다."
+      },
+      {
+        "exam_en": "The general declared an <strong class=\"target-word\">armistice</strong> to end the battle.",
+        "exam_ko": "장군은 전투를 끝내기 위해 <strong class=\"target-word\">휴전</strong>을 선언했다."
+      }
+    ]
+  },
+  {
+    "id": 11017,
+    "origin": "treachery",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">treachery</strong> shocked everyone who trusted him.",
+        "exam_ko": "그의 <strong class=\"target-word\">배신</strong>은 그를 믿었던 모두를 충격에 빠뜨렸다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">treacheries</strong> will never be forgiven.",
+        "exam_ko": "그의 <strong class=\"target-word\">배신 행위</strong>는 결코 용서받을 수 없을 것이다."
+      }
+    ]
+  },
+  {
+    "id": 11018,
+    "origin": "paternal",
+    "examples": [
+      {
+        "exam_en": "He felt deep <strong class=\"target-word\">paternal</strong> love for his children.",
+        "exam_ko": "그는 자녀들에게 깊은 <strong class=\"target-word\">부성</strong>애를 느꼈다."
+      },
+      {
+        "exam_en": "The boss took a <strong class=\"target-word\">paternal</strong> interest in his staff.",
+        "exam_ko": "상사는 직원들에게 <strong class=\"target-word\">아버지 같은</strong> 관심을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 11019,
+    "origin": "demarcation",
+    "examples": [
+      {
+        "exam_en": "The river serves as a clear <strong class=\"target-word\">demarcation</strong> between the two regions.",
+        "exam_ko": "강은 두 지역 사이의 명확한 <strong class=\"target-word\">경계</strong> 역할을 한다."
+      }
+    ]
+  },
+  {
+    "id": 11020,
+    "origin": "mercurial",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">mercurial</strong> temper that surprises everyone.",
+        "exam_ko": "그녀는 모두를 놀라게 하는 <strong class=\"target-word\">변덕스러운</strong> 성격을 가졌다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">mercurial</strong> mood made him hard to work with.",
+        "exam_ko": "그의 <strong class=\"target-word\">변화무쌍한</strong> 기분은 함께 일하기 어렵게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 11021,
+    "origin": "intensify",
+    "examples": [
+      {
+        "exam_en": "Police have <strong class=\"target-word\">intensified</strong> their search for the criminal.",
+        "exam_ko": "경찰은 범인 수색을 <strong class=\"target-word\">강화했다</strong>."
+      },
+      {
+        "exam_en": "The rain <strong class=\"target-word\">intensified</strong> as the storm approached.",
+        "exam_ko": "폭풍이 다가오면서 비가 <strong class=\"target-word\">강해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11022,
+    "origin": "rhetorical",
+    "examples": [
+      {
+        "exam_en": "The speaker showed great <strong class=\"target-word\">rhetorical</strong> skill.",
+        "exam_ko": "그 연사는 뛰어난 <strong class=\"target-word\">수사학적</strong> 기술을 보여줬다."
+      }
+    ]
+  },
+  {
+    "id": 11023,
+    "origin": "predecessor",
+    "examples": [
+      {
+        "exam_en": "The new manager is stricter than her <strong class=\"target-word\">predecessor</strong>.",
+        "exam_ko": "새 지배인은 <strong class=\"target-word\">전임자</strong>보다 더 엄격하다."
+      }
+    ]
+  },
+  {
+    "id": 11024,
+    "origin": "nebulous",
+    "examples": [
+      {
+        "exam_en": "His plans for the future remain <strong class=\"target-word\">nebulous</strong>.",
+        "exam_ko": "그의 미래 계획은 여전히 <strong class=\"target-word\">막연하다</strong>."
+      },
+      {
+        "exam_en": "The concept of time is <strong class=\"target-word\">nebulous</strong> and hard to grasp.",
+        "exam_ko": "시간의 개념은 <strong class=\"target-word\">흐릿하며</strong> 이해하기 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 11026,
+    "origin": "repugnant",
+    "examples": [
+      {
+        "exam_en": "Gossip is <strong class=\"target-word\">repugnant</strong> to me.",
+        "exam_ko": "가십 같은 건 내게 <strong class=\"target-word\">역겹다</strong>."
+      },
+      {
+        "exam_en": "His behavior was <strong class=\"target-word\">repugnant</strong> to everyone present.",
+        "exam_ko": "그의 행동은 그 자리에 있는 모두에게 <strong class=\"target-word\">불쾌했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11029,
+    "origin": "assuage",
+    "examples": [
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">assuage</strong> his anger with kind words.",
+        "exam_ko": "그녀는 따뜻한 말로 그의 화를 <strong class=\"target-word\">달래려</strong> 했다."
+      }
+    ]
+  }
+]

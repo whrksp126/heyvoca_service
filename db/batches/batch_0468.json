@@ -1,0 +1,258 @@
+[
+  {
+    "id": 13745,
+    "origin": "consultation",
+    "examples": [
+      {
+        "exam_en": "a consultation room",
+        "exam_ko": "진찰실"
+      },
+      {
+        "exam_en": "books for constant consultation",
+        "exam_ko": "항상 참고하는 책"
+      }
+    ]
+  },
+  {
+    "id": 13747,
+    "origin": "glut",
+    "examples": [
+      {
+        "exam_en": "glut oneself with",
+        "exam_ko": "…을 실컷 먹다; 실컷 만족하다."
+      },
+      {
+        "exam_en": "glut one's eyes",
+        "exam_ko": "싫증나도록 보다."
+      }
+    ]
+  },
+  {
+    "id": 13748,
+    "origin": "reverie",
+    "examples": [
+      {
+        "exam_en": "be lost in  reverie",
+        "exam_ko": "골똘히 생각에 잠겨 있다."
+      }
+    ]
+  },
+  {
+    "id": 13750,
+    "origin": "exacerbate",
+    "examples": [
+      {
+        "exam_en": "words exacerbating a quarrel",
+        "exam_ko": "싸움을 부채질하는 말."
+      },
+      {
+        "exam_en": "The factory's irresponsible waste disposal practices exacerbated pollution in the nearby river.",
+        "exam_ko": "공장의 무책임한 폐기물 처리 방법은 인근 강의 오염을 악화시켰다."
+      }
+    ]
+  },
+  {
+    "id": 13752,
+    "origin": "skeletal",
+    "examples": [
+      {
+        "exam_en": "The archaeologists carefully reconstructed the skeletal remains of an ancient civilization.",
+        "exam_ko": "고고학자들은 신중하게 고대 문명의 해골 유해를 복원했다."
+      }
+    ]
+  },
+  {
+    "id": 13761,
+    "origin": "dissipation",
+    "examples": [
+      {
+        "exam_en": "the dissipation of energy",
+        "exam_ko": "정력[시간]의 낭비."
+      }
+    ]
+  },
+  {
+    "id": 13763,
+    "origin": "impunity",
+    "examples": [
+      {
+        "exam_en": "with impunity",
+        "exam_ko": "벌을 받지 않고; 야단맞지 않고, 무사히."
+      }
+    ]
+  },
+  {
+    "id": 13764,
+    "origin": "embitter",
+    "examples": [
+      {
+        "exam_en": "The verdict embittered me against the judge.",
+        "exam_ko": "그 판결은 내게 판사에 대해 악감정을 품게 했다."
+      },
+      {
+        "exam_en": "His misery was embittered by his failure.",
+        "exam_ko": "실패로 그의 불행이 가중되었다."
+      }
+    ]
+  },
+  {
+    "id": 13768,
+    "origin": "catapult",
+    "examples": [
+      {
+        "exam_en": "be catapulted to stardom",
+        "exam_ko": "일약 스타덤에 오르다."
+      }
+    ]
+  },
+  {
+    "id": 13770,
+    "origin": "dastardly",
+    "examples": [
+      {
+        "exam_en": "a dastardly act",
+        "exam_ko": "비겁한 행위"
+      },
+      {
+        "exam_en": "a dastardly stab in the back.",
+        "exam_ko": "등에 비겁한 칼찌검"
+      },
+      {
+        "exam_en": "a dastardly act ",
+        "exam_ko": "비겁한 행위"
+      },
+      {
+        "exam_en": "a dastardly stab in the back. ",
+        "exam_ko": "등에 비겁한 칼찌검"
+      }
+    ]
+  },
+  {
+    "id": 13772,
+    "origin": "tumult",
+    "examples": [
+      {
+        "exam_en": "cause tumult",
+        "exam_ko": "소동을 일으키다."
+      },
+      {
+        "exam_en": "in tumult",
+        "exam_ko": "마음이 동요하여."
+      },
+      {
+        "exam_en": "I could simply not be heard in the tumult.",
+        "exam_ko": "소란 속에서 저는 도저히 들을 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 13773,
+    "origin": "lax",
+    "examples": [
+      {
+        "exam_en": "lax discipline",
+        "exam_ko": "미온적인 규율"
+      },
+      {
+        "exam_en": "be lax in one's duties",
+        "exam_ko": "직무에 태만하다."
+      }
+    ]
+  },
+  {
+    "id": 13774,
+    "origin": "compilation",
+    "examples": [
+      {
+        "exam_en": "do a compilation",
+        "exam_ko": "편집하다."
+      }
+    ]
+  },
+  {
+    "id": 13775,
+    "origin": "predispose",
+    "examples": [
+      {
+        "exam_en": "Her allergy does not predispose her to eat eggs.",
+        "exam_ko": "그녀는 알레르기가 있어서 계란은 먹지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 13777,
+    "origin": "tumultuous",
+    "examples": [
+      {
+        "exam_en": "a tumultuous meeting",
+        "exam_ko": "떠들썩한 모임[군중]."
+      },
+      {
+        "exam_en": "The crowd erupted into tumultuous cheers after the team's victory.",
+        "exam_ko": "그 팀의 승리 후 관중들은 떠들썩한 환호성을 터뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 13787,
+    "origin": "bracket",
+    "examples": [
+      {
+        "exam_en": "round brackets",
+        "exam_ko": "둥근 괄호(( ))"
+      },
+      {
+        "exam_en": "square brackets",
+        "exam_ko": "각괄호([ ])"
+      }
+    ]
+  },
+  {
+    "id": 13788,
+    "origin": "rivet",
+    "examples": [
+      {
+        "exam_en": "riveted hatred",
+        "exam_ko": "뿌리 깊은 원한"
+      },
+      {
+        "exam_en": "I sat riveted by the movie.",
+        "exam_ko": "그 영화에 넋을 잃고 못 박힌 것처럼 앉아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 13789,
+    "origin": "clubbed",
+    "examples": [
+      {
+        "exam_en": "clubbed fingers",
+        "exam_ko": "끝이 굵직한 손가락."
+      }
+    ]
+  },
+  {
+    "id": 13791,
+    "origin": "sedition",
+    "examples": [
+      {
+        "exam_en": "stir up sedition",
+        "exam_ko": "반란을 선동하다."
+      }
+    ]
+  },
+  {
+    "id": 13792,
+    "origin": "ardent",
+    "examples": [
+      {
+        "exam_en": "ardent love",
+        "exam_ko": "열렬한 사랑"
+      },
+      {
+        "exam_en": "an ardent fan",
+        "exam_ko": "열광적인 팬."
+      }
+    ]
+  }
+]

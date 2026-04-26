@@ -1,0 +1,270 @@
+[
+  {
+    "id": 2786,
+    "origin": "appendicitis",
+    "examples": [
+      {
+        "exam_en": "He was diagnosed with <strong class=\"target-word\">appendicitis</strong> and had surgery.",
+        "exam_ko": "그는 <strong class=\"target-word\">맹장염</strong> 진단을 받고 수술을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2787,
+    "origin": "asthma",
+    "examples": [
+      {
+        "exam_en": "She carries an inhaler in case her <strong class=\"target-word\">asthma</strong> flares up.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">천식</strong>이 악화될 경우를 대비해 흡입기를 가지고 다닌다."
+      }
+    ]
+  },
+  {
+    "id": 2791,
+    "origin": "snore",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">snores</strong> so loudly that it wakes me up.",
+        "exam_ko": "그는 너무 크게 <strong class=\"target-word\">코를 골아서</strong> 나를 깨운다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">snored</strong> all night and looked tired in the morning.",
+        "exam_ko": "그녀는 밤새 <strong class=\"target-word\">코를 골았고</strong> 아침에 피곤해 보였다."
+      }
+    ]
+  },
+  {
+    "id": 2792,
+    "origin": "flu",
+    "examples": [
+      {
+        "exam_en": "He caught the <strong class=\"target-word\">flu</strong> and stayed in bed all day.",
+        "exam_ko": "그는 <strong class=\"target-word\">독감</strong>에 걸려 하루 종일 침대에 누워 있었다."
+      },
+      {
+        "exam_en": "I have a mild fever and hope it is not the <strong class=\"target-word\">flu</strong>.",
+        "exam_ko": "나는 미열이 있는데 <strong class=\"target-word\">독감</strong>이 아니면 좋겠다."
+      }
+    ]
+  },
+  {
+    "id": 2793,
+    "origin": "vomit",
+    "examples": [
+      {
+        "exam_en": "The child <strong class=\"target-word\">vomited</strong> when he had the flu.",
+        "exam_ko": "아이는 독감에 걸렸을 때 <strong class=\"target-word\">토했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">vomited</strong> blood and was rushed to the hospital.",
+        "exam_ko": "그는 피를 <strong class=\"target-word\">토하고</strong> 병원으로 급히 이송되었다."
+      }
+    ]
+  },
+  {
+    "id": 2794,
+    "origin": "nausea",
+    "examples": [
+      {
+        "exam_en": "She felt sudden <strong class=\"target-word\">nausea</strong> and had to sit down.",
+        "exam_ko": "그녀는 갑작스러운 <strong class=\"target-word\">구역질</strong>을 느끼고 앉아야 했다."
+      },
+      {
+        "exam_en": "Even seeing that guy fills me with <strong class=\"target-word\">nausea</strong>.",
+        "exam_ko": "그 녀석을 보기만 해도 <strong class=\"target-word\">구역질</strong>이 난다."
+      }
+    ]
+  },
+  {
+    "id": 2795,
+    "origin": "chill",
+    "examples": [
+      {
+        "exam_en": "There was a sharp <strong class=\"target-word\">chill</strong> in the morning air.",
+        "exam_ko": "아침 공기에 강한 <strong class=\"target-word\">냉기</strong>가 감돌았다."
+      },
+      {
+        "exam_en": "She caught a <strong class=\"target-word\">chill</strong> after walking in the rain.",
+        "exam_ko": "그녀는 빗속을 걷다가 <strong class=\"target-word\">감기 기운</strong>이 들었다."
+      }
+    ]
+  },
+  {
+    "id": 2798,
+    "origin": "stomachache",
+    "examples": [
+      {
+        "exam_en": "I had a slight <strong class=\"target-word\">stomachache</strong> after eating too fast.",
+        "exam_ko": "너무 빨리 먹어서 가벼운 <strong class=\"target-word\">복통</strong>이 생겼다."
+      },
+      {
+        "exam_en": "He suffered from a <strong class=\"target-word\">stomachache</strong> all morning.",
+        "exam_ko": "그는 오전 내내 <strong class=\"target-word\">복통</strong>을 앓았다."
+      }
+    ]
+  },
+  {
+    "id": 2802,
+    "origin": "hip",
+    "examples": [
+      {
+        "exam_en": "She has chronic <strong class=\"target-word\">hip</strong> pain from running.",
+        "exam_ko": "그녀는 달리기로 인한 만성 <strong class=\"target-word\">엉덩이</strong> 통증이 있다."
+      },
+      {
+        "exam_en": "He put his hands on his <strong class=\"target-word\">hips</strong> and sighed.",
+        "exam_ko": "그는 <strong class=\"target-word\">엉덩이</strong>에 손을 얹고 한숨을 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 2805,
+    "origin": "corn",
+    "examples": [
+      {
+        "exam_en": "She bought an ear of <strong class=\"target-word\">corn</strong> at the market.",
+        "exam_ko": "그녀는 시장에서 <strong class=\"target-word\">옥수수</strong> 한 개를 샀다."
+      },
+      {
+        "exam_en": "They grew <strong class=\"target-word\">corn</strong> in the field behind the house.",
+        "exam_ko": "그들은 집 뒤 밭에서 <strong class=\"target-word\">옥수수</strong>를 재배했다."
+      }
+    ]
+  },
+  {
+    "id": 2806,
+    "origin": "wrinkle",
+    "examples": [
+      {
+        "exam_en": "She smoothed out the <strong class=\"target-word\">wrinkles</strong> on her dress.",
+        "exam_ko": "그녀는 드레스의 <strong class=\"target-word\">주름</strong>을 폈다."
+      },
+      {
+        "exam_en": "He has deep <strong class=\"target-word\">wrinkles</strong> around his eyes from smiling.",
+        "exam_ko": "그는 많이 웃어서 눈가에 깊은 <strong class=\"target-word\">주름</strong>이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 2810,
+    "origin": "whisker",
+    "examples": [
+      {
+        "exam_en": "He was very fond of combing his <strong class=\"target-word\">whiskers</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">턱수염</strong> 빗는 것을 아주 좋아했다."
+      },
+      {
+        "exam_en": "He won the race by a <strong class=\"target-word\">whisker</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">아슬아슬하게</strong> 경주에서 이겼다."
+      }
+    ]
+  },
+  {
+    "id": 2811,
+    "origin": "profile",
+    "examples": [
+      {
+        "exam_en": "The photographer captured her <strong class=\"target-word\">profile</strong> from the side.",
+        "exam_ko": "사진가는 옆에서 그녀의 <strong class=\"target-word\">옆얼굴</strong>을 찍었다."
+      },
+      {
+        "exam_en": "She has a fine <strong class=\"target-word\">profile</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">옆얼굴</strong>이 아름답다."
+      }
+    ]
+  },
+  {
+    "id": 2813,
+    "origin": "fingerprint",
+    "examples": [
+      {
+        "exam_en": "The thief left <strong class=\"target-word\">fingerprints</strong> on the glass.",
+        "exam_ko": "도둑은 유리에 <strong class=\"target-word\">지문</strong>을 남겼다."
+      },
+      {
+        "exam_en": "The police took the suspect's <strong class=\"target-word\">fingerprints</strong>.",
+        "exam_ko": "경찰은 용의자의 <strong class=\"target-word\">지문</strong>을 채취했다."
+      }
+    ]
+  },
+  {
+    "id": 2815,
+    "origin": "molar",
+    "examples": [
+      {
+        "exam_en": "The dentist filled a cavity in her <strong class=\"target-word\">molar</strong>.",
+        "exam_ko": "치과 의사가 그녀의 <strong class=\"target-word\">어금니</strong>에 충치를 때웠다."
+      }
+    ]
+  },
+  {
+    "id": 2821,
+    "origin": "toe",
+    "examples": [
+      {
+        "exam_en": "She hurt her little <strong class=\"target-word\">toe</strong> on the door.",
+        "exam_ko": "그녀는 문에 새끼 <strong class=\"target-word\">발가락</strong>을 부딪쳤다."
+      },
+      {
+        "exam_en": "He stubbed his big <strong class=\"target-word\">toe</strong> on the table leg.",
+        "exam_ko": "그는 엄지 <strong class=\"target-word\">발가락</strong>을 테이블 다리에 찧었다."
+      }
+    ]
+  },
+  {
+    "id": 2822,
+    "origin": "heel",
+    "examples": [
+      {
+        "exam_en": "She got a blister on her <strong class=\"target-word\">heel</strong> from new shoes.",
+        "exam_ko": "그녀는 새 신발로 인해 <strong class=\"target-word\">뒤꿈치</strong>에 물집이 생겼다."
+      },
+      {
+        "exam_en": "The soldier clicked his <strong class=\"target-word\">heels</strong> and stood at attention.",
+        "exam_ko": "병사는 <strong class=\"target-word\">뒤꿈치</strong>를 착 붙이며 차렷 자세를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 2823,
+    "origin": "ankle",
+    "examples": [
+      {
+        "exam_en": "She sprained her <strong class=\"target-word\">ankle</strong> while jogging.",
+        "exam_ko": "그녀는 조깅 중에 <strong class=\"target-word\">발목</strong>을 삐었다."
+      },
+      {
+        "exam_en": "He broke his <strong class=\"target-word\">ankle</strong> in the fall.",
+        "exam_ko": "그는 넘어지면서 <strong class=\"target-word\">발목</strong>이 부러졌다."
+      }
+    ]
+  },
+  {
+    "id": 2824,
+    "origin": "limb",
+    "examples": [
+      {
+        "exam_en": "He lost a <strong class=\"target-word\">limb</strong> in the accident and now uses a prosthetic.",
+        "exam_ko": "그는 사고로 <strong class=\"target-word\">팔다리</strong> 하나를 잃고 의지를 사용한다."
+      },
+      {
+        "exam_en": "She stretched her <strong class=\"target-word\">limbs</strong> after sitting for hours.",
+        "exam_ko": "그녀는 몇 시간 동안 앉아 있다가 <strong class=\"target-word\">손발</strong>을 뻗었다."
+      }
+    ]
+  },
+  {
+    "id": 2826,
+    "origin": "shin",
+    "examples": [
+      {
+        "exam_en": "He bumped his <strong class=\"target-word\">shin</strong> against the corner of the desk.",
+        "exam_ko": "그는 책상 모서리에 <strong class=\"target-word\">정강이</strong>를 부딪쳤다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">shinned</strong> up a tree to get a better view.",
+        "exam_ko": "그녀는 더 잘 보려고 나무에 <strong class=\"target-word\">기어올라갔다</strong>."
+      }
+    ]
+  }
+]

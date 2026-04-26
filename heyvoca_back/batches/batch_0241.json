@@ -1,0 +1,602 @@
+[
+  {
+    "id": 24191,
+    "word": "retrenchment",
+    "exam_en": "The worsening economic situation has forced the government into a policy of <strong class=\"target-word\">retrenchment</strong>.",
+    "exam_ko": "나빠지는 경제 사정 때문에 정부는 부득불 긴축 정책을 쓰게 <strong class=\"target-word\">되었다</strong>."
+  },
+  {
+    "id": 24192,
+    "word": "occidental",
+    "exam_en": "<strong class=\"target-word\">Occidental</strong> culture",
+    "exam_ko": "<strong class=\"target-word\">서양</strong> 문화[문명]."
+  },
+  {
+    "id": 24193,
+    "word": "farrago",
+    "exam_en": "The story was a <strong class=\"target-word\">farrago</strong> of lies and deceit.",
+    "exam_ko": "그 이야기는 거짓과 속임수를 뒤섞어 놓은 <strong class=\"target-word\">것이었다</strong>."
+  },
+  {
+    "id": 24194,
+    "word": "biff",
+    "exam_en": "give a person a <strong class=\"target-word\">biff</strong> on the head",
+    "exam_ko": "머리에 한 방 <strong class=\"target-word\">먹이다</strong>."
+  },
+  {
+    "id": 24195,
+    "word": "ferric",
+    "exam_en": "<strong class=\"target-word\">ferric</strong> oxide",
+    "exam_ko": "<strong class=\"target-word\">산화제이철</strong>, 철단(鐵丹)."
+  },
+  {
+    "id": 24196,
+    "word": "fettle",
+    "exam_en": "in good <strong class=\"target-word\">fettle</strong>",
+    "exam_ko": "<strong class=\"target-word\">건강한</strong> 상태로, 원기왕성하여."
+  },
+  {
+    "id": 24197,
+    "word": "clack",
+    "exam_en": "Her high heels <strong class=\"target-word\">clack</strong>ed down the hall.",
+    "exam_ko": "<strong class=\"target-word\">딸깍거리는</strong> 그녀의 하이힐 소리가 홀을 울렸다."
+  },
+  {
+    "id": 24198,
+    "word": "clack",
+    "exam_en": "Hold your <strong class=\"target-word\">clack</strong>!",
+    "exam_ko": "입 <strong class=\"target-word\">닥쳐</strong>!"
+  },
+  {
+    "id": 24199,
+    "word": "cervical",
+    "exam_en": "<strong class=\"target-word\">cervical</strong> cancer",
+    "exam_ko": "<strong class=\"target-word\">자궁암</strong>"
+  },
+  {
+    "id": 24200,
+    "word": "cervical",
+    "exam_en": "<strong class=\"target-word\">cervical</strong> screening",
+    "exam_ko": "<strong class=\"target-word\">자궁암</strong> 검진."
+  },
+  {
+    "id": 24201,
+    "word": "starboard",
+    "exam_en": "put the helm to <strong class=\"target-word\">starboard</strong>",
+    "exam_ko": "키를 우현으로 <strong class=\"target-word\">잡다</strong>."
+  },
+  {
+    "id": 24202,
+    "word": "starboard",
+    "exam_en": "a <strong class=\"target-word\">starboard</strong> anchor",
+    "exam_ko": "<strong class=\"target-word\">우현의</strong> 큰 닻"
+  },
+  {
+    "id": 24203,
+    "word": "volt",
+    "exam_en": "a 500-<strong class=\"target-word\">volt</strong> current",
+    "exam_ko": "500<strong class=\"target-word\">볼트의</strong> 전류."
+  },
+  {
+    "id": 24204,
+    "word": "footed",
+    "exam_en": "a four-<strong class=\"target-word\">footed</strong> beast",
+    "exam_ko": "<strong class=\"target-word\">네발짐승</strong>."
+  },
+  {
+    "id": 24205,
+    "word": "dualistic",
+    "exam_en": "the <strong class=\"target-word\">dualistic</strong> theory",
+    "exam_ko": "<strong class=\"target-word\">이원론</strong>[설]."
+  },
+  {
+    "id": 24206,
+    "word": "gyrate",
+    "exam_en": "The dancers <strong class=\"target-word\">gyrate</strong> to the music.",
+    "exam_ko": "댄서들은 음악에 맞추어 <strong class=\"target-word\">빙빙 돌았다</strong>."
+  },
+  {
+    "id": 24207,
+    "word": "drudge",
+    "exam_en": "<strong class=\"target-word\">drudge</strong> away at tedious work",
+    "exam_ko": "지겨운 일을 <strong class=\"target-word\">하다</strong>."
+  },
+  {
+    "id": 24208,
+    "word": "amalgam",
+    "exam_en": "a strange <strong class=\"target-word\">amalgam</strong> of Korean and Western traditions",
+    "exam_ko": "한국 전통과 서양 전통의 기묘한 <strong class=\"target-word\">혼합</strong>."
+  },
+  {
+    "id": 24209,
+    "word": "kindling",
+    "exam_en": "use paper as <strong class=\"target-word\">kindling</strong>",
+    "exam_ko": "종이를 불쏘시개로 <strong class=\"target-word\">쓰다</strong>."
+  },
+  {
+    "id": 24210,
+    "word": "jumpstart",
+    "exam_en": "<strong class=\"target-word\">jumpstart</strong> the economy once again",
+    "exam_ko": "경제를 다시 <strong class=\"target-word\">소생시키다</strong>."
+  },
+  {
+    "id": 24211,
+    "word": "metro",
+    "exam_en": "<strong class=\"target-word\">metrorrhagia</strong>",
+    "exam_ko": "자궁 <strong class=\"target-word\">출혈</strong>."
+  },
+  {
+    "id": 24212,
+    "word": "incommensurate",
+    "exam_en": "abilities <strong class=\"target-word\">incommensurate</strong> to the task",
+    "exam_ko": "일에 <strong class=\"target-word\">맞지 않는</strong> 능력."
+  },
+  {
+    "id": 24213,
+    "word": "piecrust",
+    "exam_en": "Promises are like <strong class=\"target-word\">piecrust</strong>, made to be broken.",
+    "exam_ko": "약속이란 파이 껍질같이 깨어지기 쉬운 <strong class=\"target-word\">것이다</strong>."
+  },
+  {
+    "id": 24214,
+    "word": "unsight",
+    "exam_en": "<strong class=\"target-word\">unsight</strong>, unseen",
+    "exam_ko": "보지도 조사하지도 <strong class=\"target-word\">않고</strong>."
+  },
+  {
+    "id": 24215,
+    "word": "placatory",
+    "exam_en": "<strong class=\"target-word\">placatory</strong> words",
+    "exam_ko": "<strong class=\"target-word\">위로의</strong> 말."
+  },
+  {
+    "id": 24216,
+    "word": "unclog",
+    "exam_en": "<strong class=\"target-word\">unclog</strong> a drain",
+    "exam_ko": "배수로의 막힌 것을 <strong class=\"target-word\">제거하다</strong>."
+  },
+  {
+    "id": 24217,
+    "word": "nitpick",
+    "exam_en": "You're so <strong class=\"target-word\">nitpick</strong>y.",
+    "exam_ko": "뭘 그리 <strong class=\"target-word\">꼬치꼬치</strong> 따지니?"
+  },
+  {
+    "id": 24218,
+    "word": "boxing",
+    "exam_en": "a <strong class=\"target-word\">boxing</strong> match",
+    "exam_ko": "<strong class=\"target-word\">권투</strong> 시합."
+  },
+  {
+    "id": 24219,
+    "word": "accordion",
+    "exam_en": "an <strong class=\"target-word\">accordion</strong> door",
+    "exam_ko": "<strong class=\"target-word\">신축성</strong> 자재로 된 문."
+  },
+  {
+    "id": 24220,
+    "word": "golf",
+    "exam_en": "go <strong class=\"target-word\">golfing</strong>",
+    "exam_ko": "<strong class=\"target-word\">골프를 치러</strong> 가다."
+  },
+  {
+    "id": 24221,
+    "word": "diatonic",
+    "exam_en": "the <strong class=\"target-word\">diatonic</strong> scale",
+    "exam_ko": "<strong class=\"target-word\">온음계</strong>."
+  },
+  {
+    "id": 24222,
+    "word": "indictable",
+    "exam_en": "an <strong class=\"target-word\">indictable</strong> offense",
+    "exam_ko": "(대배심에 의한) <strong class=\"target-word\">기소</strong> 범죄"
+  },
+  {
+    "id": 24223,
+    "word": "indictable",
+    "exam_en": "an <strong class=\"target-word\">indictable</strong> offender",
+    "exam_ko": "<strong class=\"target-word\">피기소</strong> 범죄인"
+  },
+  {
+    "id": 24224,
+    "word": "hermetically",
+    "exam_en": "The jar was <strong class=\"target-word\">hermetically</strong> sealed.",
+    "exam_ko": "그 단지는 밀폐되어 <strong class=\"target-word\">있었다</strong>."
+  },
+  {
+    "id": 24225,
+    "word": "uncork",
+    "exam_en": "<strong class=\"target-word\">uncork</strong> a bottle of wine",
+    "exam_ko": "와인 병의 마개를 <strong class=\"target-word\">뽑다</strong>."
+  },
+  {
+    "id": 24226,
+    "word": "uncork",
+    "exam_en": "The enemy <strong class=\"target-word\">uncork</strong> a surprise that changed the course of the war.",
+    "exam_ko": "적은 기습 작전을 취했으며, 그것이 그 후의 전국(戰局)을 <strong class=\"target-word\">바꾸었다</strong>."
+  },
+  {
+    "id": 24227,
+    "word": "eyeopener",
+    "exam_en": "Visiting Russia was a real <strong class=\"target-word\">eyeopener</strong> for me.",
+    "exam_ko": "러시아 여행은 나에게 정말이지 놀라운 <strong class=\"target-word\">경험이었다</strong>."
+  },
+  {
+    "id": 24228,
+    "word": "delicatessen",
+    "exam_en": "<strong class=\"target-word\">Delicatessen</strong> usually require little preparation for serving.",
+    "exam_ko": "조제 식품은 상에 내놓는 데에 조리가 별로 필요하지 <strong class=\"target-word\">않다</strong>."
+  },
+  {
+    "id": 24229,
+    "word": "delicatessen",
+    "exam_en": "The <strong class=\"target-word\">delicatessen</strong> closes at nine o'clock.",
+    "exam_ko": "그 조제 식품점은 아홉시에 문을 <strong class=\"target-word\">닫는다</strong>."
+  },
+  {
+    "id": 24230,
+    "word": "stunningly",
+    "exam_en": "The scenery from the mountain-top was <strong class=\"target-word\">stunningly</strong> beautiful.",
+    "exam_ko": "산 정상에서 바라본 풍경은 숨이 멎을 정도로 <strong class=\"target-word\">아름다웠다</strong>."
+  },
+  {
+    "id": 24231,
+    "word": "deceptively",
+    "exam_en": "<strong class=\"target-word\">deceptively</strong> simple",
+    "exam_ko": "<strong class=\"target-word\">언뜻</strong> 보기엔 간단한 (사실은 어려운)."
+  },
+  {
+    "id": 24232,
+    "word": "thrice",
+    "exam_en": "<strong class=\"target-word\">thrice</strong>-blessed",
+    "exam_ko": "<strong class=\"target-word\">매우</strong> 축복 받은."
+  },
+  {
+    "id": 24233,
+    "word": "overjoy",
+    "exam_en": "I am <strong class=\"target-word\">overjoy</strong> to learn of your promotion.",
+    "exam_ko": "당신이 승진했다는 것을 알고 기쁘기 <strong class=\"target-word\">그지없습니다</strong>."
+  },
+  {
+    "id": 24234,
+    "word": "smarten",
+    "exam_en": "<strong class=\"target-word\">smarten</strong> up one's room",
+    "exam_ko": "방을 깨끗이 <strong class=\"target-word\">하다</strong>."
+  },
+  {
+    "id": 24235,
+    "word": "spellbinding",
+    "exam_en": "It was a <strong class=\"target-word\">spellbinding</strong> experience.",
+    "exam_ko": "그것은 매혹적인 <strong class=\"target-word\">경험이었다</strong>."
+  },
+  {
+    "id": 24236,
+    "word": "sunstroke",
+    "exam_en": "have <strong class=\"target-word\">sunstroke</strong>",
+    "exam_ko": "일사병에 <strong class=\"target-word\">걸리다</strong>."
+  },
+  {
+    "id": 24237,
+    "word": "rhubarb",
+    "exam_en": "They are nice to him in person and then <strong class=\"target-word\">rhubarb</strong> away behind his back.",
+    "exam_ko": "그들은 직접 마주하면 그에게 친절했지만 등 뒤에서는 계속 <strong class=\"target-word\">수군거렸다</strong>."
+  },
+  {
+    "id": 24238,
+    "word": "aegis",
+    "exam_en": "under the royal <strong class=\"target-word\">aegis</strong>",
+    "exam_ko": "왕실의 비호를 <strong class=\"target-word\">받아</strong>서."
+  },
+  {
+    "id": 24239,
+    "word": "environs",
+    "exam_en": "The <strong class=\"target-word\">environs</strong> are attractive.",
+    "exam_ko": "주변이 <strong class=\"target-word\">아름답다</strong>."
+  },
+  {
+    "id": 24240,
+    "word": "dichotomous",
+    "exam_en": "<strong class=\"target-word\">dichotomous</strong> branching",
+    "exam_ko": "두 <strong class=\"target-word\">갈래지기</strong>[분열]."
+  },
+  {
+    "id": 24241,
+    "word": "sounding",
+    "exam_en": "a <strong class=\"target-word\">sounding</strong> declaration",
+    "exam_ko": "<strong class=\"target-word\">야단스러운</strong> 선언."
+  },
+  {
+    "id": 24242,
+    "word": "sounding",
+    "exam_en": "be in <strong class=\"target-word\">sounding</strong>s",
+    "exam_ko": "(<strong class=\"target-word\">배가</strong>) 측연이 닿는 곳에 있다."
+  },
+  {
+    "id": 24243,
+    "word": "parlay",
+    "exam_en": "He <strong class=\"target-word\">parlay</strong> a $35 loan from his grandmother into a nationwide chain of restaurants.",
+    "exam_ko": "그는 할머니에게서 빌린 35달러를 자본으로 하여 전국적인 식당 연쇄점을 <strong class=\"target-word\">만들었다</strong>."
+  },
+  {
+    "id": 24244,
+    "word": "roguery",
+    "exam_en": "He is notorious for his <strong class=\"target-word\">roguery</strong>.",
+    "exam_ko": "그는 유명한 <strong class=\"target-word\">사기꾼이다.</strong>"
+  },
+  {
+    "id": 24245,
+    "word": "underrepresented",
+    "exam_en": "an <strong class=\"target-word\">underrepresented</strong> group",
+    "exam_ko": "<strong class=\"target-word\">소수그룹</strong>"
+  },
+  {
+    "id": 24246,
+    "word": "underrepresented",
+    "exam_en": "Women are extremely <strong class=\"target-word\">underrepresented</strong> in the nation's parliament.",
+    "exam_ko": "그 나라 의회에 있어서의 여성 대표는 지극히 <strong class=\"target-word\">적다</strong>."
+  },
+  {
+    "id": 24247,
+    "word": "afterwards",
+    "exam_en": "He died soon <strong class=\"target-word\">afterwards</strong>.",
+    "exam_ko": "그는 그 후 곧 <strong class=\"target-word\">죽었다</strong>."
+  },
+  {
+    "id": 24248,
+    "word": "afterwards",
+    "exam_en": "They lived happily ever <strong class=\"target-word\">afterwards</strong>.",
+    "exam_ko": "그 뒤로 그들은 즐겁게 <strong class=\"target-word\">살았습니다</strong>(※동화의 끝맺음에 쓰이는 말)."
+  },
+  {
+    "id": 24249,
+    "word": "leer",
+    "exam_en": "<strong class=\"target-word\">leer</strong> at a woman",
+    "exam_ko": "여성에게 추파를 <strong class=\"target-word\">던지다</strong>."
+  },
+  {
+    "id": 24250,
+    "word": "mortally",
+    "exam_en": "a <strong class=\"target-word\">mortally</strong> injured person",
+    "exam_ko": "<strong class=\"target-word\">치명상을</strong> 입은 사람."
+  },
+  {
+    "id": 24251,
+    "word": "factious",
+    "exam_en": "These <strong class=\"target-word\">factious</strong> quarrels have almost destroyed the party.",
+    "exam_ko": "이러한 당파 싸움은 당을 거의 망할 <strong class=\"target-word\">뻔했다</strong>"
+  },
+  {
+    "id": 24252,
+    "word": "biographic",
+    "exam_en": "a <strong class=\"target-word\">biographic</strong> dictionary",
+    "exam_ko": "<strong class=\"target-word\">인명</strong> 사전."
+  },
+  {
+    "id": 24253,
+    "word": "carpal",
+    "exam_en": "<strong class=\"target-word\">carpal</strong> bones",
+    "exam_ko": "<strong class=\"target-word\">수근골</strong>."
+  },
+  {
+    "id": 24254,
+    "word": "prudential",
+    "exam_en": "<strong class=\"target-word\">prudential</strong> policies",
+    "exam_ko": "<strong class=\"target-word\">신중한</strong> 정책."
+  },
+  {
+    "id": 24255,
+    "word": "prudential",
+    "exam_en": "a <strong class=\"target-word\">prudential</strong> committee",
+    "exam_ko": "<strong class=\"target-word\">자문</strong> 위원회."
+  },
+  {
+    "id": 24256,
+    "word": "electro",
+    "exam_en": "<strong class=\"target-word\">electro</strong>biology",
+    "exam_ko": "전기 <strong class=\"target-word\">생물학,</strong> 생물 전기학."
+  },
+  {
+    "id": 24257,
+    "word": "totality",
+    "exam_en": "in its <strong class=\"target-word\">totality</strong>",
+    "exam_ko": "전체로서, <strong class=\"target-word\">통틀어</strong>."
+  },
+  {
+    "id": 24258,
+    "word": "inbound",
+    "exam_en": "an <strong class=\"target-word\">inbound</strong> ship",
+    "exam_ko": "(본국으로 돌아가는)<strong class=\"target-word\">귀항선</strong>."
+  },
+  {
+    "id": 24259,
+    "word": "ditto",
+    "exam_en": "say <strong class=\"target-word\">ditto</strong> to",
+    "exam_ko": "…과 같은 의견이라고 <strong class=\"target-word\">말하다</strong>."
+  },
+  {
+    "id": 24260,
+    "word": "ditto",
+    "exam_en": "\"I love you.\" \"<strong class=\"target-word\">Ditto</strong>.\"",
+    "exam_ko": "「<strong class=\"target-word\">사랑해요</strong>.」 「나도 그래.」"
+  },
+  {
+    "id": 24261,
+    "word": "convalescent",
+    "exam_en": "a <strong class=\"target-word\">convalescent</strong> ward",
+    "exam_ko": "<strong class=\"target-word\">회복기</strong> 환자 병동."
+  },
+  {
+    "id": 24262,
+    "word": "beery",
+    "exam_en": "a <strong class=\"target-word\">beery</strong> breath",
+    "exam_ko": "<strong class=\"target-word\">입에서</strong> 풍기는 맥주 냄새"
+  },
+  {
+    "id": 24263,
+    "word": "beery",
+    "exam_en": "<strong class=\"target-word\">beery</strong> good humor",
+    "exam_ko": "<strong class=\"target-word\">얼근히</strong> 취한 기분."
+  },
+  {
+    "id": 24264,
+    "word": "mousetrap",
+    "exam_en": "build a better <strong class=\"target-word\">mousetrap</strong>",
+    "exam_ko": "매력적인 신제품을 <strong class=\"target-word\">만들다</strong>."
+  },
+  {
+    "id": 24265,
+    "word": "molehill",
+    "exam_en": "make a mountain of a <strong class=\"target-word\">molehill</strong>",
+    "exam_ko": "하찮은 일을 크게 생각하다[떠벌리다, 보이게 하다], <strong class=\"target-word\">침소봉대하다</strong>."
+  },
+  {
+    "id": 24266,
+    "word": "doormat",
+    "exam_en": "be treated like a <strong class=\"target-word\">doormat</strong>",
+    "exam_ko": "동네북처럼 <strong class=\"target-word\">취급받다</strong>."
+  },
+  {
+    "id": 24267,
+    "word": "doormat",
+    "exam_en": "I'm not your <strong class=\"target-word\">doormat</strong>.",
+    "exam_ko": "나 <strong class=\"target-word\">동네북</strong> 아니야."
+  },
+  {
+    "id": 24268,
+    "word": "peerage",
+    "exam_en": "life <strong class=\"target-word\">peerage</strong>",
+    "exam_ko": "<strong class=\"target-word\">일대</strong> 귀족"
+  },
+  {
+    "id": 24269,
+    "word": "peerage",
+    "exam_en": "be raised to the <strong class=\"target-word\">peerage</strong>",
+    "exam_ko": "귀족에 <strong class=\"target-word\">봉해지다</strong>."
+  },
+  {
+    "id": 24270,
+    "word": "baldheaded",
+    "exam_en": "go <strong class=\"target-word\">baldheaded</strong> at",
+    "exam_ko": "…에 무턱대고 <strong class=\"target-word\">덤벼들다</strong>"
+  },
+  {
+    "id": 24271,
+    "word": "baldheaded",
+    "exam_en": "go <strong class=\"target-word\">baldheaded</strong> into",
+    "exam_ko": "…에 모든 것을 <strong class=\"target-word\">걸다</strong>."
+  },
+  {
+    "id": 24272,
+    "word": "expatriation",
+    "exam_en": "the right of <strong class=\"target-word\">expatriation</strong>",
+    "exam_ko": "<strong class=\"target-word\">국적</strong> 이탈권."
+  },
+  {
+    "id": 24273,
+    "word": "antipodal",
+    "exam_en": "<strong class=\"target-word\">antipodal</strong> opinions",
+    "exam_ko": "<strong class=\"target-word\">대립</strong> 의견."
+  },
+  {
+    "id": 24274,
+    "word": "memorialize",
+    "exam_en": "A stone cross <strong class=\"target-word\">memorialize</strong> the victims of the disaster.",
+    "exam_ko": "그 재해의 희생자를 추도하기 위해 돌 십자가가 세워져 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 24275,
+    "word": "shuttlecock",
+    "exam_en": "<strong class=\"target-word\">shuttlecock</strong> letters",
+    "exam_ko": "편지를 <strong class=\"target-word\">주고받다</strong>."
+  },
+  {
+    "id": 24276,
+    "word": "joker",
+    "exam_en": "a confirmed <strong class=\"target-word\">joker</strong>",
+    "exam_ko": "<strong class=\"target-word\">농담만</strong> 하는 사람"
+  },
+  {
+    "id": 24277,
+    "word": "joker",
+    "exam_en": "a practical <strong class=\"target-word\">joker</strong>",
+    "exam_ko": "<strong class=\"target-word\">짓궂은</strong> 장난을 하는 사람."
+  },
+  {
+    "id": 24278,
+    "word": "golfing",
+    "exam_en": "a <strong class=\"target-word\">golfing</strong> cap",
+    "exam_ko": "<strong class=\"target-word\">골프</strong> 모자"
+  },
+  {
+    "id": 24279,
+    "word": "golfing",
+    "exam_en": "a <strong class=\"target-word\">golfing</strong> holiday",
+    "exam_ko": "<strong class=\"target-word\">골프</strong> 휴가."
+  },
+  {
+    "id": 24280,
+    "word": "unroll",
+    "exam_en": "<strong class=\"target-word\">unroll</strong> a picture scroll",
+    "exam_ko": "족자를 <strong class=\"target-word\">펴다</strong>."
+  },
+  {
+    "id": 24281,
+    "word": "unburden",
+    "exam_en": "<strong class=\"target-word\">unburden</strong> a mule",
+    "exam_ko": "노새의 짐을 <strong class=\"target-word\">부리다</strong>"
+  },
+  {
+    "id": 24282,
+    "word": "unburden",
+    "exam_en": "<strong class=\"target-word\">unburden</strong> him of his bags",
+    "exam_ko": "그의 자루를 <strong class=\"target-word\">내려주다</strong>."
+  },
+  {
+    "id": 24283,
+    "word": "dishonesty",
+    "exam_en": "an act of <strong class=\"target-word\">dishonesty</strong>",
+    "exam_ko": "<strong class=\"target-word\">부정</strong> 행위"
+  },
+  {
+    "id": 24284,
+    "word": "dishonesty",
+    "exam_en": "many <strong class=\"target-word\">dishonesty</strong>",
+    "exam_ko": "많은 <strong class=\"target-word\">부정</strong> 행위."
+  },
+  {
+    "id": 24285,
+    "word": "vastness",
+    "exam_en": "the <strong class=\"target-word\">vastness</strong> of the desert",
+    "exam_ko": "사막의 <strong class=\"target-word\">광활함</strong>"
+  },
+  {
+    "id": 24286,
+    "word": "vastness",
+    "exam_en": "the <strong class=\"target-word\">vastness</strong> of the universe",
+    "exam_ko": "우주의 <strong class=\"target-word\">광대함</strong>."
+  },
+  {
+    "id": 24288,
+    "word": "unopened",
+    "exam_en": "send back a letter <strong class=\"target-word\">unopened</strong>",
+    "exam_ko": "편지를 개봉하지 않고 <strong class=\"target-word\">반송하다</strong>."
+  },
+  {
+    "id": 24292,
+    "word": "inflationary",
+    "exam_en": "<strong class=\"target-word\">inflationary</strong> trend",
+    "exam_ko": "<strong class=\"target-word\">인플레이션</strong> 경향"
+  },
+  {
+    "id": 24293,
+    "word": "inflationary",
+    "exam_en": "<strong class=\"target-word\">inflationary</strong> hedge",
+    "exam_ko": "인플레이션 <strong class=\"target-word\">방어</strong>[대비]책."
+  },
+  {
+    "id": 24294,
+    "word": "modernity",
+    "exam_en": "a spirit of <strong class=\"target-word\">modernity</strong>",
+    "exam_ko": "<strong class=\"target-word\">현대적</strong> 정신."
+  }
+]

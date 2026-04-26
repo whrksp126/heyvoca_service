@@ -1,0 +1,290 @@
+[
+  {
+    "id": 11496,
+    "origin": "mute",
+    "examples": [
+      {
+        "exam_en": "He stood in <strong class=\"target-word\">mute</strong> anger after the argument.",
+        "exam_ko": "그는 말다툼 후 <strong class=\"target-word\">말없는</strong> 분노로 서 있었다."
+      },
+      {
+        "exam_en": "She remained <strong class=\"target-word\">mute</strong> throughout the entire meeting.",
+        "exam_ko": "그녀는 회의 내내 <strong class=\"target-word\">침묵을 지켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11497,
+    "origin": "performer",
+    "examples": [
+      {
+        "exam_en": "He is a great talker but a poor <strong class=\"target-word\">performer</strong>.",
+        "exam_ko": "그는 말은 잘하지만 형편없는 <strong class=\"target-word\">실행자</strong>다."
+      },
+      {
+        "exam_en": "She is a skilled <strong class=\"target-word\">performer</strong> on the banjo.",
+        "exam_ko": "그녀는 능숙한 밴조 <strong class=\"target-word\">연주자</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 11498,
+    "origin": "excursion",
+    "examples": [
+      {
+        "exam_en": "We joined a ski <strong class=\"target-word\">excursion</strong> last winter.",
+        "exam_ko": "우리는 지난 겨울 스키 <strong class=\"target-word\">여행</strong>에 참가했다."
+      },
+      {
+        "exam_en": "The school organized a day <strong class=\"target-word\">excursion</strong> to the museum.",
+        "exam_ko": "학교는 박물관으로의 당일 <strong class=\"target-word\">소풍</strong>을 계획했다."
+      }
+    ]
+  },
+  {
+    "id": 11499,
+    "origin": "substitution",
+    "examples": [
+      {
+        "exam_en": "The team made a late <strong class=\"target-word\">substitution</strong> during the match.",
+        "exam_ko": "팀은 경기 후반에 <strong class=\"target-word\">교체</strong>를 단행했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">substitution</strong> of volunteers for paid staff saved costs.",
+        "exam_ko": "유급 직원을 자원봉사자로 <strong class=\"target-word\">대체한</strong> 것이 비용을 절감했다."
+      }
+    ]
+  },
+  {
+    "id": 11502,
+    "origin": "annotate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">annotated</strong> Arnold's essays carefully.",
+        "exam_ko": "그는 아놀드의 평론에 꼼꼼히 <strong class=\"target-word\">주석을 달았다</strong>."
+      },
+      {
+        "exam_en": "Please include an <strong class=\"target-word\">annotated</strong> copy of the specification.",
+        "exam_ko": "시방서의 <strong class=\"target-word\">주석이 달린</strong> 사본을 포함해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 11503,
+    "origin": "infringement",
+    "examples": [
+      {
+        "exam_en": "The lawsuit involved a clear <strong class=\"target-word\">infringement</strong> of privacy.",
+        "exam_ko": "그 소송은 명백한 사생활 <strong class=\"target-word\">침해</strong>와 관련이 있었다."
+      },
+      {
+        "exam_en": "Copyright <strong class=\"target-word\">infringement</strong> can result in heavy fines.",
+        "exam_ko": "저작권 <strong class=\"target-word\">침해</strong>는 큰 벌금으로 이어질 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 11504,
+    "origin": "flicker",
+    "examples": [
+      {
+        "exam_en": "Her life is <strong class=\"target-word\">flickering</strong> out slowly.",
+        "exam_ko": "그녀의 생명의 불이 천천히 <strong class=\"target-word\">꺼져가고</strong> 있다."
+      },
+      {
+        "exam_en": "Anxiety <strong class=\"target-word\">flickered</strong> across her face.",
+        "exam_ko": "불안한 빛이 그녀의 얼굴에 언뜻 <strong class=\"target-word\">어른거렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11506,
+    "origin": "perishable",
+    "examples": [
+      {
+        "exam_en": "Milk and meat are highly <strong class=\"target-word\">perishable</strong> foods.",
+        "exam_ko": "우유와 고기는 매우 <strong class=\"target-word\">부패하기 쉬운</strong> 식품이다."
+      },
+      {
+        "exam_en": "Store all <strong class=\"target-word\">perishable</strong> items in the refrigerator.",
+        "exam_ko": "<strong class=\"target-word\">쉽게 상하는</strong> 음식은 모두 냉장고에 보관하세요."
+      }
+    ]
+  },
+  {
+    "id": 11507,
+    "origin": "portfolio",
+    "examples": [
+      {
+        "exam_en": "He was appointed as a minister without <strong class=\"target-word\">portfolio</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">무임소</strong> 장관으로 임명되었다."
+      },
+      {
+        "exam_en": "She built a strong investment <strong class=\"target-word\">portfolio</strong> over ten years.",
+        "exam_ko": "그녀는 10년에 걸쳐 강력한 투자 <strong class=\"target-word\">포트폴리오</strong>를 구성했다."
+      }
+    ]
+  },
+  {
+    "id": 11508,
+    "origin": "fastidious",
+    "examples": [
+      {
+        "exam_en": "She is very <strong class=\"target-word\">fastidious</strong> about her appearance.",
+        "exam_ko": "그녀는 자신의 외모에 매우 <strong class=\"target-word\">까다롭다</strong>."
+      },
+      {
+        "exam_en": "Den was <strong class=\"target-word\">fastidious</strong> about his looks at all times.",
+        "exam_ko": "덴은 항상 자신의 외모에 <strong class=\"target-word\">까다로웠다</strong>."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">fastidious</strong> taste in literature.",
+        "exam_ko": "그는 문학에 관해 <strong class=\"target-word\">까다로운</strong> 취향을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 11509,
+    "origin": "swelling",
+    "examples": [
+      {
+        "exam_en": "There is a nasty <strong class=\"target-word\">swelling</strong> on his neck.",
+        "exam_ko": "그의 목에 보기 싫은 <strong class=\"target-word\">혹</strong>이 있다."
+      },
+      {
+        "exam_en": "Apply ice to reduce the <strong class=\"target-word\">swelling</strong> after injury.",
+        "exam_ko": "부상 후 <strong class=\"target-word\">부기</strong>를 줄이려면 얼음을 대세요."
+      }
+    ]
+  },
+  {
+    "id": 11511,
+    "origin": "tenacious",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">tenacious</strong> and never gave up on her dream.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">끈질겨서</strong> 꿈을 절대 포기하지 않았다."
+      },
+      {
+        "exam_en": "The bulldog has a <strong class=\"target-word\">tenacious</strong> grip that won't let go.",
+        "exam_ko": "불독은 놓지 않는 <strong class=\"target-word\">집요한</strong> 물림새를 가지고 있다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">tenacious</strong> in pursuing his goals.",
+        "exam_ko": "그는 목표를 추구하는 데 <strong class=\"target-word\">끈기 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11512,
+    "origin": "remuneration",
+    "examples": [
+      {
+        "exam_en": "The company offered fair <strong class=\"target-word\">remuneration</strong> for his labor.",
+        "exam_ko": "회사는 그의 노동에 대해 공정한 <strong class=\"target-word\">보수</strong>를 지급했다."
+      },
+      {
+        "exam_en": "She negotiated better <strong class=\"target-word\">remuneration</strong> before signing.",
+        "exam_ko": "그녀는 서명 전에 더 나은 <strong class=\"target-word\">보상</strong>을 협상했다."
+      }
+    ]
+  },
+  {
+    "id": 11514,
+    "origin": "incomparable",
+    "examples": [
+      {
+        "exam_en": "She has an <strong class=\"target-word\">incomparable</strong> charm that draws everyone.",
+        "exam_ko": "그녀는 모든 사람을 끌어당기는 <strong class=\"target-word\">비길 데 없는</strong> 매력을 가지고 있다."
+      },
+      {
+        "exam_en": "He is a man of <strong class=\"target-word\">incomparable</strong> wealth and influence.",
+        "exam_ko": "그는 <strong class=\"target-word\">비할 바 없는</strong> 부와 영향력을 가진 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 11516,
+    "origin": "conceit",
+    "examples": [
+      {
+        "exam_en": "He is so full of <strong class=\"target-word\">conceit</strong> that no one likes him.",
+        "exam_ko": "그는 <strong class=\"target-word\">자만심</strong>으로 가득 차 있어 아무도 그를 좋아하지 않는다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">conceit</strong> prevented him from accepting criticism.",
+        "exam_ko": "그의 <strong class=\"target-word\">자부심</strong>이 비판을 받아들이는 것을 막았다."
+      }
+    ]
+  },
+  {
+    "id": 11518,
+    "origin": "bias",
+    "examples": [
+      {
+        "exam_en": "He has a strong <strong class=\"target-word\">bias</strong> toward classical music.",
+        "exam_ko": "그는 클래식 음악에 강한 <strong class=\"target-word\">편향</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "The report showed a clear <strong class=\"target-word\">bias</strong> toward the government.",
+        "exam_ko": "그 보고서는 정부를 지지하는 명백한 <strong class=\"target-word\">편향</strong>을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 11519,
+    "origin": "bibliography",
+    "examples": [
+      {
+        "exam_en": "He compiled a complete Milton <strong class=\"target-word\">bibliography</strong>.",
+        "exam_ko": "그는 완전한 밀턴 <strong class=\"target-word\">저작 목록</strong>을 편찬했다."
+      },
+      {
+        "exam_en": "The thesis includes a detailed <strong class=\"target-word\">bibliography</strong> at the end.",
+        "exam_ko": "논문 끝에 상세한 <strong class=\"target-word\">참고문헌</strong>이 포함되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 11522,
+    "origin": "amity",
+    "examples": [
+      {
+        "exam_en": "The two nations signed a treaty to promote <strong class=\"target-word\">amity</strong>.",
+        "exam_ko": "두 나라는 <strong class=\"target-word\">친선</strong>을 증진하기 위한 조약에 서명했다."
+      },
+      {
+        "exam_en": "They lived in <strong class=\"target-word\">amity</strong> with their neighbors.",
+        "exam_ko": "그들은 이웃들과 <strong class=\"target-word\">우호적으로</strong> 살았다."
+      }
+    ]
+  },
+  {
+    "id": 11523,
+    "origin": "amicable",
+    "examples": [
+      {
+        "exam_en": "They settled their dispute in an <strong class=\"target-word\">amicable</strong> manner.",
+        "exam_ko": "그들은 분쟁을 <strong class=\"target-word\">우호적인</strong> 방식으로 해결했다."
+      },
+      {
+        "exam_en": "The two companies reached an <strong class=\"target-word\">amicable</strong> agreement.",
+        "exam_ko": "두 회사는 <strong class=\"target-word\">원만한</strong> 합의에 도달했다."
+      }
+    ]
+  },
+  {
+    "id": 11524,
+    "origin": "exalt",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">exalted</strong> to the position of president.",
+        "exam_ko": "그는 사장 자리로 <strong class=\"target-word\">승진되었다</strong>."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">exalted</strong> by her remarkable success.",
+        "exam_ko": "그녀는 놀라운 성공으로 <strong class=\"target-word\">우쭐한</strong> 기분이었다."
+      }
+    ]
+  }
+]

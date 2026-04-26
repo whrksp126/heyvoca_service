@@ -1,0 +1,250 @@
+[
+  {
+    "id": 15444,
+    "origin": "hue",
+    "examples": [
+      {
+        "exam_en": "pale hues",
+        "exam_ko": "엷은 색조"
+      },
+      {
+        "exam_en": "all the hues of the rainbow",
+        "exam_ko": "무지개의 여러 가지 빛깔"
+      }
+    ]
+  },
+  {
+    "id": 15446,
+    "origin": "cider",
+    "examples": [
+      {
+        "exam_en": "May I have three ciders?",
+        "exam_ko": "사과술을 세 잔 주십시오."
+      }
+    ]
+  },
+  {
+    "id": 15454,
+    "origin": "indefinite",
+    "examples": [
+      {
+        "exam_en": "an indefinite opinion",
+        "exam_ko": "애매한 의견"
+      },
+      {
+        "exam_en": "in an indefinite manner",
+        "exam_ko": "막연한 태도로."
+      }
+    ]
+  },
+  {
+    "id": 15456,
+    "origin": "downy",
+    "examples": [
+      {
+        "exam_en": "a downy bird",
+        "exam_ko": "빈틈없는 녀석."
+      }
+    ]
+  },
+  {
+    "id": 15458,
+    "origin": "mobility",
+    "examples": [
+      {
+        "exam_en": "upward mobility",
+        "exam_ko": "(사회의) 상승 지향."
+      }
+    ]
+  },
+  {
+    "id": 15461,
+    "origin": "peck",
+    "examples": [
+      {
+        "exam_en": "peck a hole in a tree",
+        "exam_ko": "나무에 구멍을 뚫다."
+      },
+      {
+        "exam_en": "peck insects from the tree bark",
+        "exam_ko": "나무 껍질을 찔러 곤충을 몰아내다."
+      }
+    ]
+  },
+  {
+    "id": 15463,
+    "origin": "besiege",
+    "examples": [
+      {
+        "exam_en": "the besieged",
+        "exam_ko": "농성군"
+      },
+      {
+        "exam_en": "He was besieged by reporters.",
+        "exam_ko": "그는 기자들에게 둘러싸여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 15467,
+    "origin": "rocky",
+    "examples": [
+      {
+        "exam_en": "a rocky path",
+        "exam_ko": "돌길."
+      },
+      {
+        "exam_en": "rocky hardness",
+        "exam_ko": "바위처럼 굳음."
+      }
+    ]
+  },
+  {
+    "id": 15468,
+    "origin": "mar",
+    "examples": [
+      {
+        "exam_en": "Strip mining mars the landscape.",
+        "exam_ko": "노천 채굴이 경관을 손상시키고 있다"
+      },
+      {
+        "exam_en": "My travels were marred by a traffic accident.",
+        "exam_ko": "내 여행은 교통 사고로 엉망이 되어 버렸다."
+      },
+      {
+        "exam_en": "Touch up and otherwise repair and restore marred exposed finishes to eliminate visual defects.",
+        "exam_ko": "시각적 결함을 제거하기위해 손상된 노출부위를 터치업하거나 아니면 수리하고 복구시킵니다."
+      }
+    ]
+  },
+  {
+    "id": 15469,
+    "origin": "fright",
+    "examples": [
+      {
+        "exam_en": "get the fright of one's life",
+        "exam_ko": "깜짝 놀라다"
+      },
+      {
+        "exam_en": "have a fright",
+        "exam_ko": "공포에 사로잡히다"
+      }
+    ]
+  },
+  {
+    "id": 15471,
+    "origin": "trailblazer",
+    "examples": [
+      {
+        "exam_en": "a trailblazer in the field of medicine",
+        "exam_ko": "의학계의 개척자."
+      },
+      {
+        "exam_en": "Ando was a trailblazer in contemporary architecture.",
+        "exam_ko": "안도 다다오는 현대 건축의 선구자였습니다."
+      }
+    ]
+  },
+  {
+    "id": 15473,
+    "origin": "indemnify",
+    "examples": [
+      {
+        "exam_en": "indemnify a person for an action",
+        "exam_ko": "어떤 행위에 책임을 지지 않게 한다는 것을 남에게 보증하다."
+      }
+    ]
+  },
+  {
+    "id": 15479,
+    "origin": "sweltering",
+    "examples": [
+      {
+        "exam_en": "It's sweltering in the room.",
+        "exam_ko": "방안이 너무 무덥다."
+      }
+    ]
+  },
+  {
+    "id": 15487,
+    "origin": "ultimatum",
+    "examples": [
+      {
+        "exam_en": "deliver an ultimatum",
+        "exam_ko": "최후 통첩을 보내다."
+      }
+    ]
+  },
+  {
+    "id": 15491,
+    "origin": "insolvency",
+    "examples": [
+      {
+        "exam_en": "An ipso facto clause is a contractual provision that allows one party to terminate or modify the operation of the contract (or provides for this to occur automatically) upon the occurrence of a specified insolvency related event.",
+        "exam_ko": "ipso facto 조항은 특정 파산 관련 사건 발생시 한 당사자가 계약 운영을 종료 또는 수정 (또는 자동으로 수행하도록)하는 계약 조항입니다."
+      }
+    ]
+  },
+  {
+    "id": 15492,
+    "origin": "cannibalism",
+    "examples": [
+      {
+        "exam_en": "practice cannibalism",
+        "exam_ko": "동족끼리 잡아먹다, 인육을 먹다."
+      }
+    ]
+  },
+  {
+    "id": 15493,
+    "origin": "categorically",
+    "examples": [
+      {
+        "exam_en": "categorically deny",
+        "exam_ko": "딱 잘라 부인하다."
+      }
+    ]
+  },
+  {
+    "id": 15494,
+    "origin": "categorical",
+    "examples": [
+      {
+        "exam_en": "a categorical imperative",
+        "exam_ko": "[윤리학] 정언[단언]적 명령, 지상 명령; (양심의) 무조건적 명령."
+      },
+      {
+        "exam_en": "My answer is a categorical \"no\".",
+        "exam_ko": "딱 잘라 거절합니다."
+      }
+    ]
+  },
+  {
+    "id": 15499,
+    "origin": "vegetative",
+    "examples": [
+      {
+        "exam_en": "the vegetative world",
+        "exam_ko": "식물계"
+      },
+      {
+        "exam_en": "vegetative growth",
+        "exam_ko": "식물의 생장."
+      }
+    ]
+  },
+  {
+    "id": 15502,
+    "origin": "acquiesce",
+    "examples": [
+      {
+        "exam_en": "The people acquiesced in the President's decisions.",
+        "exam_ko": "국민은 대통령의 결정에 마지못해 동의했다."
+      },
+      {
+        "exam_en": "Despite his disagreement, he eventually acquiesced to their demands.",
+        "exam_ko": "그의 반대에도 불구하고, 결국 그는 그들의 요구에 동의했다."
+      }
+    ]
+  }
+]

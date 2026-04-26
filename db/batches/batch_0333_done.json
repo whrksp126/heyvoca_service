@@ -1,0 +1,282 @@
+[
+  {
+    "id": 8600,
+    "origin": "likelihood",
+    "examples": [
+      {
+        "exam_en": "The treatment reduces the <strong class=\"target-word\">likelihood</strong> of heart attacks.",
+        "exam_ko": "그 치료법은 심장 마비가 일어날 <strong class=\"target-word\">가능성</strong>을 줄인다."
+      },
+      {
+        "exam_en": "Is there any <strong class=\"target-word\">likelihood</strong> that he will succeed?",
+        "exam_ko": "그가 성공할 <strong class=\"target-word\">가능성</strong>이 있습니까?"
+      }
+    ]
+  },
+  {
+    "id": 8601,
+    "origin": "pounce",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pounces</strong> on my words like a lawyer.",
+        "exam_ko": "그는 마치 법률가처럼 내 말꼬리를 <strong class=\"target-word\">물고 늘어진다</strong>."
+      },
+      {
+        "exam_en": "The cat <strong class=\"target-word\">pounced</strong> on the mouse instantly.",
+        "exam_ko": "고양이가 즉시 쥐에게 <strong class=\"target-word\">달려들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8602,
+    "origin": "affable",
+    "examples": [
+      {
+        "exam_en": "She greeted everyone with an <strong class=\"target-word\">affable</strong> smile.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">부드러운</strong> 미소로 모두를 맞이했다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">affable</strong> to everybody he meets.",
+        "exam_ko": "그는 만나는 모든 사람에게 <strong class=\"target-word\">친절하게</strong> 대한다."
+      }
+    ]
+  },
+  {
+    "id": 8604,
+    "origin": "cerebral",
+    "examples": [
+      {
+        "exam_en": "The doctor diagnosed him with <strong class=\"target-word\">cerebral</strong> hemorrhage.",
+        "exam_ko": "의사는 그에게 <strong class=\"target-word\">뇌</strong> 출혈 진단을 내렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">cerebral</strong> cortex controls complex thinking.",
+        "exam_ko": "<strong class=\"target-word\">대뇌</strong> 피질은 복잡한 사고를 조절한다."
+      }
+    ]
+  },
+  {
+    "id": 8608,
+    "origin": "triangulation",
+    "examples": [
+      {
+        "exam_en": "The team used <strong class=\"target-word\">triangulation</strong> to find the signal source.",
+        "exam_ko": "팀은 신호 발신지를 찾기 위해 <strong class=\"target-word\">삼각 측량</strong>을 이용했다."
+      },
+      {
+        "exam_en": "GPS relies on <strong class=\"target-word\">triangulation</strong> from multiple satellites.",
+        "exam_ko": "GPS는 여러 위성의 <strong class=\"target-word\">삼각 측량</strong>에 의존한다."
+      }
+    ]
+  },
+  {
+    "id": 8611,
+    "origin": "horror",
+    "examples": [
+      {
+        "exam_en": "She witnessed the <strong class=\"target-word\">horror</strong> of war firsthand.",
+        "exam_ko": "그녀는 전쟁의 <strong class=\"target-word\">공포</strong>를 직접 목격했다."
+      },
+      {
+        "exam_en": "To his <strong class=\"target-word\">horror</strong>, the bridge collapsed beneath him.",
+        "exam_ko": "<strong class=\"target-word\">무섭게도</strong> 다리가 그 아래에서 무너졌다."
+      }
+    ]
+  },
+  {
+    "id": 8612,
+    "origin": "stray",
+    "examples": [
+      {
+        "exam_en": "The child <strong class=\"target-word\">strayed</strong> from the path into the woods.",
+        "exam_ko": "아이는 길을 벗어나 숲 속으로 <strong class=\"target-word\">들어섰다</strong>."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">stray</strong> dog was wandering the streets alone.",
+        "exam_ko": "<strong class=\"target-word\">길을 잃은</strong> 개 한 마리가 홀로 거리를 돌아다녔다."
+      }
+    ]
+  },
+  {
+    "id": 8613,
+    "origin": "commitment",
+    "examples": [
+      {
+        "exam_en": "She fulfilled her <strong class=\"target-word\">commitment</strong> to the project.",
+        "exam_ko": "그녀는 프로젝트에 대한 <strong class=\"target-word\">약속</strong>을 이행했다."
+      },
+      {
+        "exam_en": "He made a <strong class=\"target-word\">commitment</strong> to improve his health.",
+        "exam_ko": "그는 건강을 개선하겠다는 <strong class=\"target-word\">확약</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 8616,
+    "origin": "lime",
+    "examples": [
+      {
+        "exam_en": "Workers spread <strong class=\"target-word\">lime</strong> on the soil to reduce acidity.",
+        "exam_ko": "일꾼들은 산성을 줄이려고 토양에 <strong class=\"target-word\">석회</strong>를 뿌렸다."
+      },
+      {
+        "exam_en": "She squeezed a <strong class=\"target-word\">lime</strong> over the grilled fish.",
+        "exam_ko": "그녀는 구운 생선 위에 <strong class=\"target-word\">라임</strong>을 짜 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 8618,
+    "origin": "embed",
+    "examples": [
+      {
+        "exam_en": "Dirt was <strong class=\"target-word\">embedded</strong> deep in the carpet fibers.",
+        "exam_ko": "먼지가 카펫 섬유 깊숙이 <strong class=\"target-word\">박혀</strong> 있었다."
+      },
+      {
+        "exam_en": "The crown was <strong class=\"target-word\">embedded</strong> with precious jewels.",
+        "exam_ko": "왕관에는 귀한 보석들이 <strong class=\"target-word\">박혀</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8620,
+    "origin": "wade",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">waded</strong> across the shallow river carefully.",
+        "exam_ko": "그들은 얕은 강을 조심스럽게 <strong class=\"target-word\">걸어서 건넜다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">waded</strong> into the crowd to find his friend.",
+        "exam_ko": "그는 친구를 찾으러 군중 속으로 <strong class=\"target-word\">끼어 들어갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8622,
+    "origin": "ritual",
+    "examples": [
+      {
+        "exam_en": "The tribe performed a religious <strong class=\"target-word\">ritual</strong> at dawn.",
+        "exam_ko": "부족은 새벽에 종교 <strong class=\"target-word\">의식</strong>을 행했다."
+      },
+      {
+        "exam_en": "Morning coffee has become a daily <strong class=\"target-word\">ritual</strong> for her.",
+        "exam_ko": "아침 커피는 그녀의 일상적인 <strong class=\"target-word\">의식</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 8623,
+    "origin": "slick",
+    "examples": [
+      {
+        "exam_en": "The floor was <strong class=\"target-word\">slick</strong> with ice after the rain.",
+        "exam_ko": "비가 온 뒤 바닥이 얼음으로 <strong class=\"target-word\">미끄러웠다</strong>."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">slick</strong> talker who wins people over easily.",
+        "exam_ko": "그는 사람들을 쉽게 설득하는 <strong class=\"target-word\">말솜씨 좋은</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 8627,
+    "origin": "cutter",
+    "examples": [
+      {
+        "exam_en": "He used a box <strong class=\"target-word\">cutter</strong> to open the package.",
+        "exam_ko": "그는 박스 <strong class=\"target-word\">커터</strong>로 포장을 열었다."
+      },
+      {
+        "exam_en": "The meat <strong class=\"target-word\">cutter</strong> sliced the roast into thin pieces.",
+        "exam_ko": "고기 <strong class=\"target-word\">절단기</strong>가 로스트를 얇게 잘랐다."
+      }
+    ]
+  },
+  {
+    "id": 8628,
+    "origin": "rift",
+    "examples": [
+      {
+        "exam_en": "The sun appeared through a <strong class=\"target-word\">rift</strong> in the clouds.",
+        "exam_ko": "태양이 구름 사이의 <strong class=\"target-word\">틈</strong>을 뚫고 나타났다."
+      },
+      {
+        "exam_en": "A political scandal caused a <strong class=\"target-word\">rift</strong> in their friendship.",
+        "exam_ko": "정치적 스캔들이 그들의 우정에 <strong class=\"target-word\">금</strong>을 냈다."
+      }
+    ]
+  },
+  {
+    "id": 8629,
+    "origin": "thaw",
+    "examples": [
+      {
+        "exam_en": "The snow on the ground will <strong class=\"target-word\">thaw</strong> soon.",
+        "exam_ko": "땅 위의 눈은 곧 <strong class=\"target-word\">녹을</strong> 것이다."
+      },
+      {
+        "exam_en": "This meat will take an hour to <strong class=\"target-word\">thaw</strong> completely.",
+        "exam_ko": "이 냉동육은 완전히 <strong class=\"target-word\">녹는</strong> 데 한 시간이 걸릴 것이다."
+      }
+    ]
+  },
+  {
+    "id": 8630,
+    "origin": "prostrate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">prostrated</strong> himself before the altar in prayer.",
+        "exam_ko": "그는 기도하며 제단 앞에 <strong class=\"target-word\">엎드렸다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">prostrate</strong> with grief after the funeral.",
+        "exam_ko": "그녀는 장례식 후 슬픔으로 <strong class=\"target-word\">쓰러져</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8631,
+    "origin": "blunt",
+    "examples": [
+      {
+        "exam_en": "The knife was too <strong class=\"target-word\">blunt</strong> to cut the bread.",
+        "exam_ko": "칼이 너무 <strong class=\"target-word\">무뎌서</strong> 빵을 자를 수 없었다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">blunt</strong> about her opinion of the plan.",
+        "exam_ko": "그녀는 계획에 대한 의견을 <strong class=\"target-word\">직설적으로</strong> 말했다."
+      }
+    ]
+  },
+  {
+    "id": 8632,
+    "origin": "misdemeanor",
+    "examples": [
+      {
+        "exam_en": "He was charged with a <strong class=\"target-word\">misdemeanor</strong> for jaywalking.",
+        "exam_ko": "그는 무단횡단으로 <strong class=\"target-word\">경범죄</strong> 혐의를 받았다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">misdemeanor</strong> carries a lighter sentence than a felony.",
+        "exam_ko": "<strong class=\"target-word\">경범죄</strong>는 중범죄보다 가벼운 형량을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 8633,
+    "origin": "degeneration",
+    "examples": [
+      {
+        "exam_en": "Experts warned of moral <strong class=\"target-word\">degeneration</strong> in modern society.",
+        "exam_ko": "전문가들은 현대 사회의 도덕적 <strong class=\"target-word\">퇴폐</strong>를 경고했다."
+      },
+      {
+        "exam_en": "The disease causes gradual <strong class=\"target-word\">degeneration</strong> of muscle tissue.",
+        "exam_ko": "그 병은 근육 조직의 점진적인 <strong class=\"target-word\">퇴화</strong>를 유발한다."
+      }
+    ]
+  }
+]

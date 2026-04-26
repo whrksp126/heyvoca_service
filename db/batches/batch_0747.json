@@ -1,0 +1,218 @@
+[
+  {
+    "id": 42333,
+    "origin": "brevipennate",
+    "examples": [
+      {
+        "exam_en": "The bird had brevipennate wings, which allowed it to maneuver swiftly through the dense forest.",
+        "exam_ko": "그 새는 날개가 짧아 빠르게 우거진 숲 속을 비행할 수 있었다."
+      }
+    ]
+  },
+  {
+    "id": 42336,
+    "origin": "beetroot",
+    "examples": [
+      {
+        "exam_en": "go beetroot",
+        "exam_ko": "얼굴이 빨개지다."
+      }
+    ]
+  },
+  {
+    "id": 42372,
+    "origin": "ortho",
+    "examples": [
+      {
+        "exam_en": "orthocenter",
+        "exam_ko": "수심(垂心)."
+      }
+    ]
+  },
+  {
+    "id": 42374,
+    "origin": "optative",
+    "examples": [
+      {
+        "exam_en": "the optative mood",
+        "exam_ko": "기원법."
+      },
+      {
+        "exam_en": "God save the Queen.",
+        "exam_ko": "「신이여 여왕을 지켜 주소서」 등."
+      }
+    ]
+  },
+  {
+    "id": 42376,
+    "origin": "overcommit",
+    "examples": [
+      {
+        "exam_en": "The government was overcommitted militarily.",
+        "exam_ko": "정부는 군사적으로 지나치게 개입했다"
+      },
+      {
+        "exam_en": "By taking on a new project, he overcommitted himself.",
+        "exam_ko": "그는 새로운 사업을 떠맡아 꼼짝할 수 없는 지경에 빠져버렸다."
+      }
+    ]
+  },
+  {
+    "id": 42380,
+    "origin": "monosyllabic",
+    "examples": [
+      {
+        "exam_en": "a monosyllabic reply",
+        "exam_ko": "퉁명스러운 대답."
+      }
+    ]
+  },
+  {
+    "id": 42387,
+    "origin": "chiro",
+    "examples": [
+      {
+        "exam_en": "chirology",
+        "exam_ko": "수화법(手話法)."
+      }
+    ]
+  },
+  {
+    "id": 42438,
+    "origin": "concretion",
+    "examples": [
+      {
+        "exam_en": "a calcareous concretion",
+        "exam_ko": "석회질 결핵."
+      }
+    ]
+  },
+  {
+    "id": 42445,
+    "origin": "somato",
+    "examples": [
+      {
+        "exam_en": "somatopleure",
+        "exam_ko": "체벽엽."
+      }
+    ]
+  },
+  {
+    "id": 42458,
+    "origin": "unbend",
+    "examples": [
+      {
+        "exam_en": "unbend oneself",
+        "exam_ko": "푸근히 쉬다, 푸근해지다"
+      },
+      {
+        "exam_en": "unbend the brow",
+        "exam_ko": "이맛살[찡그린 얼굴]을 펴다."
+      }
+    ]
+  },
+  {
+    "id": 42463,
+    "origin": "unalloyed",
+    "examples": [
+      {
+        "exam_en": "unalloyed metals",
+        "exam_ko": "합금이 아닌 금속."
+      },
+      {
+        "exam_en": "unalloyed triumph",
+        "exam_ko": "완전한 승리."
+      }
+    ]
+  },
+  {
+    "id": 42466,
+    "origin": "toothcomb",
+    "examples": [
+      {
+        "exam_en": "go through ‥ with a toothcomb",
+        "exam_ko": "…을 면밀히 조사하다."
+      }
+    ]
+  },
+  {
+    "id": 42491,
+    "origin": "iso",
+    "examples": [
+      {
+        "exam_en": "isomorph",
+        "exam_ko": "동형체."
+      }
+    ]
+  },
+  {
+    "id": 42509,
+    "origin": "unbid",
+    "examples": [
+      {
+        "exam_en": "an unbid visitor",
+        "exam_ko": "불청객."
+      }
+    ]
+  },
+  {
+    "id": 42513,
+    "origin": "therefrom",
+    "examples": [
+      {
+        "exam_en": "the conclusion derived therefrom",
+        "exam_ko": "거기서 나온 결론."
+      }
+    ]
+  },
+  {
+    "id": 42514,
+    "origin": "theretofore",
+    "examples": [
+      {
+        "exam_en": "the law theretofore made",
+        "exam_ko": "그보다 먼저 만들어진 법."
+      }
+    ]
+  },
+  {
+    "id": 42523,
+    "origin": "shatterproof",
+    "examples": [
+      {
+        "exam_en": "shatterproof glass",
+        "exam_ko": "안전 유리."
+      }
+    ]
+  },
+  {
+    "id": 42533,
+    "origin": "ing",
+    "examples": [
+      {
+        "exam_en": "a painting, a building, writings, shavings",
+        "exam_ko": "(※복수형은 보통 「…된 것」의 뜻)."
+      }
+    ]
+  },
+  {
+    "id": 42569,
+    "origin": "tare",
+    "examples": [
+      {
+        "exam_en": "Before weighing the ingredients, make sure to zero the scale by subtracting the tare weight.",
+        "exam_ko": "재료의 무게를 측정하기 전에 포장 무게를 빼고 저울을 0로 맞추어야 합니다."
+      }
+    ]
+  },
+  {
+    "id": 42571,
+    "origin": "centric",
+    "examples": [
+      {
+        "exam_en": "a centric point",
+        "exam_ko": "중심점."
+      }
+    ]
+  }
+]

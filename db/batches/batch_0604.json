@@ -1,0 +1,254 @@
+[
+  {
+    "id": 20379,
+    "origin": "genteel",
+    "examples": [
+      {
+        "exam_en": " A man might be rich without being genteel. ",
+        "exam_ko": "가문이 훌륭하지 않고서도 부자일 수가 있다."
+      },
+      {
+        "exam_en": "live in genteel poverty",
+        "exam_ko": "가난하면서 품위 있는 체하며 살다."
+      },
+      {
+        "exam_en": "A man might be rich without being genteel.",
+        "exam_ko": "가문이 훌륭하지 않고서도 부자일 수가 있다."
+      }
+    ]
+  },
+  {
+    "id": 20382,
+    "origin": "pang",
+    "examples": [
+      {
+        "exam_en": "a pang of conscience",
+        "exam_ko": "양심의 가책."
+      },
+      {
+        "exam_en": "the pangs of childbirth",
+        "exam_ko": "진통."
+      }
+    ]
+  },
+  {
+    "id": 20384,
+    "origin": "effectual",
+    "examples": [
+      {
+        "exam_en": "effectual action against unemployment",
+        "exam_ko": "실업에 대한 적절한 조치."
+      },
+      {
+        "exam_en": "An effective bombardment silenced the enemy.",
+        "exam_ko": "효과적인 포격으로 적을 침묵시켰다.\n"
+      },
+      {
+        "exam_en": "An effective bombardment silenced the enemy.",
+        "exam_ko": "효과적인 포격으로 적을 침묵시켰다."
+      }
+    ]
+  },
+  {
+    "id": 20387,
+    "origin": "mystical",
+    "examples": [
+      {
+        "exam_en": "the mystical rose",
+        "exam_ko": "성모 마리아의 칭호[를 상징하는 장미]."
+      },
+      {
+        "exam_en": "mystical rapture",
+        "exam_ko": "법열(法悅)."
+      }
+    ]
+  },
+  {
+    "id": 20388,
+    "origin": "observance",
+    "examples": [
+      {
+        "exam_en": "the observance of traffic laws",
+        "exam_ko": "교통법규의 준수."
+      },
+      {
+        "exam_en": "the observance of one's birthday",
+        "exam_ko": "생일 축하"
+      }
+    ]
+  },
+  {
+    "id": 20389,
+    "origin": "blurred",
+    "examples": [
+      {
+        "exam_en": "a blurred photo",
+        "exam_ko": "핀트가 맞지 않아 뿌연 사진."
+      }
+    ]
+  },
+  {
+    "id": 20392,
+    "origin": "inducement",
+    "examples": [
+      {
+        "exam_en": "a system of inducement to encourage workers to turn out more work",
+        "exam_ko": "더 많은 제품을 만들도록 근로자들을 부추기기 위한 유도 장치."
+      },
+      {
+        "exam_en": "on any inducement",
+        "exam_ko": "아무리 유인하여도"
+      }
+    ]
+  },
+  {
+    "id": 20395,
+    "origin": "mirthful",
+    "examples": [
+      {
+        "exam_en": "a mirthful smile",
+        "exam_ko": "즐거운 듯한 미소"
+      },
+      {
+        "exam_en": "a mirthful old gentleman",
+        "exam_ko": "명랑한 노인."
+      }
+    ]
+  },
+  {
+    "id": 20397,
+    "origin": "mariner",
+    "examples": [
+      {
+        "exam_en": "a mariner's compass",
+        "exam_ko": "선박용 나침반."
+      }
+    ]
+  },
+  {
+    "id": 20398,
+    "origin": "manly",
+    "examples": [
+      {
+        "exam_en": "a manly voice",
+        "exam_ko": "남성적인 목소리."
+      },
+      {
+        "exam_en": "manly sports",
+        "exam_ko": "남자에게 알맞은 스포츠."
+      }
+    ]
+  },
+  {
+    "id": 20400,
+    "origin": "intelligible",
+    "examples": [
+      {
+        "exam_en": "Our aim is intelligible to anyone.",
+        "exam_ko": "우리의 목적은 누구나 다 이해할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 20402,
+    "origin": "inceptive",
+    "examples": [
+      {
+        "exam_en": "an inceptive verb",
+        "exam_ko": "기동 동사."
+      },
+      {
+        "exam_en": "A point is inceptive of a line.",
+        "exam_ko": "점은 선의 시작."
+      }
+    ]
+  },
+  {
+    "id": 20403,
+    "origin": "immodest",
+    "examples": [
+      {
+        "exam_en": "an immodest dress",
+        "exam_ko": "품위 없는 옷"
+      },
+      {
+        "exam_en": "immodest remarks",
+        "exam_ko": "음란한 말."
+      }
+    ]
+  },
+  {
+    "id": 20404,
+    "origin": "incontrovertible",
+    "examples": [
+      {
+        "exam_en": "an incontrovertible fact",
+        "exam_ko": "명약관화한 사실."
+      }
+    ]
+  },
+  {
+    "id": 20406,
+    "origin": "detestation",
+    "examples": [
+      {
+        "exam_en": "have a detestation of militarism",
+        "exam_ko": "군국주의를 혐오하다."
+      }
+    ]
+  },
+  {
+    "id": 20407,
+    "origin": "guiltless",
+    "examples": [
+      {
+        "exam_en": "an old house guiltless of paint",
+        "exam_ko": "페인트를 오랫동안 칠하지 않은 집."
+      }
+    ]
+  },
+  {
+    "id": 20408,
+    "origin": "saintly",
+    "examples": [
+      {
+        "exam_en": "a saintly life",
+        "exam_ko": "성인다운 생애."
+      }
+    ]
+  },
+  {
+    "id": 20409,
+    "origin": "godly",
+    "examples": [
+      {
+        "exam_en": "the godly",
+        "exam_ko": "(종종 비꼼) 신앙심이 깊은 사람들."
+      }
+    ]
+  },
+  {
+    "id": 20410,
+    "origin": "dusky",
+    "examples": [
+      {
+        "exam_en": "the dusky light of the forest",
+        "exam_ko": "숲 속의 어슴푸레한 빛"
+      },
+      {
+        "exam_en": "get dusky",
+        "exam_ko": "어둑어둑해지다."
+      }
+    ]
+  },
+  {
+    "id": 20415,
+    "origin": "workable",
+    "examples": [
+      {
+        "exam_en": "a workable solution",
+        "exam_ko": "실행 가능한 해결책[협정]."
+      }
+    ]
+  }
+]

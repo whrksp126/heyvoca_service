@@ -1,0 +1,278 @@
+[
+  {
+    "id": 8948,
+    "origin": "concentric",
+    "examples": [
+      {
+        "exam_en": "The teacher drew <strong class=\"target-word\">concentric</strong> circles on the board.",
+        "exam_ko": "선생님은 칠판에 <strong class=\"target-word\">동심</strong> 원들을 그렸다."
+      },
+      {
+        "exam_en": "The troops launched <strong class=\"target-word\">concentric</strong> fire on the enemy.",
+        "exam_ko": "군대는 적에게 <strong class=\"target-word\">집중</strong> 포화를 가했다."
+      }
+    ]
+  },
+  {
+    "id": 8950,
+    "origin": "latitude",
+    "examples": [
+      {
+        "exam_en": "The island is located at south <strong class=\"target-word\">latitude</strong> 35 degrees.",
+        "exam_ko": "그 섬은 남<strong class=\"target-word\">위</strong> 35도에 위치한다."
+      },
+      {
+        "exam_en": "Seoul lies at a high north <strong class=\"target-word\">latitude</strong>.",
+        "exam_ko": "서울은 높은 북<strong class=\"target-word\">위</strong>에 위치한다."
+      }
+    ]
+  },
+  {
+    "id": 8951,
+    "origin": "orient",
+    "examples": [
+      {
+        "exam_en": "He was sent as consul to the <strong class=\"target-word\">Orient</strong>.",
+        "exam_ko": "그는 영사로 <strong class=\"target-word\">동양</strong>에 파견되었다."
+      },
+      {
+        "exam_en": "She needs time to <strong class=\"target-word\">orient</strong> herself in the new city.",
+        "exam_ko": "그녀는 새 도시에서 <strong class=\"target-word\">방향을 잡는</strong> 데 시간이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 8952,
+    "origin": "knack",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">knack</strong> for drawing maps.",
+        "exam_ko": "그녀는 지도 그리는 <strong class=\"target-word\">재주</strong>가 있다."
+      },
+      {
+        "exam_en": "I got a <strong class=\"target-word\">knack</strong> for this job.",
+        "exam_ko": "난 이 일에 <strong class=\"target-word\">재주</strong>가 있어."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">knack</strong> for making people laugh.",
+        "exam_ko": "그는 사람들을 웃기는 <strong class=\"target-word\">재주</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 8954,
+    "origin": "starry",
+    "examples": [
+      {
+        "exam_en": "We lay under the <strong class=\"target-word\">starry</strong> sky all night.",
+        "exam_ko": "우리는 밤새 <strong class=\"target-word\">별이 총총한</strong> 하늘 아래 누워 있었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">starry</strong> light guided us through the dark.",
+        "exam_ko": "<strong class=\"target-word\">별빛</strong>이 어둠 속에서 우리를 인도했다."
+      }
+    ]
+  },
+  {
+    "id": 8955,
+    "origin": "gulf",
+    "examples": [
+      {
+        "exam_en": "The ship sailed across the <strong class=\"target-word\">Gulf</strong> of Mexico.",
+        "exam_ko": "배는 멕시코 <strong class=\"target-word\">만</strong>을 가로질러 항해했다."
+      },
+      {
+        "exam_en": "There is a wide <strong class=\"target-word\">gulf</strong> between the rich and the poor.",
+        "exam_ko": "빈부 사이에는 큰 <strong class=\"target-word\">격차</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 8957,
+    "origin": "mediterranean",
+    "examples": [
+      {
+        "exam_en": "Spain has a <strong class=\"target-word\">Mediterranean</strong> climate with hot summers.",
+        "exam_ko": "스페인은 여름이 더운 <strong class=\"target-word\">지중해성</strong> 기후를 가진다."
+      },
+      {
+        "exam_en": "We visited several <strong class=\"target-word\">Mediterranean</strong> islands last summer.",
+        "exam_ko": "우리는 지난여름 <strong class=\"target-word\">지중해</strong>의 여러 섬들을 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 8958,
+    "origin": "migrant",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">migrant</strong> bird arrived at the lake this spring.",
+        "exam_ko": "<strong class=\"target-word\">철새</strong> 한 마리가 이번 봄 호수에 날아왔다."
+      },
+      {
+        "exam_en": "He worked as an economic <strong class=\"target-word\">migrant</strong> in another country.",
+        "exam_ko": "그는 다른 나라에서 경제적 <strong class=\"target-word\">이주자</strong>로 일했다."
+      }
+    ]
+  },
+  {
+    "id": 8960,
+    "origin": "demanding",
+    "examples": [
+      {
+        "exam_en": "My new boss is very <strong class=\"target-word\">demanding</strong> at work.",
+        "exam_ko": "내 새 상사는 직장에서 매우 <strong class=\"target-word\">엄격하다</strong>."
+      },
+      {
+        "exam_en": "Don't be so <strong class=\"target-word\">demanding</strong> of others.",
+        "exam_ko": "다른 사람들에게 너무 많은 것을 <strong class=\"target-word\">요구하지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 8962,
+    "origin": "hometown",
+    "examples": [
+      {
+        "exam_en": "Seattle is my <strong class=\"target-word\">hometown</strong>.",
+        "exam_ko": "내 <strong class=\"target-word\">고향</strong>은 시애틀이다."
+      }
+    ]
+  },
+  {
+    "id": 8966,
+    "origin": "squash",
+    "examples": [
+      {
+        "exam_en": "He accidentally <strong class=\"target-word\">squashed</strong> the package with his bag.",
+        "exam_ko": "그는 실수로 가방으로 꾸러미를 <strong class=\"target-word\">찌그러뜨렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">squashed</strong> the pillow flat.",
+        "exam_ko": "그는 베개를 <strong class=\"target-word\">짓눌러서</strong> 납작하게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 8967,
+    "origin": "patiently",
+    "examples": [
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">patiently</strong> examined Mary.",
+        "exam_ko": "의사는 <strong class=\"target-word\">끈기 있게</strong> 메리를 진찰했다."
+      },
+      {
+        "exam_en": "Mary was <strong class=\"target-word\">patiently</strong> examined by the doctor.",
+        "exam_ko": "메리는 의사의 <strong class=\"target-word\">끈기 있는</strong> 진찰을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 8968,
+    "origin": "slimy",
+    "examples": [
+      {
+        "exam_en": "The road was <strong class=\"target-word\">slimy</strong> after the rain.",
+        "exam_ko": "비가 온 후 길이 <strong class=\"target-word\">진흙투성이</strong>였다."
+      },
+      {
+        "exam_en": "The cave walls were covered in <strong class=\"target-word\">slimy</strong> moss.",
+        "exam_ko": "동굴 벽은 <strong class=\"target-word\">끈적끈적한</strong> 이끼로 덮여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8970,
+    "origin": "horde",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">horde</strong> of locusts destroyed the crops.",
+        "exam_ko": "메뚜기 <strong class=\"target-word\">떼</strong>가 농작물을 망쳤다."
+      },
+      {
+        "exam_en": "There was a <strong class=\"target-word\">horde</strong> of children in the train.",
+        "exam_ko": "열차 안에는 많은 어린이들의 <strong class=\"target-word\">무리</strong>가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8971,
+    "origin": "necessitate",
+    "examples": [
+      {
+        "exam_en": "Language learning usually <strong class=\"target-word\">necessitates</strong> conscious mimicry.",
+        "exam_ko": "언어 습득에는 보통 의식적인 모방이 <strong class=\"target-word\">필요하다</strong>."
+      },
+      {
+        "exam_en": "This change <strong class=\"target-word\">necessitates</strong> a full review of the plan.",
+        "exam_ko": "이 변화는 계획의 전면 재검토를 <strong class=\"target-word\">필요로 한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8972,
+    "origin": "daunt",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">daunted</strong> by the difficulty of the task.",
+        "exam_ko": "그는 그 과제의 어려움에 <strong class=\"target-word\">기가 죽었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8973,
+    "origin": "instantaneous",
+    "examples": [
+      {
+        "exam_en": "The system gave an <strong class=\"target-word\">instantaneous</strong> reaction to the input.",
+        "exam_ko": "시스템은 입력에 <strong class=\"target-word\">즉각적인</strong> 반응을 보였다."
+      },
+      {
+        "exam_en": "The medicine had an <strong class=\"target-word\">instantaneous</strong> effect on her pain.",
+        "exam_ko": "약은 그녀의 통증에 <strong class=\"target-word\">즉각적인</strong> 효과를 나타냈다."
+      }
+    ]
+  },
+  {
+    "id": 8975,
+    "origin": "undaunted",
+    "examples": [
+      {
+        "exam_en": "She remained <strong class=\"target-word\">undaunted</strong> by repeated failure.",
+        "exam_ko": "그녀는 거듭되는 실패에도 <strong class=\"target-word\">굴하지 않았다</strong>."
+      },
+      {
+        "exam_en": "The pilot was <strong class=\"target-word\">undaunted</strong> by the storm.",
+        "exam_ko": "조종사는 폭풍우에도 <strong class=\"target-word\">끄떡하지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8977,
+    "origin": "utmost",
+    "examples": [
+      {
+        "exam_en": "She made <strong class=\"target-word\">utmost</strong> efforts to finish on time.",
+        "exam_ko": "그녀는 제시간에 끝내려고 <strong class=\"target-word\">최대한</strong> 노력했다."
+      },
+      {
+        "exam_en": "I will give the matter my <strong class=\"target-word\">utmost</strong> attention.",
+        "exam_ko": "그 문제에 <strong class=\"target-word\">최대한</strong> 주의를 기울이겠다."
+      }
+    ]
+  },
+  {
+    "id": 8978,
+    "origin": "intensity",
+    "examples": [
+      {
+        "exam_en": "Everyone was shocked by the <strong class=\"target-word\">intensity</strong> of his anger.",
+        "exam_ko": "모두가 그의 분노의 <strong class=\"target-word\">격렬함</strong>에 충격을 받았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">intensity</strong> of the heat made it hard to breathe.",
+        "exam_ko": "극심한 열기의 <strong class=\"target-word\">강도</strong>로 숨쉬기가 힘들었다."
+      }
+    ]
+  }
+]

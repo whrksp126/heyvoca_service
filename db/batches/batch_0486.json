@@ -1,0 +1,238 @@
+[
+  {
+    "id": 14514,
+    "origin": "carrion",
+    "examples": [
+      {
+        "exam_en": "a carrion bird",
+        "exam_ko": "썩은 고기를 먹는 새."
+      }
+    ]
+  },
+  {
+    "id": 14517,
+    "origin": "sentry",
+    "examples": [
+      {
+        "exam_en": "be on sentry",
+        "exam_ko": "보초를 서다"
+      },
+      {
+        "exam_en": "stand sentry over",
+        "exam_ko": "…을 파수 보다"
+      }
+    ]
+  },
+  {
+    "id": 14519,
+    "origin": "steeped",
+    "examples": [
+      {
+        "exam_en": "steeped in crime",
+        "exam_ko": "악에 물든"
+      },
+      {
+        "exam_en": "a castle steeped in mystery",
+        "exam_ko": "신비에 싸인 성(城)."
+      }
+    ]
+  },
+  {
+    "id": 14521,
+    "origin": "paragon",
+    "examples": [
+      {
+        "exam_en": "a paragon of beauty",
+        "exam_ko": "미의 화신, 절세의 미인"
+      },
+      {
+        "exam_en": "a paragon of virtue",
+        "exam_ko": "미덕의 귀감."
+      },
+      {
+        "exam_en": "The royal family could be relied upon as paragons of etiquette.",
+        "exam_ko": "왕실은 예절의 귀감으로 여겨질 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 14523,
+    "origin": "pariah",
+    "examples": [
+      {
+        "exam_en": "Putin has become something of a pariah in Western diplomatic circles due to his increasingly strained relations with Western governments.",
+        "exam_ko": "푸틴은 서방 정부와의 관계가 갈수록 경색되면서 서방 외교계에서 일종의 왕따가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 14527,
+    "origin": "chortle",
+    "examples": [
+      {
+        "exam_en": "chortle one's satisfaction",
+        "exam_ko": "만족스럽게 킬킬 웃다."
+      }
+    ]
+  },
+  {
+    "id": 14528,
+    "origin": "slum",
+    "examples": [
+      {
+        "exam_en": "go slumming",
+        "exam_ko": "슬럼가를 찾아가다."
+      }
+    ]
+  },
+  {
+    "id": 14530,
+    "origin": "aplomb",
+    "examples": [
+      {
+        "exam_en": "do ‥ with aplomb",
+        "exam_ko": "침착하게 …하다."
+      }
+    ]
+  },
+  {
+    "id": 14537,
+    "origin": "molester",
+    "examples": [
+      {
+        "exam_en": "a child molester",
+        "exam_ko": "아동 성추행자."
+      }
+    ]
+  },
+  {
+    "id": 14538,
+    "origin": "smitten",
+    "examples": [
+      {
+        "exam_en": "smitten with sorrow",
+        "exam_ko": "슬픔에 잠긴."
+      },
+      {
+        "exam_en": "He was smitten with his girlfriend from the day they met.",
+        "exam_ko": "그는 처음 만난 날부터 애인에게 반했다."
+      }
+    ]
+  },
+  {
+    "id": 14540,
+    "origin": "foist",
+    "examples": [
+      {
+        "exam_en": "He foisted damaged goods off on me.",
+        "exam_ko": "그는 내게 흠이 생긴 상품을 사게 했다."
+      }
+    ]
+  },
+  {
+    "id": 14544,
+    "origin": "prevailing",
+    "examples": [
+      {
+        "exam_en": "the prevailing fashion",
+        "exam_ko": "널리 유행하고 있는 패션"
+      },
+      {
+        "exam_en": "the prevailing economic climate",
+        "exam_ko": "현재의[널리 퍼져 있는] 경제적 여건"
+      }
+    ]
+  },
+  {
+    "id": 14546,
+    "origin": "alcove",
+    "examples": [
+      {
+        "exam_en": "a dining alcove",
+        "exam_ko": "식사용 작은 방."
+      }
+    ]
+  },
+  {
+    "id": 14550,
+    "origin": "nonchalance",
+    "examples": [
+      {
+        "exam_en": "with  nonchalance",
+        "exam_ko": "(짐짓) 태연하게, 예사로."
+      }
+    ]
+  },
+  {
+    "id": 14553,
+    "origin": "morbid",
+    "examples": [
+      {
+        "exam_en": "a morbid fear of fire",
+        "exam_ko": "불에 대한 병적인 공포."
+      },
+      {
+        "exam_en": "a morbid organ",
+        "exam_ko": "병에 걸린 기관"
+      }
+    ]
+  },
+  {
+    "id": 14554,
+    "origin": "soggy",
+    "examples": [
+      {
+        "exam_en": "The ground was soggy from the rain.",
+        "exam_ko": "땅이 비로 함빡 젖었다."
+      }
+    ]
+  },
+  {
+    "id": 14561,
+    "origin": "sly",
+    "examples": [
+      {
+        "exam_en": "a sly dog",
+        "exam_ko": "교활한 놈"
+      },
+      {
+        "exam_en": "sly as a fox",
+        "exam_ko": "여우같이 교활한."
+      }
+    ]
+  },
+  {
+    "id": 14564,
+    "origin": "alimentary",
+    "examples": [
+      {
+        "exam_en": "an alimentary endowment",
+        "exam_ko": "부조금."
+      }
+    ]
+  },
+  {
+    "id": 14567,
+    "origin": "rim",
+    "examples": [
+      {
+        "exam_en": "the rim of a crater",
+        "exam_ko": "분화구의 테두리[안경테]"
+      },
+      {
+        "exam_en": "the rim of a cap",
+        "exam_ko": "모자의 테두리."
+      }
+    ]
+  },
+  {
+    "id": 14570,
+    "origin": "insomniac",
+    "examples": [
+      {
+        "exam_en": "the insomniac clamor of insects",
+        "exam_ko": "불면증에 걸릴 만큼 시끄러운 벌레소리."
+      }
+    ]
+  }
+]

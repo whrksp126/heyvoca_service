@@ -1,0 +1,266 @@
+[
+  {
+    "id": 2499,
+    "origin": "controversial",
+    "examples": [
+      {
+        "exam_en": "The new policy was highly <strong class=\"target-word\">controversial</strong>.",
+        "exam_ko": "새 정책은 매우 <strong class=\"target-word\">논란이 많았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2500,
+    "origin": "oral",
+    "examples": [
+      {
+        "exam_en": "He gave <strong class=\"target-word\">oral</strong> directions to the team.",
+        "exam_ko": "그는 팀에 <strong class=\"target-word\">구두로</strong> 지시를 내렸다."
+      },
+      {
+        "exam_en": "She passed her <strong class=\"target-word\">oral</strong> examination yesterday.",
+        "exam_ko": "그녀는 어제 <strong class=\"target-word\">구술</strong> 시험을 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 2501,
+    "origin": "encouraging",
+    "examples": [
+      {
+        "exam_en": "The doctor shared some <strong class=\"target-word\">encouraging</strong> news with us.",
+        "exam_ko": "의사가 우리에게 <strong class=\"target-word\">고무적인</strong> 소식을 전했다."
+      },
+      {
+        "exam_en": "She wrote an <strong class=\"target-word\">encouraging</strong> letter to her friend.",
+        "exam_ko": "그녀는 친구에게 <strong class=\"target-word\">격려하는</strong> 편지를 썼다."
+      }
+    ]
+  },
+  {
+    "id": 2502,
+    "origin": "organic",
+    "examples": [
+      {
+        "exam_en": "The soil contains a lot of <strong class=\"target-word\">organic</strong> matter.",
+        "exam_ko": "토양에는 <strong class=\"target-word\">유기</strong> 물질이 많이 포함되어 있다."
+      },
+      {
+        "exam_en": "They found <strong class=\"target-word\">organic</strong> remains at the site.",
+        "exam_ko": "그들은 현장에서 <strong class=\"target-word\">유기</strong> 유해를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 2503,
+    "origin": "expected",
+    "examples": [
+      {
+        "exam_en": "The investment yielded an <strong class=\"target-word\">expected</strong> return.",
+        "exam_ko": "투자는 <strong class=\"target-word\">예상</strong> 수익을 냈다."
+      }
+    ]
+  },
+  {
+    "id": 2504,
+    "origin": "statistical",
+    "examples": [
+      {
+        "exam_en": "The report included <strong class=\"target-word\">statistical</strong> information on sales.",
+        "exam_ko": "보고서에는 판매에 관한 <strong class=\"target-word\">통계적</strong> 자료가 포함되었다."
+      },
+      {
+        "exam_en": "They applied a <strong class=\"target-word\">statistical</strong> technique to the data.",
+        "exam_ko": "그들은 데이터에 <strong class=\"target-word\">통계</strong> 기법을 적용했다."
+      }
+    ]
+  },
+  {
+    "id": 2505,
+    "origin": "desirable",
+    "examples": [
+      {
+        "exam_en": "He is a very <strong class=\"target-word\">desirable</strong> person to work with.",
+        "exam_ko": "그는 함께 일하기에 매우 <strong class=\"target-word\">바람직한</strong> 사람이다."
+      },
+      {
+        "exam_en": "I bought a house in a <strong class=\"target-word\">desirable</strong> neighborhood.",
+        "exam_ko": "나는 <strong class=\"target-word\">좋은</strong> 주택 지역에 집을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 2506,
+    "origin": "exclusive",
+    "examples": [
+      {
+        "exam_en": "Communism and Capitalism are mutually <strong class=\"target-word\">exclusive</strong>.",
+        "exam_ko": "공산주의와 자본주의는 서로 <strong class=\"target-word\">양립할 수 없다</strong>."
+      },
+      {
+        "exam_en": "Reading is her <strong class=\"target-word\">exclusive</strong> hobby.",
+        "exam_ko": "독서는 그녀의 <strong class=\"target-word\">유일한</strong> 취미다."
+      }
+    ]
+  },
+  {
+    "id": 2507,
+    "origin": "marked",
+    "examples": [
+      {
+        "exam_en": "His work stands in <strong class=\"target-word\">marked</strong> contrast to hers.",
+        "exam_ko": "그의 작업은 그녀의 것과 <strong class=\"target-word\">현저한</strong> 대조를 이룬다."
+      },
+      {
+        "exam_en": "He became a <strong class=\"target-word\">marked</strong> man after the incident.",
+        "exam_ko": "그는 사건 이후 <strong class=\"target-word\">요주의</strong> 인물이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 2508,
+    "origin": "experienced",
+    "examples": [
+      {
+        "exam_en": "She has an <strong class=\"target-word\">experienced</strong> eye for design.",
+        "exam_ko": "그녀는 디자인에 <strong class=\"target-word\">숙련된</strong> 안목을 가지고 있다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">experienced</strong> in teaching English.",
+        "exam_ko": "그는 영어 교습에 <strong class=\"target-word\">경험이 많다</strong>."
+      },
+      {
+        "exam_en": "We need an <strong class=\"target-word\">experienced</strong> engineer for this project.",
+        "exam_ko": "이 프로젝트에는 <strong class=\"target-word\">경력 있는</strong> 엔지니어가 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2509,
+    "origin": "unexpected",
+    "examples": [
+      {
+        "exam_en": "The team celebrated their <strong class=\"target-word\">unexpected</strong> victory.",
+        "exam_ko": "팀은 <strong class=\"target-word\">뜻밖의</strong> 승리를 축하했다."
+      },
+      {
+        "exam_en": "An <strong class=\"target-word\">unexpected</strong> guest arrived at the party.",
+        "exam_ko": "<strong class=\"target-word\">불시에</strong> 찾아온 손님이 파티에 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 2510,
+    "origin": "superb",
+    "examples": [
+      {
+        "exam_en": "The designer did a <strong class=\"target-word\">superb</strong> job on that project.",
+        "exam_ko": "그 디자이너는 그 프로젝트에서 <strong class=\"target-word\">뛰어난</strong> 일을 해냈다."
+      }
+    ]
+  },
+  {
+    "id": 2511,
+    "origin": "sheer",
+    "examples": [
+      {
+        "exam_en": "He succeeded through <strong class=\"target-word\">sheer</strong> hard work.",
+        "exam_ko": "그는 오로지 <strong class=\"target-word\">순전한</strong> 노력으로 성공했다."
+      },
+      {
+        "exam_en": "It was <strong class=\"target-word\">sheer</strong> idiocy to ignore the warning.",
+        "exam_ko": "경고를 무시한 것은 <strong class=\"target-word\">순전한</strong> 어리석음이었다."
+      }
+    ]
+  },
+  {
+    "id": 2512,
+    "origin": "disappointed",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">disappointed</strong> loser left the room quietly.",
+        "exam_ko": "<strong class=\"target-word\">실의에 빠진</strong> 패자는 조용히 방을 떠났다."
+      },
+      {
+        "exam_en": "She was deeply <strong class=\"target-word\">disappointed</strong> in love.",
+        "exam_ko": "그녀는 사랑에서 깊이 <strong class=\"target-word\">실망했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2513,
+    "origin": "frightened",
+    "examples": [
+      {
+        "exam_en": "The child was <strong class=\"target-word\">frightened</strong> by the loud noise.",
+        "exam_ko": "아이는 큰 소리에 <strong class=\"target-word\">겁먹었다</strong>."
+      },
+      {
+        "exam_en": "The little girl was <strong class=\"target-word\">frightened</strong> her mother wouldn't come back.",
+        "exam_ko": "그 어린 소녀는 엄마가 돌아오지 않을까 <strong class=\"target-word\">겁먹었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2514,
+    "origin": "gastric",
+    "examples": [
+      {
+        "exam_en": "He stayed home with <strong class=\"target-word\">gastric</strong> flu.",
+        "exam_ko": "그는 <strong class=\"target-word\">위장</strong> 독감으로 집에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2515,
+    "origin": "capitalist",
+    "examples": [
+      {
+        "exam_en": "The US is a leading <strong class=\"target-word\">capitalist</strong> country.",
+        "exam_ko": "미국은 대표적인 <strong class=\"target-word\">자본주의</strong> 국가다."
+      }
+    ]
+  },
+  {
+    "id": 2516,
+    "origin": "romantic",
+    "examples": [
+      {
+        "exam_en": "They watched a <strong class=\"target-word\">romantic</strong> film together.",
+        "exam_ko": "그들은 함께 <strong class=\"target-word\">연애</strong> 영화를 봤다."
+      },
+      {
+        "exam_en": "They started a <strong class=\"target-word\">romantic</strong> relationship last year.",
+        "exam_ko": "그들은 작년에 <strong class=\"target-word\">연애</strong> 관계를 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 2517,
+    "origin": "naked",
+    "examples": [
+      {
+        "exam_en": "She had <strong class=\"target-word\">naked</strong> shoulders in the dress.",
+        "exam_ko": "그녀는 드레스를 입어 어깨가 <strong class=\"target-word\">드러나 있었다</strong>."
+      },
+      {
+        "exam_en": "He stood <strong class=\"target-word\">naked</strong> to the waist in the heat.",
+        "exam_ko": "그는 더위에 상반신을 <strong class=\"target-word\">드러낸 채</strong> 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2518,
+    "origin": "reluctant",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">reluctant</strong> consent to the plan.",
+        "exam_ko": "그는 계획에 <strong class=\"target-word\">마지못해</strong> 동의했다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">reluctant</strong> answer to the question.",
+        "exam_ko": "그녀는 질문에 <strong class=\"target-word\">마지못해</strong> 대답했다."
+      }
+    ]
+  }
+]

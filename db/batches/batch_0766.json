@@ -1,0 +1,214 @@
+[
+  {
+    "id": 49934,
+    "origin": "tetragon",
+    "examples": [
+      {
+        "exam_en": "regular tetragon",
+        "exam_ko": "정사각형."
+      }
+    ]
+  },
+  {
+    "id": 49937,
+    "origin": "baro",
+    "examples": [
+      {
+        "exam_en": "barodynamics",
+        "exam_ko": "중량 역학"
+      },
+      {
+        "exam_en": "barometry",
+        "exam_ko": "기압 측정법."
+      }
+    ]
+  },
+  {
+    "id": 49992,
+    "origin": "joking",
+    "examples": [
+      {
+        "exam_en": "Don't try joking anymore.  Don't try joking anymore.",
+        "exam_ko": "까불고 있어.  다음부터는 까불지마."
+      }
+    ]
+  },
+  {
+    "id": 50099,
+    "origin": "heh",
+    "examples": [
+      {
+        "exam_en": "Heh, heh, heh, fooled you.",
+        "exam_ko": "헤, 헤, 헤, 속았지."
+      }
+    ]
+  },
+  {
+    "id": 50109,
+    "origin": "chandler",
+    "examples": [
+      {
+        "exam_en": "a corn chandler",
+        "exam_ko": "잡곡상."
+      }
+    ]
+  },
+  {
+    "id": 50234,
+    "origin": "marrying",
+    "examples": [
+      {
+        "exam_en": "marrying couple",
+        "exam_ko": "결혼할 커플."
+      }
+    ]
+  },
+  {
+    "id": 50269,
+    "origin": "intersectional",
+    "examples": [
+      {
+        "exam_en": "intersectional games",
+        "exam_ko": "지구(地區) 대항 경기."
+      }
+    ]
+  },
+  {
+    "id": 50273,
+    "origin": "handfasting",
+    "examples": [
+      {
+        "exam_en": "They hope to renew their wedding vows with a handfasting ceremony.",
+        "exam_ko": "그들은 현대식 결혼식으로 혼인 서약을 다시 하고 싶어 한다."
+      }
+    ]
+  },
+  {
+    "id": 50376,
+    "origin": "lifesaving",
+    "examples": [
+      {
+        "exam_en": "Lifesaving Service",
+        "exam_ko": "수난 구조대."
+      }
+    ]
+  },
+  {
+    "id": 50453,
+    "origin": "unceremonious",
+    "examples": [
+      {
+        "exam_en": "He is rather too unceremonious for my taste.",
+        "exam_ko": "그는 너무 버릇이 없어서 내 성미에 맞지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 50456,
+    "origin": "doctrinal",
+    "examples": [
+      {
+        "exam_en": "a doctrinal dispute",
+        "exam_ko": "교리상의 논쟁."
+      }
+    ]
+  },
+  {
+    "id": 50465,
+    "origin": "reactivity",
+    "examples": [
+      {
+        "exam_en": "Certification from a qualified testing agency indicating absence of deleterious expansion of concrete due to alkali aggregate reactivity in accordance with ASTM C 33",
+        "exam_ko": "ASTM C 33에 따른 알칼리 골재 반응성으로 인한 콘크리트의 유해한 팽창이 없음을 나타내는 적격 시험 기관의 인증"
+      }
+    ]
+  },
+  {
+    "id": 50507,
+    "origin": "rapier",
+    "examples": [
+      {
+        "exam_en": "a rapier glance",
+        "exam_ko": "(비유) 힐끗 쏘아보기."
+      }
+    ]
+  },
+  {
+    "id": 50514,
+    "origin": "iphone",
+    "examples": [
+      {
+        "exam_en": "The iPhone is an internet and multimedia-enabled smartphone.",
+        "exam_ko": "아이폰은 인터넷과 멀티미디어가 가능한 스마트폰이다."
+      }
+    ]
+  },
+  {
+    "id": 50652,
+    "origin": "vicissitudes",
+    "examples": [
+      {
+        "exam_en": "Over the millennia, cultures have changed very substantially as they have learned to cope with environmental vicissitudes.",
+        "exam_ko": "수천 년 동안, 문화는 환경의 변화에 대처하는 법을 배우면서 매우 크게 변화해 왔다."
+      }
+    ]
+  },
+  {
+    "id": 50662,
+    "origin": "freewill",
+    "examples": [
+      {
+        "exam_en": "a freewill contribution",
+        "exam_ko": "자발적인 기부."
+      }
+    ]
+  },
+  {
+    "id": 50680,
+    "origin": "etic",
+    "examples": [
+      {
+        "exam_en": "limnetic, genetic.",
+        "exam_ko": "※종종 -esis형의 명사에 대응."
+      }
+    ]
+  },
+  {
+    "id": 50720,
+    "origin": "carload",
+    "examples": [
+      {
+        "exam_en": "carload lot",
+        "exam_ko": "화차 전세 취급 기준량"
+      },
+      {
+        "exam_en": "carload rate",
+        "exam_ko": "화차 전세 운임률."
+      }
+    ]
+  },
+  {
+    "id": 50770,
+    "origin": "inconceivably",
+    "examples": [
+      {
+        "exam_en": "The magazine has sold an inconceivably large number of copies.",
+        "exam_ko": "그 잡지는 상상할 수 없을 정도로 많은 부수가 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": 50773,
+    "origin": "matchwood",
+    "examples": [
+      {
+        "exam_en": "make matchwood of",
+        "exam_ko": "…을 산산조각으로 하다"
+      },
+      {
+        "exam_en": "reduce to matchwood",
+        "exam_ko": "박살내다."
+      }
+    ]
+  }
+]

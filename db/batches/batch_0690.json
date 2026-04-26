@@ -1,0 +1,234 @@
+[
+  {
+    "id": 28301,
+    "origin": "sapphire",
+    "examples": [
+      {
+        "exam_en": "I have a sapphire in my ring.",
+        "exam_ko": "내 반지에는 사파이어가 박혀 있다."
+      }
+    ]
+  },
+  {
+    "id": 28302,
+    "origin": "aloe",
+    "examples": [
+      {
+        "exam_en": "You need to apply aloe to your burns.",
+        "exam_ko": "화상에 알로에를 바르는 것이 좋다."
+      }
+    ]
+  },
+  {
+    "id": 28303,
+    "origin": "elegance",
+    "examples": [
+      {
+        "exam_en": "elegance of manners",
+        "exam_ko": "거동의 우아함."
+      },
+      {
+        "exam_en": "the elegance of the discussion",
+        "exam_ko": "논의의 적확함."
+      }
+    ]
+  },
+  {
+    "id": 28306,
+    "origin": "enjoyment",
+    "examples": [
+      {
+        "exam_en": "the enjoyment of an estate",
+        "exam_ko": "재산의 소유"
+      },
+      {
+        "exam_en": "be in the enjoyment of good health",
+        "exam_ko": "건강을 누리다"
+      }
+    ]
+  },
+  {
+    "id": 28308,
+    "origin": "inmost",
+    "examples": [
+      {
+        "exam_en": "the inmost depths of the jungle",
+        "exam_ko": "밀림의 가장 깊은 곳."
+      },
+      {
+        "exam_en": "my inmost feelings",
+        "exam_ko": "마음속 깊이 간직한 감정."
+      }
+    ]
+  },
+  {
+    "id": 28312,
+    "origin": "aright",
+    "examples": [
+      {
+        "exam_en": "if I remember aright",
+        "exam_ko": "잘못 생각한 것이 아니면, 틀림 없이."
+      }
+    ]
+  },
+  {
+    "id": 28321,
+    "origin": "fingernail",
+    "examples": [
+      {
+        "exam_en": "to the fingernails",
+        "exam_ko": "손톱 끝까지, 완전히, 죄다."
+      }
+    ]
+  },
+  {
+    "id": 28322,
+    "origin": "alphabet",
+    "examples": [
+      {
+        "exam_en": "the Greek alphabet",
+        "exam_ko": "그리스 문자"
+      },
+      {
+        "exam_en": "the Roman alphabet",
+        "exam_ko": "로마(문)자"
+      }
+    ]
+  },
+  {
+    "id": 28324,
+    "origin": "hurrah",
+    "examples": [
+      {
+        "exam_en": "Hurrah for the Queen!",
+        "exam_ko": "여왕 폐하 만세!"
+      }
+    ]
+  },
+  {
+    "id": 28325,
+    "origin": "oneself",
+    "examples": [
+      {
+        "exam_en": "absent oneself from school",
+        "exam_ko": "학교를 결석하다"
+      },
+      {
+        "exam_en": "hide oneself",
+        "exam_ko": "몸을 숨기다, 숨다"
+      }
+    ]
+  },
+  {
+    "id": 28326,
+    "origin": "weakly",
+    "examples": [
+      {
+        "exam_en": "a weakly young man",
+        "exam_ko": "병약한 젊은이."
+      }
+    ]
+  },
+  {
+    "id": 28327,
+    "origin": "listed",
+    "examples": [
+      {
+        "exam_en": "listed securities",
+        "exam_ko": "상장증권."
+      }
+    ]
+  },
+  {
+    "id": 28329,
+    "origin": "physically",
+    "examples": [
+      {
+        "exam_en": "It's physically impossible to travel faster than the speed of light.",
+        "exam_ko": "빛의 속도보다 더 빨리 간다는 것은 자연법칙상 불가능한 일이다."
+      },
+      {
+        "exam_en": "It's physically impossible to finish all this work by the end of the week.",
+        "exam_ko": "주말까지 이 모든 일을 끝내는 것은 도저히 불가능하다."
+      }
+    ]
+  },
+  {
+    "id": 28333,
+    "origin": "plat",
+    "examples": [
+      {
+        "exam_en": "Subdivision is the act of dividing land into pieces that are easier to sell or otherwise develop, usually via a plat.",
+        "exam_ko": "대지 구획은 토지를 일반적으로 대지 도면을 통해 판매하거나 개발하기 쉬운 조각으로 나누는 행위입니다."
+      }
+    ]
+  },
+  {
+    "id": 28347,
+    "origin": "bloated",
+    "examples": [
+      {
+        "exam_en": "a face bloated with fatigue",
+        "exam_ko": "피로로 부은 얼굴"
+      },
+      {
+        "exam_en": "the bloated body of a drowned dog",
+        "exam_ko": "익사한 개의 부풀어 오른 사체."
+      }
+    ]
+  },
+  {
+    "id": 28351,
+    "origin": "outbound",
+    "examples": [
+      {
+        "exam_en": "an outbound ship",
+        "exam_ko": "외항선"
+      }
+    ]
+  },
+  {
+    "id": 28356,
+    "origin": "anticipatory",
+    "examples": [
+      {
+        "exam_en": "anticipatory importation",
+        "exam_ko": "앞을 예상한 수입."
+      },
+      {
+        "exam_en": "anticipatory 'it'",
+        "exam_ko": "선행의 it(※It is interesting to play chess.의 it 등)."
+      }
+    ]
+  },
+  {
+    "id": 28357,
+    "origin": "ergonomic",
+    "examples": [
+      {
+        "exam_en": "ergonomic design",
+        "exam_ko": "인체공학적인 설계"
+      }
+    ]
+  },
+  {
+    "id": 28370,
+    "origin": "tote",
+    "examples": [
+      {
+        "exam_en": "Jed always toted a pistol.",
+        "exam_ko": "제드는 언제나 권총을 몸에 지니고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 28380,
+    "origin": "overstep",
+    "examples": [
+      {
+        "exam_en": "overstep the mark",
+        "exam_ko": "정도를 넘다."
+      }
+    ]
+  }
+]

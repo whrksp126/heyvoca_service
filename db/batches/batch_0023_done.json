@@ -1,0 +1,282 @@
+[
+  {
+    "id": 444,
+    "origin": "diminish",
+    "examples": [
+      {
+        "exam_en": "The medicine <strong class=\"target-word\">diminished</strong> his pain significantly.",
+        "exam_ko": "약이 그의 통증을 크게 <strong class=\"target-word\">줄여주었다</strong>."
+      },
+      {
+        "exam_en": "Her confidence <strong class=\"target-word\">diminished</strong> after the failure.",
+        "exam_ko": "실패 후 그녀의 자신감이 <strong class=\"target-word\">줄어들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 445,
+    "origin": "rain",
+    "examples": [
+      {
+        "exam_en": "Heavy <strong class=\"target-word\">rain</strong> flooded the streets overnight.",
+        "exam_ko": "폭우로 밤새 거리가 침수되었다."
+      },
+      {
+        "exam_en": "It started to <strong class=\"target-word\">rain</strong> during our picnic.",
+        "exam_ko": "소풍 중에 <strong class=\"target-word\">비가 내리기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 446,
+    "origin": "bang",
+    "examples": [
+      {
+        "exam_en": "He hit his head with a loud <strong class=\"target-word\">bang</strong>.",
+        "exam_ko": "그는 크게 <strong class=\"target-word\">쾅</strong> 하며 머리를 부딪혔다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">banged</strong> on the door to get attention.",
+        "exam_ko": "그녀는 주의를 끌려고 문을 <strong class=\"target-word\">쾅쾅 두드렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 447,
+    "origin": "arouse",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">aroused</strong> him from his deep sleep.",
+        "exam_ko": "우리는 깊이 자고 있는 그를 <strong class=\"target-word\">깨웠다</strong>."
+      },
+      {
+        "exam_en": "His speech <strong class=\"target-word\">aroused</strong> anger in the audience.",
+        "exam_ko": "그의 연설은 청중의 분노를 <strong class=\"target-word\">불러일으켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 448,
+    "origin": "suppress",
+    "examples": [
+      {
+        "exam_en": "The government <strong class=\"target-word\">suppressed</strong> the protest movement.",
+        "exam_ko": "정부는 시위 운동을 <strong class=\"target-word\">억압했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">suppressed</strong> a laugh during the meeting.",
+        "exam_ko": "그는 회의 중에 웃음을 <strong class=\"target-word\">참았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 449,
+    "origin": "slam",
+    "examples": [
+      {
+        "exam_en": "He angrily <strong class=\"target-word\">slammed</strong> the dictionary on the desk.",
+        "exam_ko": "그는 화가 나서 사전을 책상에 <strong class=\"target-word\">내동댕이쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">slammed</strong> the door when she left.",
+        "exam_ko": "그녀는 나가면서 문을 <strong class=\"target-word\">쾅 닫았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 450,
+    "origin": "transmit",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">transmitted</strong> the money by check.",
+        "exam_ko": "그들은 수표로 돈을 <strong class=\"target-word\">송금했다</strong>."
+      },
+      {
+        "exam_en": "This canal <strong class=\"target-word\">transmits</strong> water to the fields for irrigation.",
+        "exam_ko": "이 수로는 관개용 물을 밭에 <strong class=\"target-word\">보낸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 451,
+    "origin": "rent",
+    "examples": [
+      {
+        "exam_en": "She pays a high <strong class=\"target-word\">rent</strong> for her apartment.",
+        "exam_ko": "그녀는 아파트 <strong class=\"target-word\">임대료</strong>를 많이 낸다."
+      },
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">rent</strong> a car for the trip.",
+        "exam_ko": "그는 여행을 위해 차를 <strong class=\"target-word\">빌리기로</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 452,
+    "origin": "neglect",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">neglected</strong> his duties at work.",
+        "exam_ko": "그는 직장에서 자신의 임무를 <strong class=\"target-word\">소홀히 했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">neglected</strong> her friend's advice and regretted it.",
+        "exam_ko": "그녀는 친구의 충고를 <strong class=\"target-word\">무시했다가</strong> 후회했다."
+      }
+    ]
+  },
+  {
+    "id": 453,
+    "origin": "tour",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">toured</strong> through Europe last summer.",
+        "exam_ko": "그들은 지난 여름 유럽을 <strong class=\"target-word\">여행했다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">toured</strong> the White House as a class trip.",
+        "exam_ko": "우리는 수학여행으로 백악관을 <strong class=\"target-word\">견학했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 454,
+    "origin": "entertain",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">entertained</strong> the child with fairy tales.",
+        "exam_ko": "그녀는 동화를 들려주어 아이를 <strong class=\"target-word\">즐겁게 했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">entertained</strong> himself by singing songs.",
+        "exam_ko": "그는 노래를 부르며 <strong class=\"target-word\">즐겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 455,
+    "origin": "fling",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">flung</strong> rocks into the pond.",
+        "exam_ko": "그는 연못에 돌을 <strong class=\"target-word\">던졌다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">flung</strong> her money around without care.",
+        "exam_ko": "그녀는 아무 생각 없이 돈을 <strong class=\"target-word\">마구 뿌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 456,
+    "origin": "spill",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">spilled</strong> coffee on her dress.",
+        "exam_ko": "그녀는 옷에 커피를 <strong class=\"target-word\">엎질렀다</strong>."
+      },
+      {
+        "exam_en": "It is no use crying over <strong class=\"target-word\">spilt</strong> milk.",
+        "exam_ko": "<strong class=\"target-word\">엎질러진</strong> 물은 주워 담을 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 457,
+    "origin": "figure",
+    "examples": [
+      {
+        "exam_en": "A dark <strong class=\"target-word\">figure</strong> moved slowly in the dusk.",
+        "exam_ko": "황혼 속에서 어두운 <strong class=\"target-word\">인물의 형체</strong>가 천천히 움직였다."
+      },
+      {
+        "exam_en": "She is a key <strong class=\"target-word\">figure</strong> in the research field.",
+        "exam_ko": "그녀는 연구 분야의 핵심 <strong class=\"target-word\">인물</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 458,
+    "origin": "tax",
+    "examples": [
+      {
+        "exam_en": "The government raised the income <strong class=\"target-word\">tax</strong> this year.",
+        "exam_ko": "정부는 올해 소득 <strong class=\"target-word\">세금</strong>을 올렸다."
+      },
+      {
+        "exam_en": "Citizens must pay <strong class=\"target-word\">tax</strong> on their earnings.",
+        "exam_ko": "시민들은 소득에 대해 <strong class=\"target-word\">세금</strong>을 내야 한다."
+      }
+    ]
+  },
+  {
+    "id": 459,
+    "origin": "cool",
+    "examples": [
+      {
+        "exam_en": "They rested in a <strong class=\"target-word\">cool</strong> place during the hot day.",
+        "exam_ko": "그들은 더운 날 <strong class=\"target-word\">서늘한</strong> 곳에서 쉬었다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">cool</strong> breeze blew through the window.",
+        "exam_ko": "<strong class=\"target-word\">서늘한</strong> 산들바람이 창문으로 불어왔다."
+      }
+    ]
+  },
+  {
+    "id": 460,
+    "origin": "compile",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">compiled</strong> famous essays into one book.",
+        "exam_ko": "그녀는 유명한 에세이를 모아 한 권의 책으로 <strong class=\"target-word\">편집했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">compiled</strong> a dictionary from various sources.",
+        "exam_ko": "그는 다양한 자료를 모아 사전을 <strong class=\"target-word\">편찬했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 461,
+    "origin": "transport",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">transported</strong> goods to London by plane.",
+        "exam_ko": "그들은 화물을 비행기로 런던에 <strong class=\"target-word\">수송했다</strong>."
+      },
+      {
+        "exam_en": "Trucks <strong class=\"target-word\">transport</strong> fresh produce to the market daily.",
+        "exam_ko": "트럭이 매일 신선한 농산물을 시장으로 <strong class=\"target-word\">운반한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 462,
+    "origin": "entail",
+    "examples": [
+      {
+        "exam_en": "Marriage <strong class=\"target-word\">entails</strong> cooperation and understanding.",
+        "exam_ko": "결혼 생활에는 협조와 이해가 <strong class=\"target-word\">필요하다</strong>."
+      },
+      {
+        "exam_en": "Traveling in certain areas <strong class=\"target-word\">entails</strong> great danger.",
+        "exam_ko": "특정 지역 여행에는 큰 위험이 <strong class=\"target-word\">따른다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 463,
+    "origin": "reassure",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">reassured</strong> her that there was nothing to worry about.",
+        "exam_ko": "그들은 걱정할 것이 없다고 말하며 그녀를 <strong class=\"target-word\">안심시켰다</strong>."
+      },
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">reassured</strong> the patient before the surgery.",
+        "exam_ko": "의사는 수술 전에 환자를 <strong class=\"target-word\">안심시켰다</strong>."
+      }
+    ]
+  }
+]

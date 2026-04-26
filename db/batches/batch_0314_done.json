@@ -1,0 +1,274 @@
+[
+  {
+    "id": 7939,
+    "origin": "mattress",
+    "examples": [
+      {
+        "exam_en": "She bought a firm <strong class=\"target-word\">mattress</strong> for better sleep.",
+        "exam_ko": "그녀는 더 편한 수면을 위해 딱딱한 <strong class=\"target-word\">매트리스</strong>를 샀다."
+      },
+      {
+        "exam_en": "The old <strong class=\"target-word\">mattress</strong> sagged in the middle.",
+        "exam_ko": "낡은 <strong class=\"target-word\">매트리스</strong>가 가운데가 꺼져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7940,
+    "origin": "matched",
+    "examples": [
+      {
+        "exam_en": "Everyone said they were perfectly <strong class=\"target-word\">matched</strong>.",
+        "exam_ko": "모든 사람들이 그들이 완벽하게 <strong class=\"target-word\">잘 어울린다</strong>고 말했다."
+      }
+    ]
+  },
+  {
+    "id": 7941,
+    "origin": "manure",
+    "examples": [
+      {
+        "exam_en": "Farmers use <strong class=\"target-word\">manure</strong> to enrich the soil.",
+        "exam_ko": "농부들은 토양을 비옥하게 하기 위해 <strong class=\"target-word\">거름</strong>을 사용한다."
+      },
+      {
+        "exam_en": "He spread <strong class=\"target-word\">manure</strong> across the fields in spring.",
+        "exam_ko": "그는 봄에 밭 전체에 <strong class=\"target-word\">퇴비</strong>를 뿌렸다."
+      }
+    ]
+  },
+  {
+    "id": 7942,
+    "origin": "lurking",
+    "examples": [
+      {
+        "exam_en": "A stranger was <strong class=\"target-word\">lurking</strong> near the school gate.",
+        "exam_ko": "낯선 사람이 학교 정문 근처에 <strong class=\"target-word\">숨어</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7945,
+    "origin": "literacy",
+    "examples": [
+      {
+        "exam_en": "The program aims to improve financial <strong class=\"target-word\">literacy</strong> among teens.",
+        "exam_ko": "그 프로그램은 청소년들의 금융 <strong class=\"target-word\">이해력</strong>을 높이는 것을 목표로 한다."
+      },
+      {
+        "exam_en": "Computer <strong class=\"target-word\">literacy</strong> is required for most jobs today.",
+        "exam_ko": "오늘날 대부분의 직업에는 컴퓨터 <strong class=\"target-word\">활용 능력</strong>이 요구된다."
+      },
+      {
+        "exam_en": "Digital <strong class=\"target-word\">literacy</strong> is a crucial skill in the information age.",
+        "exam_ko": "디지털 <strong class=\"target-word\">문해력</strong>은 정보화 시대에 필수적인 기술이다."
+      }
+    ]
+  },
+  {
+    "id": 7947,
+    "origin": "liquor",
+    "examples": [
+      {
+        "exam_en": "He was arrested for selling <strong class=\"target-word\">liquor</strong> without a license.",
+        "exam_ko": "그는 무허가로 <strong class=\"target-word\">주류</strong>를 판매하다 체포되었다."
+      },
+      {
+        "exam_en": "The store only sells fermented <strong class=\"target-word\">liquor</strong>.",
+        "exam_ko": "그 가게는 발효 <strong class=\"target-word\">주류</strong>만 판매한다."
+      }
+    ]
+  },
+  {
+    "id": 7949,
+    "origin": "liar",
+    "examples": [
+      {
+        "exam_en": "He is a terrible <strong class=\"target-word\">liar</strong> who blushes every time.",
+        "exam_ko": "그는 거짓말할 때마다 얼굴이 빨개지는 형편없는 <strong class=\"target-word\">거짓말쟁이</strong>다."
+      },
+      {
+        "exam_en": "She called him a <strong class=\"target-word\">liar</strong> in front of everyone.",
+        "exam_ko": "그녀는 모두 앞에서 그를 <strong class=\"target-word\">거짓말쟁이</strong>라고 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 7950,
+    "origin": "lease",
+    "examples": [
+      {
+        "exam_en": "They signed a one-year <strong class=\"target-word\">lease</strong> on the apartment.",
+        "exam_ko": "그들은 아파트에 대한 1년 <strong class=\"target-word\">임대차 계약</strong>을 체결했다."
+      },
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">lease</strong> her house to a family.",
+        "exam_ko": "그녀는 자신의 집을 한 가족에게 <strong class=\"target-word\">임대하기로</strong> 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 7951,
+    "origin": "leadership",
+    "examples": [
+      {
+        "exam_en": "She stepped up and took <strong class=\"target-word\">leadership</strong> of the project.",
+        "exam_ko": "그녀는 나서서 프로젝트의 <strong class=\"target-word\">리더십</strong>을 맡았다."
+      },
+      {
+        "exam_en": "The coach exercised strong <strong class=\"target-word\">leadership</strong> during the crisis.",
+        "exam_ko": "감독은 위기 상황에서 강력한 <strong class=\"target-word\">리더십</strong>을 발휘했다."
+      }
+    ]
+  },
+  {
+    "id": 7952,
+    "origin": "lawsuit",
+    "examples": [
+      {
+        "exam_en": "They won the <strong class=\"target-word\">lawsuit</strong> after a long trial.",
+        "exam_ko": "그들은 오랜 재판 끝에 <strong class=\"target-word\">소송</strong>에서 이겼다."
+      },
+      {
+        "exam_en": "She filed a <strong class=\"target-word\">lawsuit</strong> against the company for damages.",
+        "exam_ko": "그녀는 손해배상을 위해 회사를 상대로 <strong class=\"target-word\">소송</strong>을 제기했다."
+      }
+    ]
+  },
+  {
+    "id": 7954,
+    "origin": "latch",
+    "examples": [
+      {
+        "exam_en": "He forgot to fasten the <strong class=\"target-word\">latch</strong> on the garden gate.",
+        "exam_ko": "그는 정원 문의 <strong class=\"target-word\">걸쇠</strong>를 잠그는 것을 잊었다."
+      }
+    ]
+  },
+  {
+    "id": 7955,
+    "origin": "laser",
+    "examples": [
+      {
+        "exam_en": "The surgical alternative is to <strong class=\"target-word\">laser</strong> the growths.",
+        "exam_ko": "외과적 대안은 종양에 <strong class=\"target-word\">레이저</strong> 치료를 하는 것이다."
+      },
+      {
+        "exam_en": "The doctor used a <strong class=\"target-word\">laser</strong> to correct her vision.",
+        "exam_ko": "의사는 그녀의 시력을 교정하기 위해 <strong class=\"target-word\">레이저</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 7959,
+    "origin": "irrigate",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">irrigate</strong> the fields using water from the river.",
+        "exam_ko": "그들은 강물을 이용해 밭에 <strong class=\"target-word\">관개한다</strong>."
+      },
+      {
+        "exam_en": "Engineers built canals to <strong class=\"target-word\">irrigate</strong> the desert region.",
+        "exam_ko": "엔지니어들은 사막 지역에 <strong class=\"target-word\">관개하기</strong> 위해 운하를 건설했다."
+      }
+    ]
+  },
+  {
+    "id": 7962,
+    "origin": "inspiration",
+    "examples": [
+      {
+        "exam_en": "The artist drew <strong class=\"target-word\">inspiration</strong> from nature.",
+        "exam_ko": "그 예술가는 자연에서 <strong class=\"target-word\">영감</strong>을 얻었다."
+      },
+      {
+        "exam_en": "She had a sudden <strong class=\"target-word\">inspiration</strong> while taking a walk.",
+        "exam_ko": "그녀는 산책하던 중 갑작스러운 <strong class=\"target-word\">영감</strong>이 떠올랐다."
+      }
+    ]
+  },
+  {
+    "id": 7963,
+    "origin": "informed",
+    "examples": [
+      {
+        "exam_en": "He made an <strong class=\"target-word\">informed</strong> guess based on the data.",
+        "exam_ko": "그는 데이터를 바탕으로 <strong class=\"target-word\">근거 있는</strong> 추측을 했다."
+      },
+      {
+        "exam_en": "The journalist relied on <strong class=\"target-word\">informed</strong> sources for the story.",
+        "exam_ko": "그 기자는 기사를 위해 <strong class=\"target-word\">정통한</strong> 소식통에 의존했다."
+      }
+    ]
+  },
+  {
+    "id": 7964,
+    "origin": "infection",
+    "examples": [
+      {
+        "exam_en": "The doctor treated the wound to prevent <strong class=\"target-word\">infection</strong>.",
+        "exam_ko": "의사는 <strong class=\"target-word\">감염</strong>을 막기 위해 상처를 치료했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">infection</strong> spread quickly through the community.",
+        "exam_ko": "그 <strong class=\"target-word\">감염</strong>은 지역 사회 전체로 빠르게 퍼졌다."
+      }
+    ]
+  },
+  {
+    "id": 7965,
+    "origin": "identification",
+    "examples": [
+      {
+        "exam_en": "Police completed the <strong class=\"target-word\">identification</strong> of the victim.",
+        "exam_ko": "경찰은 피해자의 <strong class=\"target-word\">신원 확인</strong>을 완료했다."
+      },
+      {
+        "exam_en": "We use a fingerprint system in the <strong class=\"target-word\">identification</strong> of criminals.",
+        "exam_ko": "우리는 범인의 <strong class=\"target-word\">신원 확인</strong>에 지문법을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 7967,
+    "origin": "housework",
+    "examples": [
+      {
+        "exam_en": "She does most of the <strong class=\"target-word\">housework</strong> after work.",
+        "exam_ko": "그녀는 퇴근 후 대부분의 <strong class=\"target-word\">집안일</strong>을 한다."
+      },
+      {
+        "exam_en": "They agreed to share the <strong class=\"target-word\">housework</strong> equally.",
+        "exam_ko": "그들은 <strong class=\"target-word\">가사</strong>를 동등하게 분담하기로 했다."
+      }
+    ]
+  },
+  {
+    "id": 7968,
+    "origin": "hike",
+    "examples": [
+      {
+        "exam_en": "They went <strong class=\"target-word\">hiking</strong> in the mountains on the weekend.",
+        "exam_ko": "그들은 주말에 산에 <strong class=\"target-word\">하이킹</strong>하러 갔다."
+      },
+      {
+        "exam_en": "The government plans to <strong class=\"target-word\">hike</strong> gas prices next month.",
+        "exam_ko": "정부는 다음 달 가스 요금을 <strong class=\"target-word\">인상할</strong> 계획이다."
+      }
+    ]
+  },
+  {
+    "id": 7969,
+    "origin": "hectic",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">hectic</strong> day with back-to-back meetings.",
+        "exam_ko": "연속되는 회의로 정신없이 <strong class=\"target-word\">바쁜</strong> 하루였다."
+      },
+      {
+        "exam_en": "The office gets <strong class=\"target-word\">hectic</strong> every morning before 9 a.m.",
+        "exam_ko": "사무실은 오전 9시 이전에 매일 아침 <strong class=\"target-word\">정신없이 바빠진다</strong>."
+      }
+    ]
+  }
+]

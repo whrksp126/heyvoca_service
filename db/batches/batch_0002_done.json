@@ -1,0 +1,282 @@
+[
+  {
+    "id": 22,
+    "origin": "scared",
+    "examples": [
+      {
+        "exam_en": "She looked <strong class=\"target-word\">scared</strong> when the dog barked.",
+        "exam_ko": "개가 짖었을 때 그녀는 <strong class=\"target-word\">겁먹은</strong> 표정이었다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">scared</strong> of the dark room.",
+        "exam_ko": "그는 어두운 방이 <strong class=\"target-word\">무서웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "origin": "impressive",
+    "examples": [
+      {
+        "exam_en": "Her piano performance was truly <strong class=\"target-word\">impressive</strong>.",
+        "exam_ko": "그녀의 피아노 연주는 정말 <strong class=\"target-word\">인상적이었다</strong>."
+      },
+      {
+        "exam_en": "He gave an <strong class=\"target-word\">impressive</strong> speech at the ceremony.",
+        "exam_ko": "그는 행사에서 <strong class=\"target-word\">감동적인</strong> 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "origin": "gorgeous",
+    "examples": [
+      {
+        "exam_en": "The hotel room was absolutely <strong class=\"target-word\">gorgeous</strong>.",
+        "exam_ko": "호텔 방은 정말 <strong class=\"target-word\">화려했다</strong>."
+      },
+      {
+        "exam_en": "We watched a <strong class=\"target-word\">gorgeous</strong> sunset from the beach.",
+        "exam_ko": "우리는 해변에서 <strong class=\"target-word\">아름다운</strong> 석양을 바라봤다."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "origin": "tall",
+    "examples": [
+      {
+        "exam_en": "He is the <strong class=\"target-word\">tallest</strong> boy in his class.",
+        "exam_ko": "그는 반에서 가장 <strong class=\"target-word\">키가 큰</strong> 남자아이다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">tall</strong> tree stood in the center of the yard.",
+        "exam_ko": "마당 한가운데 <strong class=\"target-word\">높은</strong> 나무가 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "origin": "short",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">short</strong> dress to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">짧은</strong> 드레스를 입고 갔다."
+      },
+      {
+        "exam_en": "The stick was too <strong class=\"target-word\">short</strong> to reach the shelf.",
+        "exam_ko": "막대기가 너무 <strong class=\"target-word\">짧아서</strong> 선반에 닿지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "origin": "pretty",
+    "examples": [
+      {
+        "exam_en": "The baby has a very <strong class=\"target-word\">pretty</strong> smile.",
+        "exam_ko": "그 아기는 아주 <strong class=\"target-word\">귀여운</strong> 미소를 가지고 있다."
+      },
+      {
+        "exam_en": "She looked <strong class=\"target-word\">pretty</strong> in her new dress.",
+        "exam_ko": "그녀는 새 드레스를 입으니 <strong class=\"target-word\">예뻐</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "origin": "ugly",
+    "examples": [
+      {
+        "exam_en": "He has an <strong class=\"target-word\">ugly</strong> scar on his arm.",
+        "exam_ko": "그의 팔에는 <strong class=\"target-word\">보기 흉한</strong> 흉터가 있다."
+      },
+      {
+        "exam_en": "She refused to wear the <strong class=\"target-word\">ugly</strong> dress.",
+        "exam_ko": "그녀는 그 <strong class=\"target-word\">못생긴</strong> 드레스를 입기 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "origin": "fat",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">fat</strong> man struggled to climb the stairs.",
+        "exam_ko": "그 <strong class=\"target-word\">뚱뚱한</strong> 남자는 계단 오르기를 힘들어했다."
+      },
+      {
+        "exam_en": "He gained weight and got <strong class=\"target-word\">fat</strong> over winter.",
+        "exam_ko": "그는 겨울 동안 체중이 늘어 <strong class=\"target-word\">살이 쪘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "origin": "cute",
+    "examples": [
+      {
+        "exam_en": "Everyone thought the baby was <strong class=\"target-word\">cute</strong>.",
+        "exam_ko": "모두가 그 아기를 <strong class=\"target-word\">귀엽다</strong>고 생각했다."
+      },
+      {
+        "exam_en": "The puppy made a <strong class=\"target-word\">cute</strong> little sound.",
+        "exam_ko": "강아지가 <strong class=\"target-word\">귀여운</strong> 작은 소리를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "origin": "selfish",
+    "examples": [
+      {
+        "exam_en": "He always acts in a <strong class=\"target-word\">selfish</strong> way.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">이기적으로</strong> 행동한다."
+      },
+      {
+        "exam_en": "He's a <strong class=\"target-word\">selfish</strong> person who thinks only of himself.",
+        "exam_ko": "그는 자기밖에 모르는 <strong class=\"target-word\">이기적인</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "origin": "shy",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">shy</strong> girl whispered her answer softly.",
+        "exam_ko": "<strong class=\"target-word\">수줍어하는</strong> 소녀가 조용히 대답했다."
+      },
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">shy</strong>, speak up and share your idea.",
+        "exam_ko": "<strong class=\"target-word\">부끄러워하지</strong> 말고 어서 말해보세요."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "origin": "afraid",
+    "examples": [
+      {
+        "exam_en": "She is very <strong class=\"target-word\">afraid</strong> of dogs.",
+        "exam_ko": "그녀는 개를 매우 <strong class=\"target-word\">두려워한다</strong>."
+      },
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">afraid</strong> to ask for help.",
+        "exam_ko": "도움을 요청하는 것을 <strong class=\"target-word\">두려워하지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "origin": "slim",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">slim</strong> waist and long legs.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가는</strong> 허리와 긴 다리를 가졌다."
+      },
+      {
+        "exam_en": "He looks <strong class=\"target-word\">slim</strong> after months of exercise.",
+        "exam_ko": "몇 달간 운동을 하고 나서 그는 <strong class=\"target-word\">날씬해</strong> 보인다."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "origin": "dangerous",
+    "examples": [
+      {
+        "exam_en": "Firefighting is a very <strong class=\"target-word\">dangerous</strong> occupation.",
+        "exam_ko": "소방관은 매우 <strong class=\"target-word\">위험한</strong> 직업이다."
+      },
+      {
+        "exam_en": "This river is a <strong class=\"target-word\">dangerous</strong> place for children.",
+        "exam_ko": "이 강은 아이들에게 <strong class=\"target-word\">위험한</strong> 장소이다."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "origin": "lovely",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">lovely</strong> personality that everyone admires.",
+        "exam_ko": "그녀는 모두가 감탄하는 <strong class=\"target-word\">사랑스러운</strong> 성격을 가졌다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">lovely</strong> woman with a warm smile.",
+        "exam_ko": "그녀는 따뜻한 미소를 가진 <strong class=\"target-word\">아름다운</strong> 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "origin": "charming",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">charming</strong> gentleman loved by all.",
+        "exam_ko": "그는 모두에게 사랑받는 <strong class=\"target-word\">매력적인</strong> 신사이다."
+      },
+      {
+        "exam_en": "What a <strong class=\"target-word\">charming</strong> young man he is!",
+        "exam_ko": "그는 정말 <strong class=\"target-word\">매력적인</strong> 젊은이구나!"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "origin": "be",
+    "examples": [
+      {
+        "exam_en": "I think, therefore I <strong class=\"target-word\">am</strong>.",
+        "exam_ko": "나는 생각한다, 그러므로 나는 <strong class=\"target-word\">존재한다</strong>."
+      },
+      {
+        "exam_en": "Kennedy <strong class=\"target-word\">is</strong> no more.",
+        "exam_ko": "케네디는 이제 <strong class=\"target-word\">없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "origin": "break",
+    "examples": [
+      {
+        "exam_en": "He accidentally <strong class=\"target-word\">broke</strong> a glass on the floor.",
+        "exam_ko": "그는 실수로 유리잔을 바닥에 <strong class=\"target-word\">깼다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">broke</strong> the cloth by pulling it hard.",
+        "exam_ko": "그녀는 천을 세게 당겨서 <strong class=\"target-word\">찢었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "origin": "bring",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">bring</strong> me an apple from the kitchen.",
+        "exam_ko": "부엌에서 사과 하나 <strong class=\"target-word\">가져다줘</strong>."
+      },
+      {
+        "exam_en": "The dishes were <strong class=\"target-word\">brought</strong> to her table.",
+        "exam_ko": "접시가 그녀의 테이블로 <strong class=\"target-word\">운반되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "origin": "buy",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">buy</strong> a bag from the store.",
+        "exam_ko": "그녀는 가게에서 가방을 <strong class=\"target-word\">사기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">bought</strong> the jacket at a cheap price.",
+        "exam_ko": "그는 재킷을 싸게 <strong class=\"target-word\">샀다</strong>."
+      }
+    ]
+  }
+]

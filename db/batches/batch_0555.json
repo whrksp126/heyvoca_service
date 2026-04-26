@@ -1,0 +1,258 @@
+[
+  {
+    "id": 18103,
+    "origin": "earful",
+    "examples": [
+      {
+        "exam_en": "get an earful from",
+        "exam_ko": "…으로부터 귀가 따가울 정도로 듣다"
+      },
+      {
+        "exam_en": "give a person an earful on",
+        "exam_ko": "…의 일로 남을 꾸짖다."
+      }
+    ]
+  },
+  {
+    "id": 18110,
+    "origin": "optional",
+    "examples": [
+      {
+        "exam_en": "an optional subject",
+        "exam_ko": "선택 과목"
+      },
+      {
+        "exam_en": "an optional extra",
+        "exam_ko": "옵션, 선택 사양"
+      }
+    ]
+  },
+  {
+    "id": 18111,
+    "origin": "eyesight",
+    "examples": [
+      {
+        "exam_en": "lose one's eyesight",
+        "exam_ko": "눈이 멀다, 실명하다"
+      },
+      {
+        "exam_en": "have poor eyesight",
+        "exam_ko": "시력이 나쁘다[좋다]."
+      }
+    ]
+  },
+  {
+    "id": 18112,
+    "origin": "illumination",
+    "examples": [
+      {
+        "exam_en": "stage illumination",
+        "exam_ko": "무대 조명"
+      },
+      {
+        "exam_en": "indirect illumination",
+        "exam_ko": "간접 조명"
+      }
+    ]
+  },
+  {
+    "id": 18114,
+    "origin": "twinkling",
+    "examples": [
+      {
+        "exam_en": "in a twinkling ＝in the twinkling of an eye",
+        "exam_ko": "순식간에."
+      }
+    ]
+  },
+  {
+    "id": 18116,
+    "origin": "signatory",
+    "examples": [
+      {
+        "exam_en": "the signatory nations to a trade agreement",
+        "exam_ko": "통상 협정 가맹국."
+      }
+    ]
+  },
+  {
+    "id": 18118,
+    "origin": "snobby",
+    "examples": [
+      {
+        "exam_en": "She's too snobby.",
+        "exam_ko": "그 여자는 너무 코가 높아 (콧대가 세다/도도하다)."
+      }
+    ]
+  },
+  {
+    "id": 18120,
+    "origin": "hypnotic",
+    "examples": [
+      {
+        "exam_en": "a hypnotic effect",
+        "exam_ko": "최면 효과"
+      },
+      {
+        "exam_en": "a hypnotic suggestion",
+        "exam_ko": "(최면 상태로 하기 위한) 최면 암시."
+      }
+    ]
+  },
+  {
+    "id": 18121,
+    "origin": "biz",
+    "examples": [
+      {
+        "exam_en": "show biz",
+        "exam_ko": "흥행업"
+      },
+      {
+        "exam_en": "Good biz!",
+        "exam_ko": "(영) 잘했어!"
+      }
+    ]
+  },
+  {
+    "id": 18122,
+    "origin": "irrefutable",
+    "examples": [
+      {
+        "exam_en": "His mendacious statements were exposed by irrefutable evidence.",
+        "exam_ko": "그의 거짓말 같은 발언은 반박할 수 없는 증거에 의해 폭로되었다."
+      }
+    ]
+  },
+  {
+    "id": 18126,
+    "origin": "morrow",
+    "examples": [
+      {
+        "exam_en": "on the morrow",
+        "exam_ko": "내일에"
+      },
+      {
+        "exam_en": "on the morrow evening",
+        "exam_ko": "다음날 저녁에."
+      }
+    ]
+  },
+  {
+    "id": 18130,
+    "origin": "saunter",
+    "examples": [
+      {
+        "exam_en": "saunter by",
+        "exam_ko": "어슬렁거리며 지나가다"
+      },
+      {
+        "exam_en": "saunter off somewhere",
+        "exam_ko": "어디론지 어슬렁어슬렁 사라지다."
+      }
+    ]
+  },
+  {
+    "id": 18138,
+    "origin": "perceptible",
+    "examples": [
+      {
+        "exam_en": "There was a perceptible change in his expression.",
+        "exam_ko": "그의 표정이 뚜렷하게 변했다."
+      }
+    ]
+  },
+  {
+    "id": 18139,
+    "origin": "mortification",
+    "examples": [
+      {
+        "exam_en": "to one's mortification",
+        "exam_ko": "부끄럽게도"
+      },
+      {
+        "exam_en": "I experienced the mortification of finding my advice rejected.",
+        "exam_ko": "유감스럽게도 내 충고는 퇴짜를 맞았다"
+      }
+    ]
+  },
+  {
+    "id": 18143,
+    "origin": "sniffle",
+    "examples": [
+      {
+        "exam_en": "I had a cold and was sniffling all day.",
+        "exam_ko": "나는 감기에 걸려서 하루 종일 코를 훌쩍거렸다"
+      },
+      {
+        "exam_en": "People sniffled at the funeral.",
+        "exam_ko": "사람들은 장례식에서 훌쩍이며 흐느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 18144,
+    "origin": "hoot",
+    "examples": [
+      {
+        "exam_en": "The audience hooted at the speaker for his mistake.",
+        "exam_ko": "청중은 강연자의 실수에 대해 야유했다."
+      },
+      {
+        "exam_en": "A steamboat hooted sadly on the river.",
+        "exam_ko": "증기선이 강을 지나가면서 고동을 구슬프게 울렸다."
+      }
+    ]
+  },
+  {
+    "id": 18145,
+    "origin": "twinkle",
+    "examples": [
+      {
+        "exam_en": "The stars are twinkling.",
+        "exam_ko": "별들이 반짝이고 있다"
+      },
+      {
+        "exam_en": "The towns twinkle with fairy lights all through Christmas.",
+        "exam_ko": "그 소도시는 크리스마스철 내내 장식 색등으로 빛나고 있다."
+      }
+    ]
+  },
+  {
+    "id": 18154,
+    "origin": "straddle",
+    "examples": [
+      {
+        "exam_en": "straddle a pony",
+        "exam_ko": "망아지[자전거]에 올라타다."
+      },
+      {
+        "exam_en": "straddle the fence",
+        "exam_ko": "중립[기회주의]적 입장을 취하다."
+      }
+    ]
+  },
+  {
+    "id": 18156,
+    "origin": "nitrate",
+    "examples": [
+      {
+        "exam_en": "In wastewater treatment, denitrification is a vital process. It removes nitrates, which can cause health problems as well as harmful algal blooms.",
+        "exam_ko": "폐수 처리에서 탈질은 중요한 과정입니다. 건강상의 문제와 해조류를 유발할 수 있는 질산염을 제거하는 과정이다."
+      }
+    ]
+  },
+  {
+    "id": 18159,
+    "origin": "nightfall",
+    "examples": [
+      {
+        "exam_en": "at nightfall",
+        "exam_ko": "해질 무렵에"
+      },
+      {
+        "exam_en": "before nightfall",
+        "exam_ko": "해가 지기 전에."
+      }
+    ]
+  }
+]

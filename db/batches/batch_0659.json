@@ -1,0 +1,230 @@
+[
+  {
+    "id": 24413,
+    "origin": "therapeutics",
+    "examples": [
+      {
+        "exam_en": "electro therapeutics",
+        "exam_ko": "전기 치료학."
+      }
+    ]
+  },
+  {
+    "id": 24420,
+    "origin": "batting",
+    "examples": [
+      {
+        "exam_en": "the batting order",
+        "exam_ko": "타순(打順)"
+      },
+      {
+        "exam_en": "a batting eye",
+        "exam_ko": "선구안(選球眼)"
+      }
+    ]
+  },
+  {
+    "id": 24423,
+    "origin": "glaciated",
+    "examples": [
+      {
+        "exam_en": "a glaciated shelf",
+        "exam_ko": "빙식붕(氷蝕棚)."
+      }
+    ]
+  },
+  {
+    "id": 24425,
+    "origin": "kayak",
+    "examples": [
+      {
+        "exam_en": "paddle a kayak",
+        "exam_ko": "카약을 젓다."
+      }
+    ]
+  },
+  {
+    "id": 24430,
+    "origin": "sleigh",
+    "examples": [
+      {
+        "exam_en": "drive a sleigh",
+        "exam_ko": "썰매를 몰다"
+      },
+      {
+        "exam_en": "throw off the back of the sleigh",
+        "exam_ko": "동아리[한 패]에서 떼어버리다."
+      }
+    ]
+  },
+  {
+    "id": 24431,
+    "origin": "glamping",
+    "examples": [
+      {
+        "exam_en": "Glamping offers all the comfort of a luxury hotel in beautiful, outdoor settings.",
+        "exam_ko": "글램핑은 아름다운 야외 환경에다 호화 호텔의 모든 안락함을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 24435,
+    "origin": "turndown",
+    "examples": [
+      {
+        "exam_en": "a turndown bed",
+        "exam_ko": "접식 침대."
+      },
+      {
+        "exam_en": "get a turndown from a chick",
+        "exam_ko": "계집애에게 퇴짜 당하다."
+      }
+    ]
+  },
+  {
+    "id": 24437,
+    "origin": "ramify",
+    "examples": [
+      {
+        "exam_en": "ramify into several groups",
+        "exam_ko": "몇몇 파로 분열하다"
+      },
+      {
+        "exam_en": "The waterways ramify across the plain.",
+        "exam_ko": "수로는 평야를 가로지르며 갈라지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 24442,
+    "origin": "unborn",
+    "examples": [
+      {
+        "exam_en": "unborn generations",
+        "exam_ko": "후세의 사람들, 미래의 세대"
+      },
+      {
+        "exam_en": "an unborn child",
+        "exam_ko": "태아."
+      }
+    ]
+  },
+  {
+    "id": 24445,
+    "origin": "meaningless",
+    "examples": [
+      {
+        "exam_en": "a meaningless question",
+        "exam_ko": "무의미한 질문."
+      }
+    ]
+  },
+  {
+    "id": 24447,
+    "origin": "politically",
+    "examples": [
+      {
+        "exam_en": "Politically, the region is very unstable.",
+        "exam_ko": "정치적으로 그 지역은 매우 불안정하다."
+      }
+    ]
+  },
+  {
+    "id": 24453,
+    "origin": "confidentially",
+    "examples": [
+      {
+        "exam_en": "speak confidentially to a person",
+        "exam_ko": "남에게 털어놓고 이야기하다."
+      }
+    ]
+  },
+  {
+    "id": 24463,
+    "origin": "emblematic",
+    "examples": [
+      {
+        "exam_en": "The cross is emblematic of Christ's suffering.",
+        "exam_ko": "십자가는 예수의 수난을 상징하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": 24468,
+    "origin": "rerun",
+    "examples": [
+      {
+        "exam_en": "They rerun so many old films on TV.",
+        "exam_ko": "그들은 아주 많은 옛날 영화를 TV에 재상영하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 24469,
+    "origin": "aperitif",
+    "examples": [
+      {
+        "exam_en": "Would you like to have aperitif?",
+        "exam_ko": "식전주를 드시겠습니까?"
+      }
+    ]
+  },
+  {
+    "id": 24472,
+    "origin": "secretarial",
+    "examples": [
+      {
+        "exam_en": "the secretarial staff",
+        "exam_ko": "서기[비서]진."
+      }
+    ]
+  },
+  {
+    "id": 24474,
+    "origin": "auteur",
+    "examples": [
+      {
+        "exam_en": "auteur theory",
+        "exam_ko": "감독 중심주의."
+      }
+    ]
+  },
+  {
+    "id": 24479,
+    "origin": "unshakable",
+    "examples": [
+      {
+        "exam_en": "an unshakable belief in God",
+        "exam_ko": "신에 대한 확고한 믿음."
+      }
+    ]
+  },
+  {
+    "id": 24480,
+    "origin": "apposition",
+    "examples": [
+      {
+        "exam_en": "in close apposition",
+        "exam_ko": "바싹 붙여서, 병렬시켜서."
+      },
+      {
+        "exam_en": "the apposition of a seal",
+        "exam_ko": "날인 첨부."
+      }
+    ]
+  },
+  {
+    "id": 24481,
+    "origin": "analytic",
+    "examples": [
+      {
+        "exam_en": "the analytic method",
+        "exam_ko": "분석적 방법"
+      },
+      {
+        "exam_en": "analytic philosophy",
+        "exam_ko": "분석 철학."
+      }
+    ]
+  }
+]

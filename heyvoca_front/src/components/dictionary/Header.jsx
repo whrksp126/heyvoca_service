@@ -1,18 +1,23 @@
 import React from 'react';
 import { IconCamera } from '../../assets/svg/icon';
-import postMessageManager from '../../utils/postMessageManager';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import DictionaryOcrResultNewFullSheet from '../newfullsheet/DictionaryOcrResultNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
 const Header = () => {
   "use memo";
 
+  const { pushNewFullSheet } = useNewFullSheetActions();
+
   const handleCameraClick = () => {
     vibrate({ duration: 5 });
-    postMessageManager.sendMessageToReactNative('openCamera', null);
+    pushNewFullSheet(DictionaryOcrResultNewFullSheet);
   };
 
   return (
-    <div className='
+    <div
+      data-page-header
+      className='
       relative
       flex items-center justify-center
       w-full h-[55px]

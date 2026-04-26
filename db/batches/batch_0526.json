@@ -1,0 +1,270 @@
+[
+  {
+    "id": 16535,
+    "origin": "trauma",
+    "examples": [
+      {
+        "exam_en": "a childhood trauma",
+        "exam_ko": "(어릴 때 체험한) 정신적 쇼크"
+      },
+      {
+        "exam_en": "the trauma of the Vietnam war",
+        "exam_ko": "월남전의 충격."
+      }
+    ]
+  },
+  {
+    "id": 16536,
+    "origin": "uproot",
+    "examples": [
+      {
+        "exam_en": "The flood uprooted the trees.",
+        "exam_ko": "홍수는 나무들을 뿌리째 뽑아 놓았다."
+      },
+      {
+        "exam_en": "be uprooted from one's home",
+        "exam_ko": "자기 집에서 쫓겨나다."
+      }
+    ]
+  },
+  {
+    "id": 16537,
+    "origin": "reflex",
+    "examples": [
+      {
+        "exam_en": "a conditioned reflex",
+        "exam_ko": "조건 반사."
+      },
+      {
+        "exam_en": "have good reflexes",
+        "exam_ko": "반사 신경이 예민하다."
+      }
+    ]
+  },
+  {
+    "id": 16542,
+    "origin": "lumbar",
+    "examples": [
+      {
+        "exam_en": "lumbar anesthesia",
+        "exam_ko": "요추 마취"
+      },
+      {
+        "exam_en": "the lumbar region",
+        "exam_ko": "요부(腰部)."
+      }
+    ]
+  },
+  {
+    "id": 16544,
+    "origin": "nuzzle",
+    "examples": [
+      {
+        "exam_en": "The pup nuzzled up close to the boy.",
+        "exam_ko": "강아지는 소년에게 코를 비벼댔다."
+      }
+    ]
+  },
+  {
+    "id": 16547,
+    "origin": "incoherent",
+    "examples": [
+      {
+        "exam_en": "an incoherent explanation",
+        "exam_ko": "앞뒤가 맞지 않는 설명."
+      }
+    ]
+  },
+  {
+    "id": 16552,
+    "origin": "osteo",
+    "examples": [
+      {
+        "exam_en": "osteoblast",
+        "exam_ko": "조골(造骨) 세포"
+      },
+      {
+        "exam_en": "osteoporosis",
+        "exam_ko": "골다공증(骨多孔症)."
+      }
+    ]
+  },
+  {
+    "id": 16553,
+    "origin": "vertebra",
+    "examples": [
+      {
+        "exam_en": "a lumbar vertebra",
+        "exam_ko": "요추(腰椎)"
+      },
+      {
+        "exam_en": "a cervical vertebra",
+        "exam_ko": "경추(頸椎)"
+      },
+      {
+        "exam_en": "a lumbar vertebra ",
+        "exam_ko": "요추(腰椎)"
+      },
+      {
+        "exam_en": "a cervical vertebra ",
+        "exam_ko": "경추(頸椎)"
+      }
+    ]
+  },
+  {
+    "id": 16564,
+    "origin": "prenuptial",
+    "examples": [
+      {
+        "exam_en": "prenuptial play",
+        "exam_ko": "[동물] 교미 전희(前戱)."
+      }
+    ]
+  },
+  {
+    "id": 16571,
+    "origin": "intravenous",
+    "examples": [
+      {
+        "exam_en": "an intravenous injection",
+        "exam_ko": "정맥 주사"
+      },
+      {
+        "exam_en": "intravenous drugs",
+        "exam_ko": "정맥 주사로 주입하는 약물."
+      }
+    ]
+  },
+  {
+    "id": 16579,
+    "origin": "distal",
+    "examples": [
+      {
+        "exam_en": "distal bite",
+        "exam_ko": "원심 교합(遠心咬合)."
+      }
+    ]
+  },
+  {
+    "id": 16581,
+    "origin": "spleen",
+    "examples": [
+      {
+        "exam_en": "in a fit of spleen",
+        "exam_ko": "발끈해서, 화난 김에"
+      },
+      {
+        "exam_en": "work off one's spleen",
+        "exam_ko": "울분을 풀다."
+      }
+    ]
+  },
+  {
+    "id": 16582,
+    "origin": "gall",
+    "examples": [
+      {
+        "exam_en": "vent one's gall on",
+        "exam_ko": "…에게 증오를 퍼붓다."
+      },
+      {
+        "exam_en": "have the gall to do",
+        "exam_ko": "뻔뻔스럽게도 …하다."
+      },
+      {
+        "exam_en": "It really galls me that Josh is always encouraging Lori with her work, but he never misses an opportunity to belittle mine.",
+        "exam_ko": "Josh가 항상 로리가 한일은 칭찬하고 내가 한건 하찮게 만들 기회를 놓치지 않아 ! 정말 억울해"
+      },
+      {
+        "exam_en": "One senior defense official told SpaceX had the gall to look like heroes while having others pay so much.",
+        "exam_ko": "한 고위 관계자는 국방부 말했다. 스페이스X가 뻔뻔함이 있다고 보이게 하는 영웅처럼 다른 사람들에게 돈을 지불하게 하면서 그렇게 많은"
+      }
+    ]
+  },
+  {
+    "id": 16585,
+    "origin": "potion",
+    "examples": [
+      {
+        "exam_en": "magic potion",
+        "exam_ko": "마법의 약"
+      },
+      {
+        "exam_en": "a sleeping potion",
+        "exam_ko": "수면제"
+      }
+    ]
+  },
+  {
+    "id": 16589,
+    "origin": "saline",
+    "examples": [
+      {
+        "exam_en": "saline solution",
+        "exam_ko": "식염수."
+      }
+    ]
+  },
+  {
+    "id": 16590,
+    "origin": "endo",
+    "examples": [
+      {
+        "exam_en": "endodontium",
+        "exam_ko": "치수(齒髓)"
+      },
+      {
+        "exam_en": "endocarditis",
+        "exam_ko": "심내막염."
+      }
+    ]
+  },
+  {
+    "id": 16591,
+    "origin": "anterior",
+    "examples": [
+      {
+        "exam_en": "the anterior part",
+        "exam_ko": "앞부분."
+      },
+      {
+        "exam_en": "It is an event anterior to the murder.",
+        "exam_ko": "그것은 그 살인 사건보다 앞선 사건이다."
+      }
+    ]
+  },
+  {
+    "id": 16593,
+    "origin": "constriction",
+    "examples": [
+      {
+        "exam_en": "the constriction in one's throat",
+        "exam_ko": "목의 압박감."
+      }
+    ]
+  },
+  {
+    "id": 16607,
+    "origin": "coronary",
+    "examples": [
+      {
+        "exam_en": "a coronary occlusion",
+        "exam_ko": "관상 동맥 폐색"
+      },
+      {
+        "exam_en": "coronary heart disease",
+        "exam_ko": "관상 동맥성 심장병."
+      }
+    ]
+  },
+  {
+    "id": 16609,
+    "origin": "decerebrate",
+    "examples": [
+      {
+        "exam_en": "decerebrate rigidity",
+        "exam_ko": "뇌 제거 경직."
+      }
+    ]
+  }
+]

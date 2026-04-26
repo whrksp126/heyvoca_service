@@ -313,6 +313,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header - h-58.5px matches Figma */}
       <div
+        data-page-header
         style={{
           position: 'relative',
           display: 'flex',
@@ -643,6 +644,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     </div>
 
                     <MemorizationStatus
+                      hideOverdue
                       repetition={item.sm2?.repetition ?? item.repetition ?? 0}
                       interval={item.sm2?.interval ?? item.interval ?? 0}
                       ef={item.sm2?.ef ?? item.ef ?? 2.5}

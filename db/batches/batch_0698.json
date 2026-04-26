@@ -1,0 +1,222 @@
+[
+  {
+    "id": 29329,
+    "origin": "nationally",
+    "examples": [
+      {
+        "exam_en": "The finals will be televised nationally.",
+        "exam_ko": "결승전은 전국으로 방영될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 29334,
+    "origin": "shebang",
+    "examples": [
+      {
+        "exam_en": "blowup the whole shebang",
+        "exam_ko": "모든 것을 망치다."
+      }
+    ]
+  },
+  {
+    "id": 29347,
+    "origin": "pronominal",
+    "examples": [
+      {
+        "exam_en": "a pronominal adjective",
+        "exam_ko": "대명사적 형용사."
+      }
+    ]
+  },
+  {
+    "id": 29350,
+    "origin": "adoptive",
+    "examples": [
+      {
+        "exam_en": "an adoptive mother",
+        "exam_ko": "양모[양가]."
+      }
+    ]
+  },
+  {
+    "id": 29376,
+    "origin": "cholinergic",
+    "examples": [
+      {
+        "exam_en": "cholinergic agent",
+        "exam_ko": "콜린 작용제."
+      }
+    ]
+  },
+  {
+    "id": 29387,
+    "origin": "epithelial",
+    "examples": [
+      {
+        "exam_en": "epithelial cells",
+        "exam_ko": "상피 세포."
+      }
+    ]
+  },
+  {
+    "id": 29408,
+    "origin": "methaqualone",
+    "examples": [
+      {
+        "exam_en": "biopharmaceutical studies on methaqualone",
+        "exam_ko": "메타콸론에 대한 생물약제학적 연구."
+      }
+    ]
+  },
+  {
+    "id": 29409,
+    "origin": "checkered",
+    "examples": [
+      {
+        "exam_en": "a checkered career",
+        "exam_ko": "파란만장한 생애."
+      },
+      {
+        "exam_en": "a checkered flag",
+        "exam_ko": "(자동차 경주의) 바둑판무늬 깃발."
+      }
+    ]
+  },
+  {
+    "id": 29415,
+    "origin": "adulterated",
+    "examples": [
+      {
+        "exam_en": "adulterated gasoline",
+        "exam_ko": "(등유를 섞은) 가짜 휘발유."
+      }
+    ]
+  },
+  {
+    "id": 29418,
+    "origin": "admonitory",
+    "examples": [
+      {
+        "exam_en": "The teacher gave an admonitory speech to the students, reminding them of the importance of studying diligently.",
+        "exam_ko": "선생님은 학생들에게 힘들게 공부하는 중요성을 상기시키기 위해 훈계적인 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": 29422,
+    "origin": "adamantine",
+    "examples": [
+      {
+        "exam_en": "an attitude of adamantine stubbornness",
+        "exam_ko": "완고하기 그지없는 태도."
+      }
+    ]
+  },
+  {
+    "id": 29438,
+    "origin": "undreamed",
+    "examples": [
+      {
+        "exam_en": "A course more promising Than a wild dedication of yourselves To unpathed waters, undreamed shores,",
+        "exam_ko": "개척되지 않은 물이나 상상도 못한 해변을 향한 당신 자신의 사나운 헌신보다 희망적인 길"
+      }
+    ]
+  },
+  {
+    "id": 29439,
+    "origin": "swinging",
+    "examples": [
+      {
+        "exam_en": "a swinging gait",
+        "exam_ko": "비틀거리는 발걸음."
+      },
+      {
+        "exam_en": "the swinging sixties",
+        "exam_ko": "사회적·성적 자유로 상징되는 1960년대."
+      }
+    ]
+  },
+  {
+    "id": 29454,
+    "origin": "auto",
+    "examples": [
+      {
+        "exam_en": "autochrome",
+        "exam_ko": "천연색 사진"
+      },
+      {
+        "exam_en": "autokinetics",
+        "exam_ko": "수의 운동"
+      }
+    ]
+  },
+  {
+    "id": 29460,
+    "origin": "phrasal",
+    "examples": [
+      {
+        "exam_en": "a phrasal adjective",
+        "exam_ko": "구형용사."
+      }
+    ]
+  },
+  {
+    "id": 29466,
+    "origin": "compensatory",
+    "examples": [
+      {
+        "exam_en": "compensatory lengthening",
+        "exam_ko": "[언어학] 대상 연장(인접한 자음이 없어진 데 따른 모음의 장음화)"
+      },
+      {
+        "exam_en": "compensatory financing facility",
+        "exam_ko": "(IMF의) 수출 변동 보상 융자."
+      }
+    ]
+  },
+  {
+    "id": 29467,
+    "origin": "netting",
+    "examples": [
+      {
+        "exam_en": "mosquito netting",
+        "exam_ko": "모기장"
+      },
+      {
+        "exam_en": "fish netting",
+        "exam_ko": "어망."
+      }
+    ]
+  },
+  {
+    "id": 29474,
+    "origin": "exercisable",
+    "examples": [
+      {
+        "exam_en": "exercisable right",
+        "exam_ko": "행사할 수 있는 권리."
+      }
+    ]
+  },
+  {
+    "id": 29475,
+    "origin": "hmm",
+    "examples": [
+      {
+        "exam_en": "Hmm. I doubt it somehow, but yes, maybe.",
+        "exam_ko": "음, 난 그것이 어쩐지 의심스럽지만, 아마 그럴지도 모르지."
+      }
+    ]
+  },
+  {
+    "id": 29487,
+    "origin": "tother",
+    "examples": [
+      {
+        "exam_en": "tell tother from which",
+        "exam_ko": "(익살) 구분짓다."
+      }
+    ]
+  }
+]

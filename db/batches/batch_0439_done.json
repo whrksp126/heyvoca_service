@@ -1,0 +1,262 @@
+[
+  {
+    "id": 12498,
+    "origin": "repay",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">repaid</strong> the loan within a year.",
+        "exam_ko": "그녀는 1년 안에 대출금을 <strong class=\"target-word\">갚았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">repaid</strong> his friend's kindness with gratitude.",
+        "exam_ko": "그는 친구의 친절에 감사로 <strong class=\"target-word\">보답했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12501,
+    "origin": "dressed",
+    "examples": [
+      {
+        "exam_en": "She was elegantly <strong class=\"target-word\">dressed</strong> for the event.",
+        "exam_ko": "그녀는 행사를 위해 우아하게 <strong class=\"target-word\">차려입었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12502,
+    "origin": "amazement",
+    "examples": [
+      {
+        "exam_en": "He stared in <strong class=\"target-word\">amazement</strong> at the magic trick.",
+        "exam_ko": "그는 마술에 <strong class=\"target-word\">놀라움</strong>으로 바라보았다."
+      },
+      {
+        "exam_en": "To everyone's <strong class=\"target-word\">amazement</strong>, she won first place.",
+        "exam_ko": "모두의 <strong class=\"target-word\">놀라움</strong>에, 그녀가 1등을 차지했다."
+      }
+    ]
+  },
+  {
+    "id": 12503,
+    "origin": "sunshine",
+    "examples": [
+      {
+        "exam_en": "The children played in the warm <strong class=\"target-word\">sunshine</strong>.",
+        "exam_ko": "아이들은 따뜻한 <strong class=\"target-word\">햇살</strong> 속에서 놀았다."
+      },
+      {
+        "exam_en": "Bright <strong class=\"target-word\">sunshine</strong> filled the room in the morning.",
+        "exam_ko": "아침에 밝은 <strong class=\"target-word\">햇빛</strong>이 방을 가득 채웠다."
+      }
+    ]
+  },
+  {
+    "id": 12505,
+    "origin": "floodgate",
+    "examples": [
+      {
+        "exam_en": "The decision opened the <strong class=\"target-word\">floodgates</strong> to new complaints.",
+        "exam_ko": "그 결정은 새로운 불만의 <strong class=\"target-word\">수문</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 12506,
+    "origin": "deluxe",
+    "examples": [
+      {
+        "exam_en": "They stayed in a <strong class=\"target-word\">deluxe</strong> suite at the hotel.",
+        "exam_ko": "그들은 호텔의 <strong class=\"target-word\">고급</strong> 스위트룸에 묵었다."
+      },
+      {
+        "exam_en": "She bought the <strong class=\"target-word\">deluxe</strong> edition of the book.",
+        "exam_ko": "그녀는 책의 <strong class=\"target-word\">호화</strong> 판을 구매했다."
+      }
+    ]
+  },
+  {
+    "id": 12508,
+    "origin": "gent",
+    "examples": [
+      {
+        "exam_en": "He was a proper <strong class=\"target-word\">gent</strong> who opened doors for others.",
+        "exam_ko": "그는 다른 사람을 위해 문을 열어주는 진정한 <strong class=\"target-word\">신사</strong>였다."
+      },
+      {
+        "exam_en": "The old <strong class=\"target-word\">gent</strong> tipped his hat politely.",
+        "exam_ko": "그 나이 든 <strong class=\"target-word\">신사</strong>는 정중하게 모자를 들어올렸다."
+      }
+    ]
+  },
+  {
+    "id": 12512,
+    "origin": "manoeuvre",
+    "examples": [
+      {
+        "exam_en": "The pilot had to <strong class=\"target-word\">manoeuvre</strong> carefully through the storm.",
+        "exam_ko": "조종사는 폭풍 속에서 신중하게 <strong class=\"target-word\">조종해야</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 12513,
+    "origin": "immerse",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">immersed</strong> herself in the new language.",
+        "exam_ko": "그녀는 새로운 언어에 <strong class=\"target-word\">몰입했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">immersed</strong> the cloth in warm water.",
+        "exam_ko": "그는 천을 따뜻한 물에 <strong class=\"target-word\">담갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12518,
+    "origin": "inhibition",
+    "examples": [
+      {
+        "exam_en": "Alcohol lowers people's <strong class=\"target-word\">inhibitions</strong> at parties.",
+        "exam_ko": "술은 파티에서 사람들의 <strong class=\"target-word\">억제심</strong>을 낮춘다."
+      },
+      {
+        "exam_en": "She danced without any <strong class=\"target-word\">inhibition</strong> on stage.",
+        "exam_ko": "그녀는 무대 위에서 아무런 <strong class=\"target-word\">거리낌</strong> 없이 춤을 췄다."
+      }
+    ]
+  },
+  {
+    "id": 12520,
+    "origin": "contour",
+    "examples": [
+      {
+        "exam_en": "The map shows the <strong class=\"target-word\">contours</strong> of the mountain range.",
+        "exam_ko": "지도는 산맥의 <strong class=\"target-word\">윤곽선</strong>을 보여준다."
+      },
+      {
+        "exam_en": "She traced the <strong class=\"target-word\">contour</strong> of the coastline carefully.",
+        "exam_ko": "그녀는 해안선의 <strong class=\"target-word\">윤곽</strong>을 꼼꼼히 따라 그렸다."
+      }
+    ]
+  },
+  {
+    "id": 12522,
+    "origin": "helpless",
+    "examples": [
+      {
+        "exam_en": "He felt completely <strong class=\"target-word\">helpless</strong> during the crisis.",
+        "exam_ko": "그는 위기 상황에서 완전히 <strong class=\"target-word\">무력함</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "The baby was <strong class=\"target-word\">helpless</strong> without its mother nearby.",
+        "exam_ko": "아기는 어머니 없이는 <strong class=\"target-word\">스스로 아무것도 할 수 없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12523,
+    "origin": "superstitious",
+    "examples": [
+      {
+        "exam_en": "My grandmother is very <strong class=\"target-word\">superstitious</strong> about black cats.",
+        "exam_ko": "할머니는 검은 고양이에 대해 매우 <strong class=\"target-word\">미신을 믿는다</strong>."
+      },
+      {
+        "exam_en": "He refused to walk under the ladder because he was <strong class=\"target-word\">superstitious</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">미신을 믿어서</strong> 사다리 아래를 지나가지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 12526,
+    "origin": "torch",
+    "examples": [
+      {
+        "exam_en": "She carried the Olympic <strong class=\"target-word\">torch</strong> through the city.",
+        "exam_ko": "그녀는 도시를 가로질러 올림픽 <strong class=\"target-word\">성화</strong>를 들고 달렸다."
+      },
+      {
+        "exam_en": "He used a <strong class=\"target-word\">torch</strong> to find his way in the dark.",
+        "exam_ko": "그는 어둠 속에서 길을 찾기 위해 <strong class=\"target-word\">횃불</strong>을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 12529,
+    "origin": "cliff",
+    "examples": [
+      {
+        "exam_en": "They stood at the edge of the steep <strong class=\"target-word\">cliff</strong>.",
+        "exam_ko": "그들은 가파른 <strong class=\"target-word\">절벽</strong> 끝에 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12533,
+    "origin": "publishing",
+    "examples": [
+      {
+        "exam_en": "She works at a major <strong class=\"target-word\">publishing</strong> company in Seoul.",
+        "exam_ko": "그녀는 서울의 대형 <strong class=\"target-word\">출판</strong>사에서 일한다."
+      },
+      {
+        "exam_en": "Digital <strong class=\"target-word\">publishing</strong> has changed the book industry.",
+        "exam_ko": "디지털 <strong class=\"target-word\">출판</strong>이 도서 산업을 변화시켰다."
+      }
+    ]
+  },
+  {
+    "id": 12534,
+    "origin": "agreement",
+    "examples": [
+      {
+        "exam_en": "Both sides reached an <strong class=\"target-word\">agreement</strong> after long negotiations.",
+        "exam_ko": "양측은 긴 협상 끝에 <strong class=\"target-word\">합의</strong>에 도달했다."
+      },
+      {
+        "exam_en": "They signed the <strong class=\"target-word\">agreement</strong> by mutual consent.",
+        "exam_ko": "그들은 쌍방의 동의 하에 <strong class=\"target-word\">협정</strong>에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 12536,
+    "origin": "impediment",
+    "examples": [
+      {
+        "exam_en": "Lack of funding is a major <strong class=\"target-word\">impediment</strong> to research.",
+        "exam_ko": "자금 부족은 연구에 큰 <strong class=\"target-word\">장애물</strong>이다."
+      },
+      {
+        "exam_en": "His speech <strong class=\"target-word\">impediment</strong> made communication difficult.",
+        "exam_ko": "그의 언어 <strong class=\"target-word\">장애</strong>는 의사소통을 어렵게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 12537,
+    "origin": "subdivision",
+    "examples": [
+      {
+        "exam_en": "The city approved a new residential <strong class=\"target-word\">subdivision</strong> project.",
+        "exam_ko": "시는 새로운 주거 <strong class=\"target-word\">구획</strong> 사업을 승인했다."
+      }
+    ]
+  },
+  {
+    "id": 12538,
+    "origin": "precipitate",
+    "examples": [
+      {
+        "exam_en": "The scandal <strong class=\"target-word\">precipitated</strong> his sudden resignation.",
+        "exam_ko": "스캔들이 그의 갑작스러운 사임을 <strong class=\"target-word\">재촉했다</strong>."
+      },
+      {
+        "exam_en": "Heavy rain can <strong class=\"target-word\">precipitate</strong> dangerous flash floods.",
+        "exam_ko": "폭우는 위험한 돌발 홍수를 <strong class=\"target-word\">촉발할</strong> 수 있다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1755,
+    "origin": "ought",
+    "examples": [
+      {
+        "exam_en": "Every student <strong class=\"target-word\">ought</strong> to attend the meeting.",
+        "exam_ko": "모든 학생이 모임에 <strong class=\"target-word\">참석해야 한다</strong>."
+      },
+      {
+        "exam_en": "You <strong class=\"target-word\">oughtn't</strong> to say such a thing.",
+        "exam_ko": "그런 말을 해서는 <strong class=\"target-word\">안 된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1756,
+    "origin": "stick",
+    "examples": [
+      {
+        "exam_en": "He used a <strong class=\"target-word\">stick</strong> to support himself.",
+        "exam_ko": "그는 몸을 지탱하려고 <strong class=\"target-word\">지팡이</strong>를 사용했다."
+      },
+      {
+        "exam_en": "The mud <strong class=\"target-word\">stuck</strong> to my boots after the rain.",
+        "exam_ko": "비가 온 후 진흙이 내 장화에 <strong class=\"target-word\">달라붙었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1757,
+    "origin": "divide",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">divided</strong> the words into syllables.",
+        "exam_ko": "그녀는 단어들을 음절로 <strong class=\"target-word\">나눴다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">divided</strong> the cake in half.",
+        "exam_ko": "그는 케이크를 반으로 <strong class=\"target-word\">나눴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1758,
+    "origin": "train",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">train</strong> service was delayed by an hour.",
+        "exam_ko": "<strong class=\"target-word\">열차</strong> 편이 한 시간 지연되었다."
+      },
+      {
+        "exam_en": "She took a <strong class=\"target-word\">train</strong> at 3 p.m.",
+        "exam_ko": "그녀는 오후 3시 <strong class=\"target-word\">열차</strong>를 탔다."
+      }
+    ]
+  },
+  {
+    "id": 1759,
+    "origin": "undertake",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">undertook</strong> the arrangements for the event.",
+        "exam_ko": "그는 행사 준비를 <strong class=\"target-word\">맡았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">undertook</strong> responsibility for the sale.",
+        "exam_ko": "그녀는 판매에 대한 책임을 <strong class=\"target-word\">졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1760,
+    "origin": "combine",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">combined</strong> the two tables into one.",
+        "exam_ko": "그들은 두 테이블을 하나로 <strong class=\"target-word\">붙였다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">combined</strong> theory with practice.",
+        "exam_ko": "그녀는 이론과 실천을 <strong class=\"target-word\">결부시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1761,
+    "origin": "spread",
+    "examples": [
+      {
+        "exam_en": "The ship sailed with all sails <strong class=\"target-word\">spread</strong>.",
+        "exam_ko": "배는 돛을 모두 <strong class=\"target-word\">펼친</strong> 채 항해했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">spread</strong> out his legs and relaxed.",
+        "exam_ko": "그는 두 다리를 <strong class=\"target-word\">벌리고</strong> 편히 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 1762,
+    "origin": "attack",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">attacked</strong> the city at dawn.",
+        "exam_ko": "군인들은 새벽에 도시를 <strong class=\"target-word\">공격했다</strong>."
+      },
+      {
+        "exam_en": "Our dog <strong class=\"target-word\">attacked</strong> the burglar and drove him off.",
+        "exam_ko": "우리 집 개가 도둑에게 <strong class=\"target-word\">달려들어</strong> 쫓아버렸다."
+      }
+    ]
+  },
+  {
+    "id": 1763,
+    "origin": "shout",
+    "examples": [
+      {
+        "exam_en": "The crowd <strong class=\"target-word\">shouted</strong> for joy.",
+        "exam_ko": "군중은 기쁨에 <strong class=\"target-word\">환성을 질렀다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">shouted</strong> with laughter at the joke.",
+        "exam_ko": "그들은 농담에 크게 <strong class=\"target-word\">소리쳐 웃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1764,
+    "origin": "step",
+    "examples": [
+      {
+        "exam_en": "She walked with a lively <strong class=\"target-word\">step</strong>.",
+        "exam_ko": "그녀는 활발한 <strong class=\"target-word\">발걸음</strong>으로 걸었다."
+      },
+      {
+        "exam_en": "He walked with firm <strong class=\"target-word\">steps</strong> toward the door.",
+        "exam_ko": "그는 씩씩한 <strong class=\"target-word\">발걸음</strong>으로 문 쪽을 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 1765,
+    "origin": "secure",
+    "examples": [
+      {
+        "exam_en": "They found a <strong class=\"target-word\">secure</strong> place to hide.",
+        "exam_ko": "그들은 숨을 <strong class=\"target-word\">안전한</strong> 장소를 찾았다."
+      },
+      {
+        "exam_en": "The army built a <strong class=\"target-word\">secure</strong> fortress on the hill.",
+        "exam_ko": "군대는 언덕 위에 <strong class=\"target-word\">안전한</strong> 요새를 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 1766,
+    "origin": "conclude",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">concluded</strong> the meeting at 9 with a prayer.",
+        "exam_ko": "우리는 9시에 기도로 모임을 <strong class=\"target-word\">마쳤다</strong>."
+      },
+      {
+        "exam_en": "The story <strong class=\"target-word\">concludes</strong> with a happy ending.",
+        "exam_ko": "그 이야기는 행복한 결말로 <strong class=\"target-word\">끝난다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1767,
+    "origin": "imply",
+    "examples": [
+      {
+        "exam_en": "Rights <strong class=\"target-word\">imply</strong> obligations.",
+        "exam_ko": "권리에는 반드시 의무가 <strong class=\"target-word\">따른다</strong>."
+      },
+      {
+        "exam_en": "Are you <strong class=\"target-word\">implying</strong> that I am a thief?",
+        "exam_ko": "내가 도둑이라고 <strong class=\"target-word\">암시하는</strong> 것이냐?"
+      }
+    ]
+  },
+  {
+    "id": 1768,
+    "origin": "display",
+    "examples": [
+      {
+        "exam_en": "New books are <strong class=\"target-word\">displayed</strong> in the show window.",
+        "exam_ko": "신간 서적이 진열장에 <strong class=\"target-word\">전시되어</strong> 있다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">displayed</strong> his anger in front of everyone.",
+        "exam_ko": "그는 모두 앞에서 분노를 <strong class=\"target-word\">드러냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1769,
+    "origin": "illustrate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">illustrated</strong> her theory with clear examples.",
+        "exam_ko": "그녀는 명확한 예를 들어 이론을 <strong class=\"target-word\">설명했다</strong>."
+      },
+      {
+        "exam_en": "The chart <strong class=\"target-word\">illustrates</strong> how the body works.",
+        "exam_ko": "그 그림은 신체의 기능을 <strong class=\"target-word\">설명하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 1770,
+    "origin": "investigate",
+    "examples": [
+      {
+        "exam_en": "Police <strong class=\"target-word\">investigated</strong> the causes of the accident.",
+        "exam_ko": "경찰은 사고의 원인을 <strong class=\"target-word\">조사했다</strong>."
+      },
+      {
+        "exam_en": "The team <strong class=\"target-word\">investigated</strong> the matter thoroughly.",
+        "exam_ko": "팀은 그 문제를 철저히 <strong class=\"target-word\">조사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1771,
+    "origin": "direct",
+    "examples": [
+      {
+        "exam_en": "The general <strong class=\"target-word\">directed</strong> his nation through the war.",
+        "exam_ko": "장군은 국민을 이끌며 전쟁을 <strong class=\"target-word\">지휘했다</strong>."
+      },
+      {
+        "exam_en": "A police officer stood there <strong class=\"target-word\">directing</strong> the traffic.",
+        "exam_ko": "경찰관이 그곳에서 교통을 <strong class=\"target-word\">지휘하고</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1772,
+    "origin": "generate",
+    "examples": [
+      {
+        "exam_en": "The system <strong class=\"target-word\">generates</strong> reports automatically.",
+        "exam_ko": "시스템이 보고서를 자동으로 <strong class=\"target-word\">생성한다</strong>."
+      },
+      {
+        "exam_en": "Heat is <strong class=\"target-word\">generated</strong> from burning fuel.",
+        "exam_ko": "열은 연료 연소에서 <strong class=\"target-word\">생성된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1773,
+    "origin": "escape",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">escaped</strong> from prison after years.",
+        "exam_ko": "그는 수년 만에 교도소에서 <strong class=\"target-word\">탈출했다</strong>."
+      },
+      {
+        "exam_en": "She often <strong class=\"target-word\">escapes</strong> from reality through books.",
+        "exam_ko": "그녀는 종종 독서로 현실에서 <strong class=\"target-word\">도피한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1774,
+    "origin": "rely",
+    "examples": [
+      {
+        "exam_en": "You can <strong class=\"target-word\">rely</strong> on her word.",
+        "exam_ko": "그녀의 약속은 <strong class=\"target-word\">믿을</strong> 수 있어."
+      },
+      {
+        "exam_en": "You can't <strong class=\"target-word\">rely</strong> on his assistance.",
+        "exam_ko": "그의 도움은 <strong class=\"target-word\">믿을</strong> 것이 못 돼."
+      }
+    ]
+  }
+]

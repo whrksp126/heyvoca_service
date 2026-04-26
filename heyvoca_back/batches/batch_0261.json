@@ -1,0 +1,602 @@
+[
+  {
+    "id": 26510,
+    "word": "attention",
+    "exam_en": "<strong class=\"target-word\">Attention</strong>!",
+    "exam_ko": "<strong class=\"target-word\">차려</strong>!"
+  },
+  {
+    "id": 26511,
+    "word": "medic",
+    "exam_en": "I had worked as a <strong class=\"target-word\">medic</strong> at the 150th Medical Detachment for 2 years.",
+    "exam_ko": "나는 2 년동안 <strong class=\"target-word\">위생병으로</strong> 150 파견 병원에서 근무하였다."
+  },
+  {
+    "id": 26512,
+    "word": "captain",
+    "exam_en": "The <strong class=\"target-word\">captain</strong> was stripped of his rank.",
+    "exam_ko": "그 대위는 계급장을 <strong class=\"target-word\">박탈당했다</strong>."
+  },
+  {
+    "id": 26513,
+    "word": "missile",
+    "exam_en": "This ballistic <strong class=\"target-word\">missile</strong> carries a nuclear warhead.",
+    "exam_ko": "이 탄도 미사일은 핵탄두를 <strong class=\"target-word\">가지고</strong> 있다."
+  },
+  {
+    "id": 26514,
+    "word": "sergeant",
+    "exam_en": "I was discharged from the Army as a <strong class=\"target-word\">sergeant</strong>.",
+    "exam_ko": "나는 육군 <strong class=\"target-word\">병장</strong>으로 제대했다."
+  },
+  {
+    "id": 26515,
+    "word": "security",
+    "exam_en": "We have to show our pass to the <strong class=\"target-word\">security</strong> guard.",
+    "exam_ko": "<strong class=\"target-word\">경비</strong>에 우리의 통행권을 보여주어야 한다."
+  },
+  {
+    "id": 26516,
+    "word": "regiment",
+    "exam_en": "We are walking at the head of the <strong class=\"target-word\">regiment</strong>.",
+    "exam_ko": "우리는 그 <strong class=\"target-word\">연대</strong> 맨 앞에서 걷고 있다."
+  },
+  {
+    "id": 26517,
+    "word": "assassination",
+    "exam_en": "The recent bombings in this town was in reprisal for the <strong class=\"target-word\">assassination</strong> of their general.",
+    "exam_ko": "이 마을을 최근에 <strong class=\"target-word\">폭격한</strong> 것은 그들의 장군을 암살한 것에 대한 보복이었다."
+  },
+  {
+    "id": 26518,
+    "word": "major",
+    "exam_en": "<strong class=\"target-word\">Major</strong> John spoke ill of him.",
+    "exam_ko": "죤 소령은 그를 <strong class=\"target-word\">비난했다</strong>."
+  },
+  {
+    "id": 26519,
+    "word": "reveille",
+    "exam_en": "<strong class=\"target-word\">Reveille</strong> is at 6.",
+    "exam_ko": "<strong class=\"target-word\">기상나팔은</strong> 6시다."
+  },
+  {
+    "id": 26520,
+    "word": "colonel",
+    "exam_en": "He served as a <strong class=\"target-word\">colonel</strong> in the army.",
+    "exam_ko": "그는 육군에서 <strong class=\"target-word\">대령</strong>으로 복무했다."
+  },
+  {
+    "id": 26521,
+    "word": "division",
+    "exam_en": "I was stationed at the 180th Infantry <strong class=\"target-word\">Division</strong>.",
+    "exam_ko": "나는 육군 180 보병 사단에 <strong class=\"target-word\">배치되었다</strong>."
+  },
+  {
+    "id": 26522,
+    "word": "rifle",
+    "exam_en": "The burglar took a pot at him with his <strong class=\"target-word\">rifle</strong>.",
+    "exam_ko": "그 절도범은 <strong class=\"target-word\">소총</strong>으로 그를 쏘았다."
+  },
+  {
+    "id": 26523,
+    "word": "epaulet",
+    "exam_en": "The female soldier wears <strong class=\"target-word\">epaulet</strong>s on her shoulder.",
+    "exam_ko": "그 여군은 어깨에 견장을 <strong class=\"target-word\">견장</strong> 있다."
+  },
+  {
+    "id": 26524,
+    "word": "underripe",
+    "exam_en": "I like this <strong class=\"target-word\">underripe</strong> banana.",
+    "exam_ko": "나는 이 덜익은 <strong class=\"target-word\">바나나를</strong> 좋아한다."
+  },
+  {
+    "id": 26525,
+    "word": "stir-fry",
+    "exam_en": "Please <strong class=\"target-word\">stir-fry</strong> this meat in the big pan in a small amount of oil.",
+    "exam_ko": "기름을 조금 넣고 이 큰 팬에 고기를 <strong class=\"target-word\">볶으세요</strong>."
+  },
+  {
+    "id": 26526,
+    "word": "decanting",
+    "exam_en": "You have to know that <strong class=\"target-word\">decanting</strong> matures the taste of young wines.",
+    "exam_ko": "디캔팅은 덜 익은 와인의 맛을 성숙시킨다는 것을 <strong class=\"target-word\">알아야</strong> 한다."
+  },
+  {
+    "id": 26527,
+    "word": "corked",
+    "exam_en": "<strong class=\"target-word\">Corked</strong> wine was contaminated by this chemical material.",
+    "exam_ko": "<strong class=\"target-word\">코르크</strong> 마개를 한 와인은 이 화학 물질로 오염되었다."
+  },
+  {
+    "id": 26528,
+    "word": "freeze-dry",
+    "exam_en": "<strong class=\"target-word\">Freeze</strong>-dried coffee retains its flavor.",
+    "exam_ko": "<strong class=\"target-word\">동결건조</strong> 커피는 향이 보존된다."
+  },
+  {
+    "id": 26529,
+    "word": "dice",
+    "exam_en": "Please <strong class=\"target-word\">dice</strong> the vegetables for the soup.",
+    "exam_ko": "수프를 위해 야채를 <strong class=\"target-word\">깍둑썰기</strong>하세요."
+  },
+  {
+    "id": 26530,
+    "word": "broth",
+    "exam_en": "Let's plop the onions in the <strong class=\"target-word\">broth</strong>.",
+    "exam_ko": "국에 양파를 <strong class=\"target-word\">퐁당</strong> 넣자."
+  },
+  {
+    "id": 26531,
+    "word": "abalone",
+    "exam_en": "Please clean the <strong class=\"target-word\">abalone</strong>s and mince them.",
+    "exam_ko": "<strong class=\"target-word\">전복</strong>을 씻은 후 잘게 다지세요."
+  },
+  {
+    "id": 26532,
+    "word": "aperitif",
+    "exam_en": "Would you like to have <strong class=\"target-word\">aperitif</strong>?",
+    "exam_ko": "<strong class=\"target-word\">식전주를</strong> 드시겠습니까?"
+  },
+  {
+    "id": 26533,
+    "word": "grease",
+    "exam_en": "Please <strong class=\"target-word\">grease</strong> the pan for the next step.",
+    "exam_ko": "다음 단계를 위해서 팬에 <strong class=\"target-word\">기름을 치세요</strong>."
+  },
+  {
+    "id": 26534,
+    "word": "rind",
+    "exam_en": "Please pare the <strong class=\"target-word\">rind</strong> from these apples.",
+    "exam_ko": "이 <strong class=\"target-word\">사과들의</strong> 껍질을 벗기세요."
+  },
+  {
+    "id": 26535,
+    "word": "appellation",
+    "exam_en": "<strong class=\"target-word\">Appellation</strong> d’origine Controlee (AOC) was enacted in France.",
+    "exam_ko": "프랑스에서는 와인 원산지 명칭 통제가 <strong class=\"target-word\">법제화되어</strong> 있다."
+  },
+  {
+    "id": 26536,
+    "word": "soak",
+    "exam_en": "<strong class=\"target-word\">Soak</strong> the rice in clean water.",
+    "exam_ko": "깨끗한 물에 쌀을 <strong class=\"target-word\">담그세요</strong>."
+  },
+  {
+    "id": 26537,
+    "word": "sear",
+    "exam_en": "I want you to <strong class=\"target-word\">sear</strong> the meat first to retain its juices.",
+    "exam_ko": "가장 먼저 고기를 <strong class=\"target-word\">재빨리 구워서</strong> 육즙이 빠져나가지 않도록 하세요."
+  },
+  {
+    "id": 26538,
+    "word": "plop",
+    "exam_en": "Can you just <strong class=\"target-word\">plop</strong> some ice in my soda drinks?",
+    "exam_ko": "나의 소다수에 얼음만 좀 퐁당 넣어 <strong class=\"target-word\">줄래요?</strong>"
+  },
+  {
+    "id": 26539,
+    "word": "recipe",
+    "exam_en": "The <strong class=\"target-word\">recipe</strong>s you told me were fine.",
+    "exam_ko": "내가 <strong class=\"target-word\">레시피</strong> 말한 요리법은 훌륭했다."
+  },
+  {
+    "id": 26540,
+    "word": "cuisine",
+    "exam_en": "My restaurant is famous for its excellent <strong class=\"target-word\">cuisine</strong>.",
+    "exam_ko": "나의 레스토랑은 <strong class=\"target-word\">요리</strong>가 훌륭하기로 유명하다."
+  },
+  {
+    "id": 26541,
+    "word": "hot",
+    "exam_en": "My mug tipped over, spilling <strong class=\"target-word\">hot</strong> coffee everywhere.",
+    "exam_ko": "나의 머그잔이 넘어져서, <strong class=\"target-word\">뜨거운</strong> 커피가 사방에 쏟아졌다."
+  },
+  {
+    "id": 26542,
+    "word": "mousse",
+    "exam_en": "I'd like to order a chocolate <strong class=\"target-word\">mousse</strong>.",
+    "exam_ko": "나는 초콜릿 <strong class=\"target-word\">무스</strong>를 주문하고 싶다."
+  },
+  {
+    "id": 26543,
+    "word": "broccoli",
+    "exam_en": "I am chopping all the little bits of <strong class=\"target-word\">broccoli</strong> into bite-sized pieces.",
+    "exam_ko": "나는 작은 조각의 브로콜리를 한 입 크기의 조각으로 <strong class=\"target-word\">자르고</strong> 있다."
+  },
+  {
+    "id": 26544,
+    "word": "culinary",
+    "exam_en": "They are showing off their <strong class=\"target-word\">culinary</strong> skills.",
+    "exam_ko": "그들은 요리 솜씨를 <strong class=\"target-word\">뽐내고</strong> 있다."
+  },
+  {
+    "id": 26545,
+    "word": "bold",
+    "exam_en": "I prefer <strong class=\"target-word\">bold</strong> wines to light wines.",
+    "exam_ko": "나는 맛이 가벼운 것 보다 진한 와인을 <strong class=\"target-word\">좋아한다</strong>."
+  },
+  {
+    "id": 26546,
+    "word": "mushroom",
+    "exam_en": "Let's talk about <strong class=\"target-word\">mushroom</strong> today.",
+    "exam_ko": "오늘 버섯에 <strong class=\"target-word\">대하여</strong> 대화를 하자."
+  },
+  {
+    "id": 26547,
+    "word": "flour",
+    "exam_en": "Mix the <strong class=\"target-word\">flour</strong> and water.",
+    "exam_ko": "<strong class=\"target-word\">밀가루와</strong> 물을 섞으세요."
+  },
+  {
+    "id": 26548,
+    "word": "garlic",
+    "exam_en": "It look like a bulb of <strong class=\"target-word\">garlic</strong>.",
+    "exam_ko": "<strong class=\"target-word\">마늘</strong> 알 같이 생겼어."
+  },
+  {
+    "id": 26549,
+    "word": "banquet",
+    "exam_en": "The hotel <strong class=\"target-word\">banquet</strong> was swankified.",
+    "exam_ko": "그 호텔 연회는 <strong class=\"target-word\">호화롭게</strong> 꾸며졌다."
+  },
+  {
+    "id": 26550,
+    "word": "savor",
+    "exam_en": "We are able to <strong class=\"target-word\">savor</strong> some wines in this cave.",
+    "exam_ko": "우리들은 이 동굴 안에서 와인을 <strong class=\"target-word\">맛볼</strong> 수 있다."
+  },
+  {
+    "id": 26551,
+    "word": "savor",
+    "exam_en": "This soup has a <strong class=\"target-word\">savor</strong> of carrot.",
+    "exam_ko": "이 수프는 홍당무 <strong class=\"target-word\">맛</strong>이 난다."
+  },
+  {
+    "id": 26552,
+    "word": "microwave",
+    "exam_en": "Please the soup in the <strong class=\"target-word\">microwave</strong> for 2 minutes.",
+    "exam_ko": "이 분 동안 수프를 전자레인지에 <strong class=\"target-word\">데워요</strong>."
+  },
+  {
+    "id": 26553,
+    "word": "refrigerate",
+    "exam_en": "These fruits don’t need to be <strong class=\"target-word\">refrigerate</strong>d.",
+    "exam_ko": "이 <strong class=\"target-word\">냉장하다</strong> 냉장보관이 필요없다."
+  },
+  {
+    "id": 26554,
+    "word": "cheesecake",
+    "exam_en": "I love <strong class=\"target-word\">cheesecake</strong> too much to moderate my intake.",
+    "exam_ko": "나는 치즈케익을 너무 <strong class=\"target-word\">좋아해서</strong> 먹는 양을 조절할 수가 없다."
+  },
+  {
+    "id": 26555,
+    "word": "toast",
+    "exam_en": "We'll have a large <strong class=\"target-word\">toast</strong>, thanks.",
+    "exam_ko": "큰 <strong class=\"target-word\">토스트</strong> 하나 갖다 주세요."
+  },
+  {
+    "id": 26556,
+    "word": "noodle",
+    "exam_en": "Would you prefer ramen or <strong class=\"target-word\">noodle</strong>s?",
+    "exam_ko": "라면으로 하시겠어요 국수로 <strong class=\"target-word\">국수</strong>"
+  },
+  {
+    "id": 26557,
+    "word": "onion",
+    "exam_en": "Will you peel the <strong class=\"target-word\">onion</strong>s for me?",
+    "exam_ko": "<strong class=\"target-word\">양파</strong> 껍질 좀 벗겨 주겠어요?"
+  },
+  {
+    "id": 26557,
+    "word": "peel",
+    "exam_en": "Will you <strong class=\"target-word\">peel</strong> the onions for me?",
+    "exam_ko": "<strong class=\"target-word\">양파</strong> 껍질 좀 벗겨 주겠어요?"
+  },
+  {
+    "id": 26558,
+    "word": "pepperoni",
+    "exam_en": "Please give me two large <strong class=\"target-word\">pepperoni</strong> pizza to go.",
+    "exam_ko": "<strong class=\"target-word\">페파로니</strong> 피자 라즈 사이즈 한 판 포장해 주세요."
+  },
+  {
+    "id": 26559,
+    "word": "cater",
+    "exam_en": "We are <strong class=\"target-word\">cater</strong>ing for today's reception.",
+    "exam_ko": "<strong class=\"target-word\">음식을제공</strong> 리셉션은 우리가 준비합니다."
+  },
+  {
+    "id": 26560,
+    "word": "uncomfortable",
+    "exam_en": "The weather was <strong class=\"target-word\">uncomfortable</strong> for outdoor activities.",
+    "exam_ko": "날씨는 야외 활동에 <strong class=\"target-word\">불편했습니다</strong>."
+  },
+  {
+    "id": 26561,
+    "word": "symptoms",
+    "exam_en": "I'm going to tell a dentist about your <strong class=\"target-word\">symptoms</strong>.",
+    "exam_ko": "당신의 증상에 대해 의사 <strong class=\"target-word\">선생님께</strong> 말씀드리겠습니다."
+  },
+  {
+    "id": 26562,
+    "word": "dentures",
+    "exam_en": "There are two types of <strong class=\"target-word\">dentures</strong>.",
+    "exam_ko": "<strong class=\"target-word\">두가지</strong> 종류의 틀니가 있습니다."
+  },
+  {
+    "id": 26563,
+    "word": "clasps",
+    "exam_en": "It can be attached to your teeth with <strong class=\"target-word\">clasps</strong>.",
+    "exam_ko": "치아에 고리를 걸어 틀니를 <strong class=\"target-word\">끼우게</strong> 됩니다."
+  },
+  {
+    "id": 26564,
+    "word": "last",
+    "exam_en": "It <strong class=\"target-word\">last</strong>s two to three hours to go away.",
+    "exam_ko": "<strong class=\"target-word\">마지막</strong> 두 세 시간 정도 지속돼요."
+  },
+  {
+    "id": 26565,
+    "word": "inflammation",
+    "exam_en": "You have some cavities and gum <strong class=\"target-word\">inflammation</strong>.",
+    "exam_ko": "약간의 충치와 <strong class=\"target-word\">잇몸</strong> 염증이 있습니다."
+  },
+  {
+    "id": 26566,
+    "word": "cavity",
+    "exam_en": "It looks like the <strong class=\"target-word\">cavity</strong> is really deep.",
+    "exam_ko": "충치가 깊이 <strong class=\"target-word\">있는거</strong> 같네요."
+  },
+  {
+    "id": 26567,
+    "word": "hurt",
+    "exam_en": "It might <strong class=\"target-word\">hurt</strong> a little.",
+    "exam_ko": "<strong class=\"target-word\">조금</strong> 아프실 수도 있어요."
+  },
+  {
+    "id": 26568,
+    "word": "reschedule",
+    "exam_en": "Can I <strong class=\"target-word\">reschedule</strong> your appointment?",
+    "exam_ko": "제가 약속을 <strong class=\"target-word\">변경해도</strong> 될까요?"
+  },
+  {
+    "id": 26569,
+    "word": "individual",
+    "exam_en": "It varies from <strong class=\"target-word\">individual</strong> to individual.",
+    "exam_ko": "<strong class=\"target-word\">사람마다</strong> 개인차가 있습니다."
+  },
+  {
+    "id": 26570,
+    "word": "shot",
+    "exam_en": "I'll make you feel numb first. The <strong class=\"target-word\">shot</strong> might hurt a little.",
+    "exam_ko": "마취 먼저 하겠습니다. <strong class=\"target-word\">따끔하실</strong> 겁니다."
+  },
+  {
+    "id": 26571,
+    "word": "gum",
+    "exam_en": "We need to take an x-ray to examine your teeth and <strong class=\"target-word\">gum</strong>",
+    "exam_ko": "환자분의 치아와 잇몸을 <strong class=\"target-word\">검사하기</strong> 위해 엑스레이가 필요합니다."
+  },
+  {
+    "id": 26572,
+    "word": "practice",
+    "exam_en": "You should <strong class=\"target-word\">practice</strong> a lot at first.",
+    "exam_ko": "처음에는 연습을 많이 <strong class=\"target-word\">하셔야</strong> 합니다."
+  },
+  {
+    "id": 26573,
+    "word": "help",
+    "exam_en": "Let me <strong class=\"target-word\">help</strong> you!",
+    "exam_ko": "제가 도와 줄 수 있게 <strong class=\"target-word\">해주세요</strong>."
+  },
+  {
+    "id": 26574,
+    "word": "weird",
+    "exam_en": "It feels <strong class=\"target-word\">weird</strong>.",
+    "exam_ko": "느낌이 <strong class=\"target-word\">이상해요</strong>."
+  },
+  {
+    "id": 26575,
+    "word": "brush",
+    "exam_en": "If your teeth feel sensitive to cold, use warm water when you <strong class=\"target-word\">brush</strong> your teeth.",
+    "exam_ko": "만약 당신의 치아가 찬 것에 시리다면. 이를 닦을 때는 따뜻한 물을 <strong class=\"target-word\">사용하세요</strong>."
+  },
+  {
+    "id": 26576,
+    "word": "still",
+    "exam_en": "Please keep <strong class=\"target-word\">still</strong> until this machine stops.",
+    "exam_ko": "기계가 멈출 <strong class=\"target-word\">때까지</strong> 그대로 계세요."
+  },
+  {
+    "id": 26577,
+    "word": "rinse",
+    "exam_en": "<strong class=\"target-word\">Rinse</strong> your mouth.",
+    "exam_ko": "입안을 <strong class=\"target-word\">헹구세요</strong>."
+  },
+  {
+    "id": 26578,
+    "word": "bottom",
+    "exam_en": "You only have one cavity on the <strong class=\"target-word\">bottom</strong>.",
+    "exam_ko": "<strong class=\"target-word\">아래쪽에</strong> 한 개의 충치가 있습니다."
+  },
+  {
+    "id": 26579,
+    "word": "anesthetize",
+    "exam_en": "I'm going to <strong class=\"target-word\">anesthetize</strong> this area before we start.",
+    "exam_ko": "<strong class=\"target-word\">시작</strong> 전 그 부위 마취를 하겠습니다."
+  },
+  {
+    "id": 26580,
+    "word": "tooth",
+    "exam_en": "You have a cavity on the bottom <strong class=\"target-word\">tooth</strong>.",
+    "exam_ko": "<strong class=\"target-word\">아래</strong> 치아에 충치가 있습니다."
+  },
+  {
+    "id": 26581,
+    "word": "pain",
+    "exam_en": "Have you felt any <strong class=\"target-word\">pain</strong> on that tooth?",
+    "exam_ko": "치아에 통증을 느낀 적이 <strong class=\"target-word\">있으십니까?</strong>"
+  },
+  {
+    "id": 26582,
+    "word": "appointment",
+    "exam_en": "Are you going to make an <strong class=\"target-word\">appointment</strong> with Dr. Park?",
+    "exam_ko": "박 <strong class=\"target-word\">선생님과</strong> 예약을 잡을 예정입니까?"
+  },
+  {
+    "id": 26583,
+    "word": "information",
+    "exam_en": "So, we can get more detailed <strong class=\"target-word\">information</strong> about your mouth.",
+    "exam_ko": "<strong class=\"target-word\">그래서</strong> 저희가 환자분의 상태를 더 자세히 파악할 수 있습니다."
+  },
+  {
+    "id": 26584,
+    "word": "needles",
+    "exam_en": "I'm afraid of <strong class=\"target-word\">needles</strong>.",
+    "exam_ko": "나는 주사가 <strong class=\"target-word\">무서워요</strong>."
+  },
+  {
+    "id": 26585,
+    "word": "diagnosis",
+    "exam_en": "We need to take an x-ray for an accurate <strong class=\"target-word\">diagnosis</strong>.",
+    "exam_ko": "<strong class=\"target-word\">정확한</strong> 진단을 위해서 환자분의 엑스레이가 필요합니다."
+  },
+  {
+    "id": 26586,
+    "word": "whitening",
+    "exam_en": "I'm going to take a lecture on teeth <strong class=\"target-word\">whitening</strong> for this week.",
+    "exam_ko": "이번주에 <strong class=\"target-word\">미백</strong> 강연을 들을 겁니다."
+  },
+  {
+    "id": 26587,
+    "word": "machine",
+    "exam_en": "This <strong class=\"target-word\">machine</strong> is moving around your head.",
+    "exam_ko": "머리 주변으로 기계가 <strong class=\"target-word\">돌아갈</strong> 겁니다."
+  },
+  {
+    "id": 26588,
+    "word": "sensitive",
+    "exam_en": "<strong class=\"target-word\">Sensitive</strong> to cold.",
+    "exam_ko": "찬 것에 <strong class=\"target-word\">민감한</strong> 증상."
+  },
+  {
+    "id": 26589,
+    "word": "spontaneous",
+    "exam_en": "Mild but <strong class=\"target-word\">spontaneous</strong> pain.",
+    "exam_ko": "<strong class=\"target-word\">경미</strong> 하나 지속되는 통증."
+  },
+  {
+    "id": 26590,
+    "word": "correct",
+    "exam_en": "Make sure your address and phone numbers are <strong class=\"target-word\">correct</strong>.",
+    "exam_ko": "당신의 주소와 <strong class=\"target-word\">전화번호가</strong> 정확한지 확인해 주세요."
+  },
+  {
+    "id": 26591,
+    "word": "procedure",
+    "exam_en": "I'll give you more shots if you feel pain during the <strong class=\"target-word\">procedure</strong>.",
+    "exam_ko": "진료 중간에 통증이 <strong class=\"target-word\">있으면</strong> 마취를 더 해드리겠습니다."
+  },
+  {
+    "id": 26592,
+    "word": "tomorrow",
+    "exam_en": "Make sure you come back <strong class=\"target-word\">tomorrow</strong>.",
+    "exam_ko": "<strong class=\"target-word\">내일</strong> 반드시 오세요."
+  },
+  {
+    "id": 26593,
+    "word": "deep",
+    "exam_en": "It looks <strong class=\"target-word\">deep</strong>.",
+    "exam_ko": "꽤 많이 <strong class=\"target-word\">썩었네요</strong>."
+  },
+  {
+    "id": 26594,
+    "word": "quit",
+    "exam_en": "You should have <strong class=\"target-word\">quit</strong> smoking.",
+    "exam_ko": "담배를 <strong class=\"target-word\">끊어야</strong> 헸습니다."
+  },
+  {
+    "id": 26595,
+    "word": "drive",
+    "exam_en": "Are you going to <strong class=\"target-word\">drive</strong>?",
+    "exam_ko": "<strong class=\"target-word\">운전해서</strong> 오실 건가요?"
+  },
+  {
+    "id": 26596,
+    "word": "missing",
+    "exam_en": "You have two <strong class=\"target-word\">missing</strong> teeth.",
+    "exam_ko": "당신은 두 개의 치아가 <strong class=\"target-word\">없습니다</strong>."
+  },
+  {
+    "id": 26597,
+    "word": "ask",
+    "exam_en": "Do you want me to <strong class=\"target-word\">ask</strong>?",
+    "exam_ko": "<strong class=\"target-word\">물어봐</strong> 드릴께요."
+  },
+  {
+    "id": 26598,
+    "word": "painful",
+    "exam_en": "Is it going to be <strong class=\"target-word\">painful</strong>?",
+    "exam_ko": "<strong class=\"target-word\">아픈가요</strong>?"
+  },
+  {
+    "id": 26599,
+    "word": "message",
+    "exam_en": "Do you want me to leave a <strong class=\"target-word\">message</strong>?",
+    "exam_ko": "<strong class=\"target-word\">메시지</strong> 남겨드릴께요?"
+  },
+  {
+    "id": 26600,
+    "word": "groove",
+    "exam_en": "There's a <strong class=\"target-word\">groove</strong> on this stick.",
+    "exam_ko": "막대기에 홈이 <strong class=\"target-word\">패여</strong> 있습니다."
+  },
+  {
+    "id": 26601,
+    "word": "door",
+    "exam_en": "Let me get the <strong class=\"target-word\">door</strong> for you.",
+    "exam_ko": "제가 문 열어 <strong class=\"target-word\">드릴께요</strong>."
+  },
+  {
+    "id": 26602,
+    "word": "minutes",
+    "exam_en": "It takes 5 <strong class=\"target-word\">minutes</strong>.",
+    "exam_ko": "<strong class=\"target-word\">5분</strong> 걸려요."
+  },
+  {
+    "id": 26603,
+    "word": "mouth",
+    "exam_en": "I'm going to take a look in your <strong class=\"target-word\">mouth</strong>.",
+    "exam_ko": "<strong class=\"target-word\">구강내를</strong> 살펴보겠습니다."
+  },
+  {
+    "id": 26604,
+    "word": "tongue",
+    "exam_en": "When the anesthesia starts to work, you feel numb on the side of <strong class=\"target-word\">tongue</strong> and lower lip.",
+    "exam_ko": "마취가 일단 되면, 혀와 입술 반쪽 감각이 <strong class=\"target-word\">이상할</strong> 거에요."
+  },
+  {
+    "id": 26605,
+    "word": "remove",
+    "exam_en": "It takes 8-12 weeks to be healed after the teeth have been <strong class=\"target-word\">remove</strong>d",
+    "exam_ko": "치아를 뽑고, 잇몸이 치유되기 까지 <strong class=\"target-word\">제거하다</strong> 정도 걸립니다"
+  },
+  {
+    "id": 26606,
+    "word": "complete",
+    "exam_en": "One is <strong class=\"target-word\">complete</strong> and the other is partial.",
+    "exam_ko": "하나는 <strong class=\"target-word\">완전틀니</strong> 이고 다른 하나는 부분틀니 입니다."
+  },
+  {
+    "id": 26606,
+    "word": "partial",
+    "exam_en": "One is complete and the other is <strong class=\"target-word\">partial</strong>.",
+    "exam_ko": "하나는 <strong class=\"target-word\">완전틀니</strong> 이고 다른 하나는 부분틀니 입니다."
+  },
+  {
+    "id": 26607,
+    "word": "adjust",
+    "exam_en": "By doing so, we can find what area needs to be <strong class=\"target-word\">adjust</strong>ed",
+    "exam_ko": "그러면,틀니의 어떤 부분을 <strong class=\"target-word\">조정하다</strong> 하는지 저희가 찾아낼 수 있습니다."
+  }
+]

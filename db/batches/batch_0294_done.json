@@ -1,0 +1,242 @@
+[
+  {
+    "id": 7321,
+    "origin": "aversion",
+    "examples": [
+      {
+        "exam_en": "She has a strong <strong class=\"target-word\">aversion</strong> to dishonesty.",
+        "exam_ko": "그녀는 불성실함에 강한 <strong class=\"target-word\">혐오감</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">aversion</strong> to loud noise is well known.",
+        "exam_ko": "큰 소음에 대한 그의 <strong class=\"target-word\">거부감</strong>은 잘 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 7324,
+    "origin": "juggernaut",
+    "examples": [
+      {
+        "exam_en": "The tech company became an unstoppable <strong class=\"target-word\">juggernaut</strong>.",
+        "exam_ko": "그 기술 회사는 막을 수 없는 <strong class=\"target-word\">거대한 힘</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 7325,
+    "origin": "arduous",
+    "examples": [
+      {
+        "exam_en": "The hike up the mountain was <strong class=\"target-word\">arduous</strong>.",
+        "exam_ko": "산을 오르는 하이킹은 <strong class=\"target-word\">힘겨웠다</strong>."
+      },
+      {
+        "exam_en": "She completed the <strong class=\"target-word\">arduous</strong> task without complaint.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">고된</strong> 작업을 불평 없이 완수했다."
+      }
+    ]
+  },
+  {
+    "id": 7326,
+    "origin": "stimulus",
+    "examples": [
+      {
+        "exam_en": "The tax cut served as a <strong class=\"target-word\">stimulus</strong> to the economy.",
+        "exam_ko": "세금 감면은 경제에 <strong class=\"target-word\">자극제</strong> 역할을 했다."
+      },
+      {
+        "exam_en": "Reduced tariffs are a <strong class=\"target-word\">stimulus</strong> to trade.",
+        "exam_ko": "관세 인하는 무역의 <strong class=\"target-word\">촉진제</strong>가 된다."
+      }
+    ]
+  },
+  {
+    "id": 7327,
+    "origin": "auditory",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">auditory</strong> nerve connects the ear to the brain.",
+        "exam_ko": "<strong class=\"target-word\">청각</strong> 신경은 귀와 뇌를 연결한다."
+      },
+      {
+        "exam_en": "He suffered from <strong class=\"target-word\">auditory</strong> hallucinations for months.",
+        "exam_ko": "그는 몇 달 동안 <strong class=\"target-word\">청각적</strong> 환각으로 고통받았다."
+      }
+    ]
+  },
+  {
+    "id": 7331,
+    "origin": "contention",
+    "examples": [
+      {
+        "exam_en": "The inheritance became a bone of <strong class=\"target-word\">contention</strong> among siblings.",
+        "exam_ko": "유산은 형제들 사이에서 <strong class=\"target-word\">다툼</strong>의 씨앗이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 7332,
+    "origin": "derivative",
+    "examples": [
+      {
+        "exam_en": "French is a <strong class=\"target-word\">derivative</strong> of Latin.",
+        "exam_ko": "프랑스어는 라틴어에서 <strong class=\"target-word\">파생된</strong> 언어이다."
+      }
+    ]
+  },
+  {
+    "id": 7333,
+    "origin": "negate",
+    "examples": [
+      {
+        "exam_en": "One bad deed can <strong class=\"target-word\">negate</strong> many good ones.",
+        "exam_ko": "나쁜 짓 한 번이 많은 선행을 <strong class=\"target-word\">무효로 만들</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 7334,
+    "origin": "populace",
+    "examples": [
+      {
+        "exam_en": "They represented only a fraction of the general <strong class=\"target-word\">populace</strong>.",
+        "exam_ko": "그들은 일반 <strong class=\"target-word\">대중</strong>의 일부분만을 대표했다."
+      }
+    ]
+  },
+  {
+    "id": 7335,
+    "origin": "affiliate",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">affiliate</strong> herself with the research group.",
+        "exam_ko": "그녀는 연구 집단에 <strong class=\"target-word\">가입하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "The club is <strong class=\"target-word\">affiliated</strong> with the national organization.",
+        "exam_ko": "그 동아리는 전국 단체에 <strong class=\"target-word\">소속되어</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 7337,
+    "origin": "starchy",
+    "examples": [
+      {
+        "exam_en": "He wore a <strong class=\"target-word\">starchy</strong> collar to the formal event.",
+        "exam_ko": "그는 공식 행사에 <strong class=\"target-word\">풀 먹인</strong> 깃을 달고 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 7338,
+    "origin": "snooty",
+    "examples": [
+      {
+        "exam_en": "He is too <strong class=\"target-word\">snooty</strong> to talk to ordinary people.",
+        "exam_ko": "그는 너무 <strong class=\"target-word\">건방져서</strong> 평범한 사람들과 대화하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 7341,
+    "origin": "xenotransplant",
+    "examples": [
+      {
+        "exam_en": "The doctor performed the world's first heart <strong class=\"target-word\">xenotransplant</strong>.",
+        "exam_ko": "그 의사는 세계 최초로 심장 <strong class=\"target-word\">이종 이식</strong> 수술을 했다."
+      }
+    ]
+  },
+  {
+    "id": 7343,
+    "origin": "pharmaceutical",
+    "examples": [
+      {
+        "exam_en": "She works at a large <strong class=\"target-word\">pharmaceutical</strong> company.",
+        "exam_ko": "그녀는 대형 <strong class=\"target-word\">제약</strong> 회사에서 일한다."
+      }
+    ]
+  },
+  {
+    "id": 7346,
+    "origin": "embryo",
+    "examples": [
+      {
+        "exam_en": "Scientists studied the development of the <strong class=\"target-word\">embryo</strong>.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">배아</strong>의 발달 과정을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 7347,
+    "origin": "coax",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">coaxed</strong> the child away from the game.",
+        "exam_ko": "그녀는 아이를 달래어 게임을 <strong class=\"target-word\">그만두게 했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">coaxed</strong> his friend into sharing the secret.",
+        "exam_ko": "그는 친구를 <strong class=\"target-word\">구슬려서</strong> 비밀을 털어놓게 했다."
+      }
+    ]
+  },
+  {
+    "id": 7349,
+    "origin": "pierce",
+    "examples": [
+      {
+        "exam_en": "The soldier <strong class=\"target-word\">pierced</strong> the enemy with a spear.",
+        "exam_ko": "병사가 창으로 적을 <strong class=\"target-word\">꿰찔렀다</strong>."
+      },
+      {
+        "exam_en": "The arrow <strong class=\"target-word\">pierced</strong> his leg during battle.",
+        "exam_ko": "전투 중 화살이 그의 다리를 <strong class=\"target-word\">꿰뚫었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7350,
+    "origin": "venerate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">venerates</strong> the gods of his ancestors.",
+        "exam_ko": "그는 조상의 신들을 <strong class=\"target-word\">숭배한다</strong>."
+      },
+      {
+        "exam_en": "Robert Burns is Scotland's most <strong class=\"target-word\">venerated</strong> poet.",
+        "exam_ko": "로버트 번즈는 스코틀랜드에서 가장 <strong class=\"target-word\">존경받는</strong> 시인이다."
+      }
+    ]
+  },
+  {
+    "id": 7351,
+    "origin": "abdicate",
+    "examples": [
+      {
+        "exam_en": "The king chose to <strong class=\"target-word\">abdicate</strong> the throne.",
+        "exam_ko": "왕은 왕좌에서 <strong class=\"target-word\">퇴위하기로</strong> 선택했다."
+      },
+      {
+        "exam_en": "The queen decided to <strong class=\"target-word\">abdicate</strong> in favor of her son.",
+        "exam_ko": "여왕은 아들을 위해 <strong class=\"target-word\">퇴위하기로</strong> 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 7352,
+    "origin": "captivate",
+    "examples": [
+      {
+        "exam_en": "The performer <strong class=\"target-word\">captivated</strong> the entire audience.",
+        "exam_ko": "공연자는 전체 청중을 <strong class=\"target-word\">사로잡았다</strong>."
+      },
+      {
+        "exam_en": "Her beauty <strong class=\"target-word\">captivated</strong> him completely.",
+        "exam_ko": "그녀의 아름다움이 그를 완전히 <strong class=\"target-word\">매혹시켰다</strong>."
+      }
+    ]
+  }
+]

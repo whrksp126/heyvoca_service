@@ -1,0 +1,286 @@
+[
+  {
+    "id": 3571,
+    "origin": "industry",
+    "examples": [
+      {
+        "exam_en": "The city depends on <strong class=\"target-word\">heavy industry</strong> for jobs.",
+        "exam_ko": "그 도시는 일자리를 <strong class=\"target-word\">중공업</strong>에 의존한다."
+      },
+      {
+        "exam_en": "The steel <strong class=\"target-word\">industry</strong> has declined in recent years.",
+        "exam_ko": "최근 몇 년간 철강 <strong class=\"target-word\">산업</strong>이 쇠퇴했다."
+      }
+    ]
+  },
+  {
+    "id": 3572,
+    "origin": "incident",
+    "examples": [
+      {
+        "exam_en": "He reported the <strong class=\"target-word\">incident</strong> to the police.",
+        "exam_ko": "그는 그 <strong class=\"target-word\">사건</strong>을 경찰에 신고했다."
+      },
+      {
+        "exam_en": "The trip ended without any <strong class=\"target-word\">incident</strong>.",
+        "exam_ko": "여행은 아무런 <strong class=\"target-word\">사고</strong> 없이 끝났다."
+      }
+    ]
+  },
+  {
+    "id": 3573,
+    "origin": "if",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">If</strong> necessary, I can cook dinner tonight.",
+        "exam_ko": "만일 <strong class=\"target-word\">필요하다면</strong> 오늘 저녁 식사를 준비할 수 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">If</strong> you need any money, let me know.",
+        "exam_ko": "만약 돈이 <strong class=\"target-word\">필요하다면</strong> 알려주세요."
+      }
+    ]
+  },
+  {
+    "id": 3574,
+    "origin": "idea",
+    "examples": [
+      {
+        "exam_en": "Western <strong class=\"target-word\">ideas</strong> spread throughout the world.",
+        "exam_ko": "서양 <strong class=\"target-word\">사상</strong>이 전 세계로 퍼졌다."
+      },
+      {
+        "exam_en": "She struggled to explain abstract <strong class=\"target-word\">ideas</strong> simply.",
+        "exam_ko": "그녀는 추상적인 <strong class=\"target-word\">개념</strong>을 쉽게 설명하려 했다."
+      }
+    ]
+  },
+  {
+    "id": 3575,
+    "origin": "ice",
+    "examples": [
+      {
+        "exam_en": "He dropped a piece of <strong class=\"target-word\">ice</strong> into his drink.",
+        "exam_ko": "그는 음료에 <strong class=\"target-word\">얼음</strong> 한 조각을 넣었다."
+      },
+      {
+        "exam_en": "My feet are like <strong class=\"target-word\">ice</strong> after walking outside.",
+        "exam_ko": "밖에서 걷고 나니 발이 <strong class=\"target-word\">얼음</strong>처럼 차갑다."
+      }
+    ]
+  },
+  {
+    "id": 3576,
+    "origin": "i",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">I</strong> am a student at this school.",
+        "exam_ko": "<strong class=\"target-word\">나는</strong> 이 학교의 학생이다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">I</strong> forgot to bring my umbrella today.",
+        "exam_ko": "<strong class=\"target-word\">나는</strong> 오늘 우산을 가져오는 것을 잊었다."
+      }
+    ]
+  },
+  {
+    "id": 3577,
+    "origin": "husband",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">husband</strong> always does what she says.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">남편</strong>은 항상 그녀가 시키는 대로 한다."
+      },
+      {
+        "exam_en": "They have been <strong class=\"target-word\">husband</strong> and wife for twenty years.",
+        "exam_ko": "그들은 이십 년째 <strong class=\"target-word\">남편</strong>과 아내로 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3578,
+    "origin": "hunger",
+    "examples": [
+      {
+        "exam_en": "Many people in the region die of <strong class=\"target-word\">hunger</strong>.",
+        "exam_ko": "그 지역의 많은 사람들이 <strong class=\"target-word\">굶주림</strong>으로 죽는다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Hunger</strong> is the best sauce.",
+        "exam_ko": "<strong class=\"target-word\">시장</strong>이 반찬이다."
+      }
+    ]
+  },
+  {
+    "id": 3580,
+    "origin": "humor",
+    "examples": [
+      {
+        "exam_en": "His cheap <strong class=\"target-word\">humor</strong> made everyone uncomfortable.",
+        "exam_ko": "그의 어설픈 <strong class=\"target-word\">유머</strong>는 모두를 불편하게 했다."
+      },
+      {
+        "exam_en": "My friend failed to see the <strong class=\"target-word\">humor</strong> in my joke.",
+        "exam_ko": "내 친구는 내 농담의 <strong class=\"target-word\">유머</strong>를 이해하지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 3581,
+    "origin": "however",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">However</strong> cold it is, she always goes swimming.",
+        "exam_ko": "날씨가 아무리 추워도 <strong class=\"target-word\">그래도</strong> 그녀는 늘 수영하러 간다."
+      },
+      {
+        "exam_en": "I want that car, <strong class=\"target-word\">however</strong> much it costs.",
+        "exam_ko": "아무리 비싸더라도 <strong class=\"target-word\">그래도</strong> 나는 저 차를 원한다."
+      }
+    ]
+  },
+  {
+    "id": 3582,
+    "origin": "how",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">How</strong> did you come to know her?",
+        "exam_ko": "<strong class=\"target-word\">어떻게</strong> 그녀를 알게 되었습니까?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">How</strong> do I do this correctly?",
+        "exam_ko": "이것을 <strong class=\"target-word\">어떻게</strong> 올바르게 하는 건가요?"
+      }
+    ]
+  },
+  {
+    "id": 3583,
+    "origin": "hour",
+    "examples": [
+      {
+        "exam_en": "The meeting lasted about a quarter of an <strong class=\"target-word\">hour</strong>.",
+        "exam_ko": "회의는 약 15분, 즉 <strong class=\"target-word\">한 시간</strong>의 4분의 1 동안 지속됐다."
+      },
+      {
+        "exam_en": "She arrived half an <strong class=\"target-word\">hour</strong> late.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">한 시간</strong>의 절반만큼 늦게 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 3584,
+    "origin": "hotel",
+    "examples": [
+      {
+        "exam_en": "They stayed at a lakeside <strong class=\"target-word\">hotel</strong> during their trip.",
+        "exam_ko": "그들은 여행 중 호숫가 <strong class=\"target-word\">호텔</strong>에 머물렀다."
+      },
+      {
+        "exam_en": "She booked a <strong class=\"target-word\">hotel</strong> room for two nights.",
+        "exam_ko": "그녀는 이틀 동안 <strong class=\"target-word\">호텔</strong> 방을 예약했다."
+      }
+    ]
+  },
+  {
+    "id": 3585,
+    "origin": "hospital",
+    "examples": [
+      {
+        "exam_en": "He was taken to a general <strong class=\"target-word\">hospital</strong> after the accident.",
+        "exam_ko": "그는 사고 후 종합 <strong class=\"target-word\">병원</strong>으로 이송됐다."
+      },
+      {
+        "exam_en": "She had to enter the <strong class=\"target-word\">hospital</strong> for surgery.",
+        "exam_ko": "그녀는 수술을 위해 <strong class=\"target-word\">병원</strong>에 입원해야 했다."
+      }
+    ]
+  },
+  {
+    "id": 3586,
+    "origin": "horse",
+    "examples": [
+      {
+        "exam_en": "The farmer used a <strong class=\"target-word\">horse</strong> and cart to carry goods.",
+        "exam_ko": "농부는 물건을 나르기 위해 <strong class=\"target-word\">말</strong>과 수레를 이용했다."
+      },
+      {
+        "exam_en": "He works like a <strong class=\"target-word\">horse</strong> every day.",
+        "exam_ko": "그는 매일 <strong class=\"target-word\">말</strong>처럼 무섭게 일한다."
+      }
+    ]
+  },
+  {
+    "id": 3587,
+    "origin": "honor",
+    "examples": [
+      {
+        "exam_en": "He earned great <strong class=\"target-word\">honor</strong> in his business career.",
+        "exam_ko": "그는 사업 경력에서 큰 <strong class=\"target-word\">명예</strong>를 얻었다."
+      },
+      {
+        "exam_en": "Winning this award brings <strong class=\"target-word\">honor</strong> to our school.",
+        "exam_ko": "이 상을 받는 것은 우리 학교에 <strong class=\"target-word\">명예</strong>를 가져다준다."
+      },
+      {
+        "exam_en": "I know the type of <strong class=\"target-word\">honor</strong> that runs in his family.",
+        "exam_ko": "나는 그의 집안에 어떤 <strong class=\"target-word\">명예</strong>가 흐르는지 알고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3588,
+    "origin": "home",
+    "examples": [
+      {
+        "exam_en": "The Kennedy <strong class=\"target-word\">home</strong> is now a historic site.",
+        "exam_ko": "케네디 <strong class=\"target-word\">저택</strong>은 현재 역사적 명소가 되었다."
+      },
+      {
+        "exam_en": "She finally has a <strong class=\"target-word\">home</strong> of her own.",
+        "exam_ko": "그녀는 마침내 자신만의 <strong class=\"target-word\">집</strong>을 갖게 되었다."
+      }
+    ]
+  },
+  {
+    "id": 3589,
+    "origin": "hollow",
+    "examples": [
+      {
+        "exam_en": "A squirrel hid nuts inside the <strong class=\"target-word\">hollow</strong> tree.",
+        "exam_ko": "다람쥐가 <strong class=\"target-word\">속이 빈</strong> 나무 안에 견과류를 숨겼다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">hollow</strong> cheeks showed he had not eaten well.",
+        "exam_ko": "그의 <strong class=\"target-word\">훌쭉한</strong> 볼은 그가 잘 먹지 못했음을 보여줬다."
+      }
+    ]
+  },
+  {
+    "id": 3590,
+    "origin": "holiday",
+    "examples": [
+      {
+        "exam_en": "New Year's Day is a legal <strong class=\"target-word\">holiday</strong> in most countries.",
+        "exam_ko": "새해 첫날은 대부분의 나라에서 법정 <strong class=\"target-word\">휴일</strong>이다."
+      },
+      {
+        "exam_en": "Schools are closed on public <strong class=\"target-word\">holidays</strong>.",
+        "exam_ko": "학교는 공<strong class=\"target-word\">휴일</strong>에 문을 닫는다."
+      }
+    ]
+  },
+  {
+    "id": 3591,
+    "origin": "hole",
+    "examples": [
+      {
+        "exam_en": "There is a <strong class=\"target-word\">hole</strong> in the wall near the door.",
+        "exam_ko": "문 근처 벽에 <strong class=\"target-word\">구멍</strong>이 나 있다."
+      },
+      {
+        "exam_en": "He used a drill to bore a <strong class=\"target-word\">hole</strong> in the board.",
+        "exam_ko": "그는 드릴로 판자에 <strong class=\"target-word\">구멍</strong>을 뚫었다."
+      }
+    ]
+  }
+]

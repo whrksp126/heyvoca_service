@@ -1,0 +1,246 @@
+[
+  {
+    "id": 14283,
+    "origin": "amplify",
+    "examples": [
+      {
+        "exam_en": "amplify knowledge",
+        "exam_ko": "지식을 넓히다."
+      },
+      {
+        "exam_en": "amplify a theory",
+        "exam_ko": "이론을 확충하다."
+      }
+    ]
+  },
+  {
+    "id": 14285,
+    "origin": "congenital",
+    "examples": [
+      {
+        "exam_en": "a congenital trait",
+        "exam_ko": "선천적인 특성[기형, 질병]."
+      },
+      {
+        "exam_en": "a congenital liar",
+        "exam_ko": "순 거짓말쟁이."
+      }
+    ]
+  },
+  {
+    "id": 14286,
+    "origin": "repress",
+    "examples": [
+      {
+        "exam_en": "repress anger",
+        "exam_ko": "화를 참다[본능을 억누르다]"
+      },
+      {
+        "exam_en": "I could hardly repress my laughter.",
+        "exam_ko": "나는 웃음을 참을 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 14289,
+    "origin": "vice",
+    "examples": [
+      {
+        "exam_en": "vice and virtue",
+        "exam_ko": "악덕과 미덕"
+      },
+      {
+        "exam_en": "Smoking is my only vice.",
+        "exam_ko": "흡연이 나의 유일한 악습이다."
+      }
+    ]
+  },
+  {
+    "id": 14290,
+    "origin": "explanatory",
+    "examples": [
+      {
+        "exam_en": "in an explanatory tone",
+        "exam_ko": "변명투로."
+      }
+    ]
+  },
+  {
+    "id": 14291,
+    "origin": "transitional",
+    "examples": [
+      {
+        "exam_en": "a transitional period",
+        "exam_ko": "과도기."
+      },
+      {
+        "exam_en": "We are living in a transitional period of history.",
+        "exam_ko": "우리는 역사의 과도기에 살고 있다."
+      },
+      {
+        "exam_en": "We are living in a transitional period of history.  ",
+        "exam_ko": "우리는 역사의 과도기에 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 14293,
+    "origin": "cholera",
+    "examples": [
+      {
+        "exam_en": "epidemic cholera",
+        "exam_ko": "진성 콜레라"
+      },
+      {
+        "exam_en": "suspected cholera",
+        "exam_ko": "의사(擬似) 콜레라."
+      }
+    ]
+  },
+  {
+    "id": 14294,
+    "origin": "valor",
+    "examples": [
+      {
+        "exam_en": "deeds of valor",
+        "exam_ko": "훈공."
+      }
+    ]
+  },
+  {
+    "id": 14296,
+    "origin": "treatise",
+    "examples": [
+      {
+        "exam_en": "a treatise on lung disease",
+        "exam_ko": "폐질환에 관한 논문."
+      }
+    ]
+  },
+  {
+    "id": 14297,
+    "origin": "elucidation",
+    "examples": [
+      {
+        "exam_en": "the elucidation of a new theory",
+        "exam_ko": "새 이론의 해명."
+      }
+    ]
+  },
+  {
+    "id": 14301,
+    "origin": "lance",
+    "examples": [
+      {
+        "exam_en": "The knight wielded his lance skillfully during the jousting competition.",
+        "exam_ko": "기사는 기마전 대회에서 솜씨 좋게 창을 다뤘다."
+      }
+    ]
+  },
+  {
+    "id": 14307,
+    "origin": "nomadic",
+    "examples": [
+      {
+        "exam_en": "a nomadic tribe",
+        "exam_ko": "유목 민족"
+      },
+      {
+        "exam_en": "the nomadic life of a foreign correspondent",
+        "exam_ko": "해외 통신 기자의 방황 생활."
+      }
+    ]
+  },
+  {
+    "id": 14310,
+    "origin": "based",
+    "examples": [
+      {
+        "exam_en": "a Seoul-based company",
+        "exam_ko": "서울에 본사를 둔 회사"
+      },
+      {
+        "exam_en": "a Latin-based language",
+        "exam_ko": "라틴어에 기초를 둔 언어."
+      }
+    ]
+  },
+  {
+    "id": 14312,
+    "origin": "underpinning",
+    "examples": [
+      {
+        "exam_en": "In construction or renovation, underpinning is the process of strengthening the foundation of an existing building or other structure.",
+        "exam_ko": "건축 또는 개조에서 언더피닝은 기존 건물 또는 다른 구조물의 기초를 강화하는 과정입니다."
+      }
+    ]
+  },
+  {
+    "id": 14315,
+    "origin": "proliferation",
+    "examples": [
+      {
+        "exam_en": "the proliferation of nuclear weapons",
+        "exam_ko": "핵무기 확산."
+      }
+    ]
+  },
+  {
+    "id": 14317,
+    "origin": "cavalry",
+    "examples": [
+      {
+        "exam_en": "heavy cavalry",
+        "exam_ko": "중[경]기병"
+      },
+      {
+        "exam_en": "300 cavalry",
+        "exam_ko": "기병 300기(騎)"
+      }
+    ]
+  },
+  {
+    "id": 14319,
+    "origin": "paleolithic",
+    "examples": [
+      {
+        "exam_en": "Paleolithic art",
+        "exam_ko": "구석기 미술(3만 년 전의 동굴 벽화 등)."
+      }
+    ]
+  },
+  {
+    "id": 14321,
+    "origin": "neolithic",
+    "examples": [
+      {
+        "exam_en": "the Neolithic Age",
+        "exam_ko": "신석기 시대."
+      }
+    ]
+  },
+  {
+    "id": 14322,
+    "origin": "mural",
+    "examples": [
+      {
+        "exam_en": "a mural precipice",
+        "exam_ko": "절벽"
+      },
+      {
+        "exam_en": "a mural paint-ing",
+        "exam_ko": "벽화[벽화가]."
+      }
+    ]
+  },
+  {
+    "id": 14323,
+    "origin": "distention",
+    "examples": [
+      {
+        "exam_en": "distention of the abdomen",
+        "exam_ko": "복부의 팽창."
+      }
+    ]
+  }
+]

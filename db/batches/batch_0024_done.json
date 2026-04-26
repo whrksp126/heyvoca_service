@@ -1,0 +1,282 @@
+[
+  {
+    "id": 464,
+    "origin": "embark",
+    "examples": [
+      {
+        "exam_en": "The commander <strong class=\"target-word\">embarked</strong> his troops for the battlefield.",
+        "exam_ko": "사령관은 군대를 싸움터로 <strong class=\"target-word\">파견했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">embarked</strong> on a new career last year.",
+        "exam_ko": "그녀는 작년에 새로운 경력을 <strong class=\"target-word\">시작했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 465,
+    "origin": "bow",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bowed</strong> deeply before the audience.",
+        "exam_ko": "그는 관객 앞에서 깊이 <strong class=\"target-word\">고개를 숙였다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">bowed</strong> to his boss.",
+        "exam_ko": "그는 상사에게 머리 숙여 <strong class=\"target-word\">인사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 466,
+    "origin": "deprive",
+    "examples": [
+      {
+        "exam_en": "The law <strong class=\"target-word\">deprived</strong> him of his rights.",
+        "exam_ko": "그 법은 그에게서 권리를 <strong class=\"target-word\">빼앗았다</strong>."
+      },
+      {
+        "exam_en": "The accident <strong class=\"target-word\">deprived</strong> her of her sight.",
+        "exam_ko": "그 사고는 그녀의 시력을 <strong class=\"target-word\">앗아갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 467,
+    "origin": "revive",
+    "examples": [
+      {
+        "exam_en": "Doctors <strong class=\"target-word\">revived</strong> the unconscious swimmer with CPR.",
+        "exam_ko": "의사들이 심폐소생술로 의식을 잃은 수영자를 <strong class=\"target-word\">소생시켰다</strong>."
+      },
+      {
+        "exam_en": "That novel <strong class=\"target-word\">revived</strong> my interest in reading.",
+        "exam_ko": "그 소설은 독서에 대한 내 관심을 <strong class=\"target-word\">되살렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 468,
+    "origin": "sentence",
+    "examples": [
+      {
+        "exam_en": "The judge gave him a death <strong class=\"target-word\">sentence</strong>.",
+        "exam_ko": "판사는 그에게 사형 <strong class=\"target-word\">선고</strong>를 내렸다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">sentenced</strong> to five years in prison.",
+        "exam_ko": "그는 5년 징역형을 <strong class=\"target-word\">선고받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 469,
+    "origin": "campaign",
+    "examples": [
+      {
+        "exam_en": "She ran a successful political <strong class=\"target-word\">campaign</strong>.",
+        "exam_ko": "그녀는 성공적인 정치 <strong class=\"target-word\">캠페인</strong>을 벌였다."
+      },
+      {
+        "exam_en": "The charity launched a welfare <strong class=\"target-word\">campaign</strong> this month.",
+        "exam_ko": "그 자선단체는 이번 달 복지 <strong class=\"target-word\">운동</strong>을 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 470,
+    "origin": "supplement",
+    "examples": [
+      {
+        "exam_en": "The newspaper published a travel <strong class=\"target-word\">supplement</strong> on Sunday.",
+        "exam_ko": "신문은 일요일에 여행 <strong class=\"target-word\">부록</strong>을 발행했다."
+      },
+      {
+        "exam_en": "She takes vitamin C as a dietary <strong class=\"target-word\">supplement</strong>.",
+        "exam_ko": "그녀는 비타민 C를 영양 <strong class=\"target-word\">보충제</strong>로 복용한다."
+      }
+    ]
+  },
+  {
+    "id": 471,
+    "origin": "project",
+    "examples": [
+      {
+        "exam_en": "They launched a <strong class=\"target-word\">project</strong> to build a new gymnasium.",
+        "exam_ko": "그들은 새 체육관 건립 <strong class=\"target-word\">프로젝트</strong>를 시작했다."
+      },
+      {
+        "exam_en": "Our team completed the <strong class=\"target-word\">project</strong> ahead of schedule.",
+        "exam_ko": "우리 팀은 일정보다 일찍 <strong class=\"target-word\">프로젝트</strong>를 완료했다."
+      }
+    ]
+  },
+  {
+    "id": 472,
+    "origin": "part",
+    "examples": [
+      {
+        "exam_en": "This happened in the middle <strong class=\"target-word\">part</strong> of the century.",
+        "exam_ko": "이것은 그 세기 중반 <strong class=\"target-word\">부분</strong>에 일어났다."
+      },
+      {
+        "exam_en": "Each <strong class=\"target-word\">part</strong> of the plan was carefully reviewed.",
+        "exam_ko": "계획의 각 <strong class=\"target-word\">부분</strong>이 꼼꼼하게 검토되었다."
+      }
+    ]
+  },
+  {
+    "id": 473,
+    "origin": "forbid",
+    "examples": [
+      {
+        "exam_en": "The rules <strong class=\"target-word\">forbid</strong> smoking inside the building.",
+        "exam_ko": "규칙은 건물 안에서 흡연을 <strong class=\"target-word\">금지한다</strong>."
+      },
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">forbade</strong> the patient from eating sweets.",
+        "exam_ko": "의사는 환자에게 단것을 먹는 것을 <strong class=\"target-word\">금지했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 474,
+    "origin": "effect",
+    "examples": [
+      {
+        "exam_en": "Every cause has an <strong class=\"target-word\">effect</strong>.",
+        "exam_ko": "모든 원인에는 <strong class=\"target-word\">결과</strong>가 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">effects</strong> of the illness were not serious.",
+        "exam_ko": "그 병의 <strong class=\"target-word\">영향</strong>은 심각하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 475,
+    "origin": "calm",
+    "examples": [
+      {
+        "exam_en": "The sea was <strong class=\"target-word\">calm</strong> after the storm.",
+        "exam_ko": "폭풍이 지나간 후 바다는 <strong class=\"target-word\">잔잔했다</strong>."
+      },
+      {
+        "exam_en": "She stayed <strong class=\"target-word\">calm</strong> during the emergency.",
+        "exam_ko": "그녀는 비상 상황에서도 <strong class=\"target-word\">침착함</strong>을 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 476,
+    "origin": "manipulate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">manipulated</strong> the controls with great skill.",
+        "exam_ko": "그는 뛰어난 기술로 장치를 <strong class=\"target-word\">능숙하게 다루었다</strong>."
+      },
+      {
+        "exam_en": "The trader tried to <strong class=\"target-word\">manipulate</strong> the stock prices.",
+        "exam_ko": "그 거래자는 주가를 <strong class=\"target-word\">조작하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 477,
+    "origin": "debate",
+    "examples": [
+      {
+        "exam_en": "The candidates held a heated <strong class=\"target-word\">debate</strong> on live TV.",
+        "exam_ko": "후보자들은 생방송에서 열띤 <strong class=\"target-word\">토론</strong>을 벌였다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">debated</strong> the issue for hours.",
+        "exam_ko": "그들은 몇 시간 동안 그 문제를 <strong class=\"target-word\">토론했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 478,
+    "origin": "chat",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">chatted</strong> over a cup of tea.",
+        "exam_ko": "그들은 차를 마시며 <strong class=\"target-word\">이야기를 나눴다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">chatted</strong> with her friend about weekend plans.",
+        "exam_ko": "그녀는 친구와 주말 계획에 대해 <strong class=\"target-word\">잡담했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 479,
+    "origin": "time",
+    "examples": [
+      {
+        "exam_en": "We don't have much <strong class=\"target-word\">time</strong> left today.",
+        "exam_ko": "오늘 남은 <strong class=\"target-word\">시간</strong>이 많지 않다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Time</strong> flies when you are having fun.",
+        "exam_ko": "즐거울 때는 <strong class=\"target-word\">시간</strong>이 빨리 간다."
+      }
+    ]
+  },
+  {
+    "id": 480,
+    "origin": "punish",
+    "examples": [
+      {
+        "exam_en": "The court <strong class=\"target-word\">punished</strong> him with a heavy fine.",
+        "exam_ko": "법원은 그에게 무거운 벌금으로 <strong class=\"target-word\">처벌했다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">punished</strong> for his misdeed.",
+        "exam_ko": "그는 나쁜 짓 때문에 <strong class=\"target-word\">처벌받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 481,
+    "origin": "supervise",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">supervises</strong> a bookkeeping team of twenty.",
+        "exam_ko": "그녀는 20명의 경리 팀을 <strong class=\"target-word\">감독한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">supervised</strong> the children at the playground.",
+        "exam_ko": "그는 운동장에서 아이들을 <strong class=\"target-word\">지도했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 482,
+    "origin": "substitute",
+    "examples": [
+      {
+        "exam_en": "They used margarine as a <strong class=\"target-word\">substitute</strong> for butter.",
+        "exam_ko": "그들은 버터 대신 마가린을 <strong class=\"target-word\">대용품</strong>으로 사용했다."
+      },
+      {
+        "exam_en": "A teacher <strong class=\"target-word\">substituted</strong> for the sick professor today.",
+        "exam_ko": "오늘 한 교사가 아픈 교수를 <strong class=\"target-word\">대신했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 483,
+    "origin": "convict",
+    "examples": [
+      {
+        "exam_en": "The jury <strong class=\"target-word\">convicted</strong> him of theft.",
+        "exam_ko": "배심원단은 그에게 절도죄로 <strong class=\"target-word\">유죄를 선고했다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">convict</strong> was released after ten years.",
+        "exam_ko": "그 <strong class=\"target-word\">죄수</strong>는 10년 후 석방되었다."
+      }
+    ]
+  }
+]

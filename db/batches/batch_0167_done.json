@@ -1,0 +1,290 @@
+[
+  {
+    "id": 3632,
+    "origin": "fish",
+    "examples": [
+      {
+        "exam_en": "He caught several <strong class=\"target-word\">fish</strong> at the lake.",
+        "exam_ko": "그는 호수에서 <strong class=\"target-word\">물고기</strong>를 여러 마리 잡았다."
+      },
+      {
+        "exam_en": "She loves to <strong class=\"target-word\">fish</strong> on weekends.",
+        "exam_ko": "그녀는 주말에 <strong class=\"target-word\">낚시하는</strong> 것을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 3633,
+    "origin": "finger",
+    "examples": [
+      {
+        "exam_en": "She cut her <strong class=\"target-word\">finger</strong> while cooking.",
+        "exam_ko": "그녀는 요리하다가 <strong class=\"target-word\">손가락</strong>을 베었다."
+      },
+      {
+        "exam_en": "He pointed his <strong class=\"target-word\">finger</strong> at the map.",
+        "exam_ko": "그는 지도를 <strong class=\"target-word\">손가락</strong>으로 가리켰다."
+      }
+    ]
+  },
+  {
+    "id": 3634,
+    "origin": "film",
+    "examples": [
+      {
+        "exam_en": "A thin <strong class=\"target-word\">film</strong> of oil covered the surface.",
+        "exam_ko": "기름의 얇은 <strong class=\"target-word\">막</strong>이 표면을 덮고 있었다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">filmed</strong> the birds in the forest.",
+        "exam_ko": "그들은 숲에서 새들을 <strong class=\"target-word\">촬영했다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">film</strong> will be released tomorrow.",
+        "exam_ko": "그 <strong class=\"target-word\">영화</strong>는 내일 개봉될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 3635,
+    "origin": "fifty",
+    "examples": [
+      {
+        "exam_en": "The volunteers arrived in groups of <strong class=\"target-word\">fifty</strong>.",
+        "exam_ko": "자원봉사자들은 <strong class=\"target-word\">50명</strong>씩 무리를 지어 도착했다."
+      },
+      {
+        "exam_en": "She is in her early <strong class=\"target-word\">fifties</strong> and very active.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">50대</strong> 초반인데 매우 활동적이다."
+      }
+    ]
+  },
+  {
+    "id": 3636,
+    "origin": "fifth",
+    "examples": [
+      {
+        "exam_en": "He arrived on the <strong class=\"target-word\">fifth</strong> day of the trip.",
+        "exam_ko": "그는 여행 <strong class=\"target-word\">다섯째</strong> 날에 도착했다."
+      },
+      {
+        "exam_en": "She lives on the <strong class=\"target-word\">fifth</strong> floor.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">5층</strong>에 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3637,
+    "origin": "fifteen",
+    "examples": [
+      {
+        "exam_en": "The rugby team has <strong class=\"target-word\">fifteen</strong> players.",
+        "exam_ko": "럭비 팀은 선수가 <strong class=\"target-word\">15명</strong>이다."
+      },
+      {
+        "exam_en": "She waited for <strong class=\"target-word\">fifteen</strong> minutes at the station.",
+        "exam_ko": "그녀는 역에서 <strong class=\"target-word\">15분</strong> 동안 기다렸다."
+      }
+    ]
+  },
+  {
+    "id": 3638,
+    "origin": "field",
+    "examples": [
+      {
+        "exam_en": "Farmers planted wheat in the <strong class=\"target-word\">field</strong>.",
+        "exam_ko": "농부들이 <strong class=\"target-word\">밭</strong>에 밀을 심었다."
+      },
+      {
+        "exam_en": "Children played soccer in the grass <strong class=\"target-word\">field</strong>.",
+        "exam_ko": "아이들이 잔디 <strong class=\"target-word\">들판</strong>에서 축구를 했다."
+      }
+    ]
+  },
+  {
+    "id": 3639,
+    "origin": "few",
+    "examples": [
+      {
+        "exam_en": "He is a man of <strong class=\"target-word\">few</strong> words.",
+        "exam_ko": "그는 <strong class=\"target-word\">말수가 적은</strong> 사람이다."
+      },
+      {
+        "exam_en": "There were so <strong class=\"target-word\">few</strong> cups that we had to share.",
+        "exam_ko": "컵이 너무 <strong class=\"target-word\">적어서</strong> 우리는 돌려 마셔야 했다."
+      }
+    ]
+  },
+  {
+    "id": 3640,
+    "origin": "fertile",
+    "examples": [
+      {
+        "exam_en": "Crops grow well in <strong class=\"target-word\">fertile</strong> land.",
+        "exam_ko": "<strong class=\"target-word\">기름진</strong> 땅에서 작물이 잘 자란다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">fertile</strong> rains helped the crops grow.",
+        "exam_ko": "<strong class=\"target-word\">단비</strong>가 내려 작물이 잘 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 3641,
+    "origin": "feather",
+    "examples": [
+      {
+        "exam_en": "The pillow was as light as a <strong class=\"target-word\">feather</strong>.",
+        "exam_ko": "베개가 <strong class=\"target-word\">깃털</strong>처럼 가벼웠다."
+      },
+      {
+        "exam_en": "The bird preened its <strong class=\"target-word\">feathers</strong> in the sun.",
+        "exam_ko": "새는 햇빛 아래서 <strong class=\"target-word\">깃털</strong>을 다듬었다."
+      }
+    ]
+  },
+  {
+    "id": 3642,
+    "origin": "father",
+    "examples": [
+      {
+        "exam_en": "He will become a <strong class=\"target-word\">father</strong> next month.",
+        "exam_ko": "그는 다음 달에 <strong class=\"target-word\">아버지</strong>가 된다."
+      },
+      {
+        "exam_en": "The bereaved <strong class=\"target-word\">father</strong> wept at the funeral.",
+        "exam_ko": "자식을 잃은 <strong class=\"target-word\">아버지</strong>는 장례식에서 울었다."
+      }
+    ]
+  },
+  {
+    "id": 3643,
+    "origin": "family",
+    "examples": [
+      {
+        "exam_en": "They are a <strong class=\"target-word\">family</strong> of two living together.",
+        "exam_ko": "그들은 함께 사는 두 명의 <strong class=\"target-word\">가족</strong>이다."
+      },
+      {
+        "exam_en": "How is your <strong class=\"target-word\">family</strong> doing these days?",
+        "exam_ko": "요즘 <strong class=\"target-word\">가족</strong>들은 다들 잘 지내나요?"
+      }
+    ]
+  },
+  {
+    "id": 3644,
+    "origin": "factory",
+    "examples": [
+      {
+        "exam_en": "A new soap <strong class=\"target-word\">factory</strong> opened near the town.",
+        "exam_ko": "마을 근처에 새 비누 <strong class=\"target-word\">공장</strong>이 문을 열었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">factory</strong> workers went on strike.",
+        "exam_ko": "<strong class=\"target-word\">공장</strong> 노동자들이 파업에 돌입했다."
+      }
+    ]
+  },
+  {
+    "id": 3645,
+    "origin": "eye",
+    "examples": [
+      {
+        "exam_en": "She watched him out of the corner of her <strong class=\"target-word\">eye</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">눈</strong>의 꼬리로 그를 지켜봤다."
+      },
+      {
+        "exam_en": "This star is visible to the naked <strong class=\"target-word\">eye</strong>.",
+        "exam_ko": "이 별은 맨 <strong class=\"target-word\">눈</strong>으로도 볼 수 있다."
+      },
+      {
+        "exam_en": "Korea <strong class=\"target-word\">eyes</strong> the launch of its fourth space rocket.",
+        "exam_ko": "한국은 네 번째 우주 로켓 발사를 <strong class=\"target-word\">노리고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 3646,
+    "origin": "expert",
+    "examples": [
+      {
+        "exam_en": "She is an <strong class=\"target-word\">expert</strong> in agriculture.",
+        "exam_ko": "그녀는 농업 <strong class=\"target-word\">전문가</strong>이다."
+      },
+      {
+        "exam_en": "He is an <strong class=\"target-word\">expert</strong> at water skiing.",
+        "exam_ko": "그는 수상 스키의 <strong class=\"target-word\">명수</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3647,
+    "origin": "experiment",
+    "examples": [
+      {
+        "exam_en": "Students conducted an <strong class=\"target-word\">experiment</strong> in physics class.",
+        "exam_ko": "학생들이 물리 수업에서 <strong class=\"target-word\">실험</strong>을 진행했다."
+      },
+      {
+        "exam_en": "Scientists ran <strong class=\"target-word\">experiments</strong> on living animals.",
+        "exam_ko": "과학자들이 살아있는 동물에게 <strong class=\"target-word\">실험</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 3648,
+    "origin": "exile",
+    "examples": [
+      {
+        "exam_en": "The king sent the rebel into <strong class=\"target-word\">exile</strong>.",
+        "exam_ko": "왕은 반역자를 <strong class=\"target-word\">추방</strong>했다."
+      },
+      {
+        "exam_en": "The poet died in <strong class=\"target-word\">exile</strong> far from home.",
+        "exam_ko": "시인은 고향에서 멀리 <strong class=\"target-word\">망명</strong> 중에 죽었다."
+      }
+    ]
+  },
+  {
+    "id": 3649,
+    "origin": "example",
+    "examples": [
+      {
+        "exam_en": "The dictionary provides useful <strong class=\"target-word\">examples</strong> for each word.",
+        "exam_ko": "사전은 각 단어에 유용한 <strong class=\"target-word\">예문</strong>을 제공한다."
+      },
+      {
+        "exam_en": "His career is a great <strong class=\"target-word\">example</strong> of hard work.",
+        "exam_ko": "그의 경력은 노력의 훌륭한 <strong class=\"target-word\">사례</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3650,
+    "origin": "every",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Every</strong> book in this library is available.",
+        "exam_ko": "이 도서관의 <strong class=\"target-word\">모든</strong> 책을 이용할 수 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Every</strong> student passed the final exam.",
+        "exam_ko": "<strong class=\"target-word\">모든</strong> 학생이 기말시험을 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 3651,
+    "origin": "ever",
+    "examples": [
+      {
+        "exam_en": "She has been happy <strong class=\"target-word\">ever</strong> since she moved here.",
+        "exam_ko": "그녀는 이곳으로 이사한 이후 <strong class=\"target-word\">줄곧</strong> 행복하다."
+      },
+      {
+        "exam_en": "They lived happily <strong class=\"target-word\">ever</strong> after.",
+        "exam_ko": "그들은 그 후 <strong class=\"target-word\">영원히</strong> 행복하게 살았다."
+      }
+    ]
+  }
+]

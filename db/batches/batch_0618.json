@@ -1,0 +1,238 @@
+[
+  {
+    "id": 21089,
+    "origin": "rakish",
+    "examples": [
+      {
+        "exam_en": "wear a hat at a rakish angle",
+        "exam_ko": "모자를 세련되게 비스듬히 쓰다."
+      }
+    ]
+  },
+  {
+    "id": 21091,
+    "origin": "rapidity",
+    "examples": [
+      {
+        "exam_en": "with unusual rapidity",
+        "exam_ko": "비상한 속도로."
+      }
+    ]
+  },
+  {
+    "id": 21092,
+    "origin": "developmental",
+    "examples": [
+      {
+        "exam_en": "developmental stages",
+        "exam_ko": "발달 단계"
+      },
+      {
+        "exam_en": "developmental psychology",
+        "exam_ko": "발달 심리학"
+      }
+    ]
+  },
+  {
+    "id": 21093,
+    "origin": "congratulatory",
+    "examples": [
+      {
+        "exam_en": "a congratulatory address",
+        "exam_ko": "축사"
+      },
+      {
+        "exam_en": "send a congratulatory telegram",
+        "exam_ko": "축전을 보내다."
+      }
+    ]
+  },
+  {
+    "id": 21097,
+    "origin": "clipper",
+    "examples": [
+      {
+        "exam_en": "a pair of clippers",
+        "exam_ko": "가위 한 자루."
+      }
+    ]
+  },
+  {
+    "id": 21098,
+    "origin": "mettle",
+    "examples": [
+      {
+        "exam_en": "a man of cowardly mettle",
+        "exam_ko": "겁 많은 사나이."
+      },
+      {
+        "exam_en": "a girl of mettle",
+        "exam_ko": "씩씩한 소녀"
+      }
+    ]
+  },
+  {
+    "id": 21099,
+    "origin": "squall",
+    "examples": [
+      {
+        "exam_en": "Can't you stop that baby squalling?",
+        "exam_ko": "저 아기가 울부짖는 소리를 멈추게 할 수 없을까요?"
+      }
+    ]
+  },
+  {
+    "id": 21100,
+    "origin": "sketch",
+    "examples": [
+      {
+        "exam_en": "a watercolor sketch",
+        "exam_ko": "수채 스케치"
+      },
+      {
+        "exam_en": "make a  sketch of",
+        "exam_ko": "…을 (연필로) 스케치하다(※*do a sketch라고는 하지 않음)."
+      }
+    ]
+  },
+  {
+    "id": 21101,
+    "origin": "sketchy",
+    "examples": [
+      {
+        "exam_en": "Serge described their first album as 'sketchy nonsense'.",
+        "exam_ko": "서지는 그들의 첫 앨범을 '뭐라 하는지 알 수 없는 헛소리'라고 묘사했다."
+      }
+    ]
+  },
+  {
+    "id": 21102,
+    "origin": "inflection",
+    "examples": [
+      {
+        "exam_en": "His English had a slightly Cockney inflection.",
+        "exam_ko": "그의 영어에는 런던 사투리의 억양이 약간 있었다."
+      }
+    ]
+  },
+  {
+    "id": 21103,
+    "origin": "unstable",
+    "examples": [
+      {
+        "exam_en": "an unstable government",
+        "exam_ko": "불안정한 정권."
+      },
+      {
+        "exam_en": "unstable weather",
+        "exam_ko": "변하기 쉬운 날씨"
+      }
+    ]
+  },
+  {
+    "id": 21104,
+    "origin": "tincture",
+    "examples": [
+      {
+        "exam_en": "a faint tincture of tobacco",
+        "exam_ko": "희미한 담배 냄새"
+      },
+      {
+        "exam_en": "have a tincture of learning in Latin",
+        "exam_ko": "라틴어를 몇 마디 알고 있다."
+      }
+    ]
+  },
+  {
+    "id": 21105,
+    "origin": "motionless",
+    "examples": [
+      {
+        "exam_en": "be sitting motionless",
+        "exam_ko": "움직이지 않고 앉아 있다."
+      }
+    ]
+  },
+  {
+    "id": 21107,
+    "origin": "tubercle",
+    "examples": [
+      {
+        "exam_en": "root tubercles",
+        "exam_ko": "근립(根粒)."
+      }
+    ]
+  },
+  {
+    "id": 21108,
+    "origin": "pleasing",
+    "examples": [
+      {
+        "exam_en": "a pleasing taste",
+        "exam_ko": "즐거운 취미[좋은 기후]"
+      },
+      {
+        "exam_en": "a pleasing face",
+        "exam_ko": "인상이 좋은 얼굴"
+      }
+    ]
+  },
+  {
+    "id": 21109,
+    "origin": "zoom",
+    "examples": [
+      {
+        "exam_en": "He zoomed down the track.",
+        "exam_ko": "(오토바이 등을 타고) 그는 트랙을 마구 달렸다"
+      },
+      {
+        "exam_en": "The car zoomed just in front of us.",
+        "exam_ko": "차가 우리 눈앞을 붕하고 통과했다"
+      }
+    ]
+  },
+  {
+    "id": 21110,
+    "origin": "waterless",
+    "examples": [
+      {
+        "exam_en": "waterless cooking",
+        "exam_ko": "물이 필요 없는 요리."
+      }
+    ]
+  },
+  {
+    "id": 21112,
+    "origin": "outflow",
+    "examples": [
+      {
+        "exam_en": "the outflow of dollars",
+        "exam_ko": "달러의 유출."
+      }
+    ]
+  },
+  {
+    "id": 21113,
+    "origin": "elemental",
+    "examples": [
+      {
+        "exam_en": "an elemental sense of rhythm",
+        "exam_ko": "타고난 리듬 감각."
+      },
+      {
+        "exam_en": "elemental gods",
+        "exam_ko": "자연신(태양신, 뇌신(雷神) 등)"
+      }
+    ]
+  },
+  {
+    "id": 21118,
+    "origin": "uninterrupted",
+    "examples": [
+      {
+        "exam_en": "a height commanding an uninterrupted view of the sea",
+        "exam_ko": "바다를 멀리 바라다볼 수 있는 고지."
+      }
+    ]
+  }
+]

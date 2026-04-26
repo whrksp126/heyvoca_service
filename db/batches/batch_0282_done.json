@@ -1,0 +1,286 @@
+[
+  {
+    "id": 6960,
+    "origin": "household",
+    "examples": [
+      {
+        "exam_en": "They have a large <strong class=\"target-word\">household</strong> with six children.",
+        "exam_ko": "그들은 아이가 여섯 명인 대규모 <strong class=\"target-word\">가구</strong>이다."
+      },
+      {
+        "exam_en": "She manages the entire <strong class=\"target-word\">household</strong> on her own.",
+        "exam_ko": "그녀는 혼자서 <strong class=\"target-word\">살림</strong> 전체를 꾸려나간다."
+      }
+    ]
+  },
+  {
+    "id": 6961,
+    "origin": "hook",
+    "examples": [
+      {
+        "exam_en": "He hung his coat on the <strong class=\"target-word\">hook</strong> by the door.",
+        "exam_ko": "그는 문 옆 <strong class=\"target-word\">옷걸이</strong>에 코트를 걸었다."
+      },
+      {
+        "exam_en": "The fish took the <strong class=\"target-word\">hook</strong> and was reeled in.",
+        "exam_ko": "물고기가 <strong class=\"target-word\">낚싯바늘</strong>을 물어 끌려왔다."
+      },
+      {
+        "exam_en": "He wants to reduce <strong class=\"target-word\">hooks</strong> in his golf swing.",
+        "exam_ko": "그는 골프 스윙에서 <strong class=\"target-word\">훅</strong>을 줄이고 싶어한다."
+      }
+    ]
+  },
+  {
+    "id": 6962,
+    "origin": "invaluable",
+    "examples": [
+      {
+        "exam_en": "Your <strong class=\"target-word\">invaluable</strong> help made the project a success.",
+        "exam_ko": "당신의 <strong class=\"target-word\">더없이 귀중한</strong> 도움 덕분에 프로젝트가 성공했다."
+      },
+      {
+        "exam_en": "His advice was <strong class=\"target-word\">invaluable</strong> to me.",
+        "exam_ko": "그의 조언은 나에게 <strong class=\"target-word\">귀중한</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 6963,
+    "origin": "quarrel",
+    "examples": [
+      {
+        "exam_en": "He tried to pick a <strong class=\"target-word\">quarrel</strong> with his neighbor.",
+        "exam_ko": "그는 이웃에게 <strong class=\"target-word\">싸움</strong>을 걸려고 했다."
+      },
+      {
+        "exam_en": "The misunderstanding caused a serious <strong class=\"target-word\">quarrel</strong> between them.",
+        "exam_ko": "오해가 그들 사이에 심각한 <strong class=\"target-word\">다툼</strong>을 일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 6966,
+    "origin": "combat",
+    "examples": [
+      {
+        "exam_en": "The government is working to <strong class=\"target-word\">combat</strong> the spread of disease.",
+        "exam_ko": "정부는 질병 확산과 <strong class=\"target-word\">싸우기</strong> 위해 노력하고 있다."
+      },
+      {
+        "exam_en": "He struggled to <strong class=\"target-word\">combat</strong> his growing despair.",
+        "exam_ko": "그는 커져가는 절망과 <strong class=\"target-word\">맞서 싸우려</strong> 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 6967,
+    "origin": "volunteer",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">volunteer</strong> at the local shelter.",
+        "exam_ko": "그녀는 지역 쉼터에서 <strong class=\"target-word\">자원봉사</strong>하기로 결심했다."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">volunteers</strong> helped clean the park after the event.",
+        "exam_ko": "많은 <strong class=\"target-word\">자원봉사자들</strong>이 행사 후 공원 청소를 도왔다."
+      }
+    ]
+  },
+  {
+    "id": 6968,
+    "origin": "poet",
+    "examples": [
+      {
+        "exam_en": "He was considered a minor <strong class=\"target-word\">poet</strong> of his era.",
+        "exam_ko": "그는 자신의 시대에 이류 <strong class=\"target-word\">시인</strong>으로 여겨졌다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">poet</strong> published her first collection last year.",
+        "exam_ko": "그 <strong class=\"target-word\">시인</strong>은 작년에 첫 번째 시집을 출판했다."
+      }
+    ]
+  },
+  {
+    "id": 6969,
+    "origin": "collide",
+    "examples": [
+      {
+        "exam_en": "They almost <strong class=\"target-word\">collided</strong> with each other in the hallway.",
+        "exam_ko": "그들은 복도에서 하마터면 <strong class=\"target-word\">부딪칠</strong> 뻔했다."
+      },
+      {
+        "exam_en": "His principles <strong class=\"target-word\">collided</strong> with his personal interests.",
+        "exam_ko": "그의 원칙이 개인적 이익과 <strong class=\"target-word\">충돌했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6970,
+    "origin": "physics",
+    "examples": [
+      {
+        "exam_en": "She majored in applied <strong class=\"target-word\">physics</strong> at university.",
+        "exam_ko": "그녀는 대학에서 응용 <strong class=\"target-word\">물리학</strong>을 전공했다."
+      },
+      {
+        "exam_en": "He took a course in <strong class=\"target-word\">physics</strong> this semester.",
+        "exam_ko": "그는 이번 학기에 <strong class=\"target-word\">물리학</strong> 수업을 들었다."
+      }
+    ]
+  },
+  {
+    "id": 6971,
+    "origin": "milestone",
+    "examples": [
+      {
+        "exam_en": "The discovery was a major <strong class=\"target-word\">milestone</strong> in medical history.",
+        "exam_ko": "그 발견은 의학사에서 중요한 <strong class=\"target-word\">이정표</strong>였다."
+      },
+      {
+        "exam_en": "Graduating was a huge <strong class=\"target-word\">milestone</strong> in her life.",
+        "exam_ko": "졸업은 그녀 인생의 큰 <strong class=\"target-word\">이정표</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 6972,
+    "origin": "bubble",
+    "examples": [
+      {
+        "exam_en": "The children blew <strong class=\"target-word\">bubbles</strong> in the park.",
+        "exam_ko": "아이들은 공원에서 <strong class=\"target-word\">비눗방울</strong>을 불었다."
+      },
+      {
+        "exam_en": "The economic <strong class=\"target-word\">bubble</strong> finally burst last year.",
+        "exam_ko": "경제 <strong class=\"target-word\">거품</strong>이 작년에 마침내 꺼졌다."
+      }
+    ]
+  },
+  {
+    "id": 6973,
+    "origin": "personality",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">personality</strong> is rather forceful and direct.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">성격</strong>은 꽤 강하고 직설적이다."
+      },
+      {
+        "exam_en": "Travel helps you develop your <strong class=\"target-word\">personality</strong> over time.",
+        "exam_ko": "여행은 시간이 지나면서 <strong class=\"target-word\">인격</strong>을 형성하는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 6974,
+    "origin": "merry",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">merry</strong> laugh filled the room.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">명랑한</strong> 웃음소리가 방을 가득 채웠다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">merry</strong> children played in the garden all day.",
+        "exam_ko": "하루 종일 <strong class=\"target-word\">쾌활한</strong> 아이들이 정원에서 놀았다."
+      }
+    ]
+  },
+  {
+    "id": 6975,
+    "origin": "tissue",
+    "examples": [
+      {
+        "exam_en": "The biopsy revealed damaged muscle <strong class=\"target-word\">tissue</strong>.",
+        "exam_ko": "생검 결과 손상된 근육 <strong class=\"target-word\">조직</strong>이 발견되었다."
+      },
+      {
+        "exam_en": "She wiped her tears with a <strong class=\"target-word\">tissue</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">화장지</strong>로 눈물을 닦았다."
+      }
+    ]
+  },
+  {
+    "id": 6976,
+    "origin": "infant",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">infant</strong> slept peacefully in the crib.",
+        "exam_ko": "<strong class=\"target-word\">유아</strong>가 요람에서 평화롭게 잠들었다."
+      },
+      {
+        "exam_en": "The hospital offers special care for <strong class=\"target-word\">infant</strong> patients.",
+        "exam_ko": "그 병원은 <strong class=\"target-word\">영아</strong> 환자를 위한 특별 치료를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 6977,
+    "origin": "biography",
+    "examples": [
+      {
+        "exam_en": "She wrote a <strong class=\"target-word\">biography</strong> of the famous scientist.",
+        "exam_ko": "그녀는 유명한 과학자의 <strong class=\"target-word\">전기</strong>를 썼다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">biography</strong> revealed many unknown facts about his life.",
+        "exam_ko": "그 <strong class=\"target-word\">전기</strong>는 그의 삶에 대한 많은 알려지지 않은 사실을 밝혔다."
+      }
+    ]
+  },
+  {
+    "id": 6978,
+    "origin": "astonish",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">astonished</strong> everyone by announcing her engagement.",
+        "exam_ko": "그녀는 약혼 발표로 모든 사람들을 <strong class=\"target-word\">깜짝 놀라게</strong> 했다."
+      },
+      {
+        "exam_en": "His brute strength <strong class=\"target-word\">astonished</strong> the entire team.",
+        "exam_ko": "그의 엄청난 힘은 팀 전체를 <strong class=\"target-word\">경탄하게</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 6979,
+    "origin": "appetite",
+    "examples": [
+      {
+        "exam_en": "She had a good <strong class=\"target-word\">appetite</strong> after the long hike.",
+        "exam_ko": "긴 하이킹 후 그녀는 <strong class=\"target-word\">식욕</strong>이 왕성했다."
+      },
+      {
+        "exam_en": "The smell of food sharpened his <strong class=\"target-word\">appetite</strong>.",
+        "exam_ko": "음식 냄새가 그의 <strong class=\"target-word\">식욕</strong>을 돋웠다."
+      }
+    ]
+  },
+  {
+    "id": 6980,
+    "origin": "timid",
+    "examples": [
+      {
+        "exam_en": "He is too <strong class=\"target-word\">timid</strong> to speak in front of others.",
+        "exam_ko": "그는 너무 <strong class=\"target-word\">소심해서</strong> 다른 사람들 앞에서 말을 못한다."
+      },
+      {
+        "exam_en": "She feels <strong class=\"target-word\">timid</strong> around strangers.",
+        "exam_ko": "그녀는 낯선 사람들 앞에서 <strong class=\"target-word\">겁을 먹는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6981,
+    "origin": "architecture",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">architecture</strong> at a top university.",
+        "exam_ko": "그녀는 명문 대학에서 <strong class=\"target-word\">건축학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "The city is famous for its ancient <strong class=\"target-word\">architecture</strong>.",
+        "exam_ko": "그 도시는 고대 <strong class=\"target-word\">건축물</strong>로 유명하다."
+      }
+    ]
+  }
+]

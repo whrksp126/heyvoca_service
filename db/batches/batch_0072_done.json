@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1493,
+    "origin": "cater",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">cater</strong> for weddings and parties.",
+        "exam_ko": "저희는 결혼식과 파티를 <strong class=\"target-word\">담당합니다</strong>."
+      },
+      {
+        "exam_en": "Our newspapers try to <strong class=\"target-word\">cater</strong> to all opinions.",
+        "exam_ko": "우리 신문은 모든 의견을 <strong class=\"target-word\">수렴하려</strong> 합니다."
+      },
+      {
+        "exam_en": "This menu <strong class=\"target-word\">caters</strong> to vegetarians as well.",
+        "exam_ko": "이 메뉴는 채식주의자도 <strong class=\"target-word\">고려한</strong> 것입니다."
+      },
+      {
+        "exam_en": "We are <strong class=\"target-word\">catering</strong> for today's reception.",
+        "exam_ko": "오늘 리셉션은 저희가 <strong class=\"target-word\">준비하고 있습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1494,
+    "origin": "concede",
+    "examples": [
+      {
+        "exam_en": "He finally <strong class=\"target-word\">conceded</strong> defeat after the last round.",
+        "exam_ko": "그는 마지막 라운드 후 결국 패배를 <strong class=\"target-word\">인정했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">concede</strong> that he's a good runner, but I can beat him.",
+        "exam_ko": "나는 그가 훌륭한 주자임을 <strong class=\"target-word\">인정하지만</strong> 이길 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1495,
+    "origin": "opt",
+    "examples": [
+      {
+        "exam_en": "OPEC <strong class=\"target-word\">opted</strong> for a substantial price increase.",
+        "exam_ko": "OPEC은 대폭적인 가격 인상을 <strong class=\"target-word\">채택했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">opted</strong> to stay home instead of going out.",
+        "exam_ko": "그녀는 외출 대신 집에 있기로 <strong class=\"target-word\">선택했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1496,
+    "origin": "persist",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">persisted</strong> in his belief despite all criticism.",
+        "exam_ko": "그는 모든 비판에도 자신의 신념을 <strong class=\"target-word\">고집했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">persisted</strong> in her denial until the end.",
+        "exam_ko": "그녀는 끝까지 부정하기를 <strong class=\"target-word\">고집했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1497,
+    "origin": "isolate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">isolated</strong> himself from all social contact.",
+        "exam_ko": "그는 모든 사회적 접촉을 <strong class=\"target-word\">끊어버렸다</strong>."
+      },
+      {
+        "exam_en": "A large area was <strong class=\"target-word\">isolated</strong> by the flood.",
+        "exam_ko": "넓은 지역이 홍수로 인해 <strong class=\"target-word\">고립됐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1498,
+    "origin": "spin",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">spun</strong> the wool into fine yarn.",
+        "exam_ko": "그녀는 양모를 가는 실로 <strong class=\"target-word\">자았다</strong>."
+      },
+      {
+        "exam_en": "A spider <strong class=\"target-word\">spins</strong> a web to catch insects.",
+        "exam_ko": "거미는 곤충을 잡기 위해 집을 <strong class=\"target-word\">짓는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1499,
+    "origin": "disclose",
+    "examples": [
+      {
+        "exam_en": "The headlight <strong class=\"target-word\">disclosed</strong> a parked car.",
+        "exam_ko": "헤드라이트가 주차된 차를 <strong class=\"target-word\">드러내 보였다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">disclosed</strong> that he had been in prison.",
+        "exam_ko": "그는 투옥된 일이 있었다고 <strong class=\"target-word\">밝혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1500,
+    "origin": "spring",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sprang</strong> into the pool with excitement.",
+        "exam_ko": "그녀는 흥분해서 풀장으로 <strong class=\"target-word\">뛰어들었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sprang</strong> to his feet when she entered.",
+        "exam_ko": "그녀가 들어오자 그는 발딱 <strong class=\"target-word\">일어섰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1501,
+    "origin": "conceive",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">conceived</strong> a deep affection for her.",
+        "exam_ko": "그는 그녀에게 깊은 애정을 <strong class=\"target-word\">품게 됐다</strong>."
+      },
+      {
+        "exam_en": "Scientists first <strong class=\"target-word\">conceived</strong> the idea of the atomic bomb in the 1930s.",
+        "exam_ko": "과학자들은 1930년대에 원자 폭탄의 개념을 처음 <strong class=\"target-word\">생각해 냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1502,
+    "origin": "interfere",
+    "examples": [
+      {
+        "exam_en": "I want to go if nothing <strong class=\"target-word\">interferes</strong>.",
+        "exam_ko": "<strong class=\"target-word\">방해가</strong> 없다면 나도 가고 싶다."
+      },
+      {
+        "exam_en": "Skipping breakfast <strong class=\"target-word\">interferes</strong> with students' concentration.",
+        "exam_ko": "아침을 거르는 것은 학생들의 집중력에 <strong class=\"target-word\">지장을 준다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1503,
+    "origin": "regulate",
+    "examples": [
+      {
+        "exam_en": "He tries to <strong class=\"target-word\">regulate</strong> his daily habits carefully.",
+        "exam_ko": "그는 일상 습관을 꼼꼼히 <strong class=\"target-word\">규칙적으로 유지하려</strong> 한다."
+      },
+      {
+        "exam_en": "Police officers <strong class=\"target-word\">regulate</strong> the traffic at busy intersections.",
+        "exam_ko": "경찰관들은 붐비는 교차로에서 교통을 <strong class=\"target-word\">단속한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1504,
+    "origin": "peer",
+    "examples": [
+      {
+        "exam_en": "He values his <strong class=\"target-word\">peers'</strong> opinions more than his teachers'.",
+        "exam_ko": "그는 선생님보다 <strong class=\"target-word\">동료들의</strong> 의견을 더 중시한다."
+      },
+      {
+        "exam_en": "He has no <strong class=\"target-word\">peers</strong> when it comes to debate.",
+        "exam_ko": "토론에 있어서 그를 당할 <strong class=\"target-word\">상대</strong>가 없다."
+      }
+    ]
+  },
+  {
+    "id": 1505,
+    "origin": "fancy",
+    "examples": [
+      {
+        "exam_en": "She had happy <strong class=\"target-word\">fancies</strong> of becoming a movie star.",
+        "exam_ko": "그녀는 영화 스타가 되는 즐거운 <strong class=\"target-word\">꿈</strong>을 가지고 있었다."
+      },
+      {
+        "exam_en": "I have a <strong class=\"target-word\">fancy</strong> that we will do well in the election.",
+        "exam_ko": "이번 선거가 잘될 것 같은 <strong class=\"target-word\">예감</strong>이 든다."
+      }
+    ]
+  },
+  {
+    "id": 1506,
+    "origin": "inherit",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">inherited</strong> a title from his father.",
+        "exam_ko": "그는 아버지의 칭호를 <strong class=\"target-word\">이어받았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">inherited</strong> his wavy hair from his mother.",
+        "exam_ko": "그는 곱슬머리를 어머니에게서 <strong class=\"target-word\">물려받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1507,
+    "origin": "speed",
+    "examples": [
+      {
+        "exam_en": "The car moved with great <strong class=\"target-word\">speed</strong> on the highway.",
+        "exam_ko": "차는 고속도로에서 엄청난 <strong class=\"target-word\">속도로</strong> 달렸다."
+      },
+      {
+        "exam_en": "More haste, less <strong class=\"target-word\">speed</strong>.",
+        "exam_ko": "급할수록 천천히, <strong class=\"target-word\">서두르면</strong> 오히려 늦어진다."
+      }
+    ]
+  },
+  {
+    "id": 1508,
+    "origin": "regret",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">regrets</strong> the follies of his youth.",
+        "exam_ko": "그는 젊은 시절의 어리석은 행동을 <strong class=\"target-word\">후회하고 있다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">regret</strong> the decline in respect for older people.",
+        "exam_ko": "연장자 공경 풍토가 쇠퇴하는 것은 <strong class=\"target-word\">유감스럽다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1509,
+    "origin": "extract",
+    "examples": [
+      {
+        "exam_en": "The surgeon <strong class=\"target-word\">extracted</strong> the tonsils safely.",
+        "exam_ko": "외과의사는 편도선을 안전하게 <strong class=\"target-word\">절제했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">extracted</strong> the cork from the bottle.",
+        "exam_ko": "그는 병에서 코르크 마개를 <strong class=\"target-word\">뽑았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1510,
+    "origin": "label",
+    "examples": [
+      {
+        "exam_en": "He put a <strong class=\"target-word\">label</strong> on his suitcase.",
+        "exam_ko": "그는 여행 가방에 <strong class=\"target-word\">꼬리표</strong>를 붙였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">label</strong> on the barrel reads \"Olive Oil.\"",
+        "exam_ko": "통의 <strong class=\"target-word\">라벨</strong>에는 '올리브 오일'이라고 쓰여 있다."
+      }
+    ]
+  },
+  {
+    "id": 1511,
+    "origin": "descend",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">descended</strong> from the hilltop as the sun set.",
+        "exam_ko": "그들은 해가 질 무렵 언덕에서 <strong class=\"target-word\">내려왔다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">descended</strong> into the cellar to find the old box.",
+        "exam_ko": "그는 오래된 상자를 찾으러 지하실로 <strong class=\"target-word\">내려갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1512,
+    "origin": "boost",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">boosted</strong> the child into the wagon.",
+        "exam_ko": "그는 아이를 마차에 <strong class=\"target-word\">밀어 올렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">boosted</strong> him into a good job.",
+        "exam_ko": "그녀는 그가 좋은 직업을 갖도록 <strong class=\"target-word\">밀어주었다</strong>."
+      }
+    ]
+  }
+]

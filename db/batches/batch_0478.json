@@ -1,0 +1,238 @@
+[
+  {
+    "id": 14173,
+    "origin": "venomous",
+    "examples": [
+      {
+        "exam_en": "a venomous snake",
+        "exam_ko": "독사."
+      },
+      {
+        "exam_en": "venomous words",
+        "exam_ko": "악의 있는 말[계획]."
+      }
+    ]
+  },
+  {
+    "id": 14178,
+    "origin": "purported",
+    "examples": [
+      {
+        "exam_en": "a purported foreign spy",
+        "exam_ko": "외국 스파이라는 말이 나도는 사람."
+      }
+    ]
+  },
+  {
+    "id": 14179,
+    "origin": "militant",
+    "examples": [
+      {
+        "exam_en": "a militant speech",
+        "exam_ko": "호전적인 발언"
+      },
+      {
+        "exam_en": "militant labor union members",
+        "exam_ko": "전투적인 노동 조합원"
+      }
+    ]
+  },
+  {
+    "id": 14183,
+    "origin": "antidumping",
+    "examples": [
+      {
+        "exam_en": "an antidumping tariff",
+        "exam_ko": "반(反)덤핑 관세."
+      }
+    ]
+  },
+  {
+    "id": 14184,
+    "origin": "nominally",
+    "examples": [
+      {
+        "exam_en": "Electrical metallic tubing (EMT), also commonly called thin-wall, is a listed steel raceway of circular cross section, which is unthreaded, and nominally 10 long.",
+        "exam_ko": "thin- wall이라고 불리는 EMT(금속 전기 도관)은 나산니가 없고 공칭 길이 10인 둥근 단면의 강철 배선관이다."
+      }
+    ]
+  },
+  {
+    "id": 14186,
+    "origin": "dispersed",
+    "examples": [
+      {
+        "exam_en": "dispersed industries",
+        "exam_ko": "분산형 산업."
+      }
+    ]
+  },
+  {
+    "id": 14188,
+    "origin": "equilibrium",
+    "examples": [
+      {
+        "exam_en": "a political equilibrium",
+        "exam_ko": "정치적 균형"
+      },
+      {
+        "exam_en": "restore one's equilibrium",
+        "exam_ko": "몸의 균형을 되찾다[유지하다]"
+      }
+    ]
+  },
+  {
+    "id": 14191,
+    "origin": "entrust",
+    "examples": [
+      {
+        "exam_en": "entrust a person with one's life",
+        "exam_ko": "남에게 목숨[재산]을 맡기다"
+      },
+      {
+        "exam_en": "I entrusted him with the care of the child.",
+        "exam_ko": "아이를 돌보는 일을 그에게 맡겼다."
+      }
+    ]
+  },
+  {
+    "id": 14192,
+    "origin": "caucasian",
+    "examples": [
+      {
+        "exam_en": "The criminal was a male Caucasian.",
+        "exam_ko": "그 범인은 백인 남자였다."
+      }
+    ]
+  },
+  {
+    "id": 14193,
+    "origin": "incontinent",
+    "examples": [
+      {
+        "exam_en": "be incontinent of anger",
+        "exam_ko": "화를 참지 못하다."
+      }
+    ]
+  },
+  {
+    "id": 14196,
+    "origin": "fairy",
+    "examples": [
+      {
+        "exam_en": "the fairy footings on the grass",
+        "exam_ko": "요정이 풀밭에서 춤춘 자리"
+      },
+      {
+        "exam_en": "fairyland",
+        "exam_ko": "요정의 나라"
+      }
+    ]
+  },
+  {
+    "id": 14201,
+    "origin": "hyper",
+    "examples": [
+      {
+        "exam_en": "a hypertrophied organ, a hypersensitive man, a hyperbole",
+        "exam_ko": "비대한 기관, 과민한 사람, 과장"
+      }
+    ]
+  },
+  {
+    "id": 14206,
+    "origin": "undersell",
+    "examples": [
+      {
+        "exam_en": "Don't undersell yourself.",
+        "exam_ko": "자신을 싸게 팔지 마라."
+      }
+    ]
+  },
+  {
+    "id": 14210,
+    "origin": "pervert",
+    "examples": [
+      {
+        "exam_en": "pervert the course of justice",
+        "exam_ko": "[법률](증거의 인멸·날조 등에 의해) 정의의 길에서 벗어나다."
+      },
+      {
+        "exam_en": "That liar perverts the truth.",
+        "exam_ko": "저 거짓말쟁이는 진실을 왜곡한다."
+      }
+    ]
+  },
+  {
+    "id": 14212,
+    "origin": "humdrum",
+    "examples": [
+      {
+        "exam_en": "a humdrum life",
+        "exam_ko": "단조로운 삶."
+      }
+    ]
+  },
+  {
+    "id": 14218,
+    "origin": "supplementary",
+    "examples": [
+      {
+        "exam_en": "The government had to take supplementary action to avoid a budget crisis.",
+        "exam_ko": "정부는 예산 위기를 모면하기 위해서 임시 조처를 취해야만 했다."
+      },
+      {
+        "exam_en": "a supplementary angle",
+        "exam_ko": "보각."
+      }
+    ]
+  },
+  {
+    "id": 14219,
+    "origin": "irrational",
+    "examples": [
+      {
+        "exam_en": "irrational beasts",
+        "exam_ko": "이성이 없는 동물."
+      },
+      {
+        "exam_en": "My parents were worried by my irrational behaviour.",
+        "exam_ko": "부모님은 나의 분별없는 행동에 걱정이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 14221,
+    "origin": "logistic",
+    "examples": [
+      {
+        "exam_en": "logistic supply",
+        "exam_ko": "후방 지원."
+      }
+    ]
+  },
+  {
+    "id": 14222,
+    "origin": "brigade",
+    "examples": [
+      {
+        "exam_en": "a mixed brigade",
+        "exam_ko": "혼성 여단"
+      },
+      {
+        "exam_en": "the Brigade",
+        "exam_ko": "(영국의) 근위 여단."
+      }
+    ]
+  },
+  {
+    "id": 14223,
+    "origin": "harmonic",
+    "examples": [
+      {
+        "exam_en": "harmonic progression",
+        "exam_ko": "조화 수열."
+      }
+    ]
+  }
+]

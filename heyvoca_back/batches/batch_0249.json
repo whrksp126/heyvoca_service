@@ -1,0 +1,602 @@
+[
+  {
+    "id": 25063,
+    "word": "iso",
+    "exam_en": "<strong class=\"target-word\">iso</strong>morph",
+    "exam_ko": "<strong class=\"target-word\">동형체.</strong>"
+  },
+  {
+    "id": 25064,
+    "word": "chiro",
+    "exam_en": "<strong class=\"target-word\">chiro</strong>logy",
+    "exam_ko": "<strong class=\"target-word\">수화법</strong>(手話法)."
+  },
+  {
+    "id": 25065,
+    "word": "concretion",
+    "exam_en": "a calcareous <strong class=\"target-word\">concretion</strong>",
+    "exam_ko": "<strong class=\"target-word\">석회질</strong> 결핵."
+  },
+  {
+    "id": 25066,
+    "word": "ortho",
+    "exam_en": "<strong class=\"target-word\">ortho</strong>center",
+    "exam_ko": "<strong class=\"target-word\">수심</strong>(垂心)."
+  },
+  {
+    "id": 25067,
+    "word": "optative",
+    "exam_en": "the <strong class=\"target-word\">optative</strong> mood",
+    "exam_ko": "<strong class=\"target-word\">기원법</strong>."
+  },
+  {
+    "id": 25068,
+    "word": "optative",
+    "exam_en": "<strong class=\"target-word\">God save the Queen</strong>.",
+    "exam_ko": "「<strong class=\"target-word\">신이여</strong> 여왕을 지켜 주소서」 등."
+  },
+  {
+    "id": 25069,
+    "word": "overcommit",
+    "exam_en": "The government was <strong class=\"target-word\">overcommit</strong>ted militarily.",
+    "exam_ko": "정부는 <strong class=\"target-word\">군사적으로</strong> 지나치게 개입했다"
+  },
+  {
+    "id": 25070,
+    "word": "overcommit",
+    "exam_en": "By taking on a new project, he <strong class=\"target-word\">overcommit</strong>ted himself.",
+    "exam_ko": "그는 새로운 사업을 떠맡아 <strong class=\"target-word\">꼼짝할 수 없는</strong> 지경에 빠져버렸다."
+  },
+  {
+    "id": 25071,
+    "word": "monosyllabic",
+    "exam_en": "a <strong class=\"target-word\">monosyllabic</strong> reply",
+    "exam_ko": "<strong class=\"target-word\">퉁명스러운</strong> 대답."
+  },
+  {
+    "id": 25072,
+    "word": "fleshly",
+    "exam_en": "simplicity and godly sincerity, as opposed to <strong class=\"target-word\">fleshly</strong> wisdom.",
+    "exam_ko": "세속적 <strong class=\"target-word\">지혜와</strong> 대조되는 순진함과 경건한 성실성."
+  },
+  {
+    "id": 25073,
+    "word": "ing",
+    "exam_en": "a paint<strong class=\"target-word\">ing</strong>, a building, writings, shavings",
+    "exam_ko": "(※<strong class=\"target-word\">복수형은</strong> 보통 「…된 것」의 뜻)."
+  },
+  {
+    "id": 25074,
+    "word": "centric",
+    "exam_en": "a <strong class=\"target-word\">centric</strong> point",
+    "exam_ko": "<strong class=\"target-word\">중심점</strong>."
+  },
+  {
+    "id": 25075,
+    "word": "etude",
+    "exam_en": "the <strong class=\"target-word\">etude</strong>s of Chopin",
+    "exam_ko": "쇼팽의 <strong class=\"target-word\">에튀드.</strong>"
+  },
+  {
+    "id": 25076,
+    "word": "styx",
+    "exam_en": "black as <strong class=\"target-word\">Styx</strong>",
+    "exam_ko": "<strong class=\"target-word\">칠흑같이</strong> 어두운."
+  },
+  {
+    "id": 25077,
+    "word": "suggestible",
+    "exam_en": "At that age, kids are highly <strong class=\"target-word\">suggestible</strong>.",
+    "exam_ko": "그 나이의 아이들은 매우 쉽게 영향을 <strong class=\"target-word\">받는다</strong>."
+  },
+  {
+    "id": 25078,
+    "word": "humored",
+    "exam_en": "good <strong class=\"target-word\">humored</strong>",
+    "exam_ko": "<strong class=\"target-word\">기분이</strong> 좋은[언짢은]."
+  },
+  {
+    "id": 25079,
+    "word": "antero",
+    "exam_en": "<strong class=\"target-word\">antero</strong>parietal",
+    "exam_ko": "<strong class=\"target-word\">전두골</strong> 전부(前部)."
+  },
+  {
+    "id": 25080,
+    "word": "seaborne",
+    "exam_en": "<strong class=\"target-word\">seaborne</strong> goods",
+    "exam_ko": "<strong class=\"target-word\">해운</strong> 화물."
+  },
+  {
+    "id": 25081,
+    "word": "overheated",
+    "exam_en": "The fire was caused by an <strong class=\"target-word\">overheated</strong> clothes dryer.",
+    "exam_ko": "그 화재는 <strong class=\"target-word\">건조기의 과열</strong>이 원인이었다."
+  },
+  {
+    "id": 25082,
+    "word": "indiscrete",
+    "exam_en": "Creation of the world is said to have begun with <strong class=\"target-word\">indiscrete</strong> chaos.",
+    "exam_ko": "세계는 모든 것이 한데 둥친 혼돈 상태 에서 창조되었다고 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25083,
+    "word": "buzzkill",
+    "exam_en": "He has a history of being a total <strong class=\"target-word\">buzzkill</strong>.",
+    "exam_ko": "그는 남의 흥을 팍 깨버리는 사람이라는 내력이 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25084,
+    "word": "strop",
+    "exam_en": "be in a <strong class=\"target-word\">strop</strong>",
+    "exam_ko": "기분이 <strong class=\"target-word\">나쁘다</strong>."
+  },
+  {
+    "id": 25085,
+    "word": "specie",
+    "exam_en": "shortness of <strong class=\"target-word\">specie</strong>",
+    "exam_ko": "<strong class=\"target-word\">정화</strong> 부족"
+  },
+  {
+    "id": 25086,
+    "word": "specie",
+    "exam_en": "<strong class=\"target-word\">specie</strong> held abroad",
+    "exam_ko": "<strong class=\"target-word\">재외</strong>(在外) 정화"
+  },
+  {
+    "id": 25088,
+    "word": "andro",
+    "exam_en": "<strong class=\"target-word\">andro</strong>phobia",
+    "exam_ko": "남성 <strong class=\"target-word\">혐오.</strong>"
+  },
+  {
+    "id": 25089,
+    "word": "andry",
+    "exam_en": "poly<strong class=\"target-word\">andry</strong>",
+    "exam_ko": "<strong class=\"target-word\">일처다부</strong>(一妻多夫)."
+  },
+  {
+    "id": 25090,
+    "word": "unthread",
+    "exam_en": "<strong class=\"target-word\">unthread</strong> a sewing machine",
+    "exam_ko": "재봉틀의 실을 <strong class=\"target-word\">뽑다</strong>."
+  },
+  {
+    "id": 25091,
+    "word": "unthread",
+    "exam_en": "<strong class=\"target-word\">unthread</strong> a maze",
+    "exam_ko": "미로를 <strong class=\"target-word\">빠져나오다</strong>"
+  },
+  {
+    "id": 25092,
+    "word": "lees",
+    "exam_en": "the <strong class=\"target-word\">lees</strong> of life",
+    "exam_ko": "<strong class=\"target-word\">보잘것없는</strong> 여생(餘生)."
+  },
+  {
+    "id": 25093,
+    "word": "orthorexia",
+    "exam_en": "<strong class=\"target-word\">Orthorexia</strong> often starts out as an innocent attempt to eat more healthfully.",
+    "exam_ko": "건강식품 강박증은 흔히 건강에 더 좋게 음식을 먹으려는 순진한 시도로 <strong class=\"target-word\">시작된다</strong>."
+  },
+  {
+    "id": 25094,
+    "word": "procuration",
+    "exam_en": "a letter of <strong class=\"target-word\">procuration</strong>",
+    "exam_ko": "<strong class=\"target-word\">위임장</strong>."
+  },
+  {
+    "id": 25095,
+    "word": "aslant",
+    "exam_en": "walk with head <strong class=\"target-word\">aslant</strong>",
+    "exam_ko": "머리를 비스듬히 기울이고 <strong class=\"target-word\">걷다</strong>."
+  },
+  {
+    "id": 25096,
+    "word": "genocidaire",
+    "exam_en": "a former prime minister and convicted <strong class=\"target-word\">genocidaire</strong>",
+    "exam_ko": "전 수상이며 유죄 <strong class=\"target-word\">선고</strong>를 받은 종족 학살자."
+  },
+  {
+    "id": 25097,
+    "word": "broiler",
+    "exam_en": "Yesterday was a real <strong class=\"target-word\">broiler</strong>!",
+    "exam_ko": "어제는 정말 <strong class=\"target-word\">지독히도 더웠지!</strong>"
+  },
+  {
+    "id": 25102,
+    "word": "whodunit",
+    "exam_en": "I like to read <strong class=\"target-word\">whodunit</strong>s about people who solve crimes.",
+    "exam_ko": "나는 범죄를 해결하는 사람들을 다룬 추리 소설 읽는 것을 <strong class=\"target-word\">좋아한다.</strong>"
+  },
+  {
+    "id": 25103,
+    "word": "bumbleberry",
+    "exam_en": "I bought some <strong class=\"target-word\">bumbleberry</strong> jelly.",
+    "exam_ko": "나는 여러 딸기류를 혼합해 만든 젤리를 좀 <strong class=\"target-word\">샀다</strong>."
+  },
+  {
+    "id": 25104,
+    "word": "reckoner",
+    "exam_en": "He was a ready <strong class=\"target-word\">reckoner</strong>.",
+    "exam_ko": "그는 계산이 <strong class=\"target-word\">빨랐다</strong>."
+  },
+  {
+    "id": 25105,
+    "word": "sculptured",
+    "exam_en": "a <strong class=\"target-word\">sculptured</strong> pillar",
+    "exam_ko": "<strong class=\"target-word\">조각으로</strong> 장식한 기둥."
+  },
+  {
+    "id": 25106,
+    "word": "unreadable",
+    "exam_en": "The manuscript was almost illegible and when finally deciphered was <strong class=\"target-word\">unreadable</strong>.",
+    "exam_ko": "그 원고는 거의 글씨를 알아볼 수 없었지만, 겨우 뜯어 읽어보니 참고 읽기에도 힘든 <strong class=\"target-word\">것이었다</strong>."
+  },
+  {
+    "id": 25107,
+    "word": "peachy",
+    "exam_en": "How are you? \"I'm just <strong class=\"target-word\">peachy</strong>\"",
+    "exam_ko": "잘 지내? \"<strong class=\"target-word\">좋아</strong>\""
+  },
+  {
+    "id": 25108,
+    "word": "reveille",
+    "exam_en": "<strong class=\"target-word\">Reveille</strong> was at 6.",
+    "exam_ko": "기상 나팔은 6시에 <strong class=\"target-word\">울렸다</strong>."
+  },
+  {
+    "id": 25109,
+    "word": "pinnate",
+    "exam_en": "a <strong class=\"target-word\">pinnate</strong> leaf",
+    "exam_ko": "<strong class=\"target-word\">우상</strong> 복엽(複葉)."
+  },
+  {
+    "id": 25110,
+    "word": "pluri",
+    "exam_en": "<strong class=\"target-word\">pluri</strong>syllabic",
+    "exam_ko": "<strong class=\"target-word\">다음절의;</strong> pluriaxial."
+  },
+  {
+    "id": 25111,
+    "word": "overgrow",
+    "exam_en": "be <strong class=\"target-word\">overgrow</strong>n with tall weeds",
+    "exam_ko": "키가 큰 잡초가 <strong class=\"target-word\">온통 우거져 있다</strong>."
+  },
+  {
+    "id": 25112,
+    "word": "overgrow",
+    "exam_en": "The child has <strong class=\"target-word\">overgrow</strong>n his clothes.",
+    "exam_ko": "아이가 <strong class=\"target-word\">너무 크게 자라서</strong> 그 옷을 입을 수 없게 되었다."
+  },
+  {
+    "id": 25113,
+    "word": "baptismal",
+    "exam_en": "a <strong class=\"target-word\">baptismal</strong> name",
+    "exam_ko": "<strong class=\"target-word\">세례명</strong>(Christian name)."
+  },
+  {
+    "id": 25114,
+    "word": "hereabout",
+    "exam_en": "somewhere <strong class=\"target-word\">hereabout</strong>",
+    "exam_ko": "<strong class=\"target-word\">어딘지</strong> 이 근처에서."
+  },
+  {
+    "id": 25115,
+    "word": "colloidal",
+    "exam_en": "a <strong class=\"target-word\">colloidal</strong> solution",
+    "exam_ko": "<strong class=\"target-word\">콜로이드</strong> 용액"
+  },
+  {
+    "id": 25116,
+    "word": "colloidal",
+    "exam_en": "a <strong class=\"target-word\">colloidal</strong> system",
+    "exam_ko": "<strong class=\"target-word\">콜로이드계</strong>."
+  },
+  {
+    "id": 25117,
+    "word": "affine",
+    "exam_en": "<strong class=\"target-word\">affine</strong> geometry",
+    "exam_ko": "<strong class=\"target-word\">아핀</strong> 기하학"
+  },
+  {
+    "id": 25118,
+    "word": "affine",
+    "exam_en": "<strong class=\"target-word\">affine</strong> coordinates",
+    "exam_ko": "<strong class=\"target-word\">아핀</strong> 좌표."
+  },
+  {
+    "id": 25119,
+    "word": "polymeric",
+    "exam_en": "<strong class=\"target-word\">polymeric</strong> genes",
+    "exam_ko": "<strong class=\"target-word\">동의</strong>(同義) 유전자."
+  },
+  {
+    "id": 25120,
+    "word": "articular",
+    "exam_en": "<strong class=\"target-word\">articular</strong> inflammation",
+    "exam_ko": "<strong class=\"target-word\">관절염</strong>."
+  },
+  {
+    "id": 25121,
+    "word": "intraocular",
+    "exam_en": "<strong class=\"target-word\">intraocular</strong> pressure",
+    "exam_ko": "<strong class=\"target-word\">안내압</strong>(眼內壓)."
+  },
+  {
+    "id": 25122,
+    "word": "modulus",
+    "exam_en": "the <strong class=\"target-word\">modulus</strong> of expansion",
+    "exam_ko": "<strong class=\"target-word\">팽창</strong> 계수."
+  },
+  {
+    "id": 25123,
+    "word": "subtend",
+    "exam_en": "a chord <strong class=\"target-word\">subtend</strong>ing an arc",
+    "exam_ko": "<strong class=\"target-word\">호에</strong> 대한 현."
+  },
+  {
+    "id": 25124,
+    "word": "groomed",
+    "exam_en": "neatly <strong class=\"target-word\">groomed</strong>",
+    "exam_ko": "<strong class=\"target-word\">말쑥하게</strong> 차려입은."
+  },
+  {
+    "id": 25125,
+    "word": "extractive",
+    "exam_en": "<strong class=\"target-word\">extractive</strong> technology",
+    "exam_ko": "(석탄·석유 등의) <strong class=\"target-word\">채굴</strong> 기술."
+  },
+  {
+    "id": 25126,
+    "word": "calculating",
+    "exam_en": "a <strong class=\"target-word\">calculating</strong> machine",
+    "exam_ko": "<strong class=\"target-word\">계산기</strong>(calculator)."
+  },
+  {
+    "id": 25127,
+    "word": "tachy",
+    "exam_en": "<strong class=\"target-word\">tachy</strong>phylaxis",
+    "exam_ko": "[의학] 급속 <strong class=\"target-word\">면역법.</strong>"
+  },
+  {
+    "id": 25128,
+    "word": "suctorial",
+    "exam_en": "a <strong class=\"target-word\">suctorial</strong> organ",
+    "exam_ko": "<strong class=\"target-word\">흡입</strong> 기관."
+  },
+  {
+    "id": 25129,
+    "word": "mascara",
+    "exam_en": "apply <strong class=\"target-word\">mascara</strong>",
+    "exam_ko": "<strong class=\"target-word\">마스카라를 바르다</strong>[칠하다]."
+  },
+  {
+    "id": 25130,
+    "word": "fundus",
+    "exam_en": "the <strong class=\"target-word\">fundus</strong> oculi",
+    "exam_ko": "<strong class=\"target-word\">안저</strong>(眼底)."
+  },
+  {
+    "id": 25131,
+    "word": "adenoid",
+    "exam_en": "He's got <strong class=\"target-word\">adenoid</strong>s.",
+    "exam_ko": "(비격식) 그는 <strong class=\"target-word\">아데노이드</strong>에 걸려 있다."
+  },
+  {
+    "id": 25132,
+    "word": "sublingual",
+    "exam_en": "the <strong class=\"target-word\">sublingual</strong> gland",
+    "exam_ko": "<strong class=\"target-word\">혀밑샘</strong>[동맥]."
+  },
+  {
+    "id": 25133,
+    "word": "yearling",
+    "exam_en": "a <strong class=\"target-word\">yearling</strong> heifer",
+    "exam_ko": "한 <strong class=\"target-word\">살배기의</strong> 암소"
+  },
+  {
+    "id": 25134,
+    "word": "yearling",
+    "exam_en": "a <strong class=\"target-word\">yearling</strong> bride",
+    "exam_ko": "결혼 생활 <strong class=\"target-word\">1년 된 새색시</strong>."
+  },
+  {
+    "id": 25135,
+    "word": "airwaves",
+    "exam_en": "on the <strong class=\"target-word\">airwaves</strong>",
+    "exam_ko": "<strong class=\"target-word\">방송으로.</strong>"
+  },
+  {
+    "id": 25136,
+    "word": "livered",
+    "exam_en": "a lily-<strong class=\"target-word\">livered</strong> man",
+    "exam_ko": "<strong class=\"target-word\">겁쟁이</strong>."
+  },
+  {
+    "id": 25137,
+    "word": "roundup",
+    "exam_en": "a <strong class=\"target-word\">roundup</strong> of vagrants",
+    "exam_ko": "<strong class=\"target-word\">부랑자</strong> 일제 검거."
+  },
+  {
+    "id": 25138,
+    "word": "halidom",
+    "exam_en": "by my <strong class=\"target-word\">halidom</strong>",
+    "exam_ko": "<strong class=\"target-word\">맹세코</strong>."
+  },
+  {
+    "id": 25139,
+    "word": "thereunder",
+    "exam_en": "They were thirty years old and <strong class=\"target-word\">thereunder</strong>.",
+    "exam_ko": "그들은 30세 및 그 <strong class=\"target-word\">이하였다</strong>."
+  },
+  {
+    "id": 25140,
+    "word": "hie",
+    "exam_en": "<strong class=\"target-word\">Hie</strong> yourself to work.",
+    "exam_ko": "<strong class=\"target-word\">서둘러</strong> 일하러 가라."
+  },
+  {
+    "id": 25141,
+    "word": "ere",
+    "exam_en": "<strong class=\"target-word\">ere</strong> long",
+    "exam_ko": "<strong class=\"target-word\">이윽고</strong>, 머지않아."
+  },
+  {
+    "id": 25142,
+    "word": "ere",
+    "exam_en": "<strong class=\"target-word\">ere</strong>  too late",
+    "exam_ko": "<strong class=\"target-word\">때늦기</strong> 전에."
+  },
+  {
+    "id": 25143,
+    "word": "domiciled",
+    "exam_en": "a <strong class=\"target-word\">domiciled</strong> bill",
+    "exam_ko": "<strong class=\"target-word\">지급지</strong> 지정 어음."
+  },
+  {
+    "id": 25144,
+    "word": "bc",
+    "exam_en": "<strong class=\"target-word\">35 B.C.</strong>",
+    "exam_ko": "<strong class=\"target-word\">기원전</strong> 35년(에)."
+  },
+  {
+    "id": 25145,
+    "word": "copestone",
+    "exam_en": "the <strong class=\"target-word\">copestone</strong> of one's achievements",
+    "exam_ko": "<strong class=\"target-word\">금상첨화격인</strong> 업적."
+  },
+  {
+    "id": 25146,
+    "word": "athirst",
+    "exam_en": "He is <strong class=\"target-word\">athirst</strong> for your telephone.",
+    "exam_ko": "그는 <strong class=\"target-word\">네 전화를 애타게 기다리고</strong> 있다."
+  },
+  {
+    "id": 25147,
+    "word": "agoing",
+    "exam_en": "set <strong class=\"target-word\">agoing</strong>",
+    "exam_ko": "(…을) 움직이다, <strong class=\"target-word\">시작하다</strong>."
+  },
+  {
+    "id": 25148,
+    "word": "sprat",
+    "exam_en": "throw a <strong class=\"target-word\">sprat</strong> to catch a herring",
+    "exam_ko": "(비유) 새우로 도미를 <strong class=\"target-word\">낚다</strong>."
+  },
+  {
+    "id": 25149,
+    "word": "octagonal",
+    "exam_en": "the <strong class=\"target-word\">octagonal</strong> tower",
+    "exam_ko": "<strong class=\"target-word\">팔각형의</strong> 탑."
+  },
+  {
+    "id": 25150,
+    "word": "furred",
+    "exam_en": "a <strong class=\"target-word\">furred</strong> gown",
+    "exam_ko": "<strong class=\"target-word\">모피를</strong> 댄 가운"
+  },
+  {
+    "id": 25151,
+    "word": "furred",
+    "exam_en": "a <strong class=\"target-word\">furred</strong> lady in ermine",
+    "exam_ko": "<strong class=\"target-word\">흰담비</strong> 모피 코트를 입은 부인."
+  },
+  {
+    "id": 25152,
+    "word": "ibs",
+    "exam_en": "One of the commonest foods found to cause <strong class=\"target-word\">IBS</strong> was wheat.",
+    "exam_ko": "IBS를 유발하는 가장 흔한 식품들 중 하나가 밀인 것으로 <strong class=\"target-word\">밝혀졌다</strong>."
+  },
+  {
+    "id": 25153,
+    "word": "irresponsive",
+    "exam_en": "<strong class=\"target-word\">irresponsive</strong> to control",
+    "exam_ko": "<strong class=\"target-word\">제어</strong>가 통하지 않는."
+  },
+  {
+    "id": 25154,
+    "word": "unimpassioned",
+    "exam_en": "an <strong class=\"target-word\">unimpassioned</strong> presentation of the facts",
+    "exam_ko": "<strong class=\"target-word\">진실의</strong> 냉철한 기술(記述)."
+  },
+  {
+    "id": 25155,
+    "word": "unformed",
+    "exam_en": "an <strong class=\"target-word\">unformed</strong> fetus",
+    "exam_ko": "미성숙한 <strong class=\"target-word\">태아</strong>"
+  },
+  {
+    "id": 25156,
+    "word": "unformed",
+    "exam_en": "an <strong class=\"target-word\">unformed</strong> scribble",
+    "exam_ko": "<strong class=\"target-word\">마구</strong> 휘갈겨 쓴 글."
+  },
+  {
+    "id": 25157,
+    "word": "irretention",
+    "exam_en": "<strong class=\"target-word\">irretention</strong> of urine",
+    "exam_ko": "<strong class=\"target-word\">요실금</strong>(尿失禁)."
+  },
+  {
+    "id": 25158,
+    "word": "forgivable",
+    "exam_en": "That mistake is <strong class=\"target-word\">forgivable</strong>.",
+    "exam_ko": "그 실수는 용서받을 수 <strong class=\"target-word\">있다</strong>(※사람을 주어로 하여 The man is forgivable.이라고는 하지 않음)."
+  },
+  {
+    "id": 25159,
+    "word": "smelling",
+    "exam_en": "good-<strong class=\"target-word\">smelling</strong>",
+    "exam_ko": "<strong class=\"target-word\">좋은</strong> 냄새가 나는."
+  },
+  {
+    "id": 25160,
+    "word": "incomparably",
+    "exam_en": "This model is <strong class=\"target-word\">incomparably</strong> better than the others.",
+    "exam_ko": "이 모델은 다른 것들과는 비교가 안 될 정도로 <strong class=\"target-word\">좋다</strong>."
+  },
+  {
+    "id": 25161,
+    "word": "pratfall",
+    "exam_en": "take a <strong class=\"target-word\">pratfall</strong> on",
+    "exam_ko": "…에 미끄러져 엉덩방아를 <strong class=\"target-word\">찧다</strong>."
+  },
+  {
+    "id": 25162,
+    "word": "intra",
+    "exam_en": "<strong class=\"target-word\">intra</strong>cardiac",
+    "exam_ko": "<strong class=\"target-word\">심장</strong> 내의"
+  },
+  {
+    "id": 25163,
+    "word": "intra",
+    "exam_en": "<strong class=\"target-word\">intra</strong>vascular",
+    "exam_ko": "<strong class=\"target-word\">혈관</strong> 내에서 일어나는"
+  },
+  {
+    "id": 25164,
+    "word": "crypto",
+    "exam_en": "<strong class=\"target-word\">crypto</strong>-Christian",
+    "exam_ko": "<strong class=\"target-word\">지하에</strong> 숨은 크리스트교 신자"
+  },
+  {
+    "id": 25165,
+    "word": "crypto",
+    "exam_en": "<strong class=\"target-word\">crypto</strong>psychics",
+    "exam_ko": "<strong class=\"target-word\">심령</strong>(心靈)."
+  },
+  {
+    "id": 25166,
+    "word": "gyro",
+    "exam_en": "<strong class=\"target-word\">gyro</strong>scope",
+    "exam_ko": "<strong class=\"target-word\">회전계.</strong>"
+  },
+  {
+    "id": 25167,
+    "word": "indiscernible",
+    "exam_en": "an <strong class=\"target-word\">indiscernible</strong> difference",
+    "exam_ko": "<strong class=\"target-word\">분간할</strong> 수 없을 만큼의 차이"
+  }
+]

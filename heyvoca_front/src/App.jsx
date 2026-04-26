@@ -30,6 +30,7 @@ import { OverlayContextProvider, OverlayStateContext, OverlayActionsContext } fr
 import { OverlayProvider } from './components/overlay/OverlayProvider';
 import { GemAnimationProvider } from './context/GemAnimationContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { KeyboardProvider } from './context/KeyboardContext';
 
 const AppLayout = () => {
   return (
@@ -102,7 +103,9 @@ function App() {
               <OverlayContextProvider>
                 <GemAnimationProvider>
                   <ThemeProvider>
-                    <AppWithContexts />
+                    <KeyboardProvider>
+                      <AppWithContexts />
+                    </KeyboardProvider>
                   </ThemeProvider>
                 </GemAnimationProvider>
               </OverlayContextProvider>

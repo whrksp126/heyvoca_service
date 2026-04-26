@@ -1,0 +1,286 @@
+[
+  {
+    "id": 3469,
+    "origin": "period",
+    "examples": [
+      {
+        "exam_en": "That was the happiest <strong class=\"target-word\">period</strong> of her life.",
+        "exam_ko": "그것은 그녀 삶에서 가장 행복한 <strong class=\"target-word\">시기</strong>였다."
+      },
+      {
+        "exam_en": "She lived during the <strong class=\"target-word\">period</strong> of Queen Victoria.",
+        "exam_ko": "그녀는 빅토리아 여왕 <strong class=\"target-word\">시대</strong>에 살았다."
+      }
+    ]
+  },
+  {
+    "id": 3470,
+    "origin": "percent",
+    "examples": [
+      {
+        "exam_en": "Prices rose by ten <strong class=\"target-word\">percent</strong> last year.",
+        "exam_ko": "물가가 작년에 10<strong class=\"target-word\">퍼센트</strong> 올랐다."
+      },
+      {
+        "exam_en": "She scored ninety <strong class=\"target-word\">percent</strong> on the test.",
+        "exam_ko": "그녀는 시험에서 90<strong class=\"target-word\">퍼센트</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 3471,
+    "origin": "people",
+    "examples": [
+      {
+        "exam_en": "Many <strong class=\"target-word\">people</strong> gathered in the square.",
+        "exam_ko": "많은 <strong class=\"target-word\">사람들</strong>이 광장에 모였다."
+      },
+      {
+        "exam_en": "Old <strong class=\"target-word\">people</strong> often share their wisdom.",
+        "exam_ko": "노인 <strong class=\"target-word\">사람들</strong>은 종종 지혜를 나눈다."
+      }
+    ]
+  },
+  {
+    "id": 3472,
+    "origin": "pen",
+    "examples": [
+      {
+        "exam_en": "She put down her <strong class=\"target-word\">pen</strong> and stopped writing.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">펜</strong>을 내려놓고 쓰기를 멈췄다."
+      },
+      {
+        "exam_en": "He crossed out the word with his <strong class=\"target-word\">pen</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">펜</strong>으로 단어를 지웠다."
+      }
+    ]
+  },
+  {
+    "id": 3473,
+    "origin": "peace",
+    "examples": [
+      {
+        "exam_en": "Leaders gathered to discuss world <strong class=\"target-word\">peace</strong>.",
+        "exam_ko": "지도자들이 세계 <strong class=\"target-word\">평화</strong>를 논의하기 위해 모였다."
+      },
+      {
+        "exam_en": "They signed a treaty for lasting <strong class=\"target-word\">peace</strong>.",
+        "exam_ko": "그들은 지속적인 <strong class=\"target-word\">평화</strong>를 위한 조약에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 3474,
+    "origin": "path",
+    "examples": [
+      {
+        "exam_en": "We walked along the <strong class=\"target-word\">path</strong> through the garden.",
+        "exam_ko": "우리는 정원을 가로지르는 <strong class=\"target-word\">길</strong>을 따라 걸었다."
+      },
+      {
+        "exam_en": "They cleared a <strong class=\"target-word\">path</strong> through the dense jungle.",
+        "exam_ko": "그들은 울창한 정글을 통과하는 <strong class=\"target-word\">길</strong>을 냈다."
+      }
+    ]
+  },
+  {
+    "id": 3475,
+    "origin": "passport",
+    "examples": [
+      {
+        "exam_en": "She showed her <strong class=\"target-word\">passport</strong> at the border.",
+        "exam_ko": "그녀는 국경에서 <strong class=\"target-word\">여권</strong>을 제시했다."
+      },
+      {
+        "exam_en": "He applied for a new <strong class=\"target-word\">passport</strong> at the office.",
+        "exam_ko": "그는 사무소에서 새 <strong class=\"target-word\">여권</strong>을 신청했다."
+      }
+    ]
+  },
+  {
+    "id": 3476,
+    "origin": "passenger",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">passenger</strong> list was checked before boarding.",
+        "exam_ko": "<strong class=\"target-word\">승객</strong> 명단이 탑승 전에 확인되었다."
+      },
+      {
+        "exam_en": "Every <strong class=\"target-word\">passenger</strong> must show a ticket.",
+        "exam_ko": "모든 <strong class=\"target-word\">승객</strong>은 표를 보여주어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3477,
+    "origin": "party",
+    "examples": [
+      {
+        "exam_en": "She threw a big birthday <strong class=\"target-word\">party</strong> for her son.",
+        "exam_ko": "그녀는 아들을 위해 성대한 생일 <strong class=\"target-word\">파티</strong>를 열었다."
+      },
+      {
+        "exam_en": "The lavish <strong class=\"target-word\">party</strong> impressed all the guests.",
+        "exam_ko": "성대한 <strong class=\"target-word\">파티</strong>가 모든 손님들을 감동시켰다."
+      }
+    ]
+  },
+  {
+    "id": 3478,
+    "origin": "parliament",
+    "examples": [
+      {
+        "exam_en": "He was elected as a member of <strong class=\"target-word\">Parliament</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">의회</strong> 의원으로 선출되었다."
+      },
+      {
+        "exam_en": "The bill passed in <strong class=\"target-word\">Parliament</strong> after debate.",
+        "exam_ko": "그 법안은 토론 후 <strong class=\"target-word\">의회</strong>에서 통과되었다."
+      }
+    ]
+  },
+  {
+    "id": 3479,
+    "origin": "parent",
+    "examples": [
+      {
+        "exam_en": "Children should respect their <strong class=\"target-word\">parents</strong>.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">부모님</strong>을 존중해야 한다."
+      },
+      {
+        "exam_en": "Both my <strong class=\"target-word\">parents</strong> work full time.",
+        "exam_ko": "우리 <strong class=\"target-word\">부모님</strong>은 둘 다 풀타임으로 일하신다."
+      }
+    ]
+  },
+  {
+    "id": 3480,
+    "origin": "parade",
+    "examples": [
+      {
+        "exam_en": "Everyone watched the Easter <strong class=\"target-word\">parade</strong> downtown.",
+        "exam_ko": "모두가 시내에서 부활절 <strong class=\"target-word\">퍼레이드</strong>를 구경했다."
+      },
+      {
+        "exam_en": "The athletes marched in a <strong class=\"target-word\">parade</strong> after winning.",
+        "exam_ko": "선수들이 우승 후 <strong class=\"target-word\">퍼레이드</strong>를 벌였다."
+      }
+    ]
+  },
+  {
+    "id": 3481,
+    "origin": "paper",
+    "examples": [
+      {
+        "exam_en": "She wrote the answer on ruled <strong class=\"target-word\">paper</strong>.",
+        "exam_ko": "그녀는 괘선 <strong class=\"target-word\">종이</strong>에 답을 썼다."
+      },
+      {
+        "exam_en": "He smoothed the surface with emery <strong class=\"target-word\">paper</strong>.",
+        "exam_ko": "그는 사포 <strong class=\"target-word\">종이</strong>로 표면을 매끄럽게 했다."
+      }
+    ]
+  },
+  {
+    "id": 3482,
+    "origin": "pan",
+    "examples": [
+      {
+        "exam_en": "She fried the eggs in a hot <strong class=\"target-word\">pan</strong>.",
+        "exam_ko": "그녀는 뜨거운 <strong class=\"target-word\">팬</strong>에 달걀을 볶았다."
+      },
+      {
+        "exam_en": "The critic <strong class=\"target-word\">panned</strong> the new movie harshly.",
+        "exam_ko": "평론가는 새 영화를 혹독하게 <strong class=\"target-word\">혹평했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3483,
+    "origin": "pain",
+    "examples": [
+      {
+        "exam_en": "She felt a sharp <strong class=\"target-word\">pain</strong> in her tooth.",
+        "exam_ko": "그녀는 치아에 날카로운 <strong class=\"target-word\">통증</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "He winced at the stabbing <strong class=\"target-word\">pain</strong> in his side.",
+        "exam_ko": "그는 옆구리의 찌르는 듯한 <strong class=\"target-word\">통증</strong>에 얼굴을 찡그렸다."
+      },
+      {
+        "exam_en": "Have you felt any <strong class=\"target-word\">pain</strong> in that tooth?",
+        "exam_ko": "그 치아에 <strong class=\"target-word\">통증</strong>을 느낀 적이 있으십니까?"
+      }
+    ]
+  },
+  {
+    "id": 3484,
+    "origin": "page",
+    "examples": [
+      {
+        "exam_en": "She reads the sports <strong class=\"target-word\">pages</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 스포츠 <strong class=\"target-word\">면</strong>을 읽는다."
+      },
+      {
+        "exam_en": "The story appeared on the front <strong class=\"target-word\">page</strong>.",
+        "exam_ko": "그 기사는 신문 <strong class=\"target-word\">1면</strong>에 실렸다."
+      }
+    ]
+  },
+  {
+    "id": 3485,
+    "origin": "out",
+    "examples": [
+      {
+        "exam_en": "Get <strong class=\"target-word\">out</strong> of the room right now.",
+        "exam_ko": "지금 당장 방에서 <strong class=\"target-word\">나가라</strong>."
+      },
+      {
+        "exam_en": "Please let me get <strong class=\"target-word\">out</strong> at this floor.",
+        "exam_ko": "이 층에서 <strong class=\"target-word\">내리겠습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3486,
+    "origin": "oust",
+    "examples": [
+      {
+        "exam_en": "The board voted to <strong class=\"target-word\">oust</strong> the CEO.",
+        "exam_ko": "이사회는 CEO를 <strong class=\"target-word\">몰아내기</strong>로 투표했다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">ousted</strong> from his post last week.",
+        "exam_ko": "그는 지난주에 그 직위에서 <strong class=\"target-word\">쫓겨났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3487,
+    "origin": "ours",
+    "examples": [
+      {
+        "exam_en": "Which car is <strong class=\"target-word\">ours</strong>?",
+        "exam_ko": "어느 차가 <strong class=\"target-word\">우리 것</strong>입니까?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Ours</strong> is essentially a tragic age.",
+        "exam_ko": "<strong class=\"target-word\">우리 시대</strong>는 본질적으로 비극의 시대이다."
+      }
+    ]
+  },
+  {
+    "id": 3488,
+    "origin": "our",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Our</strong> generation faces many challenges.",
+        "exam_ko": "<strong class=\"target-word\">우리</strong> 세대는 많은 도전에 직면해 있다."
+      },
+      {
+        "exam_en": "In <strong class=\"target-word\">our</strong> own day, technology changes fast.",
+        "exam_ko": "<strong class=\"target-word\">우리</strong> 시대에는 기술이 빠르게 변한다."
+      }
+    ]
+  }
+]

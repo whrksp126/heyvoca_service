@@ -1,0 +1,234 @@
+[
+  {
+    "id": 20305,
+    "origin": "centripetal",
+    "examples": [
+      {
+        "exam_en": "centripetal inflorescence",
+        "exam_ko": "구심 꽃차례."
+      }
+    ]
+  },
+  {
+    "id": 20306,
+    "origin": "gloss",
+    "examples": [
+      {
+        "exam_en": "gloss finish",
+        "exam_ko": "광내기 손질"
+      },
+      {
+        "exam_en": "silk with a good gloss",
+        "exam_ko": "고운 윤이 나는 비단"
+      }
+    ]
+  },
+  {
+    "id": 20307,
+    "origin": "outdated",
+    "examples": [
+      {
+        "exam_en": "an outdated passport",
+        "exam_ko": "기한이 지난 여권."
+      }
+    ]
+  },
+  {
+    "id": 20309,
+    "origin": "micro",
+    "examples": [
+      {
+        "exam_en": "microstructure",
+        "exam_ko": "미세 구조."
+      }
+    ]
+  },
+  {
+    "id": 20311,
+    "origin": "feigned",
+    "examples": [
+      {
+        "exam_en": "a feigned illness",
+        "exam_ko": "꾀병."
+      }
+    ]
+  },
+  {
+    "id": 20314,
+    "origin": "misuse",
+    "examples": [
+      {
+        "exam_en": "the misuse of power by government officials",
+        "exam_ko": "국가 공무원의 권력 남용."
+      }
+    ]
+  },
+  {
+    "id": 20318,
+    "origin": "misapprehension",
+    "examples": [
+      {
+        "exam_en": "beyond misapprehension",
+        "exam_ko": "오해할 여지가 없을 정도로"
+      },
+      {
+        "exam_en": "under a misapprehension",
+        "exam_ko": "오해하여."
+      }
+    ]
+  },
+  {
+    "id": 20324,
+    "origin": "illegible",
+    "examples": [
+      {
+        "exam_en": "an illegible handwriting",
+        "exam_ko": "읽기 어려운 필적."
+      },
+      {
+        "exam_en": "The handwriting was so illegible that no one could decipher the message.",
+        "exam_ko": "손글씨가 너무 읽기 어려워서 누구도 그 메시지를 해독할 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 20325,
+    "origin": "irreverent",
+    "examples": [
+      {
+        "exam_en": "an irreverent reply",
+        "exam_ko": "불손한 대답."
+      }
+    ]
+  },
+  {
+    "id": 20331,
+    "origin": "muffle",
+    "examples": [
+      {
+        "exam_en": "muffle one's throat",
+        "exam_ko": "목에 스카프 등을 두르다"
+      },
+      {
+        "exam_en": "muffle up oneself well",
+        "exam_ko": "몸을 단단히 감싸다."
+      }
+    ]
+  },
+  {
+    "id": 20332,
+    "origin": "handiwork",
+    "examples": [
+      {
+        "exam_en": "This is his handiwork.",
+        "exam_ko": "이것은 그 사람의 짓이다."
+      }
+    ]
+  },
+  {
+    "id": 20336,
+    "origin": "unmistakable",
+    "examples": [
+      {
+        "exam_en": "the unmistakable sound of a baby crying",
+        "exam_ko": "틀림없는 아기의 울음소리."
+      }
+    ]
+  },
+  {
+    "id": 20338,
+    "origin": "inconstant",
+    "examples": [
+      {
+        "exam_en": "Fortune is inconstant.",
+        "exam_ko": "운명의 여신은 변덕스럽다."
+      }
+    ]
+  },
+  {
+    "id": 20339,
+    "origin": "unoccupied",
+    "examples": [
+      {
+        "exam_en": "an unoccupied house",
+        "exam_ko": "빈집."
+      }
+    ]
+  },
+  {
+    "id": 20340,
+    "origin": "ineffective",
+    "examples": [
+      {
+        "exam_en": "an ineffective attempt",
+        "exam_ko": "헛된 시도"
+      },
+      {
+        "exam_en": "The new drug was ineffective.",
+        "exam_ko": "새 약은 효력이 없었다."
+      }
+    ]
+  },
+  {
+    "id": 20341,
+    "origin": "neglectful",
+    "examples": [
+      {
+        "exam_en": "students who are neglectful of their studies",
+        "exam_ko": "공부를 게을리하는 학생들"
+      },
+      {
+        "exam_en": "neglectful of one's appearance",
+        "exam_ko": "옷차림에 무관심한"
+      }
+    ]
+  },
+  {
+    "id": 20342,
+    "origin": "heedless",
+    "examples": [
+      {
+        "exam_en": "be heedless of others",
+        "exam_ko": "남의 생각을 않다."
+      }
+    ]
+  },
+  {
+    "id": 20343,
+    "origin": "insupportable",
+    "examples": [
+      {
+        "exam_en": "an insupportable charge",
+        "exam_ko": "이치에 맞지 않는 트집."
+      }
+    ]
+  },
+  {
+    "id": 20344,
+    "origin": "arbiter",
+    "examples": [
+      {
+        "exam_en": "an arbiter of labor disputes",
+        "exam_ko": "노동쟁의 조정자."
+      },
+      {
+        "exam_en": "the final arbiter",
+        "exam_ko": "최종 결정자."
+      }
+    ]
+  },
+  {
+    "id": 20345,
+    "origin": "quaver",
+    "examples": [
+      {
+        "exam_en": "quaver with fright",
+        "exam_ko": "무서워서 와들와들 떨다."
+      },
+      {
+        "exam_en": "quaver  a few words",
+        "exam_ko": "떨리는 목소리로 두세 마디 발설(發說)하다"
+      }
+    ]
+  }
+]

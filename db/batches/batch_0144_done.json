@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3133,
+    "origin": "occasionally",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">occasionally</strong> visits her hometown.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가끔</strong> 고향을 방문한다."
+      },
+      {
+        "exam_en": "Only <strong class=\"target-word\">occasionally</strong> does he play tennis.",
+        "exam_ko": "그는 <strong class=\"target-word\">가끔씩</strong>만 테니스를 친다."
+      }
+    ]
+  },
+  {
+    "id": 3135,
+    "origin": "nursery",
+    "examples": [
+      {
+        "exam_en": "The working couple leave their child in a day <strong class=\"target-word\">nursery</strong>.",
+        "exam_ko": "그 맞벌이 부부는 아이를 <strong class=\"target-word\">탁아소</strong>에 맡긴다."
+      },
+      {
+        "exam_en": "Universities are often <strong class=\"target-word\">nurseries</strong> for radicals.",
+        "exam_ko": "대학은 종종 과격파의 <strong class=\"target-word\">온상</strong>이 된다."
+      }
+    ]
+  },
+  {
+    "id": 3136,
+    "origin": "literature",
+    "examples": [
+      {
+        "exam_en": "She majored in English <strong class=\"target-word\">literature</strong> at university.",
+        "exam_ko": "그녀는 대학에서 영어 <strong class=\"target-word\">문학</strong>을 전공했다."
+      },
+      {
+        "exam_en": "Popular <strong class=\"target-word\">literature</strong> appeals to a wide audience.",
+        "exam_ko": "대중 <strong class=\"target-word\">문학</strong>은 폭넓은 독자층에게 어필한다."
+      }
+    ]
+  },
+  {
+    "id": 3137,
+    "origin": "exception",
+    "examples": [
+      {
+        "exam_en": "This case is an <strong class=\"target-word\">exception</strong> to the rule.",
+        "exam_ko": "이 경우는 규칙의 <strong class=\"target-word\">예외</strong>다."
+      },
+      {
+        "exam_en": "The teacher made an <strong class=\"target-word\">exception</strong> for the late student.",
+        "exam_ko": "선생님은 지각한 학생에게 <strong class=\"target-word\">예외</strong>를 두었다."
+      }
+    ]
+  },
+  {
+    "id": 3139,
+    "origin": "overflow",
+    "examples": [
+      {
+        "exam_en": "The mob <strong class=\"target-word\">overflowed</strong> into the streets.",
+        "exam_ko": "폭도들이 거리로 <strong class=\"target-word\">쏟아져 나왔다</strong>."
+      },
+      {
+        "exam_en": "My heart <strong class=\"target-word\">overflows</strong> with gratitude.",
+        "exam_ko": "내 마음은 고마움으로 <strong class=\"target-word\">가득 차 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3140,
+    "origin": "lessen",
+    "examples": [
+      {
+        "exam_en": "Suicides have <strong class=\"target-word\">lessened</strong> during the last several years.",
+        "exam_ko": "자살자가 최근 몇 년 동안 <strong class=\"target-word\">줄어들었다</strong>."
+      },
+      {
+        "exam_en": "The fever has <strong class=\"target-word\">lessened</strong> after taking medicine.",
+        "exam_ko": "약을 먹은 후 열이 <strong class=\"target-word\">내렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3141,
+    "origin": "abate",
+    "examples": [
+      {
+        "exam_en": "The medicine helped <strong class=\"target-word\">abate</strong> the patient's pain.",
+        "exam_ko": "약이 환자의 고통을 <strong class=\"target-word\">덜어 주었다</strong>."
+      },
+      {
+        "exam_en": "The seller agreed to <strong class=\"target-word\">abate</strong> the price.",
+        "exam_ko": "판매자는 가격을 <strong class=\"target-word\">깎는</strong> 것에 동의했다."
+      },
+      {
+        "exam_en": "In an hour or so the storm would <strong class=\"target-word\">abate</strong> and they could leave.",
+        "exam_ko": "한 시간쯤 지나면 폭풍이 <strong class=\"target-word\">잦아들고</strong> 그들은 떠날 수 있을 것이다."
+      }
+    ]
+  },
+  {
+    "id": 3142,
+    "origin": "curd",
+    "examples": [
+      {
+        "exam_en": "Bean <strong class=\"target-word\">curd</strong> is a popular ingredient in Asian cooking.",
+        "exam_ko": "<strong class=\"target-word\">두부</strong>는 아시아 요리에서 인기 있는 재료다."
+      }
+    ]
+  },
+  {
+    "id": 3143,
+    "origin": "paste",
+    "examples": [
+      {
+        "exam_en": "She applied wallpaper <strong class=\"target-word\">paste</strong> to the wall.",
+        "exam_ko": "그녀는 벽에 벽지용 <strong class=\"target-word\">풀</strong>을 발랐다."
+      },
+      {
+        "exam_en": "He squeezed toothpaste <strong class=\"target-word\">paste</strong> onto his brush.",
+        "exam_ko": "그는 칫솔에 치약 <strong class=\"target-word\">반죽</strong>을 짜냈다."
+      }
+    ]
+  },
+  {
+    "id": 3146,
+    "origin": "affordable",
+    "examples": [
+      {
+        "exam_en": "There is a lot of <strong class=\"target-word\">affordable</strong> housing in this area.",
+        "exam_ko": "이 지역에는 <strong class=\"target-word\">알맞은 가격의</strong> 집이 많이 있다."
+      }
+    ]
+  },
+  {
+    "id": 3147,
+    "origin": "within",
+    "examples": [
+      {
+        "exam_en": "Please finish the task <strong class=\"target-word\">within</strong> an hour.",
+        "exam_ko": "한 시간 <strong class=\"target-word\">이내에</strong> 업무를 끝내주세요."
+      },
+      {
+        "exam_en": "The answer lies <strong class=\"target-word\">within</strong> yourself.",
+        "exam_ko": "답은 당신 <strong class=\"target-word\">내면에</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 3148,
+    "origin": "stall",
+    "examples": [
+      {
+        "exam_en": "He led the horse back into the <strong class=\"target-word\">stall</strong>.",
+        "exam_ko": "그는 말을 도로 <strong class=\"target-word\">마구간</strong>에 넣었다."
+      },
+      {
+        "exam_en": "She bought a magazine at the newspaper <strong class=\"target-word\">stall</strong>.",
+        "exam_ko": "그녀는 신문 <strong class=\"target-word\">판매점</strong>에서 잡지를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 3154,
+    "origin": "abortion",
+    "examples": [
+      {
+        "exam_en": "She decided to have an <strong class=\"target-word\">abortion</strong> after much thought.",
+        "exam_ko": "그녀는 오랜 고민 끝에 <strong class=\"target-word\">낙태</strong>를 결심했다."
+      },
+      {
+        "exam_en": "The debate over <strong class=\"target-word\">abortion</strong> remains controversial.",
+        "exam_ko": "<strong class=\"target-word\">낙태</strong>에 관한 논쟁은 여전히 논란이 많다."
+      },
+      {
+        "exam_en": "She kept the pregnancy secret until <strong class=\"target-word\">abortion</strong> was no longer possible.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">낙태</strong>가 불가능해질 때까지 임신 사실을 비밀로 했다."
+      }
+    ]
+  },
+  {
+    "id": 3155,
+    "origin": "corporal",
+    "examples": [
+      {
+        "exam_en": "He suffered from <strong class=\"target-word\">corporal</strong> infirmities in his old age.",
+        "exam_ko": "그는 노년에 <strong class=\"target-word\">육체적</strong> 결함으로 고생했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Corporal</strong> desire is a natural human instinct.",
+        "exam_ko": "<strong class=\"target-word\">육체적</strong> 욕망은 자연스러운 인간 본능이다."
+      }
+    ]
+  },
+  {
+    "id": 3156,
+    "origin": "court",
+    "examples": [
+      {
+        "exam_en": "The case was heard in a civil <strong class=\"target-word\">court</strong>.",
+        "exam_ko": "그 사건은 민사 <strong class=\"target-word\">법원</strong>에서 심리되었다."
+      },
+      {
+        "exam_en": "The judge ordered a retrial in <strong class=\"target-word\">court</strong>.",
+        "exam_ko": "판사는 <strong class=\"target-word\">법정</strong>에서 재심을 명령했다."
+      }
+    ]
+  },
+  {
+    "id": 3157,
+    "origin": "offend",
+    "examples": [
+      {
+        "exam_en": "His comments <strong class=\"target-word\">offended</strong> me.",
+        "exam_ko": "그의 논평으로 기분이 <strong class=\"target-word\">상했다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">offended</strong> at this man's behavior.",
+        "exam_ko": "그는 이 사나이의 행동에 <strong class=\"target-word\">화를 내고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3158,
+    "origin": "offense",
+    "examples": [
+      {
+        "exam_en": "Murder is considered a capital <strong class=\"target-word\">offense</strong>.",
+        "exam_ko": "살인은 사형에 해당하는 <strong class=\"target-word\">죄</strong>로 여겨진다."
+      },
+      {
+        "exam_en": "It was his first <strong class=\"target-word\">offense</strong>, so he got a light sentence.",
+        "exam_ko": "초범이었기 때문에 가벼운 <strong class=\"target-word\">죄</strong>로 처리되었다."
+      }
+    ]
+  },
+  {
+    "id": 3159,
+    "origin": "alternate",
+    "examples": [
+      {
+        "exam_en": "Good luck <strong class=\"target-word\">alternates</strong> with misfortune.",
+        "exam_ko": "행과 불행은 <strong class=\"target-word\">번갈아</strong> 온다."
+      },
+      {
+        "exam_en": "The flood and ebb tides <strong class=\"target-word\">alternate</strong> with each other.",
+        "exam_ko": "만조와 간조는 <strong class=\"target-word\">교대로</strong> 일어난다."
+      }
+    ]
+  },
+  {
+    "id": 3162,
+    "origin": "engagement",
+    "examples": [
+      {
+        "exam_en": "They announced their <strong class=\"target-word\">engagement</strong> at dinner.",
+        "exam_ko": "그들은 저녁 식사 자리에서 <strong class=\"target-word\">약혼</strong>을 발표했다."
+      },
+      {
+        "exam_en": "He broke his <strong class=\"target-word\">engagement</strong> without explanation.",
+        "exam_ko": "그는 설명 없이 <strong class=\"target-word\">약속</strong>을 어겼다."
+      }
+    ]
+  },
+  {
+    "id": 3163,
+    "origin": "suicide",
+    "examples": [
+      {
+        "exam_en": "The couple committed double <strong class=\"target-word\">suicide</strong> together.",
+        "exam_ko": "그 커플은 함께 동반 <strong class=\"target-word\">자살</strong>을 했다."
+      },
+      {
+        "exam_en": "The cult members carried out a mass <strong class=\"target-word\">suicide</strong>.",
+        "exam_ko": "그 사이비 종교 신도들은 집단 <strong class=\"target-word\">자살</strong>을 감행했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "id": 4288,
+    "origin": "preference",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">preference</strong> for tea over coffee.",
+        "exam_ko": "그녀는 커피보다 차를 <strong class=\"target-word\">선호한다</strong>."
+      },
+      {
+        "exam_en": "He chose the job by <strong class=\"target-word\">preference</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">선호에 따라</strong> 그 일을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 4290,
+    "origin": "presumably",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Presumably</strong> his name will go down in history.",
+        "exam_ko": "<strong class=\"target-word\">아마도</strong> 그의 이름은 역사에 남을 것이다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">presumably</strong> still at work.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">아마</strong> 아직 일하고 있을 것이다."
+      }
+    ]
+  },
+  {
+    "id": 4291,
+    "origin": "readily",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">readily</strong> adapted to the new surroundings.",
+        "exam_ko": "그는 새로운 환경에 <strong class=\"target-word\">쉽게</strong> 적응했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">readily</strong> agreed to help her friend.",
+        "exam_ko": "그녀는 친구를 돕는 것을 <strong class=\"target-word\">기꺼이</strong> 받아들였다."
+      }
+    ]
+  },
+  {
+    "id": 4293,
+    "origin": "amiable",
+    "examples": [
+      {
+        "exam_en": "The teacher was known as an <strong class=\"target-word\">amiable</strong> person.",
+        "exam_ko": "그 선생님은 <strong class=\"target-word\">붙임성 있는</strong> 사람으로 알려졌다."
+      },
+      {
+        "exam_en": "He greeted us in an <strong class=\"target-word\">amiable</strong> manner.",
+        "exam_ko": "그는 우리를 <strong class=\"target-word\">호감 가는</strong> 태도로 맞이했다."
+      }
+    ]
+  },
+  {
+    "id": 4294,
+    "origin": "approachable",
+    "examples": [
+      {
+        "exam_en": "The manager is very <strong class=\"target-word\">approachable</strong> to new staff.",
+        "exam_ko": "그 관리자는 신입 직원들에게 매우 <strong class=\"target-word\">친해지기 쉬운</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 4295,
+    "origin": "elective",
+    "examples": [
+      {
+        "exam_en": "The president holds an <strong class=\"target-word\">elective</strong> office.",
+        "exam_ko": "대통령은 <strong class=\"target-word\">선거로 취임하는</strong> 공직을 맡는다."
+      },
+      {
+        "exam_en": "She exercised her <strong class=\"target-word\">elective</strong> franchise for the first time.",
+        "exam_ko": "그녀는 처음으로 <strong class=\"target-word\">선거권</strong>을 행사했다."
+      }
+    ]
+  },
+  {
+    "id": 4296,
+    "origin": "elevated",
+    "examples": [
+      {
+        "exam_en": "Cars drove along the <strong class=\"target-word\">elevated</strong> highway.",
+        "exam_ko": "차들이 <strong class=\"target-word\">고가</strong> 고속도로를 달렸다."
+      },
+      {
+        "exam_en": "He has reached <strong class=\"target-word\">elevated</strong> status among young professionals.",
+        "exam_ko": "그는 젊은 전문인들 중에서 <strong class=\"target-word\">높은</strong> 지위에 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 4297,
+    "origin": "elicit",
+    "examples": [
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">elicit</strong> a reply from him.",
+        "exam_ko": "그녀는 그에게서 대답을 <strong class=\"target-word\">이끌어내려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 4299,
+    "origin": "elongate",
+    "examples": [
+      {
+        "exam_en": "The singer tends to <strong class=\"target-word\">elongate</strong> vowels for effect.",
+        "exam_ko": "그 가수는 효과를 위해 모음을 <strong class=\"target-word\">길게 늘이는</strong> 경향이 있다."
+      },
+      {
+        "exam_en": "An iron rod <strong class=\"target-word\">elongates</strong> when heated.",
+        "exam_ko": "쇠막대는 가열되면 <strong class=\"target-word\">늘어난다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4300,
+    "origin": "empower",
+    "examples": [
+      {
+        "exam_en": "The police are <strong class=\"target-word\">empowered</strong> by law to search private houses.",
+        "exam_ko": "경찰에게는 법률에 의해 가택 수사권이 <strong class=\"target-word\">부여된다</strong>."
+      },
+      {
+        "exam_en": "Education <strong class=\"target-word\">empowers</strong> people to build better lives.",
+        "exam_ko": "교육은 사람들이 더 나은 삶을 만들도록 <strong class=\"target-word\">힘을 준다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4301,
+    "origin": "fabricate",
+    "examples": [
+      {
+        "exam_en": "The factory <strong class=\"target-word\">fabricates</strong> automobile parts daily.",
+        "exam_ko": "그 공장은 매일 자동차 부품을 <strong class=\"target-word\">제조한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4303,
+    "origin": "famish",
+    "examples": [
+      {
+        "exam_en": "I am almost <strong class=\"target-word\">famished</strong> after the long hike.",
+        "exam_ko": "긴 하이킹 후에 나는 거의 <strong class=\"target-word\">굶주린</strong> 상태다."
+      }
+    ]
+  },
+  {
+    "id": 4304,
+    "origin": "formerly",
+    "examples": [
+      {
+        "exam_en": "This was a <strong class=\"target-word\">formerly</strong> prosperous town.",
+        "exam_ko": "이곳은 <strong class=\"target-word\">한때</strong> 번창했던 도시였다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Formerly</strong>, this neighborhood was farmland.",
+        "exam_ko": "<strong class=\"target-word\">이전에</strong> 이 부근은 농지였다."
+      }
+    ]
+  },
+  {
+    "id": 4306,
+    "origin": "frenzy",
+    "examples": [
+      {
+        "exam_en": "The fans cheered in a <strong class=\"target-word\">frenzy</strong> of excitement.",
+        "exam_ko": "팬들은 흥분의 <strong class=\"target-word\">광란</strong> 속에서 응원했다."
+      },
+      {
+        "exam_en": "His rude words drove her into a <strong class=\"target-word\">frenzy</strong>.",
+        "exam_ko": "그의 무례한 말이 그녀를 <strong class=\"target-word\">격분</strong>하게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 4307,
+    "origin": "geography",
+    "examples": [
+      {
+        "exam_en": "She studied human <strong class=\"target-word\">geography</strong> at university.",
+        "exam_ko": "그녀는 대학에서 인문 <strong class=\"target-word\">지리학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "He learned the <strong class=\"target-word\">geography</strong> of Korea in class.",
+        "exam_ko": "그는 수업에서 한국의 <strong class=\"target-word\">지리</strong>를 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 4309,
+    "origin": "imperative",
+    "examples": [
+      {
+        "exam_en": "Food and water are <strong class=\"target-word\">imperative</strong> needs for survival.",
+        "exam_ko": "음식과 물은 생존에 <strong class=\"target-word\">긴급하게 필요한</strong> 것이다."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">imperative</strong> that you attend the meeting.",
+        "exam_ko": "그 회의에 참석하는 것은 <strong class=\"target-word\">필수적이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4310,
+    "origin": "initiation",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">initiation</strong> into the club took an hour.",
+        "exam_ko": "그의 클럽 <strong class=\"target-word\">가입 의식</strong>은 한 시간이 걸렸다."
+      },
+      {
+        "exam_en": "The group held a mock <strong class=\"target-word\">initiation</strong> ceremony.",
+        "exam_ko": "그 그룹은 가짜 <strong class=\"target-word\">입회식</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 4311,
+    "origin": "integration",
+    "examples": [
+      {
+        "exam_en": "Racial <strong class=\"target-word\">integration</strong> remains an important social goal.",
+        "exam_ko": "인종 <strong class=\"target-word\">통합</strong>은 여전히 중요한 사회적 목표다."
+      },
+      {
+        "exam_en": "School <strong class=\"target-word\">integration</strong> ended racial segregation in education.",
+        "exam_ko": "학교 <strong class=\"target-word\">통합</strong>은 교육에서 인종 차별을 철폐했다."
+      }
+    ]
+  },
+  {
+    "id": 4314,
+    "origin": "lasting",
+    "examples": [
+      {
+        "exam_en": "The two nations agreed on a <strong class=\"target-word\">lasting</strong> peace.",
+        "exam_ko": "두 나라는 <strong class=\"target-word\">영구적인</strong> 평화에 합의했다."
+      },
+      {
+        "exam_en": "They built a <strong class=\"target-word\">lasting</strong> friendship over the years.",
+        "exam_ko": "그들은 수년에 걸쳐 <strong class=\"target-word\">오래가는</strong> 우정을 쌓았다."
+      }
+    ]
+  },
+  {
+    "id": 4315,
+    "origin": "adherent",
+    "examples": [
+      {
+        "exam_en": "He is a strong <strong class=\"target-word\">adherent</strong> of justice.",
+        "exam_ko": "그는 정의의 열렬한 <strong class=\"target-word\">지지자</strong>다."
+      },
+      {
+        "exam_en": "She became an <strong class=\"target-word\">adherent</strong> of the conservative party.",
+        "exam_ko": "그녀는 보수당 <strong class=\"target-word\">지지자</strong>가 되었다."
+      }
+    ]
+  }
+]

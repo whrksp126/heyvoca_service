@@ -1,0 +1,266 @@
+[
+  {
+    "id": 2972,
+    "origin": "apparently",
+    "examples": [
+      {
+        "exam_en": "I didn't see the accident, but <strong class=\"target-word\">apparently</strong> it was his fault.",
+        "exam_ko": "나는 그 사고를 목격하지 못했지만 <strong class=\"target-word\">보기에는</strong> 그의 과실인 것 같다."
+      },
+      {
+        "exam_en": "The bag <strong class=\"target-word\">apparently</strong> contained the ransom.",
+        "exam_ko": "<strong class=\"target-word\">보기에</strong> 백 속에는 몸값이 들어 있는 것 같았다."
+      }
+    ]
+  },
+  {
+    "id": 2973,
+    "origin": "holdup",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">holdup</strong> on the highway this morning.",
+        "exam_ko": "오늘 아침 고속도로에서 <strong class=\"target-word\">교통 체증</strong>이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2975,
+    "origin": "permission",
+    "examples": [
+      {
+        "exam_en": "He entered the building with <strong class=\"target-word\">permission</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">허가를 받아</strong> 건물에 들어갔다."
+      },
+      {
+        "exam_en": "She got special <strong class=\"target-word\">permission</strong> to leave early.",
+        "exam_ko": "그녀는 일찍 퇴근할 특별 <strong class=\"target-word\">허가</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2976,
+    "origin": "handwriting",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">handwriting</strong> is hard to read.",
+        "exam_ko": "그의 <strong class=\"target-word\">글씨</strong>는 읽기 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 2978,
+    "origin": "sympathize",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">sympathized</strong> with the girl in her grief.",
+        "exam_ko": "그는 그 소녀의 슬픔에 <strong class=\"target-word\">동정했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">sympathize</strong> with your ambition to become a writer.",
+        "exam_ko": "나는 당신이 작가가 되고 싶어하는 염원에 <strong class=\"target-word\">공감한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2979,
+    "origin": "ailment",
+    "examples": [
+      {
+        "exam_en": "He visited the doctor for a minor <strong class=\"target-word\">ailment</strong>.",
+        "exam_ko": "그는 가벼운 <strong class=\"target-word\">질환</strong> 때문에 의사를 찾았다."
+      },
+      {
+        "exam_en": "The Noni fruit was used to treat common <strong class=\"target-word\">ailments</strong> like wounds.",
+        "exam_ko": "Noni 과일은 상처 같은 일반적인 <strong class=\"target-word\">질병</strong>을 치료하는 데 사용되었다."
+      }
+    ]
+  },
+  {
+    "id": 2980,
+    "origin": "sweat",
+    "examples": [
+      {
+        "exam_en": "She began to <strong class=\"target-word\">sweat</strong> heavily during the workout.",
+        "exam_ko": "그녀는 운동 중에 땀을 많이 <strong class=\"target-word\">흘리기</strong> 시작했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sweated</strong> with anxiety.",
+        "exam_ko": "그는 불안해서 식은땀을 <strong class=\"target-word\">흘렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2981,
+    "origin": "rack",
+    "examples": [
+      {
+        "exam_en": "She hung the towel on the <strong class=\"target-word\">rack</strong>.",
+        "exam_ko": "그녀는 수건을 <strong class=\"target-word\">걸이</strong>에 걸었다."
+      },
+      {
+        "exam_en": "He placed his suitcase on the luggage <strong class=\"target-word\">rack</strong>.",
+        "exam_ko": "그는 여행 가방을 수화물 <strong class=\"target-word\">선반</strong>에 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 2983,
+    "origin": "booze",
+    "examples": [
+      {
+        "exam_en": "He has been on the <strong class=\"target-word\">booze</strong> for weeks.",
+        "exam_ko": "그는 몇 주째 <strong class=\"target-word\">술</strong>을 달고 살고 있다."
+      },
+      {
+        "exam_en": "She decided to hit the <strong class=\"target-word\">booze</strong> after a stressful day.",
+        "exam_ko": "힘든 하루를 보낸 후 그녀는 <strong class=\"target-word\">술</strong>을 마시기로 했다."
+      }
+    ]
+  },
+  {
+    "id": 2984,
+    "origin": "salute",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">saluted</strong> the professor with a bow.",
+        "exam_ko": "그는 교수에게 머리 숙여 <strong class=\"target-word\">인사했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">saluted</strong> the girls with a wave of the hand.",
+        "exam_ko": "그는 소녀들에게 손을 흔들어 <strong class=\"target-word\">인사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2985,
+    "origin": "commend",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">commend</strong> Mr. Brown to you.",
+        "exam_ko": "브라운 씨를 여러분께 <strong class=\"target-word\">추천</strong>하겠습니다."
+      },
+      {
+        "exam_en": "The chief <strong class=\"target-word\">commended</strong> the fireman for his bravery.",
+        "exam_ko": "서장은 소방관의 용감성을 <strong class=\"target-word\">칭송했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2986,
+    "origin": "department",
+    "examples": [
+      {
+        "exam_en": "She works in the public relations <strong class=\"target-word\">department</strong>.",
+        "exam_ko": "그녀는 홍보 <strong class=\"target-word\">부서</strong>에서 일한다."
+      },
+      {
+        "exam_en": "He transferred to the accounting <strong class=\"target-word\">department</strong>.",
+        "exam_ko": "그는 회계 <strong class=\"target-word\">부서</strong>로 이동했다."
+      }
+    ]
+  },
+  {
+    "id": 2988,
+    "origin": "log",
+    "examples": [
+      {
+        "exam_en": "The workers carried the <strong class=\"target-word\">log</strong> to the sawmill.",
+        "exam_ko": "작업자들은 <strong class=\"target-word\">통나무</strong>를 제재소로 옮겼다."
+      },
+      {
+        "exam_en": "This task is as easy as rolling off a <strong class=\"target-word\">log</strong>.",
+        "exam_ko": "이 일은 <strong class=\"target-word\">통나무</strong>에서 굴러떨어지는 것처럼 아주 수월하다."
+      }
+    ]
+  },
+  {
+    "id": 2989,
+    "origin": "snobbery",
+    "examples": [
+      {
+        "exam_en": "His constant name-dropping is pure <strong class=\"target-word\">snobbery</strong>.",
+        "exam_ko": "그가 끊임없이 유명인 이름을 들먹이는 것은 순전한 <strong class=\"target-word\">속물 근성</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2990,
+    "origin": "snob",
+    "examples": [
+      {
+        "exam_en": "He is an intellectual <strong class=\"target-word\">snob</strong> who dismisses popular books.",
+        "exam_ko": "그는 대중 소설을 무시하는 지적 <strong class=\"target-word\">속물</strong>이다."
+      },
+      {
+        "exam_en": "She is a wine <strong class=\"target-word\">snob</strong> who only drinks expensive bottles.",
+        "exam_ko": "그녀는 값비싼 와인만 마시는 와인 <strong class=\"target-word\">속물</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2991,
+    "origin": "soothe",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">soothed</strong> the crying child with a lullaby.",
+        "exam_ko": "그녀는 자장가로 우는 아이를 <strong class=\"target-word\">달랬다</strong>."
+      },
+      {
+        "exam_en": "The medicine helped <strong class=\"target-word\">soothe</strong> her toothache.",
+        "exam_ko": "약이 그녀의 치통을 <strong class=\"target-word\">덜어주는</strong> 데 도움이 됐다."
+      }
+    ]
+  },
+  {
+    "id": 2992,
+    "origin": "irksome",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">irksome</strong> rules made everyone frustrated.",
+        "exam_ko": "<strong class=\"target-word\">귀찮은</strong> 규칙들이 모두를 짜증나게 했다."
+      }
+    ]
+  },
+  {
+    "id": 2994,
+    "origin": "tread",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">trod</strong> the streets for hours.",
+        "exam_ko": "그는 몇 시간 동안 거리를 <strong class=\"target-word\">걸었다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">treading</strong> quietly and cautiously.",
+        "exam_ko": "그는 조용히 조심스럽게 <strong class=\"target-word\">걷고</strong> 있었다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">tread</strong> carefully on the wet floor.",
+        "exam_ko": "젖은 바닥에서 조심히 <strong class=\"target-word\">걸어</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 2995,
+    "origin": "founded",
+    "examples": [
+      {
+        "exam_en": "His argument was ill <strong class=\"target-word\">founded</strong> and lacked evidence.",
+        "exam_ko": "그의 주장은 근거가 <strong class=\"target-word\">박약했고</strong> 증거가 부족했다."
+      }
+    ]
+  },
+  {
+    "id": 2996,
+    "origin": "stifle",
+    "examples": [
+      {
+        "exam_en": "The victim was <strong class=\"target-word\">stifled</strong> to death in the closed room.",
+        "exam_ko": "피해자는 밀폐된 방에서 <strong class=\"target-word\">질식사했다</strong>."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">stifle</strong> a yawn during the meeting.",
+        "exam_ko": "그녀는 회의 중에 하품을 <strong class=\"target-word\">참으려</strong> 했다."
+      }
+    ]
+  }
+]

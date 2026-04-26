@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1073,
+    "origin": "disappointing",
+    "examples": [
+      {
+        "exam_en": "The test result was somewhat <strong class=\"target-word\">disappointing</strong>.",
+        "exam_ko": "시험 결과는 다소 <strong class=\"target-word\">실망스러웠다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">disappointing</strong> turnout surprised the organizers.",
+        "exam_ko": "저조한 <strong class=\"target-word\">참석률</strong>은 주최자들을 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 1074,
+    "origin": "exciting",
+    "examples": [
+      {
+        "exam_en": "We had an <strong class=\"target-word\">exciting</strong> trip to Europe.",
+        "exam_ko": "우리는 유럽으로 <strong class=\"target-word\">신나는</strong> 여행을 했다."
+      },
+      {
+        "exam_en": "The World Cup is the most <strong class=\"target-word\">exciting</strong> soccer championship.",
+        "exam_ko": "월드컵은 가장 <strong class=\"target-word\">흥미진진한</strong> 축구 선수권 대회이다."
+      }
+    ]
+  },
+  {
+    "id": 1075,
+    "origin": "touching",
+    "examples": [
+      {
+        "exam_en": "The film ended with a <strong class=\"target-word\">touching</strong> scene.",
+        "exam_ko": "영화는 <strong class=\"target-word\">감동적인</strong> 장면으로 끝났다."
+      },
+      {
+        "exam_en": "It was so <strong class=\"target-word\">touching</strong>, I almost cried.",
+        "exam_ko": "너무 <strong class=\"target-word\">감격스러워서</strong> 눈물이 날 뻔했다."
+      },
+      {
+        "exam_en": "Her speech was deeply <strong class=\"target-word\">touching</strong>.",
+        "exam_ko": "그녀의 연설은 깊이 <strong class=\"target-word\">감동적이었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1076,
+    "origin": "moving",
+    "examples": [
+      {
+        "exam_en": "The soldier aimed at a <strong class=\"target-word\">moving</strong> target.",
+        "exam_ko": "그 군인은 <strong class=\"target-word\">움직이는</strong> 표적을 겨냥했다."
+      },
+      {
+        "exam_en": "She was the <strong class=\"target-word\">moving</strong> spirit behind the project.",
+        "exam_ko": "그녀가 그 프로젝트의 <strong class=\"target-word\">주도적인</strong> 인물이었다."
+      }
+    ]
+  },
+  {
+    "id": 1077,
+    "origin": "surprise",
+    "examples": [
+      {
+        "exam_en": "The news <strong class=\"target-word\">surprised</strong> me.",
+        "exam_ko": "그 뉴스에 <strong class=\"target-word\">놀랐다</strong>."
+      },
+      {
+        "exam_en": "His conduct <strong class=\"target-word\">surprised</strong> me.",
+        "exam_ko": "그의 소행에 나는 <strong class=\"target-word\">어처구니가 없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1078,
+    "origin": "congress",
+    "examples": [
+      {
+        "exam_en": "Doctors held a medical <strong class=\"target-word\">congress</strong> last week.",
+        "exam_ko": "의사들이 지난주에 의학 <strong class=\"target-word\">학회</strong>를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 1079,
+    "origin": "depress",
+    "examples": [
+      {
+        "exam_en": "The news <strong class=\"target-word\">depressed</strong> us.",
+        "exam_ko": "그 소식에 우리는 <strong class=\"target-word\">낙담했다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Depress</strong> this button in case of fire.",
+        "exam_ko": "불이 났을 때는 이 버튼을 <strong class=\"target-word\">누르시오</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1080,
+    "origin": "progress",
+    "examples": [
+      {
+        "exam_en": "Europe is making <strong class=\"target-word\">progress</strong> toward political unity.",
+        "exam_ko": "유럽은 정치적 통합을 향해 <strong class=\"target-word\">전진하고 있다</strong>."
+      },
+      {
+        "exam_en": "Scientists tracked the <strong class=\"target-word\">progress</strong> of the planets.",
+        "exam_ko": "과학자들이 행성의 <strong class=\"target-word\">진행</strong>을 추적했다."
+      }
+    ]
+  },
+  {
+    "id": 1081,
+    "origin": "address",
+    "examples": [
+      {
+        "exam_en": "She gave the opening <strong class=\"target-word\">address</strong> at the ceremony.",
+        "exam_ko": "그녀는 행사에서 개회 <strong class=\"target-word\">연설</strong>을 했다."
+      },
+      {
+        "exam_en": "Different cultures use different <strong class=\"target-word\">address</strong> forms.",
+        "exam_ko": "문화마다 다른 <strong class=\"target-word\">호칭</strong> 형식을 사용한다."
+      },
+      {
+        "exam_en": "We need to <strong class=\"target-word\">address</strong> this problem.",
+        "exam_ko": "우리는 이 문제를 <strong class=\"target-word\">해결해야 한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1082,
+    "origin": "dress",
+    "examples": [
+      {
+        "exam_en": "She wore casual <strong class=\"target-word\">dress</strong> to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">평상복</strong>을 입었다."
+      },
+      {
+        "exam_en": "The dancers performed in traditional folk <strong class=\"target-word\">dress</strong>.",
+        "exam_ko": "무용수들이 전통 <strong class=\"target-word\">민속의상</strong>을 입고 공연했다."
+      }
+    ]
+  },
+  {
+    "id": 1084,
+    "origin": "behind",
+    "examples": [
+      {
+        "exam_en": "There is a garden <strong class=\"target-word\">behind</strong> the house.",
+        "exam_ko": "집 <strong class=\"target-word\">뒤에</strong> 정원이 있다."
+      },
+      {
+        "exam_en": "Look <strong class=\"target-word\">behind</strong> you.",
+        "exam_ko": "<strong class=\"target-word\">뒤를</strong> 보아라."
+      }
+    ]
+  },
+  {
+    "id": 1085,
+    "origin": "shining",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">shining</strong> example of dedication.",
+        "exam_ko": "그녀는 헌신의 <strong class=\"target-word\">훌륭한</strong> 모범이다."
+      }
+    ]
+  },
+  {
+    "id": 1086,
+    "origin": "elite",
+    "examples": [
+      {
+        "exam_en": "You are now among the <strong class=\"target-word\">elite</strong>.",
+        "exam_ko": "너는 이제 <strong class=\"target-word\">엘리트</strong> 집단의 일원이다."
+      },
+      {
+        "exam_en": "They belong to an <strong class=\"target-word\">elite</strong> military corps.",
+        "exam_ko": "그들은 <strong class=\"target-word\">엘리트</strong> 군 부대에 속해 있다."
+      }
+    ]
+  },
+  {
+    "id": 1088,
+    "origin": "education",
+    "examples": [
+      {
+        "exam_en": "Intellectual <strong class=\"target-word\">education</strong> shapes critical thinking.",
+        "exam_ko": "<strong class=\"target-word\">지적 교육</strong>은 비판적 사고를 형성한다."
+      },
+      {
+        "exam_en": "He received a university <strong class=\"target-word\">education</strong>.",
+        "exam_ko": "그는 대학 <strong class=\"target-word\">교육</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 1089,
+    "origin": "strategic",
+    "examples": [
+      {
+        "exam_en": "The army ordered a <strong class=\"target-word\">strategic</strong> withdrawal.",
+        "exam_ko": "군은 <strong class=\"target-word\">전략적</strong> 철수를 명령했다."
+      },
+      {
+        "exam_en": "Both nations reduced their <strong class=\"target-word\">strategic</strong> nuclear weapons.",
+        "exam_ko": "양국은 <strong class=\"target-word\">전략</strong> 핵무기를 감축했다."
+      }
+    ]
+  },
+  {
+    "id": 1090,
+    "origin": "network",
+    "examples": [
+      {
+        "exam_en": "The city built a <strong class=\"target-word\">network</strong> of roads.",
+        "exam_ko": "도시는 도로 <strong class=\"target-word\">망</strong>을 구축했다."
+      },
+      {
+        "exam_en": "Police broke up an espionage <strong class=\"target-word\">network</strong>.",
+        "exam_ko": "경찰이 간첩 <strong class=\"target-word\">망</strong>을 해체했다."
+      }
+    ]
+  },
+  {
+    "id": 1091,
+    "origin": "broadcasting",
+    "examples": [
+      {
+        "exam_en": "Television <strong class=\"target-word\">broadcasting</strong> reaches millions of viewers.",
+        "exam_ko": "텔레비전 <strong class=\"target-word\">방송</strong>은 수백만 명의 시청자에게 전달된다."
+      },
+      {
+        "exam_en": "She works at a local <strong class=\"target-word\">broadcasting</strong> station.",
+        "exam_ko": "그녀는 지역 <strong class=\"target-word\">방송</strong>국에서 일한다."
+      }
+    ]
+  },
+  {
+    "id": 1092,
+    "origin": "recently",
+    "examples": [
+      {
+        "exam_en": "He read a <strong class=\"target-word\">recently</strong> published autobiography.",
+        "exam_ko": "<strong class=\"target-word\">최근에</strong> 출판된 자서전을 읽었다."
+      },
+      {
+        "exam_en": "Prices have risen until quite <strong class=\"target-word\">recently</strong>.",
+        "exam_ko": "아주 <strong class=\"target-word\">최근</strong>까지 물가가 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 1093,
+    "origin": "partnership",
+    "examples": [
+      {
+        "exam_en": "The two firms are in <strong class=\"target-word\">partnership</strong>.",
+        "exam_ko": "두 회사는 <strong class=\"target-word\">협력</strong> 관계에 있다."
+      },
+      {
+        "exam_en": "They went into <strong class=\"target-word\">partnership</strong> to launch a startup.",
+        "exam_ko": "그들은 스타트업 창업을 위해 <strong class=\"target-word\">제휴</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 1094,
+    "origin": "bridge",
+    "examples": [
+      {
+        "exam_en": "We crossed the Golden Gate <strong class=\"target-word\">Bridge</strong> at sunset.",
+        "exam_ko": "우리는 일몰에 금문 <strong class=\"target-word\">교</strong>를 건넜다."
+      },
+      {
+        "exam_en": "The old <strong class=\"target-word\">bridge</strong> collapsed during the flood.",
+        "exam_ko": "홍수 중에 오래된 <strong class=\"target-word\">다리</strong>가 무너졌다."
+      }
+    ]
+  }
+]

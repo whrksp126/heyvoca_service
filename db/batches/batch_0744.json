@@ -1,0 +1,234 @@
+[
+  {
+    "id": 41368,
+    "origin": "azimuthal",
+    "examples": [
+      {
+        "exam_en": "the azimuthal projection",
+        "exam_ko": "(지도의) 등거리 방위 도법."
+      }
+    ]
+  },
+  {
+    "id": 41374,
+    "origin": "ergodic",
+    "examples": [
+      {
+        "exam_en": "the ergodic hypothesis",
+        "exam_ko": "에르고드 가설."
+      }
+    ]
+  },
+  {
+    "id": 41380,
+    "origin": "damnable",
+    "examples": [
+      {
+        "exam_en": "This damnable weather!",
+        "exam_ko": "이 놈의 날씨!"
+      }
+    ]
+  },
+  {
+    "id": 41399,
+    "origin": "calends",
+    "examples": [
+      {
+        "exam_en": "on the Greek calends",
+        "exam_ko": "언제까지고 결코 (…)않다(※그리스력에는 calends가 없기 때문)."
+      }
+    ]
+  },
+  {
+    "id": 41400,
+    "origin": "unguarded",
+    "examples": [
+      {
+        "exam_en": "in an unguarded moment",
+        "exam_ko": "방심한 순간에."
+      },
+      {
+        "exam_en": "an unguarded crossing",
+        "exam_ko": "무인 건널목."
+      }
+    ]
+  },
+  {
+    "id": 41409,
+    "origin": "intestate",
+    "examples": [
+      {
+        "exam_en": "die intestate",
+        "exam_ko": "유언 없이 죽다."
+      },
+      {
+        "exam_en": "an intestate property",
+        "exam_ko": "처분에 대해 유언 없는 재산."
+      }
+    ]
+  },
+  {
+    "id": 41418,
+    "origin": "undefended",
+    "examples": [
+      {
+        "exam_en": "an undefended town",
+        "exam_ko": "무방비의 도시."
+      }
+    ]
+  },
+  {
+    "id": 41424,
+    "origin": "twopence",
+    "examples": [
+      {
+        "exam_en": "twopence colored",
+        "exam_ko": "싸고 번지르르한."
+      },
+      {
+        "exam_en": "I don't care  twopence.",
+        "exam_ko": "조금도 개의치 않는다."
+      }
+    ]
+  },
+  {
+    "id": 41437,
+    "origin": "insomuch",
+    "examples": [
+      {
+        "exam_en": "He sang beautifully, insomuch that the audience was reduced to tears.",
+        "exam_ko": "그는 청중이 눈물을 글썽일 만큼 아름다운 목소리로 노래했다."
+      },
+      {
+        "exam_en": "Children should eat lots of fruit insomuch as it promotes good health.",
+        "exam_ko": "과일은 건강에 좋으므로 어린이가 많이 먹어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 41453,
+    "origin": "niagara",
+    "examples": [
+      {
+        "exam_en": "The radio station broadcasts a Niagara of lies.",
+        "exam_ko": "그 방송국은 거짓말을 마구 내보낸다"
+      },
+      {
+        "exam_en": "Blood was running in a Niagara.",
+        "exam_ko": "피가 분출하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 41458,
+    "origin": "infrequency",
+    "examples": [
+      {
+        "exam_en": "The railway has a proud record of infrequency of accidents.",
+        "exam_ko": "그 철도는 사고가 적은 것을 자랑으로 하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 41459,
+    "origin": "maddening",
+    "examples": [
+      {
+        "exam_en": "a maddening thirst",
+        "exam_ko": "미칠 듯한 갈증."
+      },
+      {
+        "exam_en": "It is maddening that he should have broken his promise.",
+        "exam_ko": "그가 약속을 어기다니 괘씸하다."
+      }
+    ]
+  },
+  {
+    "id": 41473,
+    "origin": "unaddressed",
+    "examples": [
+      {
+        "exam_en": "an unaddressed envelope",
+        "exam_ko": "주소·성명이 쓰여 있지 않은 봉투."
+      }
+    ]
+  },
+  {
+    "id": 41507,
+    "origin": "chiseled",
+    "examples": [
+      {
+        "exam_en": "a chiseled face",
+        "exam_ko": "윤곽이 뚜렷한 얼굴."
+      }
+    ]
+  },
+  {
+    "id": 41513,
+    "origin": "soever",
+    "examples": [
+      {
+        "exam_en": "in any place soever",
+        "exam_ko": "어떤 장소건"
+      },
+      {
+        "exam_en": "What objects soever you like, you may have.",
+        "exam_ko": "마음에 드는 것이면 어느 것이든 가지십시오."
+      }
+    ]
+  },
+  {
+    "id": 41529,
+    "origin": "radiological",
+    "examples": [
+      {
+        "exam_en": "radiological weapons",
+        "exam_ko": "핵무기."
+      }
+    ]
+  },
+  {
+    "id": 41559,
+    "origin": "chicane",
+    "examples": [
+      {
+        "exam_en": "chicane a person into a contract",
+        "exam_ko": "남을 구워삶아 계약을 맺게 하다"
+      },
+      {
+        "exam_en": "chicane a person out of his property",
+        "exam_ko": "남에게서 재산을 편취하다."
+      }
+    ]
+  },
+  {
+    "id": 41584,
+    "origin": "poda",
+    "examples": [
+      {
+        "exam_en": "Cephalopoda",
+        "exam_ko": "두족류(頭足類)."
+      }
+    ]
+  },
+  {
+    "id": 41605,
+    "origin": "votable",
+    "examples": [
+      {
+        "exam_en": "a votable issue",
+        "exam_ko": "표결에 부칠 문제[쟁점]."
+      }
+    ]
+  },
+  {
+    "id": 41607,
+    "origin": "anthropo",
+    "examples": [
+      {
+        "exam_en": "anthropogeography",
+        "exam_ko": "인문 지리학."
+      }
+    ]
+  }
+]

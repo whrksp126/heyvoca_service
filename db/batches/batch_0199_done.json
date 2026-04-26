@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4518,
+    "origin": "bulb",
+    "examples": [
+      {
+        "exam_en": "Please replace the broken light <strong class=\"target-word\">bulb</strong>.",
+        "exam_ko": "고장난 <strong class=\"target-word\">전구</strong>를 교체해 주세요."
+      },
+      {
+        "exam_en": "She planted tulip <strong class=\"target-word\">bulbs</strong> in the garden.",
+        "exam_ko": "그녀는 정원에 튤립 <strong class=\"target-word\">구근</strong>을 심었다."
+      }
+    ]
+  },
+  {
+    "id": 4520,
+    "origin": "camel",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">camel</strong> can survive days without water.",
+        "exam_ko": "<strong class=\"target-word\">낙타</strong>는 물 없이도 며칠을 버틸 수 있다."
+      },
+      {
+        "exam_en": "The last straw breaks the <strong class=\"target-word\">camel</strong>'s back.",
+        "exam_ko": "마지막 지푸라기가 <strong class=\"target-word\">낙타</strong>의 등을 부러뜨린다."
+      }
+    ]
+  },
+  {
+    "id": 4521,
+    "origin": "cannon",
+    "examples": [
+      {
+        "exam_en": "The soldiers fired the <strong class=\"target-word\">cannon</strong> at the fortress.",
+        "exam_ko": "병사들은 요새를 향해 <strong class=\"target-word\">대포</strong>를 쐈다."
+      },
+      {
+        "exam_en": "The old <strong class=\"target-word\">cannon</strong> is now on display in the museum.",
+        "exam_ko": "오래된 <strong class=\"target-word\">대포</strong>가 현재 박물관에 전시되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 4523,
+    "origin": "career",
+    "examples": [
+      {
+        "exam_en": "She made a bold <strong class=\"target-word\">career</strong> change at forty.",
+        "exam_ko": "그녀는 마흔에 과감한 <strong class=\"target-word\">직업</strong> 전환을 했다."
+      },
+      {
+        "exam_en": "He built a successful <strong class=\"target-word\">career</strong> in law.",
+        "exam_ko": "그는 법조계에서 성공적인 <strong class=\"target-word\">경력</strong>을 쌓았다."
+      }
+    ]
+  },
+  {
+    "id": 4524,
+    "origin": "cart",
+    "examples": [
+      {
+        "exam_en": "The baker pushed his <strong class=\"target-word\">cart</strong> through the market.",
+        "exam_ko": "빵 장수는 시장을 통해 <strong class=\"target-word\">수레</strong>를 밀었다."
+      },
+      {
+        "exam_en": "She loaded groceries into her shopping <strong class=\"target-word\">cart</strong>.",
+        "exam_ko": "그녀는 쇼핑 <strong class=\"target-word\">카트</strong>에 식료품을 담았다."
+      }
+    ]
+  },
+  {
+    "id": 4525,
+    "origin": "blouse",
+    "examples": [
+      {
+        "exam_en": "She wears a white silk <strong class=\"target-word\">blouse</strong> to work.",
+        "exam_ko": "그녀는 출근할 때 하얀 실크 <strong class=\"target-word\">블라우스</strong>를 입는다."
+      },
+      {
+        "exam_en": "She bought a floral <strong class=\"target-word\">blouse</strong> at the shop.",
+        "exam_ko": "그녀는 가게에서 꽃무늬 <strong class=\"target-word\">블라우스</strong>를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 4526,
+    "origin": "breath",
+    "examples": [
+      {
+        "exam_en": "He took a deep <strong class=\"target-word\">breath</strong> before speaking.",
+        "exam_ko": "그는 말하기 전에 깊게 <strong class=\"target-word\">숨</strong>을 들이쉬었다."
+      },
+      {
+        "exam_en": "She was out of <strong class=\"target-word\">breath</strong> after running.",
+        "exam_ko": "달리고 난 후 그녀는 <strong class=\"target-word\">숨</strong>이 찼다."
+      }
+    ]
+  },
+  {
+    "id": 4527,
+    "origin": "wireless",
+    "examples": [
+      {
+        "exam_en": "They send messages through a <strong class=\"target-word\">wireless</strong> network.",
+        "exam_ko": "그들은 <strong class=\"target-word\">무선</strong> 네트워크를 통해 메시지를 보낸다."
+      },
+      {
+        "exam_en": "The ship is equipped with a <strong class=\"target-word\">wireless</strong> system.",
+        "exam_ko": "그 배는 <strong class=\"target-word\">무선</strong> 통신 장비를 갖추고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4528,
+    "origin": "wisp",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">wisp</strong> of smoke rose from the chimney.",
+        "exam_ko": "굴뚝에서 연기 한 <strong class=\"target-word\">줄기</strong>가 피어올랐다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">wisp</strong> of cloud drifted across the sky.",
+        "exam_ko": "구름 한 <strong class=\"target-word\">조각</strong>이 하늘을 가로질러 흘렀다."
+      }
+    ]
+  },
+  {
+    "id": 4530,
+    "origin": "writer",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">writer</strong> of popular mystery novels.",
+        "exam_ko": "그녀는 인기 있는 추리 소설 <strong class=\"target-word\">작가</strong>이다."
+      },
+      {
+        "exam_en": "He is thriving as a <strong class=\"target-word\">writer</strong> in the city.",
+        "exam_ko": "그는 도시에서 <strong class=\"target-word\">작가</strong>로 승승장구하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4532,
+    "origin": "youth",
+    "examples": [
+      {
+        "exam_en": "She looks full of <strong class=\"target-word\">youth</strong> even at sixty.",
+        "exam_ko": "그녀는 예순에도 <strong class=\"target-word\">젊음</strong>이 넘쳐 보인다."
+      },
+      {
+        "exam_en": "He tried hard to keep his <strong class=\"target-word\">youth</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">젊음</strong>을 잃지 않으려 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 4534,
+    "origin": "unlike",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Unlike</strong> his brother, he enjoys outdoor sports.",
+        "exam_ko": "형과 <strong class=\"target-word\">달리</strong>, 그는 야외 스포츠를 즐긴다."
+      },
+      {
+        "exam_en": "The brothers are very <strong class=\"target-word\">unlike</strong> in character.",
+        "exam_ko": "그 형제는 성격이 크게 <strong class=\"target-word\">다르다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4535,
+    "origin": "unsure",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">unsure</strong> of herself before the interview.",
+        "exam_ko": "그녀는 면접 전에 자신감이 <strong class=\"target-word\">없었다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">unsure</strong> which road to take.",
+        "exam_ko": "그는 어느 길을 택해야 할지 <strong class=\"target-word\">확신이 없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4537,
+    "origin": "urine",
+    "examples": [
+      {
+        "exam_en": "The doctor asked him to provide a <strong class=\"target-word\">urine</strong> sample.",
+        "exam_ko": "의사는 그에게 <strong class=\"target-word\">소변</strong> 샘플을 제출하도록 요청했다."
+      },
+      {
+        "exam_en": "The test detects glucose levels in <strong class=\"target-word\">urine</strong>.",
+        "exam_ko": "그 검사는 <strong class=\"target-word\">소변</strong>의 포도당 수치를 측정한다."
+      }
+    ]
+  },
+  {
+    "id": 4538,
+    "origin": "visitor",
+    "examples": [
+      {
+        "exam_en": "The hotel welcomed <strong class=\"target-word\">visitors</strong> from around the world.",
+        "exam_ko": "호텔은 전 세계에서 온 <strong class=\"target-word\">방문객</strong>을 맞이했다."
+      },
+      {
+        "exam_en": "She went to the lobby to see her <strong class=\"target-word\">visitor</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">방문자</strong>를 만나러 로비로 갔다."
+      }
+    ]
+  },
+  {
+    "id": 4540,
+    "origin": "welfare",
+    "examples": [
+      {
+        "exam_en": "The government expanded its social <strong class=\"target-word\">welfare</strong> program.",
+        "exam_ko": "정부는 사회 <strong class=\"target-word\">복지</strong> 프로그램을 확대했다."
+      },
+      {
+        "exam_en": "Child <strong class=\"target-word\">welfare</strong> is a top priority in this policy.",
+        "exam_ko": "아동 <strong class=\"target-word\">복지</strong>는 이 정책의 최우선 과제이다."
+      }
+    ]
+  },
+  {
+    "id": 4542,
+    "origin": "tournament",
+    "examples": [
+      {
+        "exam_en": "Thank you for joining this <strong class=\"target-word\">tournament</strong> today.",
+        "exam_ko": "오늘 이 <strong class=\"target-word\">대회</strong>에 참가해 주셔서 감사합니다."
+      },
+      {
+        "exam_en": "She won the chess <strong class=\"target-word\">tournament</strong> last weekend.",
+        "exam_ko": "그녀는 지난 주말 체스 <strong class=\"target-word\">토너먼트</strong>에서 우승했다."
+      }
+    ]
+  },
+  {
+    "id": 4543,
+    "origin": "tractor",
+    "examples": [
+      {
+        "exam_en": "The farmer drove a <strong class=\"target-word\">tractor</strong> across the field.",
+        "exam_ko": "농부는 들판을 가로질러 <strong class=\"target-word\">트랙터</strong>를 몰았다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">tractor</strong> is essential for large-scale farming.",
+        "exam_ko": "<strong class=\"target-word\">트랙터</strong>는 대규모 농업에 필수적이다."
+      }
+    ]
+  },
+  {
+    "id": 4544,
+    "origin": "transportation",
+    "examples": [
+      {
+        "exam_en": "Public <strong class=\"target-word\">transportation</strong> is free for senior citizens.",
+        "exam_ko": "노인은 대중 <strong class=\"target-word\">교통</strong>을 무료로 이용할 수 있다."
+      },
+      {
+        "exam_en": "The city improved its <strong class=\"target-word\">transportation</strong> network.",
+        "exam_ko": "시는 <strong class=\"target-word\">교통</strong> 네트워크를 개선했다."
+      }
+    ]
+  },
+  {
+    "id": 4545,
+    "origin": "truly",
+    "examples": [
+      {
+        "exam_en": "The witness testified <strong class=\"target-word\">truly</strong> in court.",
+        "exam_ko": "증인은 법정에서 <strong class=\"target-word\">사실대로</strong> 증언했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">truly</strong> cares about her students.",
+        "exam_ko": "그녀는 학생들을 <strong class=\"target-word\">진심으로</strong> 아낀다."
+      }
+    ]
+  }
+]

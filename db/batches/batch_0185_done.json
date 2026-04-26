@@ -1,0 +1,270 @@
+[
+  {
+    "id": 4149,
+    "origin": "dwarf",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">dwarf</strong> stood beside the tall knight.",
+        "exam_ko": "키 작은 <strong class=\"target-word\">난쟁이</strong>가 큰 기사 옆에 서 있었다."
+      },
+      {
+        "exam_en": "They planted a <strong class=\"target-word\">dwarf</strong> rose in the garden.",
+        "exam_ko": "그들은 정원에 <strong class=\"target-word\">왜성</strong> 장미를 심었다."
+      }
+    ]
+  },
+  {
+    "id": 4151,
+    "origin": "illness",
+    "examples": [
+      {
+        "exam_en": "He recovered from a serious <strong class=\"target-word\">illness</strong> last year.",
+        "exam_ko": "그는 작년에 심각한 <strong class=\"target-word\">병</strong>에서 회복했다."
+      },
+      {
+        "exam_en": "She feigned <strong class=\"target-word\">illness</strong> to skip school.",
+        "exam_ko": "그녀는 학교를 빠지려고 <strong class=\"target-word\">병</strong>을 꾀병으로 꾸몄다."
+      }
+    ]
+  },
+  {
+    "id": 4152,
+    "origin": "mourn",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">mourned</strong> his failure for weeks.",
+        "exam_ko": "그는 몇 주 동안 자신의 실패를 <strong class=\"target-word\">한탄했다</strong>."
+      },
+      {
+        "exam_en": "The family <strong class=\"target-word\">mourned</strong> for the dead soldier.",
+        "exam_ko": "가족들은 전사한 군인을 <strong class=\"target-word\">애도했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4153,
+    "origin": "nurse",
+    "examples": [
+      {
+        "exam_en": "The hospital <strong class=\"target-word\">nurse</strong> checked his blood pressure.",
+        "exam_ko": "병원 <strong class=\"target-word\">간호사</strong>가 그의 혈압을 확인했다."
+      },
+      {
+        "exam_en": "A Red Cross <strong class=\"target-word\">nurse</strong> treated the wounded soldier.",
+        "exam_ko": "적십자사 <strong class=\"target-word\">간호사</strong>가 부상당한 병사를 치료했다."
+      }
+    ]
+  },
+  {
+    "id": 4155,
+    "origin": "vibrate",
+    "examples": [
+      {
+        "exam_en": "The wire <strong class=\"target-word\">vibrated</strong> like a guitar string.",
+        "exam_ko": "전선이 기타 줄처럼 <strong class=\"target-word\">떨렸다</strong>."
+      },
+      {
+        "exam_en": "Her voice <strong class=\"target-word\">vibrated</strong> with sincerity.",
+        "exam_ko": "그녀의 목소리는 진심으로 <strong class=\"target-word\">떨렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4156,
+    "origin": "assuredly",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Assuredly</strong>, he looked great in his new suit.",
+        "exam_ko": "<strong class=\"target-word\">확실히</strong>, 그는 새 옷을 입고 멋있어 보였다."
+      }
+    ]
+  },
+  {
+    "id": 4158,
+    "origin": "disagreement",
+    "examples": [
+      {
+        "exam_en": "They were in <strong class=\"target-word\">disagreement</strong> over the new policy.",
+        "exam_ko": "그들은 새 정책에 대해 <strong class=\"target-word\">의견 불일치</strong>를 보였다."
+      },
+      {
+        "exam_en": "There was a <strong class=\"target-word\">disagreement</strong> in architectural styles.",
+        "exam_ko": "건축 양식에 <strong class=\"target-word\">부조화</strong>가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4159,
+    "origin": "overweight",
+    "examples": [
+      {
+        "exam_en": "Her luggage was <strong class=\"target-word\">overweight</strong> at the airport.",
+        "exam_ko": "공항에서 그녀의 수화물이 <strong class=\"target-word\">중량 초과</strong>였다."
+      },
+      {
+        "exam_en": "My bags were <strong class=\"target-word\">overweight</strong> by five kilos.",
+        "exam_ko": "내 가방은 5킬로 <strong class=\"target-word\">초과</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 4161,
+    "origin": "yen",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">yen</strong> for traveling abroad.",
+        "exam_ko": "그녀는 해외여행을 <strong class=\"target-word\">갈망했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4162,
+    "origin": "cherish",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">cherishes</strong> her pet cat every day.",
+        "exam_ko": "그녀는 매일 자신의 고양이를 <strong class=\"target-word\">소중히 돌본다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">cherishes</strong> his native country deeply.",
+        "exam_ko": "그는 조국을 깊이 <strong class=\"target-word\">사랑한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4163,
+    "origin": "dictation",
+    "examples": [
+      {
+        "exam_en": "The teacher gave <strong class=\"target-word\">dictation</strong> to the students.",
+        "exam_ko": "선생님이 학생들에게 <strong class=\"target-word\">받아쓰기</strong>를 시켰다."
+      },
+      {
+        "exam_en": "She took the president's <strong class=\"target-word\">dictation</strong> carefully.",
+        "exam_ko": "그녀는 사장의 <strong class=\"target-word\">구술</strong>을 주의 깊게 받아썼다."
+      }
+    ]
+  },
+  {
+    "id": 4168,
+    "origin": "overcharge",
+    "examples": [
+      {
+        "exam_en": "I think you <strong class=\"target-word\">overcharged</strong> me for the eggs.",
+        "exam_ko": "계란값을 <strong class=\"target-word\">과다 청구</strong>하신 것 같아요."
+      },
+      {
+        "exam_en": "Do not <strong class=\"target-word\">overcharge</strong> the battery overnight.",
+        "exam_ko": "밤새 배터리를 <strong class=\"target-word\">과충전</strong>하지 마세요."
+      }
+    ]
+  },
+  {
+    "id": 4169,
+    "origin": "greenhouse",
+    "examples": [
+      {
+        "exam_en": "They grew tomatoes in the <strong class=\"target-word\">greenhouse</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">온실</strong>에서 토마토를 재배했다."
+      }
+    ]
+  },
+  {
+    "id": 4173,
+    "origin": "nationality",
+    "examples": [
+      {
+        "exam_en": "She has American <strong class=\"target-word\">nationality</strong>.",
+        "exam_ko": "그녀는 미국 <strong class=\"target-word\">국적</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "What <strong class=\"target-word\">nationality</strong> are you?",
+        "exam_ko": "<strong class=\"target-word\">국적</strong>이 어디입니까?"
+      }
+    ]
+  },
+  {
+    "id": 4174,
+    "origin": "solution",
+    "examples": [
+      {
+        "exam_en": "They found a peaceful <strong class=\"target-word\">solution</strong> to the conflict.",
+        "exam_ko": "그들은 갈등에 대한 평화적인 <strong class=\"target-word\">해결책</strong>을 찾았다."
+      },
+      {
+        "exam_en": "It was a problem with no obvious <strong class=\"target-word\">solution</strong>.",
+        "exam_ko": "명백한 <strong class=\"target-word\">답</strong>이 없는 문제였다."
+      },
+      {
+        "exam_en": "Apply a ten-percent acid <strong class=\"target-word\">solution</strong> to clean the wall.",
+        "exam_ko": "벽을 청소하려면 10% 산 <strong class=\"target-word\">용액</strong>을 사용하세요."
+      }
+    ]
+  },
+  {
+    "id": 4176,
+    "origin": "di",
+    "examples": [
+      {
+        "exam_en": "The prefix <strong class=\"target-word\">di</strong> means two or twice.",
+        "exam_ko": "접두사 <strong class=\"target-word\">di</strong>는 둘 또는 두 번을 의미한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Di</strong>chromism means showing two different colors.",
+        "exam_ko": "<strong class=\"target-word\">이</strong>색성은 두 가지 색을 나타내는 것을 의미한다."
+      }
+    ]
+  },
+  {
+    "id": 4178,
+    "origin": "unpaid",
+    "examples": [
+      {
+        "exam_en": "He left an <strong class=\"target-word\">unpaid</strong> bill on the table.",
+        "exam_ko": "그는 탁자 위에 <strong class=\"target-word\">미납</strong> 청구서를 남겼다."
+      },
+      {
+        "exam_en": "The company owes <strong class=\"target-word\">unpaid</strong> taxes to the government.",
+        "exam_ko": "그 회사는 정부에 <strong class=\"target-word\">미납</strong> 세금을 지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4179,
+    "origin": "orbit",
+    "examples": [
+      {
+        "exam_en": "The earth travels in an <strong class=\"target-word\">orbit</strong> around the sun.",
+        "exam_ko": "지구는 태양 주위의 <strong class=\"target-word\">궤도</strong>를 돈다."
+      },
+      {
+        "exam_en": "They put a satellite into <strong class=\"target-word\">orbit</strong> around Earth.",
+        "exam_ko": "그들은 지구 주위 <strong class=\"target-word\">궤도</strong>에 위성을 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 4180,
+    "origin": "equator",
+    "examples": [
+      {
+        "exam_en": "The country lies right on the <strong class=\"target-word\">equator</strong>.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">적도</strong> 바로 위에 위치한다."
+      }
+    ]
+  },
+  {
+    "id": 4181,
+    "origin": "errand",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">errand</strong> boy delivered the package quickly.",
+        "exam_ko": "<strong class=\"target-word\">심부름</strong>하는 아이가 빠르게 소포를 배달했다."
+      },
+      {
+        "exam_en": "I sent her on an <strong class=\"target-word\">errand</strong> to the supermarket.",
+        "exam_ko": "나는 그녀를 슈퍼마켓에 <strong class=\"target-word\">심부름</strong> 보냈다."
+      }
+    ]
+  }
+]

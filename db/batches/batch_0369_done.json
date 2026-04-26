@@ -1,0 +1,242 @@
+[
+  {
+    "id": 9966,
+    "origin": "perched",
+    "examples": [
+      {
+        "exam_en": "The hotel is <strong class=\"target-word\">perched</strong> on the mountainside.",
+        "exam_ko": "그 호텔은 산중턱에 <strong class=\"target-word\">자리 잡고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9968,
+    "origin": "musty",
+    "examples": [
+      {
+        "exam_en": "The old room smelled <strong class=\"target-word\">musty</strong> and damp.",
+        "exam_ko": "오래된 방에서 <strong class=\"target-word\">곰팡내</strong>와 습기가 났다."
+      }
+    ]
+  },
+  {
+    "id": 9969,
+    "origin": "squashy",
+    "examples": [
+      {
+        "exam_en": "The overripe tomatoes felt <strong class=\"target-word\">squashy</strong> in my hand.",
+        "exam_ko": "너무 익은 토마토가 손에서 <strong class=\"target-word\">물렁물렁하게</strong> 느껴졌다."
+      }
+    ]
+  },
+  {
+    "id": 9973,
+    "origin": "scruff",
+    "examples": [
+      {
+        "exam_en": "He grabbed the dog by the <strong class=\"target-word\">scruff</strong> of its neck.",
+        "exam_ko": "그는 개의 <strong class=\"target-word\">뒷덜미</strong>를 잡았다."
+      }
+    ]
+  },
+  {
+    "id": 9976,
+    "origin": "twang",
+    "examples": [
+      {
+        "exam_en": "She speaks with a southern <strong class=\"target-word\">twang</strong>.",
+        "exam_ko": "그녀는 남부 특유의 <strong class=\"target-word\">콧소리 억양</strong>으로 말한다."
+      }
+    ]
+  },
+  {
+    "id": 9980,
+    "origin": "maroon",
+    "examples": [
+      {
+        "exam_en": "They were <strong class=\"target-word\">marooned</strong> in the middle of nowhere.",
+        "exam_ko": "그들은 낯선 곳 한가운데에 <strong class=\"target-word\">고립되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9982,
+    "origin": "crutch",
+    "examples": [
+      {
+        "exam_en": "He broke his leg and walks on <strong class=\"target-word\">crutches</strong> now.",
+        "exam_ko": "그는 다리가 부러져서 지금 <strong class=\"target-word\">목발</strong>을 짚고 걷는다."
+      },
+      {
+        "exam_en": "Coffee has become a <strong class=\"target-word\">crutch</strong> for her every morning.",
+        "exam_ko": "커피는 그녀에게 매일 아침 없어서는 안 될 <strong class=\"target-word\">의지거리</strong>가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 9983,
+    "origin": "gibber",
+    "examples": [
+      {
+        "exam_en": "He began to <strong class=\"target-word\">gibber</strong> with fear in the dark.",
+        "exam_ko": "그는 어둠 속에서 두려움에 <strong class=\"target-word\">횡설수설하기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 9984,
+    "origin": "waddle",
+    "examples": [
+      {
+        "exam_en": "The penguin <strong class=\"target-word\">waddled</strong> across the ice.",
+        "exam_ko": "펭귄이 얼음 위를 <strong class=\"target-word\">뒤뚱뒤뚱 걸어갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9985,
+    "origin": "jab",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">jabbed</strong> the opponent's neck with his knife.",
+        "exam_ko": "그는 상대방의 목을 나이프로 <strong class=\"target-word\">찔렀다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">jabbed</strong> her fist at his face.",
+        "exam_ko": "그녀는 그의 얼굴을 향해 주먹을 <strong class=\"target-word\">내질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9986,
+    "origin": "knuckle",
+    "examples": [
+      {
+        "exam_en": "He cracked his <strong class=\"target-word\">knuckles</strong> before the match.",
+        "exam_ko": "그는 경기 전에 <strong class=\"target-word\">손가락 관절</strong>을 꺾어 딱 소리를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 9987,
+    "origin": "glisten",
+    "examples": [
+      {
+        "exam_en": "The snow <strong class=\"target-word\">glistened</strong> under the morning sun.",
+        "exam_ko": "눈이 아침 햇살 아래 <strong class=\"target-word\">반짝였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9989,
+    "origin": "maniac",
+    "examples": [
+      {
+        "exam_en": "He is a fishing <strong class=\"target-word\">maniac</strong> who goes out every weekend.",
+        "exam_ko": "그는 매주 낚시를 나가는 낚시 <strong class=\"target-word\">광</strong>이다."
+      },
+      {
+        "exam_en": "The driver was speeding like a <strong class=\"target-word\">maniac</strong> on the highway.",
+        "exam_ko": "그 운전자는 고속도로에서 <strong class=\"target-word\">미친 사람</strong>처럼 과속했다."
+      }
+    ]
+  },
+  {
+    "id": 9990,
+    "origin": "revolting",
+    "examples": [
+      {
+        "exam_en": "His ideas on marriage were <strong class=\"target-word\">revolting</strong> to her.",
+        "exam_ko": "그의 결혼관은 그녀에게 매우 <strong class=\"target-word\">역겨웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9991,
+    "origin": "slug",
+    "examples": [
+      {
+        "exam_en": "I put a <strong class=\"target-word\">slug</strong> in the phone, but it didn't work.",
+        "exam_ko": "공중전화에 <strong class=\"target-word\">위조 동전</strong>을 넣었지만 작동하지 않았다."
+      },
+      {
+        "exam_en": "He took a <strong class=\"target-word\">slug</strong> of whiskey before going on stage.",
+        "exam_ko": "그는 무대에 오르기 전에 위스키를 한 <strong class=\"target-word\">모금</strong> 마셨다."
+      }
+    ]
+  },
+  {
+    "id": 9994,
+    "origin": "bonnet",
+    "examples": [
+      {
+        "exam_en": "She wore a wide <strong class=\"target-word\">bonnet</strong> to protect her face from the sun.",
+        "exam_ko": "그녀는 햇볕을 가리려고 넓은 <strong class=\"target-word\">보닛</strong>을 썼다."
+      },
+      {
+        "exam_en": "He opened the <strong class=\"target-word\">bonnet</strong> to check the engine.",
+        "exam_ko": "그는 엔진을 확인하려고 <strong class=\"target-word\">보닛</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 9996,
+    "origin": "ruffle",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">ruffled</strong> his hair affectionately.",
+        "exam_ko": "그녀는 애정을 담아 그의 머리를 <strong class=\"target-word\">헝클었다</strong>."
+      },
+      {
+        "exam_en": "The wind <strong class=\"target-word\">ruffled</strong> the surface of the water.",
+        "exam_ko": "바람이 수면을 <strong class=\"target-word\">일렁거리게 했다</strong>."
+      },
+      {
+        "exam_en": "A gentle <strong class=\"target-word\">ruffle</strong> of the leaves created a soothing sound.",
+        "exam_ko": "잎들이 부드럽게 <strong class=\"target-word\">흔들리는 소리</strong>가 마음을 차분하게 했다."
+      }
+    ]
+  },
+  {
+    "id": 9998,
+    "origin": "tangle",
+    "examples": [
+      {
+        "exam_en": "Her hair was <strong class=\"target-word\">tangled</strong> with weeds after the swim.",
+        "exam_ko": "수영 후 그녀의 머리카락이 잡초에 <strong class=\"target-word\">엉켰다</strong>."
+      },
+      {
+        "exam_en": "The wind <strong class=\"target-word\">tangled</strong> her hair badly.",
+        "exam_ko": "바람이 그녀의 머리카락을 심하게 <strong class=\"target-word\">헝클어 놓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9999,
+    "origin": "astride",
+    "examples": [
+      {
+        "exam_en": "The child sat <strong class=\"target-word\">astride</strong> the fence in the yard.",
+        "exam_ko": "아이는 마당의 울타리에 <strong class=\"target-word\">걸터앉았다</strong>."
+      },
+      {
+        "exam_en": "Beethoven stands <strong class=\"target-word\">astride</strong> the world of music.",
+        "exam_ko": "베토벤은 음악 세계에 <strong class=\"target-word\">군림하는</strong> 거대한 존재이다."
+      }
+    ]
+  },
+  {
+    "id": 10000,
+    "origin": "dab",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">dabbed</strong> the wound gently with a wet cloth.",
+        "exam_ko": "그녀는 축축한 천으로 상처를 살살 <strong class=\"target-word\">닦아냈다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">dabbed</strong> the brush lightly on the paper.",
+        "exam_ko": "그는 붓을 종이에 살짝 <strong class=\"target-word\">갖다 댔다</strong>."
+      }
+    ]
+  }
+]

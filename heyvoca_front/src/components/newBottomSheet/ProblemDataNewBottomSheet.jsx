@@ -38,7 +38,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
       </div>
       <div className="
         flex flex-col gap-[20px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         p-[20px] pb-[105px]
         overflow-y-auto
       ">

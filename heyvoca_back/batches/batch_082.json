@@ -1,0 +1,602 @@
+[
+  {
+    "id": 8087,
+    "word": "perm",
+    "exam_en": "have one's hair <strong class=\"target-word\">perm</strong>ed",
+    "exam_ko": "(남을 시켜) 머리를 <strong class=\"target-word\">파마하다</strong>"
+  },
+  {
+    "id": 8088,
+    "word": "outfit",
+    "exam_en": "a climber's <strong class=\"target-word\">outfit</strong>",
+    "exam_ko": "등산가의 <strong class=\"target-word\">장비</strong>"
+  },
+  {
+    "id": 8089,
+    "word": "outfit",
+    "exam_en": "a diving <strong class=\"target-word\">outfit</strong>",
+    "exam_ko": "다이빙용 <strong class=\"target-word\">장비</strong> 일체"
+  },
+  {
+    "id": 8090,
+    "word": "laundry",
+    "exam_en": "dirty <strong class=\"target-word\">laundry</strong>",
+    "exam_ko": "더러운 <strong class=\"target-word\">세탁물</strong>"
+  },
+  {
+    "id": 8091,
+    "word": "laundry",
+    "exam_en": "<strong class=\"target-word\">laundry</strong> detergent",
+    "exam_ko": "세탁용 <strong class=\"target-word\">세제</strong>"
+  },
+  {
+    "id": 8092,
+    "word": "exam",
+    "exam_en": "take  an <strong class=\"target-word\">exam</strong>",
+    "exam_ko": "시험을 <strong class=\"target-word\">보다</strong>"
+  },
+  {
+    "id": 8093,
+    "word": "exam",
+    "exam_en": "pass an <strong class=\"target-word\">exam</strong>",
+    "exam_ko": "시험에 <strong class=\"target-word\">합격하다</strong>"
+  },
+  {
+    "id": 8094,
+    "word": "coin",
+    "exam_en": "a copper <strong class=\"target-word\">coin</strong>",
+    "exam_ko": "구리 <strong class=\"target-word\">동전</strong>"
+  },
+  {
+    "id": 8095,
+    "word": "coin",
+    "exam_en": "toss a <strong class=\"target-word\">coin</strong>",
+    "exam_ko": "(어떤 일을) <strong class=\"target-word\">동전</strong>을 높이 던져 결정하다."
+  },
+  {
+    "id": 8096,
+    "word": "paperback",
+    "exam_en": "appear in <strong class=\"target-word\">paperback</strong>",
+    "exam_ko": "<strong class=\"target-word\">페이퍼백</strong>으로 출판되다."
+  },
+  {
+    "id": 8097,
+    "word": "atlas",
+    "exam_en": "an anatomical <strong class=\"target-word\">atlas</strong>",
+    "exam_ko": "해부 <strong class=\"target-word\">도해서</strong>."
+  },
+  {
+    "id": 8098,
+    "word": "encyclopedia",
+    "exam_en": "'The <strong class=\"target-word\">Encyclopedia</strong> Americana'",
+    "exam_ko": "<strong class=\"target-word\">백과사전</strong>(아메리카나, 1829년 창간)"
+  },
+  {
+    "id": 8099,
+    "word": "encyclopedia",
+    "exam_en": "<strong class=\"target-word\">encyclopedia</strong> Britannica",
+    "exam_ko": "<strong class=\"target-word\">백과사전</strong>(Britannica)"
+  },
+  {
+    "id": 8100,
+    "word": "basin",
+    "exam_en": "a <strong class=\"target-word\">basin</strong> of soup",
+    "exam_ko": "국 한 <strong class=\"target-word\">대접</strong>"
+  },
+  {
+    "id": 8101,
+    "word": "basin",
+    "exam_en": "a <strong class=\"target-word\">basin</strong> for salad",
+    "exam_ko": "샐러드용 <strong class=\"target-word\">볼</strong>"
+  },
+  {
+    "id": 8102,
+    "word": "sponge",
+    "exam_en": "give‥ a <strong class=\"target-word\">sponge</strong>",
+    "exam_ko": "…을 <strong class=\"target-word\">스펀지</strong>로 닦다."
+  },
+  {
+    "id": 8103,
+    "word": "sponge",
+    "exam_en": "<strong class=\"target-word\">sponge</strong> away the ink",
+    "exam_ko": "잉크를 <strong class=\"target-word\">훔치다</strong>"
+  },
+  {
+    "id": 8104,
+    "word": "towel",
+    "exam_en": "a bath <strong class=\"target-word\">towel</strong>",
+    "exam_ko": "목욕 <strong class=\"target-word\">타월</strong>"
+  },
+  {
+    "id": 8105,
+    "word": "towel",
+    "exam_en": "a round <strong class=\"target-word\">towel</strong>",
+    "exam_ko": "두루마리 <strong class=\"target-word\">타월</strong>."
+  },
+  {
+    "id": 8106,
+    "word": "niece",
+    "exam_en": "Mary, <strong class=\"target-word\">niece</strong> to Mr. James",
+    "exam_ko": "제임스씨의 <strong class=\"target-word\">조카딸</strong>인 메리."
+  },
+  {
+    "id": 8107,
+    "word": "nephew",
+    "exam_en": "John, <strong class=\"target-word\">nephew</strong> to Mr. James",
+    "exam_ko": "제임스씨의 <strong class=\"target-word\">조카</strong>인 존."
+  },
+  {
+    "id": 8108,
+    "word": "uncle",
+    "exam_en": "<strong class=\"target-word\">Uncle</strong> Tom",
+    "exam_ko": "톰 <strong class=\"target-word\">아저씨</strong> (UNCLE TOM)."
+  },
+  {
+    "id": 8109,
+    "word": "uncle",
+    "exam_en": "gone to <strong class=\"target-word\">uncle</strong>'s",
+    "exam_ko": "<strong class=\"target-word\">전당포</strong>에 잡혀"
+  },
+  {
+    "id": 8110,
+    "word": "poke",
+    "exam_en": "<strong class=\"target-word\">poke</strong> a person in the face",
+    "exam_ko": "남의 <strong class=\"target-word\">얼굴</strong>을 치다"
+  },
+  {
+    "id": 8111,
+    "word": "poke",
+    "exam_en": "<strong class=\"target-word\">poke</strong> a person in the ribs",
+    "exam_ko": "(정다운 듯이) 남의 <strong class=\"target-word\">옆구리</strong>를 쿡쿡 찌르다."
+  },
+  {
+    "id": 8112,
+    "word": "pinch",
+    "exam_en": "<strong class=\"target-word\">pinch</strong> out a cigarette",
+    "exam_ko": "담뱃불을 비벼 <strong class=\"target-word\">끄다</strong>"
+  },
+  {
+    "id": 8113,
+    "word": "pinch",
+    "exam_en": "<strong class=\"target-word\">pinch</strong> one's finger in the door",
+    "exam_ko": "문틈에 <strong class=\"target-word\">손가락</strong>이 끼다"
+  },
+  {
+    "id": 8114,
+    "word": "mall",
+    "exam_en": "a pedestrian <strong class=\"target-word\">mall</strong>",
+    "exam_ko": "산책용 <strong class=\"target-word\">보행자 도로</strong>"
+  },
+  {
+    "id": 8115,
+    "word": "unbutton",
+    "exam_en": "<strong class=\"target-word\">unbutton</strong> one's lips",
+    "exam_ko": "심중을 <strong class=\"target-word\">털어놓다</strong>."
+  },
+  {
+    "id": 8116,
+    "word": "untie",
+    "exam_en": "<strong class=\"target-word\">untie</strong> a horse from a fence",
+    "exam_ko": "울타리에서 말을 <strong class=\"target-word\">풀어주다</strong>"
+  },
+  {
+    "id": 8117,
+    "word": "untie",
+    "exam_en": "<strong class=\"target-word\">untie</strong> one's shoelaces",
+    "exam_ko": "구두끈을 <strong class=\"target-word\">풀다</strong>."
+  },
+  {
+    "id": 8118,
+    "word": "comedy",
+    "exam_en": "a light <strong class=\"target-word\">comedy</strong>",
+    "exam_ko": "<strong class=\"target-word\">경희극</strong>"
+  },
+  {
+    "id": 8119,
+    "word": "comedy",
+    "exam_en": "There is much <strong class=\"target-word\">comedy</strong> in life.",
+    "exam_ko": "인생에는 <strong class=\"target-word\">희극적</strong>인 데가 많다."
+  },
+  {
+    "id": 8120,
+    "word": "frustrated",
+    "exam_en": "Coaches are sometimes <strong class=\"target-word\">frustrated</strong> players.",
+    "exam_ko": "선수로서 <strong class=\"target-word\">성공하지 못한</strong> 코치들이 가끔 있다."
+  },
+  {
+    "id": 8121,
+    "word": "frustrated",
+    "exam_en": "sexually <strong class=\"target-word\">frustrated</strong>",
+    "exam_ko": "성적(性的)으로 <strong class=\"target-word\">욕구 불만</strong>인."
+  },
+  {
+    "id": 8122,
+    "word": "essay",
+    "exam_en": "an <strong class=\"target-word\">essay</strong> on Mark Twain",
+    "exam_ko": "<strong class=\"target-word\">마크 트웨인론</strong>(論)"
+  },
+  {
+    "id": 8123,
+    "word": "essay",
+    "exam_en": "an <strong class=\"target-word\">essay</strong> test",
+    "exam_ko": "논문식 <strong class=\"target-word\">시험</strong>."
+  },
+  {
+    "id": 8124,
+    "word": "ceiling",
+    "exam_en": "hang a <strong class=\"target-word\">ceiling</strong>",
+    "exam_ko": "<strong class=\"target-word\">천장</strong>을 대다."
+  },
+  {
+    "id": 8125,
+    "word": "ceiling",
+    "exam_en": "<strong class=\"target-word\">ceiling</strong> prices",
+    "exam_ko": "물가[임금]의 <strong class=\"target-word\">최고 한도</strong>"
+  },
+  {
+    "id": 8126,
+    "word": "backyard",
+    "exam_en": "in one's <strong class=\"target-word\">backyard</strong>",
+    "exam_ko": "늘 모이는 <strong class=\"target-word\">곳</strong>에서"
+  },
+  {
+    "id": 8127,
+    "word": "bedroom",
+    "exam_en": "The house has two <strong class=\"target-word\">bedroom</strong>s.",
+    "exam_ko": "그 집은 두 개의 <strong class=\"target-word\">침실</strong>이 있다."
+  },
+  {
+    "id": 8128,
+    "word": "bedroom",
+    "exam_en": "<strong class=\"target-word\">bedroom</strong> eyes",
+    "exam_ko": "<strong class=\"target-word\">침실 같은 눈빛</strong>"
+  },
+  {
+    "id": 8129,
+    "word": "bland",
+    "exam_en": "a <strong class=\"target-word\">bland</strong> personality",
+    "exam_ko": "<strong class=\"target-word\">온화한</strong> 성격"
+  },
+  {
+    "id": 8130,
+    "word": "bland",
+    "exam_en": "<strong class=\"target-word\">bland</strong> foods",
+    "exam_ko": "자극이 없는 <strong class=\"target-word\">음식</strong>."
+  },
+  {
+    "id": 8131,
+    "word": "savory",
+    "exam_en": "a <strong class=\"target-word\">savory</strong> aroma",
+    "exam_ko": "<strong class=\"target-word\">맛있는 냄새</strong>"
+  },
+  {
+    "id": 8132,
+    "word": "savory",
+    "exam_en": "a <strong class=\"target-word\">savory</strong> plate of food",
+    "exam_ko": "<strong class=\"target-word\">맛깔스러운 요리</strong>"
+  },
+  {
+    "id": 8133,
+    "word": "stale",
+    "exam_en": "<strong class=\"target-word\">stale</strong> water",
+    "exam_ko": "썩는 냄새가 나는 <strong class=\"target-word\">물</strong>"
+  },
+  {
+    "id": 8134,
+    "word": "stale",
+    "exam_en": "<strong class=\"target-word\">stale</strong> beer",
+    "exam_ko": "<strong class=\"target-word\">김빠진</strong> 맥주"
+  },
+  {
+    "id": 8135,
+    "word": "tart",
+    "exam_en": "<strong class=\"target-word\">tart</strong> oneself up",
+    "exam_ko": "화려하게 <strong class=\"target-word\">멋을 내다</strong>."
+  },
+  {
+    "id": 8136,
+    "word": "stove",
+    "exam_en": "a gas <strong class=\"target-word\">stove</strong>",
+    "exam_ko": "가스[석탄] <strong class=\"target-word\">난로</strong>."
+  },
+  {
+    "id": 8137,
+    "word": "stove",
+    "exam_en": "light a <strong class=\"target-word\">stove</strong>",
+    "exam_ko": "<strong class=\"target-word\">레인지</strong>를 켜다."
+  },
+  {
+    "id": 8138,
+    "word": "cask",
+    "exam_en": "a <strong class=\"target-word\">cask</strong> of cider",
+    "exam_ko": "사과주 <strong class=\"target-word\">한 통</strong>."
+  },
+  {
+    "id": 8139,
+    "word": "kettle",
+    "exam_en": "put the <strong class=\"target-word\">kettle</strong> on for tea",
+    "exam_ko": "(홍차용으로) <strong class=\"target-word\">물을 끓이다</strong>."
+  },
+  {
+    "id": 8140,
+    "word": "kettle",
+    "exam_en": "a <strong class=\"target-word\">kettle</strong> of water",
+    "exam_ko": "한주전자 <strong class=\"target-word\">가득한 물</strong>."
+  },
+  {
+    "id": 8141,
+    "word": "straw",
+    "exam_en": "a basket of <strong class=\"target-word\">straw</strong>",
+    "exam_ko": "<strong class=\"target-word\">밀짚</strong>으로 짠 바구니"
+  },
+  {
+    "id": 8142,
+    "word": "straw",
+    "exam_en": "a house thatched with <strong class=\"target-word\">straw</strong>",
+    "exam_ko": "<strong class=\"target-word\">밀짚</strong>으로 지어진 초가집."
+  },
+  {
+    "id": 8143,
+    "word": "lid",
+    "exam_en": "with the <strong class=\"target-word\">lid</strong> off",
+    "exam_ko": "<strong class=\"target-word\">뚜껑</strong>을 열어 채로"
+  },
+  {
+    "id": 8144,
+    "word": "lid",
+    "exam_en": "I took the <strong class=\"target-word\">lid</strong> off the coffee can and scooped some out.",
+    "exam_ko": "나는 <strong class=\"target-word\">커피통</strong>의 뚜껑을 열고 커피를 약간 퍼냈다."
+  },
+  {
+    "id": 8145,
+    "word": "whisk",
+    "exam_en": "<strong class=\"target-word\">whisk</strong> one's coat",
+    "exam_ko": "웃옷의 먼지를 <strong class=\"target-word\">털다</strong>."
+  },
+  {
+    "id": 8146,
+    "word": "whisk",
+    "exam_en": "She <strong class=\"target-word\">whisked</strong> the cups away.",
+    "exam_ko": "그녀는 <strong class=\"target-word\">컵들</strong>을 부리나케 치웠다"
+  },
+  {
+    "id": 8147,
+    "word": "ladle",
+    "exam_en": "<strong class=\"target-word\">ladle</strong> out a spoonful of soup",
+    "exam_ko": "수프를 <strong class=\"target-word\">한 스푼 가득</strong> 뜨다"
+  },
+  {
+    "id": 8148,
+    "word": "ladle",
+    "exam_en": "He <strong class=\"target-word\">ladle</strong>d soup into his bowl.",
+    "exam_ko": "그는 자기 주발에 <strong class=\"target-word\">수프를 퍼담았다</strong>."
+  },
+  {
+    "id": 8149,
+    "word": "mince",
+    "exam_en": "<strong class=\"target-word\">mince</strong>d meat",
+    "exam_ko": "<strong class=\"target-word\">다진 고기</strong>"
+  },
+  {
+    "id": 8150,
+    "word": "mince",
+    "exam_en": "thoroughly <strong class=\"target-word\">mince</strong> the topic",
+    "exam_ko": "그 문제를 <strong class=\"target-word\">세분화하다</strong>."
+  },
+  {
+    "id": 8151,
+    "word": "fry",
+    "exam_en": "<strong class=\"target-word\">fried</strong> eggs",
+    "exam_ko": "<strong class=\"target-word\">계란 프라이</strong>"
+  },
+  {
+    "id": 8152,
+    "word": "fry",
+    "exam_en": "<strong class=\"target-word\">fry</strong> fish",
+    "exam_ko": "생선을 <strong class=\"target-word\">튀기다</strong>"
+  },
+  {
+    "id": 8153,
+    "word": "peel",
+    "exam_en": "<strong class=\"target-word\">peel</strong> a banana",
+    "exam_ko": "바나나 <strong class=\"target-word\">껍질</strong>을 벗기다."
+  },
+  {
+    "id": 8154,
+    "word": "peel",
+    "exam_en": "<strong class=\"target-word\">peel</strong> the bark from a tree",
+    "exam_ko": "나무 <strong class=\"target-word\">껍질</strong>을 벗기다."
+  },
+  {
+    "id": 8155,
+    "word": "broth",
+    "exam_en": "chicken <strong class=\"target-word\">broth</strong>",
+    "exam_ko": "<strong class=\"target-word\">닭고기 수프</strong>"
+  },
+  {
+    "id": 8156,
+    "word": "broth",
+    "exam_en": "Too many cooks spoil the <strong class=\"target-word\">broth</strong>.",
+    "exam_ko": "<strong class=\"target-word\">요리사가 많으면</strong> 수프를 망친다."
+  },
+  {
+    "id": 8157,
+    "word": "salad",
+    "exam_en": "vegetable <strong class=\"target-word\">salad</strong>",
+    "exam_ko": "<strong class=\"target-word\">야채 샐러드</strong>"
+  },
+  {
+    "id": 8158,
+    "word": "salad",
+    "exam_en": "a green <strong class=\"target-word\">salad</strong>",
+    "exam_ko": "(주로 양상추의) <strong class=\"target-word\">야채 샐러드</strong>"
+  },
+  {
+    "id": 8159,
+    "word": "stew",
+    "exam_en": "<strong class=\"target-word\">stew</strong> meat",
+    "exam_ko": "고기를 <strong class=\"target-word\">끓이다</strong>."
+  },
+  {
+    "id": 8160,
+    "word": "stew",
+    "exam_en": "be all <strong class=\"target-word\">stew</strong>ed up over something",
+    "exam_ko": "어떤 일에 <strong class=\"target-word\">조바심하다</strong>."
+  },
+  {
+    "id": 8161,
+    "word": "soup",
+    "exam_en": "vegetable <strong class=\"target-word\">soup</strong>",
+    "exam_ko": "<strong class=\"target-word\">야채 수프</strong>"
+  },
+  {
+    "id": 8162,
+    "word": "soup",
+    "exam_en": "a thick <strong class=\"target-word\">soup</strong>",
+    "exam_ko": "<strong class=\"target-word\">진한 수프</strong>"
+  },
+  {
+    "id": 8163,
+    "word": "noodle",
+    "exam_en": "chicken <strong class=\"target-word\">noodle</strong> soup",
+    "exam_ko": "<strong class=\"target-word\">누들</strong>이 든 닭고기 수프."
+  },
+  {
+    "id": 8164,
+    "word": "hanger",
+    "exam_en": "a paper <strong class=\"target-word\">hanger</strong>",
+    "exam_ko": "<strong class=\"target-word\">종이 장정가</strong>"
+  },
+  {
+    "id": 8165,
+    "word": "clothes",
+    "exam_en": "casual <strong class=\"target-word\">clothes</strong>",
+    "exam_ko": "<strong class=\"target-word\">평상복</strong>"
+  },
+  {
+    "id": 8166,
+    "word": "clothes",
+    "exam_en": "alter <strong class=\"target-word\">clothes</strong>",
+    "exam_ko": "<strong class=\"target-word\">옷</strong>을 고치다[수선하다]"
+  },
+  {
+    "id": 8167,
+    "word": "bug",
+    "exam_en": "a flu <strong class=\"target-word\">bug</strong>",
+    "exam_ko": "<strong class=\"target-word\">독감 바이러스</strong>"
+  },
+  {
+    "id": 8168,
+    "word": "bug",
+    "exam_en": "catch a <strong class=\"target-word\">bug</strong>",
+    "exam_ko": "<strong class=\"target-word\">세균</strong>에 감염되다."
+  },
+  {
+    "id": 8169,
+    "word": "toy",
+    "exam_en": "make a <strong class=\"target-word\">toy</strong> of",
+    "exam_ko": "…을 <strong class=\"target-word\">가지고 놀다</strong>"
+  },
+  {
+    "id": 8170,
+    "word": "toy",
+    "exam_en": "a <strong class=\"target-word\">toy</strong> tractor",
+    "exam_ko": "<strong class=\"target-word\">장난감 트랙터</strong>."
+  },
+  {
+    "id": 8171,
+    "word": "drawer",
+    "exam_en": "a deep <strong class=\"target-word\">drawer</strong>",
+    "exam_ko": "안 깊이가 긴 <strong class=\"target-word\">서랍</strong>"
+  },
+  {
+    "id": 8172,
+    "word": "drawer",
+    "exam_en": "a chest of <strong class=\"target-word\">drawer</strong>s",
+    "exam_ko": "<strong class=\"target-word\">서랍</strong>이 있는 장농."
+  },
+  {
+    "id": 8173,
+    "word": "myself",
+    "exam_en": "I <strong class=\"target-word\">myself</strong> went there.",
+    "exam_ko": "<strong class=\"target-word\">나 스스로</strong> 거기에 갔다."
+  },
+  {
+    "id": 8174,
+    "word": "myself",
+    "exam_en": "He wrote to Richards and <strong class=\"target-word\">myself</strong>.",
+    "exam_ko": "그는 <strong class=\"target-word\">리처즈</strong>와 나에게 편지를 써 보냈다."
+  },
+  {
+    "id": 8175,
+    "word": "service",
+    "exam_en": "medical <strong class=\"target-word\">service</strong>s",
+    "exam_ko": "<strong class=\"target-word\">의료 활동</strong>"
+  },
+  {
+    "id": 8176,
+    "word": "service",
+    "exam_en": "a public <strong class=\"target-word\">service</strong>",
+    "exam_ko": "<strong class=\"target-word\">공공 봉사</strong>"
+  },
+  {
+    "id": 8177,
+    "word": "snack",
+    "exam_en": "go to a restaurant for a <strong class=\"target-word\">snack</strong>",
+    "exam_ko": "<strong class=\"target-word\">가벼운 식사</strong>를 하기 위해 레스토랑에 가다."
+  },
+  {
+    "id": 8178,
+    "word": "snack",
+    "exam_en": "go <strong class=\"target-word\">snack</strong>",
+    "exam_ko": "<strong class=\"target-word\">몫</strong>으로 나누다."
+  },
+  {
+    "id": 8179,
+    "word": "lunch",
+    "exam_en": "a late <strong class=\"target-word\">lunch</strong>",
+    "exam_ko": "<strong class=\"target-word\">늦은 점심 식사</strong>"
+  },
+  {
+    "id": 8180,
+    "word": "lunch",
+    "exam_en": "a business <strong class=\"target-word\">lunch</strong>",
+    "exam_ko": "<strong class=\"target-word\">비즈니스 런치</strong>"
+  },
+  {
+    "id": 8181,
+    "word": "breakfast",
+    "exam_en": "working <strong class=\"target-word\">breakfast</strong>",
+    "exam_ko": "<strong class=\"target-word\">일에 관한 이야기</strong>를 나누면서 하는 아침 식사"
+  },
+  {
+    "id": 8182,
+    "word": "breakfast",
+    "exam_en": "serve a hearty <strong class=\"target-word\">breakfast</strong>",
+    "exam_ko": "아침상을 <strong class=\"target-word\">푸짐하게 차려내다</strong>"
+  },
+  {
+    "id": 8183,
+    "word": "volume",
+    "exam_en": "a work in ten <strong class=\"target-word\">volume</strong>s",
+    "exam_ko": "<strong class=\"target-word\">모두 10권</strong>의 저작"
+  },
+  {
+    "id": 8184,
+    "word": "volume",
+    "exam_en": "a two-<strong class=\"target-word\">volume</strong> novel",
+    "exam_ko": "<strong class=\"target-word\">2권으로 된</strong> 소설"
+  },
+  {
+    "id": 8185,
+    "word": "scholar",
+    "exam_en": "a classical <strong class=\"target-word\">scholar</strong>",
+    "exam_ko": "<strong class=\"target-word\">고전 학자</strong>"
+  },
+  {
+    "id": 8186,
+    "word": "scholar",
+    "exam_en": "a Milton <strong class=\"target-word\">scholar</strong>",
+    "exam_ko": "<strong class=\"target-word\">밀턴 연구가</strong>."
+  }
+]

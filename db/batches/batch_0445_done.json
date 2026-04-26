@@ -1,0 +1,242 @@
+[
+  {
+    "id": 12726,
+    "origin": "correlation",
+    "examples": [
+      {
+        "exam_en": "There is a close <strong class=\"target-word\">correlation</strong> between unemployment and crime.",
+        "exam_ko": "실업과 범죄 사이에는 밀접한 <strong class=\"target-word\">상관관계</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 12729,
+    "origin": "assuming",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Assuming</strong> there is no war, the economy will recover.",
+        "exam_ko": "전쟁이 없다고 <strong class=\"target-word\">가정하면</strong> 경제는 회복될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 12731,
+    "origin": "restriction",
+    "examples": [
+      {
+        "exam_en": "The government imposed a <strong class=\"target-word\">restriction</strong> on energy use.",
+        "exam_ko": "정부는 에너지 사용에 <strong class=\"target-word\">제한</strong>을 부과했다."
+      },
+      {
+        "exam_en": "They entered the area without any <strong class=\"target-word\">restriction</strong>.",
+        "exam_ko": "그들은 아무런 <strong class=\"target-word\">제한</strong> 없이 그 지역에 들어갔다."
+      }
+    ]
+  },
+  {
+    "id": 12733,
+    "origin": "problematic",
+    "examples": [
+      {
+        "exam_en": "His success remains very <strong class=\"target-word\">problematic</strong>.",
+        "exam_ko": "그의 성공 여부는 매우 <strong class=\"target-word\">불확실하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12734,
+    "origin": "demoralize",
+    "examples": [
+      {
+        "exam_en": "The defeat began to <strong class=\"target-word\">demoralize</strong> the soldiers.",
+        "exam_ko": "패배는 병사들의 사기를 <strong class=\"target-word\">꺾기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 12742,
+    "origin": "seismic",
+    "examples": [
+      {
+        "exam_en": "Scientists located the <strong class=\"target-word\">seismic</strong> center quickly.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">지진</strong> 진원지를 빠르게 파악했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">seismic</strong> waves traveled across the ocean.",
+        "exam_ko": "<strong class=\"target-word\">지진</strong>파가 바다를 가로질러 전달되었다."
+      }
+    ]
+  },
+  {
+    "id": 12744,
+    "origin": "platy",
+    "examples": [
+      {
+        "exam_en": "The rocks have a <strong class=\"target-word\">platy</strong> structure from applied pressure.",
+        "exam_ko": "암석은 압력으로 인해 <strong class=\"target-word\">판상</strong> 구조를 가진다."
+      }
+    ]
+  },
+  {
+    "id": 12750,
+    "origin": "unwelcome",
+    "examples": [
+      {
+        "exam_en": "The host tried to ignore the <strong class=\"target-word\">unwelcome</strong> guest.",
+        "exam_ko": "주인은 <strong class=\"target-word\">반갑지 않은</strong> 손님을 무시하려 했다."
+      }
+    ]
+  },
+  {
+    "id": 12755,
+    "origin": "warlike",
+    "examples": [
+      {
+        "exam_en": "That tribe was known as a <strong class=\"target-word\">warlike</strong> nation.",
+        "exam_ko": "그 부족은 <strong class=\"target-word\">호전적인</strong> 민족으로 알려져 있었다."
+      },
+      {
+        "exam_en": "The general was praised for his <strong class=\"target-word\">warlike</strong> achievements.",
+        "exam_ko": "그 장군은 <strong class=\"target-word\">전공</strong>으로 칭송받았다."
+      }
+    ]
+  },
+  {
+    "id": 12762,
+    "origin": "polar",
+    "examples": [
+      {
+        "exam_en": "They joined a team on <strong class=\"target-word\">polar</strong> expeditions.",
+        "exam_ko": "그들은 <strong class=\"target-word\">극지</strong> 탐험대에 합류했다."
+      },
+      {
+        "exam_en": "Their opinions are <strong class=\"target-word\">polar</strong> opposites.",
+        "exam_ko": "그들의 의견은 완전한 <strong class=\"target-word\">정반대</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12763,
+    "origin": "temperate",
+    "examples": [
+      {
+        "exam_en": "She tries to be <strong class=\"target-word\">temperate</strong> in work as well as play.",
+        "exam_ko": "그녀는 일뿐만 아니라 놀이에서도 <strong class=\"target-word\">절제하려</strong> 노력한다."
+      },
+      {
+        "exam_en": "He is always <strong class=\"target-word\">temperate</strong> in eating and drinking.",
+        "exam_ko": "그는 음식과 음료에서 항상 <strong class=\"target-word\">절도를 지킨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12764,
+    "origin": "imaginary",
+    "examples": [
+      {
+        "exam_en": "The heroine of this film is an <strong class=\"target-word\">imaginary</strong> person.",
+        "exam_ko": "이 영화의 여주인공은 <strong class=\"target-word\">가공의</strong> 인물이다."
+      },
+      {
+        "exam_en": "Fairies are <strong class=\"target-word\">imaginary</strong> creatures.",
+        "exam_ko": "요정은 <strong class=\"target-word\">상상의</strong> 산물이다."
+      }
+    ]
+  },
+  {
+    "id": 12765,
+    "origin": "hemisphere",
+    "examples": [
+      {
+        "exam_en": "Korea is located in the northern <strong class=\"target-word\">hemisphere</strong>.",
+        "exam_ko": "한국은 북쪽 <strong class=\"target-word\">반구</strong>에 위치해 있다."
+      }
+    ]
+  },
+  {
+    "id": 12767,
+    "origin": "caucus",
+    "examples": [
+      {
+        "exam_en": "The party held a <strong class=\"target-word\">caucus</strong> to decide its position.",
+        "exam_ko": "당은 입장을 결정하기 위해 <strong class=\"target-word\">간부 회의</strong>를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 12770,
+    "origin": "fledgling",
+    "examples": [
+      {
+        "exam_en": "The country is building a <strong class=\"target-word\">fledgling</strong> democracy.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">신생</strong> 민주주의를 세우고 있다."
+      }
+    ]
+  },
+  {
+    "id": 12772,
+    "origin": "awry",
+    "examples": [
+      {
+        "exam_en": "He glanced <strong class=\"target-word\">awry</strong> at the stranger.",
+        "exam_ko": "그는 낯선 사람을 <strong class=\"target-word\">곁눈질로</strong> 바라보았다."
+      },
+      {
+        "exam_en": "Your tie is <strong class=\"target-word\">awry</strong>.",
+        "exam_ko": "넥타이가 <strong class=\"target-word\">비뚤어져</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 12773,
+    "origin": "flamboyant",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">flamboyant</strong> orange shirt to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">화려한</strong> 오렌지색 셔츠를 입고 왔다."
+      },
+      {
+        "exam_en": "The church features a curious <strong class=\"target-word\">flamboyant</strong> window.",
+        "exam_ko": "그 교회는 기이한 <strong class=\"target-word\">불꽃 양식</strong> 창문이 특징이다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">flamboyant</strong> style draws attention everywhere.",
+        "exam_ko": "그의 <strong class=\"target-word\">화려한</strong> 스타일은 어디서든 시선을 끈다."
+      }
+    ]
+  },
+  {
+    "id": 12774,
+    "origin": "ingratiate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">ingratiated</strong> himself with his employer.",
+        "exam_ko": "그는 고용주의 <strong class=\"target-word\">환심을 샀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12777,
+    "origin": "kink",
+    "examples": [
+      {
+        "exam_en": "She brushed out the <strong class=\"target-word\">kinks</strong> in her hair.",
+        "exam_ko": "그녀는 머리카락의 <strong class=\"target-word\">곱슬거림</strong>을 빗으로 폈다."
+      },
+      {
+        "exam_en": "He got a <strong class=\"target-word\">kink</strong> in his neck after sleeping.",
+        "exam_ko": "잠을 자고 나서 목에 <strong class=\"target-word\">뻐근함</strong>이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 12778,
+    "origin": "mooch",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">mooch</strong> a cigarette from a friend.",
+        "exam_ko": "그는 친구에게 담배 한 개비를 <strong class=\"target-word\">구걸하려</strong> 했다."
+      }
+    ]
+  }
+]

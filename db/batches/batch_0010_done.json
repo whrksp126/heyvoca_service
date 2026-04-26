@@ -1,0 +1,290 @@
+[
+  {
+    "id": 183,
+    "origin": "replace",
+    "examples": [
+      {
+        "exam_en": "Hostility was <strong class=\"target-word\">replaced</strong> by love.",
+        "exam_ko": "적의가 애정으로 <strong class=\"target-word\">바뀌었다</strong>."
+      },
+      {
+        "exam_en": "Ms. Jones will <strong class=\"target-word\">replace</strong> Mr. Smith as president.",
+        "exam_ko": "존스씨가 스미스씨의 후임으로 사장을 <strong class=\"target-word\">대체할</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 184,
+    "origin": "improve",
+    "examples": [
+      {
+        "exam_en": "She practiced daily to <strong class=\"target-word\">improve</strong> her writing.",
+        "exam_ko": "그녀는 글쓰기를 <strong class=\"target-word\">향상시키려고</strong> 매일 연습했다."
+      },
+      {
+        "exam_en": "The new plan will <strong class=\"target-word\">improve</strong> the situation greatly.",
+        "exam_ko": "새 계획이 상황을 크게 <strong class=\"target-word\">호전시킬</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 185,
+    "origin": "fill",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">fill</strong> the cup with sugar.",
+        "exam_ko": "컵에 설탕을 가득 <strong class=\"target-word\">담아</strong> 주세요."
+      },
+      {
+        "exam_en": "I was <strong class=\"target-word\">filled</strong> with joy.",
+        "exam_ko": "기쁨으로 가슴이 <strong class=\"target-word\">벅찼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 186,
+    "origin": "mention",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">mentioned</strong> the issue briefly in his speech.",
+        "exam_ko": "그는 연설에서 그 문제를 간단히 <strong class=\"target-word\">언급했다</strong>."
+      },
+      {
+        "exam_en": "As I <strong class=\"target-word\">mentioned</strong> before, the deadline is Friday.",
+        "exam_ko": "전에 <strong class=\"target-word\">말씀드린</strong> 대로 마감은 금요일이다."
+      }
+    ]
+  },
+  {
+    "id": 187,
+    "origin": "fight",
+    "examples": [
+      {
+        "exam_en": "The two soldiers <strong class=\"target-word\">fought</strong> hand to hand.",
+        "exam_ko": "두 병사가 맞붙어 <strong class=\"target-word\">싸웠다</strong>."
+      },
+      {
+        "exam_en": "They held a sham <strong class=\"target-word\">fight</strong> to train the troops.",
+        "exam_ko": "군대를 훈련하기 위해 모의 <strong class=\"target-word\">전투</strong>를 벌였다."
+      },
+      {
+        "exam_en": "The government <strong class=\"target-word\">fights</strong> hard against climate change.",
+        "exam_ko": "정부는 기후 변화에 맞서 열심히 <strong class=\"target-word\">싸운다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 188,
+    "origin": "intend",
+    "examples": [
+      {
+        "exam_en": "What do you <strong class=\"target-word\">intend</strong> to do next?",
+        "exam_ko": "다음에는 무엇을 할 <strong class=\"target-word\">작정이냐</strong>?"
+      },
+      {
+        "exam_en": "He has never flown and never <strong class=\"target-word\">intends</strong> to.",
+        "exam_ko": "그는 비행기를 타본 적 없으며 그럴 <strong class=\"target-word\">생각도 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 189,
+    "origin": "drop",
+    "examples": [
+      {
+        "exam_en": "A single <strong class=\"target-word\">drop</strong> of water fell on her hand.",
+        "exam_ko": "물 <strong class=\"target-word\">방울</strong> 하나가 그녀의 손에 떨어졌다."
+      },
+      {
+        "exam_en": "A tear <strong class=\"target-word\">drop</strong> rolled down her cheek.",
+        "exam_ko": "눈물 <strong class=\"target-word\">방울</strong>이 그녀의 뺨을 타고 흘렀다."
+      }
+    ]
+  },
+  {
+    "id": 190,
+    "origin": "push",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pushed</strong> a small cart down the aisle.",
+        "exam_ko": "그는 통로를 따라 작은 짐차를 <strong class=\"target-word\">밀었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pushed</strong> the book off the desk.",
+        "exam_ko": "그녀는 책을 책상에서 <strong class=\"target-word\">밀어 떨어뜨렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 191,
+    "origin": "hit",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">hit</strong> a nail with a hammer.",
+        "exam_ko": "그는 망치로 못을 <strong class=\"target-word\">쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">hit</strong> the ball hard with her racket.",
+        "exam_ko": "그녀는 라켓으로 공을 세게 <strong class=\"target-word\">쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 192,
+    "origin": "discover",
+    "examples": [
+      {
+        "exam_en": "Columbus <strong class=\"target-word\">discovered</strong> the New World in 1492.",
+        "exam_ko": "콜럼버스는 1492년에 신대륙을 <strong class=\"target-word\">발견했다</strong>."
+      },
+      {
+        "exam_en": "We never <strong class=\"target-word\">discovered</strong> how to open the box.",
+        "exam_ko": "우리는 그 상자를 여는 법을 끝내 <strong class=\"target-word\">알아내지 못했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 193,
+    "origin": "refuse",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">refused</strong> the advice without explanation.",
+        "exam_ko": "그녀는 설명 없이 그 충고를 <strong class=\"target-word\">거절했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">refused</strong> my offer for no good reason.",
+        "exam_ko": "그는 충분한 이유 없이 내 제의를 <strong class=\"target-word\">거절했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 194,
+    "origin": "prevent",
+    "examples": [
+      {
+        "exam_en": "Vaccination can <strong class=\"target-word\">prevent</strong> many serious diseases.",
+        "exam_ko": "예방 접종은 많은 심각한 질병을 <strong class=\"target-word\">예방할</strong> 수 있다."
+      },
+      {
+        "exam_en": "The police acted quickly to <strong class=\"target-word\">prevent</strong> the riot from breaking out.",
+        "exam_ko": "경찰은 폭동 발생을 <strong class=\"target-word\">방지하기</strong> 위해 신속히 움직였다."
+      }
+    ]
+  },
+  {
+    "id": 195,
+    "origin": "regard",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">regarded</strong> the discovery as of little value.",
+        "exam_ko": "그들은 그 발견을 거의 가치 없다고 <strong class=\"target-word\">생각했다</strong>."
+      },
+      {
+        "exam_en": "I don't <strong class=\"target-word\">regard</strong> the matter as clarified by any means.",
+        "exam_ko": "나는 문제가 분명해졌다고 <strong class=\"target-word\">생각하지</strong> 않는다."
+      }
+    ]
+  },
+  {
+    "id": 196,
+    "origin": "lay",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">laid</strong> her head on the pillow and slept.",
+        "exam_ko": "그녀는 베개에 머리를 <strong class=\"target-word\">얹고</strong> 잠들었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">laid</strong> his pen on the desk carefully.",
+        "exam_ko": "그는 펜을 책상 위에 조심스럽게 <strong class=\"target-word\">놓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 197,
+    "origin": "reveal",
+    "examples": [
+      {
+        "exam_en": "His answer <strong class=\"target-word\">revealed</strong> his ignorance on the topic.",
+        "exam_ko": "그의 대답은 그 주제에 대한 무식을 <strong class=\"target-word\">드러냈다</strong>."
+      },
+      {
+        "exam_en": "She finally <strong class=\"target-word\">revealed</strong> her true identity to us.",
+        "exam_ko": "그녀는 마침내 우리에게 자신의 정체를 <strong class=\"target-word\">밝혔다</strong>."
+      },
+      {
+        "exam_en": "The investigation <strong class=\"target-word\">revealed</strong> serious flaws in the system.",
+        "exam_ko": "조사는 시스템의 심각한 결함을 <strong class=\"target-word\">드러냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 198,
+    "origin": "state",
+    "examples": [
+      {
+        "exam_en": "Water exists in a gaseous <strong class=\"target-word\">state</strong> at high temperatures.",
+        "exam_ko": "물은 고온에서 기체 <strong class=\"target-word\">상태</strong>로 존재한다."
+      },
+      {
+        "exam_en": "He entered the married <strong class=\"target-word\">state</strong> last year.",
+        "exam_ko": "그는 작년에 결혼 <strong class=\"target-word\">상태</strong>에 들어섰다."
+      }
+    ]
+  },
+  {
+    "id": 199,
+    "origin": "operate",
+    "examples": [
+      {
+        "exam_en": "The tractor <strong class=\"target-word\">operates</strong> on diesel oil.",
+        "exam_ko": "이 트랙터는 디젤유로 <strong class=\"target-word\">작동한다</strong>."
+      },
+      {
+        "exam_en": "The brain <strong class=\"target-word\">operates</strong> even during sleep.",
+        "exam_ko": "두뇌는 잠자는 동안에도 <strong class=\"target-word\">작용한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 200,
+    "origin": "answer",
+    "examples": [
+      {
+        "exam_en": "She gave an evasive <strong class=\"target-word\">answer</strong> to avoid the question.",
+        "exam_ko": "그녀는 질문을 피하려고 얼버무리는 <strong class=\"target-word\">대답</strong>을 했다."
+      },
+      {
+        "exam_en": "His only <strong class=\"target-word\">answer</strong> was that he did not know.",
+        "exam_ko": "그의 유일한 <strong class=\"target-word\">대답</strong>은 모르겠다는 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 201,
+    "origin": "record",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">recorded</strong> it in my diary.",
+        "exam_ko": "나는 그것을 일기에 <strong class=\"target-word\">적어 두었다</strong>."
+      },
+      {
+        "exam_en": "The number of deaths was never <strong class=\"target-word\">recorded</strong>.",
+        "exam_ko": "사망자 수는 끝내 <strong class=\"target-word\">기록되지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 202,
+    "origin": "depend",
+    "examples": [
+      {
+        "exam_en": "This timetable cannot be <strong class=\"target-word\">depended</strong> on.",
+        "exam_ko": "이 시간표는 <strong class=\"target-word\">믿을</strong> 수 없다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">depend</strong> on their boss for guidance.",
+        "exam_ko": "그들은 지도를 위해 사장을 <strong class=\"target-word\">신뢰한다</strong>."
+      }
+    ]
+  }
+]

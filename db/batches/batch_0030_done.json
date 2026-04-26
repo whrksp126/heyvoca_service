@@ -1,0 +1,290 @@
+[
+  {
+    "id": 589,
+    "origin": "scream",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">screamed</strong> out in pain.",
+        "exam_ko": "그녀는 고통에 못 이겨 <strong class=\"target-word\">비명을 질렀다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">screamed</strong> at the two kids to stop fighting.",
+        "exam_ko": "그녀는 두 아이들에게 싸우지 말라고 <strong class=\"target-word\">고함쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 590,
+    "origin": "schedule",
+    "examples": [
+      {
+        "exam_en": "She has a very full <strong class=\"target-word\">schedule</strong> this week.",
+        "exam_ko": "그녀는 이번 주 <strong class=\"target-word\">일정</strong>이 꽉 차 있다."
+      },
+      {
+        "exam_en": "The tight <strong class=\"target-word\">schedule</strong> left no time to rest.",
+        "exam_ko": "빡빡한 <strong class=\"target-word\">일정</strong> 때문에 쉴 시간이 없었다."
+      }
+    ]
+  },
+  {
+    "id": 591,
+    "origin": "scare",
+    "examples": [
+      {
+        "exam_en": "He always <strong class=\"target-word\">scared</strong> me with his imperious ways.",
+        "exam_ko": "그는 위압적인 방식으로 나를 항상 <strong class=\"target-word\">겁나게 했다</strong>."
+      },
+      {
+        "exam_en": "You <strong class=\"target-word\">scared</strong> me!",
+        "exam_ko": "나 <strong class=\"target-word\">놀랐잖아</strong>!"
+      },
+      {
+        "exam_en": "The sudden <strong class=\"target-word\">scare</strong> made her heart race.",
+        "exam_ko": "갑작스러운 <strong class=\"target-word\">공포</strong>로 그녀의 심장이 뛰었다."
+      }
+    ]
+  },
+  {
+    "id": 592,
+    "origin": "roar",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">roared</strong> in rage at everyone around him.",
+        "exam_ko": "그는 주변 모든 사람에게 화가 나서 <strong class=\"target-word\">고함쳤다</strong>."
+      },
+      {
+        "exam_en": "The crowd <strong class=\"target-word\">roared</strong> with excitement at the game.",
+        "exam_ko": "군중은 경기에 흥분하며 <strong class=\"target-word\">함성을 질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 593,
+    "origin": "rid",
+    "examples": [
+      {
+        "exam_en": "We must <strong class=\"target-word\">rid</strong> the world of nuclear threats.",
+        "exam_ko": "우리는 세계에서 핵 위협을 <strong class=\"target-word\">제거해야</strong> 한다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rid</strong> the room of mosquitos quickly.",
+        "exam_ko": "그녀는 방에서 모기를 빠르게 <strong class=\"target-word\">없앴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 594,
+    "origin": "review",
+    "examples": [
+      {
+        "exam_en": "She wrote a book <strong class=\"target-word\">review</strong> for the magazine.",
+        "exam_ko": "그녀는 잡지에 책 <strong class=\"target-word\">서평</strong>을 썼다."
+      },
+      {
+        "exam_en": "The critic published a sharp <strong class=\"target-word\">review</strong> of the film.",
+        "exam_ko": "평론가는 그 영화에 대한 날카로운 <strong class=\"target-word\">평론</strong>을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 595,
+    "origin": "puzzle",
+    "examples": [
+      {
+        "exam_en": "Existence remains an eternal <strong class=\"target-word\">puzzle</strong> for philosophers.",
+        "exam_ko": "인생은 철학자들에게 영원한 <strong class=\"target-word\">수수께끼</strong>로 남아 있다."
+      },
+      {
+        "exam_en": "The teacher produced a tricky <strong class=\"target-word\">puzzle</strong> for students.",
+        "exam_ko": "선생님은 학생들에게 까다로운 <strong class=\"target-word\">퍼즐</strong>을 출제했다."
+      }
+    ]
+  },
+  {
+    "id": 596,
+    "origin": "overhear",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">overheard</strong> you chatting with the teacher.",
+        "exam_ko": "네가 선생님과 잡담하는 것을 우연히 <strong class=\"target-word\">들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 597,
+    "origin": "nod",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">nodded</strong> approvingly at his suggestion.",
+        "exam_ko": "그녀는 그의 제안에 좋다며 <strong class=\"target-word\">고개를 끄덕였다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">nodded</strong> in the affirmative without a word.",
+        "exam_ko": "그는 한 마디도 없이 찬성하여 <strong class=\"target-word\">고개를 끄덕였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 598,
+    "origin": "locate",
+    "examples": [
+      {
+        "exam_en": "They decided to <strong class=\"target-word\">locate</strong> the capital in Seoul.",
+        "exam_ko": "그들은 수도를 서울에 <strong class=\"target-word\">두기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">located</strong> himself behind the curtain to hide.",
+        "exam_ko": "그는 숨기 위해 커튼 뒤에 <strong class=\"target-word\">자리를 잡았다</strong>."
+      },
+      {
+        "exam_en": "Can you <strong class=\"target-word\">locate</strong> the missing file on the server?",
+        "exam_ko": "서버에서 누락된 파일을 <strong class=\"target-word\">찾을</strong> 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 599,
+    "origin": "insist",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">insisted</strong> on the justice of her claim.",
+        "exam_ko": "그녀는 자신의 요구가 정당하다고 <strong class=\"target-word\">강력히 주장했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">insisted</strong> on the accuracy of the data.",
+        "exam_ko": "그는 데이터가 정확하다고 <strong class=\"target-word\">강조했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 600,
+    "origin": "handle",
+    "examples": [
+      {
+        "exam_en": "She drank from a teacup with a broken <strong class=\"target-word\">handle</strong>.",
+        "exam_ko": "<strong class=\"target-word\">손잡이</strong>가 깨진 찻잔으로 그녀가 차를 마셨다."
+      },
+      {
+        "exam_en": "He leaned the broom <strong class=\"target-word\">handle</strong> against the wall.",
+        "exam_ko": "그는 빗자루 <strong class=\"target-word\">손잡이</strong>를 벽에 기댔다."
+      },
+      {
+        "exam_en": "She knows how to <strong class=\"target-word\">handle</strong> difficult situations calmly.",
+        "exam_ko": "그녀는 어려운 상황을 침착하게 <strong class=\"target-word\">처리하는</strong> 법을 안다."
+      }
+    ]
+  },
+  {
+    "id": 601,
+    "origin": "guard",
+    "examples": [
+      {
+        "exam_en": "The dog <strong class=\"target-word\">guards</strong> a flock of sheep every day.",
+        "exam_ko": "그 개는 매일 양떼를 <strong class=\"target-word\">지킨다</strong>."
+      },
+      {
+        "exam_en": "Two officers <strong class=\"target-word\">guarded</strong> the prisoners overnight.",
+        "exam_ko": "두 경관이 밤새 죄수들을 <strong class=\"target-word\">감시했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 602,
+    "origin": "explore",
+    "examples": [
+      {
+        "exam_en": "They set off to <strong class=\"target-word\">explore</strong> the interior of the island.",
+        "exam_ko": "그들은 섬의 내륙을 <strong class=\"target-word\">탐험하러</strong> 출발했다."
+      },
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">explore</strong> a new career path.",
+        "exam_ko": "그녀는 새로운 직업 경로를 <strong class=\"target-word\">개척하기로</strong> 결심했다."
+      }
+    ]
+  },
+  {
+    "id": 603,
+    "origin": "engage",
+    "examples": [
+      {
+        "exam_en": "Work fully <strong class=\"target-word\">engages</strong> her time every day.",
+        "exam_ko": "일이 매일 그녀의 시간을 완전히 <strong class=\"target-word\">채운다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">engaged</strong> the stranger in conversation.",
+        "exam_ko": "나는 초면인 사람을 대화에 <strong class=\"target-word\">끌어들였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 604,
+    "origin": "drum",
+    "examples": [
+      {
+        "exam_en": "He played the bass <strong class=\"target-word\">drum</strong> at the concert.",
+        "exam_ko": "그는 콘서트에서 큰 <strong class=\"target-word\">북</strong>을 연주했다."
+      },
+      {
+        "exam_en": "She practiced on a double <strong class=\"target-word\">drum</strong> kit all afternoon.",
+        "exam_ko": "그녀는 오후 내내 양면 <strong class=\"target-word\">드럼</strong> 세트를 연습했다."
+      }
+    ]
+  },
+  {
+    "id": 605,
+    "origin": "disappear",
+    "examples": [
+      {
+        "exam_en": "The ship slowly <strong class=\"target-word\">disappeared</strong> from sight.",
+        "exam_ko": "배가 천천히 시야에서 <strong class=\"target-word\">사라졌다</strong>."
+      },
+      {
+        "exam_en": "The little boy <strong class=\"target-word\">disappeared</strong> down the road.",
+        "exam_ko": "그 소년은 거리 끝 쪽에서 <strong class=\"target-word\">보이지 않게 되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 606,
+    "origin": "deserve",
+    "examples": [
+      {
+        "exam_en": "He truly <strong class=\"target-word\">deserves</strong> to be called a genius.",
+        "exam_ko": "그는 과연 천재라고 불릴 <strong class=\"target-word\">만한</strong> 인물이다."
+      },
+      {
+        "exam_en": "The boy well <strong class=\"target-word\">deserves</strong> praise for his effort.",
+        "exam_ko": "그 소년은 노력으로 충분히 칭찬받을 <strong class=\"target-word\">만하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 607,
+    "origin": "delight",
+    "examples": [
+      {
+        "exam_en": "She clapped her hands with <strong class=\"target-word\">delight</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">기쁨</strong>에 손뼉을 쳤다."
+      },
+      {
+        "exam_en": "To my <strong class=\"target-word\">delight</strong>, the surprise party was a success.",
+        "exam_ko": "나로서 매우 <strong class=\"target-word\">기쁘게도</strong>, 깜짝 파티가 성공했다."
+      }
+    ]
+  },
+  {
+    "id": 608,
+    "origin": "declare",
+    "examples": [
+      {
+        "exam_en": "The president <strong class=\"target-word\">declared</strong> a state of war yesterday.",
+        "exam_ko": "대통령은 어제 <strong class=\"target-word\">선전 포고를 했다</strong>."
+      },
+      {
+        "exam_en": "The government <strong class=\"target-word\">declared</strong> war on poverty.",
+        "exam_ko": "정부는 빈곤에 <strong class=\"target-word\">선전 포고했다</strong>."
+      }
+    ]
+  }
+]

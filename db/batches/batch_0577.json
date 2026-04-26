@@ -1,0 +1,246 @@
+[
+  {
+    "id": 19150,
+    "origin": "proviso",
+    "examples": [
+      {
+        "exam_en": "with the proviso that",
+        "exam_ko": "…이라는 조건(부)로."
+      }
+    ]
+  },
+  {
+    "id": 19152,
+    "origin": "prominence",
+    "examples": [
+      {
+        "exam_en": "come to prominence",
+        "exam_ko": "눈에 띄게 되다, 유명해지다"
+      },
+      {
+        "exam_en": "bring ‥ into prominence",
+        "exam_ko": "…을 눈에 띄게 하다"
+      }
+    ]
+  },
+  {
+    "id": 19154,
+    "origin": "proclamation",
+    "examples": [
+      {
+        "exam_en": "a proclamation of independence",
+        "exam_ko": "독립 선언"
+      },
+      {
+        "exam_en": "a royal proclamation",
+        "exam_ko": "왕의 포고문"
+      }
+    ]
+  },
+  {
+    "id": 19155,
+    "origin": "presuppose",
+    "examples": [
+      {
+        "exam_en": "presuppose that the results will be positive",
+        "exam_ko": "결과는 확실히 좋을 것이라고 예상하다"
+      },
+      {
+        "exam_en": "I presupposed that it was the truth.",
+        "exam_ko": "물론 그것이 진실이라고 생각했다."
+      }
+    ]
+  },
+  {
+    "id": 19156,
+    "origin": "prejudicial",
+    "examples": [
+      {
+        "exam_en": "a course of action prejudicial to a person's interests",
+        "exam_ko": "남에게 불리한 소송"
+      },
+      {
+        "exam_en": "a food additive prejudicial to health",
+        "exam_ko": "건강에 유해한 식품 첨가물."
+      }
+    ]
+  },
+  {
+    "id": 19157,
+    "origin": "postulate",
+    "examples": [
+      {
+        "exam_en": "the demands postulated",
+        "exam_ko": "요구 사항."
+      },
+      {
+        "exam_en": "The economist postulates that full employment is an impossible goal.",
+        "exam_ko": "그 경제학자는 완전 고용은 달성 불가능한 목표라고 주장한다."
+      }
+    ]
+  },
+  {
+    "id": 19158,
+    "origin": "postmark",
+    "examples": [
+      {
+        "exam_en": "The parcel was postmarked \"New York.\"",
+        "exam_ko": "소포에는 뉴욕의 소인이 찍혀 있었다."
+      }
+    ]
+  },
+  {
+    "id": 19163,
+    "origin": "polarize",
+    "examples": [
+      {
+        "exam_en": "a highly controversial issue which has polarized the country",
+        "exam_ko": "나라를 양분시킨 뜨거운 논쟁점."
+      }
+    ]
+  },
+  {
+    "id": 19164,
+    "origin": "polarity",
+    "examples": [
+      {
+        "exam_en": "the growing polarity between the left and right wings of the party",
+        "exam_ko": "당내의 좌파와 우파간의 증대하는 대립."
+      }
+    ]
+  },
+  {
+    "id": 19169,
+    "origin": "imitation",
+    "examples": [
+      {
+        "exam_en": "a pale imitation",
+        "exam_ko": "조잡한 모조품"
+      },
+      {
+        "exam_en": "Beware of poor imitations.",
+        "exam_ko": "(게시·광고) 가짜에 주의."
+      }
+    ]
+  },
+  {
+    "id": 19172,
+    "origin": "hysteria",
+    "examples": [
+      {
+        "exam_en": "mass hysteria",
+        "exam_ko": "집단 히스테리"
+      },
+      {
+        "exam_en": "He suffers from hysteria occasionally.",
+        "exam_ko": "그는 이따금 히스테리로 고생한다."
+      }
+    ]
+  },
+  {
+    "id": 19175,
+    "origin": "humanize",
+    "examples": [
+      {
+        "exam_en": "a humanized approach to science",
+        "exam_ko": "과학에의 인도적 접근"
+      },
+      {
+        "exam_en": "humanize the tyrant",
+        "exam_ko": "폭군을 누그러지게 하다"
+      }
+    ]
+  },
+  {
+    "id": 19182,
+    "origin": "heartbeat",
+    "examples": [
+      {
+        "exam_en": "irregular heartbeats",
+        "exam_ko": "부정맥."
+      }
+    ]
+  },
+  {
+    "id": 19183,
+    "origin": "handicap",
+    "examples": [
+      {
+        "exam_en": "assign a handicap",
+        "exam_ko": "핸디캡을 주다."
+      },
+      {
+        "exam_en": "a physical handicap",
+        "exam_ko": "신체[정신] 장애"
+      }
+    ]
+  },
+  {
+    "id": 19187,
+    "origin": "gustatory",
+    "examples": [
+      {
+        "exam_en": "gustatory buds",
+        "exam_ko": "(혀의) 미뢰(味蕾). (또는 gus·ta·tive [gΛstətiv])"
+      }
+    ]
+  },
+  {
+    "id": 19191,
+    "origin": "generously",
+    "examples": [
+      {
+        "exam_en": "He generously offered to give me a ticket to the game.",
+        "exam_ko": "그는 친절하게도 그 경기의 티켓을 나에게 주겠다고 말했다."
+      }
+    ]
+  },
+  {
+    "id": 19206,
+    "origin": "judicious",
+    "examples": [
+      {
+        "exam_en": "judicious handling of the situation",
+        "exam_ko": "사태에 대한 신중한 대처."
+      },
+      {
+        "exam_en": "She made a judicious decision after carefully considering all the options.",
+        "exam_ko": "그녀는 모든 옵션을 신중하게 고려한 뒤 분별력 있는 결정을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 19209,
+    "origin": "irreverence",
+    "examples": [
+      {
+        "exam_en": "treat him with irreverence",
+        "exam_ko": "그를 경멸하다."
+      }
+    ]
+  },
+  {
+    "id": 19214,
+    "origin": "intersperse",
+    "examples": [
+      {
+        "exam_en": "flowers interspersed among the grass",
+        "exam_ko": "잔디 여기저기에 배치된 꽃."
+      },
+      {
+        "exam_en": "intersperse one's talk with good humor",
+        "exam_ko": "재치 있는 유머를 틈틈이 끼워 이야기에 변화를 주다."
+      }
+    ]
+  },
+  {
+    "id": 19215,
+    "origin": "intercity",
+    "examples": [
+      {
+        "exam_en": "an intercity train service",
+        "exam_ko": "(도중에 정차하지 않는) 도시간 급행 열차편."
+      }
+    ]
+  }
+]

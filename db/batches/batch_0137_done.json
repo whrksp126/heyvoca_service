@@ -1,0 +1,278 @@
+[
+  {
+    "id": 2943,
+    "origin": "disapprove",
+    "examples": [
+      {
+        "exam_en": "His proposal was <strong class=\"target-word\">disapproved</strong> by the committee.",
+        "exam_ko": "그의 제안은 위원회에서 <strong class=\"target-word\">찬성을 얻지 못했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">disapprove</strong> of smoking in public places.",
+        "exam_ko": "나는 공공장소에서의 흡연을 <strong class=\"target-word\">반대한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2944,
+    "origin": "wit",
+    "examples": [
+      {
+        "exam_en": "You can live on your <strong class=\"target-word\">wits</strong> alone.",
+        "exam_ko": "그 <strong class=\"target-word\">재치</strong>만으로도 충분히 살아갈 수 있다."
+      },
+      {
+        "exam_en": "That man doesn't have the <strong class=\"target-word\">wit</strong> to tie his shoes.",
+        "exam_ko": "저 사람은 신발끈도 못 맬 <strong class=\"target-word\">지능</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2945,
+    "origin": "hired",
+    "examples": [
+      {
+        "exam_en": "The gang used a <strong class=\"target-word\">hired</strong> assassin for the job.",
+        "exam_ko": "그 조직은 그 일에 <strong class=\"target-word\">고용된</strong> 자객을 썼다."
+      },
+      {
+        "exam_en": "They drove a <strong class=\"target-word\">hired</strong> car to the airport.",
+        "exam_ko": "그들은 <strong class=\"target-word\">임대한</strong> 차를 타고 공항에 갔다."
+      }
+    ]
+  },
+  {
+    "id": 2946,
+    "origin": "province",
+    "examples": [
+      {
+        "exam_en": "She grew up in the <strong class=\"target-word\">province</strong> of Quebec.",
+        "exam_ko": "그녀는 퀘벡 <strong class=\"target-word\">주</strong>에서 자랐다."
+      },
+      {
+        "exam_en": "Ethics falls within the <strong class=\"target-word\">province</strong> of philosophy.",
+        "exam_ko": "윤리학은 철학의 <strong class=\"target-word\">분야</strong>에 속한다."
+      }
+    ]
+  },
+  {
+    "id": 2947,
+    "origin": "forge",
+    "examples": [
+      {
+        "exam_en": "The blacksmith <strong class=\"target-word\">forged</strong> a sword in his shop.",
+        "exam_ko": "대장장이는 가게에서 검을 <strong class=\"target-word\">단조했다</strong>."
+      },
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">forging</strong> a check.",
+        "exam_ko": "그는 수표를 <strong class=\"target-word\">위조한</strong> 혐의로 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 2948,
+    "origin": "choir",
+    "examples": [
+      {
+        "exam_en": "The string section leads the orchestra <strong class=\"target-word\">choir</strong>.",
+        "exam_ko": "현악 파트가 오케스트라 <strong class=\"target-word\">합창단</strong>을 이끈다."
+      },
+      {
+        "exam_en": "She sings in the school <strong class=\"target-word\">choir</strong>.",
+        "exam_ko": "그녀는 학교 <strong class=\"target-word\">합창단</strong>에서 노래를 한다."
+      }
+    ]
+  },
+  {
+    "id": 2950,
+    "origin": "statement",
+    "examples": [
+      {
+        "exam_en": "She made a <strong class=\"target-word\">statement</strong> that the contract was illegal.",
+        "exam_ko": "그녀는 그 계약이 위법이라는 <strong class=\"target-word\">성명</strong>을 발표했다."
+      },
+      {
+        "exam_en": "The president made an official <strong class=\"target-word\">statement</strong> to the press.",
+        "exam_ko": "대통령은 언론에 공식 <strong class=\"target-word\">성명</strong>을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 2951,
+    "origin": "teller",
+    "examples": [
+      {
+        "exam_en": "He is a gifted <strong class=\"target-word\">teller</strong> of stories.",
+        "exam_ko": "그는 재능 있는 이야기 <strong class=\"target-word\">작가</strong>이다."
+      },
+      {
+        "exam_en": "The bank <strong class=\"target-word\">teller</strong> processed my deposit quickly.",
+        "exam_ko": "은행 <strong class=\"target-word\">창구 직원</strong>이 내 입금을 빠르게 처리했다."
+      }
+    ]
+  },
+  {
+    "id": 2952,
+    "origin": "thrill",
+    "examples": [
+      {
+        "exam_en": "The horror film <strong class=\"target-word\">thrilled</strong> everyone with fear.",
+        "exam_ko": "공포 영화는 모두를 두려움으로 <strong class=\"target-word\">오싹하게 했다</strong>."
+      },
+      {
+        "exam_en": "The basketball game <strong class=\"target-word\">thrilled</strong> the audience.",
+        "exam_ko": "농구 경기는 관중들을 <strong class=\"target-word\">열광시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2953,
+    "origin": "departure",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">departure</strong> time was delayed by one hour.",
+        "exam_ko": "<strong class=\"target-word\">출발</strong> 시간이 한 시간 지연되었다."
+      },
+      {
+        "exam_en": "She waved goodbye at the moment of his <strong class=\"target-word\">departure</strong>.",
+        "exam_ko": "그녀는 그의 <strong class=\"target-word\">출발</strong> 순간에 손을 흔들었다."
+      }
+    ]
+  },
+  {
+    "id": 2954,
+    "origin": "abroad",
+    "examples": [
+      {
+        "exam_en": "The company operates both at home and <strong class=\"target-word\">abroad</strong>.",
+        "exam_ko": "그 회사는 국내외 모두에서 <strong class=\"target-word\">해외</strong> 사업을 운영한다."
+      },
+      {
+        "exam_en": "She has lived <strong class=\"target-word\">abroad</strong> for three years.",
+        "exam_ko": "그녀는 3년째 <strong class=\"target-word\">해외에서</strong> 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2955,
+    "origin": "rob",
+    "examples": [
+      {
+        "exam_en": "Two men tried to <strong class=\"target-word\">rob</strong> a bank downtown.",
+        "exam_ko": "두 남자가 시내 은행을 <strong class=\"target-word\">강탈하려</strong> 했다."
+      },
+      {
+        "exam_en": "The thief <strong class=\"target-word\">robbed</strong> the safe overnight.",
+        "exam_ko": "도둑은 밤사이 금고를 <strong class=\"target-word\">털었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2957,
+    "origin": "tryout",
+    "examples": [
+      {
+        "exam_en": "I am so nervous about this <strong class=\"target-word\">tryout</strong>.",
+        "exam_ko": "이 <strong class=\"target-word\">오디션</strong> 때문에 너무 떨려요."
+      },
+      {
+        "exam_en": "He passed the <strong class=\"target-word\">tryout</strong> for the school team.",
+        "exam_ko": "그는 학교 팀 <strong class=\"target-word\">선발 시험</strong>을 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 2959,
+    "origin": "equipment",
+    "examples": [
+      {
+        "exam_en": "She bought new tennis <strong class=\"target-word\">equipment</strong> last week.",
+        "exam_ko": "그녀는 지난주에 새 테니스 <strong class=\"target-word\">용품</strong>을 샀다."
+      },
+      {
+        "exam_en": "The lab has modern <strong class=\"target-word\">equipment</strong> for research.",
+        "exam_ko": "실험실에는 연구용 최신 <strong class=\"target-word\">설비</strong>가 갖춰져 있다."
+      }
+    ]
+  },
+  {
+    "id": 2960,
+    "origin": "faith",
+    "examples": [
+      {
+        "exam_en": "He is a man of deep <strong class=\"target-word\">faith</strong>.",
+        "exam_ko": "그는 깊은 <strong class=\"target-word\">신앙심</strong>을 가진 사람이다."
+      },
+      {
+        "exam_en": "She has <strong class=\"target-word\">faith</strong> in her team's ability.",
+        "exam_ko": "그녀는 팀의 능력을 <strong class=\"target-word\">신뢰한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2961,
+    "origin": "permanently",
+    "examples": [
+      {
+        "exam_en": "He applied for the right to live in Canada <strong class=\"target-word\">permanently</strong>.",
+        "exam_ko": "그는 캐나다에 <strong class=\"target-word\">영구적으로</strong> 거주할 권리를 신청했다."
+      },
+      {
+        "exam_en": "The injury <strong class=\"target-word\">permanently</strong> affected his vision.",
+        "exam_ko": "그 부상은 그의 시력에 <strong class=\"target-word\">영구적인</strong> 영향을 미쳤다."
+      }
+    ]
+  },
+  {
+    "id": 2962,
+    "origin": "hitchhike",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">hitchhiked</strong> from Baltimore to Washington.",
+        "exam_ko": "나는 볼티모어에서 워싱턴까지 <strong class=\"target-word\">편승하여</strong> 왔다."
+      }
+    ]
+  },
+  {
+    "id": 2964,
+    "origin": "dose",
+    "examples": [
+      {
+        "exam_en": "Take one <strong class=\"target-word\">dose</strong> of medicine after each meal.",
+        "exam_ko": "식후마다 약 한 <strong class=\"target-word\">복용량</strong>을 복용하세요."
+      },
+      {
+        "exam_en": "The patient received a lethal <strong class=\"target-word\">dose</strong> by mistake.",
+        "exam_ko": "환자는 실수로 <strong class=\"target-word\">치사량</strong>을 투여받았다."
+      }
+    ]
+  },
+  {
+    "id": 2966,
+    "origin": "spice",
+    "examples": [
+      {
+        "exam_en": "Cinnamon is a fragrant <strong class=\"target-word\">spice</strong> used in baking.",
+        "exam_ko": "계피는 제빵에 쓰이는 향기로운 <strong class=\"target-word\">향신료</strong>이다."
+      },
+      {
+        "exam_en": "This curry needs more <strong class=\"target-word\">spice</strong>.",
+        "exam_ko": "이 카레에는 <strong class=\"target-word\">향신료</strong>가 더 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2967,
+    "origin": "ditch",
+    "examples": [
+      {
+        "exam_en": "The water flows into the <strong class=\"target-word\">ditch</strong> by the field.",
+        "exam_ko": "물은 들판 옆 <strong class=\"target-word\">도랑</strong>으로 흘러 들어간다."
+      },
+      {
+        "exam_en": "Her yard was <strong class=\"target-word\">ditched</strong> all around with a dry channel.",
+        "exam_ko": "그녀의 마당은 마른 수로로 <strong class=\"target-word\">둘러파여</strong> 있었다."
+      }
+    ]
+  }
+]

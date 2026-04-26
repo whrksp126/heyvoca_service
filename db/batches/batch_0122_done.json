@@ -1,0 +1,286 @@
+[
+  {
+    "id": 2540,
+    "origin": "provincial",
+    "examples": [
+      {
+        "exam_en": "The case was handled by a <strong class=\"target-word\">provincial</strong> court.",
+        "exam_ko": "그 사건은 <strong class=\"target-word\">지방</strong> 법원에서 처리되었다."
+      },
+      {
+        "exam_en": "She works for a <strong class=\"target-word\">provincial</strong> newspaper.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">지방</strong> 신문사에서 일한다."
+      }
+    ]
+  },
+  {
+    "id": 2541,
+    "origin": "smart",
+    "examples": [
+      {
+        "exam_en": "The wound <strong class=\"target-word\">smarted</strong> for hours.",
+        "exam_ko": "상처가 몇 시간 동안 <strong class=\"target-word\">쑤셨다</strong>."
+      },
+      {
+        "exam_en": "His eyes <strong class=\"target-word\">smarted</strong> from the gas.",
+        "exam_ko": "가스 때문에 눈이 <strong class=\"target-word\">따가웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2542,
+    "origin": "endless",
+    "examples": [
+      {
+        "exam_en": "She grew tired of his <strong class=\"target-word\">endless</strong> complaints.",
+        "exam_ko": "그녀는 그의 <strong class=\"target-word\">끊임없는</strong> 불평에 지쳤다."
+      },
+      {
+        "exam_en": "The meeting was filled with <strong class=\"target-word\">endless</strong> chatter.",
+        "exam_ko": "회의는 <strong class=\"target-word\">끝없는</strong> 잡담으로 가득했다."
+      }
+    ]
+  },
+  {
+    "id": 2543,
+    "origin": "isolated",
+    "examples": [
+      {
+        "exam_en": "The soldiers defended the <strong class=\"target-word\">isolated</strong> fortress alone.",
+        "exam_ko": "병사들은 <strong class=\"target-word\">고립된</strong> 요새를 홀로 방어했다."
+      },
+      {
+        "exam_en": "They found an <strong class=\"target-word\">isolated</strong> village in the mountains.",
+        "exam_ko": "그들은 산속의 <strong class=\"target-word\">외딴</strong> 마을을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 2544,
+    "origin": "drunk",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">drunk</strong> on gin when they found him.",
+        "exam_ko": "그들이 그를 발견했을 때 그는 진에 <strong class=\"target-word\">취해</strong> 있었다."
+      },
+      {
+        "exam_en": "Tom came to work <strong class=\"target-word\">drunk</strong>.",
+        "exam_ko": "톰은 <strong class=\"target-word\">술에 취한</strong> 채로 출근했다."
+      }
+    ]
+  },
+  {
+    "id": 2545,
+    "origin": "geographical",
+    "examples": [
+      {
+        "exam_en": "The map shows the <strong class=\"target-word\">geographical</strong> features of the region.",
+        "exam_ko": "그 지도는 그 지역의 <strong class=\"target-word\">지리적</strong> 특징을 보여준다."
+      },
+      {
+        "exam_en": "They studied the <strong class=\"target-word\">geographical</strong> distribution of the species.",
+        "exam_ko": "그들은 그 종의 <strong class=\"target-word\">지리적</strong> 분포를 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 2546,
+    "origin": "dynamic",
+    "examples": [
+      {
+        "exam_en": "The country has a <strong class=\"target-word\">dynamic</strong> economy.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">역동적인</strong> 경제를 가지고 있다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">dynamic</strong> leader who inspires her team.",
+        "exam_ko": "그녀는 팀에 영감을 주는 <strong class=\"target-word\">역동적인</strong> 리더다."
+      }
+    ]
+  },
+  {
+    "id": 2547,
+    "origin": "boring",
+    "examples": [
+      {
+        "exam_en": "The students thought he was a <strong class=\"target-word\">boring</strong> teacher.",
+        "exam_ko": "학생들은 그가 <strong class=\"target-word\">지루한</strong> 선생님이라고 생각했다."
+      },
+      {
+        "exam_en": "The lecture was incredibly <strong class=\"target-word\">boring</strong>.",
+        "exam_ko": "그 강의는 정말 <strong class=\"target-word\">지루했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2548,
+    "origin": "forthcoming",
+    "examples": [
+      {
+        "exam_en": "The library announced several <strong class=\"target-word\">forthcoming</strong> books.",
+        "exam_ko": "도서관은 여러 <strong class=\"target-word\">근간</strong> 도서를 발표했다."
+      },
+      {
+        "exam_en": "Everyone is watching the <strong class=\"target-word\">forthcoming</strong> presidential election.",
+        "exam_ko": "모두가 <strong class=\"target-word\">다가오는</strong> 대통령 선거를 지켜보고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2549,
+    "origin": "unfortunate",
+    "examples": [
+      {
+        "exam_en": "Their marriage turned out to be <strong class=\"target-word\">unfortunate</strong>.",
+        "exam_ko": "그들의 결혼은 <strong class=\"target-word\">불행한</strong> 것으로 드러났다."
+      },
+      {
+        "exam_en": "The location was <strong class=\"target-word\">unfortunate</strong> for a new business.",
+        "exam_ko": "그 위치는 새 사업에 <strong class=\"target-word\">부적합한</strong> 곳이었다."
+      }
+    ]
+  },
+  {
+    "id": 2550,
+    "origin": "definite",
+    "examples": [
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">definite</strong> answer to the question.",
+        "exam_ko": "그녀는 질문에 <strong class=\"target-word\">명확한</strong> 답변을 했다."
+      },
+      {
+        "exam_en": "He had a <strong class=\"target-word\">definite</strong> reason for his decision.",
+        "exam_ko": "그는 자신의 결정에 <strong class=\"target-word\">분명한</strong> 이유가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2551,
+    "origin": "super",
+    "examples": [
+      {
+        "exam_en": "They stayed in a <strong class=\"target-word\">super</strong> deluxe hotel suite.",
+        "exam_ko": "그들은 <strong class=\"target-word\">초</strong>호화 호텔 스위트에 묵었다."
+      },
+      {
+        "exam_en": "The new model has <strong class=\"target-word\">super</strong> performance.",
+        "exam_ko": "신형 모델은 <strong class=\"target-word\">뛰어난</strong> 성능을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2552,
+    "origin": "notable",
+    "examples": [
+      {
+        "exam_en": "The discovery was a <strong class=\"target-word\">notable</strong> event in science.",
+        "exam_ko": "그 발견은 과학에서 <strong class=\"target-word\">주목할 만한</strong> 사건이었다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">notable</strong> doctor in the field.",
+        "exam_ko": "그는 그 분야에서 <strong class=\"target-word\">저명한</strong> 의사다."
+      }
+    ]
+  },
+  {
+    "id": 2553,
+    "origin": "indirect",
+    "examples": [
+      {
+        "exam_en": "We took an <strong class=\"target-word\">indirect</strong> route to avoid traffic.",
+        "exam_ko": "우리는 교통 체증을 피해 <strong class=\"target-word\">우회</strong> 경로를 택했다."
+      },
+      {
+        "exam_en": "The policy had an <strong class=\"target-word\">indirect</strong> influence on prices.",
+        "exam_ko": "그 정책은 물가에 <strong class=\"target-word\">간접적인</strong> 영향을 미쳤다."
+      }
+    ]
+  },
+  {
+    "id": 2554,
+    "origin": "stiff",
+    "examples": [
+      {
+        "exam_en": "He wore a shirt with a <strong class=\"target-word\">stiff</strong> collar.",
+        "exam_ko": "그는 <strong class=\"target-word\">빳빳한</strong> 칼라가 달린 셔츠를 입었다."
+      },
+      {
+        "exam_en": "My shoulders feel <strong class=\"target-word\">stiff</strong> after sitting all day.",
+        "exam_ko": "하루 종일 앉아 있었더니 어깨가 <strong class=\"target-word\">뻣뻣하다</strong>."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">stiff</strong> breeze made walking difficult.",
+        "exam_ko": "<strong class=\"target-word\">강한</strong> 바람이 걷기를 어렵게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 2555,
+    "origin": "wealthy",
+    "examples": [
+      {
+        "exam_en": "She grew up in a <strong class=\"target-word\">wealthy</strong> family.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">부유한</strong> 집안에서 자랐다."
+      },
+      {
+        "exam_en": "He wrote an essay <strong class=\"target-word\">wealthy</strong> in philosophical insight.",
+        "exam_ko": "그는 철학적 통찰이 <strong class=\"target-word\">풍부한</strong> 논문을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 2556,
+    "origin": "awkward",
+    "examples": [
+      {
+        "exam_en": "The new worker seemed <strong class=\"target-word\">awkward</strong> on the job.",
+        "exam_ko": "새 직원은 일하는 것이 <strong class=\"target-word\">서툴러</strong> 보였다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">awkward</strong> with his hands.",
+        "exam_ko": "그는 손재주가 <strong class=\"target-word\">서투르다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2557,
+    "origin": "lively",
+    "examples": [
+      {
+        "exam_en": "She walked with <strong class=\"target-word\">lively</strong> steps down the street.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">힘찬</strong> 걸음으로 거리를 걸었다."
+      },
+      {
+        "exam_en": "The class had a <strong class=\"target-word\">lively</strong> discussion on the topic.",
+        "exam_ko": "수업에서 그 주제에 대해 <strong class=\"target-word\">활발한</strong> 토론이 벌어졌다."
+      }
+    ]
+  },
+  {
+    "id": 2558,
+    "origin": "neutral",
+    "examples": [
+      {
+        "exam_en": "Switzerland remained a <strong class=\"target-word\">neutral</strong> state during the war.",
+        "exam_ko": "스위스는 전쟁 중에 <strong class=\"target-word\">중립</strong>국으로 남았다."
+      },
+      {
+        "exam_en": "The judge maintained a <strong class=\"target-word\">neutral</strong> attitude throughout the trial.",
+        "exam_ko": "판사는 재판 내내 <strong class=\"target-word\">공정한</strong> 태도를 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 2559,
+    "origin": "artistic",
+    "examples": [
+      {
+        "exam_en": "The painting has great <strong class=\"target-word\">artistic</strong> beauty.",
+        "exam_ko": "그 그림은 뛰어난 <strong class=\"target-word\">예술적</strong> 아름다움을 지니고 있다."
+      },
+      {
+        "exam_en": "The director achieved a stunning <strong class=\"target-word\">artistic</strong> effect.",
+        "exam_ko": "감독은 놀라운 <strong class=\"target-word\">예술적</strong> 효과를 만들어냈다."
+      }
+    ]
+  }
+]

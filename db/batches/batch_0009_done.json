@@ -1,0 +1,290 @@
+[
+  {
+    "id": 163,
+    "origin": "require",
+    "examples": [
+      {
+        "exam_en": "I shall <strong class=\"target-word\">require</strong> assistance with my luggage.",
+        "exam_ko": "짐을 운반하는 데 남의 도움이 <strong class=\"target-word\">필요하다</strong>."
+      },
+      {
+        "exam_en": "The floor <strong class=\"target-word\">requires</strong> washing.",
+        "exam_ko": "마루를 닦아야 <strong class=\"target-word\">하겠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 164,
+    "origin": "continue",
+    "examples": [
+      {
+        "exam_en": "The cold weather <strong class=\"target-word\">continued</strong> for three weeks.",
+        "exam_ko": "추운 날씨가 3주일이나 <strong class=\"target-word\">계속되었다</strong>."
+      },
+      {
+        "exam_en": "The custom <strong class=\"target-word\">continues</strong> today.",
+        "exam_ko": "그 풍습은 오늘날에도 <strong class=\"target-word\">계속되고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 165,
+    "origin": "add",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">added</strong> sugar to her coffee.",
+        "exam_ko": "그녀는 커피에 설탕을 <strong class=\"target-word\">넣었다</strong>."
+      },
+      {
+        "exam_en": "If you <strong class=\"target-word\">add</strong> eight and four you get twelve.",
+        "exam_ko": "8에 4를 <strong class=\"target-word\">더하면</strong> 12가 된다."
+      }
+    ]
+  },
+  {
+    "id": 166,
+    "origin": "change",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">changed</strong> his character over the years.",
+        "exam_ko": "그는 세월이 지나며 성격을 <strong class=\"target-word\">바꿨다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">changed</strong> her dress before the party.",
+        "exam_ko": "그녀는 파티 전에 복장을 <strong class=\"target-word\">바꿨다</strong>."
+      },
+      {
+        "exam_en": "The manager <strong class=\"target-word\">changed</strong> the schedule without notice.",
+        "exam_ko": "매니저는 예고 없이 일정을 <strong class=\"target-word\">변경했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 167,
+    "origin": "remember",
+    "examples": [
+      {
+        "exam_en": "He couldn't <strong class=\"target-word\">remember</strong> my address.",
+        "exam_ko": "그는 내 주소가 <strong class=\"target-word\">생각나지</strong> 않았다."
+      },
+      {
+        "exam_en": "I just <strong class=\"target-word\">remembered</strong> that I have to call him.",
+        "exam_ko": "그에게 전화해야 한다는 것이 지금 막 <strong class=\"target-word\">생각났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 168,
+    "origin": "remain",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">remained</strong> silent throughout the meeting.",
+        "exam_ko": "그는 회의 내내 침묵을 <strong class=\"target-word\">지켰다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">remained</strong> standing at the door.",
+        "exam_ko": "그녀는 문 앞에 우두커니 <strong class=\"target-word\">서 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 169,
+    "origin": "receive",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">received</strong> a letter from her friend.",
+        "exam_ko": "그녀는 친구로부터 편지를 <strong class=\"target-word\">받았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">received</strong> a special award at the ceremony.",
+        "exam_ko": "그는 시상식에서 특별상을 <strong class=\"target-word\">받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 170,
+    "origin": "win",
+    "examples": [
+      {
+        "exam_en": "Our team <strong class=\"target-word\">won</strong> the fight against rivals.",
+        "exam_ko": "우리 팀은 라이벌과의 싸움에서 <strong class=\"target-word\">이겼다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">won</strong> the bet and got the money.",
+        "exam_ko": "그는 내기에서 <strong class=\"target-word\">이겨</strong> 돈을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 171,
+    "origin": "develop",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">developed</strong> her communication skills over time.",
+        "exam_ko": "그녀는 시간이 지나며 소통 능력을 <strong class=\"target-word\">발전시켰다</strong>."
+      },
+      {
+        "exam_en": "Rice farming has been <strong class=\"target-word\">developed</strong> to a high degree in Korea.",
+        "exam_ko": "한국에서는 벼농사가 고도로 <strong class=\"target-word\">발달해</strong> 있다."
+      },
+      {
+        "exam_en": "The team <strong class=\"target-word\">developed</strong> site plans and cost estimates.",
+        "exam_ko": "팀은 대지계획과 견적서를 <strong class=\"target-word\">개발했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 172,
+    "origin": "describe",
+    "examples": [
+      {
+        "exam_en": "The witness <strong class=\"target-word\">described</strong> the event in detail.",
+        "exam_ko": "목격자는 그 사건을 자세히 <strong class=\"target-word\">묘사했다</strong>."
+      },
+      {
+        "exam_en": "Can you <strong class=\"target-word\">describe</strong> what happened to the police?",
+        "exam_ko": "경찰에게 무슨 일이 있었는지 <strong class=\"target-word\">설명할</strong> 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 173,
+    "origin": "agree",
+    "examples": [
+      {
+        "exam_en": "I completely <strong class=\"target-word\">agree</strong> with your opinion.",
+        "exam_ko": "나는 당신의 의견에 완전히 <strong class=\"target-word\">동의합니다</strong>."
+      },
+      {
+        "exam_en": "I don't <strong class=\"target-word\">agree</strong> with you on the matter.",
+        "exam_ko": "그 일에 관해서는 네게 <strong class=\"target-word\">찬성할</strong> 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 174,
+    "origin": "reach",
+    "examples": [
+      {
+        "exam_en": "They finally <strong class=\"target-word\">reached</strong> London after a long journey.",
+        "exam_ko": "그들은 긴 여행 끝에 마침내 런던에 <strong class=\"target-word\">도착했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">reached</strong> the summit before sunset.",
+        "exam_ko": "그녀는 해가 지기 전에 정상에 <strong class=\"target-word\">도달했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 175,
+    "origin": "build",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">built</strong> the island into a naval base.",
+        "exam_ko": "그들은 섬을 해군 기지로 <strong class=\"target-word\">만들었다</strong>."
+      },
+      {
+        "exam_en": "We will <strong class=\"target-word\">build</strong> a new house next year.",
+        "exam_ko": "우리는 내년에 새 집을 <strong class=\"target-word\">지을</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 176,
+    "origin": "involve",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">involved</strong> his friend in the quarrel.",
+        "exam_ko": "그는 친구를 싸움에 <strong class=\"target-word\">끌어들였다</strong>."
+      },
+      {
+        "exam_en": "She got <strong class=\"target-word\">involved</strong> in a heated argument.",
+        "exam_ko": "그녀는 격렬한 논쟁에 <strong class=\"target-word\">말려들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 177,
+    "origin": "return",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">returned</strong> from the trip exhausted.",
+        "exam_ko": "그는 여행에서 지쳐서 <strong class=\"target-word\">돌아왔다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">returned</strong> to her hometown after years.",
+        "exam_ko": "그녀는 몇 년 만에 고향으로 <strong class=\"target-word\">돌아왔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 178,
+    "origin": "force",
+    "examples": [
+      {
+        "exam_en": "No one can control the <strong class=\"target-word\">forces</strong> of nature.",
+        "exam_ko": "아무도 자연의 <strong class=\"target-word\">힘</strong>을 통제할 수 없다."
+      },
+      {
+        "exam_en": "The storm grew in <strong class=\"target-word\">force</strong> throughout the night.",
+        "exam_ko": "폭풍은 밤새 <strong class=\"target-word\">기세</strong>를 더하였다."
+      }
+    ]
+  },
+  {
+    "id": 179,
+    "origin": "reflect",
+    "examples": [
+      {
+        "exam_en": "Water <strong class=\"target-word\">reflects</strong> light beautifully.",
+        "exam_ko": "물은 빛을 아름답게 <strong class=\"target-word\">반사한다</strong>."
+      },
+      {
+        "exam_en": "This hall <strong class=\"target-word\">reflects</strong> sound very well.",
+        "exam_ko": "이 홀은 음을 매우 잘 <strong class=\"target-word\">반향한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 180,
+    "origin": "smile",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">smiled</strong> sweetly at the camera.",
+        "exam_ko": "그녀는 카메라를 향해 생긋 <strong class=\"target-word\">웃었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">smiled</strong> awkwardly at his boss's joke.",
+        "exam_ko": "그는 상사의 농담에 어색하게 <strong class=\"target-word\">웃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 181,
+    "origin": "admit",
+    "examples": [
+      {
+        "exam_en": "The guard <strong class=\"target-word\">admitted</strong> him into the room.",
+        "exam_ko": "경비원이 그를 방 안으로 <strong class=\"target-word\">들였다</strong>."
+      },
+      {
+        "exam_en": "The college <strong class=\"target-word\">admitted</strong> only a few students.",
+        "exam_ko": "그 대학은 소수의 학생만 <strong class=\"target-word\">입학을 허가했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 182,
+    "origin": "assume",
+    "examples": [
+      {
+        "exam_en": "Let's <strong class=\"target-word\">assume</strong> she wins the game.",
+        "exam_ko": "그녀가 그 게임에 이긴다고 <strong class=\"target-word\">가정하자</strong>."
+      },
+      {
+        "exam_en": "Life is tougher than you <strong class=\"target-word\">assume</strong>.",
+        "exam_ko": "인생은 네가 <strong class=\"target-word\">생각하는</strong> 것보다 훨씬 힘들다."
+      }
+    ]
+  }
+]

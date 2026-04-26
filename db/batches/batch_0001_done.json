@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1,
+    "origin": "interested",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">interested</strong> students asked many questions.",
+        "exam_ko": "<strong class=\"target-word\">관심이 있는</strong> 학생들이 많은 질문을 했다."
+      },
+      {
+        "exam_en": "She gave him an <strong class=\"target-word\">interested</strong> look.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">흥미로운</strong> 눈빛을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "origin": "angry",
+    "examples": [
+      {
+        "exam_en": "He left the room with an <strong class=\"target-word\">angry</strong> look.",
+        "exam_ko": "그는 <strong class=\"target-word\">성난</strong> 얼굴로 방을 나갔다."
+      },
+      {
+        "exam_en": "The delay made the customers very <strong class=\"target-word\">angry</strong>.",
+        "exam_ko": "지연으로 인해 고객들은 매우 <strong class=\"target-word\">화가 났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "origin": "upset",
+    "examples": [
+      {
+        "exam_en": "She accidentally <strong class=\"target-word\">upset</strong> the vase on the table.",
+        "exam_ko": "그녀는 실수로 테이블 위의 꽃병을 <strong class=\"target-word\">뒤엎었다</strong>."
+      },
+      {
+        "exam_en": "The boat was <strong class=\"target-word\">upset</strong> by the waves.",
+        "exam_ko": "파도에 휩쓸려 배는 <strong class=\"target-word\">전복됐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "origin": "happy",
+    "examples": [
+      {
+        "exam_en": "I'm <strong class=\"target-word\">happy</strong> to hear your voice.",
+        "exam_ko": "당신 목소리를 들으니 <strong class=\"target-word\">기쁘군요</strong>."
+      },
+      {
+        "exam_en": "I will be <strong class=\"target-word\">happy</strong> to attend your party.",
+        "exam_ko": "귀하의 파티에 <strong class=\"target-word\">기꺼이</strong> 참석하겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "origin": "tired",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">tired</strong> from a long day at work.",
+        "exam_ko": "그는 긴 하루 업무로 <strong class=\"target-word\">지쳐</strong> 있었다."
+      },
+      {
+        "exam_en": "You look really <strong class=\"target-word\">tired</strong> today.",
+        "exam_ko": "너 오늘 정말 <strong class=\"target-word\">피곤해</strong> 보인다."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "origin": "cold",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">cold</strong> weather kept everyone indoors.",
+        "exam_ko": "<strong class=\"target-word\">추운</strong> 날씨 탓에 모두 실내에 머물렀다."
+      },
+      {
+        "exam_en": "She ordered a <strong class=\"target-word\">cold</strong> drink after the run.",
+        "exam_ko": "그녀는 달리기 후 <strong class=\"target-word\">차가운</strong> 음료를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "origin": "exhausted",
+    "examples": [
+      {
+        "exam_en": "She felt completely <strong class=\"target-word\">exhausted</strong> after the hike.",
+        "exam_ko": "그녀는 하이킹 후 완전히 <strong class=\"target-word\">기진맥진했다</strong>."
+      },
+      {
+        "exam_en": "My patience was <strong class=\"target-word\">exhausted</strong> by his excuses.",
+        "exam_ko": "그의 변명으로 나의 인내심이 <strong class=\"target-word\">바닥났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "origin": "bored",
+    "examples": [
+      {
+        "exam_en": "He sat in class with a <strong class=\"target-word\">bored</strong> expression.",
+        "exam_ko": "그는 <strong class=\"target-word\">지루한</strong> 표정으로 수업에 앉아 있었다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">bored</strong> to death waiting for the bus.",
+        "exam_ko": "그녀는 버스를 기다리며 <strong class=\"target-word\">심심해서 죽을 지경이었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "origin": "sleepy",
+    "examples": [
+      {
+        "exam_en": "He let out a <strong class=\"target-word\">sleepy</strong> yawn during the meeting.",
+        "exam_ko": "그는 회의 중에 <strong class=\"target-word\">졸린</strong> 하품을 했다."
+      },
+      {
+        "exam_en": "She looked up with <strong class=\"target-word\">sleepy</strong> eyes.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">잠에 취한</strong> 눈으로 올려다보았다."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "origin": "depressed",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">depressed</strong> after losing his job.",
+        "exam_ko": "그는 직업을 잃고 나서 <strong class=\"target-word\">우울해졌다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">depressed</strong> by the sad news.",
+        "exam_ko": "그녀는 슬픈 소식에 <strong class=\"target-word\">풀이 죽었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "origin": "beautiful",
+    "examples": [
+      {
+        "exam_en": "The sunset over the ocean was truly <strong class=\"target-word\">beautiful</strong>.",
+        "exam_ko": "바다 위의 일몰은 정말 <strong class=\"target-word\">아름다웠다</strong>."
+      },
+      {
+        "exam_en": "The soup is really <strong class=\"target-word\">beautiful</strong>.",
+        "exam_ko": "수프 맛이 정말 <strong class=\"target-word\">훌륭하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "origin": "sad",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">sad</strong> feeling all day long.",
+        "exam_ko": "그녀는 하루 종일 <strong class=\"target-word\">슬픈</strong> 기분이었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">sad</strong> news left everyone in silence.",
+        "exam_ko": "<strong class=\"target-word\">비보</strong>에 모두 말을 잃었다."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "origin": "ashamed",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">ashamed</strong> of his own shortcomings.",
+        "exam_ko": "그는 자신의 결점을 몹시 <strong class=\"target-word\">부끄러워했다</strong>."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">ashamed</strong> for her friend's behavior.",
+        "exam_ko": "그녀는 친구의 행동으로 인해 <strong class=\"target-word\">창피함을 느꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "origin": "full",
+    "examples": [
+      {
+        "exam_en": "The glass was <strong class=\"target-word\">full</strong> to the brim with water.",
+        "exam_ko": "컵은 물이 넘칠 만큼 <strong class=\"target-word\">가득 차</strong> 있었다."
+      },
+      {
+        "exam_en": "The coaches were about two-thirds <strong class=\"target-word\">full</strong>.",
+        "exam_ko": "객차에는 약 3분의 2 정도 승객이 <strong class=\"target-word\">차 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "origin": "hungry",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">hungry</strong> child asked for more food.",
+        "exam_ko": "<strong class=\"target-word\">배를 곯은</strong> 아이가 더 달라고 했다."
+      },
+      {
+        "exam_en": "He looked <strong class=\"target-word\">hungry</strong> when lunch arrived.",
+        "exam_ko": "점심이 나왔을 때 그는 <strong class=\"target-word\">시장한</strong> 표정이었다."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "origin": "mad",
+    "examples": [
+      {
+        "exam_en": "He almost went <strong class=\"target-word\">mad</strong> from the constant noise.",
+        "exam_ko": "그는 끊임없는 소음에 거의 <strong class=\"target-word\">미칠</strong> 뻔했다."
+      },
+      {
+        "exam_en": "She was hopping <strong class=\"target-word\">mad</strong> about the cancellation.",
+        "exam_ko": "그녀는 취소 통보에 <strong class=\"target-word\">노발대발했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "origin": "thirsty",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">thirsty</strong> from working in the heat.",
+        "exam_ko": "그는 더위 속에서 일해서 <strong class=\"target-word\">목이 말랐다</strong>."
+      },
+      {
+        "exam_en": "I always feel <strong class=\"target-word\">thirsty</strong> after exercise.",
+        "exam_ko": "나는 운동 후에 항상 <strong class=\"target-word\">목이 마르다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "origin": "attractive",
+    "examples": [
+      {
+        "exam_en": "She wore an <strong class=\"target-word\">attractive</strong> smile throughout the event.",
+        "exam_ko": "그녀는 행사 내내 <strong class=\"target-word\">매력적인</strong> 미소를 지었다."
+      },
+      {
+        "exam_en": "He learned the way of making himself <strong class=\"target-word\">attractive</strong> to others.",
+        "exam_ko": "그는 남의 마음을 끄는 <strong class=\"target-word\">매력적인</strong> 사람이 되는 법을 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "origin": "hot",
+    "examples": [
+      {
+        "exam_en": "It was too <strong class=\"target-word\">hot</strong> to go outside today.",
+        "exam_ko": "오늘은 너무 <strong class=\"target-word\">더워서</strong> 밖에 나갈 수 없었다."
+      },
+      {
+        "exam_en": "Would you give me a <strong class=\"target-word\">hot</strong> coffee?",
+        "exam_ko": "<strong class=\"target-word\">뜨거운</strong> 커피 한 잔 주시겠습니까?"
+      },
+      {
+        "exam_en": "My mug tipped over, spilling <strong class=\"target-word\">hot</strong> coffee everywhere.",
+        "exam_ko": "머그잔이 넘어져서 <strong class=\"target-word\">뜨거운</strong> 커피가 사방에 쏟아졌다."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "origin": "surprised",
+    "examples": [
+      {
+        "exam_en": "She looked up with a <strong class=\"target-word\">surprised</strong> expression.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">깜짝 놀란</strong> 표정으로 올려다보았다."
+      },
+      {
+        "exam_en": "The boy looked very <strong class=\"target-word\">surprised</strong> by the news.",
+        "exam_ko": "소년은 그 소식에 매우 <strong class=\"target-word\">놀란</strong> 듯했다."
+      }
+    ]
+  }
+]

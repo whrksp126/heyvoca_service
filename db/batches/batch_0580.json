@@ -1,0 +1,246 @@
+[
+  {
+    "id": 19301,
+    "origin": "toothed",
+    "examples": [
+      {
+        "exam_en": "a toothed smile",
+        "exam_ko": "만면에 띤 웃음."
+      }
+    ]
+  },
+  {
+    "id": 19303,
+    "origin": "inconsistency",
+    "examples": [
+      {
+        "exam_en": "full of inconsistencies",
+        "exam_ko": "모순투성이의."
+      }
+    ]
+  },
+  {
+    "id": 19304,
+    "origin": "corporeal",
+    "examples": [
+      {
+        "exam_en": "corporeal capital",
+        "exam_ko": "유체 자본"
+      },
+      {
+        "exam_en": "corporeal property",
+        "exam_ko": "유체 재산[동산]"
+      }
+    ]
+  },
+  {
+    "id": 19305,
+    "origin": "unanimity",
+    "examples": [
+      {
+        "exam_en": "unanimity of opinion",
+        "exam_ko": "의견의 일치"
+      },
+      {
+        "exam_en": "the unanimity of the Cabinet",
+        "exam_ko": "전 각료의 의견 일치"
+      }
+    ]
+  },
+  {
+    "id": 19306,
+    "origin": "prosaic",
+    "examples": [
+      {
+        "exam_en": "a prosaic job",
+        "exam_ko": "지루한 일[연설]."
+      },
+      {
+        "exam_en": "His later poetry is often prosaic. ",
+        "exam_ko": "그의 후기 시는 종종 산문적이다."
+      },
+      {
+        "exam_en": "His later poetry is often prosaic.",
+        "exam_ko": "그의 후기 시는 종종 산문적이다."
+      }
+    ]
+  },
+  {
+    "id": 19307,
+    "origin": "bevy",
+    "examples": [
+      {
+        "exam_en": "a bevy of young girls",
+        "exam_ko": "젊은 여성의 한 무리."
+      }
+    ]
+  },
+  {
+    "id": 19308,
+    "origin": "humane",
+    "examples": [
+      {
+        "exam_en": "humane killing",
+        "exam_ko": "고통을 주지 않는 살인, 안락사"
+      },
+      {
+        "exam_en": "a man of humane character",
+        "exam_ko": "마음씨가 고운 사람"
+      }
+    ]
+  },
+  {
+    "id": 19310,
+    "origin": "whittle",
+    "examples": [
+      {
+        "exam_en": "whittle wood into a spoon",
+        "exam_ko": "나무를 깎아서 숟가락을 만들다."
+      },
+      {
+        "exam_en": "whittle down the power of",
+        "exam_ko": "…의 세력을 꺾다"
+      }
+    ]
+  },
+  {
+    "id": 19311,
+    "origin": "preordained",
+    "examples": [
+      {
+        "exam_en": "a preordained destiny",
+        "exam_ko": "숙명, 운명."
+      }
+    ]
+  },
+  {
+    "id": 19314,
+    "origin": "composed",
+    "examples": [
+      {
+        "exam_en": "in one's composed voice",
+        "exam_ko": "침착한 목소리로."
+      }
+    ]
+  },
+  {
+    "id": 19316,
+    "origin": "antecede",
+    "examples": [
+      {
+        "exam_en": "Beautiful sunny autumn days antecede a cold and often snowy winter.",
+        "exam_ko": "아름답고 화창한 가을날은 앞두고 있다. 춥고 종종 눈이 내리는 겨울을"
+      }
+    ]
+  },
+  {
+    "id": 19319,
+    "origin": "preponderate",
+    "examples": [
+      {
+        "exam_en": "Pain preponderates over pleasure in the world.",
+        "exam_ko": "이승에서는 고통이 즐거움을 능가한다."
+      }
+    ]
+  },
+  {
+    "id": 19320,
+    "origin": "deft",
+    "examples": [
+      {
+        "exam_en": "deft fingers",
+        "exam_ko": "재주 있는 손가락."
+      }
+    ]
+  },
+  {
+    "id": 19325,
+    "origin": "inveigle",
+    "examples": [
+      {
+        "exam_en": "inveigle a person into buying a bad stock",
+        "exam_ko": "남을 속여 불량주(株)를 사게 하다."
+      },
+      {
+        "exam_en": "inveigle a promise from a person",
+        "exam_ko": "남에게서 교묘하게 약속을 받아내다."
+      }
+    ]
+  },
+  {
+    "id": 19329,
+    "origin": "concomitant",
+    "examples": [
+      {
+        "exam_en": "a concomitant result",
+        "exam_ko": "부수적으로 생기는 결과"
+      },
+      {
+        "exam_en": "an increase in student numbers and the concomitant increase in class size",
+        "exam_ko": "학생수의 증가와 그에 부수하는 학급 규모의 증대."
+      }
+    ]
+  },
+  {
+    "id": 19330,
+    "origin": "terse",
+    "examples": [
+      {
+        "exam_en": "His terse reply ended the conversation.",
+        "exam_ko": "그의 간결한 답변이 대화를 끝나게 했다."
+      },
+      {
+        "exam_en": "Lincoln's Gettysburg Address is terse.",
+        "exam_ko": "링컨의 게티스버그 연설은 간결하다.\n"
+      },
+      {
+        "exam_en": "Lincoln's Gettysburg Address is terse.",
+        "exam_ko": "링컨의 게티스버그 연설은 간결하다."
+      }
+    ]
+  },
+  {
+    "id": 19331,
+    "origin": "bog",
+    "examples": [
+      {
+        "exam_en": "The car got bogged down in the mud.",
+        "exam_ko": "그 차는 진흙탕에 빠져 꼼짝 못하게 되었다."
+      },
+      {
+        "exam_en": "Bog off!",
+        "exam_ko": "(영·구어) 나가라."
+      }
+    ]
+  },
+  {
+    "id": 19332,
+    "origin": "reverent",
+    "examples": [
+      {
+        "exam_en": "in a reverent manner",
+        "exam_ko": "경건하게."
+      }
+    ]
+  },
+  {
+    "id": 19333,
+    "origin": "pecuniary",
+    "examples": [
+      {
+        "exam_en": "pecuniary embarrassment",
+        "exam_ko": "재정난[정책]."
+      }
+    ]
+  },
+  {
+    "id": 19339,
+    "origin": "surmise",
+    "examples": [
+      {
+        "exam_en": "I surmised that she had told him of my difficulty.",
+        "exam_ko": "그녀가 내 곤경을 그에게 말했으리라고 추측했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "id": 9403,
+    "origin": "accomplished",
+    "examples": [
+      {
+        "exam_en": "The deal became an <strong class=\"target-word\">accomplished</strong> fact.",
+        "exam_ko": "그 거래는 <strong class=\"target-word\">기정</strong> 사실이 되었다."
+      },
+      {
+        "exam_en": "She is an <strong class=\"target-word\">accomplished</strong> artist.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">숙달된</strong> 예술가다."
+      }
+    ]
+  },
+  {
+    "id": 9404,
+    "origin": "pointless",
+    "examples": [
+      {
+        "exam_en": "His remark was completely <strong class=\"target-word\">pointless</strong>.",
+        "exam_ko": "그의 말은 완전히 <strong class=\"target-word\">무의미했다</strong>."
+      },
+      {
+        "exam_en": "It's <strong class=\"target-word\">pointless</strong> to argue about it now.",
+        "exam_ko": "지금 그것에 대해 논쟁하는 건 <strong class=\"target-word\">무의미하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9405,
+    "origin": "disable",
+    "examples": [
+      {
+        "exam_en": "A fall <strong class=\"target-word\">disabled</strong> him from walking.",
+        "exam_ko": "낙상으로 그는 걸을 수 <strong class=\"target-word\">없게 되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9406,
+    "origin": "retaliation",
+    "examples": [
+      {
+        "exam_en": "The attack was carried out in <strong class=\"target-word\">retaliation</strong> for the bombing.",
+        "exam_ko": "그 공격은 폭격에 대한 <strong class=\"target-word\">보복</strong>으로 행해졌다."
+      }
+    ]
+  },
+  {
+    "id": 9408,
+    "origin": "coordinate",
+    "examples": [
+      {
+        "exam_en": "The two departments have <strong class=\"target-word\">coordinate</strong> authority.",
+        "exam_ko": "두 부서는 <strong class=\"target-word\">동등한</strong> 권한을 갖는다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">coordinate</strong> in rank with me.",
+        "exam_ko": "그는 나와 <strong class=\"target-word\">같은</strong> 계급이다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">coordinated</strong> efforts to finish the project.",
+        "exam_ko": "그들은 프로젝트를 마치기 위해 협력을 <strong class=\"target-word\">조율했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9411,
+    "origin": "licensed",
+    "examples": [
+      {
+        "exam_en": "He carried a <strong class=\"target-word\">licensed</strong> gun.",
+        "exam_ko": "그는 <strong class=\"target-word\">허가받은</strong> 총을 소지했다."
+      },
+      {
+        "exam_en": "This shop is a <strong class=\"target-word\">licensed</strong> retailer.",
+        "exam_ko": "이 가게는 <strong class=\"target-word\">허가받은</strong> 판매점이다."
+      }
+    ]
+  },
+  {
+    "id": 9412,
+    "origin": "finest",
+    "examples": [
+      {
+        "exam_en": "The officers are the city's <strong class=\"target-word\">finest</strong>.",
+        "exam_ko": "그 경찰관들은 시의 <strong class=\"target-word\">최고</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 9413,
+    "origin": "intriguing",
+    "examples": [
+      {
+        "exam_en": "She raised an <strong class=\"target-word\">intriguing</strong> question.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">흥미로운</strong> 질문을 제기했다."
+      }
+    ]
+  },
+  {
+    "id": 9414,
+    "origin": "capricious",
+    "examples": [
+      {
+        "exam_en": "My <strong class=\"target-word\">capricious</strong> boss changes plans every day.",
+        "exam_ko": "우리 <strong class=\"target-word\">변덕스러운</strong> 상사는 매일 계획을 바꾼다."
+      },
+      {
+        "exam_en": "She is known for her <strong class=\"target-word\">capricious</strong> decisions.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">변덕스러운</strong> 결정으로 유명하다."
+      },
+      {
+        "exam_en": "Spring weather is often <strong class=\"target-word\">capricious</strong> and unpredictable.",
+        "exam_ko": "봄 날씨는 종종 <strong class=\"target-word\">변덕스럽고</strong> 예측하기 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 9415,
+    "origin": "relatively",
+    "examples": [
+      {
+        "exam_en": "The task was <strong class=\"target-word\">relatively</strong> simple.",
+        "exam_ko": "그 작업은 <strong class=\"target-word\">비교적</strong> 단순했다."
+      },
+      {
+        "exam_en": "We are <strong class=\"target-word\">relatively</strong> happy with the results.",
+        "exam_ko": "우리는 결과에 <strong class=\"target-word\">비교적</strong> 만족한다."
+      }
+    ]
+  },
+  {
+    "id": 9416,
+    "origin": "pinpoint",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">pinpoint</strong> of light at the tunnel end.",
+        "exam_ko": "터널 끝에 <strong class=\"target-word\">아주 작은</strong> 불빛이 보였다."
+      },
+      {
+        "exam_en": "The team used <strong class=\"target-word\">pinpoint</strong> bombing to hit the target.",
+        "exam_ko": "팀은 목표물을 맞추기 위해 <strong class=\"target-word\">정밀</strong> 폭격을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 9420,
+    "origin": "custody",
+    "examples": [
+      {
+        "exam_en": "The child is in the <strong class=\"target-word\">custody</strong> of her mother.",
+        "exam_ko": "아이는 어머니의 <strong class=\"target-word\">보호</strong> 아래 있다."
+      },
+      {
+        "exam_en": "The court granted him <strong class=\"target-word\">custody</strong> of the children.",
+        "exam_ko": "법원은 그에게 아이들의 <strong class=\"target-word\">양육권</strong>을 부여했다."
+      }
+    ]
+  },
+  {
+    "id": 9421,
+    "origin": "neutralize",
+    "examples": [
+      {
+        "exam_en": "Baking soda can <strong class=\"target-word\">neutralize</strong> stomach acid.",
+        "exam_ko": "베이킹소다는 위산을 <strong class=\"target-word\">중화시킬</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 9422,
+    "origin": "array",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">arrayed</strong> people in a single line.",
+        "exam_ko": "그들은 사람들을 한 줄로 <strong class=\"target-word\">늘어세웠다</strong>."
+      },
+      {
+        "exam_en": "The army was <strong class=\"target-word\">arrayed</strong> against the enemy.",
+        "exam_ko": "군대는 적군에 맞서 전투 대열로 <strong class=\"target-word\">배치되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9423,
+    "origin": "quarterback",
+    "examples": [
+      {
+        "exam_en": "He is just a Monday morning <strong class=\"target-word\">quarterback</strong>.",
+        "exam_ko": "그는 그냥 사후에 충고하는 <strong class=\"target-word\">훈수꾼</strong>이다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">quarterbacked</strong> the entire remodeling project.",
+        "exam_ko": "그녀가 전체 리모델링 프로젝트를 <strong class=\"target-word\">지휘했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9424,
+    "origin": "tactical",
+    "examples": [
+      {
+        "exam_en": "This location is a key <strong class=\"target-word\">tactical</strong> point.",
+        "exam_ko": "이 위치는 중요한 <strong class=\"target-word\">전술상의</strong> 요점이다."
+      },
+      {
+        "exam_en": "They deployed a <strong class=\"target-word\">tactical</strong> nuclear weapon.",
+        "exam_ko": "그들은 <strong class=\"target-word\">전술</strong> 핵무기를 배치했다."
+      }
+    ]
+  },
+  {
+    "id": 9425,
+    "origin": "selling",
+    "examples": [
+      {
+        "exam_en": "This is our fastest-<strong class=\"target-word\">selling</strong> model.",
+        "exam_ko": "이것은 우리의 가장 잘 <strong class=\"target-word\">팔리는</strong> 모델이다."
+      }
+    ]
+  },
+  {
+    "id": 9428,
+    "origin": "unarmed",
+    "examples": [
+      {
+        "exam_en": "The country declared <strong class=\"target-word\">unarmed</strong> neutrality.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">비무장</strong> 중립을 선언했다."
+      },
+      {
+        "exam_en": "The suspect was <strong class=\"target-word\">unarmed</strong> during the arrest.",
+        "exam_ko": "용의자는 체포 당시 <strong class=\"target-word\">비무장</strong> 상태였다."
+      }
+    ]
+  },
+  {
+    "id": 9429,
+    "origin": "climbing",
+    "examples": [
+      {
+        "exam_en": "He enjoys rock <strong class=\"target-word\">climbing</strong> on weekends.",
+        "exam_ko": "그는 주말에 암벽 <strong class=\"target-word\">등반</strong>을 즐긴다."
+      }
+    ]
+  },
+  {
+    "id": 9430,
+    "origin": "authenticate",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">authenticated</strong> the signature on the check.",
+        "exam_ko": "그들은 수표의 서명을 <strong class=\"target-word\">감정했다</strong>."
+      },
+      {
+        "exam_en": "The painting was <strong class=\"target-word\">authenticated</strong> as a Matisse.",
+        "exam_ko": "그 그림은 마티스 작품으로 <strong class=\"target-word\">감정되었다</strong>."
+      }
+    ]
+  }
+]

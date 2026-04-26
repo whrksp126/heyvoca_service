@@ -221,10 +221,12 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
       {/* Header */}
-      <div className="
+      <div
+        data-page-header
+        className="
         relative
         flex items-center justify-between
-        h-[65px] 
+        h-[65px]
         pt-[20px] px-[16px] pb-[14px]
       ">
         <div className="flex items-center gap-[4px]">

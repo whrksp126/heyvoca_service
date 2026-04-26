@@ -1,0 +1,250 @@
+[
+  {
+    "id": 20912,
+    "origin": "disordered",
+    "examples": [
+      {
+        "exam_en": "emotionally disordered child",
+        "exam_ko": "정서 장애아."
+      }
+    ]
+  },
+  {
+    "id": 20913,
+    "origin": "fractional",
+    "examples": [
+      {
+        "exam_en": "fractional numbers",
+        "exam_ko": "분수."
+      },
+      {
+        "exam_en": "fractional currency",
+        "exam_ko": "소액 통화."
+      }
+    ]
+  },
+  {
+    "id": 20914,
+    "origin": "prejudiced",
+    "examples": [
+      {
+        "exam_en": "a prejudiced view against",
+        "exam_ko": "…에 대한 편견."
+      }
+    ]
+  },
+  {
+    "id": 20917,
+    "origin": "hale",
+    "examples": [
+      {
+        "exam_en": "He was haled into court by his employer.",
+        "exam_ko": "그는 고용주의 손으로 법정까지 끌려 나왔다."
+      }
+    ]
+  },
+  {
+    "id": 20918,
+    "origin": "universally",
+    "examples": [
+      {
+        "exam_en": "universally applicable",
+        "exam_ko": "무엇에든지 적용되는"
+      },
+      {
+        "exam_en": "universally acknowledged",
+        "exam_ko": "보편적으로 인정된."
+      }
+    ]
+  },
+  {
+    "id": 20920,
+    "origin": "substratum",
+    "examples": [
+      {
+        "exam_en": "have a substratum of fact",
+        "exam_ko": "사실에 입각하고 있다."
+      },
+      {
+        "exam_en": "a substratum of sand",
+        "exam_ko": "모래의 기층."
+      }
+    ]
+  },
+  {
+    "id": 20924,
+    "origin": "educated",
+    "examples": [
+      {
+        "exam_en": "educated people",
+        "exam_ko": "교육을 받은 사람들"
+      },
+      {
+        "exam_en": "self-educated",
+        "exam_ko": "독학의"
+      }
+    ]
+  },
+  {
+    "id": 20929,
+    "origin": "unbiased",
+    "examples": [
+      {
+        "exam_en": "an unbiased opinion",
+        "exam_ko": "편견 없는 의견"
+      },
+      {
+        "exam_en": "an unbiased estimator",
+        "exam_ko": "불편 추정량."
+      }
+    ]
+  },
+  {
+    "id": 20934,
+    "origin": "observable",
+    "examples": [
+      {
+        "exam_en": "an observable increase",
+        "exam_ko": "눈에 보이는 증가."
+      },
+      {
+        "exam_en": "an observable holiday",
+        "exam_ko": "경축일"
+      }
+    ]
+  },
+  {
+    "id": 20938,
+    "origin": "unrestrained",
+    "examples": [
+      {
+        "exam_en": "unrestrained anger",
+        "exam_ko": "억제되지 않는 분노."
+      }
+    ]
+  },
+  {
+    "id": 20939,
+    "origin": "thinly",
+    "examples": [
+      {
+        "exam_en": "a thinly veiled threat",
+        "exam_ko": "눈에 보이는 위협"
+      },
+      {
+        "exam_en": "a thinly staffed office",
+        "exam_ko": "직원이 충분치 않은 직장."
+      }
+    ]
+  },
+  {
+    "id": 20940,
+    "origin": "derivation",
+    "examples": [
+      {
+        "exam_en": "What is the derivation of this word?",
+        "exam_ko": "이 단어의 어원은 무엇입니까?"
+      }
+    ]
+  },
+  {
+    "id": 20942,
+    "origin": "blessing",
+    "examples": [
+      {
+        "exam_en": "a mixed blessing",
+        "exam_ko": "좋기도 하고 나쁘기도 한 것"
+      },
+      {
+        "exam_en": "by the blessing of God",
+        "exam_ko": "하느님의 은총으로"
+      }
+    ]
+  },
+  {
+    "id": 20945,
+    "origin": "valued",
+    "examples": [
+      {
+        "exam_en": "a valued heirloom",
+        "exam_ko": "귀중한 가보."
+      },
+      {
+        "exam_en": "a house valued at $150,000",
+        "exam_ko": "평가액 15만 달러의 집"
+      }
+    ]
+  },
+  {
+    "id": 20949,
+    "origin": "homogeneity",
+    "examples": [
+      {
+        "exam_en": "cultural homogeneity",
+        "exam_ko": "문화상의 균질성."
+      }
+    ]
+  },
+  {
+    "id": 20958,
+    "origin": "nether",
+    "examples": [
+      {
+        "exam_en": "the nether world",
+        "exam_ko": "지옥, 황천, 저승."
+      },
+      {
+        "exam_en": "one's nether garments",
+        "exam_ko": "바지"
+      }
+    ]
+  },
+  {
+    "id": 20963,
+    "origin": "continuity",
+    "examples": [
+      {
+        "exam_en": "a continuity announcer",
+        "exam_ko": "다음 프로그램을 소개하는 아나운서."
+      }
+    ]
+  },
+  {
+    "id": 20967,
+    "origin": "sunken",
+    "examples": [
+      {
+        "exam_en": "the treasure of a sunken ship",
+        "exam_ko": "침몰선의 보물."
+      },
+      {
+        "exam_en": "a sunken bathtub",
+        "exam_ko": "푹 파진 욕조"
+      }
+    ]
+  },
+  {
+    "id": 20968,
+    "origin": "nude",
+    "examples": [
+      {
+        "exam_en": "She posed nude for a photograph.",
+        "exam_ko": "그녀는 사진을 찍기 위해 누드로 자세를 취했다."
+      },
+      {
+        "exam_en": "an area nude of vegetation",
+        "exam_ko": "풀 한 포기도 없는 토지."
+      }
+    ]
+  },
+  {
+    "id": 20969,
+    "origin": "uncovered",
+    "examples": [
+      {
+        "exam_en": "an uncovered porch",
+        "exam_ko": "지붕 없는 현관."
+      }
+    ]
+  }
+]

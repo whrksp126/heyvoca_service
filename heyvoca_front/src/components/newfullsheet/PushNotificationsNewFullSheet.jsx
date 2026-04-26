@@ -118,7 +118,9 @@ const PushNotificationsNewFullSheet = () => {
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
-      <div className="
+      <div
+        data-page-header
+        className="
         relative
         flex items-center justify-between
         h-[55px]

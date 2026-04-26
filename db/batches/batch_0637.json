@@ -1,0 +1,266 @@
+[
+  {
+    "id": 22355,
+    "origin": "inoffensive",
+    "examples": [
+      {
+        "exam_en": "useful, inoffensive animals",
+        "exam_ko": "유용하고 해롭지 않은 동물."
+      }
+    ]
+  },
+  {
+    "id": 22356,
+    "origin": "nightly",
+    "examples": [
+      {
+        "exam_en": "nightly festival",
+        "exam_ko": "밤에 치르는 축제."
+      },
+      {
+        "exam_en": "nightly raids",
+        "exam_ko": "매일 밤의 습격."
+      }
+    ]
+  },
+  {
+    "id": 22358,
+    "origin": "proselyte",
+    "examples": [
+      {
+        "exam_en": "a proselyte to christianity",
+        "exam_ko": "크리스트교로의 개종."
+      },
+      {
+        "exam_en": "Christianity has always been a proselyting faith.",
+        "exam_ko": "그리스도교는 언제나 사람을 개종시키는 종교였다."
+      }
+    ]
+  },
+  {
+    "id": 22362,
+    "origin": "impudence",
+    "examples": [
+      {
+        "exam_en": "have the impudence to do",
+        "exam_ko": "뻔뻔스럽게도 …하다"
+      },
+      {
+        "exam_en": "None of your impudence!",
+        "exam_ko": "건방진 수작 마라."
+      }
+    ]
+  },
+  {
+    "id": 22368,
+    "origin": "showy",
+    "examples": [
+      {
+        "exam_en": "showy flowers",
+        "exam_ko": "화려한 꽃."
+      }
+    ]
+  },
+  {
+    "id": 22371,
+    "origin": "unhurried",
+    "examples": [
+      {
+        "exam_en": "an unhurried schedule",
+        "exam_ko": "여유 있는 일정"
+      },
+      {
+        "exam_en": "an unhurried manner",
+        "exam_ko": "태연자약하여 서두르지 않는 태도."
+      }
+    ]
+  },
+  {
+    "id": 22372,
+    "origin": "brotherhood",
+    "examples": [
+      {
+        "exam_en": "the medical brotherhood",
+        "exam_ko": "의료 협회."
+      },
+      {
+        "exam_en": "the legal brotherhood",
+        "exam_ko": "변호사[법조]단."
+      }
+    ]
+  },
+  {
+    "id": 22374,
+    "origin": "husky",
+    "examples": [
+      {
+        "exam_en": "The veterans are not veterans at all, but the huskiest set of young fellows. ",
+        "exam_ko": "퇴역군인들은 그저 퇴역군인들이 아니고, 근골이 강장한 젊은 패들이다."
+      },
+      {
+        "exam_en": "The veterans are not veterans at all, but the huskiest set of young fellows.",
+        "exam_ko": "퇴역군인들은 그저 퇴역군인들이 아니고, 근골이 강장한 젊은 패들이다."
+      }
+    ]
+  },
+  {
+    "id": 22378,
+    "origin": "crossing",
+    "examples": [
+      {
+        "exam_en": "have a good crossing",
+        "exam_ko": "잔잔한[거친] 바다를 건너다"
+      },
+      {
+        "exam_en": "No Crossing.",
+        "exam_ko": "(게시) 횡단 금지(※No Xing으로도 쓰임)."
+      }
+    ]
+  },
+  {
+    "id": 22384,
+    "origin": "offing",
+    "examples": [
+      {
+        "exam_en": "keep an offing",
+        "exam_ko": "계속하여 앞바다를 항해하다"
+      },
+      {
+        "exam_en": "gain an offing",
+        "exam_ko": "앞바다로 나가다"
+      }
+    ]
+  },
+  {
+    "id": 22387,
+    "origin": "upland",
+    "examples": [
+      {
+        "exam_en": "upland areas",
+        "exam_ko": "고지지방."
+      }
+    ]
+  },
+  {
+    "id": 22392,
+    "origin": "confute",
+    "examples": [
+      {
+        "exam_en": "confute one's opponent with facts",
+        "exam_ko": "사실을 들어 반론자를 끽소리도 못하게 하다."
+      }
+    ]
+  },
+  {
+    "id": 22393,
+    "origin": "sliding",
+    "examples": [
+      {
+        "exam_en": "sliding time",
+        "exam_ko": "근무 시간 자유 선택제(flex time)."
+      },
+      {
+        "exam_en": "a sliding seat",
+        "exam_ko": "(경조(競漕) 보트의) 미끄러져 움직이는 좌석."
+      }
+    ]
+  },
+  {
+    "id": 22395,
+    "origin": "impend",
+    "examples": [
+      {
+        "exam_en": "a large rock impending over the entrance",
+        "exam_ko": "입구 위에 내리덮여 있는 큰 바위."
+      },
+      {
+        "exam_en": "Rain impended.",
+        "exam_ko": "이제라도 금방 비가 올 듯했다."
+      }
+    ]
+  },
+  {
+    "id": 22399,
+    "origin": "asymptotic",
+    "examples": [
+      {
+        "exam_en": "an asymptotic circle",
+        "exam_ko": "점근원[곡선]"
+      },
+      {
+        "exam_en": "asymptotic series",
+        "exam_ko": "점근 급수."
+      }
+    ]
+  },
+  {
+    "id": 22410,
+    "origin": "parity",
+    "examples": [
+      {
+        "exam_en": "be on a parity with",
+        "exam_ko": "…과 동등[동격, 등량]이다"
+      },
+      {
+        "exam_en": "stand at parity",
+        "exam_ko": "등위[동등]이다."
+      }
+    ]
+  },
+  {
+    "id": 22419,
+    "origin": "furlough",
+    "examples": [
+      {
+        "exam_en": "be on furlough",
+        "exam_ko": "휴가 중이다"
+      },
+      {
+        "exam_en": "go home on furlough",
+        "exam_ko": "휴가로 귀국하다"
+      },
+      {
+        "exam_en": "2020 saw many aviation workers furloughed, while those still working risked falling ill.",
+        "exam_ko": "2020년에는 많은 항공업무 종사자들이 (코로나로) 임시해고를 당한 반면, 여전히 일하고 있던 종사자들은 (과로로) 병에 걸릴 위험에 직면했다."
+      }
+    ]
+  },
+  {
+    "id": 22420,
+    "origin": "stave",
+    "examples": [
+      {
+        "exam_en": "the staves of a barrel",
+        "exam_ko": "통널."
+      },
+      {
+        "exam_en": "The hull was staved in by the impact.",
+        "exam_ko": "충돌로 선체에 구멍이 났다."
+      }
+    ]
+  },
+  {
+    "id": 22425,
+    "origin": "pantoscopic",
+    "examples": [
+      {
+        "exam_en": "a pantoscopic camera",
+        "exam_ko": "전경 사진기(panoramic camera)."
+      }
+    ]
+  },
+  {
+    "id": 22432,
+    "origin": "yea",
+    "examples": [
+      {
+        "exam_en": "yea and",
+        "exam_ko": "아니 그뿐만 아니라, 게다가."
+      },
+      {
+        "exam_en": "Enough of your yeas and nays and maybes.",
+        "exam_ko": "너의 이도저도 아닌 태도는 이제 질색이다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "id": 43889,
+    "origin": "forgivable",
+    "examples": [
+      {
+        "exam_en": "That mistake is forgivable.",
+        "exam_ko": "그 실수는 용서받을 수 있다(※사람을 주어로 하여 The man is forgivable.이라고는 하지 않음)."
+      }
+    ]
+  },
+  {
+    "id": 43893,
+    "origin": "smelling",
+    "examples": [
+      {
+        "exam_en": "good-smelling",
+        "exam_ko": "좋은 냄새가 나는."
+      }
+    ]
+  },
+  {
+    "id": 43944,
+    "origin": "incomparably",
+    "examples": [
+      {
+        "exam_en": "This model is incomparably better than the others.",
+        "exam_ko": "이 모델은 다른 것들과는 비교가 안 될 정도로 좋다."
+      }
+    ]
+  },
+  {
+    "id": 43948,
+    "origin": "pratfall",
+    "examples": [
+      {
+        "exam_en": "take a pratfall on",
+        "exam_ko": "…에 미끄러져 엉덩방아를 찧다."
+      }
+    ]
+  },
+  {
+    "id": 43972,
+    "origin": "intra",
+    "examples": [
+      {
+        "exam_en": "intracardiac",
+        "exam_ko": "심장 내의"
+      },
+      {
+        "exam_en": "intravascular",
+        "exam_ko": "혈관 내에서 일어나는"
+      }
+    ]
+  },
+  {
+    "id": 43975,
+    "origin": "crypto",
+    "examples": [
+      {
+        "exam_en": "crypto-Christian",
+        "exam_ko": "지하에 숨은 크리스트교 신자"
+      },
+      {
+        "exam_en": "cryptopsychics",
+        "exam_ko": "심령(心靈)."
+      }
+    ]
+  },
+  {
+    "id": 43986,
+    "origin": "gyro",
+    "examples": [
+      {
+        "exam_en": "gyroscope",
+        "exam_ko": "회전계."
+      }
+    ]
+  },
+  {
+    "id": 44003,
+    "origin": "indiscernible",
+    "examples": [
+      {
+        "exam_en": "an indiscernible difference",
+        "exam_ko": "분간할 수 없을 만큼의 차이"
+      },
+      {
+        "exam_en": "an indiscernible shade",
+        "exam_ko": "식별할 수 없는 음영."
+      }
+    ]
+  },
+  {
+    "id": 44016,
+    "origin": "unapproachable",
+    "examples": [
+      {
+        "exam_en": "He is a fine teacher, but as a person, rather unapproachable.",
+        "exam_ko": "그는 훌륭한 선생이지만 인간으로서는 친근감이 안 든다."
+      },
+      {
+        "exam_en": "unapproachable talent",
+        "exam_ko": "비길 데 없는 재능."
+      }
+    ]
+  },
+  {
+    "id": 44032,
+    "origin": "sou",
+    "examples": [
+      {
+        "exam_en": "He hasn't a sou.",
+        "exam_ko": "그는 무일푼이다."
+      }
+    ]
+  },
+  {
+    "id": 44042,
+    "origin": "sahib",
+    "examples": [
+      {
+        "exam_en": "Colonel Sahib",
+        "exam_ko": "대령님"
+      },
+      {
+        "exam_en": "Smith Sahib",
+        "exam_ko": "스미스님."
+      }
+    ]
+  },
+  {
+    "id": 44062,
+    "origin": "expansile",
+    "examples": [
+      {
+        "exam_en": "expansile force",
+        "exam_ko": "팽창력[운동]."
+      }
+    ]
+  },
+  {
+    "id": 44076,
+    "origin": "finespun",
+    "examples": [
+      {
+        "exam_en": "finespun cloth",
+        "exam_ko": "발이 고운 피륙"
+      },
+      {
+        "exam_en": "a finespun novel",
+        "exam_ko": "정밀하게 구성된 소설."
+      }
+    ]
+  },
+  {
+    "id": 44080,
+    "origin": "propagandize",
+    "examples": [
+      {
+        "exam_en": "propagandize voters",
+        "exam_ko": "선거 운동을 하다"
+      },
+      {
+        "exam_en": "propagandize a community",
+        "exam_ko": "어떤 사회[나라]에 포교하다."
+      }
+    ]
+  },
+  {
+    "id": 44096,
+    "origin": "noob",
+    "examples": [
+      {
+        "exam_en": "the hostility of hardcore gamers towards noobs",
+        "exam_ko": "초보자에 대한 하드코어 게이머들의 적의."
+      }
+    ]
+  },
+  {
+    "id": 44108,
+    "origin": "refit",
+    "examples": [
+      {
+        "exam_en": "under  refit",
+        "exam_ko": "개장중에."
+      }
+    ]
+  },
+  {
+    "id": 44118,
+    "origin": "oiled",
+    "examples": [
+      {
+        "exam_en": "oiled paper",
+        "exam_ko": "기름 종이, 유지."
+      }
+    ]
+  },
+  {
+    "id": 44136,
+    "origin": "virginity",
+    "examples": [
+      {
+        "exam_en": "lose one's virginity",
+        "exam_ko": "처녀성을 잃다."
+      }
+    ]
+  },
+  {
+    "id": 44140,
+    "origin": "morpho",
+    "examples": [
+      {
+        "exam_en": "morphosis",
+        "exam_ko": "형태 형성 과정."
+      }
+    ]
+  },
+  {
+    "id": 44155,
+    "origin": "unglued",
+    "examples": [
+      {
+        "exam_en": "come unglued",
+        "exam_ko": "(미·비격식) 격노하다. 크게 화를 내다; ＜계획 등이＞ 실패하다"
+      },
+      {
+        "exam_en": "become unglued",
+        "exam_ko": "화가 나서 어쩔 줄 모르다, 발끈하다; 실패하다."
+      }
+    ]
+  }
+]

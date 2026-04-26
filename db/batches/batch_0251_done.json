@@ -1,0 +1,270 @@
+[
+  {
+    "id": 6055,
+    "origin": "rat",
+    "examples": [
+      {
+        "exam_en": "He was drunk as a <strong class=\"target-word\">rat</strong> last night.",
+        "exam_ko": "그는 어젯밤 <strong class=\"target-word\">고주망태가</strong> 되었다."
+      },
+      {
+        "exam_en": "She came home looking like a drowned <strong class=\"target-word\">rat</strong>.",
+        "exam_ko": "그녀는 물에 빠진 <strong class=\"target-word\">생쥐처럼</strong> 흠뻑 젖어 집에 왔다."
+      }
+    ]
+  },
+  {
+    "id": 6056,
+    "origin": "pox",
+    "examples": [
+      {
+        "exam_en": "The child caught chicken <strong class=\"target-word\">pox</strong> at school.",
+        "exam_ko": "그 아이는 학교에서 <strong class=\"target-word\">수두</strong>에 걸렸다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">pox</strong> on those who spread false rumors!",
+        "exam_ko": "거짓 소문을 퍼뜨리는 자들에게 <strong class=\"target-word\">재앙이</strong> 있을지어다!"
+      }
+    ]
+  },
+  {
+    "id": 6059,
+    "origin": "overwhelm",
+    "examples": [
+      {
+        "exam_en": "The army was <strong class=\"target-word\">overwhelmed</strong> by the guerilla troops.",
+        "exam_ko": "그 군대는 게릴라 부대에 의해 <strong class=\"target-word\">격파되었다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">overwhelmed</strong> by grief.",
+        "exam_ko": "그는 비탄에 <strong class=\"target-word\">잠겨</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6065,
+    "origin": "equinox",
+    "examples": [
+      {
+        "exam_en": "The vernal <strong class=\"target-word\">equinox</strong> marks the start of spring.",
+        "exam_ko": "춘분점 <strong class=\"target-word\">춘분</strong>은 봄의 시작을 알린다."
+      },
+      {
+        "exam_en": "Days and nights are equal at the autumn <strong class=\"target-word\">equinox</strong>.",
+        "exam_ko": "<strong class=\"target-word\">추분</strong>에는 낮과 밤의 길이가 같다."
+      },
+      {
+        "exam_en": "Each solstice lies midway between the two <strong class=\"target-word\">equinoxes</strong>.",
+        "exam_ko": "각 지점은 두 <strong class=\"target-word\">분점</strong> 사이 중간에 위치한다."
+      }
+    ]
+  },
+  {
+    "id": 6070,
+    "origin": "countenance",
+    "examples": [
+      {
+        "exam_en": "She had an expressive <strong class=\"target-word\">countenance</strong> that revealed her emotions.",
+        "exam_ko": "그녀는 감정을 드러내는 표정 풍부한 <strong class=\"target-word\">얼굴</strong>을 가지고 있었다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">countenance</strong> changed when he heard the news.",
+        "exam_ko": "그는 그 소식을 듣고 <strong class=\"target-word\">안색이</strong> 바뀌었다."
+      }
+    ]
+  },
+  {
+    "id": 6072,
+    "origin": "ale",
+    "examples": [
+      {
+        "exam_en": "He ordered a small <strong class=\"target-word\">ale</strong> at the pub.",
+        "exam_ko": "그는 펍에서 약한 <strong class=\"target-word\">에일</strong>을 주문했다."
+      },
+      {
+        "exam_en": "Good <strong class=\"target-word\">ale</strong> will make even a cat speak.",
+        "exam_ko": "좋은 <strong class=\"target-word\">에일</strong>은 고양이까지도 말하게 한다."
+      }
+    ]
+  },
+  {
+    "id": 6073,
+    "origin": "puddle",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">puddled</strong> up the trench with clay.",
+        "exam_ko": "그들은 도랑을 진흙으로 <strong class=\"target-word\">메웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6074,
+    "origin": "rap",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">rapped</strong> him on the shoulder to get his attention.",
+        "exam_ko": "그녀는 그의 주의를 끌려고 어깨를 <strong class=\"target-word\">톡톡 쳤다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">rapped</strong> on the gate and waited.",
+        "exam_ko": "그는 대문을 <strong class=\"target-word\">똑똑 두드리고</strong> 기다렸다."
+      }
+    ]
+  },
+  {
+    "id": 6076,
+    "origin": "freak",
+    "examples": [
+      {
+        "exam_en": "The two-headed snake was a <strong class=\"target-word\">freak</strong> of nature.",
+        "exam_ko": "머리가 둘인 그 뱀은 자연의 <strong class=\"target-word\">기형</strong>이었다."
+      },
+      {
+        "exam_en": "He was once a drug <strong class=\"target-word\">freak</strong> but recovered.",
+        "exam_ko": "그는 한때 마약 <strong class=\"target-word\">중독자</strong>였지만 회복했다."
+      }
+    ]
+  },
+  {
+    "id": 6077,
+    "origin": "dismal",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">dismal</strong> rainy day with no sunshine.",
+        "exam_ko": "햇빛 한 점 없는 <strong class=\"target-word\">음침한</strong> 비오는 하루였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">dismal</strong> events left everyone in low spirits.",
+        "exam_ko": "<strong class=\"target-word\">우울한</strong> 사건들로 모두가 의기소침해졌다."
+      }
+    ]
+  },
+  {
+    "id": 6079,
+    "origin": "wedgie",
+    "examples": [
+      {
+        "exam_en": "You have a <strong class=\"target-word\">wedgie</strong> from those tight pants.",
+        "exam_ko": "그 꽉 끼는 바지 때문에 <strong class=\"target-word\">바지가 끼었어</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6080,
+    "origin": "swerve",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">swerved</strong> from his duty under pressure.",
+        "exam_ko": "그는 압박을 받아 본분을 <strong class=\"target-word\">저버렸다</strong>."
+      },
+      {
+        "exam_en": "The bird <strong class=\"target-word\">swerved</strong> sharply in the air.",
+        "exam_ko": "새가 공중에서 날카롭게 <strong class=\"target-word\">방향을 바꾸었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6081,
+    "origin": "staple",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">stapled</strong> the pages together neatly.",
+        "exam_ko": "그녀는 페이지들을 깔끔하게 <strong class=\"target-word\">스테이플로 철했다</strong>."
+      },
+      {
+        "exam_en": "Rice is the <strong class=\"target-word\">staple</strong> of the Korean diet.",
+        "exam_ko": "쌀은 한국인의 <strong class=\"target-word\">주식</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 6084,
+    "origin": "precaution",
+    "examples": [
+      {
+        "exam_en": "She carried an umbrella just as a <strong class=\"target-word\">precaution</strong>.",
+        "exam_ko": "그녀는 단지 <strong class=\"target-word\">예방책으로</strong> 우산을 가져갔다."
+      },
+      {
+        "exam_en": "They took <strong class=\"target-word\">precautions</strong> against an earthquake.",
+        "exam_ko": "그들은 지진에 대비한 <strong class=\"target-word\">사전 대책</strong>을 강구했다."
+      }
+    ]
+  },
+  {
+    "id": 6088,
+    "origin": "mayhem",
+    "examples": [
+      {
+        "exam_en": "The new rules prevent <strong class=\"target-word\">mayhem</strong> on school enrollment days.",
+        "exam_ko": "새 규칙은 학교 등록일의 <strong class=\"target-word\">혼란</strong>을 막기 위한 것이다."
+      }
+    ]
+  },
+  {
+    "id": 6089,
+    "origin": "limp",
+    "examples": [
+      {
+        "exam_en": "The injured player <strong class=\"target-word\">limped</strong> to the bench.",
+        "exam_ko": "부상한 선수는 다리를 <strong class=\"target-word\">절며</strong> 벤치로 갔다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">limped</strong> home after twisting her ankle.",
+        "exam_ko": "그녀는 발목을 삐고 나서 <strong class=\"target-word\">절뚝거리며</strong> 집에 돌아갔다."
+      }
+    ]
+  },
+  {
+    "id": 6090,
+    "origin": "inflated",
+    "examples": [
+      {
+        "exam_en": "The kids played with an <strong class=\"target-word\">inflated</strong> balloon.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">부풀어진</strong> 풍선을 가지고 놀았다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">inflated</strong> with conceit after the win.",
+        "exam_ko": "그는 승리 후 자만심으로 <strong class=\"target-word\">우쭐해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6091,
+    "origin": "hail",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">hailed</strong> an old friend across the street.",
+        "exam_ko": "그녀는 길 건너편의 옛 친구에게 <strong class=\"target-word\">인사를 건넸다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">hailed</strong> the proposal with great enthusiasm.",
+        "exam_ko": "그들은 그 제안을 열렬하게 <strong class=\"target-word\">환영했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6092,
+    "origin": "gyp",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">gypped</strong> out of his money by a scammer.",
+        "exam_ko": "그는 사기꾼에게 돈을 <strong class=\"target-word\">탈취당했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6093,
+    "origin": "fatality",
+    "examples": [
+      {
+        "exam_en": "The airline accident caused multiple <strong class=\"target-word\">fatalities</strong>.",
+        "exam_ko": "항공 사고로 여러 명의 <strong class=\"target-word\">사망자</strong>가 발생했다."
+      },
+      {
+        "exam_en": "It was a bad crash, but there were no <strong class=\"target-word\">fatalities</strong>.",
+        "exam_ko": "심한 충돌이었지만 <strong class=\"target-word\">사망자</strong>는 한 명도 없었다."
+      }
+    ]
+  }
+]

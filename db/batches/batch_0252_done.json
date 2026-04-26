@@ -1,0 +1,254 @@
+[
+  {
+    "id": 6095,
+    "origin": "eviction",
+    "examples": [
+      {
+        "exam_en": "The landlord issued an <strong class=\"target-word\">eviction</strong> notice to the tenant.",
+        "exam_ko": "집주인이 세입자에게 <strong class=\"target-word\">퇴거</strong> 통보를 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 6096,
+    "origin": "encore",
+    "examples": [
+      {
+        "exam_en": "The band performed an <strong class=\"target-word\">encore</strong> after the show.",
+        "exam_ko": "밴드는 공연 후 <strong class=\"target-word\">앙코르</strong>를 연주했다."
+      },
+      {
+        "exam_en": "The audience cheered for an <strong class=\"target-word\">encore</strong> at the end.",
+        "exam_ko": "관객들은 마지막에 <strong class=\"target-word\">앙코르</strong>를 외쳤다."
+      }
+    ]
+  },
+  {
+    "id": 6097,
+    "origin": "doodle",
+    "examples": [
+      {
+        "exam_en": "He always <strong class=\"target-word\">doodles</strong> while talking on the phone.",
+        "exam_ko": "그는 전화 통화 중 항상 <strong class=\"target-word\">낙서</strong>를 한다."
+      }
+    ]
+  },
+  {
+    "id": 6098,
+    "origin": "clog",
+    "examples": [
+      {
+        "exam_en": "Hair <strong class=\"target-word\">clogged</strong> the drain completely.",
+        "exam_ko": "머리카락이 배수구를 완전히 <strong class=\"target-word\">막았다</strong>."
+      },
+      {
+        "exam_en": "A machine won't work if it is <strong class=\"target-word\">clogged</strong> with dirt.",
+        "exam_ko": "기계가 먼지로 <strong class=\"target-word\">막혀</strong> 있으면 작동하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 6099,
+    "origin": "bum",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">bum</strong> was sleeping on the park bench.",
+        "exam_ko": "한 <strong class=\"target-word\">부랑자</strong>가 공원 벤치에서 자고 있었다."
+      },
+      {
+        "exam_en": "He is a total ski <strong class=\"target-word\">bum</strong> who skips work for powder days.",
+        "exam_ko": "그는 분설 날이면 일을 빠지는 열렬한 스키 <strong class=\"target-word\">광</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 6101,
+    "origin": "tandem",
+    "examples": [
+      {
+        "exam_en": "They rode a <strong class=\"target-word\">tandem</strong> bicycle along the coast.",
+        "exam_ko": "그들은 해안을 따라 <strong class=\"target-word\">2인용 자전거</strong>를 탔다."
+      },
+      {
+        "exam_en": "The two teams worked in <strong class=\"target-word\">tandem</strong> to finish the project.",
+        "exam_ko": "두 팀은 프로젝트를 끝내기 위해 <strong class=\"target-word\">협력하여</strong> 일했다."
+      }
+    ]
+  },
+  {
+    "id": 6103,
+    "origin": "snitch",
+    "examples": [
+      {
+        "exam_en": "The boy <strong class=\"target-word\">snitched</strong> a candy bar from the store.",
+        "exam_ko": "그 소년은 가게에서 사탕을 <strong class=\"target-word\">훔쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">snitched</strong> on him to the teacher.",
+        "exam_ko": "그녀는 선생님에게 그를 <strong class=\"target-word\">밀고했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6104,
+    "origin": "silverware",
+    "examples": [
+      {
+        "exam_en": "The thieves stole a set of <strong class=\"target-word\">silverware</strong>.",
+        "exam_ko": "도둑들이 <strong class=\"target-word\">은식기</strong> 한 세트를 훔쳐갔다."
+      }
+    ]
+  },
+  {
+    "id": 6106,
+    "origin": "republican",
+    "examples": [
+      {
+        "exam_en": "They established a <strong class=\"target-word\">republican</strong> government after the revolution.",
+        "exam_ko": "그들은 혁명 후 <strong class=\"target-word\">공화</strong> 정부를 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 6107,
+    "origin": "seething",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">seething</strong> mob gathered outside the building.",
+        "exam_ko": "<strong class=\"target-word\">들끓는</strong> 군중이 건물 밖에 모였다."
+      },
+      {
+        "exam_en": "The country is <strong class=\"target-word\">seething</strong> with social unrest.",
+        "exam_ko": "그 나라는 사회적 불안으로 <strong class=\"target-word\">들끓고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 6108,
+    "origin": "recrimination",
+    "examples": [
+      {
+        "exam_en": "Let's talk calmly instead of trading <strong class=\"target-word\">recriminations</strong>.",
+        "exam_ko": "<strong class=\"target-word\">비난</strong>을 주고받는 대신 차분히 이야기하자."
+      },
+      {
+        "exam_en": "After the argument, <strong class=\"target-word\">recrimination</strong> filled the room.",
+        "exam_ko": "논쟁 후 방 안에 <strong class=\"target-word\">비난</strong>이 가득했다."
+      }
+    ]
+  },
+  {
+    "id": 6109,
+    "origin": "pander",
+    "examples": [
+      {
+        "exam_en": "The politician <strong class=\"target-word\">pandered</strong> to public fears to win votes.",
+        "exam_ko": "그 정치인은 표를 얻으려고 대중의 공포에 <strong class=\"target-word\">영합했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6110,
+    "origin": "lucrative",
+    "examples": [
+      {
+        "exam_en": "She found a <strong class=\"target-word\">lucrative</strong> job in the tech industry.",
+        "exam_ko": "그녀는 IT 업계에서 <strong class=\"target-word\">수익성 높은</strong> 일자리를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 6113,
+    "origin": "ebb",
+    "examples": [
+      {
+        "exam_en": "The sea follows the natural <strong class=\"target-word\">ebb</strong> and flow of tides.",
+        "exam_ko": "바다는 조수의 자연스러운 <strong class=\"target-word\">썰물</strong>과 밀물을 따른다."
+      },
+      {
+        "exam_en": "His energy began to <strong class=\"target-word\">ebb</strong> as the day went on.",
+        "exam_ko": "하루가 지나면서 그의 에너지가 <strong class=\"target-word\">빠져나가기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 6114,
+    "origin": "inmate",
+    "examples": [
+      {
+        "exam_en": "One of the <strong class=\"target-word\">inmates</strong> escaped from the prison.",
+        "exam_ko": "<strong class=\"target-word\">수용자</strong> 중 한 명이 교도소에서 탈출했다."
+      }
+    ]
+  },
+  {
+    "id": 6115,
+    "origin": "darned",
+    "examples": [
+      {
+        "exam_en": "Put away that <strong class=\"target-word\">darned</strong> toy right now!",
+        "exam_ko": "그 <strong class=\"target-word\">빌어먹을</strong> 장난감 지금 당장 치워!"
+      }
+    ]
+  },
+  {
+    "id": 6117,
+    "origin": "contraband",
+    "examples": [
+      {
+        "exam_en": "Officers seized a large amount of <strong class=\"target-word\">contraband</strong> at the border.",
+        "exam_ko": "경관들이 국경에서 많은 양의 <strong class=\"target-word\">밀수품</strong>을 압수했다."
+      },
+      {
+        "exam_en": "The shipment included <strong class=\"target-word\">contraband</strong> weapons.",
+        "exam_ko": "그 화물에는 <strong class=\"target-word\">금수</strong> 무기가 포함되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6119,
+    "origin": "abide",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">abided</strong> in New York for two years.",
+        "exam_ko": "그녀는 뉴욕에서 2년간 <strong class=\"target-word\">체류했다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">abide</strong> with us tonight.",
+        "exam_ko": "오늘 밤 우리와 함께 <strong class=\"target-word\">묵어요</strong>."
+      },
+      {
+        "exam_en": "Everyone must <strong class=\"target-word\">abide</strong> by the community rules.",
+        "exam_ko": "모든 사람은 공동체 규칙을 <strong class=\"target-word\">준수해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 6120,
+    "origin": "witted",
+    "examples": [
+      {
+        "exam_en": "She is very quick-<strong class=\"target-word\">witted</strong> and solves problems fast.",
+        "exam_ko": "그녀는 매우 머리 회전이 빠른 <strong class=\"target-word\">재치</strong> 있는 사람이다."
+      },
+      {
+        "exam_en": "He is a half-<strong class=\"target-word\">witted</strong> character in the story.",
+        "exam_ko": "그는 이야기 속의 <strong class=\"target-word\">우둔한</strong> 인물이다."
+      }
+    ]
+  },
+  {
+    "id": 6122,
+    "origin": "untangle",
+    "examples": [
+      {
+        "exam_en": "She carefully <strong class=\"target-word\">untangled</strong> the knots in the rope.",
+        "exam_ko": "그녀는 밧줄의 매듭을 조심스럽게 <strong class=\"target-word\">풀었다</strong>."
+      },
+      {
+        "exam_en": "It took a while to <strong class=\"target-word\">untangle</strong> the string.",
+        "exam_ko": "엉킨 실을 <strong class=\"target-word\">푸는</strong> 데 시간이 걸렸다."
+      }
+    ]
+  }
+]

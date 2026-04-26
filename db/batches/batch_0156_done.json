@@ -1,0 +1,274 @@
+[
+  {
+    "id": 3409,
+    "origin": "shrink",
+    "examples": [
+      {
+        "exam_en": "This cloth will <strong class=\"target-word\">shrink</strong> if washed.",
+        "exam_ko": "이 천은 세탁하면 <strong class=\"target-word\">줄어들</strong> 것이다."
+      },
+      {
+        "exam_en": "Our resources are gradually <strong class=\"target-word\">shrinking</strong>.",
+        "exam_ko": "우리의 자원은 점점 <strong class=\"target-word\">줄어들고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 3410,
+    "origin": "shock",
+    "examples": [
+      {
+        "exam_en": "The earthquake sent a <strong class=\"target-word\">shock</strong> through the building.",
+        "exam_ko": "지진이 건물 전체에 <strong class=\"target-word\">충격</strong>을 전달했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">shocks</strong> of several explosions rocked the ship.",
+        "exam_ko": "몇 차례의 폭발 <strong class=\"target-word\">충격</strong>이 배를 뒤흔들었다."
+      }
+    ]
+  },
+  {
+    "id": 3411,
+    "origin": "shelter",
+    "examples": [
+      {
+        "exam_en": "They hid in an air-raid <strong class=\"target-word\">shelter</strong> during the attack.",
+        "exam_ko": "그들은 공습 중에 방공 <strong class=\"target-word\">대피소</strong>에 숨었다."
+      },
+      {
+        "exam_en": "We waited at the bus <strong class=\"target-word\">shelter</strong> for an hour.",
+        "exam_ko": "우리는 버스 <strong class=\"target-word\">대기소</strong>에서 한 시간을 기다렸다."
+      }
+    ]
+  },
+  {
+    "id": 3412,
+    "origin": "shelf",
+    "examples": [
+      {
+        "exam_en": "The supermarket <strong class=\"target-word\">shelves</strong> were completely empty.",
+        "exam_ko": "슈퍼마켓 <strong class=\"target-word\">진열대</strong>가 완전히 비어 있었다."
+      },
+      {
+        "exam_en": "He fixed the broken <strong class=\"target-word\">shelf</strong> in the kitchen.",
+        "exam_ko": "그는 부엌의 부서진 <strong class=\"target-word\">선반</strong>을 수리했다."
+      }
+    ]
+  },
+  {
+    "id": 3413,
+    "origin": "she",
+    "examples": [
+      {
+        "exam_en": "My wife says <strong class=\"target-word\">she</strong> wants to do some shopping.",
+        "exam_ko": "아내가 <strong class=\"target-word\">자신이</strong> 쇼핑을 하고 싶다고 말했다."
+      },
+      {
+        "exam_en": "We have a cat, and <strong class=\"target-word\">she</strong> catches mice every night.",
+        "exam_ko": "우리는 고양이를 키우는데, <strong class=\"target-word\">그 애가</strong> 매일 밤 쥐를 잡는다."
+      }
+    ]
+  },
+  {
+    "id": 3414,
+    "origin": "shame",
+    "examples": [
+      {
+        "exam_en": "He was overcome with <strong class=\"target-word\">shame</strong> after lying.",
+        "exam_ko": "그는 거짓말을 한 후 <strong class=\"target-word\">수치심</strong>에 사로잡혔다."
+      },
+      {
+        "exam_en": "She blushed with <strong class=\"target-word\">shame</strong> in front of everyone.",
+        "exam_ko": "그녀는 모두 앞에서 <strong class=\"target-word\">수치심</strong>으로 얼굴이 빨개졌다."
+      }
+    ]
+  },
+  {
+    "id": 3415,
+    "origin": "sex",
+    "examples": [
+      {
+        "exam_en": "They had <strong class=\"target-word\">sex</strong> after dating for a year.",
+        "exam_ko": "그들은 1년간 사귄 후 <strong class=\"target-word\">성관계</strong>를 가졌다."
+      },
+      {
+        "exam_en": "The doctor warned him against too much <strong class=\"target-word\">sex</strong>.",
+        "exam_ko": "의사는 그에게 과도한 <strong class=\"target-word\">성생활</strong>을 삼가도록 경고했다."
+      }
+    ]
+  },
+  {
+    "id": 3416,
+    "origin": "several",
+    "examples": [
+      {
+        "exam_en": "The project cost <strong class=\"target-word\">several</strong> thousand dollars.",
+        "exam_ko": "그 프로젝트는 <strong class=\"target-word\">수천</strong> 달러가 들었다."
+      },
+      {
+        "exam_en": "There are <strong class=\"target-word\">several</strong> ways to solve the problem.",
+        "exam_ko": "그 문제를 해결하는 방법은 <strong class=\"target-word\">몇 가지</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 3417,
+    "origin": "seven",
+    "examples": [
+      {
+        "exam_en": "The students sat in groups of <strong class=\"target-word\">seven</strong>.",
+        "exam_ko": "학생들은 <strong class=\"target-word\">일곱</strong> 명씩 모둠을 지어 앉았다."
+      },
+      {
+        "exam_en": "Meet me at <strong class=\"target-word\">seven</strong> in Room 7.",
+        "exam_ko": "<strong class=\"target-word\">7시</strong>에 7호실에서 만납시다."
+      }
+    ]
+  },
+  {
+    "id": 3418,
+    "origin": "series",
+    "examples": [
+      {
+        "exam_en": "The lab made a <strong class=\"target-word\">series</strong> of important discoveries.",
+        "exam_ko": "그 연구실은 일련의 중요한 <strong class=\"target-word\">발견들</strong>을 해냈다."
+      },
+      {
+        "exam_en": "He failed after a <strong class=\"target-word\">series</strong> of unsuccessful attempts.",
+        "exam_ko": "그는 실패로 끝난 <strong class=\"target-word\">여러 차례</strong>의 시도 끝에 포기했다."
+      }
+    ]
+  },
+  {
+    "id": 3419,
+    "origin": "senate",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">Senate</strong> is currently in session.",
+        "exam_ko": "<strong class=\"target-word\">상원</strong>은 현재 개회 중이다."
+      }
+    ]
+  },
+  {
+    "id": 3420,
+    "origin": "self",
+    "examples": [
+      {
+        "exam_en": "She stayed true to her own <strong class=\"target-word\">self</strong> throughout.",
+        "exam_ko": "그녀는 내내 자기 <strong class=\"target-word\">자신</strong>에게 솔직했다."
+      },
+      {
+        "exam_en": "He introduced his humble <strong class=\"target-word\">self</strong> to the group.",
+        "exam_ko": "그는 보잘것없는 <strong class=\"target-word\">자신</strong>을 일행에게 소개했다."
+      }
+    ]
+  },
+  {
+    "id": 3421,
+    "origin": "seldom",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">seldom</strong> commits an error at work.",
+        "exam_ko": "그는 직장에서 <strong class=\"target-word\">좀처럼</strong> 실수를 하지 않는다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">seldom</strong> late for school.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">좀처럼</strong> 학교에 지각하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 3422,
+    "origin": "second",
+    "examples": [
+      {
+        "exam_en": "Please read the <strong class=\"target-word\">second</strong> chapter carefully.",
+        "exam_ko": "<strong class=\"target-word\">두 번째</strong> 장을 주의 깊게 읽어 보세요."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">second</strong> half of the film was more exciting.",
+        "exam_ko": "영화의 <strong class=\"target-word\">후반부</strong>가 더 흥미로웠다."
+      }
+    ]
+  },
+  {
+    "id": 3423,
+    "origin": "seat",
+    "examples": [
+      {
+        "exam_en": "She chose a window <strong class=\"target-word\">seat</strong> on the train.",
+        "exam_ko": "그녀는 기차에서 창가 <strong class=\"target-word\">자리</strong>를 골랐다."
+      },
+      {
+        "exam_en": "The guest was given the <strong class=\"target-word\">seat</strong> of honor.",
+        "exam_ko": "손님에게 <strong class=\"target-word\">상석</strong>이 주어졌다."
+      }
+    ]
+  },
+  {
+    "id": 3424,
+    "origin": "season",
+    "examples": [
+      {
+        "exam_en": "Each <strong class=\"target-word\">season</strong> brings different weather.",
+        "exam_ko": "각 <strong class=\"target-word\">계절</strong>은 서로 다른 날씨를 가져온다."
+      },
+      {
+        "exam_en": "The dry <strong class=\"target-word\">season</strong> lasts about six months.",
+        "exam_ko": "건 <strong class=\"target-word\">기</strong>는 약 6개월 동안 지속된다."
+      }
+    ]
+  },
+  {
+    "id": 3425,
+    "origin": "school",
+    "examples": [
+      {
+        "exam_en": "She is the most popular teacher at this <strong class=\"target-word\">school</strong>.",
+        "exam_ko": "그녀는 이 <strong class=\"target-word\">학교</strong>에서 가장 인기 있는 선생님이다."
+      }
+    ]
+  },
+  {
+    "id": 3426,
+    "origin": "scale",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">scale</strong> on the thermometer goes up to 100.",
+        "exam_ko": "온도계의 <strong class=\"target-word\">눈금</strong>은 100까지 올라간다."
+      },
+      {
+        "exam_en": "This map uses a <strong class=\"target-word\">scale</strong> in inches.",
+        "exam_ko": "이 지도는 인치 <strong class=\"target-word\">단위의 눈금</strong>을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 3427,
+    "origin": "satellite",
+    "examples": [
+      {
+        "exam_en": "Titan is a <strong class=\"target-word\">satellite</strong> of Saturn.",
+        "exam_ko": "타이탄은 토성의 <strong class=\"target-word\">위성</strong>이다."
+      },
+      {
+        "exam_en": "The country launched a space <strong class=\"target-word\">satellite</strong> last year.",
+        "exam_ko": "그 나라는 지난해 우주 <strong class=\"target-word\">위성</strong>을 발사했다."
+      }
+    ]
+  },
+  {
+    "id": 3428,
+    "origin": "salt",
+    "examples": [
+      {
+        "exam_en": "Common <strong class=\"target-word\">salt</strong> is used in almost every dish.",
+        "exam_ko": "일반 <strong class=\"target-word\">소금</strong>은 거의 모든 요리에 사용된다."
+      },
+      {
+        "exam_en": "She added a grain of <strong class=\"target-word\">salt</strong> to the soup.",
+        "exam_ko": "그녀는 수프에 <strong class=\"target-word\">소금</strong> 한 알을 넣었다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,258 @@
+[
+  {
+    "id": 19770,
+    "origin": "seasonable",
+    "examples": [
+      {
+        "exam_en": "seasonable frost",
+        "exam_ko": "제철에 내린 서리."
+      },
+      {
+        "exam_en": "Hot weather is seasonable in July. ",
+        "exam_ko": "7월의 더위는 철에 알맞다."
+      },
+      {
+        "exam_en": "Hot weather is seasonable in July.",
+        "exam_ko": "7월의 더위는 철에 알맞다."
+      }
+    ]
+  },
+  {
+    "id": 19771,
+    "origin": "premium",
+    "examples": [
+      {
+        "exam_en": "The student got a premium for perfect attendance.",
+        "exam_ko": "그 학생은 개근상을 받았다."
+      },
+      {
+        "exam_en": "give a premium for",
+        "exam_ko": "…에 대해서 할증금을 내다."
+      }
+    ]
+  },
+  {
+    "id": 19772,
+    "origin": "primordial",
+    "examples": [
+      {
+        "exam_en": "primordial sin",
+        "exam_ko": "원죄."
+      },
+      {
+        "exam_en": "a primordial gem cell",
+        "exam_ko": "시원 생식 세포"
+      }
+    ]
+  },
+  {
+    "id": 19777,
+    "origin": "titular",
+    "examples": [
+      {
+        "exam_en": "He is the titular lord of the domain.",
+        "exam_ko": "그는 그 영지의 정식 군주이다."
+      },
+      {
+        "exam_en": "the titular character in 'Macbeth'",
+        "exam_ko": "「맥베스」에서의 맥베스역."
+      }
+    ]
+  },
+  {
+    "id": 19778,
+    "origin": "wile",
+    "examples": [
+      {
+        "exam_en": "I was tired of her wiles and cunning.",
+        "exam_ko": "나는 그녀의 속임수와 간사스러움에 지쳤다."
+      },
+      {
+        "exam_en": "womanly wiles ",
+        "exam_ko": "여자다운 간계"
+      },
+      {
+        "exam_en": "womanly wiles",
+        "exam_ko": "여자다운 간계"
+      }
+    ]
+  },
+  {
+    "id": 19779,
+    "origin": "nadir",
+    "examples": [
+      {
+        "exam_en": "His fortune was at its nadir.",
+        "exam_ko": "그의 운명은 절망 상태에 빠져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 19782,
+    "origin": "salutary",
+    "examples": [
+      {
+        "exam_en": "salutary exercise",
+        "exam_ko": "건강에 좋은 운동."
+      }
+    ]
+  },
+  {
+    "id": 19785,
+    "origin": "emollient",
+    "examples": [
+      {
+        "exam_en": "emollient words",
+        "exam_ko": "마음을 진정시키는 말."
+      }
+    ]
+  },
+  {
+    "id": 19788,
+    "origin": "secluded",
+    "examples": [
+      {
+        "exam_en": "a secluded place",
+        "exam_ko": "외진 곳."
+      }
+    ]
+  },
+  {
+    "id": 19790,
+    "origin": "declaim",
+    "examples": [
+      {
+        "exam_en": "declaim against the waste of the taxpayers' money",
+        "exam_ko": "납세자의 돈을 낭비하는 것에 대해 맹렬히 항의하다."
+      },
+      {
+        "exam_en": "declaim a piece of verse",
+        "exam_ko": "시를 낭송하다."
+      }
+    ]
+  },
+  {
+    "id": 19791,
+    "origin": "reclamation",
+    "examples": [
+      {
+        "exam_en": "land reclamation",
+        "exam_ko": "토지 개량, 개척."
+      }
+    ]
+  },
+  {
+    "id": 19792,
+    "origin": "disclaim",
+    "examples": [
+      {
+        "exam_en": "He disclaimed being involved in the affair.",
+        "exam_ko": "그는 그 사건에 관련된 것을 부인했다."
+      }
+    ]
+  },
+  {
+    "id": 19797,
+    "origin": "inaccessible",
+    "examples": [
+      {
+        "exam_en": "a library inaccessible to the general public",
+        "exam_ko": "일반인은 이용할 수 없는 도서관"
+      },
+      {
+        "exam_en": "materials inaccessible to us",
+        "exam_ko": "우리가 얻기 어려운 자료."
+      }
+    ]
+  },
+  {
+    "id": 19800,
+    "origin": "incarnation",
+    "examples": [
+      {
+        "exam_en": "He is the incarnation of kindness.",
+        "exam_ko": "그는 친절 그 자체이다."
+      },
+      {
+        "exam_en": "He believes he was a cowboy in a former incarnation.",
+        "exam_ko": "그는 전생에 카우보이였다고 믿고 있다."
+      }
+    ]
+  },
+  {
+    "id": 19803,
+    "origin": "cleavage",
+    "examples": [
+      {
+        "exam_en": "a sharp cleavage in society between rich and poor",
+        "exam_ko": "빈부간의 급격한 사회적 분열."
+      },
+      {
+        "exam_en": "She shows a lot of cleavage.",
+        "exam_ko": "그녀는 가슴팍을 꽤 드러내놓고 있다."
+      },
+      {
+        "exam_en": "Cleavage - The tendency of a mineral to break along flat planar surfaces as determined by the structure of its crystal lattice.",
+        "exam_ko": "벽개--결정 격자의 구조에 따라 결정된 평평한 평면 표면을 따라 미네랄이 부서지는 경향"
+      }
+    ]
+  },
+  {
+    "id": 19806,
+    "origin": "animadversion",
+    "examples": [
+      {
+        "exam_en": "make animadversions on",
+        "exam_ko": "…을 비난하다."
+      }
+    ]
+  },
+  {
+    "id": 19807,
+    "origin": "animus",
+    "examples": [
+      {
+        "exam_en": "feel animus against",
+        "exam_ko": "…에 대해 적의를 품다."
+      }
+    ]
+  },
+  {
+    "id": 19808,
+    "origin": "inanimate",
+    "examples": [
+      {
+        "exam_en": "an inanimate object",
+        "exam_ko": "무생물"
+      },
+      {
+        "exam_en": "an inanimate form",
+        "exam_ko": "(의식을 잃고) 움직이지 않는 신체."
+      }
+    ]
+  },
+  {
+    "id": 19809,
+    "origin": "equanimity",
+    "examples": [
+      {
+        "exam_en": "with equanimity",
+        "exam_ko": "냉정히, 차분히."
+      },
+      {
+        "exam_en": "She received the news with surprising equanimity.",
+        "exam_ko": "그녀는 놀랍도록 침착하게 그 소식을 접했다."
+      }
+    ]
+  },
+  {
+    "id": 19812,
+    "origin": "recuperative",
+    "examples": [
+      {
+        "exam_en": "recuperative strength",
+        "exam_ko": "회복력."
+      }
+    ]
+  }
+]

@@ -1,0 +1,274 @@
+[
+  {
+    "id": 2323,
+    "origin": "colorful",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">colorful</strong> shirt to the festival.",
+        "exam_ko": "그녀는 축제에 <strong class=\"target-word\">화려한</strong> 셔츠를 입고 갔다."
+      },
+      {
+        "exam_en": "The bird had <strong class=\"target-word\">colorful</strong> wings that caught everyone's eye.",
+        "exam_ko": "그 새는 모두의 시선을 끄는 <strong class=\"target-word\">화려한</strong> 날개를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 2324,
+    "origin": "injured",
+    "examples": [
+      {
+        "exam_en": "He played with an <strong class=\"target-word\">injured</strong> leg.",
+        "exam_ko": "그는 <strong class=\"target-word\">부상당한</strong> 다리로 경기를 뛰었다."
+      },
+      {
+        "exam_en": "Many people were <strong class=\"target-word\">injured</strong> in the accident.",
+        "exam_ko": "많은 사람들이 그 사고에서 <strong class=\"target-word\">부상을 입었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2325,
+    "origin": "uniform",
+    "examples": [
+      {
+        "exam_en": "The zebra has <strong class=\"target-word\">uniform</strong> stripes across its body.",
+        "exam_ko": "얼룩말은 몸 전체에 <strong class=\"target-word\">균일한</strong> 줄무늬를 가지고 있다."
+      },
+      {
+        "exam_en": "Students must wear a <strong class=\"target-word\">uniform</strong> at school.",
+        "exam_ko": "학생들은 학교에서 <strong class=\"target-word\">교복</strong>을 입어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 2326,
+    "origin": "glorious",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">glorious</strong> victory for the team.",
+        "exam_ko": "그것은 팀에게 <strong class=\"target-word\">영광스러운</strong> 승리였다."
+      },
+      {
+        "exam_en": "We enjoyed a <strong class=\"target-word\">glorious</strong> summer day at the beach.",
+        "exam_ko": "우리는 해변에서 <strong class=\"target-word\">눈부시게 아름다운</strong> 여름날을 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 2327,
+    "origin": "wicked",
+    "examples": [
+      {
+        "exam_en": "The story features a <strong class=\"target-word\">wicked</strong> queen who hates the princess.",
+        "exam_ko": "그 이야기에는 공주를 미워하는 <strong class=\"target-word\">사악한</strong> 여왕이 등장한다."
+      },
+      {
+        "exam_en": "It's <strong class=\"target-word\">wicked</strong> of you to do such things.",
+        "exam_ko": "그런 짓을 하다니 정말 <strong class=\"target-word\">못됐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2329,
+    "origin": "rising",
+    "examples": [
+      {
+        "exam_en": "We watched the <strong class=\"target-word\">rising</strong> smoke from the campfire.",
+        "exam_ko": "우리는 모닥불에서 <strong class=\"target-word\">피어오르는</strong> 연기를 바라보았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">rising</strong> sun lit up the entire valley.",
+        "exam_ko": "<strong class=\"target-word\">떠오르는</strong> 태양이 온 계곡을 밝혔다."
+      }
+    ]
+  },
+  {
+    "id": 2330,
+    "origin": "novel",
+    "examples": [
+      {
+        "exam_en": "I read a <strong class=\"target-word\">novel</strong> by Dickens last week.",
+        "exam_ko": "나는 지난주에 디킨스의 <strong class=\"target-word\">소설</strong>을 읽었다."
+      },
+      {
+        "exam_en": "She came up with a <strong class=\"target-word\">novel</strong> solution to the problem.",
+        "exam_ko": "그녀는 그 문제에 대한 <strong class=\"target-word\">참신한</strong> 해결책을 생각해냈다."
+      }
+    ]
+  },
+  {
+    "id": 2331,
+    "origin": "balanced",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">balanced</strong> diet keeps you healthy.",
+        "exam_ko": "<strong class=\"target-word\">균형 잡힌</strong> 식단은 건강을 유지해준다."
+      },
+      {
+        "exam_en": "The government proposed a <strong class=\"target-word\">balanced</strong> budget this year.",
+        "exam_ko": "정부는 올해 <strong class=\"target-word\">균형</strong> 예산안을 제안했다."
+      }
+    ]
+  },
+  {
+    "id": 2332,
+    "origin": "delightful",
+    "examples": [
+      {
+        "exam_en": "We received a <strong class=\"target-word\">delightful</strong> surprise from our friends.",
+        "exam_ko": "우리는 친구들로부터 <strong class=\"target-word\">기쁜</strong> 깜짝 선물을 받았다."
+      },
+      {
+        "exam_en": "She is a truly <strong class=\"target-word\">delightful</strong> person to be around.",
+        "exam_ko": "그녀는 함께 있으면 정말 <strong class=\"target-word\">즐거운</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 2333,
+    "origin": "arbitrary",
+    "examples": [
+      {
+        "exam_en": "The teacher made an <strong class=\"target-word\">arbitrary</strong> decision without any reason.",
+        "exam_ko": "선생님은 아무 이유 없이 <strong class=\"target-word\">임의적인</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "The judge was criticized for his <strong class=\"target-word\">arbitrary</strong> ruling.",
+        "exam_ko": "판사는 <strong class=\"target-word\">독단적인</strong> 판결로 비판을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2334,
+    "origin": "adjacent",
+    "examples": [
+      {
+        "exam_en": "They live in <strong class=\"target-word\">adjacent</strong> houses on the same street.",
+        "exam_ko": "그들은 같은 거리의 <strong class=\"target-word\">인접한</strong> 집들에 산다."
+      },
+      {
+        "exam_en": "The school is <strong class=\"target-word\">adjacent</strong> to the park.",
+        "exam_ko": "학교는 공원에 <strong class=\"target-word\">인접해</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 2336,
+    "origin": "worrying",
+    "examples": [
+      {
+        "exam_en": "I had a <strong class=\"target-word\">worrying</strong> time waiting for the results.",
+        "exam_ko": "나는 결과를 기다리는 <strong class=\"target-word\">걱정스러운</strong> 시간을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 2337,
+    "origin": "weird",
+    "examples": [
+      {
+        "exam_en": "He always comes up with <strong class=\"target-word\">weird</strong> ideas.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">이상한</strong> 생각을 해낸다."
+      },
+      {
+        "exam_en": "That <strong class=\"target-word\">weird</strong> fellow talked to himself all day.",
+        "exam_ko": "그 <strong class=\"target-word\">괴상한</strong> 녀석은 하루 종일 혼자 중얼거렸다."
+      },
+      {
+        "exam_en": "It feels <strong class=\"target-word\">weird</strong> to be back here.",
+        "exam_ko": "여기 다시 오니 <strong class=\"target-word\">이상한</strong> 느낌이 든다."
+      }
+    ]
+  },
+  {
+    "id": 2339,
+    "origin": "rolling",
+    "examples": [
+      {
+        "exam_en": "We drove through <strong class=\"target-word\">rolling</strong> hills in the countryside.",
+        "exam_ko": "우리는 시골의 <strong class=\"target-word\">완만하게 기복하는</strong> 언덕을 달렸다."
+      },
+      {
+        "exam_en": "The sailor had a <strong class=\"target-word\">rolling</strong> gait from years at sea.",
+        "exam_ko": "그 선원은 오랜 항해 생활로 <strong class=\"target-word\">흔들거리는</strong> 걸음걸이를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 2340,
+    "origin": "evolutionary",
+    "examples": [
+      {
+        "exam_en": "Darwin studied the <strong class=\"target-word\">evolutionary</strong> origin of species.",
+        "exam_ko": "다윈은 종의 <strong class=\"target-word\">진화적</strong> 기원을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 2341,
+    "origin": "intimate",
+    "examples": [
+      {
+        "exam_en": "They have been <strong class=\"target-word\">intimate</strong> friends since childhood.",
+        "exam_ko": "그들은 어린 시절부터 <strong class=\"target-word\">친밀한</strong> 친구 사이다."
+      },
+      {
+        "exam_en": "She became <strong class=\"target-word\">intimate</strong> with her new colleagues quickly.",
+        "exam_ko": "그녀는 새 동료들과 빠르게 <strong class=\"target-word\">친해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2342,
+    "origin": "sporting",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">sporting</strong> gentleman who loves hunting.",
+        "exam_ko": "그는 사냥을 좋아하는 <strong class=\"target-word\">스포츠맨</strong> 신사다."
+      },
+      {
+        "exam_en": "The channel broadcasts <strong class=\"target-word\">sporting</strong> news every evening.",
+        "exam_ko": "그 채널은 매일 저녁 <strong class=\"target-word\">스포츠</strong> 뉴스를 방송한다."
+      }
+    ]
+  },
+  {
+    "id": 2343,
+    "origin": "disciplinary",
+    "examples": [
+      {
+        "exam_en": "The school took <strong class=\"target-word\">disciplinary</strong> measures against the student.",
+        "exam_ko": "학교는 그 학생에게 <strong class=\"target-word\">징계</strong> 조치를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 2344,
+    "origin": "formidable",
+    "examples": [
+      {
+        "exam_en": "They faced a <strong class=\"target-word\">formidable</strong> opponent in the finals.",
+        "exam_ko": "그들은 결승에서 <strong class=\"target-word\">만만치 않은</strong> 상대를 만났다."
+      },
+      {
+        "exam_en": "Climbing the mountain was a <strong class=\"target-word\">formidable</strong> task.",
+        "exam_ko": "그 산을 오르는 것은 <strong class=\"target-word\">어마어마한</strong> 과업이었다."
+      },
+      {
+        "exam_en": "The team faced a <strong class=\"target-word\">formidable</strong> opponent in the championship.",
+        "exam_ko": "팀은 챔피언십에서 <strong class=\"target-word\">강력한</strong> 상대팀에 맞섰다."
+      }
+    ]
+  },
+  {
+    "id": 2345,
+    "origin": "lexical",
+    "examples": [
+      {
+        "exam_en": "The word has a clear <strong class=\"target-word\">lexical</strong> meaning in the dictionary.",
+        "exam_ko": "그 단어는 사전에서 명확한 <strong class=\"target-word\">어휘적</strong> 의미를 가진다."
+      }
+    ]
+  }
+]

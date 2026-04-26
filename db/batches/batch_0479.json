@@ -1,0 +1,254 @@
+[
+  {
+    "id": 14224,
+    "origin": "navigation",
+    "examples": [
+      {
+        "exam_en": "a GPS navigation system GPS",
+        "exam_ko": "[위성] 항법 시스템."
+      }
+    ]
+  },
+  {
+    "id": 14227,
+    "origin": "stoic",
+    "examples": [
+      {
+        "exam_en": "The stoic soldier remained calm and composed even in the midst of battle.",
+        "exam_ko": "극기심이 강한 병사는 전투 중에도 차분하고 침착했다."
+      }
+    ]
+  },
+  {
+    "id": 14230,
+    "origin": "slogan",
+    "examples": [
+      {
+        "exam_en": "shout a slogan for",
+        "exam_ko": "…에 찬성[반대]하는 슬로건을 외치다."
+      }
+    ]
+  },
+  {
+    "id": 14232,
+    "origin": "pandemic",
+    "examples": [
+      {
+        "exam_en": "The global community faced a major challenge in dealing with the COVID-19 pandemic.",
+        "exam_ko": "글로벌 커뮤니티는 코로나19 팬데믹(세계적 유행병)을 대처하는 데 있어 큰 도전에 직면했다."
+      }
+    ]
+  },
+  {
+    "id": 14233,
+    "origin": "rental",
+    "examples": [
+      {
+        "exam_en": "pay the monthly rental on one's house",
+        "exam_ko": "집의 월세를 물다."
+      }
+    ]
+  },
+  {
+    "id": 14235,
+    "origin": "sexy",
+    "examples": [
+      {
+        "exam_en": "That picture is too sexy.",
+        "exam_ko": "그 사진 너무 야하다."
+      },
+      {
+        "exam_en": "sexy picture",
+        "exam_ko": "성적 충동을 일으키는 그림."
+      }
+    ]
+  },
+  {
+    "id": 14237,
+    "origin": "framework",
+    "examples": [
+      {
+        "exam_en": "the framework of society",
+        "exam_ko": "사회 기구."
+      }
+    ]
+  },
+  {
+    "id": 14241,
+    "origin": "nostalgia",
+    "examples": [
+      {
+        "exam_en": "suffer from nostalgia for one's home",
+        "exam_ko": "향수에 젖다[사로잡히다]."
+      },
+      {
+        "exam_en": "Looking at old photographs filled him with nostalgia for his childhood.",
+        "exam_ko": "옛 사진을 보는 것은 그에게 어린 시절에 대한 향수를 불러 일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 14243,
+    "origin": "filibuster",
+    "examples": [
+      {
+        "exam_en": "filibuster against",
+        "exam_ko": "…에 반대해 의사 진행을 방해하다."
+      },
+      {
+        "exam_en": "You're filibustering against the wrong bill, Senator.",
+        "exam_ko": "상원의원님, 다른 의안에 대해서 의사 방해를 하고 계십니다."
+      },
+      {
+        "exam_en": "You're filibustering against the wrong bill, Senator. ",
+        "exam_ko": "상원의원님, 다른 의안에 대해서 의사 방해를 하고 계십니다."
+      }
+    ]
+  },
+  {
+    "id": 14247,
+    "origin": "starvation",
+    "examples": [
+      {
+        "exam_en": "starvation diet",
+        "exam_ko": "단식 요법"
+      },
+      {
+        "exam_en": "die of starvation",
+        "exam_ko": "굶어 죽다, 아사하다."
+      }
+    ]
+  },
+  {
+    "id": 14248,
+    "origin": "austere",
+    "examples": [
+      {
+        "exam_en": "an austere teacher",
+        "exam_ko": "엄한 선생."
+      },
+      {
+        "exam_en": "an austere life",
+        "exam_ko": "검소한 생활"
+      }
+    ]
+  },
+  {
+    "id": 14249,
+    "origin": "gap",
+    "examples": [
+      {
+        "exam_en": "bridge the gap",
+        "exam_ko": "틈을 메우다"
+      },
+      {
+        "exam_en": "make a gap",
+        "exam_ko": "틈이 생기게 하다[을 만들다]"
+      }
+    ]
+  },
+  {
+    "id": 14261,
+    "origin": "virgin",
+    "examples": [
+      {
+        "exam_en": "virgin flushes",
+        "exam_ko": "처녀다운 수줍음."
+      },
+      {
+        "exam_en": "a virgin blade",
+        "exam_ko": "아직까지 피로 더럽혀진 일이 없는 칼"
+      }
+    ]
+  },
+  {
+    "id": 14263,
+    "origin": "taboo",
+    "examples": [
+      {
+        "exam_en": "Incest is generally taboo among humans.",
+        "exam_ko": "근친상간은 인간 사회에서는 일반적으로 금지되어 있다."
+      },
+      {
+        "exam_en": "place a taboo on a thing",
+        "exam_ko": "어떤 물건을 금제하다."
+      }
+    ]
+  },
+  {
+    "id": 14264,
+    "origin": "smashing",
+    "examples": [
+      {
+        "exam_en": "We had a smashing time.",
+        "exam_ko": "정말 재미있었다."
+      },
+      {
+        "exam_en": "a smashing argument",
+        "exam_ko": "결정타를 먹이는 토론."
+      }
+    ]
+  },
+  {
+    "id": 14270,
+    "origin": "eaves",
+    "examples": [
+      {
+        "exam_en": "The eaves are dripping.",
+        "exam_ko": "처마에서 물이 똑똑 떨어진다."
+      },
+      {
+        "exam_en": "The eaves are dripping. ",
+        "exam_ko": "처마에서 물이 똑똑 떨어진다."
+      }
+    ]
+  },
+  {
+    "id": 14271,
+    "origin": "clockwise",
+    "examples": [
+      {
+        "exam_en": "Turn the lid clockwise if you want to close it tightly.",
+        "exam_ko": "네가 그것을 꽉 닫기를 원하면 뚜껑을 오른쪽으로 돌려라."
+      }
+    ]
+  },
+  {
+    "id": 14273,
+    "origin": "etc",
+    "examples": [
+      {
+        "exam_en": "The color etc. are not important for our purpose.",
+        "exam_ko": "색상 등은 우리의 목적에는 중요하지 않다(※etc가 붙은 단수 명사는 복수형의 동사를 취함)."
+      }
+    ]
+  },
+  {
+    "id": 14274,
+    "origin": "resultant",
+    "examples": [
+      {
+        "exam_en": "a revolution and the resultant disorder",
+        "exam_ko": "혁명과 그 결과 발생한 혼란."
+      },
+      {
+        "exam_en": "the resultant force",
+        "exam_ko": "합력(合力)."
+      }
+    ]
+  },
+  {
+    "id": 14278,
+    "origin": "inverse",
+    "examples": [
+      {
+        "exam_en": "inverse order",
+        "exam_ko": "역순"
+      },
+      {
+        "exam_en": "in inverse relation to",
+        "exam_ko": "…과 반비례하여."
+      }
+    ]
+  }
+]

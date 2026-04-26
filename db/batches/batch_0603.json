@@ -1,0 +1,258 @@
+[
+  {
+    "id": 20346,
+    "origin": "mournful",
+    "examples": [
+      {
+        "exam_en": "mournful eyes",
+        "exam_ko": "슬픔에 잠긴 눈"
+      },
+      {
+        "exam_en": "in mournful numbers",
+        "exam_ko": "구슬픈 가락으로."
+      }
+    ]
+  },
+  {
+    "id": 20347,
+    "origin": "substantive",
+    "examples": [
+      {
+        "exam_en": "a substantive nation",
+        "exam_ko": "독립국."
+      }
+    ]
+  },
+  {
+    "id": 20348,
+    "origin": "towering",
+    "examples": [
+      {
+        "exam_en": "a towering hotel",
+        "exam_ko": "고층 호텔[키가 장대 같은 사나이]."
+      },
+      {
+        "exam_en": "towering abilities",
+        "exam_ko": "비상한 재주."
+      }
+    ]
+  },
+  {
+    "id": 20350,
+    "origin": "submissive",
+    "examples": [
+      {
+        "exam_en": "submissive workers",
+        "exam_ko": "유순한 노동자."
+      }
+    ]
+  },
+  {
+    "id": 20352,
+    "origin": "uncompromising",
+    "examples": [
+      {
+        "exam_en": "uncompromising will",
+        "exam_ko": "단호한 의지"
+      },
+      {
+        "exam_en": "an uncompromising opponent",
+        "exam_ko": "강경한 반대파"
+      }
+    ]
+  },
+  {
+    "id": 20355,
+    "origin": "subjection",
+    "examples": [
+      {
+        "exam_en": "subjection to a higher authority",
+        "exam_ko": "보다 높은 권력에의 복종."
+      }
+    ]
+  },
+  {
+    "id": 20356,
+    "origin": "speechless",
+    "examples": [
+      {
+        "exam_en": "be speechless with horror",
+        "exam_ko": "무서운 나머지 말을 못 하다."
+      },
+      {
+        "exam_en": "It's so upset I'm speechless.\n",
+        "exam_ko": "기가 막혀 말이 안 나오네.\n"
+      },
+      {
+        "exam_en": "It's so upset I'm speechless.",
+        "exam_ko": "기가 막혀 말이 안 나오네."
+      }
+    ]
+  },
+  {
+    "id": 20357,
+    "origin": "unashamed",
+    "examples": [
+      {
+        "exam_en": "be unashamed of doing",
+        "exam_ko": "…하기를 부끄러워하지 않다."
+      }
+    ]
+  },
+  {
+    "id": 20358,
+    "origin": "rend",
+    "examples": [
+      {
+        "exam_en": "a party rent in two by factional strife",
+        "exam_ko": "파벌 싸움으로 둘로 분열한 정당"
+      },
+      {
+        "exam_en": "Lightning rent the tree asunder.",
+        "exam_ko": "번개가 그 나무를 박살냈다."
+      }
+    ]
+  },
+  {
+    "id": 20359,
+    "origin": "succor",
+    "examples": [
+      {
+        "exam_en": "My family gave succor to a lost little boy we saw in the park.",
+        "exam_ko": "우리 가족은 공원에서 본, 길을 잃은 어린 소년을 도와주었다."
+      }
+    ]
+  },
+  {
+    "id": 20361,
+    "origin": "impressionable",
+    "examples": [
+      {
+        "exam_en": "an impressionable age",
+        "exam_ko": "감수성이 예민한 나이."
+      }
+    ]
+  },
+  {
+    "id": 20363,
+    "origin": "privy",
+    "examples": [
+      {
+        "exam_en": "be privy to the plot",
+        "exam_ko": "그 음모에 내밀히 관여하고 있다."
+      },
+      {
+        "exam_en": "a privy chamber",
+        "exam_ko": "(궁정의) 사실(私室)."
+      }
+    ]
+  },
+  {
+    "id": 20367,
+    "origin": "resolved",
+    "examples": [
+      {
+        "exam_en": "the new governor is resolved to do his best.",
+        "exam_ko": "새 지사는 최선을 다할 것을 굳게 결심하고 있다"
+      },
+      {
+        "exam_en": "The coach was resolved that the team would practice harder.",
+        "exam_ko": "코치는 팀을 더 열심히 훈련시키기로 결심했다."
+      }
+    ]
+  },
+  {
+    "id": 20368,
+    "origin": "similitude",
+    "examples": [
+      {
+        "exam_en": "the striking similitude between the two sculptures",
+        "exam_ko": "두 조각의 현저한 유사."
+      },
+      {
+        "exam_en": "a devil in the similitude of a serpent",
+        "exam_ko": "뱀의 모습을 한 악마."
+      }
+    ]
+  },
+  {
+    "id": 20369,
+    "origin": "recollect",
+    "examples": [
+      {
+        "exam_en": "I can't recollect what he said.",
+        "exam_ko": "그가 무슨 말을 했는지 생각이 안 난다"
+      },
+      {
+        "exam_en": "I recollect that he said so.",
+        "exam_ko": "그가 그렇게 말한 것이 생각난다"
+      }
+    ]
+  },
+  {
+    "id": 20370,
+    "origin": "deliverance",
+    "examples": [
+      {
+        "exam_en": "deliverance from sin",
+        "exam_ko": "죄로부터의 해방."
+      },
+      {
+        "exam_en": "Prayer brings deliverance from guilt.",
+        "exam_ko": "기도는 우리를 죄에서 구해준다."
+      }
+    ]
+  },
+  {
+    "id": 20371,
+    "origin": "slacken",
+    "examples": [
+      {
+        "exam_en": "slacken one's pace",
+        "exam_ko": "발걸음을 늦추다"
+      },
+      {
+        "exam_en": "slacken one's vigilance",
+        "exam_ko": "경계를 게을리하다."
+      }
+    ]
+  },
+  {
+    "id": 20373,
+    "origin": "allusion",
+    "examples": [
+      {
+        "exam_en": "an allusion to Pope",
+        "exam_ko": "교황에 대한 언급."
+      }
+    ]
+  },
+  {
+    "id": 20375,
+    "origin": "proffer",
+    "examples": [
+      {
+        "exam_en": "proffer to assist",
+        "exam_ko": "원조를 제의하다"
+      },
+      {
+        "exam_en": "She refused the proffered drink.",
+        "exam_ko": "그녀는 제공된 음료를 거절했다"
+      }
+    ]
+  },
+  {
+    "id": 20378,
+    "origin": "propound",
+    "examples": [
+      {
+        "exam_en": "propound a question",
+        "exam_ko": "문제를 제기하다"
+      },
+      {
+        "exam_en": "propound a theory",
+        "exam_ko": "학설을 발표하다."
+      }
+    ]
+  }
+]

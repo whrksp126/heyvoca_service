@@ -4,11 +4,13 @@ const Header = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   return (
-    <div className='
+    <div
+      data-page-header
+      className='
       flex items-center justify-between
       w-full h-[55px]
       px-[16px] py-[14px]
-      bg-layout-white 
+      bg-layout-white
       dark:bg-layout-black
     '>
       <div className="left">

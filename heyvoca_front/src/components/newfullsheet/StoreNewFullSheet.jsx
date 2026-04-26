@@ -55,7 +55,7 @@ const StoreNewFullSheet = () => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
       {/* Header */}
-      <div className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
+      <div data-page-header className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
         <motion.button
           onClick={() => {
             vibrate({ duration: 5 });

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 837,
+    "origin": "prevalent",
+    "examples": [
+      {
+        "exam_en": "Smartphone addiction is <strong class=\"target-word\">prevalent</strong> among teenagers.",
+        "exam_ko": "스마트폰 중독은 십대 청소년들 사이에서 <strong class=\"target-word\">만연해</strong> 있다."
+      },
+      {
+        "exam_en": "Eye diseases are <strong class=\"target-word\">prevalent</strong> in some tropical countries.",
+        "exam_ko": "몇몇 열대 지방에서 눈병이 <strong class=\"target-word\">유행한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 838,
+    "origin": "overwhelming",
+    "examples": [
+      {
+        "exam_en": "The team won by an <strong class=\"target-word\">overwhelming</strong> margin.",
+        "exam_ko": "그 팀은 <strong class=\"target-word\">압도적인</strong> 차이로 승리했다."
+      },
+      {
+        "exam_en": "The candidate received <strong class=\"target-word\">overwhelming</strong> support from voters.",
+        "exam_ko": "그 후보는 유권자들로부터 <strong class=\"target-word\">압도적인</strong> 지지를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 839,
+    "origin": "devote",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">devoted</strong> her property to the church.",
+        "exam_ko": "그녀는 교회에 재산을 <strong class=\"target-word\">희사했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">devoted</strong> his life to music.",
+        "exam_ko": "그는 음악에 일생을 <strong class=\"target-word\">바쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 840,
+    "origin": "decrease",
+    "examples": [
+      {
+        "exam_en": "The population has <strong class=\"target-word\">decreased</strong> sharply this decade.",
+        "exam_ko": "이번 10년간 인구가 급격히 <strong class=\"target-word\">줄었다</strong>."
+      },
+      {
+        "exam_en": "His influence slowly <strong class=\"target-word\">decreased</strong> over time.",
+        "exam_ko": "그의 영향력은 시간이 지나면서 서서히 <strong class=\"target-word\">줄어들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 841,
+    "origin": "decline",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">declined</strong> to go to the park with us.",
+        "exam_ko": "그는 우리와 공원에 가는 것을 <strong class=\"target-word\">거절했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">declined</strong> his kind offer politely.",
+        "exam_ko": "그녀는 그의 친절한 제의를 정중하게 <strong class=\"target-word\">사절했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 842,
+    "origin": "declaration",
+    "examples": [
+      {
+        "exam_en": "The president signed the <strong class=\"target-word\">declaration</strong> of war.",
+        "exam_ko": "대통령은 선전 포고 <strong class=\"target-word\">선언문</strong>에 서명했다."
+      },
+      {
+        "exam_en": "The country issued a <strong class=\"target-word\">declaration</strong> of neutrality.",
+        "exam_ko": "그 나라는 중립 <strong class=\"target-word\">선언</strong>을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 843,
+    "origin": "defend",
+    "examples": [
+      {
+        "exam_en": "Soldiers <strong class=\"target-word\">defended</strong> their country against the enemies.",
+        "exam_ko": "군인들은 적으로부터 나라를 <strong class=\"target-word\">지켰다</strong>."
+      },
+      {
+        "exam_en": "The champion successfully <strong class=\"target-word\">defended</strong> his title.",
+        "exam_ko": "챔피언은 성공적으로 자신의 타이틀을 <strong class=\"target-word\">방어했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 844,
+    "origin": "delivery",
+    "examples": [
+      {
+        "exam_en": "I sent the package by special <strong class=\"target-word\">delivery</strong>.",
+        "exam_ko": "나는 소포를 속달 <strong class=\"target-word\">배달편</strong>으로 보냈다."
+      },
+      {
+        "exam_en": "I missed the two o'clock <strong class=\"target-word\">delivery</strong> today.",
+        "exam_ko": "오늘 2시 <strong class=\"target-word\">배달</strong>을 놓쳤다."
+      }
+    ]
+  },
+  {
+    "id": 845,
+    "origin": "deposit",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">deposited</strong> her bag on the table.",
+        "exam_ko": "그녀는 가방을 책상 위에 <strong class=\"target-word\">놓았다</strong>."
+      },
+      {
+        "exam_en": "Mud was <strong class=\"target-word\">deposited</strong> on the fields by the flood.",
+        "exam_ko": "홍수로 인해 논밭에 진흙이 <strong class=\"target-word\">쌓였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 846,
+    "origin": "curtail",
+    "examples": [
+      {
+        "exam_en": "The manager asked him to <strong class=\"target-word\">curtail</strong> his speech.",
+        "exam_ko": "관리자는 그에게 연설을 <strong class=\"target-word\">줄이라고</strong> 요청했다."
+      },
+      {
+        "exam_en": "His salary was <strong class=\"target-word\">curtailed</strong> due to poor performance.",
+        "exam_ko": "그는 저조한 성과로 인해 급여가 <strong class=\"target-word\">삭감되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 847,
+    "origin": "currency",
+    "examples": [
+      {
+        "exam_en": "Gold <strong class=\"target-word\">currency</strong> was common in ancient times.",
+        "exam_ko": "금 <strong class=\"target-word\">화폐</strong>는 고대에 흔했다."
+      },
+      {
+        "exam_en": "Paper <strong class=\"target-word\">currency</strong> replaced coins over time.",
+        "exam_ko": "지폐 <strong class=\"target-word\">화폐</strong>가 시간이 지나면서 동전을 대체했다."
+      }
+    ]
+  },
+  {
+    "id": 848,
+    "origin": "cuisine",
+    "examples": [
+      {
+        "exam_en": "She loves French <strong class=\"target-word\">cuisine</strong> above all others.",
+        "exam_ko": "그녀는 무엇보다 프랑스 <strong class=\"target-word\">요리</strong>를 좋아한다."
+      },
+      {
+        "exam_en": "My restaurant is famous for its excellent <strong class=\"target-word\">cuisine</strong>.",
+        "exam_ko": "나의 레스토랑은 훌륭한 <strong class=\"target-word\">요리</strong>로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 849,
+    "origin": "critical",
+    "examples": [
+      {
+        "exam_en": "The professor gave a <strong class=\"target-word\">critical</strong> opinion of the essay.",
+        "exam_ko": "교수는 그 논문에 대해 <strong class=\"target-word\">비판적인</strong> 의견을 냈다."
+      },
+      {
+        "exam_en": "The play received excellent <strong class=\"target-word\">critical</strong> reviews.",
+        "exam_ko": "그 연극은 훌륭한 <strong class=\"target-word\">비평적</strong> 평가를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 850,
+    "origin": "standard",
+    "examples": [
+      {
+        "exam_en": "The product quality is up to <strong class=\"target-word\">standard</strong>.",
+        "exam_ko": "제품 품질이 <strong class=\"target-word\">기준</strong>에 달해 있다."
+      },
+      {
+        "exam_en": "Her work failed to meet the expected <strong class=\"target-word\">standard</strong>.",
+        "exam_ko": "그녀의 작업은 기대했던 <strong class=\"target-word\">수준</strong>에 미치지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 852,
+    "origin": "credit",
+    "examples": [
+      {
+        "exam_en": "His story deserves no <strong class=\"target-word\">credit</strong> at all.",
+        "exam_ko": "그의 이야기는 전혀 <strong class=\"target-word\">신용할</strong> 만한 것이 못 된다."
+      },
+      {
+        "exam_en": "I give full <strong class=\"target-word\">credit</strong> to her for the success.",
+        "exam_ko": "나는 그 성공의 공을 온전히 그녀에게 <strong class=\"target-word\">돌린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 853,
+    "origin": "creative",
+    "examples": [
+      {
+        "exam_en": "She has a very <strong class=\"target-word\">creative</strong> mind.",
+        "exam_ko": "그녀는 매우 <strong class=\"target-word\">창의적인</strong> 사고를 가지고 있다."
+      },
+      {
+        "exam_en": "He enrolled in a <strong class=\"target-word\">creative</strong> writing course.",
+        "exam_ko": "그는 <strong class=\"target-word\">창작</strong> 글쓰기 강좌에 등록했다."
+      }
+    ]
+  },
+  {
+    "id": 854,
+    "origin": "coverage",
+    "examples": [
+      {
+        "exam_en": "The bank requires 40 percent gold <strong class=\"target-word\">coverage</strong> for paper currency.",
+        "exam_ko": "은행은 지폐에 대해 40%의 금 <strong class=\"target-word\">준비율</strong>을 요구한다."
+      },
+      {
+        "exam_en": "The insurance plan offers full medical <strong class=\"target-word\">coverage</strong>.",
+        "exam_ko": "그 보험 플랜은 완전한 의료 <strong class=\"target-word\">보장</strong>을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 855,
+    "origin": "polite",
+    "examples": [
+      {
+        "exam_en": "She left a <strong class=\"target-word\">polite</strong> but honest comment.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">정중하지만</strong> 솔직한 비평을 남겼다."
+      },
+      {
+        "exam_en": "He wrote a <strong class=\"target-word\">polite</strong> letter to the manager.",
+        "exam_ko": "그는 매니저에게 <strong class=\"target-word\">정중한</strong> 편지를 썼다."
+      }
+    ]
+  },
+  {
+    "id": 856,
+    "origin": "courteous",
+    "examples": [
+      {
+        "exam_en": "It is very <strong class=\"target-word\">courteous</strong> of you to visit me.",
+        "exam_ko": "이렇게 찾아주시다니 정말 <strong class=\"target-word\">고맙습니다</strong>."
+      },
+      {
+        "exam_en": "The staff were always <strong class=\"target-word\">courteous</strong> to customers.",
+        "exam_ko": "직원들은 항상 고객에게 <strong class=\"target-word\">정중했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 857,
+    "origin": "course",
+    "examples": [
+      {
+        "exam_en": "She reflected on the <strong class=\"target-word\">course</strong> of her life.",
+        "exam_ko": "그녀는 자신의 인생 <strong class=\"target-word\">행로</strong>를 돌아보았다."
+      },
+      {
+        "exam_en": "The boat followed the upper <strong class=\"target-word\">course</strong> of the river.",
+        "exam_ko": "보트는 강의 상류 <strong class=\"target-word\">흐름</strong>을 따라갔다."
+      }
+    ]
+  }
+]

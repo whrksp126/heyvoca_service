@@ -1,0 +1,282 @@
+[
+  {
+    "id": 980,
+    "origin": "anniversary",
+    "examples": [
+      {
+        "exam_en": "They celebrated their wedding <strong class=\"target-word\">anniversary</strong> at a restaurant.",
+        "exam_ko": "그들은 결혼 <strong class=\"target-word\">기념일</strong>을 식당에서 축하했다."
+      },
+      {
+        "exam_en": "The country marked the 200th <strong class=\"target-word\">anniversary</strong> of its independence.",
+        "exam_ko": "그 나라는 독립 200주년 <strong class=\"target-word\">기념일</strong>을 기렸다."
+      }
+    ]
+  },
+  {
+    "id": 981,
+    "origin": "defense",
+    "examples": [
+      {
+        "exam_en": "The lawyer prepared a strong <strong class=\"target-word\">defense</strong> for his client.",
+        "exam_ko": "변호사는 의뢰인을 위해 강력한 <strong class=\"target-word\">변호</strong>를 준비했다."
+      },
+      {
+        "exam_en": "The country increased its military <strong class=\"target-word\">defense</strong> budget.",
+        "exam_ko": "그 나라는 군사 <strong class=\"target-word\">방어</strong> 예산을 늘렸다."
+      }
+    ]
+  },
+  {
+    "id": 983,
+    "origin": "successful",
+    "examples": [
+      {
+        "exam_en": "The new product launch was very <strong class=\"target-word\">successful</strong>.",
+        "exam_ko": "새 제품 출시는 매우 <strong class=\"target-word\">성공적</strong>이었다."
+      },
+      {
+        "exam_en": "She became a <strong class=\"target-word\">successful</strong> entrepreneur at a young age.",
+        "exam_ko": "그녀는 어린 나이에 <strong class=\"target-word\">성공한</strong> 사업가가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 984,
+    "origin": "ongoing",
+    "examples": [
+      {
+        "exam_en": "The government provides <strong class=\"target-word\">ongoing</strong> support to flood victims.",
+        "exam_ko": "정부는 홍수 피해자들에게 <strong class=\"target-word\">지속적인</strong> 지원을 제공한다."
+      },
+      {
+        "exam_en": "The investigation is still <strong class=\"target-word\">ongoing</strong> after several months.",
+        "exam_ko": "수사는 몇 달이 지난 후에도 여전히 <strong class=\"target-word\">진행 중</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 985,
+    "origin": "senior",
+    "examples": [
+      {
+        "exam_en": "He was promoted to a <strong class=\"target-word\">senior</strong> manager position.",
+        "exam_ko": "그는 <strong class=\"target-word\">고위</strong> 관리직으로 승진했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">senior</strong> students mentor the newcomers.",
+        "exam_ko": "<strong class=\"target-word\">선배</strong> 학생들이 신입생들을 지도한다."
+      }
+    ]
+  },
+  {
+    "id": 988,
+    "origin": "jackpot",
+    "examples": [
+      {
+        "exam_en": "She hit the <strong class=\"target-word\">jackpot</strong> and won a million dollars.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">대박</strong>을 터뜨려 백만 달러를 얻었다."
+      },
+      {
+        "exam_en": "He felt like he hit the <strong class=\"target-word\">jackpot</strong> when he got the job.",
+        "exam_ko": "그는 그 일자리를 얻었을 때 <strong class=\"target-word\">큰 행운</strong>을 잡은 것 같았다."
+      }
+    ]
+  },
+  {
+    "id": 989,
+    "origin": "pot",
+    "examples": [
+      {
+        "exam_en": "She boiled water in a large <strong class=\"target-word\">pot</strong> on the stove.",
+        "exam_ko": "그녀는 가스레인지 위의 큰 <strong class=\"target-word\">냄비</strong>에서 물을 끓였다."
+      },
+      {
+        "exam_en": "He stirred the soup <strong class=\"target-word\">pot</strong> slowly over low heat.",
+        "exam_ko": "그는 약한 불로 수프 <strong class=\"target-word\">냄비</strong>를 천천히 저었다."
+      }
+    ]
+  },
+  {
+    "id": 990,
+    "origin": "fear",
+    "examples": [
+      {
+        "exam_en": "She has a strong <strong class=\"target-word\">fear</strong> of heights.",
+        "exam_ko": "그녀는 심한 고소 <strong class=\"target-word\">공포증</strong>이 있다."
+      },
+      {
+        "exam_en": "He was overcome by <strong class=\"target-word\">fear</strong> during the earthquake.",
+        "exam_ko": "그는 지진이 발생하는 동안 <strong class=\"target-word\">공포</strong>에 질렸다."
+      }
+    ]
+  },
+  {
+    "id": 991,
+    "origin": "dive",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">dived</strong> into the ocean to search for pearls.",
+        "exam_ko": "그는 진주를 찾으러 바다에 <strong class=\"target-word\">잠수했다</strong>."
+      },
+      {
+        "exam_en": "The children <strong class=\"target-word\">dived</strong> into the pool one by one.",
+        "exam_ko": "아이들은 하나씩 수영장으로 <strong class=\"target-word\">뛰어들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 992,
+    "origin": "daybreak",
+    "examples": [
+      {
+        "exam_en": "They left the village before <strong class=\"target-word\">daybreak</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">새벽</strong> 전에 마을을 떠났다."
+      },
+      {
+        "exam_en": "The soldiers marched out at <strong class=\"target-word\">daybreak</strong>.",
+        "exam_ko": "병사들은 <strong class=\"target-word\">여명</strong>에 행진을 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 995,
+    "origin": "daylight",
+    "examples": [
+      {
+        "exam_en": "They worked only during <strong class=\"target-word\">daylight</strong> hours.",
+        "exam_ko": "그들은 <strong class=\"target-word\">일광</strong> 시간에만 일했다."
+      },
+      {
+        "exam_en": "The robbery happened in broad <strong class=\"target-word\">daylight</strong>.",
+        "exam_ko": "강도 사건은 환한 <strong class=\"target-word\">대낮</strong>에 발생했다."
+      }
+    ]
+  },
+  {
+    "id": 996,
+    "origin": "graceful",
+    "examples": [
+      {
+        "exam_en": "The ballet dancer moved in a <strong class=\"target-word\">graceful</strong> way.",
+        "exam_ko": "발레 댄서는 <strong class=\"target-word\">우아한</strong> 방식으로 움직였다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">graceful</strong> bow to the audience.",
+        "exam_ko": "그녀는 관객에게 <strong class=\"target-word\">우아하게</strong> 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 997,
+    "origin": "fearful",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">fearful</strong> storm hit the coast last night.",
+        "exam_ko": "어젯밤 <strong class=\"target-word\">무시무시한</strong> 폭풍이 해안을 강타했다."
+      },
+      {
+        "exam_en": "The children were <strong class=\"target-word\">fearful</strong> of the dark forest.",
+        "exam_ko": "아이들은 어두운 숲을 <strong class=\"target-word\">무서워했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 998,
+    "origin": "thoughtful",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">thoughtful</strong> answer to the question.",
+        "exam_ko": "그는 질문에 <strong class=\"target-word\">사려 깊은</strong> 답변을 했다."
+      },
+      {
+        "exam_en": "It was very <strong class=\"target-word\">thoughtful</strong> of her to send flowers.",
+        "exam_ko": "꽃을 보내준 그녀의 행동은 매우 <strong class=\"target-word\">배려 깊은</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 999,
+    "origin": "doubtful",
+    "examples": [
+      {
+        "exam_en": "His motive for helping seemed <strong class=\"target-word\">doubtful</strong> to everyone.",
+        "exam_ko": "그가 도우려는 동기는 모두에게 <strong class=\"target-word\">의심스러웠다</strong>."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">doubtful</strong> whether he will arrive on time.",
+        "exam_ko": "그가 제시간에 도착할지는 <strong class=\"target-word\">불확실하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1000,
+    "origin": "thankful",
+    "examples": [
+      {
+        "exam_en": "I am extremely <strong class=\"target-word\">thankful</strong> to him for his help.",
+        "exam_ko": "그의 도움에 정말로 <strong class=\"target-word\">감사하게</strong> 생각한다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">thankful</strong> to breathe the fresh air.",
+        "exam_ko": "그녀는 신선한 공기를 마실 수 있어서 <strong class=\"target-word\">기뻤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1001,
+    "origin": "careful",
+    "examples": [
+      {
+        "exam_en": "Be <strong class=\"target-word\">careful</strong> when crossing the busy street.",
+        "exam_ko": "복잡한 도로를 건널 때 <strong class=\"target-word\">조심해라</strong>."
+      },
+      {
+        "exam_en": "You should be more <strong class=\"target-word\">careful</strong> with your belongings.",
+        "exam_ko": "소지품을 더 <strong class=\"target-word\">조심스럽게</strong> 다뤄야 한다."
+      }
+    ]
+  },
+  {
+    "id": 1002,
+    "origin": "helpful",
+    "examples": [
+      {
+        "exam_en": "It was very <strong class=\"target-word\">helpful</strong> of you to type the manuscript.",
+        "exam_ko": "원고를 타이핑해 주신 것이 정말 <strong class=\"target-word\">도움이 됐습니다</strong>."
+      },
+      {
+        "exam_en": "This map is <strong class=\"target-word\">helpful</strong> for finding the location.",
+        "exam_ko": "이 지도는 위치를 찾는 데 <strong class=\"target-word\">도움이 된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1003,
+    "origin": "whether",
+    "examples": [
+      {
+        "exam_en": "I don't know <strong class=\"target-word\">whether</strong> he will succeed.",
+        "exam_ko": "그가 성공할지 <strong class=\"target-word\">어떨지</strong> 알 수 없다."
+      },
+      {
+        "exam_en": "She can't decide <strong class=\"target-word\">whether</strong> to stay or leave.",
+        "exam_ko": "그녀는 머물지 떠날지 <strong class=\"target-word\">결정하지</strong> 못하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1004,
+    "origin": "purchase",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">purchased</strong> a new car for five thousand dollars.",
+        "exam_ko": "그는 새 차를 5천 달러에 <strong class=\"target-word\">구입했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">purchased</strong> a new coat for her daughter.",
+        "exam_ko": "그녀는 딸에게 새 코트를 <strong class=\"target-word\">사주었다</strong>."
+      }
+    ]
+  }
+]

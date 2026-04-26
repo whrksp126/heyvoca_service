@@ -1,0 +1,246 @@
+[
+  {
+    "id": 22066,
+    "origin": "crustose",
+    "examples": [
+      {
+        "exam_en": "crustose lichens",
+        "exam_ko": "고착지의."
+      }
+    ]
+  },
+  {
+    "id": 22077,
+    "origin": "bewilderment",
+    "examples": [
+      {
+        "exam_en": "in bewilderment",
+        "exam_ko": "당황하여, 어찌할 바를 몰라."
+      }
+    ]
+  },
+  {
+    "id": 22083,
+    "origin": "astringent",
+    "examples": [
+      {
+        "exam_en": "astringent criticism",
+        "exam_ko": "신랄한 비판."
+      },
+      {
+        "exam_en": "an astringent taste",
+        "exam_ko": "떫은 맛[사과]."
+      }
+    ]
+  },
+  {
+    "id": 22084,
+    "origin": "crystallize",
+    "examples": [
+      {
+        "exam_en": "crystallized sugar",
+        "exam_ko": "얼음사탕."
+      },
+      {
+        "exam_en": "He tried to crystallize his ideas.",
+        "exam_ko": "그는 자신의 생각을 명확히 하려고 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 22086,
+    "origin": "appreciative",
+    "examples": [
+      {
+        "exam_en": "an appreciative listener",
+        "exam_ko": "감상력 있는 청취자"
+      },
+      {
+        "exam_en": "deeply appreciative of",
+        "exam_ko": "…의 진가를 잘 이해하고."
+      }
+    ]
+  },
+  {
+    "id": 22088,
+    "origin": "aeolian",
+    "examples": [
+      {
+        "exam_en": "Aeolian rocks",
+        "exam_ko": "풍성암."
+      }
+    ]
+  },
+  {
+    "id": 22100,
+    "origin": "carboniferous",
+    "examples": [
+      {
+        "exam_en": "the Carboniferous period",
+        "exam_ko": "석탄기."
+      }
+    ]
+  },
+  {
+    "id": 22104,
+    "origin": "undeveloped",
+    "examples": [
+      {
+        "exam_en": "an undeveloped child",
+        "exam_ko": "지진아."
+      }
+    ]
+  },
+  {
+    "id": 22107,
+    "origin": "teaching",
+    "examples": [
+      {
+        "exam_en": "English teaching",
+        "exam_ko": "영어 교수"
+      },
+      {
+        "exam_en": "student teaching",
+        "exam_ko": "(미) 교생 실습"
+      }
+    ]
+  },
+  {
+    "id": 22118,
+    "origin": "rationalize",
+    "examples": [
+      {
+        "exam_en": "rationalize away a myth",
+        "exam_ko": "전설에 합리적인 해석을 내리다."
+      },
+      {
+        "exam_en": "He tried to rationalize his foolish actions.",
+        "exam_ko": "그는 자기의 어리석은 행위를 정당화하려고 했다."
+      }
+    ]
+  },
+  {
+    "id": 22124,
+    "origin": "calcium",
+    "examples": [
+      {
+        "exam_en": "a calcium deficiency",
+        "exam_ko": "캄슘 부족"
+      },
+      {
+        "exam_en": "calcium phosphate",
+        "exam_ko": "인산칼슘[석회]."
+      }
+    ]
+  },
+  {
+    "id": 22129,
+    "origin": "illuminated",
+    "examples": [
+      {
+        "exam_en": "an illuminatedd manuscript",
+        "exam_ko": "채색 사본."
+      }
+    ]
+  },
+  {
+    "id": 22133,
+    "origin": "dredge",
+    "examples": [
+      {
+        "exam_en": "dredge up an old scandal",
+        "exam_ko": "오래된 스캔들을 새삼스레 생각해 내다."
+      },
+      {
+        "exam_en": "They are dredging the lake for the dead body.",
+        "exam_ko": "그들은 시체를 찾아 호수를 뒤지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 22137,
+    "origin": "volley",
+    "examples": [
+      {
+        "exam_en": "a volley of bullets",
+        "exam_ko": "탄환의 일제 사격"
+      },
+      {
+        "exam_en": "fire a volley",
+        "exam_ko": "일제사격을 하다"
+      }
+    ]
+  },
+  {
+    "id": 22138,
+    "origin": "hock",
+    "examples": [
+      {
+        "exam_en": "She hocked nearly all her clothes for her living.",
+        "exam_ko": "그녀는 생계 때문에 자기의 옷가지를 거의 다 전당 잡혔다."
+      },
+      {
+        "exam_en": "out of hock",
+        "exam_ko": "전당품을 되찾아; 빚을 갚아."
+      }
+    ]
+  },
+  {
+    "id": 22139,
+    "origin": "bedeck",
+    "examples": [
+      {
+        "exam_en": "The cars were all bedecked with flowers for the ceremony.",
+        "exam_ko": "차들은 의식을 위하여 온통 꽃으로 장식되었다."
+      }
+    ]
+  },
+  {
+    "id": 22151,
+    "origin": "introductory",
+    "examples": [
+      {
+        "exam_en": "an introductory chapter",
+        "exam_ko": "서장(序章)"
+      },
+      {
+        "exam_en": "introductory remarks",
+        "exam_ko": "머리말"
+      }
+    ]
+  },
+  {
+    "id": 22157,
+    "origin": "indent",
+    "examples": [
+      {
+        "exam_en": "indent the first line of each paragraph",
+        "exam_ko": "각 절의 첫 행을 안으로 들어가게 하다."
+      }
+    ]
+  },
+  {
+    "id": 22158,
+    "origin": "jot",
+    "examples": [
+      {
+        "exam_en": "Please jot down what I say.",
+        "exam_ko": "내가 말하는 것을 몇 자 적어 주십시오."
+      }
+    ]
+  },
+  {
+    "id": 22164,
+    "origin": "alpine",
+    "examples": [
+      {
+        "exam_en": "an alpine meadow",
+        "exam_ko": "고산 초원"
+      },
+      {
+        "exam_en": "Alpine Club",
+        "exam_ko": "산악회."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5818,
+    "origin": "recipient",
+    "examples": [
+      {
+        "exam_en": "She was the <strong class=\"target-word\">recipient</strong> of the award.",
+        "exam_ko": "그녀는 그 상의 <strong class=\"target-word\">수상자</strong>였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">recipient</strong> of the letter never replied.",
+        "exam_ko": "편지의 <strong class=\"target-word\">수취인</strong>은 답장을 하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 5819,
+    "origin": "shove",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">shoved</strong> his way through the crowd.",
+        "exam_ko": "그는 군중을 <strong class=\"target-word\">밀치며</strong> 나아갔다."
+      },
+      {
+        "exam_en": "The door was <strong class=\"target-word\">shoved</strong> open suddenly.",
+        "exam_ko": "문이 갑자기 <strong class=\"target-word\">밀쳐져</strong> 열렸다."
+      }
+    ]
+  },
+  {
+    "id": 5821,
+    "origin": "pivot",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">pivoted</strong> quickly to face the crowd.",
+        "exam_ko": "그녀는 군중을 향해 빠르게 <strong class=\"target-word\">몸을 돌렸다</strong>."
+      },
+      {
+        "exam_en": "He is the <strong class=\"target-word\">pivot</strong> of the baseball team.",
+        "exam_ko": "그는 그 야구팀의 <strong class=\"target-word\">핵심 축</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5823,
+    "origin": "irrigation",
+    "examples": [
+      {
+        "exam_en": "Farmers rely on <strong class=\"target-word\">irrigation</strong> during dry seasons.",
+        "exam_ko": "농부들은 건기에 <strong class=\"target-word\">관개</strong>에 의존한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">irrigation</strong> system supplies water to the fields.",
+        "exam_ko": "<strong class=\"target-word\">관개</strong> 시스템이 밭에 물을 공급한다."
+      }
+    ]
+  },
+  {
+    "id": 5824,
+    "origin": "hideous",
+    "examples": [
+      {
+        "exam_en": "The monster had a <strong class=\"target-word\">hideous</strong> face.",
+        "exam_ko": "그 괴물은 <strong class=\"target-word\">흉측한</strong> 얼굴을 가졌다."
+      },
+      {
+        "exam_en": "The crime scene was truly <strong class=\"target-word\">hideous</strong>.",
+        "exam_ko": "그 범죄 현장은 정말 <strong class=\"target-word\">끔찍했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5826,
+    "origin": "glee",
+    "examples": [
+      {
+        "exam_en": "The children laughed with <strong class=\"target-word\">glee</strong> at the show.",
+        "exam_ko": "아이들은 공연을 보며 <strong class=\"target-word\">기쁨</strong>으로 웃었다."
+      },
+      {
+        "exam_en": "She clapped her hands in <strong class=\"target-word\">glee</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">기쁨</strong>에 손뼉을 쳤다."
+      }
+    ]
+  },
+  {
+    "id": 5827,
+    "origin": "gmo",
+    "examples": [
+      {
+        "exam_en": "They only sell non-<strong class=\"target-word\">GMO</strong> corn at this market.",
+        "exam_ko": "이 시장에서는 비<strong class=\"target-word\">유전자변형</strong> 옥수수만 판다."
+      },
+      {
+        "exam_en": "The label confirms the product is <strong class=\"target-word\">GMO</strong>-free.",
+        "exam_ko": "표기에서 그 제품이 <strong class=\"target-word\">유전자변형</strong> 성분이 없음을 확인한다."
+      }
+    ]
+  },
+  {
+    "id": 5828,
+    "origin": "expire",
+    "examples": [
+      {
+        "exam_en": "My license <strong class=\"target-word\">expires</strong> on the first of May.",
+        "exam_ko": "내 면허증은 5월 1일에 <strong class=\"target-word\">만료된다</strong>."
+      },
+      {
+        "exam_en": "The old man <strong class=\"target-word\">expired</strong> peacefully in his sleep.",
+        "exam_ko": "그 노인은 잠을 자다 평화롭게 <strong class=\"target-word\">숨을 거뒀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5830,
+    "origin": "buffer",
+    "examples": [
+      {
+        "exam_en": "The child acted as a <strong class=\"target-word\">buffer</strong> between the parents.",
+        "exam_ko": "아이가 부모 사이에서 <strong class=\"target-word\">완충</strong> 역할을 했다."
+      },
+      {
+        "exam_en": "The forest serves as a <strong class=\"target-word\">buffer</strong> against strong winds.",
+        "exam_ko": "숲은 강한 바람에 대한 <strong class=\"target-word\">완충</strong> 역할을 한다."
+      }
+    ]
+  },
+  {
+    "id": 5831,
+    "origin": "authorize",
+    "examples": [
+      {
+        "exam_en": "A budget was <strong class=\"target-word\">authorized</strong> for the project.",
+        "exam_ko": "그 프로젝트에 예산이 <strong class=\"target-word\">승인되었다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">authorized</strong> to sign the contract.",
+        "exam_ko": "그는 계약서에 서명할 <strong class=\"target-word\">권한을 부여받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5832,
+    "origin": "binge",
+    "examples": [
+      {
+        "exam_en": "She went on a <strong class=\"target-word\">binge</strong> and ate too much.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">폭식</strong>을 하며 너무 많이 먹었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">binged</strong> on his favorite series all weekend.",
+        "exam_ko": "그는 주말 내내 좋아하는 드라마를 <strong class=\"target-word\">몰아봤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5833,
+    "origin": "ail",
+    "examples": [
+      {
+        "exam_en": "What is <strong class=\"target-word\">ailing</strong> your mother?",
+        "exam_ko": "너의 어머님은 왜 <strong class=\"target-word\">고통받고</strong> 계시니?"
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">ailing</strong> from a bad cold.",
+        "exam_ko": "그녀는 독감으로 <strong class=\"target-word\">앓고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 5835,
+    "origin": "torso",
+    "examples": [
+      {
+        "exam_en": "He had a strong, muscular <strong class=\"target-word\">torso</strong>.",
+        "exam_ko": "그는 강하고 근육질의 <strong class=\"target-word\">상체</strong>를 가졌다."
+      },
+      {
+        "exam_en": "The artist painted only the <strong class=\"target-word\">torso</strong> of the figure.",
+        "exam_ko": "화가는 인물의 <strong class=\"target-word\">몸통</strong>만 그렸다."
+      }
+    ]
+  },
+  {
+    "id": 5836,
+    "origin": "wriggle",
+    "examples": [
+      {
+        "exam_en": "The puppy <strong class=\"target-word\">wriggled</strong> out of my arms.",
+        "exam_ko": "강아지가 내 팔에서 <strong class=\"target-word\">꿈틀거리며</strong> 빠져나갔다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">wriggled</strong> her way through the narrow gap.",
+        "exam_ko": "그녀는 좁은 틈을 <strong class=\"target-word\">몸을 비틀며</strong> 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 5838,
+    "origin": "shudder",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">shuddered</strong> with dread at the news.",
+        "exam_ko": "그는 그 소식에 공포로 <strong class=\"target-word\">몸을 떨었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">shuddered</strong> at the sight of the snake.",
+        "exam_ko": "그녀는 뱀을 보고 <strong class=\"target-word\">몸서리쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5839,
+    "origin": "ravenous",
+    "examples": [
+      {
+        "exam_en": "The hikers were <strong class=\"target-word\">ravenous</strong> after the long trek.",
+        "exam_ko": "등산객들은 긴 트레킹 후 <strong class=\"target-word\">몹시 배가 고팠다</strong>."
+      },
+      {
+        "exam_en": "She had a <strong class=\"target-word\">ravenous</strong> appetite for learning.",
+        "exam_ko": "그녀는 배움에 대한 <strong class=\"target-word\">왕성한</strong> 식욕을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 5840,
+    "origin": "scepter",
+    "examples": [
+      {
+        "exam_en": "The king held the golden <strong class=\"target-word\">scepter</strong> in his hand.",
+        "exam_ko": "왕은 손에 황금 <strong class=\"target-word\">왕홀</strong>을 들었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">scepter</strong> symbolized the ruler's authority.",
+        "exam_ko": "<strong class=\"target-word\">왕홀</strong>은 통치자의 권위를 상징했다."
+      }
+    ]
+  },
+  {
+    "id": 5842,
+    "origin": "purge",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">purge</strong> his conscience of guilt.",
+        "exam_ko": "그는 양심에서 죄책감을 <strong class=\"target-word\">씻어내려</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">purged</strong> envy from her heart.",
+        "exam_ko": "그녀는 마음속 시기심을 <strong class=\"target-word\">털어냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5843,
+    "origin": "petroleum",
+    "examples": [
+      {
+        "exam_en": "The country exports crude <strong class=\"target-word\">petroleum</strong> overseas.",
+        "exam_ko": "그 나라는 해외로 원유 <strong class=\"target-word\">석유</strong>를 수출한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Petroleum</strong> products include gasoline and diesel.",
+        "exam_ko": "<strong class=\"target-word\">석유</strong> 제품에는 가솔린과 디젤이 포함된다."
+      }
+    ]
+  },
+  {
+    "id": 5844,
+    "origin": "pike",
+    "examples": [
+      {
+        "exam_en": "New challenges are coming down the <strong class=\"target-word\">pike</strong>.",
+        "exam_ko": "새로운 도전들이 <strong class=\"target-word\">다가오고</strong> 있다."
+      },
+      {
+        "exam_en": "The soldier carried a long <strong class=\"target-word\">pike</strong> into battle.",
+        "exam_ko": "병사는 긴 <strong class=\"target-word\">창</strong>을 들고 전투에 나섰다."
+      }
+    ]
+  }
+]

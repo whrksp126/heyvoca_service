@@ -1,0 +1,230 @@
+[
+  {
+    "id": 28216,
+    "origin": "immensity",
+    "examples": [
+      {
+        "exam_en": "the immensities of outer space",
+        "exam_ko": "우주의 광활함."
+      }
+    ]
+  },
+  {
+    "id": 28217,
+    "origin": "sexism",
+    "examples": [
+      {
+        "exam_en": "sexism in language",
+        "exam_ko": "언어상의 성 차별."
+      }
+    ]
+  },
+  {
+    "id": 28225,
+    "origin": "unguided",
+    "examples": [
+      {
+        "exam_en": "an unguided tour",
+        "exam_ko": "안내원이 없는 여행"
+      },
+      {
+        "exam_en": "an unguided missile",
+        "exam_ko": "무유도 유도탄."
+      }
+    ]
+  },
+  {
+    "id": 28226,
+    "origin": "cracking",
+    "examples": [
+      {
+        "exam_en": "a cracking good movie",
+        "exam_ko": "매우 훌륭한 영화."
+      }
+    ]
+  },
+  {
+    "id": 28227,
+    "origin": "challenged",
+    "examples": [
+      {
+        "exam_en": "people who are physically or mentally challenged",
+        "exam_ko": "신체적으로 또는 정신적으로 노력을 요하는 사람들(※「장애인」의 완곡한 표현)"
+      },
+      {
+        "exam_en": "aurally challenged",
+        "exam_ko": "귀가 잘 들리지 않는"
+      }
+    ]
+  },
+  {
+    "id": 28240,
+    "origin": "vaccine",
+    "examples": [
+      {
+        "exam_en": "bovine vaccine",
+        "exam_ko": "우두[인두화(人痘化)] 백신."
+      },
+      {
+        "exam_en": "influenza vaccine",
+        "exam_ko": "인플루엔자 백신"
+      }
+    ]
+  },
+  {
+    "id": 28241,
+    "origin": "hopelessly",
+    "examples": [
+      {
+        "exam_en": "They were crying hopelessly.",
+        "exam_ko": "그들은 절망하여 울고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 28243,
+    "origin": "bookable",
+    "examples": [
+      {
+        "exam_en": "All seats bookable",
+        "exam_ko": "전 좌석 예약제."
+      }
+    ]
+  },
+  {
+    "id": 28247,
+    "origin": "hater",
+    "examples": [
+      {
+        "exam_en": "Don't let the haters get you down",
+        "exam_ko": "너를 헐뜯는 사람들 때문에 우울해 하지 마."
+      },
+      {
+        "exam_en": "a passionate hater of tyranny",
+        "exam_ko": "압제를 강력히 증오하는 사람."
+      }
+    ]
+  },
+  {
+    "id": 28249,
+    "origin": "obligated",
+    "examples": [
+      {
+        "exam_en": "be obligated to do",
+        "exam_ko": "…할 의무가 있다[를 느끼다]"
+      },
+      {
+        "exam_en": "feel obligated to a person",
+        "exam_ko": "남에게 은혜를 느끼다."
+      }
+    ]
+  },
+  {
+    "id": 28267,
+    "origin": "basketful",
+    "examples": [
+      {
+        "exam_en": "a basketful of hope",
+        "exam_ko": "상당한 희망."
+      }
+    ]
+  },
+  {
+    "id": 28269,
+    "origin": "watchout",
+    "examples": [
+      {
+        "exam_en": "Watch out for cars when you cross the road.",
+        "exam_ko": "당신이 길을 건널 때 차를 조심하세요."
+      }
+    ]
+  },
+  {
+    "id": 28281,
+    "origin": "anguished",
+    "examples": [
+      {
+        "exam_en": "an anguished conscience",
+        "exam_ko": "괴로움을 느끼는 양심."
+      }
+    ]
+  },
+  {
+    "id": 28284,
+    "origin": "nourished",
+    "examples": [
+      {
+        "exam_en": "a well nourished baby",
+        "exam_ko": "영양 상태가 좋은[좋지 않은] 아기."
+      }
+    ]
+  },
+  {
+    "id": 28285,
+    "origin": "pronged",
+    "examples": [
+      {
+        "exam_en": "a four-pronged fork",
+        "exam_ko": "네 갈래진 포크"
+      },
+      {
+        "exam_en": "a three-pronged approach",
+        "exam_ko": "세 방면에서의 접근."
+      }
+    ]
+  },
+  {
+    "id": 28286,
+    "origin": "peopled",
+    "examples": [
+      {
+        "exam_en": "a thickly peopled country",
+        "exam_ko": "인구 밀도가 높은 국가."
+      }
+    ]
+  },
+  {
+    "id": 28287,
+    "origin": "encrusted",
+    "examples": [
+      {
+        "exam_en": "a crown encrusted with jewels",
+        "exam_ko": "보석으로 뒤덮인 왕관."
+      }
+    ]
+  },
+  {
+    "id": 28290,
+    "origin": "intercession",
+    "examples": [
+      {
+        "exam_en": "make  intercession  for B",
+        "exam_ko": "B를 위해(A에게) 잘 말해 주다."
+      },
+      {
+        "exam_en": "Through the intercession of the secretary of state with the king these bad restrictions were removed.",
+        "exam_ko": "통해 중재를 국무장관이 국왕과 나쁜 제한들이 폐지되었다."
+      }
+    ]
+  },
+  {
+    "id": 28296,
+    "origin": "abashed",
+    "examples": [
+      {
+        "exam_en": "He was abashed at his own ignorance.",
+        "exam_ko": "그는 자신의 무지에 부끄러웠다."
+      }
+    ]
+  },
+  {
+    "id": 28297,
+    "origin": "barred",
+    "examples": [
+      {
+        "exam_en": "a barred gate",
+        "exam_ko": "빗장으로 잠근 문."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 729,
+    "origin": "opponent",
+    "examples": [
+      {
+        "exam_en": "He defeated his political <strong class=\"target-word\">opponent</strong> in the election.",
+        "exam_ko": "그는 선거에서 정치적 <strong class=\"target-word\">상대</strong>를 이겼다."
+      },
+      {
+        "exam_en": "She is a strong <strong class=\"target-word\">opponent</strong> of the new policy.",
+        "exam_ko": "그녀는 새 정책의 강력한 <strong class=\"target-word\">반대자</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 730,
+    "origin": "injure",
+    "examples": [
+      {
+        "exam_en": "The flood <strong class=\"target-word\">injured</strong> many crops in the region.",
+        "exam_ko": "홍수가 그 지역의 많은 작물을 <strong class=\"target-word\">손상시켰다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">injured</strong> his shoulder playing football.",
+        "exam_ko": "그는 축구를 하다가 어깨를 <strong class=\"target-word\">다쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 731,
+    "origin": "eminent",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">eminent</strong> as a historian in her field.",
+        "exam_ko": "그녀는 자기 분야에서 역사가로서 <strong class=\"target-word\">저명하다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">eminent</strong> for his great virtues.",
+        "exam_ko": "그는 훌륭한 덕행으로 <strong class=\"target-word\">유명하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 732,
+    "origin": "pregnant",
+    "examples": [
+      {
+        "exam_en": "The farmer noticed his cow was <strong class=\"target-word\">pregnant</strong>.",
+        "exam_ko": "농부는 소가 <strong class=\"target-word\">임신한</strong> 것을 알아챘다."
+      },
+      {
+        "exam_en": "She is seven months <strong class=\"target-word\">pregnant</strong> with twins.",
+        "exam_ko": "그녀는 쌍둥이를 임신한 지 <strong class=\"target-word\">임신</strong> 7개월째다."
+      }
+    ]
+  },
+  {
+    "id": 733,
+    "origin": "update",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">update</strong> the information on the website.",
+        "exam_ko": "웹사이트의 정보를 <strong class=\"target-word\">업데이트</strong>해 주세요."
+      },
+      {
+        "exam_en": "They released an <strong class=\"target-word\">updated</strong> version of the software.",
+        "exam_ko": "그들은 소프트웨어의 <strong class=\"target-word\">업데이트된</strong> 버전을 출시했다."
+      }
+    ]
+  },
+  {
+    "id": 734,
+    "origin": "salesman",
+    "examples": [
+      {
+        "exam_en": "A door-to-door <strong class=\"target-word\">salesman</strong> knocked on our door.",
+        "exam_ko": "방문 <strong class=\"target-word\">판매원</strong>이 우리 집 문을 두드렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">salesman</strong> offered a big discount on the car.",
+        "exam_ko": "그 <strong class=\"target-word\">판매원</strong>은 자동차에 큰 할인을 제안했다."
+      }
+    ]
+  },
+  {
+    "id": 735,
+    "origin": "property",
+    "examples": [
+      {
+        "exam_en": "You must not trespass on private <strong class=\"target-word\">property</strong>.",
+        "exam_ko": "사유 <strong class=\"target-word\">재산</strong>을 침범해서는 안 된다."
+      },
+      {
+        "exam_en": "The company owns a lot of fixed <strong class=\"target-word\">property</strong>.",
+        "exam_ko": "그 회사는 고정 <strong class=\"target-word\">자산</strong>을 많이 보유하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 736,
+    "origin": "value",
+    "examples": [
+      {
+        "exam_en": "This ring has great sentimental <strong class=\"target-word\">value</strong> to me.",
+        "exam_ko": "이 반지는 내게 큰 감상적 <strong class=\"target-word\">가치</strong>가 있다."
+      },
+      {
+        "exam_en": "He learned the <strong class=\"target-word\">value</strong> of a good upbringing.",
+        "exam_ko": "그는 훌륭한 가정 교육의 <strong class=\"target-word\">중요성</strong>을 깨달았다."
+      }
+    ]
+  },
+  {
+    "id": 737,
+    "origin": "delay",
+    "examples": [
+      {
+        "exam_en": "They decided to <strong class=\"target-word\">delay</strong> the party by a week.",
+        "exam_ko": "그들은 파티를 일주일 <strong class=\"target-word\">연기하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "Bad weather caused a <strong class=\"target-word\">delay</strong> in our journey.",
+        "exam_ko": "나쁜 날씨가 우리의 여행을 <strong class=\"target-word\">지연시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 738,
+    "origin": "select",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">selected</strong> a toy for her child at the store.",
+        "exam_ko": "그녀는 가게에서 아이에게 줄 장난감을 <strong class=\"target-word\">골랐다</strong>."
+      },
+      {
+        "exam_en": "The judge <strong class=\"target-word\">selected</strong> the best work among many entries.",
+        "exam_ko": "심사위원은 많은 출품작 중에서 최우수작을 <strong class=\"target-word\">가려냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 739,
+    "origin": "guarantee",
+    "examples": [
+      {
+        "exam_en": "The store gave me a money-back <strong class=\"target-word\">guarantee</strong> on the product.",
+        "exam_ko": "가게는 상품에 대해 환불 <strong class=\"target-word\">보증</strong>을 해줬다."
+      },
+      {
+        "exam_en": "He signed a letter of <strong class=\"target-word\">guarantee</strong> for the loan.",
+        "exam_ko": "그는 대출에 대한 <strong class=\"target-word\">보증서</strong>에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 740,
+    "origin": "ahead",
+    "examples": [
+      {
+        "exam_en": "The road goes straight <strong class=\"target-word\">ahead</strong> for two miles.",
+        "exam_ko": "도로는 2마일 동안 곧장 <strong class=\"target-word\">앞쪽으로</strong> 이어진다."
+      },
+      {
+        "exam_en": "There are difficult challenges <strong class=\"target-word\">ahead</strong> of us.",
+        "exam_ko": "우리 <strong class=\"target-word\">앞에는</strong> 어려운 도전들이 있다."
+      }
+    ]
+  },
+  {
+    "id": 741,
+    "origin": "manufacture",
+    "examples": [
+      {
+        "exam_en": "This factory specializes in glass <strong class=\"target-word\">manufacture</strong>.",
+        "exam_ko": "이 공장은 유리 <strong class=\"target-word\">제조</strong>를 전문으로 한다."
+      },
+      {
+        "exam_en": "This car is of foreign <strong class=\"target-word\">manufacture</strong>.",
+        "exam_ko": "이 자동차는 외국 <strong class=\"target-word\">제조</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 742,
+    "origin": "agency",
+    "examples": [
+      {
+        "exam_en": "She found a job through an employment <strong class=\"target-word\">agency</strong>.",
+        "exam_ko": "그녀는 직업 <strong class=\"target-word\">소개소</strong>를 통해 일자리를 구했다."
+      },
+      {
+        "exam_en": "They hired a general sales <strong class=\"target-word\">agency</strong> for distribution.",
+        "exam_ko": "그들은 유통을 위해 판매 총<strong class=\"target-word\">대리점</strong>을 고용했다."
+      }
+    ]
+  },
+  {
+    "id": 743,
+    "origin": "request",
+    "examples": [
+      {
+        "exam_en": "She made a <strong class=\"target-word\">request</strong> to her boss for extra time off.",
+        "exam_ko": "그녀는 상사에게 추가 휴가를 <strong class=\"target-word\">요청했다</strong>."
+      },
+      {
+        "exam_en": "He refused her <strong class=\"target-word\">request</strong> without any explanation.",
+        "exam_ko": "그는 아무 설명 없이 그녀의 <strong class=\"target-word\">요청</strong>을 거절했다."
+      }
+    ]
+  },
+  {
+    "id": 744,
+    "origin": "warn",
+    "examples": [
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">warned</strong> me about the dangers of smoking.",
+        "exam_ko": "의사는 흡연의 위험성에 대해 내게 <strong class=\"target-word\">경고했다</strong>."
+      },
+      {
+        "exam_en": "We were <strong class=\"target-word\">warned</strong> not to swim in that river.",
+        "exam_ko": "우리는 그 강에서 수영하지 말라고 <strong class=\"target-word\">경고를 받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 745,
+    "origin": "trouble",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">troubled</strong> by a groundless rumor at work.",
+        "exam_ko": "그는 직장에서 근거 없는 소문으로 <strong class=\"target-word\">괴로움을 겪었다</strong>."
+      },
+      {
+        "exam_en": "She has been <strong class=\"target-word\">troubled</strong> with rheumatism for years.",
+        "exam_ko": "그녀는 수년간 류머티즘으로 <strong class=\"target-word\">고생하고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 746,
+    "origin": "totally",
+    "examples": [
+      {
+        "exam_en": "I am not <strong class=\"target-word\">totally</strong> unaware of these problems.",
+        "exam_ko": "나는 이 문제들을 <strong class=\"target-word\">전혀</strong> 모르는 것은 아니다."
+      },
+      {
+        "exam_en": "This result is <strong class=\"target-word\">totally</strong> different from what I expected.",
+        "exam_ko": "이 결과는 내가 예상했던 것과 <strong class=\"target-word\">완전히</strong> 다르다."
+      }
+    ]
+  },
+  {
+    "id": 747,
+    "origin": "triple",
+    "examples": [
+      {
+        "exam_en": "The rope was tied with a <strong class=\"target-word\">triple</strong> knot for safety.",
+        "exam_ko": "로프는 안전을 위해 <strong class=\"target-word\">삼중</strong> 매듭으로 묶였다."
+      },
+      {
+        "exam_en": "Sales <strong class=\"target-word\">tripled</strong> after the new marketing campaign.",
+        "exam_ko": "새 마케팅 캠페인 이후 매출이 <strong class=\"target-word\">세 배가 됐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 748,
+    "origin": "transfer",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">transferred</strong> to a new branch last month.",
+        "exam_ko": "그녀는 지난달 새 지점으로 <strong class=\"target-word\">전근됐다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">transferred</strong> the file to his new laptop.",
+        "exam_ko": "그는 파일을 새 노트북으로 <strong class=\"target-word\">옮겼다</strong>."
+      }
+    ]
+  }
+]

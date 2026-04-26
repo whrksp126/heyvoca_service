@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5467,
+    "origin": "heavily",
+    "examples": [
+      {
+        "exam_en": "The truck was <strong class=\"target-word\">heavily</strong> loaded with cargo.",
+        "exam_ko": "트럭에 화물이 <strong class=\"target-word\">잔뜩</strong> 실려 있었다."
+      },
+      {
+        "exam_en": "She breathed <strong class=\"target-word\">heavily</strong> after the run.",
+        "exam_ko": "달리기 후 그녀는 <strong class=\"target-word\">힘겹게</strong> 숨을 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 5468,
+    "origin": "happening",
+    "examples": [
+      {
+        "exam_en": "The festival had many amusing <strong class=\"target-word\">happenings</strong>.",
+        "exam_ko": "그 축제에는 재미있는 <strong class=\"target-word\">사건</strong>들이 많았다."
+      },
+      {
+        "exam_en": "That club is the most <strong class=\"target-word\">happening</strong> spot in town.",
+        "exam_ko": "그 클럽은 도시에서 가장 <strong class=\"target-word\">핫한</strong> 장소다."
+      }
+    ]
+  },
+  {
+    "id": 5469,
+    "origin": "tension",
+    "examples": [
+      {
+        "exam_en": "The athlete felt muscular <strong class=\"target-word\">tension</strong> before the race.",
+        "exam_ko": "선수는 경기 전 근육 <strong class=\"target-word\">긴장</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "She got a headache caused by <strong class=\"target-word\">tension</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">긴장</strong>으로 두통이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 5473,
+    "origin": "role",
+    "examples": [
+      {
+        "exam_en": "She played the <strong class=\"target-word\">role</strong> of Hamlet on stage.",
+        "exam_ko": "그녀는 무대에서 햄릿 <strong class=\"target-word\">역할</strong>을 했다."
+      },
+      {
+        "exam_en": "Teachers have an important <strong class=\"target-word\">role</strong> in society.",
+        "exam_ko": "교사는 사회에서 중요한 <strong class=\"target-word\">역할</strong>을 한다."
+      }
+    ]
+  },
+  {
+    "id": 5474,
+    "origin": "bond",
+    "examples": [
+      {
+        "exam_en": "He broke free from his <strong class=\"target-word\">bonds</strong> and escaped.",
+        "exam_ko": "그는 <strong class=\"target-word\">속박</strong>에서 벗어나 탈출했다."
+      },
+      {
+        "exam_en": "She burst her <strong class=\"target-word\">bonds</strong> and finally gained freedom.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">굴레</strong>를 끊고 마침내 자유를 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 5476,
+    "origin": "trying",
+    "examples": [
+      {
+        "exam_en": "The long journey was a <strong class=\"target-word\">trying</strong> ordeal for everyone.",
+        "exam_ko": "긴 여정은 모두에게 <strong class=\"target-word\">힘든</strong> 시련이었다."
+      },
+      {
+        "exam_en": "The harsh climate is <strong class=\"target-word\">trying</strong> to your health.",
+        "exam_ko": "혹독한 기후는 건강에 <strong class=\"target-word\">해롭다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5477,
+    "origin": "gone",
+    "examples": [
+      {
+        "exam_en": "Those happy days are past and <strong class=\"target-word\">gone</strong>.",
+        "exam_ko": "그 행복했던 날들은 지나가 <strong class=\"target-word\">버렸다</strong>."
+      },
+      {
+        "exam_en": "By the time we arrived, the opportunity was <strong class=\"target-word\">gone</strong>.",
+        "exam_ko": "우리가 도착했을 때 기회는 이미 <strong class=\"target-word\">사라져</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5478,
+    "origin": "lord",
+    "examples": [
+      {
+        "exam_en": "He was the <strong class=\"target-word\">lord</strong> of a vast mansion.",
+        "exam_ko": "그는 넓은 대저택의 <strong class=\"target-word\">주인</strong>이었다."
+      },
+      {
+        "exam_en": "The feudal <strong class=\"target-word\">lord</strong> ruled over the region.",
+        "exam_ko": "봉건 <strong class=\"target-word\">군주</strong>가 그 지역을 다스렸다."
+      }
+    ]
+  },
+  {
+    "id": 5479,
+    "origin": "heard",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">heard</strong> you were sick last week.",
+        "exam_ko": "지난주에 네가 아팠다고 <strong class=\"target-word\">들었어</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">heard</strong> that you got married.",
+        "exam_ko": "너 결혼했다고 <strong class=\"target-word\">들었어</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5480,
+    "origin": "looking",
+    "examples": [
+      {
+        "exam_en": "He was a disagreeable-<strong class=\"target-word\">looking</strong> man at first glance.",
+        "exam_ko": "그는 첫눈에 사귀기 어려워 <strong class=\"target-word\">보이는</strong> 사람이었다."
+      },
+      {
+        "exam_en": "She kept <strong class=\"target-word\">looking</strong> out the window nervously.",
+        "exam_ko": "그녀는 초조하게 계속 창밖을 <strong class=\"target-word\">바라보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5481,
+    "origin": "seen",
+    "examples": [
+      {
+        "exam_en": "He trusted only things <strong class=\"target-word\">seen</strong> with his own eyes.",
+        "exam_ko": "그는 자신의 눈으로 직접 <strong class=\"target-word\">본</strong> 것만 믿었다."
+      },
+      {
+        "exam_en": "She had never <strong class=\"target-word\">seen</strong> such a beautiful sunset before.",
+        "exam_ko": "그녀는 그렇게 아름다운 노을을 본 적이 <strong class=\"target-word\">없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5482,
+    "origin": "interface",
+    "examples": [
+      {
+        "exam_en": "The app has a simple and clean <strong class=\"target-word\">interface</strong>.",
+        "exam_ko": "그 앱은 단순하고 깔끔한 <strong class=\"target-word\">인터페이스</strong>를 갖고 있다."
+      },
+      {
+        "exam_en": "They improved the user <strong class=\"target-word\">interface</strong> after feedback.",
+        "exam_ko": "피드백을 반영해 사용자 <strong class=\"target-word\">인터페이스</strong>를 개선했다."
+      }
+    ]
+  },
+  {
+    "id": 5483,
+    "origin": "saw",
+    "examples": [
+      {
+        "exam_en": "He used a circular <strong class=\"target-word\">saw</strong> to cut the wood.",
+        "exam_ko": "그는 둥근 <strong class=\"target-word\">톱</strong>으로 나무를 잘랐다."
+      },
+      {
+        "exam_en": "The teeth of the <strong class=\"target-word\">saw</strong> were very sharp.",
+        "exam_ko": "<strong class=\"target-word\">톱</strong>의 날이 매우 날카로웠다."
+      }
+    ]
+  },
+  {
+    "id": 5484,
+    "origin": "configuration",
+    "examples": [
+      {
+        "exam_en": "The geographical <strong class=\"target-word\">configuration</strong> of Korea is unique.",
+        "exam_ko": "한국의 지리적 <strong class=\"target-word\">형태</strong>는 독특하다."
+      },
+      {
+        "exam_en": "The server <strong class=\"target-word\">configuration</strong> was updated by the engineer.",
+        "exam_ko": "엔지니어가 서버 <strong class=\"target-word\">설정</strong>을 업데이트했다."
+      }
+    ]
+  },
+  {
+    "id": 5486,
+    "origin": "done",
+    "examples": [
+      {
+        "exam_en": "What's <strong class=\"target-word\">done</strong> cannot be undone.",
+        "exam_ko": "이미 <strong class=\"target-word\">한</strong> 일은 되돌릴 수 없다."
+      },
+      {
+        "exam_en": "Are you <strong class=\"target-word\">done</strong> with your homework yet?",
+        "exam_ko": "숙제는 다 <strong class=\"target-word\">끝냈어</strong>?"
+      }
+    ]
+  },
+  {
+    "id": 5487,
+    "origin": "herself",
+    "examples": [
+      {
+        "exam_en": "She finished the project by <strong class=\"target-word\">herself</strong>.",
+        "exam_ko": "그녀는 혼자서 프로젝트를 <strong class=\"target-word\">스스로</strong> 완성했다."
+      },
+      {
+        "exam_en": "She met the First Lady <strong class=\"target-word\">herself</strong> at the event.",
+        "exam_ko": "그녀는 행사에서 영부인 <strong class=\"target-word\">본인</strong>을 만났다."
+      }
+    ]
+  },
+  {
+    "id": 5489,
+    "origin": "himself",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">himself</strong> made the telephone call.",
+        "exam_ko": "그가 <strong class=\"target-word\">직접</strong> 전화를 했다."
+      },
+      {
+        "exam_en": "I want to speak to the manager <strong class=\"target-word\">himself</strong>.",
+        "exam_ko": "지배인 <strong class=\"target-word\">본인</strong>과 직접 이야기하고 싶다."
+      }
+    ]
+  },
+  {
+    "id": 5490,
+    "origin": "mat",
+    "examples": [
+      {
+        "exam_en": "Please wipe your shoes on the <strong class=\"target-word\">mat</strong> before entering.",
+        "exam_ko": "들어오기 전에 <strong class=\"target-word\">매트</strong>에 신발을 닦으세요."
+      },
+      {
+        "exam_en": "Her hair was tangled like a <strong class=\"target-word\">mat</strong> after the wind.",
+        "exam_ko": "바람 뒤에 그녀의 머리카락은 <strong class=\"target-word\">엉킨 덩어리</strong>처럼 되었다."
+      }
+    ]
+  },
+  {
+    "id": 5492,
+    "origin": "being",
+    "examples": [
+      {
+        "exam_en": "She doubted the actual <strong class=\"target-word\">being</strong> of such creatures.",
+        "exam_ko": "그녀는 그런 생물의 실제 <strong class=\"target-word\">존재</strong>를 의심했다."
+      },
+      {
+        "exam_en": "Humans are social <strong class=\"target-word\">beings</strong> by nature.",
+        "exam_ko": "인간은 본래 사회적 <strong class=\"target-word\">존재</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 5496,
+    "origin": "its",
+    "examples": [
+      {
+        "exam_en": "She held the child and patted <strong class=\"target-word\">its</strong> back gently.",
+        "exam_ko": "그녀는 아이를 안고 <strong class=\"target-word\">그</strong> 등을 살며시 두드렸다."
+      },
+      {
+        "exam_en": "The dog managed to keep <strong class=\"target-word\">its</strong> balance on the slope.",
+        "exam_ko": "개는 비탈에서 간신히 <strong class=\"target-word\">자신의</strong> 균형을 유지했다."
+      }
+    ]
+  }
+]

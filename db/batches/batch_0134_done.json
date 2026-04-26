@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2861,
+    "origin": "elbow",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">elbowed</strong> his way through the crowd.",
+        "exam_ko": "그는 군중을 <strong class=\"target-word\">팔꿈치로 밀며</strong> 나아갔다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">elbowed</strong> him out of the way.",
+        "exam_ko": "그녀는 그를 <strong class=\"target-word\">팔로 밀어</strong> 비켜 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 2862,
+    "origin": "eyelid",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">eyelids</strong> felt heavy with sleep.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">눈꺼풀</strong>이 잠으로 무거워졌다."
+      }
+    ]
+  },
+  {
+    "id": 2864,
+    "origin": "tailor",
+    "examples": [
+      {
+        "exam_en": "He opened a <strong class=\"target-word\">tailor</strong> shop downtown.",
+        "exam_ko": "그는 시내에 <strong class=\"target-word\">양복점</strong>을 열었다."
+      },
+      {
+        "exam_en": "She went to the <strong class=\"target-word\">tailor</strong> to get measured.",
+        "exam_ko": "그녀는 치수를 재러 <strong class=\"target-word\">양복점</strong>에 갔다."
+      }
+    ]
+  },
+  {
+    "id": 2866,
+    "origin": "ironing",
+    "examples": [
+      {
+        "exam_en": "I've been doing the laundry and <strong class=\"target-word\">ironing</strong> all day.",
+        "exam_ko": "하루 종일 세탁과 <strong class=\"target-word\">다리미질</strong>을 하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2867,
+    "origin": "width",
+    "examples": [
+      {
+        "exam_en": "She bought three <strong class=\"target-word\">widths</strong> of cloth for the curtain.",
+        "exam_ko": "그녀는 커튼용 천 세 <strong class=\"target-word\">폭</strong>을 샀다."
+      },
+      {
+        "exam_en": "The painting measures three feet in <strong class=\"target-word\">width</strong>.",
+        "exam_ko": "그 그림은 <strong class=\"target-word\">가로</strong>가 3피트이다."
+      }
+    ]
+  },
+  {
+    "id": 2868,
+    "origin": "length",
+    "examples": [
+      {
+        "exam_en": "The rectangle is eight inches in <strong class=\"target-word\">length</strong>.",
+        "exam_ko": "그 직사각형의 <strong class=\"target-word\">세로</strong>는 8인치이다."
+      },
+      {
+        "exam_en": "He ran the <strong class=\"target-word\">length</strong> of the football field.",
+        "exam_ko": "그는 미식 축구 경기장의 <strong class=\"target-word\">전체 길이</strong>를 뛰었다."
+      }
+    ]
+  },
+  {
+    "id": 2869,
+    "origin": "bust",
+    "examples": [
+      {
+        "exam_en": "The artist made a <strong class=\"target-word\">bust</strong> of the president.",
+        "exam_ko": "그 예술가는 대통령의 <strong class=\"target-word\">흉상</strong>을 만들었다."
+      },
+      {
+        "exam_en": "She has a very large <strong class=\"target-word\">bust</strong>.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">가슴</strong>이 매우 크다."
+      },
+      {
+        "exam_en": "The dress fits well around the <strong class=\"target-word\">bust</strong>.",
+        "exam_ko": "드레스가 <strong class=\"target-word\">가슴</strong> 부분에 잘 맞는다."
+      }
+    ]
+  },
+  {
+    "id": 2870,
+    "origin": "measurement",
+    "examples": [
+      {
+        "exam_en": "Scientists use the metric system of <strong class=\"target-word\">measurement</strong>.",
+        "exam_ko": "과학자들은 미터 <strong class=\"target-word\">측정</strong> 체계를 사용한다."
+      },
+      {
+        "exam_en": "The tailor took precise <strong class=\"target-word\">measurements</strong> before cutting.",
+        "exam_ko": "재단사는 자르기 전에 정확한 <strong class=\"target-word\">치수</strong>를 쟀다."
+      }
+    ]
+  },
+  {
+    "id": 2871,
+    "origin": "buckle",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">buckled</strong> the seat belt in the car.",
+        "exam_ko": "자동차의 안전 벨트를 <strong class=\"target-word\">채웠다</strong>."
+      },
+      {
+        "exam_en": "The accident <strong class=\"target-word\">buckled</strong> the wheel of my bicycle.",
+        "exam_ko": "그 사고로 내 자전거 바퀴가 <strong class=\"target-word\">휘었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2872,
+    "origin": "collar",
+    "examples": [
+      {
+        "exam_en": "He turned up his <strong class=\"target-word\">collar</strong> against the cold wind.",
+        "exam_ko": "그는 찬바람을 막으려고 <strong class=\"target-word\">깃</strong>을 세웠다."
+      },
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">collar</strong> of dark-blue sapphires.",
+        "exam_ko": "그녀는 진한 청색 사파이어 <strong class=\"target-word\">목걸이</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2873,
+    "origin": "lining",
+    "examples": [
+      {
+        "exam_en": "Every cloud has a silver <strong class=\"target-word\">lining</strong>.",
+        "exam_ko": "모든 구름에는 은빛 <strong class=\"target-word\">자락</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 2875,
+    "origin": "hem",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">hemmed</strong> in by strict rules.",
+        "exam_ko": "그녀는 엄격한 규칙에 <strong class=\"target-word\">꼼짝 못하게</strong> 된 느낌이었다."
+      },
+      {
+        "exam_en": "The speaker was <strong class=\"target-word\">hemmed</strong> in by the crowd.",
+        "exam_ko": "연설자는 군중에 <strong class=\"target-word\">둘러싸였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2877,
+    "origin": "seam",
+    "examples": [
+      {
+        "exam_en": "The pipe has a welded <strong class=\"target-word\">seam</strong> at the joint.",
+        "exam_ko": "파이프 이음부에 용접 <strong class=\"target-word\">이음매</strong>가 있다."
+      },
+      {
+        "exam_en": "She carefully undid the <strong class=\"target-word\">seam</strong> of the jacket.",
+        "exam_ko": "그녀는 재킷의 <strong class=\"target-word\">솔기</strong>를 조심스럽게 뜯었다."
+      }
+    ]
+  },
+  {
+    "id": 2880,
+    "origin": "vintage",
+    "examples": [
+      {
+        "exam_en": "This is a rare 1928 <strong class=\"target-word\">vintage</strong> wine.",
+        "exam_ko": "이것은 귀한 1928년산 <strong class=\"target-word\">빈티지</strong> 와인이다."
+      },
+      {
+        "exam_en": "He drives a 2003-<strong class=\"target-word\">vintage</strong> car.",
+        "exam_ko": "그는 2003년식 <strong class=\"target-word\">빈티지</strong> 차를 몬다."
+      }
+    ]
+  },
+  {
+    "id": 2881,
+    "origin": "retro",
+    "examples": [
+      {
+        "exam_en": "She decorated her room in a <strong class=\"target-word\">retro</strong> style.",
+        "exam_ko": "그녀는 방을 <strong class=\"target-word\">레트로</strong> 스타일로 꾸몄다."
+      }
+    ]
+  },
+  {
+    "id": 2882,
+    "origin": "disaster",
+    "examples": [
+      {
+        "exam_en": "The earthquake was a natural <strong class=\"target-word\">disaster</strong>.",
+        "exam_ko": "그 지진은 자연 <strong class=\"target-word\">재해</strong>였다."
+      },
+      {
+        "exam_en": "Poor planning can lead to <strong class=\"target-word\">disaster</strong>.",
+        "exam_ko": "부실한 계획은 <strong class=\"target-word\">재앙</strong>으로 이어질 수 있다."
+      },
+      {
+        "exam_en": "She froze when she saw the <strong class=\"target-word\">disaster</strong> in her apartment.",
+        "exam_ko": "그녀는 아파트의 <strong class=\"target-word\">재난 현장</strong>을 보고 얼어붙었다."
+      }
+    ]
+  },
+  {
+    "id": 2883,
+    "origin": "preside",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">presided</strong> over the committee meeting.",
+        "exam_ko": "그는 위원회 회의를 <strong class=\"target-word\">주재했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">presides</strong> over the committee meetings.",
+        "exam_ko": "그녀는 위원회 회의를 <strong class=\"target-word\">관장하고</strong> 있다."
+      },
+      {
+        "exam_en": "A judge <strong class=\"target-word\">presides</strong> over the trial.",
+        "exam_ko": "판사가 재판을 <strong class=\"target-word\">주재한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2884,
+    "origin": "overtime",
+    "examples": [
+      {
+        "exam_en": "The company paid him extra for <strong class=\"target-word\">overtime</strong>.",
+        "exam_ko": "회사는 그에게 <strong class=\"target-word\">초과 근무</strong> 수당을 지급했다."
+      },
+      {
+        "exam_en": "\"Would you like to do some <strong class=\"target-word\">overtime</strong> today?\" \"Sure.\"",
+        "exam_ko": "\"오늘 <strong class=\"target-word\">초과 근무</strong> 하실래요?\" \"그러죠.\""
+      }
+    ]
+  },
+  {
+    "id": 2886,
+    "origin": "reconstruction",
+    "examples": [
+      {
+        "exam_en": "The government focused on economic <strong class=\"target-word\">reconstruction</strong> after the war.",
+        "exam_ko": "정부는 전쟁 후 경제 <strong class=\"target-word\">재건</strong>에 집중했다."
+      },
+      {
+        "exam_en": "The old temple is under <strong class=\"target-word\">reconstruction</strong>.",
+        "exam_ko": "그 오래된 사원은 <strong class=\"target-word\">개축</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 2890,
+    "origin": "cooking",
+    "examples": [
+      {
+        "exam_en": "She is good at <strong class=\"target-word\">cooking</strong> Italian food.",
+        "exam_ko": "그녀는 이탈리아 <strong class=\"target-word\">요리</strong>를 잘한다."
+      },
+      {
+        "exam_en": "He does all the <strong class=\"target-word\">cooking</strong> at home.",
+        "exam_ko": "그는 집에서 <strong class=\"target-word\">요리</strong>를 전담한다."
+      },
+      {
+        "exam_en": "She enjoys <strong class=\"target-word\">cooking</strong> for her family on weekends.",
+        "exam_ko": "그녀는 주말에 가족을 위해 <strong class=\"target-word\">요리하는</strong> 것을 즐긴다."
+      }
+    ]
+  }
+]

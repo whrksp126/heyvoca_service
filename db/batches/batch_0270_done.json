@@ -1,0 +1,290 @@
+[
+  {
+    "id": 6685,
+    "origin": "vexed",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">vexed</strong> with you.",
+        "exam_ko": "나는 너에게 <strong class=\"target-word\">화가 나 있다</strong>."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">vexed</strong> at his laziness.",
+        "exam_ko": "그의 게으름 때문에 나는 몹시 <strong class=\"target-word\">짜증이 난다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6686,
+    "origin": "versatile",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">versatile</strong> artist.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">다재다능한</strong> 예술가이다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">versatile</strong> talent in music.",
+        "exam_ko": "그는 음악에서 <strong class=\"target-word\">다방면의</strong> 재능을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 6687,
+    "origin": "verify",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">verified</strong> the theory through experiments.",
+        "exam_ko": "우리는 실험을 통해 그 이론을 <strong class=\"target-word\">확증했다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">verify</strong> the accuracy of the translation.",
+        "exam_ko": "번역의 정확성을 <strong class=\"target-word\">확인해</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 6688,
+    "origin": "verge",
+    "examples": [
+      {
+        "exam_en": "They camped at the <strong class=\"target-word\">verge</strong> of the forest.",
+        "exam_ko": "그들은 숲의 <strong class=\"target-word\">가장자리</strong>에서 캠핑했다."
+      },
+      {
+        "exam_en": "She was on the <strong class=\"target-word\">verge</strong> of tears.",
+        "exam_ko": "그녀는 눈물이 나올 <strong class=\"target-word\">직전</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 6689,
+    "origin": "ventilate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">ventilated</strong> the work area with a fan.",
+        "exam_ko": "그는 환풍기로 작업장을 <strong class=\"target-word\">환기시켰다</strong>."
+      },
+      {
+        "exam_en": "Their grievances were <strong class=\"target-word\">ventilated</strong> at the meeting.",
+        "exam_ko": "그들의 불평이 회의에서 <strong class=\"target-word\">털어놓아졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6690,
+    "origin": "velocity",
+    "examples": [
+      {
+        "exam_en": "The rocket reached a high <strong class=\"target-word\">velocity</strong>.",
+        "exam_ko": "로켓은 높은 <strong class=\"target-word\">속도</strong>에 도달했다."
+      },
+      {
+        "exam_en": "Scientists measured the <strong class=\"target-word\">velocity</strong> of the bullet.",
+        "exam_ko": "과학자들은 탄환의 <strong class=\"target-word\">속도</strong>를 측정했다."
+      }
+    ]
+  },
+  {
+    "id": 6691,
+    "origin": "ulcer",
+    "examples": [
+      {
+        "exam_en": "He was diagnosed with a gastric <strong class=\"target-word\">ulcer</strong>.",
+        "exam_ko": "그는 위 <strong class=\"target-word\">궤양</strong> 진단을 받았다."
+      },
+      {
+        "exam_en": "Stress can cause a stomach <strong class=\"target-word\">ulcer</strong>.",
+        "exam_ko": "스트레스는 위 <strong class=\"target-word\">궤양</strong>을 유발할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 6692,
+    "origin": "tyrant",
+    "examples": [
+      {
+        "exam_en": "The country suffered under a merciless <strong class=\"target-word\">tyrant</strong>.",
+        "exam_ko": "그 나라는 무자비한 <strong class=\"target-word\">폭군</strong> 아래 고통받았다."
+      },
+      {
+        "exam_en": "My boss is a real <strong class=\"target-word\">tyrant</strong>.",
+        "exam_ko": "내 상사는 정말 <strong class=\"target-word\">폭군</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 6693,
+    "origin": "transition",
+    "examples": [
+      {
+        "exam_en": "We are living in an age of <strong class=\"target-word\">transition</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">변천기</strong>에 살고 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">transition</strong> from school to work can be challenging.",
+        "exam_ko": "학교에서 직장으로의 <strong class=\"target-word\">과도기</strong>는 어려울 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 6694,
+    "origin": "tranquil",
+    "examples": [
+      {
+        "exam_en": "They relaxed in the <strong class=\"target-word\">tranquil</strong> park.",
+        "exam_ko": "그들은 <strong class=\"target-word\">한가로운</strong> 공원에서 쉬었다."
+      },
+      {
+        "exam_en": "She enjoyed a <strong class=\"target-word\">tranquil</strong> retirement.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">평화로운</strong> 은퇴 생활을 즐겼다."
+      },
+      {
+        "exam_en": "The lake looked <strong class=\"target-word\">tranquil</strong> in the morning.",
+        "exam_ko": "아침의 호수는 <strong class=\"target-word\">고요해</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 6695,
+    "origin": "tilt",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">tilted</strong> the ladder against the wall.",
+        "exam_ko": "그는 사다리를 벽에 <strong class=\"target-word\">기울여</strong> 세웠다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">tilted</strong> the photograph toward the light.",
+        "exam_ko": "그녀는 사진을 빛 쪽으로 <strong class=\"target-word\">기울였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6696,
+    "origin": "throng",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">throng</strong> of people gathered at the square.",
+        "exam_ko": "광장에 사람들의 <strong class=\"target-word\">무리</strong>가 모여들었다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">throng</strong> of fans greeted the singer.",
+        "exam_ko": "가수를 <strong class=\"target-word\">군중</strong>이 환영했다."
+      }
+    ]
+  },
+  {
+    "id": 6697,
+    "origin": "throb",
+    "examples": [
+      {
+        "exam_en": "His heart <strong class=\"target-word\">throbbed</strong> with joy.",
+        "exam_ko": "그의 가슴은 기쁨으로 <strong class=\"target-word\">고동쳤다</strong>."
+      },
+      {
+        "exam_en": "My arm <strong class=\"target-word\">throbbed</strong> with pain.",
+        "exam_ko": "팔이 아파서 <strong class=\"target-word\">욱신거렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6698,
+    "origin": "thrive",
+    "examples": [
+      {
+        "exam_en": "The town <strong class=\"target-word\">thrives</strong> primarily on tourism.",
+        "exam_ko": "그 도시는 주로 관광으로 <strong class=\"target-word\">번창하고</strong> 있다."
+      },
+      {
+        "exam_en": "The baby <strong class=\"target-word\">thrived</strong> on her mother's milk.",
+        "exam_ko": "아기는 모유를 먹으며 <strong class=\"target-word\">건강하게 자랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6699,
+    "origin": "tentative",
+    "examples": [
+      {
+        "exam_en": "They reached a <strong class=\"target-word\">tentative</strong> agreement.",
+        "exam_ko": "그들은 <strong class=\"target-word\">잠정적인</strong> 합의에 도달했다."
+      },
+      {
+        "exam_en": "She proposed a <strong class=\"target-word\">tentative</strong> theory.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">가설적인</strong> 이론을 제안했다."
+      },
+      {
+        "exam_en": "The team presented a <strong class=\"target-word\">tentative</strong> plan.",
+        "exam_ko": "팀은 <strong class=\"target-word\">잠정적인</strong> 계획을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 6700,
+    "origin": "tariff",
+    "examples": [
+      {
+        "exam_en": "The government decided to eliminate import <strong class=\"target-word\">tariffs</strong>.",
+        "exam_ko": "정부는 수입 <strong class=\"target-word\">관세</strong>를 철폐하기로 결정했다."
+      },
+      {
+        "exam_en": "They raised the <strong class=\"target-word\">tariff</strong> on imported cars.",
+        "exam_ko": "수입 자동차에 대한 <strong class=\"target-word\">관세</strong>를 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 6701,
+    "origin": "strife",
+    "examples": [
+      {
+        "exam_en": "Political <strong class=\"target-word\">strife</strong> divided the country.",
+        "exam_ko": "정치적 <strong class=\"target-word\">투쟁</strong>이 나라를 분열시켰다."
+      },
+      {
+        "exam_en": "Internal <strong class=\"target-word\">strife</strong> weakened the organization.",
+        "exam_ko": "<strong class=\"target-word\">내분</strong>이 그 조직을 약화시켰다."
+      }
+    ]
+  },
+  {
+    "id": 6702,
+    "origin": "stereotype",
+    "examples": [
+      {
+        "exam_en": "He challenged the ethnic <strong class=\"target-word\">stereotype</strong>.",
+        "exam_ko": "그는 민족적 <strong class=\"target-word\">고정 관념</strong>에 도전했다."
+      },
+      {
+        "exam_en": "She holds <strong class=\"target-word\">stereotypes</strong> about women in the workplace.",
+        "exam_ko": "그녀는 직장 내 여성에 대한 <strong class=\"target-word\">고정 관념</strong>을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 6703,
+    "origin": "stagnant",
+    "examples": [
+      {
+        "exam_en": "The pond was <strong class=\"target-word\">stagnant</strong> and covered with scum.",
+        "exam_ko": "연못은 <strong class=\"target-word\">고여 있었고</strong> 찌꺼기로 뒤덮여 있었다."
+      },
+      {
+        "exam_en": "Our output has remained <strong class=\"target-word\">stagnant</strong> due to low investment.",
+        "exam_ko": "저조한 투자 때문에 우리 생산고는 여전히 <strong class=\"target-word\">침체해</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 6704,
+    "origin": "sprout",
+    "examples": [
+      {
+        "exam_en": "New ideas will always <strong class=\"target-word\">sprout</strong> up.",
+        "exam_ko": "새로운 아이디어는 항상 <strong class=\"target-word\">솟아나는</strong> 법이다."
+      },
+      {
+        "exam_en": "Leaves began to <strong class=\"target-word\">sprout</strong> from the trees.",
+        "exam_ko": "나뭇잎이 나무에서 <strong class=\"target-word\">싹트기</strong> 시작했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,246 @@
+[
+  {
+    "id": 15376,
+    "origin": "tutorial",
+    "examples": [
+      {
+        "exam_en": "the tutorial system",
+        "exam_ko": "(대학의) 개별 지도 제도."
+      }
+    ]
+  },
+  {
+    "id": 15380,
+    "origin": "downsize",
+    "examples": [
+      {
+        "exam_en": "The company downsized its workforce by 15％.",
+        "exam_ko": "그 회사는 종업원을 15％ 삭감했다."
+      }
+    ]
+  },
+  {
+    "id": 15385,
+    "origin": "unbeatable",
+    "examples": [
+      {
+        "exam_en": "unbeatable prices",
+        "exam_ko": "최고 가격 [위업]."
+      }
+    ]
+  },
+  {
+    "id": 15386,
+    "origin": "partisan",
+    "examples": [
+      {
+        "exam_en": "partisan spirit",
+        "exam_ko": "당파 근성[심]"
+      },
+      {
+        "exam_en": "partisan strife",
+        "exam_ko": "파벌 싸움."
+      }
+    ]
+  },
+  {
+    "id": 15387,
+    "origin": "partisanship",
+    "examples": [
+      {
+        "exam_en": "The intense partisanship in politics often hinders effective decision-making and collaboration.",
+        "exam_ko": "정치에서 맹목적인 당파주의는 종종 효과적인 의사결정과 협력을 방해한다."
+      }
+    ]
+  },
+  {
+    "id": 15393,
+    "origin": "federate",
+    "examples": [
+      {
+        "exam_en": "federate nations",
+        "exam_ko": "연방 국가."
+      }
+    ]
+  },
+  {
+    "id": 15395,
+    "origin": "determination",
+    "examples": [
+      {
+        "exam_en": "her determination to win",
+        "exam_ko": "이기려는 그녀의 결심"
+      },
+      {
+        "exam_en": "reach a determination",
+        "exam_ko": "결심이 서다"
+      }
+    ]
+  },
+  {
+    "id": 15401,
+    "origin": "effectively",
+    "examples": [
+      {
+        "exam_en": "work together effectively",
+        "exam_ko": "함께 일하여 실효를 거두다."
+      }
+    ]
+  },
+  {
+    "id": 15404,
+    "origin": "comfortably",
+    "examples": [
+      {
+        "exam_en": "be comfortably off",
+        "exam_ko": "부족한 것 없이 살다."
+      }
+    ]
+  },
+  {
+    "id": 15407,
+    "origin": "sardonic",
+    "examples": [
+      {
+        "exam_en": "He replied with a sardonic smile, mocking their efforts.",
+        "exam_ko": "그는 냉소적인 미소를 짓고, 그들의 노력을 조롱했다."
+      }
+    ]
+  },
+  {
+    "id": 15409,
+    "origin": "copayment",
+    "examples": [
+      {
+        "exam_en": "As of Jan. 1, employees will pay a $40 copayment on brand-name prescription drugs if generic versions are available.",
+        "exam_ko": "1월 1일자로, 직원들은 일반명 의약품이 이용 가능한 경우에는 상표명 처방 의약품에 대해 40달러의 추가 비용을 지불하게 된다."
+      }
+    ]
+  },
+  {
+    "id": 15411,
+    "origin": "hiring",
+    "examples": [
+      {
+        "exam_en": "hiring of a ship",
+        "exam_ko": "용선(傭船)."
+      }
+    ]
+  },
+  {
+    "id": 15412,
+    "origin": "soaking",
+    "examples": [
+      {
+        "exam_en": "a soaking downpour",
+        "exam_ko": "억수같이 쏟아지는 비."
+      },
+      {
+        "exam_en": "be soaking wet",
+        "exam_ko": "흠뻑 젖다."
+      }
+    ]
+  },
+  {
+    "id": 15413,
+    "origin": "commune",
+    "examples": [
+      {
+        "exam_en": "commune with nature",
+        "exam_ko": "자연을 마음의 벗으로 삼다"
+      },
+      {
+        "exam_en": "commune with oneself",
+        "exam_ko": "심사숙고하다."
+      }
+    ]
+  },
+  {
+    "id": 15416,
+    "origin": "agrarian",
+    "examples": [
+      {
+        "exam_en": "agrarian laws",
+        "exam_ko": "(고대 로마의) 토지 분배법."
+      },
+      {
+        "exam_en": "an agrarian society",
+        "exam_ko": "농경 사회."
+      }
+    ]
+  },
+  {
+    "id": 15428,
+    "origin": "crusty",
+    "examples": [
+      {
+        "exam_en": "a crusty person",
+        "exam_ko": "무뚝뚝한 사람."
+      }
+    ]
+  },
+  {
+    "id": 15430,
+    "origin": "uranium",
+    "examples": [
+      {
+        "exam_en": "enriched uranium",
+        "exam_ko": "농축 우라늄"
+      },
+      {
+        "exam_en": "uranium fission",
+        "exam_ko": "우라늄 핵분열"
+      }
+    ]
+  },
+  {
+    "id": 15440,
+    "origin": "alternately",
+    "examples": [
+      {
+        "exam_en": "alternate in the lead",
+        "exam_ko": "앞서거니 뒤서거니 하다"
+      },
+      {
+        "exam_en": "work on alternate days",
+        "exam_ko": "격일제로 근무하다"
+      },
+      {
+        "exam_en": "alternate in the lead ",
+        "exam_ko": "앞서거니 뒤서거니 하다"
+      },
+      {
+        "exam_en": "work on alternate days ",
+        "exam_ko": "격일제로 근무하다"
+      }
+    ]
+  },
+  {
+    "id": 15441,
+    "origin": "loiter",
+    "examples": [
+      {
+        "exam_en": "loiter about",
+        "exam_ko": "어정버정 걷다"
+      },
+      {
+        "exam_en": "loiter in the park",
+        "exam_ko": "공원을 어슬렁거리다."
+      }
+    ]
+  },
+  {
+    "id": 15442,
+    "origin": "tempered",
+    "examples": [
+      {
+        "exam_en": "a good-tempered boy",
+        "exam_ko": "마음씨가 고운[나쁜] 소년"
+      },
+      {
+        "exam_en": "hot-tempered",
+        "exam_ko": "성 잘내는[성마른]."
+      }
+    ]
+  }
+]

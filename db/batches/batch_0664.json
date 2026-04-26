@@ -1,0 +1,222 @@
+[
+  {
+    "id": 24934,
+    "origin": "vesicular",
+    "examples": [
+      {
+        "exam_en": "vesicular murmur",
+        "exam_ko": "폐포음."
+      },
+      {
+        "exam_en": "BFS is typically a grey vesicular material that is lighter than most basalt.",
+        "exam_ko": "고로 슬래그는 일반적으로 현무암보다 밝은 회색 기공이 있는 자재이다."
+      }
+    ]
+  },
+  {
+    "id": 24953,
+    "origin": "clamshell",
+    "examples": [
+      {
+        "exam_en": "a clamshell door",
+        "exam_ko": "군용기 등의 기수 밑[후미]에 있는 화물 적재구."
+      }
+    ]
+  },
+  {
+    "id": 24971,
+    "origin": "reedy",
+    "examples": [
+      {
+        "exam_en": "a reedy marsh",
+        "exam_ko": "갈대가 우거진 늪지."
+      },
+      {
+        "exam_en": "a reedy pipe",
+        "exam_ko": "갈대 피리."
+      }
+    ]
+  },
+  {
+    "id": 24974,
+    "origin": "padlock",
+    "examples": [
+      {
+        "exam_en": "Fitted with a hasp and staple for use with a padlock (not included)",
+        "exam_ko": "자물쇠와 함께 사용하기 위해 걸쇠와 스테이플이 장착되어 있습니다 (포함되지 않음)"
+      },
+      {
+        "exam_en": "•Fitted with a hasp and staple for use with a padlock (not included)",
+        "exam_ko": "자물쇠와 함께 사용하기 위해 걸쇠와 스테이플이 장착되어 있습니다 (포함되지 않음)"
+      }
+    ]
+  },
+  {
+    "id": 24982,
+    "origin": "alarming",
+    "examples": [
+      {
+        "exam_en": "an alarming rise in violent crime",
+        "exam_ko": "흉악한 범죄의 놀랄 만한 증가."
+      }
+    ]
+  },
+  {
+    "id": 24984,
+    "origin": "cholesterol",
+    "examples": [
+      {
+        "exam_en": "cholesterol level",
+        "exam_ko": "콜레스테롤 수치."
+      }
+    ]
+  },
+  {
+    "id": 24991,
+    "origin": "scraggly",
+    "examples": [
+      {
+        "exam_en": "a scraggly unwashed hair",
+        "exam_ko": "더부룩한 감지 않은 머리."
+      }
+    ]
+  },
+  {
+    "id": 24992,
+    "origin": "boxful",
+    "examples": [
+      {
+        "exam_en": "a boxful of nails",
+        "exam_ko": "못 한 상자."
+      }
+    ]
+  },
+  {
+    "id": 25000,
+    "origin": "gluten",
+    "examples": [
+      {
+        "exam_en": "gluten bread",
+        "exam_ko": "글루텐 빵(당뇨병 환자의 소화에 좋음)."
+      }
+    ]
+  },
+  {
+    "id": 25008,
+    "origin": "obstetric",
+    "examples": [
+      {
+        "exam_en": "an obstetric nurse",
+        "exam_ko": "산과 간호사."
+      }
+    ]
+  },
+  {
+    "id": 25022,
+    "origin": "tack",
+    "examples": [
+      {
+        "exam_en": "a thumb tack",
+        "exam_ko": "압정."
+      },
+      {
+        "exam_en": "the port tack",
+        "exam_ko": "(돛의) 좌현방향."
+      }
+    ]
+  },
+  {
+    "id": 25027,
+    "origin": "stoical",
+    "examples": [
+      {
+        "exam_en": "His acceptance of the news was stoical. ",
+        "exam_ko": "의연하게 그는 그 소식을 받아들였다"
+      },
+      {
+        "exam_en": "His acceptance of the news was stoical.",
+        "exam_ko": "의연하게 그는 그 소식을 받아들였다"
+      }
+    ]
+  },
+  {
+    "id": 25028,
+    "origin": "collected",
+    "examples": [
+      {
+        "exam_en": "collected works",
+        "exam_ko": "작품집, 전집."
+      }
+    ]
+  },
+  {
+    "id": 25031,
+    "origin": "vocative",
+    "examples": [
+      {
+        "exam_en": "the vocative case",
+        "exam_ko": "호격."
+      }
+    ]
+  },
+  {
+    "id": 25042,
+    "origin": "monocular",
+    "examples": [
+      {
+        "exam_en": "a monocular microscope",
+        "exam_ko": "단안 현미경."
+      }
+    ]
+  },
+  {
+    "id": 25051,
+    "origin": "meatus",
+    "examples": [
+      {
+        "exam_en": "the auditory meatus",
+        "exam_ko": "이도(耳道)[요도]."
+      }
+    ]
+  },
+  {
+    "id": 25055,
+    "origin": "acrylic",
+    "examples": [
+      {
+        "exam_en": "acrylic paint",
+        "exam_ko": "아크릴 도료."
+      }
+    ]
+  },
+  {
+    "id": 25087,
+    "origin": "premeditation",
+    "examples": [
+      {
+        "exam_en": "with premeditation",
+        "exam_ko": "고의로."
+      }
+    ]
+  },
+  {
+    "id": 25126,
+    "origin": "breakneck",
+    "examples": [
+      {
+        "exam_en": "at breakneck speed",
+        "exam_ko": "무시무시한 속력으로."
+      }
+    ]
+  },
+  {
+    "id": 25131,
+    "origin": "finny",
+    "examples": [
+      {
+        "exam_en": "the finny deep",
+        "exam_ko": "물고기가 많은 심해(深海)."
+      }
+    ]
+  }
+]

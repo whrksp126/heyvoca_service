@@ -1,0 +1,266 @@
+[
+  {
+    "id": 11293,
+    "origin": "burnt",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">burnt</strong> child dreads the fire.",
+        "exam_ko": "<strong class=\"target-word\">불에 덴</strong> 아이는 불을 무서워한다."
+      }
+    ]
+  },
+  {
+    "id": 11294,
+    "origin": "convulse",
+    "examples": [
+      {
+        "exam_en": "An earthquake <strong class=\"target-word\">convulsed</strong> the island.",
+        "exam_ko": "지진으로 섬이 심하게 <strong class=\"target-word\">흔들렸다</strong>."
+      },
+      {
+        "exam_en": "The bribery scandal <strong class=\"target-word\">convulsed</strong> the government.",
+        "exam_ko": "뇌물 사건이 정부를 <strong class=\"target-word\">뒤흔들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11295,
+    "origin": "communicative",
+    "examples": [
+      {
+        "exam_en": "She is very <strong class=\"target-word\">communicative</strong> with her team.",
+        "exam_ko": "그녀는 팀원들과 매우 <strong class=\"target-word\">소통을 잘한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11296,
+    "origin": "anyhow",
+    "examples": [
+      {
+        "exam_en": "I must finish this in a few days <strong class=\"target-word\">anyhow</strong>.",
+        "exam_ko": "<strong class=\"target-word\">어떻게 해서라도</strong> 이것을 수일 내에 끝내야 한다."
+      },
+      {
+        "exam_en": "The work may be done <strong class=\"target-word\">anyhow</strong> you like.",
+        "exam_ko": "그 일은 <strong class=\"target-word\">어떤 방법으로든</strong> 해도 좋다."
+      }
+    ]
+  },
+  {
+    "id": 11298,
+    "origin": "groggy",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">groggy</strong> from lack of sleep.",
+        "exam_ko": "그는 수면 부족으로 <strong class=\"target-word\">비틀거렸다</strong>."
+      },
+      {
+        "exam_en": "The old wooden tower looked <strong class=\"target-word\">groggy</strong> and unstable.",
+        "exam_ko": "낡은 목조탑은 <strong class=\"target-word\">흔들흔들</strong>하고 불안정해 보였다."
+      }
+    ]
+  },
+  {
+    "id": 11300,
+    "origin": "waken",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">wakened</strong> by the earthquake.",
+        "exam_ko": "그녀는 지진으로 <strong class=\"target-word\">잠에서 깼다</strong>."
+      },
+      {
+        "exam_en": "He gently <strong class=\"target-word\">wakened</strong> the child from sleep.",
+        "exam_ko": "그는 아이를 잠에서 부드럽게 <strong class=\"target-word\">깨웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11308,
+    "origin": "risen",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">risen</strong> sun lit up the entire valley.",
+        "exam_ko": "<strong class=\"target-word\">떠오른</strong> 태양이 온 계곡을 밝혔다."
+      }
+    ]
+  },
+  {
+    "id": 11309,
+    "origin": "mistaken",
+    "examples": [
+      {
+        "exam_en": "He said so, if I am not <strong class=\"target-word\">mistaken</strong>.",
+        "exam_ko": "내가 <strong class=\"target-word\">틀리지 않는다면</strong> 그는 그렇게 말했다."
+      },
+      {
+        "exam_en": "Father was <strong class=\"target-word\">mistaken</strong> about the train time.",
+        "exam_ko": "아버지는 기차 시간을 <strong class=\"target-word\">잘못 알고 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11311,
+    "origin": "flown",
+    "examples": [
+      {
+        "exam_en": "He had <strong class=\"target-word\">flown</strong> from Chicago.",
+        "exam_ko": "그는 시카고에서 비행기로 <strong class=\"target-word\">떠났었다</strong>."
+      },
+      {
+        "exam_en": "The bird had <strong class=\"target-word\">flown</strong> south for winter.",
+        "exam_ko": "새는 겨울을 위해 남쪽으로 <strong class=\"target-word\">날아갔었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11314,
+    "origin": "bore",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bore</strong> a hole through the board.",
+        "exam_ko": "그는 판자에 구멍을 <strong class=\"target-word\">뚫었다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">bore</strong> a well in the dry field.",
+        "exam_ko": "그들은 메마른 들판에 우물을 <strong class=\"target-word\">팠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11316,
+    "origin": "pickle",
+    "examples": [
+      {
+        "exam_en": "He found himself in a real <strong class=\"target-word\">pickle</strong>.",
+        "exam_ko": "그는 정말 <strong class=\"target-word\">난처한 상황</strong>에 처해 있었다."
+      },
+      {
+        "exam_en": "The kid is a little <strong class=\"target-word\">pickle</strong> at school.",
+        "exam_ko": "그 아이는 학교에서 작은 <strong class=\"target-word\">말썽꾸러기</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 11317,
+    "origin": "unravel",
+    "examples": [
+      {
+        "exam_en": "The detective tried to <strong class=\"target-word\">unravel</strong> the riddle.",
+        "exam_ko": "형사는 그 수수께끼를 <strong class=\"target-word\">풀려고</strong> 했다."
+      },
+      {
+        "exam_en": "Communism began to <strong class=\"target-word\">unravel</strong> after the Berlin Wall fell.",
+        "exam_ko": "베를린 장벽이 무너진 후 공산주의가 <strong class=\"target-word\">무너지기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 11318,
+    "origin": "sedimentary",
+    "examples": [
+      {
+        "exam_en": "The cliff was made of <strong class=\"target-word\">sedimentary</strong> rock.",
+        "exam_ko": "그 절벽은 <strong class=\"target-word\">퇴적암</strong>으로 이루어져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 11320,
+    "origin": "engender",
+    "examples": [
+      {
+        "exam_en": "Poverty often <strong class=\"target-word\">engenders</strong> crime.",
+        "exam_ko": "빈곤은 종종 범죄를 <strong class=\"target-word\">낳는다</strong>."
+      },
+      {
+        "exam_en": "Fear <strong class=\"target-word\">engenders</strong> hate.",
+        "exam_ko": "두려움은 증오를 <strong class=\"target-word\">낳는다</strong>."
+      },
+      {
+        "exam_en": "Mistrust can <strong class=\"target-word\">engender</strong> conflict between groups.",
+        "exam_ko": "불신은 집단 간 갈등을 <strong class=\"target-word\">일으킬</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 11321,
+    "origin": "leery",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">leery</strong> of his promises.",
+        "exam_ko": "나는 그의 약속이 <strong class=\"target-word\">의심스럽다</strong>."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">leery</strong> of investing in stocks.",
+        "exam_ko": "그녀는 주식 투자를 <strong class=\"target-word\">조심스러워한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11323,
+    "origin": "nexus",
+    "examples": [
+      {
+        "exam_en": "The city is the <strong class=\"target-word\">nexus</strong> of regional trade.",
+        "exam_ko": "그 도시는 지역 무역의 <strong class=\"target-word\">중심 연결점</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 11324,
+    "origin": "erosion",
+    "examples": [
+      {
+        "exam_en": "Wind <strong class=\"target-word\">erosion</strong> shaped the rocky landscape.",
+        "exam_ko": "<strong class=\"target-word\">풍식</strong>이 바위 지형을 형성했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">erosion</strong> of royal power weakened the monarchy.",
+        "exam_ko": "왕권의 <strong class=\"target-word\">침식</strong>이 군주제를 약화시켰다."
+      },
+      {
+        "exam_en": "Soil <strong class=\"target-word\">erosion</strong> is caused by heavy rain.",
+        "exam_ko": "폭우는 토양 <strong class=\"target-word\">침식</strong>을 유발한다."
+      }
+    ]
+  },
+  {
+    "id": 11325,
+    "origin": "predicate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">predicated</strong> that human life is eternal.",
+        "exam_ko": "그는 인간의 생명이 영원하다고 <strong class=\"target-word\">단언했다</strong>."
+      },
+      {
+        "exam_en": "Most religions <strong class=\"target-word\">predicate</strong> life after death.",
+        "exam_ko": "대개의 종교는 내세가 있다고 <strong class=\"target-word\">단언한다</strong>."
+      },
+      {
+        "exam_en": "The theory <strong class=\"target-word\">predicates</strong> equality among all people.",
+        "exam_ko": "그 이론은 모든 사람의 평등을 <strong class=\"target-word\">전제로 한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11326,
+    "origin": "juxtapose",
+    "examples": [
+      {
+        "exam_en": "The artist chose to <strong class=\"target-word\">juxtapose</strong> contrasting colors.",
+        "exam_ko": "그 예술가는 대비되는 색상을 <strong class=\"target-word\">나란히 배치했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11327,
+    "origin": "diversion",
+    "examples": [
+      {
+        "exam_en": "The plan involved a <strong class=\"target-word\">diversion</strong> of tax money.",
+        "exam_ko": "그 계획은 세금의 <strong class=\"target-word\">유용</strong>을 포함했다."
+      }
+    ]
+  }
+]

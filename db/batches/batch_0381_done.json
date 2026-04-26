@@ -1,0 +1,238 @@
+[
+  {
+    "id": 10345,
+    "origin": "sod",
+    "examples": [
+      {
+        "exam_en": "He is such a lazy <strong class=\"target-word\">sod</strong>.",
+        "exam_ko": "그는 정말 게으른 <strong class=\"target-word\">녀석</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 10350,
+    "origin": "prick",
+    "examples": [
+      {
+        "exam_en": "She felt the <strong class=\"target-word\">pricks</strong> of conscience after lying.",
+        "exam_ko": "그녀는 거짓말 후 양심의 <strong class=\"target-word\">가책</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pricked</strong> her finger with a needle.",
+        "exam_ko": "그녀는 바늘로 손가락을 <strong class=\"target-word\">찔렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10351,
+    "origin": "nonsense",
+    "examples": [
+      {
+        "exam_en": "You're talking complete <strong class=\"target-word\">nonsense</strong>.",
+        "exam_ko": "너는 순전한 <strong class=\"target-word\">허튼소리</strong>를 늘어놓고 있다."
+      },
+      {
+        "exam_en": "Stop this <strong class=\"target-word\">nonsense</strong> and focus on work.",
+        "exam_ko": "이 <strong class=\"target-word\">바보 같은 짓</strong>을 멈추고 일에 집중해라."
+      }
+    ]
+  },
+  {
+    "id": 10352,
+    "origin": "max",
+    "examples": [
+      {
+        "exam_en": "His credit card <strong class=\"target-word\">maxed</strong> out at the store.",
+        "exam_ko": "그의 신용카드는 가게에서 한도를 <strong class=\"target-word\">초과했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10361,
+    "origin": "downstairs",
+    "examples": [
+      {
+        "exam_en": "She went <strong class=\"target-word\">downstairs</strong> to answer the door.",
+        "exam_ko": "그녀는 문을 열어주러 <strong class=\"target-word\">아래층으로</strong> 내려갔다."
+      }
+    ]
+  },
+  {
+    "id": 10362,
+    "origin": "doorbell",
+    "examples": [
+      {
+        "exam_en": "He rang the <strong class=\"target-word\">doorbell</strong> and waited outside.",
+        "exam_ko": "그는 <strong class=\"target-word\">초인종</strong>을 누르고 밖에서 기다렸다."
+      }
+    ]
+  },
+  {
+    "id": 10363,
+    "origin": "despondent",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">despondent</strong> about her poor health.",
+        "exam_ko": "그녀는 건강이 나빠진 것에 <strong class=\"target-word\">낙담했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10364,
+    "origin": "crescent",
+    "examples": [
+      {
+        "exam_en": "A full moon changes to a <strong class=\"target-word\">crescent</strong> moon.",
+        "exam_ko": "보름달은 <strong class=\"target-word\">초승달</strong>로 바뀐다."
+      }
+    ]
+  },
+  {
+    "id": 10365,
+    "origin": "conservatory",
+    "examples": [
+      {
+        "exam_en": "She studied piano at the <strong class=\"target-word\">conservatory</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">음악원</strong>에서 피아노를 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 10367,
+    "origin": "cinema",
+    "examples": [
+      {
+        "exam_en": "Let's go to the <strong class=\"target-word\">cinema</strong> tonight.",
+        "exam_ko": "오늘 밤 <strong class=\"target-word\">영화관</strong>에 가자."
+      },
+      {
+        "exam_en": "She works as a director in the <strong class=\"target-word\">cinema</strong> industry.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">영화</strong> 산업에서 감독으로 일한다."
+      }
+    ]
+  },
+  {
+    "id": 10373,
+    "origin": "saint",
+    "examples": [
+      {
+        "exam_en": "He was declared a <strong class=\"target-word\">saint</strong> by the church.",
+        "exam_ko": "그는 교회에 의해 <strong class=\"target-word\">성인</strong>으로 선포되었다."
+      },
+      {
+        "exam_en": "She is the patron <strong class=\"target-word\">saint</strong> of this city.",
+        "exam_ko": "그녀는 이 도시의 수호 <strong class=\"target-word\">성인</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 10374,
+    "origin": "biblical",
+    "examples": [
+      {
+        "exam_en": "He told a <strong class=\"target-word\">biblical</strong> story to the children.",
+        "exam_ko": "그는 아이들에게 <strong class=\"target-word\">성서</strong>의 이야기를 들려주었다."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">biblical</strong> names are still common today.",
+        "exam_ko": "많은 <strong class=\"target-word\">성경</strong>의 이름들이 오늘날에도 여전히 흔하다."
+      }
+    ]
+  },
+  {
+    "id": 10377,
+    "origin": "weekdays",
+    "examples": [
+      {
+        "exam_en": "He works on <strong class=\"target-word\">weekdays</strong> and rests on weekends.",
+        "exam_ko": "그는 <strong class=\"target-word\">평일</strong>에 일하고 주말에 쉰다."
+      }
+    ]
+  },
+  {
+    "id": 10379,
+    "origin": "glamour",
+    "examples": [
+      {
+        "exam_en": "She was drawn to the <strong class=\"target-word\">glamour</strong> of the film industry.",
+        "exam_ko": "그녀는 영화 산업의 <strong class=\"target-word\">화려함</strong>에 끌렸다."
+      },
+      {
+        "exam_en": "He was dazzled by the <strong class=\"target-word\">glamour</strong> of the big city.",
+        "exam_ko": "그는 대도시의 <strong class=\"target-word\">매력</strong>에 눈이 휘둥그레졌다."
+      }
+    ]
+  },
+  {
+    "id": 10380,
+    "origin": "someday",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Someday</strong> we will meet again.",
+        "exam_ko": "<strong class=\"target-word\">언젠가</strong> 우리는 다시 만날 것이다."
+      }
+    ]
+  },
+  {
+    "id": 10381,
+    "origin": "confirmed",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">confirmed</strong> bachelor who lives alone.",
+        "exam_ko": "그는 혼자 사는 <strong class=\"target-word\">확고한</strong> 독신주의자다."
+      },
+      {
+        "exam_en": "The police arrested a <strong class=\"target-word\">confirmed</strong> thief.",
+        "exam_ko": "경찰은 <strong class=\"target-word\">상습</strong> 도둑을 체포했다."
+      }
+    ]
+  },
+  {
+    "id": 10382,
+    "origin": "quotation",
+    "examples": [
+      {
+        "exam_en": "He used a <strong class=\"target-word\">quotation</strong> from the Bible.",
+        "exam_ko": "그는 성서에서 <strong class=\"target-word\">인용문</strong>을 사용했다."
+      },
+      {
+        "exam_en": "She requested a <strong class=\"target-word\">quotation</strong> for the construction work.",
+        "exam_ko": "그녀는 공사 작업에 대한 <strong class=\"target-word\">견적서</strong>를 요청했다."
+      }
+    ]
+  },
+  {
+    "id": 10383,
+    "origin": "detour",
+    "examples": [
+      {
+        "exam_en": "We had to make a <strong class=\"target-word\">detour</strong> due to the flood.",
+        "exam_ko": "우리는 홍수로 인해 <strong class=\"target-word\">우회</strong>해야 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">detoured</strong> around the fallen tree on the road.",
+        "exam_ko": "그는 도로의 쓰러진 나무를 <strong class=\"target-word\">돌아서</strong> 갔다."
+      }
+    ]
+  },
+  {
+    "id": 10384,
+    "origin": "drainage",
+    "examples": [
+      {
+        "exam_en": "The city completed the <strong class=\"target-word\">drainage</strong> work last month.",
+        "exam_ko": "시는 지난달 <strong class=\"target-word\">배수</strong> 공사를 완료했다."
+      }
+    ]
+  },
+  {
+    "id": 10385,
+    "origin": "notification",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">notification</strong> about the meeting.",
+        "exam_ko": "그녀는 회의에 대한 <strong class=\"target-word\">통보</strong>를 받았다."
+      }
+    ]
+  }
+]

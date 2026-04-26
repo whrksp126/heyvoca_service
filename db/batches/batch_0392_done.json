@@ -1,0 +1,270 @@
+[
+  {
+    "id": 10730,
+    "origin": "tramp",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">tramped</strong> through the forest all day.",
+        "exam_ko": "그는 하루 종일 숲을 <strong class=\"target-word\">쿵쿵거리며 걸어다녔다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">tramp</strong> slept on a park bench.",
+        "exam_ko": "그 <strong class=\"target-word\">부랑자</strong>는 공원 벤치에서 잠을 잤다."
+      }
+    ]
+  },
+  {
+    "id": 10731,
+    "origin": "rye",
+    "examples": [
+      {
+        "exam_en": "They bake bread using <strong class=\"target-word\">rye</strong> flour.",
+        "exam_ko": "그들은 <strong class=\"target-word\">호밀</strong> 가루로 빵을 굽는다."
+      },
+      {
+        "exam_en": "The farmer harvested <strong class=\"target-word\">rye</strong> in the field.",
+        "exam_ko": "농부는 밭에서 <strong class=\"target-word\">호밀</strong>을 수확했다."
+      }
+    ]
+  },
+  {
+    "id": 10732,
+    "origin": "mushroom",
+    "examples": [
+      {
+        "exam_en": "She picked fresh <strong class=\"target-word\">mushrooms</strong> in the forest.",
+        "exam_ko": "그녀는 숲에서 신선한 <strong class=\"target-word\">버섯</strong>을 땄다."
+      },
+      {
+        "exam_en": "We cooked <strong class=\"target-word\">mushroom</strong> soup for dinner.",
+        "exam_ko": "우리는 저녁으로 <strong class=\"target-word\">버섯</strong> 수프를 만들었다."
+      },
+      {
+        "exam_en": "The city <strong class=\"target-word\">mushroomed</strong> rapidly over ten years.",
+        "exam_ko": "그 도시는 10년 동안 빠르게 <strong class=\"target-word\">급성장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10735,
+    "origin": "beating",
+    "examples": [
+      {
+        "exam_en": "The bully gave him a severe <strong class=\"target-word\">beating</strong>.",
+        "exam_ko": "불량배가 그에게 심한 <strong class=\"target-word\">구타</strong>를 가했다."
+      },
+      {
+        "exam_en": "He got a good <strong class=\"target-word\">beating</strong> after the fight.",
+        "exam_ko": "그는 싸움 후에 호되게 <strong class=\"target-word\">맞았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10737,
+    "origin": "larceny",
+    "examples": [
+      {
+        "exam_en": "He was charged with grand <strong class=\"target-word\">larceny</strong>.",
+        "exam_ko": "그는 중 <strong class=\"target-word\">절도죄</strong>로 기소되었다."
+      }
+    ]
+  },
+  {
+    "id": 10739,
+    "origin": "withdrawal",
+    "examples": [
+      {
+        "exam_en": "The army completed its <strong class=\"target-word\">withdrawal</strong> from the region.",
+        "exam_ko": "군대는 그 지역에서의 <strong class=\"target-word\">철수</strong>를 완료했다."
+      },
+      {
+        "exam_en": "She made a large <strong class=\"target-word\">withdrawal</strong> from her bank account.",
+        "exam_ko": "그녀는 은행 계좌에서 큰 금액을 <strong class=\"target-word\">인출했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10743,
+    "origin": "remains",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">remains</strong> of the meal are in the fridge.",
+        "exam_ko": "음식의 <strong class=\"target-word\">나머지</strong>는 냉장고에 있다."
+      },
+      {
+        "exam_en": "The family buried the <strong class=\"target-word\">remains</strong> of the deceased.",
+        "exam_ko": "가족은 고인의 <strong class=\"target-word\">유해</strong>를 매장했다."
+      },
+      {
+        "exam_en": "Ancient <strong class=\"target-word\">remains</strong> were found at the site.",
+        "exam_ko": "그 장소에서 고대 <strong class=\"target-word\">유적</strong>이 발견되었다."
+      }
+    ]
+  },
+  {
+    "id": 10744,
+    "origin": "adultery",
+    "examples": [
+      {
+        "exam_en": "He was accused of committing <strong class=\"target-word\">adultery</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">간통</strong>을 저지른 혐의를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 10745,
+    "origin": "dismay",
+    "examples": [
+      {
+        "exam_en": "Losing his job <strong class=\"target-word\">dismayed</strong> him deeply.",
+        "exam_ko": "직업을 잃어 그는 깊이 <strong class=\"target-word\">낙담했다</strong>."
+      },
+      {
+        "exam_en": "To our <strong class=\"target-word\">dismay</strong>, the event was canceled.",
+        "exam_ko": "<strong class=\"target-word\">실망스럽게도</strong> 행사가 취소되었다."
+      },
+      {
+        "exam_en": "The bad news filled her with <strong class=\"target-word\">dismay</strong>.",
+        "exam_ko": "나쁜 소식에 그녀는 <strong class=\"target-word\">실망감</strong>에 가득 찼다."
+      }
+    ]
+  },
+  {
+    "id": 10749,
+    "origin": "bidder",
+    "examples": [
+      {
+        "exam_en": "The painting was sold to the highest <strong class=\"target-word\">bidder</strong>.",
+        "exam_ko": "그 그림은 최고 <strong class=\"target-word\">입찰자</strong>에게 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": 10750,
+    "origin": "quake",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">quaked</strong> with terror during the storm.",
+        "exam_ko": "그는 폭풍 중에 공포로 <strong class=\"target-word\">와들와들 떨었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">quaked</strong> in her boots before the speech.",
+        "exam_ko": "그녀는 연설 전에 <strong class=\"target-word\">벌벌 떨었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10751,
+    "origin": "transaction",
+    "examples": [
+      {
+        "exam_en": "He completed an online <strong class=\"target-word\">transaction</strong> with his card.",
+        "exam_ko": "그는 카드로 온라인 <strong class=\"target-word\">거래</strong>를 완료했다."
+      },
+      {
+        "exam_en": "They had regular business <strong class=\"target-word\">transactions</strong> for years.",
+        "exam_ko": "그들은 수년간 정기적으로 <strong class=\"target-word\">상거래</strong>를 해왔다."
+      }
+    ]
+  },
+  {
+    "id": 10752,
+    "origin": "publicly",
+    "examples": [
+      {
+        "exam_en": "The document is <strong class=\"target-word\">publicly</strong> available online.",
+        "exam_ko": "그 문서는 온라인에서 <strong class=\"target-word\">공개적으로</strong> 열람 가능하다."
+      },
+      {
+        "exam_en": "The mayor <strong class=\"target-word\">publicly</strong> announced the new policy.",
+        "exam_ko": "시장은 새 정책을 <strong class=\"target-word\">공개적으로</strong> 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 10754,
+    "origin": "predictive",
+    "examples": [
+      {
+        "exam_en": "Warm breezes are <strong class=\"target-word\">predictive</strong> of spring.",
+        "exam_ko": "따뜻한 바람은 봄을 <strong class=\"target-word\">예고하는</strong> 신호다."
+      }
+    ]
+  },
+  {
+    "id": 10755,
+    "origin": "disoriented",
+    "examples": [
+      {
+        "exam_en": "The pilot became <strong class=\"target-word\">disoriented</strong> in bad weather.",
+        "exam_ko": "조종사는 악천후 속에서 <strong class=\"target-word\">방향 감각을 잃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10756,
+    "origin": "enchanting",
+    "examples": [
+      {
+        "exam_en": "She gave him an <strong class=\"target-word\">enchanting</strong> smile.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">매혹적인</strong> 미소를 지었다."
+      }
+    ]
+  },
+  {
+    "id": 10757,
+    "origin": "cartel",
+    "examples": [
+      {
+        "exam_en": "The major banks formed a <strong class=\"target-word\">cartel</strong> in banking.",
+        "exam_ko": "대형 은행들은 금융 분야에서 <strong class=\"target-word\">카르텔</strong>을 형성했다."
+      }
+    ]
+  },
+  {
+    "id": 10758,
+    "origin": "regime",
+    "examples": [
+      {
+        "exam_en": "The country suffered under a military <strong class=\"target-word\">regime</strong>.",
+        "exam_ko": "그 나라는 군사 <strong class=\"target-word\">정권</strong> 아래에서 고통받았다."
+      },
+      {
+        "exam_en": "Many fled the country under the Nazi <strong class=\"target-word\">regime</strong>.",
+        "exam_ko": "많은 사람들이 나치 <strong class=\"target-word\">정권</strong> 아래에서 나라를 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 10759,
+    "origin": "theatrical",
+    "examples": [
+      {
+        "exam_en": "She joined a <strong class=\"target-word\">theatrical</strong> troupe last year.",
+        "exam_ko": "그녀는 작년에 <strong class=\"target-word\">연극</strong> 극단에 합류했다."
+      },
+      {
+        "exam_en": "He checked the <strong class=\"target-word\">theatrical</strong> page in the newspaper.",
+        "exam_ko": "그는 신문의 <strong class=\"target-word\">연극</strong>란을 확인했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">theatrical</strong> performance captivated the audience.",
+        "exam_ko": "그 <strong class=\"target-word\">연극</strong> 공연은 관객을 사로잡았다."
+      }
+    ]
+  },
+  {
+    "id": 10760,
+    "origin": "ignorance",
+    "examples": [
+      {
+        "exam_en": "He acted in complete <strong class=\"target-word\">ignorance</strong> of the law.",
+        "exam_ko": "그는 법에 대해 완전히 <strong class=\"target-word\">무지한</strong> 상태로 행동했다."
+      },
+      {
+        "exam_en": "She made a mistake out of <strong class=\"target-word\">ignorance</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">무지</strong>로 인해 실수를 저질렀다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "id": 4208,
+    "origin": "peril",
+    "examples": [
+      {
+        "exam_en": "The sailors faced the <strong class=\"target-word\">perils</strong> of the stormy sea.",
+        "exam_ko": "선원들은 폭풍이 몰아치는 바다의 <strong class=\"target-word\">위험</strong>에 맞섰다."
+      },
+      {
+        "exam_en": "She acted bravely in the hour of <strong class=\"target-word\">peril</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">위기</strong>의 순간에 용감하게 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 4209,
+    "origin": "sculpture",
+    "examples": [
+      {
+        "exam_en": "The museum displayed ancient Greek <strong class=\"target-word\">sculptures</strong>.",
+        "exam_ko": "박물관은 고대 그리스 <strong class=\"target-word\">조각품</strong>들을 전시했다."
+      },
+      {
+        "exam_en": "She created a beautiful <strong class=\"target-word\">sculpture</strong> from marble.",
+        "exam_ko": "그녀는 대리석으로 아름다운 <strong class=\"target-word\">조각 작품</strong>을 만들었다."
+      },
+      {
+        "exam_en": "The artist spent months carving the <strong class=\"target-word\">sculpture</strong>.",
+        "exam_ko": "그 예술가는 몇 달 동안 <strong class=\"target-word\">조각품</strong>을 조각했다."
+      }
+    ]
+  },
+  {
+    "id": 4210,
+    "origin": "shortage",
+    "examples": [
+      {
+        "exam_en": "The country faced a serious <strong class=\"target-word\">shortage</strong> of grain.",
+        "exam_ko": "그 나라는 심각한 곡식 <strong class=\"target-word\">부족</strong>에 직면했다."
+      },
+      {
+        "exam_en": "The housing <strong class=\"target-word\">shortage</strong> is very acute.",
+        "exam_ko": "주택 <strong class=\"target-word\">부족</strong>은 매우 심각하다."
+      }
+    ]
+  },
+  {
+    "id": 4211,
+    "origin": "volcano",
+    "examples": [
+      {
+        "exam_en": "The island has an active <strong class=\"target-word\">volcano</strong> at its center.",
+        "exam_ko": "그 섬 중앙에는 활화산인 <strong class=\"target-word\">화산</strong>이 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">volcano</strong> erupted with great force.",
+        "exam_ko": "맹렬한 기세로 <strong class=\"target-word\">화산</strong>이 폭발했다."
+      }
+    ]
+  },
+  {
+    "id": 4212,
+    "origin": "wildlife",
+    "examples": [
+      {
+        "exam_en": "The park protects diverse <strong class=\"target-word\">wildlife</strong> in the region.",
+        "exam_ko": "그 공원은 지역의 다양한 <strong class=\"target-word\">야생 동물</strong>을 보호한다."
+      },
+      {
+        "exam_en": "We visited a <strong class=\"target-word\">wildlife</strong> park on the weekend.",
+        "exam_ko": "우리는 주말에 <strong class=\"target-word\">야생 동물</strong> 공원을 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 4213,
+    "origin": "hare",
+    "examples": [
+      {
+        "exam_en": "The child was as timid as a <strong class=\"target-word\">hare</strong>.",
+        "exam_ko": "그 아이는 <strong class=\"target-word\">산토끼</strong>처럼 몹시 소심했다."
+      },
+      {
+        "exam_en": "He who runs after two <strong class=\"target-word\">hares</strong> will catch neither.",
+        "exam_ko": "두 마리 <strong class=\"target-word\">토끼</strong>를 쫓는 자는 한 마리도 잡지 못한다."
+      }
+    ]
+  },
+  {
+    "id": 4214,
+    "origin": "scent",
+    "examples": [
+      {
+        "exam_en": "The flower gave off a sweet <strong class=\"target-word\">scent</strong>.",
+        "exam_ko": "그 꽃은 달콤한 <strong class=\"target-word\">향기</strong>를 풍겼다."
+      },
+      {
+        "exam_en": "She loved the <strong class=\"target-word\">scent</strong> of lilacs in spring.",
+        "exam_ko": "그녀는 봄철 라일락의 <strong class=\"target-word\">향기</strong>를 좋아했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">scent</strong> of fresh flowers filled the garden.",
+        "exam_ko": "신선한 꽃의 <strong class=\"target-word\">향기</strong>가 정원을 가득 채웠다."
+      }
+    ]
+  },
+  {
+    "id": 4215,
+    "origin": "bye",
+    "examples": [
+      {
+        "exam_en": "Our team received a <strong class=\"target-word\">bye</strong> in the first round.",
+        "exam_ko": "우리 팀은 1라운드에서 <strong class=\"target-word\">부전승</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 4216,
+    "origin": "bean",
+    "examples": [
+      {
+        "exam_en": "She cooked a soup with small <strong class=\"target-word\">beans</strong>.",
+        "exam_ko": "그녀는 작은 <strong class=\"target-word\">콩</strong>으로 수프를 끓였다."
+      },
+      {
+        "exam_en": "He ground fresh coffee <strong class=\"target-word\">beans</strong> every morning.",
+        "exam_ko": "그는 매일 아침 신선한 커피 <strong class=\"target-word\">원두</strong>를 갈았다."
+      }
+    ]
+  },
+  {
+    "id": 4217,
+    "origin": "hug",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">hugged</strong> his partner tightly.",
+        "exam_ko": "그는 파트너를 꼭 <strong class=\"target-word\">껴안았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">hugged</strong> the child to her cheek.",
+        "exam_ko": "그녀는 아이를 <strong class=\"target-word\">껴안고</strong> 볼을 비볐다."
+      }
+    ]
+  },
+  {
+    "id": 4218,
+    "origin": "opposed",
+    "examples": [
+      {
+        "exam_en": "He was strongly <strong class=\"target-word\">opposed</strong> to the new policy.",
+        "exam_ko": "그는 새 정책에 강하게 <strong class=\"target-word\">반대했다</strong>."
+      },
+      {
+        "exam_en": "She was totally <strong class=\"target-word\">opposed</strong> to the idea.",
+        "exam_ko": "그녀는 그 아이디어에 완전히 <strong class=\"target-word\">반대했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4219,
+    "origin": "cell",
+    "examples": [
+      {
+        "exam_en": "The prisoner spent years in a condemned <strong class=\"target-word\">cell</strong>.",
+        "exam_ko": "그 죄수는 사형수 <strong class=\"target-word\">독방</strong>에서 수년을 보냈다."
+      },
+      {
+        "exam_en": "The guard put the suspect in a <strong class=\"target-word\">cell</strong>.",
+        "exam_ko": "교도관은 용의자를 <strong class=\"target-word\">독방</strong>에 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 4222,
+    "origin": "pearl",
+    "examples": [
+      {
+        "exam_en": "She wore a necklace made of <strong class=\"target-word\">pearls</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">진주</strong>로 만든 목걸이를 착용했다."
+      },
+      {
+        "exam_en": "The diver found a rare <strong class=\"target-word\">pearl</strong> in the oyster.",
+        "exam_ko": "다이버는 굴 속에서 희귀한 <strong class=\"target-word\">진주</strong>를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 4223,
+    "origin": "registration",
+    "examples": [
+      {
+        "exam_en": "Voter <strong class=\"target-word\">registration</strong> closed before the election.",
+        "exam_ko": "유권자 <strong class=\"target-word\">등록</strong>은 선거 전에 마감되었다."
+      },
+      {
+        "exam_en": "She completed her <strong class=\"target-word\">registration</strong> for the course.",
+        "exam_ko": "그녀는 강좌 <strong class=\"target-word\">등록</strong>을 마쳤다."
+      }
+    ]
+  },
+  {
+    "id": 4225,
+    "origin": "unemployment",
+    "examples": [
+      {
+        "exam_en": "He applied for <strong class=\"target-word\">unemployment</strong> insurance after losing his job.",
+        "exam_ko": "그는 직장을 잃은 후 <strong class=\"target-word\">실업</strong> 보험을 신청했다."
+      },
+      {
+        "exam_en": "The government worked to keep <strong class=\"target-word\">unemployment</strong> low.",
+        "exam_ko": "정부는 <strong class=\"target-word\">실업률</strong>을 낮게 유지하려 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 4226,
+    "origin": "marble",
+    "examples": [
+      {
+        "exam_en": "The sculptor carved a statue from <strong class=\"target-word\">marble</strong>.",
+        "exam_ko": "조각가는 <strong class=\"target-word\">대리석</strong>으로 동상을 조각했다."
+      },
+      {
+        "exam_en": "The floor was as hard as <strong class=\"target-word\">marble</strong>.",
+        "exam_ko": "바닥은 <strong class=\"target-word\">대리석</strong>처럼 단단했다."
+      }
+    ]
+  },
+  {
+    "id": 4229,
+    "origin": "phenomenon",
+    "examples": [
+      {
+        "exam_en": "Globalization is a major historical <strong class=\"target-word\">phenomenon</strong>.",
+        "exam_ko": "세계화는 중요한 역사적 <strong class=\"target-word\">현상</strong>이다."
+      },
+      {
+        "exam_en": "Earthquakes are natural <strong class=\"target-word\">phenomena</strong> we cannot prevent.",
+        "exam_ko": "지진은 우리가 막을 수 없는 자연 <strong class=\"target-word\">현상</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4230,
+    "origin": "pollution",
+    "examples": [
+      {
+        "exam_en": "Environmental <strong class=\"target-word\">pollution</strong> threatens ecosystems worldwide.",
+        "exam_ko": "환경 <strong class=\"target-word\">오염</strong>은 전 세계 생태계를 위협한다."
+      },
+      {
+        "exam_en": "Noise <strong class=\"target-word\">pollution</strong> affects people living near airports.",
+        "exam_ko": "소음 <strong class=\"target-word\">공해</strong>는 공항 근처에 사는 사람들에게 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 4231,
+    "origin": "enthusiasm",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">enthusiasm</strong> for collecting stamps never faded.",
+        "exam_ko": "우표 수집에 대한 그의 <strong class=\"target-word\">열정</strong>은 사그라들지 않았다."
+      },
+      {
+        "exam_en": "She tackled the project with great <strong class=\"target-word\">enthusiasm</strong>.",
+        "exam_ko": "그녀는 큰 <strong class=\"target-word\">열정</strong>으로 프로젝트에 임했다."
+      }
+    ]
+  },
+  {
+    "id": 4232,
+    "origin": "philosophy",
+    "examples": [
+      {
+        "exam_en": "He studied deductive <strong class=\"target-word\">philosophy</strong> at university.",
+        "exam_ko": "그는 대학에서 연역 <strong class=\"target-word\">철학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">philosophy</strong> of life inspired many students.",
+        "exam_ko": "그녀의 삶의 <strong class=\"target-word\">철학</strong>은 많은 학생들에게 영감을 주었다."
+      }
+    ]
+  }
+]

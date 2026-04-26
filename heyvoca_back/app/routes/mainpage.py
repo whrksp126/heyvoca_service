@@ -184,13 +184,23 @@ def api_user_recent_study_create_update():
 
         db.session.commit()
     
-    # create
+    # create or upsert (id 없을 때 같은 user+type 레코드가 이미 있으면 update)
     else:
-        recent_data = UserRecentStudy(
-            user_id=user_id, study_data=study_data, status=status,
-            progress_index=progress_index, type=RecentStudyType(type.lower()), updated_at=None
-        )
-        db.session.add(recent_data)
+        recent_data = db.session.query(UserRecentStudy)\
+            .filter(UserRecentStudy.user_id == user_id)\
+            .filter(UserRecentStudy.type == RecentStudyType(type.lower()))\
+            .first()
+        if recent_data is not None:
+            recent_data.study_data = study_data
+            recent_data.status = status
+            recent_data.progress_index = progress_index
+            recent_data.updated_at = datetime.utcnow()
+        else:
+            recent_data = UserRecentStudy(
+                user_id=user_id, study_data=study_data, status=status,
+                progress_index=progress_index, type=RecentStudyType(type.lower()), updated_at=None
+            )
+            db.session.add(recent_data)
         db.session.commit()
 
     data = {
@@ -449,7 +459,7 @@ def api_user_study_history():
                 'before': user.gem_cnt - add_gem,
                 'after': user.gem_cnt
             },
-            'today_study_complete': True,
+            'today_study_complete': is_today_study_complete,
             'goals': goals
         }
     }

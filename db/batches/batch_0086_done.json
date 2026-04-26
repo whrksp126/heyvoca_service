@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1775,
+    "origin": "succeed",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">succeeded</strong> in the final exam.",
+        "exam_ko": "그녀는 최종 시험에 <strong class=\"target-word\">합격했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">succeeded</strong> in overcoming every obstacle.",
+        "exam_ko": "그는 모든 장애물을 극복하는 데 <strong class=\"target-word\">성공했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1776,
+    "origin": "afford",
+    "examples": [
+      {
+        "exam_en": "I can't <strong class=\"target-word\">afford</strong> to waste even one cent.",
+        "exam_ko": "단 한 푼도 <strong class=\"target-word\">낭비할 여유가</strong> 없다."
+      },
+      {
+        "exam_en": "He could easily <strong class=\"target-word\">afford</strong> not to work for a while.",
+        "exam_ko": "그는 얼마 동안 일하지 않아도 <strong class=\"target-word\">여유롭게 지낼 수</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1777,
+    "origin": "earn",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">earns</strong> good wages every month.",
+        "exam_ko": "그녀는 매달 좋은 <strong class=\"target-word\">임금을 번다</strong>."
+      },
+      {
+        "exam_en": "He reported less than he actually <strong class=\"target-word\">earned</strong>.",
+        "exam_ko": "그는 실제로 <strong class=\"target-word\">번</strong> 것보다 적게 신고했다."
+      }
+    ]
+  },
+  {
+    "id": 1778,
+    "origin": "burn",
+    "examples": [
+      {
+        "exam_en": "The wet wood only <strong class=\"target-word\">burned</strong> with thick smoke.",
+        "exam_ko": "젖은 나무는 연기만 내며 <strong class=\"target-word\">탔다</strong>."
+      },
+      {
+        "exam_en": "The dry logs <strong class=\"target-word\">burned</strong> well in the fireplace.",
+        "exam_ko": "마른 장작이 벽난로에서 잘 <strong class=\"target-word\">타올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1779,
+    "origin": "matter",
+    "examples": [
+      {
+        "exam_en": "Ice is water in solid <strong class=\"target-word\">matter</strong>.",
+        "exam_ko": "얼음은 고체 <strong class=\"target-word\">물질</strong>인 물이다."
+      },
+      {
+        "exam_en": "The soil contains a lot of mineral <strong class=\"target-word\">matter</strong>.",
+        "exam_ko": "그 토양에는 광물 <strong class=\"target-word\">물질</strong>이 많이 포함되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 1780,
+    "origin": "last",
+    "examples": [
+      {
+        "exam_en": "They studied the <strong class=\"target-word\">last</strong> lesson of the textbook.",
+        "exam_ko": "그들은 교과서의 <strong class=\"target-word\">마지막</strong> 과를 공부했다."
+      },
+      {
+        "exam_en": "He made a <strong class=\"target-word\">last</strong>-minute proposal before the deadline.",
+        "exam_ko": "그는 마감 직전에 <strong class=\"target-word\">막바지</strong> 제안을 했다."
+      },
+      {
+        "exam_en": "The anesthesia <strong class=\"target-word\">lasts</strong> two to three hours.",
+        "exam_ko": "마취는 두세 시간 <strong class=\"target-word\">지속된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1781,
+    "origin": "gather",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">gathered</strong> her books together into a pile.",
+        "exam_ko": "그녀는 책을 한 묶음으로 <strong class=\"target-word\">모았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">gathered</strong> her hair into a bun.",
+        "exam_ko": "그녀는 머리카락을 뒤쪽으로 <strong class=\"target-word\">묶었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1782,
+    "origin": "derive",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">derives</strong> great pleasure from conversation.",
+        "exam_ko": "그는 대화에서 큰 즐거움을 <strong class=\"target-word\">얻는다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">derived</strong> her strong character from her mother.",
+        "exam_ko": "그녀는 강한 성격을 어머니로부터 <strong class=\"target-word\">물려받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1783,
+    "origin": "conduct",
+    "examples": [
+      {
+        "exam_en": "The teacher praised his good <strong class=\"target-word\">conduct</strong>.",
+        "exam_ko": "선생님은 그의 훌륭한 <strong class=\"target-word\">행실</strong>을 칭찬했다."
+      },
+      {
+        "exam_en": "The child's <strong class=\"target-word\">conduct</strong> in school was terrible.",
+        "exam_ko": "그 아이가 학교에서 하는 <strong class=\"target-word\">행실</strong>은 형편없었다."
+      }
+    ]
+  },
+  {
+    "id": 1784,
+    "origin": "shut",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">shut</strong> the window before it rains.",
+        "exam_ko": "비가 오기 전에 창문을 <strong class=\"target-word\">닫아</strong> 주세요."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">shut</strong> his eyes to the facts.",
+        "exam_ko": "그는 사실에 <strong class=\"target-word\">눈을 감았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1785,
+    "origin": "elect",
+    "examples": [
+      {
+        "exam_en": "The people <strong class=\"target-word\">elected</strong> a new governor last year.",
+        "exam_ko": "국민들은 작년에 새 지사를 <strong class=\"target-word\">선출했다</strong>."
+      },
+      {
+        "exam_en": "The members <strong class=\"target-word\">elected</strong> him as chairman.",
+        "exam_ko": "회원들은 그를 의장으로 <strong class=\"target-word\">선출했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1786,
+    "origin": "cope",
+    "examples": [
+      {
+        "exam_en": "She learned to <strong class=\"target-word\">cope</strong> with every difficulty.",
+        "exam_ko": "그녀는 모든 어려움에 <strong class=\"target-word\">대처하는</strong> 법을 배웠다."
+      },
+      {
+        "exam_en": "He wasn't able to <strong class=\"target-word\">cope</strong> with the stresses of the job.",
+        "exam_ko": "그는 직장의 스트레스에 <strong class=\"target-word\">대처할</strong> 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 1787,
+    "origin": "persuade",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">persuaded</strong> him to go to the party.",
+        "exam_ko": "나는 그를 파티에 가도록 <strong class=\"target-word\">설득했다</strong>."
+      },
+      {
+        "exam_en": "The car was finally <strong class=\"target-word\">persuaded</strong> to start.",
+        "exam_ko": "자동차는 가까스로 시동이 <strong class=\"target-word\">걸렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1788,
+    "origin": "recover",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">recovered</strong> the stolen jewellery.",
+        "exam_ko": "경찰은 도난당한 보석을 <strong class=\"target-word\">되찾았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">recovered</strong> her original weight after the diet.",
+        "exam_ko": "그녀는 다이어트 후 원래 체중을 <strong class=\"target-word\">회복했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1789,
+    "origin": "blow",
+    "examples": [
+      {
+        "exam_en": "He took a hard <strong class=\"target-word\">blow</strong> to the stomach.",
+        "exam_ko": "그는 배에 강한 <strong class=\"target-word\">일격</strong>을 맞았다."
+      },
+      {
+        "exam_en": "The boxer landed a <strong class=\"target-word\">blow</strong> on his opponent's jaw.",
+        "exam_ko": "복서는 상대의 턱에 <strong class=\"target-word\">일격</strong>을 날렸다."
+      }
+    ]
+  },
+  {
+    "id": 1790,
+    "origin": "soviet",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">Soviet</strong> Union collapsed in 1991.",
+        "exam_ko": "<strong class=\"target-word\">소비에트</strong> 연방은 1991년에 붕괴했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">Soviet</strong> space program was highly advanced.",
+        "exam_ko": "<strong class=\"target-word\">소비에트</strong> 우주 프로그램은 매우 발전해 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1791,
+    "origin": "basic",
+    "examples": [
+      {
+        "exam_en": "Steel and coal are <strong class=\"target-word\">basic</strong> industries for the economy.",
+        "exam_ko": "철강과 석탄은 경제의 <strong class=\"target-word\">기간</strong> 산업이다."
+      },
+      {
+        "exam_en": "He presented a <strong class=\"target-word\">basic</strong> argument for the proposal.",
+        "exam_ko": "그는 그 제안에 대한 <strong class=\"target-word\">기본적인</strong> 논거를 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 1792,
+    "origin": "military",
+    "examples": [
+      {
+        "exam_en": "American <strong class=\"target-word\">military</strong> power is the largest in the world.",
+        "exam_ko": "미국의 <strong class=\"target-word\">군사</strong>력은 세계 최대이다."
+      },
+      {
+        "exam_en": "The president discussed <strong class=\"target-word\">military</strong> affairs with generals.",
+        "exam_ko": "대통령은 장군들과 <strong class=\"target-word\">군사</strong> 문제를 논의했다."
+      }
+    ]
+  },
+  {
+    "id": 1793,
+    "origin": "original",
+    "examples": [
+      {
+        "exam_en": "The word lost its <strong class=\"target-word\">original</strong> meaning over time.",
+        "exam_ko": "그 단어는 시간이 지나며 <strong class=\"target-word\">원래</strong> 뜻을 잃었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">original</strong> inhabitants lived here for centuries.",
+        "exam_ko": "<strong class=\"target-word\">원주민</strong>들은 수 세기 동안 이곳에 살았다."
+      }
+    ]
+  },
+  {
+    "id": 1794,
+    "origin": "aware",
+    "examples": [
+      {
+        "exam_en": "I am not <strong class=\"target-word\">aware</strong> of any changes so far.",
+        "exam_ko": "나는 지금까지 어떤 변화도 <strong class=\"target-word\">알지 못한다</strong>."
+      },
+      {
+        "exam_en": "She was well <strong class=\"target-word\">aware</strong> of the risks involved.",
+        "exam_ko": "그녀는 관련된 위험을 절실히 <strong class=\"target-word\">알고 있었다</strong>."
+      }
+    ]
+  }
+]

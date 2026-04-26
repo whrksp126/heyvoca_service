@@ -1,0 +1,258 @@
+[
+  {
+    "id": 19268,
+    "origin": "daub",
+    "examples": [
+      {
+        "exam_en": "daub a wall with paint",
+        "exam_ko": "온 벽을 페인트로 칠하다"
+      },
+      {
+        "exam_en": "daub mud on the wall",
+        "exam_ko": "벽에 진흙을 바르다."
+      }
+    ]
+  },
+  {
+    "id": 19270,
+    "origin": "burdensome",
+    "examples": [
+      {
+        "exam_en": "The extra work was burdensome. ",
+        "exam_ko": "그 시간외 일은 귀찮았다."
+      },
+      {
+        "exam_en": "a burdensome debt ",
+        "exam_ko": "부담스러운 빚"
+      },
+      {
+        "exam_en": "The extra work was burdensome.",
+        "exam_ko": "그 시간외 일은 귀찮았다."
+      },
+      {
+        "exam_en": "a burdensome debt",
+        "exam_ko": "부담스러운 빚"
+      }
+    ]
+  },
+  {
+    "id": 19271,
+    "origin": "luxuriant",
+    "examples": [
+      {
+        "exam_en": "luxuriant foliage",
+        "exam_ko": "무성한 나뭇잎"
+      },
+      {
+        "exam_en": "a luxuriant hair",
+        "exam_ko": "더부룩한 머리[턱수염]."
+      }
+    ]
+  },
+  {
+    "id": 19272,
+    "origin": "opulent",
+    "examples": [
+      {
+        "exam_en": "opulent surroundings",
+        "exam_ko": "부유한 환경."
+      },
+      {
+        "exam_en": "an opulent beard",
+        "exam_ko": "무성한 턱수염."
+      }
+    ]
+  },
+  {
+    "id": 19275,
+    "origin": "engross",
+    "examples": [
+      {
+        "exam_en": "engross oneself in",
+        "exam_ko": "…에 열중해 있다"
+      },
+      {
+        "exam_en": "His lecture engrossed all of my attention.",
+        "exam_ko": "그의 강의에 나는 정신을 온통 빼앗겼다."
+      }
+    ]
+  },
+  {
+    "id": 19276,
+    "origin": "irremediable",
+    "examples": [
+      {
+        "exam_en": "irremediable illness",
+        "exam_ko": "불치의 병."
+      }
+    ]
+  },
+  {
+    "id": 19278,
+    "origin": "vagary",
+    "examples": [
+      {
+        "exam_en": "the vagaries of life",
+        "exam_ko": "인생의 성쇠[부침(浮沈)]."
+      }
+    ]
+  },
+  {
+    "id": 19282,
+    "origin": "extirpate",
+    "examples": [
+      {
+        "exam_en": "extirpate a gang of robbers",
+        "exam_ko": "도적 떼를 소탕하다."
+      }
+    ]
+  },
+  {
+    "id": 19283,
+    "origin": "unambiguous",
+    "examples": [
+      {
+        "exam_en": "an unambiguous statement ",
+        "exam_ko": "모호하지 않은 진술"
+      },
+      {
+        "exam_en": "an unambiguous statement",
+        "exam_ko": "모호하지 않은 진술"
+      }
+    ]
+  },
+  {
+    "id": 19284,
+    "origin": "pygmy",
+    "examples": [
+      {
+        "exam_en": "one's pygmy effort",
+        "exam_ko": "미력(微力)."
+      }
+    ]
+  },
+  {
+    "id": 19285,
+    "origin": "defunct",
+    "examples": [
+      {
+        "exam_en": "\"Who is Gorbachev?\" \"He was the President of the now defunct Soviet Union.\"",
+        "exam_ko": "「고르바초프가 누구니?」 「그는 지금은 없어진 소련의 대통령이었어.」"
+      }
+    ]
+  },
+  {
+    "id": 19286,
+    "origin": "beggarly",
+    "examples": [
+      {
+        "exam_en": "a beggarly salary",
+        "exam_ko": "얼마 안 되는 급료."
+      }
+    ]
+  },
+  {
+    "id": 19287,
+    "origin": "solidify",
+    "examples": [
+      {
+        "exam_en": "solidify concrete",
+        "exam_ko": "콘크리트를 굳히다"
+      },
+      {
+        "exam_en": "solidify one's knowledge",
+        "exam_ko": "지식을 강화[확실한 것으로]하다."
+      },
+      {
+        "exam_en": "The propaganda served only to solidify opinion, not to change minds.",
+        "exam_ko": "선전은 여론을 굳히는 데만 도움이 되었을 뿐 마음을 바꾸는 데는 도움이 되지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 19288,
+    "origin": "wizened",
+    "examples": [
+      {
+        "exam_en": "a wizened face",
+        "exam_ko": "쭈글쭈글한 얼굴. (또는 weazen)"
+      }
+    ]
+  },
+  {
+    "id": 19291,
+    "origin": "germane",
+    "examples": [
+      {
+        "exam_en": "facts germane to the discussion",
+        "exam_ko": "그 토론에 깊은 관계가 있는 사실."
+      }
+    ]
+  },
+  {
+    "id": 19293,
+    "origin": "semblance",
+    "examples": [
+      {
+        "exam_en": "in semblance",
+        "exam_ko": "외관[외모, 겉모양]은"
+      },
+      {
+        "exam_en": "under the semblance of",
+        "exam_ko": "…을 가장하여, …인 체하고"
+      }
+    ]
+  },
+  {
+    "id": 19294,
+    "origin": "overtax",
+    "examples": [
+      {
+        "exam_en": "overtax oneself",
+        "exam_ko": "무리하다"
+      },
+      {
+        "exam_en": "overtax one's strength",
+        "exam_ko": "무리한 노력을 하다."
+      }
+    ]
+  },
+  {
+    "id": 19296,
+    "origin": "speck",
+    "examples": [
+      {
+        "exam_en": "a speck of blood",
+        "exam_ko": "피 묻은 얼룩."
+      },
+      {
+        "exam_en": "a speck of grit",
+        "exam_ko": "미세한 모래알."
+      }
+    ]
+  },
+  {
+    "id": 19297,
+    "origin": "splotch",
+    "examples": [
+      {
+        "exam_en": "Don't buy that tablecloth, the material splotches easily",
+        "exam_ko": "그 상보는 사지 말라, 얼룩이 잘 지는 천이니."
+      }
+    ]
+  },
+  {
+    "id": 19300,
+    "origin": "jagged",
+    "examples": [
+      {
+        "exam_en": "in a voice jagged with excitement",
+        "exam_ko": "흥분한 나머지 목소리가 변하여[갈라져]."
+      },
+      {
+        "exam_en": "Beating your trowel blade on the edge of a mortar pan to remove excess mortar is bad habit to get into as it can cause jagged or rough edges.",
+        "exam_ko": "과도한 모르타르를 제거하기 위해 모르타르 통 가장자를 흙손으로 두드리는 것은 들쭉날쭉한 거친 가장자리를 유발할 수 있으므로 나쁜 습관이다."
+      }
+    ]
+  }
+]

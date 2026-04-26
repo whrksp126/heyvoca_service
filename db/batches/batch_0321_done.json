@@ -1,0 +1,278 @@
+[
+  {
+    "id": 8180,
+    "origin": "undercover",
+    "examples": [
+      {
+        "exam_en": "The police ran an <strong class=\"target-word\">undercover</strong> operation.",
+        "exam_ko": "경찰은 <strong class=\"target-word\">비밀</strong> 작전을 펼쳤다."
+      },
+      {
+        "exam_en": "She worked as an <strong class=\"target-word\">undercover</strong> agent for years.",
+        "exam_ko": "그녀는 수년간 <strong class=\"target-word\">잠복</strong> 요원으로 일했다."
+      }
+    ]
+  },
+  {
+    "id": 8181,
+    "origin": "uncover",
+    "examples": [
+      {
+        "exam_en": "Investigators <strong class=\"target-word\">uncovered</strong> a major fraud scheme.",
+        "exam_ko": "수사관들은 대규모 사기 계획을 <strong class=\"target-word\">밝혀냈다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">uncovered</strong> a hidden plot against the mayor.",
+        "exam_ko": "그녀는 시장을 향한 음모를 <strong class=\"target-word\">폭로했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8182,
+    "origin": "recovery",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">recovery</strong> of the stolen paintings took months.",
+        "exam_ko": "도난당한 그림들의 <strong class=\"target-word\">회수</strong>는 수개월이 걸렸다."
+      },
+      {
+        "exam_en": "The injury is past <strong class=\"target-word\">recovery</strong>.",
+        "exam_ko": "그 부상은 <strong class=\"target-word\">회복</strong>될 가망이 없다."
+      }
+    ]
+  },
+  {
+    "id": 8184,
+    "origin": "editor",
+    "examples": [
+      {
+        "exam_en": "She was promoted to managing <strong class=\"target-word\">editor</strong> last year.",
+        "exam_ko": "그녀는 작년에 편집국장 <strong class=\"target-word\">에디터</strong>로 승진했다."
+      },
+      {
+        "exam_en": "The sports <strong class=\"target-word\">editor</strong> assigned the story to a reporter.",
+        "exam_ko": "스포츠 <strong class=\"target-word\">에디터</strong>가 기자에게 기사를 배정했다."
+      }
+    ]
+  },
+  {
+    "id": 8188,
+    "origin": "cream",
+    "examples": [
+      {
+        "exam_en": "Have some <strong class=\"target-word\">cream</strong> in your coffee.",
+        "exam_ko": "커피에 <strong class=\"target-word\">크림</strong> 좀 타세요."
+      },
+      {
+        "exam_en": "She applied cold <strong class=\"target-word\">cream</strong> to her face.",
+        "exam_ko": "그녀는 얼굴에 콜드 <strong class=\"target-word\">크림</strong>을 발랐다."
+      }
+    ]
+  },
+  {
+    "id": 8192,
+    "origin": "foster",
+    "examples": [
+      {
+        "exam_en": "The program aims to <strong class=\"target-word\">foster</strong> social reforms.",
+        "exam_ko": "이 프로그램은 사회 개혁을 <strong class=\"target-word\">촉진</strong>하는 것을 목표로 한다."
+      },
+      {
+        "exam_en": "The summit helped <strong class=\"target-word\">foster</strong> friendly relations between the two countries.",
+        "exam_ko": "정상 회담은 양국 간의 우호 관계를 <strong class=\"target-word\">돈독히 하는</strong> 데 도움이 됐다."
+      }
+    ]
+  },
+  {
+    "id": 8193,
+    "origin": "fodder",
+    "examples": [
+      {
+        "exam_en": "The farmer grows corn as <strong class=\"target-word\">fodder</strong> for his cattle.",
+        "exam_ko": "그 농부는 소의 <strong class=\"target-word\">사료</strong>로 옥수수를 재배한다."
+      },
+      {
+        "exam_en": "Those soldiers were treated as mere cannon <strong class=\"target-word\">fodder</strong>.",
+        "exam_ko": "그 군인들은 그저 총알받이 <strong class=\"target-word\">희생양</strong>으로 취급받았다."
+      }
+    ]
+  },
+  {
+    "id": 8194,
+    "origin": "escalator",
+    "examples": [
+      {
+        "exam_en": "She took the <strong class=\"target-word\">escalator</strong> up to the third floor.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">에스컬레이터</strong>를 타고 3층으로 올라갔다."
+      },
+      {
+        "exam_en": "Education is often called a social <strong class=\"target-word\">escalator</strong>.",
+        "exam_ko": "교육은 종종 사회적 <strong class=\"target-word\">출세 사다리</strong>라고 불린다."
+      }
+    ]
+  },
+  {
+    "id": 8197,
+    "origin": "skillful",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">skillful</strong> driver on mountain roads.",
+        "exam_ko": "그는 산길에서 매우 <strong class=\"target-word\">능숙한</strong> 운전자다."
+      },
+      {
+        "exam_en": "He is extremely <strong class=\"target-word\">skillful</strong> in writing Chinese characters.",
+        "exam_ko": "그는 한자 쓰는 솜씨가 매우 <strong class=\"target-word\">능숙하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8198,
+    "origin": "eggshell",
+    "examples": [
+      {
+        "exam_en": "The cup was as thin as an <strong class=\"target-word\">eggshell</strong>.",
+        "exam_ko": "그 컵은 <strong class=\"target-word\">달걀 껍데기</strong>처럼 얇았다."
+      },
+      {
+        "exam_en": "She chose an <strong class=\"target-word\">eggshell</strong> finish for the living room walls.",
+        "exam_ko": "그녀는 거실 벽에 <strong class=\"target-word\">무광택</strong> 마감을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 8200,
+    "origin": "deliberative",
+    "examples": [
+      {
+        "exam_en": "The senators met in a <strong class=\"target-word\">deliberative</strong> assembly.",
+        "exam_ko": "상원 의원들은 <strong class=\"target-word\">심의</strong> 회의에서 만났다."
+      },
+      {
+        "exam_en": "The committee used a <strong class=\"target-word\">deliberative</strong> process to reach a decision.",
+        "exam_ko": "위원회는 결정을 내리기 위해 <strong class=\"target-word\">숙의</strong> 과정을 거쳤다."
+      }
+    ]
+  },
+  {
+    "id": 8201,
+    "origin": "liberty",
+    "examples": [
+      {
+        "exam_en": "America is known as the land of <strong class=\"target-word\">liberty</strong>.",
+        "exam_ko": "미국은 <strong class=\"target-word\">자유</strong>의 나라로 알려져 있다."
+      },
+      {
+        "exam_en": "He finally gained his <strong class=\"target-word\">liberty</strong> after ten years.",
+        "exam_ko": "그는 10년 만에 마침내 <strong class=\"target-word\">자유</strong>를 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 8202,
+    "origin": "lover",
+    "examples": [
+      {
+        "exam_en": "She is a passionate <strong class=\"target-word\">lover</strong> of classical music.",
+        "exam_ko": "그녀는 클래식 음악의 열정적인 <strong class=\"target-word\">애호가</strong>다."
+      },
+      {
+        "exam_en": "They were secret <strong class=\"target-word\">lovers</strong> for several years.",
+        "exam_ko": "그들은 수년간 비밀 <strong class=\"target-word\">연인</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 8203,
+    "origin": "disbelief",
+    "examples": [
+      {
+        "exam_en": "I shook my head in utter <strong class=\"target-word\">disbelief</strong>.",
+        "exam_ko": "나는 완전한 <strong class=\"target-word\">불신</strong>으로 머리를 가로저었다."
+      }
+    ]
+  },
+  {
+    "id": 8204,
+    "origin": "disbelieve",
+    "examples": [
+      {
+        "exam_en": "Many people <strong class=\"target-word\">disbelieve</strong> reports of UFO sightings.",
+        "exam_ko": "많은 사람들은 UFO 목격 보고를 <strong class=\"target-word\">믿지 않는다</strong>."
+      },
+      {
+        "exam_en": "I came to <strong class=\"target-word\">disbelieve</strong> in his sincerity.",
+        "exam_ko": "나는 그의 성실성을 <strong class=\"target-word\">의심하게</strong> 되었다."
+      }
+    ]
+  },
+  {
+    "id": 8206,
+    "origin": "believer",
+    "examples": [
+      {
+        "exam_en": "She is a devout <strong class=\"target-word\">believer</strong> in Christianity.",
+        "exam_ko": "그녀는 독실한 기독교 <strong class=\"target-word\">신자</strong>다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">believer</strong> in working hard for a living.",
+        "exam_ko": "그는 생계를 위해 열심히 일해야 한다고 <strong class=\"target-word\">믿는 사람</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8209,
+    "origin": "elevation",
+    "examples": [
+      {
+        "exam_en": "The village sits at an <strong class=\"target-word\">elevation</strong> of 800 feet.",
+        "exam_ko": "그 마을은 해발 800피트의 <strong class=\"target-word\">고도</strong>에 위치해 있다."
+      },
+      {
+        "exam_en": "His speech showed a marked <strong class=\"target-word\">elevation</strong> of spirit.",
+        "exam_ko": "그의 연설은 두드러진 정신의 <strong class=\"target-word\">고귀함</strong>을 보여 주었다."
+      }
+    ]
+  },
+  {
+    "id": 8210,
+    "origin": "leverage",
+    "examples": [
+      {
+        "exam_en": "The country used its oil supply as political <strong class=\"target-word\">leverage</strong>.",
+        "exam_ko": "그 나라는 석유 공급을 정치적 <strong class=\"target-word\">영향력</strong>으로 활용했다."
+      },
+      {
+        "exam_en": "The bank reviewed its <strong class=\"target-word\">leverage</strong> ratio carefully.",
+        "exam_ko": "은행은 <strong class=\"target-word\">레버리지</strong> 비율을 신중하게 검토했다."
+      }
+    ]
+  },
+  {
+    "id": 8211,
+    "origin": "lever",
+    "examples": [
+      {
+        "exam_en": "He pushed the <strong class=\"target-word\">lever</strong> to open the gate.",
+        "exam_ko": "그는 문을 열기 위해 <strong class=\"target-word\">지레</strong>를 밀었다."
+      },
+      {
+        "exam_en": "The politician used public opinion as a <strong class=\"target-word\">lever</strong>.",
+        "exam_ko": "그 정치인은 여론을 <strong class=\"target-word\">수단</strong>으로 활용했다."
+      }
+    ]
+  },
+  {
+    "id": 8212,
+    "origin": "dissociation",
+    "examples": [
+      {
+        "exam_en": "The law enforced the <strong class=\"target-word\">dissociation</strong> of church and state.",
+        "exam_ko": "법은 교회와 국가의 <strong class=\"target-word\">분리</strong>를 강제했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">dissociation</strong> from the group surprised everyone.",
+        "exam_ko": "그가 그룹에서 <strong class=\"target-word\">탈퇴</strong>한 것은 모두를 놀라게 했다."
+      }
+    ]
+  }
+]

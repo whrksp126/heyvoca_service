@@ -1,0 +1,286 @@
+[
+  {
+    "id": 5263,
+    "origin": "mirror",
+    "examples": [
+      {
+        "exam_en": "She checked her hair in the <strong class=\"target-word\">mirror</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">거울</strong>에서 머리를 확인했다."
+      },
+      {
+        "exam_en": "He smashed the <strong class=\"target-word\">mirror</strong> by accident.",
+        "exam_ko": "그는 실수로 <strong class=\"target-word\">거울</strong>을 깨뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 5264,
+    "origin": "whoever",
+    "examples": [
+      {
+        "exam_en": "We will welcome <strong class=\"target-word\">whoever</strong> comes to the party.",
+        "exam_ko": "파티에 오는 사람은 <strong class=\"target-word\">누구든지</strong> 환영합니다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Whoever</strong> finishes first gets a prize.",
+        "exam_ko": "먼저 끝내는 사람은 <strong class=\"target-word\">누구든지</strong> 상을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 5265,
+    "origin": "plainly",
+    "examples": [
+      {
+        "exam_en": "Tell me <strong class=\"target-word\">plainly</strong> what you want.",
+        "exam_ko": "무엇을 원하는지 <strong class=\"target-word\">분명하게</strong> 말하시오."
+      },
+      {
+        "exam_en": "They were dressed very <strong class=\"target-word\">plainly</strong> that day.",
+        "exam_ko": "그들은 그날 매우 <strong class=\"target-word\">수수하게</strong> 옷을 입었다."
+      }
+    ]
+  },
+  {
+    "id": 5266,
+    "origin": "spite",
+    "examples": [
+      {
+        "exam_en": "He broke the toy out of <strong class=\"target-word\">spite</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">악의</strong>로 장난감을 부쉈다."
+      },
+      {
+        "exam_en": "She bore a deep <strong class=\"target-word\">spite</strong> against him.",
+        "exam_ko": "그녀는 그에게 깊은 <strong class=\"target-word\">원한</strong>을 품었다."
+      }
+    ]
+  },
+  {
+    "id": 5269,
+    "origin": "scattered",
+    "examples": [
+      {
+        "exam_en": "There will be <strong class=\"target-word\">scattered</strong> showers this afternoon.",
+        "exam_ko": "오늘 오후에 <strong class=\"target-word\">산발적인</strong> 소나기가 내릴 것이다."
+      },
+      {
+        "exam_en": "The village had <strong class=\"target-word\">scattered</strong> houses across the hillside.",
+        "exam_ko": "마을에는 언덕에 <strong class=\"target-word\">흩어진</strong> 집들이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5270,
+    "origin": "lab",
+    "examples": [
+      {
+        "exam_en": "She spent all night in the <strong class=\"target-word\">lab</strong>.",
+        "exam_ko": "그녀는 밤새 <strong class=\"target-word\">실험실</strong>에서 지냈다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">lab</strong> results came back positive.",
+        "exam_ko": "<strong class=\"target-word\">실험실</strong> 결과가 양성으로 나왔다."
+      }
+    ]
+  },
+  {
+    "id": 5271,
+    "origin": "parameter",
+    "examples": [
+      {
+        "exam_en": "The contract defines the <strong class=\"target-word\">parameters</strong> of the job.",
+        "exam_ko": "계약서는 업무의 <strong class=\"target-word\">범위</strong>를 규정한다."
+      },
+      {
+        "exam_en": "We must work within the <strong class=\"target-word\">parameters</strong> set by the team.",
+        "exam_ko": "우리는 팀이 정한 <strong class=\"target-word\">한계 내</strong>에서 일해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 5273,
+    "origin": "understanding",
+    "examples": [
+      {
+        "exam_en": "To my <strong class=\"target-word\">understanding</strong>, the meeting starts at noon.",
+        "exam_ko": "내가 <strong class=\"target-word\">이해하기로는</strong> 회의는 정오에 시작한다."
+      },
+      {
+        "exam_en": "She had a great <strong class=\"target-word\">understanding</strong> of art.",
+        "exam_ko": "그녀는 예술에 대해 뛰어난 <strong class=\"target-word\">이해력</strong>을 가지고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5276,
+    "origin": "drinking",
+    "examples": [
+      {
+        "exam_en": "He gave up <strong class=\"target-word\">drinking</strong> after the accident.",
+        "exam_ko": "그는 사고 후 <strong class=\"target-word\">음주</strong>를 끊었다."
+      },
+      {
+        "exam_en": "She got tired of his <strong class=\"target-word\">drinking</strong> every night.",
+        "exam_ko": "그녀는 그의 매일 밤 <strong class=\"target-word\">음주</strong>에 지쳐버렸다."
+      }
+    ]
+  },
+  {
+    "id": 5277,
+    "origin": "click",
+    "examples": [
+      {
+        "exam_en": "I fired until the revolver went <strong class=\"target-word\">click</strong>.",
+        "exam_ko": "권총이 <strong class=\"target-word\">찰칵</strong> 할 때까지 쏘아댔다."
+      },
+      {
+        "exam_en": "The door <strong class=\"target-word\">clicked</strong> shut behind her.",
+        "exam_ko": "문이 그녀 뒤에서 <strong class=\"target-word\">찰칵</strong> 하고 닫혔다."
+      }
+    ]
+  },
+  {
+    "id": 5278,
+    "origin": "whip",
+    "examples": [
+      {
+        "exam_en": "The trainer used a <strong class=\"target-word\">whip</strong> to guide the horse.",
+        "exam_ko": "조련사는 말을 이끌기 위해 <strong class=\"target-word\">채찍</strong>을 사용했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">whipped</strong> the cream until it was stiff.",
+        "exam_ko": "그녀는 크림이 단단해질 때까지 <strong class=\"target-word\">휘저었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5280,
+    "origin": "themselves",
+    "examples": [
+      {
+        "exam_en": "They built the house <strong class=\"target-word\">themselves</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">스스로</strong> 집을 지었다."
+      },
+      {
+        "exam_en": "The kids organized the event <strong class=\"target-word\">themselves</strong>.",
+        "exam_ko": "아이들이 <strong class=\"target-word\">직접</strong> 행사를 준비했다."
+      }
+    ]
+  },
+  {
+    "id": 5281,
+    "origin": "waiting",
+    "examples": [
+      {
+        "exam_en": "She has been <strong class=\"target-word\">waiting</strong> for an hour.",
+        "exam_ko": "그녀는 한 시간째 <strong class=\"target-word\">기다리고</strong> 있다."
+      },
+      {
+        "exam_en": "He sat in the <strong class=\"target-word\">waiting</strong> room before the interview.",
+        "exam_ko": "그는 면접 전에 <strong class=\"target-word\">대기</strong>실에 앉아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5282,
+    "origin": "thinking",
+    "examples": [
+      {
+        "exam_en": "She changed her <strong class=\"target-word\">thinking</strong> after reading the book.",
+        "exam_ko": "그녀는 책을 읽고 나서 <strong class=\"target-word\">사고방식</strong>이 바뀌었다."
+      },
+      {
+        "exam_en": "Critical <strong class=\"target-word\">thinking</strong> is essential in this field.",
+        "exam_ko": "비판적 <strong class=\"target-word\">사고</strong>는 이 분야에서 필수적이다."
+      }
+    ]
+  },
+  {
+    "id": 5283,
+    "origin": "arms",
+    "examples": [
+      {
+        "exam_en": "The soldiers took up <strong class=\"target-word\">arms</strong> to defend the city.",
+        "exam_ko": "군인들은 도시를 지키기 위해 <strong class=\"target-word\">무기</strong>를 들었다."
+      },
+      {
+        "exam_en": "She held the baby in her <strong class=\"target-word\">arms</strong>.",
+        "exam_ko": "그녀는 아기를 <strong class=\"target-word\">팔</strong>에 안았다."
+      }
+    ]
+  },
+  {
+    "id": 5285,
+    "origin": "source",
+    "examples": [
+      {
+        "exam_en": "Stress is a major <strong class=\"target-word\">source</strong> of illness.",
+        "exam_ko": "스트레스는 질병의 주요 <strong class=\"target-word\">원인</strong>이다."
+      },
+      {
+        "exam_en": "They traced the river back to its <strong class=\"target-word\">source</strong>.",
+        "exam_ko": "그들은 강을 거슬러 <strong class=\"target-word\">수원지</strong>까지 찾아갔다."
+      },
+      {
+        "exam_en": "Solar energy is a clean power <strong class=\"target-word\">source</strong>.",
+        "exam_ko": "태양 에너지는 깨끗한 에너지 <strong class=\"target-word\">원천</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5286,
+    "origin": "internet",
+    "examples": [
+      {
+        "exam_en": "He reported the <strong class=\"target-word\">internet</strong> crime to the police.",
+        "exam_ko": "그는 <strong class=\"target-word\">인터넷</strong> 범죄를 경찰에 신고했다."
+      },
+      {
+        "exam_en": "She uses the <strong class=\"target-word\">internet</strong> to study English.",
+        "exam_ko": "그녀는 영어 공부를 위해 <strong class=\"target-word\">인터넷</strong>을 이용한다."
+      }
+    ]
+  },
+  {
+    "id": 5289,
+    "origin": "domain",
+    "examples": [
+      {
+        "exam_en": "This issue falls within the <strong class=\"target-word\">domain</strong> of medicine.",
+        "exam_ko": "이 문제는 의학의 <strong class=\"target-word\">영역</strong>에 속한다."
+      },
+      {
+        "exam_en": "Cooking was once considered the <strong class=\"target-word\">domain</strong> of women.",
+        "exam_ko": "요리는 한때 여성의 <strong class=\"target-word\">영역</strong>으로 여겨졌다."
+      }
+    ]
+  },
+  {
+    "id": 5290,
+    "origin": "making",
+    "examples": [
+      {
+        "exam_en": "Good habits are the <strong class=\"target-word\">making</strong> of a successful person.",
+        "exam_ko": "좋은 습관은 성공한 사람의 <strong class=\"target-word\">성장 요인</strong>이다."
+      },
+      {
+        "exam_en": "Decision <strong class=\"target-word\">making</strong> gets harder under pressure.",
+        "exam_ko": "압박 속에서는 <strong class=\"target-word\">결정</strong>이 더 어려워진다."
+      }
+    ]
+  },
+  {
+    "id": 5291,
+    "origin": "copyright",
+    "examples": [
+      {
+        "exam_en": "The author holds the <strong class=\"target-word\">copyright</strong> to the book.",
+        "exam_ko": "저자는 그 책의 <strong class=\"target-word\">저작권</strong>을 보유하고 있다."
+      },
+      {
+        "exam_en": "Using the image without permission is a <strong class=\"target-word\">copyright</strong> violation.",
+        "exam_ko": "허락 없이 이미지를 사용하는 것은 <strong class=\"target-word\">저작권</strong> 침해이다."
+      }
+    ]
+  }
+]

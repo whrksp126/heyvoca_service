@@ -1,0 +1,262 @@
+[
+  {
+    "id": 16752,
+    "origin": "heated",
+    "examples": [
+      {
+        "exam_en": "a heated swimming pool",
+        "exam_ko": "온수 수영장."
+      },
+      {
+        "exam_en": "heated argument",
+        "exam_ko": "열띤 토론."
+      }
+    ]
+  },
+  {
+    "id": 16753,
+    "origin": "departed",
+    "examples": [
+      {
+        "exam_en": "departed glory",
+        "exam_ko": "과거의 영광."
+      }
+    ]
+  },
+  {
+    "id": 16754,
+    "origin": "pushed",
+    "examples": [
+      {
+        "exam_en": "be pushed for",
+        "exam_ko": "money"
+      },
+      {
+        "exam_en": "At that age, he will be pushed to find a new job.",
+        "exam_ko": "그 나이에 그가 새로운 직장을 찾기는 어려울 것이다."
+      }
+    ]
+  },
+  {
+    "id": 16757,
+    "origin": "slippy",
+    "examples": [
+      {
+        "exam_en": "Look slippy.",
+        "exam_ko": "빨리빨리 해라."
+      }
+    ]
+  },
+  {
+    "id": 16758,
+    "origin": "audio",
+    "examples": [
+      {
+        "exam_en": "an audio amplifier",
+        "exam_ko": "오디오 앰프."
+      },
+      {
+        "exam_en": "an audio store",
+        "exam_ko": "오디오 판매점."
+      }
+    ]
+  },
+  {
+    "id": 16762,
+    "origin": "traveled",
+    "examples": [
+      {
+        "exam_en": "a well-traveled old gentleman",
+        "exam_ko": "광범위하게 여행한 노신사."
+      },
+      {
+        "exam_en": "a well-traveled highway",
+        "exam_ko": "교통량이 많은 고속도로."
+      }
+    ]
+  },
+  {
+    "id": 16765,
+    "origin": "owing",
+    "examples": [
+      {
+        "exam_en": "return what is owing",
+        "exam_ko": "빚진 것을 갚다."
+      }
+    ]
+  },
+  {
+    "id": 16768,
+    "origin": "rented",
+    "examples": [
+      {
+        "exam_en": "a rented apartment",
+        "exam_ko": "임대 아파트."
+      }
+    ]
+  },
+  {
+    "id": 16769,
+    "origin": "lived",
+    "examples": [
+      {
+        "exam_en": "short-lived",
+        "exam_ko": "단명의."
+      },
+      {
+        "exam_en": "long-lived",
+        "exam_ko": "명이 긴, 오래가는"
+      }
+    ]
+  },
+  {
+    "id": 16772,
+    "origin": "starred",
+    "examples": [
+      {
+        "exam_en": "ill-starred",
+        "exam_ko": "운수가 나쁜."
+      }
+    ]
+  },
+  {
+    "id": 16774,
+    "origin": "sopping",
+    "examples": [
+      {
+        "exam_en": "be sopping wet",
+        "exam_ko": "흠뻑 젖다."
+      }
+    ]
+  },
+  {
+    "id": 16777,
+    "origin": "fearsome",
+    "examples": [
+      {
+        "exam_en": "a fearsome sight",
+        "exam_ko": "무서운 광경"
+      },
+      {
+        "exam_en": "a fearsome reputation as a sexist",
+        "exam_ko": "성차별주의자라는 악평."
+      }
+    ]
+  },
+  {
+    "id": 16779,
+    "origin": "solo",
+    "examples": [
+      {
+        "exam_en": "a piano solo",
+        "exam_ko": "피아노 독주"
+      },
+      {
+        "exam_en": "sing a solo",
+        "exam_ko": "독창하다."
+      }
+    ]
+  },
+  {
+    "id": 16783,
+    "origin": "packed",
+    "examples": [
+      {
+        "exam_en": "The hall was packed to the rafters with people of all ages.",
+        "exam_ko": "그 홀은 모든 연령의 사람들로 꽉 차 있었다."
+      },
+      {
+        "exam_en": "an action-packed movie",
+        "exam_ko": "액션이 많은 영화."
+      }
+    ]
+  },
+  {
+    "id": 16788,
+    "origin": "photographic",
+    "examples": [
+      {
+        "exam_en": "a photographic laboratory",
+        "exam_ko": "사진 현상실"
+      },
+      {
+        "exam_en": "photographic film",
+        "exam_ko": "사진용 필름."
+      }
+    ]
+  },
+  {
+    "id": 16789,
+    "origin": "thrifty",
+    "examples": [
+      {
+        "exam_en": "a thrifty household manager",
+        "exam_ko": "알뜰한 주부"
+      },
+      {
+        "exam_en": "be thrifty with one's money",
+        "exam_ko": "돈을 절약하다."
+      }
+    ]
+  },
+  {
+    "id": 16793,
+    "origin": "thickset",
+    "examples": [
+      {
+        "exam_en": "trees thickset with leaves",
+        "exam_ko": "잎이 무성한 나무."
+      },
+      {
+        "exam_en": "a short thickset man",
+        "exam_ko": "땅딸막한 사람."
+      }
+    ]
+  },
+  {
+    "id": 16796,
+    "origin": "latter",
+    "examples": [
+      {
+        "exam_en": "Of these two opinions, I prefer the latter to the former.",
+        "exam_ko": "이 두 가지 의견 중에서 전자보다 후자가 낫다"
+      },
+      {
+        "exam_en": "He and Peter drove down in the latter's car.",
+        "exam_ko": "그와 피터는 피터의 차를 타고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 16797,
+    "origin": "appointive",
+    "examples": [
+      {
+        "exam_en": "an appointive office",
+        "exam_ko": "임명직."
+      },
+      {
+        "exam_en": "the president's appointive powers",
+        "exam_ko": "대통령의 임명권."
+      }
+    ]
+  },
+  {
+    "id": 16799,
+    "origin": "upright",
+    "examples": [
+      {
+        "exam_en": "upright posture",
+        "exam_ko": "똑바른 자세"
+      },
+      {
+        "exam_en": "a tall upright young man",
+        "exam_ko": "키 크고 자세가 곧은 젊은이."
+      },
+      {
+        "exam_en": "The structural members of fabricated frame scaffolds such as the legs, poles, posts, frames and uprights shall be plumb and braced to prevent swaying and displacement.",
+        "exam_ko": "다리, 가둥, 포스트, 프레임, 수직기둥과 같은 조립된 프레임 비계의 구조비계는 수직이여아 하고 흔들림과 이동을 방지하기 위해 보강해야 한다."
+      }
+    ]
+  }
+]

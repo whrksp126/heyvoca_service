@@ -1,0 +1,258 @@
+[
+  {
+    "id": 9433,
+    "origin": "recognition",
+    "examples": [
+      {
+        "exam_en": "Her work gained worldwide <strong class=\"target-word\">recognition</strong>.",
+        "exam_ko": "그녀의 작품은 세계적인 <strong class=\"target-word\">인정</strong>을 받았다."
+      },
+      {
+        "exam_en": "He received <strong class=\"target-word\">recognition</strong> for his contribution.",
+        "exam_ko": "그는 공헌으로 <strong class=\"target-word\">인정</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 9434,
+    "origin": "facial",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">facial</strong> expression showed surprise.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">얼굴</strong> 표정은 놀라움을 나타냈다."
+      }
+    ]
+  },
+  {
+    "id": 9436,
+    "origin": "adhesion",
+    "examples": [
+      {
+        "exam_en": "He expressed his <strong class=\"target-word\">adhesion</strong> to the policy.",
+        "exam_ko": "그는 그 정책에 대한 <strong class=\"target-word\">지지</strong>를 표명했다."
+      }
+    ]
+  },
+  {
+    "id": 9438,
+    "origin": "infrared",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Infrared</strong> cameras detect heat from objects.",
+        "exam_ko": "<strong class=\"target-word\">적외선</strong> 카메라는 물체의 열을 감지한다."
+      },
+      {
+        "exam_en": "The telescope uses <strong class=\"target-word\">infrared</strong> astronomy techniques.",
+        "exam_ko": "그 망원경은 <strong class=\"target-word\">적외선</strong> 천문학 기술을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 9439,
+    "origin": "headquarter",
+    "examples": [
+      {
+        "exam_en": "The company is <strong class=\"target-word\">headquartered</strong> in New York.",
+        "exam_ko": "그 회사의 본사는 뉴욕에 <strong class=\"target-word\">위치해 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9440,
+    "origin": "cinch",
+    "examples": [
+      {
+        "exam_en": "He had a <strong class=\"target-word\">cinch</strong> on the situation.",
+        "exam_ko": "그는 상황을 <strong class=\"target-word\">꽉 잡고</strong> 있었다."
+      },
+      {
+        "exam_en": "Riding a bike is a <strong class=\"target-word\">cinch</strong> once you practice.",
+        "exam_ko": "연습하면 자전거 타기는 <strong class=\"target-word\">식은 죽 먹기</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 9441,
+    "origin": "decoy",
+    "examples": [
+      {
+        "exam_en": "The spy used a <strong class=\"target-word\">decoy</strong> to mislead the enemy.",
+        "exam_ko": "스파이는 적을 속이기 위해 <strong class=\"target-word\">미끼</strong>를 사용했다."
+      },
+      {
+        "exam_en": "The hunter used a rubber duck as a <strong class=\"target-word\">decoy</strong>.",
+        "exam_ko": "사냥꾼은 고무 오리를 <strong class=\"target-word\">유인용 미끼</strong>로 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 9442,
+    "origin": "facelift",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">facelift</strong> last year.",
+        "exam_ko": "그녀는 지난해 <strong class=\"target-word\">얼굴 성형 수술</strong>을 받았다."
+      },
+      {
+        "exam_en": "The old building got a complete <strong class=\"target-word\">facelift</strong>.",
+        "exam_ko": "오래된 건물이 완전한 <strong class=\"target-word\">개조</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 9444,
+    "origin": "presently",
+    "examples": [
+      {
+        "exam_en": "It will be 5:30 <strong class=\"target-word\">presently</strong>.",
+        "exam_ko": "이제 <strong class=\"target-word\">곧</strong> 5시 반입니다."
+      },
+      {
+        "exam_en": "The doctor will see you <strong class=\"target-word\">presently</strong>.",
+        "exam_ko": "의사가 <strong class=\"target-word\">곧</strong> 당신을 만날 것입니다."
+      }
+    ]
+  },
+  {
+    "id": 9446,
+    "origin": "currently",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">currently</strong> working on the problem.",
+        "exam_ko": "<strong class=\"target-word\">지금</strong> 그 문제를 다루고 있다."
+      },
+      {
+        "exam_en": "Dolphins are <strong class=\"target-word\">currently</strong> recognized as very intelligent.",
+        "exam_ko": "돌고래는 <strong class=\"target-word\">현재</strong> 매우 영리하다고 인정된다."
+      }
+    ]
+  },
+  {
+    "id": 9447,
+    "origin": "dedicated",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">dedicated</strong> teacher loved by students.",
+        "exam_ko": "그녀는 학생들에게 사랑받는 <strong class=\"target-word\">헌신적인</strong> 교사다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">dedicated</strong> to his job.",
+        "exam_ko": "그는 자기 일에 <strong class=\"target-word\">헌신적이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9450,
+    "origin": "unthinkable",
+    "examples": [
+      {
+        "exam_en": "Failure was <strong class=\"target-word\">unthinkable</strong> to him.",
+        "exam_ko": "그에게 실패란 <strong class=\"target-word\">상상도 할 수 없는</strong> 일이었다."
+      },
+      {
+        "exam_en": "Your proposal is <strong class=\"target-word\">unthinkable</strong>.",
+        "exam_ko": "당신의 제안은 <strong class=\"target-word\">말도 안 된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9453,
+    "origin": "incite",
+    "examples": [
+      {
+        "exam_en": "The speaker <strong class=\"target-word\">incited</strong> the workers to strike.",
+        "exam_ko": "연사는 근로자들을 <strong class=\"target-word\">자극하여</strong> 파업을 일으켰다."
+      },
+      {
+        "exam_en": "The news <strong class=\"target-word\">incited</strong> public curiosity.",
+        "exam_ko": "그 뉴스는 대중의 호기심을 <strong class=\"target-word\">자극했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9454,
+    "origin": "unclear",
+    "examples": [
+      {
+        "exam_en": "The terms of the contract were <strong class=\"target-word\">unclear</strong>.",
+        "exam_ko": "계약 조건이 <strong class=\"target-word\">불명확했다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">unclear</strong> about what to do next.",
+        "exam_ko": "그녀는 다음에 무엇을 해야 할지 <strong class=\"target-word\">몰랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9455,
+    "origin": "intention",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">intention</strong> was partly deliberate.",
+        "exam_ko": "그의 <strong class=\"target-word\">의도</strong>는 부분적으로 고의적이었다."
+      },
+      {
+        "exam_en": "He has no <strong class=\"target-word\">intention</strong> of coming.",
+        "exam_ko": "그는 올 <strong class=\"target-word\">의향</strong>이 없다."
+      }
+    ]
+  },
+  {
+    "id": 9456,
+    "origin": "scrounge",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">scrounged</strong> a cigarette from his friend.",
+        "exam_ko": "그는 친구에게서 담배 한 개비를 <strong class=\"target-word\">슬쩍 얻어갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9457,
+    "origin": "illegally",
+    "examples": [
+      {
+        "exam_en": "The pictures were <strong class=\"target-word\">illegally</strong> exported abroad.",
+        "exam_ko": "그 그림들은 <strong class=\"target-word\">불법으로</strong> 해외로 반출되었다."
+      }
+    ]
+  },
+  {
+    "id": 9458,
+    "origin": "airing",
+    "examples": [
+      {
+        "exam_en": "Your suit needs an <strong class=\"target-word\">airing</strong>.",
+        "exam_ko": "당신 양복을 <strong class=\"target-word\">바람에 내놓아야</strong> 하겠소."
+      },
+      {
+        "exam_en": "She took an <strong class=\"target-word\">airing</strong> in the park.",
+        "exam_ko": "그녀는 공원에서 <strong class=\"target-word\">산책</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 9459,
+    "origin": "extremist",
+    "examples": [
+      {
+        "exam_en": "The government warned against <strong class=\"target-word\">extremist</strong> groups.",
+        "exam_ko": "정부는 <strong class=\"target-word\">과격파</strong> 단체에 대해 경고했다."
+      }
+    ]
+  },
+  {
+    "id": 9462,
+    "origin": "operative",
+    "examples": [
+      {
+        "exam_en": "The new law became <strong class=\"target-word\">operative</strong> last month.",
+        "exam_ko": "새 법률은 지난달부터 <strong class=\"target-word\">효력을 발휘했다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">operative</strong> dose was carefully calculated.",
+        "exam_ko": "<strong class=\"target-word\">유효</strong> 용량이 세심하게 계산되었다."
+      }
+    ]
+  }
+]

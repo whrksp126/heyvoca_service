@@ -1,0 +1,262 @@
+[
+  {
+    "id": 13101,
+    "origin": "faze",
+    "examples": [
+      {
+        "exam_en": "His original failure did not faze him.",
+        "exam_ko": "그는 처음 실패에 꼼짝도 하지 않았다."
+      },
+      {
+        "exam_en": "His original failure did not faze him. ",
+        "exam_ko": "그는 처음 실패에 꼼짝도 하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 13102,
+    "origin": "ravishing",
+    "examples": [
+      {
+        "exam_en": "a ravishing smile",
+        "exam_ko": "매혹적인 미소."
+      }
+    ]
+  },
+  {
+    "id": 13103,
+    "origin": "scoot",
+    "examples": [
+      {
+        "exam_en": "scoot off to a party",
+        "exam_ko": "파티에 달려가다"
+      },
+      {
+        "exam_en": "The cat scooted up the tree.",
+        "exam_ko": "고양이가 나무에 뛰어올랐다"
+      }
+    ]
+  },
+  {
+    "id": 13107,
+    "origin": "exhaustion",
+    "examples": [
+      {
+        "exam_en": "the exhaustion of supplies",
+        "exam_ko": "식량[자원]의 고갈."
+      },
+      {
+        "exam_en": "in exhaustion",
+        "exam_ko": "기진맥진하여"
+      }
+    ]
+  },
+  {
+    "id": 13108,
+    "origin": "exponent",
+    "examples": [
+      {
+        "exam_en": "She is an exponent of vegetarianism.",
+        "exam_ko": "그녀는 채식주의의 대표적 인물이다."
+      }
+    ]
+  },
+  {
+    "id": 13109,
+    "origin": "revolutionize",
+    "examples": [
+      {
+        "exam_en": "The computer has revolutionized our business.",
+        "exam_ko": "컴퓨터는 우리 업무에 대변혁을 일으켰다."
+      },
+      {
+        "exam_en": "revolutionize a country",
+        "exam_ko": "국가에 혁명을 일으키다."
+      }
+    ]
+  },
+  {
+    "id": 13110,
+    "origin": "detached",
+    "examples": [
+      {
+        "exam_en": "a detached house",
+        "exam_ko": "독립 주택, 단독 주택"
+      },
+      {
+        "exam_en": "a detached palace",
+        "exam_ko": "별궁."
+      }
+    ]
+  },
+  {
+    "id": 13112,
+    "origin": "amused",
+    "examples": [
+      {
+        "exam_en": "amused spectators",
+        "exam_ko": "흥겨워 하는 구경꾼들"
+      },
+      {
+        "exam_en": "keep a baby amused",
+        "exam_ko": "아기를 어르다."
+      }
+    ]
+  },
+  {
+    "id": 13113,
+    "origin": "overnight",
+    "examples": [
+      {
+        "exam_en": "stay overnight",
+        "exam_ko": "하룻밤 묵다"
+      },
+      {
+        "exam_en": "He prepared the report overnight.",
+        "exam_ko": "그는 전날 밤에[밤새도록] 보고서를 준비했다"
+      }
+    ]
+  },
+  {
+    "id": 13117,
+    "origin": "parch",
+    "examples": [
+      {
+        "exam_en": "parching heat",
+        "exam_ko": "타는 듯한 더위"
+      },
+      {
+        "exam_en": "be parched with thirst",
+        "exam_ko": "목이 몹시 마르다."
+      },
+      {
+        "exam_en": "After the long-distance running, I was parched and in need of water.",
+        "exam_ko": "장거리 달리기 후에 나는 갈증을 느껴 물이 필요했다."
+      }
+    ]
+  },
+  {
+    "id": 13118,
+    "origin": "resurrect",
+    "examples": [
+      {
+        "exam_en": "The government resurrected an ancient law in order to punish the ringleaders.",
+        "exam_ko": "정부는 주모자들을 처벌하기 위하여 고대의 법률을 부활시켰다."
+      }
+    ]
+  },
+  {
+    "id": 13120,
+    "origin": "pitching",
+    "examples": [
+      {
+        "exam_en": "a pitching board",
+        "exam_ko": "(연습용) 투구판."
+      }
+    ]
+  },
+  {
+    "id": 13121,
+    "origin": "uncharted",
+    "examples": [
+      {
+        "exam_en": "an uncharted island",
+        "exam_ko": "미지의 섬"
+      },
+      {
+        "exam_en": "uncharted waters",
+        "exam_ko": "미지의 해역[영역]."
+      }
+    ]
+  },
+  {
+    "id": 13122,
+    "origin": "incorrigible",
+    "examples": [
+      {
+        "exam_en": "an incorrigible pessimist",
+        "exam_ko": "철저한 비관주의자."
+      },
+      {
+        "exam_en": "incorrigible bad habits",
+        "exam_ko": "뿌리 깊은 악습."
+      }
+    ]
+  },
+  {
+    "id": 13123,
+    "origin": "nauseate",
+    "examples": [
+      {
+        "exam_en": "His hypocrisy nauseates me.",
+        "exam_ko": "그의 위선적인 태도에는 혐오감을 느낀다."
+      }
+    ]
+  },
+  {
+    "id": 13124,
+    "origin": "dye",
+    "examples": [
+      {
+        "exam_en": "acid dyes",
+        "exam_ko": "산성[염기성] 염료."
+      },
+      {
+        "exam_en": "She dyed the dress green.",
+        "exam_ko": "그녀는 옷을 녹색으로 염색했다"
+      }
+    ]
+  },
+  {
+    "id": 13125,
+    "origin": "hood",
+    "examples": [
+      {
+        "exam_en": "a raincoat with a hood",
+        "exam_ko": "후드 달린 레인코트"
+      },
+      {
+        "exam_en": "wear a hood",
+        "exam_ko": "후드를 쓰고 있다."
+      }
+    ]
+  },
+  {
+    "id": 13129,
+    "origin": "sailboat",
+    "examples": [
+      {
+        "exam_en": "Our sailboat is small but moves fast on the lake.",
+        "exam_ko": "우리 돛단배는 작지만 호수에서 빠르게 달린다."
+      },
+      {
+        "exam_en": "The sailboat is docking at the wharf.",
+        "exam_ko": "돛단배가 부두에 정박하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 13130,
+    "origin": "rowboat",
+    "examples": [
+      {
+        "exam_en": "Do you have any rowboats for rent?",
+        "exam_ko": "보트 좀 빌릴 수 있을까요?"
+      },
+      {
+        "exam_en": "row a rowboat",
+        "exam_ko": "배의 노를 젓다."
+      }
+    ]
+  },
+  {
+    "id": 13131,
+    "origin": "sledding",
+    "examples": [
+      {
+        "exam_en": "hard sledding",
+        "exam_ko": "난항(難航)."
+      }
+    ]
+  }
+]

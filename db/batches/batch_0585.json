@@ -1,0 +1,246 @@
+[
+  {
+    "id": 19487,
+    "origin": "abortive",
+    "examples": [
+      {
+        "exam_en": "His efforts proved abortive.",
+        "exam_ko": "그의 노력은 허사였다."
+      }
+    ]
+  },
+  {
+    "id": 19488,
+    "origin": "patronage",
+    "examples": [
+      {
+        "exam_en": "give a store one's patronage",
+        "exam_ko": "어떤 가게를 단골로 삼다"
+      },
+      {
+        "exam_en": "have a large patronage",
+        "exam_ko": "단골 손님이 많다."
+      }
+    ]
+  },
+  {
+    "id": 19489,
+    "origin": "connivance",
+    "examples": [
+      {
+        "exam_en": "connivance at a person's wrongdoing",
+        "exam_ko": "남의 비행을 보고도 못 본 체함"
+      },
+      {
+        "exam_en": "with his connivance",
+        "exam_ko": "그의 묵인으로."
+      }
+    ]
+  },
+  {
+    "id": 19490,
+    "origin": "contravention",
+    "examples": [
+      {
+        "exam_en": "in contravention of the rule",
+        "exam_ko": "규칙을 위반하여."
+      }
+    ]
+  },
+  {
+    "id": 19492,
+    "origin": "volition",
+    "examples": [
+      {
+        "exam_en": "He left of his own volition.",
+        "exam_ko": "그는 자진하여 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 19493,
+    "origin": "obsequious",
+    "examples": [
+      {
+        "exam_en": "an obsequious smile",
+        "exam_ko": "아첨하는 웃음."
+      }
+    ]
+  },
+  {
+    "id": 19494,
+    "origin": "wheedle",
+    "examples": [
+      {
+        "exam_en": "He wheedled me into loaning him some money.",
+        "exam_ko": "그는 내 비위를 맞추어서 돈을 빌려갔다."
+      },
+      {
+        "exam_en": "I wheedled a new trumpet out of my parents.",
+        "exam_ko": "부모에게 졸라서 새 트럼펫을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 19501,
+    "origin": "corroboration",
+    "examples": [
+      {
+        "exam_en": "in corroboration of",
+        "exam_ko": "…을 확증하기 위하여[확인하여]."
+      }
+    ]
+  },
+  {
+    "id": 19503,
+    "origin": "bewail",
+    "examples": [
+      {
+        "exam_en": "bewail a person's death",
+        "exam_ko": "남의 죽음을 몹시 슬퍼하다."
+      }
+    ]
+  },
+  {
+    "id": 19505,
+    "origin": "motley",
+    "examples": [
+      {
+        "exam_en": "a motley crew",
+        "exam_ko": "수상쩍은 한 무리"
+      },
+      {
+        "exam_en": "a motley group of people",
+        "exam_ko": "갖가지 사람들로 된 그룹."
+      }
+    ]
+  },
+  {
+    "id": 19507,
+    "origin": "expediency",
+    "examples": [
+      {
+        "exam_en": "the expediency of a measure",
+        "exam_ko": "수단의 현명함."
+      },
+      {
+        "exam_en": "political expediency",
+        "exam_ko": "정치적인 방편주의."
+      }
+    ]
+  },
+  {
+    "id": 19512,
+    "origin": "prepossess",
+    "examples": [
+      {
+        "exam_en": "He was prepossessed with his social status.",
+        "exam_ko": "그는 자기의 사회적 지위에 집착해 있었다."
+      }
+    ]
+  },
+  {
+    "id": 19514,
+    "origin": "welter",
+    "examples": [
+      {
+        "exam_en": "welter in luxury",
+        "exam_ko": "사치에 빠지다."
+      }
+    ]
+  },
+  {
+    "id": 19515,
+    "origin": "vagrant",
+    "examples": [
+      {
+        "exam_en": "The country is full of beggars and vagrants.",
+        "exam_ko": "그 나라는 거지와 부랑자로 꽉 차 있다."
+      },
+      {
+        "exam_en": "arrested as a vagrant ",
+        "exam_ko": "부랑자로 체포된"
+      },
+      {
+        "exam_en": "arrested as a vagrant",
+        "exam_ko": "부랑자로 체포된"
+      }
+    ]
+  },
+  {
+    "id": 19516,
+    "origin": "gaiety",
+    "examples": [
+      {
+        "exam_en": "in all gaiety",
+        "exam_ko": "즐겁게 떠들어대며, 희희낙락하여."
+      },
+      {
+        "exam_en": "gaiety of dress",
+        "exam_ko": "화사한 복장."
+      }
+    ]
+  },
+  {
+    "id": 19517,
+    "origin": "impassive",
+    "examples": [
+      {
+        "exam_en": "an impassive face",
+        "exam_ko": "무표정한 얼굴."
+      }
+    ]
+  },
+  {
+    "id": 19518,
+    "origin": "panorama",
+    "examples": [
+      {
+        "exam_en": "a panorama of faces",
+        "exam_ko": "죽 늘어선 얼굴들"
+      },
+      {
+        "exam_en": "a fine panorama of the city",
+        "exam_ko": "그 시의 훌륭한 전경."
+      },
+      {
+        "exam_en": "From the top of the hill, we had a breathtaking panorama of the entire city.",
+        "exam_ko": "언덕 꼭대기에서 우리는 전체 도시의 숨막히는 풍경을 감상했다."
+      }
+    ]
+  },
+  {
+    "id": 19521,
+    "origin": "irate",
+    "examples": [
+      {
+        "exam_en": "irate citizens",
+        "exam_ko": "분노한 시민."
+      }
+    ]
+  },
+  {
+    "id": 19522,
+    "origin": "mirth",
+    "examples": [
+      {
+        "exam_en": "uncontrolled mirth",
+        "exam_ko": "억누를 수 없는 웃음."
+      }
+    ]
+  },
+  {
+    "id": 19523,
+    "origin": "hamstring",
+    "examples": [
+      {
+        "exam_en": "be hamstrung by regulations",
+        "exam_ko": "규제에 의해 무력화 되다[힘을 못쓰다]."
+      },
+      {
+        "exam_en": "The Starlink signal had been restricted and was not available past the front line, essentially hamstringing their efforts to retake territory from the Russians.",
+        "exam_ko": "(우크라이나에서 일론머스크의) 스타링크 신호는 사용이 제한되어 있었고, 없었기 때문에 사용할 수 지나서도 최전방을 근본적으로 방해했다. 그들의 노력을 탈환하려는 영토를 러시아로부터"
+      }
+    ]
+  }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "id": 18458,
+    "origin": "exertion",
+    "examples": [
+      {
+        "exam_en": "Walking up stairs requires exertion.",
+        "exam_ko": "계단을 오르는 것은 격심한 활동을 요한다."
+      },
+      {
+        "exam_en": "make exertions",
+        "exam_ko": "노력하다, 애쓰다."
+      }
+    ]
+  },
+  {
+    "id": 18461,
+    "origin": "infrequent",
+    "examples": [
+      {
+        "exam_en": "infrequent visits",
+        "exam_ko": "이따금 하는 방문."
+      },
+      {
+        "exam_en": "infrequent spelling errors",
+        "exam_ko": "어쩌다가 있는 철자 오류."
+      }
+    ]
+  },
+  {
+    "id": 18462,
+    "origin": "wearisome",
+    "examples": [
+      {
+        "exam_en": "a wearisome trip",
+        "exam_ko": "피곤한 여행."
+      },
+      {
+        "exam_en": "a wearisome meeting",
+        "exam_ko": "지루한 모임"
+      }
+    ]
+  },
+  {
+    "id": 18464,
+    "origin": "redeploy",
+    "examples": [
+      {
+        "exam_en": "This small school is being closed, but the teachers will be redeployed in other schools.",
+        "exam_ko": "이 작은 학교는 폐교되고 있는 중이지만 선생들은 다른 학교로 전근될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 18466,
+    "origin": "extremity",
+    "examples": [
+      {
+        "exam_en": "at the extremity of a penninsula",
+        "exam_ko": "반도의 맨 끝."
+      },
+      {
+        "exam_en": "lower extremities",
+        "exam_ko": "사람의 다리[팔]."
+      }
+    ]
+  },
+  {
+    "id": 18467,
+    "origin": "preponderance",
+    "examples": [
+      {
+        "exam_en": "a group of boys with a preponderance of blacks",
+        "exam_ko": "흑인수가 더 많은 한무리의 소년들"
+      },
+      {
+        "exam_en": "have an overwhelming preponderance over",
+        "exam_ko": "…에 대해서 압도적으로 우세하다."
+      }
+    ]
+  },
+  {
+    "id": 18469,
+    "origin": "antecedent",
+    "examples": [
+      {
+        "exam_en": "an antecedent clause",
+        "exam_ko": "선행절"
+      },
+      {
+        "exam_en": "an antecedent right",
+        "exam_ko": "선행권"
+      }
+    ]
+  },
+  {
+    "id": 18470,
+    "origin": "platter",
+    "examples": [
+      {
+        "exam_en": "There were five kinds of cheese on a wooden platter.",
+        "exam_ko": "대형 목제 접시에는 다섯 가지 종류의 치즈가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 18471,
+    "origin": "cherished",
+    "examples": [
+      {
+        "exam_en": "cherished friendship",
+        "exam_ko": "소중하게 간직한 우정."
+      }
+    ]
+  },
+  {
+    "id": 18473,
+    "origin": "millwork",
+    "examples": [
+      {
+        "exam_en": "millwork with custom construction / features",
+        "exam_ko": "특성/맞춤 제작을 위한 목공 작업"
+      }
+    ]
+  },
+  {
+    "id": 18474,
+    "origin": "expanse",
+    "examples": [
+      {
+        "exam_en": "the great expanse of water",
+        "exam_ko": "광활한 수면"
+      },
+      {
+        "exam_en": "blue expanse",
+        "exam_ko": "푸른 하늘, 창공"
+      }
+    ]
+  },
+  {
+    "id": 18477,
+    "origin": "scaffolding",
+    "examples": [
+      {
+        "exam_en": "Review and approve the design of temporay works, including shuttering and scaffolding for suitability and safety during construction.",
+        "exam_ko": "시공 중 적합성 및 안전성을 위해 거푸집 및 비계를 포함한 임시 작업의 설계 검토 및 승인하시오."
+      }
+    ]
+  },
+  {
+    "id": 18479,
+    "origin": "periodical",
+    "examples": [
+      {
+        "exam_en": "She subscribes to several periodicals.",
+        "exam_ko": "그녀는 여러 개의 정기 간행물을 구독한다."
+      }
+    ]
+  },
+  {
+    "id": 18481,
+    "origin": "uneasy",
+    "examples": [
+      {
+        "exam_en": "an uneasy bearing",
+        "exam_ko": "부자연스런 태도"
+      },
+      {
+        "exam_en": "stand in an uneasy attitude",
+        "exam_ko": "어색한 태도로 서다."
+      }
+    ]
+  },
+  {
+    "id": 18482,
+    "origin": "dogged",
+    "examples": [
+      {
+        "exam_en": "a dogged scholar",
+        "exam_ko": "좀처럼 자기의 학설을 굽히지 않는 학자"
+      },
+      {
+        "exam_en": "It's dogged as  does it.",
+        "exam_ko": "꾸준히 하면 성사된다."
+      }
+    ]
+  },
+  {
+    "id": 18483,
+    "origin": "affectionately",
+    "examples": [
+      {
+        "exam_en": "Yours affectionately,",
+        "exam_ko": "사랑하는 사람으로부터(※가족 등 친밀한 사이에서 쓰는 편지의 결구로 Lovingly yours,와 같은 정도의 친밀감을 나타냄. cf. SINCERELY)."
+      }
+    ]
+  },
+  {
+    "id": 18484,
+    "origin": "accede",
+    "examples": [
+      {
+        "exam_en": "accede to a proposal",
+        "exam_ko": "제의에 응하다."
+      },
+      {
+        "exam_en": "accede to the throne",
+        "exam_ko": "즉위[취임]하다."
+      },
+      {
+        "exam_en": "The senior command did not accede to these requests.",
+        "exam_ko": "상급 지휘관은 이러한 요청에 응하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 18485,
+    "origin": "scant",
+    "examples": [
+      {
+        "exam_en": "scant provisions",
+        "exam_ko": "빠듯한 식량"
+      },
+      {
+        "exam_en": "with scant attention to",
+        "exam_ko": "…에 충분한 주의를 기울이지 않고."
+      },
+      {
+        "exam_en": "There was scant information available about the mysterious creature in the ancient texts.",
+        "exam_ko": "고대 문헌에는 신비한 생물에 대한 정보가 거의 없었다."
+      }
+    ]
+  },
+  {
+    "id": 18486,
+    "origin": "hind",
+    "examples": [
+      {
+        "exam_en": "a dog's hind legs",
+        "exam_ko": "개의 뒷다리"
+      },
+      {
+        "exam_en": "the hind part of a horse's body",
+        "exam_ko": "말의 몸의 뒤쪽 부분."
+      }
+    ]
+  },
+  {
+    "id": 18488,
+    "origin": "obedient",
+    "examples": [
+      {
+        "exam_en": "an obedient dog",
+        "exam_ko": "충실한 개"
+      },
+      {
+        "exam_en": "obedient to the laws",
+        "exam_ko": "국법에 따라서"
+      },
+      {
+        "exam_en": "As an officer he was obedient and never disputed my orders or argued with them.",
+        "exam_ko": "장교로서 그는 순종적이었고 이의를 제기하거나 내 명령에 논쟁한 적이 없었다. 그들과"
+      }
+    ]
+  }
+]

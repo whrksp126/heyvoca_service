@@ -1,0 +1,254 @@
+[
+  {
+    "id": 17500,
+    "origin": "sup",
+    "examples": [
+      {
+        "exam_en": "sup out",
+        "exam_ko": "밖에서 저녁을 먹다"
+      },
+      {
+        "exam_en": "The workers sup on beans and bacon.",
+        "exam_ko": "노동자들은 콩과 베이컨을 저녁으로 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 17507,
+    "origin": "scram",
+    "examples": [
+      {
+        "exam_en": "Scram ,you aren't wanted here.",
+        "exam_ko": "꺼져, 필요 없어."
+      }
+    ]
+  },
+  {
+    "id": 17508,
+    "origin": "golly",
+    "examples": [
+      {
+        "exam_en": "By  golly!",
+        "exam_ko": "저런, 어머나."
+      }
+    ]
+  },
+  {
+    "id": 17510,
+    "origin": "abbey",
+    "examples": [
+      {
+        "exam_en": "The medieval abbey stood majestically atop the hill, its grand architecture evoking a sense of tranquility and spiritual reverence.",
+        "exam_ko": "중세 시대의 수도원은 언덕 꼭대기에 웅장하게 솟아 있었으며, 그 웅장한 건축은 평화와 영적 숭배의 감정을 일깨웠다."
+      }
+    ]
+  },
+  {
+    "id": 17512,
+    "origin": "sleepiness",
+    "examples": [
+      {
+        "exam_en": "shake off sleepiness",
+        "exam_ko": "졸음을 쫓아버리다."
+      }
+    ]
+  },
+  {
+    "id": 17514,
+    "origin": "discriminating",
+    "examples": [
+      {
+        "exam_en": "a discriminating test",
+        "exam_ko": "분석 시험."
+      },
+      {
+        "exam_en": "a discriminating feature",
+        "exam_ko": "두드러진 특징"
+      }
+    ]
+  },
+  {
+    "id": 17517,
+    "origin": "homely",
+    "examples": [
+      {
+        "exam_en": "a homely girl",
+        "exam_ko": "못생긴 계집 아이"
+      },
+      {
+        "exam_en": "\"What do you think of her?\" \"I think she is rather homely.\"",
+        "exam_ko": "「저 여자 어때?」 「예쁜 얼굴은 아니라고 생각해.」"
+      }
+    ]
+  },
+  {
+    "id": 17518,
+    "origin": "ticked",
+    "examples": [
+      {
+        "exam_en": "I'm so ticked.",
+        "exam_ko": "저는 너무 화가 나요."
+      }
+    ]
+  },
+  {
+    "id": 17519,
+    "origin": "lonesome",
+    "examples": [
+      {
+        "exam_en": "I am lonesome without my family.",
+        "exam_ko": "가족이 없어서 쓸쓸하다."
+      },
+      {
+        "exam_en": "I bet you told her how lonesome you were.",
+        "exam_ko": "나는 네가 그녀에게 얼마나 외로웠는지 말했다고 장담한다."
+      },
+      {
+        "exam_en": "I bet you told her how lonesome you were. ",
+        "exam_ko": "나는 네가 그녀에게 얼마나 외로웠는지 말했다고 장담한다."
+      }
+    ]
+  },
+  {
+    "id": 17521,
+    "origin": "numeral",
+    "examples": [
+      {
+        "exam_en": "cardinal numerals",
+        "exam_ko": "기(基)수사"
+      },
+      {
+        "exam_en": "ordinal numerals",
+        "exam_ko": "서(序)수사"
+      }
+    ]
+  },
+  {
+    "id": 17522,
+    "origin": "celebrated",
+    "examples": [
+      {
+        "exam_en": "the celebrated",
+        "exam_ko": "명사들"
+      },
+      {
+        "exam_en": "He is celebrated for his bravery.",
+        "exam_ko": "그는 용감한 사람으로 이름나 있다"
+      }
+    ]
+  },
+  {
+    "id": 17527,
+    "origin": "cremate",
+    "examples": [
+      {
+        "exam_en": "All men are cremated equal.",
+        "exam_ko": "죽으면 모두 평등하다(※All men are created equal. 을 비꼰 말)."
+      }
+    ]
+  },
+  {
+    "id": 17529,
+    "origin": "liquefy",
+    "examples": [
+      {
+        "exam_en": "liquefied natural gas",
+        "exam_ko": "액화 천연 가스(약자: LNG)"
+      },
+      {
+        "exam_en": "liquefied petroleum gas",
+        "exam_ko": "액화 석유 가스(약자: LPG)."
+      }
+    ]
+  },
+  {
+    "id": 17531,
+    "origin": "jobless",
+    "examples": [
+      {
+        "exam_en": "jobless insurance",
+        "exam_ko": "실업 보험"
+      },
+      {
+        "exam_en": "the jobless rate",
+        "exam_ko": "실업률."
+      }
+    ]
+  },
+  {
+    "id": 17532,
+    "origin": "bedrock",
+    "examples": [
+      {
+        "exam_en": "be at bedrock",
+        "exam_ko": "최저가 되어 있다, 바닥이다."
+      },
+      {
+        "exam_en": "the bedrock prices",
+        "exam_ko": "바닥 시세, 최저가."
+      }
+    ]
+  },
+  {
+    "id": 17536,
+    "origin": "patriot",
+    "examples": [
+      {
+        "exam_en": "an ardent patriot",
+        "exam_ko": "열렬한 애국자."
+      }
+    ]
+  },
+  {
+    "id": 17539,
+    "origin": "forbear",
+    "examples": [
+      {
+        "exam_en": "She could not forbear crying.",
+        "exam_ko": "그녀는 울지 않을 수 없었다"
+      },
+      {
+        "exam_en": "She forbore to make any commitments.",
+        "exam_ko": "그녀는 어떠한 약속도 하지 않으려 했다."
+      }
+    ]
+  },
+  {
+    "id": 17542,
+    "origin": "baseless",
+    "examples": [
+      {
+        "exam_en": "a baseless rumor",
+        "exam_ko": "뜬소문."
+      },
+      {
+        "exam_en": "And like the baseless fabric of this vision,",
+        "exam_ko": "그리고 이 통찰의 근거없는 구조처럼,"
+      }
+    ]
+  },
+  {
+    "id": 17543,
+    "origin": "glimmer",
+    "examples": [
+      {
+        "exam_en": "a glimmer of understanding",
+        "exam_ko": "어렴풋한 이해."
+      },
+      {
+        "exam_en": "not a glimmer",
+        "exam_ko": "조금도, 전혀."
+      }
+    ]
+  },
+  {
+    "id": 17544,
+    "origin": "moonshine",
+    "examples": [
+      {
+        "exam_en": "Nothing is stronger than country moonshine.",
+        "exam_ko": "시골의 밀주만큼 독한 술은 없다."
+      }
+    ]
+  }
+]

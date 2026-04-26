@@ -1,0 +1,226 @@
+[
+  {
+    "id": 39645,
+    "origin": "retributive",
+    "examples": [
+      {
+        "exam_en": "retributive justice",
+        "exam_ko": "인과응보."
+      }
+    ]
+  },
+  {
+    "id": 39655,
+    "origin": "professed",
+    "examples": [
+      {
+        "exam_en": "a professed communist",
+        "exam_ko": "공공연히 공산주의자라고 자칭하는 사람."
+      },
+      {
+        "exam_en": "a professed cook",
+        "exam_ko": "전문 요리사."
+      }
+    ]
+  },
+  {
+    "id": 39664,
+    "origin": "interrogatory",
+    "examples": [
+      {
+        "exam_en": "in an interrogatory manner",
+        "exam_ko": "의심스럽다는 태도로."
+      }
+    ]
+  },
+  {
+    "id": 39670,
+    "origin": "inconsequent",
+    "examples": [
+      {
+        "exam_en": "an inconsequent conclusion.",
+        "exam_ko": "비논리적인 결론."
+      },
+      {
+        "exam_en": "an inconsequent remark",
+        "exam_ko": "목적에서 벗어난 발언."
+      }
+    ]
+  },
+  {
+    "id": 39692,
+    "origin": "expiatory",
+    "examples": [
+      {
+        "exam_en": "be expiatory of one's offense",
+        "exam_ko": "속죄가 되다."
+      }
+    ]
+  },
+  {
+    "id": 39707,
+    "origin": "eradicator",
+    "examples": [
+      {
+        "exam_en": "an ink eradicator",
+        "exam_ko": "잉크 지우개."
+      }
+    ]
+  },
+  {
+    "id": 39725,
+    "origin": "delectation",
+    "examples": [
+      {
+        "exam_en": "for one's delectation",
+        "exam_ko": "재미로."
+      }
+    ]
+  },
+  {
+    "id": 39739,
+    "origin": "condolatory",
+    "examples": [
+      {
+        "exam_en": "a condolatory address",
+        "exam_ko": "조사"
+      },
+      {
+        "exam_en": "a condolatory letter",
+        "exam_ko": "문상 편지."
+      }
+    ]
+  },
+  {
+    "id": 39750,
+    "origin": "ascribable",
+    "examples": [
+      {
+        "exam_en": "an accident ascribable to carelessness",
+        "exam_ko": "부주의에 의한 것으로 생각되는 사고."
+      }
+    ]
+  },
+  {
+    "id": 39754,
+    "origin": "accordant",
+    "examples": [
+      {
+        "exam_en": "be accordant with one's principles",
+        "exam_ko": "자기의 신조와 합치[부합]하다"
+      },
+      {
+        "exam_en": "be accordant to reason",
+        "exam_ko": "이치에 합당하다."
+      }
+    ]
+  },
+  {
+    "id": 39775,
+    "origin": "caries",
+    "examples": [
+      {
+        "exam_en": "Caries is preventable.",
+        "exam_ko": "카리에스는 예방할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 39793,
+    "origin": "buccal",
+    "examples": [
+      {
+        "exam_en": "the buccal cavity",
+        "exam_ko": "구강(口腔)."
+      }
+    ]
+  },
+  {
+    "id": 39803,
+    "origin": "unenviable",
+    "examples": [
+      {
+        "exam_en": "an unenviable standard of living",
+        "exam_ko": "부러워할 것이 못 되는 생활 수준"
+      },
+      {
+        "exam_en": "an unenviable task",
+        "exam_ko": "난처한 과업."
+      }
+    ]
+  },
+  {
+    "id": 39805,
+    "origin": "punishable",
+    "examples": [
+      {
+        "exam_en": "Murder is punishable by death.",
+        "exam_ko": "살인은 사형에 처해야 마땅하다."
+      }
+    ]
+  },
+  {
+    "id": 39834,
+    "origin": "crosscurrent",
+    "examples": [
+      {
+        "exam_en": "the crosscurrents of public opinion",
+        "exam_ko": "여론이 가지각색임."
+      }
+    ]
+  },
+  {
+    "id": 39843,
+    "origin": "otitis",
+    "examples": [
+      {
+        "exam_en": "otitis externa",
+        "exam_ko": "외이염"
+      },
+      {
+        "exam_en": "otitis interna",
+        "exam_ko": "내이염."
+      }
+    ]
+  },
+  {
+    "id": 39859,
+    "origin": "perjured",
+    "examples": [
+      {
+        "exam_en": "perjured testimony",
+        "exam_ko": "위증 진술."
+      }
+    ]
+  },
+  {
+    "id": 39890,
+    "origin": "sifting",
+    "examples": [
+      {
+        "exam_en": "siftings of snow on a road",
+        "exam_ko": "노상에 흩날리는 눈."
+      }
+    ]
+  },
+  {
+    "id": 39892,
+    "origin": "pretexting",
+    "examples": [
+      {
+        "exam_en": "Take appropriate measures to avoid pretexting.",
+        "exam_ko": "프리텍스팅을 피할 수 있도록 적절한 조치를 취하라."
+      }
+    ]
+  },
+  {
+    "id": 39898,
+    "origin": "mettled",
+    "examples": [
+      {
+        "exam_en": "high mettled",
+        "exam_ko": "원기 왕성한."
+      }
+    ]
+  }
+]

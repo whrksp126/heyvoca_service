@@ -1,0 +1,254 @@
+[
+  {
+    "id": 12261,
+    "origin": "winding",
+    "examples": [
+      {
+        "exam_en": "The road takes a <strong class=\"target-word\">winding</strong> path through the hills.",
+        "exam_ko": "그 도로는 언덕을 따라 <strong class=\"target-word\">구불구불한</strong> 길을 간다."
+      },
+      {
+        "exam_en": "They followed a <strong class=\"target-word\">winding</strong> river through the forest.",
+        "exam_ko": "그들은 숲속의 <strong class=\"target-word\">구불구불한</strong> 강을 따라 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 12265,
+    "origin": "conversion",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">conversion</strong> of water into steam requires heat.",
+        "exam_ko": "물의 수증기로의 <strong class=\"target-word\">전환</strong>에는 열이 필요하다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">conversion</strong> of won into dollars took some time.",
+        "exam_ko": "원화의 달러로의 <strong class=\"target-word\">환전</strong>에는 시간이 걸렸다."
+      }
+    ]
+  },
+  {
+    "id": 12269,
+    "origin": "tier",
+    "examples": [
+      {
+        "exam_en": "The classroom was arranged in <strong class=\"target-word\">tiers</strong>.",
+        "exam_ko": "교실은 <strong class=\"target-word\">계단식</strong>으로 배치되어 있었다."
+      },
+      {
+        "exam_en": "The wedding cake had five <strong class=\"target-word\">tiers</strong>.",
+        "exam_ko": "결혼 케이크는 다섯 <strong class=\"target-word\">층</strong>으로 되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12270,
+    "origin": "ratio",
+    "examples": [
+      {
+        "exam_en": "The mixture has a <strong class=\"target-word\">ratio</strong> of 7 to 3.",
+        "exam_ko": "혼합물의 <strong class=\"target-word\">비율</strong>은 7 대 3이다."
+      },
+      {
+        "exam_en": "We calculated the <strong class=\"target-word\">ratio</strong> of students to teachers.",
+        "exam_ko": "우리는 교사 대비 학생 <strong class=\"target-word\">비율</strong>을 계산했다."
+      }
+    ]
+  },
+  {
+    "id": 12271,
+    "origin": "emit",
+    "examples": [
+      {
+        "exam_en": "Cars <strong class=\"target-word\">emit</strong> noxious fumes.",
+        "exam_ko": "자동차는 유독 가스를 <strong class=\"target-word\">내뿜는다</strong>."
+      },
+      {
+        "exam_en": "John <strong class=\"target-word\">emitted</strong> a few curses.",
+        "exam_ko": "존은 몇 마디 악담을 <strong class=\"target-word\">내뱉었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12275,
+    "origin": "atom",
+    "examples": [
+      {
+        "exam_en": "The vase was smashed to <strong class=\"target-word\">atoms</strong>.",
+        "exam_ko": "꽃병이 <strong class=\"target-word\">산산조각</strong>으로 부서졌다."
+      },
+      {
+        "exam_en": "You haven't changed an <strong class=\"target-word\">atom</strong>.",
+        "exam_ko": "<strong class=\"target-word\">조금도</strong> 변하지 않았구나."
+      }
+    ]
+  },
+  {
+    "id": 12277,
+    "origin": "valuation",
+    "examples": [
+      {
+        "exam_en": "She placed a high <strong class=\"target-word\">valuation</strong> on honesty.",
+        "exam_ko": "그녀는 정직함을 높이 <strong class=\"target-word\">평가했다</strong>."
+      },
+      {
+        "exam_en": "The final <strong class=\"target-word\">valuation</strong> of the property was surprising.",
+        "exam_ko": "그 부동산의 최종 <strong class=\"target-word\">평가액</strong>은 놀라웠다."
+      }
+    ]
+  },
+  {
+    "id": 12279,
+    "origin": "conformance",
+    "examples": [
+      {
+        "exam_en": "The equipment is not in <strong class=\"target-word\">conformance</strong> with safety standards.",
+        "exam_ko": "그 장비는 안전 기준에 <strong class=\"target-word\">부합하지</strong> 않는다."
+      }
+    ]
+  },
+  {
+    "id": 12281,
+    "origin": "permeability",
+    "examples": [
+      {
+        "exam_en": "The soil has high water <strong class=\"target-word\">permeability</strong>.",
+        "exam_ko": "그 토양은 물 <strong class=\"target-word\">투과성</strong>이 높다."
+      }
+    ]
+  },
+  {
+    "id": 12284,
+    "origin": "rotation",
+    "examples": [
+      {
+        "exam_en": "The seasons change through <strong class=\"target-word\">rotation</strong>.",
+        "exam_ko": "계절은 <strong class=\"target-word\">순환</strong>을 통해 바뀐다."
+      },
+      {
+        "exam_en": "Every star is in <strong class=\"target-word\">rotation</strong>.",
+        "exam_ko": "별은 모두 <strong class=\"target-word\">자전</strong>하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 12285,
+    "origin": "optimum",
+    "examples": [
+      {
+        "exam_en": "Doctors advised an <strong class=\"target-word\">optimum</strong> weight for her height.",
+        "exam_ko": "의사들은 그녀의 키에 맞는 <strong class=\"target-word\">최적</strong> 체중을 권고했다."
+      },
+      {
+        "exam_en": "Plants grow best under <strong class=\"target-word\">optimum</strong> conditions.",
+        "exam_ko": "식물은 <strong class=\"target-word\">최적</strong> 조건에서 가장 잘 자란다."
+      }
+    ]
+  },
+  {
+    "id": 12286,
+    "origin": "gambler",
+    "examples": [
+      {
+        "exam_en": "He is a compulsive <strong class=\"target-word\">gambler</strong> who lost everything.",
+        "exam_ko": "그는 모든 것을 잃은 충동적인 <strong class=\"target-word\">도박꾼</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12288,
+    "origin": "pneumatic",
+    "examples": [
+      {
+        "exam_en": "The bus uses a <strong class=\"target-word\">pneumatic</strong> brake system.",
+        "exam_ko": "그 버스는 <strong class=\"target-word\">공기압</strong> 제동 시스템을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 12289,
+    "origin": "fusible",
+    "examples": [
+      {
+        "exam_en": "The device contains a <strong class=\"target-word\">fusible</strong> safety plug.",
+        "exam_ko": "그 장치에는 <strong class=\"target-word\">가용성</strong> 안전 플러그가 들어 있다."
+      }
+    ]
+  },
+  {
+    "id": 12291,
+    "origin": "outlet",
+    "examples": [
+      {
+        "exam_en": "The drain serves as an <strong class=\"target-word\">outlet</strong> for excess water.",
+        "exam_ko": "배수구는 남은 물의 <strong class=\"target-word\">배출구</strong> 역할을 한다."
+      },
+      {
+        "exam_en": "Exercise is a healthy <strong class=\"target-word\">outlet</strong> for frustration.",
+        "exam_ko": "운동은 좌절감을 위한 건강한 <strong class=\"target-word\">배출구</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12297,
+    "origin": "whitish",
+    "examples": [
+      {
+        "exam_en": "She had <strong class=\"target-word\">whitish</strong> blue eyes.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">희끄무레한</strong> 파란 눈을 가지고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12300,
+    "origin": "tolerable",
+    "examples": [
+      {
+        "exam_en": "The summer heat in this area is <strong class=\"target-word\">tolerable</strong>.",
+        "exam_ko": "이 지역의 여름 더위는 <strong class=\"target-word\">참을 만하다</strong>."
+      },
+      {
+        "exam_en": "His English was <strong class=\"target-word\">tolerable</strong> but not impressive.",
+        "exam_ko": "그의 영어는 <strong class=\"target-word\">그럭저럭 통하는</strong> 수준이었다."
+      }
+    ]
+  },
+  {
+    "id": 12301,
+    "origin": "practicable",
+    "examples": [
+      {
+        "exam_en": "The plan is <strong class=\"target-word\">practicable</strong> within our budget.",
+        "exam_ko": "그 계획은 우리 예산 내에서 <strong class=\"target-word\">실행 가능하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12302,
+    "origin": "reasonably",
+    "examples": [
+      {
+        "exam_en": "The restaurant is <strong class=\"target-word\">reasonably</strong> priced.",
+        "exam_ko": "그 식당은 가격이 <strong class=\"target-word\">적당하다</strong>."
+      },
+      {
+        "exam_en": "He worked <strong class=\"target-word\">reasonably</strong> hard.",
+        "exam_ko": "그는 꽤 <strong class=\"target-word\">열심히</strong> 일했다."
+      }
+    ]
+  },
+  {
+    "id": 12303,
+    "origin": "cartridge",
+    "examples": [
+      {
+        "exam_en": "The soldier loaded a live <strong class=\"target-word\">cartridge</strong> into the rifle.",
+        "exam_ko": "군인은 소총에 실탄 <strong class=\"target-word\">카트리지</strong>를 장전했다."
+      },
+      {
+        "exam_en": "He fired a blank <strong class=\"target-word\">cartridge</strong> during the ceremony.",
+        "exam_ko": "그는 행사 중에 공포 <strong class=\"target-word\">탄약</strong>을 발사했다."
+      }
+    ]
+  }
+]

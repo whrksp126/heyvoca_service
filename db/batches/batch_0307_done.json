@@ -1,0 +1,250 @@
+[
+  {
+    "id": 7718,
+    "origin": "frisk",
+    "examples": [
+      {
+        "exam_en": "The new lambs are <strong class=\"target-word\">frisking</strong> in the fields.",
+        "exam_ko": "새끼 양들이 초원에서 <strong class=\"target-word\">뛰놀고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 7719,
+    "origin": "unrequited",
+    "examples": [
+      {
+        "exam_en": "He suffers from <strong class=\"target-word\">unrequited</strong> love for her.",
+        "exam_ko": "그는 그녀에 대한 <strong class=\"target-word\">짝사랑</strong>으로 힘들어한다."
+      }
+    ]
+  },
+  {
+    "id": 7720,
+    "origin": "staunch",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">staunch</strong> ally in every crisis.",
+        "exam_ko": "그녀는 모든 위기에서 <strong class=\"target-word\">든든한</strong> 동맹이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">staunch</strong> wall withstood the heavy storm.",
+        "exam_ko": "그 <strong class=\"target-word\">견고한</strong> 벽은 강한 폭풍을 견뎌냈다."
+      }
+    ]
+  },
+  {
+    "id": 7721,
+    "origin": "distress",
+    "examples": [
+      {
+        "exam_en": "The child showed clear signs of <strong class=\"target-word\">distress</strong>.",
+        "exam_ko": "그 아이는 명확한 <strong class=\"target-word\">고통</strong>의 표정을 보였다."
+      },
+      {
+        "exam_en": "She suffered deep mental <strong class=\"target-word\">distress</strong> after the loss.",
+        "exam_ko": "그녀는 상실 후 깊은 정신적 <strong class=\"target-word\">고통</strong>을 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 7724,
+    "origin": "rape",
+    "examples": [
+      {
+        "exam_en": "He was convicted of <strong class=\"target-word\">rape</strong> and sentenced to prison.",
+        "exam_ko": "그는 <strong class=\"target-word\">강간</strong> 혐의로 유죄 판결을 받고 수감됐다."
+      },
+      {
+        "exam_en": "They protested the corporate <strong class=\"target-word\">rape</strong> of the environment.",
+        "exam_ko": "그들은 환경의 기업적 <strong class=\"target-word\">파괴</strong>에 항의했다."
+      }
+    ]
+  },
+  {
+    "id": 7726,
+    "origin": "stow",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">stowed</strong> his luggage in the overhead compartment.",
+        "exam_ko": "그는 짐을 머리 위 칸에 <strong class=\"target-word\">집어넣었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">stowed</strong> her clothes neatly into the box.",
+        "exam_ko": "그녀는 옷을 상자에 차곡차곡 <strong class=\"target-word\">넣었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7727,
+    "origin": "offhand",
+    "examples": [
+      {
+        "exam_en": "The interpreter translated the speech <strong class=\"target-word\">offhand</strong>.",
+        "exam_ko": "통역사는 연설을 <strong class=\"target-word\">즉석에서</strong> 번역했다."
+      },
+      {
+        "exam_en": "I can't decide <strong class=\"target-word\">offhand</strong> which car to buy.",
+        "exam_ko": "어느 차를 살지 <strong class=\"target-word\">즉석에서</strong> 정할 수는 없다."
+      }
+    ]
+  },
+  {
+    "id": 7728,
+    "origin": "infatuated",
+    "examples": [
+      {
+        "exam_en": "He is completely <strong class=\"target-word\">infatuated</strong> with that girl.",
+        "exam_ko": "그는 저 여자에게 완전히 <strong class=\"target-word\">홀딱 반해</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 7732,
+    "origin": "jiffy",
+    "examples": [
+      {
+        "exam_en": "I'll have it done in a <strong class=\"target-word\">jiffy</strong>.",
+        "exam_ko": "<strong class=\"target-word\">금방</strong> 해드리겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 7733,
+    "origin": "revelation",
+    "examples": [
+      {
+        "exam_en": "Her confession was a total <strong class=\"target-word\">revelation</strong> to everyone.",
+        "exam_ko": "그녀의 고백은 모두에게 완전한 <strong class=\"target-word\">놀라운 사실</strong>이었다."
+      },
+      {
+        "exam_en": "The Book of <strong class=\"target-word\">Revelation</strong> is the last book of the Bible.",
+        "exam_ko": "<strong class=\"target-word\">요한계시록</strong>은 성경의 마지막 책이다."
+      }
+    ]
+  },
+  {
+    "id": 7735,
+    "origin": "alimony",
+    "examples": [
+      {
+        "exam_en": "She receives monthly <strong class=\"target-word\">alimony</strong> after the divorce.",
+        "exam_ko": "그녀는 이혼 후 매달 <strong class=\"target-word\">위자료</strong>를 받는다."
+      }
+    ]
+  },
+  {
+    "id": 7736,
+    "origin": "referral",
+    "examples": [
+      {
+        "exam_en": "The doctor made a <strong class=\"target-word\">referral</strong> to a specialist.",
+        "exam_ko": "의사는 전문의에게 <strong class=\"target-word\">진료 의뢰</strong>를 했다."
+      },
+      {
+        "exam_en": "Most patients came through <strong class=\"target-word\">referrals</strong> from other physicians.",
+        "exam_ko": "대부분의 환자는 다른 의사의 <strong class=\"target-word\">소개</strong>를 통해 왔다."
+      }
+    ]
+  },
+  {
+    "id": 7738,
+    "origin": "pool",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">pool</strong> of blood on the floor.",
+        "exam_ko": "바닥에 <strong class=\"target-word\">웅덩이</strong>처럼 피가 고여 있었다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">pool</strong> of sunlight fell through the window.",
+        "exam_ko": "창문으로 <strong class=\"target-word\">한 줄기</strong> 햇빛이 쏟아졌다."
+      }
+    ]
+  },
+  {
+    "id": 7739,
+    "origin": "whammy",
+    "examples": [
+      {
+        "exam_en": "Losing the job and the car was a double <strong class=\"target-word\">whammy</strong>.",
+        "exam_ko": "직장과 차를 모두 잃은 것은 <strong class=\"target-word\">이중 타격</strong>이었다."
+      },
+      {
+        "exam_en": "He put a <strong class=\"target-word\">whammy</strong> on his rival before the match.",
+        "exam_ko": "그는 경기 전 상대에게 <strong class=\"target-word\">저주</strong>를 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 7742,
+    "origin": "streamer",
+    "examples": [
+      {
+        "exam_en": "Long <strong class=\"target-word\">streamers</strong> of smoke trailed behind the plane.",
+        "exam_ko": "비행기 뒤로 긴 <strong class=\"target-word\">연기의 흐름</strong>이 이어졌다."
+      }
+    ]
+  },
+  {
+    "id": 7744,
+    "origin": "tempting",
+    "examples": [
+      {
+        "exam_en": "She received a very <strong class=\"target-word\">tempting</strong> job offer.",
+        "exam_ko": "그녀는 매우 <strong class=\"target-word\">솔깃한</strong> 일자리 제안을 받았다."
+      },
+      {
+        "exam_en": "This roast beef looks very <strong class=\"target-word\">tempting</strong>.",
+        "exam_ko": "이 불고기는 아주 <strong class=\"target-word\">먹음직스러워</strong> 보인다."
+      }
+    ]
+  },
+  {
+    "id": 7745,
+    "origin": "exult",
+    "examples": [
+      {
+        "exam_en": "The fans <strong class=\"target-word\">exulted</strong> at their team's victory.",
+        "exam_ko": "팬들은 팀의 승리에 <strong class=\"target-word\">기뻐 날뛰었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">exulted</strong> over her unexpected success.",
+        "exam_ko": "그녀는 예상치 못한 성공에 <strong class=\"target-word\">환호했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7746,
+    "origin": "jitter",
+    "examples": [
+      {
+        "exam_en": "He had the <strong class=\"target-word\">jitters</strong> before the big presentation.",
+        "exam_ko": "그는 중요한 발표 전에 <strong class=\"target-word\">초조함</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 7748,
+    "origin": "tummy",
+    "examples": [
+      {
+        "exam_en": "The baby's <strong class=\"target-word\">tummy</strong> button is so cute.",
+        "exam_ko": "아기의 <strong class=\"target-word\">배</strong>꼽이 너무 귀엽다."
+      },
+      {
+        "exam_en": "She got an upset <strong class=\"target-word\">tummy</strong> after eating too much.",
+        "exam_ko": "그녀는 너무 많이 먹고 <strong class=\"target-word\">배탈</strong>이 났다."
+      }
+    ]
+  },
+  {
+    "id": 7751,
+    "origin": "outing",
+    "examples": [
+      {
+        "exam_en": "The family went on an <strong class=\"target-word\">outing</strong> to the beach.",
+        "exam_ko": "가족이 바닷가로 <strong class=\"target-word\">나들이</strong>를 갔다."
+      }
+    ]
+  }
+]

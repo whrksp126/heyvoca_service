@@ -1,0 +1,274 @@
+[
+  {
+    "id": 5943,
+    "origin": "brackish",
+    "examples": [
+      {
+        "exam_en": "Mangrove trees grow in <strong class=\"target-word\">brackish</strong> water near the coast.",
+        "exam_ko": "맹그로브 나무는 해안 근처의 <strong class=\"target-word\">염기 섞인</strong> 물에서 자란다."
+      }
+    ]
+  },
+  {
+    "id": 5945,
+    "origin": "splendor",
+    "examples": [
+      {
+        "exam_en": "The palace was famous for its <strong class=\"target-word\">splendor</strong>.",
+        "exam_ko": "그 궁전은 그 <strong class=\"target-word\">화려함</strong>으로 유명했다."
+      },
+      {
+        "exam_en": "They lived in great <strong class=\"target-word\">splendor</strong> in the city.",
+        "exam_ko": "그들은 도시에서 대단한 <strong class=\"target-word\">호사</strong>를 누리며 살았다."
+      }
+    ]
+  },
+  {
+    "id": 5946,
+    "origin": "ridicule",
+    "examples": [
+      {
+        "exam_en": "He became an object of <strong class=\"target-word\">ridicule</strong> at school.",
+        "exam_ko": "그는 학교에서 <strong class=\"target-word\">조롱</strong>의 대상이 되었다."
+      },
+      {
+        "exam_en": "She faced <strong class=\"target-word\">ridicule</strong> for her unusual ideas.",
+        "exam_ko": "그녀는 독특한 생각으로 <strong class=\"target-word\">비웃음</strong>을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 5947,
+    "origin": "plausible",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">plausible</strong> excuse for being late.",
+        "exam_ko": "그는 지각에 대해 <strong class=\"target-word\">그럴듯한</strong> 변명을 했다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">plausible</strong> argument in the debate.",
+        "exam_ko": "그녀는 토론에서 <strong class=\"target-word\">타당해 보이는</strong> 주장을 펼쳤다."
+      },
+      {
+        "exam_en": "The witness provided a <strong class=\"target-word\">plausible</strong> explanation for the incident.",
+        "exam_ko": "목격자는 사건에 대해 <strong class=\"target-word\">타당한</strong> 설명을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 5948,
+    "origin": "patronize",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">patronize</strong> our local stores.",
+        "exam_ko": "우리는 우리 지역 상점을 <strong class=\"target-word\">애용한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">patronized</strong> several philanthropic causes.",
+        "exam_ko": "그는 여러 자선 사업을 <strong class=\"target-word\">후원했다</strong>."
+      },
+      {
+        "exam_en": "When your colleague <strong class=\"target-word\">patronizes</strong> you, it is hard to be patient.",
+        "exam_ko": "동료가 당신을 <strong class=\"target-word\">깔볼 때</strong> 참기가 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 5949,
+    "origin": "modesty",
+    "examples": [
+      {
+        "exam_en": "She showed natural <strong class=\"target-word\">modesty</strong> about her achievements.",
+        "exam_ko": "그녀는 자신의 성취에 대해 타고난 <strong class=\"target-word\">겸손함</strong>을 보였다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">modesty</strong> was false and everyone noticed.",
+        "exam_ko": "그의 <strong class=\"target-word\">겸손한 척</strong>은 거짓이었고 모두가 알아챘다."
+      }
+    ]
+  },
+  {
+    "id": 5950,
+    "origin": "oblige",
+    "examples": [
+      {
+        "exam_en": "A small income <strong class=\"target-word\">obliges</strong> us to be thrifty.",
+        "exam_ko": "적은 수입은 우리를 절약하도록 <strong class=\"target-word\">강제한다</strong>."
+      },
+      {
+        "exam_en": "We are <strong class=\"target-word\">obliged</strong> to pay taxes.",
+        "exam_ko": "우리는 납세의 <strong class=\"target-word\">의무가 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5954,
+    "origin": "gruel",
+    "examples": [
+      {
+        "exam_en": "The prisoner survived on thin <strong class=\"target-word\">gruel</strong> every day.",
+        "exam_ko": "죄수는 매일 묽은 <strong class=\"target-word\">죽</strong>으로 연명했다."
+      }
+    ]
+  },
+  {
+    "id": 5955,
+    "origin": "euphemism",
+    "examples": [
+      {
+        "exam_en": "\"Pass away\" is a <strong class=\"target-word\">euphemism</strong> for \"die.\"",
+        "exam_ko": "\"돌아가시다\"는 \"죽다\"의 <strong class=\"target-word\">완곡한 표현</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5956,
+    "origin": "duly",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">duly</strong> elected as the new president.",
+        "exam_ko": "그녀는 새 회장으로 <strong class=\"target-word\">정식으로</strong> 선출되었다."
+      },
+      {
+        "exam_en": "The proposal should be <strong class=\"target-word\">duly</strong> considered.",
+        "exam_ko": "그 제안은 <strong class=\"target-word\">충분히</strong> 고려해야 한다."
+      },
+      {
+        "exam_en": "The singer <strong class=\"target-word\">duly</strong> appeared on stage for an encore.",
+        "exam_ko": "가수는 앵콜 무대에 <strong class=\"target-word\">예상대로</strong> 다시 등장했다."
+      }
+    ]
+  },
+  {
+    "id": 5958,
+    "origin": "destruction",
+    "examples": [
+      {
+        "exam_en": "The enemy caused the <strong class=\"target-word\">destruction</strong> of the city.",
+        "exam_ko": "적은 도시의 <strong class=\"target-word\">파괴</strong>를 일으켰다."
+      },
+      {
+        "exam_en": "The fire led to the <strong class=\"target-word\">destruction</strong> of the building.",
+        "exam_ko": "화재는 건물의 <strong class=\"target-word\">파괴</strong>로 이어졌다."
+      }
+    ]
+  },
+  {
+    "id": 5967,
+    "origin": "superfluous",
+    "examples": [
+      {
+        "exam_en": "The report included <strong class=\"target-word\">superfluous</strong> details we didn't need.",
+        "exam_ko": "보고서에는 불필요한 <strong class=\"target-word\">여분의</strong> 세부 사항이 포함되어 있었다."
+      },
+      {
+        "exam_en": "Your acknowledgment is <strong class=\"target-word\">superfluous</strong>.",
+        "exam_ko": "사례의 말은 <strong class=\"target-word\">불필요하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5968,
+    "origin": "slap",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">slap</strong> on the cheek.",
+        "exam_ko": "그녀는 뺨에 <strong class=\"target-word\">따귀</strong>를 한 대 맞았다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slapped</strong> her on the cheek.",
+        "exam_ko": "그는 그녀의 따귀를 <strong class=\"target-word\">찰싹 때렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5969,
+    "origin": "scorch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">scorched</strong> her shirt while ironing it.",
+        "exam_ko": "그녀는 다림질하다가 와이셔츠를 <strong class=\"target-word\">눌렸다</strong>."
+      },
+      {
+        "exam_en": "The hot sun <strong class=\"target-word\">scorched</strong> her face and neck.",
+        "exam_ko": "뜨거운 태양이 그녀의 얼굴과 목을 <strong class=\"target-word\">태웠다</strong>."
+      },
+      {
+        "exam_en": "Be careful not to <strong class=\"target-word\">scorch</strong> the vegetables on high heat.",
+        "exam_ko": "고온에서 채소가 <strong class=\"target-word\">타지</strong> 않도록 주의하세요."
+      }
+    ]
+  },
+  {
+    "id": 5970,
+    "origin": "parasite",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">parasite</strong> depends on its host to survive.",
+        "exam_ko": "<strong class=\"target-word\">기생충</strong>은 생존을 위해 숙주에 의존한다."
+      }
+    ]
+  },
+  {
+    "id": 5972,
+    "origin": "omission",
+    "examples": [
+      {
+        "exam_en": "The report was submitted without <strong class=\"target-word\">omission</strong>.",
+        "exam_ko": "보고서는 <strong class=\"target-word\">누락</strong> 없이 제출되었다."
+      },
+      {
+        "exam_en": "There were several <strong class=\"target-word\">omissions</strong> in the list.",
+        "exam_ko": "리스트에는 몇 가지 <strong class=\"target-word\">누락된 것</strong>이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5974,
+    "origin": "maggot",
+    "examples": [
+      {
+        "exam_en": "They found a <strong class=\"target-word\">maggot</strong> in the rotting fruit.",
+        "exam_ko": "그들은 썩은 과일에서 <strong class=\"target-word\">구더기</strong>를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 5981,
+    "origin": "glare",
+    "examples": [
+      {
+        "exam_en": "The snow melted in the <strong class=\"target-word\">glare</strong> of the sun.",
+        "exam_ko": "눈은 태양의 <strong class=\"target-word\">강렬한 빛</strong>을 받아 녹았다."
+      },
+      {
+        "exam_en": "She gave him a hostile <strong class=\"target-word\">glare</strong> across the room.",
+        "exam_ko": "그녀는 방 너머로 그에게 적의 어린 <strong class=\"target-word\">노려봄</strong>을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 5982,
+    "origin": "gorge",
+    "examples": [
+      {
+        "exam_en": "The hikers crossed a deep <strong class=\"target-word\">gorge</strong> on the trail.",
+        "exam_ko": "등산객들은 등산로에서 깊은 <strong class=\"target-word\">협곡</strong>을 건넜다."
+      }
+    ]
+  },
+  {
+    "id": 5984,
+    "origin": "flop",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">flopped</strong> down on the couch after work.",
+        "exam_ko": "그는 퇴근 후 소파에 <strong class=\"target-word\">털썩</strong> 주저앉았다."
+      },
+      {
+        "exam_en": "The politician <strong class=\"target-word\">flopped</strong> over to the opposing party.",
+        "exam_ko": "그 정치인은 반대당으로 <strong class=\"target-word\">변절했다</strong>."
+      }
+    ]
+  }
+]

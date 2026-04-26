@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1936,
+    "origin": "employment",
+    "examples": [
+      {
+        "exam_en": "The factory offered <strong class=\"target-word\">employment</strong> to many locals.",
+        "exam_ko": "그 공장은 많은 지역 주민들에게 <strong class=\"target-word\">고용</strong>을 제공했다."
+      },
+      {
+        "exam_en": "He found <strong class=\"target-word\">employment</strong> at a tech company.",
+        "exam_ko": "그는 기술 회사에서 <strong class=\"target-word\">일자리</strong>를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 1937,
+    "origin": "negotiation",
+    "examples": [
+      {
+        "exam_en": "The two sides began peace <strong class=\"target-word\">negotiations</strong> last week.",
+        "exam_ko": "양측은 지난주에 평화 <strong class=\"target-word\">협상</strong>을 시작했다."
+      },
+      {
+        "exam_en": "The trade <strong class=\"target-word\">negotiation</strong> lasted several months.",
+        "exam_ko": "그 무역 <strong class=\"target-word\">협상</strong>은 몇 달간 계속되었다."
+      }
+    ]
+  },
+  {
+    "id": 1938,
+    "origin": "conference",
+    "examples": [
+      {
+        "exam_en": "She attended an international <strong class=\"target-word\">conference</strong> in Seoul.",
+        "exam_ko": "그녀는 서울에서 열린 국제 <strong class=\"target-word\">회의</strong>에 참석했다."
+      },
+      {
+        "exam_en": "The company held a press <strong class=\"target-word\">conference</strong> this morning.",
+        "exam_ko": "회사는 오늘 아침 기자 <strong class=\"target-word\">회견</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 1939,
+    "origin": "dispatch",
+    "examples": [
+      {
+        "exam_en": "The government <strong class=\"target-word\">dispatched</strong> troops to the border.",
+        "exam_ko": "정부는 국경에 병력을 <strong class=\"target-word\">급파했다</strong>."
+      },
+      {
+        "exam_en": "The manager <strong class=\"target-word\">dispatched</strong> a salesman to the client.",
+        "exam_ko": "매니저는 고객에게 영업사원을 <strong class=\"target-word\">보냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1940,
+    "origin": "conservative",
+    "examples": [
+      {
+        "exam_en": "The party adopted <strong class=\"target-word\">conservative</strong> policies on taxes.",
+        "exam_ko": "그 당은 세금에 관한 <strong class=\"target-word\">보수적인</strong> 정책을 채택했다."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">conservative</strong> attitude toward marriage.",
+        "exam_ko": "그녀는 결혼에 대해 <strong class=\"target-word\">보수적인</strong> 태도를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1941,
+    "origin": "usual",
+    "examples": [
+      {
+        "exam_en": "He arrived at the <strong class=\"target-word\">usual</strong> time for dinner.",
+        "exam_ko": "그는 <strong class=\"target-word\">평소</strong> 저녁 식사 시간에 도착했다."
+      },
+      {
+        "exam_en": "She handled the problem in her <strong class=\"target-word\">usual</strong> calm way.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">평소</strong>처럼 침착하게 문제를 처리했다."
+      }
+    ]
+  },
+  {
+    "id": 1942,
+    "origin": "unable",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">unable</strong> to play the piano.",
+        "exam_ko": "그녀는 피아노를 <strong class=\"target-word\">치지 못한다</strong>."
+      },
+      {
+        "exam_en": "She found herself <strong class=\"target-word\">unable</strong> to do it again.",
+        "exam_ko": "그녀는 그것을 다시 할 수 <strong class=\"target-word\">없다는</strong> 것을 알았다."
+      }
+    ]
+  },
+  {
+    "id": 1943,
+    "origin": "rural",
+    "examples": [
+      {
+        "exam_en": "He grew up enjoying <strong class=\"target-word\">rural</strong> life.",
+        "exam_ko": "그는 <strong class=\"target-word\">시골</strong> 생활을 즐기며 자랐다."
+      },
+      {
+        "exam_en": "She spoke with a distinct <strong class=\"target-word\">rural</strong> accent.",
+        "exam_ko": "그녀는 뚜렷한 <strong class=\"target-word\">시골</strong> 사투리로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 1944,
+    "origin": "substantial",
+    "examples": [
+      {
+        "exam_en": "Dreams are not always <strong class=\"target-word\">substantial</strong> enough to rely on.",
+        "exam_ko": "꿈이 항상 <strong class=\"target-word\">현실적인</strong> 것은 아니다."
+      },
+      {
+        "exam_en": "They built a <strong class=\"target-word\">substantial</strong> house on the hillside.",
+        "exam_ko": "그들은 언덕에 <strong class=\"target-word\">튼튼한</strong> 집을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 1945,
+    "origin": "christian",
+    "examples": [
+      {
+        "exam_en": "The museum displayed ancient <strong class=\"target-word\">Christian</strong> art.",
+        "exam_ko": "박물관은 고대 <strong class=\"target-word\">기독교</strong> 예술품을 전시했다."
+      },
+      {
+        "exam_en": "She was raised in the <strong class=\"target-word\">Christian</strong> faith.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">기독교</strong> 신앙 안에서 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 1946,
+    "origin": "average",
+    "examples": [
+      {
+        "exam_en": "He is an above-<strong class=\"target-word\">average</strong> hitter on the team.",
+        "exam_ko": "그는 팀에서 <strong class=\"target-word\">평균</strong> 이상의 타자다."
+      },
+      {
+        "exam_en": "The teacher calculated the class <strong class=\"target-word\">average</strong> after the test.",
+        "exam_ko": "선생님은 시험 후 학급 <strong class=\"target-word\">평균</strong>을 계산했다."
+      }
+    ]
+  },
+  {
+    "id": 1947,
+    "origin": "leading",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">leading</strong> figure in climate research.",
+        "exam_ko": "그녀는 기후 연구의 <strong class=\"target-word\">선도적인</strong> 인물이다."
+      },
+      {
+        "exam_en": "They work for a <strong class=\"target-word\">leading</strong> company in the industry.",
+        "exam_ko": "그들은 업계 <strong class=\"target-word\">선두</strong> 회사에서 일한다."
+      }
+    ]
+  },
+  {
+    "id": 1948,
+    "origin": "reasonable",
+    "examples": [
+      {
+        "exam_en": "The judge asked for <strong class=\"target-word\">reasonable</strong> proof of the claim.",
+        "exam_ko": "판사는 주장에 대한 <strong class=\"target-word\">합리적인</strong> 증거를 요청했다."
+      },
+      {
+        "exam_en": "There is no <strong class=\"target-word\">reasonable</strong> link between the deed and the punishment.",
+        "exam_ko": "행위와 벌 사이에는 <strong class=\"target-word\">이치에 맞는</strong> 관계가 없다."
+      }
+    ]
+  },
+  {
+    "id": 1949,
+    "origin": "immediate",
+    "examples": [
+      {
+        "exam_en": "The teacher expected an <strong class=\"target-word\">immediate</strong> answer from the student.",
+        "exam_ko": "선생님은 학생에게 <strong class=\"target-word\">즉각적인</strong> 대답을 기대했다."
+      },
+      {
+        "exam_en": "The store required <strong class=\"target-word\">immediate</strong> payment at checkout.",
+        "exam_ko": "가게는 계산대에서 <strong class=\"target-word\">즉시</strong> 결제를 요구했다."
+      }
+    ]
+  },
+  {
+    "id": 1950,
+    "origin": "suitable",
+    "examples": [
+      {
+        "exam_en": "The problem is <strong class=\"target-word\">suitable</strong> for class discussion.",
+        "exam_ko": "그 문제는 학급 토론에 <strong class=\"target-word\">적합하다</strong>."
+      },
+      {
+        "exam_en": "These shoes are not <strong class=\"target-word\">suitable</strong> for long walks.",
+        "exam_ko": "이 구두는 오랜 산책에 <strong class=\"target-word\">적합하지 않다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1951,
+    "origin": "detailed",
+    "examples": [
+      {
+        "exam_en": "She wrote a <strong class=\"target-word\">detailed</strong> analysis of the text.",
+        "exam_ko": "그녀는 원문에 대한 <strong class=\"target-word\">상세한</strong> 분석을 작성했다."
+      },
+      {
+        "exam_en": "The professor gave a <strong class=\"target-word\">detailed</strong> explanation of the theory.",
+        "exam_ko": "교수는 그 이론을 <strong class=\"target-word\">상세히</strong> 설명했다."
+      }
+    ]
+  },
+  {
+    "id": 1952,
+    "origin": "working",
+    "examples": [
+      {
+        "exam_en": "Scientists study the <strong class=\"target-word\">workings</strong> of the human brain.",
+        "exam_ko": "과학자들은 인간 두뇌의 <strong class=\"target-word\">작용</strong>을 연구한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">working</strong> population has grown over the past decade.",
+        "exam_ko": "<strong class=\"target-word\">노동</strong> 인구가 지난 10년간 증가했다."
+      }
+    ]
+  },
+  {
+    "id": 1953,
+    "origin": "overall",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">overall</strong> length of the bridge is 500 meters.",
+        "exam_ko": "그 다리의 <strong class=\"target-word\">전체</strong> 길이는 500미터다."
+      },
+      {
+        "exam_en": "The committee proposed an <strong class=\"target-word\">overall</strong> ban on plastic bags.",
+        "exam_ko": "위원회는 비닐봉지의 <strong class=\"target-word\">전면적인</strong> 금지를 제안했다."
+      }
+    ]
+  },
+  {
+    "id": 1954,
+    "origin": "female",
+    "examples": [
+      {
+        "exam_en": "The country elected its first <strong class=\"target-word\">female</strong> president.",
+        "exam_ko": "그 나라는 최초의 <strong class=\"target-word\">여성</strong> 대통령을 선출했다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">female</strong> doctor treated the patients at the clinic.",
+        "exam_ko": "<strong class=\"target-word\">여성</strong> 의사가 클리닉에서 환자들을 치료했다."
+      }
+    ]
+  },
+  {
+    "id": 1955,
+    "origin": "democratic",
+    "examples": [
+      {
+        "exam_en": "The country held its first truly <strong class=\"target-word\">democratic</strong> election.",
+        "exam_ko": "그 나라는 처음으로 진정한 <strong class=\"target-word\">민주적인</strong> 선거를 치렀다."
+      },
+      {
+        "exam_en": "The new system became fully <strong class=\"target-word\">democratic</strong> after reform.",
+        "exam_ko": "개혁 이후 새 체제는 완전히 <strong class=\"target-word\">민주적으로</strong> 변했다."
+      }
+    ]
+  }
+]

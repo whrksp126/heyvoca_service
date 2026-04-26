@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3674,
+    "origin": "door",
+    "examples": [
+      {
+        "exam_en": "She opened the sliding <strong class=\"target-word\">door</strong> quietly.",
+        "exam_ko": "그녀는 미닫이 <strong class=\"target-word\">문</strong>을 조용히 열었다."
+      },
+      {
+        "exam_en": "Let me get the <strong class=\"target-word\">door</strong> for you.",
+        "exam_ko": "제가 <strong class=\"target-word\">문</strong> 열어 드릴게요."
+      }
+    ]
+  },
+  {
+    "id": 3675,
+    "origin": "dollar",
+    "examples": [
+      {
+        "exam_en": "He paid with a five-<strong class=\"target-word\">dollar</strong> bill.",
+        "exam_ko": "그는 5<strong class=\"target-word\">달러</strong> 지폐로 지불했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">dollar</strong> crisis hit the economy hard.",
+        "exam_ko": "<strong class=\"target-word\">달러</strong> 위기가 경제를 강타했다."
+      }
+    ]
+  },
+  {
+    "id": 3676,
+    "origin": "dog",
+    "examples": [
+      {
+        "exam_en": "He breeds <strong class=\"target-word\">dogs</strong> on his farm.",
+        "exam_ko": "그는 농장에서 <strong class=\"target-word\">개</strong>를 사육한다."
+      },
+      {
+        "exam_en": "She has had a <strong class=\"target-word\">dog</strong> since childhood.",
+        "exam_ko": "그녀는 어린 시절부터 <strong class=\"target-word\">개</strong>를 길러왔다."
+      }
+    ]
+  },
+  {
+    "id": 3677,
+    "origin": "doctor",
+    "examples": [
+      {
+        "exam_en": "The woman <strong class=\"target-word\">doctor</strong> treated all the patients.",
+        "exam_ko": "여 <strong class=\"target-word\">의사</strong>가 모든 환자를 치료했다."
+      },
+      {
+        "exam_en": "The army <strong class=\"target-word\">doctor</strong> cared for the wounded soldiers.",
+        "exam_ko": "군 <strong class=\"target-word\">의사</strong>가 부상병들을 돌봤다."
+      }
+    ]
+  },
+  {
+    "id": 3678,
+    "origin": "distance",
+    "examples": [
+      {
+        "exam_en": "They traveled a great <strong class=\"target-word\">distance</strong> to meet.",
+        "exam_ko": "그들은 만나기 위해 먼 <strong class=\"target-word\">거리</strong>를 이동했다."
+      },
+      {
+        "exam_en": "The school is within walking <strong class=\"target-word\">distance</strong> from here.",
+        "exam_ko": "학교는 여기서 걸어갈 수 있는 <strong class=\"target-word\">거리</strong>에 있다."
+      }
+    ]
+  },
+  {
+    "id": 3680,
+    "origin": "dispute",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">disputed</strong> the matter for hours.",
+        "exam_ko": "그들은 몇 시간 동안 그 문제를 <strong class=\"target-word\">논쟁했다</strong>."
+      },
+      {
+        "exam_en": "No one could <strong class=\"target-word\">dispute</strong> the facts.",
+        "exam_ko": "아무도 그 사실을 <strong class=\"target-word\">반박</strong>할 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 3681,
+    "origin": "disk",
+    "examples": [
+      {
+        "exam_en": "She stored the data on a magnetic <strong class=\"target-word\">disk</strong>.",
+        "exam_ko": "그녀는 데이터를 자기 <strong class=\"target-word\">디스크</strong>에 저장했다."
+      },
+      {
+        "exam_en": "He inserted a floppy <strong class=\"target-word\">disk</strong> into the drive.",
+        "exam_ko": "그는 드라이브에 플로피 <strong class=\"target-word\">디스크</strong>를 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 3682,
+    "origin": "disease",
+    "examples": [
+      {
+        "exam_en": "He recovered quickly from the acute <strong class=\"target-word\">disease</strong>.",
+        "exam_ko": "그는 급성 <strong class=\"target-word\">질환</strong>에서 빠르게 회복했다."
+      },
+      {
+        "exam_en": "The doctor warned it was a serious <strong class=\"target-word\">disease</strong>.",
+        "exam_ko": "의사는 그것이 심각한 <strong class=\"target-word\">질병</strong>이라고 경고했다."
+      }
+    ]
+  },
+  {
+    "id": 3683,
+    "origin": "disarm",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">disarmed</strong> the prisoner at the gate.",
+        "exam_ko": "군인들은 문에서 포로를 <strong class=\"target-word\">무장 해제시켰다</strong>."
+      },
+      {
+        "exam_en": "The police <strong class=\"target-word\">disarmed</strong> him of all weapons.",
+        "exam_ko": "경찰은 그에게서 모든 무기를 <strong class=\"target-word\">빼앗았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3684,
+    "origin": "dirt",
+    "examples": [
+      {
+        "exam_en": "His boots were covered in <strong class=\"target-word\">dirt</strong>.",
+        "exam_ko": "그의 부츠는 <strong class=\"target-word\">흙</strong>으로 뒤덮여 있었다."
+      },
+      {
+        "exam_en": "They flung <strong class=\"target-word\">dirt</strong> at his reputation.",
+        "exam_ko": "그들은 그의 평판에 <strong class=\"target-word\">오물</strong>을 퍼부었다."
+      }
+    ]
+  },
+  {
+    "id": 3686,
+    "origin": "dinner",
+    "examples": [
+      {
+        "exam_en": "They all sat down to <strong class=\"target-word\">dinner</strong> together.",
+        "exam_ko": "모두 함께 <strong class=\"target-word\">저녁 식사</strong> 자리에 앉았다."
+      },
+      {
+        "exam_en": "We had a shore <strong class=\"target-word\">dinner</strong> by the lake.",
+        "exam_ko": "우리는 호숫가에서 <strong class=\"target-word\">식사</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 3687,
+    "origin": "diet",
+    "examples": [
+      {
+        "exam_en": "Rice is the staple <strong class=\"target-word\">diet</strong> in Korea.",
+        "exam_ko": "쌀은 한국의 주요 <strong class=\"target-word\">식단</strong>이다."
+      },
+      {
+        "exam_en": "She followed a strict <strong class=\"target-word\">diet</strong> for a month.",
+        "exam_ko": "그녀는 한 달 동안 엄격한 <strong class=\"target-word\">식이요법</strong>을 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 3689,
+    "origin": "device",
+    "examples": [
+      {
+        "exam_en": "The machine has a built-in safety <strong class=\"target-word\">device</strong>.",
+        "exam_ko": "기계에는 내장 안전 <strong class=\"target-word\">장치</strong>가 있다."
+      },
+      {
+        "exam_en": "This <strong class=\"target-word\">device</strong> is used for sharpening pencils.",
+        "exam_ko": "이 <strong class=\"target-word\">장치</strong>는 연필을 깎는 데 사용된다."
+      }
+    ]
+  },
+  {
+    "id": 3690,
+    "origin": "desert",
+    "examples": [
+      {
+        "exam_en": "The Gobi <strong class=\"target-word\">Desert</strong> is vast and dry.",
+        "exam_ko": "고비 <strong class=\"target-word\">사막</strong>은 광활하고 건조하다."
+      },
+      {
+        "exam_en": "They crossed the <strong class=\"target-word\">desert</strong> by camel.",
+        "exam_ko": "그들은 낙타를 타고 <strong class=\"target-word\">사막</strong>을 건넜다."
+      }
+    ]
+  },
+  {
+    "id": 3691,
+    "origin": "depression",
+    "examples": [
+      {
+        "exam_en": "There were several <strong class=\"target-word\">depressions</strong> in the ground.",
+        "exam_ko": "지면에 여러 개의 <strong class=\"target-word\">움푹 팬 곳</strong>이 있었다."
+      },
+      {
+        "exam_en": "She sometimes suffers from <strong class=\"target-word\">depression</strong>.",
+        "exam_ko": "그녀는 가끔 <strong class=\"target-word\">우울증</strong>으로 고통받는다."
+      }
+    ]
+  },
+  {
+    "id": 3692,
+    "origin": "deploy",
+    "examples": [
+      {
+        "exam_en": "The army <strong class=\"target-word\">deployed</strong> troops to the border.",
+        "exam_ko": "군대는 국경에 병력을 <strong class=\"target-word\">배치했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">deployed</strong> the new software update today.",
+        "exam_ko": "그들은 오늘 새 소프트웨어 업데이트를 <strong class=\"target-word\">배포했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3693,
+    "origin": "denounce",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">denounced</strong> the official as a traitor.",
+        "exam_ko": "그는 그 관리를 배신자라고 <strong class=\"target-word\">비난했다</strong>."
+      },
+      {
+        "exam_en": "The politician stood up to <strong class=\"target-word\">denounce</strong> corruption.",
+        "exam_ko": "그 정치인은 부패를 <strong class=\"target-word\">규탄하기</strong> 위해 나섰다."
+      }
+    ]
+  },
+  {
+    "id": 3694,
+    "origin": "democracy",
+    "examples": [
+      {
+        "exam_en": "Direct <strong class=\"target-word\">democracy</strong> gives power to every citizen.",
+        "exam_ko": "직접 <strong class=\"target-word\">민주주의</strong>는 모든 시민에게 권력을 준다."
+      },
+      {
+        "exam_en": "Parliamentary <strong class=\"target-word\">democracy</strong> depends on free elections.",
+        "exam_ko": "의회 <strong class=\"target-word\">민주주의</strong>는 자유 선거에 달려 있다."
+      }
+    ]
+  },
+  {
+    "id": 3695,
+    "origin": "degree",
+    "examples": [
+      {
+        "exam_en": "He was born into a family of high <strong class=\"target-word\">degree</strong>.",
+        "exam_ko": "그는 높은 <strong class=\"target-word\">계급</strong>의 집안에서 태어났다."
+      },
+      {
+        "exam_en": "She earned her <strong class=\"target-word\">degree</strong> in three years.",
+        "exam_ko": "그녀는 3년 만에 <strong class=\"target-word\">학위</strong>를 취득했다."
+      }
+    ]
+  },
+  {
+    "id": 3696,
+    "origin": "debt",
+    "examples": [
+      {
+        "exam_en": "He has a <strong class=\"target-word\">debt</strong> of ten dollars.",
+        "exam_ko": "그는 10달러의 <strong class=\"target-word\">빚</strong>이 있다."
+      },
+      {
+        "exam_en": "The national <strong class=\"target-word\">debt</strong> has grown every year.",
+        "exam_ko": "국가 <strong class=\"target-word\">부채</strong>는 매년 증가해 왔다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1895,
+    "word": "warm",
+    "exam_en": "a <strong class=\"target-word\">warm</strong> sweater",
+    "exam_ko": "<strong class=\"target-word\">따뜻한</strong> 스웨터"
+  },
+  {
+    "id": 1896,
+    "word": "forehead",
+    "exam_en": "a high <strong class=\"target-word\">forehead</strong>",
+    "exam_ko": "<strong class=\"target-word\">넓은</strong> 이마."
+  },
+  {
+    "id": 1897,
+    "word": "glad",
+    "exam_en": "feel <strong class=\"target-word\">glad</strong> at the result",
+    "exam_ko": "그 결과에 <strong class=\"target-word\">만족하다</strong>"
+  },
+  {
+    "id": 1898,
+    "word": "glad",
+    "exam_en": "I am <strong class=\"target-word\">glad</strong> that you were not hurt in the accident.",
+    "exam_ko": "그 사고에서 부상을 입지 않으셨다니 <strong class=\"target-word\">다행입니다</strong>"
+  },
+  {
+    "id": 1899,
+    "word": "checkup",
+    "exam_en": "give a <strong class=\"target-word\">checkup</strong> to",
+    "exam_ko": "…을 <strong class=\"target-word\">점검하다</strong>."
+  },
+  {
+    "id": 1900,
+    "word": "tooth",
+    "exam_en": "<strong class=\"target-word\">teeth</strong> alignment",
+    "exam_ko": "<strong class=\"target-word\">치아</strong> 정렬"
+  },
+  {
+    "id": 1901,
+    "word": "tooth",
+    "exam_en": "draw a <strong class=\"target-word\">tooth</strong>",
+    "exam_ko": "이를 <strong class=\"target-word\">뽑다</strong>"
+  },
+  {
+    "id": 1902,
+    "word": "terrify",
+    "exam_en": "The police <strong class=\"target-word\">terrified</strong> him into confessing to the crime.",
+    "exam_ko": "경찰은 그를 위협하여 범죄를 <strong class=\"target-word\">자백시켰다</strong>."
+  },
+  {
+    "id": 1903,
+    "word": "sort",
+    "exam_en": "this <strong class=\"target-word\">sort</strong> of tree",
+    "exam_ko": "이 <strong class=\"target-word\">종류의</strong> 나무(※종류는 하나. 종류가 복수인 경우는 these sorts of trees/trees of these sorts가 됨)"
+  },
+  {
+    "id": 1904,
+    "word": "sort",
+    "exam_en": "a new <strong class=\"target-word\">sort</strong> of music",
+    "exam_ko": "<strong class=\"target-word\">새로운</strong> 종류의 음악"
+  },
+  {
+    "id": 1905,
+    "word": "loss",
+    "exam_en": "a big <strong class=\"target-word\">loss</strong>",
+    "exam_ko": "큰 <strong class=\"target-word\">손해</strong>(액)"
+  },
+  {
+    "id": 1906,
+    "word": "loss",
+    "exam_en": "<strong class=\"target-word\">Losses</strong> from theft at any auto plant are always heavy.",
+    "exam_ko": "어느 자동차 공장이든 도난에 의한 <strong class=\"target-word\">손실</strong>은 항상 막대하다"
+  },
+  {
+    "id": 1907,
+    "word": "death",
+    "exam_en": "a natural <strong class=\"target-word\">death</strong>",
+    "exam_ko": "<strong class=\"target-word\">자연사</strong>"
+  },
+  {
+    "id": 1908,
+    "word": "death",
+    "exam_en": "a painful <strong class=\"target-word\">death</strong>",
+    "exam_ko": "<strong class=\"target-word\">고통을</strong> 수반하는 죽음"
+  },
+  {
+    "id": 1909,
+    "word": "blind",
+    "exam_en": "a <strong class=\"target-word\">blind</strong> school",
+    "exam_ko": "<strong class=\"target-word\">맹인학교</strong>"
+  },
+  {
+    "id": 1910,
+    "word": "blind",
+    "exam_en": "education for the <strong class=\"target-word\">blind</strong>",
+    "exam_ko": "<strong class=\"target-word\">맹인</strong> 교육"
+  },
+  {
+    "id": 1911,
+    "word": "adolescent",
+    "exam_en": "<strong class=\"target-word\">adolescent</strong> yearnings",
+    "exam_ko": "<strong class=\"target-word\">청춘기의</strong> 동경"
+  },
+  {
+    "id": 1912,
+    "word": "mug",
+    "exam_en": "a <strong class=\"target-word\">mug</strong> of cocoa",
+    "exam_ko": "한 <strong class=\"target-word\">잔</strong>의 코코아."
+  },
+  {
+    "id": 1913,
+    "word": "mug",
+    "exam_en": "What an ugly <strong class=\"target-word\">mug</strong>!",
+    "exam_ko": "정말 못생긴 <strong class=\"target-word\">낯짝</strong>이군!"
+  },
+  {
+    "id": 1914,
+    "word": "envy",
+    "exam_en": "through <strong class=\"target-word\">envy</strong>",
+    "exam_ko": "<strong class=\"target-word\">시기한</strong> 나머지"
+  },
+  {
+    "id": 1915,
+    "word": "envy",
+    "exam_en": "excite a person's <strong class=\"target-word\">envy</strong>",
+    "exam_ko": "남의 부러움을 <strong class=\"target-word\">사다</strong>"
+  },
+  {
+    "id": 1916,
+    "word": "fantastic",
+    "exam_en": "<strong class=\"target-word\">fantastic</strong> designs",
+    "exam_ko": "<strong class=\"target-word\">기상천외한</strong> 디자인."
+  },
+  {
+    "id": 1917,
+    "word": "fantastic",
+    "exam_en": "<strong class=\"target-word\">fantastic</strong> terrors",
+    "exam_ko": "<strong class=\"target-word\">까닭</strong> 없는 공포."
+  },
+  {
+    "id": 1918,
+    "word": "name",
+    "exam_en": "a personal <strong class=\"target-word\">name</strong>",
+    "exam_ko": "(성(姓)에 대하여) <strong class=\"target-word\">개인명</strong>(※「인명」은 a person's name)"
+  },
+  {
+    "id": 1919,
+    "word": "name",
+    "exam_en": "her maiden  <strong class=\"target-word\">name</strong>",
+    "exam_ko": "그녀의 결혼 전[결혼 후]의 <strong class=\"target-word\">이름</strong>"
+  },
+  {
+    "id": 1920,
+    "word": "mistake",
+    "exam_en": "make a <strong class=\"target-word\">mistake</strong> in",
+    "exam_ko": "…에서 <strong class=\"target-word\">잘못하다</strong>(※make 대신 do를 쓰면 안 됨)"
+  },
+  {
+    "id": 1921,
+    "word": "mistake",
+    "exam_en": "make the <strong class=\"target-word\">mistake</strong> of doing",
+    "exam_ko": "…하는 실수를 <strong class=\"target-word\">저지르다</strong>"
+  },
+  {
+    "id": 1922,
+    "word": "ridiculous",
+    "exam_en": "a <strong class=\"target-word\">ridiculous</strong> scheme",
+    "exam_ko": "<strong class=\"target-word\">어처구니없는</strong> 계획"
+  },
+  {
+    "id": 1923,
+    "word": "ridiculous",
+    "exam_en": "<strong class=\"target-word\">ridiculous</strong> in dress",
+    "exam_ko": "옷[<strong class=\"target-word\">모양</strong>]이 우스운"
+  },
+  {
+    "id": 1924,
+    "word": "direction",
+    "exam_en": "in all <strong class=\"target-word\">direction</strong>s",
+    "exam_ko": "사방 <strong class=\"target-word\">팔방에</strong>"
+  },
+  {
+    "id": 1925,
+    "word": "direction",
+    "exam_en": "in the opposite <strong class=\"target-word\">direction</strong>",
+    "exam_ko": "<strong class=\"target-word\">반대</strong> 방향에"
+  },
+  {
+    "id": 1926,
+    "word": "street",
+    "exam_en": "a main <strong class=\"target-word\">street</strong>",
+    "exam_ko": "<strong class=\"target-word\">중심가</strong>[뒷길]"
+  },
+  {
+    "id": 1927,
+    "word": "street",
+    "exam_en": "meet a person on the <strong class=\"target-word\">street</strong>",
+    "exam_ko": "거리에서 남과 <strong class=\"target-word\">만나다</strong>(※일반적으로 (미)에서는 on, (영)에서는 in을 씀. 그러나 장소로서의 한정감이 강하게 작용할 때는 in, 단순히 「도로상에서」라고 할 때는 on을 씀)"
+  },
+  {
+    "id": 1928,
+    "word": "overpass",
+    "exam_en": "<strong class=\"target-word\">overpass</strong> the border",
+    "exam_ko": "국경을 <strong class=\"target-word\">넘다</strong>."
+  },
+  {
+    "id": 1929,
+    "word": "overpass",
+    "exam_en": "<strong class=\"target-word\">overpass</strong> obstacles",
+    "exam_ko": "장애를 <strong class=\"target-word\">극복하다</strong>"
+  },
+  {
+    "id": 1930,
+    "word": "convenient",
+    "exam_en": "a <strong class=\"target-word\">convenient</strong> size",
+    "exam_ko": "<strong class=\"target-word\">알맞은</strong> 크기"
+  },
+  {
+    "id": 1931,
+    "word": "convenient",
+    "exam_en": "a <strong class=\"target-word\">convenient</strong> hour for the meeting",
+    "exam_ko": "<strong class=\"target-word\">모임에</strong> 알맞은 시간[장소]"
+  },
+  {
+    "id": 1932,
+    "word": "more",
+    "exam_en": "<strong class=\"target-word\">more</strong> wine",
+    "exam_ko": "더 <strong class=\"target-word\">많은</strong> 포도주[사과]"
+  },
+  {
+    "id": 1933,
+    "word": "more",
+    "exam_en": "ten or <strong class=\"target-word\">more</strong> girls",
+    "exam_ko": "10명 <strong class=\"target-word\">또는</strong> 그 이상의 소녀(※한편 more than ten girls는 「11명 이상의 소녀」의 뜻)"
+  },
+  {
+    "id": 1934,
+    "word": "perfect",
+    "exam_en": "a <strong class=\"target-word\">perfect</strong> crime",
+    "exam_ko": "<strong class=\"target-word\">완전</strong> 범죄"
+  },
+  {
+    "id": 1935,
+    "word": "perfect",
+    "exam_en": "a <strong class=\"target-word\">perfect</strong> reproduction",
+    "exam_ko": "<strong class=\"target-word\">정확한</strong> 복사"
+  },
+  {
+    "id": 1936,
+    "word": "connection",
+    "exam_en": "the <strong class=\"target-word\">connection</strong> between crime and poverty",
+    "exam_ko": "<strong class=\"target-word\">범죄와</strong> 빈곤의 관련성"
+  },
+  {
+    "id": 1937,
+    "word": "connection",
+    "exam_en": "make a <strong class=\"target-word\">connection</strong>",
+    "exam_ko": "관련성을 <strong class=\"target-word\">보이다</strong>"
+  },
+  {
+    "id": 1938,
+    "word": "child",
+    "exam_en": "the <strong class=\"target-word\">Child</strong>ren's Charter",
+    "exam_ko": "<strong class=\"target-word\">어린이</strong> 헌장"
+  },
+  {
+    "id": 1939,
+    "word": "child",
+    "exam_en": "<strong class=\"target-word\">child</strong> welfare",
+    "exam_ko": "<strong class=\"target-word\">아동</strong> 복지[심리학]"
+  },
+  {
+    "id": 1940,
+    "word": "fare",
+    "exam_en": "a taxi <strong class=\"target-word\">fare</strong>",
+    "exam_ko": "<strong class=\"target-word\">택시</strong>[버스, 철도, 항공] 요금"
+  },
+  {
+    "id": 1941,
+    "word": "fare",
+    "exam_en": "a reduced <strong class=\"target-word\">fare</strong>",
+    "exam_ko": "<strong class=\"target-word\">할인</strong> 요금"
+  },
+  {
+    "id": 1942,
+    "word": "adult",
+    "exam_en": "an <strong class=\"target-word\">adult</strong> person",
+    "exam_ko": "<strong class=\"target-word\">어른</strong>."
+  },
+  {
+    "id": 1943,
+    "word": "adult",
+    "exam_en": "<strong class=\"target-word\">adult</strong> movies",
+    "exam_ko": "<strong class=\"target-word\">성인용</strong> 영화(약자: A)"
+  },
+  {
+    "id": 1944,
+    "word": "station",
+    "exam_en": "a bus <strong class=\"target-word\">station</strong>",
+    "exam_ko": "<strong class=\"target-word\">버스</strong> 터미널(※「버스 정류장」은 bus stop)"
+  },
+  {
+    "id": 1945,
+    "word": "station",
+    "exam_en": "a train  <strong class=\"target-word\">station</strong>",
+    "exam_ko": "<strong class=\"target-word\">기차역</strong>"
+  },
+  {
+    "id": 1946,
+    "word": "avenue",
+    "exam_en": "Fifth <strong class=\"target-word\">Avenue</strong>",
+    "exam_ko": "5<strong class=\"target-word\">번가</strong>(※고유명사에는 무관사)."
+  },
+  {
+    "id": 1947,
+    "word": "avenue",
+    "exam_en": "an <strong class=\"target-word\">avenue</strong> to prosperity",
+    "exam_ko": "<strong class=\"target-word\">번영에의</strong> 길"
+  },
+  {
+    "id": 1948,
+    "word": "cab",
+    "exam_en": "a <strong class=\"target-word\">cab</strong> fare",
+    "exam_ko": "<strong class=\"target-word\">택시요금</strong>"
+  },
+  {
+    "id": 1949,
+    "word": "cab",
+    "exam_en": "take a <strong class=\"target-word\">cab</strong>  to the hotel",
+    "exam_ko": "호텔에 택시를 타고 <strong class=\"target-word\">가다</strong>"
+  },
+  {
+    "id": 1950,
+    "word": "chapter",
+    "exam_en": "the <strong class=\"target-word\">chapter</strong>",
+    "exam_ko": "<strong class=\"target-word\">장</strong>"
+  },
+  {
+    "id": 1951,
+    "word": "first",
+    "exam_en": "the <strong class=\"target-word\">first</strong> chapter",
+    "exam_ko": "<strong class=\"target-word\">첫 번째</strong> 장"
+  },
+  {
+    "id": 1952,
+    "word": "first",
+    "exam_en": "the <strong class=\"target-word\">first</strong> of April",
+    "exam_ko": "<strong class=\"target-word\">4월 1일</strong>"
+  },
+  {
+    "id": 1953,
+    "word": "maybe",
+    "exam_en": "<strong class=\"target-word\">Maybe</strong> she forgot my birthday.",
+    "exam_ko": "(어쩌면) 그녀는 나의 생일을 잊어버렸는지도 <strong class=\"target-word\">모른다</strong>"
+  },
+  {
+    "id": 1954,
+    "word": "maybe",
+    "exam_en": "<strong class=\"target-word\">Maybe</strong> he'll go, <strong class=\"target-word\">maybe</strong> he won't.",
+    "exam_ko": "그는 갈지도 모르고, 안 갈지도 <strong class=\"target-word\">모른다</strong>"
+  },
+  {
+    "id": 1955,
+    "word": "person",
+    "exam_en": "a hotel room for two <strong class=\"target-word\">persons</strong>",
+    "exam_ko": "2<strong class=\"target-word\">인용의</strong> 호텔 방"
+  },
+  {
+    "id": 1956,
+    "word": "person",
+    "exam_en": "I thought him a pleasant <strong class=\"target-word\">person</strong>.",
+    "exam_ko": "나는 그가 호감이 가는 <strong class=\"target-word\">사람</strong>이라고 생각했다."
+  },
+  {
+    "id": 1957,
+    "word": "director",
+    "exam_en": "a managing <strong class=\"target-word\">director</strong>",
+    "exam_ko": "<strong class=\"target-word\">상무</strong>[전무] 이사."
+  },
+  {
+    "id": 1958,
+    "word": "director",
+    "exam_en": "the <strong class=\"target-word\">Director</strong> of Public Prosecutions",
+    "exam_ko": "(영) <strong class=\"target-word\">국장</strong>."
+  },
+  {
+    "id": 1959,
+    "word": "famous",
+    "exam_en": "a <strong class=\"target-word\">famous</strong> actor",
+    "exam_ko": "<strong class=\"target-word\">유명한</strong> 배우"
+  },
+  {
+    "id": 1960,
+    "word": "famous",
+    "exam_en": "France is <strong class=\"target-word\">famous</strong> for its wine.",
+    "exam_ko": "프랑스는 포도주로 <strong class=\"target-word\">유명하다</strong>"
+  },
+  {
+    "id": 1961,
+    "word": "musical",
+    "exam_en": "a <strong class=\"target-word\">musical</strong> composer",
+    "exam_ko": "<strong class=\"target-word\">음악</strong> 작곡가"
+  },
+  {
+    "id": 1962,
+    "word": "musical",
+    "exam_en": "a <strong class=\"target-word\">musical</strong> director",
+    "exam_ko": "<strong class=\"target-word\">음악</strong> 감독"
+  },
+  {
+    "id": 1963,
+    "word": "type",
+    "exam_en": "two <strong class=\"target-word\">types</strong> of intonation",
+    "exam_ko": "두 <strong class=\"target-word\">종류의</strong> 억양"
+  },
+  {
+    "id": 1964,
+    "word": "type",
+    "exam_en": "women of the blonde <strong class=\"target-word\">type</strong>",
+    "exam_ko": "<strong class=\"target-word\">타입</strong> 여자"
+  },
+  {
+    "id": 1965,
+    "word": "during",
+    "exam_en": "<strong class=\"target-word\">during</strong> and after the crisis",
+    "exam_ko": "<strong class=\"target-word\">위기 중에</strong> 또는 그 후에도"
+  },
+  {
+    "id": 1966,
+    "word": "during",
+    "exam_en": "<strong class=\"target-word\">during</strong> the summer",
+    "exam_ko": "<strong class=\"target-word\">여름 동안</strong>."
+  },
+  {
+    "id": 1967,
+    "word": "score",
+    "exam_en": "final <strong class=\"target-word\">score</strong>",
+    "exam_ko": "최종 <strong class=\"target-word\">득점</strong>"
+  },
+  {
+    "id": 1968,
+    "word": "score",
+    "exam_en": "keep  <strong class=\"target-word\">score</strong>",
+    "exam_ko": "<strong class=\"target-word\">점수</strong>를 기록하다"
+  },
+  {
+    "id": 1969,
+    "word": "basketball",
+    "exam_en": "play <strong class=\"target-word\">basketball</strong>",
+    "exam_ko": "<strong class=\"target-word\">농구</strong>를 하다."
+  },
+  {
+    "id": 1970,
+    "word": "sport",
+    "exam_en": "play[do] <strong class=\"target-word\">sport</strong>(s)",
+    "exam_ko": "<strong class=\"target-word\">스포츠</strong>를 하다"
+  },
+  {
+    "id": 1971,
+    "word": "sport",
+    "exam_en": "enjoy <strong class=\"target-word\">sport</strong>(s)",
+    "exam_ko": "<strong class=\"target-word\">스포츠</strong>를 즐기다"
+  },
+  {
+    "id": 1972,
+    "word": "favorite",
+    "exam_en": "a fortune's <strong class=\"target-word\">favorite</strong>",
+    "exam_ko": "운명의 <strong class=\"target-word\">총아</strong>"
+  },
+  {
+    "id": 1973,
+    "word": "favorite",
+    "exam_en": "play <strong class=\"target-word\">favorites</strong>",
+    "exam_ko": "특별 취급을 하다, <strong class=\"target-word\">편애하다</strong>"
+  },
+  {
+    "id": 1974,
+    "word": "singer",
+    "exam_en": "a male <strong class=\"target-word\">singer</strong>",
+    "exam_ko": "남자 <strong class=\"target-word\">가수</strong>"
+  },
+  {
+    "id": 1975,
+    "word": "singer",
+    "exam_en": "an opera <strong class=\"target-word\">singer</strong>",
+    "exam_ko": "오페라 <strong class=\"target-word\">가수</strong>."
+  },
+  {
+    "id": 1976,
+    "word": "most",
+    "exam_en": "the horse with  <strong class=\"target-word\">most</strong> speed",
+    "exam_ko": "<strong class=\"target-word\">가장</strong> 빨리 달리는 말"
+  },
+  {
+    "id": 1977,
+    "word": "most",
+    "exam_en": "the person with  <strong class=\"target-word\">most</strong> stage talent",
+    "exam_ko": "배우로서의 재능을 <strong class=\"target-word\">가장</strong> 풍부히 가지고 있는 사람"
+  },
+  {
+    "id": 1978,
+    "word": "kind",
+    "exam_en": "a <strong class=\"target-word\">kind</strong> mother",
+    "exam_ko": "<strong class=\"target-word\">다정한</strong> 엄마"
+  },
+  {
+    "id": 1979,
+    "word": "kind",
+    "exam_en": "a <strong class=\"target-word\">kind</strong> act",
+    "exam_ko": "<strong class=\"target-word\">친절한</strong> 행위"
+  },
+  {
+    "id": 1980,
+    "word": "kid",
+    "exam_en": "a book bound in <strong class=\"target-word\">kid</strong>",
+    "exam_ko": "<strong class=\"target-word\">키드</strong> 가죽으로 장정한 책."
+  },
+  {
+    "id": 1981,
+    "word": "kid",
+    "exam_en": "a high school <strong class=\"target-word\">kid</strong>",
+    "exam_ko": "<strong class=\"target-word\">고교생</strong>."
+  },
+  {
+    "id": 1982,
+    "word": "word",
+    "exam_en": "an obsolete <strong class=\"target-word\">word</strong>",
+    "exam_ko": "<strong class=\"target-word\">폐어</strong>"
+  },
+  {
+    "id": 1983,
+    "word": "word",
+    "exam_en": "a short <strong class=\"target-word\">word</strong>",
+    "exam_ko": "(철자가) 짧은 <strong class=\"target-word\">단어</strong>"
+  },
+  {
+    "id": 1984,
+    "word": "action",
+    "exam_en": "out of <strong class=\"target-word\">action</strong>",
+    "exam_ko": "<strong class=\"target-word\">작동</strong>하지 않는"
+  },
+  {
+    "id": 1985,
+    "word": "action",
+    "exam_en": "in <strong class=\"target-word\">action</strong>",
+    "exam_ko": "<strong class=\"target-word\">작동</strong> 중에"
+  },
+  {
+    "id": 1986,
+    "word": "yourself",
+    "exam_en": "You <strong class=\"target-word\">yourself</strong> are responsible for the lost book.",
+    "exam_ko": "그 책을 분실한 책임은 당신 <strong class=\"target-word\">자신</strong>에게 있습니다"
+  },
+  {
+    "id": 1987,
+    "word": "yourself",
+    "exam_en": "You <strong class=\"target-word\">yourself</strong> told me so.",
+    "exam_ko": "너 <strong class=\"target-word\">자신</strong>이 내게 그렇게 말했다."
+  },
+  {
+    "id": 1988,
+    "word": "around",
+    "exam_en": "People crowded <strong class=\"target-word\">around</strong> to look at the wrecked car.",
+    "exam_ko": "크게 망가진 차를 보려고 사람들이 <strong class=\"target-word\">주위에</strong> 떼지어 모였다"
+  },
+  {
+    "id": 1989,
+    "word": "around",
+    "exam_en": "The trunk grows larger <strong class=\"target-word\">around</strong>.",
+    "exam_ko": "나무 줄기는 <strong class=\"target-word\">둘레</strong>가 점점 굵어진다."
+  },
+  {
+    "id": 1990,
+    "word": "nothing",
+    "exam_en": "say <strong class=\"target-word\">nothing</strong>",
+    "exam_ko": "아무것도 <strong class=\"target-word\">말하지</strong> 않다"
+  },
+  {
+    "id": 1991,
+    "word": "nothing",
+    "exam_en": "There was <strong class=\"target-word\">nothing</strong> in the room.",
+    "exam_ko": "그 방에는 <strong class=\"target-word\">아무것도</strong> 없었다"
+  },
+  {
+    "id": 1992,
+    "word": "tonight",
+    "exam_en": "<strong class=\"target-word\">Tonight</strong> is no ordinary night.",
+    "exam_ko": "오늘은 여느 때와 같은 <strong class=\"target-word\">밤</strong>이 아니다."
+  },
+  {
+    "id": 1993,
+    "word": "tonight",
+    "exam_en": "Can you come for dinner <strong class=\"target-word\">tonight</strong>?",
+    "exam_ko": "오늘 <strong class=\"target-word\">밤</strong>에 식사하러 올 수 있겠어요?"
+  },
+  {
+    "id": 1994,
+    "word": "tough",
+    "exam_en": "<strong class=\"target-word\">tough</strong> steel",
+    "exam_ko": "<strong class=\"target-word\">단단한</strong> 금속"
+  }
+]

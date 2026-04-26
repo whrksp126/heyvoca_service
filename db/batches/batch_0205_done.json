@@ -1,0 +1,266 @@
+[
+  {
+    "id": 4668,
+    "origin": "immediately",
+    "examples": [
+      {
+        "exam_en": "She called him <strong class=\"target-word\">immediately</strong> after the accident.",
+        "exam_ko": "그녀는 사고 후 <strong class=\"target-word\">즉시</strong> 그에게 전화했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">immediately</strong> noticed the mistake.",
+        "exam_ko": "그는 <strong class=\"target-word\">즉각</strong> 실수를 알아챘다."
+      }
+    ]
+  },
+  {
+    "id": 4669,
+    "origin": "worship",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">worshipped</strong> idols in the ancient temple.",
+        "exam_ko": "그들은 고대 신전에서 우상을 <strong class=\"target-word\">숭배했다</strong>."
+      },
+      {
+        "exam_en": "Fans <strong class=\"target-word\">worship</strong> the athlete like a hero.",
+        "exam_ko": "팬들은 그 선수를 영웅처럼 <strong class=\"target-word\">숭배한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4671,
+    "origin": "prince",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">prince</strong> greeted guests at the palace gate.",
+        "exam_ko": "<strong class=\"target-word\">왕자</strong>는 궁전 문에서 손님들을 맞이했다."
+      },
+      {
+        "exam_en": "The crown <strong class=\"target-word\">prince</strong> attended the state ceremony.",
+        "exam_ko": "왕세자 <strong class=\"target-word\">왕자</strong>가 국가 행사에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 4672,
+    "origin": "princess",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">princess</strong> waved to the crowd from the balcony.",
+        "exam_ko": "<strong class=\"target-word\">공주</strong>는 발코니에서 군중에게 손을 흔들었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">princess</strong> received a royal honor at the ceremony.",
+        "exam_ko": "<strong class=\"target-word\">공주</strong>는 행사에서 왕실 훈장을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 4674,
+    "origin": "quack",
+    "examples": [
+      {
+        "exam_en": "He was exposed as a <strong class=\"target-word\">quack</strong> doctor with no license.",
+        "exam_ko": "그는 면허 없는 <strong class=\"target-word\">돌팔이</strong> 의사로 밝혀졌다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">quack</strong> sold fake medicine to sick people.",
+        "exam_ko": "그 <strong class=\"target-word\">사기꾼</strong>은 아픈 사람들에게 가짜 약을 팔았다."
+      }
+    ]
+  },
+  {
+    "id": 4675,
+    "origin": "queen",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">queen</strong> delivered a speech to the nation.",
+        "exam_ko": "<strong class=\"target-word\">여왕</strong>이 국민에게 연설을 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">queen</strong> signed the new law at the ceremony.",
+        "exam_ko": "<strong class=\"target-word\">여왕</strong>은 행사에서 새 법안에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 4676,
+    "origin": "quilt",
+    "examples": [
+      {
+        "exam_en": "She spread a warm <strong class=\"target-word\">quilt</strong> over the bed.",
+        "exam_ko": "그녀는 침대 위에 따뜻한 <strong class=\"target-word\">누비이불</strong>을 펼쳤다."
+      },
+      {
+        "exam_en": "Grandma <strong class=\"target-word\">quilted</strong> a blanket for the new baby.",
+        "exam_ko": "할머니는 새 아기를 위해 담요를 <strong class=\"target-word\">누볐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4679,
+    "origin": "crab",
+    "examples": [
+      {
+        "exam_en": "His rude behavior <strong class=\"target-word\">crabbed</strong> the entire deal.",
+        "exam_ko": "그의 무례한 행동이 거래 전체를 <strong class=\"target-word\">망쳐놨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4680,
+    "origin": "crane",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">craned</strong> her neck to find her mother.",
+        "exam_ko": "그녀는 어머니를 찾으려고 목을 <strong class=\"target-word\">길게 뺐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4681,
+    "origin": "crown",
+    "examples": [
+      {
+        "exam_en": "The king wore a golden <strong class=\"target-word\">crown</strong> at the coronation.",
+        "exam_ko": "왕은 대관식에서 금빛 <strong class=\"target-word\">왕관</strong>을 썼다."
+      },
+      {
+        "exam_en": "The officer served under the authority of the <strong class=\"target-word\">crown</strong>.",
+        "exam_ko": "그 관리는 <strong class=\"target-word\">왕권</strong>의 권한 아래 복무했다."
+      }
+    ]
+  },
+  {
+    "id": 4684,
+    "origin": "flamingo",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Flamingos</strong> are colorful, attractive birds.",
+        "exam_ko": "<strong class=\"target-word\">홍학</strong>은 색이 화려하고 매력적인 새다."
+      }
+    ]
+  },
+  {
+    "id": 4687,
+    "origin": "glove",
+    "examples": [
+      {
+        "exam_en": "She put on her <strong class=\"target-word\">gloves</strong> before going outside.",
+        "exam_ko": "그녀는 밖에 나가기 전에 <strong class=\"target-word\">장갑</strong>을 꼈다."
+      },
+      {
+        "exam_en": "He forgot his <strong class=\"target-word\">gloves</strong> on a cold winter day.",
+        "exam_ko": "그는 추운 겨울날 <strong class=\"target-word\">장갑</strong>을 두고 나왔다."
+      }
+    ]
+  },
+  {
+    "id": 4688,
+    "origin": "glue",
+    "examples": [
+      {
+        "exam_en": "She used quick-drying <strong class=\"target-word\">glue</strong> to fix the broken vase.",
+        "exam_ko": "그녀는 깨진 꽃병을 고치려고 순간 <strong class=\"target-word\">접착제</strong>를 썼다."
+      },
+      {
+        "exam_en": "He squeezed <strong class=\"target-word\">glue</strong> onto the paper carefully.",
+        "exam_ko": "그는 종이에 <strong class=\"target-word\">접착제</strong>를 조심스럽게 짜 발랐다."
+      }
+    ]
+  },
+  {
+    "id": 4689,
+    "origin": "grape",
+    "examples": [
+      {
+        "exam_en": "She bought a bunch of <strong class=\"target-word\">grapes</strong> at the market.",
+        "exam_ko": "그녀는 시장에서 <strong class=\"target-word\">포도</strong> 한 송이를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 4690,
+    "origin": "graph",
+    "examples": [
+      {
+        "exam_en": "The teacher drew a line <strong class=\"target-word\">graph</strong> on the board.",
+        "exam_ko": "선생님은 칠판에 선 <strong class=\"target-word\">그래프</strong>를 그렸다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">graph</strong> of stock price changes.",
+        "exam_ko": "그녀는 주가 변동을 <strong class=\"target-word\">그래프</strong>로 나타냈다."
+      }
+    ]
+  },
+  {
+    "id": 4694,
+    "origin": "photo",
+    "examples": [
+      {
+        "exam_en": "He took a <strong class=\"target-word\">photo</strong> of the sunset on the beach.",
+        "exam_ko": "그는 해변의 노을을 <strong class=\"target-word\">사진</strong>으로 찍었다."
+      },
+      {
+        "exam_en": "She studied <strong class=\"target-word\">photochemistry</strong> at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">광화학</strong>을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 4695,
+    "origin": "chopstick",
+    "examples": [
+      {
+        "exam_en": "He picked up sushi with <strong class=\"target-word\">chopsticks</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">젓가락</strong>으로 초밥을 집었다."
+      },
+      {
+        "exam_en": "She eats noodles with <strong class=\"target-word\">chopsticks</strong> every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">젓가락</strong>으로 국수를 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 4696,
+    "origin": "sandwich",
+    "examples": [
+      {
+        "exam_en": "He ate a beef <strong class=\"target-word\">sandwich</strong> for lunch.",
+        "exam_ko": "그는 점심으로 쇠고기 <strong class=\"target-word\">샌드위치</strong>를 먹었다."
+      },
+      {
+        "exam_en": "She ordered a cheese <strong class=\"target-word\">sandwich</strong> at the cafe.",
+        "exam_ko": "그녀는 카페에서 치즈 <strong class=\"target-word\">샌드위치</strong>를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 4697,
+    "origin": "sheep",
+    "examples": [
+      {
+        "exam_en": "A flock of <strong class=\"target-word\">sheep</strong> grazed in the green field.",
+        "exam_ko": "<strong class=\"target-word\">양</strong> 떼가 초록 들판에서 풀을 뜯었다."
+      },
+      {
+        "exam_en": "The farmer raises <strong class=\"target-word\">sheep</strong> on the hillside.",
+        "exam_ko": "농부는 언덕에서 <strong class=\"target-word\">양</strong>을 키운다."
+      }
+    ]
+  },
+  {
+    "id": 4698,
+    "origin": "shepherd",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">shepherd</strong> guided the flock home safely.",
+        "exam_ko": "<strong class=\"target-word\">양치기</strong>는 양 떼를 안전하게 집으로 이끌었다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">shepherded</strong> the guests out of the building.",
+        "exam_ko": "그녀는 손님들을 건물 밖으로 <strong class=\"target-word\">안내했다</strong>."
+      }
+    ]
+  }
+]

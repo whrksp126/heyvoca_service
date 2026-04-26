@@ -9,12 +9,13 @@ const BottomNav = () => {
 
   return (
     <footer
+      data-bottom-nav
       className="
-        fixed bottom-0 
-        w-full 
-        border-t border-border 
-        bg-layout-white/90 
-        dark:bg-layout-black/90 
+        fixed bottom-0
+        w-full
+        border-t border-border
+        bg-layout-white/90
+        dark:bg-layout-black/90
         dark:border-border-dark
         backdrop-blur-md
         "

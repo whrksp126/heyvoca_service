@@ -1,0 +1,242 @@
+[
+  {
+    "id": 16378,
+    "origin": "bananas",
+    "examples": [
+      {
+        "exam_en": "drive a person bananas",
+        "exam_ko": "열중케 하다, 미칠 것 같이 만들다"
+      },
+      {
+        "exam_en": "go bananas",
+        "exam_ko": "머리가 돌다, 열광[흥분]하다, 속이 울컥 치밀다, 몹시 골내다."
+      }
+    ]
+  },
+  {
+    "id": 16383,
+    "origin": "oriented",
+    "examples": [
+      {
+        "exam_en": "a male-oriented world",
+        "exam_ko": "남성 지향[우위]의 세계"
+      },
+      {
+        "exam_en": "profit-oriented",
+        "exam_ko": "이익 추구형의"
+      }
+    ]
+  },
+  {
+    "id": 16384,
+    "origin": "inspiring",
+    "examples": [
+      {
+        "exam_en": "an inspiring speech",
+        "exam_ko": "남을 고무하는 연설."
+      }
+    ]
+  },
+  {
+    "id": 16385,
+    "origin": "underhand",
+    "examples": [
+      {
+        "exam_en": "underhand methods",
+        "exam_ko": "음흉한 방법."
+      }
+    ]
+  },
+  {
+    "id": 16389,
+    "origin": "numerical",
+    "examples": [
+      {
+        "exam_en": "numerical analysis",
+        "exam_ko": "수치 해석"
+      },
+      {
+        "exam_en": "a numerical formula",
+        "exam_ko": "숫자 방정식"
+      }
+    ]
+  },
+  {
+    "id": 16397,
+    "origin": "allegorical",
+    "examples": [
+      {
+        "exam_en": "an allegorical poem",
+        "exam_ko": "우화시(詩)."
+      }
+    ]
+  },
+  {
+    "id": 16400,
+    "origin": "unwillingly",
+    "examples": [
+      {
+        "exam_en": "We accepted the terms unwillingly.",
+        "exam_ko": "우리는 그 조건을 마지못해 받아들였다."
+      }
+    ]
+  },
+  {
+    "id": 16402,
+    "origin": "willingly",
+    "examples": [
+      {
+        "exam_en": "\"Will you join the cause?\" \"Yes, willingly.\"",
+        "exam_ko": "「그 운동의 취지에 찬성합니까?」 「예, 기꺼이 찬성합니다.」(※Yes, I will에 해당함)."
+      }
+    ]
+  },
+  {
+    "id": 16403,
+    "origin": "beget",
+    "examples": [
+      {
+        "exam_en": "Abraham begat Isaac.",
+        "exam_ko": "아브라함이 이삭을 낳았다 ＜[성서] 마태복음 1:2＞."
+      },
+      {
+        "exam_en": "Poverty begets hunger, and hunger begets crime.",
+        "exam_ko": "가난은 기아를 낳고, 기아는 죄악을 낳는다."
+      }
+    ]
+  },
+  {
+    "id": 16405,
+    "origin": "righteousness",
+    "examples": [
+      {
+        "exam_en": "make for righteousness",
+        "exam_ko": "정의를 위해 이바지하다"
+      },
+      {
+        "exam_en": "Some of us strive for righteousness.",
+        "exam_ko": "우리들 중에는 옳은 것을 위해 노력하는 사람도 있다."
+      }
+    ]
+  },
+  {
+    "id": 16410,
+    "origin": "inane",
+    "examples": [
+      {
+        "exam_en": "the boundless inane",
+        "exam_ko": "무한한 공간(space)."
+      }
+    ]
+  },
+  {
+    "id": 16412,
+    "origin": "conversational",
+    "examples": [
+      {
+        "exam_en": "a conversational style",
+        "exam_ko": "회화체"
+      },
+      {
+        "exam_en": "in a conversational voice",
+        "exam_ko": "스스럼없는 말투로."
+      }
+    ]
+  },
+  {
+    "id": 16413,
+    "origin": "fullfledged",
+    "examples": [
+      {
+        "exam_en": "a fullfledged architect",
+        "exam_ko": "어엿한 건축가."
+      },
+      {
+        "exam_en": "a fullfledged psychosis",
+        "exam_ko": "병세가 완연한 정신병."
+      }
+    ]
+  },
+  {
+    "id": 16416,
+    "origin": "underrate",
+    "examples": [
+      {
+        "exam_en": "Don't underrate the abilities of your enemies.",
+        "exam_ko": "적의 능력을 깔보지 말아라."
+      }
+    ]
+  },
+  {
+    "id": 16420,
+    "origin": "gauze",
+    "examples": [
+      {
+        "exam_en": "sterilized gauze",
+        "exam_ko": "소독 가제."
+      }
+    ]
+  },
+  {
+    "id": 16422,
+    "origin": "domed",
+    "examples": [
+      {
+        "exam_en": "a domed storage tank",
+        "exam_ko": "돔형 저장 탱크"
+      },
+      {
+        "exam_en": "a domed stadium",
+        "exam_ko": "돔형 경기[야구]장."
+      }
+    ]
+  },
+  {
+    "id": 16424,
+    "origin": "opaque",
+    "examples": [
+      {
+        "exam_en": "an opaque body",
+        "exam_ko": "불투명체."
+      },
+      {
+        "exam_en": "The window was covered with an opaque curtain, blocking the sunlight.",
+        "exam_ko": "창문은 햇빛을 막기 위해 불투명한 커튼으로 가려져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 16428,
+    "origin": "cue",
+    "examples": [
+      {
+        "exam_en": "The actor always comes out on cue.",
+        "exam_ko": "배우는 언제나 어떤 신호에 의해 등장한다."
+      },
+      {
+        "exam_en": "give a person his cue",
+        "exam_ko": "남에게 암시를 주다, 귀띔해주다."
+      }
+    ]
+  },
+  {
+    "id": 16432,
+    "origin": "lubrication",
+    "examples": [
+      {
+        "exam_en": "Remove excess lubrication, paint and mortar droppings, and other foreign substances.",
+        "exam_ko": "과도한 윤활유, 페인트, 몰탈 떨어진것, 기타 이물질을 제거하세요."
+      }
+    ]
+  },
+  {
+    "id": 16434,
+    "origin": "arbitral",
+    "examples": [
+      {
+        "exam_en": "the arbitral tribunal jury",
+        "exam_ko": "중재 재판소 배심원."
+      }
+    ]
+  }
+]

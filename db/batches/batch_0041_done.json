@@ -1,0 +1,274 @@
+[
+  {
+    "id": 816,
+    "origin": "focus",
+    "examples": [
+      {
+        "exam_en": "The teacher helped students <strong class=\"target-word\">focus</strong> on key ideas.",
+        "exam_ko": "선생님은 학생들이 핵심 개념에 <strong class=\"target-word\">집중하도록</strong> 도왔다."
+      },
+      {
+        "exam_en": "She struggled to <strong class=\"target-word\">focus</strong> during the loud meeting.",
+        "exam_ko": "그녀는 시끄러운 회의 중에 <strong class=\"target-word\">집중하기</strong> 어려웠다."
+      }
+    ]
+  },
+  {
+    "id": 817,
+    "origin": "firm",
+    "examples": [
+      {
+        "exam_en": "The peach felt <strong class=\"target-word\">firm</strong> and fresh at the market.",
+        "exam_ko": "그 복숭아는 시장에서 <strong class=\"target-word\">단단하고</strong> 신선했다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">firm</strong> answer and did not change it.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">단호한</strong> 답변을 하고 바꾸지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 818,
+    "origin": "firework",
+    "examples": [
+      {
+        "exam_en": "Many <strong class=\"target-word\">fireworks</strong> lit up the sky on New Year's Eve.",
+        "exam_ko": "새해 전날 밤 많은 <strong class=\"target-word\">불꽃놀이</strong>가 하늘을 밝혔다."
+      },
+      {
+        "exam_en": "The children watched <strong class=\"target-word\">fireworks</strong> burst over the river.",
+        "exam_ko": "아이들은 강 위에서 터지는 <strong class=\"target-word\">불꽃놀이</strong>를 바라봤다."
+      }
+    ]
+  },
+  {
+    "id": 820,
+    "origin": "fade",
+    "examples": [
+      {
+        "exam_en": "The colors in the old photo began to <strong class=\"target-word\">fade</strong> quickly.",
+        "exam_ko": "오래된 사진의 색이 빠르게 <strong class=\"target-word\">흐려지기</strong> 시작했다."
+      },
+      {
+        "exam_en": "His excitement soon <strong class=\"target-word\">faded</strong> after the bad news.",
+        "exam_ko": "나쁜 소식 후 그의 흥분은 곧 <strong class=\"target-word\">사그라들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 821,
+    "origin": "extremely",
+    "examples": [
+      {
+        "exam_en": "I'm <strong class=\"target-word\">extremely</strong> sorry for the misunderstanding.",
+        "exam_ko": "오해에 대해 <strong class=\"target-word\">정말로</strong> 미안합니다."
+      }
+    ]
+  },
+  {
+    "id": 822,
+    "origin": "factor",
+    "examples": [
+      {
+        "exam_en": "Cost was the main <strong class=\"target-word\">factor</strong> in their decision.",
+        "exam_ko": "비용이 그들의 결정에서 주된 <strong class=\"target-word\">요인</strong>이었다."
+      },
+      {
+        "exam_en": "Wealth was the chief <strong class=\"target-word\">factor</strong> in his success.",
+        "exam_ko": "부가 그의 성공에서 주요 <strong class=\"target-word\">요인</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 823,
+    "origin": "extra",
+    "examples": [
+      {
+        "exam_en": "The hotel charged an <strong class=\"target-word\">extra</strong> fee for late checkout.",
+        "exam_ko": "호텔은 늦은 체크아웃에 <strong class=\"target-word\">추가</strong> 요금을 부과했다."
+      },
+      {
+        "exam_en": "She received <strong class=\"target-word\">extra</strong> pay for working overtime.",
+        "exam_ko": "그녀는 초과 근무로 <strong class=\"target-word\">추가</strong> 수당을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 824,
+    "origin": "evolution",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">evolution</strong> of the novel took centuries.",
+        "exam_ko": "소설의 <strong class=\"target-word\">발전</strong>은 수 세기가 걸렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">evolution</strong> of computer technology has been rapid.",
+        "exam_ko": "컴퓨터 기술의 <strong class=\"target-word\">발달</strong>은 매우 빠르게 이루어졌다."
+      }
+    ]
+  },
+  {
+    "id": 825,
+    "origin": "evident",
+    "examples": [
+      {
+        "exam_en": "The mistake was <strong class=\"target-word\">evident</strong> to everyone in the room.",
+        "exam_ko": "그 실수는 방 안의 모든 사람에게 <strong class=\"target-word\">분명했다</strong>."
+      },
+      {
+        "exam_en": "Her talent was <strong class=\"target-word\">evident</strong> from an early age.",
+        "exam_ko": "그녀의 재능은 어릴 때부터 <strong class=\"target-word\">분명하게</strong> 드러났다."
+      }
+    ]
+  },
+  {
+    "id": 826,
+    "origin": "evidence",
+    "examples": [
+      {
+        "exam_en": "The detective found reliable <strong class=\"target-word\">evidence</strong> at the scene.",
+        "exam_ko": "형사는 현장에서 확실한 <strong class=\"target-word\">증거</strong>를 발견했다."
+      },
+      {
+        "exam_en": "The lawyer presented strong <strong class=\"target-word\">evidence</strong> in court.",
+        "exam_ko": "변호사는 법정에서 강력한 <strong class=\"target-word\">증거</strong>를 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 827,
+    "origin": "evenly",
+    "examples": [
+      {
+        "exam_en": "They divided the money <strong class=\"target-word\">evenly</strong> among the group.",
+        "exam_ko": "그들은 돈을 그룹 내에서 <strong class=\"target-word\">균등하게</strong> 나눴다."
+      },
+      {
+        "exam_en": "The two teams are <strong class=\"target-word\">evenly</strong> matched in skill.",
+        "exam_ko": "두 팀은 실력이 <strong class=\"target-word\">대등하게</strong> 맞붙어 있다."
+      }
+    ]
+  },
+  {
+    "id": 828,
+    "origin": "evade",
+    "examples": [
+      {
+        "exam_en": "The suspect managed to <strong class=\"target-word\">evade</strong> capture for days.",
+        "exam_ko": "그 용의자는 며칠간 체포를 <strong class=\"target-word\">피하는</strong> 데 성공했다."
+      },
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">evade</strong> the reporter's direct question.",
+        "exam_ko": "그는 기자의 직접적인 질문을 <strong class=\"target-word\">회피하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 829,
+    "origin": "evacuate",
+    "examples": [
+      {
+        "exam_en": "Firefighters ordered everyone to <strong class=\"target-word\">evacuate</strong> the building.",
+        "exam_ko": "소방관들은 모두에게 건물을 <strong class=\"target-word\">대피하라고</strong> 명령했다."
+      },
+      {
+        "exam_en": "Children were <strong class=\"target-word\">evacuated</strong> from cities to the countryside.",
+        "exam_ko": "아이들은 도시에서 시골로 <strong class=\"target-word\">피난했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 830,
+    "origin": "estimate",
+    "examples": [
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">estimate</strong> the cost of the trip.",
+        "exam_ko": "그녀는 여행 경비를 <strong class=\"target-word\">어림잡으려</strong> 했다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">estimated</strong> the damage at five million dollars.",
+        "exam_ko": "나는 피해액을 5백만 달러로 <strong class=\"target-word\">추정했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 831,
+    "origin": "establishment",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">establishment</strong> of a new university took years.",
+        "exam_ko": "새 대학의 <strong class=\"target-word\">설립</strong>에는 수년이 걸렸다."
+      },
+      {
+        "exam_en": "The two countries celebrated the <strong class=\"target-word\">establishment</strong> of diplomatic relations.",
+        "exam_ko": "두 나라는 외교 관계의 <strong class=\"target-word\">수립</strong>을 축하했다."
+      }
+    ]
+  },
+  {
+    "id": 832,
+    "origin": "escort",
+    "examples": [
+      {
+        "exam_en": "The VIP was provided with a security <strong class=\"target-word\">escort</strong>.",
+        "exam_ko": "그 중요 인물은 경호 <strong class=\"target-word\">호위</strong>를 받았다."
+      },
+      {
+        "exam_en": "The queen was <strong class=\"target-word\">escorted</strong> by soldiers everywhere.",
+        "exam_ko": "여왕은 어디서나 병사들에게 <strong class=\"target-word\">호위를 받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 833,
+    "origin": "escalate",
+    "examples": [
+      {
+        "exam_en": "Both sides feared the conflict would <strong class=\"target-word\">escalate</strong> into war.",
+        "exam_ko": "양측은 갈등이 전쟁으로 <strong class=\"target-word\">확대될</strong>까 두려워했다."
+      },
+      {
+        "exam_en": "The cost of living is <strong class=\"target-word\">escalating</strong> every year.",
+        "exam_ko": "생활비가 매년 <strong class=\"target-word\">상승하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 834,
+    "origin": "eager",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">eager</strong> to start her new job.",
+        "exam_ko": "그녀는 새 직장을 시작하기를 <strong class=\"target-word\">열망했다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">eager</strong> in his studies every day.",
+        "exam_ko": "그는 매일 공부에 <strong class=\"target-word\">열심이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 835,
+    "origin": "durability",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">durability</strong> of concrete depends on its grade.",
+        "exam_ko": "콘크리트의 <strong class=\"target-word\">내구성</strong>은 등급에 따라 달라진다."
+      }
+    ]
+  },
+  {
+    "id": 836,
+    "origin": "due",
+    "examples": [
+      {
+        "exam_en": "The payment is <strong class=\"target-word\">due</strong> by the end of the month.",
+        "exam_ko": "납부금은 월말까지 <strong class=\"target-word\">지불해야 한다</strong>."
+      },
+      {
+        "exam_en": "The loan became <strong class=\"target-word\">due</strong> after one year.",
+        "exam_ko": "대출금은 1년 후 <strong class=\"target-word\">만기가 되었다</strong>."
+      }
+    ]
+  }
+]

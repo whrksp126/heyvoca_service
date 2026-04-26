@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1594,
+    "origin": "circulate",
+    "examples": [
+      {
+        "exam_en": "Blood <strong class=\"target-word\">circulates</strong> through the body.",
+        "exam_ko": "피는 체내를 <strong class=\"target-word\">순환한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">circulated</strong> from table to table at the party.",
+        "exam_ko": "그는 파티에서 이 식탁 저 식탁을 <strong class=\"target-word\">누비고 다녔다</strong>."
+      },
+      {
+        "exam_en": "Swimming helps blood <strong class=\"target-word\">circulate</strong> through the muscles.",
+        "exam_ko": "수영은 혈액이 근육을 통해 <strong class=\"target-word\">순환하도록</strong> 돕는다."
+      }
+    ]
+  },
+  {
+    "id": 1595,
+    "origin": "sum",
+    "examples": [
+      {
+        "exam_en": "She calculated the <strong class=\"target-word\">sum</strong> of all expenses.",
+        "exam_ko": "그녀는 모든 비용의 <strong class=\"target-word\">합계</strong>를 계산했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">sum</strong> of 7 and 9 is 16.",
+        "exam_ko": "7과 9의 <strong class=\"target-word\">합</strong>은 16이다."
+      }
+    ]
+  },
+  {
+    "id": 1596,
+    "origin": "stem",
+    "examples": [
+      {
+        "exam_en": "His illness <strong class=\"target-word\">stems</strong> from a car accident.",
+        "exam_ko": "그의 병의 근원은 교통 사고에서 <strong class=\"target-word\">비롯된다</strong>."
+      },
+      {
+        "exam_en": "The guards <strong class=\"target-word\">stemmed</strong> the enemy attack.",
+        "exam_ko": "경비원들이 적의 공격을 <strong class=\"target-word\">저지했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1597,
+    "origin": "weaken",
+    "examples": [
+      {
+        "exam_en": "Age had <strong class=\"target-word\">weakened</strong> his eyesight significantly.",
+        "exam_ko": "나이가 들어 그의 시력이 크게 <strong class=\"target-word\">약해졌다</strong>."
+      },
+      {
+        "exam_en": "Fatigue <strong class=\"target-word\">weakened</strong> her resistance.",
+        "exam_ko": "피로가 그녀의 저항력을 <strong class=\"target-word\">약하게 만들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1598,
+    "origin": "shed",
+    "examples": [
+      {
+        "exam_en": "The farmer kept his tools in the <strong class=\"target-word\">shed</strong>.",
+        "exam_ko": "농부는 창고에 도구를 <strong class=\"target-word\">보관했다</strong>."
+      },
+      {
+        "exam_en": "The snake <strong class=\"target-word\">shed</strong> its skin in the grass.",
+        "exam_ko": "뱀이 풀밭에서 허물을 <strong class=\"target-word\">벗었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1599,
+    "origin": "slip",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">slipped</strong> on the wet floor.",
+        "exam_ko": "그녀는 젖은 바닥에서 <strong class=\"target-word\">미끄러졌다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slipped</strong> a note under the door.",
+        "exam_ko": "그는 문 아래로 쪽지를 <strong class=\"target-word\">슬쩍 넣었다</strong>."
+      },
+      {
+        "exam_en": "The cup <strong class=\"target-word\">slipped</strong> from her hand.",
+        "exam_ko": "컵이 그녀의 손에서 <strong class=\"target-word\">미끄러져 떨어졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1600,
+    "origin": "hate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">hates</strong> violence in any form.",
+        "exam_ko": "그녀는 어떤 형태의 폭력도 <strong class=\"target-word\">몹시 싫어한다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">hate</strong> injustice.",
+        "exam_ko": "나는 부정이 <strong class=\"target-word\">질색이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1601,
+    "origin": "count",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">counted</strong> the students' heads.",
+        "exam_ko": "선생님이 학생 수를 <strong class=\"target-word\">세었다</strong>."
+      },
+      {
+        "exam_en": "Every vote <strong class=\"target-word\">counts</strong> in this election.",
+        "exam_ko": "이번 선거에서는 한 표 한 표가 <strong class=\"target-word\">중요하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1602,
+    "origin": "lean",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">leaned</strong> forward to hear him better.",
+        "exam_ko": "그녀는 그의 말을 잘 듣기 위해 앞으로 <strong class=\"target-word\">몸을 기울였다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">leaned</strong> against the wall to rest.",
+        "exam_ko": "그는 쉬기 위해 벽에 <strong class=\"target-word\">기댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1603,
+    "origin": "exercise",
+    "examples": [
+      {
+        "exam_en": "She does outdoor <strong class=\"target-word\">exercises</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 야외 <strong class=\"target-word\">운동</strong>을 한다."
+      },
+      {
+        "exam_en": "Gymnastic <strong class=\"target-word\">exercises</strong> improve flexibility.",
+        "exam_ko": "체조 <strong class=\"target-word\">운동</strong>은 유연성을 향상시킨다."
+      }
+    ]
+  },
+  {
+    "id": 1604,
+    "origin": "roll",
+    "examples": [
+      {
+        "exam_en": "The ball <strong class=\"target-word\">rolled</strong> down the hill.",
+        "exam_ko": "공이 언덕 아래로 <strong class=\"target-word\">굴러갔다</strong>."
+      },
+      {
+        "exam_en": "The dog <strong class=\"target-word\">rolled</strong> over on the grass.",
+        "exam_ko": "개가 잔디 위에서 <strong class=\"target-word\">한 바퀴 굴렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1605,
+    "origin": "attach",
+    "examples": [
+      {
+        "exam_en": "A strong link <strong class=\"target-word\">attaches</strong> the individual to the whole.",
+        "exam_ko": "강한 유대가 개체를 전체에 <strong class=\"target-word\">결합시킨다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">attached</strong> a caboose to the freight train.",
+        "exam_ko": "그는 화물 열차에 승무원차를 <strong class=\"target-word\">연결했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1606,
+    "origin": "house",
+    "examples": [
+      {
+        "exam_en": "They moved into a two-story <strong class=\"target-word\">house</strong> last year.",
+        "exam_ko": "그들은 작년에 2층짜리 <strong class=\"target-word\">집</strong>으로 이사했다."
+      },
+      {
+        "exam_en": "He built a wooden <strong class=\"target-word\">house</strong> near the lake.",
+        "exam_ko": "그는 호수 근처에 목조 <strong class=\"target-word\">가옥</strong>을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 1607,
+    "origin": "accuse",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">accused</strong> of treason by the court.",
+        "exam_ko": "그는 법원에서 반역죄로 <strong class=\"target-word\">기소되었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">accused</strong> him of committing fraud.",
+        "exam_ko": "그녀는 그를 사기죄로 <strong class=\"target-word\">고발했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1608,
+    "origin": "judge",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">judge</strong> delivered the verdict this morning.",
+        "exam_ko": "<strong class=\"target-word\">판사</strong>가 오늘 아침 판결을 선고했다."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">judge</strong> a person by their appearance.",
+        "exam_ko": "외모로 사람을 <strong class=\"target-word\">판단하지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 1609,
+    "origin": "bind",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">bound</strong> the captive's hands and feet.",
+        "exam_ko": "그들은 포로의 손발을 <strong class=\"target-word\">묶었다</strong>."
+      },
+      {
+        "exam_en": "The prisoner was <strong class=\"target-word\">bound</strong> with chains.",
+        "exam_ko": "죄수는 사슬로 <strong class=\"target-word\">묶였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1610,
+    "origin": "stretch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">stretched</strong> her limbs after waking up.",
+        "exam_ko": "그녀는 일어나서 팔다리를 <strong class=\"target-word\">쭉 뻗었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">stretched</strong> out a helping hand.",
+        "exam_ko": "그는 도움의 손을 <strong class=\"target-word\">뻗쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1611,
+    "origin": "comment",
+    "examples": [
+      {
+        "exam_en": "He left a <strong class=\"target-word\">comment</strong> on the article.",
+        "exam_ko": "그는 기사에 <strong class=\"target-word\">댓글</strong>을 남겼다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">comment</strong> about the plan was biting.",
+        "exam_ko": "계획에 대한 그녀의 <strong class=\"target-word\">비평</strong>은 신랄했다."
+      }
+    ]
+  },
+  {
+    "id": 1612,
+    "origin": "withdraw",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">withdrew</strong> from the competition.",
+        "exam_ko": "그녀는 대회에서 <strong class=\"target-word\">물러났다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">withdrew</strong> his eyes from the scene.",
+        "exam_ko": "그는 광경에서 시선을 <strong class=\"target-word\">돌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1613,
+    "origin": "exclude",
+    "examples": [
+      {
+        "exam_en": "The port authority <strong class=\"target-word\">excluded</strong> the ship from entry.",
+        "exam_ko": "항만 당국이 배의 입항을 <strong class=\"target-word\">차단했다</strong>."
+      },
+      {
+        "exam_en": "Perfect faith <strong class=\"target-word\">excludes</strong> doubt.",
+        "exam_ko": "완전한 믿음은 의심을 <strong class=\"target-word\">차단한다</strong>."
+      }
+    ]
+  }
+]

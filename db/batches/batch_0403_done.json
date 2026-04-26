@@ -1,0 +1,282 @@
+[
+  {
+    "id": 11097,
+    "origin": "diplomacy",
+    "examples": [
+      {
+        "exam_en": "The two nations resolved the conflict through <strong class=\"target-word\">diplomacy</strong>.",
+        "exam_ko": "두 나라는 <strong class=\"target-word\">외교</strong>를 통해 갈등을 해결했다."
+      },
+      {
+        "exam_en": "She handled the tense meeting with great <strong class=\"target-word\">diplomacy</strong>.",
+        "exam_ko": "그녀는 긴장된 회의를 훌륭한 <strong class=\"target-word\">외교적 수완</strong>으로 이끌었다."
+      }
+    ]
+  },
+  {
+    "id": 11101,
+    "origin": "virginal",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">virginal</strong> purity that charmed everyone.",
+        "exam_ko": "그녀는 모든 사람을 매료시키는 <strong class=\"target-word\">처녀다운</strong> 청순함을 지니고 있었다."
+      },
+      {
+        "exam_en": "The landscape looked <strong class=\"target-word\">virginal</strong> after the fresh snowfall.",
+        "exam_ko": "신선한 눈이 내린 후 그 풍경은 <strong class=\"target-word\">순결한</strong> 모습이었다."
+      }
+    ]
+  },
+  {
+    "id": 11102,
+    "origin": "un",
+    "examples": [
+      {
+        "exam_en": "The prefix <strong class=\"target-word\">un</strong>- makes words mean the opposite.",
+        "exam_ko": "접두사 <strong class=\"target-word\">un</strong>-은 단어의 의미를 반대로 만든다."
+      },
+      {
+        "exam_en": "Words like <strong class=\"target-word\">un</strong>happy and <strong class=\"target-word\">un</strong>fair use this prefix.",
+        "exam_ko": "<strong class=\"target-word\">un</strong>happy나 <strong class=\"target-word\">un</strong>fair 같은 단어가 이 접두사를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 11103,
+    "origin": "inconsolable",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">inconsolable</strong> after losing his dog.",
+        "exam_ko": "그는 개를 잃고 나서 <strong class=\"target-word\">위로받을 수 없을</strong> 만큼 슬퍼했다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">inconsolable</strong> at the loss of her son.",
+        "exam_ko": "그녀는 아들을 잃어 몹시 <strong class=\"target-word\">낙담하고</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 11108,
+    "origin": "ad",
+    "examples": [
+      {
+        "exam_en": "She placed a want <strong class=\"target-word\">ad</strong> in the newspaper.",
+        "exam_ko": "그녀는 신문에 모집 <strong class=\"target-word\">광고</strong>를 실었다."
+      },
+      {
+        "exam_en": "They bought a full-page <strong class=\"target-word\">ad</strong> in the magazine.",
+        "exam_ko": "그들은 잡지에 전면 <strong class=\"target-word\">광고</strong>를 구입했다."
+      }
+    ]
+  },
+  {
+    "id": 11109,
+    "origin": "labored",
+    "examples": [
+      {
+        "exam_en": "The patient showed <strong class=\"target-word\">labored</strong> movements after the surgery.",
+        "exam_ko": "환자는 수술 후 <strong class=\"target-word\">굼뜬</strong> 동작을 보였다."
+      },
+      {
+        "exam_en": "His speech was <strong class=\"target-word\">labored</strong>.",
+        "exam_ko": "그의 연설은 <strong class=\"target-word\">부자연스러웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11117,
+    "origin": "jealousy",
+    "examples": [
+      {
+        "exam_en": "She was consumed with <strong class=\"target-word\">jealousy</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">질투심</strong>에 불타고 있었다."
+      },
+      {
+        "exam_en": "His success aroused <strong class=\"target-word\">jealousy</strong> among his colleagues.",
+        "exam_ko": "그의 성공은 동료들 사이에 <strong class=\"target-word\">질투</strong>를 불러일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 11118,
+    "origin": "arrangement",
+    "examples": [
+      {
+        "exam_en": "She learned flower <strong class=\"target-word\">arrangement</strong> at the local studio.",
+        "exam_ko": "그녀는 동네 스튜디오에서 꽃 <strong class=\"target-word\">꽂이</strong>를 배웠다."
+      },
+      {
+        "exam_en": "The room <strong class=\"target-word\">arrangement</strong> made the space feel larger.",
+        "exam_ko": "방 <strong class=\"target-word\">배치</strong>가 공간을 더 넓어 보이게 했다."
+      }
+    ]
+  },
+  {
+    "id": 11119,
+    "origin": "concur",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">concur</strong> with his view on many points.",
+        "exam_ko": "나는 많은 점에서 그의 견해에 <strong class=\"target-word\">동의한다</strong>."
+      },
+      {
+        "exam_en": "Our anniversary <strong class=\"target-word\">concurred</strong> with my birthday.",
+        "exam_ko": "우리의 기념일이 내 생일과 <strong class=\"target-word\">겹쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11120,
+    "origin": "usurp",
+    "examples": [
+      {
+        "exam_en": "The general tried to <strong class=\"target-word\">usurp</strong> the throne by force.",
+        "exam_ko": "그 장군은 무력으로 왕위를 <strong class=\"target-word\">찬탈하려</strong> 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">usurped</strong> another company's patent rights.",
+        "exam_ko": "그는 다른 회사의 특허권을 <strong class=\"target-word\">도용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11122,
+    "origin": "humanly",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Humanly</strong> speaking, perfection is impossible.",
+        "exam_ko": "<strong class=\"target-word\">인간적인</strong> 관점에서 보면 완벽함은 불가능하다."
+      },
+      {
+        "exam_en": "They did everything <strong class=\"target-word\">humanly</strong> possible to save him.",
+        "exam_ko": "그들은 그를 살리기 위해 <strong class=\"target-word\">인력으로</strong> 가능한 모든 것을 다했다."
+      }
+    ]
+  },
+  {
+    "id": 11123,
+    "origin": "butcher",
+    "examples": [
+      {
+        "exam_en": "Hitler was as great a <strong class=\"target-word\">butcher</strong> as the world has seen.",
+        "exam_ko": "히틀러는 세계 역사상 최대의 <strong class=\"target-word\">학살자</strong>였다."
+      },
+      {
+        "exam_en": "She bought fresh meat from the local <strong class=\"target-word\">butcher</strong>.",
+        "exam_ko": "그녀는 동네 <strong class=\"target-word\">정육점</strong>에서 신선한 고기를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 11125,
+    "origin": "humiliating",
+    "examples": [
+      {
+        "exam_en": "Losing the match in public was a <strong class=\"target-word\">humiliating</strong> experience.",
+        "exam_ko": "공개적으로 시합에서 지는 것은 <strong class=\"target-word\">굴욕적인</strong> 경험이었다."
+      },
+      {
+        "exam_en": "He found the criticism deeply <strong class=\"target-word\">humiliating</strong>.",
+        "exam_ko": "그는 그 비판이 몹시 <strong class=\"target-word\">굴욕적이라고</strong> 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 11128,
+    "origin": "ambassador",
+    "examples": [
+      {
+        "exam_en": "She was appointed the Korean <strong class=\"target-word\">Ambassador</strong> to Great Britain.",
+        "exam_ko": "그녀는 주영 한국 <strong class=\"target-word\">대사</strong>로 임명되었다."
+      },
+      {
+        "exam_en": "The U.S. <strong class=\"target-word\">Ambassador</strong> held a reception in Seoul.",
+        "exam_ko": "서울 주재 미국 <strong class=\"target-word\">대사</strong>가 리셉션을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 11130,
+    "origin": "seclusion",
+    "examples": [
+      {
+        "exam_en": "The country adopted a policy of <strong class=\"target-word\">seclusion</strong> for centuries.",
+        "exam_ko": "그 나라는 수세기 동안 <strong class=\"target-word\">쇄국</strong> 정책을 유지했다."
+      },
+      {
+        "exam_en": "She longed for <strong class=\"target-word\">seclusion</strong> after years of fame.",
+        "exam_ko": "그녀는 수년간의 명성 이후 <strong class=\"target-word\">은둔</strong>을 갈망했다."
+      }
+    ]
+  },
+  {
+    "id": 11135,
+    "origin": "beseech",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">beseeched</strong> the judge for mercy.",
+        "exam_ko": "그는 판사에게 자비를 <strong class=\"target-word\">간청했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">beseech</strong> you to forgive me.",
+        "exam_ko": "제발 저를 용서해 주시기를 <strong class=\"target-word\">간청합니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11136,
+    "origin": "heir",
+    "examples": [
+      {
+        "exam_en": "He is the <strong class=\"target-word\">heir</strong> to a large fortune.",
+        "exam_ko": "그는 많은 재산의 <strong class=\"target-word\">상속인</strong>이다."
+      },
+      {
+        "exam_en": "She fell <strong class=\"target-word\">heir</strong> to the family estate.",
+        "exam_ko": "그녀는 가문의 재산을 <strong class=\"target-word\">상속받게</strong> 되었다."
+      }
+    ]
+  },
+  {
+    "id": 11139,
+    "origin": "previously",
+    "examples": [
+      {
+        "exam_en": "He had visited the city three weeks <strong class=\"target-word\">previously</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">이전에</strong> 삼 주 전 그 도시를 방문했었다."
+      },
+      {
+        "exam_en": "I had met her <strong class=\"target-word\">previously</strong>.",
+        "exam_ko": "나는 그녀를 <strong class=\"target-word\">전에</strong> 만난 적이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 11140,
+    "origin": "bestow",
+    "examples": [
+      {
+        "exam_en": "The king <strong class=\"target-word\">bestowed</strong> a medal upon the brave soldier.",
+        "exam_ko": "왕은 용감한 병사에게 훈장을 <strong class=\"target-word\">수여했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bestowed</strong> much time on completing the project.",
+        "exam_ko": "그녀는 프로젝트를 완성하는 데 많은 시간을 <strong class=\"target-word\">쏟았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11141,
+    "origin": "contrary",
+    "examples": [
+      {
+        "exam_en": "They held <strong class=\"target-word\">contrary</strong> opinions on the issue.",
+        "exam_ko": "그들은 그 문제에 대해 <strong class=\"target-word\">반대되는</strong> 의견을 가지고 있었다."
+      },
+      {
+        "exam_en": "The result was <strong class=\"target-word\">contrary</strong> to our plan.",
+        "exam_ko": "결과는 우리의 계획과 <strong class=\"target-word\">정반대였다</strong>."
+      }
+    ]
+  }
+]

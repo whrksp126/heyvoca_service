@@ -1,0 +1,246 @@
+[
+  {
+    "id": 17692,
+    "origin": "unfit",
+    "examples": [
+      {
+        "exam_en": "soil unfit for potatoes",
+        "exam_ko": "감자에는 부적당한 토양"
+      },
+      {
+        "exam_en": "unfit for consumption",
+        "exam_ko": "소비[정주]에 부적당한"
+      }
+    ]
+  },
+  {
+    "id": 17694,
+    "origin": "generative",
+    "examples": [
+      {
+        "exam_en": "a generative cell",
+        "exam_ko": "생식 세포."
+      }
+    ]
+  },
+  {
+    "id": 17698,
+    "origin": "millet",
+    "examples": [
+      {
+        "exam_en": "a field of millet",
+        "exam_ko": "수수밭."
+      }
+    ]
+  },
+  {
+    "id": 17707,
+    "origin": "flowered",
+    "examples": [
+      {
+        "exam_en": "double-flowered",
+        "exam_ko": "중판화의, 겹꽃이 피는."
+      },
+      {
+        "exam_en": "flowered dress material",
+        "exam_ko": "꽃무늬가 있는 드레스 감."
+      }
+    ]
+  },
+  {
+    "id": 17708,
+    "origin": "haste",
+    "examples": [
+      {
+        "exam_en": "with great haste",
+        "exam_ko": "급히 서둘러"
+      },
+      {
+        "exam_en": "be in haste to do",
+        "exam_ko": "…하기 위해 서두르고 있다"
+      }
+    ]
+  },
+  {
+    "id": 17709,
+    "origin": "admitted",
+    "examples": [
+      {
+        "exam_en": "an admitted fact",
+        "exam_ko": "공공연한 사실."
+      }
+    ]
+  },
+  {
+    "id": 17710,
+    "origin": "idleness",
+    "examples": [
+      {
+        "exam_en": "tolerate a person's idleness",
+        "exam_ko": "남의 게으름을 너그러이 보아주다"
+      },
+      {
+        "exam_en": "Of idleness comes no goodness.",
+        "exam_ko": "나태에서 가치 있는 것은 어떤 것도 나오지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 17714,
+    "origin": "roaring",
+    "examples": [
+      {
+        "exam_en": "roaring applause",
+        "exam_ko": "떠나갈 듯한 갈채"
+      },
+      {
+        "exam_en": "a roaring party",
+        "exam_ko": "떠들썩하게 흥청대는 파티."
+      }
+    ]
+  },
+  {
+    "id": 17718,
+    "origin": "remembrance",
+    "examples": [
+      {
+        "exam_en": "to the best of my remembrance",
+        "exam_ko": "내가 기억하는[아는] 한"
+      },
+      {
+        "exam_en": "bring back one's remembrance of the event",
+        "exam_ko": "그 사건의 기억을 되살리다"
+      }
+    ]
+  },
+  {
+    "id": 17719,
+    "origin": "indefinitely",
+    "examples": [
+      {
+        "exam_en": "put off one's departure indefinitely",
+        "exam_ko": "출발을 무기 연기하다."
+      }
+    ]
+  },
+  {
+    "id": 17720,
+    "origin": "yardstick",
+    "examples": [
+      {
+        "exam_en": "the yardstick of success",
+        "exam_ko": "성공의 척도."
+      }
+    ]
+  },
+  {
+    "id": 17722,
+    "origin": "thine",
+    "examples": [
+      {
+        "exam_en": "This chamber is thine.",
+        "exam_ko": "이 방은 그대의 것이니라."
+      },
+      {
+        "exam_en": "thine enemies",
+        "exam_ko": "그대의 적"
+      }
+    ]
+  },
+  {
+    "id": 17724,
+    "origin": "learner",
+    "examples": [
+      {
+        "exam_en": "advanced  learners",
+        "exam_ko": "상급[중급, 초급]학습자"
+      },
+      {
+        "exam_en": "a fast learner",
+        "exam_ko": "학습 속도가 빠른[느린] 사람."
+      }
+    ]
+  },
+  {
+    "id": 17725,
+    "origin": "necessarily",
+    "examples": [
+      {
+        "exam_en": "I don't necessarily need another car.",
+        "exam_ko": "나는 반드시 차를 또 하나 필요로 하는 것은 아니다"
+      },
+      {
+        "exam_en": "Money does not necessarily bring happiness.",
+        "exam_ko": "돈이 반드시 행복을 가져다주는 것은 아니다."
+      }
+    ]
+  },
+  {
+    "id": 17727,
+    "origin": "foolproof",
+    "examples": [
+      {
+        "exam_en": "a foolproof camera",
+        "exam_ko": "조작이 간단한 카메라"
+      },
+      {
+        "exam_en": "The bank has a foolproof security system.",
+        "exam_ko": "그 은행에는 확실한 안전 장치가 있다."
+      }
+    ]
+  },
+  {
+    "id": 17729,
+    "origin": "sincerity",
+    "examples": [
+      {
+        "exam_en": "speak in all sincerity",
+        "exam_ko": "성실[진실]하게 말하다."
+      }
+    ]
+  },
+  {
+    "id": 17730,
+    "origin": "intercom",
+    "examples": [
+      {
+        "exam_en": "He came on the intercom.",
+        "exam_ko": "인터컴에서 그의 목소리가 들려왔다."
+      }
+    ]
+  },
+  {
+    "id": 17731,
+    "origin": "reunite",
+    "examples": [
+      {
+        "exam_en": "The mother will be reunited with her child.",
+        "exam_ko": "어머니는 자식과 다시 결합될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 17734,
+    "origin": "interrogative",
+    "examples": [
+      {
+        "exam_en": "an interrogative tone of voice",
+        "exam_ko": "무엇인가 묻고 싶어하는 어조."
+      },
+      {
+        "exam_en": "an interrogative pronoun",
+        "exam_ko": "의문 대명사[형용사, 부사, 문]."
+      }
+    ]
+  },
+  {
+    "id": 17735,
+    "origin": "abstraction",
+    "examples": [
+      {
+        "exam_en": "The artist's painting was an abstraction of emotions, using bold strokes and vibrant colors.",
+        "exam_ko": "그 화가의 그림은 감정의 추상화로, 대담한 획과 화려한 색상을 사용했다."
+      }
+    ]
+  }
+]

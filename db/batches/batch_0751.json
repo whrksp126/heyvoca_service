@@ -1,0 +1,214 @@
+[
+  {
+    "id": 43583,
+    "origin": "domiciled",
+    "examples": [
+      {
+        "exam_en": "a domiciled bill",
+        "exam_ko": "지급지 지정 어음."
+      }
+    ]
+  },
+  {
+    "id": 43595,
+    "origin": "livered",
+    "examples": [
+      {
+        "exam_en": "a lily-livered man",
+        "exam_ko": "겁쟁이."
+      }
+    ]
+  },
+  {
+    "id": 43607,
+    "origin": "xenial",
+    "examples": [
+      {
+        "exam_en": "The host's xenial nature made everyone feel welcome and comfortable.",
+        "exam_ko": "호스트의 친절한 성격은 모두가 환영받고 편안하게 느끼게 했다."
+      }
+    ]
+  },
+  {
+    "id": 43616,
+    "origin": "halidom",
+    "examples": [
+      {
+        "exam_en": "by my halidom",
+        "exam_ko": "맹세코."
+      }
+    ]
+  },
+  {
+    "id": 43617,
+    "origin": "thereunder",
+    "examples": [
+      {
+        "exam_en": "They were thirty years old and thereunder.",
+        "exam_ko": "그들은 30세 및 그 이하였다."
+      }
+    ]
+  },
+  {
+    "id": 43629,
+    "origin": "hie",
+    "examples": [
+      {
+        "exam_en": "Hie yourself to work.",
+        "exam_ko": "서둘러 일하러 가라."
+      }
+    ]
+  },
+  {
+    "id": 43639,
+    "origin": "ere",
+    "examples": [
+      {
+        "exam_en": "ere long",
+        "exam_ko": "이윽고, 머지않아."
+      },
+      {
+        "exam_en": "ere  too late",
+        "exam_ko": "때늦기 전에."
+      }
+    ]
+  },
+  {
+    "id": 43656,
+    "origin": "roundup",
+    "examples": [
+      {
+        "exam_en": "a roundup of vagrants",
+        "exam_ko": "부랑자 일제 검거."
+      }
+    ]
+  },
+  {
+    "id": 43681,
+    "origin": "bc",
+    "examples": [
+      {
+        "exam_en": "35 B.C.",
+        "exam_ko": "기원전 35년(에)."
+      }
+    ]
+  },
+  {
+    "id": 43750,
+    "origin": "copestone",
+    "examples": [
+      {
+        "exam_en": "the copestone of one's achievements",
+        "exam_ko": "금상첨화격인 업적."
+      }
+    ]
+  },
+  {
+    "id": 43755,
+    "origin": "athirst",
+    "examples": [
+      {
+        "exam_en": "He is athirst for your telephone.",
+        "exam_ko": "그는 네 전화를 애타게 기다리고 있다."
+      }
+    ]
+  },
+  {
+    "id": 43756,
+    "origin": "agoing",
+    "examples": [
+      {
+        "exam_en": "set agoing",
+        "exam_ko": "(…을) 움직이다, 시작하다."
+      }
+    ]
+  },
+  {
+    "id": 43757,
+    "origin": "sprat",
+    "examples": [
+      {
+        "exam_en": "throw a sprat to catch a herring",
+        "exam_ko": "(비유) 새우로 도미를 낚다."
+      }
+    ]
+  },
+  {
+    "id": 43812,
+    "origin": "octagonal",
+    "examples": [
+      {
+        "exam_en": "the octagonal tower",
+        "exam_ko": "팔각형의 탑."
+      }
+    ]
+  },
+  {
+    "id": 43820,
+    "origin": "furred",
+    "examples": [
+      {
+        "exam_en": "a furred gown",
+        "exam_ko": "모피를 댄 가운"
+      },
+      {
+        "exam_en": "a furred lady in ermine",
+        "exam_ko": "흰담비 모피 코트를 입은 부인."
+      }
+    ]
+  },
+  {
+    "id": 43831,
+    "origin": "ibs",
+    "examples": [
+      {
+        "exam_en": "One of the commonest foods found to cause IBS was wheat.",
+        "exam_ko": "IBS를 유발하는 가장 흔한 식품들 중 하나가 밀인 것으로 밝혀졌다."
+      }
+    ]
+  },
+  {
+    "id": 43846,
+    "origin": "irresponsive",
+    "examples": [
+      {
+        "exam_en": "irresponsive to control",
+        "exam_ko": "제어가 통하지 않는."
+      }
+    ]
+  },
+  {
+    "id": 43849,
+    "origin": "unimpassioned",
+    "examples": [
+      {
+        "exam_en": "an unimpassioned presentation of the facts",
+        "exam_ko": "진실의 냉철한 기술(記述)."
+      }
+    ]
+  },
+  {
+    "id": 43850,
+    "origin": "unformed",
+    "examples": [
+      {
+        "exam_en": "an unformed fetus",
+        "exam_ko": "미성숙한 태아"
+      },
+      {
+        "exam_en": "an unformed scribble",
+        "exam_ko": "마구 휘갈겨 쓴 글."
+      }
+    ]
+  },
+  {
+    "id": 43864,
+    "origin": "irretention",
+    "examples": [
+      {
+        "exam_en": "irretention of urine",
+        "exam_ko": "요실금(尿失禁)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "id": 13052,
+    "origin": "earnest",
+    "examples": [
+      {
+        "exam_en": "an earnest student",
+        "exam_ko": "성실한 학생"
+      },
+      {
+        "exam_en": "an earnest believer",
+        "exam_ko": "열성적인 신자[기독교도]"
+      }
+    ]
+  },
+  {
+    "id": 13054,
+    "origin": "purposefully",
+    "examples": [
+      {
+        "exam_en": "He strode purposefully towards the barn.",
+        "exam_ko": "그는 의도적으로 헛간 쪽으로 성큼성큼 걸어갔다."
+      }
+    ]
+  },
+  {
+    "id": 13057,
+    "origin": "dialogue",
+    "examples": [
+      {
+        "exam_en": "a short dialogue between Hamlet and his mother",
+        "exam_ko": "햄릿과 그의 어머니 사이의 짧은 대화."
+      },
+      {
+        "exam_en": "the dialogues of Plato",
+        "exam_ko": "플라톤의 대화편"
+      }
+    ]
+  },
+  {
+    "id": 13058,
+    "origin": "modal",
+    "examples": [
+      {
+        "exam_en": "modal adverbs",
+        "exam_ko": "법부사."
+      },
+      {
+        "exam_en": "modal logic",
+        "exam_ko": "양상 논리학."
+      }
+    ]
+  },
+  {
+    "id": 13060,
+    "origin": "hap",
+    "examples": [
+      {
+        "exam_en": "if it so haps",
+        "exam_ko": "어쩌다 그런 일이 일어난다면."
+      }
+    ]
+  },
+  {
+    "id": 13061,
+    "origin": "debar",
+    "examples": [
+      {
+        "exam_en": "He was debarred from voting.",
+        "exam_ko": "그는 투표에서 제외되었다."
+      }
+    ]
+  },
+  {
+    "id": 13063,
+    "origin": "expel",
+    "examples": [
+      {
+        "exam_en": "expel the gas from an old well",
+        "exam_ko": "낡은 우물에서 가스를 방출하다"
+      },
+      {
+        "exam_en": "expel water from a person's lungs",
+        "exam_ko": "폐에 들어간 물을 제거하다"
+      }
+    ]
+  },
+  {
+    "id": 13064,
+    "origin": "satan",
+    "examples": [
+      {
+        "exam_en": "He is as sinful as Satan.",
+        "exam_ko": "그는 악마 못지않은 악당이다."
+      }
+    ]
+  },
+  {
+    "id": 13065,
+    "origin": "horoscope",
+    "examples": [
+      {
+        "exam_en": "cast a horoscope",
+        "exam_ko": "점성술로 점을 치다, 점성도를 만들다."
+      }
+    ]
+  },
+  {
+    "id": 13069,
+    "origin": "turned",
+    "examples": [
+      {
+        "exam_en": "a turned letter",
+        "exam_ko": "(활자의) 거꾸로 된 글자; 복자(伏字)."
+      }
+    ]
+  },
+  {
+    "id": 13074,
+    "origin": "advised",
+    "examples": [
+      {
+        "exam_en": "ill-advised",
+        "exam_ko": "무분별한[현명한]."
+      },
+      {
+        "exam_en": "Please keep me advised of your travel plans.",
+        "exam_ko": "당신의 여행 계획을 내게 연락해 주시오."
+      }
+    ]
+  },
+  {
+    "id": 13075,
+    "origin": "assay",
+    "examples": [
+      {
+        "exam_en": "assay one's ability",
+        "exam_ko": "자기의 능력을 시험해 보다."
+      },
+      {
+        "exam_en": "assay the circumstances",
+        "exam_ko": "상황을 분석하다"
+      }
+    ]
+  },
+  {
+    "id": 13076,
+    "origin": "silymarin",
+    "examples": [
+      {
+        "exam_en": "I am currently taking two 450mg capsules of silymarin a day.",
+        "exam_ko": "나는 현재 하루에 450 밀리그램짜리 실리마린 캡슐 두 알씩을 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 13077,
+    "origin": "massage",
+    "examples": [
+      {
+        "exam_en": "give a massage",
+        "exam_ko": "마사지[안마]를 해 주다[받다]."
+      },
+      {
+        "exam_en": "massage a person's ego",
+        "exam_ko": "남을 치켜세우다."
+      }
+    ]
+  },
+  {
+    "id": 13079,
+    "origin": "anti",
+    "examples": [
+      {
+        "exam_en": "antitoxin",
+        "exam_ko": "항독소"
+      },
+      {
+        "exam_en": "antiaging",
+        "exam_ko": "노화방지의"
+      }
+    ]
+  },
+  {
+    "id": 13089,
+    "origin": "decidedly",
+    "examples": [
+      {
+        "exam_en": "The company's prospects look decidedly gloomy.",
+        "exam_ko": "그 회사의 전망은 확실히 어두워 보인다."
+      }
+    ]
+  },
+  {
+    "id": 13090,
+    "origin": "oldie",
+    "examples": [
+      {
+        "exam_en": "an oldie but goodie",
+        "exam_ko": "오래되었지만 [시대에 뒤떨어졌지만] 좋은 것."
+      }
+    ]
+  },
+  {
+    "id": 13092,
+    "origin": "lemon",
+    "examples": [
+      {
+        "exam_en": "\"You sold me a lemon.\" \"Keep your shirt on and then tell me what's wrong with the car.\"",
+        "exam_ko": "「당신은 나한테 엉터리 차를 팔았소.」 「진정하시고 그 차 어디가 어떤지 말씀해 보세요.」"
+      }
+    ]
+  },
+  {
+    "id": 13095,
+    "origin": "tedium",
+    "examples": [
+      {
+        "exam_en": "a day of tedium at the factory",
+        "exam_ko": "공장에서의 지루한 하루."
+      }
+    ]
+  },
+  {
+    "id": 13096,
+    "origin": "boredom",
+    "examples": [
+      {
+        "exam_en": "in infinite boredom",
+        "exam_ko": "몹시 지루하여."
+      }
+    ]
+  }
+]

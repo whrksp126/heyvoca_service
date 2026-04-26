@@ -1,0 +1,230 @@
+[
+  {
+    "id": 22720,
+    "origin": "cesspool",
+    "examples": [
+      {
+        "exam_en": "a cesspool of infamy",
+        "exam_ko": "악의 소굴."
+      }
+    ]
+  },
+  {
+    "id": 22722,
+    "origin": "auspice",
+    "examples": [
+      {
+        "exam_en": "be held under the auspices of",
+        "exam_ko": "…의 주최로 개최되다."
+      }
+    ]
+  },
+  {
+    "id": 22724,
+    "origin": "appertain",
+    "examples": [
+      {
+        "exam_en": "the farm and everything appertaining to it",
+        "exam_ko": "농장과 그 부속물 일체."
+      }
+    ]
+  },
+  {
+    "id": 22725,
+    "origin": "crabbed",
+    "examples": [
+      {
+        "exam_en": "a crabbed author",
+        "exam_ko": "난해한 작가."
+      },
+      {
+        "exam_en": "crabbed handwriting",
+        "exam_ko": "알아보기 어려운 필적."
+      }
+    ]
+  },
+  {
+    "id": 22727,
+    "origin": "abjuration",
+    "examples": [
+      {
+        "exam_en": "abjuration of the realm",
+        "exam_ko": "[영국법] (성역에 도피한 자가 행하는) 영구 이국(離國) 선언."
+      }
+    ]
+  },
+  {
+    "id": 22735,
+    "origin": "diffused",
+    "examples": [
+      {
+        "exam_en": "a widely diffused rumor",
+        "exam_ko": "널리 퍼진 소문."
+      }
+    ]
+  },
+  {
+    "id": 22737,
+    "origin": "scented",
+    "examples": [
+      {
+        "exam_en": "keen-scented",
+        "exam_ko": "후각이 예민한."
+      }
+    ]
+  },
+  {
+    "id": 22741,
+    "origin": "wearer",
+    "examples": [
+      {
+        "exam_en": "a contact lens wearer",
+        "exam_ko": "콘택트 렌즈 착용자."
+      }
+    ]
+  },
+  {
+    "id": 22742,
+    "origin": "uterine",
+    "examples": [
+      {
+        "exam_en": "uterine cancer",
+        "exam_ko": "자궁암."
+      },
+      {
+        "exam_en": "uterine brothers",
+        "exam_ko": "아버지가 다른 형제."
+      }
+    ]
+  },
+  {
+    "id": 22743,
+    "origin": "timbered",
+    "examples": [
+      {
+        "exam_en": "cedar-timbered",
+        "exam_ko": "삼나무 재목의."
+      }
+    ]
+  },
+  {
+    "id": 22750,
+    "origin": "verbalize",
+    "examples": [
+      {
+        "exam_en": "verbalize one's feelings",
+        "exam_ko": "자기의 감정을 말로 표현하다."
+      }
+    ]
+  },
+  {
+    "id": 22751,
+    "origin": "wasteful",
+    "examples": [
+      {
+        "exam_en": "wasteful methods",
+        "exam_ko": "비경제적인 방법"
+      },
+      {
+        "exam_en": "be wasteful with",
+        "exam_ko": "…을 낭비하다"
+      }
+    ]
+  },
+  {
+    "id": 22752,
+    "origin": "rover",
+    "examples": [
+      {
+        "exam_en": "shoot at rovers",
+        "exam_ko": "무턱대고 쏘다."
+      }
+    ]
+  },
+  {
+    "id": 22753,
+    "origin": "misadventure",
+    "examples": [
+      {
+        "exam_en": "death by misadventure",
+        "exam_ko": "(영) [법률] 사고사"
+      },
+      {
+        "exam_en": "by misadventure",
+        "exam_ko": "재수 없게"
+      }
+    ]
+  },
+  {
+    "id": 22756,
+    "origin": "vocal",
+    "examples": [
+      {
+        "exam_en": "the vocal organs",
+        "exam_ko": "발성 기관."
+      },
+      {
+        "exam_en": "Public opinion has at last become vocal.",
+        "exam_ko": "여론이 마침내 떠들썩 해졌다"
+      }
+    ]
+  },
+  {
+    "id": 22759,
+    "origin": "wrest",
+    "examples": [
+      {
+        "exam_en": "wrest a weapon from a person",
+        "exam_ko": "남에게서 무기를 빼앗다."
+      },
+      {
+        "exam_en": "wrest a victory from the enemy",
+        "exam_ko": "적을 겨우 패배시키다"
+      }
+    ]
+  },
+  {
+    "id": 22760,
+    "origin": "woeful",
+    "examples": [
+      {
+        "exam_en": "a woeful spectacle",
+        "exam_ko": "비참한 광경"
+      },
+      {
+        "exam_en": "a woeful cry",
+        "exam_ko": "비통한 외침 소리."
+      }
+    ]
+  },
+  {
+    "id": 22763,
+    "origin": "unswerving",
+    "examples": [
+      {
+        "exam_en": "unswerving in one's determination to stamp out corruption",
+        "exam_ko": "부패를 근절시키려는 결심이 확고한."
+      }
+    ]
+  },
+  {
+    "id": 22765,
+    "origin": "insubstantial",
+    "examples": [
+      {
+        "exam_en": "Dreams and ambitions are insubstantial.",
+        "exam_ko": "꿈이라든지 야심은 상상적인 것이다."
+      }
+    ]
+  },
+  {
+    "id": 22766,
+    "origin": "conterminous",
+    "examples": [
+      {
+        "exam_en": "an office conterminous to his",
+        "exam_ko": "그와 이웃한 사무실."
+      }
+    ]
+  }
+]

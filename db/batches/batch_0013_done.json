@@ -1,0 +1,282 @@
+[
+  {
+    "id": 243,
+    "origin": "mind",
+    "examples": [
+      {
+        "exam_en": "She suffers from <strong class=\"target-word\">disorders of the mind</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">정신 장애</strong>를 앓고 있다."
+      },
+      {
+        "exam_en": "He has a very <strong class=\"target-word\">lively mind</strong>.",
+        "exam_ko": "그는 매우 <strong class=\"target-word\">활발한 정신</strong>을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 244,
+    "origin": "emerge",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">emerged</strong> into a clearing in the forest.",
+        "exam_ko": "그들은 숲 속의 개간지로 <strong class=\"target-word\">나왔다</strong>."
+      },
+      {
+        "exam_en": "A new trend <strong class=\"target-word\">emerged</strong> in the market last year.",
+        "exam_ko": "작년에 시장에서 새로운 트렌드가 <strong class=\"target-word\">나타났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 245,
+    "origin": "mark",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">mark</strong> of the lash on his back.",
+        "exam_ko": "그의 등에 채찍 <strong class=\"target-word\">자국</strong>이 있었다."
+      },
+      {
+        "exam_en": "The first <strong class=\"target-word\">marks</strong> in the snow were visible.",
+        "exam_ko": "눈 위의 첫 발자국 <strong class=\"target-word\">자국들</strong>이 보였다."
+      }
+    ]
+  },
+  {
+    "id": 246,
+    "origin": "deny",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">denied</strong> all charges against him in court.",
+        "exam_ko": "그는 법정에서 자신에 대한 모든 혐의를 <strong class=\"target-word\">부인했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">denied</strong> that the signature was hers.",
+        "exam_ko": "그녀는 그 서명이 자신의 것이 아니라고 <strong class=\"target-word\">부인했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 247,
+    "origin": "aim",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">aimed</strong> at the target with a gun.",
+        "exam_ko": "그는 총으로 표적을 <strong class=\"target-word\">겨냥했다</strong>."
+      },
+      {
+        "exam_en": "She always <strong class=\"target-word\">aims</strong> at accuracy in her work.",
+        "exam_ko": "그녀는 자신의 일에서 항상 정확성을 <strong class=\"target-word\">추구한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 248,
+    "origin": "shoot",
+    "examples": [
+      {
+        "exam_en": "The guard was ordered to <strong class=\"target-word\">shoot</strong> on sight.",
+        "exam_ko": "경비원은 발견 즉시 <strong class=\"target-word\">사살하라</strong>는 명령을 받았다."
+      },
+      {
+        "exam_en": "The prisoner was <strong class=\"target-word\">shot</strong> at sunrise.",
+        "exam_ko": "그 죄수는 해가 뜰 때 <strong class=\"target-word\">총살되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 249,
+    "origin": "appoint",
+    "examples": [
+      {
+        "exam_en": "The president <strong class=\"target-word\">appointed</strong> a new official yesterday.",
+        "exam_ko": "대통령은 어제 새로운 공무원을 <strong class=\"target-word\">임명했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">appointed</strong> him as headmaster of the school.",
+        "exam_ko": "그들은 그를 학교의 교장으로 <strong class=\"target-word\">임명했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 250,
+    "origin": "supply",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">supplied</strong> the village with electricity.",
+        "exam_ko": "그 회사는 마을에 전기를 <strong class=\"target-word\">공급했다</strong>."
+      },
+      {
+        "exam_en": "The school <strong class=\"target-word\">supplied</strong> books to the students.",
+        "exam_ko": "학교는 학생들에게 책을 <strong class=\"target-word\">지급했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 251,
+    "origin": "order",
+    "examples": [
+      {
+        "exam_en": "The events are listed in chronological <strong class=\"target-word\">order</strong>.",
+        "exam_ko": "사건들은 연대순 <strong class=\"target-word\">순서</strong>로 나열되어 있다."
+      },
+      {
+        "exam_en": "Please complete the tasks in due <strong class=\"target-word\">order</strong>.",
+        "exam_ko": "작업들을 정해진 <strong class=\"target-word\">순서</strong>대로 완료해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 252,
+    "origin": "observe",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">observed</strong> some change in his personality.",
+        "exam_ko": "그녀는 그의 성격 변화를 <strong class=\"target-word\">알아차렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">observed</strong> that there were misprints in the book.",
+        "exam_ko": "그는 그 책에 오식이 있음을 <strong class=\"target-word\">알아챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 253,
+    "origin": "reply",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">replied</strong> to the demand immediately.",
+        "exam_ko": "그녀는 요구에 즉시 <strong class=\"target-word\">응했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">replied</strong> to the letter the next day.",
+        "exam_ko": "그는 다음 날 그 편지에 <strong class=\"target-word\">답장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 254,
+    "origin": "strike",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">struck</strong> the man dead with one blow.",
+        "exam_ko": "그는 단 한 번의 타격으로 그 남자를 <strong class=\"target-word\">때려 죽였다</strong>."
+      },
+      {
+        "exam_en": "The boxer <strong class=\"target-word\">struck</strong> his opponent down in the third round.",
+        "exam_ko": "그 권투선수는 3라운드에서 상대를 <strong class=\"target-word\">때려눕혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 255,
+    "origin": "settle",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">settled</strong> the price after long negotiations.",
+        "exam_ko": "그들은 긴 협상 끝에 가격을 <strong class=\"target-word\">정했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">settled</strong> to pay 10 dollars for it.",
+        "exam_ko": "나는 그것에 10달러를 지불하기로 <strong class=\"target-word\">결정했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 256,
+    "origin": "ring",
+    "examples": [
+      {
+        "exam_en": "She wears a beautiful <strong class=\"target-word\">ring</strong> on her finger.",
+        "exam_ko": "그녀는 손가락에 아름다운 <strong class=\"target-word\">반지</strong>를 끼고 있다."
+      },
+      {
+        "exam_en": "He put on a <strong class=\"target-word\">ring</strong> before the ceremony.",
+        "exam_ko": "그는 식 전에 <strong class=\"target-word\">반지</strong>를 끼었다."
+      }
+    ]
+  },
+  {
+    "id": 257,
+    "origin": "propose",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">proposed</strong> an urgent motion at the meeting.",
+        "exam_ko": "그녀는 회의에서 긴급 동의를 <strong class=\"target-word\">제출했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">proposed</strong> that it be done at once.",
+        "exam_ko": "그는 즉시 그것을 해야 한다고 <strong class=\"target-word\">제안했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 258,
+    "origin": "ignore",
+    "examples": [
+      {
+        "exam_en": "The judge decided to <strong class=\"target-word\">ignore</strong> the evidence.",
+        "exam_ko": "판사는 그 증거를 <strong class=\"target-word\">무시하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "My advice was completely <strong class=\"target-word\">ignored</strong> by the team.",
+        "exam_ko": "내 충고는 팀에 의해 완전히 <strong class=\"target-word\">무시되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 259,
+    "origin": "link",
+    "examples": [
+      {
+        "exam_en": "The strength of a chain is its weakest <strong class=\"target-word\">link</strong>.",
+        "exam_ko": "사슬의 강도는 가장 약한 <strong class=\"target-word\">고리</strong>에 달려 있다."
+      },
+      {
+        "exam_en": "There is a clear <strong class=\"target-word\">link</strong> between cancer and poor hygiene.",
+        "exam_ko": "암과 비위생 사이에는 분명한 <strong class=\"target-word\">연관성</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 260,
+    "origin": "press",
+    "examples": [
+      {
+        "exam_en": "The child <strong class=\"target-word\">pressed</strong> his nose against the window.",
+        "exam_ko": "아이는 창문에 코를 꼭 <strong class=\"target-word\">댔다</strong>."
+      },
+      {
+        "exam_en": "The police <strong class=\"target-word\">pressed</strong> the crowd back from the scene.",
+        "exam_ko": "경찰은 군중을 현장에서 <strong class=\"target-word\">밀어냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 261,
+    "origin": "respond",
+    "examples": [
+      {
+        "exam_en": "He bravely <strong class=\"target-word\">responded</strong> to the challenge.",
+        "exam_ko": "그는 도전에 용감하게 <strong class=\"target-word\">응했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">responded</strong> promptly to the survey.",
+        "exam_ko": "그들은 조사에 신속하게 <strong class=\"target-word\">대답했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 262,
+    "origin": "survive",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">survived</strong> all of his children.",
+        "exam_ko": "그는 자식들 모두보다 오래 <strong class=\"target-word\">살았다</strong>."
+      },
+      {
+        "exam_en": "Mr. Smith is <strong class=\"target-word\">survived</strong> by his wife and a son.",
+        "exam_ko": "스미스 씨의 유족으로 부인과 아들이 <strong class=\"target-word\">남아있다</strong>."
+      }
+    ]
+  }
+]

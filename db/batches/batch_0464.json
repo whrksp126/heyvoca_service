@@ -1,0 +1,262 @@
+[
+  {
+    "id": 13560,
+    "origin": "pique",
+    "examples": [
+      {
+        "exam_en": "be piqued at",
+        "exam_ko": "…에 불끈하다"
+      },
+      {
+        "exam_en": "She piqued me with her remark.",
+        "exam_ko": "나는 그녀의 비평을 듣고 분개했다."
+      }
+    ]
+  },
+  {
+    "id": 13562,
+    "origin": "harp",
+    "examples": [
+      {
+        "exam_en": "Don't take your harp to the party.",
+        "exam_ko": "언제나 똑같은 이야기만 하지를 마라."
+      },
+      {
+        "exam_en": "Harp not for ever on the same string.",
+        "exam_ko": "언제나 똑같은 이야기만 하지를 마라"
+      }
+    ]
+  },
+  {
+    "id": 13567,
+    "origin": "asymmetric",
+    "examples": [
+      {
+        "exam_en": "an asymmetric design",
+        "exam_ko": "균형이 잡히지 않은 도안."
+      }
+    ]
+  },
+  {
+    "id": 13573,
+    "origin": "developer",
+    "examples": [
+      {
+        "exam_en": "a late developer",
+        "exam_ko": "신체적[지적] 성장이 더딘 어린이."
+      }
+    ]
+  },
+  {
+    "id": 13574,
+    "origin": "combustion",
+    "examples": [
+      {
+        "exam_en": "spontaneous combustion",
+        "exam_ko": "자연 발화."
+      },
+      {
+        "exam_en": "an incomplete combustion",
+        "exam_ko": "불완전 연소."
+      }
+    ]
+  },
+  {
+    "id": 13575,
+    "origin": "adipose",
+    "examples": [
+      {
+        "exam_en": "adipose tissue",
+        "exam_ko": "지방 조직."
+      }
+    ]
+  },
+  {
+    "id": 13576,
+    "origin": "synthesis",
+    "examples": [
+      {
+        "exam_en": "a synthesis of Eastern and Western philosophy",
+        "exam_ko": "동서 철학의 통합체."
+      },
+      {
+        "exam_en": "the synthesis of rubber from petroleum",
+        "exam_ko": "석유에서의 고무의 합성."
+      }
+    ]
+  },
+  {
+    "id": 13581,
+    "origin": "orientation",
+    "examples": [
+      {
+        "exam_en": "a new orientation in life",
+        "exam_ko": "인생에 있어서의 새로운 방향 정립"
+      },
+      {
+        "exam_en": "our company's orientation toward customer satisfaction",
+        "exam_ko": "고객 만족도를 중시하는 우리 회사의 방침."
+      }
+    ]
+  },
+  {
+    "id": 13582,
+    "origin": "terminology",
+    "examples": [
+      {
+        "exam_en": "the terminology of chemistry",
+        "exam_ko": "화학 용어."
+      },
+      {
+        "exam_en": "Medical students need to learn the complex terminology used in the field of anatomy.",
+        "exam_ko": "의과대학생은 해부학 분야에서 사용되는 복잡한 전문용어를 배워야 한다."
+      }
+    ]
+  },
+  {
+    "id": 13583,
+    "origin": "minutes",
+    "examples": [
+      {
+        "exam_en": "Prepare all the minutes of meeting attended by the Employer and Consultant and submit within three(3) days for review and approval.",
+        "exam_ko": "발주처와 컨설턴트가 참석 한 모든 회의록을 준비하고 3 일 이내에 검토 및 승인을 위해 제출하십시오."
+      },
+      {
+        "exam_en": "It takes 5 minutes.",
+        "exam_ko": "5분 걸려요."
+      }
+    ]
+  },
+  {
+    "id": 13584,
+    "origin": "proceeding",
+    "examples": [
+      {
+        "exam_en": "court proceedings",
+        "exam_ko": "법정에서의 의사 진행 상황, 법정 의사록"
+      },
+      {
+        "exam_en": "the necessary proceedings for the merger of the two banks",
+        "exam_ko": "두 은행의 합병에 필요한 일련의 절차들"
+      }
+    ]
+  },
+  {
+    "id": 13587,
+    "origin": "synchronous",
+    "examples": [
+      {
+        "exam_en": "two pendulums so adjusted that their movements are synchronous.",
+        "exam_ko": "운동이 똑같도록 조절된 두개의 진자."
+      },
+      {
+        "exam_en": "two pendulums so adjusted that their movements are synchronous. ",
+        "exam_ko": "운동이 똑같도록 조절된 두개의 진자. "
+      }
+    ]
+  },
+  {
+    "id": 13588,
+    "origin": "ordain",
+    "examples": [
+      {
+        "exam_en": "God has ordained us to suffer.",
+        "exam_ko": "신은 우리를 고통받게끔 정해놓았다(※이상의 문형은 모두가 가능하기는 하지만 that 구문을 쓰는 것이 가장 자연스러움. should를 쓰는 것은 주로 (영))"
+      },
+      {
+        "exam_en": "God ordained him as a leader of men.",
+        "exam_ko": "신은 그를 사람들의 지도자로 정해놓았다."
+      }
+    ]
+  },
+  {
+    "id": 13591,
+    "origin": "decorative",
+    "examples": [
+      {
+        "exam_en": "decorative art",
+        "exam_ko": "장식 예술"
+      },
+      {
+        "exam_en": "add a decorative touch",
+        "exam_ko": "장식적인 터치를 가하다."
+      }
+    ]
+  },
+  {
+    "id": 13594,
+    "origin": "passivity",
+    "examples": [
+      {
+        "exam_en": "His passivity in the face of injustice surprised everyone.",
+        "exam_ko": "불의에 대한 그의 수동적인 태도는 모두를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 13596,
+    "origin": "larva",
+    "examples": [
+      {
+        "exam_en": "the larva of a butterfly",
+        "exam_ko": "나비의 유충."
+      }
+    ]
+  },
+  {
+    "id": 13601,
+    "origin": "awhile",
+    "examples": [
+      {
+        "exam_en": "Rest awhile.",
+        "exam_ko": "좀 쉬어라."
+      },
+      {
+        "exam_en": "Stay awhile.",
+        "exam_ko": "잠시 머물러 있거라."
+      }
+    ]
+  },
+  {
+    "id": 13602,
+    "origin": "chip",
+    "examples": [
+      {
+        "exam_en": "a wood chip",
+        "exam_ko": "나무 부스러기"
+      },
+      {
+        "exam_en": "chocolate chip cookies",
+        "exam_ko": "초콜릿 칩 쿠키(작은 초콜릿 조각이 박힌 쿠키)."
+      },
+      {
+        "exam_en": "When you chip, place your left hand on your left thigh before taking your grip.",
+        "exam_ko": "골프에서 칩 샷을 치려고 할 때, 골프채를 잡기 전에 당신의 왼 쪽 허벅지 위에 왼 손을 놓으세요."
+      }
+    ]
+  },
+  {
+    "id": 13603,
+    "origin": "sharpener",
+    "examples": [
+      {
+        "exam_en": "a pencil sharpener",
+        "exam_ko": "연필깎이."
+      }
+    ]
+  },
+  {
+    "id": 13604,
+    "origin": "dribble",
+    "examples": [
+      {
+        "exam_en": "water dribbling from the pipe",
+        "exam_ko": "배관에서 똑똑 떨어지고 있는 물."
+      },
+      {
+        "exam_en": "in dribbles",
+        "exam_ko": "조금씩."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 324,
+    "origin": "true",
+    "examples": [
+      {
+        "exam_en": "She told a <strong class=\"target-word\">true</strong> story about her past.",
+        "exam_ko": "그녀는 자신의 과거에 대한 <strong class=\"target-word\">실화</strong>를 들려줬다."
+      },
+      {
+        "exam_en": "This is a <strong class=\"target-word\">true</strong> indication of his talent.",
+        "exam_ko": "이것은 그의 재능에 대한 <strong class=\"target-word\">확실한</strong> 조짐이다."
+      }
+    ]
+  },
+  {
+    "id": 325,
+    "origin": "common",
+    "examples": [
+      {
+        "exam_en": "They share <strong class=\"target-word\">common</strong> concerns about safety.",
+        "exam_ko": "그들은 안전에 대한 <strong class=\"target-word\">공통의</strong> 관심사를 가지고 있다."
+      },
+      {
+        "exam_en": "The land became their <strong class=\"target-word\">common</strong> possession.",
+        "exam_ko": "그 땅은 그들의 <strong class=\"target-word\">공유</strong> 재산이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 326,
+    "origin": "necessary",
+    "examples": [
+      {
+        "exam_en": "Sleep is a <strong class=\"target-word\">necessary</strong> condition for good health.",
+        "exam_ko": "수면은 건강을 위한 <strong class=\"target-word\">필요</strong> 조건이다."
+      },
+      {
+        "exam_en": "She packed items <strong class=\"target-word\">necessary</strong> for daily life.",
+        "exam_ko": "그녀는 일상 생활에 <strong class=\"target-word\">필요한</strong> 물건들을 챙겼다."
+      }
+    ]
+  },
+  {
+    "id": 327,
+    "origin": "single",
+    "examples": [
+      {
+        "exam_en": "He drank a <strong class=\"target-word\">single</strong> glass of water.",
+        "exam_ko": "그는 물을 <strong class=\"target-word\">단</strong> 한 잔 마셨다."
+      },
+      {
+        "exam_en": "She did not say a <strong class=\"target-word\">single</strong> word of gratitude.",
+        "exam_ko": "그녀는 감사하다는 말을 <strong class=\"target-word\">단</strong> 한 마디도 하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 328,
+    "origin": "personal",
+    "examples": [
+      {
+        "exam_en": "That is a <strong class=\"target-word\">personal</strong> matter between us.",
+        "exam_ko": "그것은 우리 사이의 <strong class=\"target-word\">개인적인</strong> 일이다."
+      },
+      {
+        "exam_en": "He sent her a <strong class=\"target-word\">personal</strong> letter.",
+        "exam_ko": "그는 그녀에게 <strong class=\"target-word\">개인적인</strong> 편지를 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 329,
+    "origin": "hard",
+    "examples": [
+      {
+        "exam_en": "Diamond is the <strong class=\"target-word\">hardest</strong> mineral on earth.",
+        "exam_ko": "다이아몬드는 지구에서 가장 <strong class=\"target-word\">단단한</strong> 광물이다."
+      },
+      {
+        "exam_en": "The ground was too <strong class=\"target-word\">hard</strong> to dig.",
+        "exam_ko": "땅이 너무 <strong class=\"target-word\">굳어</strong> 파기 힘들었다."
+      }
+    ]
+  },
+  {
+    "id": 330,
+    "origin": "private",
+    "examples": [
+      {
+        "exam_en": "He does not share his <strong class=\"target-word\">private</strong> affairs easily.",
+        "exam_ko": "그는 자신의 <strong class=\"target-word\">사적인</strong> 일을 쉽게 나누지 않는다."
+      },
+      {
+        "exam_en": "That is just my <strong class=\"target-word\">private</strong> view on the topic.",
+        "exam_ko": "그것은 그 주제에 대한 나의 <strong class=\"target-word\">사견</strong>일 뿐이다."
+      }
+    ]
+  },
+  {
+    "id": 331,
+    "origin": "poor",
+    "examples": [
+      {
+        "exam_en": "It is one of the <strong class=\"target-word\">poorest</strong> countries in the world.",
+        "exam_ko": "그곳은 세계에서 가장 <strong class=\"target-word\">가난한</strong> 나라 중 하나이다."
+      },
+      {
+        "exam_en": "Workers protested against the <strong class=\"target-word\">poor</strong> treatment they received.",
+        "exam_ko": "노동자들은 자신들이 받은 <strong class=\"target-word\">열악한</strong> 처우에 항의했다."
+      }
+    ]
+  },
+  {
+    "id": 332,
+    "origin": "financial",
+    "examples": [
+      {
+        "exam_en": "She manages all <strong class=\"target-word\">financial</strong> affairs for the company.",
+        "exam_ko": "그녀는 회사의 모든 <strong class=\"target-word\">재무</strong> 업무를 관리한다."
+      },
+      {
+        "exam_en": "The project turned out to be a <strong class=\"target-word\">financial</strong> success.",
+        "exam_ko": "그 프로젝트는 결국 <strong class=\"target-word\">금전적인</strong> 성공을 거뒀다."
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "origin": "wide",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">wide</strong> river runs through the city.",
+        "exam_ko": "도시를 가로질러 <strong class=\"target-word\">폭이 넓은</strong> 강이 흐른다."
+      },
+      {
+        "exam_en": "The table is five feet <strong class=\"target-word\">wide</strong>.",
+        "exam_ko": "그 탁자는 <strong class=\"target-word\">폭이</strong> 5피트이다."
+      }
+    ]
+  },
+  {
+    "id": 334,
+    "origin": "foreign",
+    "examples": [
+      {
+        "exam_en": "He drives a car of <strong class=\"target-word\">foreign</strong> make.",
+        "exam_ko": "그는 <strong class=\"target-word\">외제</strong> 자동차를 운전한다."
+      },
+      {
+        "exam_en": "The bank ran short of <strong class=\"target-word\">foreign</strong> currency.",
+        "exam_ko": "은행의 <strong class=\"target-word\">외화</strong>가 부족해졌다."
+      }
+    ]
+  },
+  {
+    "id": 335,
+    "origin": "simple",
+    "examples": [
+      {
+        "exam_en": "The teacher asked a <strong class=\"target-word\">simple</strong> question.",
+        "exam_ko": "선생님이 <strong class=\"target-word\">단순한</strong> 질문을 했다."
+      },
+      {
+        "exam_en": "The book is written in <strong class=\"target-word\">simple</strong> English.",
+        "exam_ko": "그 책은 <strong class=\"target-word\">쉬운</strong> 영어로 쓰여 있다."
+      }
+    ]
+  },
+  {
+    "id": 336,
+    "origin": "recent",
+    "examples": [
+      {
+        "exam_en": "The class covered <strong class=\"target-word\">recent</strong> history this week.",
+        "exam_ko": "수업에서 이번 주 <strong class=\"target-word\">근대</strong> 역사를 다뤘다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">most recent</strong> album sold very well.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">가장 최근</strong> 앨범은 잘 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": 337,
+    "origin": "concerned",
+    "examples": [
+      {
+        "exam_en": "The authorities <strong class=\"target-word\">concerned</strong> reviewed the case.",
+        "exam_ko": "<strong class=\"target-word\">관계</strong> 당국이 그 사건을 검토했다."
+      },
+      {
+        "exam_en": "All parties <strong class=\"target-word\">concerned</strong> agreed to the terms.",
+        "exam_ko": "모든 <strong class=\"target-word\">이해 관계</strong> 당사자들이 조건에 동의했다."
+      }
+    ]
+  },
+  {
+    "id": 338,
+    "origin": "american",
+    "examples": [
+      {
+        "exam_en": "She proudly waved the <strong class=\"target-word\">American</strong> flag.",
+        "exam_ko": "그녀는 자랑스럽게 <strong class=\"target-word\">미국</strong> 국기를 흔들었다."
+      },
+      {
+        "exam_en": "Baseball is a very <strong class=\"target-word\">American</strong> sport.",
+        "exam_ko": "야구는 매우 <strong class=\"target-word\">미국적인</strong> 스포츠이다."
+      }
+    ]
+  },
+  {
+    "id": 339,
+    "origin": "various",
+    "examples": [
+      {
+        "exam_en": "The park is home to <strong class=\"target-word\">various</strong> species of birds.",
+        "exam_ko": "그 공원에는 <strong class=\"target-word\">다양한</strong> 종류의 새들이 산다."
+      },
+      {
+        "exam_en": "There are <strong class=\"target-word\">various</strong> ways to solve the problem.",
+        "exam_ko": "그 문제를 풀 수 있는 <strong class=\"target-word\">갖가지</strong> 방법이 있다."
+      }
+    ]
+  },
+  {
+    "id": 340,
+    "origin": "fine",
+    "examples": [
+      {
+        "exam_en": "The mountain offers a <strong class=\"target-word\">fine</strong> view at sunrise.",
+        "exam_ko": "그 산은 일출 때 <strong class=\"target-word\">절경</strong>을 선사한다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">fined</strong> for returning the tape late.",
+        "exam_ko": "그는 테이프를 늦게 반납해서 <strong class=\"target-word\">벌금</strong>을 물었다."
+      }
+    ]
+  },
+  {
+    "id": 341,
+    "origin": "english",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">English</strong> and grew up in London.",
+        "exam_ko": "그는 <strong class=\"target-word\">영국인</strong>이고 런던에서 자랐다."
+      },
+      {
+        "exam_en": "Cricket is the most <strong class=\"target-word\">English</strong> game there is.",
+        "exam_ko": "크리켓은 가장 <strong class=\"target-word\">영국적인</strong> 경기이다."
+      }
+    ]
+  },
+  {
+    "id": 342,
+    "origin": "wrong",
+    "examples": [
+      {
+        "exam_en": "Stealing is a <strong class=\"target-word\">wrong</strong> act in any culture.",
+        "exam_ko": "도둑질은 어떤 문화에서도 <strong class=\"target-word\">사악한</strong> 행위이다."
+      },
+      {
+        "exam_en": "Her parents were <strong class=\"target-word\">wrong</strong> to make her study so hard.",
+        "exam_ko": "그녀에게 그렇게 심하게 공부를 시키다니 그녀의 부모는 <strong class=\"target-word\">잘못된</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 343,
+    "origin": "present",
+    "examples": [
+      {
+        "exam_en": "All <strong class=\"target-word\">present</strong> company was excluded from the count.",
+        "exam_ko": "현재 <strong class=\"target-word\">여기 있는</strong> 모든 사람은 집계에서 제외되었다."
+      },
+      {
+        "exam_en": "You must <strong class=\"target-word\">present</strong> your passport at the border.",
+        "exam_ko": "국경에서 여권을 <strong class=\"target-word\">제시</strong>해야 한다."
+      }
+    ]
+  }
+]

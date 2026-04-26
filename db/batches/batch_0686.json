@@ -1,0 +1,230 @@
+[
+  {
+    "id": 27695,
+    "origin": "mister",
+    "examples": [
+      {
+        "exam_en": "Mr. Chairman",
+        "exam_ko": "의장님."
+      },
+      {
+        "exam_en": "Good morning, Mister.",
+        "exam_ko": "선생, 안녕하십니까?"
+      }
+    ]
+  },
+  {
+    "id": 27696,
+    "origin": "cobbler",
+    "examples": [
+      {
+        "exam_en": "The cobbler's wife goes the worst shod.",
+        "exam_ko": "구두 수선공의 부인은 다 해진 신발을 신는다; 대장간에 식칼이 녹슨다"
+      },
+      {
+        "exam_en": "Let the cobbler stick to his last.",
+        "exam_ko": "구두장이는 구두골에서 떠나지 못하게 하라; 사람은 자기 일에 전념해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 27697,
+    "origin": "freshly",
+    "examples": [
+      {
+        "exam_en": "freshly baked bread",
+        "exam_ko": "갓 구워낸 빵."
+      }
+    ]
+  },
+  {
+    "id": 27708,
+    "origin": "southerly",
+    "examples": [
+      {
+        "exam_en": "walk in a southerly direction",
+        "exam_ko": "남쪽 방향으로 걷다."
+      },
+      {
+        "exam_en": "most southerly(=southernmost)",
+        "exam_ko": "최남단의"
+      }
+    ]
+  },
+  {
+    "id": 27710,
+    "origin": "northerly",
+    "examples": [
+      {
+        "exam_en": "northerly breeze",
+        "exam_ko": "북에서 불어오는 산들바람."
+      },
+      {
+        "exam_en": "We continued in a northerly direction.",
+        "exam_ko": "우리는 북쪽으로 계속 갔다."
+      }
+    ]
+  },
+  {
+    "id": 27711,
+    "origin": "mealy",
+    "examples": [
+      {
+        "exam_en": "mealy potatoes",
+        "exam_ko": "(삶으면) 수분이 적어 버석버석한 감자."
+      },
+      {
+        "exam_en": "the baker's mealy hands",
+        "exam_ko": "빵 굽는 사람의 가루투성이의 손."
+      }
+    ]
+  },
+  {
+    "id": 27719,
+    "origin": "childproof",
+    "examples": [
+      {
+        "exam_en": "a childproof medicine bottle",
+        "exam_ko": "어린아이는 열 수 없는 약병."
+      }
+    ]
+  },
+  {
+    "id": 27720,
+    "origin": "paradise",
+    "examples": [
+      {
+        "exam_en": "the Paradise of the Pacific",
+        "exam_ko": "태평양의 낙원(하와이)."
+      }
+    ]
+  },
+  {
+    "id": 27722,
+    "origin": "quarto",
+    "examples": [
+      {
+        "exam_en": "quarto sheets of paper",
+        "exam_ko": "4절판."
+      }
+    ]
+  },
+  {
+    "id": 27723,
+    "origin": "highbrow",
+    "examples": [
+      {
+        "exam_en": "where highbrows and lowbrows rub shoulders without disdain.",
+        "exam_ko": "지식인과 저속한 사람들이 업신여기지 않고 교제하는 곳."
+      }
+    ]
+  },
+  {
+    "id": 27729,
+    "origin": "overbear",
+    "examples": [
+      {
+        "exam_en": "overbear the enemy attack",
+        "exam_ko": "적의 공격을 물리치다."
+      }
+    ]
+  },
+  {
+    "id": 27730,
+    "origin": "unattached",
+    "examples": [
+      {
+        "exam_en": "He's handsome but unattached.",
+        "exam_ko": "그는 잘 생겼지만 어느 누구와도 교제하지 않고 있다."
+      }
+    ]
+  },
+  {
+    "id": 27734,
+    "origin": "neuter",
+    "examples": [
+      {
+        "exam_en": "the neuter gender",
+        "exam_ko": "중성. cf. MASCULINE 『형용사』 2, FEMININE 『형용사』 3."
+      },
+      {
+        "exam_en": "neuter flowers",
+        "exam_ko": "무성 꽃."
+      }
+    ]
+  },
+  {
+    "id": 27841,
+    "origin": "doubly",
+    "examples": [
+      {
+        "exam_en": "doubly careful",
+        "exam_ko": "배나 조심하는."
+      }
+    ]
+  },
+  {
+    "id": 27859,
+    "origin": "scholastic",
+    "examples": [
+      {
+        "exam_en": "a scholastic institution",
+        "exam_ko": "학교"
+      },
+      {
+        "exam_en": "a scholastic career",
+        "exam_ko": "교직"
+      }
+    ]
+  },
+  {
+    "id": 27865,
+    "origin": "inexpressible",
+    "examples": [
+      {
+        "exam_en": "inexpressible sorrow",
+        "exam_ko": "이루 말할 수 없는 슬픔."
+      }
+    ]
+  },
+  {
+    "id": 27870,
+    "origin": "mailing",
+    "examples": [
+      {
+        "exam_en": "a mailing list",
+        "exam_ko": "(다이렉트 메일 등의) 우송자 명단."
+      }
+    ]
+  },
+  {
+    "id": 27872,
+    "origin": "unannounced",
+    "examples": [
+      {
+        "exam_en": "He arrived at the party unannounced.",
+        "exam_ko": "그는 예고도 없이 파티에 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 27874,
+    "origin": "waking",
+    "examples": [
+      {
+        "exam_en": "a waking dream",
+        "exam_ko": "백일몽."
+      }
+    ]
+  },
+  {
+    "id": 27952,
+    "origin": "wartime",
+    "examples": [
+      {
+        "exam_en": "in  wartime",
+        "exam_ko": "전시에."
+      }
+    ]
+  }
+]

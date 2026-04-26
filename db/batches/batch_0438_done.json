@@ -1,0 +1,242 @@
+[
+  {
+    "id": 12459,
+    "origin": "grueling",
+    "examples": [
+      {
+        "exam_en": "The marathon was a <strong class=\"target-word\">grueling</strong> race for all runners.",
+        "exam_ko": "마라톤은 모든 선수에게 <strong class=\"target-word\">고된</strong> 경기였다."
+      },
+      {
+        "exam_en": "The coach gave the team a <strong class=\"target-word\">grueling</strong> workout.",
+        "exam_ko": "코치는 팀에게 <strong class=\"target-word\">혹독한</strong> 훈련을 시켰다."
+      }
+    ]
+  },
+  {
+    "id": 12465,
+    "origin": "resemblance",
+    "examples": [
+      {
+        "exam_en": "She bears a strong <strong class=\"target-word\">resemblance</strong> to her mother.",
+        "exam_ko": "그녀는 어머니와 강한 <strong class=\"target-word\">닮음</strong>을 보인다."
+      },
+      {
+        "exam_en": "There was little <strong class=\"target-word\">resemblance</strong> between mother and son.",
+        "exam_ko": "어머니와 아들 사이에는 <strong class=\"target-word\">닮은 점</strong>이 거의 없었다."
+      }
+    ]
+  },
+  {
+    "id": 12466,
+    "origin": "landing",
+    "examples": [
+      {
+        "exam_en": "The pilot made an emergency <strong class=\"target-word\">landing</strong> on the highway.",
+        "exam_ko": "조종사는 고속도로에 비상 <strong class=\"target-word\">착륙</strong>을 했다."
+      },
+      {
+        "exam_en": "The troops made a successful <strong class=\"target-word\">landing</strong> on the beach.",
+        "exam_ko": "군대는 해변에 성공적인 <strong class=\"target-word\">상륙</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 12467,
+    "origin": "flipper",
+    "examples": [
+      {
+        "exam_en": "The diver put on a pair of <strong class=\"target-word\">flippers</strong> before entering the water.",
+        "exam_ko": "잠수부는 물에 들어가기 전에 <strong class=\"target-word\">오리발</strong> 한 켤레를 착용했다."
+      }
+    ]
+  },
+  {
+    "id": 12468,
+    "origin": "posh",
+    "examples": [
+      {
+        "exam_en": "They stayed at a <strong class=\"target-word\">posh</strong> hotel in the city center.",
+        "exam_ko": "그들은 도심에 있는 <strong class=\"target-word\">고급</strong> 호텔에 묵었다."
+      },
+      {
+        "exam_en": "She spoke in a <strong class=\"target-word\">posh</strong> accent at the formal event.",
+        "exam_ko": "그녀는 공식 행사에서 <strong class=\"target-word\">상류층</strong> 억양으로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 12469,
+    "origin": "pompous",
+    "examples": [
+      {
+        "exam_en": "The band leader bowed in a <strong class=\"target-word\">pompous</strong> manner.",
+        "exam_ko": "악단 지도자는 <strong class=\"target-word\">거만한</strong> 태도로 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 12472,
+    "origin": "misjudge",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">misjudged</strong> the distance and missed the shot.",
+        "exam_ko": "그는 거리를 <strong class=\"target-word\">잘못 판단해서</strong> 슛을 놓쳤다."
+      }
+    ]
+  },
+  {
+    "id": 12475,
+    "origin": "inseparable",
+    "examples": [
+      {
+        "exam_en": "The two sisters have been <strong class=\"target-word\">inseparable</strong> since childhood.",
+        "exam_ko": "두 자매는 어린 시절부터 <strong class=\"target-word\">떼려야 뗄 수 없는</strong> 사이였다."
+      },
+      {
+        "exam_en": "He is rarely seen without his <strong class=\"target-word\">inseparable</strong> pipe.",
+        "exam_ko": "그는 자신의 <strong class=\"target-word\">늘 함께하는</strong> 파이프 없이는 거의 보이지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 12476,
+    "origin": "irreplaceable",
+    "examples": [
+      {
+        "exam_en": "The museum lost an <strong class=\"target-word\">irreplaceable</strong> ancient vase in the fire.",
+        "exam_ko": "박물관은 화재로 <strong class=\"target-word\">대체 불가능한</strong> 고대 꽃병을 잃었다."
+      }
+    ]
+  },
+  {
+    "id": 12477,
+    "origin": "amphibian",
+    "examples": [
+      {
+        "exam_en": "Frogs are <strong class=\"target-word\">amphibians</strong> that live on land and in water.",
+        "exam_ko": "개구리는 육지와 물에서 사는 <strong class=\"target-word\">양서류</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12478,
+    "origin": "shoddy",
+    "examples": [
+      {
+        "exam_en": "The building collapsed due to <strong class=\"target-word\">shoddy</strong> construction work.",
+        "exam_ko": "건물은 <strong class=\"target-word\">부실한</strong> 공사로 인해 무너졌다."
+      }
+    ]
+  },
+  {
+    "id": 12479,
+    "origin": "creek",
+    "examples": [
+      {
+        "exam_en": "Your ball landed very close to the <strong class=\"target-word\">creek</strong>.",
+        "exam_ko": "당신의 공은 <strong class=\"target-word\">개울</strong> 아주 가까이에 떨어졌다."
+      }
+    ]
+  },
+  {
+    "id": 12480,
+    "origin": "connive",
+    "examples": [
+      {
+        "exam_en": "The manager <strong class=\"target-word\">connived</strong> at the employee's embezzlement.",
+        "exam_ko": "관리자는 직원의 횡령을 <strong class=\"target-word\">묵인했다</strong>."
+      },
+      {
+        "exam_en": "Mr. Smith <strong class=\"target-word\">connived</strong> with his boss to trap me.",
+        "exam_ko": "스미스 씨는 상사와 <strong class=\"target-word\">공모하여</strong> 나를 함정에 빠뜨리려 했다."
+      }
+    ]
+  },
+  {
+    "id": 12485,
+    "origin": "handover",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">handover</strong> of the project took place last Friday.",
+        "exam_ko": "프로젝트 <strong class=\"target-word\">인계</strong>는 지난 금요일에 이루어졌다."
+      }
+    ]
+  },
+  {
+    "id": 12486,
+    "origin": "mastermind",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">masterminded</strong> the robbery from outside the country.",
+        "exam_ko": "그는 해외에서 강도 사건을 <strong class=\"target-word\">배후에서 조종했다</strong>."
+      },
+      {
+        "exam_en": "She was the <strong class=\"target-word\">mastermind</strong> behind the entire scheme.",
+        "exam_ko": "그녀는 전체 계획의 <strong class=\"target-word\">주모자</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 12489,
+    "origin": "prayer",
+    "examples": [
+      {
+        "exam_en": "The students stood in silent <strong class=\"target-word\">prayer</strong> before the ceremony.",
+        "exam_ko": "학생들은 행사 전 묵념으로 <strong class=\"target-word\">기도</strong>를 올렸다."
+      },
+      {
+        "exam_en": "She said a <strong class=\"target-word\">prayer</strong> of thanks after the meal.",
+        "exam_ko": "그녀는 식사 후 감사의 <strong class=\"target-word\">기도</strong>를 드렸다."
+      }
+    ]
+  },
+  {
+    "id": 12490,
+    "origin": "priceless",
+    "examples": [
+      {
+        "exam_en": "He is my <strong class=\"target-word\">priceless</strong> best friend whom I can't replace.",
+        "exam_ko": "그는 내가 대신할 수 없는 <strong class=\"target-word\">둘도 없는</strong> 친구이다."
+      },
+      {
+        "exam_en": "The museum holds a <strong class=\"target-word\">priceless</strong> collection of ancient paintings.",
+        "exam_ko": "박물관은 <strong class=\"target-word\">값을 매길 수 없는</strong> 고대 회화 소장품을 보유하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 12491,
+    "origin": "squirm",
+    "examples": [
+      {
+        "exam_en": "The eels <strong class=\"target-word\">squirmed</strong> in the fisherman's net.",
+        "exam_ko": "뱀장어들이 어부의 그물 안에서 <strong class=\"target-word\">꿈틀거렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12492,
+    "origin": "mitten",
+    "examples": [
+      {
+        "exam_en": "She wore a pair of <strong class=\"target-word\">mittens</strong> to keep her hands warm.",
+        "exam_ko": "그녀는 손을 따뜻하게 하기 위해 <strong class=\"target-word\">벙어리 장갑</strong> 한 켤레를 꼈다."
+      }
+    ]
+  },
+  {
+    "id": 12493,
+    "origin": "brow",
+    "examples": [
+      {
+        "exam_en": "She knit her <strong class=\"target-word\">brows</strong> when she heard the bad news.",
+        "exam_ko": "그녀는 나쁜 소식을 듣고 <strong class=\"target-word\">눈살</strong>을 찌푸렸다."
+      },
+      {
+        "exam_en": "He had a high <strong class=\"target-word\">brow</strong> and deep-set eyes.",
+        "exam_ko": "그는 높은 <strong class=\"target-word\">이마</strong>와 깊이 박힌 눈을 가졌다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 26133,
+    "word": "diaphragm",
+    "exam_en": "<strong class=\"target-word\">diaphragm</strong> fastening requirement",
+    "exam_ko": "<strong class=\"target-word\">칸막이벽</strong> 조임 요구사항"
+  },
+  {
+    "id": 26134,
+    "word": "prejudice",
+    "exam_en": "Any delay will <strong class=\"target-word\">prejudice</strong> the project.",
+    "exam_ko": "어떤 <strong class=\"target-word\">지체든</strong> 프로젝트에 악영향을 끼칠 것이다."
+  },
+  {
+    "id": 26135,
+    "word": "equidistant",
+    "exam_en": "Mean of the temperatures observed at 24 <strong class=\"target-word\">equidistant</strong> times in the course of a continuous 24-hour period (normally the mean solar day from midnight to midnight according to the zonal time of the station).",
+    "exam_ko": "연속 24 시간 동안 24 개의 <strong class=\"target-word\">등거리</strong> 시간에서 관측 된 온도의 평균 (일반적으로 관측소의 지역 시간에 따라 자정에서 자정까지의 평균 태양 일)."
+  },
+  {
+    "id": 26136,
+    "word": "attribute",
+    "exam_en": "Significant qualities may include <strong class=\"target-word\">attribute</strong>s such as performance, weight, size, durability, visual effect, sustainable design characteristics, warranties, and specific features and requirements indicated.",
+    "exam_ko": "중요한 품질에는 성능, 무게, 크기, 내구성, 시각 효과, 친환경 디자인 특성, 보증 및 특정 기능 및 계시된 요구 사항과 같은 <strong class=\"target-word\">속성</strong>이 포함될 수 있습니다."
+  },
+  {
+    "id": 26137,
+    "word": "plat",
+    "exam_en": "Subdivision is the act of dividing land into pieces that are easier to sell or otherwise develop, usually via a <strong class=\"target-word\">plat</strong>.",
+    "exam_ko": "대지 구획은 토지를 일반적으로 <strong class=\"target-word\">대지 도면</strong>을 통해 판매하거나 개발하기 쉬운 조각으로 나누는 행위입니다."
+  },
+  {
+    "id": 26137,
+    "word": "subdivision",
+    "exam_en": "<strong class=\"target-word\">Subdivision</strong> is the act of dividing land into pieces that are easier to sell or otherwise develop, usually via a plat.",
+    "exam_ko": "<strong class=\"target-word\">대지 구획</strong>은 토지를 일반적으로 대지 도면을 통해 판매하거나 개발하기 쉬운 조각으로 나누는 행위입니다."
+  },
+  {
+    "id": 26138,
+    "word": "stakeholder",
+    "exam_en": "Provide support related authorities and <strong class=\"target-word\">stakeholder</strong>s and to improve the policy and measure of improvement waste recycling.",
+    "exam_ko": "쓰레기 재활용 정책 향상과 개선 방안을 위해 관계 당국과 <strong class=\"target-word\">이해 당사자</strong>들 도와주시오."
+  },
+  {
+    "id": 26139,
+    "word": "liability",
+    "exam_en": "Please write down your data here from Financial Statement. (eg. net profit, total equity, total <strong class=\"target-word\">liability</strong>, current asset, current liabilty etc.)",
+    "exam_ko": "재무 제표에서 여기에 데이터를 기록하십시오. (예 : 순이익, 총 자본, <strong class=\"target-word\">부채</strong>, 유동 자산, 유동 부채 등)"
+  },
+  {
+    "id": 26140,
+    "word": "oversee",
+    "exam_en": "<strong class=\"target-word\">Oversee</strong> the detailed archtectural and infrastructure design works, particularly the external areas design to ensure their copliance to required all enginerring specifications",
+    "exam_ko": "요구하는 모든 엔지니어링 사양의 준수를 위해 상세한 건축적이고 사회 기반 시설 설계 작업 특히, 외부 영역 설계를 <strong class=\"target-word\">감독</strong>하시오."
+  },
+  {
+    "id": 26141,
+    "word": "ameliorate",
+    "exam_en": "Steps have been taken to <strong class=\"target-word\">ameliorate</strong> the situation.",
+    "exam_ko": "상황을 <strong class=\"target-word\">개선하기위한</strong> 조치가 취해졌습니다."
+  },
+  {
+    "id": 26142,
+    "word": "tarmac",
+    "exam_en": "<strong class=\"target-word\">Tarmac</strong> is a brand name for a black material used for building roads.",
+    "exam_ko": "Tarmac은 도로 건설에 사용되는 검은 색 소재의 <strong class=\"target-word\">아스팔트</strong> 이름입니다."
+  },
+  {
+    "id": 26143,
+    "word": "specimen",
+    "exam_en": "Provide test <strong class=\"target-word\">specimen</strong>s representative of proposed products and construction.",
+    "exam_ko": "제안된 제품 및 시공을 대표하는 <strong class=\"target-word\">견본</strong>을 제공하세요."
+  },
+  {
+    "id": 26144,
+    "word": "crevice",
+    "exam_en": "Crack and <strong class=\"target-word\">crevice</strong> painting treatment",
+    "exam_ko": "균열 및 <strong class=\"target-word\">틈새</strong> 페인팅 처리"
+  },
+  {
+    "id": 26145,
+    "word": "secrete",
+    "exam_en": "Shellac is an resin <strong class=\"target-word\">secrete</strong>d by the female lac bug on trees in the forests of India and Thailand.",
+    "exam_ko": "셸락은 인도와 태국의 숲에서 나무에 락 암컷곤충에 의해 <strong class=\"target-word\">분비되는</strong> 수지입니다."
+  },
+  {
+    "id": 26145,
+    "word": "shellac",
+    "exam_en": "<strong class=\"target-word\">Shellac</strong> is an resin secreted by the female lac bug on trees in the forests of India and Thailand.",
+    "exam_ko": "<strong class=\"target-word\">셸락</strong>은 인도와 태국의 숲에서 나무에 락 암컷곤충에 의해 분비되는 수지입니다."
+  },
+  {
+    "id": 26146,
+    "word": "handover",
+    "exam_en": "<strong class=\"target-word\">Handover</strong> :On or before practical completion provide: - An electronic copy of the as constructed drawings. - A list of plant and equipment installed as part of the project. Include the following details: - Make - Model - Year of manufacture - Capacity - Location",
+    "exam_ko": "<strong class=\"target-word\">인계</strong>: 실제 완료시 또는 제공 전 :-건축된 도면의 전자 사본. -프로젝트의 일부로 설치된 플랜트 및 장비 목록. 다음 세부 사항을 포함하십시오.-제품-모델-제조 연도-용량-위치"
+  },
+  {
+    "id": 26147,
+    "word": "grout",
+    "exam_en": "<strong class=\"target-word\">Grout</strong> is generally a mixture of water, cement.",
+    "exam_ko": "그라우트는 물, <strong class=\"target-word\">시멘트</strong>, 모래 혼합물이다"
+  },
+  {
+    "id": 26148,
+    "word": "grout",
+    "exam_en": "<strong class=\"target-word\">Grout</strong>ing is employed in embedding rebar in masonry walls, connecting sections of pre-cast concrete, filling voids, and sealing joints such as those between tiles.",
+    "exam_ko": "<strong class=\"target-word\">그라우팅</strong>(회반죽 채우기)는 벽돌 벽에 철근을 매립하고, 프리 캐스트 콘크리트의 섹션을 연결하고, 빈 공간을 채우고, 타일 사이의 조인트를 밀봉하는 데 사용됩니다."
+  },
+  {
+    "id": 26149,
+    "word": "pilaster",
+    "exam_en": "In contrast to a <strong class=\"target-word\">pilaster</strong>, a engaged column or butress can support the structure of wall and roof above.",
+    "exam_ko": "<strong class=\"target-word\">붙임</strong> 기둥과 반대로 부주와 버트러스는 위의 벽과 지붕을 지지할 수 있다."
+  },
+  {
+    "id": 26150,
+    "word": "receptacle",
+    "exam_en": "internal and external <strong class=\"target-word\">receptacle</strong> system",
+    "exam_ko": "내부 및 외부 <strong class=\"target-word\">전기콘센트</strong> 시스템"
+  },
+  {
+    "id": 26151,
+    "word": "buff",
+    "exam_en": "<strong class=\"target-word\">Buff</strong> is the colour produced by an equal mix of the tertiary colours citron and russet.",
+    "exam_ko": "<strong class=\"target-word\">버프색</strong>은 3 차 색상 유자 및 황갈색을 균등하게 혼합하여 생성 된 색상입니다"
+  },
+  {
+    "id": 26152,
+    "word": "vestibule",
+    "exam_en": "A <strong class=\"target-word\">vestibule</strong> is an enclosed area between the outside door of a building and the inside.",
+    "exam_ko": "<strong class=\"target-word\">방품실</strong>은 건물의 외부 문과 내부 사이에 밀폐 된 공간입니다"
+  },
+  {
+    "id": 26153,
+    "word": "conduit",
+    "exam_en": "Embedments(pipes, ducts, sleeves, <strong class=\"target-word\">conduit</strong> etc.) in Concrete",
+    "exam_ko": "콘크리트 매설물(파이프, 덕트, 슬리브, <strong class=\"target-word\">비닐 전선관</strong>등)"
+  },
+  {
+    "id": 26154,
+    "word": "fuse",
+    "exam_en": "Raw materials are <strong class=\"target-word\">fuse</strong>d in an electric furnace followed by casting of the melt in special molds. In glass production, highly siliceous, dense, fireclay bricks, known as flux blocks, are preferred in the portion of the tank that comes in contact with molten glass.",
+    "exam_ko": "원자재는 특수 금형에 주조되는 전기로에 <strong class=\"target-word\">용융</strong>된다.유리 생산에서는 용융 유리와 접촉하는 탱크 부분에서 플럭스 블록으로 알려진 고규 산성 고밀도의 내화 점토 벽돌이 선호됩니다."
+  },
+  {
+    "id": 26155,
+    "word": "ferrous",
+    "exam_en": "Cast steel is a <strong class=\"target-word\">ferrous</strong> alloy with a maximum carbon content of approximately 0.75%.",
+    "exam_ko": "주강은 약 0.75 %의 최대 탄소 함량을 가진 <strong class=\"target-word\">철 합금</strong>입니다."
+  },
+  {
+    "id": 26156,
+    "word": "adjustable",
+    "exam_en": "<strong class=\"target-word\">Adjustable</strong> Round Floor Box Kit with Outlet and Plate",
+    "exam_ko": "<strong class=\"target-word\">조절 식</strong> 원형 플로어 박스 키트 콘센트 및 플레이트가있는"
+  },
+  {
+    "id": 26157,
+    "word": "boulder",
+    "exam_en": "Crushed aggregate is produced by crushing quarry rock, <strong class=\"target-word\">boulder</strong>s, cobbles, or large-size gravel.",
+    "exam_ko": "분쇄 골재는 채석장 바위, <strong class=\"target-word\">바위</strong>, 자갈, 대형 자갈을 분쇄하여 생산한다."
+  },
+  {
+    "id": 26158,
+    "word": "metamorphic",
+    "exam_en": "<strong class=\"target-word\">Metamorphic</strong> Gneiss has many uses as a building material such as flooring, ornamental stones, gravestones, facing stones on buildings.",
+    "exam_ko": "<strong class=\"target-word\">변성</strong> 편마암은 바닥용, 장식용 돌, 묘비, 건물의 외장재와 같은 건축자재로 많이 사용된다."
+  },
+  {
+    "id": 26159,
+    "word": "waterproof",
+    "exam_en": "Protect adjacent surfaces from contraction with cleaner by covering then with liquid strippable masking agent or polyethylene film and <strong class=\"target-word\">waterproof</strong> masking tape.",
+    "exam_ko": "액체 스트리핑 가능한 마스킹 제 또는 폴리에틸렌 필름과 <strong class=\"target-word\">방수</strong> 마스킹 테이프로 덮음으로써 인접한 표면이 클리너로 수축되지 않도록 보호하십시오."
+  },
+  {
+    "id": 26160,
+    "word": "grit",
+    "exam_en": "<strong class=\"target-word\">Grit</strong> blasting(sand blasting) is a cleaning method.",
+    "exam_ko": "긔릿 <strong class=\"target-word\">블라스팅</strong>(샌드 블라스팅)은 하나의 청소 방법이다."
+  },
+  {
+    "id": 26161,
+    "word": "inaugural",
+    "exam_en": "The construction of a Spectator Facility intended for the <strong class=\"target-word\">inaugural</strong> ceremony of the Olympic Games scheduled to take place in Pyeong Chang, Korea in 2018.",
+    "exam_ko": "2018 년 평창에서 개최 될 예정인 올림픽 게임의 <strong class=\"target-word\">개회식</strong>을 위한 관중 시설 건설."
+  },
+  {
+    "id": 26162,
+    "word": "superintendent",
+    "exam_en": "Give the <strong class=\"target-word\">Superintendent</strong> copies of manufacturers’ warranties. Electronic versions in PDF are preferred.",
+    "exam_ko": "<strong class=\"target-word\">감리</strong>에게 제조업체의 보증서를 주시오. PDF의 전자 버전이 선호됩니다."
+  },
+  {
+    "id": 26163,
+    "word": "lengthwise",
+    "exam_en": "For a crosswise fold, fabric is usually folded so the cut ends match. However, a crosswise fold can also be a partial fold. A crosswise fold is often used when pattern pieces are too wide to fit on fabric folded <strong class=\"target-word\">lengthwise</strong>.",
+    "exam_ko": "횡방향 접힘의 경우 천은 보통 접혀서 절단 끝이 일치합니다. 허나 횡방향 접힘은 부분 접힘 일 수도 있습니다. 횡방향 접힘은 패턴 조간이 너무 넓어서 <strong class=\"target-word\">종방향</strong> 접힌 원단에 맞지 않을 때 종종 사용 됩니다."
+  },
+  {
+    "id": 26164,
+    "word": "align",
+    "exam_en": "<strong class=\"target-word\">Align</strong> all outlets horizontally or vertically for a uniform neat appearance.",
+    "exam_ko": "모든 콘센트를 <strong class=\"target-word\">정렬</strong>하여 균일하고 깔끔한 외관을 만드세요."
+  },
+  {
+    "id": 26165,
+    "word": "hopper",
+    "exam_en": "After concrete is poured at a construction site, the chutes of ready mixed concrete trucks and <strong class=\"target-word\">hopper</strong>s of concrete pump trucks must be washed out to remove the remaining concrete before it hardens.",
+    "exam_ko": "콘크리트를 현장에 타설한 후, 레디 콘크리트 트럭의 슈트와 콘크리트 펌프 트럭의 <strong class=\"target-word\">호퍼</strong>를 남아 있는 콘크리트를 굳기전에 씻어내야 한다."
+  },
+  {
+    "id": 26166,
+    "word": "proactive",
+    "exam_en": "Early and <strong class=\"target-word\">proactive</strong> public engagement, specifically targeted at community members, is essential to ensuring a successful infill project.",
+    "exam_ko": "특히 지역 사회 주민의 대상으로 한 조기의 <strong class=\"target-word\">선제적인</strong> 공공적 참여는 성공적 인필(유휴공간 사용)프로젝트에 중요하다."
+  },
+  {
+    "id": 26167,
+    "word": "deliverable",
+    "exam_en": "cooperate other disciplinal engineers to get final <strong class=\"target-word\">deliverable</strong>s",
+    "exam_ko": "최종 <strong class=\"target-word\">납품물</strong>을 얻기 위해 타분야 엔지니어와 협력하라."
+  },
+  {
+    "id": 26168,
+    "word": "vesicular",
+    "exam_en": "BFS is typically a grey <strong class=\"target-word\">vesicular</strong> material that is lighter than most basalt.",
+    "exam_ko": "고로 슬래그는 일반적으로 현무암보다 밝은 <strong class=\"target-word\">기공질</strong> 자재이다."
+  },
+  {
+    "id": 26169,
+    "word": "setback",
+    "exam_en": "A distance from a curb, property line, or structure within which building is prohibited. <strong class=\"target-word\">Setback</strong>s are building restrictions imposed on property owners. Local governments create setbacks through ordinances and Building Codes, usually for reasons of public policy such as safety, privacy, and environmental protection",
+    "exam_ko": "건축이 금지된 곳에서 연석, 대지 경계선, 구조물과의 거리를 말한다. <strong class=\"target-word\">건축 제한선</strong>은 부동산 소유자에게 부과된 건축제한이다. 보통 지방정부에서 법령 및 건축법을 통해 개인정보 보호, 환경 보호와 같은 공공 정책의 이유로 건축 제한선을 만든다."
+  },
+  {
+    "id": 26170,
+    "word": "perpend",
+    "exam_en": "The term <strong class=\"target-word\">perpend</strong> refers to the vertical joints between blocks or bricks that have been laid in a horizontal course to form a wall. Perpends are normally filled and sealed with mortar. The horizontal mortar joint in a wall construction is typically referred to as the bed joint.",
+    "exam_ko": "The term <strong class=\"target-word\">perpend</strong> (관석)은 벽을 형성하기 위해 수평 코스에 놓인 블록 또는 벽돌 사이의 수직 조인트를 의미합니다. Perpends는 일반적으로 박격포로 채워지고 봉인됩니다. 벽 구조에서의 수평 모르타르 조인트는 전형적으로 베드 조인트로 지칭된다."
+  },
+  {
+    "id": 26171,
+    "word": "perpend",
+    "exam_en": "The term <strong class=\"target-word\">perpend</strong> refers to the vertical joints between blocks or bricks that have been laid in a horizontal course to form a wall. Perpends are normally filled and sealed with mortar. The horizontal mortar joint in a wall construction is typically referred to as the bed joint.",
+    "exam_ko": "The term <strong class=\"target-word\">perpend</strong> (펄펜드)는 벽을 형성하기 위해 수평 코스에 놓인 블록 또는 벽돌 사이의 수직 조인트를 의미합니다. Perpends는 일반적으로 모르타로 채워지고 봉인된다. 벽 구조에서의 수평 모르타르 조인트는 전형적으로 베드 조인트로 지칭된다."
+  },
+  {
+    "id": 26172,
+    "word": "erosion",
+    "exam_en": "Ultraviolet(UV) Exposure; No peeling, chipping, flaking, pitting, crazing, <strong class=\"target-word\">erosion</strong> or other deleterious effects were observed under ASTM.",
+    "exam_ko": "노출 된곳은 껍질 벗겨짐, 금, 조각 벗겨짐, 곰보자국, 잔금, <strong class=\"target-word\">부식</strong>, 다른 유해한 영향이 보이면 안된다."
+  },
+  {
+    "id": 26173,
+    "word": "gunite",
+    "exam_en": "<strong class=\"target-word\">Gunite</strong> and shotcrete are two trade terms for different types of sprayed concrete.",
+    "exam_ko": "<strong class=\"target-word\">Gunite</strong> 및 Shotcrete는 서로 다른 유형의 스프레이 콘크리트에 대한 두 가지 분야의 용어입니다."
+  },
+  {
+    "id": 26174,
+    "word": "retain",
+    "exam_en": "Demolished and salvaged materials - Except for materials to be recovered and <strong class=\"target-word\">retain</strong>ed by the Superintendent or re-used, take possession of demolished materials and remove them from the site. Do not burn or bury demolished materials on the site. Prevent spillage of demolished materials in transit.",
+    "exam_ko": "철거 및 회수 된 자재 - 감리에 의해 회수되고 <strong class=\"target-word\">보유</strong>되거나 재활용할 자재를 제외하고 철거된 자재를 현장에서 가져와 제거합니다. 현장에서 철거된 재료를 태우거나 묻지 마십시오. 운송중 철거된 물질의 유출을 방지하십시오."
+  },
+  {
+    "id": 26174,
+    "word": "spillage",
+    "exam_en": "Demolished and salvaged materials - Except for materials to be recovered and retained by the Superintendent or re-used, take possession of demolished materials and remove them from the site. Do not burn or bury demolished materials on the site. Prevent <strong class=\"target-word\">spillage</strong> of demolished materials in transit.",
+    "exam_ko": "철거 및 회수 된 자재 - 감리에 의해 회수되고 보유되거나 재활용할 자재를 제외하고 철거된 자재를 현장에서 가져와 제거합니다. 현장에서 철거된 재료를 태우거나 묻지 마십시오. 운송중 철거된 물질의 <strong class=\"target-word\">유출</strong>을 방지하십시오."
+  },
+  {
+    "id": 26175,
+    "word": "serpentine",
+    "exam_en": "<strong class=\"target-word\">Serpentine</strong> stone was frequently used as a building material in the late 19th century because of its distinctive greenish color.",
+    "exam_ko": "<strong class=\"target-word\">사문석</strong>은 독특한 녹색으로 인해 19 세기 후반에 건축 자재로 자주 사용되었습니다."
+  },
+  {
+    "id": 26176,
+    "word": "storefront",
+    "exam_en": "A <strong class=\"target-word\">storefront</strong> or shopfront is the facade or entryway of a retail store located on the ground floor or street level of a commercial building, typically including one or more display windows. A storefront functions to attract visual attention to a business and its merchandise.",
+    "exam_ko": "<strong class=\"target-word\">상점 정면</strong>은 하나 이상의 전시 창을 포함하여 상업용 건물의 1층 또는 거리 높이에 위치한 소매점의 정면 또는 출입구이다."
+  },
+  {
+    "id": 26177,
+    "word": "change",
+    "exam_en": "<strong class=\"target-word\">Change</strong>s not made obvious and not explained or made obvious but not explained will not be accepted under the contract whether this is advised to the Contractor or not. Changes which were not requested but are made obvious and which are explained will be assessed during the re-assessment process.",
+    "exam_ko": "<strong class=\"target-word\">변경</strong> 명확하지 않고 설명되지 않았거나 명백하지만 설명되지 않은 사항은 계약자에게 알렸든 아니든 계약에 따라 수락되지 않습니다. 요청되지 않았지만 명백하고 설명 된 변경 사항은 재평가 과정에서 평가됩니다."
+  },
+  {
+    "id": 26178,
+    "word": "oscillation",
+    "exam_en": "<strong class=\"target-word\">Oscillation</strong> for asphalt construction and earth work. The HAMM programme contains oscillation drums for tandem rollers and compactors.",
+    "exam_ko": "아스팔트 공사 및 토공사 작업을 위한 <strong class=\"target-word\">진동</strong>. HAMM 프로그램에는 탠덤 롤러 및 압착기를 위한 진동 드럼이 포함되어 있습니다."
+  },
+  {
+    "id": 26179,
+    "word": "excavation",
+    "exam_en": "Rock: Monolithic material with a volume greater than 0.5 m3 which cannot be removed until broken up. The Contractor shall be deemed to have allowed for the cost of performing the required <strong class=\"target-word\">excavation</strong>s in whatever material may be encountered, and no extra payment shall be paid for excavation in rock.",
+    "exam_ko": "0.5 m3 이상의 깨기 전에 제거 할 수 없는 하나의 덩어리의 암석. 계약자는 어떤 재질의 암석을 만나도 <strong class=\"target-word\">굴착</strong> 작업을 수행하는 비용을 허용한 것으로 간주되며, 암석 굴착에 대해서는 추가 비용을 지불되지 않는다."
+  },
+  {
+    "id": 26179,
+    "word": "rock",
+    "exam_en": "<strong class=\"target-word\">Rock</strong>: Monolithic material with a volume greater than 0.5 m3 which cannot be removed until broken up. The Contractor shall be deemed to have allowed for the cost of performing the required excavations in whatever material may be encountered, and no extra payment shall be paid for excavation in rock.",
+    "exam_ko": "<strong class=\"target-word\">암석</strong>: 0.5 m3 이상의 깨기 전에 제거 할 수 없는 하나의 덩어리. 계약자는 어떤 재질의 암석을 만나도 굴착 작업을 수행하는 비용을 허용한 것으로 간주되며, 암석 굴착에 대해서는 추가 비용을 지불되지 않는다."
+  },
+  {
+    "id": 26180,
+    "word": "albeit",
+    "exam_en": "<strong class=\"target-word\">Albeit</strong> difficult, the job shall be done by April.",
+    "exam_ko": "<strong class=\"target-word\">비록</strong> 어렵지만 그 일은 4월까지 마쳐야 한다."
+  },
+  {
+    "id": 26181,
+    "word": "intensification",
+    "exam_en": "<strong class=\"target-word\">Intensification</strong> strategies typically involve establishing an urban boundary to prevent sprawl, and directing future development at higher densities to peripheral greenfield areas within the boundary, and intensification at existing urban centres.",
+    "exam_ko": "<strong class=\"target-word\">강화</strong> 전략은 보통 마구잡이 개발을 방지하기 위해 도시경계를 설립하고 경계 내의 주변의 그린필드 지역의 고밀도 미래 개발계획을 지도하고, 기존 도시 중심부의 강화를 포함한다."
+  },
+  {
+    "id": 26182,
+    "word": "addendum",
+    "exam_en": "An <strong class=\"target-word\">addendum</strong> is an agreed-upon addition signed by all parties to the original contract. It details the specific terms, clauses, sections etc.",
+    "exam_ko": "<strong class=\"target-word\">부록</strong>은 모든 당사자가 최초 계약에 서명 한 합의 된 추가 사항입니다. 특정 용어, 절, 섹션 등을 자세히 설명합니다."
+  },
+  {
+    "id": 26183,
+    "word": "accredited",
+    "exam_en": "In Korea, professional engineer titles and <strong class=\"target-word\">accredited</strong> engineering degrees are regulated and certified.",
+    "exam_ko": "한국에서는 전문 엔지니어 직함과 <strong class=\"target-word\">공인</strong> 엔지니어 학위가 규제 및 인증됩니다."
+  },
+  {
+    "id": 26184,
+    "word": "landscape",
+    "exam_en": "<strong class=\"target-word\">Landscape</strong>: demolition plan, site plan, site layout plan, buildings and structures, outdoor lighting, above and below ground utilities as appropriate, grading plan, planting, revegitation, irrigation plan, site detail, site elevation, site section, sign plan",
+    "exam_ko": "<strong class=\"target-word\">조경</strong>: 철거계획, 부지계획, 부지배치계획, 건물과 구조, 외부 조명, 적합한 지상지하 유틸리티, 정지계획, 식재, 재녹화, 관개(물대기), 부지 상세, 부지 입면, 부지 단면도, 간판 계획"
+  },
+  {
+    "id": 26185,
+    "word": "platy",
+    "exam_en": "These rocks develop a <strong class=\"target-word\">platy</strong> or sheet-like structure that reflects the direction that pressure was applied.",
+    "exam_ko": "이 암석은 <strong class=\"target-word\">판</strong> 또는 시트와 같은 구조를 만들어 압력이 가해진 방향을 반영합니다."
+  },
+  {
+    "id": 26186,
+    "word": "elasticity",
+    "exam_en": "Normalweight Concrete: Density per ASTM C 138. Design the mix to produce the strength, modulus of <strong class=\"target-word\">elasticity</strong> and density as indicated on the Contract Documents.",
+    "exam_ko": "보통 콘크리트: ASTM C 138 따른 농도. 계약서에 명시된 강도와 <strong class=\"target-word\">탄성</strong>의 기준으로 강도가 나올수 있도록 콘크리트 믹스를 설계하시오."
+  },
+  {
+    "id": 26186,
+    "word": "modulus",
+    "exam_en": "Normalweight Concrete: Density per ASTM C 138. Design the mix to produce the strength, <strong class=\"target-word\">modulus</strong> of elasticity and density as indicated on the Contract Documents.",
+    "exam_ko": "보통 콘크리트: ASTM C 138 따른 농도. 계약서에 명시된 강도와 탄성의 <strong class=\"target-word\">계수</strong>로 강도가 나올수 있도록 콘크리트 믹스를 설계하시오."
+  },
+  {
+    "id": 26187,
+    "word": "encroachment",
+    "exam_en": "Prevent the <strong class=\"target-word\">encroachment</strong> of demolished materials on to adjoining property, including public places.",
+    "exam_ko": "공공 장소를 포함하여 인접한 건물에 철거 된 자재가 <strong class=\"target-word\">잠식</strong>하는 것을 방지합니다."
+  },
+  {
+    "id": 26188,
+    "word": "profuse",
+    "exam_en": "this early Indian architecture is the consistent and <strong class=\"target-word\">profuse</strong> use of arched windows and doors, which are extremely important elements of the architectural decor.",
+    "exam_ko": "이 초기 인도 건축물은 아치형 창문과 문을 일관되고 <strong class=\"target-word\">풍부하게</strong> 사용하며 건축 장식의 매우 중요한 요소입니다."
+  },
+  {
+    "id": 26189,
+    "word": "profuse",
+    "exam_en": "Jonathan has gained so much weight that even his doctor is concerned about his <strong class=\"target-word\">profuse</strong> growth.",
+    "exam_ko": "조나단은 살이 너무 많이 쪄서 의사도 <strong class=\"target-word\">과도한</strong> 성장에 걱정을 하고 있다."
+  },
+  {
+    "id": 26190,
+    "word": "fragmentation",
+    "exam_en": "Prevent premature <strong class=\"target-word\">fragmentation</strong> of agricultural land prior to the extension of cost-effective urban service.",
+    "exam_ko": "비용 효율적 도시 서비스의 확대 이전에 농지의 조기 <strong class=\"target-word\">분열</strong>을 방지하세요."
+  },
+  {
+    "id": 26191,
+    "word": "swale",
+    "exam_en": "A <strong class=\"target-word\">swale</strong> is a technique for capturing and storing water in a garden. In this article, learn how to build a swale in the residential landscape.",
+    "exam_ko": "<strong class=\"target-word\">습지</strong>는 물을 포착하고 저장하는 기술이다. 이 기사에서 주거 시설 조경에 습지 형성을 배워보자."
+  },
+  {
+    "id": 26192,
+    "word": "interstice",
+    "exam_en": "Blends between harsh and smooth edges. <strong class=\"target-word\">Interstice</strong> Width: 0.0 - 1.0. Sets interstice (gap size).",
+    "exam_ko": "거친 가장자리와 부드러운 가장자리를 혼합합니다. 틈새 폭 : 0.0-1.0. <strong class=\"target-word\">인터스티스</strong> (갭 크기)을 설정합니다."
+  },
+  {
+    "id": 26193,
+    "word": "calcareous",
+    "exam_en": "<strong class=\"target-word\">Calcareous</strong> Stone:Common types of calcareous stones include: marble, travertine, limestone, and onyx. Composed mainly of calcium carbonate, a calcareous stone is very sensitive to cleaning solutions that contain acidic or alkaline value.",
+    "exam_ko": "<strong class=\"target-word\">석회질</strong> 돌: 석회질 돌의 일반적인 유형에는 대리석, 트래벌틴, 석회석 및 오닉스가 포함됩니다. 탄산 칼슘으로 주로 구성된 석회질 돌은 산성 또는 알칼리성을 함유 한 세척 용액에 매우 민감합니다."
+  },
+  {
+    "id": 26194,
+    "word": "in-service",
+    "exam_en": "Manufacturer Qualifications: A firm experienced in manufacturing products or systems similar to those indicated for this Project and with a record of successful <strong class=\"target-word\">in-service</strong> performance, as well as sufficient production capacity to produce required units.",
+    "exam_ko": "제조업체 자격: 이 프로젝트에 표시된 것과 유사한 제품 또는 시스템을 제조 한 경험이 있고 성공적인 <strong class=\"target-word\">운영 성과</strong> 기록과 필요한 단위를 생산하기에 충분한 생산 능력을 갖춘 회사."
+  },
+  {
+    "id": 26195,
+    "word": "reinstatement",
+    "exam_en": "<strong class=\"target-word\">Reinstatement</strong>-Make good any damage caused during demolition to match the existing.",
+    "exam_ko": "<strong class=\"target-word\">복구</strong>: 철거 중 발생한 손상을 기존의 것과 일치하도록 만듭니다."
+  },
+  {
+    "id": 26196,
+    "word": "curbing",
+    "exam_en": "Granite is used to make many objects that we encounter in daily life. These include counter tops, floor tiles, paving stone, <strong class=\"target-word\">curbing</strong>, stair treads, building veneer, and cemetery monuments.",
+    "exam_ko": "화강암은 우리가 일상 생활에서 만나는 많은 물건을 만드는 데 사용됩니다. 여기에는 카운터 상판, 바닥 타일, 포석, <strong class=\"target-word\">연석</strong>, 계단 디딤판, 베니어, 묘지 비석이 포함됩니다."
+  },
+  {
+    "id": 26196,
+    "word": "granite",
+    "exam_en": "<strong class=\"target-word\">Granite</strong> is used to make many objects that we encounter in daily life. These include counter tops, floor tiles, paving stone, curbing, stair treads, building veneer, and cemetery monuments.",
+    "exam_ko": "<strong class=\"target-word\">화강암</strong>은 우리가 일상 생활에서 만나는 많은 물건을 만드는 데 사용됩니다. 여기에는 카운터 상판, 바닥 타일, 포석, 연석, 계단 디딤판, 베니어, 묘지 비석이 포함됩니다."
+  },
+  {
+    "id": 26197,
+    "word": "preside",
+    "exam_en": "An adjudicator <strong class=\"target-word\">preside</strong>s, judges, and arbitrates during a formal dispute or competition.",
+    "exam_ko": "중재자는 공식 분쟁이나 경쟁 중에 <strong class=\"target-word\">주재</strong>, 판결 및 중재를 한다."
+  },
+  {
+    "id": 26198,
+    "word": "contiguous",
+    "exam_en": "Cut stone from one block or <strong class=\"target-word\">contiguous</strong>, matched blocks (in which) natural markings occur.",
+    "exam_ko": "자연적 표시가 있는 하나의 블록 또는 <strong class=\"target-word\">인접한</strong> 일치하는 블록에서 돌을 자르십시오."
+  },
+  {
+    "id": 26199,
+    "word": "abutment",
+    "exam_en": "The keystone is the centre stone or masonry unit at the apex of an arch. The springer is the lowest voussoir on each side, located where the curve of the arch springs from the vertical support or <strong class=\"target-word\">abutment</strong> of the wall or pier.",
+    "exam_ko": "키스톤은 아치의 정점에 있는 중앙 돌 또는 벽돌 단위입니다. 스프링거는 각 측면에서 가장 낮은 voussoir이며 아치의 곡선이 벽의 수직 지지대 또는 <strong class=\"target-word\">받침</strong>에서 튀어 나오는 곳에 위치합니다."
+  },
+  {
+    "id": 26200,
+    "word": "preamble",
+    "exam_en": "A <strong class=\"target-word\">preamble</strong> is an explanation of a document, commonly found in contracts, specifications and bills of quantities. It can help with the interpretation of the document. A preamble might include: A description of the parties to the contract. A description of the competence (or lack of it) of the parties to the contract.",
+    "exam_ko": "<strong class=\"target-word\">서문</strong>은 일반적으로 계약서, 시방서, 수량산출서에서 보여지는 문서에 대한 설명이다. 문서 해석에 도움이 될 수 있다. 서문은 계약 당사자의 설명과 역량(부족한 부분)을 포함한다."
+  },
+  {
+    "id": 26201,
+    "word": "endowment",
+    "exam_en": "Most <strong class=\"target-word\">endowment</strong>s are designed to keep the principal amount intact while using the investment income for charitable efforts.",
+    "exam_ko": "대부분의 <strong class=\"target-word\">기부금</strong>은 자선 활동에 투자 소득을 사용하면서 원금을 그대로 유지하도록 계획되었습니다."
+  },
+  {
+    "id": 26202,
+    "word": "delineate",
+    "exam_en": "The Standard Specifications Manual and its amendments <strong class=\"target-word\">delineate</strong> the requirements for projects constructed for the embassy.",
+    "exam_ko": "시방서 매뉴얼과 그 개정안은 대사관을 위해 건설 된 프로젝트의 요구 사항을 <strong class=\"target-word\">설명</strong>합니다."
+  },
+  {
+    "id": 26203,
+    "word": "quaternary",
+    "exam_en": "As an RYB <strong class=\"target-word\">quaternary</strong> colour, it is the colour produced by an equal mix of the tertiary colours citron and russet.",
+    "exam_ko": "RYB <strong class=\"target-word\">4차</strong> 색상으로서, 3 차 색상 유자 및 황갈색의 동일한 혼합에 의해 생성 된 색상입니다."
+  },
+  {
+    "id": 26204,
+    "word": "planar",
+    "exam_en": "As the name implies, a <strong class=\"target-word\">planar</strong> surface is simply a surface that is a plane.",
+    "exam_ko": "이름에서 알 수 있듯이 <strong class=\"target-word\">평면형</strong> 표면은 단순히 평면 인 표면입니다."
+  },
+  {
+    "id": 26205,
+    "word": "autoclave",
+    "exam_en": "ALC-<strong class=\"target-word\">Autoclave</strong>d Light Weight Concrete",
+    "exam_ko": "<strong class=\"target-word\">고압가온</strong> 경량 콘크리트(ALC, 단열 효과 우수함)"
+  },
+  {
+    "id": 26206,
+    "word": "impractical",
+    "exam_en": "Damage - If a tree, which is to remain, is damaged and repair work is considered <strong class=\"target-word\">impractical</strong>, or is attempted and fails, remove the tree and the root system, if so directed. Replace the tree with a tree of the same species and a similar condition and size or pay compensation.",
+    "exam_ko": "손상 - 만약 보유해야할 나무가 손상되었고 복구작업이 <strong class=\"target-word\">현실 불가능</strong>하게 여겨지거나 복구 시도후 실패하였을때 나무와 뿌리 체게를 지시에 따라 제거하고 같은 종의 우사한 조건과 크기의 나무를 대체하거나 배상금을 지불한다."
+  },
+  {
+    "id": 26207,
+    "word": "mediator",
+    "exam_en": "The <strong class=\"target-word\">mediator</strong> must have the relevant experience dealing with disputes similar to such dispute arising out of or in connection with this Agreement, and must not have a conflict of interest. After mediation process resolves disputes,the mediator’s compensation and related expenses shall be finally determined by the mediator.",
+    "exam_ko": "<strong class=\"target-word\">중재자</strong>는 본 계약으로 인해 또는 이와 관련하여 발생하는 분쟁과 유사한 분쟁을 다루는 관련 경험이 있어야하며 이해의 상충이 없어야합니다. 중재 프로세스가 분쟁을 해결 한 후 중재자의 보상 및 관련 비용은 중재자가 최종 결정합니다."
+  },
+  {
+    "id": 26208,
+    "word": "clearance",
+    "exam_en": "It is recommended that at least 5mm <strong class=\"target-word\">clearance</strong> is kept between the bottom edge of the glazing tape and rebate base, to ensure that no moisture traps occur.",
+    "exam_ko": "수분 트랩이 발생하지 않도록, 유리 테이프와 은촉이음 사이에 <strong class=\"target-word\">최소 5mm 간격</strong>을 유지하는 것이 좋습니다."
+  },
+  {
+    "id": 26209,
+    "word": "stringent",
+    "exam_en": "Referenced Standards: If compliance with two or more standards is specified and the standards establish different or conflicting requirements for minimum quantities or quality levels, comply with the most <strong class=\"target-word\">stringent</strong> requirement.",
+    "exam_ko": "참조 표준: 만약 두개 이상의 표준 준수가 명시되어 있고 기준이 다르게 설립되어 있거나 최소 수량이나 품질 수준의 요구사항이 상충될때 가장 <strong class=\"target-word\">엄격한</strong> 요구사항을 준수하시오."
+  },
+  {
+    "id": 26210,
+    "word": "nominally",
+    "exam_en": "Electrical metallic tubing (EMT), also commonly called thin-wall, is a listed steel raceway of circular cross section, which is unthreaded, and <strong class=\"target-word\">nominally</strong> 10 long.",
+    "exam_ko": "thin-wall이라고 불리는 EMT(금속 전기 도관)은 나선이 없고 <strong class=\"target-word\">공칭</strong> 길이 10인 둥근 단면의 강철 배선관이다."
+  },
+  {
+    "id": 26211,
+    "word": "lavatory",
+    "exam_en": "<strong class=\"target-word\">Lavatory</strong> is a room fitted with equipment for washing the hands and face and usually with flush toilet facilities.",
+    "exam_ko": "<strong class=\"target-word\">화장실</strong>은 손과 얼굴을 씻을 수 있는 장비가 구비 된 공간이며, 보통 화장실 시설을 갖추고 있습니다."
+  },
+  {
+    "id": 26212,
+    "word": "caustic",
+    "exam_en": "Concrete washout water (or washwater) is a slurry containing toxic metals. It’s also <strong class=\"target-word\">caustic</strong> and corrosive, having a pH near 12.",
+    "exam_ko": "콘크리트 세척수는 독성 금속을 함유한 슬러리입니다. 또한 <strong class=\"target-word\">가성</strong>이고 부식성이 있고 거의 pH 12를 띱니다."
+  },
+  {
+    "id": 26212,
+    "word": "corrosive",
+    "exam_en": "Concrete washout water (or washwater) is a slurry containing toxic metals. It’s also caustic and <strong class=\"target-word\">corrosive</strong>, having a pH near 12.",
+    "exam_ko": "콘크리트 세척수는 독성 금속을 함유한 슬러리입니다. 또한 가성이고 <strong class=\"target-word\">부식성</strong>이 있고 거의 pH 12를 띱니다."
+  },
+  {
+    "id": 26213,
+    "word": "emulsify",
+    "exam_en": "To <strong class=\"target-word\">emulsify</strong> means to mix two ingredients that do not combine easily, such as oil and water.",
+    "exam_ko": "<strong class=\"target-word\">유화</strong>한다는 것은 기름과 물과 같이 쉽게 결합되지 않는 두 가지 성분을 혼합하는 것을 의미합니다."
+  },
+  {
+    "id": 26214,
+    "word": "variegated",
+    "exam_en": "<strong class=\"target-word\">Variegated</strong> wall painting by blending paint color",
+    "exam_ko": "<strong class=\"target-word\">다양한 색의</strong> 벽 페인팅은 페인트 색 혼합으로 이루어진다"
+  },
+  {
+    "id": 26215,
+    "word": "arbitrator",
+    "exam_en": "The <strong class=\"target-word\">arbitrator</strong> must have the relevant experience dealing with disputes similar to such dispute arising out of or in connection with this Agreement, and must not have a conflict of interest. After mediation process resolves disputes,the arbitrator’s compensation and related expenses shall be finally determined by the arbitrator.",
+    "exam_ko": "<strong class=\"target-word\">중재자</strong>는 본 계약으로 인해 또는 이와 관련하여 발생하는 분쟁과 유사한 분쟁을 다루는 관련 경험이 있어야하며 이해 상충이 없어야합니다. 중재 프로세스가 분쟁을 해결 한 후 중재자의 보상 및 관련 비용은 중재자가 최종 결정합니다."
+  },
+  {
+    "id": 26216,
+    "word": "practicable",
+    "exam_en": "Patching: Patch construction by filling, repairing, refinishing, closing up, and similar operations following performance of other work. Patch with durable seams that are as invisible as <strong class=\"target-word\">practicable</strong>.",
+    "exam_ko": "패치: 다른 작업을 실행한 후 채우기, 수선, 재마감, 막음 그와 유사한 작업으로 패치하시오. <strong class=\"target-word\">가능한</strong> 한 보이지 않는 튼튼한 솔기로 패치하시오."
+  },
+  {
+    "id": 26217,
+    "word": "reactivity",
+    "exam_en": "Certification from a qualified testing agency indicating absence of deleterious expansion of concrete due to alkali aggregate <strong class=\"target-word\">reactivity</strong> in accordance with ASTM C 33",
+    "exam_ko": "ASTM C 33에 따른 알칼리 골재 <strong class=\"target-word\">반응성</strong>으로 인한 콘크리트의 유해한 팽창이 없음을 나타내는 적격 시험 기관의 인증"
+  },
+  {
+    "id": 26218,
+    "word": "header",
+    "exam_en": "<strong class=\"target-word\">Header</strong> is the shorter square face of the brick which measures 9cm x 9cm. Header bond is also known as heading bond.",
+    "exam_ko": "<strong class=\"target-word\">헤더</strong>는 9cm x 9cm 크기의 벽돌의 짧은 사각형입니다. 헤더 본드는 헤딩 본드라고도 합니다."
+  },
+  {
+    "id": 26219,
+    "word": "pending",
+    "exam_en": "Advise Owner of <strong class=\"target-word\">pending</strong> insurance changeover requirements.",
+    "exam_ko": "<strong class=\"target-word\">진행 중인</strong> 보험 전환 요구 사항을 소유자에게 알립니다."
+  },
+  {
+    "id": 26220,
+    "word": "correspondence",
+    "exam_en": "All <strong class=\"target-word\">correspondence</strong> including email and telefax messages shall be adequately identified and referenced with project number, project title, and specific subject.",
+    "exam_ko": "이메일 및 텔레 팩스 메시지를 포함한 모든 <strong class=\"target-word\">서신</strong>은 프로젝트 번호, 프로젝트 제목 및 특정 주제를 적절히 식별되고 참조되어야합니다."
+  },
+  {
+    "id": 26221,
+    "word": "accreditation",
+    "exam_en": "LEED Certification is often confused with LEED <strong class=\"target-word\">accreditation</strong>.",
+    "exam_ko": "LEED 인증과 LEED <strong class=\"target-word\">공인</strong>은 자주 혼동된다."
+  },
+  {
+    "id": 26222,
+    "word": "quarries",
+    "exam_en": "Most gravel comes from sand pits and <strong class=\"target-word\">quarries</strong>.",
+    "exam_ko": "Most gravel comes from sand pits and <strong class=\"target-word\">채석장</strong>s."
+  },
+  {
+    "id": 26223,
+    "word": "padlock",
+    "exam_en": "Fitted with a hasp and staple for use with a <strong class=\"target-word\">padlock</strong> (not included)",
+    "exam_ko": "<strong class=\"target-word\">자물쇠</strong>와 함께 사용하기 위해 걸쇠와 스테이플이 장착되어 있습니다 (포함되지 않음)"
+  },
+  {
+    "id": 26224,
+    "word": "lubrication",
+    "exam_en": "Remove excess <strong class=\"target-word\">lubrication</strong>, paint and mortar droppings, and other foreign substances.",
+    "exam_ko": "과도한 <strong class=\"target-word\">윤활유</strong>, 페인트, 몰탈 떨어진 것, 기타 이물질을 제거하세요."
+  },
+  {
+    "id": 26225,
+    "word": "scaffolding",
+    "exam_en": "Review and approve the design of temporay works, including shuttering and <strong class=\"target-word\">scaffolding</strong> for suitability and safety during construction.",
+    "exam_ko": "시공 중 적합성 및 안전성을 위해 거푸집 및 <strong class=\"target-word\">비계</strong>를 포함한 임시 작업의 설계 검토 및 승인하시오."
+  }
+]

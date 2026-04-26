@@ -2,7 +2,7 @@ import json
 import re
 import os
 from flask import render_template, redirect, url_for, request, session, jsonify, g
-from sqlalchemy import text, select
+from sqlalchemy import text, select, case, func
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
@@ -85,30 +85,37 @@ def search_word_en():
 
     search_pattern = f'{partial_word}%'
 
-    # 서브 쿼리 : 해당 단어의 id 검색(오름차순 기준 최대 10개까지)
-    subquery = (db.session.query(Voca.id)
-                .filter(Voca.word.like(search_pattern))
-                .order_by(Voca.word.asc())
-                .limit(10)
-                .subquery())
+    # 유사도 순 정렬: 완전 일치 > 짧은 단어(쿼리에 가까움) > 알파벳 순
+    id_rows = (db.session.query(Voca.id)
+               .filter(Voca.word.like(search_pattern))
+               .order_by(
+                   case((Voca.word == partial_word, 0), else_=1),
+                   func.length(Voca.word).asc(),
+                   Voca.word.asc()
+               )
+               .limit(10)
+               .all())
+    voca_ids = [r[0] for r in id_rows]
+
+    if not voca_ids:
+        return jsonify({'code': 200, 'data': []}), 200
 
     # 단어와 발음 가져오기
-    words = db.session.query(Voca).filter(Voca.id.in_(subquery)).all()
+    words = db.session.query(Voca).filter(Voca.id.in_(voca_ids)).all()
 
     # 뜻 가져오기
     meanings = (db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning)
                 .join(VocaMeaning, VocaMeaningMap.meaning_id == VocaMeaning.id)
-                .filter(VocaMeaningMap.voca_id.in_(subquery))
+                .filter(VocaMeaningMap.voca_id.in_(voca_ids))
                 .all())
 
     # 예문 가져오기
     examples = (db.session.query(VocaExampleMap.voca_id, VocaExample.id, VocaExample.exam_en, VocaExample.exam_ko)
                 .join(VocaExample, VocaExampleMap.example_id == VocaExample.id)
-                .filter(VocaExampleMap.voca_id.in_(subquery))
+                .filter(VocaExampleMap.voca_id.in_(voca_ids))
                 .all())
 
     # 단어별로 뜻과 예문을 매핑하여 결과 생성
-    data = []  # 최종 데이터 담는 리스트
     word_map = {word.id: {
         'word': word.word,
         'pronunciation': word.pronunciation,
@@ -127,8 +134,8 @@ def search_word_en():
         if example_data not in word_map[voca_id]['examples']:
             word_map[voca_id]['examples'].append(example_data)
 
-    # 최종 데이터 리스트 생성
-    data = list(word_map.values())
+    # voca_ids 순서(유사도순)대로 최종 데이터 구성
+    data = [word_map[vid] for vid in voca_ids if vid in word_map]
 
     return jsonify({'code': 200, 'data': data}), 200
 
@@ -158,49 +165,79 @@ def search_word_korean():
     else:
         return jsonify({'code': 400, 'message': '잘못된 요청입니다.'}), 400
     
-    # SQL 쿼리 작성
-    query = text(f"""
-        SELECT voca_meaning.id, voca_meaning.meaning, voca_meaning_map.voca_id
+    # 1. 매치된 meaning들을 유사도 순으로 가져와서 voca_id 순서 추출 (중복 제거, 최대 10개 voca)
+    match_query = text("""
+        SELECT voca_meaning.meaning, voca_meaning_map.voca_id
         FROM voca_meaning
         JOIN voca_meaning_map ON voca_meaning.id = voca_meaning_map.meaning_id
         WHERE REPLACE(voca_meaning.meaning, ' ', '') REGEXP :pattern
-        ORDER BY voca_meaning.meaning ASC
-        LIMIT 10
+        ORDER BY
+            CASE WHEN REPLACE(voca_meaning.meaning, ' ', '') = :exact THEN 0 ELSE 1 END,
+            CASE WHEN REPLACE(voca_meaning.meaning, ' ', '') LIKE :starts_with THEN 0 ELSE 1 END,
+            CHAR_LENGTH(voca_meaning.meaning) ASC,
+            voca_meaning.meaning ASC
+        LIMIT 30
     """)
+    matched = db.session.execute(match_query, {
+        'pattern': regex_pattern,
+        'exact': partial_word,
+        'starts_with': f'{partial_word}%',
+    }).fetchall()
 
-    # 쿼리 실행
-    results = db.session.execute(query, {'pattern': regex_pattern}).fetchall()
+    # 유사도 순으로 중복 없이 voca_id 수집 (매치된 대표 의미도 기억)
+    voca_ids = []
+    matched_meaning_map = {}  # voca_id -> 매치된 의미(첫 번째, 가장 유사도 높음)
+    for row in matched:
+        if row.voca_id not in matched_meaning_map:
+            matched_meaning_map[row.voca_id] = row.meaning
+            voca_ids.append(row.voca_id)
+        if len(voca_ids) >= 10:
+            break
 
-    # 결과를 JSON 형태로 반환 (word + meaning + example)
-    result_list = []
-    voca_ids = [result.voca_id for result in results]
-    voca_records = db.session.query(Voca).filter(Voca.id.in_(voca_ids)).all()
-    voca_dict = {voca.id: voca for voca in voca_records}
+    if not voca_ids:
+        return jsonify({'code': 200, 'data': []}), 200
 
-    for result in results:
-        voca = voca_dict.get(result.voca_id)
-        
-        if not voca:
-            continue
+    # 2. voca들의 전체 정보(모든 meanings + examples) 조회
+    words = db.session.query(Voca).filter(Voca.id.in_(voca_ids)).all()
 
-        # 예문 데이터 처리
-        example_data = []
-        example_maps = db.session.query(VocaExampleMap).filter_by(voca_id=voca.id).all()
-        example_ids = [example_map.example_id for example_map in example_maps]
-        examples = db.session.query(VocaExample).filter(VocaExample.id.in_(example_ids)).all()
-        
-        for example in examples:
-            example_data.append({"id": example.id, "origin": example.exam_en, "meaning": example.exam_ko})
+    all_meanings = (db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning)
+                    .join(VocaMeaning, VocaMeaningMap.meaning_id == VocaMeaning.id)
+                    .filter(VocaMeaningMap.voca_id.in_(voca_ids))
+                    .all())
 
-        result_data = {
-            'word': voca.word,
-            'pronunciation': voca.pronunciation,
-            'examples': example_data,
-            'meaning': result.meaning,
-        }
-        result_list.append(result_data)
+    all_examples = (db.session.query(VocaExampleMap.voca_id, VocaExample.id, VocaExample.exam_en, VocaExample.exam_ko)
+                    .join(VocaExample, VocaExampleMap.example_id == VocaExample.id)
+                    .filter(VocaExampleMap.voca_id.in_(voca_ids))
+                    .all())
 
-    return jsonify({'code': 200, 'data': result_list}), 200
+    # 3. 단어별로 뜻/예문 그룹핑
+    word_map = {w.id: {
+        'word': w.word,
+        'pronunciation': w.pronunciation,
+        'meanings': [],
+        'examples': [],
+    } for w in words}
+
+    for voca_id, meaning in all_meanings:
+        if meaning not in word_map[voca_id]['meanings']:
+            word_map[voca_id]['meanings'].append(meaning)
+
+    for voca_id, exam_id, exam_en, exam_ko in all_examples:
+        ex = {"id": exam_id, "origin": exam_en, "meaning": exam_ko}
+        if ex not in word_map[voca_id]['examples']:
+            word_map[voca_id]['examples'].append(ex)
+
+    # 4. 각 단어의 meanings에서 매치된 의미를 맨 앞으로 이동 (검색한 의미가 우선 노출)
+    for vid, w in word_map.items():
+        matched_meaning = matched_meaning_map.get(vid)
+        if matched_meaning and matched_meaning in w['meanings']:
+            w['meanings'].remove(matched_meaning)
+            w['meanings'].insert(0, matched_meaning)
+
+    # 5. voca_ids 순서(유사도순)대로 최종 데이터 구성
+    data = [word_map[vid] for vid in voca_ids if vid in word_map]
+
+    return jsonify({'code': 200, 'data': data}), 200
 
 
 # 한글 자음 리스트

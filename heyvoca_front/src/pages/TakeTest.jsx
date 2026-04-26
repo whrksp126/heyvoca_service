@@ -42,23 +42,47 @@ const TakeTest = () => {
   const setupTestQuestions = (targetMemoryState, vocabularySheetId, count, testType) => {
     let allWords = [];
 
+    // 같은 word.id(= vocaIndexId)는 여러 단어장에 있어도 암기 상태를 공유하므로
+    // 한 번만 출제한다. 기본적으로 처음 만난 단어장 버전을 유지하되,
+    // 그 버전의 meanings가 비어있고 뒤에 등장한 버전엔 있으면 교체한다
+    // (단어장에 따라 의미가 비어있는 매핑이 존재할 수 있기 때문).
+    const hasMeanings = (w) => Array.isArray(w?.meanings) && w.meanings.length > 0;
+    const dedupeByWordId = (entries) => {
+      const byId = new Map();
+      for (const w of entries) {
+        const existing = byId.get(w.id);
+        if (!existing) {
+          byId.set(w.id, w);
+          continue;
+        }
+        if (!hasMeanings(existing) && hasMeanings(w)) {
+          byId.set(w.id, w);
+        }
+      }
+      return Array.from(byId.values());
+    };
+
     if (vocabularySheetId === "all") {
-      allWords = vocabularySheets.flatMap(sheet =>
-        sheet.words.map(word => ({
-          ...word,
-          vocabularySheetId: sheet.id
-        }))
-      );
-    } else if (Array.isArray(vocabularySheetId)) {
-      const idSet = new Set(vocabularySheetId);
-      allWords = vocabularySheets
-        .filter(sheet => idSet.has(sheet.id))
-        .flatMap(sheet =>
+      allWords = dedupeByWordId(
+        vocabularySheets.flatMap(sheet =>
           sheet.words.map(word => ({
             ...word,
             vocabularySheetId: sheet.id
           }))
-        );
+        )
+      );
+    } else if (Array.isArray(vocabularySheetId)) {
+      const idSet = new Set(vocabularySheetId);
+      allWords = dedupeByWordId(
+        vocabularySheets
+          .filter(sheet => idSet.has(sheet.id))
+          .flatMap(sheet =>
+            sheet.words.map(word => ({
+              ...word,
+              vocabularySheetId: sheet.id
+            }))
+          )
+      );
     } else {
       const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
       if (vocabularySheet) {
@@ -127,6 +151,65 @@ const TakeTest = () => {
       }
 
       // 랜덤하게 섞기
+      selectedWords = shuffleArray(selectedWords).slice(0, count);
+    }
+    // 빠른 복습: 망각 곡선 우선순위로 전체 사전에서 자동 선별
+    else if (testType === 'quick') {
+      // 우선순위 1: 복습 지연 (가장 오래된 것부터)
+      selectedWords.push(...sortedOverdueWords.slice(0, count));
+
+      // 우선순위 2: 오늘 학습 예정
+      if (selectedWords.length < count) {
+        const ids = new Set(selectedWords.map(w => w.id));
+        selectedWords.push(
+          ...todayScheduledWords.filter(w => !ids.has(w.id)).slice(0, count - selectedWords.length)
+        );
+      }
+
+      // 우선순위 3: 단기 기억 (interval 1~10일, nextReview 임박한 것부터)
+      if (selectedWords.length < count) {
+        const ids = new Set(selectedWords.map(w => w.id));
+        const shortTerm = allWords
+          .filter(w => {
+            const interval = w.sm2?.interval ?? w.interval ?? 0;
+            return interval > 0 && interval < 10 && !ids.has(w.id);
+          })
+          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
+        selectedWords.push(...shortTerm.slice(0, count - selectedWords.length));
+      }
+
+      // 우선순위 4: 중기 기억 (interval 10~60일, nextReview 임박한 것부터)
+      if (selectedWords.length < count) {
+        const ids = new Set(selectedWords.map(w => w.id));
+        const mediumTerm = allWords
+          .filter(w => {
+            const interval = w.sm2?.interval ?? w.interval ?? 0;
+            return interval >= 10 && interval < 60 && !ids.has(w.id);
+          })
+          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
+        selectedWords.push(...mediumTerm.slice(0, count - selectedWords.length));
+      }
+
+      // 우선순위 5: 미학습 (한 번도 학습 안 한 단어 - 랜덤)
+      if (selectedWords.length < count) {
+        const ids = new Set(selectedWords.map(w => w.id));
+        selectedWords.push(
+          ...shuffleArray(unlearnedWords.filter(w => !ids.has(w.id))).slice(0, count - selectedWords.length)
+        );
+      }
+
+      // 우선순위 6: 장기 기억 (interval 60일↑, nextReview 임박한 것부터)
+      if (selectedWords.length < count) {
+        const ids = new Set(selectedWords.map(w => w.id));
+        const longTerm = allWords
+          .filter(w => {
+            const interval = w.sm2?.interval ?? w.interval ?? 0;
+            return interval >= 60 && !ids.has(w.id);
+          })
+          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
+        selectedWords.push(...longTerm.slice(0, count - selectedWords.length));
+      }
+
       selectedWords = shuffleArray(selectedWords).slice(0, count);
     }
     // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어 중 복습 우선 + 나머지 랜덤
@@ -235,11 +318,18 @@ const TakeTest = () => {
           // 최대 4개, 최소 2개 — 나머지는 setupQuestions 내부에서 유동 분배
           const chunkSize = Math.min(4, remaining);
           const chunk = shuffledWords.slice(wordIdx, wordIdx + chunkSize);
-          allQuestions.push(...plugin.setupQuestions(chunk, allWords));
-          wordIdx += chunkSize;
+          const generated = plugin.setupQuestions(chunk, allWords);
+          if (generated.length > 0) {
+            allQuestions.push(...generated);
+            wordIdx += chunkSize;
+          } else {
+            // 플러그인이 0개 반환 (예: fillInTheBlank 예문 없음) → 1개씩 multipleChoice fallback
+            allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], 'multipleChoice'));
+            wordIdx++;
+          }
         } else {
-          // 1개 남으면 multipleChoice fallback
-          allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], randomType));
+          // 1개 남으면 항상 multipleChoice fallback (cardMatch/fillInTheBlank 등은 words가 없어 crash)
+          allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], 'multipleChoice'));
           wordIdx++;
         }
       } else {
@@ -257,13 +347,22 @@ const TakeTest = () => {
         setIsTestQuestionsSetting(false);
         return;
       }
-      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning") {
-        // 학습 중 이면 기존 학습 기록 그대로 적용해서 학습 시작
-        setTestQuestions(recentStudy[state.testType].study_data);
-        setProgressIndex(recentStudy[state.testType].progress_index);
-        setIsTestQuestionsSetting(false);
-      } else {
-        // 학습 기록이 없으면 새로운 학습 데이터 생성 후 학습 시작
+      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning" && recentStudy[state.testType].study_data?.length > 0) {
+        const studyData = recentStudy[state.testType].study_data;
+        // cardMatch/cardMatchListening 질문에 words 배열이 없으면 잘못된 캐시 → 재생성
+        const isCacheValid = studyData.every(q =>
+          !['cardMatch', 'cardMatchListening'].includes(q.questionType) || Array.isArray(q.words)
+        );
+        if (isCacheValid) {
+          setTestQuestions(studyData);
+          setProgressIndex(recentStudy[state.testType].progress_index);
+          setIsTestQuestionsSetting(false);
+          return;
+        }
+        // 잘못된 캐시 → else 블록으로 fall-through해서 재생성
+      }
+      {
+        // 학습 기록이 없거나 잘못된 캐시이면 새로운 학습 데이터 생성 후 학습 시작
         console.log("state", state.data.memoryState);
 
         // SM-2 알고리즘 기준으로 학습 데이터 세팅

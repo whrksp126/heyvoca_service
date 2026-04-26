@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3652,
+    "origin": "event",
+    "examples": [
+      {
+        "exam_en": "The school held a big sporting <strong class=\"target-word\">event</strong> last week.",
+        "exam_ko": "학교는 지난주에 큰 스포츠 <strong class=\"target-word\">행사</strong>를 개최했다."
+      },
+      {
+        "exam_en": "The war was a major historical <strong class=\"target-word\">event</strong>.",
+        "exam_ko": "그 전쟁은 중요한 역사적 <strong class=\"target-word\">사건</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 3653,
+    "origin": "even",
+    "examples": [
+      {
+        "exam_en": "The floor must be <strong class=\"target-word\">even</strong> before we lay the tiles.",
+        "exam_ko": "타일을 깔기 전에 바닥이 <strong class=\"target-word\">평평해야</strong> 한다."
+      },
+      {
+        "exam_en": "She kept an <strong class=\"target-word\">even</strong> tone throughout the meeting.",
+        "exam_ko": "그녀는 회의 내내 <strong class=\"target-word\">고른</strong> 어조를 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 3654,
+    "origin": "environment",
+    "examples": [
+      {
+        "exam_en": "Children need a safe living <strong class=\"target-word\">environment</strong> to grow.",
+        "exam_ko": "아이들은 성장을 위해 안전한 생활 <strong class=\"target-word\">환경</strong>이 필요하다."
+      },
+      {
+        "exam_en": "Changes in the <strong class=\"target-word\">environment</strong> affect all living things.",
+        "exam_ko": "<strong class=\"target-word\">환경</strong>의 변화는 모든 생물에 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 3655,
+    "origin": "engineer",
+    "examples": [
+      {
+        "exam_en": "He works as a civil <strong class=\"target-word\">engineer</strong> for the city.",
+        "exam_ko": "그는 시에서 토목 <strong class=\"target-word\">기사</strong>로 일한다."
+      },
+      {
+        "exam_en": "The telephone <strong class=\"target-word\">engineer</strong> cannot come until tomorrow.",
+        "exam_ko": "전화 <strong class=\"target-word\">수리공</strong>은 내일까지 올 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 3656,
+    "origin": "engine",
+    "examples": [
+      {
+        "exam_en": "The car runs on a gasoline <strong class=\"target-word\">engine</strong>.",
+        "exam_ko": "그 차는 가솔린 <strong class=\"target-word\">엔진</strong>으로 움직인다."
+      },
+      {
+        "exam_en": "The ship uses an auxiliary <strong class=\"target-word\">engine</strong> as backup.",
+        "exam_ko": "그 배는 예비용으로 보조 <strong class=\"target-word\">엔진</strong>을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 3657,
+    "origin": "energy",
+    "examples": [
+      {
+        "exam_en": "She is always full of <strong class=\"target-word\">energy</strong> in the morning.",
+        "exam_ko": "그녀는 아침에 항상 <strong class=\"target-word\">활력</strong>이 넘친다."
+      },
+      {
+        "exam_en": "He spent all his <strong class=\"target-word\">energy</strong> on the project.",
+        "exam_ko": "그는 그 프로젝트에 모든 <strong class=\"target-word\">에너지</strong>를 쏟았다."
+      }
+    ]
+  },
+  {
+    "id": 3658,
+    "origin": "enemy",
+    "examples": [
+      {
+        "exam_en": "The fox is a natural <strong class=\"target-word\">enemy</strong> of rabbits.",
+        "exam_ko": "여우는 토끼의 천연 <strong class=\"target-word\">천적</strong>이다."
+      },
+      {
+        "exam_en": "The two politicians became political <strong class=\"target-word\">enemies</strong> over time.",
+        "exam_ko": "두 정치인은 시간이 지나며 정치적 <strong class=\"target-word\">적</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 3659,
+    "origin": "embassy",
+    "examples": [
+      {
+        "exam_en": "She visited the Korean <strong class=\"target-word\">embassy</strong> in Paris.",
+        "exam_ko": "그녀는 파리 주재 한국 <strong class=\"target-word\">대사관</strong>을 방문했다."
+      },
+      {
+        "exam_en": "He fulfilled his duties at the <strong class=\"target-word\">embassy</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">대사관</strong>에서 자신의 임무를 수행했다."
+      }
+    ]
+  },
+  {
+    "id": 3660,
+    "origin": "else",
+    "examples": [
+      {
+        "exam_en": "He wanted to see someone <strong class=\"target-word\">else</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">다른</strong> 사람을 만나고 싶어했다."
+      },
+      {
+        "exam_en": "Is there anything <strong class=\"target-word\">else</strong> I can help you with?",
+        "exam_ko": "제가 도와드릴 <strong class=\"target-word\">다른</strong> 것이 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 3662,
+    "origin": "electricity",
+    "examples": [
+      {
+        "exam_en": "Lightning is a form of atmospheric <strong class=\"target-word\">electricity</strong>.",
+        "exam_ko": "번개는 대기 <strong class=\"target-word\">전기</strong>의 한 형태이다."
+      },
+      {
+        "exam_en": "The house lost <strong class=\"target-word\">electricity</strong> during the storm.",
+        "exam_ko": "폭풍 동안 집의 <strong class=\"target-word\">전기</strong>가 나갔다."
+      }
+    ]
+  },
+  {
+    "id": 3663,
+    "origin": "elastic",
+    "examples": [
+      {
+        "exam_en": "She wore a skirt with an <strong class=\"target-word\">elastic</strong> waistband.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">고무줄</strong> 허리띠가 달린 치마를 입었다."
+      },
+      {
+        "exam_en": "The band snapped back because it was highly <strong class=\"target-word\">elastic</strong>.",
+        "exam_ko": "그 밴드는 매우 <strong class=\"target-word\">탄력적</strong>이어서 튕겨 돌아왔다."
+      }
+    ]
+  },
+  {
+    "id": 3664,
+    "origin": "eight",
+    "examples": [
+      {
+        "exam_en": "The meeting starts at <strong class=\"target-word\">eight</strong> in the morning.",
+        "exam_ko": "회의는 아침 <strong class=\"target-word\">여덟</strong> 시에 시작한다."
+      },
+      {
+        "exam_en": "She placed the <strong class=\"target-word\">eight</strong> of hearts on the table.",
+        "exam_ko": "그녀는 테이블 위에 하트 <strong class=\"target-word\">8</strong>을 놓았다."
+      }
+    ]
+  },
+  {
+    "id": 3665,
+    "origin": "edge",
+    "examples": [
+      {
+        "exam_en": "He stood on the <strong class=\"target-word\">edge</strong> of a cliff.",
+        "exam_ko": "그는 절벽 <strong class=\"target-word\">끝</strong>에 서 있었다."
+      },
+      {
+        "exam_en": "The country was on the <strong class=\"target-word\">edge</strong> of starvation.",
+        "exam_ko": "그 나라는 기아의 <strong class=\"target-word\">가장자리</strong>에 놓여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3666,
+    "origin": "economy",
+    "examples": [
+      {
+        "exam_en": "The global <strong class=\"target-word\">economy</strong> slowed down last year.",
+        "exam_ko": "지난해 세계 <strong class=\"target-word\">경제</strong>가 둔화되었다."
+      },
+      {
+        "exam_en": "We need more <strong class=\"target-word\">economy</strong> in our use of energy.",
+        "exam_ko": "우리는 에너지 사용에서 더 많은 <strong class=\"target-word\">절약</strong>이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 3668,
+    "origin": "east",
+    "examples": [
+      {
+        "exam_en": "The sun rises in the <strong class=\"target-word\">east</strong> every morning.",
+        "exam_ko": "태양은 매일 아침 <strong class=\"target-word\">동쪽</strong>에서 떠오른다."
+      },
+      {
+        "exam_en": "She grew up in the <strong class=\"target-word\">east</strong> of China.",
+        "exam_ko": "그녀는 중국 <strong class=\"target-word\">동부</strong>에서 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 3669,
+    "origin": "earth",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">earth</strong> revolves around the sun.",
+        "exam_ko": "<strong class=\"target-word\">지구</strong>는 태양 주위를 공전한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">earth</strong> rotates on its axis every day.",
+        "exam_ko": "<strong class=\"target-word\">지구</strong>는 매일 자기 축을 중심으로 자전한다."
+      }
+    ]
+  },
+  {
+    "id": 3670,
+    "origin": "each",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Each</strong> student must submit their own report.",
+        "exam_ko": "<strong class=\"target-word\">각</strong> 학생은 자신의 보고서를 제출해야 한다."
+      },
+      {
+        "exam_en": "She calls her parents <strong class=\"target-word\">each</strong> year on their anniversary.",
+        "exam_ko": "그녀는 기념일마다 <strong class=\"target-word\">매년</strong> 부모님께 전화한다."
+      }
+    ]
+  },
+  {
+    "id": 3671,
+    "origin": "duty",
+    "examples": [
+      {
+        "exam_en": "She has a strong sense of <strong class=\"target-word\">duty</strong> toward her family.",
+        "exam_ko": "그녀는 가족에 대한 강한 <strong class=\"target-word\">의무감</strong>을 지니고 있다."
+      },
+      {
+        "exam_en": "Paying taxes is a <strong class=\"target-word\">duty</strong> of every citizen.",
+        "exam_ko": "세금을 내는 것은 모든 시민의 <strong class=\"target-word\">의무</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3672,
+    "origin": "drug",
+    "examples": [
+      {
+        "exam_en": "The doctor prescribed a <strong class=\"target-word\">drug</strong> for the infection.",
+        "exam_ko": "의사는 감염을 위한 <strong class=\"target-word\">약</strong>을 처방했다."
+      },
+      {
+        "exam_en": "Some <strong class=\"target-word\">drugs</strong> require a doctor's prescription.",
+        "exam_ko": "일부 <strong class=\"target-word\">약물</strong>은 의사의 처방이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 3673,
+    "origin": "down",
+    "examples": [
+      {
+        "exam_en": "The temperature dropped <strong class=\"target-word\">down</strong> to zero overnight.",
+        "exam_ko": "기온이 하룻밤 사이 영도까지 <strong class=\"target-word\">내려갔다</strong>."
+      },
+      {
+        "exam_en": "She pulled the blinds <strong class=\"target-word\">down</strong> to block the sun.",
+        "exam_ko": "그녀는 햇빛을 막기 위해 차양을 <strong class=\"target-word\">내렸다</strong>."
+      }
+    ]
+  }
+]

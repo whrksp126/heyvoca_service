@@ -1,0 +1,602 @@
+[
+  {
+    "id": 101,
+    "word": "work",
+    "exam_en": "academic <strong class=\"target-word\">work</strong>",
+    "exam_ko": "<strong class=\"target-word\">학업</strong>"
+  },
+  {
+    "id": 102,
+    "word": "work",
+    "exam_en": "three years of junior high <strong class=\"target-word\">work</strong>",
+    "exam_ko": "3년간의 중학 <strong class=\"target-word\">교육</strong>"
+  },
+  {
+    "id": 103,
+    "word": "will",
+    "exam_en": "I <strong class=\"target-word\">will</strong> be seventeen next birthday.",
+    "exam_ko": "나는 이번 생일로 17세가 <strong class=\"target-word\">된다</strong>"
+  },
+  {
+    "id": 104,
+    "word": "will",
+    "exam_en": "John <strong class=\"target-word\">will</strong> leave for London on Monday.",
+    "exam_ko": "존은 월요일에 런던으로 <strong class=\"target-word\">떠난다</strong>"
+  },
+  {
+    "id": 105,
+    "word": "would",
+    "exam_en": "He told me that he <strong class=\"target-word\">would</strong> be free in a few minutes.",
+    "exam_ko": "그는 곧 <strong class=\"target-word\">틈이 난다</strong>고 나에게 말했다"
+  },
+  {
+    "id": 106,
+    "word": "would",
+    "exam_en": "I knew I <strong class=\"target-word\">would</strong> enjoy the music.",
+    "exam_ko": "그 음악을 즐겁게 듣게 될 것으로 <strong class=\"target-word\">알고 있었다</strong>"
+  },
+  {
+    "id": 107,
+    "word": "can",
+    "exam_en": "I <strong class=\"target-word\">can</strong> play the piano.",
+    "exam_ko": "피아노를 칠 줄 <strong class=\"target-word\">안다</strong>"
+  },
+  {
+    "id": 108,
+    "word": "can",
+    "exam_en": "<strong class=\"target-word\">Can</strong> you speak English?",
+    "exam_ko": "너는 <strong class=\"target-word\">영어</strong>를 (말)할 줄 아느냐?"
+  },
+  {
+    "id": 109,
+    "word": "could",
+    "exam_en": "They <strong class=\"target-word\">could</strong> not swim and had to be rescued.",
+    "exam_ko": "그들이 헤엄칠 줄 몰랐기 때문에 구조해야만 <strong class=\"target-word\">했다</strong>"
+  },
+  {
+    "id": 110,
+    "word": "could",
+    "exam_en": "In those days, a transatlantic voyage <strong class=\"target-word\">could</strong> be dangerous.",
+    "exam_ko": "그 당시에는 대서양 횡단 항해가 위험한 경우도 <strong class=\"target-word\">있었다</strong>"
+  },
+  {
+    "id": 111,
+    "word": "may",
+    "exam_en": "He's absent today. He <strong class=\"target-word\">may</strong> be sick.",
+    "exam_ko": "그는 오늘 결석이다. 아플는지도 <strong class=\"target-word\">모른다</strong>"
+  },
+  {
+    "id": 112,
+    "word": "may",
+    "exam_en": "We <strong class=\"target-word\">may</strong> go to the movies tomorrow.",
+    "exam_ko": "내일 영화 보러 갈지도 <strong class=\"target-word\">모른다</strong>."
+  },
+  {
+    "id": 113,
+    "word": "should",
+    "exam_en": "He asked me if he <strong class=\"target-word\">should</strong> call a taxi.",
+    "exam_ko": "그는 택시를 부를까요하고 내게 <strong class=\"target-word\">물었다</strong>(※보통 (영)에서는 주어가 2, 3인칭인 경우에는 should 대신에 would를 씀)"
+  },
+  {
+    "id": 114,
+    "word": "should",
+    "exam_en": "I thought I <strong class=\"target-word\">should</strong> like the job.",
+    "exam_ko": "그 일이 마음에 들 것으로 <strong class=\"target-word\">생각했다</strong>"
+  },
+  {
+    "id": 115,
+    "word": "must",
+    "exam_en": "Children <strong class=\"target-word\">must</strong> obey their elders.",
+    "exam_ko": "아이들은 어른에게 복종해야 <strong class=\"target-word\">한다</strong>"
+  },
+  {
+    "id": 116,
+    "word": "must",
+    "exam_en": "You <strong class=\"target-word\">must</strong> eat what is put before you.",
+    "exam_ko": "당신이 앞에 놓인 것을 먹어야 <strong class=\"target-word\">한다</strong>"
+  },
+  {
+    "id": 117,
+    "word": "mean",
+    "exam_en": "By 'knowledge' what does Chomsky <strong class=\"target-word\">mean</strong> here?",
+    "exam_ko": "<strong class=\"target-word\">여기서</strong> 촘스키가 「지식」이라 하는 것은 무엇을 <strong class=\"target-word\">뜻하는가</strong>?"
+  },
+  {
+    "id": 118,
+    "word": "mean",
+    "exam_en": "A red light <strong class=\"target-word\">means</strong> stop.",
+    "exam_ko": "빨간 등은 정지를 <strong class=\"target-word\">의미한다</strong>"
+  },
+  {
+    "id": 119,
+    "word": "become",
+    "exam_en": "<strong class=\"target-word\">become</strong> a sailor",
+    "exam_ko": "선원[의사]이 <strong class=\"target-word\">되다</strong>"
+  },
+  {
+    "id": 120,
+    "word": "become",
+    "exam_en": "<strong class=\"target-word\">become</strong> king",
+    "exam_ko": "왕이 <strong class=\"target-word\">되다</strong>"
+  },
+  {
+    "id": 121,
+    "word": "seem",
+    "exam_en": "She <strong class=\"target-word\">seems</strong> (to me) (to be) a very old woman.",
+    "exam_ko": "그녀는 나이가 아주 많아 <strong class=\"target-word\">보인다</strong>(※정도를 나타내는 형용사를 수반하는 경우에는 to be를 생략할 수 있음)"
+  },
+  {
+    "id": 122,
+    "word": "seem",
+    "exam_en": "He <strong class=\"target-word\">seemed</strong> (to be) a reliable doctor.",
+    "exam_ko": "그는 신뢰할 만한 의사인 것 <strong class=\"target-word\">같았다</strong>"
+  },
+  {
+    "id": 123,
+    "word": "might",
+    "exam_en": "He told me that he <strong class=\"target-word\">might</strong> come.",
+    "exam_ko": "그는 내게 올지도 모른다고 <strong class=\"target-word\">말했다</strong>"
+  },
+  {
+    "id": 124,
+    "word": "might",
+    "exam_en": "I was afraid he <strong class=\"target-word\">might</strong> have lost his way.",
+    "exam_ko": "어쩌면 그가 길을 잃었을지도 몰라 <strong class=\"target-word\">걱정스러웠다</strong>"
+  },
+  {
+    "id": 125,
+    "word": "provide",
+    "exam_en": "<strong class=\"target-word\">provide</strong> a person with food[＝<strong class=\"target-word\">provide</strong> food for[to] a person]",
+    "exam_ko": "남에게 음식물[방]을 <strong class=\"target-word\">제공하다</strong>(※provide 사람 with 사물(=provide 사물 for[to] 사람)."
+  },
+  {
+    "id": 126,
+    "word": "provide",
+    "exam_en": "<strong class=\"target-word\">provide</strong> one's car with a TV",
+    "exam_ko": "자동차에 텔레비전을 <strong class=\"target-word\">부착하다</strong>"
+  },
+  {
+    "id": 127,
+    "word": "follow",
+    "exam_en": "One event <strong class=\"target-word\">followed</strong> another.",
+    "exam_ko": "사건이 잇달아 <strong class=\"target-word\">터졌다</strong>"
+  },
+  {
+    "id": 128,
+    "word": "follow",
+    "exam_en": "My son <strong class=\"target-word\">followed</strong> me into this business.",
+    "exam_ko": "아들이 이 사업의 뒤를 <strong class=\"target-word\">이었다</strong>."
+  },
+  {
+    "id": 129,
+    "word": "begin",
+    "exam_en": "<strong class=\"target-word\">begin</strong> at the beginning",
+    "exam_ko": "처음부터 <strong class=\"target-word\">시작하다</strong>"
+  },
+  {
+    "id": 130,
+    "word": "begin",
+    "exam_en": "<strong class=\"target-word\">begin</strong> at ten",
+    "exam_ko": "10시[7월 1일, 7월]에 <strong class=\"target-word\">시작되다</strong>"
+  },
+  {
+    "id": 131,
+    "word": "going",
+    "exam_en": "a <strong class=\"target-word\">going</strong> business",
+    "exam_ko": "영업 중인[채산이 맞는] <strong class=\"target-word\">사업</strong>[회사, 가게 (등)], 계속[존속] 기업"
+  },
+  {
+    "id": 132,
+    "word": "going",
+    "exam_en": "the <strong class=\"target-word\">going</strong> price",
+    "exam_ko": "<strong class=\"target-word\">현행</strong> 가격, 시가"
+  },
+  {
+    "id": 133,
+    "word": "help",
+    "exam_en": "May I <strong class=\"target-word\">help</strong> you?",
+    "exam_ko": "(점원 등이) 뭘 <strong class=\"target-word\">찾으십니까</strong>?; (웨이트리스가) 뭘 드시겠습니까?"
+  },
+  {
+    "id": 134,
+    "word": "help",
+    "exam_en": "Is there anything I can <strong class=\"target-word\">help</strong> you with?",
+    "exam_ko": "뭘 <strong class=\"target-word\">거들어</strong> 드릴까요?"
+  },
+  {
+    "id": 135,
+    "word": "run",
+    "exam_en": "<strong class=\"target-word\">run</strong> upstairs",
+    "exam_ko": "2층에 뛰어 <strong class=\"target-word\">올라가다</strong>"
+  },
+  {
+    "id": 136,
+    "word": "run",
+    "exam_en": "<strong class=\"target-word\">run</strong> down the street",
+    "exam_ko": "거리를 <strong class=\"target-word\">뛰어가다</strong>"
+  },
+  {
+    "id": 137,
+    "word": "set",
+    "exam_en": "<strong class=\"target-word\">set</strong> a lamp on the TV",
+    "exam_ko": "램프를 텔레비전 위에 <strong class=\"target-word\">놓다</strong>"
+  },
+  {
+    "id": 138,
+    "word": "set",
+    "exam_en": "<strong class=\"target-word\">set</strong> a vase on its side",
+    "exam_ko": "꽃병을 눕혀 <strong class=\"target-word\">놓다</strong>"
+  },
+  {
+    "id": 139,
+    "word": "move",
+    "exam_en": "<strong class=\"target-word\">move</strong> uneasily",
+    "exam_ko": "앉은 자리가 거북해 <strong class=\"target-word\">옴쭉거리다</strong>"
+  },
+  {
+    "id": 140,
+    "word": "move",
+    "exam_en": "<strong class=\"target-word\">move</strong> to and fro",
+    "exam_ko": "이곳저곳 <strong class=\"target-word\">돌아다니다</strong>"
+  },
+  {
+    "id": 141,
+    "word": "include",
+    "exam_en": "<strong class=\"target-word\">include</strong> impurities",
+    "exam_ko": "불순물을 <strong class=\"target-word\">함유하다</strong>"
+  },
+  {
+    "id": 142,
+    "word": "include",
+    "exam_en": "The book <strong class=\"target-word\">includes</strong> an index.",
+    "exam_ko": "그 책은 색인이 붙어 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 143,
+    "word": "believe",
+    "exam_en": "<strong class=\"target-word\">believe</strong> a story",
+    "exam_ko": "이야기를 진실이라 <strong class=\"target-word\">생각하다</strong>"
+  },
+  {
+    "id": 144,
+    "word": "believe",
+    "exam_en": "not <strong class=\"target-word\">believe</strong> a word of it",
+    "exam_ko": "(비격식) 전혀 믿을 수 <strong class=\"target-word\">없다</strong>"
+  },
+  {
+    "id": 145,
+    "word": "allow",
+    "exam_en": "Smoking is not <strong class=\"target-word\">allowed</strong> here.",
+    "exam_ko": "여기서는 <strong class=\"target-word\">금연입니다</strong>"
+  },
+  {
+    "id": 146,
+    "word": "allow",
+    "exam_en": "You are not <strong class=\"target-word\">allowed</strong> to use a flash in this museum.",
+    "exam_ko": "이 미술관에서는 플래시 사용이 금지되어 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 147,
+    "word": "lead",
+    "exam_en": "<strong class=\"target-word\">lead</strong> a dog on a leash",
+    "exam_ko": "가죽끈을 잡고 개를 끌고 <strong class=\"target-word\">가다</strong>"
+  },
+  {
+    "id": 148,
+    "word": "lead",
+    "exam_en": "The guide will <strong class=\"target-word\">lead</strong> you to the monument.",
+    "exam_ko": "안내자가 기념비까지 안내할 <strong class=\"target-word\">겁니다</strong>."
+  },
+  {
+    "id": 149,
+    "word": "stand",
+    "exam_en": "<strong class=\"target-word\">stand</strong> and fight",
+    "exam_ko": "멈춰서서 <strong class=\"target-word\">싸우다</strong>"
+  },
+  {
+    "id": 150,
+    "word": "stand",
+    "exam_en": "<strong class=\"target-word\">stand</strong> fast like a rock",
+    "exam_ko": "바위처럼 꼼짝 않고 서 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 151,
+    "word": "happen",
+    "exam_en": "whatever may <strong class=\"target-word\">happen</strong>",
+    "exam_ko": "어떤 일이 <strong class=\"target-word\">있더라도</strong>"
+  },
+  {
+    "id": 152,
+    "word": "happen",
+    "exam_en": "My car broke down last week and it <strong class=\"target-word\">happened</strong> again today.",
+    "exam_ko": "내 차가 지난주에 고장났는데 오늘 또 <strong class=\"target-word\">말썽이다</strong>"
+  },
+  {
+    "id": 153,
+    "word": "carry",
+    "exam_en": "<strong class=\"target-word\">carry</strong> a thing on one's shoulder",
+    "exam_ko": "물건을 어깨에 메고 <strong class=\"target-word\">나르다</strong>"
+  },
+  {
+    "id": 154,
+    "word": "carry",
+    "exam_en": "<strong class=\"target-word\">Carry</strong> this stool back to its place.",
+    "exam_ko": "이 걸상을 제자리에 도로 <strong class=\"target-word\">갖다</strong> 놓아라"
+  },
+  {
+    "id": 155,
+    "word": "appear",
+    "exam_en": "<strong class=\"target-word\">appear</strong> in sight",
+    "exam_ko": "보이게 <strong class=\"target-word\">되다</strong>"
+  },
+  {
+    "id": 156,
+    "word": "appear",
+    "exam_en": "A stranger suddenly <strong class=\"target-word\">appeared</strong> in the doorway.",
+    "exam_ko": "낯선 사람이 갑자기 문간에 <strong class=\"target-word\">나타났다</strong>."
+  },
+  {
+    "id": 157,
+    "word": "produce",
+    "exam_en": "<strong class=\"target-word\">produce</strong> good results",
+    "exam_ko": "좋은 결과를 <strong class=\"target-word\">낳다</strong>"
+  },
+  {
+    "id": 158,
+    "word": "produce",
+    "exam_en": "<strong class=\"target-word\">produce</strong> steel",
+    "exam_ko": "철강[자동차]을 <strong class=\"target-word\">생산하다</strong>"
+  },
+  {
+    "id": 159,
+    "word": "sit",
+    "exam_en": "<strong class=\"target-word\">sit</strong> on a chair",
+    "exam_ko": "의자에 <strong class=\"target-word\">앉다</strong>(※보통 팔걸이가 없는 의자에는 on을 쓰고, 팔걸이가 있는 의자나 소파에 푹 눌러 앉을 때는 in을 씀)"
+  },
+  {
+    "id": 160,
+    "word": "sit",
+    "exam_en": "<strong class=\"target-word\">sit</strong> on the floor",
+    "exam_ko": "마루에 <strong class=\"target-word\">앉다</strong>"
+  },
+  {
+    "id": 161,
+    "word": "offer",
+    "exam_en": "<strong class=\"target-word\">offer</strong> a bribe",
+    "exam_ko": "뇌물을 <strong class=\"target-word\">주다</strong>(※give와는 달리 상대방이 받았는지의 여부는 확실치 않음)"
+  },
+  {
+    "id": 162,
+    "word": "offer",
+    "exam_en": "<strong class=\"target-word\">offer</strong> a job",
+    "exam_ko": "일거리를 <strong class=\"target-word\">제공하다</strong>"
+  },
+  {
+    "id": 163,
+    "word": "consider",
+    "exam_en": "We <strong class=\"target-word\">considered</strong> his suggestion.",
+    "exam_ko": "그의 제안을 충분히 <strong class=\"target-word\">검토했다</strong>"
+  },
+  {
+    "id": 164,
+    "word": "consider",
+    "exam_en": "We <strong class=\"target-word\">considered</strong> going tomorrow but finally decided against it.",
+    "exam_ko": "내일 갈까 생각했으나 결국 가지 않기로 <strong class=\"target-word\">결정했다</strong>"
+  },
+  {
+    "id": 165,
+    "word": "suggest",
+    "exam_en": "She <strong class=\"target-word\">suggested</strong> having a rest.",
+    "exam_ko": "그녀는 잠깐 쉬자고 <strong class=\"target-word\">말했다</strong>"
+  },
+  {
+    "id": 166,
+    "word": "suggest",
+    "exam_en": "He <strong class=\"target-word\">suggested</strong> that the tower  be restored.",
+    "exam_ko": "그는 그 탑이 복구되어야 하지 않겠느냐고 <strong class=\"target-word\">제안했다</strong>"
+  },
+  {
+    "id": 167,
+    "word": "expect",
+    "exam_en": "<strong class=\"target-word\">expect</strong> to find a good job",
+    "exam_ko": "좋은 일자리를 얻으리라고 <strong class=\"target-word\">생각하다</strong>"
+  },
+  {
+    "id": 168,
+    "word": "expect",
+    "exam_en": "<strong class=\"target-word\">expect</strong> the flying time to be around one hour",
+    "exam_ko": "비행 시간으로 약 1시간을 <strong class=\"target-word\">예정하다</strong>"
+  },
+  {
+    "id": 169,
+    "word": "let",
+    "exam_en": "<strong class=\"target-word\">let</strong> him go",
+    "exam_ko": "(그가 가고 싶어하므로) <strong class=\"target-word\">보내주다</strong>"
+  },
+  {
+    "id": 170,
+    "word": "let",
+    "exam_en": "Will you <strong class=\"target-word\">let</strong> me smoke?",
+    "exam_ko": "<strong class=\"target-word\">담배를</strong> 피워도 되겠습니까?"
+  },
+  {
+    "id": 171,
+    "word": "require",
+    "exam_en": "I shall <strong class=\"target-word\">require</strong> assistance with my luggage.",
+    "exam_ko": "짐을 운반하는 데 남의 도움이 <strong class=\"target-word\">필요하다</strong>"
+  },
+  {
+    "id": 172,
+    "word": "require",
+    "exam_en": "The floor <strong class=\"target-word\">requires</strong> washing.",
+    "exam_ko": "마루를 닦아야 <strong class=\"target-word\">되겠다</strong>"
+  },
+  {
+    "id": 173,
+    "word": "continue",
+    "exam_en": "The cold weather <strong class=\"target-word\">continued</strong> for three weeks.",
+    "exam_ko": "추운 날씨가 3주일이나 <strong class=\"target-word\">계속되었다</strong>"
+  },
+  {
+    "id": 174,
+    "word": "continue",
+    "exam_en": "The custom <strong class=\"target-word\">continues</strong>  today.",
+    "exam_ko": "그 풍습은 오늘날에도 계속되고 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 175,
+    "word": "add",
+    "exam_en": "<strong class=\"target-word\">add</strong> sugar to coffee",
+    "exam_ko": "커피에 설탕을 <strong class=\"target-word\">타다</strong>"
+  },
+  {
+    "id": 176,
+    "word": "add",
+    "exam_en": "If you <strong class=\"target-word\">add</strong> eight and four you get twelve.",
+    "exam_ko": "8에 4를 보태면 12가 <strong class=\"target-word\">된다</strong>."
+  },
+  {
+    "id": 177,
+    "word": "change",
+    "exam_en": "<strong class=\"target-word\">change</strong> one's character",
+    "exam_ko": "성격[생각]을 <strong class=\"target-word\">바꾸다</strong>"
+  },
+  {
+    "id": 178,
+    "word": "change",
+    "exam_en": "<strong class=\"target-word\">change</strong> one's dress",
+    "exam_ko": "복장을 <strong class=\"target-word\">바꾸다</strong>"
+  },
+  {
+    "id": 179,
+    "word": "remember",
+    "exam_en": "He couldn't <strong class=\"target-word\">remember</strong> my address.",
+    "exam_ko": "그는 내 주소가 생각나지 <strong class=\"target-word\">않았다</strong>"
+  },
+  {
+    "id": 180,
+    "word": "remember",
+    "exam_en": "I just <strong class=\"target-word\">remembered</strong> that I have to call him up.",
+    "exam_ko": "그에게 전화를 걸어야 한다는 것이 지금 막 <strong class=\"target-word\">생각났다</strong>"
+  },
+  {
+    "id": 181,
+    "word": "remain",
+    "exam_en": "<strong class=\"target-word\">remain</strong> silent",
+    "exam_ko": "여전히 침묵을 지키고[반란 상태로, 미혼인 채로] <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 182,
+    "word": "remain",
+    "exam_en": "<strong class=\"target-word\">remain</strong> standing",
+    "exam_ko": "우두커니 서 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 183,
+    "word": "receive",
+    "exam_en": "<strong class=\"target-word\">receive</strong> a letter from",
+    "exam_ko": "...으로부터 편지를 <strong class=\"target-word\">받다</strong>"
+  },
+  {
+    "id": 184,
+    "word": "receive",
+    "exam_en": "<strong class=\"target-word\">receive</strong> a special award",
+    "exam_ko": "특별상을 <strong class=\"target-word\">받다</strong>"
+  },
+  {
+    "id": 185,
+    "word": "win",
+    "exam_en": "<strong class=\"target-word\">win</strong> a fight",
+    "exam_ko": "싸움[논쟁]에 <strong class=\"target-word\">이기다</strong>"
+  },
+  {
+    "id": 186,
+    "word": "win",
+    "exam_en": "<strong class=\"target-word\">win</strong> a bet",
+    "exam_ko": "내기에 <strong class=\"target-word\">이기다</strong>"
+  },
+  {
+    "id": 187,
+    "word": "develop",
+    "exam_en": "<strong class=\"target-word\">develop</strong> one's faculties",
+    "exam_ko": "능력을 <strong class=\"target-word\">발전시키다</strong>"
+  },
+  {
+    "id": 188,
+    "word": "develop",
+    "exam_en": "Rice farming has been <strong class=\"target-word\">developed</strong> to a high degree in Korea.",
+    "exam_ko": "한국에서는 벼농사가 고도로 발달해 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 189,
+    "word": "describe",
+    "exam_en": "<strong class=\"target-word\">describe</strong> an event",
+    "exam_ko": "사건을 <strong class=\"target-word\">묘사하다</strong>"
+  },
+  {
+    "id": 190,
+    "word": "describe",
+    "exam_en": "<strong class=\"target-word\">describe</strong> something to a person",
+    "exam_ko": "남에게 어떤 일을 <strong class=\"target-word\">설명하다</strong>"
+  },
+  {
+    "id": 191,
+    "word": "agree",
+    "exam_en": "I quite <strong class=\"target-word\">agree</strong>.",
+    "exam_ko": "정말 동감입니다, 지당한 <strong class=\"target-word\">말씀입니다</strong>"
+  },
+  {
+    "id": 192,
+    "word": "agree",
+    "exam_en": "I don't <strong class=\"target-word\">agree</strong> with you on the matter.",
+    "exam_ko": "그 일에 관해서는 네게 찬성할 수 <strong class=\"target-word\">없다</strong>"
+  },
+  {
+    "id": 193,
+    "word": "reach",
+    "exam_en": "<strong class=\"target-word\">reach</strong> London",
+    "exam_ko": "런던에 <strong class=\"target-word\">도착하다</strong>."
+  },
+  {
+    "id": 194,
+    "word": "reach",
+    "exam_en": "finally[eventually] <strong class=\"target-word\">reach</strong>",
+    "exam_ko": "마침내 <strong class=\"target-word\">도착하다</strong>"
+  },
+  {
+    "id": 195,
+    "word": "build",
+    "exam_en": "<strong class=\"target-word\">build</strong> an island into a naval base",
+    "exam_ko": "섬을 해군 기지로 <strong class=\"target-word\">만들다</strong>"
+  },
+  {
+    "id": 196,
+    "word": "build",
+    "exam_en": "We will <strong class=\"target-word\">build</strong> a new house next year.",
+    "exam_ko": "우리는 내년에 새 집을 지을 <strong class=\"target-word\">것이다</strong>"
+  },
+  {
+    "id": 197,
+    "word": "involve",
+    "exam_en": "<strong class=\"target-word\">involve</strong> a person in a quarrel",
+    "exam_ko": "남을 싸움에 <strong class=\"target-word\">끌어들이다</strong>"
+  },
+  {
+    "id": 198,
+    "word": "involve",
+    "exam_en": "get <strong class=\"target-word\">involved</strong> in an argument",
+    "exam_ko": "논쟁에 <strong class=\"target-word\">말려들다</strong>"
+  },
+  {
+    "id": 199,
+    "word": "return",
+    "exam_en": "<strong class=\"target-word\">return</strong> from a trip",
+    "exam_ko": "여행에서 <strong class=\"target-word\">돌아오다</strong>"
+  },
+  {
+    "id": 200,
+    "word": "return",
+    "exam_en": "<strong class=\"target-word\">return</strong> to life",
+    "exam_ko": "다시 <strong class=\"target-word\">살아나다</strong>"
+  }
+]

@@ -1,0 +1,238 @@
+[
+  {
+    "id": 30867,
+    "origin": "indisputably",
+    "examples": [
+      {
+        "exam_en": "The book is indisputably a masterpiece.",
+        "exam_ko": "그 책은 논의할 여지없이 걸작이다."
+      }
+    ]
+  },
+  {
+    "id": 30877,
+    "origin": "toned",
+    "examples": [
+      {
+        "exam_en": "cold-toned",
+        "exam_ko": "냉랭한 어조의."
+      }
+    ]
+  },
+  {
+    "id": 30891,
+    "origin": "burger",
+    "examples": [
+      {
+        "exam_en": "cheese-burger",
+        "exam_ko": "치즈 버거."
+      }
+    ]
+  },
+  {
+    "id": 30892,
+    "origin": "middleman",
+    "examples": [
+      {
+        "exam_en": "the profiteering of the middleman",
+        "exam_ko": "중간 상인의 폭리 취득"
+      },
+      {
+        "exam_en": "cut out the middleman",
+        "exam_ko": "(생산자로부터 직접 돈을 치르고 입수하여) 중간 상인을 피하다."
+      }
+    ]
+  },
+  {
+    "id": 30922,
+    "origin": "slavish",
+    "examples": [
+      {
+        "exam_en": "slavish submission",
+        "exam_ko": "노예적인 굴종."
+      },
+      {
+        "exam_en": "slavish mimicry",
+        "exam_ko": "독창성 없는 모방."
+      }
+    ]
+  },
+  {
+    "id": 30924,
+    "origin": "ophthalmic",
+    "examples": [
+      {
+        "exam_en": "an ophthalmic surgeon",
+        "exam_ko": "안과 의사"
+      },
+      {
+        "exam_en": "an ophthalmic optician",
+        "exam_ko": "검안사."
+      }
+    ]
+  },
+  {
+    "id": 30926,
+    "origin": "scrubber",
+    "examples": [
+      {
+        "exam_en": "a hard scrubber",
+        "exam_ko": "힘을 넣어 북북 문지르는[씻는] 사람."
+      }
+    ]
+  },
+  {
+    "id": 30931,
+    "origin": "truthfully",
+    "examples": [
+      {
+        "exam_en": "Truthfully, I'm not convinced of her innocence.",
+        "exam_ko": "솔직히 말해서, 나는 그녀의 무죄를 확신할 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 30932,
+    "origin": "inaccurately",
+    "examples": [
+      {
+        "exam_en": "She claimed her remarks had been reported inaccurately.",
+        "exam_ko": "그녀는 자신의 말이 그릇되게 보도되었다고 주장했다."
+      }
+    ]
+  },
+  {
+    "id": 30935,
+    "origin": "wastage",
+    "examples": [
+      {
+        "exam_en": "a wastage of 30％ of the recycled material",
+        "exam_ko": "재생 물질의 30％ 손실량."
+      },
+      {
+        "exam_en": "factory wastage",
+        "exam_ko": "공장 폐수."
+      }
+    ]
+  },
+  {
+    "id": 30936,
+    "origin": "inelastic",
+    "examples": [
+      {
+        "exam_en": "He had a maddeningly inelastic mind.",
+        "exam_ko": "그는 사람을 미치게 할 만큼 융통성이 없다."
+      },
+      {
+        "exam_en": "a rigid and inelastic system",
+        "exam_ko": "너무 엄격하고 융통성이 없는 제도"
+      }
+    ]
+  },
+  {
+    "id": 30938,
+    "origin": "intending",
+    "examples": [
+      {
+        "exam_en": "an intending teacher",
+        "exam_ko": "교사 지망자."
+      }
+    ]
+  },
+  {
+    "id": 30939,
+    "origin": "warmly",
+    "examples": [
+      {
+        "exam_en": "Be sure to dress warmly.",
+        "exam_ko": "옷을 따뜻하게 입어야 해요."
+      },
+      {
+        "exam_en": "We received him warmly.",
+        "exam_ko": "그를 따뜻하게[진심으로] 맞이했다."
+      }
+    ]
+  },
+  {
+    "id": 30941,
+    "origin": "hopping",
+    "examples": [
+      {
+        "exam_en": "We went bar-hopping last night.",
+        "exam_ko": "어젯밤에는 술집을 몇 집 돌아다녔다."
+      }
+    ]
+  },
+  {
+    "id": 30948,
+    "origin": "sunburst",
+    "examples": [
+      {
+        "exam_en": "a sunburst of popularity",
+        "exam_ko": "(비유) 폭발적 인기."
+      },
+      {
+        "exam_en": "The sunburst is regarded as a valuable one, and consists of a large center diamond with 30 smaller stones set in a double row around it.",
+        "exam_ko": "그 해 모양의 보석은 값진 것으로 여겨지고 있는데, 그 한 가운데에는 큰 금강석이 있고 그 둘레에는 두 줄로 조그만 보석들이 박혀 있다."
+      }
+    ]
+  },
+  {
+    "id": 30961,
+    "origin": "unseasonable",
+    "examples": [
+      {
+        "exam_en": "We had an unseasonable snow yesterday.",
+        "exam_ko": "어제 계절에 맞지 않는 눈이 내렸다."
+      },
+      {
+        "exam_en": "an unseasonable suggestion",
+        "exam_ko": "시기가 좋지 않은 제안."
+      }
+    ]
+  },
+  {
+    "id": 30963,
+    "origin": "preowned",
+    "examples": [
+      {
+        "exam_en": "new and preowned amateur radios and test equipment",
+        "exam_ko": "신품 또는 중고 아마추어 무선 및 테스트 장비."
+      }
+    ]
+  },
+  {
+    "id": 30969,
+    "origin": "dashed",
+    "examples": [
+      {
+        "exam_en": "He is dashed smart.",
+        "exam_ko": "그는 얄미울 정도로 영리하다"
+      },
+      {
+        "exam_en": "be dashed absurd",
+        "exam_ko": "정말 어처구니없다."
+      }
+    ]
+  },
+  {
+    "id": 30972,
+    "origin": "kingship",
+    "examples": [
+      {
+        "exam_en": "His Britannic Kingship",
+        "exam_ko": "영국 왕 폐하."
+      }
+    ]
+  },
+  {
+    "id": 30983,
+    "origin": "pinched",
+    "examples": [
+      {
+        "exam_en": "We're rather pinched  these days.",
+        "exam_ko": "우리는 요즘 다소 경제적으로 쪼들리고 있다."
+      }
+    ]
+  }
+]

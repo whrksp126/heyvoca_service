@@ -1,0 +1,242 @@
+[
+  {
+    "id": 19591,
+    "origin": "pickpocket",
+    "examples": [
+      {
+        "exam_en": "I just got pick-pocketed. Can I have some cash for the bus?",
+        "exam_ko": "소매치기 당했어요. 차비 좀 주실 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 19592,
+    "origin": "gaily",
+    "examples": [
+      {
+        "exam_en": "gaily lighted room",
+        "exam_ko": "조명이 화려한 방."
+      }
+    ]
+  },
+  {
+    "id": 19595,
+    "origin": "imprint",
+    "examples": [
+      {
+        "exam_en": "the imprint of a foot in the mud",
+        "exam_ko": "진흙에 난 발자국"
+      },
+      {
+        "exam_en": "leave an imprint on",
+        "exam_ko": "…에 자국을 남기다."
+      }
+    ]
+  },
+  {
+    "id": 19596,
+    "origin": "impassable",
+    "examples": [
+      {
+        "exam_en": "Road impassable to motorcars.",
+        "exam_ko": "(게시) 자동차 통행 금지."
+      }
+    ]
+  },
+  {
+    "id": 19597,
+    "origin": "differential",
+    "examples": [
+      {
+        "exam_en": "a differential feature",
+        "exam_ko": "변별적인 특징"
+      },
+      {
+        "exam_en": "differential diagnosis",
+        "exam_ko": "[의학] 감별 진단."
+      }
+    ]
+  },
+  {
+    "id": 19598,
+    "origin": "whit",
+    "examples": [
+      {
+        "exam_en": "not a whit ‥",
+        "exam_ko": "조금도 …않다"
+      },
+      {
+        "exam_en": "eat up every whit",
+        "exam_ko": "말끔히 먹어치우다."
+      }
+    ]
+  },
+  {
+    "id": 19600,
+    "origin": "scandalize",
+    "examples": [
+      {
+        "exam_en": "be scandalized by his rudeness",
+        "exam_ko": "건방진 태도에 분개하다."
+      }
+    ]
+  },
+  {
+    "id": 19602,
+    "origin": "foregoing",
+    "examples": [
+      {
+        "exam_en": "the foregoing section",
+        "exam_ko": "앞 절."
+      }
+    ]
+  },
+  {
+    "id": 19604,
+    "origin": "answerable",
+    "examples": [
+      {
+        "exam_en": "a government answerable to the people",
+        "exam_ko": "국민에게 책임을 지는 정부"
+      },
+      {
+        "exam_en": "He is answerable to me for his behavior.",
+        "exam_ko": "그는 나에 대한 자신의 행위를 책임져야 한다."
+      }
+    ]
+  },
+  {
+    "id": 19606,
+    "origin": "enthrone",
+    "examples": [
+      {
+        "exam_en": "He was enthroneed as archbishop.",
+        "exam_ko": "그는 대주교에 취임했다."
+      }
+    ]
+  },
+  {
+    "id": 19607,
+    "origin": "sufficiency",
+    "examples": [
+      {
+        "exam_en": "a sufficiency of exercise",
+        "exam_ko": "충분한 운동."
+      }
+    ]
+  },
+  {
+    "id": 19612,
+    "origin": "embryonic",
+    "examples": [
+      {
+        "exam_en": "an embryonic social movement",
+        "exam_ko": "초기의 사회 운동."
+      }
+    ]
+  },
+  {
+    "id": 19613,
+    "origin": "actuate",
+    "examples": [
+      {
+        "exam_en": "He is actuated wholly by his desire.",
+        "exam_ko": "그의 행동은 모두 욕망에서 비롯되고 있다"
+      },
+      {
+        "exam_en": "What actuated him to steal?",
+        "exam_ko": "무엇이 그를 도둑질하게 만들었을까?"
+      }
+    ]
+  },
+  {
+    "id": 19614,
+    "origin": "acquisitive",
+    "examples": [
+      {
+        "exam_en": "the acquisitive instinct",
+        "exam_ko": "물욕 본능"
+      },
+      {
+        "exam_en": "an acquisitive mind",
+        "exam_ko": "향학열[탐욕](이 있는 사람)"
+      }
+    ]
+  },
+  {
+    "id": 19615,
+    "origin": "piteous",
+    "examples": [
+      {
+        "exam_en": "the piteous cries of the starving children",
+        "exam_ko": "굶주리고 있는 아이들의 애처로운 울음소리."
+      }
+    ]
+  },
+  {
+    "id": 19616,
+    "origin": "locomotive",
+    "examples": [
+      {
+        "exam_en": "a steam locomotive",
+        "exam_ko": "증기 기관차"
+      },
+      {
+        "exam_en": "drive a locomotive",
+        "exam_ko": "기관차를 운전하다."
+      }
+    ]
+  },
+  {
+    "id": 19618,
+    "origin": "aggravating",
+    "examples": [
+      {
+        "exam_en": "aggravating delays caused by heavy traffic",
+        "exam_ko": "극심한 교통량으로 인한 짜증스러운 지체."
+      }
+    ]
+  },
+  {
+    "id": 19619,
+    "origin": "disuse",
+    "examples": [
+      {
+        "exam_en": "become rusty from disuse",
+        "exam_ko": "쓰지 않아서 녹슬다"
+      },
+      {
+        "exam_en": "fall into disuse",
+        "exam_ko": "쓰이지 않게 되다, 버려지다."
+      }
+    ]
+  },
+  {
+    "id": 19620,
+    "origin": "disqualify",
+    "examples": [
+      {
+        "exam_en": "be disqualified from",
+        "exam_ko": "…의 자격을 잃다"
+      },
+      {
+        "exam_en": "The athlete was disqualified for taking drugs.",
+        "exam_ko": "그 운동선수는 마약을 복용했기 때문에 실격되었다."
+      }
+    ]
+  },
+  {
+    "id": 19621,
+    "origin": "disloyal",
+    "examples": [
+      {
+        "exam_en": "a disloyal friend",
+        "exam_ko": "불성실한 친구"
+      },
+      {
+        "exam_en": "be disloyal to one's country",
+        "exam_ko": "조국에 대해 불충하다"
+      }
+    ]
+  }
+]

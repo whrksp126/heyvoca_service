@@ -99,10 +99,12 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
-      <div className="
+      <div
+        data-page-header
+        className="
         relative
         flex items-center justify-center
-        h-[55px] 
+        h-[55px]
         pt-[20px] px-[10px] pb-[14px]
       ">
         <motion.button
@@ -138,7 +140,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
       <div className="
         relative
         flex flex-col items-center gap-[45px] justify-end 
-        w-full h-[calc(100vh-var(--status-bar-height)-55px)]
+        w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))]
         p-[20px]
         bg-primary-main-100
       ">

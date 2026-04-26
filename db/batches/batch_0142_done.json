@@ -1,0 +1,258 @@
+[
+  {
+    "id": 3082,
+    "origin": "bladder",
+    "examples": [
+      {
+        "exam_en": "The doctor found a problem with his <strong class=\"target-word\">bladder</strong>.",
+        "exam_ko": "의사는 그의 <strong class=\"target-word\">방광</strong>에 문제가 있다는 것을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 3084,
+    "origin": "operation",
+    "examples": [
+      {
+        "exam_en": "He underwent a serious <strong class=\"target-word\">operation</strong> last week.",
+        "exam_ko": "그는 지난주에 큰 <strong class=\"target-word\">수술</strong>을 받았다."
+      },
+      {
+        "exam_en": "The machine requires careful <strong class=\"target-word\">operation</strong> at all times.",
+        "exam_ko": "그 기계는 항상 신중한 <strong class=\"target-word\">조작</strong>이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 3085,
+    "origin": "postpone",
+    "examples": [
+      {
+        "exam_en": "The game was <strong class=\"target-word\">postponed</strong> until Saturday.",
+        "exam_ko": "시합은 토요일까지 <strong class=\"target-word\">연기되었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">postponed</strong> his reply until the next day.",
+        "exam_ko": "그는 답장을 다음 날까지 <strong class=\"target-word\">미루었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3086,
+    "origin": "instrument",
+    "examples": [
+      {
+        "exam_en": "The surgeon used precise <strong class=\"target-word\">instruments</strong> during the procedure.",
+        "exam_ko": "외과 의사는 수술 중 정밀한 <strong class=\"target-word\">기구</strong>를 사용했다."
+      },
+      {
+        "exam_en": "She played a string <strong class=\"target-word\">instrument</strong> in the orchestra.",
+        "exam_ko": "그녀는 오케스트라에서 현악 <strong class=\"target-word\">악기</strong>를 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 3087,
+    "origin": "cake",
+    "examples": [
+      {
+        "exam_en": "She baked a <strong class=\"target-word\">cake</strong> for the birthday party.",
+        "exam_ko": "그녀는 생일 파티를 위해 <strong class=\"target-word\">케이크</strong>를 구웠다."
+      },
+      {
+        "exam_en": "You cannot have your <strong class=\"target-word\">cake</strong> and eat it too.",
+        "exam_ko": "<strong class=\"target-word\">케이크</strong>를 먹으면서 동시에 갖고 있을 수는 없다."
+      }
+    ]
+  },
+  {
+    "id": 3088,
+    "origin": "fringe",
+    "examples": [
+      {
+        "exam_en": "They camped on the <strong class=\"target-word\">fringe</strong> of the desert.",
+        "exam_ko": "그들은 사막의 <strong class=\"target-word\">가장자리</strong>에서 야영했다."
+      },
+      {
+        "exam_en": "He belongs to the <strong class=\"target-word\">fringe</strong> of the political movement.",
+        "exam_ko": "그는 정치 운동의 <strong class=\"target-word\">극단파</strong>에 속한다."
+      }
+    ]
+  },
+  {
+    "id": 3089,
+    "origin": "expropriate",
+    "examples": [
+      {
+        "exam_en": "The government moved to <strong class=\"target-word\">expropriate</strong> land from the farmers.",
+        "exam_ko": "정부는 농민들로부터 토지를 <strong class=\"target-word\">수용하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 3090,
+    "origin": "dressing",
+    "examples": [
+      {
+        "exam_en": "\"What kind of <strong class=\"target-word\">dressing</strong> would you like?\" \"French, please.\"",
+        "exam_ko": "\"어떤 <strong class=\"target-word\">드레싱</strong>으로 드릴까요?\" \"프렌치요.\""
+      }
+    ]
+  },
+  {
+    "id": 3091,
+    "origin": "coincidence",
+    "examples": [
+      {
+        "exam_en": "What a <strong class=\"target-word\">coincidence</strong> that we met here today.",
+        "exam_ko": "오늘 여기서 만나다니 정말 <strong class=\"target-word\">우연</strong>이네요."
+      },
+      {
+        "exam_en": "There was a remarkable <strong class=\"target-word\">coincidence</strong> in their opinions.",
+        "exam_ko": "그들의 의견에는 놀라운 <strong class=\"target-word\">일치</strong>가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3092,
+    "origin": "insomnia",
+    "examples": [
+      {
+        "exam_en": "She has suffered from <strong class=\"target-word\">insomnia</strong> for several months.",
+        "exam_ko": "그녀는 몇 달째 <strong class=\"target-word\">불면증</strong>으로 고통받고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3093,
+    "origin": "wretch",
+    "examples": [
+      {
+        "exam_en": "The poor <strong class=\"target-word\">wretch</strong> had nowhere to go.",
+        "exam_ko": "그 불쌍한 <strong class=\"target-word\">신세</strong>의 사람은 갈 곳이 없었다."
+      },
+      {
+        "exam_en": "You are a <strong class=\"target-word\">wretch</strong>!",
+        "exam_ko": "이 <strong class=\"target-word\">치사한 놈</strong>아!"
+      }
+    ]
+  },
+  {
+    "id": 3095,
+    "origin": "pace",
+    "examples": [
+      {
+        "exam_en": "She walked at a steady <strong class=\"target-word\">pace</strong> through the park.",
+        "exam_ko": "그녀는 공원을 일정한 <strong class=\"target-word\">속도</strong>로 걸었다."
+      },
+      {
+        "exam_en": "He kept up the <strong class=\"target-word\">pace</strong> of five miles an hour.",
+        "exam_ko": "그는 시속 5마일의 <strong class=\"target-word\">속도</strong>를 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 3096,
+    "origin": "otherwise",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">otherwise</strong> known as the Iron Man.",
+        "exam_ko": "그는 <strong class=\"target-word\">달리</strong> 아이언맨으로 알려져 있다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">otherwise</strong> engaged and could not attend.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">다른</strong> 일이 있어서 참석할 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 3099,
+    "origin": "evaporate",
+    "examples": [
+      {
+        "exam_en": "In hot weather water <strong class=\"target-word\">evaporates</strong> quickly.",
+        "exam_ko": "더운 날에는 물이 빠르게 <strong class=\"target-word\">증발한다</strong>."
+      },
+      {
+        "exam_en": "Hopes of reaching an agreement <strong class=\"target-word\">evaporated</strong>.",
+        "exam_ko": "합의에 이르리라는 희망이 <strong class=\"target-word\">사라졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3100,
+    "origin": "insufficiency",
+    "examples": [
+      {
+        "exam_en": "The camp faced an <strong class=\"target-word\">insufficiency</strong> of food supplies.",
+        "exam_ko": "캠프는 식량 <strong class=\"target-word\">부족</strong>에 직면했다."
+      },
+      {
+        "exam_en": "She was diagnosed with an <strong class=\"target-word\">insufficiency</strong> of vitamin C.",
+        "exam_ko": "그녀는 비타민 C <strong class=\"target-word\">결핍</strong> 진단을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 3101,
+    "origin": "renal",
+    "examples": [
+      {
+        "exam_en": "He was hospitalized due to <strong class=\"target-word\">renal</strong> failure.",
+        "exam_ko": "그는 <strong class=\"target-word\">신장</strong> 부전으로 입원했다."
+      }
+    ]
+  },
+  {
+    "id": 3102,
+    "origin": "dialysis",
+    "examples": [
+      {
+        "exam_en": "He goes to the clinic for <strong class=\"target-word\">dialysis</strong> three times a week.",
+        "exam_ko": "그는 일주일에 세 번 <strong class=\"target-word\">투석</strong>을 받으러 병원에 간다."
+      }
+    ]
+  },
+  {
+    "id": 3105,
+    "origin": "misconception",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">misconception</strong> about how the system worked.",
+        "exam_ko": "그녀는 시스템이 작동하는 방식에 대해 <strong class=\"target-word\">오해</strong>하고 있었다."
+      },
+      {
+        "exam_en": "It is a popular <strong class=\"target-word\">misconception</strong> that bats are blind.",
+        "exam_ko": "박쥐가 눈이 멀었다는 것은 흔한 <strong class=\"target-word\">오해</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 3106,
+    "origin": "misunderstanding",
+    "examples": [
+      {
+        "exam_en": "A simple <strong class=\"target-word\">misunderstanding</strong> caused conflict between friends.",
+        "exam_ko": "단순한 <strong class=\"target-word\">오해</strong>가 친구 사이에 갈등을 일으켰다."
+      },
+      {
+        "exam_en": "There was a <strong class=\"target-word\">misunderstanding</strong> about the meeting time.",
+        "exam_ko": "회의 시간에 대해 <strong class=\"target-word\">오해</strong>가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3107,
+    "origin": "misconstruction",
+    "examples": [
+      {
+        "exam_en": "He placed a <strong class=\"target-word\">misconstruction</strong> on her words.",
+        "exam_ko": "그는 그녀의 말을 <strong class=\"target-word\">잘못 해석했다</strong>."
+      },
+      {
+        "exam_en": "His statement was open to <strong class=\"target-word\">misconstruction</strong>.",
+        "exam_ko": "그의 발언은 <strong class=\"target-word\">오해</strong>를 불러일으킬 수 있었다."
+      }
+    ]
+  }
+]

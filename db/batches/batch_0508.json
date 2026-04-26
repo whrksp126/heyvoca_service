@@ -1,0 +1,238 @@
+[
+  {
+    "id": 15597,
+    "origin": "esophageal",
+    "examples": [
+      {
+        "exam_en": "esophageal cancer",
+        "exam_ko": "식도암."
+      }
+    ]
+  },
+  {
+    "id": 15599,
+    "origin": "contradiction",
+    "examples": [
+      {
+        "exam_en": "the contradiction of the rumor",
+        "exam_ko": "소문의 부정"
+      },
+      {
+        "exam_en": "stand contradiction",
+        "exam_ko": "반대에도 불구하고 태연하다"
+      }
+    ]
+  },
+  {
+    "id": 15603,
+    "origin": "soaring",
+    "examples": [
+      {
+        "exam_en": "soaring prices",
+        "exam_ko": "물가의 급등."
+      }
+    ]
+  },
+  {
+    "id": 15604,
+    "origin": "premature",
+    "examples": [
+      {
+        "exam_en": "premature conclusions",
+        "exam_ko": "조급한 결론"
+      },
+      {
+        "exam_en": "premature baldness",
+        "exam_ko": "젊어서 (머리가) 벗어짐"
+      }
+    ]
+  },
+  {
+    "id": 15605,
+    "origin": "overestimate",
+    "examples": [
+      {
+        "exam_en": "overestimate one's abilities",
+        "exam_ko": "자기의 역량을 과신하다."
+      },
+      {
+        "exam_en": "We overestimated the cost, so we still have some money left.",
+        "exam_ko": "우리는 그 비용을 지나치게 어림잡아서 아직 자금이 남아 있다."
+      }
+    ]
+  },
+  {
+    "id": 15608,
+    "origin": "uniquely",
+    "examples": [
+      {
+        "exam_en": "uniquely abled",
+        "exam_ko": "독자적인 능력이 있는(※disabled(신체 장애)의 다른 말)."
+      }
+    ]
+  },
+  {
+    "id": 15615,
+    "origin": "beeswax",
+    "examples": [
+      {
+        "exam_en": "None of your beeswax.",
+        "exam_ko": "네가 알 바 아니다."
+      }
+    ]
+  },
+  {
+    "id": 15617,
+    "origin": "intake",
+    "examples": [
+      {
+        "exam_en": "The sewer intake was too small.",
+        "exam_ko": "하수구 흡입구가 너무 작았다."
+      },
+      {
+        "exam_en": "an adequate intake of vitamins",
+        "exam_ko": "비타민의 적량 섭취"
+      }
+    ]
+  },
+  {
+    "id": 15622,
+    "origin": "undertaking",
+    "examples": [
+      {
+        "exam_en": "It's quite an undertaking.",
+        "exam_ko": "상당한 대사업이다."
+      },
+      {
+        "exam_en": "an undertaking to pay the debt within six months",
+        "exam_ko": "6개월 이내에 부채를 변상하겠다는 보증"
+      }
+    ]
+  },
+  {
+    "id": 15623,
+    "origin": "manifold",
+    "examples": [
+      {
+        "exam_en": "a manifold operation",
+        "exam_ko": "다면적인 계획."
+      },
+      {
+        "exam_en": "manifold paper",
+        "exam_ko": "복사지."
+      }
+    ]
+  },
+  {
+    "id": 15628,
+    "origin": "sedan",
+    "examples": [
+      {
+        "exam_en": "Then some one took us in his sedan and drove us to the hotel.",
+        "exam_ko": "어떤 분이 우리를 자기 세단차에 태워서 호텔까지 데려다 주었다."
+      },
+      {
+        "exam_en": "the man of Sedan",
+        "exam_ko": "나폴레옹 3세."
+      }
+    ]
+  },
+  {
+    "id": 15633,
+    "origin": "hdmi",
+    "examples": [
+      {
+        "exam_en": "It will be interesting to see if HDMI is taken up by the computer industry.",
+        "exam_ko": "HDMI가 컴퓨터 산업에서 채택되게 될 것인지를 보는 일은 흥미로울 것이다."
+      }
+    ]
+  },
+  {
+    "id": 15638,
+    "origin": "restrictive",
+    "examples": [
+      {
+        "exam_en": "restrictive regulations",
+        "exam_ko": "제한 규정."
+      },
+      {
+        "exam_en": "restrictive use",
+        "exam_ko": "(관계 대명사의) 제한적 용법."
+      }
+    ]
+  },
+  {
+    "id": 15639,
+    "origin": "fluke",
+    "examples": [
+      {
+        "exam_en": "defeat a person by a fluke",
+        "exam_ko": "요행수로 남을 이기다."
+      }
+    ]
+  },
+  {
+    "id": 15642,
+    "origin": "dispersion",
+    "examples": [
+      {
+        "exam_en": "the dispersion of light by a prism",
+        "exam_ko": "프리즘에 의한 빛의 분산."
+      }
+    ]
+  },
+  {
+    "id": 15643,
+    "origin": "campaigner",
+    "examples": [
+      {
+        "exam_en": "an old campaigner",
+        "exam_ko": "노련가, 고참자."
+      }
+    ]
+  },
+  {
+    "id": 15645,
+    "origin": "forum",
+    "examples": [
+      {
+        "exam_en": "an open forum",
+        "exam_ko": "공개 토론회."
+      }
+    ]
+  },
+  {
+    "id": 15648,
+    "origin": "fumed",
+    "examples": [
+      {
+        "exam_en": "fumed oak",
+        "exam_ko": "검게 훈증한 오크재."
+      }
+    ]
+  },
+  {
+    "id": 15649,
+    "origin": "sleeved",
+    "examples": [
+      {
+        "exam_en": "a long-sleeved shirt",
+        "exam_ko": "소매가 긴 셔츠"
+      },
+      {
+        "exam_en": "a puff- sleeved blouse",
+        "exam_ko": "주름을 잡은 소매의 블라우스."
+      }
+    ]
+  },
+  {
+    "id": 15652,
+    "origin": "reset",
+    "examples": [
+      {
+        "exam_en": "She reset her watch when her flight from London arrived in New york.",
+        "exam_ko": "그녀는 비행기가 런던에서 뉴욕으로 도착했을 때 시계를 다시 맞추어 놓았다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+[
+  {
+    "id": 1513,
+    "origin": "incur",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">incurred</strong> his boss's wrath.",
+        "exam_ko": "그는 상사의 <strong class=\"target-word\">분노를 샀다</strong>."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">incurred</strong> huge expenses.",
+        "exam_ko": "회사는 막대한 비용을 <strong class=\"target-word\">초래했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1514,
+    "origin": "fold",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">folded</strong> the paper into a small square.",
+        "exam_ko": "그녀는 종이를 작은 정사각형으로 <strong class=\"target-word\">접었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">folded</strong> up the paper to make a toy plane.",
+        "exam_ko": "그녀는 종이를 <strong class=\"target-word\">접어서</strong> 장난감 비행기를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1515,
+    "origin": "excuse",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">excused</strong> his small fault.",
+        "exam_ko": "선생님은 그의 작은 과실을 <strong class=\"target-word\">눈감아 주었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">excused</strong> him for being late.",
+        "exam_ko": "그녀는 그의 지각을 <strong class=\"target-word\">용서했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1516,
+    "origin": "intervene",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">intervened</strong> in the fight.",
+        "exam_ko": "경찰이 싸움에 <strong class=\"target-word\">개입했다</strong>."
+      },
+      {
+        "exam_en": "A narrow strip of land <strong class=\"target-word\">intervenes</strong> between the mountains and the sea.",
+        "exam_ko": "산과 바다 사이에 좁은 땅이 <strong class=\"target-word\">끼어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1517,
+    "origin": "criticize",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">criticized</strong> the plan as unworkable.",
+        "exam_ko": "그는 그 계획을 실행 불가능하다고 <strong class=\"target-word\">비판했다</strong>."
+      },
+      {
+        "exam_en": "The press <strong class=\"target-word\">heavily criticized</strong> the new policy.",
+        "exam_ko": "언론은 새 정책을 <strong class=\"target-word\">격렬하게 비판했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1518,
+    "origin": "conceal",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">concealed</strong> himself behind the curtain.",
+        "exam_ko": "그는 커튼 뒤에 <strong class=\"target-word\">몸을 숨겼다</strong>."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">conceal</strong> her emotions.",
+        "exam_ko": "그녀는 자신의 감정을 <strong class=\"target-word\">감추려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 1519,
+    "origin": "tip",
+    "examples": [
+      {
+        "exam_en": "She stood on the <strong class=\"target-word\">tip</strong> of the mountain.",
+        "exam_ko": "그녀는 산 <strong class=\"target-word\">꼭대기</strong>에 섰다."
+      },
+      {
+        "exam_en": "The village sits at the northern <strong class=\"target-word\">tip</strong> of the plain.",
+        "exam_ko": "마을은 그 들판의 북쪽 <strong class=\"target-word\">끝</strong>에 위치한다."
+      }
+    ]
+  },
+  {
+    "id": 1520,
+    "origin": "flash",
+    "examples": [
+      {
+        "exam_en": "A bright <strong class=\"target-word\">flash</strong> of lightning lit up the sky.",
+        "exam_ko": "밝은 번개 <strong class=\"target-word\">섬광</strong>이 하늘을 밝혔다."
+      },
+      {
+        "exam_en": "A blinding <strong class=\"target-word\">flash</strong> suddenly appeared.",
+        "exam_ko": "눈부신 <strong class=\"target-word\">섬광</strong>이 갑자기 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 1521,
+    "origin": "advocate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">advocated</strong> equal rights for women.",
+        "exam_ko": "그녀는 남녀 동등권을 <strong class=\"target-word\">주장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1522,
+    "origin": "breed",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">breeds</strong> tropical fish.",
+        "exam_ko": "그는 열대어를 <strong class=\"target-word\">기른다</strong>."
+      },
+      {
+        "exam_en": "Poverty <strong class=\"target-word\">breeds</strong> strife.",
+        "exam_ko": "가난은 불화를 <strong class=\"target-word\">낳는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1523,
+    "origin": "grasp",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">grasped</strong> the rung of the ladder tightly.",
+        "exam_ko": "그는 사다리 가로장을 꽉 <strong class=\"target-word\">붙잡았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">grasped</strong> the chance immediately.",
+        "exam_ko": "그녀는 즉시 기회를 <strong class=\"target-word\">붙잡았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1524,
+    "origin": "assemble",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">assembled</strong> press corps waited for the statement.",
+        "exam_ko": "<strong class=\"target-word\">모여든</strong> 기자단이 성명을 기다렸다."
+      },
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">assembled</strong> all the pupils in the hall.",
+        "exam_ko": "선생님은 모든 학생을 강당에 <strong class=\"target-word\">모았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1525,
+    "origin": "commission",
+    "examples": [
+      {
+        "exam_en": "He gave the <strong class=\"target-word\">commission</strong> of authority to his deputy.",
+        "exam_ko": "그는 부하에게 권한 <strong class=\"target-word\">위임</strong>을 했다."
+      },
+      {
+        "exam_en": "She holds a full <strong class=\"target-word\">commission</strong> of all powers.",
+        "exam_ko": "그녀는 전권 <strong class=\"target-word\">위임장</strong>을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1526,
+    "origin": "embrace",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">embraced</strong> the child warmly.",
+        "exam_ko": "그녀는 아이를 따뜻하게 <strong class=\"target-word\">껴안았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">embraced</strong> the offer without hesitation.",
+        "exam_ko": "그는 망설임 없이 제의를 <strong class=\"target-word\">받아들였다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">embrace</strong> the opportunity to educate people about Korean culture.",
+        "exam_ko": "나는 한국 문화를 알릴 기회를 <strong class=\"target-word\">열렬히 받아들인다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1527,
+    "origin": "decorate",
+    "examples": [
+      {
+        "exam_en": "The room was <strong class=\"target-word\">decorated</strong> with fresh flowers.",
+        "exam_ko": "방은 생화로 <strong class=\"target-word\">장식되어</strong> 있었다."
+      },
+      {
+        "exam_en": "The writer uses a heavily <strong class=\"target-word\">decorated</strong> style.",
+        "exam_ko": "그 작가는 수식이 많은 <strong class=\"target-word\">장식적인</strong> 문체를 쓴다."
+      }
+    ]
+  },
+  {
+    "id": 1528,
+    "origin": "drain",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">drained</strong> water from the swamp.",
+        "exam_ko": "그들은 습지에서 물을 <strong class=\"target-word\">빼냈다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">drained</strong> the oil tank completely.",
+        "exam_ko": "그는 유조를 완전히 <strong class=\"target-word\">비웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1529,
+    "origin": "edit",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">edits</strong> the daily paper.",
+        "exam_ko": "그가 그 일간 신문을 <strong class=\"target-word\">편집</strong>한다."
+      }
+    ]
+  },
+  {
+    "id": 1530,
+    "origin": "contemplate",
+    "examples": [
+      {
+        "exam_en": "He stood still and <strong class=\"target-word\">contemplated</strong> the sea.",
+        "exam_ko": "그는 가만히 서서 바다를 <strong class=\"target-word\">응시했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">contemplated</strong> the current political situation.",
+        "exam_ko": "그녀는 현재의 정치 정세를 <strong class=\"target-word\">숙고했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1531,
+    "origin": "strip",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">stripped</strong> the peel off the banana.",
+        "exam_ko": "그녀는 바나나 껍질을 <strong class=\"target-word\">벗겼다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">stripped</strong> the bark from the tree.",
+        "exam_ko": "그는 나무의 껍질을 <strong class=\"target-word\">벗겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1532,
+    "origin": "function",
+    "examples": [
+      {
+        "exam_en": "The doctor ordered a liver <strong class=\"target-word\">function</strong> test.",
+        "exam_ko": "의사는 간 <strong class=\"target-word\">기능</strong> 검사를 지시했다."
+      },
+      {
+        "exam_en": "Education has an important social <strong class=\"target-word\">function</strong>.",
+        "exam_ko": "교육은 중요한 사회적 <strong class=\"target-word\">기능</strong>을 가진다."
+      }
+    ]
+  }
+]

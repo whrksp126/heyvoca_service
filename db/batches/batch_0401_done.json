@@ -1,0 +1,238 @@
+[
+  {
+    "id": 11030,
+    "origin": "coercive",
+    "examples": [
+      {
+        "exam_en": "The government used <strong class=\"target-word\">coercive</strong> power to enforce the law.",
+        "exam_ko": "정부는 법을 집행하기 위해 <strong class=\"target-word\">강제</strong> 권력을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 11033,
+    "origin": "pragmatic",
+    "examples": [
+      {
+        "exam_en": "She took a <strong class=\"target-word\">pragmatic</strong> approach to solving the issue.",
+        "exam_ko": "그녀는 문제 해결에 <strong class=\"target-word\">실용적인</strong> 접근 방식을 택했다."
+      }
+    ]
+  },
+  {
+    "id": 11034,
+    "origin": "nationalize",
+    "examples": [
+      {
+        "exam_en": "The government decided to <strong class=\"target-word\">nationalize</strong> the steel industry.",
+        "exam_ko": "정부는 철강 산업을 <strong class=\"target-word\">국영화하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "Several banks were <strong class=\"target-word\">nationalized</strong> during the financial crisis.",
+        "exam_ko": "금융 위기 동안 여러 은행이 <strong class=\"target-word\">국유화되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11035,
+    "origin": "registry",
+    "examples": [
+      {
+        "exam_en": "They got married at the local <strong class=\"target-word\">registry</strong> office.",
+        "exam_ko": "그들은 지역 <strong class=\"target-word\">등기소</strong>에서 결혼했다."
+      }
+    ]
+  },
+  {
+    "id": 11036,
+    "origin": "sediment",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Sediment</strong> settled at the bottom of the bottle.",
+        "exam_ko": "<strong class=\"target-word\">침전물</strong>이 병 바닥에 가라앉았다."
+      }
+    ]
+  },
+  {
+    "id": 11038,
+    "origin": "eddy",
+    "examples": [
+      {
+        "exam_en": "The boat was caught in a strong <strong class=\"target-word\">eddy</strong> near the rocks.",
+        "exam_ko": "배가 바위 근처의 강한 <strong class=\"target-word\">소용돌이</strong>에 휘말렸다."
+      }
+    ]
+  },
+  {
+    "id": 11039,
+    "origin": "dilatory",
+    "examples": [
+      {
+        "exam_en": "The lawyer used <strong class=\"target-word\">dilatory</strong> tactics to delay the trial.",
+        "exam_ko": "변호사는 재판을 지연시키기 위해 <strong class=\"target-word\">지연</strong> 전술을 사용했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">dilatory</strong> response frustrated the entire team.",
+        "exam_ko": "그의 <strong class=\"target-word\">꾸물대는</strong> 대응이 팀 전체를 짜증 나게 했다."
+      }
+    ]
+  },
+  {
+    "id": 11040,
+    "origin": "twine",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">twined</strong> her hair into a neat braid.",
+        "exam_ko": "그녀는 머리를 깔끔하게 <strong class=\"target-word\">땋았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">twined</strong> a cord tightly around the branch.",
+        "exam_ko": "그는 나뭇가지에 노끈을 단단히 <strong class=\"target-word\">감았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11044,
+    "origin": "unsettle",
+    "examples": [
+      {
+        "exam_en": "The spicy food <strong class=\"target-word\">unsettled</strong> his stomach.",
+        "exam_ko": "매운 음식이 그의 위를 <strong class=\"target-word\">불편하게 했다</strong>."
+      },
+      {
+        "exam_en": "The sudden changes <strong class=\"target-word\">unsettled</strong> her.",
+        "exam_ko": "갑작스러운 변화가 그녀를 <strong class=\"target-word\">불안하게 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11047,
+    "origin": "excruciate",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">excruciated</strong> by guilt after the accident.",
+        "exam_ko": "그녀는 사고 후 죄책감에 <strong class=\"target-word\">몹시 괴로워했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11048,
+    "origin": "stoicism",
+    "examples": [
+      {
+        "exam_en": "He faced every hardship with remarkable <strong class=\"target-word\">stoicism</strong>.",
+        "exam_ko": "그는 모든 역경을 놀라운 <strong class=\"target-word\">극기심</strong>으로 견뎌냈다."
+      }
+    ]
+  },
+  {
+    "id": 11053,
+    "origin": "proprietary",
+    "examples": [
+      {
+        "exam_en": "The company protects its <strong class=\"target-word\">proprietary</strong> technology from competitors.",
+        "exam_ko": "회사는 경쟁사로부터 <strong class=\"target-word\">독점</strong> 기술을 보호한다."
+      },
+      {
+        "exam_en": "Doctors rarely recommend <strong class=\"target-word\">proprietary</strong> medicine over generics.",
+        "exam_ko": "의사들은 제네릭보다 <strong class=\"target-word\">전매</strong> 약품을 잘 추천하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 11054,
+    "origin": "punitive",
+    "examples": [
+      {
+        "exam_en": "The court imposed <strong class=\"target-word\">punitive</strong> damages on the company.",
+        "exam_ko": "법원은 그 회사에 <strong class=\"target-word\">징벌적</strong> 손해배상을 부과했다."
+      },
+      {
+        "exam_en": "The government took <strong class=\"target-word\">punitive</strong> actions against the violators.",
+        "exam_ko": "정부는 위반자들에게 <strong class=\"target-word\">제재</strong> 조치를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 11055,
+    "origin": "indict",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">indicted</strong> for treason.",
+        "exam_ko": "그는 반역죄로 <strong class=\"target-word\">기소되었다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">indicted</strong> as an accomplice in the crime.",
+        "exam_ko": "그녀는 그 범죄의 공범으로 <strong class=\"target-word\">기소되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11056,
+    "origin": "collusion",
+    "examples": [
+      {
+        "exam_en": "The officials acted in <strong class=\"target-word\">collusion</strong> with the criminals.",
+        "exam_ko": "공무원들은 범죄자들과 <strong class=\"target-word\">결탁하여</strong> 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 11057,
+    "origin": "arbitrage",
+    "examples": [
+      {
+        "exam_en": "Traders profit from <strong class=\"target-word\">arbitrage</strong> between different markets.",
+        "exam_ko": "트레이더들은 서로 다른 시장 간의 <strong class=\"target-word\">차익거래</strong>로 이익을 얻는다."
+      }
+    ]
+  },
+  {
+    "id": 11058,
+    "origin": "subsidiary",
+    "examples": [
+      {
+        "exam_en": "Freelancing became a <strong class=\"target-word\">subsidiary</strong> source of his income.",
+        "exam_ko": "프리랜서 일이 그의 <strong class=\"target-word\">부수적인</strong> 수입원이 되었다."
+      },
+      {
+        "exam_en": "The firm opened a <strong class=\"target-word\">subsidiary</strong> in Southeast Asia.",
+        "exam_ko": "그 회사는 동남아시아에 <strong class=\"target-word\">자회사</strong>를 설립했다."
+      },
+      {
+        "exam_en": "Parent companies often acquire <strong class=\"target-word\">subsidiary</strong> companies through mergers.",
+        "exam_ko": "모회사는 종종 합병을 통해 <strong class=\"target-word\">자회사</strong>를 인수한다."
+      }
+    ]
+  },
+  {
+    "id": 11059,
+    "origin": "reverberate",
+    "examples": [
+      {
+        "exam_en": "The teacher's voice <strong class=\"target-word\">reverberated</strong> through the school halls.",
+        "exam_ko": "선생님의 목소리가 학교 복도에 <strong class=\"target-word\">울려 퍼졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11060,
+    "origin": "sycophant",
+    "examples": [
+      {
+        "exam_en": "He surrounded himself with <strong class=\"target-word\">sycophants</strong> who always agreed.",
+        "exam_ko": "그는 항상 동조하는 <strong class=\"target-word\">아첨꾼들</strong>로 자신을 둘러쌌다."
+      }
+    ]
+  },
+  {
+    "id": 11061,
+    "origin": "repatriate",
+    "examples": [
+      {
+        "exam_en": "The young man was <strong class=\"target-word\">repatriated</strong> to Italy after the incident.",
+        "exam_ko": "그 젊은이는 사건 이후 이탈리아로 <strong class=\"target-word\">송환되었다</strong>."
+      }
+    ]
+  }
+]

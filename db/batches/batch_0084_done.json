@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1735,
+    "origin": "commit",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">committed</strong> suicide last year.",
+        "exam_ko": "그는 작년에 <strong class=\"target-word\">자살했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">committed</strong> herself to the project fully.",
+        "exam_ko": "그녀는 프로젝트에 완전히 <strong class=\"target-word\">헌신했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1736,
+    "origin": "threaten",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">threatened</strong> to fire her on the spot.",
+        "exam_ko": "그는 그녀를 즉시 해고하겠다고 <strong class=\"target-word\">위협했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">threatened</strong> that he would get back at me.",
+        "exam_ko": "그는 내게 앙갚음하겠다고 <strong class=\"target-word\">위협했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1737,
+    "origin": "acquire",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">acquired</strong> new land last year.",
+        "exam_ko": "그 회사는 작년에 새 토지를 <strong class=\"target-word\">취득했다</strong>."
+      },
+      {
+        "exam_en": "Children <strong class=\"target-word\">acquire</strong> language skills naturally.",
+        "exam_ko": "아이들은 언어 능력을 자연스럽게 <strong class=\"target-word\">습득한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1738,
+    "origin": "demonstrate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">demonstrated</strong> a scientific principle clearly.",
+        "exam_ko": "그녀는 과학적 원리를 명확하게 <strong class=\"target-word\">증명했다</strong>."
+      },
+      {
+        "exam_en": "I shall <strong class=\"target-word\">demonstrate</strong> that language learning is based on repetition.",
+        "exam_ko": "언어 학습은 반복에 바탕을 둔다는 것을 <strong class=\"target-word\">증명해 보이겠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1739,
+    "origin": "feed",
+    "examples": [
+      {
+        "exam_en": "The children are <strong class=\"target-word\">well fed</strong> at school.",
+        "exam_ko": "아이들은 학교에서 <strong class=\"target-word\">잘 먹고 있다</strong>."
+      },
+      {
+        "exam_en": "The baby can't <strong class=\"target-word\">feed</strong> itself yet.",
+        "exam_ko": "젖먹이는 아직 혼자서 <strong class=\"target-word\">먹지</strong> 못한다."
+      }
+    ]
+  },
+  {
+    "id": 1740,
+    "origin": "launch",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">launched</strong> a canoe into the river.",
+        "exam_ko": "그들은 강에 카누를 <strong class=\"target-word\">띄웠다</strong>."
+      },
+      {
+        "exam_en": "The company held a <strong class=\"target-word\">launching</strong> ceremony for the new ship.",
+        "exam_ko": "회사는 새 배의 <strong class=\"target-word\">진수식</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 1741,
+    "origin": "limit",
+    "examples": [
+      {
+        "exam_en": "There is an upper <strong class=\"target-word\">limit</strong> on the number of seats.",
+        "exam_ko": "좌석 수에는 최대 <strong class=\"target-word\">한도</strong>가 있다."
+      },
+      {
+        "exam_en": "The age <strong class=\"target-word\">limit</strong> for retirement is 60.",
+        "exam_ko": "정년 <strong class=\"target-word\">제한</strong> 나이는 60세이다."
+      }
+    ]
+  },
+  {
+    "id": 1742,
+    "origin": "retain",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">retained</strong> her beauty even in old age.",
+        "exam_ko": "그녀는 나이가 들어서도 아름다움을 <strong class=\"target-word\">유지했다</strong>."
+      },
+      {
+        "exam_en": "He managed to <strong class=\"target-word\">retain</strong> his self-control under pressure.",
+        "exam_ko": "그는 압박 속에서도 자제심을 <strong class=\"target-word\">잃지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1743,
+    "origin": "attract",
+    "examples": [
+      {
+        "exam_en": "Honey <strong class=\"target-word\">attracts</strong> bears.",
+        "exam_ko": "꿀은 곰을 <strong class=\"target-word\">끌어들인다</strong>."
+      },
+      {
+        "exam_en": "The music <strong class=\"target-word\">attracted</strong> many people to the square.",
+        "exam_ko": "음악이 많은 사람들을 광장으로 <strong class=\"target-word\">끌어들였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1744,
+    "origin": "assess",
+    "examples": [
+      {
+        "exam_en": "The city <strong class=\"target-word\">assessed</strong> a tax on his property.",
+        "exam_ko": "시는 그의 재산에 세금을 <strong class=\"target-word\">부과했다</strong>."
+      },
+      {
+        "exam_en": "We need to <strong class=\"target-word\">assess</strong> the consequences of this policy.",
+        "exam_ko": "우리는 이 정책의 결과를 <strong class=\"target-word\">평가해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 1745,
+    "origin": "hide",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">hid</strong> a key in the flowerpot.",
+        "exam_ko": "그녀는 화분에 열쇠를 <strong class=\"target-word\">감췄다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">hid</strong> his face in his hands.",
+        "exam_ko": "그는 손으로 얼굴을 <strong class=\"target-word\">가렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1746,
+    "origin": "reject",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">rejected</strong> the offer without hesitation.",
+        "exam_ko": "그는 주저 없이 제의를 <strong class=\"target-word\">거절했다</strong>."
+      },
+      {
+        "exam_en": "The committee <strong class=\"target-word\">rejected</strong> the proposal explicitly.",
+        "exam_ko": "위원회는 그 제안을 분명히 <strong class=\"target-word\">거부했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1747,
+    "origin": "belong",
+    "examples": [
+      {
+        "exam_en": "This car <strong class=\"target-word\">belongs</strong> to him.",
+        "exam_ko": "이 차는 그의 <strong class=\"target-word\">소유이다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">belongs</strong> to a respectable family.",
+        "exam_ko": "그녀는 훌륭한 가정의 <strong class=\"target-word\">일원이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1748,
+    "origin": "contribute",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">contributed</strong> money to the charity fund.",
+        "exam_ko": "그는 자선 기금에 돈을 <strong class=\"target-word\">기부했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">contributed</strong> food for the flood survivors.",
+        "exam_ko": "그들은 홍수 생존자들에게 식량을 <strong class=\"target-word\">제공했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1749,
+    "origin": "vary",
+    "examples": [
+      {
+        "exam_en": "The teacher decided to <strong class=\"target-word\">vary</strong> the rules this week.",
+        "exam_ko": "선생님은 이번 주 규칙을 <strong class=\"target-word\">수정하기로</strong> 했다."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">vary</strong> her daily exercise routine.",
+        "exam_ko": "그녀는 일상 운동 루틴에 <strong class=\"target-word\">변화를 주려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 1750,
+    "origin": "cry",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">cried</strong> out with pain after the fall.",
+        "exam_ko": "그는 넘어진 후 아파서 <strong class=\"target-word\">소리쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">cried</strong> with joy when she won.",
+        "exam_ko": "그녀는 우승하자 너무 기뻐서 <strong class=\"target-word\">울었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1751,
+    "origin": "impose",
+    "examples": [
+      {
+        "exam_en": "The judge <strong class=\"target-word\">imposed</strong> a fine on him.",
+        "exam_ko": "그 판사는 그에게 벌금을 <strong class=\"target-word\">부과했다</strong>."
+      },
+      {
+        "exam_en": "A new tax has been <strong class=\"target-word\">imposed</strong> on cigarettes.",
+        "exam_ko": "담배에 새로운 세금이 <strong class=\"target-word\">부과되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1752,
+    "origin": "sing",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sang</strong> to a piano accompaniment beautifully.",
+        "exam_ko": "그녀는 피아노 반주에 맞추어 아름답게 <strong class=\"target-word\">노래했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">sang</strong> a lullaby to his child.",
+        "exam_ko": "그는 아이에게 자장가를 <strong class=\"target-word\">불러줬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1753,
+    "origin": "destroy",
+    "examples": [
+      {
+        "exam_en": "The storm <strong class=\"target-word\">destroyed</strong> every house on the coast.",
+        "exam_ko": "폭풍이 해안가의 모든 집을 <strong class=\"target-word\">파괴했다</strong>."
+      },
+      {
+        "exam_en": "The fire completely <strong class=\"target-word\">destroyed</strong> the building.",
+        "exam_ko": "화재가 건물을 완전히 <strong class=\"target-word\">파괴했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1754,
+    "origin": "head",
+    "examples": [
+      {
+        "exam_en": "He was covered in mud from <strong class=\"target-word\">head</strong> to foot.",
+        "exam_ko": "그는 온몸이, <strong class=\"target-word\">머리</strong>부터 발끝까지 진흙투성이였다."
+      },
+      {
+        "exam_en": "She raised her <strong class=\"target-word\">head</strong> and looked at him.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">머리</strong>를 들어 그를 바라봤다."
+      }
+    ]
+  }
+]

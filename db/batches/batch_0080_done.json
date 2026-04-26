@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1655,
+    "origin": "convert",
+    "examples": [
+      {
+        "exam_en": "The plant <strong class=\"target-word\">converts</strong> steam into power.",
+        "exam_ko": "그 공장은 증기를 동력으로 <strong class=\"target-word\">전환한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">converted</strong> his wife to Christianity.",
+        "exam_ko": "그는 부인을 기독교로 <strong class=\"target-word\">개종시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1656,
+    "origin": "submit",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">submitted</strong> herself to his orders.",
+        "exam_ko": "그녀는 그의 명령에 <strong class=\"target-word\">따랐다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">submitted</strong> a plan to the committee.",
+        "exam_ko": "그는 위원회에 계획을 <strong class=\"target-word\">제출했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1657,
+    "origin": "feature",
+    "examples": [
+      {
+        "exam_en": "His nose is his best <strong class=\"target-word\">feature</strong>.",
+        "exam_ko": "그는 코가 가장 잘생긴 <strong class=\"target-word\">이목구비</strong>다."
+      },
+      {
+        "exam_en": "Her delicate <strong class=\"target-word\">features</strong> caught everyone's attention.",
+        "exam_ko": "그녀의 섬세한 <strong class=\"target-word\">이목구비</strong>가 모두의 시선을 끌었다."
+      }
+    ]
+  },
+  {
+    "id": 1658,
+    "origin": "land",
+    "examples": [
+      {
+        "exam_en": "The plane safely <strong class=\"target-word\">landed</strong> on the runway.",
+        "exam_ko": "비행기가 활주로에 안전하게 <strong class=\"target-word\">착륙했다</strong>."
+      },
+      {
+        "exam_en": "The sailors were glad to see <strong class=\"target-word\">land</strong> after weeks at sea.",
+        "exam_ko": "선원들은 몇 주간의 항해 끝에 <strong class=\"target-word\">육지</strong>를 보고 기뻐했다."
+      }
+    ]
+  },
+  {
+    "id": 1659,
+    "origin": "solve",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">solved</strong> the math problem quickly.",
+        "exam_ko": "그녀는 수학 문제를 빠르게 <strong class=\"target-word\">풀었다</strong>."
+      },
+      {
+        "exam_en": "The government tried to <strong class=\"target-word\">solve</strong> the economic crisis.",
+        "exam_ko": "정부는 경제 위기를 <strong class=\"target-word\">해결하려</strong> 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 1660,
+    "origin": "struggle",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">struggled</strong> like a fish out of water.",
+        "exam_ko": "그는 물 밖에 나온 물고기처럼 <strong class=\"target-word\">버둥거렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">struggled</strong> against adversity all her life.",
+        "exam_ko": "그녀는 평생 역경과 <strong class=\"target-word\">싸웠다</strong>."
+      },
+      {
+        "exam_en": "I think I was <strong class=\"target-word\">struggling</strong> today.",
+        "exam_ko": "나는 오늘 <strong class=\"target-word\">고전한</strong> 것 같아요."
+      }
+    ]
+  },
+  {
+    "id": 1661,
+    "origin": "preserve",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">preserve</strong> himself from criticism.",
+        "exam_ko": "그는 비평으로부터 자신을 <strong class=\"target-word\">지키려</strong> 했다."
+      },
+      {
+        "exam_en": "We must <strong class=\"target-word\">preserve</strong> these historic sites.",
+        "exam_ko": "우리는 이 역사적인 유적지를 <strong class=\"target-word\">보존해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 1662,
+    "origin": "owe",
+    "examples": [
+      {
+        "exam_en": "How much do I <strong class=\"target-word\">owe</strong> you?",
+        "exam_ko": "얼마를 <strong class=\"target-word\">드리면</strong> 될까요?"
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">owe</strong> two thousand dollars on my car.",
+        "exam_ko": "나는 자동차 대금으로 2,000달러를 <strong class=\"target-word\">빚지고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 1663,
+    "origin": "pour",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">poured</strong> water from the jug into a glass.",
+        "exam_ko": "그는 물 항아리에서 컵에 물을 <strong class=\"target-word\">따랐다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">poured</strong> me a cup of tea.",
+        "exam_ko": "그녀는 내게 차를 한 잔 <strong class=\"target-word\">따라주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1664,
+    "origin": "cast",
+    "examples": [
+      {
+        "exam_en": "The sea <strong class=\"target-word\">cast</strong> up seaweed onto the shore.",
+        "exam_ko": "바다가 해초를 해안으로 <strong class=\"target-word\">밀어 올렸다</strong>."
+      },
+      {
+        "exam_en": "The ship was <strong class=\"target-word\">cast</strong> ashore by the waves.",
+        "exam_ko": "배가 파도에 의해 해안으로 <strong class=\"target-word\">밀려 올라왔다</strong>."
+      },
+      {
+        "exam_en": "The director chose the <strong class=\"target-word\">cast</strong> for each role carefully.",
+        "exam_ko": "감독은 각 역할에 맞는 <strong class=\"target-word\">출연진</strong>을 신중하게 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 1665,
+    "origin": "dance",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">danced</strong> to a cheerful tune.",
+        "exam_ko": "그들은 경쾌한 음악에 맞춰 <strong class=\"target-word\">춤을 췄다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">danced</strong> along the hallway happily.",
+        "exam_ko": "그녀는 복도를 <strong class=\"target-word\">춤추며</strong> 즐겁게 지나갔다."
+      }
+    ]
+  },
+  {
+    "id": 1666,
+    "origin": "invest",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">invested</strong> his money in stocks.",
+        "exam_ko": "그는 주식에 돈을 <strong class=\"target-word\">투자했다</strong>."
+      },
+      {
+        "exam_en": "The government <strong class=\"target-word\">invested</strong> millions in the communication system.",
+        "exam_ko": "정부는 통신 시스템에 수백만 달러를 <strong class=\"target-word\">투자했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1667,
+    "origin": "kick",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">kicked</strong> down the door to enter.",
+        "exam_ko": "그는 문을 <strong class=\"target-word\">차서</strong> 들어갔다."
+      },
+      {
+        "exam_en": "She accidentally <strong class=\"target-word\">kicked</strong> the pail over.",
+        "exam_ko": "그녀는 실수로 양동이를 <strong class=\"target-word\">차서</strong> 쓰러뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 1668,
+    "origin": "race",
+    "examples": [
+      {
+        "exam_en": "He comes from a family of noble <strong class=\"target-word\">race</strong>.",
+        "exam_ko": "그는 명문 <strong class=\"target-word\">혈통</strong>의 집안 출신이다."
+      },
+      {
+        "exam_en": "She is a person of mixed <strong class=\"target-word\">race</strong>.",
+        "exam_ko": "그녀는 혼혈 <strong class=\"target-word\">인종</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1669,
+    "origin": "kiss",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">kissed</strong> the Bible and took the oath.",
+        "exam_ko": "그는 성경에 <strong class=\"target-word\">입맞추고</strong> 선서했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">kissed</strong> her hand to him as he left.",
+        "exam_ko": "그가 떠날 때 그녀는 손으로 <strong class=\"target-word\">키스를 던졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1670,
+    "origin": "light",
+    "examples": [
+      {
+        "exam_en": "A beam of <strong class=\"target-word\">light</strong> shone through the window.",
+        "exam_ko": "창문을 통해 <strong class=\"target-word\">빛</strong> 한 줄기가 비쳐 들었다."
+      },
+      {
+        "exam_en": "Only a glimmer of <strong class=\"target-word\">light</strong> remained in the room.",
+        "exam_ko": "방 안에 희미한 <strong class=\"target-word\">빛</strong>만 남아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1671,
+    "origin": "retire",
+    "examples": [
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">retire</strong> early from his job.",
+        "exam_ko": "그는 직장에서 일찍 <strong class=\"target-word\">퇴직하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">retired</strong> at the age of sixty.",
+        "exam_ko": "그녀는 60세에 <strong class=\"target-word\">퇴직했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1672,
+    "origin": "register",
+    "examples": [
+      {
+        "exam_en": "His name was on the electoral <strong class=\"target-word\">register</strong>.",
+        "exam_ko": "그의 이름은 선거인 <strong class=\"target-word\">명부</strong>에 있었다."
+      },
+      {
+        "exam_en": "Please sign the hotel <strong class=\"target-word\">register</strong> upon arrival.",
+        "exam_ko": "도착 시 숙박자 <strong class=\"target-word\">명부</strong>에 서명해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1673,
+    "origin": "resist",
+    "examples": [
+      {
+        "exam_en": "The people rose to <strong class=\"target-word\">resist</strong> tyranny.",
+        "exam_ko": "국민들은 압제에 <strong class=\"target-word\">저항하기</strong> 위해 일어섰다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">resisted</strong> being carried off by the crowd.",
+        "exam_ko": "그는 군중에게 끌려가지 않으려고 <strong class=\"target-word\">반항했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1674,
+    "origin": "print",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">printed</strong> pictures for the exhibition.",
+        "exam_ko": "그들은 전시회를 위해 그림을 <strong class=\"target-word\">인쇄했다</strong>."
+      },
+      {
+        "exam_en": "The government decided to <strong class=\"target-word\">print</strong> more money.",
+        "exam_ko": "정부는 더 많은 돈을 <strong class=\"target-word\">발행하기로</strong> 결정했다."
+      }
+    ]
+  }
+]

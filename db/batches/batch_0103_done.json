@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2127,
+    "origin": "neighboring",
+    "examples": [
+      {
+        "exam_en": "The two <strong class=\"target-word\">neighboring</strong> countries signed a peace treaty.",
+        "exam_ko": "두 <strong class=\"target-word\">인접한</strong> 나라가 평화 조약을 체결했다."
+      },
+      {
+        "exam_en": "She traveled to the <strong class=\"target-word\">neighboring</strong> island by ferry.",
+        "exam_ko": "그녀는 페리를 타고 <strong class=\"target-word\">인근</strong> 섬으로 여행했다."
+      }
+    ]
+  },
+  {
+    "id": 2128,
+    "origin": "irrelevant",
+    "examples": [
+      {
+        "exam_en": "His comment is completely <strong class=\"target-word\">irrelevant</strong> to the matter.",
+        "exam_ko": "그의 발언은 그 문제와 완전히 <strong class=\"target-word\">무관하다</strong>."
+      },
+      {
+        "exam_en": "What he said is <strong class=\"target-word\">irrelevant</strong> to our decision.",
+        "exam_ko": "그가 한 말은 우리 결정과 <strong class=\"target-word\">관계없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2129,
+    "origin": "patient",
+    "examples": [
+      {
+        "exam_en": "She was very <strong class=\"target-word\">patient</strong> while waiting in line.",
+        "exam_ko": "그녀는 줄을 서는 동안 매우 <strong class=\"target-word\">참을성 있게</strong> 기다렸다."
+      },
+      {
+        "exam_en": "Teaching children requires a <strong class=\"target-word\">patient</strong> attitude.",
+        "exam_ko": "아이들을 가르치려면 <strong class=\"target-word\">인내심 있는</strong> 태도가 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2130,
+    "origin": "compact",
+    "examples": [
+      {
+        "exam_en": "She carried a <strong class=\"target-word\">compact</strong> camera in her bag.",
+        "exam_ko": "그녀는 가방에 <strong class=\"target-word\">소형</strong> 카메라를 넣고 다녔다."
+      },
+      {
+        "exam_en": "He always writes in <strong class=\"target-word\">compact</strong> sentences.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">간결한</strong> 문장으로 글을 쓴다."
+      }
+    ]
+  },
+  {
+    "id": 2131,
+    "origin": "profitable",
+    "examples": [
+      {
+        "exam_en": "They launched a <strong class=\"target-word\">profitable</strong> business venture last year.",
+        "exam_ko": "그들은 작년에 <strong class=\"target-word\">수익성 있는</strong> 사업을 시작했다."
+      },
+      {
+        "exam_en": "Teaching abroad turned out to be quite <strong class=\"target-word\">profitable</strong>.",
+        "exam_ko": "해외에서 가르치는 일은 꽤 <strong class=\"target-word\">수입이 좋은</strong> 것으로 밝혀졌다."
+      }
+    ]
+  },
+  {
+    "id": 2132,
+    "origin": "rival",
+    "examples": [
+      {
+        "exam_en": "He faced a strong <strong class=\"target-word\">rival</strong> in the championship.",
+        "exam_ko": "그는 선수권 대회에서 강력한 <strong class=\"target-word\">경쟁자</strong>를 만났다."
+      },
+      {
+        "exam_en": "The two men were <strong class=\"target-word\">rivals</strong> for the same girl.",
+        "exam_ko": "두 남자는 같은 여자를 두고 <strong class=\"target-word\">경쟁하는</strong> 사이였다."
+      }
+    ]
+  },
+  {
+    "id": 2133,
+    "origin": "loyal",
+    "examples": [
+      {
+        "exam_en": "He stayed <strong class=\"target-word\">loyal</strong> to his team through every defeat.",
+        "exam_ko": "그는 모든 패배에도 팀에 <strong class=\"target-word\">충실하게</strong> 남아 있었다."
+      },
+      {
+        "exam_en": "She has been a <strong class=\"target-word\">loyal</strong> friend for over twenty years.",
+        "exam_ko": "그녀는 20년 넘게 <strong class=\"target-word\">충직한</strong> 친구였다."
+      }
+    ]
+  },
+  {
+    "id": 2134,
+    "origin": "moderate",
+    "examples": [
+      {
+        "exam_en": "They made a <strong class=\"target-word\">moderate</strong> request that everyone accepted.",
+        "exam_ko": "그들은 모두가 받아들인 <strong class=\"target-word\">무리 없는</strong> 요구를 했다."
+      },
+      {
+        "exam_en": "He tries to be <strong class=\"target-word\">moderate</strong> in his drinking habits.",
+        "exam_ko": "그는 음주를 <strong class=\"target-word\">절제하려고</strong> 노력한다."
+      }
+    ]
+  },
+  {
+    "id": 2135,
+    "origin": "distinguished",
+    "examples": [
+      {
+        "exam_en": "He carried himself with a <strong class=\"target-word\">distinguished</strong> bearing.",
+        "exam_ko": "그는 <strong class=\"target-word\">두드러진</strong> 태도로 자신을 표현했다."
+      },
+      {
+        "exam_en": "The hall was filled with <strong class=\"target-word\">distinguished</strong> guests from around the world.",
+        "exam_ko": "홀에는 전 세계에서 온 <strong class=\"target-word\">저명한</strong> 귀빈들로 가득했다."
+      }
+    ]
+  },
+  {
+    "id": 2136,
+    "origin": "interior",
+    "examples": [
+      {
+        "exam_en": "Workers renovated the <strong class=\"target-word\">interior</strong> parts of the building.",
+        "exam_ko": "작업자들이 건물의 <strong class=\"target-word\">내부</strong> 공간을 개조했다."
+      },
+      {
+        "exam_en": "The contractor completed all <strong class=\"target-word\">interior</strong> repairs on time.",
+        "exam_ko": "계약자가 모든 <strong class=\"target-word\">내부</strong> 수리를 제때 완료했다."
+      }
+    ]
+  },
+  {
+    "id": 2137,
+    "origin": "noble",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">noble</strong> act to give up his seat for the elderly.",
+        "exam_ko": "노인에게 자리를 양보한 것은 <strong class=\"target-word\">고귀한</strong> 행동이었다."
+      },
+      {
+        "exam_en": "She came from a <strong class=\"target-word\">noble</strong> family with a long history.",
+        "exam_ko": "그녀는 오랜 역사를 가진 <strong class=\"target-word\">귀족</strong> 가문 출신이었다."
+      }
+    ]
+  },
+  {
+    "id": 2138,
+    "origin": "insufficient",
+    "examples": [
+      {
+        "exam_en": "The region suffered from an <strong class=\"target-word\">insufficient</strong> supply of food.",
+        "exam_ko": "그 지역은 식량 공급이 <strong class=\"target-word\">부족하여</strong> 어려움을 겪었다."
+      },
+      {
+        "exam_en": "He had <strong class=\"target-word\">insufficient</strong> evidence to prove his theory.",
+        "exam_ko": "그는 자신의 이론을 증명할 증거가 <strong class=\"target-word\">불충분했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2139,
+    "origin": "eligible",
+    "examples": [
+      {
+        "exam_en": "All residents are <strong class=\"target-word\">eligible</strong> for membership in the club.",
+        "exam_ko": "모든 주민은 클럽 회원이 될 <strong class=\"target-word\">자격이 있다</strong>."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">eligible</strong> to apply for the scholarship.",
+        "exam_ko": "그녀는 장학금을 신청할 <strong class=\"target-word\">자격이 된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2140,
+    "origin": "mysterious",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">mysterious</strong> universe still puzzles scientists.",
+        "exam_ko": "<strong class=\"target-word\">신비로운</strong> 우주는 여전히 과학자들을 당혹스럽게 한다."
+      },
+      {
+        "exam_en": "Police investigated the <strong class=\"target-word\">mysterious</strong> murder case for months.",
+        "exam_ko": "경찰은 수개월 동안 <strong class=\"target-word\">기괴한</strong> 살인 사건을 조사했다."
+      }
+    ]
+  },
+  {
+    "id": 2142,
+    "origin": "managerial",
+    "examples": [
+      {
+        "exam_en": "The company adopted new <strong class=\"target-word\">managerial</strong> methods to boost efficiency.",
+        "exam_ko": "회사는 효율을 높이기 위해 새로운 <strong class=\"target-word\">경영</strong> 방법을 도입했다."
+      },
+      {
+        "exam_en": "She was promoted to a <strong class=\"target-word\">managerial</strong> position last month.",
+        "exam_ko": "그녀는 지난달 <strong class=\"target-word\">관리직</strong>으로 승진했다."
+      }
+    ]
+  },
+  {
+    "id": 2143,
+    "origin": "molecular",
+    "examples": [
+      {
+        "exam_en": "Scientists studied the <strong class=\"target-word\">molecular</strong> structure of the compound.",
+        "exam_ko": "과학자들은 그 화합물의 <strong class=\"target-word\">분자</strong> 구조를 연구했다."
+      },
+      {
+        "exam_en": "The lab conducts advanced <strong class=\"target-word\">molecular</strong> biology research.",
+        "exam_ko": "그 연구소는 첨단 <strong class=\"target-word\">분자</strong> 생물학 연구를 수행한다."
+      }
+    ]
+  },
+  {
+    "id": 2144,
+    "origin": "olympic",
+    "examples": [
+      {
+        "exam_en": "Gymnastics is one of the most popular <strong class=\"target-word\">Olympic</strong> events.",
+        "exam_ko": "체조는 가장 인기 있는 <strong class=\"target-word\">올림픽</strong> 종목 중 하나다."
+      },
+      {
+        "exam_en": "Athletes carried the <strong class=\"target-word\">Olympic</strong> flame into the stadium.",
+        "exam_ko": "선수들이 경기장 안으로 <strong class=\"target-word\">올림픽</strong> 성화를 들고 입장했다."
+      }
+    ]
+  },
+  {
+    "id": 2145,
+    "origin": "linear",
+    "examples": [
+      {
+        "exam_en": "The data points formed a <strong class=\"target-word\">linear</strong> series on the graph.",
+        "exam_ko": "데이터 포인트들이 그래프에서 <strong class=\"target-word\">선형</strong> 배열을 이루었다."
+      },
+      {
+        "exam_en": "The architect created a bold <strong class=\"target-word\">linear</strong> design for the building.",
+        "exam_ko": "건축가는 건물에 대담한 <strong class=\"target-word\">선형</strong> 디자인을 적용했다."
+      }
+    ]
+  },
+  {
+    "id": 2146,
+    "origin": "prospective",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">prospective</strong> candidate for the mayoral election.",
+        "exam_ko": "그녀는 시장 선거의 유망한 <strong class=\"target-word\">예비</strong> 후보다."
+      },
+      {
+        "exam_en": "The team discussed <strong class=\"target-word\">prospective</strong> changes to the curriculum.",
+        "exam_ko": "팀은 교육과정의 <strong class=\"target-word\">예상되는</strong> 변화에 대해 논의했다."
+      }
+    ]
+  },
+  {
+    "id": 2147,
+    "origin": "parental",
+    "examples": [
+      {
+        "exam_en": "The school requires <strong class=\"target-word\">parental</strong> consent for field trips.",
+        "exam_ko": "학교는 현장 학습에 <strong class=\"target-word\">부모의</strong> 동의를 요구한다."
+      },
+      {
+        "exam_en": "Strong <strong class=\"target-word\">parental</strong> support helps children succeed in school.",
+        "exam_ko": "강력한 <strong class=\"target-word\">부모의</strong> 지원이 아이들의 학교생활 성공에 도움이 된다."
+      }
+    ]
+  }
+]

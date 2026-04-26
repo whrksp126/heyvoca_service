@@ -1,0 +1,250 @@
+[
+  {
+    "id": 18531,
+    "origin": "rumple",
+    "examples": [
+      {
+        "exam_en": "a rumpled raincoat",
+        "exam_ko": "구겨진 레인코트."
+      },
+      {
+        "exam_en": "His hair was rumpled by the wind.",
+        "exam_ko": "머리가 바람에 날려 엉클어졌다."
+      }
+    ]
+  },
+  {
+    "id": 18533,
+    "origin": "powerless",
+    "examples": [
+      {
+        "exam_en": "be powerless to help",
+        "exam_ko": "도울 힘이 전혀 없다."
+      }
+    ]
+  },
+  {
+    "id": 18534,
+    "origin": "voiceless",
+    "examples": [
+      {
+        "exam_en": "a voiceless forest",
+        "exam_ko": "조용한 숲"
+      },
+      {
+        "exam_en": "voiceless opposition",
+        "exam_ko": "무언의 저항."
+      }
+    ]
+  },
+  {
+    "id": 18535,
+    "origin": "voiced",
+    "examples": [
+      {
+        "exam_en": "a voiced objection",
+        "exam_ko": "구두로 표명한 반대 의견."
+      },
+      {
+        "exam_en": "voiced sounds",
+        "exam_ko": "유성음[자음]."
+      }
+    ]
+  },
+  {
+    "id": 18536,
+    "origin": "microwave",
+    "examples": [
+      {
+        "exam_en": "Please the soup in the microwave for 2 minutes.",
+        "exam_ko": "이 분 동안 수프를 전자레인지에 데워요."
+      }
+    ]
+  },
+  {
+    "id": 18538,
+    "origin": "secretariat",
+    "examples": [
+      {
+        "exam_en": "the UN secretariat",
+        "exam_ko": "국제연합사무국."
+      }
+    ]
+  },
+  {
+    "id": 18542,
+    "origin": "tribal",
+    "examples": [
+      {
+        "exam_en": "tribal royalties",
+        "exam_ko": "부족에 대한 충성심."
+      }
+    ]
+  },
+  {
+    "id": 18544,
+    "origin": "vertically",
+    "examples": [
+      {
+        "exam_en": "The point P is vertically above the point A.",
+        "exam_ko": "점 P는 점 A의 수직 상방에 있다."
+      }
+    ]
+  },
+  {
+    "id": 18545,
+    "origin": "emptiness",
+    "examples": [
+      {
+        "exam_en": "the silence and emptiness of the desert",
+        "exam_ko": "고요하고 텅 빈 사막."
+      }
+    ]
+  },
+  {
+    "id": 18546,
+    "origin": "foothill",
+    "examples": [
+      {
+        "exam_en": "the foothills of the Himalaya",
+        "exam_ko": "히말라야 산맥의 구릉들."
+      }
+    ]
+  },
+  {
+    "id": 18548,
+    "origin": "alcoholic",
+    "examples": [
+      {
+        "exam_en": "alcoholic content",
+        "exam_ko": "알코올분"
+      },
+      {
+        "exam_en": "alcoholic liquors",
+        "exam_ko": "알코올 음료[주류]"
+      }
+    ]
+  },
+  {
+    "id": 18549,
+    "origin": "chiefly",
+    "examples": [
+      {
+        "exam_en": "The accident happened chiefly as a result of carelessness.",
+        "exam_ko": "사고는 대개 부주의함의 결과로 일어났다."
+      },
+      {
+        "exam_en": "We are chiefly concerned for your safety.",
+        "exam_ko": "우리는 무엇보다도 네 안전이 염려된다."
+      }
+    ]
+  },
+  {
+    "id": 18553,
+    "origin": "absurdity",
+    "examples": [
+      {
+        "exam_en": "the height of absurdity",
+        "exam_ko": "어리석기 짝이 없음"
+      },
+      {
+        "exam_en": "the colossal absurdity",
+        "exam_ko": "지독한 불합리."
+      }
+    ]
+  },
+  {
+    "id": 18556,
+    "origin": "excavation",
+    "examples": [
+      {
+        "exam_en": "Rock: Monolithic material with a volume greater than 0.5 m3 which cannot be removed until broken up. The Contractor shall be deemed to have allowed for the cost of performing the required excavations in whatever material may be encountered, and no extra payment shall be paid for excavation in rock.",
+        "exam_ko": "0.5 m3 이상의 깨기 전에 제거 할 수 없는 하나의 덩어리의 암석. 계약자는 어떤 재질의 암석을 만나도 굴착 작업을 수행하는 비용을 허용한 것으로 간주되며, 암석 굴착에 대헤서는 추가 비용을 지불되지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 18557,
+    "origin": "traditionally",
+    "examples": [
+      {
+        "exam_en": "Houses in this country have traditionally been built of brick.",
+        "exam_ko": "이 나라의 집들은 전통적으로 벽돌로 지어왔다."
+      }
+    ]
+  },
+  {
+    "id": 18559,
+    "origin": "divinity",
+    "examples": [
+      {
+        "exam_en": "the divinity of Milton's poetry",
+        "exam_ko": "밀턴 시의 장엄함."
+      },
+      {
+        "exam_en": "Doctor of Divinity",
+        "exam_ko": "신학 박사(약자: D.D.)."
+      }
+    ]
+  },
+  {
+    "id": 18560,
+    "origin": "wondrous",
+    "examples": [
+      {
+        "exam_en": "wondrous miracle of the unfolding leaf",
+        "exam_ko": "잎이 나는 놀라운 기적"
+      },
+      {
+        "exam_en": "a wondrous dream",
+        "exam_ko": "놀라운 꿈"
+      },
+      {
+        "exam_en": "wondrous miracle of the unfolding leaf ",
+        "exam_ko": "잎이 나는 놀라운 기적"
+      },
+      {
+        "exam_en": "a wondrous dream ",
+        "exam_ko": "놀라운 꿈"
+      }
+    ]
+  },
+  {
+    "id": 18562,
+    "origin": "posthumous",
+    "examples": [
+      {
+        "exam_en": "a posthumous medal",
+        "exam_ko": "사후에 수여되는 훈장."
+      },
+      {
+        "exam_en": "a posthumous work",
+        "exam_ko": "유저, 유작."
+      }
+    ]
+  },
+  {
+    "id": 18564,
+    "origin": "dowager",
+    "examples": [
+      {
+        "exam_en": "the queen dowager",
+        "exam_ko": "(왕국·제국의) 황태후."
+      }
+    ]
+  },
+  {
+    "id": 18566,
+    "origin": "innovate",
+    "examples": [
+      {
+        "exam_en": "innovate in the existing conditions",
+        "exam_ko": "현상을 쇄신하다."
+      },
+      {
+        "exam_en": "innovate a new research technique",
+        "exam_ko": "새로운 연구 방법을 채택하다."
+      }
+    ]
+  }
+]

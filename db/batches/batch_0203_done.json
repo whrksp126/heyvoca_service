@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4620,
+    "origin": "repudiate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">repudiated</strong> the accusation as false.",
+        "exam_ko": "그녀는 그 비난을 거짓이라고 <strong class=\"target-word\">부인했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">repudiated</strong> his own child after the scandal.",
+        "exam_ko": "그는 스캔들 이후 자신의 자식을 <strong class=\"target-word\">버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4621,
+    "origin": "requisite",
+    "examples": [
+      {
+        "exam_en": "She earned the <strong class=\"target-word\">requisite</strong> votes to win the election.",
+        "exam_ko": "그녀는 선거에서 이기기 위한 <strong class=\"target-word\">필요한</strong> 득표수를 얻었다."
+      },
+      {
+        "exam_en": "He lacks the <strong class=\"target-word\">requisite</strong> credentials for that job.",
+        "exam_ko": "그는 그 일을 위한 <strong class=\"target-word\">필요한</strong> 자격이 부족하다."
+      }
+    ]
+  },
+  {
+    "id": 4622,
+    "origin": "resolute",
+    "examples": [
+      {
+        "exam_en": "She remained <strong class=\"target-word\">resolute</strong> in her demand for justice.",
+        "exam_ko": "그녀는 정의를 요구하는 데 <strong class=\"target-word\">단호했다</strong>."
+      },
+      {
+        "exam_en": "He was a <strong class=\"target-word\">resolute</strong> leader who never backed down.",
+        "exam_ko": "그는 결코 물러서지 않는 <strong class=\"target-word\">단호한</strong> 지도자였다."
+      }
+    ]
+  },
+  {
+    "id": 4623,
+    "origin": "respite",
+    "examples": [
+      {
+        "exam_en": "She took a brief <strong class=\"target-word\">respite</strong> from her busy schedule.",
+        "exam_ko": "그녀는 바쁜 일정에서 잠깐 <strong class=\"target-word\">휴식</strong>을 취했다."
+      },
+      {
+        "exam_en": "The noise continued all night without any <strong class=\"target-word\">respite</strong>.",
+        "exam_ko": "소음은 밤새도록 <strong class=\"target-word\">쉼</strong> 없이 계속되었다."
+      }
+    ]
+  },
+  {
+    "id": 4624,
+    "origin": "reticent",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">reticent</strong> about discussing the matter.",
+        "exam_ko": "그는 그 문제에 대해 이야기하는 것을 <strong class=\"target-word\">꺼렸다</strong>."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">reticent</strong> about sharing her personal life.",
+        "exam_ko": "그녀는 자신의 개인적인 삶을 나누는 데 <strong class=\"target-word\">말을 아꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4625,
+    "origin": "revere",
+    "examples": [
+      {
+        "exam_en": "The community deeply <strong class=\"target-word\">reveres</strong> their wise elders.",
+        "exam_ko": "그 지역사회는 지혜로운 어르신들을 깊이 <strong class=\"target-word\">존경한다</strong>."
+      },
+      {
+        "exam_en": "Students <strong class=\"target-word\">revered</strong> the professor for his knowledge.",
+        "exam_ko": "학생들은 그 교수를 그의 지식 때문에 <strong class=\"target-word\">존경했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4626,
+    "origin": "rhetoric",
+    "examples": [
+      {
+        "exam_en": "His speech was filled with empty <strong class=\"target-word\">rhetoric</strong>.",
+        "exam_ko": "그의 연설은 공허한 <strong class=\"target-word\">미사여구</strong>로 가득했다."
+      },
+      {
+        "exam_en": "Politicians often rely on persuasive <strong class=\"target-word\">rhetoric</strong> to win votes.",
+        "exam_ko": "정치인들은 표를 얻기 위해 설득력 있는 <strong class=\"target-word\">수사</strong>에 자주 의존한다."
+      }
+    ]
+  },
+  {
+    "id": 4627,
+    "origin": "rigorous",
+    "examples": [
+      {
+        "exam_en": "The school enforces <strong class=\"target-word\">rigorous</strong> academic standards.",
+        "exam_ko": "그 학교는 <strong class=\"target-word\">엄격한</strong> 학업 기준을 적용한다."
+      },
+      {
+        "exam_en": "They conducted a <strong class=\"target-word\">rigorous</strong> investigation into the incident.",
+        "exam_ko": "그들은 그 사건에 대해 <strong class=\"target-word\">철저한</strong> 조사를 실시했다."
+      }
+    ]
+  },
+  {
+    "id": 4628,
+    "origin": "robust",
+    "examples": [
+      {
+        "exam_en": "The baby was born healthy and <strong class=\"target-word\">robust</strong>.",
+        "exam_ko": "그 아기는 건강하고 <strong class=\"target-word\">튼튼하게</strong> 태어났다."
+      },
+      {
+        "exam_en": "The company built a <strong class=\"target-word\">robust</strong> system that rarely fails.",
+        "exam_ko": "그 회사는 거의 고장 나지 않는 <strong class=\"target-word\">견고한</strong> 시스템을 구축했다."
+      }
+    ]
+  },
+  {
+    "id": 4629,
+    "origin": "rogue",
+    "examples": [
+      {
+        "exam_en": "The film features an arrant <strong class=\"target-word\">rogue</strong> who tricks everyone.",
+        "exam_ko": "그 영화는 모두를 속이는 철저한 <strong class=\"target-word\">악당</strong>을 다룬다."
+      },
+      {
+        "exam_en": "He turned <strong class=\"target-word\">rogue</strong> and betrayed his own team.",
+        "exam_ko": "그는 <strong class=\"target-word\">배신자</strong>가 되어 자신의 팀을 배신했다."
+      }
+    ]
+  },
+  {
+    "id": 4630,
+    "origin": "rudimentary",
+    "examples": [
+      {
+        "exam_en": "She has only a <strong class=\"target-word\">rudimentary</strong> understanding of chemistry.",
+        "exam_ko": "그녀는 화학에 대한 <strong class=\"target-word\">초보적인</strong> 이해만 갖고 있다."
+      },
+      {
+        "exam_en": "The shelter was built with <strong class=\"target-word\">rudimentary</strong> tools and materials.",
+        "exam_ko": "그 대피소는 <strong class=\"target-word\">기초적인</strong> 도구와 재료로 지어졌다."
+      }
+    ]
+  },
+  {
+    "id": 4631,
+    "origin": "ruminate",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">ruminated</strong> for a long time before making the decision.",
+        "exam_ko": "나는 결정을 내리기 전에 오랫동안 <strong class=\"target-word\">곰곰이 생각했다</strong>."
+      },
+      {
+        "exam_en": "She tends to <strong class=\"target-word\">ruminate</strong> over past mistakes at night.",
+        "exam_ko": "그녀는 밤에 과거 실수에 대해 <strong class=\"target-word\">골똘히 생각하는</strong> 경향이 있다."
+      }
+    ]
+  },
+  {
+    "id": 4632,
+    "origin": "rustic",
+    "examples": [
+      {
+        "exam_en": "The village has a certain <strong class=\"target-word\">rustic</strong> charm.",
+        "exam_ko": "그 마을에는 특유의 <strong class=\"target-word\">시골풍</strong> 매력이 있다."
+      },
+      {
+        "exam_en": "They stayed in a <strong class=\"target-word\">rustic</strong> cabin deep in the woods.",
+        "exam_ko": "그들은 숲 속 깊은 곳의 <strong class=\"target-word\">소박한</strong> 오두막에서 머물렀다."
+      }
+    ]
+  },
+  {
+    "id": 4633,
+    "origin": "saccharine",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">saccharine</strong> smile made others feel uneasy.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">지나치게 달콤한</strong> 미소가 다른 사람들을 불편하게 했다."
+      },
+      {
+        "exam_en": "The film's ending was too <strong class=\"target-word\">saccharine</strong> to be believable.",
+        "exam_ko": "그 영화의 결말은 믿기 어려울 만큼 <strong class=\"target-word\">감상적으로 달콤했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4635,
+    "origin": "sacrosanct",
+    "examples": [
+      {
+        "exam_en": "The temple was considered <strong class=\"target-word\">sacrosanct</strong> by the villagers.",
+        "exam_ko": "그 신전은 마을 사람들에게 <strong class=\"target-word\">신성 불가침</strong>의 장소로 여겨졌다."
+      },
+      {
+        "exam_en": "Family dinner time was <strong class=\"target-word\">sacrosanct</strong> in their household.",
+        "exam_ko": "가족 저녁 식사 시간은 그 가정에서 <strong class=\"target-word\">절대적으로 소중한</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 4637,
+    "origin": "putative",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">putative</strong> father denied any involvement.",
+        "exam_ko": "<strong class=\"target-word\">추정상의</strong> 아버지는 어떠한 관련도 부인했다."
+      },
+      {
+        "exam_en": "She is the <strong class=\"target-word\">putative</strong> leader of the underground movement.",
+        "exam_ko": "그녀는 지하 운동의 <strong class=\"target-word\">추정되는</strong> 지도자이다."
+      }
+    ]
+  },
+  {
+    "id": 4639,
+    "origin": "querulous",
+    "examples": [
+      {
+        "exam_en": "He spoke in a <strong class=\"target-word\">querulous</strong> tone throughout the meeting.",
+        "exam_ko": "그는 회의 내내 <strong class=\"target-word\">불평하는</strong> 어조로 말했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">querulous</strong> customer complained about everything.",
+        "exam_ko": "<strong class=\"target-word\">불만스러운</strong> 고객은 모든 것에 대해 불평했다."
+      }
+    ]
+  },
+  {
+    "id": 4640,
+    "origin": "quixotic",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">quixotic</strong> plan to end poverty alone seemed impossible.",
+        "exam_ko": "혼자서 빈곤을 끝내겠다는 그의 <strong class=\"target-word\">비현실적인</strong> 계획은 불가능해 보였다."
+      },
+      {
+        "exam_en": "She embarked on a <strong class=\"target-word\">quixotic</strong> quest for a perfect world.",
+        "exam_ko": "그녀는 완벽한 세계를 향한 <strong class=\"target-word\">몽상적인</strong> 탐구를 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 4641,
+    "origin": "ramification",
+    "examples": [
+      {
+        "exam_en": "The decision had serious <strong class=\"target-word\">ramifications</strong> for the company.",
+        "exam_ko": "그 결정은 회사에 심각한 <strong class=\"target-word\">파장</strong>을 불러왔다."
+      },
+      {
+        "exam_en": "He considered all the <strong class=\"target-word\">ramifications</strong> before acting.",
+        "exam_ko": "그는 행동하기 전에 모든 <strong class=\"target-word\">결과</strong>를 고려했다."
+      }
+    ]
+  },
+  {
+    "id": 4643,
+    "origin": "rapacious",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">rapacious</strong> predator waited silently for its prey.",
+        "exam_ko": "<strong class=\"target-word\">탐욕스러운</strong> 포식자는 먹잇감을 조용히 기다렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">rapacious</strong> landlord raised rent without warning.",
+        "exam_ko": "<strong class=\"target-word\">욕심 많은</strong> 집주인은 예고 없이 임대료를 올렸다."
+      }
+    ]
+  }
+]

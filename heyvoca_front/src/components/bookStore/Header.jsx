@@ -18,12 +18,14 @@ const Header = () => {
   };
 
   return (
-    <div className='
+    <div
+      data-page-header
+      className='
       relative
       flex items-center justify-center
       w-full h-[55px]
       px-[16px] py-[14px]
-      bg-layout-white 
+      bg-layout-white
       dark:bg-layout-black
     '>
       <div className="center">

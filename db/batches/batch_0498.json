@@ -1,0 +1,270 @@
+[
+  {
+    "id": 15075,
+    "origin": "tongs",
+    "examples": [
+      {
+        "exam_en": "a pair of sugar tongs",
+        "exam_ko": "각설탕[얼음] 집게 한 자루."
+      },
+      {
+        "exam_en": "These tongs are hot.",
+        "exam_ko": "이 집게는 뜨겁다."
+      },
+      {
+        "exam_en": "These tongs are hot. ",
+        "exam_ko": "이 집게는 뜨겁다.\n"
+      }
+    ]
+  },
+  {
+    "id": 15077,
+    "origin": "jingle",
+    "examples": [
+      {
+        "exam_en": "The keys jingled together in his hand.",
+        "exam_ko": "그의 손에 쥔 열쇠 묶음에서 딸랑딸랑 소리가 났다."
+      },
+      {
+        "exam_en": "He jingled the money in his pocket.",
+        "exam_ko": "그는 주머니 속의 돈을 짤랑거렸다."
+      }
+    ]
+  },
+  {
+    "id": 15080,
+    "origin": "dilute",
+    "examples": [
+      {
+        "exam_en": "dilute wine with water",
+        "exam_ko": "포도주에 물을 타다."
+      },
+      {
+        "exam_en": "dilute one's fear",
+        "exam_ko": "공포를 덜다"
+      }
+    ]
+  },
+  {
+    "id": 15081,
+    "origin": "goad",
+    "examples": [
+      {
+        "exam_en": "goad a person to anger",
+        "exam_ko": "남을 분노하게 하다"
+      },
+      {
+        "exam_en": "Greed goaded him to steal.",
+        "exam_ko": "탐욕 때문에 그는 도둑질을 하게 되었다."
+      }
+    ]
+  },
+  {
+    "id": 15082,
+    "origin": "proverb",
+    "examples": [
+      {
+        "exam_en": "as the proverb goes",
+        "exam_ko": "속담에 있듯이."
+      },
+      {
+        "exam_en": "He is a proverb for stinginess.",
+        "exam_ko": "그는 구두쇠로 소문나 있다."
+      }
+    ]
+  },
+  {
+    "id": 15084,
+    "origin": "disdainful",
+    "examples": [
+      {
+        "exam_en": "a disdainful look",
+        "exam_ko": "경멸의 눈초리"
+      },
+      {
+        "exam_en": "be disdainful of danger",
+        "exam_ko": "위험에 끄떡도 않다."
+      }
+    ]
+  },
+  {
+    "id": 15086,
+    "origin": "sooth",
+    "examples": [
+      {
+        "exam_en": "my sooth",
+        "exam_ko": "맹세코, 정말로"
+      },
+      {
+        "exam_en": "in  sooth",
+        "exam_ko": "실제로, 정말로"
+      }
+    ]
+  },
+  {
+    "id": 15088,
+    "origin": "yielding",
+    "examples": [
+      {
+        "exam_en": "a timid, yielding nature",
+        "exam_ko": "소심하여 남의 뜻대로 하는 성질"
+      },
+      {
+        "exam_en": "in yielding mood",
+        "exam_ko": "동의할 생각으로."
+      },
+      {
+        "exam_en": "He had a yielding personality, always putting others' needs before his own.",
+        "exam_ko": "그는 양보하는 성격으로, 항상 자신보다는 다른 사람들의 필요를 우선시했다."
+      }
+    ]
+  },
+  {
+    "id": 15090,
+    "origin": "morsel",
+    "examples": [
+      {
+        "exam_en": "a tasty morsel",
+        "exam_ko": "맛있는 한 입."
+      },
+      {
+        "exam_en": "just a morsel of cake",
+        "exam_ko": "단지 한 조각의 케이크"
+      }
+    ]
+  },
+  {
+    "id": 15091,
+    "origin": "crucible",
+    "examples": [
+      {
+        "exam_en": "pass through the crucible of war",
+        "exam_ko": "전쟁의 가혹한 시련을 겪다[경험하다]."
+      }
+    ]
+  },
+  {
+    "id": 15092,
+    "origin": "devious",
+    "examples": [
+      {
+        "exam_en": "take a devious route",
+        "exam_ko": "우회하다."
+      },
+      {
+        "exam_en": "win the election by devious means",
+        "exam_ko": "부정한 수단으로 선거에 이기다."
+      }
+    ]
+  },
+  {
+    "id": 15093,
+    "origin": "unduly",
+    "examples": [
+      {
+        "exam_en": "not unduly upset",
+        "exam_ko": "덮어놓고 놀라지 않고"
+      },
+      {
+        "exam_en": "unduly severe in judgement",
+        "exam_ko": "너무 심하게[나쁘게만] 판단해서."
+      }
+    ]
+  },
+  {
+    "id": 15094,
+    "origin": "deride",
+    "examples": [
+      {
+        "exam_en": "deride a person's ignorance",
+        "exam_ko": "무지를 비웃다."
+      }
+    ]
+  },
+  {
+    "id": 15095,
+    "origin": "dissension",
+    "examples": [
+      {
+        "exam_en": "internal dissension",
+        "exam_ko": "내분."
+      }
+    ]
+  },
+  {
+    "id": 15096,
+    "origin": "scarcity",
+    "examples": [
+      {
+        "exam_en": "the scarcity of teachers",
+        "exam_ko": "교원 부족"
+      },
+      {
+        "exam_en": "a year of great scarcity",
+        "exam_ko": "대흉년."
+      }
+    ]
+  },
+  {
+    "id": 15098,
+    "origin": "drip",
+    "examples": [
+      {
+        "exam_en": "trees dripping after the rain",
+        "exam_ko": "비 온 뒤에 물방울이 뚝뚝 떨어지는 나무들."
+      },
+      {
+        "exam_en": "Water is dripping down from the roof.",
+        "exam_ko": "지붕에서 물이 뚝뚝 떨어지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 15100,
+    "origin": "garland",
+    "examples": [
+      {
+        "exam_en": "carry  the garland",
+        "exam_ko": "(경기 등에서) 승리를 거두다."
+      }
+    ]
+  },
+  {
+    "id": 15103,
+    "origin": "indignation",
+    "examples": [
+      {
+        "exam_en": "righteous indignation at an injustice",
+        "exam_ko": "부당한 처사에 대한 의분"
+      },
+      {
+        "exam_en": "in  indignation",
+        "exam_ko": "분개하여, 분연히"
+      }
+    ]
+  },
+  {
+    "id": 15105,
+    "origin": "steadfast",
+    "examples": [
+      {
+        "exam_en": "a steadfast will",
+        "exam_ko": "확고부동한 의지"
+      },
+      {
+        "exam_en": "the steadfast earth",
+        "exam_ko": "흔들리지 않는 대지"
+      }
+    ]
+  },
+  {
+    "id": 15106,
+    "origin": "futility",
+    "examples": [
+      {
+        "exam_en": "the futility of war",
+        "exam_ko": "전쟁의 무익함."
+      }
+    ]
+  }
+]

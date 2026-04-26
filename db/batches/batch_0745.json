@@ -1,0 +1,214 @@
+[
+  {
+    "id": 41618,
+    "origin": "fie",
+    "examples": [
+      {
+        "exam_en": "Fie upon you!",
+        "exam_ko": "꼴보기 싫어!, 너 참 지긋지긋하군!"
+      }
+    ]
+  },
+  {
+    "id": 41622,
+    "origin": "auri",
+    "examples": [
+      {
+        "exam_en": "auriform",
+        "exam_ko": "귀 모양의."
+      }
+    ]
+  },
+  {
+    "id": 41643,
+    "origin": "hackney",
+    "examples": [
+      {
+        "exam_en": "a hackney cab",
+        "exam_ko": "전세 마차."
+      }
+    ]
+  },
+  {
+    "id": 41654,
+    "origin": "conic",
+    "examples": [
+      {
+        "exam_en": "a conic projection",
+        "exam_ko": "(지도의) 원뿔 도법[사영(射影)]."
+      }
+    ]
+  },
+  {
+    "id": 41673,
+    "origin": "itude",
+    "examples": [
+      {
+        "exam_en": "solitude",
+        "exam_ko": "고독."
+      }
+    ]
+  },
+  {
+    "id": 41685,
+    "origin": "mortise",
+    "examples": [
+      {
+        "exam_en": "a mortise and tenon joint",
+        "exam_ko": "장부 이음."
+      }
+    ]
+  },
+  {
+    "id": 41690,
+    "origin": "espousal",
+    "examples": [
+      {
+        "exam_en": "his espousal of feminism",
+        "exam_ko": "그의 페미니즘 지지."
+      }
+    ]
+  },
+  {
+    "id": 41696,
+    "origin": "conge",
+    "examples": [
+      {
+        "exam_en": "make one's conge",
+        "exam_ko": "작별 인사를 하다."
+      },
+      {
+        "exam_en": "give a person his conge",
+        "exam_ko": "남을 면직하다"
+      }
+    ]
+  },
+  {
+    "id": 41717,
+    "origin": "gravamen",
+    "examples": [
+      {
+        "exam_en": "the gravamen of a charge",
+        "exam_ko": "고소의 주된 이유."
+      }
+    ]
+  },
+  {
+    "id": 41722,
+    "origin": "besetting",
+    "examples": [
+      {
+        "exam_en": "have a strange besetting desire",
+        "exam_ko": "이상한 욕망[유혹]에 사로잡히다."
+      }
+    ]
+  },
+  {
+    "id": 41768,
+    "origin": "nerved",
+    "examples": [
+      {
+        "exam_en": "strong-nerved",
+        "exam_ko": "용기 있는."
+      }
+    ]
+  },
+  {
+    "id": 41779,
+    "origin": "unskillful",
+    "examples": [
+      {
+        "exam_en": "an unskillful hand",
+        "exam_ko": "서투른 글씨 솜씨."
+      }
+    ]
+  },
+  {
+    "id": 41783,
+    "origin": "sensitiveness",
+    "examples": [
+      {
+        "exam_en": "He has the sensitiveness of a young girl.",
+        "exam_ko": "그는 소녀처럼 민감하다."
+      },
+      {
+        "exam_en": "Parts of the body which lose all sensitiveness are likely to be seriously injured.",
+        "exam_ko": "감각력을 완전히 잃어버린 신체의 부분은 크게 다치기 쉽다."
+      }
+    ]
+  },
+  {
+    "id": 41797,
+    "origin": "mastoid",
+    "examples": [
+      {
+        "exam_en": "the mastoid process",
+        "exam_ko": "유양(乳樣) 돌기."
+      }
+    ]
+  },
+  {
+    "id": 41819,
+    "origin": "erythro",
+    "examples": [
+      {
+        "exam_en": "erythrochloropia",
+        "exam_ko": "적녹 색맹(赤綠色盲)."
+      }
+    ]
+  },
+  {
+    "id": 41822,
+    "origin": "amphi",
+    "examples": [
+      {
+        "exam_en": "amphiaster",
+        "exam_ko": "[생물] 쌍성상체(雙星狀體)."
+      }
+    ]
+  },
+  {
+    "id": 41826,
+    "origin": "patr",
+    "examples": [
+      {
+        "exam_en": "patrifocal",
+        "exam_ko": "가부장 중심의."
+      }
+    ]
+  },
+  {
+    "id": 41864,
+    "origin": "epaulet",
+    "examples": [
+      {
+        "exam_en": "win one's epaulets",
+        "exam_ko": "장교로 승진하다."
+      },
+      {
+        "exam_en": "The female soldier wears epaulets on her shoulder.",
+        "exam_ko": "그 여군은 어깨에 견장을 착용하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 41873,
+    "origin": "unhallowed",
+    "examples": [
+      {
+        "exam_en": "unhallowed ground",
+        "exam_ko": "성지로 인정되지 않은 토지."
+      }
+    ]
+  },
+  {
+    "id": 41897,
+    "origin": "azimuth",
+    "examples": [
+      {
+        "exam_en": "magnetic azimuth",
+        "exam_ko": "자침 방위."
+      }
+    ]
+  }
+]

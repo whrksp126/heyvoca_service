@@ -1,0 +1,270 @@
+[
+  {
+    "id": 1241,
+    "origin": "occasion",
+    "examples": [
+      {
+        "exam_en": "I met her on one <strong class=\"target-word\">occasion</strong> last year.",
+        "exam_ko": "나는 작년에 한 <strong class=\"target-word\">번</strong> 그녀를 만났다."
+      },
+      {
+        "exam_en": "He speaks wisely on every <strong class=\"target-word\">occasion</strong>.",
+        "exam_ko": "그는 모든 <strong class=\"target-word\">경우</strong>에 현명하게 말한다."
+      }
+    ]
+  },
+  {
+    "id": 1242,
+    "origin": "appreciate",
+    "examples": [
+      {
+        "exam_en": "She truly <strong class=\"target-word\">appreciates</strong> good wine.",
+        "exam_ko": "그녀는 좋은 와인을 진심으로 <strong class=\"target-word\">음미한다</strong>."
+      },
+      {
+        "exam_en": "I really <strong class=\"target-word\">appreciate</strong> your help today.",
+        "exam_ko": "오늘 도움을 주셔서 정말 <strong class=\"target-word\">감사합니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1243,
+    "origin": "pleasure",
+    "examples": [
+      {
+        "exam_en": "She showed <strong class=\"target-word\">pleasure</strong> when she heard the news.",
+        "exam_ko": "그녀는 소식을 듣고 <strong class=\"target-word\">기쁜</strong> 표정을 지었다."
+      },
+      {
+        "exam_en": "Reading is a <strong class=\"target-word\">pleasure</strong> I enjoy every day.",
+        "exam_ko": "독서는 내가 매일 즐기는 <strong class=\"target-word\">즐거움</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1244,
+    "origin": "sec",
+    "examples": [
+      {
+        "exam_en": "I'll be back in a <strong class=\"target-word\">sec</strong>.",
+        "exam_ko": "잠깐 후에 돌아올게요. (<strong class=\"target-word\">잠시</strong> 후에)"
+      }
+    ]
+  },
+  {
+    "id": 1245,
+    "origin": "boss",
+    "examples": [
+      {
+        "exam_en": "He is my <strong class=\"target-word\">boss</strong> at work.",
+        "exam_ko": "그는 직장에서 나의 <strong class=\"target-word\">상사</strong>입니다."
+      },
+      {
+        "exam_en": "She became a powerful political <strong class=\"target-word\">boss</strong>.",
+        "exam_ko": "그녀는 강력한 정계의 <strong class=\"target-word\">실력자</strong>가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1246,
+    "origin": "lucky",
+    "examples": [
+      {
+        "exam_en": "He is such a <strong class=\"target-word\">lucky</strong> guy.",
+        "exam_ko": "그는 정말 <strong class=\"target-word\">운 좋은</strong> 사람이다."
+      },
+      {
+        "exam_en": "Today feels like a <strong class=\"target-word\">lucky</strong> day.",
+        "exam_ko": "오늘은 <strong class=\"target-word\">운수 좋은</strong> 날인 것 같다."
+      }
+    ]
+  },
+  {
+    "id": 1248,
+    "origin": "bedtime",
+    "examples": [
+      {
+        "exam_en": "It's long past your <strong class=\"target-word\">bedtime</strong>, children!",
+        "exam_ko": "얘들아, <strong class=\"target-word\">잠잘 시간</strong>이 훨씬 지났구나."
+      },
+      {
+        "exam_en": "She eats a snack before <strong class=\"target-word\">bedtime</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">자기 전</strong>에 간식을 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 1249,
+    "origin": "pill",
+    "examples": [
+      {
+        "exam_en": "He took a sleeping <strong class=\"target-word\">pill</strong> to fall asleep.",
+        "exam_ko": "그는 잠들기 위해 <strong class=\"target-word\">수면제</strong>를 먹었다."
+      },
+      {
+        "exam_en": "She takes headache <strong class=\"target-word\">pills</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 두통 <strong class=\"target-word\">약</strong>을 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 1250,
+    "origin": "prescription",
+    "examples": [
+      {
+        "exam_en": "This medicine is only available by <strong class=\"target-word\">prescription</strong>.",
+        "exam_ko": "이 약은 <strong class=\"target-word\">처방전</strong>이 있어야만 구입할 수 있다."
+      },
+      {
+        "exam_en": "The pharmacist filled the <strong class=\"target-word\">prescription</strong> quickly.",
+        "exam_ko": "약사가 <strong class=\"target-word\">처방전</strong>에 따라 빠르게 조제했다."
+      }
+    ]
+  },
+  {
+    "id": 1251,
+    "origin": "vitamin",
+    "examples": [
+      {
+        "exam_en": "This cereal is fortified with extra <strong class=\"target-word\">vitamins</strong>.",
+        "exam_ko": "이 시리얼에는 추가 <strong class=\"target-word\">비타민</strong>이 강화되어 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Vitamin</strong> deficiency can cause serious health problems.",
+        "exam_ko": "<strong class=\"target-word\">비타민</strong> 결핍은 심각한 건강 문제를 일으킬 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1253,
+    "origin": "headache",
+    "examples": [
+      {
+        "exam_en": "I have a splitting <strong class=\"target-word\">headache</strong> right now.",
+        "exam_ko": "지금 <strong class=\"target-word\">두통</strong>이 심하게 지끈거린다."
+      },
+      {
+        "exam_en": "I have a throbbing <strong class=\"target-word\">headache</strong>.",
+        "exam_ko": "머리가 지끈거리는 <strong class=\"target-word\">두통</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 1254,
+    "origin": "swollen",
+    "examples": [
+      {
+        "exam_en": "Her eyelids were <strong class=\"target-word\">swollen</strong> from crying.",
+        "exam_ko": "그녀의 눈꺼풀은 울어서 <strong class=\"target-word\">부어올랐다</strong>."
+      },
+      {
+        "exam_en": "The river was <strong class=\"target-word\">swollen</strong> after heavy rain.",
+        "exam_ko": "폭우 후에 강물이 <strong class=\"target-word\">불어났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1255,
+    "origin": "warm",
+    "examples": [
+      {
+        "exam_en": "She drank a bowl of <strong class=\"target-word\">warm</strong> soup.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">따뜻한</strong> 수프 한 그릇을 마셨다."
+      },
+      {
+        "exam_en": "He wore a <strong class=\"target-word\">warm</strong> sweater in the cold.",
+        "exam_ko": "그는 추위에 <strong class=\"target-word\">따뜻한</strong> 스웨터를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 1256,
+    "origin": "forehead",
+    "examples": [
+      {
+        "exam_en": "She has a high, smooth <strong class=\"target-word\">forehead</strong>.",
+        "exam_ko": "그녀는 넓고 매끄러운 <strong class=\"target-word\">이마</strong>를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1257,
+    "origin": "glad",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">glad</strong> about the test result.",
+        "exam_ko": "그녀는 시험 결과에 <strong class=\"target-word\">기뻐했다</strong>."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">glad</strong> you were not hurt in the accident.",
+        "exam_ko": "사고에서 다치지 않으셔서 <strong class=\"target-word\">다행</strong>입니다."
+      }
+    ]
+  },
+  {
+    "id": 1258,
+    "origin": "checkup",
+    "examples": [
+      {
+        "exam_en": "The doctor gave him a full <strong class=\"target-word\">checkup</strong>.",
+        "exam_ko": "의사가 그에게 전체 <strong class=\"target-word\">검진</strong>을 했다."
+      }
+    ]
+  },
+  {
+    "id": 1259,
+    "origin": "tooth",
+    "examples": [
+      {
+        "exam_en": "Good <strong class=\"target-word\">teeth</strong> alignment improves your smile.",
+        "exam_ko": "좋은 <strong class=\"target-word\">치열</strong>은 미소를 더 좋게 만든다."
+      },
+      {
+        "exam_en": "The dentist had to draw a <strong class=\"target-word\">tooth</strong>.",
+        "exam_ko": "치과 의사는 <strong class=\"target-word\">이</strong>를 뽑아야 했다."
+      },
+      {
+        "exam_en": "You have a cavity on the bottom <strong class=\"target-word\">tooth</strong>.",
+        "exam_ko": "아래 <strong class=\"target-word\">치아</strong>에 충치가 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 1261,
+    "origin": "terrify",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">terrified</strong> him into confessing the crime.",
+        "exam_ko": "경찰은 그를 <strong class=\"target-word\">위협하여</strong> 범죄를 자백하게 했다."
+      }
+    ]
+  },
+  {
+    "id": 1262,
+    "origin": "sort",
+    "examples": [
+      {
+        "exam_en": "What <strong class=\"target-word\">sort</strong> of music do you like?",
+        "exam_ko": "어떤 <strong class=\"target-word\">종류</strong>의 음악을 좋아하나요?"
+      },
+      {
+        "exam_en": "This is a new <strong class=\"target-word\">sort</strong> of problem.",
+        "exam_ko": "이것은 새로운 <strong class=\"target-word\">종류</strong>의 문제이다."
+      }
+    ]
+  },
+  {
+    "id": 1263,
+    "origin": "loss",
+    "examples": [
+      {
+        "exam_en": "The company suffered a big financial <strong class=\"target-word\">loss</strong>.",
+        "exam_ko": "그 회사는 큰 재정적 <strong class=\"target-word\">손실</strong>을 입었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Losses</strong> from theft are always heavy at auto plants.",
+        "exam_ko": "자동차 공장에서 도난으로 인한 <strong class=\"target-word\">손실</strong>은 항상 막대하다."
+      }
+    ]
+  }
+]

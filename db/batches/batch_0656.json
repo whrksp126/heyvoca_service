@@ -1,0 +1,230 @@
+[
+  {
+    "id": 23982,
+    "origin": "constrained",
+    "examples": [
+      {
+        "exam_en": "a constrained laugh",
+        "exam_ko": "억지 웃음"
+      },
+      {
+        "exam_en": "a constrained expression",
+        "exam_ko": "어색한 표현."
+      }
+    ]
+  },
+  {
+    "id": 23984,
+    "origin": "usefulness",
+    "examples": [
+      {
+        "exam_en": "outlive its usefulness",
+        "exam_ko": "쓸모 없게 되었는데도 아직 존재하고[살아] 있다."
+      }
+    ]
+  },
+  {
+    "id": 23991,
+    "origin": "exergonic",
+    "examples": [
+      {
+        "exam_en": "an exergonic reaction",
+        "exam_ko": "에너지 방출 반응."
+      }
+    ]
+  },
+  {
+    "id": 23994,
+    "origin": "truncated",
+    "examples": [
+      {
+        "exam_en": "a truncated cone",
+        "exam_ko": "원뿔[각뿔]대."
+      }
+    ]
+  },
+  {
+    "id": 23999,
+    "origin": "fantasize",
+    "examples": [
+      {
+        "exam_en": "She fantasized about winning the lottery.",
+        "exam_ko": "그녀는 복권에 당첨되는 공상을 했다."
+      }
+    ]
+  },
+  {
+    "id": 24006,
+    "origin": "equalize",
+    "examples": [
+      {
+        "exam_en": "equalize tariffs on all imports",
+        "exam_ko": "모든 수입품에 같은 관세를 매기다."
+      }
+    ]
+  },
+  {
+    "id": 24030,
+    "origin": "labial",
+    "examples": [
+      {
+        "exam_en": "a labial flute",
+        "exam_ko": "플루트."
+      }
+    ]
+  },
+  {
+    "id": 24074,
+    "origin": "phosphate",
+    "examples": [
+      {
+        "exam_en": "phosphate pollution",
+        "exam_ko": "(합성 세제 등에 의한) 인(燐) 오염."
+      }
+    ]
+  },
+  {
+    "id": 24120,
+    "origin": "sumptuary",
+    "examples": [
+      {
+        "exam_en": "sumptuary regulations",
+        "exam_ko": "사치단속령."
+      }
+    ]
+  },
+  {
+    "id": 24122,
+    "origin": "institutionalize",
+    "examples": [
+      {
+        "exam_en": "institutionalized life",
+        "exam_ko": "획일화된 생활"
+      },
+      {
+        "exam_en": "the danger of institutionalizing racism",
+        "exam_ko": "인종 차별을 제도화하는 위험."
+      }
+    ]
+  },
+  {
+    "id": 24126,
+    "origin": "shingles",
+    "examples": [
+      {
+        "exam_en": "Shingles are[is] serious. ",
+        "exam_ko": "대상포진은 위험한 병이다. "
+      },
+      {
+        "exam_en": "get shingles ",
+        "exam_ko": "대상포진에 걸리다."
+      },
+      {
+        "exam_en": "Shingles are[is] serious.",
+        "exam_ko": "대상포진은 위험한 병이다."
+      },
+      {
+        "exam_en": "get shingles",
+        "exam_ko": "대상포진에 걸리다."
+      }
+    ]
+  },
+  {
+    "id": 24136,
+    "origin": "grooved",
+    "examples": [
+      {
+        "exam_en": "grooved plywood",
+        "exam_ko": "그루브 합판."
+      }
+    ]
+  },
+  {
+    "id": 24138,
+    "origin": "presumptive",
+    "examples": [
+      {
+        "exam_en": "an heir presumptive",
+        "exam_ko": "추정 상속인"
+      },
+      {
+        "exam_en": "presumptive taxation",
+        "exam_ko": "추정 과세."
+      }
+    ]
+  },
+  {
+    "id": 24144,
+    "origin": "afferent",
+    "examples": [
+      {
+        "exam_en": "afferent veins",
+        "exam_ko": "수입 혈관."
+      }
+    ]
+  },
+  {
+    "id": 24147,
+    "origin": "etiology",
+    "examples": [
+      {
+        "exam_en": "a headache of unknown etiology",
+        "exam_ko": "원인 불명의 두통."
+      }
+    ]
+  },
+  {
+    "id": 24149,
+    "origin": "delineation",
+    "examples": [
+      {
+        "exam_en": "character delineation",
+        "exam_ko": "성격 묘사."
+      }
+    ]
+  },
+  {
+    "id": 24153,
+    "origin": "clench",
+    "examples": [
+      {
+        "exam_en": "clench one's teeth",
+        "exam_ko": "이를 악물다."
+      }
+    ]
+  },
+  {
+    "id": 24154,
+    "origin": "shipping",
+    "examples": [
+      {
+        "exam_en": "shipping charges",
+        "exam_ko": "배송료."
+      },
+      {
+        "exam_en": "merchant shipping",
+        "exam_ko": "해운"
+      }
+    ]
+  },
+  {
+    "id": 24164,
+    "origin": "sic",
+    "examples": [
+      {
+        "exam_en": "Sic 'em!'",
+        "exam_ko": "(구어) 덤벼라!"
+      }
+    ]
+  },
+  {
+    "id": 24170,
+    "origin": "phatic",
+    "examples": [
+      {
+        "exam_en": "phatic communion",
+        "exam_ko": "언어 교환(인사 등 서로가 동일 사회의 일원임을 확인하기 위해 하는 언어 사용)."
+      }
+    ]
+  }
+]

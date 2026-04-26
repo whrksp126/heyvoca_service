@@ -1,0 +1,274 @@
+[
+  {
+    "id": 8532,
+    "origin": "inexpensive",
+    "examples": [
+      {
+        "exam_en": "This hotel is surprisingly <strong class=\"target-word\">inexpensive</strong> for the area.",
+        "exam_ko": "이 호텔은 그 지역치고 놀랍도록 <strong class=\"target-word\">저렴하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8533,
+    "origin": "expenditure",
+    "examples": [
+      {
+        "exam_en": "The company reduced its <strong class=\"target-word\">expenditure</strong> on office supplies.",
+        "exam_ko": "그 회사는 사무용품에 대한 <strong class=\"target-word\">지출</strong>을 줄였다."
+      },
+      {
+        "exam_en": "Government <strong class=\"target-word\">expenditure</strong> on education increased this year.",
+        "exam_ko": "교육에 대한 정부 <strong class=\"target-word\">지출</strong>이 올해 증가했다."
+      }
+    ]
+  },
+  {
+    "id": 8534,
+    "origin": "expend",
+    "examples": [
+      {
+        "exam_en": "The nation <strong class=\"target-word\">expended</strong> vast resources on military defense.",
+        "exam_ko": "국가는 군사 방어에 막대한 자원을 <strong class=\"target-word\">소비했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">expended</strong> all her energy on the project.",
+        "exam_ko": "그녀는 그 프로젝트에 모든 에너지를 <strong class=\"target-word\">쏟아부었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8535,
+    "origin": "suspension",
+    "examples": [
+      {
+        "exam_en": "The painting captures a moment of <strong class=\"target-word\">suspension</strong> in family life.",
+        "exam_ko": "그 그림은 가정 생활의 <strong class=\"target-word\">정지된</strong> 순간을 포착한다."
+      },
+      {
+        "exam_en": "His driver's license faced <strong class=\"target-word\">suspension</strong> after the violation.",
+        "exam_ko": "위반 후 그의 운전면허는 <strong class=\"target-word\">정지</strong>될 위기에 처했다."
+      }
+    ]
+  },
+  {
+    "id": 8536,
+    "origin": "suspense",
+    "examples": [
+      {
+        "exam_en": "She waited in <strong class=\"target-word\">suspense</strong> for the test results.",
+        "exam_ko": "그녀는 시험 결과를 <strong class=\"target-word\">조마조마하게</strong> 기다렸다."
+      },
+      {
+        "exam_en": "Please don't keep me in <strong class=\"target-word\">suspense</strong> any longer.",
+        "exam_ko": "더 이상 나를 <strong class=\"target-word\">애태우게</strong> 하지 마세요."
+      }
+    ]
+  },
+  {
+    "id": 8537,
+    "origin": "dependence",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">dependence</strong> on others made life difficult.",
+        "exam_ko": "남에 대한 그의 <strong class=\"target-word\">의존</strong>이 삶을 어렵게 만들었다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">dependence</strong> on her mentor grew over time.",
+        "exam_ko": "멘토에 대한 그녀의 <strong class=\"target-word\">신뢰와 의지</strong>는 시간이 지나며 깊어졌다."
+      }
+    ]
+  },
+  {
+    "id": 8539,
+    "origin": "append",
+    "examples": [
+      {
+        "exam_en": "The editor <strong class=\"target-word\">appended</strong> a note to the final chapter.",
+        "exam_ko": "편집자는 마지막 장에 주석을 <strong class=\"target-word\">덧붙였다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">append</strong> your signature at the bottom.",
+        "exam_ko": "하단에 서명을 <strong class=\"target-word\">추가해</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 8543,
+    "origin": "fend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">fended off</strong> questions about his private life.",
+        "exam_ko": "그는 사생활에 관한 질문들을 <strong class=\"target-word\">뿌리쳤다</strong>."
+      },
+      {
+        "exam_en": "She had to <strong class=\"target-word\">fend</strong> for her family alone.",
+        "exam_ko": "그녀는 혼자 가족을 <strong class=\"target-word\">부양해야</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 8544,
+    "origin": "offender",
+    "examples": [
+      {
+        "exam_en": "The judge showed leniency toward the first-time <strong class=\"target-word\">offender</strong>.",
+        "exam_ko": "판사는 초범 <strong class=\"target-word\">범죄자</strong>에게 관대함을 보였다."
+      },
+      {
+        "exam_en": "The police kept a close watch on the repeat <strong class=\"target-word\">offender</strong>.",
+        "exam_ko": "경찰은 상습 <strong class=\"target-word\">범죄자</strong>를 주시했다."
+      }
+    ]
+  },
+  {
+    "id": 8546,
+    "origin": "fencing",
+    "examples": [
+      {
+        "exam_en": "She practiced <strong class=\"target-word\">fencing</strong> every day after school.",
+        "exam_ko": "그녀는 방과 후 매일 <strong class=\"target-word\">펜싱</strong>을 연습했다."
+      }
+    ]
+  },
+  {
+    "id": 8547,
+    "origin": "fence",
+    "examples": [
+      {
+        "exam_en": "They built a wooden <strong class=\"target-word\">fence</strong> around the garden.",
+        "exam_ko": "그들은 정원 주위에 나무 <strong class=\"target-word\">울타리</strong>를 세웠다."
+      },
+      {
+        "exam_en": "The rider urged the horse over the <strong class=\"target-word\">fence</strong>.",
+        "exam_ko": "기수는 말이 <strong class=\"target-word\">울타리</strong>를 뛰어넘도록 몰았다."
+      }
+    ]
+  },
+  {
+    "id": 8549,
+    "origin": "bead",
+    "examples": [
+      {
+        "exam_en": "Mary wore a string of <strong class=\"target-word\">beads</strong> around her neck.",
+        "exam_ko": "메리는 <strong class=\"target-word\">구슬</strong> 목걸이를 하고 있었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Beads</strong> of sweat ran down his forehead.",
+        "exam_ko": "이마에서 땀 <strong class=\"target-word\">방울</strong>이 흘러내렸다."
+      }
+    ]
+  },
+  {
+    "id": 8550,
+    "origin": "mingle",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">mingled</strong> with the crowd at the festival.",
+        "exam_ko": "그녀는 축제에서 군중 속에 <strong class=\"target-word\">섞여들었다</strong>."
+      },
+      {
+        "exam_en": "Birch and pines <strong class=\"target-word\">mingle</strong> throughout the forest.",
+        "exam_ko": "그 숲에는 자작나무와 소나무가 <strong class=\"target-word\">혼재한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8553,
+    "origin": "grit",
+    "examples": [
+      {
+        "exam_en": "I got a bit of <strong class=\"target-word\">grit</strong> in my eye.",
+        "exam_ko": "눈에 <strong class=\"target-word\">모래</strong>가 들어갔다."
+      },
+      {
+        "exam_en": "He showed real <strong class=\"target-word\">grit</strong> during the hardest times.",
+        "exam_ko": "그는 가장 힘든 시기에 진정한 <strong class=\"target-word\">투지</strong>를 보여주었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Grit</strong> blasting is a common surface cleaning method.",
+        "exam_ko": "<strong class=\"target-word\">연마재</strong> 분사는 일반적인 표면 세척 방법이다."
+      }
+    ]
+  },
+  {
+    "id": 8554,
+    "origin": "cripple",
+    "examples": [
+      {
+        "exam_en": "He returned from war as a <strong class=\"target-word\">cripple</strong>.",
+        "exam_ko": "그는 전쟁에서 <strong class=\"target-word\">불구자</strong>가 되어 돌아왔다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">crippled</strong> by polio as a child.",
+        "exam_ko": "그녀는 어린 시절 소아마비로 <strong class=\"target-word\">불구가 되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8556,
+    "origin": "disorderly",
+    "examples": [
+      {
+        "exam_en": "The country suffered through a <strong class=\"target-word\">disorderly</strong> period of rule.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">혼란스러운</strong> 통치 시기를 겪었다."
+      },
+      {
+        "exam_en": "His room was <strong class=\"target-word\">disorderly</strong> and hard to navigate.",
+        "exam_ko": "그의 방은 <strong class=\"target-word\">어수선해서</strong> 다니기가 불편했다."
+      }
+    ]
+  },
+  {
+    "id": 8557,
+    "origin": "celebutante",
+    "examples": [
+      {
+        "exam_en": "She became a <strong class=\"target-word\">celebutante</strong> after her viral photos.",
+        "exam_ko": "그녀는 사진이 화제가 된 후 <strong class=\"target-word\">셀레뷰턴트</strong>가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 8559,
+    "origin": "derange",
+    "examples": [
+      {
+        "exam_en": "The unexpected news <strong class=\"target-word\">deranged</strong> their carefully laid plan.",
+        "exam_ko": "예상치 못한 소식이 그들의 계획을 <strong class=\"target-word\">엉망으로 만들었다</strong>."
+      },
+      {
+        "exam_en": "The war <strong class=\"target-word\">deranged</strong> communication and transport networks.",
+        "exam_ko": "전쟁이 통신과 수송망을 <strong class=\"target-word\">혼란에 빠뜨렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8561,
+    "origin": "methodology",
+    "examples": [
+      {
+        "exam_en": "The research <strong class=\"target-word\">methodology</strong> focuses on reliable data collection.",
+        "exam_ko": "연구 <strong class=\"target-word\">방법론</strong>은 신뢰할 수 있는 데이터 수집에 중점을 둔다."
+      }
+    ]
+  },
+  {
+    "id": 8562,
+    "origin": "flourish",
+    "examples": [
+      {
+        "exam_en": "Art <strong class=\"target-word\">flourished</strong> during that golden period.",
+        "exam_ko": "그 황금기에 예술이 <strong class=\"target-word\">번성했다</strong>."
+      },
+      {
+        "exam_en": "Businesses <strong class=\"target-word\">flourish</strong> when the economy is stable.",
+        "exam_ko": "경제가 안정될 때 사업이 <strong class=\"target-word\">번창한다</strong>."
+      },
+      {
+        "exam_en": "The startup began to <strong class=\"target-word\">flourish</strong> after new strategies.",
+        "exam_ko": "새 전략을 도입한 후 스타트업이 <strong class=\"target-word\">번창하기</strong> 시작했다."
+      }
+    ]
+  }
+]

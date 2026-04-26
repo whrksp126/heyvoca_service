@@ -1,0 +1,250 @@
+[
+  {
+    "id": 17774,
+    "origin": "esteemed",
+    "examples": [
+      {
+        "exam_en": "a highly esteemed novelist",
+        "exam_ko": "매우 높이 평가되고 있는 소설가."
+      }
+    ]
+  },
+  {
+    "id": 17775,
+    "origin": "magician",
+    "examples": [
+      {
+        "exam_en": "a word magician",
+        "exam_ko": "언어의 마술사(작가를 이름)."
+      }
+    ]
+  },
+  {
+    "id": 17777,
+    "origin": "garnish",
+    "examples": [
+      {
+        "exam_en": "garnish a dish with a slice of lemon",
+        "exam_ko": "요리에 레몬 한 조각을 곁들이다."
+      }
+    ]
+  },
+  {
+    "id": 17781,
+    "origin": "unseen",
+    "examples": [
+      {
+        "exam_en": "by unseen means",
+        "exam_ko": "알아 채이지 않는 수단으로."
+      },
+      {
+        "exam_en": "an unseen translation",
+        "exam_ko": "즉석 번역."
+      }
+    ]
+  },
+  {
+    "id": 17785,
+    "origin": "migratory",
+    "examples": [
+      {
+        "exam_en": "a migratory bird",
+        "exam_ko": "철새, 떠돌이새"
+      },
+      {
+        "exam_en": "the migratory movements of birds",
+        "exam_ko": "철새의 이동"
+      }
+    ]
+  },
+  {
+    "id": 17793,
+    "origin": "salutation",
+    "examples": [
+      {
+        "exam_en": "The boy waved his umbrella in salutation.",
+        "exam_ko": "그 소년은 우산을 흔들어 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 17797,
+    "origin": "garbled",
+    "examples": [
+      {
+        "exam_en": "a garbled message",
+        "exam_ko": "이해 불능의[문자화된] 메시지."
+      }
+    ]
+  },
+  {
+    "id": 17798,
+    "origin": "childbirth",
+    "examples": [
+      {
+        "exam_en": "a difficult childbirth",
+        "exam_ko": "난산"
+      },
+      {
+        "exam_en": "die in childbirth",
+        "exam_ko": "해산 중에 죽다."
+      }
+    ]
+  },
+  {
+    "id": 17801,
+    "origin": "slouch",
+    "examples": [
+      {
+        "exam_en": "He slouched himself farther down into his chair.",
+        "exam_ko": "그는 늘어진 몸을 의자 속에 더 깊이 파묻었다."
+      },
+      {
+        "exam_en": "He's no slouch in the classroom.",
+        "exam_ko": "그는 반에서는 곧잘 한다."
+      }
+    ]
+  },
+  {
+    "id": 17802,
+    "origin": "lather",
+    "examples": [
+      {
+        "exam_en": "get into a lather",
+        "exam_ko": "흥분하다, 초조해 하다"
+      },
+      {
+        "exam_en": "in a lather",
+        "exam_ko": "땀투성이가 되어; 흥분[동요]하여; 겁먹어."
+      }
+    ]
+  },
+  {
+    "id": 17806,
+    "origin": "numb",
+    "examples": [
+      {
+        "exam_en": "a numb feeling",
+        "exam_ko": "마비감"
+      },
+      {
+        "exam_en": "My toes are numb with cold.",
+        "exam_ko": "발가락이 추위로 감각이 없다."
+      }
+    ]
+  },
+  {
+    "id": 17811,
+    "origin": "outright",
+    "examples": [
+      {
+        "exam_en": "an outright winner",
+        "exam_ko": "완전한 승자."
+      },
+      {
+        "exam_en": "an outright thief",
+        "exam_ko": "틀림없는 도둑"
+      }
+    ]
+  },
+  {
+    "id": 17812,
+    "origin": "gasoline",
+    "examples": [
+      {
+        "exam_en": "I'd better fill up with gasoline.",
+        "exam_ko": "휘발유를 가득 채우는 것이 좋겠다(※주유소에서 「가득 채워 주세요」라고 말할 때는 \"Fill her[it] up, please.\"라고 하며, 이 때의 her, it은 차를 가리킴)."
+      }
+    ]
+  },
+  {
+    "id": 17814,
+    "origin": "fatten",
+    "examples": [
+      {
+        "exam_en": "He's very thin after his illness but we'll soon fatten him up.",
+        "exam_ko": "그는 병을 앓고 나서 몹시 말랐는데 우리가 곧 살찌게 할 것이다"
+      }
+    ]
+  },
+  {
+    "id": 17817,
+    "origin": "needless",
+    "examples": [
+      {
+        "exam_en": "needless worry",
+        "exam_ko": "불필요한 걱정, 기우(杞憂)"
+      },
+      {
+        "exam_en": "a needless waste of paper",
+        "exam_ko": "종이의 불필요한 낭비."
+      }
+    ]
+  },
+  {
+    "id": 17819,
+    "origin": "botanical",
+    "examples": [
+      {
+        "exam_en": "botanical drugs",
+        "exam_ko": "식물성 약품."
+      }
+    ]
+  },
+  {
+    "id": 17825,
+    "origin": "cardio",
+    "examples": [
+      {
+        "exam_en": "cardiomegaly",
+        "exam_ko": "심장 비대증"
+      },
+      {
+        "exam_en": "cardioactive",
+        "exam_ko": "심장에 작용하는."
+      }
+    ]
+  },
+  {
+    "id": 17826,
+    "origin": "exorcise",
+    "examples": [
+      {
+        "exam_en": "exorcise an evil spirit from a house",
+        "exam_ko": "집에서 악령을 쫓아내다"
+      },
+      {
+        "exam_en": "exorcise one's feeling of inferiority",
+        "exam_ko": "열등감을 없애버리다."
+      }
+    ]
+  },
+  {
+    "id": 17828,
+    "origin": "indescribable",
+    "examples": [
+      {
+        "exam_en": "a strange and indescribable feeling",
+        "exam_ko": "야릇하고 형언할 수 없는 감정"
+      },
+      {
+        "exam_en": "indescribable joy",
+        "exam_ko": "형언할 수 없는 기쁨."
+      }
+    ]
+  },
+  {
+    "id": 17835,
+    "origin": "lighting",
+    "examples": [
+      {
+        "exam_en": "lighting fitting",
+        "exam_ko": "조명기구"
+      },
+      {
+        "exam_en": "The lighting in that restaurant is soft and romantic",
+        "exam_ko": "저 식당의 조명은 부드럽고 낭만적이다."
+      }
+    ]
+  }
+]

@@ -39,6 +39,7 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
     dragElastic: 0.4,
     onPointerDown: handlePointerDown,
     onDragEnd: (event, info) => onDragEnd(event, info, newBottomSheet),
+    'data-bottom-sheet': 'true',
     className: `
       left-0 right-0 bottom-0 z-[1001]
       fixed
@@ -103,7 +104,7 @@ export const NewBottomSheetProvider = () => {
   "use memo";
 
   const { stack } = useNewBottomSheetContext();
-  const { clearStack, popNewBottomSheet } = useNewBottomSheetActions();
+  const { clearStack, popNewBottomSheet, resolveNewBottomSheet } = useNewBottomSheetActions();
   const [renderedStack, setRenderedStack] = useState([]);
   const [renderedActiveIndex, setRenderedActiveIndex] = useState(-1);
   const [phase, setPhase] = useState('idle');
@@ -120,7 +121,14 @@ export const NewBottomSheetProvider = () => {
 
   const handleBackdropClick = (e) => {
     const currentSheet = stack[stack.length - 1];
-    if (currentSheet?.options?.isBackdropClickClosable !== false) {
+    if (!currentSheet) return;
+    if (currentSheet.options?.isBackdropClickClosable === false) return;
+
+    if (currentSheet.resolve) {
+      // openAwait/pushAwait 시트 — resolve 호출 (미호출 시 Promise 가 pending 상태로 남음)
+      const value = currentSheet.options?.backdropClickValue ?? null;
+      resolveNewBottomSheet(value);
+    } else {
       popNewBottomSheet();
     }
   };

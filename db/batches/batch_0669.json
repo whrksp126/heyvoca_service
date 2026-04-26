@@ -1,0 +1,230 @@
+[
+  {
+    "id": 25701,
+    "origin": "macaroni",
+    "examples": [
+      {
+        "exam_en": "macaroni and cheese",
+        "exam_ko": "마카로니 치즈."
+      }
+    ]
+  },
+  {
+    "id": 25702,
+    "origin": "mademoiselle",
+    "examples": [
+      {
+        "exam_en": "Mademoiselle Lafitte",
+        "exam_ko": "라피트 양."
+      }
+    ]
+  },
+  {
+    "id": 25711,
+    "origin": "mileage",
+    "examples": [
+      {
+        "exam_en": "a used car with a low mileage",
+        "exam_ko": "주행 마일수가 적은 중고차."
+      },
+      {
+        "exam_en": "What is the mileage on your car?",
+        "exam_ko": "당신 차의 주행 거리는 얼마입니까?"
+      }
+    ]
+  },
+  {
+    "id": 25726,
+    "origin": "rumpus",
+    "examples": [
+      {
+        "exam_en": "The children made a rumpus at the party.",
+        "exam_ko": "아이들은 파티에서 법석을 떨었다."
+      }
+    ]
+  },
+  {
+    "id": 25728,
+    "origin": "mystify",
+    "examples": [
+      {
+        "exam_en": "I am mystified.",
+        "exam_ko": "뭐가 뭔지 종잡을 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 25732,
+    "origin": "nobly",
+    "examples": [
+      {
+        "exam_en": "nobly born",
+        "exam_ko": "귀족 가문에서 태어난."
+      }
+    ]
+  },
+  {
+    "id": 25737,
+    "origin": "oasis",
+    "examples": [
+      {
+        "exam_en": "The caravan stopped for the night at an oasis.",
+        "exam_ko": "사막의 대상(隊商)은 그 날밤은 오아시스 있는 곳에서 머물렀다."
+      },
+      {
+        "exam_en": "a precious oasis in city life.",
+        "exam_ko": "도시 생활에서의 귀중한 휴식처."
+      }
+    ]
+  },
+  {
+    "id": 25738,
+    "origin": "scull",
+    "examples": [
+      {
+        "exam_en": "a scull on the river",
+        "exam_ko": "강에서 배의 노젓기."
+      }
+    ]
+  },
+  {
+    "id": 25744,
+    "origin": "unlucky",
+    "examples": [
+      {
+        "exam_en": "unlucky in love",
+        "exam_ko": "연애운이 없는"
+      },
+      {
+        "exam_en": "It was unlucky that he lost his fortune.",
+        "exam_ko": "그는 불안하게도 재산을 잃었다"
+      }
+    ]
+  },
+  {
+    "id": 25747,
+    "origin": "ounce",
+    "examples": [
+      {
+        "exam_en": "with every  ounce of strength",
+        "exam_ko": "있는 힘을 다해서, 전력 투구하여."
+      }
+    ]
+  },
+  {
+    "id": 25756,
+    "origin": "auburn",
+    "examples": [
+      {
+        "exam_en": "auburn hair",
+        "exam_ko": "고동색 머리털."
+      }
+    ]
+  },
+  {
+    "id": 25782,
+    "origin": "horrify",
+    "examples": [
+      {
+        "exam_en": "I was horrified to see ‥",
+        "exam_ko": "…을 보고 끔찍했다[기가 막혔다]."
+      }
+    ]
+  },
+  {
+    "id": 25785,
+    "origin": "incontestable",
+    "examples": [
+      {
+        "exam_en": "incontestable evidence",
+        "exam_ko": "명백한 증거."
+      }
+    ]
+  },
+  {
+    "id": 25786,
+    "origin": "undoubted",
+    "examples": [
+      {
+        "exam_en": "undoubted evidence",
+        "exam_ko": "의심할 여지가 없는 증거"
+      },
+      {
+        "exam_en": "undoubted talent",
+        "exam_ko": "진정한 재능."
+      }
+    ]
+  },
+  {
+    "id": 25791,
+    "origin": "corral",
+    "examples": [
+      {
+        "exam_en": "The Gunfight at the O.K. Corral",
+        "exam_ko": "[영화] 「OK 목장의 결투」."
+      }
+    ]
+  },
+  {
+    "id": 25792,
+    "origin": "ruckus",
+    "examples": [
+      {
+        "exam_en": "raise a ruckus",
+        "exam_ko": "난장판을 벌이다."
+      }
+    ]
+  },
+  {
+    "id": 25794,
+    "origin": "airway",
+    "examples": [
+      {
+        "exam_en": "the southern airway",
+        "exam_ko": "남쪽 항공로."
+      },
+      {
+        "exam_en": "Pan American World Airways",
+        "exam_ko": "팬아메리칸 항공 (회사)."
+      }
+    ]
+  },
+  {
+    "id": 25803,
+    "origin": "almanac",
+    "examples": [
+      {
+        "exam_en": "a nautical almanac",
+        "exam_ko": "천측력(天測曆), 항해력. cf. CALENDAR."
+      },
+      {
+        "exam_en": "Whitaker's Almanack",
+        "exam_ko": "(영국 발행의) 휘터커 연감(※연감 이름에는 종종 어말에 k가 붙는 옛 철자를 씀). cf. YEARBOOK"
+      }
+    ]
+  },
+  {
+    "id": 25804,
+    "origin": "unfeeling",
+    "examples": [
+      {
+        "exam_en": "an unfeeling villain",
+        "exam_ko": "냉혹한 악당."
+      }
+    ]
+  },
+  {
+    "id": 25812,
+    "origin": "approving",
+    "examples": [
+      {
+        "exam_en": "an approving vote",
+        "exam_ko": "찬성표"
+      },
+      {
+        "exam_en": "an approving smile",
+        "exam_ko": "만족스러운 미소."
+      }
+    ]
+  }
+]

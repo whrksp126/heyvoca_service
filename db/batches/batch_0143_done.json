@@ -1,0 +1,266 @@
+[
+  {
+    "id": 3108,
+    "origin": "confidence",
+    "examples": [
+      {
+        "exam_en": "She built her <strong class=\"target-word\">confidence</strong> through practice.",
+        "exam_ko": "그녀는 연습을 통해 <strong class=\"target-word\">자신감</strong>을 키웠다."
+      },
+      {
+        "exam_en": "He won her <strong class=\"target-word\">confidence</strong> over time.",
+        "exam_ko": "그는 시간이 지나며 그녀의 <strong class=\"target-word\">신뢰</strong>를 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 3109,
+    "origin": "stuffy",
+    "examples": [
+      {
+        "exam_en": "The room felt very <strong class=\"target-word\">stuffy</strong> after the party.",
+        "exam_ko": "파티 후 방 안이 매우 <strong class=\"target-word\">답답하고 공기가 탁했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3110,
+    "origin": "stifling",
+    "examples": [
+      {
+        "exam_en": "The heat inside was absolutely <strong class=\"target-word\">stifling</strong>.",
+        "exam_ko": "안은 완전히 <strong class=\"target-word\">숨막힐 듯</strong> 더웠다."
+      }
+    ]
+  },
+  {
+    "id": 3112,
+    "origin": "refresh",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">refreshed</strong> after a short nap.",
+        "exam_ko": "그녀는 짧은 낮잠 후 <strong class=\"target-word\">기분이 상쾌해졌다</strong>."
+      },
+      {
+        "exam_en": "A walk in the park will <strong class=\"target-word\">refresh</strong> your mind.",
+        "exam_ko": "공원 산책이 기분을 <strong class=\"target-word\">상쾌하게</strong> 해줄 것이다."
+      }
+    ]
+  },
+  {
+    "id": 3113,
+    "origin": "refreshing",
+    "examples": [
+      {
+        "exam_en": "I had a <strong class=\"target-word\">refreshing</strong> drink on a hot day.",
+        "exam_ko": "더운 날 <strong class=\"target-word\">청량한</strong> 음료를 마셨다."
+      },
+      {
+        "exam_en": "The play was <strong class=\"target-word\">refreshing</strong> and highly original.",
+        "exam_ko": "그 연극은 <strong class=\"target-word\">신선하고</strong> 매우 독창적이었다."
+      }
+    ]
+  },
+  {
+    "id": 3114,
+    "origin": "beverage",
+    "examples": [
+      {
+        "exam_en": "The cafe offers a variety of hot <strong class=\"target-word\">beverages</strong>.",
+        "exam_ko": "카페는 다양한 뜨거운 <strong class=\"target-word\">음료</strong>를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 3116,
+    "origin": "indigestion",
+    "examples": [
+      {
+        "exam_en": "He suffered from <strong class=\"target-word\">indigestion</strong> after the meal.",
+        "exam_ko": "그는 식사 후 <strong class=\"target-word\">소화불량</strong>으로 고생했다."
+      }
+    ]
+  },
+  {
+    "id": 3117,
+    "origin": "faithful",
+    "examples": [
+      {
+        "exam_en": "She has been a <strong class=\"target-word\">faithful</strong> partner for years.",
+        "exam_ko": "그녀는 수년간 <strong class=\"target-word\">정숙한</strong> 반려자였다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">faithful</strong> to his promise until the end.",
+        "exam_ko": "그는 끝까지 약속에 <strong class=\"target-word\">충실했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3118,
+    "origin": "edible",
+    "examples": [
+      {
+        "exam_en": "Not all wild berries are <strong class=\"target-word\">edible</strong>.",
+        "exam_ko": "모든 야생 베리가 <strong class=\"target-word\">식용 가능한</strong> 것은 아니다."
+      },
+      {
+        "exam_en": "They used <strong class=\"target-word\">edible</strong> oil to cook the vegetables.",
+        "exam_ko": "<strong class=\"target-word\">식용</strong> 기름으로 채소를 볶았다."
+      }
+    ]
+  },
+  {
+    "id": 3119,
+    "origin": "rite",
+    "examples": [
+      {
+        "exam_en": "They performed the wedding <strong class=\"target-word\">rite</strong> in the church.",
+        "exam_ko": "그들은 교회에서 결혼 <strong class=\"target-word\">의식</strong>을 거행했다."
+      },
+      {
+        "exam_en": "The funeral <strong class=\"target-word\">rite</strong> was held in Buddhist tradition.",
+        "exam_ko": "장례 <strong class=\"target-word\">의식</strong>은 불교 전통에 따라 치러졌다."
+      }
+    ]
+  },
+  {
+    "id": 3121,
+    "origin": "steaming",
+    "examples": [
+      {
+        "exam_en": "She served a bowl of <strong class=\"target-word\">steaming</strong> hot soup.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">김이 모락모락 나는</strong> 뜨거운 수프를 내왔다."
+      }
+    ]
+  },
+  {
+    "id": 3122,
+    "origin": "plate",
+    "examples": [
+      {
+        "exam_en": "The family heirloom included a silver <strong class=\"target-word\">plate</strong>.",
+        "exam_ko": "가문의 유물에는 은 <strong class=\"target-word\">식기</strong>가 포함되어 있었다."
+      },
+      {
+        "exam_en": "He cleared his <strong class=\"target-word\">plate</strong> at every meal.",
+        "exam_ko": "그는 매 식사 때마다 <strong class=\"target-word\">접시</strong>를 깨끗이 비웠다."
+      },
+      {
+        "exam_en": "She put the cake on a clean <strong class=\"target-word\">plate</strong>.",
+        "exam_ko": "그녀는 깨끗한 <strong class=\"target-word\">접시</strong> 위에 케이크를 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 3123,
+    "origin": "norwegian",
+    "examples": [
+      {
+        "exam_en": "The ship sailed through the <strong class=\"target-word\">Norwegian</strong> Sea.",
+        "exam_ko": "배는 <strong class=\"target-word\">노르웨이</strong> 해를 항해했다."
+      }
+    ]
+  },
+  {
+    "id": 3124,
+    "origin": "authority",
+    "examples": [
+      {
+        "exam_en": "The officer spoke with great <strong class=\"target-word\">authority</strong>.",
+        "exam_ko": "그 경찰관은 강한 <strong class=\"target-word\">권위</strong>를 갖고 말했다."
+      },
+      {
+        "exam_en": "This dictionary is a highly respected <strong class=\"target-word\">authority</strong>.",
+        "exam_ko": "이 사전은 매우 권위 있는 <strong class=\"target-word\">권위서</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3125,
+    "origin": "postal",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">postal</strong> delivery arrived this morning.",
+        "exam_ko": "<strong class=\"target-word\">우편</strong> 배달이 오늘 아침에 도착했다."
+      },
+      {
+        "exam_en": "Please send it by <strong class=\"target-word\">postal</strong> service.",
+        "exam_ko": "<strong class=\"target-word\">우편</strong> 서비스로 보내주세요."
+      }
+    ]
+  },
+  {
+    "id": 3126,
+    "origin": "package",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">package</strong> of processed cheese.",
+        "exam_ko": "그녀는 가공 치즈 한 <strong class=\"target-word\">상자</strong>를 샀다."
+      },
+      {
+        "exam_en": "He carefully opened the <strong class=\"target-word\">package</strong> from abroad.",
+        "exam_ko": "그는 해외에서 온 <strong class=\"target-word\">소포</strong>를 조심스럽게 열었다."
+      },
+      {
+        "exam_en": "This small <strong class=\"target-word\">package</strong> is for you.",
+        "exam_ko": "이 작은 <strong class=\"target-word\">소포</strong>는 너에게 온 거야."
+      }
+    ]
+  },
+  {
+    "id": 3127,
+    "origin": "route",
+    "examples": [
+      {
+        "exam_en": "They chose a commercial <strong class=\"target-word\">route</strong> across the Pacific.",
+        "exam_ko": "그들은 태평양을 가로지르는 무역 <strong class=\"target-word\">항로</strong>를 선택했다."
+      },
+      {
+        "exam_en": "She walks the same <strong class=\"target-word\">route</strong> to school every day.",
+        "exam_ko": "그녀는 매일 같은 <strong class=\"target-word\">길</strong>로 학교에 간다."
+      }
+    ]
+  },
+  {
+    "id": 3129,
+    "origin": "knowledge",
+    "examples": [
+      {
+        "exam_en": "She has a great thirst for <strong class=\"target-word\">knowledge</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">지식</strong>에 대한 강한 갈증을 갖고 있다."
+      },
+      {
+        "exam_en": "He is a man of broad <strong class=\"target-word\">knowledge</strong>.",
+        "exam_ko": "그는 폭넓은 <strong class=\"target-word\">지식</strong>을 가진 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 3130,
+    "origin": "apprehension",
+    "examples": [
+      {
+        "exam_en": "She acted under the <strong class=\"target-word\">apprehension</strong> that she was late.",
+        "exam_ko": "그녀는 늦었다는 <strong class=\"target-word\">불안감</strong>에 서둘렀다."
+      },
+      {
+        "exam_en": "He felt <strong class=\"target-word\">apprehension</strong> about his own safety.",
+        "exam_ko": "그는 자신의 안전에 대해 <strong class=\"target-word\">불안감</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 3132,
+    "origin": "comprehension",
+    "examples": [
+      {
+        "exam_en": "The topic is beyond my <strong class=\"target-word\">comprehension</strong>.",
+        "exam_ko": "그 주제는 내 <strong class=\"target-word\">이해</strong> 범위를 넘어선다."
+      },
+      {
+        "exam_en": "He acted without <strong class=\"target-word\">comprehension</strong> of the situation.",
+        "exam_ko": "그는 상황을 <strong class=\"target-word\">이해</strong>하지 못한 채 행동했다."
+      }
+    ]
+  }
+]

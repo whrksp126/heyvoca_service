@@ -1,0 +1,602 @@
+[
+  {
+    "id": 4788,
+    "word": "sunset",
+    "exam_en": "watch the <strong class=\"target-word\">sunset</strong>",
+    "exam_ko": "저녁 노을을 <strong class=\"target-word\">바라보다</strong>"
+  },
+  {
+    "id": 4789,
+    "word": "sunset",
+    "exam_en": "The park closes at <strong class=\"target-word\">sunset</strong>.",
+    "exam_ko": "공원은 해질녘에 <strong class=\"target-word\">닫힌다</strong>."
+  },
+  {
+    "id": 4790,
+    "word": "reservation",
+    "exam_en": "with <strong class=\"target-word\">reservation</strong>s",
+    "exam_ko": "<strong class=\"target-word\">조건부로</strong>"
+  },
+  {
+    "id": 4791,
+    "word": "reservation",
+    "exam_en": "with the <strong class=\"target-word\">reservation</strong> that",
+    "exam_ko": "…<strong class=\"target-word\">이라는</strong> 조건부로"
+  },
+  {
+    "id": 4792,
+    "word": "sunscreen",
+    "exam_en": "apply[wear] <strong class=\"target-word\">sunscreen</strong>",
+    "exam_ko": "선크림을 <strong class=\"target-word\">바르다</strong>."
+  },
+  {
+    "id": 4793,
+    "word": "cruise",
+    "exam_en": "<strong class=\"target-word\">cruise</strong> along the shore",
+    "exam_ko": "연안을 <strong class=\"target-word\">순항하다</strong>."
+  },
+  {
+    "id": 4794,
+    "word": "cruise",
+    "exam_en": "a <strong class=\"target-word\">cruising</strong> taxi",
+    "exam_ko": "손님을 찾아다니는 <strong class=\"target-word\">택시</strong>."
+  },
+  {
+    "id": 4795,
+    "word": "seasick",
+    "exam_en": "become <strong class=\"target-word\">seasick</strong>",
+    "exam_ko": "<strong class=\"target-word\">뱃멀미하다</strong>."
+  },
+  {
+    "id": 4796,
+    "word": "sea",
+    "exam_en": "3,000 feet above the <strong class=\"target-word\">sea</strong>",
+    "exam_ko": "<strong class=\"target-word\">해발</strong> 3,000피트"
+  },
+  {
+    "id": 4797,
+    "word": "sea",
+    "exam_en": "far out at <strong class=\"target-word\">sea</strong>",
+    "exam_ko": "<strong class=\"target-word\">바다</strong> 멀리"
+  },
+  {
+    "id": 4798,
+    "word": "sand",
+    "exam_en": "fine <strong class=\"target-word\">sand</strong>",
+    "exam_ko": "<strong class=\"target-word\">가는</strong>[고운] 모래"
+  },
+  {
+    "id": 4799,
+    "word": "sand",
+    "exam_en": "a grain of <strong class=\"target-word\">sand</strong>",
+    "exam_ko": "한 <strong class=\"target-word\">알의</strong> 모래"
+  },
+  {
+    "id": 4800,
+    "word": "tourist",
+    "exam_en": "a <strong class=\"target-word\">tourist</strong> bureau",
+    "exam_ko": "<strong class=\"target-word\">여행사</strong>"
+  },
+  {
+    "id": 4801,
+    "word": "tourist",
+    "exam_en": "a <strong class=\"target-word\">tourist</strong> ticket",
+    "exam_ko": "<strong class=\"target-word\">유람권</strong>"
+  },
+  {
+    "id": 4802,
+    "word": "vacation",
+    "exam_en": "take a <strong class=\"target-word\">vacation</strong> with pay",
+    "exam_ko": "유급 휴가를 <strong class=\"target-word\">얻다</strong>"
+  },
+  {
+    "id": 4803,
+    "word": "vacation",
+    "exam_en": "He is on <strong class=\"target-word\">vacation</strong> now.",
+    "exam_ko": "그는 지금 휴가 <strong class=\"target-word\">중이다</strong>"
+  },
+  {
+    "id": 4804,
+    "word": "impression",
+    "exam_en": "a strong <strong class=\"target-word\">impression</strong>",
+    "exam_ko": "<strong class=\"target-word\">강한</strong> 인상"
+  },
+  {
+    "id": 4805,
+    "word": "impression",
+    "exam_en": "give an <strong class=\"target-word\">impression</strong> to",
+    "exam_ko": "…에게 인상을 <strong class=\"target-word\">주다</strong>"
+  },
+  {
+    "id": 4806,
+    "word": "harmonize",
+    "exam_en": "Some people always try to <strong class=\"target-word\">harmonize</strong> their opinions with those of others.",
+    "exam_ko": "<strong class=\"target-word\">항상</strong> 자기 의견을 남의 의견과 맞추려는 사람도 있다."
+  },
+  {
+    "id": 4807,
+    "word": "responsibility",
+    "exam_en": "moral <strong class=\"target-word\">responsibility</strong>",
+    "exam_ko": "<strong class=\"target-word\">도의적</strong> 책임"
+  },
+  {
+    "id": 4808,
+    "word": "responsibility",
+    "exam_en": "avoid <strong class=\"target-word\">responsibility</strong>",
+    "exam_ko": "책임을 <strong class=\"target-word\">회피하다</strong>"
+  },
+  {
+    "id": 4809,
+    "word": "destination",
+    "exam_en": "\"What's your <strong class=\"target-word\">destination</strong> on this trip?\" \"Moscow.\"",
+    "exam_ko": "「이번 여행의 행선지는 어디입니까?」 「<strong class=\"target-word\">모스크바</strong>입니다.」"
+  },
+  {
+    "id": 4810,
+    "word": "guidance",
+    "exam_en": "vocational <strong class=\"target-word\">guidance</strong>",
+    "exam_ko": "<strong class=\"target-word\">직업</strong> 지도"
+  },
+  {
+    "id": 4811,
+    "word": "guidance",
+    "exam_en": "under a person's <strong class=\"target-word\">guidance</strong>",
+    "exam_ko": "<strong class=\"target-word\">남의</strong> 지도[안내]로"
+  },
+  {
+    "id": 4812,
+    "word": "browse",
+    "exam_en": "<strong class=\"target-word\">browse</strong> on shoots",
+    "exam_ko": "새싹을 <strong class=\"target-word\">먹다</strong>."
+  },
+  {
+    "id": 4813,
+    "word": "browse",
+    "exam_en": "<strong class=\"target-word\">browse</strong> about the secondhand bookshops",
+    "exam_ko": "헌 책방을 여기저기 <strong class=\"target-word\">둘러보다</strong>"
+  },
+  {
+    "id": 4814,
+    "word": "dormitory",
+    "exam_en": "a <strong class=\"target-word\">dormitory</strong> bedroom",
+    "exam_ko": "<strong class=\"target-word\">기숙사에</strong> 있는 침실"
+  },
+  {
+    "id": 4815,
+    "word": "scholarship",
+    "exam_en": "many fields of <strong class=\"target-word\">scholarship</strong>",
+    "exam_ko": "<strong class=\"target-word\">많은</strong> 학문 분야"
+  },
+  {
+    "id": 4816,
+    "word": "scholarship",
+    "exam_en": "a man of great <strong class=\"target-word\">scholarship</strong>",
+    "exam_ko": "<strong class=\"target-word\">학식이</strong> 매우 깊은 사람."
+  },
+  {
+    "id": 4817,
+    "word": "diploma",
+    "exam_en": "a <strong class=\"target-word\">diploma</strong> in education",
+    "exam_ko": "<strong class=\"target-word\">교육학</strong> 학위 증서"
+  },
+  {
+    "id": 4818,
+    "word": "diploma",
+    "exam_en": "get one's <strong class=\"target-word\">diploma</strong>",
+    "exam_ko": "(대학[대학원]을) <strong class=\"target-word\">졸업하다</strong>."
+  },
+  {
+    "id": 4819,
+    "word": "textbook",
+    "exam_en": "a physics <strong class=\"target-word\">textbook</strong>",
+    "exam_ko": "<strong class=\"target-word\">물리</strong> 교과서"
+  },
+  {
+    "id": 4820,
+    "word": "textbook",
+    "exam_en": "on a <strong class=\"target-word\">textbook</strong> basis",
+    "exam_ko": "<strong class=\"target-word\">그대로</strong> 본따서."
+  },
+  {
+    "id": 4821,
+    "word": "teacher",
+    "exam_en": "<strong class=\"target-word\">teacher</strong> training",
+    "exam_ko": "<strong class=\"target-word\">교원</strong> 양성"
+  },
+  {
+    "id": 4822,
+    "word": "teacher",
+    "exam_en": "a <strong class=\"target-word\">teacher</strong> of English at a secondary school",
+    "exam_ko": "중학교의 <strong class=\"target-word\">영어</strong> 선생."
+  },
+  {
+    "id": 4823,
+    "word": "professor",
+    "exam_en": "<strong class=\"target-word\">Professor</strong> M.W. Smith",
+    "exam_ko": "<strong class=\"target-word\">M.W. 스미스 교수</strong>(※⑴ 성에 직접 붙일 때는 Prof.로 줄이지 않고 Professor Smith라고 함.)"
+  },
+  {
+    "id": 4824,
+    "word": "professor",
+    "exam_en": "a <strong class=\"target-word\">professor</strong> of Greek literature in the University of Manchester",
+    "exam_ko": "<strong class=\"target-word\">맨체스터 대학</strong>의 그리스 문학 (정)교수."
+  },
+  {
+    "id": 4825,
+    "word": "university",
+    "exam_en": "<strong class=\"target-word\">university</strong> autonomy",
+    "exam_ko": "<strong class=\"target-word\">대학의</strong> 자치"
+  },
+  {
+    "id": 4826,
+    "word": "university",
+    "exam_en": "enter a <strong class=\"target-word\">university</strong>",
+    "exam_ko": "(문어) <strong class=\"target-word\">대학에 들어가다</strong>(※보다 일반적으로 get into a college를 씀)"
+  },
+  {
+    "id": 4827,
+    "word": "dictionary",
+    "exam_en": "a Korean-English <strong class=\"target-word\">dictionary</strong>",
+    "exam_ko": "<strong class=\"target-word\">한영</strong> 사전"
+  },
+  {
+    "id": 4828,
+    "word": "dictionary",
+    "exam_en": "a usage <strong class=\"target-word\">dictionary</strong>",
+    "exam_ko": "<strong class=\"target-word\">어법</strong> 사전"
+  },
+  {
+    "id": 4829,
+    "word": "tuition",
+    "exam_en": "give private <strong class=\"target-word\">tuition</strong> in Italian",
+    "exam_ko": "이탈리아어의 <strong class=\"target-word\">개인 교수를 하다</strong>[받다]."
+  },
+  {
+    "id": 4830,
+    "word": "tuition",
+    "exam_en": "<strong class=\"target-word\">Tuition</strong> has gone up again.",
+    "exam_ko": "<strong class=\"target-word\">수업료가</strong> 또 올랐다."
+  },
+  {
+    "id": 4831,
+    "word": "homework",
+    "exam_en": "a piece of <strong class=\"target-word\">homework</strong>",
+    "exam_ko": "<strong class=\"target-word\">숙제</strong> 한 점"
+  },
+  {
+    "id": 4832,
+    "word": "homework",
+    "exam_en": "set the students <strong class=\"target-word\">homework</strong>",
+    "exam_ko": "학생들에게 숙제를 <strong class=\"target-word\">내다</strong>."
+  },
+  {
+    "id": 4833,
+    "word": "examination",
+    "exam_en": "a postmortem <strong class=\"target-word\">examination</strong>",
+    "exam_ko": "<strong class=\"target-word\">부검[검시]</strong>"
+  },
+  {
+    "id": 4834,
+    "word": "examination",
+    "exam_en": "a physical <strong class=\"target-word\">examination</strong>",
+    "exam_ko": "<strong class=\"target-word\">건강 진단</strong>"
+  },
+  {
+    "id": 4835,
+    "word": "pencil",
+    "exam_en": "a colored <strong class=\"target-word\">pencil</strong>",
+    "exam_ko": "<strong class=\"target-word\">색연필</strong>"
+  },
+  {
+    "id": 4836,
+    "word": "pencil",
+    "exam_en": "a sharp <strong class=\"target-word\">pencil</strong>",
+    "exam_ko": "<strong class=\"target-word\">끝이 뾰족한 연필</strong>(※우리말의 「샤프 펜슬」에 해당하는 영어는 a mechanical[an automatic] pencil, (영) a propelling pencil)"
+  },
+  {
+    "id": 4837,
+    "word": "playground",
+    "exam_en": "The <strong class=\"target-word\">Playground</strong> of Europe",
+    "exam_ko": "<strong class=\"target-word\">유럽의 휴양지</strong>(스위스의 별명)."
+  },
+  {
+    "id": 4838,
+    "word": "chair",
+    "exam_en": "sit in a <strong class=\"target-word\">chair</strong>",
+    "exam_ko": "의자에 <strong class=\"target-word\">앉다</strong>(※보통 in은 팔걸이 의자에, on은 팔걸이 없는 의자에 앉는 경우)"
+  },
+  {
+    "id": 4839,
+    "word": "chair",
+    "exam_en": "have a <strong class=\"target-word\">chair</strong>",
+    "exam_ko": "의자에 <strong class=\"target-word\">앉다</strong>(※a와 the의 차이에 주의. cf. 3, 4)"
+  },
+  {
+    "id": 4840,
+    "word": "desk",
+    "exam_en": "sit at one's <strong class=\"target-word\">desk</strong>",
+    "exam_ko": "<strong class=\"target-word\">책상 앞에 앉다</strong>"
+  },
+  {
+    "id": 4841,
+    "word": "desk",
+    "exam_en": "leave one's <strong class=\"target-word\">desk</strong>",
+    "exam_ko": "<strong class=\"target-word\">책상을 떠나다</strong>"
+  },
+  {
+    "id": 4842,
+    "word": "student",
+    "exam_en": "a <strong class=\"target-word\">student</strong> movement",
+    "exam_ko": "<strong class=\"target-word\">학생</strong> 운동"
+  },
+  {
+    "id": 4843,
+    "word": "student",
+    "exam_en": "a <strong class=\"target-word\">student</strong> at Harvard",
+    "exam_ko": "<strong class=\"target-word\">하버드 대학생</strong>(※보통 of는 쓰지 않음)"
+  },
+  {
+    "id": 4844,
+    "word": "grade",
+    "exam_en": "<strong class=\"target-word\">grade</strong> B eggs B",
+    "exam_ko": "<strong class=\"target-word\">등급의 달걀</strong>"
+  },
+  {
+    "id": 4845,
+    "word": "grade",
+    "exam_en": "people of different social <strong class=\"target-word\">grade</strong>s",
+    "exam_ko": "<strong class=\"target-word\">사회적 계층</strong>이 다른 사람들."
+  },
+  {
+    "id": 4846,
+    "word": "wrist",
+    "exam_en": "take a person by the <strong class=\"target-word\">wrist</strong>",
+    "exam_ko": "남의 <strong class=\"target-word\">손목을 잡다</strong>."
+  },
+  {
+    "id": 4847,
+    "word": "pupil",
+    "exam_en": "ten <strong class=\"target-word\">pupil</strong>s",
+    "exam_ko": "<strong class=\"target-word\">10명의</strong> 학생"
+  },
+  {
+    "id": 4848,
+    "word": "pupil",
+    "exam_en": "an able <strong class=\"target-word\">pupil</strong>",
+    "exam_ko": "<strong class=\"target-word\">유능한</strong> 학생"
+  },
+  {
+    "id": 4849,
+    "word": "lap",
+    "exam_en": "a cat sleeping in a person's <strong class=\"target-word\">lap</strong>",
+    "exam_ko": "남의 무릎에서 <strong class=\"target-word\">자고</strong> 있는 고양이(※knees를 사용할 수는 없음)."
+  },
+  {
+    "id": 4850,
+    "word": "lap",
+    "exam_en": "in Fortune's <strong class=\"target-word\">lap</strong>",
+    "exam_ko": "행운을 <strong class=\"target-word\">타고</strong>나서"
+  },
+  {
+    "id": 4851,
+    "word": "muscle",
+    "exam_en": "by the exercise of <strong class=\"target-word\">muscle</strong>s",
+    "exam_ko": "<strong class=\"target-word\">근육을 사용해서</strong> 완력으로"
+  },
+  {
+    "id": 4852,
+    "word": "muscle",
+    "exam_en": "contract a <strong class=\"target-word\">muscle</strong>",
+    "exam_ko": "<strong class=\"target-word\">근육을 수축하다</strong>"
+  },
+  {
+    "id": 4853,
+    "word": "weary",
+    "exam_en": "<strong class=\"target-word\">weary</strong> eyes",
+    "exam_ko": "<strong class=\"target-word\">피곤에</strong> 지친 눈"
+  },
+  {
+    "id": 4854,
+    "word": "weary",
+    "exam_en": "a <strong class=\"target-word\">weary</strong> head",
+    "exam_ko": "<strong class=\"target-word\">지쳐서</strong> 멍해진 머리"
+  },
+  {
+    "id": 4855,
+    "word": "swelter",
+    "exam_en": "in a <strong class=\"target-word\">swelter</strong>",
+    "exam_ko": "<strong class=\"target-word\">땀투성이가 되어</strong> 흥분하여."
+  },
+  {
+    "id": 4856,
+    "word": "condone",
+    "exam_en": "I cannot <strong class=\"target-word\">condone</strong> the use of violence under any circumstances.",
+    "exam_ko": "어떠한 경우에도 폭력의 사용은 용서할 수 <strong class=\"target-word\">없다</strong>."
+  },
+  {
+    "id": 4857,
+    "word": "buddhist",
+    "exam_en": "a <strong class=\"target-word\">Buddhist</strong> temple",
+    "exam_ko": "<strong class=\"target-word\">불교의 사찰</strong>"
+  },
+  {
+    "id": 4858,
+    "word": "buddhist",
+    "exam_en": "<strong class=\"target-word\">Buddhist</strong> priest",
+    "exam_ko": "<strong class=\"target-word\">불교의 스님</strong>."
+  },
+  {
+    "id": 4859,
+    "word": "housing",
+    "exam_en": "<strong class=\"target-word\">housing</strong> shortage",
+    "exam_ko": "<strong class=\"target-word\">주택</strong> 부족"
+  },
+  {
+    "id": 4860,
+    "word": "housing",
+    "exam_en": "live in poor <strong class=\"target-word\">housing</strong>",
+    "exam_ko": "열악한 거주 환경에서 <strong class=\"target-word\">살다</strong>."
+  },
+  {
+    "id": 4861,
+    "word": "mortgage",
+    "exam_en": "<strong class=\"target-word\">mortgage</strong> loan",
+    "exam_ko": "<strong class=\"target-word\">저당</strong>[담보] 융자, (특히) 주택 융자"
+  },
+  {
+    "id": 4862,
+    "word": "mortgage",
+    "exam_en": "<strong class=\"target-word\">mortgage</strong> repossession",
+    "exam_ko": "<strong class=\"target-word\">저당</strong> 무효[회복]"
+  },
+  {
+    "id": 4863,
+    "word": "vanity",
+    "exam_en": "wounded <strong class=\"target-word\">vanity</strong>",
+    "exam_ko": "<strong class=\"target-word\">상처 입은 허영심</strong>"
+  },
+  {
+    "id": 4864,
+    "word": "vanity",
+    "exam_en": "tickle a person's <strong class=\"target-word\">vanity</strong>",
+    "exam_ko": "<strong class=\"target-word\">남의 허영심을 만족시키다</strong>"
+  },
+  {
+    "id": 4865,
+    "word": "warranty",
+    "exam_en": "a one-year <strong class=\"target-word\">warranty</strong> on a radio",
+    "exam_ko": "<strong class=\"target-word\">라디오의 1년간의 보증서</strong>"
+  },
+  {
+    "id": 4866,
+    "word": "warranty",
+    "exam_en": "be still under <strong class=\"target-word\">warranty</strong>",
+    "exam_ko": "<strong class=\"target-word\">아직도 보증 기간 중이다</strong>."
+  },
+  {
+    "id": 4867,
+    "word": "recession",
+    "exam_en": "a stagnating <strong class=\"target-word\">recession</strong>",
+    "exam_ko": "<strong class=\"target-word\">침체하는 경기</strong>"
+  },
+  {
+    "id": 4868,
+    "word": "recession",
+    "exam_en": "The country's economy is in deep <strong class=\"target-word\">recession</strong>.",
+    "exam_ko": "그 나라의 경제는 <strong class=\"target-word\">심각한 불황에 처해 있다</strong>."
+  },
+  {
+    "id": 4869,
+    "word": "luxury",
+    "exam_en": "We can't afford to spend money on <strong class=\"target-word\">luxuries</strong>.",
+    "exam_ko": "우리는 <strong class=\"target-word\">사치품에 돈을 쓸</strong> 여유가 없다."
+  },
+  {
+    "id": 4870,
+    "word": "luxury",
+    "exam_en": "a <strong class=\"target-word\">luxury</strong> ship",
+    "exam_ko": "<strong class=\"target-word\">호화 여객선</strong>"
+  },
+  {
+    "id": 4871,
+    "word": "auction",
+    "exam_en": "put up one's collection of stamps for <strong class=\"target-word\">auction</strong>",
+    "exam_ko": "수집한 우표를 <strong class=\"target-word\">경매에 부치다</strong>"
+  },
+  {
+    "id": 4872,
+    "word": "auction",
+    "exam_en": "be sold at <strong class=\"target-word\">auction</strong>",
+    "exam_ko": "<strong class=\"target-word\">경매로 팔리다</strong>."
+  },
+  {
+    "id": 4873,
+    "word": "article",
+    "exam_en": "an editorial <strong class=\"target-word\">article</strong>",
+    "exam_ko": "<strong class=\"target-word\">사설 기사</strong>"
+  },
+  {
+    "id": 4874,
+    "word": "article",
+    "exam_en": "an <strong class=\"target-word\">article</strong> on a heart transplant",
+    "exam_ko": "<strong class=\"target-word\">심장 이식</strong>에 관한 기사"
+  },
+  {
+    "id": 4875,
+    "word": "loan",
+    "exam_en": "a public <strong class=\"target-word\">loan</strong>",
+    "exam_ko": "<strong class=\"target-word\">공채</strong>"
+  },
+  {
+    "id": 4876,
+    "word": "loan",
+    "exam_en": "a domestic <strong class=\"target-word\">loan</strong>",
+    "exam_ko": "<strong class=\"target-word\">내국</strong>[외국]채"
+  },
+  {
+    "id": 4877,
+    "word": "fatigue",
+    "exam_en": "sleep off <strong class=\"target-word\">fatigue</strong>",
+    "exam_ko": "<strong class=\"target-word\">한숨 자서 피로를 풀다</strong>."
+  },
+  {
+    "id": 4878,
+    "word": "fatigue",
+    "exam_en": "the <strong class=\"target-word\">fatigue</strong>s of proofreading",
+    "exam_ko": "<strong class=\"target-word\">교정이라는 힘든 일</strong>."
+  },
+  {
+    "id": 4879,
+    "word": "reimburse",
+    "exam_en": "<strong class=\"target-word\">reimburse</strong> a person for hospital expenses",
+    "exam_ko": "<strong class=\"target-word\">남에게 의료비에 대한 보상금을 지급하다</strong>"
+  },
+  {
+    "id": 4880,
+    "word": "reimburse",
+    "exam_en": "The company <strong class=\"target-word\">reimbursed</strong> my travel expenses.",
+    "exam_ko": "<strong class=\"target-word\">회사가 내 여비를 물어 주었다</strong>."
+  },
+  {
+    "id": 4881,
+    "word": "invoice",
+    "exam_en": "an <strong class=\"target-word\">invoice</strong> price",
+    "exam_ko": "<strong class=\"target-word\">송장 가격</strong>"
+  },
+  {
+    "id": 4882,
+    "word": "invoice",
+    "exam_en": "receive a large <strong class=\"target-word\">invoice</strong> of goods",
+    "exam_ko": "<strong class=\"target-word\">다량의 상품의 송장을 받다</strong>"
+  },
+  {
+    "id": 4883,
+    "word": "stipulation",
+    "exam_en": "on  <strong class=\"target-word\">stipulation</strong> that",
+    "exam_ko": "…<strong class=\"target-word\">이라는</strong> 조건으로."
+  },
+  {
+    "id": 4884,
+    "word": "embargo",
+    "exam_en": "under an <strong class=\"target-word\">embargo</strong>",
+    "exam_ko": "<strong class=\"target-word\">수출[출항] 금지</strong> 중에"
+  },
+  {
+    "id": 4885,
+    "word": "embargo",
+    "exam_en": "lay an <strong class=\"target-word\">embargo</strong> on ‥",
+    "exam_ko": "<strong class=\"target-word\">(배에) 입출항 금지령을 내리다</strong>"
+  },
+  {
+    "id": 4886,
+    "word": "dumping",
+    "exam_en": "exchange <strong class=\"target-word\">dumping</strong>",
+    "exam_ko": "<strong class=\"target-word\">환시세 하락[노동 착취]</strong>에 의한 덤핑."
+  },
+  {
+    "id": 4887,
+    "word": "dumping",
+    "exam_en": "No <strong class=\"target-word\">dumping</strong>.",
+    "exam_ko": "(게시) <strong class=\"target-word\">투기 금지</strong>."
+  }
+]

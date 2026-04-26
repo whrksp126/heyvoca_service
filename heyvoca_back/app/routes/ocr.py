@@ -2,9 +2,11 @@ from flask import request, jsonify
 from app.routes import ocr_bp
 from app import db
 from app.models.models import Voca, VocaMeaningMap, VocaMeaning, VocaExampleMap, VocaExample
+from app.utils.jwt_utils import jwt_required
 
 # OCR에서 추출한 단어 리스트를 받는 API
 @ocr_bp.route('/words', methods=['POST'])
+@jwt_required
 def receive_words():
     try:
         data = request.get_json()

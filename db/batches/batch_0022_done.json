@@ -1,0 +1,286 @@
+[
+  {
+    "id": 424,
+    "origin": "wonder",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">wondered</strong> why he came so late.",
+        "exam_ko": "그녀는 그가 왜 그렇게 늦게 왔는지 <strong class=\"target-word\">의아하게 여겼다</strong>."
+      },
+      {
+        "exam_en": "This result is nothing to <strong class=\"target-word\">wonder</strong> at.",
+        "exam_ko": "이 결과는 <strong class=\"target-word\">놀랄</strong> 일이 아니다."
+      }
+    ]
+  },
+  {
+    "id": 425,
+    "origin": "maintain",
+    "examples": [
+      {
+        "exam_en": "The pilot <strong class=\"target-word\">maintained</strong> an average speed of 450 mph.",
+        "exam_ko": "조종사는 시속 450마일의 평균 속도를 <strong class=\"target-word\">유지했다</strong>."
+      },
+      {
+        "exam_en": "The army <strong class=\"target-word\">maintained</strong> its attack through the night.",
+        "exam_ko": "군대는 밤새 공격을 <strong class=\"target-word\">속행했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 426,
+    "origin": "suffer",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">suffered</strong> for what he had done.",
+        "exam_ko": "그는 자신이 저지른 일로 <strong class=\"target-word\">괴로워했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">suffered</strong> all his life from money worries.",
+        "exam_ko": "그는 평생 돈 걱정으로 <strong class=\"target-word\">고통받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 427,
+    "origin": "publish",
+    "examples": [
+      {
+        "exam_en": "Faber and Faber <strong class=\"target-word\">publishes</strong> T.S. Eliot's works.",
+        "exam_ko": "페이버 앤드 페이버사는 엘리엇의 작품을 <strong class=\"target-word\">출판하고 있다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">published</strong> his novel with Knopf in 1957.",
+        "exam_ko": "그는 1957년에 크노프사에서 소설을 <strong class=\"target-word\">출판했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 428,
+    "origin": "express",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">expressed</strong> her point of view clearly.",
+        "exam_ko": "그녀는 자신의 견해를 명확하게 <strong class=\"target-word\">말했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">expressed</strong> this wish to her directly.",
+        "exam_ko": "그는 이 소원을 그녀에게 직접 <strong class=\"target-word\">이야기했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 429,
+    "origin": "avoid",
+    "examples": [
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">avoid</strong> a quarrel with him.",
+        "exam_ko": "그녀는 그와의 싸움을 <strong class=\"target-word\">피하려고</strong> 했다."
+      },
+      {
+        "exam_en": "The doctor told him to <strong class=\"target-word\">avoid</strong> sweets.",
+        "exam_ko": "의사는 그에게 단것을 <strong class=\"target-word\">피하라고</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 430,
+    "origin": "suppose",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Suppose</strong> the distance is one mile.",
+        "exam_ko": "거리가 1마일이라고 <strong class=\"target-word\">가정해 보자</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">suppose</strong> he knows what he is doing.",
+        "exam_ko": "그가 잘 알고 하는 것이라고 나는 <strong class=\"target-word\">생각한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 431,
+    "origin": "determine",
+    "examples": [
+      {
+        "exam_en": "They met to <strong class=\"target-word\">determine</strong> the boundary between the two countries.",
+        "exam_ko": "그들은 양국 간의 국경을 <strong class=\"target-word\">정하기</strong> 위해 만났다."
+      },
+      {
+        "exam_en": "We need to <strong class=\"target-word\">determine</strong> the date for the party.",
+        "exam_ko": "우리는 파티의 날짜를 <strong class=\"target-word\">정해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 432,
+    "origin": "tend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">tends</strong> to make bad judgments at critical moments.",
+        "exam_ko": "그는 위급할 때 오판하는 일이 <strong class=\"target-word\">많다</strong>."
+      },
+      {
+        "exam_en": "His political beliefs <strong class=\"target-word\">tend</strong> toward socialism.",
+        "exam_ko": "그의 정치 사상은 사회주의로 <strong class=\"target-word\">기울어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 433,
+    "origin": "save",
+    "examples": [
+      {
+        "exam_en": "Her quick thinking <strong class=\"target-word\">saved</strong> the situation.",
+        "exam_ko": "그녀의 재치 있는 판단이 상황을 <strong class=\"target-word\">수습했다</strong>."
+      },
+      {
+        "exam_en": "He worked hard to <strong class=\"target-word\">save</strong> his honor.",
+        "exam_ko": "그는 명예를 <strong class=\"target-word\">지키기</strong> 위해 열심히 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 434,
+    "origin": "design",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">designed</strong> a new model car for the company.",
+        "exam_ko": "그는 회사를 위해 신형차를 <strong class=\"target-word\">설계했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">designed</strong> a dress for the award ceremony.",
+        "exam_ko": "그녀는 시상식을 위한 드레스를 <strong class=\"target-word\">디자인했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 435,
+    "origin": "treat",
+    "examples": [
+      {
+        "exam_en": "He was accused of <strong class=\"target-word\">treating</strong> animals badly.",
+        "exam_ko": "그는 동물을 <strong class=\"target-word\">학대한</strong> 혐의를 받았다."
+      },
+      {
+        "exam_en": "She always <strong class=\"target-word\">treats</strong> everyone with respect.",
+        "exam_ko": "그녀는 항상 모든 사람을 <strong class=\"target-word\">경대한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 436,
+    "origin": "share",
+    "examples": [
+      {
+        "exam_en": "Everyone deserves a fair <strong class=\"target-word\">share</strong> of the reward.",
+        "exam_ko": "모든 사람은 공평한 보상의 <strong class=\"target-word\">몫</strong>을 받을 자격이 있다."
+      },
+      {
+        "exam_en": "She received a <strong class=\"target-word\">share</strong> in the profits.",
+        "exam_ko": "그녀는 이익의 <strong class=\"target-word\">배당</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 437,
+    "origin": "control",
+    "examples": [
+      {
+        "exam_en": "A parent company is <strong class=\"target-word\">controlling</strong> the entire industry group.",
+        "exam_ko": "한 모회사가 기업 그룹 전체를 <strong class=\"target-word\">지배하고 있다</strong>."
+      },
+      {
+        "exam_en": "The hijacker tried to <strong class=\"target-word\">control</strong> the plane and its crew.",
+        "exam_ko": "납치범은 비행기와 탑승원들을 <strong class=\"target-word\">제압하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 438,
+    "origin": "remove",
+    "examples": [
+      {
+        "exam_en": "She quietly <strong class=\"target-word\">removed</strong> herself from the room.",
+        "exam_ko": "그녀는 조용히 방을 <strong class=\"target-word\">떠났다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">remove</strong> the books from the desk.",
+        "exam_ko": "책상 위의 책을 <strong class=\"target-word\">치워</strong> 주세요."
+      },
+      {
+        "exam_en": "It takes 8 to 12 weeks to heal after a tooth is <strong class=\"target-word\">removed</strong>.",
+        "exam_ko": "치아를 <strong class=\"target-word\">뽑고</strong> 치유되기까지 8~12주가 걸린다."
+      }
+    ]
+  },
+  {
+    "id": 439,
+    "origin": "throw",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">threw</strong> his clothes about the room.",
+        "exam_ko": "그는 옷을 방 안에 <strong class=\"target-word\">내던졌다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">threw</strong> her old suit away.",
+        "exam_ko": "그녀는 헌 옷을 <strong class=\"target-word\">버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 440,
+    "origin": "exist",
+    "examples": [
+      {
+        "exam_en": "The old tradition ceased to <strong class=\"target-word\">exist</strong>.",
+        "exam_ko": "오래된 전통이 <strong class=\"target-word\">존재하기를</strong> 멈췄다."
+      },
+      {
+        "exam_en": "God does <strong class=\"target-word\">exist</strong>.",
+        "exam_ko": "신은 엄연히 <strong class=\"target-word\">존재한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 441,
+    "origin": "encourage",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">encouraged</strong> by his early success.",
+        "exam_ko": "그는 초기 성공에 <strong class=\"target-word\">자신감을 얻었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">encouraged</strong> him to learn the piano.",
+        "exam_ko": "그녀는 그에게 피아노를 배우라고 <strong class=\"target-word\">권했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 442,
+    "origin": "drown",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">drowning</strong> man will catch at a straw.",
+        "exam_ko": "<strong class=\"target-word\">물에 빠진</strong> 사람은 지푸라기라도 잡는다."
+      },
+      {
+        "exam_en": "He fell into the sea and <strong class=\"target-word\">drowned</strong>.",
+        "exam_ko": "그는 바다에 빠져서 <strong class=\"target-word\">익사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 443,
+    "origin": "activate",
+    "examples": [
+      {
+        "exam_en": "The smoke <strong class=\"target-word\">activated</strong> the fire alarm.",
+        "exam_ko": "연기가 화재 경보기를 <strong class=\"target-word\">작동시켰다</strong>."
+      },
+      {
+        "exam_en": "The chemical reaction <strong class=\"target-word\">activated</strong> the molecule.",
+        "exam_ko": "화학 반응이 분자를 <strong class=\"target-word\">활성화시켰다</strong>."
+      }
+    ]
+  }
+]

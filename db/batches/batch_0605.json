@@ -1,0 +1,266 @@
+[
+  {
+    "id": 20416,
+    "origin": "illustrious",
+    "examples": [
+      {
+        "exam_en": "illustrious achievements",
+        "exam_ko": "빛나는 업적."
+      }
+    ]
+  },
+  {
+    "id": 20418,
+    "origin": "beset",
+    "examples": [
+      {
+        "exam_en": "a man beset with a sense of guilt",
+        "exam_ko": "죄의식으로 고민하는 사람"
+      },
+      {
+        "exam_en": "be beset by illness",
+        "exam_ko": "병으로 시달리다"
+      }
+    ]
+  },
+  {
+    "id": 20419,
+    "origin": "tasteful",
+    "examples": [
+      {
+        "exam_en": "The bedroom was simple but tasteful. ",
+        "exam_ko": "침실은 단순하지만 고상했다."
+      },
+      {
+        "exam_en": "She sent the tasteful Christmas cards. ",
+        "exam_ko": "그녀는 멋진 크리스마스 카드를 보냈다."
+      },
+      {
+        "exam_en": "The bedroom was simple but tasteful.",
+        "exam_ko": "침실은 단순하지만 고상했다."
+      },
+      {
+        "exam_en": "She sent the tasteful Christmas cards.",
+        "exam_ko": "그녀는 멋진 크리스마스 카드를 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 20420,
+    "origin": "sickening",
+    "examples": [
+      {
+        "exam_en": "It is sickening to see such cruelty.",
+        "exam_ko": "그러한 잔인한 행위를 보는 것은 아주 불쾌하다."
+      }
+    ]
+  },
+  {
+    "id": 20421,
+    "origin": "sicken",
+    "examples": [
+      {
+        "exam_en": "The sight of the wounded sickened me.",
+        "exam_ko": "부상당한 사람을 보니 구역질이 났다."
+      },
+      {
+        "exam_en": "His rudeness sickens me.",
+        "exam_ko": "그의 예절 없는 태도에는 진저리가 난다"
+      }
+    ]
+  },
+  {
+    "id": 20425,
+    "origin": "conveyance",
+    "examples": [
+      {
+        "exam_en": "conveyance by land",
+        "exam_ko": "육상[수상, 철도] 수송"
+      },
+      {
+        "exam_en": "conveyance of goods",
+        "exam_ko": "화물[여객] 운송."
+      }
+    ]
+  },
+  {
+    "id": 20426,
+    "origin": "roomy",
+    "examples": [
+      {
+        "exam_en": "a roomy house",
+        "exam_ko": "넓은 집"
+      },
+      {
+        "exam_en": "a roomy car",
+        "exam_ko": "공간이 넓은 자동차."
+      }
+    ]
+  },
+  {
+    "id": 20427,
+    "origin": "barbarous",
+    "examples": [
+      {
+        "exam_en": "barbarous people",
+        "exam_ko": "미개인"
+      },
+      {
+        "exam_en": "a barbarous style",
+        "exam_ko": "비표준적[파격적인] 문체."
+      }
+    ]
+  },
+  {
+    "id": 20432,
+    "origin": "antiquated",
+    "examples": [
+      {
+        "exam_en": "antiquated laws",
+        "exam_ko": "시대에 뒤진 법률."
+      },
+      {
+        "exam_en": "He is still antiquated in his ways.",
+        "exam_ko": "그는 아직까지 방식이 구식이다."
+      },
+      {
+        "exam_en": "The company finally decided to upgrade their antiquated computer systems to improve efficiency and keep up with modern technology.",
+        "exam_ko": "그 회사는 드디어 효율성을 향상시키고 현대 기술에 발맞춰 가기 위해 낡은 컴퓨터 시스템을 업그레이드하기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 20433,
+    "origin": "allot",
+    "examples": [
+      {
+        "exam_en": "We allotted an hour to each speaker.",
+        "exam_ko": "우리는 각 연사에게 1시간을 배당했다(※수동태는 Each speaker was allotted an hour./An hour was allotted to each speaker.)"
+      },
+      {
+        "exam_en": "He allotted the profits among them.",
+        "exam_ko": "그는 그들에게 그 이익을 분배했다.(※수동태는 The profits were allotted among them.)"
+      }
+    ]
+  },
+  {
+    "id": 20439,
+    "origin": "argumentative",
+    "examples": [
+      {
+        "exam_en": "an argumentative drunk",
+        "exam_ko": "입씨름을 좋아하는 주정뱅이."
+      }
+    ]
+  },
+  {
+    "id": 20440,
+    "origin": "aerospace",
+    "examples": [
+      {
+        "exam_en": "aerospace industries",
+        "exam_ko": "항공 우주 산업[의학]."
+      }
+    ]
+  },
+  {
+    "id": 20443,
+    "origin": "tempo",
+    "examples": [
+      {
+        "exam_en": "pick up the tempo",
+        "exam_ko": "활기를 띠다, 기운이 나다."
+      }
+    ]
+  },
+  {
+    "id": 20444,
+    "origin": "sonorous",
+    "examples": [
+      {
+        "exam_en": "a sonorous church bell",
+        "exam_ko": "울려 퍼지는 교회 종소리"
+      },
+      {
+        "exam_en": "a sonorous peal of thunder",
+        "exam_ko": "울려 퍼지는 우렛소리."
+      }
+    ]
+  },
+  {
+    "id": 20445,
+    "origin": "worrisome",
+    "examples": [
+      {
+        "exam_en": "a worrisome question",
+        "exam_ko": "귀찮은 문제."
+      }
+    ]
+  },
+  {
+    "id": 20449,
+    "origin": "inlet",
+    "examples": [
+      {
+        "exam_en": "a fuel inlet",
+        "exam_ko": "연료 주입구."
+      },
+      {
+        "exam_en": "Utilities shown to scale (lighting , transformers, pull boxes, manholes, inlets, lift stations, propane tankes, septic tanks, culverts, etc.)",
+        "exam_ko": "축소된 유틸리티(조명, 변압기,풀박스, 맨홀, 주입구, 승강기 스테이션, 프로판 탱크, 정화조, 지하 배수로 등)"
+      }
+    ]
+  },
+  {
+    "id": 20453,
+    "origin": "melancholy",
+    "examples": [
+      {
+        "exam_en": "When I thought about it, I sank into melancholy.",
+        "exam_ko": "그 생각을 하자 우울해졌다."
+      },
+      {
+        "exam_en": "I was more melancholy than ten Hamlets.",
+        "exam_ko": "더없이 우울했다."
+      }
+    ]
+  },
+  {
+    "id": 20456,
+    "origin": "phantom",
+    "examples": [
+      {
+        "exam_en": "phantoms of the past",
+        "exam_ko": "과거의 망령."
+      },
+      {
+        "exam_en": "a phantom company",
+        "exam_ko": "유령 회사"
+      }
+    ]
+  },
+  {
+    "id": 20458,
+    "origin": "herring",
+    "examples": [
+      {
+        "exam_en": "herring roe",
+        "exam_ko": "말린 청어알"
+      },
+      {
+        "exam_en": "kippered herring",
+        "exam_ko": "훈제 청어(※kippers라고도 함. 버터구이로 하여 아침 식사에 먹음)"
+      }
+    ]
+  },
+  {
+    "id": 20462,
+    "origin": "forerunner",
+    "examples": [
+      {
+        "exam_en": "a forerunner of winter",
+        "exam_ko": "겨울의 전조."
+      }
+    ]
+  }
+]

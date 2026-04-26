@@ -1,0 +1,226 @@
+[
+  {
+    "id": 41918,
+    "origin": "annualize",
+    "examples": [
+      {
+        "exam_en": "Investors earned an annualized rate of seven percent paid quarterly.",
+        "exam_ko": "투자자들에게는 연간 7％의 이율로 매 분기마다 이자가 지급된다."
+      }
+    ]
+  },
+  {
+    "id": 42054,
+    "origin": "verminous",
+    "examples": [
+      {
+        "exam_en": "an old verminous blanket",
+        "exam_ko": "해충이 들끓는 낡은 담요."
+      }
+    ]
+  },
+  {
+    "id": 42064,
+    "origin": "mightily",
+    "examples": [
+      {
+        "exam_en": "cry mightily",
+        "exam_ko": "몹시 울다[허리를 쥐고 웃다]."
+      },
+      {
+        "exam_en": "be mightily important",
+        "exam_ko": "대단히 중요하다."
+      }
+    ]
+  },
+  {
+    "id": 42065,
+    "origin": "socio",
+    "examples": [
+      {
+        "exam_en": "sociobiology",
+        "exam_ko": "사회 생물학"
+      },
+      {
+        "exam_en": "socioecology",
+        "exam_ko": "사회 환경학."
+      }
+    ]
+  },
+  {
+    "id": 42077,
+    "origin": "dan",
+    "examples": [
+      {
+        "exam_en": "Dan Cupid",
+        "exam_ko": "큐피드 도령"
+      },
+      {
+        "exam_en": "Dan Chaucer",
+        "exam_ko": "초서경."
+      }
+    ]
+  },
+  {
+    "id": 42114,
+    "origin": "princeps",
+    "examples": [
+      {
+        "exam_en": "editio princeps",
+        "exam_ko": "초판."
+      }
+    ]
+  },
+  {
+    "id": 42136,
+    "origin": "jericho",
+    "examples": [
+      {
+        "exam_en": "May you perish in Jericho!",
+        "exam_ko": "꺼져라!, 뒈져라!"
+      }
+    ]
+  },
+  {
+    "id": 42148,
+    "origin": "eris",
+    "examples": [
+      {
+        "exam_en": "Eris was first identified in 2005.",
+        "exam_ko": "에리스는 2005년에 처음 확인되었다."
+      },
+      {
+        "exam_en": "Eris, my goddess of trouble",
+        "exam_ko": "내 골칫거리의 여신인 에리스."
+      }
+    ]
+  },
+  {
+    "id": 42174,
+    "origin": "overleaf",
+    "examples": [
+      {
+        "exam_en": "continued overleaf",
+        "exam_ko": "다음 페이지에 계속."
+      }
+    ]
+  },
+  {
+    "id": 42184,
+    "origin": "nitrous",
+    "examples": [
+      {
+        "exam_en": "nitrous acid",
+        "exam_ko": "아질산."
+      }
+    ]
+  },
+  {
+    "id": 42187,
+    "origin": "servo",
+    "examples": [
+      {
+        "exam_en": "servo brakes",
+        "exam_ko": "서보제동장치."
+      },
+      {
+        "exam_en": "Don't buy her flowers from the servo on the way to her house.",
+        "exam_ko": "그녀에게 줄 꽃을 그녀의 집으로 가는 길에 있는 주유소에서 사지 말라."
+      }
+    ]
+  },
+  {
+    "id": 42207,
+    "origin": "icono",
+    "examples": [
+      {
+        "exam_en": "iconographer",
+        "exam_ko": "도상학자."
+      }
+    ]
+  },
+  {
+    "id": 42237,
+    "origin": "icosa",
+    "examples": [
+      {
+        "exam_en": "icosidodecahedron",
+        "exam_ko": "32면체."
+      }
+    ]
+  },
+  {
+    "id": 42251,
+    "origin": "pronouncing",
+    "examples": [
+      {
+        "exam_en": "a pronouncing dictionary",
+        "exam_ko": "발음 사전."
+      }
+    ]
+  },
+  {
+    "id": 42258,
+    "origin": "octa",
+    "examples": [
+      {
+        "exam_en": "octan",
+        "exam_ko": "8일열."
+      }
+    ]
+  },
+  {
+    "id": 42259,
+    "origin": "octavo",
+    "examples": [
+      {
+        "exam_en": "crown 8vo",
+        "exam_ko": "크라운 8절판."
+      }
+    ]
+  },
+  {
+    "id": 42286,
+    "origin": "lockup",
+    "examples": [
+      {
+        "exam_en": "a lockup shop",
+        "exam_ko": "임대 가게[점포]."
+      }
+    ]
+  },
+  {
+    "id": 42302,
+    "origin": "entomo",
+    "examples": [
+      {
+        "exam_en": "entomolite",
+        "exam_ko": "곤충 화석."
+      }
+    ]
+  },
+  {
+    "id": 42310,
+    "origin": "encephalo",
+    "examples": [
+      {
+        "exam_en": "encephalotomy",
+        "exam_ko": "뇌절제(술)."
+      }
+    ]
+  },
+  {
+    "id": 42314,
+    "origin": "dys",
+    "examples": [
+      {
+        "exam_en": "dyskinesia",
+        "exam_ko": "운동 장애"
+      },
+      {
+        "exam_en": "dysbarism",
+        "exam_ko": "감압증."
+      }
+    ]
+  }
+]

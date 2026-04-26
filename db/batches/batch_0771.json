@@ -1,0 +1,202 @@
+[
+  {
+    "id": 51427,
+    "origin": "revison",
+    "examples": [
+      {
+        "exam_en": "Include additional time required for making corrections or revisions to submittals noted by Architect and Design-Builder and additional time for handling and reviewing submittals required by those corrections.",
+        "exam_ko": "설계자와 디자인 빌더가 명시한 제출 자료를 정정 또는 수정하는데 필요한 추가 시간과 해당 정정에 필요한 제출 자료를 처리하고 검토하는 추가 시간을 포함하시오."
+      }
+    ]
+  },
+  {
+    "id": 51428,
+    "origin": "cti",
+    "examples": [
+      {
+        "exam_en": "Eurovent and the CTI have established a cooperation agreement under which the CTI provides thermal certification process services for cooling towers to Eurovent. This includes thermal testing and administration according to CTI STD-201 RS and OM for product lines that originate their certification process with Eurovent.",
+        "exam_ko": "Eurovent와 CTI는 CTI가 냉각탑에 대한 열 인증 프로세스 서비스를 Eurovent에 제공하는 협력 계약을 체결했습니다. 여기에는 Eurovent에서 인증 프로세스를 시작한 제품 라인에 대한 CTI STD-201 RS 및 OM에 따른 열 테스트 및 관리가 포함됩니다."
+      }
+    ]
+  },
+  {
+    "id": 51429,
+    "origin": "psr(s)",
+    "examples": [
+      {
+        "exam_en": "Project Specific Requirement(s)-appear in RFT and refer to this document which is the Technical Specification for the project which is the subject of RFT",
+        "exam_ko": "RFT (입찰 요청)에 프로젝트 별 요구 사항이 나타나고 RFT (입찰 요청) 주제 인 프로젝트의 기술 시방서인 이문서를 참조하십시오."
+      }
+    ]
+  },
+  {
+    "id": 51430,
+    "origin": "ssd",
+    "examples": [
+      {
+        "exam_en": "Free water is simply the difference between the mass of a sample of wet-saturated aggregate and the mass of the same sample in the saturated-surface-dry condition.",
+        "exam_ko": "프리 워터는 표면건조 포화상채의 골재의 매스와 습윤상태의 매스의 차이를 말한다."
+      }
+    ]
+  },
+  {
+    "id": 51431,
+    "origin": "crimping",
+    "examples": [
+      {
+        "exam_en": "Crimping is joining two or more pieces of metal or other ductile material by deforming one or both of them to hold the other. The bend or deformity is called the crimp.",
+        "exam_ko": "크림 핑은 둘 이상의 금속 또는 다른 연성 재료를 결합하여 하나 또는 둘 모두를 변형시켜 다른 하나를 고정시킵니다. 굽힘 또는 변형을 크림프라고합니다."
+      }
+    ]
+  },
+  {
+    "id": 51432,
+    "origin": "skinnig",
+    "examples": [
+      {
+        "exam_en": "Paint shall show no thickening, hard sediments or skinning after being stored in a full, tightly covered container from the date of delivery until application: during this period they shall be suitable for easy application.",
+        "exam_ko": "페인트는 배송일부터 적용까지 완전히 밀폐 된 용기에 보관 한 후에는 농밀화, 딱딱한 침전물, 더껑이 보이면 안된다. 이 기간 동안은 언제든 도포할 수 있어야 한다."
+      }
+    ]
+  },
+  {
+    "id": 51433,
+    "origin": "msds",
+    "examples": [
+      {
+        "exam_en": "Hazardous Materials Notification: Submit for Record. In the event no product or material is available that does not contain hazardous materials as determined by the Owner, a Material Safety Data Sheet(MSDS) equivalent to OSHA Form 20 shall be submitted for that proposed product or material prior to installation.",
+        "exam_ko": "유해 물질 고지 : 기록을 위해 제출하십시오. 소유자가 결정한 위험 물질이 포함되어 있지 않은 제품 또는 자재가 없는 경우, 설치 전에 제안 된 제품 또는 자재에 대해 OSHA Form 20에 해당하는 자재 안전 데이터 시트(MSDS)를 제출해야합니다."
+      }
+    ]
+  },
+  {
+    "id": 51434,
+    "origin": "rqd",
+    "examples": [
+      {
+        "exam_en": "Rock quality designation (RQD) is a standard technique in the mining industry for the qualitative and quantitative assessment of rock quality and degree of jointing, fracturing, and shearing in a rock mass.",
+        "exam_ko": "암질지수는 암석 품질 및 접합, 파단 및 전단 정도에 대한 질적 및 양적 평가를 위한 광산업의 표준 기술입니다."
+      }
+    ]
+  },
+  {
+    "id": 51437,
+    "origin": "contaminants",
+    "examples": [
+      {
+        "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and contaminants by cleaning with solvents, vapor, alkalli, emulsion or steam",
+        "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 오염 물질 제거"
+      }
+    ]
+  },
+  {
+    "id": 51447,
+    "origin": "strecher",
+    "examples": [
+      {
+        "exam_en": "The course of brickwork in which all the bricks are laid as stretchers is known as stretcher course.",
+        "exam_ko": "스트레처 코스라고 알려진 스트레처는 벽돌의 수평 층이다."
+      }
+    ]
+  },
+  {
+    "id": 51448,
+    "origin": "osha",
+    "examples": [
+      {
+        "exam_en": "A. Building Code: Concrete work shall conform to the requirements of the Building Code identified on the Structural General Notes, and OSHA requirements, except where more stringent conditions or criteria occur in the standards referenced below and on the drawings.",
+        "exam_ko": "건축법 : 콘크리트 작업은 아래의 표준 및 도면에서보다 엄격한 조건 또는 기준이 발생하는 경우를 제외하고 구조 일반 사항 및 OSHA 요구 사항에 명시된 건축법의 요구 사항을 준수해야합니다."
+      }
+    ]
+  },
+  {
+    "id": 51450,
+    "origin": "dwv",
+    "examples": [
+      {
+        "exam_en": "plumbing isometrics or riser diagrams for water system and drain, waste, and vent(DWV)system for each restroom, plumbing stack, or other group of plumbing fixtures where all information cannot be shown on plan sheets",
+        "exam_ko": "모든 계획 시트에 표기할 수 없는 배관 설비물이나 배관 스택, 모든 화장실에 상하수도 및 환기 시스템을 위한 배관 아이소메트릭이나 라이저 다이아 그램"
+      }
+    ]
+  },
+  {
+    "id": 51452,
+    "origin": "lithology",
+    "examples": [
+      {
+        "exam_en": "Lithology is the study of the general physical characteristics of rocks.",
+        "exam_ko": "암석학은 암석의 일반적인 물리적 특성에 대한 연구입니다."
+      }
+    ]
+  },
+  {
+    "id": 51453,
+    "origin": "asce",
+    "examples": [
+      {
+        "exam_en": "Determined the basic wind speed, V, in accordance with ASCE 7 Figure 6-1 or IBC.",
+        "exam_ko": "ASCE 7 그림 6-1 또는 IBC에 따라 기본 풍속 V를 결정했습니다."
+      }
+    ]
+  },
+  {
+    "id": 51454,
+    "origin": "broom-clean",
+    "examples": [
+      {
+        "exam_en": "Where dust would impair proper execution of the Work, broom-clean or vacuum the entire work area, as appropriate.",
+        "exam_ko": "먼지가 작업의 올바른 수행을 방해하는 경우, 전체 작업 영역을 적절하게 비질 청소 또는 청소기 청소하십시오."
+      }
+    ]
+  },
+  {
+    "id": 51456,
+    "origin": "assp",
+    "examples": [
+      {
+        "exam_en": "The American Society of Safety Engineers (ASSE) has updated its name to the American Society of Safety Professionals (ASSP). In the simplest sense, this name change was necessary because ASSP represents more than just engineers.",
+        "exam_ko": "미국 안전 엔지니어 협회 (ASSE)는 미국 안전 전문가 협회 (ASSP)로 이름을 업데이트했습니다. 가장 간단한 의미에서 ASSP는 단순한 엔지니어 이상의 것을 나타 내기 때문에이 이름 변경이 필요했습니다."
+      }
+    ]
+  },
+  {
+    "id": 51460,
+    "origin": "snips",
+    "examples": [
+      {
+        "exam_en": "Stainless steel blades make these snip scissors extremely durable.",
+        "exam_ko": "스테인레스 스틸 날이 금속 절단용 가위를 매우 내구성있게 만듭니다."
+      }
+    ]
+  },
+  {
+    "id": 51461,
+    "origin": "non-conditioned",
+    "examples": [
+      {
+        "exam_en": "Seal reveals at openings in external walls, and in walls which are between conditioned and non-conditioned spaces, with material which is impervious to water before installing windows, doors or other items in those openings.",
+        "exam_ko": "개구부에 다른 아이템이나 창문, 문을 설치하기 전에 물이 투과하지 못하는 자재로 처치된 공간과 처치안된 공간 사이에 있는 내벽이나 외벽의 개구부를 밀폐하시오."
+      }
+    ]
+  },
+  {
+    "id": 51462,
+    "origin": "waterstop",
+    "examples": [
+      {
+        "exam_en": "Concrete Joint Locations: Submit plans indicating locations and details of construction joints, contraction joints, waterstops, sleeves, embedments, etc that interact with the joints.",
+        "exam_ko": "콘크리트 줄눈 위치 : 조인트와 상호 작용하는 시공줄눈, 수축줄눈, 지수판, 슬리브, 매설물(파이프, 덕트, 슬리브, 비닐 전선관)등의 위치와 세부사항을 나타내는 계획을 제출하시오."
+      }
+    ]
+  },
+  {
+    "id": 51463,
+    "origin": "pfp",
+    "examples": [
+      {
+        "exam_en": "Passive fire protection tends to fall into one of the following three categories: dense concrete, lightweight cementitious and intumescent coating.",
+        "exam_ko": "PFP는 고밀도 콘크리트, 경량시멘트, 내화도료 세가지 범주로 나눈다."
+      }
+    ]
+  }
+]

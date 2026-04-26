@@ -1,0 +1,230 @@
+[
+  {
+    "id": 24482,
+    "origin": "analects",
+    "examples": [
+      {
+        "exam_en": "The Analects of Confucius",
+        "exam_ko": "논어."
+      }
+    ]
+  },
+  {
+    "id": 24484,
+    "origin": "gob",
+    "examples": [
+      {
+        "exam_en": "a gob of mashed potato",
+        "exam_ko": "으깬 감자 덩어리."
+      },
+      {
+        "exam_en": "She has gobs of sex ap-peal.",
+        "exam_ko": "그녀는 성적 매력이 넘쳐흐른다."
+      }
+    ]
+  },
+  {
+    "id": 24485,
+    "origin": "snappish",
+    "examples": [
+      {
+        "exam_en": "a snappish reply",
+        "exam_ko": "퉁명스러운 대답."
+      }
+    ]
+  },
+  {
+    "id": 24488,
+    "origin": "vortex",
+    "examples": [
+      {
+        "exam_en": "be drawn into the vortex of the struggle",
+        "exam_ko": "싸움의 소용돌이 속에 휩쓸려 들어가다."
+      }
+    ]
+  },
+  {
+    "id": 24494,
+    "origin": "statehood",
+    "examples": [
+      {
+        "exam_en": "Hawaii was granted statehood in 1959.",
+        "exam_ko": "하와이는 1959년에 주로 인정되었다."
+      }
+    ]
+  },
+  {
+    "id": 24497,
+    "origin": "promotional",
+    "examples": [
+      {
+        "exam_en": "a promotional strategy",
+        "exam_ko": "선전[판매 촉진] 전략."
+      }
+    ]
+  },
+  {
+    "id": 24500,
+    "origin": "thinker",
+    "examples": [
+      {
+        "exam_en": "a slow thinker",
+        "exam_ko": "머리가 잘 돌지 않는[도는] 사람."
+      }
+    ]
+  },
+  {
+    "id": 24506,
+    "origin": "accession",
+    "examples": [
+      {
+        "exam_en": "accession to manhood",
+        "exam_ko": "성년이 됨[재산 취득]"
+      },
+      {
+        "exam_en": "accession to the throne",
+        "exam_ko": "왕의 즉위."
+      },
+      {
+        "exam_en": "The accession of territory was not only vast, but it was also of the highest importance to Venetian commerce.",
+        "exam_ko": "영토의 획득은 방대했을 뿐만 아니라 베네치아 상업에서도 가장 중요했다."
+      }
+    ]
+  },
+  {
+    "id": 24514,
+    "origin": "immunize",
+    "examples": [
+      {
+        "exam_en": "immunize a land mine",
+        "exam_ko": "지뢰를 처리하여 불발시키다."
+      }
+    ]
+  },
+  {
+    "id": 24529,
+    "origin": "undercharge",
+    "examples": [
+      {
+        "exam_en": "The store attendant undercharged me for the book.",
+        "exam_ko": "종업원은 나에게 정가 이하의 책값을 청구했다"
+      },
+      {
+        "exam_en": "The customer was undercharged  two dollars.",
+        "exam_ko": "손님은 2달러 적게 청구 받았다."
+      }
+    ]
+  },
+  {
+    "id": 24533,
+    "origin": "rarity",
+    "examples": [
+      {
+        "exam_en": "My collection of plants contains many rarities.",
+        "exam_ko": "내가 수집한 식물들은 희귀종들이 많이 있다"
+      },
+      {
+        "exam_en": "He decided to skip dessert, which is a rarity for him.",
+        "exam_ko": "그가 디저트를 생략했는데 그에게 그런 일은 좀처럼 없는 일이다."
+      }
+    ]
+  },
+  {
+    "id": 24556,
+    "origin": "isthmus",
+    "examples": [
+      {
+        "exam_en": "the isthmus of Panama",
+        "exam_ko": "파나마 해협."
+      }
+    ]
+  },
+  {
+    "id": 24557,
+    "origin": "capitalistic",
+    "examples": [
+      {
+        "exam_en": "a capitalistic society",
+        "exam_ko": "자본주의 사회[체제, 경제]."
+      }
+    ]
+  },
+  {
+    "id": 24561,
+    "origin": "wherewithal",
+    "examples": [
+      {
+        "exam_en": "They want to move, but they haven't the wherewithal.",
+        "exam_ko": "그들은 이사하고 싶으나 자금이 없다."
+      },
+      {
+        "exam_en": "Here is wherewithal to build the school.",
+        "exam_ko": "여기에 학교를 지을 자금이 있다."
+      }
+    ]
+  },
+  {
+    "id": 24568,
+    "origin": "berth",
+    "examples": [
+      {
+        "exam_en": "an upper berth",
+        "exam_ko": "위쪽[아래쪽] 침대."
+      },
+      {
+        "exam_en": "on the berth",
+        "exam_ko": "(배가) 정박 중인[에]"
+      }
+    ]
+  },
+  {
+    "id": 24570,
+    "origin": "pock",
+    "examples": [
+      {
+        "exam_en": "a pocked grey limestone wall",
+        "exam_ko": "곰보처럼 된 회색 석회암 벽."
+      }
+    ]
+  },
+  {
+    "id": 24572,
+    "origin": "arched",
+    "examples": [
+      {
+        "exam_en": "an arched bridge",
+        "exam_ko": "아치교."
+      }
+    ]
+  },
+  {
+    "id": 24575,
+    "origin": "toting",
+    "examples": [
+      {
+        "exam_en": "a gun-toting soldier",
+        "exam_ko": "총을 휴대하고 있는 병사."
+      }
+    ]
+  },
+  {
+    "id": 24581,
+    "origin": "domesticated",
+    "examples": [
+      {
+        "exam_en": "domesticated animals",
+        "exam_ko": "가축."
+      }
+    ]
+  },
+  {
+    "id": 24585,
+    "origin": "quotidian",
+    "examples": [
+      {
+        "exam_en": "She found beauty in the quotidian moments of everyday life.",
+        "exam_ko": "그녀는 일상 생활의 흔한 순간들에서 아름다움을 발견했다."
+      }
+    ]
+  }
+]

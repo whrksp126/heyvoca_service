@@ -1,0 +1,258 @@
+[
+  {
+    "id": 16994,
+    "origin": "floodwater",
+    "examples": [
+      {
+        "exam_en": "floodwater discharge",
+        "exam_ko": "고수량(高水量)."
+      }
+    ]
+  },
+  {
+    "id": 16997,
+    "origin": "fundraising",
+    "examples": [
+      {
+        "exam_en": "a fundraising campaign",
+        "exam_ko": "모금 운동."
+      }
+    ]
+  },
+  {
+    "id": 16998,
+    "origin": "gardener",
+    "examples": [
+      {
+        "exam_en": "Who's the gardener?",
+        "exam_ko": "어느 분이 정원사입니까?(※손질을 칭찬하는 말)."
+      }
+    ]
+  },
+  {
+    "id": 16999,
+    "origin": "geometric",
+    "examples": [
+      {
+        "exam_en": "a geometric theorem",
+        "exam_ko": "기하의 정리."
+      },
+      {
+        "exam_en": "a geometric design",
+        "exam_ko": "기하학적인 도안[무늬]."
+      }
+    ]
+  },
+  {
+    "id": 17001,
+    "origin": "gnawing",
+    "examples": [
+      {
+        "exam_en": "the persistent gnawings of guilt",
+        "exam_ko": "끊임없는 죄의식의 고통."
+      },
+      {
+        "exam_en": "gnawing animals",
+        "exam_ko": "[동물] 설치류(다람쥐·쥐·토끼 등)."
+      }
+    ]
+  },
+  {
+    "id": 17003,
+    "origin": "heredity",
+    "examples": [
+      {
+        "exam_en": "by heredity",
+        "exam_ko": "유전에 의해."
+      }
+    ]
+  },
+  {
+    "id": 17006,
+    "origin": "inaccurate",
+    "examples": [
+      {
+        "exam_en": "inaccurate information",
+        "exam_ko": "부정확한 정보"
+      },
+      {
+        "exam_en": "To call their relationship \"love\" is inaccurate.",
+        "exam_ko": "그들의 관계를 「사랑」이라고 하는 것은 정확한 표현이 아니다."
+      }
+    ]
+  },
+  {
+    "id": 17009,
+    "origin": "instinctive",
+    "examples": [
+      {
+        "exam_en": "instinctive behavior",
+        "exam_ko": "본능적 행동."
+      }
+    ]
+  },
+  {
+    "id": 17013,
+    "origin": "logging",
+    "examples": [
+      {
+        "exam_en": "a logging railroad",
+        "exam_ko": "삼림 철도."
+      }
+    ]
+  },
+  {
+    "id": 17015,
+    "origin": "medal",
+    "examples": [
+      {
+        "exam_en": "a prize medal",
+        "exam_ko": "상패"
+      },
+      {
+        "exam_en": "the Medal for Merit",
+        "exam_ko": "(미) 공로장"
+      }
+    ]
+  },
+  {
+    "id": 17018,
+    "origin": "microscopic",
+    "examples": [
+      {
+        "exam_en": "microscopic organisms",
+        "exam_ko": "미생물."
+      },
+      {
+        "exam_en": "microscopic examination",
+        "exam_ko": "현미경 검사."
+      }
+    ]
+  },
+  {
+    "id": 17019,
+    "origin": "missile",
+    "examples": [
+      {
+        "exam_en": "an international ballistic missile",
+        "exam_ko": "대륙간 탄도탄(ICBM)"
+      },
+      {
+        "exam_en": "nuclear missiles",
+        "exam_ko": "핵 미사일"
+      },
+      {
+        "exam_en": "A missile is flying through the air.",
+        "exam_ko": "미사일이 창공을 날고 있다."
+      },
+      {
+        "exam_en": "This ballistic missile carries a nuclear warhead.",
+        "exam_ko": "이 탄도 미사일은 핵탄두를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 17020,
+    "origin": "moss",
+    "examples": [
+      {
+        "exam_en": "A rolling stone gathers no moss.",
+        "exam_ko": "구르는 돌에는 이끼가 안 낀다, 잦은 직업 전환은 유해무익."
+      }
+    ]
+  },
+  {
+    "id": 17025,
+    "origin": "peak",
+    "examples": [
+      {
+        "exam_en": "snow-covered peaks",
+        "exam_ko": "눈덮인 봉우리들."
+      },
+      {
+        "exam_en": "The peaks were bathed in a rosy light.",
+        "exam_ko": "산봉우리들이 장미 빛으로 빛나고 있었다."
+      },
+      {
+        "exam_en": "The peaks were bathed in a rosy light. ",
+        "exam_ko": "산봉우리들이 장미 빛으로 빛나고 있었다.\n"
+      }
+    ]
+  },
+  {
+    "id": 17026,
+    "origin": "perpendicular",
+    "examples": [
+      {
+        "exam_en": "a perpendicular cliff",
+        "exam_ko": "깎아지른 낭떠러지"
+      },
+      {
+        "exam_en": "a perpendicular line",
+        "exam_ko": "수(직)선"
+      }
+    ]
+  },
+  {
+    "id": 17029,
+    "origin": "plentiful",
+    "examples": [
+      {
+        "exam_en": "a plentiful supply of fuel",
+        "exam_ko": "풍부한 연료 공급"
+      },
+      {
+        "exam_en": "be plentiful in humor",
+        "exam_ko": "유머가 넘치다."
+      }
+    ]
+  },
+  {
+    "id": 17032,
+    "origin": "porous",
+    "examples": [
+      {
+        "exam_en": "His arguments were as porous as a leaky boat.",
+        "exam_ko": "(비유) 그의 의론(議論)은 아주 허점투성이였다."
+      },
+      {
+        "exam_en": "Our southern border is porous, with over 6 million migrants having crossed over since Biden became president.",
+        "exam_ko": "바이든이 대통령이 된 후 600만 명이 넘는 이주민이 우리(미국)의 남부 국경을 쉽게 통과해 넘어온다."
+      }
+    ]
+  },
+  {
+    "id": 17033,
+    "origin": "predicable",
+    "examples": [
+      {
+        "exam_en": "Length is predicable of a line.",
+        "exam_ko": "길이는 선의 속성이다."
+      }
+    ]
+  },
+  {
+    "id": 17035,
+    "origin": "pulley",
+    "examples": [
+      {
+        "exam_en": "a fixed pulley",
+        "exam_ko": "고정 도르래"
+      },
+      {
+        "exam_en": "a driving pulley",
+        "exam_ko": "구동[이동] 도르래."
+      }
+    ]
+  },
+  {
+    "id": 17036,
+    "origin": "quadrant",
+    "examples": [
+      {
+        "exam_en": "the first quadrant",
+        "exam_ko": "제1[제2]사분면."
+      }
+    ]
+  }
+]

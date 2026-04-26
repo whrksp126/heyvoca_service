@@ -1,0 +1,246 @@
+[
+  {
+    "id": 23817,
+    "origin": "meter",
+    "examples": [
+      {
+        "exam_en": "a gas meter",
+        "exam_ko": "가스 계량기"
+      },
+      {
+        "exam_en": "taxis without meter",
+        "exam_ko": "미터기 없는 택시."
+      }
+    ]
+  },
+  {
+    "id": 23818,
+    "origin": "rotary",
+    "examples": [
+      {
+        "exam_en": "rotary motion",
+        "exam_ko": "회전 운동."
+      },
+      {
+        "exam_en": "a rotary fan",
+        "exam_ko": "선풍기[회전 펌프]"
+      }
+    ]
+  },
+  {
+    "id": 23824,
+    "origin": "metastasize",
+    "examples": [
+      {
+        "exam_en": "a process in which violence and guilt metastasize",
+        "exam_ko": "폭력과 죄가 전이되는 과정."
+      }
+    ]
+  },
+  {
+    "id": 23827,
+    "origin": "poetic",
+    "examples": [
+      {
+        "exam_en": "poetic imagination",
+        "exam_ko": "시적인 상상력"
+      },
+      {
+        "exam_en": "poetic phrasing",
+        "exam_ko": "시적인 표현"
+      }
+    ]
+  },
+  {
+    "id": 23832,
+    "origin": "iterate",
+    "examples": [
+      {
+        "exam_en": "iterate one's argument",
+        "exam_ko": "자기 주장을 반복하다."
+      }
+    ]
+  },
+  {
+    "id": 23836,
+    "origin": "heritable",
+    "examples": [
+      {
+        "exam_en": "heritable rights",
+        "exam_ko": "상속권."
+      }
+    ]
+  },
+  {
+    "id": 23844,
+    "origin": "revolving",
+    "examples": [
+      {
+        "exam_en": "a revolving stage",
+        "exam_ko": "회전 무대"
+      },
+      {
+        "exam_en": "a revolving fund",
+        "exam_ko": "(미) 회전 자금."
+      }
+    ]
+  },
+  {
+    "id": 23845,
+    "origin": "astro",
+    "examples": [
+      {
+        "exam_en": "astrogeology",
+        "exam_ko": "천체 지질학"
+      },
+      {
+        "exam_en": "astrophotography",
+        "exam_ko": "천체 사진술."
+      }
+    ]
+  },
+  {
+    "id": 23847,
+    "origin": "extravagantly",
+    "examples": [
+      {
+        "exam_en": "an extravagantly offensive person",
+        "exam_ko": "지나치게 공격적인 사람"
+      },
+      {
+        "exam_en": "The country is extravagantly beautiful.",
+        "exam_ko": "그 나라는 기막히게 아름답다."
+      }
+    ]
+  },
+  {
+    "id": 23848,
+    "origin": "seeming",
+    "examples": [
+      {
+        "exam_en": "seeming faithfulness",
+        "exam_ko": "표면상의 성의."
+      },
+      {
+        "exam_en": "without seeming to exaggerate",
+        "exam_ko": "과장하는 기색 없이."
+      }
+    ]
+  },
+  {
+    "id": 23850,
+    "origin": "agreeably",
+    "examples": [
+      {
+        "exam_en": "I was agreeably surprised.",
+        "exam_ko": "놀라기는 했지만 기뻤다."
+      }
+    ]
+  },
+  {
+    "id": 23851,
+    "origin": "ceasing",
+    "examples": [
+      {
+        "exam_en": "without ceasing",
+        "exam_ko": "끊임없이."
+      }
+    ]
+  },
+  {
+    "id": 23853,
+    "origin": "indifferently",
+    "examples": [
+      {
+        "exam_en": "They shrugged indifferently.",
+        "exam_ko": "그들은 냉담하게 어깨를 으쓱했다."
+      }
+    ]
+  },
+  {
+    "id": 23854,
+    "origin": "despond",
+    "examples": [
+      {
+        "exam_en": "despond of one's future",
+        "exam_ko": "장래를 비관하다."
+      }
+    ]
+  },
+  {
+    "id": 23856,
+    "origin": "constancy",
+    "examples": [
+      {
+        "exam_en": "have no constancy in love",
+        "exam_ko": "바람기가 많다, 애정이 변하기 쉽다."
+      }
+    ]
+  },
+  {
+    "id": 23857,
+    "origin": "inwardly",
+    "examples": [
+      {
+        "exam_en": "curve inwardly",
+        "exam_ko": "안쪽으로 굽다"
+      },
+      {
+        "exam_en": "The building was inwardly damaged.",
+        "exam_ko": "그 건물은 내부가 손상되었다."
+      }
+    ]
+  },
+  {
+    "id": 23859,
+    "origin": "retroactive",
+    "examples": [
+      {
+        "exam_en": "a retroactive clause",
+        "exam_ko": "소급 조항"
+      },
+      {
+        "exam_en": "The 10％ raise will be to April 1.",
+        "exam_ko": "10퍼센트 인상은 4월 1일까지 소급될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 23866,
+    "origin": "spelling",
+    "examples": [
+      {
+        "exam_en": "Give me the spelling of that, please.",
+        "exam_ko": "저것의 스펠을 가르쳐 주십시오."
+      }
+    ]
+  },
+  {
+    "id": 23870,
+    "origin": "retrace",
+    "examples": [
+      {
+        "exam_en": "retrace one's steps",
+        "exam_ko": "온 길을 되돌아가다."
+      },
+      {
+        "exam_en": "retrace the progress of civilization",
+        "exam_ko": "문명이 발전한 자취를 살펴보다."
+      }
+    ]
+  },
+  {
+    "id": 23871,
+    "origin": "caffeine",
+    "examples": [
+      {
+        "exam_en": "caffeine-free coffee",
+        "exam_ko": "카페인이 들어 있지 않은 커피[차, 콜라](※미국에서는 주로 건강상의 이유로 커피를 주문할 때 카페인의 첨가 여부를 지정하는 사람이 많음)."
+      },
+      {
+        "exam_en": "I think I might have become addicted to caffeine.",
+        "exam_ko": "나는 내가 카페인에 중독되었을 수도 있다고 생각해."
+      }
+    ]
+  }
+]

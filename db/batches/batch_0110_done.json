@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2279,
+    "origin": "territorial",
+    "examples": [
+      {
+        "exam_en": "The plane entered <strong class=\"target-word\">territorial</strong> airspace without permission.",
+        "exam_ko": "비행기가 허가 없이 <strong class=\"target-word\">영토</strong> 영공에 진입했다."
+      },
+      {
+        "exam_en": "The countries disputed their <strong class=\"target-word\">territorial</strong> boundaries for years.",
+        "exam_ko": "두 나라는 수년간 <strong class=\"target-word\">영토</strong> 경계를 두고 분쟁했다."
+      }
+    ]
+  },
+  {
+    "id": 2280,
+    "origin": "inland",
+    "examples": [
+      {
+        "exam_en": "The government raised <strong class=\"target-word\">inland</strong> taxes on domestic goods.",
+        "exam_ko": "정부는 국내 물품에 <strong class=\"target-word\">내국</strong>세를 인상했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Inland</strong> trade grew steadily after the new roads opened.",
+        "exam_ko": "새 도로가 열린 후 <strong class=\"target-word\">국내</strong> 교역이 꾸준히 성장했다."
+      }
+    ]
+  },
+  {
+    "id": 2281,
+    "origin": "cognitive",
+    "examples": [
+      {
+        "exam_en": "Exercise can improve your <strong class=\"target-word\">cognitive</strong> abilities significantly.",
+        "exam_ko": "운동은 <strong class=\"target-word\">인지</strong> 능력을 크게 향상시킬 수 있다."
+      },
+      {
+        "exam_en": "The test measured the children's <strong class=\"target-word\">cognitive</strong> development.",
+        "exam_ko": "그 검사는 아이들의 <strong class=\"target-word\">인지</strong> 발달을 측정했다."
+      }
+    ]
+  },
+  {
+    "id": 2283,
+    "origin": "miserable",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">miserable</strong> from the heat and humidity.",
+        "exam_ko": "그녀는 더위와 습기로 <strong class=\"target-word\">고통스러워했다</strong>."
+      },
+      {
+        "exam_en": "You don't know how <strong class=\"target-word\">miserable</strong> I feel about it.",
+        "exam_ko": "그 일로 내가 얼마나 <strong class=\"target-word\">비참한</strong>지 너는 모른다."
+      }
+    ]
+  },
+  {
+    "id": 2287,
+    "origin": "instant",
+    "examples": [
+      {
+        "exam_en": "He arrived an <strong class=\"target-word\">instant</strong> too late to catch the train.",
+        "exam_ko": "그는 기차를 놓칠 만큼 <strong class=\"target-word\">순간</strong> 늦게 도착했다."
+      },
+      {
+        "exam_en": "At that <strong class=\"target-word\">instant</strong>, the soldiers began to retreat.",
+        "exam_ko": "바로 그 <strong class=\"target-word\">순간</strong>에 병사들이 후퇴하기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 2288,
+    "origin": "lengthy",
+    "examples": [
+      {
+        "exam_en": "They took a <strong class=\"target-word\">lengthy</strong> journey across the continent.",
+        "exam_ko": "그들은 대륙을 가로지르는 <strong class=\"target-word\">긴</strong> 여행을 했다."
+      },
+      {
+        "exam_en": "The speaker gave <strong class=\"target-word\">lengthy</strong> closing remarks at the event.",
+        "exam_ko": "연사는 행사에서 <strong class=\"target-word\">장황한</strong> 폐회사를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2289,
+    "origin": "adverse",
+    "examples": [
+      {
+        "exam_en": "The film received <strong class=\"target-word\">adverse</strong> criticism from reviewers.",
+        "exam_ko": "영화는 평론가들로부터 <strong class=\"target-word\">부정적인</strong> 비평을 받았다."
+      },
+      {
+        "exam_en": "The Catholic Church is <strong class=\"target-word\">adverse</strong> to divorce.",
+        "exam_ko": "가톨릭 교회는 이혼에 <strong class=\"target-word\">반대한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2290,
+    "origin": "unconscious",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">unconscious</strong> of the change happening around her.",
+        "exam_ko": "그녀는 주변에서 일어나는 변화를 <strong class=\"target-word\">깨닫지 못하고 있었다</strong>."
+      },
+      {
+        "exam_en": "He was found <strong class=\"target-word\">unconscious</strong> from carbon-monoxide inhalation.",
+        "exam_ko": "그는 일산화탄소 중독으로 <strong class=\"target-word\">의식 불명</strong> 상태로 발견됐다."
+      }
+    ]
+  },
+  {
+    "id": 2291,
+    "origin": "aesthetic",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">aesthetic</strong> theory in her philosophy class.",
+        "exam_ko": "그녀는 철학 수업에서 <strong class=\"target-word\">미학</strong> 이론을 공부했다."
+      },
+      {
+        "exam_en": "My <strong class=\"target-word\">aesthetic</strong> standards are quite different from his.",
+        "exam_ko": "나의 <strong class=\"target-word\">심미적</strong> 기준은 그의 것과 아주 다르다."
+      }
+    ]
+  },
+  {
+    "id": 2292,
+    "origin": "orthodox",
+    "examples": [
+      {
+        "exam_en": "He follows <strong class=\"target-word\">orthodox</strong> ideas rather than new theories.",
+        "exam_ko": "그는 새 이론보다 <strong class=\"target-word\">전통적인</strong> 사상을 따른다."
+      },
+      {
+        "exam_en": "She is an <strong class=\"target-word\">orthodox</strong> Muslim who follows strict religious rules.",
+        "exam_ko": "그녀는 엄격한 종교 규범을 따르는 <strong class=\"target-word\">정통파</strong> 무슬림이다."
+      }
+    ]
+  },
+  {
+    "id": 2293,
+    "origin": "static",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">static</strong> society resists change and growth.",
+        "exam_ko": "<strong class=\"target-word\">정적인</strong> 사회는 변화와 성장에 저항한다."
+      },
+      {
+        "exam_en": "The economy remained <strong class=\"target-word\">static</strong> despite new government policies.",
+        "exam_ko": "새 정부 정책에도 불구하고 경제는 <strong class=\"target-word\">정체된</strong> 상태였다."
+      }
+    ]
+  },
+  {
+    "id": 2294,
+    "origin": "unaware",
+    "examples": [
+      {
+        "exam_en": "Many people are <strong class=\"target-word\">unaware</strong> of the growing energy problem.",
+        "exam_ko": "많은 사람들이 심각해지는 에너지 문제를 <strong class=\"target-word\">모르고 있다</strong>."
+      },
+      {
+        "exam_en": "They were <strong class=\"target-word\">unaware</strong> that the enemy was very close.",
+        "exam_ko": "그들은 적이 코앞에 있다는 것을 <strong class=\"target-word\">알아채지 못했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2295,
+    "origin": "costly",
+    "examples": [
+      {
+        "exam_en": "The queen wore <strong class=\"target-word\">costly</strong> jewels at the ceremony.",
+        "exam_ko": "여왕은 행사에서 <strong class=\"target-word\">값비싼</strong> 보석들을 착용했다."
+      },
+      {
+        "exam_en": "They won, but it was a <strong class=\"target-word\">costly</strong> victory with many casualties.",
+        "exam_ko": "그들은 이겼지만 희생이 많은 <strong class=\"target-word\">값비싼</strong> 승리였다."
+      }
+    ]
+  },
+  {
+    "id": 2296,
+    "origin": "foolish",
+    "examples": [
+      {
+        "exam_en": "It was <strong class=\"target-word\">foolish</strong> of him to trust a stranger.",
+        "exam_ko": "낯선 사람을 믿은 것은 그의 <strong class=\"target-word\">어리석은</strong> 행동이었다."
+      },
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">foolish</strong> and throw away this opportunity.",
+        "exam_ko": "<strong class=\"target-word\">어리석게</strong> 이 기회를 버리지 마라."
+      }
+    ]
+  },
+  {
+    "id": 2297,
+    "origin": "fashionable",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">fashionable</strong> hairstyle to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">유행하는</strong> 헤어스타일을 하고 갔다."
+      },
+      {
+        "exam_en": "The café became popular in <strong class=\"target-word\">fashionable</strong> social circles.",
+        "exam_ko": "그 카페는 <strong class=\"target-word\">유행을 선도하는</strong> 사교계에서 인기를 끌었다."
+      }
+    ]
+  },
+  {
+    "id": 2298,
+    "origin": "causal",
+    "examples": [
+      {
+        "exam_en": "Stress is a key <strong class=\"target-word\">causal</strong> factor in many illnesses.",
+        "exam_ko": "스트레스는 많은 질병의 주요 <strong class=\"target-word\">원인적</strong> 요인이다."
+      },
+      {
+        "exam_en": "Researchers found a <strong class=\"target-word\">causal</strong> connection between diet and health.",
+        "exam_ko": "연구자들은 식습관과 건강 사이의 <strong class=\"target-word\">인과</strong> 관계를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 2299,
+    "origin": "compatible",
+    "examples": [
+      {
+        "exam_en": "They are a <strong class=\"target-word\">compatible</strong> couple who share the same values.",
+        "exam_ko": "그들은 같은 가치관을 가진 <strong class=\"target-word\">잘 맞는</strong> 커플이다."
+      },
+      {
+        "exam_en": "This project is not <strong class=\"target-word\">compatible</strong> with the company's plans.",
+        "exam_ko": "이 프로젝트는 회사의 계획과 <strong class=\"target-word\">양립하지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2300,
+    "origin": "wee",
+    "examples": [
+      {
+        "exam_en": "She was just a <strong class=\"target-word\">wee</strong> bit nervous before the speech.",
+        "exam_ko": "그녀는 발표 전 <strong class=\"target-word\">아주 조금</strong> 긴장했다."
+      },
+      {
+        "exam_en": "He called her in the <strong class=\"target-word\">wee</strong> hours of the morning.",
+        "exam_ko": "그는 <strong class=\"target-word\">꼭두새벽</strong>에 그녀에게 전화했다."
+      }
+    ]
+  },
+  {
+    "id": 2301,
+    "origin": "implicit",
+    "examples": [
+      {
+        "exam_en": "She had <strong class=\"target-word\">implicit</strong> trust in her mentor's guidance.",
+        "exam_ko": "그녀는 멘토의 조언에 <strong class=\"target-word\">절대적인</strong> 신뢰를 가졌다."
+      },
+      {
+        "exam_en": "The soldiers showed <strong class=\"target-word\">implicit</strong> obedience to their commander.",
+        "exam_ko": "병사들은 사령관에게 <strong class=\"target-word\">절대적인</strong> 복종을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 2302,
+    "origin": "dual",
+    "examples": [
+      {
+        "exam_en": "The character had a <strong class=\"target-word\">dual</strong> personality in the story.",
+        "exam_ko": "그 등장인물은 이야기 속에서 <strong class=\"target-word\">이중</strong> 인격을 가졌다."
+      },
+      {
+        "exam_en": "They agreed on <strong class=\"target-word\">dual</strong> ownership of the property.",
+        "exam_ko": "그들은 재산에 대한 <strong class=\"target-word\">공동</strong> 소유권에 합의했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,290 @@
+[
+  {
+    "id": 7824,
+    "origin": "logic",
+    "examples": [
+      {
+        "exam_en": "He studied <strong class=\"target-word\">logic</strong> to sharpen his reasoning skills.",
+        "exam_ko": "그는 추론 능력을 키우기 위해 <strong class=\"target-word\">논리학</strong>을 공부했다."
+      },
+      {
+        "exam_en": "Her argument lacked clear <strong class=\"target-word\">logic</strong>.",
+        "exam_ko": "그녀의 주장에는 명확한 <strong class=\"target-word\">논리</strong>가 부족했다."
+      }
+    ]
+  },
+  {
+    "id": 7825,
+    "origin": "scenario",
+    "examples": [
+      {
+        "exam_en": "The director hired a talented <strong class=\"target-word\">scenario</strong> writer.",
+        "exam_ko": "감독은 재능 있는 <strong class=\"target-word\">시나리오</strong> 작가를 고용했다."
+      },
+      {
+        "exam_en": "Under this <strong class=\"target-word\">scenario</strong>, the project will succeed.",
+        "exam_ko": "이 <strong class=\"target-word\">시나리오</strong>대로라면 프로젝트는 성공할 것이다."
+      }
+    ]
+  },
+  {
+    "id": 7826,
+    "origin": "comparison",
+    "examples": [
+      {
+        "exam_en": "The report included a <strong class=\"target-word\">comparison</strong> of A and B.",
+        "exam_ko": "보고서에는 A와 B의 <strong class=\"target-word\">비교</strong>가 포함됐다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">comparison</strong> between the two products.",
+        "exam_ko": "그녀는 두 제품을 <strong class=\"target-word\">비교</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 7827,
+    "origin": "yard",
+    "examples": [
+      {
+        "exam_en": "The fence was about three <strong class=\"target-word\">yards</strong> wide.",
+        "exam_ko": "울타리는 약 3<strong class=\"target-word\">야드</strong> 너비였다."
+      },
+      {
+        "exam_en": "She bought two <strong class=\"target-word\">yards</strong> of fabric.",
+        "exam_ko": "그녀는 천을 2<strong class=\"target-word\">야드</strong> 샀다."
+      },
+      {
+        "exam_en": "He scored with a brilliant 270-<strong class=\"target-word\">yard</strong> drive.",
+        "exam_ko": "그는 멋진 270<strong class=\"target-word\">야드</strong> 드라이브로 득점을 올렸다."
+      }
+    ]
+  },
+  {
+    "id": 7828,
+    "origin": "withhold",
+    "examples": [
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">withhold</strong> his consent.",
+        "exam_ko": "그는 동의를 <strong class=\"target-word\">보류하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "She did not <strong class=\"target-word\">withhold</strong> her opinion.",
+        "exam_ko": "그녀는 자신의 의견을 <strong class=\"target-word\">숨기지</strong> 않았다."
+      }
+    ]
+  },
+  {
+    "id": 7829,
+    "origin": "wired",
+    "examples": [
+      {
+        "exam_en": "The news was broadcast by <strong class=\"target-word\">wired</strong> radio.",
+        "exam_ko": "소식은 <strong class=\"target-word\">유선</strong> 라디오로 방송됐다."
+      },
+      {
+        "exam_en": "Their hotel rooms were <strong class=\"target-word\">wired</strong> for surveillance.",
+        "exam_ko": "그들의 호텔방에는 감시용 <strong class=\"target-word\">도청 장치</strong>가 설치되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7830,
+    "origin": "widow",
+    "examples": [
+      {
+        "exam_en": "She had been a <strong class=\"target-word\">widow</strong> for five years.",
+        "exam_ko": "그녀는 5년 동안 <strong class=\"target-word\">과부</strong>로 지내 왔다."
+      },
+      {
+        "exam_en": "His wife joked that she felt like a golf <strong class=\"target-word\">widow</strong>.",
+        "exam_ko": "그의 아내는 자신이 골프 <strong class=\"target-word\">과부</strong> 같다고 농담했다."
+      },
+      {
+        "exam_en": "The young <strong class=\"target-word\">widow</strong> raised her children alone.",
+        "exam_ko": "젊은 <strong class=\"target-word\">과부</strong>는 혼자서 아이들을 키웠다."
+      }
+    ]
+  },
+  {
+    "id": 7831,
+    "origin": "wheelchair",
+    "examples": [
+      {
+        "exam_en": "A car crash left him in a <strong class=\"target-word\">wheelchair</strong>.",
+        "exam_ko": "교통사고로 그는 <strong class=\"target-word\">휠체어</strong>를 타게 됐다."
+      }
+    ]
+  },
+  {
+    "id": 7833,
+    "origin": "violation",
+    "examples": [
+      {
+        "exam_en": "The leak was a serious <strong class=\"target-word\">violation</strong> of privacy.",
+        "exam_ko": "유출은 심각한 사생활 <strong class=\"target-word\">침해</strong>였다."
+      },
+      {
+        "exam_en": "He received a fine for a traffic <strong class=\"target-word\">violation</strong>.",
+        "exam_ko": "그는 교통 <strong class=\"target-word\">위반</strong>으로 벌금을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 7834,
+    "origin": "vegetarian",
+    "examples": [
+      {
+        "exam_en": "She was a strict <strong class=\"target-word\">vegetarian</strong>.",
+        "exam_ko": "그녀는 철저한 <strong class=\"target-word\">채식주의자</strong>였다."
+      },
+      {
+        "exam_en": "He follows a <strong class=\"target-word\">vegetarian</strong> diet every day.",
+        "exam_ko": "그는 매일 <strong class=\"target-word\">채식</strong> 식단을 따른다."
+      }
+    ]
+  },
+  {
+    "id": 7835,
+    "origin": "utility",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">utility</strong> of a computer is hard to overstate.",
+        "exam_ko": "컴퓨터의 <strong class=\"target-word\">유용성</strong>은 아무리 강조해도 지나치지 않는다."
+      },
+      {
+        "exam_en": "She always carries a <strong class=\"target-word\">utility</strong> knife.",
+        "exam_ko": "그녀는 항상 <strong class=\"target-word\">만능 칼</strong>을 가지고 다닌다."
+      },
+      {
+        "exam_en": "All <strong class=\"target-word\">utilities</strong> were transferred to the new owner.",
+        "exam_ko": "모든 <strong class=\"target-word\">공공 서비스</strong>가 새 소유자 명의로 이전됐다."
+      },
+      {
+        "exam_en": "Solar panels offer clear <strong class=\"target-word\">utility</strong> in remote areas.",
+        "exam_ko": "태양 전지판은 외딴 지역에서 분명한 <strong class=\"target-word\">유용성</strong>을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 7839,
+    "origin": "unlock",
+    "examples": [
+      {
+        "exam_en": "She used a key to <strong class=\"target-word\">unlock</strong> the safe.",
+        "exam_ko": "그녀는 열쇠로 금고를 <strong class=\"target-word\">열었다</strong>."
+      },
+      {
+        "exam_en": "He forgot to <strong class=\"target-word\">lock</strong> the door before leaving.",
+        "exam_ko": "그는 나가기 전에 문을 <strong class=\"target-word\">잠그는</strong> 것을 잊었다."
+      }
+    ]
+  },
+  {
+    "id": 7840,
+    "origin": "unidentified",
+    "examples": [
+      {
+        "exam_en": "An <strong class=\"target-word\">unidentified</strong> airplane entered the airspace.",
+        "exam_ko": "<strong class=\"target-word\">국적 불명</strong>의 비행기가 영공에 진입했다."
+      },
+      {
+        "exam_en": "He suffered from an <strong class=\"target-word\">unidentified</strong> illness.",
+        "exam_ko": "그는 <strong class=\"target-word\">원인 불명</strong>의 병으로 고통받았다."
+      }
+    ]
+  },
+  {
+    "id": 7841,
+    "origin": "unbelievable",
+    "examples": [
+      {
+        "exam_en": "She was a woman of almost <strong class=\"target-word\">unbelievable</strong> beauty.",
+        "exam_ko": "그녀는 거의 <strong class=\"target-word\">믿기 어려울</strong> 정도로 아름다운 여자였다."
+      },
+      {
+        "exam_en": "The prices at that store are <strong class=\"target-word\">unbelievable</strong>.",
+        "exam_ko": "그 가게의 가격은 <strong class=\"target-word\">믿기 어려울</strong> 정도다."
+      }
+    ]
+  },
+  {
+    "id": 7842,
+    "origin": "tuna",
+    "examples": [
+      {
+        "exam_en": "She opened a can of <strong class=\"target-word\">tuna</strong> for lunch.",
+        "exam_ko": "그녀는 점심으로 <strong class=\"target-word\">참치</strong> 통조림을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 7843,
+    "origin": "trespasser",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Trespassers</strong> will be prosecuted.",
+        "exam_ko": "<strong class=\"target-word\">침입자</strong>는 고발됩니다."
+      }
+    ]
+  },
+  {
+    "id": 7844,
+    "origin": "transplant",
+    "examples": [
+      {
+        "exam_en": "Farmers <strong class=\"target-word\">transplant</strong> rice seedlings in spring.",
+        "exam_ko": "농부들은 봄에 모를 <strong class=\"target-word\">옮겨 심는다</strong>."
+      },
+      {
+        "exam_en": "They tried to <strong class=\"target-word\">transplant</strong> their traditions to the new world.",
+        "exam_ko": "그들은 전통을 새 세계로 <strong class=\"target-word\">이식하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 7845,
+    "origin": "transit",
+    "examples": [
+      {
+        "exam_en": "The ship made a <strong class=\"target-word\">transit</strong> across the Pacific.",
+        "exam_ko": "배는 태평양을 <strong class=\"target-word\">횡단</strong>했다."
+      },
+      {
+        "exam_en": "The city improved its public <strong class=\"target-word\">transit</strong> system.",
+        "exam_ko": "도시는 공공 <strong class=\"target-word\">교통 체계</strong>를 개선했다."
+      }
+    ]
+  },
+  {
+    "id": 7846,
+    "origin": "trained",
+    "examples": [
+      {
+        "exam_en": "The officer had a well-<strong class=\"target-word\">trained</strong> dog.",
+        "exam_ko": "그 경관은 훈련이 잘된 <strong class=\"target-word\">훈련견</strong>을 데리고 있었다."
+      },
+      {
+        "exam_en": "The team consists of highly <strong class=\"target-word\">trained</strong> professionals.",
+        "exam_ko": "팀은 고도로 <strong class=\"target-word\">훈련된</strong> 전문가들로 구성됐다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">trained</strong> nurse with ten years of experience.",
+        "exam_ko": "그녀는 10년 경력의 <strong class=\"target-word\">전문 교육을 받은</strong> 간호사다."
+      }
+    ]
+  },
+  {
+    "id": 7848,
+    "origin": "tobacco",
+    "examples": [
+      {
+        "exam_en": "He filled his pipe with <strong class=\"target-word\">tobacco</strong>.",
+        "exam_ko": "그는 파이프에 <strong class=\"target-word\">담배</strong>를 담았다."
+      },
+      {
+        "exam_en": "He decided to give up <strong class=\"target-word\">tobacco</strong> for good.",
+        "exam_ko": "그는 <strong class=\"target-word\">담배</strong>를 영원히 끊기로 결심했다."
+      }
+    ]
+  }
+]

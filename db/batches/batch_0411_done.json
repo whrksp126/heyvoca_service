@@ -1,0 +1,258 @@
+[
+  {
+    "id": 11396,
+    "origin": "denote",
+    "examples": [
+      {
+        "exam_en": "These symptoms <strong class=\"target-word\">denote</strong> a serious illness.",
+        "exam_ko": "이 증상들은 심각한 질병을 <strong class=\"target-word\">나타낸다</strong>."
+      },
+      {
+        "exam_en": "The symbol X <strong class=\"target-word\">denotes</strong> an unknown value.",
+        "exam_ko": "X 기호는 미지의 값을 <strong class=\"target-word\">나타낸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11397,
+    "origin": "cram",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">crammed</strong> clothes into her suitcase.",
+        "exam_ko": "그녀는 가방에 옷을 <strong class=\"target-word\">쑤셔 넣었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">crammed</strong> four years of work into three months.",
+        "exam_ko": "그는 4년 치의 일을 3개월에 <strong class=\"target-word\">해치웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11398,
+    "origin": "repetition",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Repetition</strong> is essential for learning a foreign language.",
+        "exam_ko": "<strong class=\"target-word\">반복</strong>은 외국어 습득에 매우 중요하다."
+      }
+    ]
+  },
+  {
+    "id": 11401,
+    "origin": "narrative",
+    "examples": [
+      {
+        "exam_en": "She wrote a personal <strong class=\"target-word\">narrative</strong> about her childhood.",
+        "exam_ko": "그녀는 어린 시절에 대한 개인적인 <strong class=\"target-word\">이야기</strong>를 썼다."
+      },
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">narrative</strong> of his travels in Europe.",
+        "exam_ko": "그는 유럽 여행에 대한 <strong class=\"target-word\">이야기</strong>를 들려줬다."
+      }
+    ]
+  },
+  {
+    "id": 11402,
+    "origin": "phonetic",
+    "examples": [
+      {
+        "exam_en": "Students study <strong class=\"target-word\">phonetic</strong> changes in historical linguistics.",
+        "exam_ko": "학생들은 역사 언어학에서 <strong class=\"target-word\">음운</strong> 변화를 공부한다."
+      },
+      {
+        "exam_en": "The teacher explained the international <strong class=\"target-word\">phonetic</strong> alphabet.",
+        "exam_ko": "선생님은 국제 <strong class=\"target-word\">음성</strong> 기호를 설명했다."
+      }
+    ]
+  },
+  {
+    "id": 11403,
+    "origin": "augmentation",
+    "examples": [
+      {
+        "exam_en": "She decided to undergo breast <strong class=\"target-word\">augmentation</strong> surgery.",
+        "exam_ko": "그녀는 유방 <strong class=\"target-word\">확대</strong> 수술을 받기로 결심했다."
+      }
+    ]
+  },
+  {
+    "id": 11404,
+    "origin": "meteorological",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">meteorological</strong> observatory issued a storm warning.",
+        "exam_ko": "<strong class=\"target-word\">기상</strong>대는 폭풍 경보를 발령했다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">meteorological</strong> rocket was launched to study the atmosphere.",
+        "exam_ko": "<strong class=\"target-word\">기상</strong> 로켓이 대기 연구를 위해 발사됐다."
+      }
+    ]
+  },
+  {
+    "id": 11405,
+    "origin": "oceanic",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Oceanic</strong> currents influence the world's climate.",
+        "exam_ko": "<strong class=\"target-word\">해양</strong> 해류는 전 세계 기후에 영향을 미친다."
+      },
+      {
+        "exam_en": "Scientists study <strong class=\"target-word\">oceanic</strong> fish in deep-sea expeditions.",
+        "exam_ko": "과학자들은 심해 탐사에서 <strong class=\"target-word\">바닷</strong>물고기를 연구한다."
+      }
+    ]
+  },
+  {
+    "id": 11408,
+    "origin": "aerial",
+    "examples": [
+      {
+        "exam_en": "Strong <strong class=\"target-word\">aerial</strong> currents made the flight turbulent.",
+        "exam_ko": "강한 <strong class=\"target-word\">공중</strong> 기류로 인해 비행이 흔들렸다."
+      },
+      {
+        "exam_en": "The engineers installed an <strong class=\"target-word\">aerial</strong> cable across the valley.",
+        "exam_ko": "엔지니어들은 계곡을 가로질러 <strong class=\"target-word\">가공</strong> 케이블을 설치했다."
+      }
+    ]
+  },
+  {
+    "id": 11409,
+    "origin": "gestation",
+    "examples": [
+      {
+        "exam_en": "The RSV vaccine is recommended during 32 to 36 weeks of <strong class=\"target-word\">gestation</strong>.",
+        "exam_ko": "RSV 백신은 <strong class=\"target-word\">임신</strong> 32주에서 36주에 권장된다."
+      }
+    ]
+  },
+  {
+    "id": 11410,
+    "origin": "vertigo",
+    "examples": [
+      {
+        "exam_en": "She experienced <strong class=\"target-word\">vertigo</strong> and felt the room spinning.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">현기증</strong>을 느끼며 방이 빙글빙글 도는 것 같았다."
+      }
+    ]
+  },
+  {
+    "id": 11411,
+    "origin": "expeditious",
+    "examples": [
+      {
+        "exam_en": "The team took <strong class=\"target-word\">expeditious</strong> measures to contain the fire.",
+        "exam_ko": "팀은 화재를 진압하기 위해 <strong class=\"target-word\">신속한</strong> 조치를 취했다."
+      },
+      {
+        "exam_en": "She gave an <strong class=\"target-word\">expeditious</strong> answer to the inquiry.",
+        "exam_ko": "그녀는 문의에 <strong class=\"target-word\">신속하게</strong> 답변했다."
+      }
+    ]
+  },
+  {
+    "id": 11412,
+    "origin": "orderly",
+    "examples": [
+      {
+        "exam_en": "She kept her room neat and <strong class=\"target-word\">orderly</strong>.",
+        "exam_ko": "그녀는 방을 깔끔하고 <strong class=\"target-word\">정돈된</strong> 상태로 유지했다."
+      },
+      {
+        "exam_en": "He is an <strong class=\"target-word\">orderly</strong> citizen who follows traffic rules.",
+        "exam_ko": "그는 교통 법규를 지키는 <strong class=\"target-word\">질서 있는</strong> 시민이다."
+      }
+    ]
+  },
+  {
+    "id": 11415,
+    "origin": "tarmac",
+    "examples": [
+      {
+        "exam_en": "The plane sat on the <strong class=\"target-word\">tarmac</strong> for an hour before takeoff.",
+        "exam_ko": "비행기는 이륙 전 한 시간 동안 <strong class=\"target-word\">활주로</strong>에 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 11416,
+    "origin": "ballistic",
+    "examples": [
+      {
+        "exam_en": "She went <strong class=\"target-word\">ballistic</strong> when she heard the news.",
+        "exam_ko": "그녀는 그 소식을 듣고 <strong class=\"target-word\">잔뜩 화가 났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11419,
+    "origin": "fictitious",
+    "examples": [
+      {
+        "exam_en": "He registered under a <strong class=\"target-word\">fictitious</strong> name.",
+        "exam_ko": "그는 <strong class=\"target-word\">가짜</strong> 이름으로 등록했다."
+      },
+      {
+        "exam_en": "The story is entirely <strong class=\"target-word\">fictitious</strong> and not based on real events.",
+        "exam_ko": "그 이야기는 완전히 <strong class=\"target-word\">허구</strong>이며 실제 사건에 근거하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 11420,
+    "origin": "unmanned",
+    "examples": [
+      {
+        "exam_en": "An <strong class=\"target-word\">unmanned</strong> satellite orbits the Earth every 90 minutes.",
+        "exam_ko": "<strong class=\"target-word\">무인</strong> 인공위성이 90분마다 지구를 공전한다."
+      }
+    ]
+  },
+  {
+    "id": 11422,
+    "origin": "acceptance",
+    "examples": [
+      {
+        "exam_en": "I beg your <strong class=\"target-word\">acceptance</strong> of my sincere apologies.",
+        "exam_ko": "진심 어린 사과를 <strong class=\"target-word\">받아주시기</strong>를 간청합니다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">acceptance</strong> of the offer surprised everyone.",
+        "exam_ko": "그녀의 제안 <strong class=\"target-word\">수락</strong>은 모두를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 11423,
+    "origin": "pending",
+    "examples": [
+      {
+        "exam_en": "The project is on hold <strong class=\"target-word\">pending</strong> his recovery.",
+        "exam_ko": "프로젝트는 그의 회복을 <strong class=\"target-word\">기다리며</strong> 보류 중이다."
+      },
+      {
+        "exam_en": "No action will be taken <strong class=\"target-word\">pending</strong> the official announcement.",
+        "exam_ko": "공식 발표가 있을 때까지 어떠한 조치도 취해지지 않을 것이다(<strong class=\"target-word\">계류 중</strong>)."
+      },
+      {
+        "exam_en": "The owner was notified of the <strong class=\"target-word\">pending</strong> insurance change.",
+        "exam_ko": "소유자에게 <strong class=\"target-word\">계류 중인</strong> 보험 변경 사항이 통지됐다."
+      }
+    ]
+  },
+  {
+    "id": 11424,
+    "origin": "module",
+    "examples": [
+      {
+        "exam_en": "The astronauts returned to the command <strong class=\"target-word\">module</strong>.",
+        "exam_ko": "우주비행사들은 사령 <strong class=\"target-word\">모듈</strong>로 돌아왔다."
+      },
+      {
+        "exam_en": "The lunar <strong class=\"target-word\">module</strong> landed on the Moon's surface.",
+        "exam_ko": "달 착륙 <strong class=\"target-word\">모듈</strong>이 달 표면에 착륙했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "id": 2605,
+    "origin": "allied",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">allied</strong> nations signed a peace treaty.",
+        "exam_ko": "<strong class=\"target-word\">동맹</strong> 국가들이 평화 조약에 서명했다."
+      },
+      {
+        "exam_en": "Tigers are <strong class=\"target-word\">allied</strong> to cats in nature.",
+        "exam_ko": "호랑이는 자연에서 고양이와 <strong class=\"target-word\">동류</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2606,
+    "origin": "comparative",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">comparative</strong> linguistics at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">비교</strong> 언어학을 공부했다."
+      },
+      {
+        "exam_en": "The brand ran a <strong class=\"target-word\">comparative</strong> ad campaign.",
+        "exam_ko": "그 브랜드는 <strong class=\"target-word\">비교</strong> 광고 캠페인을 진행했다."
+      }
+    ]
+  },
+  {
+    "id": 2607,
+    "origin": "uncomfortable",
+    "examples": [
+      {
+        "exam_en": "These shoes are very <strong class=\"target-word\">uncomfortable</strong> to wear.",
+        "exam_ko": "이 신발은 신기에 매우 <strong class=\"target-word\">불편하다</strong>."
+      },
+      {
+        "exam_en": "An <strong class=\"target-word\">uncomfortable</strong> silence fell over the room.",
+        "exam_ko": "방 안에 <strong class=\"target-word\">거북한</strong> 침묵이 흘렀다."
+      },
+      {
+        "exam_en": "You might feel <strong class=\"target-word\">uncomfortable</strong> with dentures at first.",
+        "exam_ko": "처음에는 틀니가 <strong class=\"target-word\">불편하게</strong> 느껴질 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 2608,
+    "origin": "cheek",
+    "examples": [
+      {
+        "exam_en": "She kissed him on the <strong class=\"target-word\">cheek</strong> goodbye.",
+        "exam_ko": "그녀는 작별 인사로 그의 <strong class=\"target-word\">뺨</strong>에 입을 맞췄다."
+      },
+      {
+        "exam_en": "He bit his <strong class=\"target-word\">cheeks</strong> to keep from laughing.",
+        "exam_ko": "그는 웃지 않으려고 <strong class=\"target-word\">볼</strong>을 깨물었다."
+      }
+    ]
+  },
+  {
+    "id": 2609,
+    "origin": "chin",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">chinned</strong> the bar twelve times in a row.",
+        "exam_ko": "그는 철봉에서 <strong class=\"target-word\">턱걸이</strong>를 열두 번 연속으로 했다."
+      },
+      {
+        "exam_en": "She rested her <strong class=\"target-word\">chin</strong> on her hand thoughtfully.",
+        "exam_ko": "그녀는 생각에 잠겨 <strong class=\"target-word\">턱</strong>을 손에 괴었다."
+      }
+    ]
+  },
+  {
+    "id": 2610,
+    "origin": "despite",
+    "examples": [
+      {
+        "exam_en": "She laughed <strong class=\"target-word\">despite</strong> herself during the meeting.",
+        "exam_ko": "그녀는 회의 중 <strong class=\"target-word\">자신도 모르게</strong> 웃음을 터뜨렸다."
+      },
+      {
+        "exam_en": "I failed the test <strong class=\"target-word\">despite</strong> studying all night.",
+        "exam_ko": "밤새 공부했음에도 <strong class=\"target-word\">불구하고</strong> 시험에 떨어졌다."
+      }
+    ]
+  },
+  {
+    "id": 2611,
+    "origin": "eyebrow",
+    "examples": [
+      {
+        "exam_en": "He has thick, bushy <strong class=\"target-word\">eyebrows</strong>.",
+        "exam_ko": "그는 짙고 풍성한 <strong class=\"target-word\">눈썹</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "Her slanted <strong class=\"target-word\">eyebrows</strong> gave her a sad expression.",
+        "exam_ko": "아래로 처진 <strong class=\"target-word\">눈썹</strong>이 그녀를 슬퍼 보이게 했다."
+      }
+    ]
+  },
+  {
+    "id": 2612,
+    "origin": "feminine",
+    "examples": [
+      {
+        "exam_en": "The dress made her look very <strong class=\"target-word\">feminine</strong>.",
+        "exam_ko": "그 드레스는 그녀를 매우 <strong class=\"target-word\">여성스럽게</strong> 보이게 했다."
+      },
+      {
+        "exam_en": "She chose a <strong class=\"target-word\">feminine</strong> style for the event.",
+        "exam_ko": "그녀는 행사를 위해 <strong class=\"target-word\">여성스러운</strong> 스타일을 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 2613,
+    "origin": "obey",
+    "examples": [
+      {
+        "exam_en": "Everyone must <strong class=\"target-word\">obey</strong> the law.",
+        "exam_ko": "모든 사람은 법률을 <strong class=\"target-word\">따라야</strong> 한다."
+      },
+      {
+        "exam_en": "Students are expected to <strong class=\"target-word\">obey</strong> the teacher.",
+        "exam_ko": "학생들은 선생님의 말씀을 <strong class=\"target-word\">따르도록</strong> 기대된다."
+      }
+    ]
+  },
+  {
+    "id": 2614,
+    "origin": "serving",
+    "examples": [
+      {
+        "exam_en": "How many <strong class=\"target-word\">servings</strong> does this recipe make?",
+        "exam_ko": "이 요리법은 몇 <strong class=\"target-word\">인분</strong>이냐?"
+      },
+      {
+        "exam_en": "Each <strong class=\"target-word\">serving</strong> contains about 200 calories.",
+        "exam_ko": "한 <strong class=\"target-word\">1인분</strong>에 약 200칼로리가 들어 있다."
+      }
+    ]
+  },
+  {
+    "id": 2615,
+    "origin": "slave",
+    "examples": [
+      {
+        "exam_en": "The movement fought to free the <strong class=\"target-word\">slaves</strong>.",
+        "exam_ko": "그 운동은 <strong class=\"target-word\">노예</strong>들을 해방하기 위해 싸웠다."
+      },
+      {
+        "exam_en": "Workers protested against <strong class=\"target-word\">slave</strong> wages.",
+        "exam_ko": "노동자들은 <strong class=\"target-word\">노예</strong> 수준의 임금에 항의했다."
+      }
+    ]
+  },
+  {
+    "id": 2616,
+    "origin": "wrist",
+    "examples": [
+      {
+        "exam_en": "He grabbed her by the <strong class=\"target-word\">wrist</strong> to stop her.",
+        "exam_ko": "그는 그녀를 막으려고 <strong class=\"target-word\">손목</strong>을 잡았다."
+      },
+      {
+        "exam_en": "She wore a bracelet on her <strong class=\"target-word\">wrist</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">손목</strong>에 팔찌를 하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2619,
+    "origin": "acquaintance",
+    "examples": [
+      {
+        "exam_en": "He is a chance <strong class=\"target-word\">acquaintance</strong> I met at a party.",
+        "exam_ko": "그는 파티에서 우연히 만난 <strong class=\"target-word\">지인</strong>이다."
+      },
+      {
+        "exam_en": "She ran into an old <strong class=\"target-word\">acquaintance</strong> downtown.",
+        "exam_ko": "그녀는 시내에서 옛 <strong class=\"target-word\">지인</strong>을 우연히 만났다."
+      }
+    ]
+  },
+  {
+    "id": 2620,
+    "origin": "assassin",
+    "examples": [
+      {
+        "exam_en": "Police arrested the hired <strong class=\"target-word\">assassin</strong> near the scene.",
+        "exam_ko": "경찰은 현장 근처에서 청부 <strong class=\"target-word\">살인자</strong>를 체포했다."
+      },
+      {
+        "exam_en": "The politician called his rival a character <strong class=\"target-word\">assassin</strong>.",
+        "exam_ko": "그 정치인은 경쟁자를 명예 <strong class=\"target-word\">훼손자</strong>라고 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 2621,
+    "origin": "bully",
+    "examples": [
+      {
+        "exam_en": "He played the <strong class=\"target-word\">bully</strong> and scared the younger kids.",
+        "exam_ko": "그는 <strong class=\"target-word\">약자를 괴롭히는 사람</strong> 역할을 하며 어린아이들을 겁줬다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">bullied</strong> him into accepting their proposal.",
+        "exam_ko": "그들은 그를 <strong class=\"target-word\">협박하여</strong> 제안을 받아들이게 했다."
+      }
+    ]
+  },
+  {
+    "id": 2623,
+    "origin": "interpreter",
+    "examples": [
+      {
+        "exam_en": "A sign-language <strong class=\"target-word\">interpreter</strong> stood beside the speaker.",
+        "exam_ko": "수화 <strong class=\"target-word\">통역사</strong>가 연사 옆에 서 있었다."
+      },
+      {
+        "exam_en": "They spoke with each other through an <strong class=\"target-word\">interpreter</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">통역사</strong>를 통해 서로 이야기했다."
+      }
+    ]
+  },
+  {
+    "id": 2624,
+    "origin": "kidnap",
+    "examples": [
+      {
+        "exam_en": "Police worked hard to find the <strong class=\"target-word\">kidnapped</strong> child.",
+        "exam_ko": "경찰은 <strong class=\"target-word\">납치된</strong> 아이를 찾기 위해 열심히 일했다."
+      },
+      {
+        "exam_en": "The gang tried to <strong class=\"target-word\">kidnap</strong> the businessman for ransom.",
+        "exam_ko": "그 일당은 몸값을 노리고 사업가를 <strong class=\"target-word\">납치하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 2625,
+    "origin": "lodger",
+    "examples": [
+      {
+        "exam_en": "She decided to take in a <strong class=\"target-word\">lodger</strong> to earn extra income.",
+        "exam_ko": "그녀는 추가 수입을 위해 <strong class=\"target-word\">하숙인</strong>을 받기로 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">lodger</strong> paid rent on time every month.",
+        "exam_ko": "<strong class=\"target-word\">하숙인</strong>은 매달 제때 방세를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 2628,
+    "origin": "participant",
+    "examples": [
+      {
+        "exam_en": "There were many <strong class=\"target-word\">participants</strong> in the marathon.",
+        "exam_ko": "그 마라톤에는 <strong class=\"target-word\">참가자</strong>가 많았다."
+      },
+      {
+        "exam_en": "Each <strong class=\"target-word\">participant</strong> received a certificate after the seminar.",
+        "exam_ko": "세미나 후 각 <strong class=\"target-word\">참가자</strong>는 수료증을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2629,
+    "origin": "pedestrian",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">pedestrian</strong> crossed the street at the traffic light.",
+        "exam_ko": "<strong class=\"target-word\">보행자</strong>가 신호등 앞에서 길을 건넜다."
+      },
+      {
+        "exam_en": "This zone is reserved for <strong class=\"target-word\">pedestrians</strong> only.",
+        "exam_ko": "이 구역은 <strong class=\"target-word\">보행자</strong> 전용으로 지정되어 있다."
+      }
+    ]
+  }
+]
