@@ -154,6 +154,60 @@ export const fetchGoogleSheetDataApi = async (accessToken, spreadsheetId, sheetT
   }
 };
 
+// Anki 파일 미리보기 (파싱)
+export const uploadAnkiPreviewApi = async (file) => {
+  const url = `${backendUrl}/vocaBooks/upload/anki/preview`;
+  const method = 'POST';
+  const data = {
+    json_data: {},
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadAnkiPreviewApi 오류:', error);
+    throw error;
+  }
+};
+
+// Anki 파일 업로드로 단어장 생성
+export const uploadAnkiApi = async (file, title, color, mapping, selectedNoteTypeId) => {
+  const url = `${backendUrl}/vocaBooks/upload/anki`;
+  const method = 'POST';
+  const data = {
+    json_data: { title, color, mapping, selectedNoteTypeId },
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadAnkiApi 오류:', error);
+    throw error;
+  }
+};
+
 // CSV 파일 업로드로 단어장 생성
 export const uploadCsvApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/csv`;
