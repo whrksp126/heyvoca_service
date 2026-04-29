@@ -48,6 +48,15 @@ def validate_word_lengths(parsed_items):
         origin = (item.get('origin') or '').strip()
         if not origin:
             continue
+        # 줄바꿈이 들어간 단어는 표 추출이 깨진 케이스(여러 행이 한 셀로 합쳐짐)이므로 거부.
+        # DB의 word VARCHAR 길이를 넘지 않더라도 단어 1건이 여러 단어 묶음일 수 있어 차단한다.
+        if '\n' in origin or '\r' in origin:
+            preview = origin.replace('\n', ' / ').replace('\r', ' / ')[:50]
+            return (
+                400,
+                f'단어 필드에 줄바꿈이 포함된 값이 있습니다: "{preview}". '
+                f'파일을 다시 확인해주세요.'
+            )
         if len(origin) > WORD_MAX_LEN:
             preview = origin[:30] + ('…' if len(origin) > 30 else '')
             return (
@@ -768,6 +777,12 @@ def upload_quizlet_pdf_voca_book():
             }
             for item in parsed_raw
         ]
+
+        # 단어 길이/줄바꿈 검증 (표 추출이 깨진 깨진 케이스 안전망)
+        invalid = validate_word_lengths(parsed_items)
+        if invalid:
+            status, msg = invalid
+            return jsonify({'code': status, 'message': msg}),
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(

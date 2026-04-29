@@ -408,8 +408,6 @@ def upload_user_voca_book():
             'goals': []
         }
 
-        # print("###response_data : ",response_data)
-
         response = jsonify({
             'code': 200, 
             'message': message,
@@ -471,64 +469,64 @@ def parse_quizlet_pdf(file_storage):
     with tempfile.NamedTemporaryFile(suffix='.pdf', delete=True) as tmp:
         file_storage.save(tmp)
         tmp.flush()
-        # print(f"[PDF DEBUG] 임시 파일 저장 완료: {tmp.name}")
 
         with pdfplumber.open(tmp.name) as pdf:
-            # print(f"[PDF DEBUG] 총 페이지 수: {len(pdf.pages)}")
 
             word_section_started = False  # '이 세트의 단어' 마커 이후만 파싱
 
             for page_idx, page in enumerate(pdf.pages):
-                # print(f"\n[PDF DEBUG] ===== 페이지 {page_idx + 1} =====")
 
                 # 1차: 테이블 감지
                 tables = page.extract_tables()
-                # print(f"[PDF DEBUG] 테이블 감지 수: {len(tables) if tables else 0}")
 
                 if tables:
                     for t_idx, table in enumerate(tables):
-                        # print(f"[PDF DEBUG]   테이블[{t_idx}] 행 수: {len(table)}")
                         for r_idx, row in enumerate(table):
                             if not row:
-                                # print(f"[PDF DEBUG]     행[{r_idx}]: None (스킵)")
                                 continue
-
-                            # 원본 행 출력
-                            # print(f"[PDF DEBUG]     행[{r_idx}] 원본: {row}")
 
                             # 셀 정리: None/빈값 제거
                             cells = [cell.strip() if cell else '' for cell in row]
                             cells = [cell for cell in cells if cell]
-                            # print(f"[PDF DEBUG]     행[{r_idx}] 정리후({len(cells)}셀): {cells}")
 
                             if len(cells) == 3:
                                 num, word, meaning = cells
                                 is_num = re.match(r'^\d+\.?$', num.strip())
-                                # print(f"[PDF DEBUG]     3컬럼 - 번호:'{num}' (is_num={bool(is_num)}), 단어:'{word}', 뜻:'{meaning}'")
                                 if is_num:
                                     noise_w = is_quizlet_noise(word)
                                     noise_m = is_quizlet_noise(meaning)
-                                    # print(f"[PDF DEBUG]     노이즈체크 - word={noise_w}, meaning={noise_m}")
                                     if not noise_w and not noise_m:
                                         parsed_items.append({"word": word.strip(), "meaning": meaning.strip()})
-                                        # print(f"[PDF DEBUG]     -> 추가됨!")
                                 else:
                                     word_candidate = cells[0]
                                     meaning_candidate = cells[1]
                                     noise_w = is_quizlet_noise(word_candidate)
                                     noise_m = is_quizlet_noise(meaning_candidate)
-                                    # print(f"[PDF DEBUG]     번호아님 -> word:'{word_candidate}', meaning:'{meaning_candidate}', 노이즈:{noise_w},{noise_m}")
                                     if not noise_w and not noise_m:
                                         parsed_items.append({"word": word_candidate.strip(), "meaning": meaning_candidate.strip()})
-                                        # print(f"[PDF DEBUG]     -> 추가됨!")
                             elif len(cells) == 2:
+                                # 일부 퀴즐렛 PDF(이미지가 일부 행에만 있는 양식)에서는
+                                # 이미지 없는 여러 행이 한 셀로 합쳐져서 word 셀에 줄바꿈이 들어올 수 있다.
+                                # 이때는 1셀 분기와 동일하게 라인별 "단어 + 비ASCII 뜻" 패턴으로 분해한다.
+                                if any('\n' in c for c in cells):
+                                    multiline_cell = cells[0] if '\n' in cells[0] else cells[1]
+                                    for cell_line in multiline_cell.split('\n'):
+                                        cell_line = cell_line.strip()
+                                        if not cell_line or is_quizlet_noise(cell_line):
+                                            continue
+                                        m = re.match(r'^(.+?)\s+([^\x00-\x7F].+)$', cell_line)
+                                        if m:
+                                            word = m.group(1).strip()
+                                            meaning = m.group(2).strip()
+                                            if word and meaning and not is_quizlet_noise(word) and not is_quizlet_noise(meaning):
+                                                parsed_items.append({"word": word, "meaning": meaning})
+                                    continue
+
                                 word, meaning = cells
                                 noise_w = is_quizlet_noise(word)
                                 noise_m = is_quizlet_noise(meaning)
-                                # print(f"[PDF DEBUG]     2컬럼 - 단어:'{word}', 뜻:'{meaning}', 노이즈:{noise_w},{noise_m}")
                                 if not noise_w and not noise_m:
                                     parsed_items.append({"word": word.strip(), "meaning": meaning.strip()})
-                                    # print(f"[PDF DEBUG]     -> 추가됨!")
                             elif len(cells) == 1:
                                 # 셀 내 여러 줄 단위로 재처리
                                 cell_lines = cells[0].split('\n')
@@ -539,10 +537,8 @@ def parse_quizlet_pdf(file_storage):
                                     # '이 세트의 단어 (n)' 마커 감지 → 이후부터 파싱 시작
                                     if re.search(r'이 세트의 단어', cell_line):
                                         word_section_started = True
-                                        # print(f"[PDF DEBUG]     1컬럼 단어섹션 시작 감지: '{cell_line[:60]}'")
                                         continue
                                     if not word_section_started:
-                                        # print(f"[PDF DEBUG]     1컬럼 섹션前 스킵: '{cell_line[:60]}'")
                                         continue
                                     if is_quizlet_noise(cell_line):
                                         continue
@@ -553,13 +549,8 @@ def parse_quizlet_pdf(file_storage):
                                         meaning = m.group(2).strip()
                                         if word and meaning and not is_quizlet_noise(word) and not is_quizlet_noise(meaning):
                                             parsed_items.append({"word": word, "meaning": meaning})
-                                            # print(f"[PDF DEBUG]     1컬럼 파싱 -> word:'{word}', meaning:'{meaning}'")
-                                    # else:
-                                        # print(f"[PDF DEBUG]     1컬럼 매칭실패: '{cell_line[:60]}'")
                                 # 마커가 한 번이라도 발견된 페이지 이후부터는 플래그 유지
                                 continue
-                            # else:
-                                # print(f"[PDF DEBUG]     {len(cells)}컬럼 - 예상외 (스킵): {cells}")
                     continue  # 테이블 있으면 텍스트 모드 스킵
 
                 # 2차: 좌표 기반 단어 추출 (x좌표로 좌/우 컬럼 분리)
@@ -567,7 +558,6 @@ def parse_quizlet_pdf(file_storage):
                 if words_on_page:
                     page_width = page.width
                     mid_x = page_width / 2
-                    # print(f"[PDF DEBUG] 좌표모드 - 단어 수: {len(words_on_page)}, 페이지 폭: {page_width}, mid_x: {mid_x}")
 
                     # y좌표로 같은 행 그룹핑 (tolerance 5px)
                     rows_by_y = {}
@@ -603,24 +593,20 @@ def parse_quizlet_pdf(file_storage):
                         parsed_items.append({"word": word_clean, "meaning": right_text})
                         coord_parsed += 1
 
-                    # print(f"[PDF DEBUG] 좌표모드 결과: {coord_parsed}개 파싱")
                     if coord_parsed > 0:
                         continue  # 좌표모드로 파싱 성공 시 텍스트 모드 스킵
 
                 # 3차: 텍스트 모드 (용어 레이아웃 등)
                 text = page.extract_text()
                 if not text:
-                    # print(f"[PDF DEBUG] 텍스트 없음 (스킵)")
                     continue
 
                 lines = text.split('\n')
-                # print(f"[PDF DEBUG] 텍스트 모드 - 총 {len(lines)}줄")
                 for line_idx, line in enumerate(lines):
                     line = line.strip()
                     if not line:
                         continue
                     if is_quizlet_noise(line):
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 노이즈: '{line[:60]}'")
                         continue
 
                     # 패턴 1: "번호. 단어: 뜻" (용어 레이아웃)
@@ -628,7 +614,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴1(번호.단어:뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -638,7 +623,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴2(번호.단어  뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -648,7 +632,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴4(번호.단어 비ASCII뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -660,7 +643,6 @@ def parse_quizlet_pdf(file_storage):
                         meaning = match.group(2).strip()
                         noise_w = is_quizlet_noise(word)
                         noise_m = is_quizlet_noise(meaning)
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴3(단어  뜻) -> word:'{word}', meaning:'{meaning}', 노이즈:{noise_w},{noise_m}")
                         if word and meaning and not noise_w and not noise_m:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
