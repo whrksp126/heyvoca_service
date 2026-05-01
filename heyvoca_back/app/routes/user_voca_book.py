@@ -132,16 +132,23 @@ def create_user_voca_book():
 @jwt_required
 def update_user_voca_book():
     data = request.get_json()
-    print("###단어장 수정 data : ",data)
+    user_id = UUID(g.user_id)
     user_voca_book_id = UUID(data.get('id'))
-    print("###단어장 수정 user_voca_book_id : ",user_voca_book_id)
     if not user_voca_book_id:
         return jsonify({'code': 400, 'message': 'ID가 필요합니다.'}), 400
 
-    user_voca_book = db.session.query(UserVocaBook).filter(UserVocaBook.id == user_voca_book_id).first()
-    print("###단어장 수정 user_voca_book : ",user_voca_book)
+    user_voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == user_voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
     if not user_voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
+
+    is_purchased = user_voca_book.bookstore_id is not None
+
+    # 구매한 단어장은 학습 진행 메타(total/memorized)만 허용 — 단어 내용은 변경 불가
+    if is_purchased and any(k in data for k in ('title', 'color', 'words')):
+        return jsonify({'code': 403, 'message': '구매한 단어장의 내용은 변경할 수 없어요.'}), 403
 
     # 넘어온 key만 업데이트
     if 'title' in data:
@@ -159,7 +166,7 @@ def update_user_voca_book():
     db.session.commit()
 
     data = {
-        'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
+        'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9),
         'updatedAt': user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None
     }
 
@@ -170,9 +177,20 @@ def update_user_voca_book():
 @jwt_required
 def delete_user_voca_book():
     data = request.get_json()
+    user_id = UUID(g.user_id)
     user_voca_book_id = UUID(data['id'])
 
-    user_voca_book = db.session.query(UserVocaBook).filter(UserVocaBook.id == user_voca_book_id).first()
+    user_voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == user_voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
+
+    if not user_voca_book:
+        return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
+
+    if user_voca_book.bookstore_id is not None:
+        return jsonify({'code': 403, 'message': '구매한 단어장은 삭제할 수 없어요.'}), 403
+
     db.session.delete(user_voca_book)
     db.session.commit()
 

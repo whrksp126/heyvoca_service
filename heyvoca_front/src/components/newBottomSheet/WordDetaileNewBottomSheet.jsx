@@ -13,12 +13,14 @@ import { vibrate } from '../../utils/osFunction';
 const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { getWord } = useVocabulary();
+  const { getWord, getVocabularySheet } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushAwaitNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
 
   // React Compiler가 자동으로 메모이제이션 처리 (useMemo 불필요)
   const word = getWord(vocabularyId, id);
+  const vocabularySheet = typeof getVocabularySheet === 'function' ? getVocabularySheet(vocabularyId) : null;
+  const isPurchasedBook = vocabularySheet?.vocaBookStoreId != null;
   console.log(word);
 
   // 단어가 삭제되어 없으면 자동으로 닫기
@@ -75,22 +77,26 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               />
             </div>
             <div className="flex items-center gap-[8px]">
-              <motion.button
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleEdit();
-                }}
-              >
-                <PencilSimple size={18} color="#FF70D4" />
-              </motion.button>
-              <motion.button
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleDelete();
-                }}
-              >
-                <Trash size={18} color="red" />
-              </motion.button>
+              {!isPurchasedBook && (
+                <>
+                  <motion.button
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      handleEdit();
+                    }}
+                  >
+                    <PencilSimple size={18} color="#FF70D4" />
+                  </motion.button>
+                  <motion.button
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      handleDelete();
+                    }}
+                  >
+                    <Trash size={18} color="red" />
+                  </motion.button>
+                </>
+              )}
             </div>
           </div>
           <div className="flex flex-wrap">

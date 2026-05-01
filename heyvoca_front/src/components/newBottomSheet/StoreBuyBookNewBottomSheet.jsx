@@ -13,7 +13,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
     const { userProfile, setUserProfile } = useUser();
     const [isLoading, setIsLoading] = useState(false);
 
-    const { packageType, packageName, cost, amount, image } = options;
+    const { packageName, cost, amount, image } = options;
 
     const handleBuy = async () => {
         vibrate({ duration: 5 });
@@ -34,7 +34,7 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
 
         setIsLoading(true);
         try {
-            const result = await purchaseBookApi(packageType);
+            const result = await purchaseBookApi(amount);
             if (result && result.code === 200) {
                 // 유저 정보 업데이트
                 setUserProfile(prev => ({

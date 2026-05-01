@@ -16,13 +16,11 @@ export const getGemItemsApi = async () => {
   }
 }
 
-// 단어장 구매 API
-export const purchaseBookApi = async (packageType) => {
+// 빈 단어장 구매 API (단가 10보석/개, amount 정수 전달)
+export const purchaseBookApi = async (amount) => {
   const url = `${backendUrl}/purchase/book`;
   const method = 'POST';
-  const fetchData = {
-    packageType: packageType, // 'single', 'small', 'large'
-  };
+  const fetchData = { amount };
   try {
     const result = await fetchDataAsync(url, method, fetchData);
     return result;

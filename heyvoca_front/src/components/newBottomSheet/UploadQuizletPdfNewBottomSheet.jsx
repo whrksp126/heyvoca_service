@@ -1,10 +1,12 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Check, FilePdf, UploadSimple, X } from '@phosphor-icons/react';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
 import { uploadQuizletPdfApi } from '../../api/voca';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
+import ImportResultNewBottomSheet from './ImportResultNewBottomSheet';
+import ImportProgressView from '../common/ImportProgressView';
 
 export const VOCABULARY_COLORS = [
   { id: 'color-1', value: '#FF70D4' },
@@ -29,7 +31,7 @@ const getColorSet = (mainColor) => {
  * 전용 호출 훅
  */
 export const useUploadQuizletPdfNewBottomSheet = () => {
-  const { pushAwaitNewBottomSheet } = useNewBottomSheet();
+  const { pushAwaitNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
   const { addVocabularySheetFromBackend } = useVocabulary();
 
   const showUploadQuizletPdfNewBottomSheet = useCallback(async () => {
@@ -45,65 +47,101 @@ export const useUploadQuizletPdfNewBottomSheet = () => {
     if (resultData) {
       try {
         await addVocabularySheetFromBackend(resultData);
-        alert('퀴즐렛 PDF가 성공적으로 추가되었습니다.');
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: true,
+          title: resultData?.title,
+          addedCount: resultData?.vocaCount ?? null,
+        });
         return true;
       } catch (error) {
         console.error('단어장 추가 실패:', error);
-        alert('단어장 추가에 실패했습니다.');
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          message: '단어장 추가에 실패했어요.\n잠시 후 다시 시도해주세요.',
+        });
         return false;
       }
     }
     return false;
-  }, [pushAwaitNewBottomSheet, addVocabularySheetFromBackend]);
+  }, [pushAwaitNewBottomSheet, pushNewBottomSheet, addVocabularySheetFromBackend]);
 
   return { showUploadQuizletPdfNewBottomSheet };
 };
 
 export const UploadQuizletPdfNewBottomSheet = () => {
-  const { resolveNewBottomSheet } = useNewBottomSheet();
+  "use memo";
+  const { resolveNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
   const [title, setTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [currentColor, setCurrentColor] = useState(VOCABULARY_COLORS[0].value);
   const [isUploading, setIsUploading] = useState(false);
+  const [nameError, setNameError] = useState('');
+  const [fileError, setFileError] = useState('');
+  const [step, setStep] = useState(1);
+  const [progress, setProgress] = useState({ label: '단어장 추가 중', done: 0, total: 0 });
   const fileInputRef = useRef(null);
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // 파일 크기 체크 (2MB 이하)
-      if (file.size > 2 * 1024 * 1024) {
-        alert('파일 크기는 2MB 이하만 가능합니다.');
-        return;
-      }
-      setSelectedFile(file);
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      setFileError('.pdf 파일만 선택할 수 있어요.');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
     }
+    if (file.size > 2 * 1024 * 1024) {
+      setFileError('파일 크기는 2MB 이하만 가능해요.');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
+
+    setFileError('');
+    setSelectedFile(file);
   };
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    setFileError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleUpload = async () => {
-    if (!selectedFile || isUploading) return;
-    if (!title.trim()) return alert('단어장 이름을 입력해주세요.');
+    if (isUploading) return;
 
+    let valid = true;
+    if (!title.trim()) {
+      setNameError('단어장 이름을 입력해주세요.');
+      valid = false;
+    }
+    if (!selectedFile) {
+      setFileError('PDF 파일을 선택해주세요.');
+      valid = false;
+    }
+    if (!valid) return;
+
+    setIsUploading(true);
+    setProgress({ label: '단어장 추가 중', done: 0, total: 0 });
+    setStep('progress');
     try {
-      setIsUploading(true);
       const color = getColorSet(currentColor);
-      const result = await uploadQuizletPdfApi(selectedFile, title, color);
+      const result = await uploadQuizletPdfApi(selectedFile, title.trim(), color);
 
       if (result && (result.code === 200 || result.code === 201)) {
         resolveNewBottomSheet(result.data);
       } else {
-        const errorMessage = result?.message || result?.error || `업로드에 실패했습니다. (코드: ${result?.code || '알 수 없음'})`;
-        alert(errorMessage);
+        const message = result?.message || result?.error
+          || `업로드에 실패했어요. (코드: ${result?.code || '알 수 없음'})`;
+        setStep(1);
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          message,
+        });
       }
     } catch (error) {
       console.error('퀴즐렛 PDF 업로드 오류:', error);
-      alert('업로드 중 오류가 발생했습니다.');
+      setStep(1);
+      showToast('업로드 중 오류가 발생했어요.');
     } finally {
       setIsUploading(false);
     }
@@ -111,38 +149,68 @@ export const UploadQuizletPdfNewBottomSheet = () => {
 
   const handleCancel = () => {
     vibrate({ duration: 5 });
+    if (step === 'progress') {
+      setIsUploading(false);
+      setStep(1);
+      return;
+    }
     resolveNewBottomSheet(null);
   };
 
+  const focusScroll = (e) => {
+    e.target?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+  };
+
+  if (step === 'progress') {
+    return (
+      <ImportProgressView
+        title="퀴즐렛 PDF 불러오기"
+        label={progress.label}
+        value={progress.done}
+        total={progress.total}
+        helperText={'PDF 페이지 수에 따라 시간이 걸릴 수 있어요.'}
+        onCancel={handleCancel}
+        cancelDisabled={isUploading}
+      />
+    );
+  }
+
   return (
-    <div className="flex flex-col">
+    <div className="relative">
       <div className="flex items-center justify-center p-[20px] pb-[0px]">
-        <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">퀴즐렛 PDF 불러오기</h1>
+        <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">퀴즐렛 PDF 불러오기</h1>
       </div>
 
-      <div className="flex flex-col gap-[30px] p-[20px]">
+      <div className="flex flex-col gap-[24px] max-h-[calc(90vh-47px)] p-[20px] pb-[105px] overflow-y-auto">
         {/* 단어장 이름 */}
         <div className="flex flex-col gap-[8px]">
-          <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">단어장 이름</h3>
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">단어장 이름</h3>
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (nameError) setNameError('');
+            }}
+            onFocus={focusScroll}
             placeholder="단어장 이름을 입력하세요"
-            className="
+            className={`
               w-full h-[45px] px-[15px]
-              border border-layout-gray-200 rounded-[8px]
-              font-normal text-[14px] text-layout-black dark:text-layout-white
+              border-[1px] rounded-[8px]
+              font-[400] text-[14px] text-layout-black dark:text-layout-white
               bg-layout-white dark:bg-layout-black
-              outline-none focus:border-primary-main-600
-              transition-colors
-            "
+              outline-none transition-colors
+              ${nameError ? 'border-red-500' : 'border-layout-gray-200 focus:border-primary-main-600'}
+            `}
           />
+          {nameError && (
+            <p className="mt-[4px] text-[12px] text-red-500">{nameError}</p>
+          )}
         </div>
 
         {/* 색상 선택 */}
         <div className="flex flex-col gap-[8px]">
-          <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">색상</h3>
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">색상</h3>
           <div className="flex items-center justify-between">
             {VOCABULARY_COLORS.map((color) => {
               const isSelected = currentColor === color.value;
@@ -173,7 +241,7 @@ export const UploadQuizletPdfNewBottomSheet = () => {
 
         {/* 파일 선택 */}
         <div className="flex flex-col gap-[8px]">
-          <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">파일 선택</h3>
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">파일 선택</h3>
           <p className="text-[12px] text-layout-gray-400">
             퀴즐렛에서 인쇄(PDF)로 저장한 파일을 선택하세요
           </p>
@@ -181,22 +249,23 @@ export const UploadQuizletPdfNewBottomSheet = () => {
           <input
             ref={fileInputRef}
             type="file"
-            accept=".pdf"
+            accept=".pdf,application/pdf"
             onChange={handleFileSelect}
             className="hidden"
           />
 
           {!selectedFile ? (
             <motion.button
-              className="
+              className={`
                 flex flex-col items-center justify-center gap-[8px]
                 w-full h-[100px]
-                border-2 border-dashed border-layout-gray-200
+                border-2 border-dashed
                 rounded-[8px]
                 text-layout-gray-400
                 bg-layout-white dark:bg-layout-black
                 transition-colors
-              "
+                ${fileError ? 'border-red-500' : 'border-layout-gray-200'}
+              `}
               onClick={() => fileInputRef.current?.click()}
               whileTap={{ scale: 0.98 }}
             >
@@ -226,27 +295,34 @@ export const UploadQuizletPdfNewBottomSheet = () => {
               </motion.button>
             </div>
           )}
+          {fileError && (
+            <p className="mt-[4px] text-[12px] text-red-500">{fileError}</p>
+          )}
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+      <div className="
+        absolute bottom-0 left-0 right-0
+        flex items-center justify-between gap-[15px]
+        p-[20px]
+        bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+      ">
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-bold"
+          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
           onClick={handleCancel}
           whileTap={{ scale: 0.95 }}
         >
           취소
         </motion.button>
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-bold disabled:opacity-50"
-          disabled={!selectedFile || isUploading}
+          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
           onClick={() => {
             vibrate({ duration: 5 });
             handleUpload();
           }}
           whileTap={{ scale: 0.95 }}
         >
-          {isUploading ? '업로드 중...' : '업로드 하기'}
+          업로드 하기
         </motion.button>
       </div>
     </div>

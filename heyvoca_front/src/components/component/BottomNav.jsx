@@ -105,7 +105,7 @@ const BottomNav = () => {
             />
             <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
-              서점
+              상점
             </span>
           </div>
         </li>

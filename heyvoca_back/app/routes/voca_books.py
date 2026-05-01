@@ -35,6 +35,91 @@ DEFAULT_SM2 = {
 }
 
 
+def is_purchased_book(voca_book):
+    """구매한 단어장(bookstore_id가 NULL이 아닌 단어장)인지 여부."""
+    return voca_book is not None and voca_book.bookstore_id is not None
+
+
+# 강조 마크업을 헤이보카 표준 형식(<strong class="target-word">)으로 정규화한다.
+# - <b>/<strong>(class 없음)/<u>/<em>/<i>/<mark>/<span style|class> → <strong class="target-word">...</strong>
+# - 이미 <strong class="target-word">는 그대로 보존
+# - **word**, __word__ Markdown 강조 → <strong class="target-word">word</strong>
+# - {{c1::word}}, {{c1::word::hint}} Anki cloze → <strong class="target-word">word</strong>
+# - 기타 모든 태그는 텍스트만 남기고 제거
+_TARGET_PLACEHOLDER_OPEN = '\x02TWOPEN\x03'
+_TARGET_PLACEHOLDER_CLOSE = '\x02TWCLOSE\x03'
+
+
+def _normalize_target_word(text):
+    if not text:
+        return ''
+
+    s = str(text)
+
+    # 0) 이미 표준 형식인 <strong class="target-word">...</strong>를 쌍으로 placeholder 치환 (이중 변환 방지)
+    s = re.sub(
+        r'<strong\b[^>]*\bclass\s*=\s*["\'][^"\']*\btarget-word\b[^"\']*["\'][^>]*>(.*?)</strong\s*>',
+        lambda m: f'{_TARGET_PLACEHOLDER_OPEN}{m.group(1)}{_TARGET_PLACEHOLDER_CLOSE}',
+        s,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+
+    # 1) Anki cloze: {{c1::word::hint}} → <strong class="target-word">word</strong>
+    s = re.sub(r'\{\{c\d+::(.+?)(?:::[^}]*)?\}\}',
+               lambda m: f'{_TARGET_PLACEHOLDER_OPEN}{m.group(1)}{_TARGET_PLACEHOLDER_CLOSE}',
+               s)
+
+    # 2) Markdown ** ** / __ __
+    s = re.sub(r'\*\*(.+?)\*\*',
+               lambda m: f'{_TARGET_PLACEHOLDER_OPEN}{m.group(1)}{_TARGET_PLACEHOLDER_CLOSE}',
+               s)
+    s = re.sub(r'__(.+?)__',
+               lambda m: f'{_TARGET_PLACEHOLDER_OPEN}{m.group(1)}{_TARGET_PLACEHOLDER_CLOSE}',
+               s)
+
+    # 3) 강조 의도가 있는 HTML 태그(쌍 매칭)를 placeholder로 치환
+    #    open/close를 한 정규식으로 매칭해 짝을 맞춰 안전하게 변환한다.
+    emphasis_tags = ['b', 'strong', 'u', 'em', 'i', 'mark']
+    for tag in emphasis_tags:
+        s = re.sub(
+            rf'<{tag}\b[^>]*>(.*?)</{tag}\s*>',
+            lambda m: f'{_TARGET_PLACEHOLDER_OPEN}{m.group(1)}{_TARGET_PLACEHOLDER_CLOSE}',
+            s,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+
+    # span: 강조 의도(style/class)가 있는 것만 placeholder, 일반 span은 내용만 보존
+    def _span_replace(m):
+        attrs = m.group(1) or ''
+        inner = m.group(2) or ''
+        lower = attrs.lower()
+        if ('font-weight' in lower or 'bold' in lower
+                or 'color' in lower or 'background' in lower
+                or 'class=' in lower):
+            return f'{_TARGET_PLACEHOLDER_OPEN}{inner}{_TARGET_PLACEHOLDER_CLOSE}'
+        return inner
+    s = re.sub(r'<span\b([^>]*)>(.*?)</span\s*>', _span_replace, s,
+               flags=re.IGNORECASE | re.DOTALL)
+
+    # 4) <br>/<br/> → 공백 (학습 화면에서 줄바꿈이 깨지는 것보다 공백이 안전)
+    s = re.sub(r'<br\s*/?>', ' ', s, flags=re.IGNORECASE)
+
+    # 5) 그 외 모든 HTML 태그 제거
+    s = re.sub(r'<[^>]+>', '', s)
+
+    # 6) HTML 엔티티 디코딩
+    s = html_unescape(s)
+
+    # 7) placeholder → 실제 strong 태그
+    s = s.replace(_TARGET_PLACEHOLDER_OPEN, '<strong class="target-word">')
+    s = s.replace(_TARGET_PLACEHOLDER_CLOSE, '</strong>')
+
+    # 8) 빈 strong 태그 제거 + 연속 공백 정리
+    s = re.sub(r'<strong class="target-word">\s*</strong>', '', s)
+    s = re.sub(r'[ \t]+', ' ', s).strip()
+    return s
+
+
 def validate_word_lengths(parsed_items):
     """
     파싱된 단어 리스트를 검증한다.
@@ -538,7 +623,10 @@ def upload_excel_voca_book():
 
             meanings = [m.strip() for m in meaning.split(',') if m.strip()]
             # EE(영어 예문)가 비면 예문 자체를 만들지 않는다. EK만 단독 입력은 무시.
-            examples = [{'origin': example_en, 'meaning': example_ko}] if example_en else []
+            examples = [{
+                'origin': _normalize_target_word(example_en),
+                'meaning': _normalize_target_word(example_ko),
+            }] if example_en else []
 
             parsed_items.append({
                 'origin': word,
@@ -677,7 +765,10 @@ def upload_csv_voca_book():
 
             meanings = [m.strip() for m in meaning.split(',') if m.strip()]
             # EE(영어 예문)가 비면 예문 자체를 만들지 않는다. EK만 단독 입력은 무시.
-            examples = [{'origin': example_en, 'meaning': example_ko}] if example_en else []
+            examples = [{
+                'origin': _normalize_target_word(example_en),
+                'meaning': _normalize_target_word(example_ko),
+            }] if example_en else []
 
             parsed_items.append({
                 'origin': word,
@@ -840,6 +931,9 @@ def update_voca_book(vocaBookId):
     if not voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
+    if is_purchased_book(voca_book):
+        return jsonify({'code': 403, 'message': '구매한 단어장은 수정할 수 없어요.'}), 403
+
     try:
         if 'title' in req:
             voca_book.name = req['title']
@@ -875,6 +969,9 @@ def delete_voca_book(vocaBookId):
     if not voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
+    if is_purchased_book(voca_book):
+        return jsonify({'code': 403, 'message': '구매한 단어장은 삭제할 수 없어요.'}), 403
+
     try:
         # 1. 삭제 대상 단어장에 포함된 단어 ID(user_voca_id) 목록 수집
         voca_ids = [m.user_voca_id for m in voca_book.voca_maps if m.user_voca_id is not None]
@@ -906,6 +1003,86 @@ def delete_voca_book(vocaBookId):
         return jsonify({'code': 500, 'message': '단어장 삭제 중 오류가 발생했습니다.'}), 500
 
 
+# 단어장에 단어 청크 추가 (대용량 업로드 시 분할 저장용)
+@voca_books_bp.route('/<vocaBookId>/vocas', methods=['POST'])
+@jwt_required
+def append_vocas_to_book(vocaBookId):
+    user_id = UUID(g.user_id)
+    req = request.get_json() or {}
+
+    try:
+        voca_book_id = UUID(str(vocaBookId))
+    except ValueError:
+        return jsonify({'code': 400, 'message': '잘못된 형식의 단어장 ID입니다.'}), 400
+
+    voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
+
+    if not voca_book:
+        return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
+
+    if is_purchased_book(voca_book):
+        return jsonify({'code': 403, 'message': '구매한 단어장은 변경할 수 없어요.'}), 403
+
+    voca_list = req.get('vocaList') or []
+    if not isinstance(voca_list, list) or not voca_list:
+        return jsonify({'code': 400, 'message': '추가할 단어 목록(vocaList)이 비어 있습니다.'}), 400
+
+    # origin/meanings/examples 형식으로 정규화
+    parsed_items = []
+    for item in voca_list:
+        origin = (item.get('origin') or '').strip()
+        if not origin:
+            continue
+        meanings = item.get('meanings') or []
+        examples = item.get('examples') or []
+        # 예문 강조 마크업 정규화 (불러오기 외부 호출 시에도 안전하게)
+        normalized_examples = []
+        for ex in examples:
+            normalized_examples.append({
+                'origin': _normalize_target_word(ex.get('origin', '')),
+                'meaning': _normalize_target_word(ex.get('meaning', '')),
+            })
+        parsed_items.append({
+            'origin': origin,
+            'meanings': meanings,
+            'examples': normalized_examples,
+        })
+
+    if not parsed_items:
+        return jsonify({'code': 400, 'message': '추가할 유효한 단어가 없습니다.'}), 400
+
+    invalid = validate_word_lengths(parsed_items)
+    if invalid:
+        status, msg = invalid
+        return jsonify({'code': status, 'message': msg}), status
+
+    try:
+        added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
+
+        # 단어장의 total_word_cnt 갱신 (UserVocaBookMap 기준 정확한 카운트)
+        new_total = db.session.query(UserVocaBookMap).filter(
+            UserVocaBookMap.user_voca_book_id == voca_book.id
+        ).count()
+        voca_book.total_word_cnt = new_total
+        voca_book.updated_at = datetime.datetime.utcnow()
+
+        db.session.commit()
+
+        return jsonify({
+            'code': 201,
+            'message': f'{added_count}개의 단어가 추가되었습니다.',
+            'data': {'addedCount': added_count, 'totalCount': new_total}
+        }), 201
+
+    except Exception:
+        db.session.rollback()
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '단어 추가 중 오류가 발생했습니다.'}), 500
+
+
 # ──────────────────────────────────────────────
 # Anki (.apkg) 업로드
 # ──────────────────────────────────────────────
@@ -913,9 +1090,9 @@ def delete_voca_book(vocaBookId):
 def _clean_anki_field(raw, keep_html=False):
     """안키 필드 값 정리.
     - [sound:...], <img ...> 미디어 참조 제거
-    - {{c1::answer::hint}} cloze → answer 로 변환
-    - keep_html=False 이면 HTML 태그도 모두 제거
-    - HTML 엔티티 디코딩
+    - keep_html=False 이면 cloze는 평문(answer)으로 풀고 HTML 태그도 모두 제거
+    - keep_html=True 이면 cloze와 강조 태그를 그대로 두고, 호출 측에서
+      _normalize_target_word()로 헤이보카 표준 형식(<strong class="target-word">)으로 변환한다
     """
     if not raw:
         return ''
@@ -925,20 +1102,18 @@ def _clean_anki_field(raw, keep_html=False):
     text = re.sub(r'\[sound:[^\]]*\]', '', text)
     text = re.sub(r'<img[^>]*>', '', text)
 
-    # cloze deletion: {{c1::answer::hint}} → answer
-    text = re.sub(r'\{\{c\d+::(.*?)(?:::[^}]*)?\}\}', r'\1', text)
-
     if not keep_html:
+        # cloze deletion: {{c1::answer::hint}} → answer
+        text = re.sub(r'\{\{c\d+::(.*?)(?:::[^}]*)?\}\}', r'\1', text)
         # <br>, <br/> → 공백
         text = re.sub(r'<br\s*/?>', ' ', text, flags=re.IGNORECASE)
         # 나머지 HTML 태그 제거
         text = re.sub(r'<[^>]+>', '', text)
-
-    # HTML 엔티티 디코딩
-    text = html_unescape(text)
+        # HTML 엔티티 디코딩
+        text = html_unescape(text)
 
     # 연속 공백 정리
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r'[ \t]+', ' ', text).strip()
     return text
 
 
@@ -1198,10 +1373,12 @@ def upload_anki_voca_book():
 
                 examples = []
                 if field_example and note.get(field_example, '').strip():
-                    ex_origin = _clean_anki_field(note[field_example], keep_html=True)
+                    ex_origin_raw = _clean_anki_field(note[field_example], keep_html=True)
+                    ex_origin = _normalize_target_word(ex_origin_raw)
                     ex_meaning = ''
                     if field_example_meaning and note.get(field_example_meaning, '').strip():
-                        ex_meaning = _clean_anki_field(note[field_example_meaning])
+                        ex_meaning_raw = _clean_anki_field(note[field_example_meaning], keep_html=True)
+                        ex_meaning = _normalize_target_word(ex_meaning_raw)
                     examples = [{'origin': ex_origin, 'meaning': ex_meaning}]
 
                 item = {

@@ -39,6 +39,18 @@ export const createVocaBookApi = async (data) => {
   }
 };
 
+// 단어장에 단어 청크 추가 (대용량 업로드 분할 저장용)
+export const appendVocasToBookApi = async (vocaBookId, vocaList) => {
+  const url = `${backendUrl}/vocaBooks/${vocaBookId}/vocas`;
+  const method = 'POST';
+  try {
+    return await fetchDataAsync(url, method, { vocaList });
+  } catch (error) {
+    console.error('appendVocasToBookApi 오류:', error);
+    throw error;
+  }
+};
+
 // 단어장 수정
 export const updateVocaBookApi = async (vocaBookId, updates) => {
   const url = `${backendUrl}/vocaBooks/${vocaBookId}`;

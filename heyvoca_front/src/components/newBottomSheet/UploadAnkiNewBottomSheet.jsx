@@ -1,10 +1,14 @@
 import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Check, FileArrowUp, UploadSimple, X, CaretDown, SpinnerGap } from '@phosphor-icons/react';
-import { vibrate } from '../../utils/osFunction';
-import { uploadAnkiPreviewApi, uploadAnkiApi } from '../../api/vocaBooks';
+import { Check, FileArrowUp, UploadSimple, X, SpinnerGap } from '@phosphor-icons/react';
+import { vibrate, showToast } from '../../utils/osFunction';
+import { uploadAnkiApi, uploadAnkiPreviewApi, createVocaBookApi, appendVocasToBookApi } from '../../api/vocaBooks';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { parseApkg, buildVocaListFromMapping } from '../../utils/ankiParser';
+import CustomSelect from '../common/CustomSelect';
+import ProgressBar from '../common/ProgressBar';
+import ImportResultNewBottomSheet from './ImportResultNewBottomSheet';
 
 const VOCABULARY_COLORS = [
   { id: 'color-1', value: '#FF70D4' },
@@ -69,11 +73,14 @@ const autoMapFields = (ankiFields) => {
   return mapping;
 };
 
+const HARD_LIMIT = 300 * 1024 * 1024;
+const CHUNK_SIZE = 200;
+
 /**
  * 전용 호출 훅
  */
 export const useUploadAnkiNewBottomSheet = () => {
-  const { pushAwaitNewBottomSheet } = useNewBottomSheet();
+  const { pushAwaitNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
   const { addVocabularySheetFromBackend } = useVocabulary();
 
   const showUploadAnkiNewBottomSheet = useCallback(async () => {
@@ -89,113 +96,204 @@ export const useUploadAnkiNewBottomSheet = () => {
     if (resultData) {
       try {
         await addVocabularySheetFromBackend(resultData);
-        alert('Anki 단어장이 성공적으로 추가되었습니다.');
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: true,
+          title: resultData?.title,
+          addedCount: resultData?.vocaCount ?? null,
+        });
         return true;
       } catch (error) {
         console.error('단어장 추가 실패:', error);
-        alert('단어장 추가에 실패했습니다.');
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          message: '단어장 추가에 실패했어요.\n잠시 후 다시 시도해주세요.',
+        });
         return false;
       }
     }
     return false;
-  }, [pushAwaitNewBottomSheet, addVocabularySheetFromBackend]);
+  }, [pushAwaitNewBottomSheet, pushNewBottomSheet, addVocabularySheetFromBackend]);
 
   return { showUploadAnkiNewBottomSheet };
 };
 
 export const UploadAnkiNewBottomSheet = () => {
   "use memo";
-  const { resolveNewBottomSheet } = useNewBottomSheet();
+  const { resolveNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
 
-  // Step 1 상태
   const [title, setTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [currentColor, setCurrentColor] = useState(VOCABULARY_COLORS[0].value);
   const [isParsing, setIsParsing] = useState(false);
+  const [parseProgress, setParseProgress] = useState({ done: 0, total: 0, label: '' });
 
-  // Step 2 상태
   const [step, setStep] = useState(1);
   const [previewData, setPreviewData] = useState(null);
   const [selectedNoteType, setSelectedNoteType] = useState(null);
   const [mapping, setMapping] = useState({});
   const [isUploading, setIsUploading] = useState(false);
-  const [showNoteTypeDropdown, setShowNoteTypeDropdown] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0, label: '' });
+
+  const [nameError, setNameError] = useState('');
+  const [fileError, setFileError] = useState('');
+  const [mappingError, setMappingError] = useState('');
 
   const fileInputRef = useRef(null);
+  const parseCancelRef = useRef({ cancelled: false });
+
+  const focusScroll = (e) => {
+    e.target?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+  };
 
   // ── Step 1 핸들러 ──
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 300 * 1024 * 1024) {
-        alert('파일 크기는 300MB 이하만 가능합니다.');
-        return;
-      }
-      setSelectedFile(file);
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.apkg')) {
+      setFileError('.apkg 파일만 선택할 수 있어요.');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
     }
+    if (file.size > HARD_LIMIT) {
+      setFileError('파일 크기는 300MB 이하만 가능해요.');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
+
+    setFileError('');
+    setSelectedFile(file);
+    // 새 파일 → 기존 분석 결과 무효화
+    setPreviewData(null);
+    setSelectedNoteType(null);
+    setMapping({});
   };
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-    // Step 1으로 초기화
+    setFileError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
     setStep(1);
     setPreviewData(null);
     setSelectedNoteType(null);
     setMapping({});
   };
 
+  const tryFrontendParse = async (file) => {
+    setParseProgress({ done: 0, total: 0, label: '파일 압축 해제 중' });
+    const result = await parseApkg(file, {
+      onProgress: ({ phase, done, total }) => {
+        if (phase === 'unzip') {
+          setParseProgress({ done: 0, total: 0, label: '파일 압축 해제 중' });
+        } else if (phase === 'open-db') {
+          setParseProgress({ done: 0, total: 0, label: '데이터베이스 여는 중' });
+        } else {
+          setParseProgress({ done, total, label: '단어 분석 중' });
+        }
+      },
+    });
+    return result;
+  };
+
+  // 프론트 파싱이 실패하거나 메모리 한계로 처리 불가할 때 서버에 preview를 요청해 동일한 형태를 받아온다.
+  // 결과에 _allNotes는 없으므로 handleUpload에서 백엔드 upload API를 사용한다.
+  const tryBackendPreview = async (file) => {
+    setParseProgress({ done: 0, total: 0, label: '서버에서 분석 중' });
+    const result = await uploadAnkiPreviewApi(file);
+    if (result && result.code === 200 && result.data) {
+      return result.data;
+    }
+    throw new Error(result?.message || '서버 분석에 실패했어요.');
+  };
+
   const handleParse = async () => {
-    if (!selectedFile || isParsing) return;
-    if (!title.trim()) return alert('단어장 이름을 입력해주세요.');
+    if (isParsing) return;
 
+    let valid = true;
+    if (!title.trim()) {
+      setNameError('단어장 이름을 입력해주세요.');
+      valid = false;
+    }
+    if (!selectedFile) {
+      setFileError('Anki 파일을 선택해주세요.');
+      valid = false;
+    }
+    if (!valid) return;
+
+    // 이미 같은 파일에 대해 분석 결과가 살아있으면 곧바로 매핑 화면으로
+    if (previewData && selectedNoteType) {
+      setStep(2);
+      return;
+    }
+
+    parseCancelRef.current = { cancelled: false };
+    const token = parseCancelRef.current;
+
+    setIsParsing(true);
+    setStep('parsing');
+    setParseProgress({ done: 0, total: 0, label: '파일 압축 해제 중' });
     try {
-      setIsParsing(true);
-      const result = await uploadAnkiPreviewApi(selectedFile);
-
-      if (result && result.code === 200 && result.data) {
-        const data = result.data;
-        setPreviewData(data);
-
-        // 노트 타입 자동 선택 (1개면 자동, 여러 개면 첫 번째)
-        const firstNt = data.noteTypes[0];
-        setSelectedNoteType(firstNt);
-
-        // 자동 필드 매핑
-        const autoMapping = autoMapFields(firstNt.fields);
-        setMapping(autoMapping);
-
-        setStep(2);
-      } else {
-        const errorMessage = result?.message || '파일 파싱에 실패했습니다.';
-        alert(errorMessage);
+      let result = null;
+      try {
+        // 모든 파일에 대해 프론트 파싱을 우선 시도
+        result = await tryFrontendParse(selectedFile);
+      } catch (frontError) {
+        if (token.cancelled) return;
+        console.warn('프론트 파싱 실패, 서버 분석으로 폴백:', frontError);
+        result = await tryBackendPreview(selectedFile);
       }
+
+      if (token.cancelled) return;
+
+      if (!result || !result.noteTypes || result.noteTypes.length === 0) {
+        setStep(1);
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          message: '파일에 단어 데이터가 없어요.',
+        });
+        return;
+      }
+
+      setPreviewData(result);
+      const firstNt = result.noteTypes[0];
+      setSelectedNoteType(firstNt);
+      setMapping(autoMapFields(firstNt.fields));
+      setStep(2);
     } catch (error) {
+      if (token.cancelled) return;
       console.error('Anki 파싱 오류:', error);
-      alert('파일 파싱 중 오류가 발생했습니다.');
+      setStep(1);
+      pushNewBottomSheet(ImportResultNewBottomSheet, {
+        success: false,
+        message: error?.message || '파일 분석 중 오류가 발생했어요.\n파일이 손상되었을 수 있어요.',
+      });
     } finally {
-      setIsParsing(false);
+      if (!token.cancelled) {
+        setIsParsing(false);
+      }
     }
   };
 
   // ── Step 2 핸들러 ──
 
-  const handleNoteTypeSelect = (nt) => {
-    setSelectedNoteType(nt);
-    setMapping(autoMapFields(nt.fields));
-    setShowNoteTypeDropdown(false);
+  const handleNoteTypeSelect = (noteTypeId) => {
+    const nt = previewData.noteTypes.find((n) => String(n.noteTypeId) === String(noteTypeId));
+    if (nt) {
+      setSelectedNoteType(nt);
+      setMapping(autoMapFields(nt.fields));
+      setMappingError('');
+    }
   };
 
   const handleMappingChange = (heyField, ankiField) => {
-    setMapping(prev => ({ ...prev, [heyField]: ankiField || null }));
+    setMapping((prev) => ({ ...prev, [heyField]: ankiField || null }));
+    if (mappingError) setMappingError('');
   };
 
   const getMappedSamples = () => {
     if (!selectedNoteType) return [];
-    return selectedNoteType.samples.map(sample => {
+    return selectedNoteType.samples.map((sample) => {
       const row = {};
       for (const hf of HEYVOCA_FIELDS) {
         const ankiField = mapping[hf.key];
@@ -207,48 +305,15 @@ export const UploadAnkiNewBottomSheet = () => {
 
   const validateMapping = () => {
     if (!mapping.word || !mapping.meaning) {
-      return '영단어와 뜻 필드 매핑은 필수입니다.';
+      return '영단어와 뜻 필드 매핑은 필수예요.';
     }
-
-    const samples = selectedNoteType?.samples || [];
-    if (samples.length === 0) return null;
-
-    // word 빈 값 체크
-    const emptyWords = samples.filter(s => !(mapping.word && (s[mapping.word] || '').replace(/<[^>]+>/g, '').replace(/\[sound:[^\]]*\]/g, '').trim()));
-    if (emptyWords.length === samples.length) {
-      return '영단어(word) 필드에 유효한 값이 없습니다. 다른 필드를 선택해주세요.';
-    }
-
-    // meaning 빈 값 체크
-    const emptyMeanings = samples.filter(s => !(mapping.meaning && (s[mapping.meaning] || '').replace(/<[^>]+>/g, '').replace(/\[sound:[^\]]*\]/g, '').trim()));
-    if (emptyMeanings.length === samples.length) {
-      return '뜻(meaning) 필드에 유효한 값이 없습니다. 다른 필드를 선택해주세요.';
-    }
-
-    // word 길이 체크: 50자 초과 즉시 거부 (영단어가 50자를 넘는 경우는 사실상 없음)
-    // 백엔드가 내려준 전체 노트 기준 통계(fieldStats)를 우선 사용한다.
-    // 통계가 없는 구버전 응답은 샘플 5개로 폴백.
-    const fieldStats = selectedNoteType?.fieldStats || null;
-    const stat = fieldStats ? fieldStats[mapping.word] : null;
-
-    if (stat && stat.nonEmptyCount > 0) {
-      if (stat.maxLen > 50) {
-        return `영단어(word) 필드에 50자를 초과하는 값이 있습니다 (최대 ${stat.maxLen}자). 단어는 50자를 넘지 않도록 해주세요.`;
-      }
-    } else {
-      const overLen = samples
-        .map(s => (s[mapping.word] || '').replace(/<[^>]+>/g, '').replace(/\[sound:[^\]]*\]/g, '').trim().length)
-        .find(l => l > 50);
-      if (overLen) {
-        return `영단어(word) 필드에 50자를 초과하는 값이 있습니다 (${overLen}자). 단어는 50자를 넘지 않도록 해주세요.`;
-      }
-    }
-
-    // word와 meaning에 같은 필드를 선택한 경우
     if (mapping.word === mapping.meaning) {
-      return '영단어와 뜻에 같은 필드를 선택할 수 없습니다.';
+      return '영단어와 뜻에 같은 필드를 선택할 수 없어요.';
     }
-
+    const stat = selectedNoteType?.fieldStats?.[mapping.word];
+    if (stat && stat.maxLen > 50) {
+      return `영단어 필드에 50자를 초과하는 값이 있어요 (최대 ${stat.maxLen}자). 다른 필드를 선택해주세요.`;
+    }
     return null;
   };
 
@@ -257,29 +322,140 @@ export const UploadAnkiNewBottomSheet = () => {
 
     const validationError = validateMapping();
     if (validationError) {
-      return alert(validationError);
+      setMappingError(validationError);
+      return;
     }
 
+    setIsUploading(true);
+    setUploadProgress({ done: 0, total: selectedNoteType?.noteCount || 0, label: '단어 정리 중' });
+    setStep('uploading');
     try {
-      setIsUploading(true);
-      const color = getColorSet(currentColor);
-      const result = await uploadAnkiApi(
-        selectedFile,
-        title,
-        color,
-        mapping,
-        selectedNoteType.noteTypeId
-      );
-
-      if (result && (result.code === 200 || result.code === 201)) {
-        resolveNewBottomSheet(result.data);
-      } else {
-        const errorMessage = result?.message || `업로드에 실패했습니다. (코드: ${result?.code || '알 수 없음'})`;
-        alert(errorMessage);
+      // 백엔드 preview로 폴백된 경우(_allNotes 없음): 백엔드 upload API로 처리
+      if (!selectedNoteType?._allNotes) {
+        const color = getColorSet(currentColor);
+        setUploadProgress({ done: 0, total: selectedNoteType?.noteCount || 0, label: '서버에 저장 중' });
+        const result = await uploadAnkiApi(
+          selectedFile,
+          title.trim(),
+          color,
+          mapping,
+          selectedNoteType.noteTypeId
+        );
+        if (result && (result.code === 200 || result.code === 201)) {
+          resolveNewBottomSheet(result.data);
+        } else {
+          const message = result?.message || `업로드에 실패했어요. (코드: ${result?.code || '알 수 없음'})`;
+          setStep(2);
+          pushNewBottomSheet(ImportResultNewBottomSheet, {
+            success: false,
+            message,
+          });
+        }
+        return;
       }
+
+      // 매핑 적용해 vocaList 생성 (프론트에서 normalize 적용됨)
+      const vocaList = await buildVocaListFromMapping(selectedNoteType, mapping, {
+        onProgress: ({ done, total }) => {
+          setUploadProgress({ done, total, label: '단어 정리 중' });
+        },
+      });
+
+      if (vocaList.length === 0) {
+        setStep(2);
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          message: '매핑 결과 유효한 단어가 없어요.\n필드 매핑을 확인해주세요.',
+        });
+        return;
+      }
+
+      const color = getColorSet(currentColor);
+      const total = vocaList.length;
+      let createdBookData = null;
+      let saved = 0;
+
+      if (total <= CHUNK_SIZE * 2.5) {
+        // 작은 양: 한 번에 생성
+        setUploadProgress({ done: 0, total, label: '단어 저장 중' });
+        const result = await createVocaBookApi({
+          title: title.trim(),
+          color,
+          vocaList,
+        });
+        if (!(result && (result.code === 200 || result.code === 201))) {
+          const message = result?.message || `업로드에 실패했어요. (코드: ${result?.code || '알 수 없음'})`;
+          setStep(2);
+          pushNewBottomSheet(ImportResultNewBottomSheet, {
+            success: false,
+            message,
+          });
+          return;
+        }
+        createdBookData = result.data;
+        setUploadProgress({ done: total, total, label: '단어 저장 중' });
+      } else {
+        // 청크 분할 저장
+        const firstChunk = vocaList.slice(0, CHUNK_SIZE);
+        setUploadProgress({ done: 0, total, label: '단어 저장 중' });
+        const firstResult = await createVocaBookApi({
+          title: title.trim(),
+          color,
+          vocaList: firstChunk,
+        });
+        if (!(firstResult && (firstResult.code === 200 || firstResult.code === 201))) {
+          const message = firstResult?.message || '업로드에 실패했어요.';
+          setStep(2);
+          pushNewBottomSheet(ImportResultNewBottomSheet, {
+            success: false,
+            message,
+          });
+          return;
+        }
+        createdBookData = firstResult.data;
+        saved = firstChunk.length;
+        setUploadProgress({ done: saved, total, label: '단어 저장 중' });
+
+        const vocaBookId = createdBookData?.vocaBookId;
+        if (!vocaBookId) {
+          setStep(2);
+          pushNewBottomSheet(ImportResultNewBottomSheet, {
+            success: false,
+            message: '단어장 ID를 받지 못했어요.',
+          });
+          return;
+        }
+
+        for (let i = CHUNK_SIZE; i < total; i += CHUNK_SIZE) {
+          const chunk = vocaList.slice(i, i + CHUNK_SIZE);
+          // eslint-disable-next-line no-await-in-loop
+          const chunkResult = await appendVocasToBookApi(vocaBookId, chunk);
+          if (!(chunkResult && (chunkResult.code === 200 || chunkResult.code === 201))) {
+            const message = chunkResult?.message || `${i + chunk.length}/${total} 단어 저장 중 오류가 발생했어요.`;
+            setStep(2);
+            pushNewBottomSheet(ImportResultNewBottomSheet, {
+              success: false,
+              message,
+            });
+            return;
+          }
+          saved += chunk.length;
+          setUploadProgress({ done: saved, total, label: '단어 저장 중' });
+        }
+      }
+
+      // 응답 데이터에 최신 단어 카운트가 들어있을 수 있음
+      resolveNewBottomSheet({
+        ...createdBookData,
+        vocaCount: total,
+      });
     } catch (error) {
       console.error('Anki 업로드 오류:', error);
-      alert('업로드 중 오류가 발생했습니다.');
+      setStep(2);
+      pushNewBottomSheet(ImportResultNewBottomSheet, {
+        success: false,
+        message: '업로드 중 오류가 발생했어요.',
+      });
     } finally {
       setIsUploading(false);
     }
@@ -288,46 +464,109 @@ export const UploadAnkiNewBottomSheet = () => {
   const handleCancel = () => {
     vibrate({ duration: 5 });
     if (step === 2) {
+      // 매핑 → 이전: 파일 선택으로 복귀(입력값/분석 결과 모두 유지)
+      setMappingError('');
       setStep(1);
-      setPreviewData(null);
-      setSelectedNoteType(null);
-      setMapping({});
+    } else if (step === 'parsing') {
+      // 분석 중 → 취소: 파일 선택으로 복귀(입력값 유지)
+      parseCancelRef.current.cancelled = true;
+      setIsParsing(false);
+      setStep(1);
     } else {
       resolveNewBottomSheet(null);
     }
   };
 
+  // ── Step 'parsing' / 'uploading': 진행률 시트 (분석/저장 공용) ──
+  if (step === 'parsing' || step === 'uploading') {
+    const isUploadingPhase = step === 'uploading';
+    const progressData = isUploadingPhase ? uploadProgress : parseProgress;
+    const headerTitle = isUploadingPhase ? '단어장 저장 중' : '파일 분석 중';
+    const fallbackLabel = isUploadingPhase ? '단어장 저장 중' : '파일 분석 중';
+    const helperText = isUploadingPhase
+      ? '저장이 끝날 때까지 잠시만 기다려주세요.'
+      : '파일 크기에 따라 시간이 걸릴 수 있어요.\n취소를 누르면 이전 화면으로 돌아갈 수 있어요.';
+
+    return (
+      <div className="relative">
+        <div className="flex items-center justify-center p-[20px] pb-[0px]">
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">{headerTitle}</h1>
+        </div>
+
+        <div className="flex flex-col items-center justify-center gap-[18px] min-h-[260px] px-[24px] pt-[24px] pb-[105px]">
+          <SpinnerGap size={36} className="animate-spin text-primary-main-600" />
+          <p className="text-[14px] font-[600] text-layout-black dark:text-layout-white">
+            {progressData.label || fallbackLabel}
+          </p>
+          <div className="w-full">
+            <ProgressBar
+              value={progressData.done}
+              total={progressData.total}
+              label=""
+            />
+          </div>
+          <p className="text-[12px] text-layout-gray-400 text-center whitespace-pre-line">
+            {helperText}
+          </p>
+        </div>
+
+        <div className="
+          absolute bottom-0 left-0 right-0
+          flex items-center justify-center gap-[15px]
+          p-[20px]
+          bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+        ">
+          <motion.button
+            className="w-full h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-50"
+            onClick={handleCancel}
+            disabled={isUploadingPhase}
+            whileTap={{ scale: 0.95 }}
+          >
+            취소
+          </motion.button>
+        </div>
+      </div>
+    );
+  }
+
   // ── Step 1: 파일 선택 ──
   if (step === 1) {
     return (
-      <div className="flex flex-col">
+      <div className="relative">
         <div className="flex items-center justify-center p-[20px] pb-[0px]">
-          <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">Anki 단어장 불러오기</h1>
+          <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">Anki 단어장 불러오기</h1>
         </div>
 
-        <div className="flex flex-col gap-[30px] p-[20px]">
+        <div className="flex flex-col gap-[24px] max-h-[calc(90vh-47px)] p-[20px] pb-[105px] overflow-y-auto">
           {/* 단어장 이름 */}
           <div className="flex flex-col gap-[8px]">
-            <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">단어장 이름</h3>
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">단어장 이름</h3>
             <input
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (nameError) setNameError('');
+              }}
+              onFocus={focusScroll}
               placeholder="단어장 이름을 입력하세요"
-              className="
+              className={`
                 w-full h-[45px] px-[15px]
-                border border-layout-gray-200 rounded-[8px]
-                font-normal text-[14px] text-layout-black dark:text-layout-white
+                border-[1px] rounded-[8px]
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 bg-layout-white dark:bg-layout-black
-                outline-none focus:border-primary-main-600
-                transition-colors
-              "
+                outline-none transition-colors
+                ${nameError ? 'border-red-500' : 'border-layout-gray-200 focus:border-primary-main-600'}
+              `}
             />
+            {nameError && (
+              <p className="mt-[4px] text-[12px] text-red-500">{nameError}</p>
+            )}
           </div>
 
           {/* 색상 선택 */}
           <div className="flex flex-col gap-[8px]">
-            <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">색상</h3>
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">색상</h3>
             <div className="flex items-center justify-between">
               {VOCABULARY_COLORS.map((color) => {
                 const isSelected = currentColor === color.value;
@@ -358,7 +597,7 @@ export const UploadAnkiNewBottomSheet = () => {
 
           {/* 파일 선택 */}
           <div className="flex flex-col gap-[8px]">
-            <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">파일 선택</h3>
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">파일 선택</h3>
             <p className="text-[12px] text-layout-gray-400">
               Anki에서 내보내기한 .apkg 파일을 선택하세요
             </p>
@@ -366,22 +605,23 @@ export const UploadAnkiNewBottomSheet = () => {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".apkg"
+              accept=".apkg,application/octet-stream"
               onChange={handleFileSelect}
               className="hidden"
             />
 
             {!selectedFile ? (
               <motion.button
-                className="
+                className={`
                   flex flex-col items-center justify-center gap-[8px]
                   w-full h-[100px]
-                  border-2 border-dashed border-layout-gray-200
+                  border-2 border-dashed
                   rounded-[8px]
                   text-layout-gray-400
                   bg-layout-white dark:bg-layout-black
                   transition-colors
-                "
+                  ${fileError ? 'border-red-500' : 'border-layout-gray-200'}
+                `}
                 onClick={() => fileInputRef.current?.click()}
                 whileTap={{ scale: 0.98 }}
               >
@@ -411,32 +651,34 @@ export const UploadAnkiNewBottomSheet = () => {
                 </motion.button>
               </div>
             )}
+            {fileError && (
+              <p className="mt-[4px] text-[12px] text-red-500">{fileError}</p>
+            )}
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-[15px] p-[20px]">
+        <div className="
+          absolute bottom-0 left-0 right-0
+          flex items-center justify-between gap-[15px]
+          p-[20px]
+          bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+        ">
           <motion.button
-            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-bold"
+            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
             onClick={handleCancel}
             whileTap={{ scale: 0.95 }}
           >
             취소
           </motion.button>
           <motion.button
-            className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-bold disabled:opacity-50"
-            disabled={!selectedFile || isParsing}
+            className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
             onClick={() => {
               vibrate({ duration: 5 });
               handleParse();
             }}
             whileTap={{ scale: 0.95 }}
           >
-            {isParsing ? (
-              <span className="flex items-center justify-center gap-[6px]">
-                <SpinnerGap size={18} className="animate-spin" />
-                파싱 중...
-              </span>
-            ) : '다음'}
+            다음
           </motion.button>
         </div>
       </div>
@@ -445,151 +687,119 @@ export const UploadAnkiNewBottomSheet = () => {
 
   // ── Step 2: 필드 매핑 + 미리보기 ──
   const mappedSamples = getMappedSamples();
+  const noteTypeOptions = (previewData?.noteTypes || []).map((nt) => ({
+    value: String(nt.noteTypeId),
+    label: `${nt.noteTypeName} (${nt.noteCount}개)`,
+  }));
 
   return (
-    <div className="flex flex-col max-h-[80vh]">
+    <div className="relative">
       <div className="flex items-center justify-center p-[20px] pb-[0px]">
-        <h1 className="text-[18px] font-bold text-layout-black dark:text-layout-white">필드 매핑</h1>
+        <h1 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">필드 매핑</h1>
       </div>
 
-      <div className="flex flex-col gap-[20px] p-[20px] overflow-y-auto">
+      <div className="flex flex-col gap-[15px] max-h-[calc(90vh-47px)] p-[20px] pb-[105px] overflow-y-auto">
         {/* 노트 타입 선택 (2개 이상일 때만 표시) */}
         {previewData && previewData.noteTypes.length > 1 && (
-          <div className="flex flex-col gap-[8px]">
-            <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">노트 타입 선택</h3>
-            <div className="relative">
-              <motion.button
-                className="
-                  flex items-center justify-between
-                  w-full h-[40px] px-[12px]
-                  border border-layout-gray-200 rounded-[8px]
-                  bg-layout-white dark:bg-layout-black
-                  text-[13px] text-layout-black dark:text-layout-white
-                "
-                onClick={() => setShowNoteTypeDropdown(!showNoteTypeDropdown)}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span>{selectedNoteType?.noteTypeName} ({selectedNoteType?.noteCount}개)</span>
-                <CaretDown size={14} weight="bold" className={`transition-transform ${showNoteTypeDropdown ? 'rotate-180' : ''}`} />
-              </motion.button>
-
-              {showNoteTypeDropdown && (
-                <div className="absolute top-[44px] left-0 right-0 z-10 border border-layout-gray-200 rounded-[8px] bg-layout-white dark:bg-layout-black shadow-lg overflow-hidden">
-                  {previewData.noteTypes.map((nt) => (
-                    <motion.button
-                      key={nt.noteTypeId}
-                      className={`
-                        w-full px-[12px] py-[10px] text-left text-[13px]
-                        ${selectedNoteType?.noteTypeId === nt.noteTypeId
-                          ? 'bg-primary-main-600 bg-opacity-10 text-primary-main-600 font-bold'
-                          : 'text-layout-black dark:text-layout-white'
-                        }
-                      `}
-                      onClick={() => handleNoteTypeSelect(nt)}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {nt.noteTypeName} ({nt.noteCount}개)
-                    </motion.button>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="flex justify-between flex-col gap-[8px]">
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">노트 타입</h3>
+            <CustomSelect
+              value={selectedNoteType ? String(selectedNoteType.noteTypeId) : ''}
+              onChange={handleNoteTypeSelect}
+              options={noteTypeOptions}
+              placeholder="노트 타입을 선택하세요"
+            />
           </div>
         )}
 
-        {/* 필드 매핑 */}
-        <div className="flex flex-col gap-[8px]">
-          <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">필드 매핑</h3>
-          <p className="text-[12px] text-layout-gray-400">
-            Anki 필드를 heyvoca 필드에 연결하세요
-          </p>
+        {/* 필드 매핑 — 단어 추가 바텀시트와 동일한 폼 구조 */}
+        {HEYVOCA_FIELDS.map((hf) => {
+          const firstSample = selectedNoteType?.samples?.[0] || {};
+          const fieldOptions = (selectedNoteType?.fields || []).map((f) => {
+            const raw = (firstSample[f] || '').toString().replace(/\s+/g, ' ').trim();
+            const preview = raw.length > 28 ? `${raw.slice(0, 28)}…` : raw;
+            return {
+              value: f,
+              label: f,
+              preview,
+            };
+          });
+          return (
+            <div key={hf.key} className="flex justify-between flex-col gap-[8px]">
+              <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+                {hf.label}{hf.required && <strong className="text-primary-main-600">*</strong>}
+              </h3>
+              <CustomSelect
+                value={mapping[hf.key] || ''}
+                onChange={(v) => handleMappingChange(hf.key, v)}
+                options={fieldOptions}
+                placeholder="선택 안함"
+              />
+            </div>
+          );
+        })}
 
-          <div className="flex flex-col gap-[10px]">
-            {HEYVOCA_FIELDS.map((hf) => (
-              <div key={hf.key} className="flex items-center gap-[10px]">
-                <span className={`w-[80px] shrink-0 text-[13px] ${hf.required ? 'font-bold text-layout-black dark:text-layout-white' : 'text-layout-gray-400'}`}>
-                  {hf.label}{hf.required ? ' *' : ''}
-                </span>
-                <select
-                  value={mapping[hf.key] || ''}
-                  onChange={(e) => handleMappingChange(hf.key, e.target.value)}
-                  className="
-                    flex-1 h-[36px] px-[10px]
-                    border border-layout-gray-200 rounded-[6px]
-                    bg-layout-white dark:bg-layout-black
-                    text-[13px] text-layout-black dark:text-layout-white
-                    outline-none focus:border-primary-main-600
-                  "
-                >
-                  <option value="">선택 안함</option>
-                  {selectedNoteType?.fields.map((field) => (
-                    <option key={field} value={field}>{field}</option>
-                  ))}
-                </select>
-              </div>
-            ))}
-          </div>
-        </div>
+        {mappingError && (
+          <p className="text-[12px] text-red-500">{mappingError}</p>
+        )}
 
-        {/* 미리보기 */}
+        {/* 미리보기 — 단어 추가 바텀시트의 예문 카드 스타일 */}
         {mappedSamples.length > 0 && mapping.word && mapping.meaning && (
-          <div className="flex flex-col gap-[8px]">
-            <h3 className="text-[14px] font-bold text-layout-black dark:text-layout-white">미리보기</h3>
-            <div className="flex flex-col gap-[6px]">
-              {mappedSamples.map((sample, idx) => (
-                <div
-                  key={idx}
-                  className="
-                    flex flex-col gap-[2px] p-[10px]
-                    border border-layout-gray-200 rounded-[6px]
-                    bg-layout-white dark:bg-layout-black
-                  "
-                >
-                  <div className="flex items-baseline gap-[6px]">
-                    <span className="text-[14px] font-bold text-layout-black dark:text-layout-white">{sample.word}</span>
+          <div className="flex justify-between flex-col gap-[8px]">
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">미리보기</h3>
+            {(() => {
+              const sample = mappedSamples[0];
+              return (
+                <div className="flex flex-col gap-[5px] p-[15px] rounded-[8px] bg-primary-main-100">
+                  <div className="flex items-baseline gap-[8px] flex-wrap">
+                    <span className="text-[16px] font-[700] text-layout-black">{sample.word || '-'}</span>
                     {sample.pronunciation && (
                       <span className="text-[12px] text-layout-gray-400">{sample.pronunciation}</span>
                     )}
                   </div>
                   {sample.meaning && (
-                    <span className="text-[13px] text-primary-main-600">{sample.meaning}</span>
+                    <span className="text-[13px] font-[600] text-primary-main-600">{sample.meaning}</span>
                   )}
-                  {sample.example && (
-                    <span className="text-[12px] text-layout-gray-400 italic">{sample.example}</span>
-                  )}
-                  {sample.exampleMeaning && (
-                    <span className="text-[12px] text-layout-gray-400">{sample.exampleMeaning}</span>
+                  {(sample.example || sample.exampleMeaning) && (
+                    <div className="mt-[5px] pt-[8px] border-t border-layout-gray-200">
+                      {sample.example && (
+                        <p className="text-[13px] text-layout-black">{sample.example}</p>
+                      )}
+                      {sample.exampleMeaning && (
+                        <p className="text-[12px] text-layout-gray-400 mt-[2px]">{sample.exampleMeaning}</p>
+                      )}
+                    </div>
                   )}
                 </div>
-              ))}
-            </div>
+              );
+            })()}
           </div>
         )}
+
       </div>
 
-      <div className="flex items-center justify-between gap-[15px] p-[20px] shrink-0">
+      <div className="
+        absolute bottom-0 left-0 right-0
+        flex items-center justify-between gap-[15px]
+        p-[20px]
+        bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+      ">
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-bold"
+          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
           onClick={handleCancel}
           whileTap={{ scale: 0.95 }}
         >
           이전
         </motion.button>
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-bold disabled:opacity-50"
-          disabled={!mapping.word || !mapping.meaning || isUploading}
+          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
           onClick={() => {
             vibrate({ duration: 5 });
             handleUpload();
           }}
           whileTap={{ scale: 0.95 }}
         >
-          {isUploading ? (
-            <span className="flex items-center justify-center gap-[6px]">
-              <SpinnerGap size={18} className="animate-spin" />
-              업로드 중...
-            </span>
-          ) : '불러오기'}
+          불러오기
         </motion.button>
       </div>
     </div>

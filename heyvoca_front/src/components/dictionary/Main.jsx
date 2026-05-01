@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh } from '@phosphor-icons/react';
+import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh, Timer } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { backendUrl, fetchDataAsync, getTextSound, stripHtmlTags } from '../../utils/common';
+import { backendUrl, fetchDataAsync, getTextSound, stripHtmlTags, isWordOverdue } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
@@ -38,6 +38,8 @@ const Main = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedWord, setSelectedWord] = useState(null);
+  const [noResults, setNoResults] = useState(false);
+  const [submittedQuery, setSubmittedQuery] = useState('');
   const suggestionsRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -110,14 +112,19 @@ const Main = () => {
     if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setShowSuggestions(false);
+      setNoResults(false);
       return;
     }
     try {
       const endpoint = lang === 'ko' ? '/search/partial/ko' : '/search/partial/en';
       const response = await fetchDataAsync(`${backendUrl}${endpoint}`, 'GET', { word: query });
       if (response?.code === 200) {
-        setSuggestions(response.data || []);
-        setShowSuggestions(true);
+        const data = response.data || [];
+        setSuggestions(data);
+        setShowSuggestions(data.length > 0);
+        setSubmittedQuery(query);
+        // 결과가 비었을 때만 true. 결과가 있으면 false로 풀어 기본 단어 목록을 다시 노출.
+        setNoResults(data.length === 0);
       }
     } catch (err) {
       console.error('추천 검색 오류:', err);
@@ -172,6 +179,9 @@ const Main = () => {
     if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setShowSuggestions(false);
+      // 검색어가 비거나 너무 짧으면 빈 결과 상태도 해제
+      setNoResults(false);
+      setSubmittedQuery('');
       return;
     }
 
@@ -179,6 +189,14 @@ const Main = () => {
       fetchSuggestions(query, lang);
     }, 300);
   };
+
+  // Enter / 검색 아이콘 클릭으로 즉시 검색 실행
+  const handleSearchSubmit = useCallback(() => {
+    if (!searchQuery.trim()) return;
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    fetchSuggestions(searchQuery, searchLang);
+    searchInputRef.current?.blur();
+  }, [searchQuery, searchLang, fetchSuggestions]);
 
   // 드롭다운 항목 클릭 (외부에서도 재사용 — OCR 풀시트의 "선택" 버튼 등)
   const handleSuggestionClick = useCallback((item) => {
@@ -305,6 +323,12 @@ const Main = () => {
               onFocus={() => {
                 if (suggestions.length > 0) setShowSuggestions(true);
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleSearchSubmit();
+                }
+              }}
               placeholder="검색할 단어를 입력하세요."
               className="
                 flex-1 bg-transparent outline-none
@@ -312,10 +336,17 @@ const Main = () => {
                 placeholder:text-layout-gray-300
               "
             />
-            <MagnifyingGlass
-              size={20}
-              className="text-layout-gray-200"
-            />
+            <button
+              type="button"
+              onClick={handleSearchSubmit}
+              className="flex items-center justify-center"
+              aria-label="검색"
+            >
+              <MagnifyingGlass
+                size={20}
+                className="text-layout-gray-200"
+              />
+            </button>
           </div>
 
           {/* 자동완성 드롭다운 */}
@@ -507,19 +538,25 @@ const Main = () => {
                         style={{ backgroundColor: bgColor }}
                       >
                         <div className="p-[15px]">
-                          <div className="flex items-center gap-[6px]">
+                          <div className="flex items-center justify-between w-full">
                             <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                               {word.origin}
                             </span>
-                            <MemorizationStatus
-                              iconOnly
-                              hideOverdue
-                              repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                              interval={word.sm2?.interval ?? word.interval ?? 0}
-                              ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                              nextReview={word.sm2?.nextReview ?? word.nextReview}
-                              wordId={String(word.vocaIndexId)}
-                            />
+                            <div className="flex items-center gap-[5px] shrink-0">
+                              {isWordOverdue(word) && (
+                                <div className="flex items-center justify-center w-[16px] h-[16px] bg-status-error-500 rounded-full">
+                                  <Timer size={10} weight="fill" className="text-white" />
+                                </div>
+                              )}
+                              <MemorizationStatus
+                                hideOverdue
+                                repetition={word.sm2?.repetition ?? word.repetition ?? 0}
+                                interval={word.sm2?.interval ?? word.interval ?? 0}
+                                ef={word.sm2?.ef ?? word.ef ?? 2.5}
+                                nextReview={word.sm2?.nextReview ?? word.nextReview}
+                                wordId={String(word.vocaIndexId)}
+                              />
+                            </div>
                           </div>
                           <p className="mt-[8px] text-[11px] text-layout-gray-400">
                             {meaningText}
@@ -583,8 +620,20 @@ const Main = () => {
         </div>
       )}
 
-      {/* 기본 뷰: 내 단어 목록 (선택된 단어 없을 때) */}
-      {!selectedWord && (
+      {/* 검색 결과 없음 (검색 실행 후 추천이 비었을 때) */}
+      {!selectedWord && noResults && submittedQuery.trim() && (
+        <div className="flex flex-col items-center pt-[40px] px-[20px]">
+          <p className="text-[16px] text-layout-black dark:text-layout-white tracking-[-0.02em] leading-[1.8] text-center">
+            <span className="text-primary-main-600 font-[600]">"{submittedQuery}"</span> 에 대한 검색 결과가 없습니다.
+          </p>
+          <p className="text-[14px] text-layout-gray-400 tracking-[-0.02em] leading-[1.8] text-center">
+            단어를 다시 한번 확인해주세요.
+          </p>
+        </div>
+      )}
+
+      {/* 기본 뷰: 내 단어 목록 (빈 결과 상태가 아닐 때만 노출) */}
+      {!selectedWord && !noResults && (
         <>
           {/* 스티키 헤더 */}
           <div className="sticky top-[69px] z-10 bg-layout-white dark:bg-layout-black flex items-center justify-between px-[20px] py-[8px]">
@@ -678,22 +727,28 @@ const Main = () => {
                       className="px-[2px] pt-[10px] pb-[10px] border-b border-border dark:border-border-dark cursor-pointer"
                       onClick={() => handleWordItemClick(word)}
                     >
-                      <div className="flex items-center gap-[5px]">
+                      <div className="flex items-center justify-between w-full">
                         <span
                           className="text-[14px] font-[700] text-layout-black dark:text-layout-white cursor-pointer"
                           onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(word.origin, 'en'); }}
                         >
                           {word.origin}
                         </span>
-                        <MemorizationStatus
-                          iconOnly
-                          hideOverdue
-                          repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                          interval={word.sm2?.interval ?? word.interval ?? 0}
-                          ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                          nextReview={word.sm2?.nextReview ?? word.nextReview}
-                          wordId={String(word.vocaIndexId)}
-                        />
+                        <div className="flex items-center gap-[5px] shrink-0">
+                          {isWordOverdue(word) && (
+                            <div className="flex items-center justify-center w-[16px] h-[16px] bg-status-error-500 rounded-full">
+                              <Timer size={10} weight="fill" className="text-white" />
+                            </div>
+                          )}
+                          <MemorizationStatus
+                            hideOverdue
+                            repetition={word.sm2?.repetition ?? word.repetition ?? 0}
+                            interval={word.sm2?.interval ?? word.interval ?? 0}
+                            ef={word.sm2?.ef ?? word.ef ?? 2.5}
+                            nextReview={word.sm2?.nextReview ?? word.nextReview}
+                            wordId={String(word.vocaIndexId)}
+                          />
+                        </div>
                       </div>
                       <div
                         className="mt-[8px] flex flex-col gap-[2px] cursor-pointer"

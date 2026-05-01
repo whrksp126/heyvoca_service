@@ -10,12 +10,13 @@ import { useUploadGoogleSheetNewBottomSheet } from './UploadGoogleSheetNewBottom
 import { useUploadAnkiNewBottomSheet } from './UploadAnkiNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import { userBookCntCheckApi } from '../../api/voca';
-import { vibrate, getDevicePlatform } from '../../utils/osFunction';
+import { vibrate, getDevicePlatform, showToast } from '../../utils/osFunction';
 import postMessageManager from '../../utils/postMessageManager';
+import ImportResultNewBottomSheet from './ImportResultNewBottomSheet';
 
 export const LoadVocabularyNewBottomSheet = () => {
   "use memo";
-  const { popNewBottomSheet } = useNewBottomSheet();
+  const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
   const { showUploadQuizletNewBottomSheet } = useUploadQuizletNewBottomSheet();
   const { showUploadExcelNewBottomSheet } = useUploadExcelNewBottomSheet();
   const { showUploadCsvNewBottomSheet } = useUploadCsvNewBottomSheet();
@@ -24,176 +25,90 @@ export const LoadVocabularyNewBottomSheet = () => {
   const { showUploadAnkiNewBottomSheet } = useUploadAnkiNewBottomSheet();
   const { userProfile } = useUser();
 
+  // 단어장 개수 체크 — 통과 시 true, 실패 시 결과 시트/토스트로 안내 후 false
+  const checkBookCnt = useCallback(async () => {
+    try {
+      const result = await userBookCntCheckApi();
+      if (result?.code !== 200) {
+        showToast('단어장 개수 확인에 실패했어요.');
+        return false;
+      }
+      const canAddBook = result?.data?.can_add_book;
+      if (!(userProfile.book_cnt > 0 || canAddBook)) {
+        pushNewBottomSheet(ImportResultNewBottomSheet, {
+          success: false,
+          title: '',
+          message: '단어장 생성 가능 횟수를 초과했어요.\n보석을 구매하면 더 추가할 수 있어요.',
+        });
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('단어장 개수 체크 실패:', error);
+      showToast('단어장 개수 확인에 실패했어요.');
+      return false;
+    }
+  }, [userProfile, pushNewBottomSheet]);
+
   /**
    * 구글 스프레드시트 불러오기
    */
   const showGoogleSheetUpload = useCallback(async () => {
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
+    if (!(await checkBookCnt())) return;
 
-      const platform = getDevicePlatform();
-      if (platform === 'web') {
-        alert('구글 스프레드시트 불러오기는 앱에서만 사용할 수 있습니다.');
-        return;
-      }
-
-      // 앱에 구글 시트 인증 요청
-      postMessageManager.setupGoogleSheetAuth((data) => {
-        postMessageManager.removeGoogleSheetAuth();
-
-        if (data.status === 200 && data.accessToken) {
-          // 현재 바텀시트 닫고 구글 시트 바텀시트 열기
-          popNewBottomSheet();
-          showUploadGoogleSheetNewBottomSheet(data.accessToken);
-        } else {
-          alert('구글 스프레드시트 인증에 실패했습니다. 다시 시도해주세요.');
-        }
+    const platform = getDevicePlatform();
+    if (platform === 'web') {
+      pushNewBottomSheet(ImportResultNewBottomSheet, {
+        success: false,
+        message: '구글 스프레드시트 불러오기는\n앱에서만 사용할 수 있어요.',
       });
-
-      postMessageManager.sendMessageToReactNative('launchGoogleSheetAuth');
-    } catch (error) {
-      console.error('구글 스프레드시트 불러오기 실패:', error);
-      alert('구글 스프레드시트 불러오기에 실패했습니다. 다시 시도해주세요.');
+      return;
     }
-  }, [popNewBottomSheet, showUploadGoogleSheetNewBottomSheet, userProfile]);
 
-  /**
-   * 퀴즐렛 데이터 업로드
-   */
+    // 앱에 구글 시트 인증 요청
+    postMessageManager.setupGoogleSheetAuth((data) => {
+      postMessageManager.removeGoogleSheetAuth();
+
+      if (data.status === 200 && data.accessToken) {
+        popNewBottomSheet();
+        showUploadGoogleSheetNewBottomSheet(data.accessToken);
+      } else {
+        showToast('구글 스프레드시트 인증에 실패했어요. 다시 시도해주세요.');
+      }
+    });
+
+    postMessageManager.sendMessageToReactNative('launchGoogleSheetAuth');
+  }, [checkBookCnt, popNewBottomSheet, pushNewBottomSheet, showUploadGoogleSheetNewBottomSheet]);
+
   const showQuizletUploadBottomSheet = useCallback(async () => {
-    // 단어장 생성 가능 여부 확인
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
+    if (!(await checkBookCnt())) return;
+    popNewBottomSheet();
+    showUploadQuizletNewBottomSheet();
+  }, [checkBookCnt, popNewBottomSheet, showUploadQuizletNewBottomSheet]);
 
-      // 현재 바텀시트(LoadVocabularyNewBottomSheet) 닫기
-      popNewBottomSheet();
-      // 퀴즐렛 업로드 바텀시트 열기
-      showUploadQuizletNewBottomSheet();
-    } catch (error) {
-      console.error('단어장 개수 체크 실패:', error);
-      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [popNewBottomSheet, showUploadQuizletNewBottomSheet, userProfile]);
-
-  /**
-   * 엑셀 파일 업로드
-   */
   const showExcelUploadBottomSheet = useCallback(async () => {
-    // 단어장 생성 가능 여부 확인
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
+    if (!(await checkBookCnt())) return;
+    popNewBottomSheet();
+    showUploadExcelNewBottomSheet();
+  }, [checkBookCnt, popNewBottomSheet, showUploadExcelNewBottomSheet]);
 
-      // 현재 바텀시트 닫기
-      popNewBottomSheet();
-      // Excel 업로드 바텀시트 열기
-      showUploadExcelNewBottomSheet();
-    } catch (error) {
-      console.error('단어장 개수 체크 실패:', error);
-      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [popNewBottomSheet, showUploadExcelNewBottomSheet, userProfile]);
-
-  /**
-   * CSV 파일 업로드
-   */
   const showCsvUploadBottomSheet = useCallback(async () => {
-    // 단어장 생성 가능 여부 확인
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
+    if (!(await checkBookCnt())) return;
+    popNewBottomSheet();
+    showUploadCsvNewBottomSheet();
+  }, [checkBookCnt, popNewBottomSheet, showUploadCsvNewBottomSheet]);
 
-      // 현재 바텀시트 닫기
-      popNewBottomSheet();
-      // CSV 업로드 바텀시트 열기
-      showUploadCsvNewBottomSheet();
-    } catch (error) {
-      console.error('단어장 개수 체크 실패:', error);
-      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [popNewBottomSheet, showUploadCsvNewBottomSheet, userProfile]);
-
-  /**
-   * 퀴즐렛 PDF 업로드
-   */
   const showQuizletPdfUploadBottomSheet = useCallback(async () => {
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
+    if (!(await checkBookCnt())) return;
+    popNewBottomSheet();
+    showUploadQuizletPdfNewBottomSheet();
+  }, [checkBookCnt, popNewBottomSheet, showUploadQuizletPdfNewBottomSheet]);
 
-      popNewBottomSheet();
-      showUploadQuizletPdfNewBottomSheet();
-    } catch (error) {
-      console.error('단어장 개수 체크 실패:', error);
-      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [popNewBottomSheet, showUploadQuizletPdfNewBottomSheet, userProfile]);
-
-  /**
-   * Anki 단어장 업로드
-   */
   const showAnkiUploadBottomSheet = useCallback(async () => {
-    try {
-      const result = await userBookCntCheckApi();
-      const canAddBook = result?.data?.can_add_book;
-      if (result.code != 200) {
-        alert('단어장 개수 확인에 실패했습니다.');
-        return;
-      }
-      if (!(userProfile.book_cnt > 0 || canAddBook)) {
-        alert('단어장 생성 가능 횟수를 초과했습니다. 보석을 구매하여 추가할 수 있습니다.');
-        return;
-      }
-
-      popNewBottomSheet();
-      showUploadAnkiNewBottomSheet();
-    } catch (error) {
-      console.error('단어장 개수 체크 실패:', error);
-      alert('단어장 개수 확인에 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [popNewBottomSheet, showUploadAnkiNewBottomSheet, userProfile]);
+    if (!(await checkBookCnt())) return;
+    popNewBottomSheet();
+    showUploadAnkiNewBottomSheet();
+  }, [checkBookCnt, popNewBottomSheet, showUploadAnkiNewBottomSheet]);
 
   const menuItems = [
     {
@@ -286,5 +201,3 @@ export const LoadVocabularyNewBottomSheet = () => {
     </div>
   );
 };
-
-
