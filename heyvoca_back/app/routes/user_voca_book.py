@@ -327,6 +327,9 @@ def convert_to_frontend_format(parsed_items):
 @user_voca_book_bp.route('/upload/quizlet', methods=['POST'])
 @jwt_required
 def upload_user_voca_book():
+    # voca_books와 양방향 import가 되므로 함수 내부에서 import
+    from app.routes.voca_books import bulk_persist_vocas, build_voca_book_response
+
     data = request.get_json()
     title = data.get('title') # 단어장 이름
     voca_list = data.get('text') # 단어 데이터
@@ -369,12 +372,27 @@ def upload_user_voca_book():
                 'message': '파싱된 단어가 없습니다. 데이터 형식을 확인해주세요.'
             }), 400
 
-        # 프론트엔드 형식으로 변환
-        frontend_format_items = convert_to_frontend_format(parsed_items)
-        print("###frontend_format_items : ",frontend_format_items)
+        # bulk_persist_vocas 입력 형식으로 변환 (origin/meanings/examples)
+        # — 다른 업로드 경로(Excel/CSV/Anki/Quizlet PDF)와 동일하게
+        #   UserVoca + UserVocaBookMap 관계 테이블에 저장해야 단어장 조회 시 노출된다.
+        normalized_items = [
+            {
+                'origin': item['word'],
+                'meanings': [m.strip() for m in item['meaning'].split(',') if m.strip()],
+                'examples': [],
+            }
+            for item in parsed_items
+        ]
 
-        ### 1. 단어장 생성 (create_user_voca_book 로직 재사용)
+        ### 1. 단어장 생성
         user = db.session.query(User).filter(User.id == user_id).first()
+
+        # book_cnt 차감
+        if user.book_cnt < 1:
+            return jsonify({
+                'code': 400,
+                'message': '최대 단어장 생성 개수를 초과했습니다.'
+            }), 400
 
         user_voca_book = UserVocaBook(
             user_id=user_id,
@@ -387,47 +405,26 @@ def upload_user_voca_book():
             updated_at=None
         )
         db.session.add(user_voca_book)
-
-        # book_cnt 차감
-        if user.book_cnt < 1:
-            db.session.rollback()
-            return jsonify({
-                'code': 400, 
-                'message': '최대 단어장 생성 개수를 초과했습니다.'
-            }), 400
+        db.session.flush()
         user.book_cnt -= 1
 
-        db.session.commit()
-        book_id = user_voca_book.id # 생성된 단어장 ID
-
-        # ### 2. 단어장 업데이트
-        user_voca_book.voca_list = json.dumps(frontend_format_items)
-        user_voca_book.total_word_cnt = len(frontend_format_items)
+        ### 2. 단어 일괄 저장
+        added_count = bulk_persist_vocas(user_id, user_voca_book.id, normalized_items)
+        user_voca_book.total_word_cnt = added_count
         user_voca_book.updated_at = datetime.datetime.utcnow()
         db.session.commit()
 
         # 성공 메시지
-        message = f'{len(parsed_items)}개의 단어가 파싱되었습니다.'
+        message = f'{added_count}개의 단어가 파싱되었습니다.'
         if failed_lines:
             message += f' ({len(failed_lines)}개 라인 파싱 실패)'
-        
-        # 결과 반환
-        response_data = {
-            "id": book_id,
-            "title": title,
-            "color": color,
-            "total": len(frontend_format_items),
-            "memorized": 0,
-            "bookstore_id": None,
-            "createdAt": user_voca_book.created_at + datetime.timedelta(hours=9),
-            "updatedAt": user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None,
-            'words': frontend_format_items,
-            'book_cnt': user.book_cnt,
-            'goals': []
-        }
+
+        # 결과 반환 (단어장 응답 + book_cnt)
+        response_data = build_voca_book_response(user_voca_book)
+        response_data['book_cnt'] = user.book_cnt
 
         response = jsonify({
-            'code': 200, 
+            'code': 200,
             'message': message,
             'data': response_data
         })

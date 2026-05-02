@@ -869,11 +869,11 @@ def upload_quizlet_pdf_voca_book():
             for item in parsed_raw
         ]
 
-        # 단어 길이/줄바꿈 검증 (표 추출이 깨진 깨진 케이스 안전망)
+        # 단어 길이/줄바꿈 검증 (표 추출이 깨진 케이스 안전망)
         invalid = validate_word_lengths(parsed_items)
         if invalid:
             status, msg = invalid
-            return jsonify({'code': status, 'message': msg}),
+            return jsonify({'code': status, 'message': msg}), status
 
         # UserVocaBook 생성
         voca_book = UserVocaBook(

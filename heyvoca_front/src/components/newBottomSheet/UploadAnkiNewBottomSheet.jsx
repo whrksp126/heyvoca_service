@@ -605,7 +605,10 @@ export const UploadAnkiNewBottomSheet = () => {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".apkg,application/octet-stream"
+              // Android WebView/Drive는 .apkg를 application/zip으로 보고하는 경우가 많아
+              // MIME 필터를 좁게 두면 파일이 회색 처리되어 선택 불가능해진다.
+              // 모든 파일을 허용하고, 확장자 검증은 handleFileSelect에서 수행.
+              accept="*/*"
               onChange={handleFileSelect}
               className="hidden"
             />
