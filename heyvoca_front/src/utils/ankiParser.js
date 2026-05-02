@@ -268,7 +268,9 @@ export const buildVocaListFromMapping = async (
     const meaning = cleanAnkiField(note[fieldMeaning]);
     if (!word || !meaning) continue;
 
-    const meanings = meaning.split(',').map((m) => m.trim()).filter(Boolean);
+    // 안키 덱은 한 셀에 'v. 인용하다, 견적하다; n. 견적(액), 시세'처럼
+    // ;로 품사를 나누고 ,로 세부 의미를 나누는 표기가 흔하므로 둘 다 분리한다.
+    const meanings = meaning.split(/[,;]/).map((m) => m.trim()).filter(Boolean);
 
     if (fieldPron && note[fieldPron] && String(note[fieldPron]).trim()) {
       const pron = cleanAnkiField(note[fieldPron]);

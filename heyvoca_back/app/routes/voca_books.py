@@ -1369,7 +1369,9 @@ def upload_anki_voca_book():
                 if not word or not meaning:
                     continue
 
-                meanings = [m.strip() for m in meaning.split(',') if m.strip()]
+                # 안키 덱은 한 셀에 'v. 인용하다, 견적하다; n. 견적(액), 시세'처럼
+                # ;로 품사를 나누고 ,로 세부 의미를 나누는 표기가 흔하므로 둘 다 분리한다.
+                meanings = [m.strip() for m in re.split(r'[,;]', meaning) if m.strip()]
 
                 examples = []
                 if field_example and note.get(field_example, '').strip():
