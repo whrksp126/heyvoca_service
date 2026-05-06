@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2731,
+    "origin": "luxury",
+    "examples": [
+      {
+        "exam_en": "We can't afford to spend money on <strong class=\"target-word\">luxuries</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">사치품</strong>에 돈을 쓸 여유가 없다."
+      },
+      {
+        "exam_en": "They stayed in a <strong class=\"target-word\">luxury</strong> hotel last night.",
+        "exam_ko": "그들은 어젯밤 <strong class=\"target-word\">고급</strong> 호텔에 묵었다."
+      }
+    ]
+  },
+  {
+    "id": 2733,
+    "origin": "auction",
+    "examples": [
+      {
+        "exam_en": "He put his stamp collection up for <strong class=\"target-word\">auction</strong>.",
+        "exam_ko": "그는 우표 컬렉션을 <strong class=\"target-word\">경매</strong>에 내놓았다."
+      },
+      {
+        "exam_en": "The painting was sold at <strong class=\"target-word\">auction</strong> for a high price.",
+        "exam_ko": "그 그림은 높은 가격에 <strong class=\"target-word\">경매</strong>로 팔렸다."
+      }
+    ]
+  },
+  {
+    "id": 2737,
+    "origin": "article",
+    "examples": [
+      {
+        "exam_en": "She wrote an editorial <strong class=\"target-word\">article</strong> for the newspaper.",
+        "exam_ko": "그녀는 신문에 사설 <strong class=\"target-word\">기사</strong>를 썼다."
+      },
+      {
+        "exam_en": "He read an <strong class=\"target-word\">article</strong> on heart transplants.",
+        "exam_ko": "그는 심장 이식에 관한 <strong class=\"target-word\">기사</strong>를 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 2739,
+    "origin": "loan",
+    "examples": [
+      {
+        "exam_en": "He applied for a bank <strong class=\"target-word\">loan</strong> to buy a house.",
+        "exam_ko": "그는 집을 사려고 은행 <strong class=\"target-word\">대출</strong>을 신청했다."
+      },
+      {
+        "exam_en": "She repaid the <strong class=\"target-word\">loan</strong> within two years.",
+        "exam_ko": "그녀는 2년 안에 <strong class=\"target-word\">대출금</strong>을 갚았다."
+      }
+    ]
+  },
+  {
+    "id": 2740,
+    "origin": "fatigue",
+    "examples": [
+      {
+        "exam_en": "He slept to recover from <strong class=\"target-word\">fatigue</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">피로</strong>를 풀기 위해 잠을 잤다."
+      },
+      {
+        "exam_en": "Chronic <strong class=\"target-word\">fatigue</strong> affects her daily life.",
+        "exam_ko": "만성 <strong class=\"target-word\">피로</strong>가 그녀의 일상생활에 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 2742,
+    "origin": "reimburse",
+    "examples": [
+      {
+        "exam_en": "The company will <strong class=\"target-word\">reimburse</strong> your travel expenses.",
+        "exam_ko": "회사가 당신의 출장비를 <strong class=\"target-word\">환급해</strong> 줄 것이다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">reimbursed</strong> him for his hospital bills.",
+        "exam_ko": "그들은 그에게 병원비를 <strong class=\"target-word\">변상해</strong> 주었다."
+      }
+    ]
+  },
+  {
+    "id": 2743,
+    "origin": "invoice",
+    "examples": [
+      {
+        "exam_en": "Please send us an <strong class=\"target-word\">invoice</strong> for the order.",
+        "exam_ko": "주문에 대한 <strong class=\"target-word\">송장</strong>을 보내 주세요."
+      },
+      {
+        "exam_en": "She checked the <strong class=\"target-word\">invoice</strong> before making payment.",
+        "exam_ko": "그녀는 결제 전에 <strong class=\"target-word\">청구서</strong>를 확인했다."
+      }
+    ]
+  },
+  {
+    "id": 2744,
+    "origin": "stipulation",
+    "examples": [
+      {
+        "exam_en": "The contract included a <strong class=\"target-word\">stipulation</strong> about deadlines.",
+        "exam_ko": "계약서에는 마감일에 관한 <strong class=\"target-word\">조항</strong>이 포함되었다."
+      },
+      {
+        "exam_en": "One <strong class=\"target-word\">stipulation</strong> was that work must finish on time.",
+        "exam_ko": "한 가지 <strong class=\"target-word\">조건</strong>은 작업을 제때 완료해야 한다는 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 2745,
+    "origin": "embargo",
+    "examples": [
+      {
+        "exam_en": "The government imposed an <strong class=\"target-word\">embargo</strong> on oil exports.",
+        "exam_ko": "정부는 석유 수출에 <strong class=\"target-word\">금수 조치</strong>를 내렸다."
+      },
+      {
+        "exam_en": "The trade <strong class=\"target-word\">embargo</strong> lasted for several years.",
+        "exam_ko": "무역 <strong class=\"target-word\">금수 조치</strong>는 몇 년간 지속되었다."
+      }
+    ]
+  },
+  {
+    "id": 2746,
+    "origin": "dumping",
+    "examples": [
+      {
+        "exam_en": "The country was accused of <strong class=\"target-word\">dumping</strong> cheap goods abroad.",
+        "exam_ko": "그 나라는 해외에 값싼 상품을 <strong class=\"target-word\">덤핑</strong>한다는 비난을 받았다."
+      },
+      {
+        "exam_en": "Illegal <strong class=\"target-word\">dumping</strong> of waste is strictly prohibited.",
+        "exam_ko": "쓰레기 불법 <strong class=\"target-word\">투기</strong>는 엄격히 금지된다."
+      }
+    ]
+  },
+  {
+    "id": 2747,
+    "origin": "surplus",
+    "examples": [
+      {
+        "exam_en": "The country has a large trade <strong class=\"target-word\">surplus</strong> this year.",
+        "exam_ko": "그 나라는 올해 큰 무역 <strong class=\"target-word\">흑자</strong>를 기록했다."
+      },
+      {
+        "exam_en": "They donated <strong class=\"target-word\">surplus</strong> food to local shelters.",
+        "exam_ko": "그들은 <strong class=\"target-word\">잉여</strong> 식량을 지역 쉼터에 기부했다."
+      }
+    ]
+  },
+  {
+    "id": 2748,
+    "origin": "surrender",
+    "examples": [
+      {
+        "exam_en": "The army <strong class=\"target-word\">surrendered</strong> the fort to the enemy.",
+        "exam_ko": "군대는 적에게 요새를 <strong class=\"target-word\">내주었다</strong>."
+      },
+      {
+        "exam_en": "The soldier finally <strong class=\"target-word\">surrendered</strong> after the battle.",
+        "exam_ko": "그 군인은 전투 후 결국 <strong class=\"target-word\">항복했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2749,
+    "origin": "dividend",
+    "examples": [
+      {
+        "exam_en": "The company paid a stock <strong class=\"target-word\">dividend</strong> to shareholders.",
+        "exam_ko": "회사는 주주들에게 주식 <strong class=\"target-word\">배당금</strong>을 지급했다."
+      },
+      {
+        "exam_en": "Investors received a higher <strong class=\"target-word\">dividend</strong> this quarter.",
+        "exam_ko": "투자자들은 이번 분기에 더 높은 <strong class=\"target-word\">배당금</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2750,
+    "origin": "scholarship",
+    "examples": [
+      {
+        "exam_en": "She won a full <strong class=\"target-word\">scholarship</strong> to study abroad.",
+        "exam_ko": "그녀는 해외 유학을 위한 전액 <strong class=\"target-word\">장학금</strong>을 받았다."
+      },
+      {
+        "exam_en": "His work showed deep <strong class=\"target-word\">scholarship</strong> in history.",
+        "exam_ko": "그의 연구는 역사에 대한 깊은 <strong class=\"target-word\">학식</strong>을 보여 주었다."
+      }
+    ]
+  },
+  {
+    "id": 2751,
+    "origin": "donation",
+    "examples": [
+      {
+        "exam_en": "He signed up for an organ <strong class=\"target-word\">donation</strong> program.",
+        "exam_ko": "그는 장기 <strong class=\"target-word\">기증</strong> 프로그램에 등록했다."
+      },
+      {
+        "exam_en": "They made a generous <strong class=\"target-word\">donation</strong> to the charity.",
+        "exam_ko": "그들은 자선단체에 후한 <strong class=\"target-word\">기부</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2752,
+    "origin": "diploma",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">diploma</strong> in education.",
+        "exam_ko": "그녀는 교육학 <strong class=\"target-word\">학위 증서</strong>를 받았다."
+      },
+      {
+        "exam_en": "He finally got his high school <strong class=\"target-word\">diploma</strong>.",
+        "exam_ko": "그는 마침내 고등학교 <strong class=\"target-word\">졸업장</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2753,
+    "origin": "transmission",
+    "examples": [
+      {
+        "exam_en": "The live <strong class=\"target-word\">transmission</strong> of the news started at nine.",
+        "exam_ko": "뉴스의 생방송 <strong class=\"target-word\">송출</strong>이 9시에 시작됐다."
+      },
+      {
+        "exam_en": "The car has a smooth manual <strong class=\"target-word\">transmission</strong>.",
+        "exam_ko": "그 차는 변속이 부드러운 수동 <strong class=\"target-word\">변속기</strong>를 갖고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2754,
+    "origin": "tow",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">towed</strong> away his illegally parked car.",
+        "exam_ko": "경찰이 불법 주차된 그의 차를 <strong class=\"target-word\">견인해</strong> 갔다."
+      },
+      {
+        "exam_en": "A truck came to <strong class=\"target-word\">tow</strong> the broken-down vehicle.",
+        "exam_ko": "고장난 차를 <strong class=\"target-word\">견인하기</strong> 위해 트럭이 왔다."
+      }
+    ]
+  },
+  {
+    "id": 2755,
+    "origin": "collision",
+    "examples": [
+      {
+        "exam_en": "Many people were hurt in the <strong class=\"target-word\">collision</strong> between the two cars.",
+        "exam_ko": "두 차량이 <strong class=\"target-word\">충돌</strong>해 많은 사람들이 다쳤다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">collision</strong> between students and police turned violent.",
+        "exam_ko": "학생과 경찰의 <strong class=\"target-word\">충돌</strong>이 폭력 사태로 번졌다."
+      }
+    ]
+  },
+  {
+    "id": 2756,
+    "origin": "breakdown",
+    "examples": [
+      {
+        "exam_en": "The stress caused him to have a nervous <strong class=\"target-word\">breakdown</strong>.",
+        "exam_ko": "스트레스로 인해 그는 신경 <strong class=\"target-word\">쇠약</strong>에 걸렸다."
+      },
+      {
+        "exam_en": "She experienced a <strong class=\"target-word\">breakdown</strong> in her health.",
+        "exam_ko": "그녀는 건강 <strong class=\"target-word\">악화</strong>를 겪었다."
+      }
+    ]
+  }
+]

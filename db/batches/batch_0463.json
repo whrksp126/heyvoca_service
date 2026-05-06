@@ -1,0 +1,230 @@
+[
+  {
+    "id": 13509,
+    "origin": "ingenuity",
+    "examples": [
+      {
+        "exam_en": "The president of SpaceX, Shotwell, said SpaceX had never envisioned that it would be used in Ukraine the way it has been echoing coverage and accounts of Ukrainian troops' ingenuity on the battlefield.",
+        "exam_ko": "스페이스X의 대표인 샷웰은 말했다. 스페이스X가 상상도 하지 못했다고 사용될 것이라고 우크라이나에서 방식의 반복해서 인용하는 보도와 해설로 우크라이나 군대의 기발한 재주를 전장에서"
+      }
+    ]
+  },
+  {
+    "id": 13515,
+    "origin": "garble",
+    "examples": [
+      {
+        "exam_en": "a garbled report",
+        "exam_ko": "사실을 왜곡한 보고서."
+      },
+      {
+        "exam_en": "garbled phone conversation",
+        "exam_ko": "(잡음 등으로 말미암아) 잘 듣지 못한 전화 통화."
+      }
+    ]
+  },
+  {
+    "id": 13517,
+    "origin": "edict",
+    "examples": [
+      {
+        "exam_en": "a Royal edict",
+        "exam_ko": "칙령"
+      },
+      {
+        "exam_en": "the Edict of Nantes",
+        "exam_ko": "낭트 칙령"
+      }
+    ]
+  },
+  {
+    "id": 13518,
+    "origin": "disperse",
+    "examples": [
+      {
+        "exam_en": "The police dispersed the meeting.",
+        "exam_ko": "경찰이 집회를 해산시켰다."
+      },
+      {
+        "exam_en": "a book dispersed throughout the world",
+        "exam_ko": "온 세계에 보급된 책"
+      }
+    ]
+  },
+  {
+    "id": 13520,
+    "origin": "deportation",
+    "examples": [
+      {
+        "exam_en": "a deportation order",
+        "exam_ko": "(국외) 퇴거 명령."
+      }
+    ]
+  },
+  {
+    "id": 13524,
+    "origin": "carnage",
+    "examples": [
+      {
+        "exam_en": "The battlefield was a scene of great carnage.",
+        "exam_ko": "전쟁터는 대학살의 현장이었다."
+      }
+    ]
+  },
+  {
+    "id": 13525,
+    "origin": "whimsical",
+    "examples": [
+      {
+        "exam_en": "The artist had a whimsical style, creating imaginative and playful works.",
+        "exam_ko": "그 예술가는 상상력이 풍부하고 장난기 많은 작품들을 만드는 기발한 스타일을 가진 작가다."
+      }
+    ]
+  },
+  {
+    "id": 13527,
+    "origin": "fizzle",
+    "examples": [
+      {
+        "exam_en": "The plan fizzled out in six months.",
+        "exam_ko": "그 계획은 반 년만에 흐지부지되고 말았다."
+      }
+    ]
+  },
+  {
+    "id": 13530,
+    "origin": "mortality",
+    "examples": [
+      {
+        "exam_en": "infant mortality",
+        "exam_ko": "(1세 미만의) 유아 사망률."
+      }
+    ]
+  },
+  {
+    "id": 13533,
+    "origin": "called",
+    "examples": [
+      {
+        "exam_en": "We pass through a town called Monmouth.",
+        "exam_ko": "우리는 몬머스라고 불리는 마을을 지나간다."
+      }
+    ]
+  },
+  {
+    "id": 13536,
+    "origin": "stretcher",
+    "examples": [
+      {
+        "exam_en": "He was brought in on a stretcher.",
+        "exam_ko": "그는 들것에 실려 들어왔다."
+      }
+    ]
+  },
+  {
+    "id": 13538,
+    "origin": "bale",
+    "examples": [
+      {
+        "exam_en": "a bale of straw",
+        "exam_ko": "짚 한포."
+      }
+    ]
+  },
+  {
+    "id": 13540,
+    "origin": "yarn",
+    "examples": [
+      {
+        "exam_en": "woolen yarn",
+        "exam_ko": "털[무명]실"
+      },
+      {
+        "exam_en": "spin yarn",
+        "exam_ko": "실을 잣다."
+      }
+    ]
+  },
+  {
+    "id": 13542,
+    "origin": "knob",
+    "examples": [
+      {
+        "exam_en": "turn  a knob",
+        "exam_ko": "손잡이를 돌리다."
+      }
+    ]
+  },
+  {
+    "id": 13543,
+    "origin": "soundly",
+    "examples": [
+      {
+        "exam_en": "reason soundly",
+        "exam_ko": "양식을 갖고 판단을 내리다."
+      },
+      {
+        "exam_en": "sleep soundly",
+        "exam_ko": "푹 자다. 숙면하다."
+      }
+    ]
+  },
+  {
+    "id": 13544,
+    "origin": "spray",
+    "examples": [
+      {
+        "exam_en": "a cloud of spray",
+        "exam_ko": "물보라"
+      },
+      {
+        "exam_en": "sea spray",
+        "exam_ko": "바닷물의 물보라"
+      }
+    ]
+  },
+  {
+    "id": 13547,
+    "origin": "arsehole",
+    "examples": [
+      {
+        "exam_en": "What an arsehole!",
+        "exam_ko": "참 멍청하네."
+      }
+    ]
+  },
+  {
+    "id": 13549,
+    "origin": "maturity",
+    "examples": [
+      {
+        "exam_en": "the maturity of fruit",
+        "exam_ko": "과일의 성숙"
+      },
+      {
+        "exam_en": "maturity of thought",
+        "exam_ko": "분별심"
+      }
+    ]
+  },
+  {
+    "id": 13556,
+    "origin": "hydrocodone",
+    "examples": [
+      {
+        "exam_en": "the synthetic codeine called hydrocodone",
+        "exam_ko": "하이드로코돈이라 불리는 합성 코데인."
+      }
+    ]
+  },
+  {
+    "id": 13557,
+    "origin": "calorie",
+    "examples": [
+      {
+        "exam_en": "Aerobic exercise will burn up a lot of calories.",
+        "exam_ko": "유산소 운동은 많은 칼로리를 소비시킨다."
+      }
+    ]
+  }
+]

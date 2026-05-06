@@ -1,0 +1,254 @@
+[
+  {
+    "id": 15790,
+    "origin": "deformed",
+    "examples": [
+      {
+        "exam_en": "a deformed head",
+        "exam_ko": "기형적인 머리[발]"
+      },
+      {
+        "exam_en": "a deformed child",
+        "exam_ko": "기형아."
+      }
+    ]
+  },
+  {
+    "id": 15792,
+    "origin": "crystalline",
+    "examples": [
+      {
+        "exam_en": "a crystalline lake",
+        "exam_ko": "맑은 호수."
+      }
+    ]
+  },
+  {
+    "id": 15800,
+    "origin": "analogy",
+    "examples": [
+      {
+        "exam_en": "draw an analogy between the computer and the brain",
+        "exam_ko": "컴퓨터와 두뇌의 유사성을 끌어내다(※make a comparison과 달리 draw an analogy는 우열을 논할 때는 쓰이지 않음)"
+      },
+      {
+        "exam_en": "have some analogy to",
+        "exam_ko": "…과 다소 비슷하다."
+      }
+    ]
+  },
+  {
+    "id": 15801,
+    "origin": "monarchy",
+    "examples": [
+      {
+        "exam_en": "a constitutional monarchy",
+        "exam_ko": "입헌 군주국[정체]."
+      }
+    ]
+  },
+  {
+    "id": 15802,
+    "origin": "aver",
+    "examples": [
+      {
+        "exam_en": "He averred that the task was easy.",
+        "exam_ko": "그는 일이 쉽다고 단언했다."
+      },
+      {
+        "exam_en": "She averred that he had done it.",
+        "exam_ko": "그녀는 그가 그것을 했다고 증언했다."
+      }
+    ]
+  },
+  {
+    "id": 15807,
+    "origin": "bellow",
+    "examples": [
+      {
+        "exam_en": "bellow  with pain",
+        "exam_ko": "고통으로[화가 나서] 소리지르다."
+      },
+      {
+        "exam_en": "bellow orders to him",
+        "exam_ko": "그에게 큰소리로 명령하다"
+      }
+    ]
+  },
+  {
+    "id": 15808,
+    "origin": "arrear",
+    "examples": [
+      {
+        "exam_en": "be in arrears with the rent",
+        "exam_ko": "집세 지불이 밀려 있다"
+      },
+      {
+        "exam_en": "fall into arrears",
+        "exam_ko": "(일·지불 등이) 밀리다"
+      }
+    ]
+  },
+  {
+    "id": 15809,
+    "origin": "contradictory",
+    "examples": [
+      {
+        "exam_en": "a theory contradictory to common sense",
+        "exam_ko": "상식에 어긋나는 이론."
+      }
+    ]
+  },
+  {
+    "id": 15812,
+    "origin": "solicitude",
+    "examples": [
+      {
+        "exam_en": "with solicitude",
+        "exam_ko": "걱정하여."
+      }
+    ]
+  },
+  {
+    "id": 15813,
+    "origin": "temperance",
+    "examples": [
+      {
+        "exam_en": "temperance in all things",
+        "exam_ko": "모든 일에 대한 자제; 만사 중용."
+      },
+      {
+        "exam_en": "a temperance hotel",
+        "exam_ko": "주류를 내놓지 않는 호텔."
+      }
+    ]
+  },
+  {
+    "id": 15814,
+    "origin": "recessive",
+    "examples": [
+      {
+        "exam_en": "recessive gene",
+        "exam_ko": "열성 유전자."
+      }
+    ]
+  },
+  {
+    "id": 15815,
+    "origin": "simulated",
+    "examples": [
+      {
+        "exam_en": "simulated fur",
+        "exam_ko": "모조의 털."
+      }
+    ]
+  },
+  {
+    "id": 15816,
+    "origin": "complacent",
+    "examples": [
+      {
+        "exam_en": "a complacent smile",
+        "exam_ko": "혼자 흐뭇해하는 미소[눈길, 태도]."
+      },
+      {
+        "exam_en": "His complacent attitude prevented him from striving for improvement.",
+        "exam_ko": "그는 현실 안주적인 태도로 인해 그의 발전을 위해 노력하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 15817,
+    "origin": "diffident",
+    "examples": [
+      {
+        "exam_en": "He is diffident about his ability to succeed.",
+        "exam_ko": "그는 성공할 자신이 없다."
+      }
+    ]
+  },
+  {
+    "id": 15820,
+    "origin": "unconditional",
+    "examples": [
+      {
+        "exam_en": "demand unconditional surrender",
+        "exam_ko": "무조건 항복을 요구하다."
+      }
+    ]
+  },
+  {
+    "id": 15823,
+    "origin": "runaway",
+    "examples": [
+      {
+        "exam_en": "a runaway child",
+        "exam_ko": "도망간 아이."
+      },
+      {
+        "exam_en": "a runaway marriage",
+        "exam_ko": "사랑의 도피 결혼."
+      }
+    ]
+  },
+  {
+    "id": 15826,
+    "origin": "unbounded",
+    "examples": [
+      {
+        "exam_en": "an unbounded function",
+        "exam_ko": "[수학] 무한 함수"
+      },
+      {
+        "exam_en": "unbounded space",
+        "exam_ko": "무한한 공간."
+      }
+    ]
+  },
+  {
+    "id": 15827,
+    "origin": "transcribe",
+    "examples": [
+      {
+        "exam_en": "The conversation was later transcribed into a book.",
+        "exam_ko": "그 회화는 나중에 문자로 출판되어 책이 되었다."
+      },
+      {
+        "exam_en": "I have transcribed the Korean into Roman characters.",
+        "exam_ko": "한글을 로마자로 옮겼다."
+      },
+      {
+        "exam_en": "The secretary was asked to transcribe the recorded interview for future reference.",
+        "exam_ko": "비서에게는 녹음된 인터뷰를 향후 참고를 위해 필기로 옮기라는 요청이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 15828,
+    "origin": "enduring",
+    "examples": [
+      {
+        "exam_en": "enduring fame",
+        "exam_ko": "불후의 명성"
+      },
+      {
+        "exam_en": "an enduring peace",
+        "exam_ko": "항구적 평화."
+      }
+    ]
+  },
+  {
+    "id": 15829,
+    "origin": "sling",
+    "examples": [
+      {
+        "exam_en": "throw slings and arrows",
+        "exam_ko": "(비유) 비판적 언사를 내뱉다 ＜셰익스피어의 「햄릿」＞."
+      },
+      {
+        "exam_en": "sling rocks at a person",
+        "exam_ko": "남에게 돌을 던지다."
+      }
+    ]
+  }
+]

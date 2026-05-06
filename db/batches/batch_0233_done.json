@@ -1,0 +1,290 @@
+[
+  {
+    "id": 5444,
+    "origin": "tray",
+    "examples": [
+      {
+        "exam_en": "She carried the cups on a <strong class=\"target-word\">tray</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">쟁반</strong>에 컵들을 담아 날랐다."
+      },
+      {
+        "exam_en": "He placed the food on the serving <strong class=\"target-word\">tray</strong>.",
+        "exam_ko": "그는 음식을 서빙 <strong class=\"target-word\">쟁반</strong>에 올려놓았다."
+      }
+    ]
+  },
+  {
+    "id": 5445,
+    "origin": "affected",
+    "examples": [
+      {
+        "exam_en": "The doctor examined the <strong class=\"target-word\">affected</strong> area carefully.",
+        "exam_ko": "의사는 <strong class=\"target-word\">환부</strong>를 주의 깊게 살펴보았다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">affected</strong> smile fooled no one.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">억지</strong> 웃음은 아무도 속이지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 5446,
+    "origin": "lightly",
+    "examples": [
+      {
+        "exam_en": "She danced <strong class=\"target-word\">lightly</strong> to the music.",
+        "exam_ko": "그녀는 음악에 맞춰 <strong class=\"target-word\">경쾌하게</strong> 춤을 췄다."
+      },
+      {
+        "exam_en": "It is raining <strong class=\"target-word\">lightly</strong> outside.",
+        "exam_ko": "밖에는 비가 <strong class=\"target-word\">조금</strong> 내리고 있다."
+      }
+    ]
+  },
+  {
+    "id": 5448,
+    "origin": "queue",
+    "examples": [
+      {
+        "exam_en": "We waited in a <strong class=\"target-word\">queue</strong> for an hour.",
+        "exam_ko": "우리는 한 시간 동안 <strong class=\"target-word\">줄</strong>을 서서 기다렸다."
+      },
+      {
+        "exam_en": "People formed a <strong class=\"target-word\">queue</strong> outside the shop.",
+        "exam_ko": "사람들이 가게 밖에 <strong class=\"target-word\">줄</strong>을 섰다."
+      }
+    ]
+  },
+  {
+    "id": 5449,
+    "origin": "lion",
+    "examples": [
+      {
+        "exam_en": "The soldier was brave as a <strong class=\"target-word\">lion</strong>.",
+        "exam_ko": "그 병사는 <strong class=\"target-word\">사자</strong>처럼 용맹스러웠다."
+      },
+      {
+        "exam_en": "He fought like a <strong class=\"target-word\">lion</strong> to protect his family.",
+        "exam_ko": "그는 가족을 지키기 위해 <strong class=\"target-word\">사자</strong>처럼 싸웠다."
+      }
+    ]
+  },
+  {
+    "id": 5450,
+    "origin": "mounted",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Mounted</strong> police patrolled the festival crowd.",
+        "exam_ko": "<strong class=\"target-word\">기마</strong> 경찰관들이 축제 군중 사이를 순찰했다."
+      },
+      {
+        "exam_en": "The officer <strong class=\"target-word\">mounted</strong> his horse and rode away.",
+        "exam_ko": "그 경찰관은 말에 <strong class=\"target-word\">올라타고</strong> 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 5451,
+    "origin": "liver",
+    "examples": [
+      {
+        "exam_en": "He needed a <strong class=\"target-word\">liver</strong> transplant to survive.",
+        "exam_ko": "그는 살아남기 위해 <strong class=\"target-word\">간</strong> 이식이 필요했다."
+      },
+      {
+        "exam_en": "The doctor said his <strong class=\"target-word\">liver</strong> was slightly damaged.",
+        "exam_ko": "의사는 그의 <strong class=\"target-word\">간</strong>이 약간 손상되었다고 했다."
+      }
+    ]
+  },
+  {
+    "id": 5452,
+    "origin": "mud",
+    "examples": [
+      {
+        "exam_en": "His name was dragged through the <strong class=\"target-word\">mud</strong>.",
+        "exam_ko": "그의 명성은 <strong class=\"target-word\">진흙탕</strong>에 끌려다녔다."
+      },
+      {
+        "exam_en": "The children played in the <strong class=\"target-word\">mud</strong> after the rain.",
+        "exam_ko": "아이들은 비가 온 후 <strong class=\"target-word\">진흙</strong>에서 놀았다."
+      }
+    ]
+  },
+  {
+    "id": 5453,
+    "origin": "mike",
+    "examples": [
+      {
+        "exam_en": "The singer adjusted the <strong class=\"target-word\">mike</strong> before performing.",
+        "exam_ko": "가수는 공연 전에 <strong class=\"target-word\">마이크</strong>를 조정했다."
+      },
+      {
+        "exam_en": "Please speak closer to the <strong class=\"target-word\">mike</strong>.",
+        "exam_ko": "<strong class=\"target-word\">마이크</strong>에 더 가까이 대고 말해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 5455,
+    "origin": "somewhat",
+    "examples": [
+      {
+        "exam_en": "I was <strong class=\"target-word\">somewhat</strong> puzzled by his answer.",
+        "exam_ko": "나는 그의 대답에 <strong class=\"target-word\">다소</strong> 당황했다."
+      },
+      {
+        "exam_en": "The result was <strong class=\"target-word\">somewhat</strong> disappointing.",
+        "exam_ko": "결과는 <strong class=\"target-word\">약간</strong> 실망스러웠다."
+      }
+    ]
+  },
+  {
+    "id": 5456,
+    "origin": "hint",
+    "examples": [
+      {
+        "exam_en": "She dropped a broad <strong class=\"target-word\">hint</strong> about her plans.",
+        "exam_ko": "그녀는 자신의 계획에 대해 노골적인 <strong class=\"target-word\">암시</strong>를 흘렸다."
+      },
+      {
+        "exam_en": "He gave a delicate <strong class=\"target-word\">hint</strong> without saying it directly.",
+        "exam_ko": "그는 직접 말하지 않고 어렴풋한 <strong class=\"target-word\">힌트</strong>를 주었다."
+      },
+      {
+        "exam_en": "Can you give me a <strong class=\"target-word\">hint</strong> to solve this puzzle?",
+        "exam_ko": "이 퍼즐을 풀 수 있는 <strong class=\"target-word\">힌트</strong>를 줄 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 5457,
+    "origin": "pride",
+    "examples": [
+      {
+        "exam_en": "He spoke with high <strong class=\"target-word\">pride</strong> about his achievement.",
+        "exam_ko": "그는 자신의 성취에 대해 강한 <strong class=\"target-word\">자만심</strong>을 갖고 말했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Pride</strong> goes before a fall.",
+        "exam_ko": "<strong class=\"target-word\">교만</strong>은 패망의 선봉이다."
+      }
+    ]
+  },
+  {
+    "id": 5458,
+    "origin": "gradually",
+    "examples": [
+      {
+        "exam_en": "The situation is <strong class=\"target-word\">gradually</strong> changing for the better.",
+        "exam_ko": "상황은 <strong class=\"target-word\">서서히</strong> 나아지고 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">gradually</strong> gained confidence in herself.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">점차</strong> 자신감을 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 5459,
+    "origin": "deeply",
+    "examples": [
+      {
+        "exam_en": "He dug <strong class=\"target-word\">deeply</strong> into the ground.",
+        "exam_ko": "그는 땅을 <strong class=\"target-word\">깊이</strong> 팠다."
+      },
+      {
+        "exam_en": "She breathed <strong class=\"target-word\">deeply</strong> to calm herself.",
+        "exam_ko": "그녀는 마음을 가라앉히기 위해 <strong class=\"target-word\">깊게</strong> 숨을 들이쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 5460,
+    "origin": "handful",
+    "examples": [
+      {
+        "exam_en": "He grabbed a <strong class=\"target-word\">handful</strong> of dirt from the ground.",
+        "exam_ko": "그는 땅에서 흙 <strong class=\"target-word\">한 줌</strong>을 집어 들었다."
+      },
+      {
+        "exam_en": "Only a <strong class=\"target-word\">handful</strong> of officers were at the scene.",
+        "exam_ko": "현장에는 <strong class=\"target-word\">몇 명</strong>의 경찰관만 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5461,
+    "origin": "halfway",
+    "examples": [
+      {
+        "exam_en": "The town is located <strong class=\"target-word\">halfway</strong> between Seoul and Busan.",
+        "exam_ko": "그 마을은 서울과 부산 <strong class=\"target-word\">중간</strong>에 위치해 있다."
+      },
+      {
+        "exam_en": "He stopped <strong class=\"target-word\">halfway</strong> up the hill to rest.",
+        "exam_ko": "그는 언덕 <strong class=\"target-word\">중턱</strong>에서 쉬기 위해 멈췄다."
+      }
+    ]
+  },
+  {
+    "id": 5462,
+    "origin": "temper",
+    "examples": [
+      {
+        "exam_en": "She has an even <strong class=\"target-word\">temper</strong> and rarely gets angry.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">성격</strong>이 온화해 좀처럼 화내지 않는다."
+      },
+      {
+        "exam_en": "He was in a bad <strong class=\"target-word\">temper</strong> all morning.",
+        "exam_ko": "그는 오전 내내 <strong class=\"target-word\">기분</strong>이 나빴다."
+      }
+    ]
+  },
+  {
+    "id": 5464,
+    "origin": "colored",
+    "examples": [
+      {
+        "exam_en": "She drew a picture with a <strong class=\"target-word\">colored</strong> pencil.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">색</strong>연필로 그림을 그렸다."
+      },
+      {
+        "exam_en": "The window was made of <strong class=\"target-word\">colored</strong> glass.",
+        "exam_ko": "창문은 <strong class=\"target-word\">색</strong>유리로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 5465,
+    "origin": "dice",
+    "examples": [
+      {
+        "exam_en": "He rolled the <strong class=\"target-word\">dice</strong> and got a six.",
+        "exam_ko": "그는 <strong class=\"target-word\">주사위</strong>를 굴려 6이 나왔다."
+      },
+      {
+        "exam_en": "They play at <strong class=\"target-word\">dice</strong> every Friday night.",
+        "exam_ko": "그들은 매주 금요일 밤 <strong class=\"target-word\">주사위</strong> 놀이를 한다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">diced</strong> the carrots into small cubes.",
+        "exam_ko": "그녀는 당근을 작은 정육면체로 <strong class=\"target-word\">깍둑썰기</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 5466,
+    "origin": "council",
+    "examples": [
+      {
+        "exam_en": "The family held a <strong class=\"target-word\">council</strong> to discuss the issue.",
+        "exam_ko": "가족은 그 문제를 논의하기 위해 <strong class=\"target-word\">회의</strong>를 열었다."
+      },
+      {
+        "exam_en": "The Cabinet <strong class=\"target-word\">Council</strong> approved the new policy.",
+        "exam_ko": "내각 <strong class=\"target-word\">회의</strong>는 새 정책을 승인했다."
+      }
+    ]
+  }
+]

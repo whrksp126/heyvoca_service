@@ -1,0 +1,302 @@
+[
+  {
+    "id": 1715,
+    "origin": "perceive",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">perceived</strong> an object approaching on the radar.",
+        "exam_ko": "레이더에 접근하는 물체를 <strong class=\"target-word\">감지했다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">perceived</strong> someone lying in ambush.",
+        "exam_ko": "누군가 잠복하고 있음을 <strong class=\"target-word\">알아챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1716,
+    "origin": "favor",
+    "examples": [
+      {
+        "exam_en": "Could you do me a <strong class=\"target-word\">favor</strong> and help me move?",
+        "exam_ko": "이사 도와주는 <strong class=\"target-word\">부탁</strong> 들어줄 수 있어?"
+      },
+      {
+        "exam_en": "May I ask you a <strong class=\"target-word\">favor</strong>?",
+        "exam_ko": "<strong class=\"target-word\">부탁</strong> 하나 해도 될까요?"
+      },
+      {
+        "exam_en": "Do me a <strong class=\"target-word\">favor</strong> and don't bring it up again.",
+        "exam_ko": "<strong class=\"target-word\">부탁</strong>인데, 다시는 그 얘기 꺼내지 마."
+      }
+    ]
+  },
+  {
+    "id": 1717,
+    "origin": "practice",
+    "examples": [
+      {
+        "exam_en": "Cheating on tests is common <strong class=\"target-word\">practice</strong> there.",
+        "exam_ko": "그곳에서는 시험 부정행위가 흔한 <strong class=\"target-word\">관행</strong>이다."
+      },
+      {
+        "exam_en": "The company engaged in unfair trade <strong class=\"target-word\">practices</strong>.",
+        "exam_ko": "그 회사는 불공정한 무역 <strong class=\"target-word\">관행</strong>을 일삼았다."
+      },
+      {
+        "exam_en": "You should <strong class=\"target-word\">practice</strong> a lot at first.",
+        "exam_ko": "처음에는 많이 <strong class=\"target-word\">연습</strong>해야 합니다."
+      }
+    ]
+  },
+  {
+    "id": 1718,
+    "origin": "tear",
+    "examples": [
+      {
+        "exam_en": "She wiped away her <strong class=\"target-word\">tears</strong> quietly.",
+        "exam_ko": "그녀는 조용히 <strong class=\"target-word\">눈물</strong>을 닦았다."
+      },
+      {
+        "exam_en": "He spoke in <strong class=\"target-word\">tears</strong> at the ceremony.",
+        "exam_ko": "그는 식장에서 <strong class=\"target-word\">눈물</strong>을 흘리며 말했다."
+      }
+    ]
+  },
+  {
+    "id": 1719,
+    "origin": "sustain",
+    "examples": [
+      {
+        "exam_en": "The pillars <strong class=\"target-word\">sustain</strong> the weight of the arch.",
+        "exam_ko": "기둥들이 아치의 무게를 <strong class=\"target-word\">떠받치고</strong> 있다."
+      },
+      {
+        "exam_en": "This shelf cannot <strong class=\"target-word\">sustain</strong> the weight of the books.",
+        "exam_ko": "이 선반은 책의 무게를 <strong class=\"target-word\">지탱할</strong> 수 없다."
+      },
+      {
+        "exam_en": "Good nutrition helps <strong class=\"target-word\">sustain</strong> your energy all day.",
+        "exam_ko": "균형 잡힌 영양 섭취는 하루 종일 에너지를 <strong class=\"target-word\">유지하는</strong> 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 1720,
+    "origin": "participate",
+    "examples": [
+      {
+        "exam_en": "He wants to <strong class=\"target-word\">participate</strong> in the Olympics.",
+        "exam_ko": "그는 올림픽에 <strong class=\"target-word\">참가</strong>하기를 원한다."
+      },
+      {
+        "exam_en": "All students are encouraged to <strong class=\"target-word\">participate</strong> actively.",
+        "exam_ko": "모든 학생들이 적극적으로 <strong class=\"target-word\">참여</strong>하도록 권장된다."
+      }
+    ]
+  },
+  {
+    "id": 1721,
+    "origin": "pose",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">posed</strong> as a detective to gather information.",
+        "exam_ko": "그는 정보를 수집하기 위해 형사로 <strong class=\"target-word\">사칭했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">posed</strong> for a picture with a bright smile.",
+        "exam_ko": "그녀는 밝게 웃으며 사진을 위해 <strong class=\"target-word\">포즈를 취했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1722,
+    "origin": "grab",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Grab</strong> a chair and sit with us.",
+        "exam_ko": "의자를 <strong class=\"target-word\">가져다</strong> 우리와 함께 앉아요."
+      },
+      {
+        "exam_en": "The general tried to <strong class=\"target-word\">grab</strong> power after the election.",
+        "exam_ko": "장군은 선거 후 권력을 <strong class=\"target-word\">움켜쥐려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 1723,
+    "origin": "smoke",
+    "examples": [
+      {
+        "exam_en": "A thick column of black <strong class=\"target-word\">smoke</strong> rose from the building.",
+        "exam_ko": "건물에서 짙은 검은 <strong class=\"target-word\">연기</strong>가 피어올랐다."
+      },
+      {
+        "exam_en": "There is no <strong class=\"target-word\">smoke</strong> without fire.",
+        "exam_ko": "아니 땐 굴뚝에 <strong class=\"target-word\">연기</strong> 날까."
+      }
+    ]
+  },
+  {
+    "id": 1724,
+    "origin": "outline",
+    "examples": [
+      {
+        "exam_en": "A chalk <strong class=\"target-word\">outline</strong> of the victim was visible on the sidewalk.",
+        "exam_ko": "보도에 희생자의 분필 <strong class=\"target-word\">윤곽선</strong>이 보였다."
+      },
+      {
+        "exam_en": "The mountain had only a vague <strong class=\"target-word\">outline</strong> in the fog.",
+        "exam_ko": "안개 속에서 산의 <strong class=\"target-word\">윤곽</strong>만 희미하게 보였다."
+      }
+    ]
+  },
+  {
+    "id": 1725,
+    "origin": "dry",
+    "examples": [
+      {
+        "exam_en": "He put on a <strong class=\"target-word\">dry</strong> shirt after swimming.",
+        "exam_ko": "수영 후 그는 <strong class=\"target-word\">마른</strong> 셔츠를 입었다."
+      },
+      {
+        "exam_en": "She uses a moisturizer for her <strong class=\"target-word\">dry</strong> skin.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">건성</strong> 피부를 위해 보습제를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 1726,
+    "origin": "adapt",
+    "examples": [
+      {
+        "exam_en": "Plants have <strong class=\"target-word\">adapted</strong> themselves to desert conditions.",
+        "exam_ko": "식물들은 사막 조건에 <strong class=\"target-word\">적응해</strong> 왔다."
+      },
+      {
+        "exam_en": "It was <strong class=\"target-word\">adapted</strong> from a novel by Sinclair Lewis.",
+        "exam_ko": "그것은 싱클레어 루이스의 소설을 <strong class=\"target-word\">각색한</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 1727,
+    "origin": "reinforce",
+    "examples": [
+      {
+        "exam_en": "Workers <strong class=\"target-word\">reinforced</strong> the barriers with logs.",
+        "exam_ko": "인부들이 울타리를 통나무로 <strong class=\"target-word\">보강했다</strong>."
+      },
+      {
+        "exam_en": "Air support <strong class=\"target-word\">reinforced</strong> the infantry on the ground.",
+        "exam_ko": "공군 지원이 지상 보병을 <strong class=\"target-word\">강화했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1728,
+    "origin": "shrug",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">shrugged</strong> his shoulders and said nothing.",
+        "exam_ko": "그는 어깨를 <strong class=\"target-word\">으쓱하고</strong> 아무 말도 하지 않았다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">shrugged</strong> off the criticism easily.",
+        "exam_ko": "그녀는 비판을 쉽게 <strong class=\"target-word\">무시해버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1729,
+    "origin": "dig",
+    "examples": [
+      {
+        "exam_en": "Workers <strong class=\"target-word\">dug</strong> up the ground to lay the pipes.",
+        "exam_ko": "인부들이 파이프를 놓기 위해 땅을 <strong class=\"target-word\">팠다</strong>."
+      },
+      {
+        "exam_en": "The dog <strong class=\"target-word\">dug</strong> a hole under the fence.",
+        "exam_ko": "개가 울타리 아래에 구멍을 <strong class=\"target-word\">팠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1730,
+    "origin": "snap",
+    "examples": [
+      {
+        "exam_en": "His dog <strong class=\"target-word\">snapped</strong> at me suddenly.",
+        "exam_ko": "그의 개가 갑자기 나를 <strong class=\"target-word\">덥석 물었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">snapped</strong> up the chance to study abroad.",
+        "exam_ko": "그녀는 해외 유학 기회를 <strong class=\"target-word\">덥석 잡았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1731,
+    "origin": "ban",
+    "examples": [
+      {
+        "exam_en": "The government <strong class=\"target-word\">banned</strong> several books last year.",
+        "exam_ko": "정부는 작년에 여러 책을 <strong class=\"target-word\">금지했다</strong>."
+      },
+      {
+        "exam_en": "Fishing is <strong class=\"target-word\">banned</strong> in this area.",
+        "exam_ko": "이 구역에서는 낚시가 <strong class=\"target-word\">금지되어</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 1732,
+    "origin": "encounter",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">encountered</strong> a childhood friend by chance.",
+        "exam_ko": "어릴 적 친구를 우연히 <strong class=\"target-word\">만났다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">encountered</strong> many novel ideas in his readings.",
+        "exam_ko": "그는 독서 중에 많은 참신한 착상을 <strong class=\"target-word\">접했다</strong>."
+      },
+      {
+        "exam_en": "They were thrilled to <strong class=\"target-word\">encounter</strong> a rare bird species.",
+        "exam_ko": "그들은 희귀한 새 종을 <strong class=\"target-word\">만나</strong> 기뻤다."
+      }
+    ]
+  },
+  {
+    "id": 1733,
+    "origin": "wave",
+    "examples": [
+      {
+        "exam_en": "A tidal <strong class=\"target-word\">wave</strong> destroyed the coastal village.",
+        "exam_ko": "해일이 해안 마을을 <strong class=\"target-word\">덮쳤다</strong>."
+      },
+      {
+        "exam_en": "Mountainous <strong class=\"target-word\">waves</strong> rocked the ship violently.",
+        "exam_ko": "산더미 같은 <strong class=\"target-word\">파도</strong>가 배를 심하게 흔들었다."
+      }
+    ]
+  },
+  {
+    "id": 1734,
+    "origin": "grant",
+    "examples": [
+      {
+        "exam_en": "The university <strong class=\"target-word\">granted</strong> a scholarship to the student.",
+        "exam_ko": "대학교는 그 학생에게 장학금을 <strong class=\"target-word\">수여했다</strong>."
+      },
+      {
+        "exam_en": "They were <strong class=\"target-word\">granted</strong> a pension after retirement.",
+        "exam_ko": "그들은 은퇴 후 연금을 <strong class=\"target-word\">받았다</strong>."
+      },
+      {
+        "exam_en": "The judge <strong class=\"target-word\">granted</strong> the request without hesitation.",
+        "exam_ko": "판사는 주저 없이 요청을 <strong class=\"target-word\">승인했다</strong>."
+      }
+    ]
+  }
+]

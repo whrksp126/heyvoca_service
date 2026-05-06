@@ -1,0 +1,246 @@
+[
+  {
+    "id": 13794,
+    "origin": "dietary",
+    "examples": [
+      {
+        "exam_en": "dietary habits",
+        "exam_ko": "식사 습관."
+      }
+    ]
+  },
+  {
+    "id": 13799,
+    "origin": "constraint",
+    "examples": [
+      {
+        "exam_en": "by constraint",
+        "exam_ko": "억지로, 강제로"
+      },
+      {
+        "exam_en": "under constraint",
+        "exam_ko": "하는 수 없이, 마지못해."
+      }
+    ]
+  },
+  {
+    "id": 13800,
+    "origin": "gregarious",
+    "examples": [
+      {
+        "exam_en": "gregarious life",
+        "exam_ko": "[동물] 군생."
+      },
+      {
+        "exam_en": "He is known for his gregarious personality and love for socializing.",
+        "exam_ko": "그는 사교적인 성격과 사회적 교류를 즐기는 것으로 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 13805,
+    "origin": "saturation",
+    "examples": [
+      {
+        "exam_en": "The heavy rainfall led to the saturation of the soil, causing flooding in low-lying areas.",
+        "exam_ko": "풍성한 강우로 인해 물을 머금은 토양이 포화되어 저지대에서 홍수가 발생했다."
+      }
+    ]
+  },
+  {
+    "id": 13806,
+    "origin": "delineate",
+    "examples": [
+      {
+        "exam_en": "He delineated the plan with great care.",
+        "exam_ko": "그는 조심스럽게 그 계획의 개요를 말했다."
+      },
+      {
+        "exam_en": "The Standard Specifications Manual and its amendments delineate the requirements for projects constructed for the embassy.",
+        "exam_ko": "시방서 매뉴얼과 그 개정안은 대사관을 위해 건설 된 프로젝트의 요구 사항을 설명합니다."
+      }
+    ]
+  },
+  {
+    "id": 13807,
+    "origin": "alloy",
+    "examples": [
+      {
+        "exam_en": "Brass is an alloy of copper and zinc.",
+        "exam_ko": "놋쇠는 구리와 아연의 합금이다."
+      },
+      {
+        "exam_en": "pleasure without alloy",
+        "exam_ko": "순수한 기쁨."
+      },
+      {
+        "exam_en": "The engineer combined different metals to create a strong and durable alloy for the construction of the bridge.",
+        "exam_ko": "공학자는 다양한 금속을 결합하여 다리 건설을 위한 강하고 내구성 있는 합금을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 13808,
+    "origin": "tussle",
+    "examples": [
+      {
+        "exam_en": "Two boys tussled in the schoolyard.",
+        "exam_ko": "두 소년은 교정에서 싸웠다."
+      }
+    ]
+  },
+  {
+    "id": 13811,
+    "origin": "salient",
+    "examples": [
+      {
+        "exam_en": "salient features",
+        "exam_ko": "두드러진 특색[사실]"
+      },
+      {
+        "exam_en": "the salient points of the speech",
+        "exam_ko": "연설 요점"
+      }
+    ]
+  },
+  {
+    "id": 13816,
+    "origin": "consensual",
+    "examples": [
+      {
+        "exam_en": "a consensual marriage",
+        "exam_ko": "합의 결혼."
+      }
+    ]
+  },
+  {
+    "id": 13819,
+    "origin": "holdover",
+    "examples": [
+      {
+        "exam_en": "The system was a holdover from the war.",
+        "exam_ko": "그 제도는 전쟁의 유물이었다."
+      }
+    ]
+  },
+  {
+    "id": 13820,
+    "origin": "fauna",
+    "examples": [
+      {
+        "exam_en": "the fauna of tropical America",
+        "exam_ko": "열대 아메리카[빙하 시대]의 동물상."
+      }
+    ]
+  },
+  {
+    "id": 13821,
+    "origin": "remotely",
+    "examples": [
+      {
+        "exam_en": "She is not remotely interested in boys.",
+        "exam_ko": "그녀는 남자아이들에게는 전혀 관심이 없다"
+      },
+      {
+        "exam_en": "Do you even think that's remotely possible?",
+        "exam_ko": "그러한 일이 있을 수 있도록 생각하십니까?"
+      }
+    ]
+  },
+  {
+    "id": 13822,
+    "origin": "bosom",
+    "examples": [
+      {
+        "exam_en": "press a person to one's bosom",
+        "exam_ko": "남을 가슴에 껴안다"
+      },
+      {
+        "exam_en": "put a baby to one's bosom",
+        "exam_ko": "아기에게 젖을 먹이다."
+      }
+    ]
+  },
+  {
+    "id": 13823,
+    "origin": "dexterity",
+    "examples": [
+      {
+        "exam_en": "manual dexterity",
+        "exam_ko": "손재주 있음"
+      },
+      {
+        "exam_en": "the dexterity with which she plays the piano",
+        "exam_ko": "피아노를 연주하는 그녀의 능숙한 솜씨."
+      }
+    ]
+  },
+  {
+    "id": 13824,
+    "origin": "charmer",
+    "examples": [
+      {
+        "exam_en": "a snake charmer",
+        "exam_ko": "뱀 부리는 사람."
+      }
+    ]
+  },
+  {
+    "id": 13825,
+    "origin": "dearth",
+    "examples": [
+      {
+        "exam_en": "a dearth of information",
+        "exam_ko": "정보[식량]의 부족."
+      }
+    ]
+  },
+  {
+    "id": 13830,
+    "origin": "disparity",
+    "examples": [
+      {
+        "exam_en": "a disparity in rank",
+        "exam_ko": "지위의 차이."
+      }
+    ]
+  },
+  {
+    "id": 13832,
+    "origin": "proprietor",
+    "examples": [
+      {
+        "exam_en": "a landed proprietor",
+        "exam_ko": "지주"
+      },
+      {
+        "exam_en": "the proprietor of a school",
+        "exam_ko": "교주(校主)[호텔 경영자]."
+      }
+    ]
+  },
+  {
+    "id": 13836,
+    "origin": "duress",
+    "examples": [
+      {
+        "exam_en": "under duress",
+        "exam_ko": "강요되어, 협박당하여."
+      },
+      {
+        "exam_en": "be held in duress",
+        "exam_ko": "감금되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 13837,
+    "origin": "gaffe",
+    "examples": [
+      {
+        "exam_en": "I accidentally made a gaffe during the important presentation.",
+        "exam_ko": "중요한 프레젠테이션 발표 중에 실수로 실언을 했다."
+      }
+    ]
+  }
+]

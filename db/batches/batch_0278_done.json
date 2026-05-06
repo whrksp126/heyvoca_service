@@ -1,0 +1,266 @@
+[
+  {
+    "id": 6867,
+    "origin": "potty",
+    "examples": [
+      {
+        "exam_en": "The child needs to go <strong class=\"target-word\">potty</strong> right now.",
+        "exam_ko": "아이가 지금 당장 <strong class=\"target-word\">화장실</strong>에 가야 한다."
+      }
+    ]
+  },
+  {
+    "id": 6868,
+    "origin": "insure",
+    "examples": [
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">insure</strong> his life last year.",
+        "exam_ko": "그는 작년에 생명 <strong class=\"target-word\">보험에 가입하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">insured</strong> her house against fire.",
+        "exam_ko": "그녀는 집에 화재 <strong class=\"target-word\">보험을 들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6869,
+    "origin": "startle",
+    "examples": [
+      {
+        "exam_en": "A loud noise <strong class=\"target-word\">startled</strong> him from his sleep.",
+        "exam_ko": "큰 소리가 그를 잠에서 <strong class=\"target-word\">깜짝 놀라게</strong> 했다."
+      },
+      {
+        "exam_en": "The barking of a dog <strong class=\"target-word\">startled</strong> me.",
+        "exam_ko": "개가 짖는 바람에 나는 <strong class=\"target-word\">깜짝 놀랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6870,
+    "origin": "ethics",
+    "examples": [
+      {
+        "exam_en": "Doctors must follow strict medical <strong class=\"target-word\">ethics</strong>.",
+        "exam_ko": "의사들은 엄격한 의료 <strong class=\"target-word\">윤리</strong>를 따라야 한다."
+      },
+      {
+        "exam_en": "Professional <strong class=\"target-word\">ethics</strong> guide how lawyers handle cases.",
+        "exam_ko": "직업 <strong class=\"target-word\">윤리</strong>가 변호사들의 사건 처리 방식을 이끈다."
+      }
+    ]
+  },
+  {
+    "id": 6871,
+    "origin": "waterproof",
+    "examples": [
+      {
+        "exam_en": "The canvas was <strong class=\"target-word\">waterproofed</strong> with tar.",
+        "exam_ko": "범포는 타르로 <strong class=\"target-word\">방수 처리되었다</strong>."
+      },
+      {
+        "exam_en": "This jacket is fully <strong class=\"target-word\">waterproof</strong> in heavy rain.",
+        "exam_ko": "이 재킷은 폭우에도 완전히 <strong class=\"target-word\">방수</strong>된다."
+      }
+    ]
+  },
+  {
+    "id": 6872,
+    "origin": "conserve",
+    "examples": [
+      {
+        "exam_en": "We should <strong class=\"target-word\">conserve</strong> electricity at home.",
+        "exam_ko": "우리는 가정에서 전기를 <strong class=\"target-word\">절약해야</strong> 한다."
+      },
+      {
+        "exam_en": "The government works to <strong class=\"target-word\">conserve</strong> natural resources.",
+        "exam_ko": "정부는 천연자원을 <strong class=\"target-word\">보존하기</strong> 위해 노력한다."
+      }
+    ]
+  },
+  {
+    "id": 6874,
+    "origin": "adhesive",
+    "examples": [
+      {
+        "exam_en": "Use an <strong class=\"target-word\">adhesive</strong> envelope to seal the letter.",
+        "exam_ko": "<strong class=\"target-word\">풀칠된</strong> 봉투를 사용하여 편지를 봉하세요."
+      },
+      {
+        "exam_en": "She used strong <strong class=\"target-word\">adhesive</strong> to fix the broken vase.",
+        "exam_ko": "그녀는 깨진 꽃병을 고치려고 강력 <strong class=\"target-word\">접착제</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 6875,
+    "origin": "prey",
+    "examples": [
+      {
+        "exam_en": "He became <strong class=\"target-word\">prey</strong> to constant fears.",
+        "exam_ko": "그는 끊임없는 공포의 <strong class=\"target-word\">먹잇감</strong>이 되었다."
+      },
+      {
+        "exam_en": "The eagle spotted its <strong class=\"target-word\">prey</strong> from high above.",
+        "exam_ko": "독수리는 높은 곳에서 <strong class=\"target-word\">먹이</strong>를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 6876,
+    "origin": "inhabit",
+    "examples": [
+      {
+        "exam_en": "Tribes <strong class=\"target-word\">inhabit</strong> the tropical forests.",
+        "exam_ko": "부족들이 열대 숲에 <strong class=\"target-word\">살고 있다</strong>."
+      },
+      {
+        "exam_en": "Fishermen <strong class=\"target-word\">inhabited</strong> the coastal village.",
+        "exam_ko": "어부들이 바닷가 마을에 <strong class=\"target-word\">살고 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6879,
+    "origin": "peddler",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">peddler</strong> sold newspapers by the subway station.",
+        "exam_ko": "<strong class=\"target-word\">행상인</strong>이 지하철역 옆에서 신문을 팔았다."
+      }
+    ]
+  },
+  {
+    "id": 6880,
+    "origin": "incline",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">inclines</strong> toward traditional ways of living.",
+        "exam_ko": "그는 전통적인 생활 방식 쪽으로 <strong class=\"target-word\">마음이 기운다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">incline</strong> to believe him.",
+        "exam_ko": "나는 그를 믿고 싶은 <strong class=\"target-word\">마음이 든다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6881,
+    "origin": "pity",
+    "examples": [
+      {
+        "exam_en": "She helped him out of <strong class=\"target-word\">pity</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">동정심</strong>에서 그를 도왔다."
+      },
+      {
+        "exam_en": "He donated money in <strong class=\"target-word\">pity</strong> of the poor.",
+        "exam_ko": "그는 가난한 이들을 <strong class=\"target-word\">불쌍히 여겨</strong> 돈을 기부했다."
+      }
+    ]
+  },
+  {
+    "id": 6882,
+    "origin": "aspire",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">aspires</strong> to become a doctor someday.",
+        "exam_ko": "그녀는 언젠가 의사가 되기를 <strong class=\"target-word\">열망한다</strong>."
+      },
+      {
+        "exam_en": "He always <strong class=\"target-word\">aspires</strong> after perfection in his work.",
+        "exam_ko": "그는 항상 자신의 일에서 완벽을 <strong class=\"target-word\">추구한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6883,
+    "origin": "conspire",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">conspired</strong> with others against the government.",
+        "exam_ko": "그들은 정부에 맞서 다른 이들과 <strong class=\"target-word\">공모했다</strong>."
+      },
+      {
+        "exam_en": "The criminals <strong class=\"target-word\">conspired</strong> to rob a bank.",
+        "exam_ko": "범인들은 은행을 털기로 <strong class=\"target-word\">공모했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6884,
+    "origin": "respire",
+    "examples": [
+      {
+        "exam_en": "Fish <strong class=\"target-word\">respire</strong> through their gills.",
+        "exam_ko": "물고기는 아가미로 <strong class=\"target-word\">호흡한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6885,
+    "origin": "airsick",
+    "examples": [
+      {
+        "exam_en": "She got <strong class=\"target-word\">airsick</strong> on her first flight.",
+        "exam_ko": "그녀는 첫 비행에서 <strong class=\"target-word\">비행기 멀미</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 6886,
+    "origin": "primer",
+    "examples": [
+      {
+        "exam_en": "He studied a Latin <strong class=\"target-word\">primer</strong> to learn the basics.",
+        "exam_ko": "그는 기초를 배우려고 라틴어 <strong class=\"target-word\">입문서</strong>를 공부했다."
+      },
+      {
+        "exam_en": "The teacher gave students a chemistry <strong class=\"target-word\">primer</strong>.",
+        "exam_ko": "선생님이 학생들에게 화학 <strong class=\"target-word\">입문서</strong>를 나눠줬다."
+      }
+    ]
+  },
+  {
+    "id": 6887,
+    "origin": "inclusive",
+    "examples": [
+      {
+        "exam_en": "The hotel offers an <strong class=\"target-word\">inclusive</strong> charge for all services.",
+        "exam_ko": "그 호텔은 모든 서비스를 <strong class=\"target-word\">포함한</strong> 요금을 제공한다."
+      },
+      {
+        "exam_en": "The total cost uses <strong class=\"target-word\">inclusive</strong> reckoning.",
+        "exam_ko": "총 비용은 모든 것을 <strong class=\"target-word\">포함한</strong> 계산 방식을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 6888,
+    "origin": "scarce",
+    "examples": [
+      {
+        "exam_en": "Food is still <strong class=\"target-word\">scarce</strong> in the region.",
+        "exam_ko": "그 지역은 아직도 식량이 <strong class=\"target-word\">부족하다</strong>."
+      },
+      {
+        "exam_en": "Clean water is <strong class=\"target-word\">scarce</strong> in the dry season.",
+        "exam_ko": "건기에는 깨끗한 물이 <strong class=\"target-word\">부족하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6889,
+    "origin": "shatter",
+    "examples": [
+      {
+        "exam_en": "The accident <strong class=\"target-word\">shattered</strong> his nerves completely.",
+        "exam_ko": "그 사고는 그의 신경을 완전히 <strong class=\"target-word\">망가뜨렸다</strong>."
+      },
+      {
+        "exam_en": "His dream was <strong class=\"target-word\">shattered</strong> by the failure.",
+        "exam_ko": "그의 꿈은 실패로 인해 <strong class=\"target-word\">산산조각 났다</strong>."
+      }
+    ]
+  }
+]

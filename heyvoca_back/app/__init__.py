@@ -66,6 +66,8 @@ def create_app():
 
   # 추가적인 초기화 코드 (블루프린트 등록 등)
   db.init_app(app)
+  from flask_migrate import Migrate as _Migrate
+  _Migrate(app, db)
   login_manager.init_app(app)
   cache.init_app(app)
   # login_manager.login_view = "main_login.html"

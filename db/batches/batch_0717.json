@@ -1,0 +1,226 @@
+[
+  {
+    "id": 33298,
+    "origin": "in-service",
+    "examples": [
+      {
+        "exam_en": "Manufacturer Qualifications: A firm experienced in manufacturing products or systems similar to those indicated for this Project and with a record of successful in-service performance, as well as sufficient production capacity to produce required units.",
+        "exam_ko": "제조업체 자격 :이 프로젝트에 표시된 것과 유사한 제품 또는 시스템을 제조 한 경험이 있고 성공적인 성과 기록과 필요한 단위를 생산하기에 충분한 생산 능력을 갖춘 회사."
+      }
+    ]
+  },
+  {
+    "id": 33301,
+    "origin": "mortally",
+    "examples": [
+      {
+        "exam_en": "a mortally injured person",
+        "exam_ko": "치명상을 입은 사람."
+      }
+    ]
+  },
+  {
+    "id": 33304,
+    "origin": "leer",
+    "examples": [
+      {
+        "exam_en": "leer at a woman",
+        "exam_ko": "여성에게 추파를 던지다."
+      }
+    ]
+  },
+  {
+    "id": 33311,
+    "origin": "biographic",
+    "examples": [
+      {
+        "exam_en": "a biographic dictionary",
+        "exam_ko": "인명 사전."
+      }
+    ]
+  },
+  {
+    "id": 33335,
+    "origin": "prudential",
+    "examples": [
+      {
+        "exam_en": "prudential policies",
+        "exam_ko": "신중한 정책."
+      },
+      {
+        "exam_en": "a prudential committee",
+        "exam_ko": "자문 위원회."
+      }
+    ]
+  },
+  {
+    "id": 33339,
+    "origin": "carpal",
+    "examples": [
+      {
+        "exam_en": "carpal bones",
+        "exam_ko": "수근골."
+      }
+    ]
+  },
+  {
+    "id": 33367,
+    "origin": "electro",
+    "examples": [
+      {
+        "exam_en": "electrobiology",
+        "exam_ko": "전기 생물학, 생물 전기학."
+      }
+    ]
+  },
+  {
+    "id": 33374,
+    "origin": "totality",
+    "examples": [
+      {
+        "exam_en": "in its totality",
+        "exam_ko": "전체로서, 통틀어."
+      }
+    ]
+  },
+  {
+    "id": 33378,
+    "origin": "inbound",
+    "examples": [
+      {
+        "exam_en": "an inbound ship",
+        "exam_ko": "(본국으로 돌아가는)귀항선."
+      }
+    ]
+  },
+  {
+    "id": 33385,
+    "origin": "mousetrap",
+    "examples": [
+      {
+        "exam_en": "build a better mousetrap",
+        "exam_ko": "매력적인 신제품을 만들다."
+      }
+    ]
+  },
+  {
+    "id": 33393,
+    "origin": "ditto",
+    "examples": [
+      {
+        "exam_en": "say ditto to",
+        "exam_ko": "…과 같은 의견이라고 말하다."
+      },
+      {
+        "exam_en": "\"I love you.\" \"Ditto.\"",
+        "exam_ko": "「사랑해요.」 「나도 그래.」"
+      }
+    ]
+  },
+  {
+    "id": 33399,
+    "origin": "architrave",
+    "examples": [
+      {
+        "exam_en": "The architrave of a door is the trim which you see around the door frame of internal doors , it will often match the skirting board in the room. It hides the gap where the frame meets the rough opening.",
+        "exam_ko": "문의 문틀은 내부 문의 도어 프레임 주위에서 볼 수 있는 테두리이며, 종종 방의 걸레 받이와 어울리게 합니다."
+      }
+    ]
+  },
+  {
+    "id": 33400,
+    "origin": "convalescent",
+    "examples": [
+      {
+        "exam_en": "a convalescent ward",
+        "exam_ko": "회복기 환자 병동."
+      }
+    ]
+  },
+  {
+    "id": 33406,
+    "origin": "beery",
+    "examples": [
+      {
+        "exam_en": "a beery breath",
+        "exam_ko": "입에서 풍기는 맥주 냄새"
+      },
+      {
+        "exam_en": "beery good humor",
+        "exam_ko": "얼근히 취한 기분."
+      }
+    ]
+  },
+  {
+    "id": 33411,
+    "origin": "molehill",
+    "examples": [
+      {
+        "exam_en": "make a mountain of a molehill",
+        "exam_ko": "하찮은 일을 크게 생각하다[떠벌리다, 보이게 하다], 침소봉대하다."
+      }
+    ]
+  },
+  {
+    "id": 33424,
+    "origin": "doormat",
+    "examples": [
+      {
+        "exam_en": "be treated like a doormat",
+        "exam_ko": "동네북처럼 취급받다."
+      },
+      {
+        "exam_en": "I'm not your doormat.",
+        "exam_ko": "나 동네북 아니야."
+      }
+    ]
+  },
+  {
+    "id": 33441,
+    "origin": "peerage",
+    "examples": [
+      {
+        "exam_en": "life peerage",
+        "exam_ko": "일대 귀족"
+      },
+      {
+        "exam_en": "be raised to the peerage",
+        "exam_ko": "귀족에 봉해지다."
+      }
+    ]
+  },
+  {
+    "id": 33524,
+    "origin": "subjugation",
+    "examples": [
+      {
+        "exam_en": "The rebels fought against the oppressive regime, seeking to overthrow the subjugation of their people.",
+        "exam_ko": "반군들은 억압적인 정권에 맞서 국민들의 예속을 타도하기 위해 싸웠다."
+      }
+    ]
+  },
+  {
+    "id": 33542,
+    "origin": "baldheaded",
+    "examples": [
+      {
+        "exam_en": "go baldheaded at",
+        "exam_ko": "…에 무턱대고 덤벼들다"
+      },
+      {
+        "exam_en": "go baldheaded into",
+        "exam_ko": "…에 모든 것을 걸다."
+      }
+    ]
+  },
+  {
+    "id": 33543,
+    "origin": "expatriation",
+    "examples": [
+      {
+        "exam_en": "the right of expatriation",
+        "exam_ko": "국적 이탈권."
+      }
+    ]
+  }
+]

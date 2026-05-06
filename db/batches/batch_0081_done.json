@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1675,
+    "origin": "date",
+    "examples": [
+      {
+        "exam_en": "The letter arrived without a <strong class=\"target-word\">date</strong>.",
+        "exam_ko": "그 편지는 <strong class=\"target-word\">날짜</strong> 없이 도착했다."
+      },
+      {
+        "exam_en": "Please write the <strong class=\"target-word\">date</strong> at the top of the form.",
+        "exam_ko": "양식 상단에 <strong class=\"target-word\">날짜</strong>를 적어 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1676,
+    "origin": "fire",
+    "examples": [
+      {
+        "exam_en": "A bright <strong class=\"target-word\">fire</strong> burned in the fireplace.",
+        "exam_ko": "벽난로에서 밝은 <strong class=\"target-word\">불</strong>이 타올랐다."
+      },
+      {
+        "exam_en": "They built a <strong class=\"target-word\">fire</strong> to stay warm at night.",
+        "exam_ko": "그들은 밤에 따뜻하게 지내려고 <strong class=\"target-word\">불</strong>을 피웠다."
+      }
+    ]
+  },
+  {
+    "id": 1677,
+    "origin": "organize",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">organized</strong> a baseball team last spring.",
+        "exam_ko": "그녀는 지난 봄에 야구팀을 <strong class=\"target-word\">편성했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">organized</strong> a committee to review the plan.",
+        "exam_ko": "그들은 계획을 검토하기 위해 위원회를 <strong class=\"target-word\">조직했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">organized</strong> the meetings to help the team.",
+        "exam_ko": "그는 팀을 돕기 위해 회의를 <strong class=\"target-word\">소집했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1678,
+    "origin": "comprise",
+    "examples": [
+      {
+        "exam_en": "The committee <strong class=\"target-word\">comprises</strong> ten members.",
+        "exam_ko": "위원회는 10명의 위원으로 <strong class=\"target-word\">구성된다</strong>."
+      },
+      {
+        "exam_en": "The city project <strong class=\"target-word\">comprises</strong> a plan to build an airport.",
+        "exam_ko": "그 도시계획은 공항 건설 계획을 <strong class=\"target-word\">포함하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 1679,
+    "origin": "swing",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">swung</strong> her legs under the chair.",
+        "exam_ko": "그녀는 의자 아래서 발을 <strong class=\"target-word\">흔들었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">swung</strong> the door open quickly.",
+        "exam_ko": "그는 문을 빠르게 <strong class=\"target-word\">휙 열었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1680,
+    "origin": "finance",
+    "examples": [
+      {
+        "exam_en": "The country's <strong class=\"target-word\">finances</strong> improved after the reform.",
+        "exam_ko": "개혁 이후 나라의 <strong class=\"target-word\">재정</strong>이 나아졌다."
+      },
+      {
+        "exam_en": "The government manages public <strong class=\"target-word\">finance</strong> carefully.",
+        "exam_ko": "정부는 공공 <strong class=\"target-word\">재정</strong>을 신중하게 관리한다."
+      }
+    ]
+  },
+  {
+    "id": 1681,
+    "origin": "detect",
+    "examples": [
+      {
+        "exam_en": "The guard <strong class=\"target-word\">detected</strong> someone stealing money.",
+        "exam_ko": "경비원은 누군가 돈을 훔치는 현장을 <strong class=\"target-word\">잡아냈다</strong>."
+      },
+      {
+        "exam_en": "Scientists <strong class=\"target-word\">detected</strong> the underlying principle of the reaction.",
+        "exam_ko": "과학자들은 반응의 근본 원리를 <strong class=\"target-word\">알아챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1682,
+    "origin": "range",
+    "examples": [
+      {
+        "exam_en": "The store offers a wide <strong class=\"target-word\">range</strong> of prices.",
+        "exam_ko": "그 가게는 폭넓은 가격 <strong class=\"target-word\">범위</strong>를 제공한다."
+      },
+      {
+        "exam_en": "The price is in the <strong class=\"target-word\">range</strong> of ten to fifty dollars.",
+        "exam_ko": "가격은 10달러에서 50달러 <strong class=\"target-word\">범위</strong>에 있다."
+      }
+    ]
+  },
+  {
+    "id": 1683,
+    "origin": "differ",
+    "examples": [
+      {
+        "exam_en": "The two ropes <strong class=\"target-word\">differ</strong> in length.",
+        "exam_ko": "두 줄은 길이가 <strong class=\"target-word\">다르다</strong>."
+      },
+      {
+        "exam_en": "The indoor and outdoor temperatures <strong class=\"target-word\">differed</strong> by ten degrees.",
+        "exam_ko": "실내와 실외 기온은 10도 <strong class=\"target-word\">차이가 났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1684,
+    "origin": "relax",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">relaxed</strong> her expression after the good news.",
+        "exam_ko": "그녀는 좋은 소식 후 표정을 <strong class=\"target-word\">부드럽게 했다</strong>."
+      },
+      {
+        "exam_en": "He sat down and <strong class=\"target-word\">relaxed</strong> after a long day.",
+        "exam_ko": "그는 긴 하루 후 자리에 앉아 <strong class=\"target-word\">쉬었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1685,
+    "origin": "oppose",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">opposed</strong> the enemy at the border.",
+        "exam_ko": "병사들은 국경에서 적에게 <strong class=\"target-word\">반항했다</strong>."
+      },
+      {
+        "exam_en": "Many citizens <strong class=\"target-word\">opposed</strong> the new law bitterly.",
+        "exam_ko": "많은 시민들이 새 법에 격렬하게 <strong class=\"target-word\">반대했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">opposed</strong> the decision at the meeting.",
+        "exam_ko": "그녀는 회의에서 그 결정에 <strong class=\"target-word\">반대했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1686,
+    "origin": "resign",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">resigned</strong> as ambassador last month.",
+        "exam_ko": "그는 지난달 대사직을 <strong class=\"target-word\">사임했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">resigned</strong> from the government after the scandal.",
+        "exam_ko": "그녀는 스캔들 후 정부에서 <strong class=\"target-word\">물러났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1687,
+    "origin": "rush",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">rushed</strong> along the corridor to catch the train.",
+        "exam_ko": "그는 기차를 타려고 복도를 <strong class=\"target-word\">달려갔다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rushed</strong> around town to finish her errands.",
+        "exam_ko": "그녀는 볼일을 마치려고 시내를 <strong class=\"target-word\">분주히 돌아다녔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1688,
+    "origin": "waste",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">wasted</strong> his money on useless things.",
+        "exam_ko": "그는 쓸모없는 것에 돈을 <strong class=\"target-word\">낭비했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">wasted</strong> time chatting over coffee.",
+        "exam_ko": "그녀는 커피를 마시며 시간을 <strong class=\"target-word\">허비했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1689,
+    "origin": "drag",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">dragged</strong> the table over to the door.",
+        "exam_ko": "그는 탁자를 문 쪽으로 <strong class=\"target-word\">끌어당겼다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">dragged</strong> herself home after the long shift.",
+        "exam_ko": "그녀는 긴 근무 후 무거운 발걸음으로 집에 <strong class=\"target-word\">돌아갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1690,
+    "origin": "pause",
+    "examples": [
+      {
+        "exam_en": "There was a brief <strong class=\"target-word\">pause</strong> in the speech.",
+        "exam_ko": "이야기 중에 잠깐 <strong class=\"target-word\">중단</strong>이 있었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">paused</strong> before answering the question.",
+        "exam_ko": "그는 질문에 답하기 전에 잠시 <strong class=\"target-word\">멈췄다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1691,
+    "origin": "pack",
+    "examples": [
+      {
+        "exam_en": "The peddler carried a heavy <strong class=\"target-word\">pack</strong> on his back.",
+        "exam_ko": "행상인은 등에 무거운 <strong class=\"target-word\">짐</strong>을 지고 다녔다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">packed</strong> essentials like water and snacks for the hike.",
+        "exam_ko": "그들은 하이킹을 위해 물과 간식 같은 필수품을 <strong class=\"target-word\">챙겼다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">packed</strong> her suitcase the night before the trip.",
+        "exam_ko": "그녀는 여행 전날 밤 여행 가방을 <strong class=\"target-word\">쌌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1692,
+    "origin": "install",
+    "examples": [
+      {
+        "exam_en": "They had a telephone <strong class=\"target-word\">installed</strong> in the office.",
+        "exam_ko": "그들은 사무실에 전화를 <strong class=\"target-word\">설치했다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">installing</strong> a closed-circuit TV system.",
+        "exam_ko": "그는 폐회로 TV 장치를 <strong class=\"target-word\">설치하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 1693,
+    "origin": "compete",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">compete</strong> against other countries in trade.",
+        "exam_ko": "그들은 무역에서 다른 나라들과 <strong class=\"target-word\">맞선다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">competed</strong> with them for the scholarship.",
+        "exam_ko": "그녀는 장학금을 타기 위해 그들과 <strong class=\"target-word\">겨뤘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1694,
+    "origin": "sink",
+    "examples": [
+      {
+        "exam_en": "The land <strong class=\"target-word\">sinks</strong> gradually toward the sea.",
+        "exam_ko": "땅은 바다 쪽으로 점차 <strong class=\"target-word\">경사져 있다</strong>."
+      },
+      {
+        "exam_en": "The kite was slowly <strong class=\"target-word\">sinking</strong> to the ground.",
+        "exam_ko": "연이 천천히 땅으로 <strong class=\"target-word\">내려앉고</strong> 있었다."
+      }
+    ]
+  }
+]

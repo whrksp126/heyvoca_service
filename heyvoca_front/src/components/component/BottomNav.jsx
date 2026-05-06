@@ -9,12 +9,13 @@ const BottomNav = () => {
 
   return (
     <footer
+      data-bottom-nav
       className="
-        fixed bottom-0 
-        w-full 
-        border-t border-border 
-        bg-layout-white/90 
-        dark:bg-layout-black/90 
+        fixed bottom-0
+        w-full
+        border-t border-border
+        bg-layout-white/90
+        dark:bg-layout-black/90
         dark:border-border-dark
         backdrop-blur-md
         "
@@ -104,7 +105,7 @@ const BottomNav = () => {
             />
             <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
               }`}>
-              서점
+              상점
             </span>
           </div>
         </li>

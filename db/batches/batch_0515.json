@@ -1,0 +1,254 @@
+[
+  {
+    "id": 15924,
+    "origin": "iced",
+    "examples": [
+      {
+        "exam_en": "iced milk",
+        "exam_ko": "(탈지유로 만드는) 냉우유."
+      }
+    ]
+  },
+  {
+    "id": 15926,
+    "origin": "singular",
+    "examples": [
+      {
+        "exam_en": "singular intelligence",
+        "exam_ko": "비범한 지성"
+      },
+      {
+        "exam_en": "a woman of singular beauty",
+        "exam_ko": "절세의 미녀."
+      }
+    ]
+  },
+  {
+    "id": 15937,
+    "origin": "setup",
+    "examples": [
+      {
+        "exam_en": "Instead of the usual classroom setup, their desks and chairs were in a circle.",
+        "exam_ko": "일반적인 교실 배치와는 달리 그들의 책상과 의자는 원형을 이루고 있었다."
+      },
+      {
+        "exam_en": "How do I know this isn't a setup?",
+        "exam_ko": "이것이 속임수가 아니란 걸 내가 어떻게 알죠?"
+      },
+      {
+        "exam_en": "When playing the downhill shot, setup is critical.",
+        "exam_ko": "내리막길에서 샷을 칠 때에는 셋압이 중요하다."
+      }
+    ]
+  },
+  {
+    "id": 15946,
+    "origin": "footwear",
+    "examples": [
+      {
+        "exam_en": "This shoe store has a large selection of footwear for both men and women.",
+        "exam_ko": "이 신발 가게는 많은 종류의 남녀 신발을 갖추어 놓고 있다."
+      }
+    ]
+  },
+  {
+    "id": 15947,
+    "origin": "overload",
+    "examples": [
+      {
+        "exam_en": "She has overloaded her schedule with work, study, and family responsibilities.",
+        "exam_ko": "그녀의 일정은 일, 공부, 그리고 가족을 돌보는 일들로 꽉 차 있다."
+      },
+      {
+        "exam_en": "During hot weather, the city's electrical system is often overloaded by fans and air conditioners.",
+        "exam_ko": "날씨가 더울 때는 선풍기와 에어컨 때문에 그 도시의 전력 시스템에 종종 과부하가 걸린다."
+      }
+    ]
+  },
+  {
+    "id": 15948,
+    "origin": "rating",
+    "examples": [
+      {
+        "exam_en": "a credit rating",
+        "exam_ko": "(미) (회사의) 신용도."
+      },
+      {
+        "exam_en": "the highest ratings",
+        "exam_ko": "최고의 시청률."
+      }
+    ]
+  },
+  {
+    "id": 15954,
+    "origin": "cascade",
+    "examples": [
+      {
+        "exam_en": "After a rainfall, water cascades down from the mountains.",
+        "exam_ko": "비가 온 후, 산에서 물이 폭포처럼 떨어진다."
+      }
+    ]
+  },
+  {
+    "id": 15957,
+    "origin": "keynote",
+    "examples": [
+      {
+        "exam_en": "the keynote of the latest fashion trend",
+        "exam_ko": "최신 유행의 기조"
+      },
+      {
+        "exam_en": "strike the keynote of",
+        "exam_ko": "…의 기조를 이루다"
+      },
+      {
+        "exam_en": "keynote speech",
+        "exam_ko": "기조연설"
+      }
+    ]
+  },
+  {
+    "id": 15961,
+    "origin": "spacing",
+    "examples": [
+      {
+        "exam_en": "single spacing",
+        "exam_ko": "(타자기에서) 행간을 1행[2행] 띄워 치는 방법."
+      }
+    ]
+  },
+  {
+    "id": 15962,
+    "origin": "termination",
+    "examples": [
+      {
+        "exam_en": "the termination of a contract",
+        "exam_ko": "계약의 종료"
+      },
+      {
+        "exam_en": "put a termination to the war",
+        "exam_ko": "전쟁을 종결시키다."
+      }
+    ]
+  },
+  {
+    "id": 15963,
+    "origin": "fiction",
+    "examples": [
+      {
+        "exam_en": "science fiction",
+        "exam_ko": "공상 과학 소설"
+      },
+      {
+        "exam_en": "Fact is stranger than fiction.",
+        "exam_ko": "사실은 소설보다 더 기이하다."
+      }
+    ]
+  },
+  {
+    "id": 15964,
+    "origin": "multi",
+    "examples": [
+      {
+        "exam_en": "multiband",
+        "exam_ko": "다주파대의"
+      },
+      {
+        "exam_en": "multifactorial",
+        "exam_ko": "다원적인"
+      }
+    ]
+  },
+  {
+    "id": 15972,
+    "origin": "indie",
+    "examples": [
+      {
+        "exam_en": "an indie film producer",
+        "exam_ko": "독립 영화 제작자."
+      }
+    ]
+  },
+  {
+    "id": 15973,
+    "origin": "trendy",
+    "examples": [
+      {
+        "exam_en": "a trendy hair style",
+        "exam_ko": "유행하는 머리형."
+      }
+    ]
+  },
+  {
+    "id": 15978,
+    "origin": "humiliation",
+    "examples": [
+      {
+        "exam_en": "a sense of humiliation",
+        "exam_ko": "굴욕감."
+      }
+    ]
+  },
+  {
+    "id": 15980,
+    "origin": "shutdown",
+    "examples": [
+      {
+        "exam_en": "The manager ordered a complete shutdown of the nuclear reactor, as there was a danger of an explosion.",
+        "exam_ko": "관리자는 폭발 위험이 있어서 원자로의 가동을 완전히 중지하도록 명령했다."
+      }
+    ]
+  },
+  {
+    "id": 15988,
+    "origin": "feeder",
+    "examples": [
+      {
+        "exam_en": "a gluttonous feeder",
+        "exam_ko": "대식가"
+      },
+      {
+        "exam_en": "a coarse feeder",
+        "exam_ko": "조식가(粗食家)."
+      }
+    ]
+  },
+  {
+    "id": 15990,
+    "origin": "temporarily",
+    "examples": [
+      {
+        "exam_en": "The daily flight to Dallas has been temporarily suspended.",
+        "exam_ko": "달라스로 매일 비행하는 항공편은 일시적으로 정지되었다."
+      }
+    ]
+  },
+  {
+    "id": 15993,
+    "origin": "marathon",
+    "examples": [
+      {
+        "exam_en": "run a marathon",
+        "exam_ko": "마라톤을 하다."
+      },
+      {
+        "exam_en": "a marathon discussion",
+        "exam_ko": "몹시 오래 걸리는 토의[회의]."
+      }
+    ]
+  },
+  {
+    "id": 15995,
+    "origin": "fore",
+    "examples": [
+      {
+        "exam_en": "the fore part of a ship",
+        "exam_ko": "배의 앞부분."
+      },
+      {
+        "exam_en": "fore God",
+        "exam_ko": "하나님에게 맹세코."
+      }
+    ]
+  }
+]

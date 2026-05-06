@@ -1,0 +1,270 @@
+[
+  {
+    "id": 4058,
+    "origin": "drone",
+    "examples": [
+      {
+        "exam_en": "Bees <strong class=\"target-word\">droned</strong> loudly in the garden.",
+        "exam_ko": "벌들이 정원에서 크게 <strong class=\"target-word\">윙윙거렸다</strong>."
+      },
+      {
+        "exam_en": "The speaker <strong class=\"target-word\">droned</strong> on for an hour.",
+        "exam_ko": "연사는 한 시간 동안 단조롭게 <strong class=\"target-word\">계속 말했다</strong>."
+      },
+      {
+        "exam_en": "The army uses an unmanned <strong class=\"target-word\">drone</strong> for surveillance.",
+        "exam_ko": "군대는 감시에 무인 <strong class=\"target-word\">드론</strong>을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 4060,
+    "origin": "annoyed",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">annoyed</strong> at his rude behavior.",
+        "exam_ko": "그녀는 그의 무례한 행동에 <strong class=\"target-word\">화가 났다</strong>."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">annoyed</strong> with you for what you have done.",
+        "exam_ko": "그런 짓을 하다니 당신에게 <strong class=\"target-word\">화가 난다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4061,
+    "origin": "clue",
+    "examples": [
+      {
+        "exam_en": "The detective found a <strong class=\"target-word\">clue</strong> to solve the case.",
+        "exam_ko": "형사는 사건을 해결할 <strong class=\"target-word\">단서</strong>를 찾았다."
+      },
+      {
+        "exam_en": "\"Do you know what he's talking about?\" \"I don't have a <strong class=\"target-word\">clue</strong>.\"",
+        "exam_ko": "\"그가 무슨 얘기를 하는지 알겠어요?\" \"전혀 <strong class=\"target-word\">짐작도 못 하겠어요</strong>.\""
+      }
+    ]
+  },
+  {
+    "id": 4062,
+    "origin": "colonel",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Colonel</strong> Sanders founded Kentucky Fried Chicken.",
+        "exam_ko": "<strong class=\"target-word\">대령</strong> 샌더스는 켄터키 프라이드 치킨을 창립했다."
+      },
+      {
+        "exam_en": "He served as a <strong class=\"target-word\">colonel</strong> in the army.",
+        "exam_ko": "그는 육군에서 <strong class=\"target-word\">대령</strong>으로 복무했다."
+      }
+    ]
+  },
+  {
+    "id": 4064,
+    "origin": "inn",
+    "examples": [
+      {
+        "exam_en": "They stayed at a cozy <strong class=\"target-word\">inn</strong> near the village.",
+        "exam_ko": "그들은 마을 근처 아늑한 <strong class=\"target-word\">여관</strong>에 묵었다."
+      },
+      {
+        "exam_en": "She runs a small <strong class=\"target-word\">inn</strong> in the countryside.",
+        "exam_ko": "그녀는 시골에서 작은 <strong class=\"target-word\">여관</strong>을 운영한다."
+      }
+    ]
+  },
+  {
+    "id": 4066,
+    "origin": "oxford",
+    "examples": [
+      {
+        "exam_en": "She is staying in <strong class=\"target-word\">Oxford</strong> for the summer.",
+        "exam_ko": "그녀는 여름 동안 <strong class=\"target-word\">옥스퍼드</strong>에 머물고 있다."
+      },
+      {
+        "exam_en": "She is studying at <strong class=\"target-word\">Oxford</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">옥스퍼드</strong> 대학에 다니고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4067,
+    "origin": "resentful",
+    "examples": [
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">resentful</strong> look.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">원망스러운</strong> 눈빛을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 4069,
+    "origin": "calling",
+    "examples": [
+      {
+        "exam_en": "Teaching is her true <strong class=\"target-word\">calling</strong> in life.",
+        "exam_ko": "가르치는 것이 그녀의 진정한 <strong class=\"target-word\">천직</strong>이다."
+      },
+      {
+        "exam_en": "He felt a strong <strong class=\"target-word\">calling</strong> to serve others.",
+        "exam_ko": "그는 타인을 섬겨야 한다는 강한 <strong class=\"target-word\">소명</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 4070,
+    "origin": "cottage",
+    "examples": [
+      {
+        "exam_en": "They bought a small <strong class=\"target-word\">cottage</strong> in the countryside.",
+        "exam_ko": "그들은 시골에 작은 <strong class=\"target-word\">오두막집</strong>을 샀다."
+      },
+      {
+        "exam_en": "We rented a summer <strong class=\"target-word\">cottage</strong> by the lake.",
+        "exam_ko": "우리는 호수 옆 여름 <strong class=\"target-word\">별장</strong>을 빌렸다."
+      }
+    ]
+  },
+  {
+    "id": 4071,
+    "origin": "counselor",
+    "examples": [
+      {
+        "exam_en": "He consulted a legal <strong class=\"target-word\">counselor</strong> for advice.",
+        "exam_ko": "그는 조언을 위해 법률 <strong class=\"target-word\">고문</strong>과 상담했다."
+      }
+    ]
+  },
+  {
+    "id": 4072,
+    "origin": "lettuce",
+    "examples": [
+      {
+        "exam_en": "She added fresh <strong class=\"target-word\">lettuce</strong> to the sandwich.",
+        "exam_ko": "그녀는 샌드위치에 신선한 <strong class=\"target-word\">상추</strong>를 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 4073,
+    "origin": "loaf",
+    "examples": [
+      {
+        "exam_en": "She bought a fresh <strong class=\"target-word\">loaf</strong> of bread at the bakery.",
+        "exam_ko": "그녀는 빵집에서 신선한 빵 한 <strong class=\"target-word\">덩어리</strong>를 샀다."
+      },
+      {
+        "exam_en": "Half a <strong class=\"target-word\">loaf</strong> is better than no bread.",
+        "exam_ko": "빵 반 <strong class=\"target-word\">덩어리</strong>라도 없는 것보다는 낫다."
+      }
+    ]
+  },
+  {
+    "id": 4074,
+    "origin": "reader",
+    "examples": [
+      {
+        "exam_en": "This book targets the general <strong class=\"target-word\">reader</strong>.",
+        "exam_ko": "이 책은 일반 <strong class=\"target-word\">독자</strong>를 대상으로 한다."
+      },
+      {
+        "exam_en": "She is an avid <strong class=\"target-word\">reader</strong> of detective stories.",
+        "exam_ko": "그녀는 탐정 소설의 열성 <strong class=\"target-word\">독자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4075,
+    "origin": "tease",
+    "examples": [
+      {
+        "exam_en": "His classmates <strong class=\"target-word\">teased</strong> him about his accent.",
+        "exam_ko": "반 친구들이 그의 사투리를 <strong class=\"target-word\">놀렸다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">teased</strong> my father to lend me some money.",
+        "exam_ko": "나는 아버지에게 돈을 빌려달라고 귀찮게 <strong class=\"target-word\">졸라댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4076,
+    "origin": "attempted",
+    "examples": [
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">attempted</strong> robbery.",
+        "exam_ko": "그는 강도 <strong class=\"target-word\">미수</strong>로 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 4083,
+    "origin": "beetle",
+    "examples": [
+      {
+        "exam_en": "A black <strong class=\"target-word\">beetle</strong> crawled across the floor.",
+        "exam_ko": "검은 <strong class=\"target-word\">바퀴벌레</strong>가 바닥을 가로질러 기어갔다."
+      },
+      {
+        "exam_en": "He found a stag <strong class=\"target-word\">beetle</strong> in the forest.",
+        "exam_ko": "그는 숲에서 사슴 <strong class=\"target-word\">벌레</strong>를 발견했다."
+      },
+      {
+        "exam_en": "The old man had thick, <strong class=\"target-word\">beetle</strong> brows.",
+        "exam_ko": "그 노인은 두꺼운 <strong class=\"target-word\">도드라진</strong> 눈썹을 가지고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4086,
+    "origin": "buggy",
+    "examples": [
+      {
+        "exam_en": "Most women pushed children in <strong class=\"target-word\">buggies</strong>.",
+        "exam_ko": "대부분의 여자들이 <strong class=\"target-word\">유모차</strong>에 아이를 태우고 밀었다."
+      },
+      {
+        "exam_en": "Either the program or the hardware is <strong class=\"target-word\">buggy</strong>.",
+        "exam_ko": "프로그램이나 하드웨어 둘 중 하나에 <strong class=\"target-word\">결함이 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4087,
+    "origin": "disconnect",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">disconnect</strong> the hose from the faucet.",
+        "exam_ko": "수도꼭지에서 호스를 <strong class=\"target-word\">분리해</strong> 주세요."
+      },
+      {
+        "exam_en": "I got <strong class=\"target-word\">disconnected</strong> during the call.",
+        "exam_ko": "통화 중에 전화가 <strong class=\"target-word\">끊겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4091,
+    "origin": "excellence",
+    "examples": [
+      {
+        "exam_en": "The school promotes moral and academic <strong class=\"target-word\">excellence</strong>.",
+        "exam_ko": "그 학교는 도덕적, 학문적 <strong class=\"target-word\">탁월함</strong>을 장려한다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">excellence</strong> in sports earned him a scholarship.",
+        "exam_ko": "스포츠에서의 <strong class=\"target-word\">탁월함</strong>이 그에게 장학금을 안겨주었다."
+      }
+    ]
+  },
+  {
+    "id": 4093,
+    "origin": "bystander",
+    "examples": [
+      {
+        "exam_en": "An innocent <strong class=\"target-word\">bystander</strong> was hurt in the accident.",
+        "exam_ko": "무고한 <strong class=\"target-word\">구경꾼</strong>이 사고에서 다쳤다."
+      }
+    ]
+  }
+]

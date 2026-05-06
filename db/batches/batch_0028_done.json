@@ -1,0 +1,270 @@
+[
+  {
+    "id": 545,
+    "origin": "coat",
+    "examples": [
+      {
+        "exam_en": "She wore a fur <strong class=\"target-word\">coat</strong> in winter.",
+        "exam_ko": "그녀는 겨울에 모피 <strong class=\"target-word\">코트</strong>를 입었다."
+      },
+      {
+        "exam_en": "He put on his <strong class=\"target-word\">coat</strong> before going out.",
+        "exam_ko": "그는 외출 전에 <strong class=\"target-word\">코트</strong>를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 547,
+    "origin": "belt",
+    "examples": [
+      {
+        "exam_en": "He wore a leather <strong class=\"target-word\">belt</strong> with his jeans.",
+        "exam_ko": "그는 청바지에 가죽 <strong class=\"target-word\">벨트</strong>를 맸다."
+      }
+    ]
+  },
+  {
+    "id": 549,
+    "origin": "necktie",
+    "examples": [
+      {
+        "exam_en": "He tied his <strong class=\"target-word\">necktie</strong> before the meeting.",
+        "exam_ko": "그는 회의 전에 <strong class=\"target-word\">넥타이</strong>를 맸다."
+      }
+    ]
+  },
+  {
+    "id": 550,
+    "origin": "suit",
+    "examples": [
+      {
+        "exam_en": "He wore a black <strong class=\"target-word\">suit</strong> to the funeral.",
+        "exam_ko": "그는 장례식에 검은 <strong class=\"target-word\">수트</strong>를 입었다."
+      },
+      {
+        "exam_en": "She bought a two-piece <strong class=\"target-word\">suit</strong> for the interview.",
+        "exam_ko": "그녀는 면접을 위해 투피스 <strong class=\"target-word\">정장</strong>을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 551,
+    "origin": "shirt",
+    "examples": [
+      {
+        "exam_en": "He put on a clean <strong class=\"target-word\">shirt</strong> for the occasion.",
+        "exam_ko": "그는 행사를 위해 깨끗한 <strong class=\"target-word\">셔츠</strong>를 입었다."
+      },
+      {
+        "exam_en": "She ironed her <strong class=\"target-word\">shirt</strong> before the presentation.",
+        "exam_ko": "그녀는 발표 전에 <strong class=\"target-word\">셔츠</strong>에 다림질을 했다."
+      }
+    ]
+  },
+  {
+    "id": 552,
+    "origin": "jacket",
+    "examples": [
+      {
+        "exam_en": "He zipped up his leather <strong class=\"target-word\">jacket</strong> in the cold.",
+        "exam_ko": "그는 추위에 가죽 <strong class=\"target-word\">재킷</strong>의 지퍼를 올렸다."
+      },
+      {
+        "exam_en": "The sailor wore a life <strong class=\"target-word\">jacket</strong> on the boat.",
+        "exam_ko": "선원은 배 위에서 구명 <strong class=\"target-word\">조끼</strong>를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 553,
+    "origin": "pants",
+    "examples": [
+      {
+        "exam_en": "She wore ski <strong class=\"target-word\">pants</strong> on the slopes.",
+        "exam_ko": "그녀는 슬로프에서 스키 <strong class=\"target-word\">바지</strong>를 입었다."
+      },
+      {
+        "exam_en": "He put on his <strong class=\"target-word\">pants</strong> and headed out.",
+        "exam_ko": "그는 <strong class=\"target-word\">바지</strong>를 입고 밖으로 나갔다."
+      }
+    ]
+  },
+  {
+    "id": 554,
+    "origin": "shoe",
+    "examples": [
+      {
+        "exam_en": "She bought a new pair of <strong class=\"target-word\">shoes</strong>.",
+        "exam_ko": "그녀는 새 <strong class=\"target-word\">신발</strong> 한 켤레를 샀다."
+      },
+      {
+        "exam_en": "He put on his <strong class=\"target-word\">shoes</strong> at the door.",
+        "exam_ko": "그는 문 앞에서 <strong class=\"target-word\">신발</strong>을 신었다."
+      }
+    ]
+  },
+  {
+    "id": 555,
+    "origin": "store",
+    "examples": [
+      {
+        "exam_en": "She stopped by the grocery <strong class=\"target-word\">store</strong> after work.",
+        "exam_ko": "그녀는 퇴근 후 식료품 <strong class=\"target-word\">가게</strong>에 들렀다."
+      },
+      {
+        "exam_en": "The general <strong class=\"target-word\">store</strong> sells a variety of goods.",
+        "exam_ko": "그 잡화 <strong class=\"target-word\">상점</strong>은 다양한 물건을 판다."
+      }
+    ]
+  },
+  {
+    "id": 557,
+    "origin": "intersection",
+    "examples": [
+      {
+        "exam_en": "Please turn right at the next <strong class=\"target-word\">intersection</strong>.",
+        "exam_ko": "다음 <strong class=\"target-word\">교차로</strong>에서 우회전하십시오."
+      }
+    ]
+  },
+  {
+    "id": 558,
+    "origin": "road",
+    "examples": [
+      {
+        "exam_en": "They drove along the national <strong class=\"target-word\">road</strong> for hours.",
+        "exam_ko": "그들은 몇 시간 동안 국가 <strong class=\"target-word\">도로</strong>를 따라 달렸다."
+      },
+      {
+        "exam_en": "The Silk <strong class=\"target-word\">Road</strong> connected Asia and Europe.",
+        "exam_ko": "실크 <strong class=\"target-word\">로드</strong>는 아시아와 유럽을 연결했다."
+      }
+    ]
+  },
+  {
+    "id": 560,
+    "origin": "pray",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">prayed</strong> for her family every night.",
+        "exam_ko": "그녀는 매일 밤 가족을 위해 <strong class=\"target-word\">기도했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">prayed</strong> to God for forgiveness.",
+        "exam_ko": "그는 용서를 위해 신에게 <strong class=\"target-word\">기도했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 561,
+    "origin": "church",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">church</strong> has two entrances.",
+        "exam_ko": "그 <strong class=\"target-word\">교회</strong>에는 두 개의 입구가 있다."
+      },
+      {
+        "exam_en": "They arrived at the <strong class=\"target-word\">church</strong> before the service.",
+        "exam_ko": "그들은 예배 전에 <strong class=\"target-word\">교회</strong>에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 562,
+    "origin": "meditation",
+    "examples": [
+      {
+        "exam_en": "He sat in deep <strong class=\"target-word\">meditation</strong> for an hour.",
+        "exam_ko": "그는 한 시간 동안 깊은 <strong class=\"target-word\">명상</strong>에 잠겼다."
+      },
+      {
+        "exam_en": "Daily <strong class=\"target-word\">meditation</strong> helps reduce stress.",
+        "exam_ko": "매일 하는 <strong class=\"target-word\">명상</strong>은 스트레스를 줄이는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 563,
+    "origin": "temple",
+    "examples": [
+      {
+        "exam_en": "They visited the ancient <strong class=\"target-word\">temple</strong> during their trip.",
+        "exam_ko": "그들은 여행 중에 오래된 <strong class=\"target-word\">사원</strong>을 방문했다."
+      },
+      {
+        "exam_en": "The Buddhist <strong class=\"target-word\">temple</strong> is surrounded by mountains.",
+        "exam_ko": "그 불교 <strong class=\"target-word\">사찰</strong>은 산으로 둘러싸여 있다."
+      }
+    ]
+  },
+  {
+    "id": 564,
+    "origin": "treasure",
+    "examples": [
+      {
+        "exam_en": "The painting is a national <strong class=\"target-word\">treasure</strong>.",
+        "exam_ko": "그 그림은 국가 <strong class=\"target-word\">보물</strong>이다."
+      },
+      {
+        "exam_en": "The museum preserves many cultural <strong class=\"target-word\">treasures</strong>.",
+        "exam_ko": "그 박물관은 많은 문화 <strong class=\"target-word\">유산</strong>을 보존한다."
+      }
+    ]
+  },
+  {
+    "id": 565,
+    "origin": "pirate",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">pirate</strong> ship sailed across the ocean.",
+        "exam_ko": "<strong class=\"target-word\">해적</strong> 선박이 바다를 가로질러 항해했다."
+      },
+      {
+        "exam_en": "He downloaded a <strong class=\"target-word\">pirate</strong> copy of the movie.",
+        "exam_ko": "그는 영화의 <strong class=\"target-word\">불법 복제</strong> 파일을 내려받았다."
+      }
+    ]
+  },
+  {
+    "id": 566,
+    "origin": "grass",
+    "examples": [
+      {
+        "exam_en": "She picked a blade of <strong class=\"target-word\">grass</strong> from the field.",
+        "exam_ko": "그녀는 들판에서 <strong class=\"target-word\">풀</strong>잎 하나를 뽑았다."
+      },
+      {
+        "exam_en": "The children played on the green <strong class=\"target-word\">grass</strong>.",
+        "exam_ko": "아이들은 초록 <strong class=\"target-word\">잔디</strong> 위에서 뛰어놀았다."
+      }
+    ]
+  },
+  {
+    "id": 567,
+    "origin": "parrot",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">parrot</strong> repeated every word it heard.",
+        "exam_ko": "<strong class=\"target-word\">앵무새</strong>는 들은 모든 단어를 반복했다."
+      },
+      {
+        "exam_en": "He kept a colorful <strong class=\"target-word\">parrot</strong> as a pet.",
+        "exam_ko": "그는 화려한 <strong class=\"target-word\">앵무새</strong>를 반려동물로 키웠다."
+      }
+    ]
+  },
+  {
+    "id": 568,
+    "origin": "shade",
+    "examples": [
+      {
+        "exam_en": "They rested in the <strong class=\"target-word\">shade</strong> of a big tree.",
+        "exam_ko": "그들은 큰 나무 <strong class=\"target-word\">그늘</strong>에서 쉬었다."
+      },
+      {
+        "exam_en": "She adjusted the lamp <strong class=\"target-word\">shade</strong> to dim the light.",
+        "exam_ko": "그녀는 빛을 줄이기 위해 전등 <strong class=\"target-word\">갓</strong>을 조정했다."
+      }
+    ]
+  }
+]

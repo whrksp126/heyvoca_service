@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh } from '@phosphor-icons/react';
+import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh, Timer } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { backendUrl, fetchDataAsync, getTextSound } from '../../utils/common';
+import { backendUrl, fetchDataAsync, getTextSound, stripHtmlTags, isWordOverdue } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
+import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
+import SelectVocaBookForWordNewBottomSheet from '../newBottomSheet/SelectVocaBookForWordNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import { PreviewBookStoreNewFullSheet } from '../newfullsheet/PreviewBookStoreNewFullSheet';
 import { getBookStoreDetailApi } from '../../api/bookStore';
@@ -24,16 +26,22 @@ const Main = () => {
 
   // 검색 상태
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchLang, setSearchLang] = useState('en');
   const [myWordResults, setMyWordResults] = useState([]);
   const [storeResults, setStoreResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimerRef = useRef(null);
 
+  const detectLang = (q) => (/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(q) ? 'ko' : 'en');
+
   // 자동완성 드롭다운 상태
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedWord, setSelectedWord] = useState(null);
+  const [noResults, setNoResults] = useState(false);
+  const [submittedQuery, setSubmittedQuery] = useState('');
   const suggestionsRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   // 기본 뷰 상태
   const [sortBy, setSortBy] = useState('updatedAt');
@@ -99,17 +107,24 @@ const Main = () => {
   }, [wordsToShow.length]);
 
   // 드롭다운 추천 검색 (타이핑 중 호출)
-  const fetchSuggestions = useCallback(async (query) => {
-    if (!query.trim() || query.trim().length < 2) {
+  const fetchSuggestions = useCallback(async (query, lang) => {
+    const minLen = lang === 'ko' ? 1 : 2;
+    if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setShowSuggestions(false);
+      setNoResults(false);
       return;
     }
     try {
-      const response = await fetchDataAsync(`${backendUrl}/search/partial/en`, 'GET', { word: query });
+      const endpoint = lang === 'ko' ? '/search/partial/ko' : '/search/partial/en';
+      const response = await fetchDataAsync(`${backendUrl}${endpoint}`, 'GET', { word: query });
       if (response?.code === 200) {
-        setSuggestions(response.data || []);
-        setShowSuggestions(true);
+        const data = response.data || [];
+        setSuggestions(data);
+        setShowSuggestions(data.length > 0);
+        setSubmittedQuery(query);
+        // 결과가 비었을 때만 true. 결과가 있으면 false로 풀어 기본 단어 목록을 다시 노출.
+        setNoResults(data.length === 0);
       }
     } catch (err) {
       console.error('추천 검색 오류:', err);
@@ -151,34 +166,61 @@ const Main = () => {
   // 검색어 변경 시 debounce로 추천 검색
   const handleSearchChange = (e) => {
     const query = e.target.value;
+    const lang = detectLang(query);
     setSearchQuery(query);
+    setSearchLang(lang);
     setSelectedWord(null);
     setMyWordResults([]);
     setStoreResults([]);
 
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
-    if (!query.trim() || query.trim().length < 2) {
+    const minLen = lang === 'ko' ? 1 : 2;
+    if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setShowSuggestions(false);
+      // 검색어가 비거나 너무 짧으면 빈 결과 상태도 해제
+      setNoResults(false);
+      setSubmittedQuery('');
       return;
     }
 
     debounceTimerRef.current = setTimeout(() => {
-      fetchSuggestions(query);
+      fetchSuggestions(query, lang);
     }, 300);
   };
 
-  // 드롭다운 항목 클릭
-  const handleSuggestionClick = (item) => {
+  // Enter / 검색 아이콘 클릭으로 즉시 검색 실행
+  const handleSearchSubmit = useCallback(() => {
+    if (!searchQuery.trim()) return;
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    fetchSuggestions(searchQuery, searchLang);
+    searchInputRef.current?.blur();
+  }, [searchQuery, searchLang, fetchSuggestions]);
+
+  // 드롭다운 항목 클릭 (외부에서도 재사용 — OCR 풀시트의 "선택" 버튼 등)
+  const handleSuggestionClick = useCallback((item) => {
     vibrate({ duration: 5 });
     getTextSound(item.word, 'en');
     setSelectedWord(item);
     setSearchQuery(item.word);
     setSuggestions([]);
     setShowSuggestions(false);
+    searchInputRef.current?.blur();
     executeSearch(item.word);
-  };
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [executeSearch]);
+
+  // 외부(OCR 풀시트 등)에서 단어 선택 이벤트 수신
+  useEffect(() => {
+    const onExternalSelect = (e) => {
+      const word = e?.detail;
+      if (!word || !word.word) return;
+      handleSuggestionClick(word);
+    };
+    window.addEventListener('dictionary:selectWord', onExternalSelect);
+    return () => window.removeEventListener('dictionary:selectWord', onExternalSelect);
+  }, [handleSuggestionClick]);
 
   // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
@@ -228,10 +270,31 @@ const Main = () => {
     pushNewBottomSheet(AddWordNewBottomSheet, {});
   };
 
+  // 내 단어 목록 아이템 클릭 → 단어 상세 바텀시트 열기
+  // 단어가 여러 단어장에 속해 있으면 먼저 단어장 선택 바텀시트를 띄운다.
+  const handleWordItemClick = (word) => {
+    const books = word.vocaBooks ?? [];
+    if (books.length === 0) return;
+    vibrate({ duration: 5 });
+
+    if (books.length === 1) {
+      pushNewBottomSheet(WordDetaileNewBottomSheet, {
+        vocabularyId: books[0].vocaBookId,
+        id: word.vocaIndexId,
+      });
+      return;
+    }
+
+    pushNewBottomSheet(SelectVocaBookForWordNewBottomSheet, {
+      vocaIndexId: word.vocaIndexId,
+      vocaBookIds: books.map(b => b.vocaBookId),
+    });
+  };
+
   return (
     <motion.div
       className="
-        h-[calc(100vh-theme(height.header)-theme(height.bottom-nav)-var(--status-bar-height))]
+        h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         bg-layout-white dark:bg-layout-black
         overflow-y-auto
       "
@@ -253,11 +316,18 @@ const Main = () => {
             bg-layout-white dark:bg-layout-black
           ">
             <input
+              ref={searchInputRef}
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
               onFocus={() => {
                 if (suggestions.length > 0) setShowSuggestions(true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleSearchSubmit();
+                }
               }}
               placeholder="검색할 단어를 입력하세요."
               className="
@@ -266,10 +336,17 @@ const Main = () => {
                 placeholder:text-layout-gray-300
               "
             />
-            <MagnifyingGlass
-              size={20}
-              className="text-layout-gray-200"
-            />
+            <button
+              type="button"
+              onClick={handleSearchSubmit}
+              className="flex items-center justify-center"
+              aria-label="검색"
+            >
+              <MagnifyingGlass
+                size={20}
+                className="text-layout-gray-200"
+              />
+            </button>
           </div>
 
           {/* 자동완성 드롭다운 */}
@@ -305,18 +382,41 @@ const Main = () => {
                   >
                     <MagnifyingGlass size={14} className="text-layout-gray-300 shrink-0" />
                     <span className="text-[14px] font-[600] shrink-0">
-                      {item.word.split('').map((char, i) => {
-                        const query = searchQuery.toLowerCase();
-                        const wordLower = item.word.toLowerCase();
-                        const startIndex = wordLower.indexOf(query);
-                        const isHighlighted = startIndex !== -1 && i >= startIndex && i < startIndex + query.length;
-                        return (
-                          <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black)' }}>{char}</span>
-                        );
-                      })}
+                      {searchLang === 'en' ? (
+                        item.word.split('').map((char, i) => {
+                          const query = searchQuery.toLowerCase();
+                          const wordLower = item.word.toLowerCase();
+                          const startIndex = wordLower.indexOf(query);
+                          const isHighlighted = startIndex !== -1 && i >= startIndex && i < startIndex + query.length;
+                          return (
+                            <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black)' }}>{char}</span>
+                          );
+                        })
+                      ) : (
+                        <span style={{ color: 'var(--layout-black)' }}>{item.word}</span>
+                      )}
                     </span>
                     <span className="text-[12px] text-[#999] flex-1 text-right line-clamp-1">
-                      {Array.isArray(item.meanings) ? item.meanings.slice(0, 2).join(', ') : item.meanings}
+                      {(() => {
+                        const meaningText = Array.isArray(item.meanings)
+                          ? item.meanings.slice(0, 2).join(', ')
+                          : (item.meanings || '');
+                        if (searchLang === 'ko' && searchQuery) {
+                          const idx = meaningText.indexOf(searchQuery);
+                          if (idx !== -1) {
+                            return (
+                              <>
+                                {meaningText.slice(0, idx)}
+                                <span style={{ color: '#FF70D4' }}>
+                                  {meaningText.slice(idx, idx + searchQuery.length)}
+                                </span>
+                                {meaningText.slice(idx + searchQuery.length)}
+                              </>
+                            );
+                          }
+                        }
+                        return meaningText;
+                      })()}
                     </span>
                   </li>
                 ))}
@@ -354,7 +454,14 @@ const Main = () => {
             {selectedWord.meanings?.length > 0 && (
               <div className="mt-[12px] flex flex-col gap-[4px]">
                 {selectedWord.meanings.map((meaning, i) => (
-                  <p key={i} className="text-[14px] text-[#555] dark:text-[#aaa] leading-[1.7]">
+                  <p
+                    key={i}
+                    className="text-[14px] text-[#555] dark:text-[#aaa] leading-[1.7] cursor-pointer"
+                    onClick={() => {
+                      vibrate({ duration: 5 });
+                      getTextSound(stripHtmlTags(meaning), 'ko');
+                    }}
+                  >
                     <span className="font-[600] text-[#999] mr-[6px]">{i + 1}.</span>
                     {meaning}
                   </p>
@@ -371,11 +478,23 @@ const Main = () => {
                     key={i}
                     className="bg-layout-gray-50 dark:bg-[#111] rounded-[8px] px-[12px] py-[10px]"
                   >
-                    <p className="text-[13px] text-layout-black dark:text-layout-white leading-[1.6] italic">
-                      "{ex.origin}"
+                    <p
+                      className="text-[13px] text-layout-black dark:text-layout-white leading-[1.6] italic cursor-pointer"
+                      onClick={() => {
+                        vibrate({ duration: 5 });
+                        getTextSound(stripHtmlTags(ex.origin || ''), 'en');
+                      }}
+                    >
+                      "<span dangerouslySetInnerHTML={{ __html: ex.origin || '' }} />"
                     </p>
                     {ex.meaning && (
-                      <p className="text-[12px] text-[#999] mt-[4px] leading-[1.5]">
+                      <p
+                        className="text-[12px] text-[#999] mt-[4px] leading-[1.5] cursor-pointer"
+                        onClick={() => {
+                          vibrate({ duration: 5 });
+                          getTextSound(stripHtmlTags(ex.meaning), 'ko');
+                        }}
+                      >
                         {ex.meaning}
                       </p>
                     )}
@@ -419,18 +538,25 @@ const Main = () => {
                         style={{ backgroundColor: bgColor }}
                       >
                         <div className="p-[15px]">
-                          <div className="flex items-center gap-[6px]">
+                          <div className="flex items-center justify-between w-full">
                             <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                               {word.origin}
                             </span>
-                            <MemorizationStatus
-                              iconOnly
-                              repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                              interval={word.sm2?.interval ?? word.interval ?? 0}
-                              ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                              nextReview={word.sm2?.nextReview ?? word.nextReview}
-                              wordId={String(word.vocaIndexId)}
-                            />
+                            <div className="flex items-center gap-[5px] shrink-0">
+                              {isWordOverdue(word) && (
+                                <div className="flex items-center justify-center w-[16px] h-[16px] bg-status-error-500 rounded-full">
+                                  <Timer size={10} weight="fill" className="text-white" />
+                                </div>
+                              )}
+                              <MemorizationStatus
+                                hideOverdue
+                                repetition={word.sm2?.repetition ?? word.repetition ?? 0}
+                                interval={word.sm2?.interval ?? word.interval ?? 0}
+                                ef={word.sm2?.ef ?? word.ef ?? 2.5}
+                                nextReview={word.sm2?.nextReview ?? word.nextReview}
+                                wordId={String(word.vocaIndexId)}
+                              />
+                            </div>
                           </div>
                           <p className="mt-[8px] text-[11px] text-layout-gray-400">
                             {meaningText}
@@ -494,8 +620,20 @@ const Main = () => {
         </div>
       )}
 
-      {/* 기본 뷰: 내 단어 목록 (선택된 단어 없을 때) */}
-      {!selectedWord && (
+      {/* 검색 결과 없음 (검색 실행 후 추천이 비었을 때) */}
+      {!selectedWord && noResults && submittedQuery.trim() && (
+        <div className="flex flex-col items-center pt-[40px] px-[20px]">
+          <p className="text-[16px] text-layout-black dark:text-layout-white tracking-[-0.02em] leading-[1.8] text-center">
+            <span className="text-primary-main-600 font-[600]">"{submittedQuery}"</span> 에 대한 검색 결과가 없습니다.
+          </p>
+          <p className="text-[14px] text-layout-gray-400 tracking-[-0.02em] leading-[1.8] text-center">
+            단어를 다시 한번 확인해주세요.
+          </p>
+        </div>
+      )}
+
+      {/* 기본 뷰: 내 단어 목록 (빈 결과 상태가 아닐 때만 노출) */}
+      {!selectedWord && !noResults && (
         <>
           {/* 스티키 헤더 */}
           <div className="sticky top-[69px] z-10 bg-layout-white dark:bg-layout-black flex items-center justify-between px-[20px] py-[8px]">
@@ -575,35 +713,56 @@ const Main = () => {
             ) : (
               <>
                 {wordsToShow.map((word, index) => {
-                  const meanings = word.vocaBooks?.[0]?.meanings ?? word.meanings;
-                  const meaningText = Array.isArray(meanings) ? meanings.join(', ') : meanings || '';
+                  const books = Array.isArray(word.vocaBooks) ? word.vocaBooks : [];
+                  const meaningLines = books.length > 0
+                    ? books
+                        .map(vb => Array.isArray(vb.meanings) ? vb.meanings.join(', ') : '')
+                        .filter(line => line.length > 0)
+                    : [Array.isArray(word.meanings) ? word.meanings.join(', ') : (word.meanings || '')]
+                        .filter(line => line.length > 0);
+                  const meaningTtsText = meaningLines.join(', ');
                   return (
                     <div
                       key={word.vocaIndexId || index}
-                      className="px-[2px] pt-[10px] pb-[10px] border-b border-border dark:border-border-dark"
+                      className="px-[2px] pt-[10px] pb-[10px] border-b border-border dark:border-border-dark cursor-pointer"
+                      onClick={() => handleWordItemClick(word)}
                     >
-                      <div className="flex items-center gap-[5px]">
+                      <div className="flex items-center justify-between w-full">
                         <span
                           className="text-[14px] font-[700] text-layout-black dark:text-layout-white cursor-pointer"
-                          onClick={() => { vibrate({ duration: 5 }); getTextSound(word.origin, 'en'); }}
+                          onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(word.origin, 'en'); }}
                         >
                           {word.origin}
                         </span>
-                        <MemorizationStatus
-                          iconOnly
-                          repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                          interval={word.sm2?.interval ?? word.interval ?? 0}
-                          ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                          nextReview={word.sm2?.nextReview ?? word.nextReview}
-                          wordId={String(word.vocaIndexId)}
-                        />
+                        <div className="flex items-center gap-[5px] shrink-0">
+                          {isWordOverdue(word) && (
+                            <div className="flex items-center justify-center w-[16px] h-[16px] bg-status-error-500 rounded-full">
+                              <Timer size={10} weight="fill" className="text-white" />
+                            </div>
+                          )}
+                          <MemorizationStatus
+                            hideOverdue
+                            repetition={word.sm2?.repetition ?? word.repetition ?? 0}
+                            interval={word.sm2?.interval ?? word.interval ?? 0}
+                            ef={word.sm2?.ef ?? word.ef ?? 2.5}
+                            nextReview={word.sm2?.nextReview ?? word.nextReview}
+                            wordId={String(word.vocaIndexId)}
+                          />
+                        </div>
                       </div>
-                      <p
-                        className="mt-[8px] text-[13px] text-[#666] dark:text-[#999] line-clamp-2 leading-[1.5] cursor-pointer"
-                        onClick={() => { vibrate({ duration: 5 }); getTextSound(meaningText, 'ko'); }}
+                      <div
+                        className="mt-[8px] flex flex-col gap-[2px] cursor-pointer"
+                        onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(meaningTtsText, 'ko'); }}
                       >
-                        {meaningText}
-                      </p>
+                        {meaningLines.map((line, i) => (
+                          <p
+                            key={i}
+                            className="text-[13px] text-[#666] dark:text-[#999] line-clamp-2 leading-[1.5]"
+                          >
+                            {line}
+                          </p>
+                        ))}
+                      </div>
                     </div>
                   );
                 })}

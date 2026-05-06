@@ -1,0 +1,602 @@
+[
+  {
+    "id": 6385,
+    "word": "cup",
+    "exam_en": "a <strong class=\"target-word\">cup</strong> and saucer",
+    "exam_ko": "받침 접시가 있는 <strong class=\"target-word\">찻잔</strong>."
+  },
+  {
+    "id": 6386,
+    "word": "culture",
+    "exam_en": "a person of <strong class=\"target-word\">culture</strong>",
+    "exam_ko": "<strong class=\"target-word\">교양</strong> 있는 사람"
+  },
+  {
+    "id": 6387,
+    "word": "culture",
+    "exam_en": "the two <strong class=\"target-word\">culture</strong>s",
+    "exam_ko": "두 개의 <strong class=\"target-word\">교양</strong>(※문과와 이과)"
+  },
+  {
+    "id": 6388,
+    "word": "crisis",
+    "exam_en": "a financial <strong class=\"target-word\">crisis</strong>",
+    "exam_ko": "금융[재정] <strong class=\"target-word\">공황</strong>"
+  },
+  {
+    "id": 6389,
+    "word": "crisis",
+    "exam_en": "a food <strong class=\"target-word\">crisis</strong>",
+    "exam_ko": "식량 <strong class=\"target-word\">위기</strong>"
+  },
+  {
+    "id": 6390,
+    "word": "crime",
+    "exam_en": "a capital <strong class=\"target-word\">crime</strong>",
+    "exam_ko": "사형 해당하는 <strong class=\"target-word\">중죄</strong>"
+  },
+  {
+    "id": 6391,
+    "word": "crime",
+    "exam_en": "the scene of the <strong class=\"target-word\">crime</strong>",
+    "exam_ko": "<strong class=\"target-word\">범행</strong> 현장"
+  },
+  {
+    "id": 6392,
+    "word": "crew",
+    "exam_en": "officers and <strong class=\"target-word\">crew</strong>",
+    "exam_ko": "고급·하급의 전 <strong class=\"target-word\">승무원</strong>"
+  },
+  {
+    "id": 6393,
+    "word": "crew",
+    "exam_en": "The ship has a large <strong class=\"target-word\">crew</strong>.",
+    "exam_ko": "그 배에는 <strong class=\"target-word\">승무원</strong>이 많다"
+  },
+  {
+    "id": 6394,
+    "word": "creature",
+    "exam_en": "dumb <strong class=\"target-word\">creature</strong>s",
+    "exam_ko": "<strong class=\"target-word\">동물</strong>."
+  },
+  {
+    "id": 6395,
+    "word": "creature",
+    "exam_en": "a good <strong class=\"target-word\">creature</strong>",
+    "exam_ko": "좋은 <strong class=\"target-word\">사람</strong>"
+  },
+  {
+    "id": 6396,
+    "word": "cow",
+    "exam_en": "keep <strong class=\"target-word\">cow</strong>s",
+    "exam_ko": "<strong class=\"target-word\">소</strong>를 치다"
+  },
+  {
+    "id": 6397,
+    "word": "cow",
+    "exam_en": "milk a <strong class=\"target-word\">cow</strong>",
+    "exam_ko": "<strong class=\"target-word\">소</strong>의 우유를 짜다"
+  },
+  {
+    "id": 6398,
+    "word": "country",
+    "exam_en": "open <strong class=\"target-word\">country</strong>",
+    "exam_ko": "넓은 <strong class=\"target-word\">땅</strong>"
+  },
+  {
+    "id": 6399,
+    "word": "country",
+    "exam_en": "unknown <strong class=\"target-word\">country</strong>",
+    "exam_ko": "미지의 <strong class=\"target-word\">땅</strong>"
+  },
+  {
+    "id": 6400,
+    "word": "cotton",
+    "exam_en": "ground <strong class=\"target-word\">cotton</strong>",
+    "exam_ko": "분쇄한 <strong class=\"target-word\">면화</strong>(繰綿)"
+  },
+  {
+    "id": 6401,
+    "word": "cotton",
+    "exam_en": "raw <strong class=\"target-word\">cotton</strong>",
+    "exam_ko": "<strong class=\"target-word\">면화</strong>, 원면"
+  },
+  {
+    "id": 6402,
+    "word": "cork",
+    "exam_en": "burnt <strong class=\"target-word\">cork</strong>",
+    "exam_ko": "(눈썹을 그리거나 배우 분장용의) 검게 그을린 <strong class=\"target-word\">코르크</strong>"
+  },
+  {
+    "id": 6403,
+    "word": "cork",
+    "exam_en": "<strong class=\"target-word\">cork</strong> a bottle",
+    "exam_ko": "병에 마개를 <strong class=\"target-word\">막다</strong>."
+  },
+  {
+    "id": 6404,
+    "word": "cooperate",
+    "exam_en": "<strong class=\"target-word\">cooperate</strong> with a person on a project",
+    "exam_ko": "그 사업에 남과 <strong class=\"target-word\">협력하다</strong>"
+  },
+  {
+    "id": 6405,
+    "word": "cooperate",
+    "exam_en": "I <strong class=\"target-word\">cooperated</strong> with my friends in cleaning the classroom.",
+    "exam_ko": "나는 친구들과 협동하여 교실을 <strong class=\"target-word\">청소했다</strong>"
+  },
+  {
+    "id": 6406,
+    "word": "convention",
+    "exam_en": "an annual <strong class=\"target-word\">convention</strong>",
+    "exam_ko": "연차 <strong class=\"target-word\">총회</strong>"
+  },
+  {
+    "id": 6407,
+    "word": "convention",
+    "exam_en": "a nominating <strong class=\"target-word\">convention</strong>",
+    "exam_ko": "(미) 대통령 후보 지명 <strong class=\"target-word\">대회</strong>"
+  },
+  {
+    "id": 6408,
+    "word": "continent",
+    "exam_en": "the New <strong class=\"target-word\">Continent</strong>",
+    "exam_ko": "<strong class=\"target-word\">신대륙</strong>(북·남미)"
+  },
+  {
+    "id": 6409,
+    "word": "continent",
+    "exam_en": "the Old <strong class=\"target-word\">Continent</strong>",
+    "exam_ko": "<strong class=\"target-word\">구대륙</strong>(유럽·아시아·아프리카)"
+  },
+  {
+    "id": 6410,
+    "word": "congratulate",
+    "exam_en": "<strong class=\"target-word\">congratulate</strong> a person on his engagement",
+    "exam_ko": "남의 약혼을 <strong class=\"target-word\">축하하다</strong>"
+  },
+  {
+    "id": 6411,
+    "word": "congratulate",
+    "exam_en": "Let me <strong class=\"target-word\">congratulate</strong> you on your success.",
+    "exam_ko": "성공을 <strong class=\"target-word\">축하합니다</strong>."
+  },
+  {
+    "id": 6412,
+    "word": "computer",
+    "exam_en": "a <strong class=\"target-word\">computer</strong> programer",
+    "exam_ko": "<strong class=\"target-word\">컴퓨터</strong> 프로그래머"
+  },
+  {
+    "id": 6413,
+    "word": "compromise",
+    "exam_en": "reach a <strong class=\"target-word\">compromise</strong>",
+    "exam_ko": "타협에 <strong class=\"target-word\">이르다</strong>"
+  },
+  {
+    "id": 6414,
+    "word": "compromise",
+    "exam_en": "make a <strong class=\"target-word\">compromise</strong> with",
+    "exam_ko": "…과 <strong class=\"target-word\">타협하다</strong>"
+  },
+  {
+    "id": 6415,
+    "word": "company",
+    "exam_en": "in the <strong class=\"target-word\">company</strong> of",
+    "exam_ko": "…과 <strong class=\"target-word\">함께</strong>; …의 면전에서"
+  },
+  {
+    "id": 6416,
+    "word": "company",
+    "exam_en": "in each other's <strong class=\"target-word\">company</strong>",
+    "exam_ko": "<strong class=\"target-word\">둘이서만</strong>[혼자서만]"
+  },
+  {
+    "id": 6417,
+    "word": "committee",
+    "exam_en": "a steering <strong class=\"target-word\">committee</strong>",
+    "exam_ko": "<strong class=\"target-word\">운영</strong>[합동] 위원회"
+  },
+  {
+    "id": 6418,
+    "word": "committee",
+    "exam_en": "the Standing <strong class=\"target-word\">Committee</strong> on Finance",
+    "exam_ko": "(우리나라의) <strong class=\"target-word\">재무</strong>[외무] (상임) 위원회"
+  },
+  {
+    "id": 6419,
+    "word": "colony",
+    "exam_en": "the foreign <strong class=\"target-word\">colony</strong> in Seoul",
+    "exam_ko": "서울의 외국인 <strong class=\"target-word\">거류민</strong>."
+  },
+  {
+    "id": 6420,
+    "word": "colony",
+    "exam_en": "an artists' <strong class=\"target-word\">colony</strong>",
+    "exam_ko": "<strong class=\"target-word\">예술인촌</strong>."
+  },
+  {
+    "id": 6421,
+    "word": "coffee",
+    "exam_en": "strong <strong class=\"target-word\">coffee</strong>",
+    "exam_ko": "진한[옅은] <strong class=\"target-word\">커피</strong>"
+  },
+  {
+    "id": 6422,
+    "word": "coffee",
+    "exam_en": "black <strong class=\"target-word\">coffee</strong>",
+    "exam_ko": "(밀크를 넣지 않은) 블랙 <strong class=\"target-word\">커피</strong>"
+  },
+  {
+    "id": 6423,
+    "word": "cloud",
+    "exam_en": "a sea of <strong class=\"target-word\">cloud</strong>s",
+    "exam_ko": "구름 <strong class=\"target-word\">바다</strong>"
+  },
+  {
+    "id": 6424,
+    "word": "cloud",
+    "exam_en": "Every <strong class=\"target-word\">cloud</strong> has a silver lining.",
+    "exam_ko": "어떤 구름도 뒤쪽은 은빛으로 빛나고 있다; 어떤 나쁜 일에도 <strong class=\"target-word\">좋은 면</strong>이 있다."
+  },
+  {
+    "id": 6425,
+    "word": "cloth",
+    "exam_en": "a yard of <strong class=\"target-word\">cloth</strong>",
+    "exam_ko": "1야드의 <strong class=\"target-word\">옷감</strong>"
+  },
+  {
+    "id": 6426,
+    "word": "cloth",
+    "exam_en": "<strong class=\"target-word\">cloth</strong> of gold",
+    "exam_ko": "<strong class=\"target-word\">금란</strong>[은란]."
+  },
+  {
+    "id": 6427,
+    "word": "clock",
+    "exam_en": "set a <strong class=\"target-word\">clock</strong> by the noon siren",
+    "exam_ko": "시계를 정오 사이렌 소리에 <strong class=\"target-word\">맞추다</strong>"
+  },
+  {
+    "id": 6428,
+    "word": "clock",
+    "exam_en": "set the <strong class=\"target-word\">clock</strong> ahead by ten minutes",
+    "exam_ko": "시계를 10분 빨리[늦게] 가게 <strong class=\"target-word\">하다</strong>."
+  },
+  {
+    "id": 6429,
+    "word": "clash",
+    "exam_en": "The demonstrators <strong class=\"target-word\">clashed</strong> with police.",
+    "exam_ko": "시위 참가자들은 경찰과 <strong class=\"target-word\">충돌했다</strong>"
+  },
+  {
+    "id": 6430,
+    "word": "clash",
+    "exam_en": "The two armies <strong class=\"target-word\">clashed</strong> near the border.",
+    "exam_ko": "양군은 국경 부근에서 <strong class=\"target-word\">격돌했다</strong>"
+  },
+  {
+    "id": 6431,
+    "word": "city",
+    "exam_en": "the capital <strong class=\"target-word\">city</strong>",
+    "exam_ko": "<strong class=\"target-word\">수도</strong>"
+  },
+  {
+    "id": 6432,
+    "word": "circle",
+    "exam_en": "the center of a <strong class=\"target-word\">circle</strong>",
+    "exam_ko": "<strong class=\"target-word\">원심</strong>"
+  },
+  {
+    "id": 6433,
+    "word": "circle",
+    "exam_en": "draw a <strong class=\"target-word\">circle</strong>",
+    "exam_ko": "원을 <strong class=\"target-word\">그리다</strong>."
+  },
+  {
+    "id": 6434,
+    "word": "chest",
+    "exam_en": "<strong class=\"target-word\">chest</strong> trouble",
+    "exam_ko": "<strong class=\"target-word\">폐병</strong>"
+  },
+  {
+    "id": 6435,
+    "word": "chest",
+    "exam_en": "a <strong class=\"target-word\">chest</strong> cold",
+    "exam_ko": "<strong class=\"target-word\">기침</strong> 감기"
+  },
+  {
+    "id": 6436,
+    "word": "chemistry",
+    "exam_en": "applied <strong class=\"target-word\">chemistry</strong>",
+    "exam_ko": "응용 <strong class=\"target-word\">화학</strong>"
+  },
+  {
+    "id": 6437,
+    "word": "chemistry",
+    "exam_en": "organic <strong class=\"target-word\">chemistry</strong>",
+    "exam_ko": "유기[무기] <strong class=\"target-word\">화학</strong>"
+  },
+  {
+    "id": 6438,
+    "word": "cheese",
+    "exam_en": "two pieces of <strong class=\"target-word\">cheese</strong>",
+    "exam_ko": "<strong class=\"target-word\">치즈</strong> 두 쪽"
+  },
+  {
+    "id": 6439,
+    "word": "cheese",
+    "exam_en": "a slice of <strong class=\"target-word\">cheese</strong>",
+    "exam_ko": "얇게 썬 <strong class=\"target-word\">치즈</strong> 한 쪽"
+  },
+  {
+    "id": 6440,
+    "word": "champion",
+    "exam_en": "the reigning <strong class=\"target-word\">champion</strong>",
+    "exam_ko": "현 <strong class=\"target-word\">챔피언</strong>."
+  },
+  {
+    "id": 6441,
+    "word": "champion",
+    "exam_en": "a <strong class=\"target-word\">champion</strong> of women's rights",
+    "exam_ko": "<strong class=\"target-word\">여권</strong> 옹호자"
+  },
+  {
+    "id": 6442,
+    "word": "chairman",
+    "exam_en": "the <strong class=\"target-word\">Chairman</strong> of Committees",
+    "exam_ko": "(영) (의회의) <strong class=\"target-word\">전원</strong>(全院) 위원장"
+  },
+  {
+    "id": 6443,
+    "word": "chairman",
+    "exam_en": "the <strong class=\"target-word\">chairman</strong> of the steering committee",
+    "exam_ko": "운영 위원회의 <strong class=\"target-word\">의장</strong>"
+  },
+  {
+    "id": 6444,
+    "word": "century",
+    "exam_en": "a quarter of a <strong class=\"target-word\">century</strong>",
+    "exam_ko": "<strong class=\"target-word\">4반세기</strong>"
+  },
+  {
+    "id": 6445,
+    "word": "century",
+    "exam_en": "the 20th <strong class=\"target-word\">century</strong>",
+    "exam_ko": "<strong class=\"target-word\">20세기</strong>(1901-2000년)(※⑴ 10세기 이상은 서수사(序數詞)를 쓰는 것이 보통. ⑵ the nineteen hundreds라고 하면 1900-1999년을 가리킴)."
+  },
+  {
+    "id": 6446,
+    "word": "center",
+    "exam_en": "at the <strong class=\"target-word\">center</strong> of a circle",
+    "exam_ko": "원의 <strong class=\"target-word\">중심</strong>에"
+  },
+  {
+    "id": 6447,
+    "word": "center",
+    "exam_en": "in the <strong class=\"target-word\">center</strong> of the room",
+    "exam_ko": "방 <strong class=\"target-word\">한가운데에</strong>."
+  },
+  {
+    "id": 6448,
+    "word": "cat",
+    "exam_en": "a he-<strong class=\"target-word\">cat</strong>",
+    "exam_ko": "<strong class=\"target-word\">수고</strong>양이(tomcat)"
+  },
+  {
+    "id": 6449,
+    "word": "cat",
+    "exam_en": "a she-<strong class=\"target-word\">cat</strong>",
+    "exam_ko": "<strong class=\"target-word\">암고</strong>양이(tabby cat)"
+  },
+  {
+    "id": 6450,
+    "word": "case",
+    "exam_en": "a <strong class=\"target-word\">case</strong> in point",
+    "exam_ko": "(현재 문제가 되어 있는 것의) 적절한 <strong class=\"target-word\">사례</strong>"
+  },
+  {
+    "id": 6451,
+    "word": "case",
+    "exam_en": "a classic <strong class=\"target-word\">case</strong> of food poisoning",
+    "exam_ko": "식중독의 전형적인 <strong class=\"target-word\">예</strong>"
+  },
+  {
+    "id": 6452,
+    "word": "card",
+    "exam_en": "a 3″×5″ <strong class=\"target-word\">card</strong>",
+    "exam_ko": "세로 3인치 가로 5인치의 <strong class=\"target-word\">카드</strong>(※×는 by로 읽음)"
+  },
+  {
+    "id": 6453,
+    "word": "card",
+    "exam_en": "a membership <strong class=\"target-word\">card</strong>",
+    "exam_ko": "<strong class=\"target-word\">회원권</strong>"
+  },
+  {
+    "id": 6454,
+    "word": "car",
+    "exam_en": "go by <strong class=\"target-word\">car</strong>",
+    "exam_ko": "<strong class=\"target-word\">자동차</strong>로 가다"
+  },
+  {
+    "id": 6455,
+    "word": "car",
+    "exam_en": "back  a <strong class=\"target-word\">car</strong>",
+    "exam_ko": "차를 <strong class=\"target-word\">후진시키다</strong>"
+  },
+  {
+    "id": 6456,
+    "word": "candidate",
+    "exam_en": "a Presidential <strong class=\"target-word\">candidate</strong>",
+    "exam_ko": "대통령 <strong class=\"target-word\">입후보자</strong>"
+  },
+  {
+    "id": 6457,
+    "word": "candidate",
+    "exam_en": "the Democratic <strong class=\"target-word\">candidate</strong> for President",
+    "exam_ko": "민주당 대통령 <strong class=\"target-word\">후보자</strong>"
+  },
+  {
+    "id": 6458,
+    "word": "cancer",
+    "exam_en": "breast <strong class=\"target-word\">cancer</strong>",
+    "exam_ko": "유방[위, 폐]<strong class=\"target-word\">암</strong>"
+  },
+  {
+    "id": 6459,
+    "word": "cancer",
+    "exam_en": "a <strong class=\"target-word\">cancer</strong> patient",
+    "exam_ko": "<strong class=\"target-word\">암환자</strong>"
+  },
+  {
+    "id": 6460,
+    "word": "camp",
+    "exam_en": "a refugee <strong class=\"target-word\">camp</strong>",
+    "exam_ko": "난민 <strong class=\"target-word\">수용소</strong>"
+  },
+  {
+    "id": 6461,
+    "word": "camp",
+    "exam_en": "pitch  <strong class=\"target-word\">camp</strong>",
+    "exam_ko": "천막을 <strong class=\"target-word\">치다</strong>"
+  },
+  {
+    "id": 6462,
+    "word": "camera",
+    "exam_en": "an autofocus <strong class=\"target-word\">camera</strong>",
+    "exam_ko": "자동 초점 <strong class=\"target-word\">카메라</strong>"
+  },
+  {
+    "id": 6463,
+    "word": "camera",
+    "exam_en": "load a <strong class=\"target-word\">camera</strong>",
+    "exam_ko": "카메라에 필름을 <strong class=\"target-word\">넣다</strong>"
+  },
+  {
+    "id": 6464,
+    "word": "cabinet",
+    "exam_en": "a single-party <strong class=\"target-word\">Cabinet</strong>",
+    "exam_ko": "단독 <strong class=\"target-word\">내각</strong>"
+  },
+  {
+    "id": 6465,
+    "word": "cabinet",
+    "exam_en": "a <strong class=\"target-word\">cabinet</strong> member",
+    "exam_ko": "<strong class=\"target-word\">각료</strong>"
+  },
+  {
+    "id": 6466,
+    "word": "button",
+    "exam_en": "a fancy <strong class=\"target-word\">button</strong>",
+    "exam_ko": "장식 <strong class=\"target-word\">단추</strong>"
+  },
+  {
+    "id": 6467,
+    "word": "button",
+    "exam_en": "fasten <strong class=\"target-word\">button</strong>s",
+    "exam_ko": "단추를 <strong class=\"target-word\">채우다</strong>"
+  },
+  {
+    "id": 6468,
+    "word": "butter",
+    "exam_en": "fresh <strong class=\"target-word\">butter</strong>",
+    "exam_ko": "신선한 <strong class=\"target-word\">버터</strong>"
+  },
+  {
+    "id": 6469,
+    "word": "butter",
+    "exam_en": "artificial <strong class=\"target-word\">butter</strong>",
+    "exam_ko": "인조[천연] <strong class=\"target-word\">버터</strong>"
+  },
+  {
+    "id": 6470,
+    "word": "but",
+    "exam_en": "He is rich, <strong class=\"target-word\">but</strong>  not happy.",
+    "exam_ko": "그는 부자지만 행복하지는 <strong class=\"target-word\">않다</strong>"
+  },
+  {
+    "id": 6471,
+    "word": "but",
+    "exam_en": "My mother went, <strong class=\"target-word\">but</strong> I did not.",
+    "exam_ko": "어머니는 갔지만, 나는 가지 <strong class=\"target-word\">않았다</strong>"
+  },
+  {
+    "id": 6472,
+    "word": "business",
+    "exam_en": "the banking <strong class=\"target-word\">business</strong>",
+    "exam_ko": "<strong class=\"target-word\">은행업</strong>"
+  },
+  {
+    "id": 6473,
+    "word": "business",
+    "exam_en": "the tailoring <strong class=\"target-word\">business</strong>",
+    "exam_ko": "양복 <strong class=\"target-word\">재봉업</strong>"
+  },
+  {
+    "id": 6474,
+    "word": "bus",
+    "exam_en": "a <strong class=\"target-word\">bus</strong> depot",
+    "exam_ko": "<strong class=\"target-word\">버스</strong> 터미널"
+  },
+  {
+    "id": 6475,
+    "word": "bus",
+    "exam_en": "<strong class=\"target-word\">bus</strong> fare",
+    "exam_ko": "<strong class=\"target-word\">버스</strong> 요금"
+  },
+  {
+    "id": 6476,
+    "word": "bullet",
+    "exam_en": "<strong class=\"target-word\">bullet</strong> wounds",
+    "exam_ko": "<strong class=\"target-word\">총상</strong>"
+  },
+  {
+    "id": 6477,
+    "word": "bullet",
+    "exam_en": "a live <strong class=\"target-word\">bullet</strong>",
+    "exam_ko": "<strong class=\"target-word\">실탄</strong>(※공포는 blank)."
+  },
+  {
+    "id": 6478,
+    "word": "building",
+    "exam_en": "a wooden  <strong class=\"target-word\">building</strong>",
+    "exam_ko": "목조[공공] <strong class=\"target-word\">건물</strong>."
+  },
+  {
+    "id": 6479,
+    "word": "building",
+    "exam_en": "design a <strong class=\"target-word\">building</strong>",
+    "exam_ko": "건물을 <strong class=\"target-word\">설계하다</strong>"
+  },
+  {
+    "id": 6480,
+    "word": "brother",
+    "exam_en": "a big[an elder, an older] <strong class=\"target-word\">brother</strong>",
+    "exam_ko": "<strong class=\"target-word\">오빠</strong>, 형"
+  },
+  {
+    "id": 6481,
+    "word": "brother",
+    "exam_en": "a little[younger] <strong class=\"target-word\">brother</strong>",
+    "exam_ko": "<strong class=\"target-word\">남동생</strong>"
+  },
+  {
+    "id": 6482,
+    "word": "broadcast",
+    "exam_en": "Channel 5 will <strong class=\"target-word\">broadcast</strong> the game at 6 o'clock.",
+    "exam_ko": "채널 5에서 정각 6시에 그 경기를 <strong class=\"target-word\">방송한다</strong>."
+  },
+  {
+    "id": 6483,
+    "word": "broadcast",
+    "exam_en": "<strong class=\"target-word\">broadcast</strong> gossip",
+    "exam_ko": "소문을 퍼뜨리고 <strong class=\"target-word\">다니다</strong>."
+  },
+  {
+    "id": 6484,
+    "word": "brick",
+    "exam_en": "a house of <strong class=\"target-word\">brick</strong>",
+    "exam_ko": "붉은 <strong class=\"target-word\">벽돌</strong>집."
+  }
+]

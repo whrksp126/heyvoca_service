@@ -1,0 +1,250 @@
+[
+  {
+    "id": 17837,
+    "origin": "bay",
+    "examples": [
+      {
+        "exam_en": "Hudson Bay",
+        "exam_ko": "허드슨 만."
+      },
+      {
+        "exam_en": "a bomb bay",
+        "exam_ko": "폭탄 적재실[기관실]."
+      }
+    ]
+  },
+  {
+    "id": 17840,
+    "origin": "asbestos",
+    "examples": [
+      {
+        "exam_en": "Refer to the asbestos clause in the Conditions of Contract.",
+        "exam_ko": "계약 조건의 석면 조항을 참조하십시오."
+      }
+    ]
+  },
+  {
+    "id": 17841,
+    "origin": "sodium",
+    "examples": [
+      {
+        "exam_en": "sodium carbonate",
+        "exam_ko": "탄산나트륨"
+      },
+      {
+        "exam_en": "sodium cyanide",
+        "exam_ko": "시안화나트륨"
+      }
+    ]
+  },
+  {
+    "id": 17843,
+    "origin": "insoluble",
+    "examples": [
+      {
+        "exam_en": "insoluble salts",
+        "exam_ko": "불용성 염류"
+      },
+      {
+        "exam_en": "Iron is insoluble in water.",
+        "exam_ko": "철은 물에 용해되지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 17850,
+    "origin": "absorbing",
+    "examples": [
+      {
+        "exam_en": "an absorbing drama",
+        "exam_ko": "아주 재미있는 연극[소설]"
+      },
+      {
+        "exam_en": "Love is absorbing.",
+        "exam_ko": "사랑은 사람의 얼을 빼앗는다."
+      }
+    ]
+  },
+  {
+    "id": 17855,
+    "origin": "puritan",
+    "examples": [
+      {
+        "exam_en": "puritan ethics",
+        "exam_ko": "청교도적인 엄격한 도덕 관념."
+      }
+    ]
+  },
+  {
+    "id": 17856,
+    "origin": "colonize",
+    "examples": [
+      {
+        "exam_en": "France once colonized Vietnam.",
+        "exam_ko": "프랑스는 한때 베트남을 식민지화했다."
+      }
+    ]
+  },
+  {
+    "id": 17866,
+    "origin": "enrich",
+    "examples": [
+      {
+        "exam_en": "enrich oneself",
+        "exam_ko": "부자가 되다"
+      },
+      {
+        "exam_en": "enrich a nation by trade",
+        "exam_ko": "무역으로 나라를 부강하게 하다."
+      },
+      {
+        "exam_en": "Reading books can enrich your understanding of various topics.",
+        "exam_ko": "책을 읽는 것은 여러 주제에 대한 이해를 풍부하게 해줄 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 17868,
+    "origin": "navigator",
+    "examples": [
+      {
+        "exam_en": "Arctic navigators",
+        "exam_ko": "북극 탐험가."
+      }
+    ]
+  },
+  {
+    "id": 17870,
+    "origin": "grout",
+    "examples": [
+      {
+        "exam_en": "Grout is generally a mixture of water, cement.",
+        "exam_ko": "그라우트는 물, 시멘트, 모래 혼합물이다"
+      },
+      {
+        "exam_en": "Grouting is employed in embedding rebar in masonry walls, connecting sections of pre-cast concrete, filling voids, and sealing joints such as those between tiles.",
+        "exam_ko": "그라우팅(회반죽 채우기)는 벽돌 벽에 철근을 매립하고, 프리 캐스트 콘크리트의 섹션을 연결하고, 빈 공간을 채우고, 타일 사이의 조인트를 밀봉하는 데 사용됩니다."
+      }
+    ]
+  },
+  {
+    "id": 17874,
+    "origin": "incapacitate",
+    "examples": [
+      {
+        "exam_en": "His poor health incapacitated him from working.",
+        "exam_ko": "건강이 좋지 못하여 일을 할 수가 없었다."
+      },
+      {
+        "exam_en": "be incapacitated from voting",
+        "exam_ko": "투표의 자격을 상실하다."
+      }
+    ]
+  },
+  {
+    "id": 17877,
+    "origin": "u",
+    "examples": [
+      {
+        "exam_en": "U for Uniform",
+        "exam_ko": "(국제 전화 통화 용어) Uniform[Uncle]의 U."
+      }
+    ]
+  },
+  {
+    "id": 17878,
+    "origin": "lowdown",
+    "examples": [
+      {
+        "exam_en": "give the lowdown on a person",
+        "exam_ko": "남에게 내막을 알리다."
+      }
+    ]
+  },
+  {
+    "id": 17879,
+    "origin": "immure",
+    "examples": [
+      {
+        "exam_en": "immure oneself",
+        "exam_ko": "틀어박히다, 죽치다."
+      },
+      {
+        "exam_en": "scientists who immure themselves in specialized research",
+        "exam_ko": "특정한 연구에 전문 분야를 제한한 과학자들."
+      }
+    ]
+  },
+  {
+    "id": 17881,
+    "origin": "flutter",
+    "examples": [
+      {
+        "exam_en": "The flag fluttered in the wind.",
+        "exam_ko": "깃발이 바람에 휘날렸다"
+      },
+      {
+        "exam_en": "Leaves fluttered down.",
+        "exam_ko": "나뭇잎이 훨훨 날아 떨어졌다."
+      },
+      {
+        "exam_en": "The butterfly fluttered from flower to flower.",
+        "exam_ko": "나비가 이 꽃 저 꽃으로 훨훨 날아다녔다."
+      }
+    ]
+  },
+  {
+    "id": 17882,
+    "origin": "wince",
+    "examples": [
+      {
+        "exam_en": "He winced at her angry words.",
+        "exam_ko": "그는 그녀의 성난 말에 얼굴을 찡그렸다."
+      }
+    ]
+  },
+  {
+    "id": 17884,
+    "origin": "fixate",
+    "examples": [
+      {
+        "exam_en": "Carefully fixate the point marked.",
+        "exam_ko": "표시를 한 점에 주의하여 시선을 집중시켜라."
+      }
+    ]
+  },
+  {
+    "id": 17887,
+    "origin": "jovial",
+    "examples": [
+      {
+        "exam_en": "They shared a jovial conversation filled with laughter.",
+        "exam_ko": "그들은 웃음이 가득한 즐거운 대화를 나눴다."
+      }
+    ]
+  },
+  {
+    "id": 17891,
+    "origin": "mistrust",
+    "examples": [
+      {
+        "exam_en": "Mistrust of the government is growing.",
+        "exam_ko": "정부에 대한 불신이 증대하고 있다."
+      },
+      {
+        "exam_en": "mistrust oneself",
+        "exam_ko": "자신이 없다."
+      }
+    ]
+  },
+  {
+    "id": 17892,
+    "origin": "mischance",
+    "examples": [
+      {
+        "exam_en": "by mischance",
+        "exam_ko": "재수 없게도."
+      }
+    ]
+  }
+]

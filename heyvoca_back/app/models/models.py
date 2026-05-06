@@ -18,6 +18,7 @@ class RecentStudyType(enum.Enum):
     TEST = "test"      # 학습
     EXAM = "exam"      # 시험
     TODAY = "today"    # 오늘의 학습
+    QUICK = "quick"    # 빠른 복습
 ### enum ###
 
 class BinaryUUID(TypeDecorator):
@@ -142,6 +143,7 @@ class InviteMap(db.Model):
 # 단어장
 class VocaBook(db.Model):
     __tablename__ = 'voca_book'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     book_nm = Column(String(255), nullable=False)
     language = Column(String(50), nullable=False)
@@ -158,10 +160,14 @@ class VocaBook(db.Model):
 # 단어 클래스 수정본
 class Voca(db.Model):
     __tablename__ = 'voca'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
-    word = Column(String(255), nullable=False)
+    word = Column(String(255), nullable=False, index=True)
     pronunciation = Column(String(100), nullable=True)
     verb_forms = Column(Text, nullable=True)
+    # 운영 DB에 존재하던 컬럼 — 단어 난이도(0~10) + 활성 여부
+    level = Column(String(50), nullable=True)
+    is_active = Column(Boolean, nullable=True, default=True)
 
     # 관계 정의
     voca_books = relationship("VocaBookMap", back_populates="voca")
@@ -177,6 +183,7 @@ class Voca(db.Model):
 # 단어 뜻
 class VocaMeaning(db.Model):
     __tablename__ = 'voca_meaning'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     meaning = Column(String(255), nullable=False)
 
@@ -187,6 +194,7 @@ class VocaMeaning(db.Model):
 # 단어 예문
 class VocaExample(db.Model):
     __tablename__ = 'voca_example'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     exam_en = Column(Text, nullable=True)
     exam_ko = Column(Text, nullable=True)
@@ -198,17 +206,27 @@ class VocaExample(db.Model):
 # 서점
 class Bookstore(db.Model):
     __tablename__ = 'bookstore'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     downloads = Column(Integer, nullable=False)
     category = Column(String(50), nullable=False)
+    # 운영 DB에 존재하던 컬럼 — 단어장 카테고리 ID 참조 (현재 코드 미사용)
+    category_id = Column(Integer, nullable=True)
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
+    # 운영 DB는 char(1). String(1)에 mysql_charset 사용으로 호환 가능하지만,
+    # 정확히 일치시키기 위해 CHAR로 변경.
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
-    level_id = Column(Integer, ForeignKey('level.id'), nullable=False)
-    book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=False)
-    admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=False)
+    # cross-schema FK 제거 (level은 heyvoca_user에 있음). 컬럼은 유지, 일관성은 애플리케이션 레벨.
+    level_id = Column(Integer, nullable=False)
+    # 운영 DB 실제 nullable=True (일부 row에 NULL 존재)
+    book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
+    admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=True)
+    # 운영 DB에 존재하던 컬럼 — 단어장 생성/수정 시각
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
@@ -222,6 +240,7 @@ class Bookstore(db.Model):
 # 단어장-단어
 class VocaBookMap(db.Model):
     __tablename__ = 'voca_book_map'
+    __bind_key__ = 'dict'
     voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
     book_id = Column(Integer, ForeignKey('voca_book.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
 
@@ -233,6 +252,7 @@ class VocaBookMap(db.Model):
 # 단어뜻-단어
 class VocaMeaningMap(db.Model):
     __tablename__ = 'voca_meaning_map'
+    __bind_key__ = 'dict'
     voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
     meaning_id = Column(Integer, ForeignKey('voca_meaning.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
 
@@ -244,6 +264,7 @@ class VocaMeaningMap(db.Model):
 # 단어예문-단어
 class VocaExampleMap(db.Model):
     __tablename__ = 'voca_example_map'
+    __bind_key__ = 'dict'
     voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
     example_id = Column(Integer, ForeignKey('voca_example.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
 
@@ -254,6 +275,7 @@ class VocaExampleMap(db.Model):
 
 class DailySentence(db.Model):
     __tablename__ = 'daily_sentence'
+    __bind_key__ = 'dict'
     date = Column(Date, nullable=False, primary_key=True)
     sentence = Column(String(200), nullable=False, primary_key=True)
     meaning = Column(String(200), nullable=False)
@@ -263,7 +285,8 @@ class UserVocaBook(db.Model):
     __tablename__ = 'user_voca_book'
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
-    bookstore_id = Column(Integer, ForeignKey('bookstore.id'), nullable=True)
+    # cross-schema FK 제거 (bookstore는 heyvoca_dict). 컬럼은 유지.
+    bookstore_id = Column(Integer, nullable=True)
     color = Column(String(256), nullable=False)
     name = Column(String(36), nullable=False)
     total_word_cnt = Column(Integer, nullable=False, default=0)
@@ -473,6 +496,7 @@ class GemLog(db.Model):
 ### 재편성된 단어장 ###
 class AdminVocaBook(db.Model):
     __tablename__ = 'admin_voca_book'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     book_nm = Column(String(255), nullable=False)
     language = Column(String(50), nullable=False)
@@ -488,6 +512,7 @@ class AdminVocaBook(db.Model):
 
 class AdminVocaBookMap(db.Model):
     __tablename__ = 'admin_voca_book_map'
+    __bind_key__ = 'dict'
     id = Column(Integer, primary_key=True)
     voca_id = Column(Integer, ForeignKey('voca.id'))
     book_id = Column(Integer, ForeignKey('admin_voca_book.id'))
@@ -520,7 +545,8 @@ class UserVoca(db.Model):
     __tablename__ = 'user_voca'
     id = Column(Integer, primary_key=True)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
-    voca_id = Column(Integer, ForeignKey('voca.id'), nullable=True)
+    # cross-schema FK 제거 (voca는 heyvoca_dict). 컬럼은 유지.
+    voca_id = Column(Integer, nullable=True)
     word = Column(String(255), nullable=True)
     voca_meanings = Column(TEXT, nullable=True)
     voca_examples = Column(TEXT, nullable=True)
@@ -530,7 +556,15 @@ class UserVoca(db.Model):
 
     # 관계 정의
     user = relationship("User")
-    voca = relationship("Voca")
+    # cross-schema relationship: voca_id가 다른 schema(dict)의 voca를 가리킴.
+    # FK 제약이 없으므로 primaryjoin + foreign() 명시.
+    # uselist=False — many-to-one (한 UserVoca당 한 Voca).
+    voca = relationship(
+        "Voca",
+        primaryjoin="UserVoca.voca_id == foreign(Voca.id)",
+        uselist=False,
+        viewonly=True,
+    )
     book_maps = relationship("UserVocaBookMap", back_populates="user_voca", cascade="all, delete-orphan")
 
     def __init__(self, user_id=None, voca_id=None, word=None, voca_meanings=None, voca_examples=None, data=None):
@@ -544,3 +578,12 @@ class UserVoca(db.Model):
         self.updated_at = datetime.utcnow()
 
 ### 재편성된 단어장 ###
+
+
+### 사전 메타 (dict_sync.py가 현재 적용된 dump의 sha256 저장) ###
+class DictMeta(db.Model):
+    __tablename__ = 'dict_meta'
+    __bind_key__ = 'dict'
+    key = Column(String(64), primary_key=True)   # 'current_dump_sha256', 'current_dump_version' 등
+    value = Column(String(255), nullable=True)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)

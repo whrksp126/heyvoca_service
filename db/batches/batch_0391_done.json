@@ -1,0 +1,266 @@
+[
+  {
+    "id": 10696,
+    "origin": "tempest",
+    "examples": [
+      {
+        "exam_en": "The country faced a political <strong class=\"target-word\">tempest</strong> last year.",
+        "exam_ko": "그 나라는 작년에 정치적 <strong class=\"target-word\">폭풍</strong>에 휘말렸다."
+      },
+      {
+        "exam_en": "Her speech caused a <strong class=\"target-word\">tempest</strong> of emotion.",
+        "exam_ko": "그녀의 연설은 감정의 <strong class=\"target-word\">폭풍</strong>을 불러일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 10697,
+    "origin": "vogue",
+    "examples": [
+      {
+        "exam_en": "Short skirts are back in <strong class=\"target-word\">vogue</strong> this season.",
+        "exam_ko": "짧은 치마가 이번 시즌에 다시 <strong class=\"target-word\">유행</strong>하고 있다."
+      },
+      {
+        "exam_en": "That style went out of <strong class=\"target-word\">vogue</strong> years ago.",
+        "exam_ko": "그 스타일은 몇 년 전에 <strong class=\"target-word\">유행</strong>이 지났다."
+      }
+    ]
+  },
+  {
+    "id": 10698,
+    "origin": "vivid",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">vivid</strong> red dress to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">선명한</strong> 빨간 드레스를 입고 갔다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">vivid</strong> imagination and tells great stories.",
+        "exam_ko": "그는 <strong class=\"target-word\">생생한</strong> 상상력을 가지고 있어 이야기를 잘 한다."
+      }
+    ]
+  },
+  {
+    "id": 10700,
+    "origin": "undo",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">undo</strong> the engagement.",
+        "exam_ko": "그녀는 약혼을 <strong class=\"target-word\">취소하기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "He pressed Ctrl+Z to <strong class=\"target-word\">undo</strong> the last change.",
+        "exam_ko": "그는 마지막 변경 사항을 <strong class=\"target-word\">되돌리기</strong> 위해 Ctrl+Z를 눌렀다."
+      }
+    ]
+  },
+  {
+    "id": 10702,
+    "origin": "undying",
+    "examples": [
+      {
+        "exam_en": "He declared his <strong class=\"target-word\">undying</strong> love for her.",
+        "exam_ko": "그는 그녀에 대한 <strong class=\"target-word\">영원한</strong> 사랑을 고백했다."
+      },
+      {
+        "exam_en": "She earned the <strong class=\"target-word\">undying</strong> gratitude of the community.",
+        "exam_ko": "그녀는 지역사회의 <strong class=\"target-word\">변치 않는</strong> 감사를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 10704,
+    "origin": "fragmentation",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">fragmentation</strong> of the party weakened its power.",
+        "exam_ko": "당의 <strong class=\"target-word\">분열</strong>이 그 세력을 약화시켰다."
+      }
+    ]
+  },
+  {
+    "id": 10707,
+    "origin": "hardship",
+    "examples": [
+      {
+        "exam_en": "She bore every <strong class=\"target-word\">hardship</strong> with a calm mind.",
+        "exam_ko": "그녀는 모든 <strong class=\"target-word\">고난</strong>을 평온한 마음으로 견뎌냈다."
+      },
+      {
+        "exam_en": "They lived through many <strong class=\"target-word\">hardships</strong> during the war.",
+        "exam_ko": "그들은 전쟁 동안 많은 <strong class=\"target-word\">고초</strong>를 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 10709,
+    "origin": "admirable",
+    "examples": [
+      {
+        "exam_en": "Her dedication to the project is truly <strong class=\"target-word\">admirable</strong>.",
+        "exam_ko": "프로젝트에 대한 그녀의 헌신은 정말 <strong class=\"target-word\">감탄스럽다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10711,
+    "origin": "civilization",
+    "examples": [
+      {
+        "exam_en": "Ancient Egypt had an advanced <strong class=\"target-word\">civilization</strong>.",
+        "exam_ko": "고대 이집트는 발달한 <strong class=\"target-word\">문명</strong>을 가지고 있었다."
+      },
+      {
+        "exam_en": "He studied the influence of Western <strong class=\"target-word\">civilization</strong> on Asia.",
+        "exam_ko": "그는 서양 <strong class=\"target-word\">문명</strong>이 아시아에 미친 영향을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 10712,
+    "origin": "cradle",
+    "examples": [
+      {
+        "exam_en": "The baby slept peacefully in the <strong class=\"target-word\">cradle</strong>.",
+        "exam_ko": "아기는 <strong class=\"target-word\">요람</strong> 안에서 평화롭게 잠들었다."
+      },
+      {
+        "exam_en": "She has been a <strong class=\"target-word\">cradle</strong> Catholic her whole life.",
+        "exam_ko": "그녀는 평생 <strong class=\"target-word\">태어날 때부터의</strong> 천주교 신자였다."
+      }
+    ]
+  },
+  {
+    "id": 10714,
+    "origin": "neutrality",
+    "examples": [
+      {
+        "exam_en": "Switzerland is known for its political <strong class=\"target-word\">neutrality</strong>.",
+        "exam_ko": "스위스는 정치적 <strong class=\"target-word\">중립</strong>으로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 10716,
+    "origin": "raging",
+    "examples": [
+      {
+        "exam_en": "The hikers were trapped by a <strong class=\"target-word\">raging</strong> torrent.",
+        "exam_ko": "등산객들은 <strong class=\"target-word\">거세게 흐르는</strong> 급류에 갇혔다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">raging</strong> storm hit the coast overnight.",
+        "exam_ko": "<strong class=\"target-word\">맹렬한</strong> 폭풍이 밤새 해안을 강타했다."
+      }
+    ]
+  },
+  {
+    "id": 10717,
+    "origin": "overthrow",
+    "examples": [
+      {
+        "exam_en": "The rebels tried to <strong class=\"target-word\">overthrow</strong> the totalitarian regime.",
+        "exam_ko": "반란군은 전체주의 정권을 <strong class=\"target-word\">타도하려</strong> 했다."
+      },
+      {
+        "exam_en": "Citizens united to <strong class=\"target-word\">overthrow</strong> the corrupt government.",
+        "exam_ko": "시민들은 부패한 정부를 <strong class=\"target-word\">전복시키기</strong> 위해 단결했다."
+      }
+    ]
+  },
+  {
+    "id": 10718,
+    "origin": "tyranny",
+    "examples": [
+      {
+        "exam_en": "The people suffered under the <strong class=\"target-word\">tyranny</strong> of the king.",
+        "exam_ko": "국민들은 왕의 <strong class=\"target-word\">폭정</strong> 아래 고통받았다."
+      },
+      {
+        "exam_en": "People united to <strong class=\"target-word\">overthrow</strong> the tyranny.",
+        "exam_ko": "사람들은 <strong class=\"target-word\">전제 정치</strong>를 타도하기 위해 단결했다."
+      }
+    ]
+  },
+  {
+    "id": 10719,
+    "origin": "starving",
+    "examples": [
+      {
+        "exam_en": "I'm absolutely <strong class=\"target-word\">starving</strong> after that long hike.",
+        "exam_ko": "긴 하이킹 후에 정말 <strong class=\"target-word\">배가 고프다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10720,
+    "origin": "sharpen",
+    "examples": [
+      {
+        "exam_en": "He went to <strong class=\"target-word\">sharpen</strong> his sword before the battle.",
+        "exam_ko": "그는 전투 전에 칼을 <strong class=\"target-word\">갈러</strong> 갔다."
+      },
+      {
+        "exam_en": "She used a knife to <strong class=\"target-word\">sharpen</strong> her pencil.",
+        "exam_ko": "그녀는 칼로 연필을 <strong class=\"target-word\">뾰족하게 깎았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10721,
+    "origin": "pumpkin",
+    "examples": [
+      {
+        "exam_en": "She baked a delicious <strong class=\"target-word\">pumpkin</strong> pie for Thanksgiving.",
+        "exam_ko": "그녀는 추수감사절을 위해 맛있는 <strong class=\"target-word\">호박</strong> 파이를 구웠다."
+      },
+      {
+        "exam_en": "He carved a <strong class=\"target-word\">pumpkin</strong> into a jack-o-lantern.",
+        "exam_ko": "그는 <strong class=\"target-word\">호박</strong>을 조각해 잭오랜턴을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 10726,
+    "origin": "fart",
+    "examples": [
+      {
+        "exam_en": "The kid accidentally let out a <strong class=\"target-word\">fart</strong> in class.",
+        "exam_ko": "그 아이는 수업 중에 실수로 <strong class=\"target-word\">방귀</strong>를 뀌었다."
+      },
+      {
+        "exam_en": "He doesn't give a <strong class=\"target-word\">fart</strong> about the rules.",
+        "exam_ko": "그는 규칙 따위는 <strong class=\"target-word\">안중에도</strong> 없다."
+      }
+    ]
+  },
+  {
+    "id": 10727,
+    "origin": "distrust",
+    "examples": [
+      {
+        "exam_en": "She began to <strong class=\"target-word\">distrust</strong> her colleague's words.",
+        "exam_ko": "그녀는 동료의 말을 <strong class=\"target-word\">불신하기</strong> 시작했다."
+      },
+      {
+        "exam_en": "Public <strong class=\"target-word\">distrust</strong> of politics is growing.",
+        "exam_ko": "정치에 대한 대중의 <strong class=\"target-word\">불신</strong>이 커지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 10729,
+    "origin": "rung",
+    "examples": [
+      {
+        "exam_en": "She climbed to the highest <strong class=\"target-word\">rung</strong> of the corporate ladder.",
+        "exam_ko": "그녀는 기업 사다리의 최상위 <strong class=\"target-word\">단계</strong>에 올랐다."
+      },
+      {
+        "exam_en": "He started from the lowest <strong class=\"target-word\">rung</strong> of the organization.",
+        "exam_ko": "그는 조직의 가장 낮은 <strong class=\"target-word\">계층</strong>에서 시작했다."
+      }
+    ]
+  }
+]

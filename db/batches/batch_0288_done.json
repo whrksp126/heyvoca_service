@@ -1,0 +1,246 @@
+[
+  {
+    "id": 7137,
+    "origin": "derail",
+    "examples": [
+      {
+        "exam_en": "The storm caused the train to <strong class=\"target-word\">derail</strong>.",
+        "exam_ko": "폭풍으로 열차가 <strong class=\"target-word\">탈선했다</strong>."
+      },
+      {
+        "exam_en": "The train <strong class=\"target-word\">derailed</strong> after it hit a tree.",
+        "exam_ko": "열차가 나무를 들이받고 <strong class=\"target-word\">탈선했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7140,
+    "origin": "fete",
+    "examples": [
+      {
+        "exam_en": "The town held a summer <strong class=\"target-word\">fete</strong> in the park.",
+        "exam_ko": "마을에서 공원에 여름 <strong class=\"target-word\">축제</strong>를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 7142,
+    "origin": "pamper",
+    "examples": [
+      {
+        "exam_en": "She likes to <strong class=\"target-word\">pamper</strong> herself after work.",
+        "exam_ko": "그녀는 퇴근 후 자신을 <strong class=\"target-word\">응석받이로 대하는</strong> 것을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 7143,
+    "origin": "accolade",
+    "examples": [
+      {
+        "exam_en": "The knight received an <strong class=\"target-word\">accolade</strong> from the queen.",
+        "exam_ko": "기사는 여왕으로부터 <strong class=\"target-word\">작위</strong>를 받았다."
+      },
+      {
+        "exam_en": "He received an <strong class=\"target-word\">accolade</strong> for his outstanding performance.",
+        "exam_ko": "그는 탁월한 연기로 <strong class=\"target-word\">포상</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 7146,
+    "origin": "malpractice",
+    "examples": [
+      {
+        "exam_en": "The doctor was sued for <strong class=\"target-word\">malpractice</strong>.",
+        "exam_ko": "그 의사는 <strong class=\"target-word\">의료 과실</strong>로 소송을 당했다."
+      }
+    ]
+  },
+  {
+    "id": 7147,
+    "origin": "extol",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">extolled</strong> his friend's talent to everyone.",
+        "exam_ko": "그는 모든 사람에게 친구의 재능을 <strong class=\"target-word\">극찬했다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">extolling</strong> the virtues of the single life.",
+        "exam_ko": "그녀는 독신 생활의 장점을 <strong class=\"target-word\">격찬하고</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7148,
+    "origin": "rife",
+    "examples": [
+      {
+        "exam_en": "Violence is <strong class=\"target-word\">rife</strong> in the slums.",
+        "exam_ko": "빈민가에서는 폭력 사태가 <strong class=\"target-word\">만연하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7149,
+    "origin": "paralysis",
+    "examples": [
+      {
+        "exam_en": "The stroke left him with partial <strong class=\"target-word\">paralysis</strong>.",
+        "exam_ko": "뇌졸중으로 그는 부분적인 <strong class=\"target-word\">마비</strong>가 생겼다."
+      },
+      {
+        "exam_en": "The accident caused a <strong class=\"target-word\">paralysis</strong> of traffic flow.",
+        "exam_ko": "그 사고로 교통 <strong class=\"target-word\">마비</strong>가 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 7152,
+    "origin": "bode",
+    "examples": [
+      {
+        "exam_en": "This <strong class=\"target-word\">bodes</strong> well for our team.",
+        "exam_ko": "이것은 우리 팀에게 좋은 <strong class=\"target-word\">징조이다</strong>."
+      },
+      {
+        "exam_en": "The news <strong class=\"target-word\">bodes</strong> well for his future.",
+        "exam_ko": "그 소식은 그의 장래에 좋은 <strong class=\"target-word\">징조이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7153,
+    "origin": "entity",
+    "examples": [
+      {
+        "exam_en": "The company operates as a separate legal <strong class=\"target-word\">entity</strong>.",
+        "exam_ko": "그 회사는 별도의 법인 <strong class=\"target-word\">실체</strong>로 운영된다."
+      },
+      {
+        "exam_en": "A nation is a political <strong class=\"target-word\">entity</strong> with defined borders.",
+        "exam_ko": "국가는 명확한 국경을 가진 정치적 <strong class=\"target-word\">실체</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 7156,
+    "origin": "swap",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">swapped</strong> jokes around the campfire.",
+        "exam_ko": "우리는 캠프파이어 주변에서 농담을 <strong class=\"target-word\">주고받았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">swapped</strong> her watch for the book.",
+        "exam_ko": "그녀는 손목시계를 그 책과 <strong class=\"target-word\">바꿨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7157,
+    "origin": "tally",
+    "examples": [
+      {
+        "exam_en": "The clerk kept a daily <strong class=\"target-word\">tally</strong> of accidents.",
+        "exam_ko": "직원은 사고 건수를 매일 <strong class=\"target-word\">기록했다</strong>."
+      },
+      {
+        "exam_en": "The film <strong class=\"target-word\">tallied</strong> over $200 million globally.",
+        "exam_ko": "그 영화는 전 세계적으로 2억 달러 이상을 <strong class=\"target-word\">기록했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7158,
+    "origin": "epidemiology",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">epidemiology</strong> to control disease outbreaks.",
+        "exam_ko": "그녀는 질병 확산을 통제하기 위해 <strong class=\"target-word\">역학</strong>을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 7160,
+    "origin": "gratification",
+    "examples": [
+      {
+        "exam_en": "To her <strong class=\"target-word\">gratification</strong>, the project succeeded.",
+        "exam_ko": "그녀가 <strong class=\"target-word\">기쁘게도</strong>, 프로젝트가 성공했다."
+      },
+      {
+        "exam_en": "He felt great <strong class=\"target-word\">gratification</strong> watching his son graduate.",
+        "exam_ko": "그는 아들의 졸업을 보며 큰 <strong class=\"target-word\">기쁨</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 7163,
+    "origin": "viral",
+    "examples": [
+      {
+        "exam_en": "He was diagnosed with a <strong class=\"target-word\">viral</strong> infection.",
+        "exam_ko": "그는 <strong class=\"target-word\">바이러스성</strong> 감염으로 진단받았다."
+      }
+    ]
+  },
+  {
+    "id": 7165,
+    "origin": "cheeky",
+    "examples": [
+      {
+        "exam_en": "That's a bit of a <strong class=\"target-word\">cheeky</strong> comment.",
+        "exam_ko": "그것은 다소 <strong class=\"target-word\">건방진</strong> 논평이다."
+      }
+    ]
+  },
+  {
+    "id": 7166,
+    "origin": "pelvic",
+    "examples": [
+      {
+        "exam_en": "She did exercises to strengthen her <strong class=\"target-word\">pelvic</strong> muscles.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">골반</strong> 근육을 강화하는 운동을 했다."
+      }
+    ]
+  },
+  {
+    "id": 7171,
+    "origin": "mock",
+    "examples": [
+      {
+        "exam_en": "Children often <strong class=\"target-word\">mock</strong> others to feel superior.",
+        "exam_ko": "아이들은 우월감을 느끼려고 남을 <strong class=\"target-word\">조롱하는</strong> 경우가 많다."
+      },
+      {
+        "exam_en": "His classmates <strong class=\"target-word\">mocked</strong> his stutter.",
+        "exam_ko": "급우들은 그의 더듬는 말투를 <strong class=\"target-word\">놀려댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7172,
+    "origin": "vanquish",
+    "examples": [
+      {
+        "exam_en": "The hero <strong class=\"target-word\">vanquished</strong> the enemy in battle.",
+        "exam_ko": "영웅은 전투에서 적을 <strong class=\"target-word\">완전히 물리쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">vanquished</strong> her opponent in the final match.",
+        "exam_ko": "그녀는 결승전에서 상대를 <strong class=\"target-word\">패배시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7173,
+    "origin": "exhilarate",
+    "examples": [
+      {
+        "exam_en": "I was <strong class=\"target-word\">exhilarated</strong> by the new responsibility.",
+        "exam_ko": "새로운 책임감에 <strong class=\"target-word\">힘이 났다</strong>."
+      }
+    ]
+  }
+]

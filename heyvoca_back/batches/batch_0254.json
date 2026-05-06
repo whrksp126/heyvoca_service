@@ -1,0 +1,602 @@
+[
+  {
+    "id": 25590,
+    "word": "critical",
+    "exam_en": "That is some satire, keen and <strong class=\"target-word\">critical</strong>",
+    "exam_ko": "그것은 예리하고 비판적인, 일종의 <strong class=\"target-word\">풍자이다</strong>."
+  },
+  {
+    "id": 25591,
+    "word": "pocketbooks",
+    "exam_en": "The economic downturn took a toll on <strong class=\"target-word\">pocketbooks</strong> of the company.",
+    "exam_ko": "경제 침체는 회사 재정 형편에 큰 타격을 <strong class=\"target-word\">줬다</strong>."
+  },
+  {
+    "id": 25592,
+    "word": "plummet",
+    "exam_en": "Share prices have <strong class=\"target-word\">plummeted</strong>.",
+    "exam_ko": "주가가 <strong class=\"target-word\">폭락했다</strong>."
+  },
+  {
+    "id": 25593,
+    "word": "redouble",
+    "exam_en": "<strong class=\"target-word\">redouble</strong> our efforts",
+    "exam_ko": "노력을 <strong class=\"target-word\">강화하다</strong>"
+  },
+  {
+    "id": 25594,
+    "word": "scramble",
+    "exam_en": "The company had to <strong class=\"target-word\">scramble</strong> to secure additional funding for its expansion plans.",
+    "exam_ko": "회사는 확대 계획을 위한 추가 자금 확보를 위해 경쟁해야 <strong class=\"target-word\">했습니다</strong>."
+  },
+  {
+    "id": 25595,
+    "word": "markedly",
+    "exam_en": "The numbers are <strong class=\"target-word\">markedly</strong> down.",
+    "exam_ko": "숫자가 눈에 띄게 <strong class=\"target-word\">줄었다</strong>."
+  },
+  {
+    "id": 25596,
+    "word": "hinder",
+    "exam_en": "It <strong class=\"target-word\">hindered</strong> economic growth.",
+    "exam_ko": "그것이 경제 성장을 <strong class=\"target-word\">방해했다</strong>."
+  },
+  {
+    "id": 25597,
+    "word": "law-abiding",
+    "exam_en": "They were <strong class=\"target-word\">law-abiding</strong>.",
+    "exam_ko": "그들은 법을 준수하는 <strong class=\"target-word\">사람들이다</strong>."
+  },
+  {
+    "id": 25598,
+    "word": "bedbugs",
+    "exam_en": "Fears of <strong class=\"target-word\">bedbugs</strong> have been spreading nationwide recently.",
+    "exam_ko": "최근 빈대 공포가 전국적으로 확산되고 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25599,
+    "word": "janus-faced",
+    "exam_en": "Populism is <strong class=\"target-word\">Janus-faced</strong>.",
+    "exam_ko": "포퓰리즘은 두 개의 얼굴을 하고 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25600,
+    "word": "unfilled",
+    "exam_en": "The situation left about 1.7 million jobs <strong class=\"target-word\">unfilled</strong>.",
+    "exam_ko": "경제 악화로 약 170만 개의 일자리가 공석으로 남아있는 <strong class=\"target-word\">상황이다</strong>."
+  },
+  {
+    "id": 25601,
+    "word": "eye",
+    "exam_en": "Korea <strong class=\"target-word\">eyes</strong> launch of 4th Nuri space rocket.",
+    "exam_ko": "한국 정부는 누리호의 4차 발사를 <strong class=\"target-word\">고려중이다</strong>."
+  },
+  {
+    "id": 25602,
+    "word": "backlash",
+    "exam_en": "His opinion brought an angry <strong class=\"target-word\">backlash</strong> from his supporters.",
+    "exam_ko": "그의 지지자들은 그의 의견에 심하게 <strong class=\"target-word\">반발했다</strong>."
+  },
+  {
+    "id": 25603,
+    "word": "underlying",
+    "exam_en": "The news addressed the <strong class=\"target-word\">underlying</strong> causes.",
+    "exam_ko": "뉴스는 근본적인 원인에 대해 <strong class=\"target-word\">다뤘습니다</strong>."
+  },
+  {
+    "id": 25604,
+    "word": "visit",
+    "exam_en": "U.S President Joe Biden <strong class=\"target-word\">visited</strong> Vietnam's capital, Hanoi.",
+    "exam_ko": "조 바이든 미국 대통령은 베트남 수도 하노이를 국빈 <strong class=\"target-word\">방문했다</strong>"
+  },
+  {
+    "id": 25605,
+    "word": "administer",
+    "exam_en": "The government will <strong class=\"target-word\">administer</strong> vaccines to all cattle farms in the nation.",
+    "exam_ko": "정부는 전국 소 사육 농가에 백신을 배분할 <strong class=\"target-word\">것이다</strong>."
+  },
+  {
+    "id": 25606,
+    "word": "relegate",
+    "exam_en": "Are you going to <strong class=\"target-word\">relegate</strong> me to the lower position?",
+    "exam_ko": "나를 더 낮은 관직으로 <strong class=\"target-word\">격하시킬</strong>건가요?"
+  },
+  {
+    "id": 25607,
+    "word": "fight",
+    "exam_en": "to <strong class=\"target-word\">fight</strong> climate change goals",
+    "exam_ko": "기후 변화 목표에 <strong class=\"target-word\">대응하기</strong> 위해"
+  },
+  {
+    "id": 25608,
+    "word": "strong",
+    "exam_en": "He suggested the government center its attention on chip manufacturing in which Vietnam is already <strong class=\"target-word\">strong</strong>.",
+    "exam_ko": "그는 \"베트남이 이미 강세를 보이는 반도체 분야에 집중해야 한다\"고 정부에 <strong class=\"target-word\">조언했다</strong>."
+  },
+  {
+    "id": 25608,
+    "word": "suggest",
+    "exam_en": "he <strong class=\"target-word\"><strong class=\"target-word\">suggested</strong></strong> the government center its attention on chip manufacturing in which Vietnam is already strong.",
+    "exam_ko": "그는 \"베트남이 이미 강세를 보이는 반도체 분야에 집중해야 한다\"고 정부에 <strong class=\"target-word\">조언했다</strong>."
+  },
+  {
+    "id": 25609,
+    "word": "devastate",
+    "exam_en": "There was a <strong class=\"target-word\">devastated</strong> area due to earthquake.",
+    "exam_ko": "지진으로 인해 파괴된 곳이 <strong class=\"target-word\">있습니다</strong>."
+  },
+  {
+    "id": 25610,
+    "word": "fare",
+    "exam_en": "They <strong class=\"target-word\">fared</strong> well in the latest election.",
+    "exam_ko": "그들은 최근 대선을 아주 잘 <strong class=\"target-word\">치뤘다</strong>."
+  },
+  {
+    "id": 25611,
+    "word": "body",
+    "exam_en": "a governing <strong class=\"target-word\">body</strong>",
+    "exam_ko": "<strong class=\"target-word\">행정부</strong>"
+  },
+  {
+    "id": 25612,
+    "word": "raise",
+    "exam_en": "The government's aim is to <strong class=\"target-word\">raise</strong> awareness of the current issue.",
+    "exam_ko": "최근 이슈가 되고 있는 문제에 대한 인식을 제고하는 것이 정부의 <strong class=\"target-word\">목표입니다</strong>."
+  },
+  {
+    "id": 25613,
+    "word": "discuss",
+    "exam_en": "The government will <strong class=\"target-word\">discuss</strong> how to narrow the rich and poor gap.",
+    "exam_ko": "정부는 빈부 격차를 해소할 방법을 강구할 <strong class=\"target-word\">것입니다</strong>."
+  },
+  {
+    "id": 25614,
+    "word": "grant",
+    "exam_en": "The government <strong class=\"target-word\">granted</strong> additional points for promotions to civil servants with multiple children.",
+    "exam_ko": "정부가 다자녀를 둔 공무원에게 승진 가점을 <strong class=\"target-word\">부여했다</strong>."
+  },
+  {
+    "id": 25615,
+    "word": "poor",
+    "exam_en": "<strong class=\"target-word\">poor</strong> treatment",
+    "exam_ko": "<strong class=\"target-word\">열악한</strong> 처우"
+  },
+  {
+    "id": 25616,
+    "word": "intent",
+    "exam_en": "It seems <strong class=\"target-word\">intent</strong> to remain a developing country.",
+    "exam_ko": "개발도상국으로 남을 계획인 것처럼 <strong class=\"target-word\">보인다</strong>."
+  },
+  {
+    "id": 25617,
+    "word": "delegation",
+    "exam_en": "Marco and his <strong class=\"target-word\">delegation</strong> immediately proceeded to San Francisco.",
+    "exam_ko": "마르코스 필리핀 대통령과 사절단은 즉시 샌프란시스코로 <strong class=\"target-word\">향했다</strong>."
+  },
+  {
+    "id": 25618,
+    "word": "sphere",
+    "exam_en": "The political <strong class=\"target-word\">sphere</strong>",
+    "exam_ko": "<strong class=\"target-word\">정치권</strong>"
+  },
+  {
+    "id": 25619,
+    "word": "keynote",
+    "exam_en": "<strong class=\"target-word\">keynote</strong> speech",
+    "exam_ko": "<strong class=\"target-word\">기조연설</strong>"
+  },
+  {
+    "id": 25620,
+    "word": "monetary",
+    "exam_en": "The <strong class=\"target-word\">monetary</strong> support",
+    "exam_ko": "<strong class=\"target-word\">금전적인</strong> 지원"
+  },
+  {
+    "id": 25621,
+    "word": "backfire",
+    "exam_en": "The plan may <strong class=\"target-word\">backfire</strong>.",
+    "exam_ko": "그 계획이 역효과를 낼 수도 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25794,
+    "word": "compostable",
+    "exam_en": "The use of <strong class=\"target-word\">compostable</strong> plastics makes the mixed waste suitable for organic recycling (composting)",
+    "exam_ko": "퇴비화 가능한 플라스틱을 사용하면 혼합 폐기물이 유기 재활용 (퇴비화)에 적합하게 <strong class=\"target-word\">합니다</strong>."
+  },
+  {
+    "id": 25795,
+    "word": "spalling",
+    "exam_en": "Excessive <strong class=\"target-word\">spalling</strong> can cause a structure to crumble. <strong class=\"target-word\">Spalling</strong> is the result of water entering brick, concrete, or natural stone. It forces the surface to peel, pop out, or flake off.",
+    "exam_ko": "과도한 스 폴링으로 인해 구조물이 부서 질 수 있습니다. 스폴링은 벽돌, 콘크리트 또는 자연석에 물이 들어가는 초래<strong class=\"target-word\">합니다</strong>. 표면이 벗겨 지거나 튀어 나오거나 조각나게 합니다."
+  },
+  {
+    "id": 25796,
+    "word": "course",
+    "exam_en": "Keeping the wall straight, level, and plumb and accurately maintaining the horizontal <strong class=\"target-word\">courses</strong> and vertical wythes.",
+    "exam_ko": "벽을 일직선, 수평 및 수직으로 유지하고 수평 <strong class=\"target-word\">코스</strong> 및 수직줄을 정확하게 유지합니다."
+  },
+  {
+    "id": 25796,
+    "word": "wythe",
+    "exam_en": "Keeping the wall straight, level, and plumb and accurately maintaining the horizontal courses and vertical <strong class=\"target-word\">wythes</strong>.",
+    "exam_ko": "벽을 일직선, 수평 및 수직으로 유지하고 수평 코스 및 수직 <strong class=\"target-word\">줄</strong>을 정확하게 유지합니다."
+  },
+  {
+    "id": 25797,
+    "word": "excess",
+    "exam_en": "Remove <strong class=\"target-word\">excess</strong> sealant immediately, including <strong class=\"target-word\">spills</strong>, <strong class=\"target-word\">smears</strong>, and spatters.",
+    "exam_ko": "<strong class=\"target-word\">흐른것</strong>, <strong class=\"target-word\">번진것</strong>, <strong class=\"target-word\">튄것</strong>을 포함하여 초과된 실란트를 즉시 제거하시오."
+  },
+  {
+    "id": 25797,
+    "word": "smears",
+    "exam_en": "Remove excess sealant immediately, including spills, <strong class=\"target-word\">smears</strong>, and spatters.",
+    "exam_ko": "흐른것, <strong class=\"target-word\">번진것</strong>, 튄것을 포함하여 초과된 실란트를 즉시 제거하시오."
+  },
+  {
+    "id": 25797,
+    "word": "spills",
+    "exam_en": "Remove excess sealant immediately, including <strong class=\"target-word\">spills</strong>, smears, and spatters.",
+    "exam_ko": "<strong class=\"target-word\">흐른것</strong>, 번진것, 튄것을 포함하여 초과된 실란트를 즉시 제거하시오."
+  },
+  {
+    "id": 25798,
+    "word": "nda",
+    "exam_en": "An <strong class=\"target-word\">NDA</strong> creates a confidential relationship between the parties, typically to protect any type of confidential and proprietary information or trade secrets. As such, an <strong class=\"target-word\">NDA</strong> protects non-public business information.",
+    "exam_ko": "NDA는 일반적으로 모든 유형의 기밀 및 독점 정보 또는 영업 비밀을 보호하기 위해 당사자간에 기밀 관계를 만듭니다. 따라서 NDA는 비공개 비즈니스 정보를 <strong class=\"target-word\">보호합니다</strong>."
+  },
+  {
+    "id": 25799,
+    "word": "curing",
+    "exam_en": "The paint shall possess good coverage and good leveling without sagging on vertical surfaces. In general, <strong class=\"target-word\">curing</strong> of paint shalll provide optimum smoothing of the paint film.",
+    "exam_ko": "페인트는 수직 표면에서 처짐없이 우수한 보장 범위와 우수한 레벨링을 가져야합니다. 일반적으로, 페인트의 양생은 페인트 필름(막)의 최적의 평활화를 <strong class=\"target-word\">제공해야한다</strong>."
+  },
+  {
+    "id": 25799,
+    "word": "sagging",
+    "exam_en": "The paint shall possess good coverage and good leveling without <strong class=\"target-word\">sagging</strong> on vertical surfaces. In general, <strong class=\"target-word\">curing</strong> of paint shalll provide optimum smoothing of the paint film.",
+    "exam_ko": "페인트는 수직 표면에서 처짐없이 우수한 보장 범위와 우수한 레벨링을 가져야합니다. 일반적으로, 페인트의 양생은 페인트 필름(막)의 최적의 평활화를 <strong class=\"target-word\">제공해야한다</strong>."
+  },
+  {
+    "id": 25800,
+    "word": "extent",
+    "exam_en": "Professional Engineer Qualifications: A professional engineer who is legally qualified to practice in jurisdiction where Project is located and who is experienced in providing engineering services of the kind indicated. Engineering services are defined as those performed for installations of the system, assembly, or products that are similar in material, design, and <strong class=\"target-word\">extent</strong> to those indicated for this Project.",
+    "exam_ko": "전문 엔지니어 자격 : 프로젝트가 위치한 관할 구역에서 합법적으로 실무 자격이 있고 표시된 종류의 엔지니어링 서비스를 제공 한 경험이있는 전문 엔지니어. 엔지니어링 서비스는 자재, 디자인 및 범위가 이 프로젝트에 표시된 것과 유사한 시스템의 설치, 조립 또는 제조의 수행을 서비스로 <strong class=\"target-word\">정의한다</strong>."
+  },
+  {
+    "id": 25800,
+    "word": "practice",
+    "exam_en": "Professional Engineer Qualifications: A professional engineer who is legally qualified to <strong class=\"target-word\">practice</strong> in jurisdiction where Project is located and who is experienced in providing engineering services of the kind indicated. Engineering services are defined as those performed for installations of the system, assembly, or products that are similar in material, design, and <strong class=\"target-word\">extent</strong> to those indicated for this Project.",
+    "exam_ko": "전문 엔지니어 자격 : 프로젝트가 위치한 관할 구역에서 합법적으로 실무 자격이 있고 표시된 종류의 엔지니어링 서비스를 제공 한 경험이있는 전문 엔지니어. 엔지니어링 서비스는 자재, 디자인 및 범위가 이 프로젝트에 표시된 것과 유사한 시스템의 설치, 조립 또는 제조의 수행을 서비스로 <strong class=\"target-word\">정의한다</strong>."
+  },
+  {
+    "id": 25800,
+    "word": "practice",
+    "exam_en": "Professional Engineer Qualifications: A professional engineer who is legally qualified to <strong class=\"target-word\">practice</strong> in jurisdiction where Project is located and who is experienced in providing engineering services of the kind indicated. Engineering services are defined as those performed for installations of the system, assembly, or products that are similar in material, design, and <strong class=\"target-word\">extent</strong> to those indicated for this Project.",
+    "exam_ko": "전문 엔지니어 자격 : 프로젝트가 위치한 관할 구역에서 합법적으로 실무 자격이 있고 표시된 종류의 엔지니어링 서비스를 제공 한 경험이있는 전문 엔지니어. 엔지니어링 서비스는 자재, 디자인 및 범위가 이 프로젝트에 표시된 것과 유사한 시스템의 설치, 조립 또는 제조의 수행을 서비스로 <strong class=\"target-word\">정의한다</strong>."
+  },
+  {
+    "id": 25801,
+    "word": "docs",
+    "exam_en": "Provision of these <strong class=\"target-word\">docs</strong> will be required before the final payment can be processed, and, if required, final certificate issued.",
+    "exam_ko": "최종 지불이 처리되기 전 필요시 최종 인증서가 발급되기 전에 이러한 문서를 제공해야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25802,
+    "word": "retainage",
+    "exam_en": "Written consent of the surety on a performance bond and/or labor and material payment bond to such contract changes as change orders or reductions in the contractor’s <strong class=\"target-word\">retainage</strong>, or to final payment, or to waiving notification of contract changes.",
+    "exam_ko": "계약 변경의 포기 통지, 최종 지불, 계약자의 <strong class=\"target-word\">지불유예금</strong> 감소 또는 변경과 같은 계약 변경에따른 임금 및 자재 지불 채권, 이행채권에 대한 보증의 서면동의"
+  },
+  {
+    "id": 25803,
+    "word": "flaking",
+    "exam_en": "Ultraviolet(UV) Exposure; No peeling, chipping, <strong class=\"target-word\">flaking</strong>, pitting, crazing, erosion or other deleterious effects were observed.",
+    "exam_ko": "자외선에 노출 된곳은 껍질 벗겨짐, 부스러지무, 금, 조각조가 벗겨짐, 곰보자국, 잔금, 부식, 다른 유해한 영향이 관찰되지 <strong class=\"target-word\">않는다</strong>."
+  },
+  {
+    "id": 25804,
+    "word": "tbm",
+    "exam_en": "The <strong class=\"target-word\">TBM</strong> should be clearly indicated on all drawings with all lever and vertical dimensions expressed in metres to three decimal places in relation.",
+    "exam_ko": "TBM은 모든 수평, 수직 치수가 미터법으로 소수점 이하 세자리로 표현되어 모든 도면에 명확하게 표시되어야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25805,
+    "word": "fabricated",
+    "exam_en": "The structural members of <strong class=\"target-word\">fabricated</strong> frame scaffolds such as the legs, poles, posts, frames and uprights shall be plumb and braced to prevent swaying and displacement.",
+    "exam_ko": "다리, 가둥, 포스트, 프레임, 수직기둥과 같은 조립된 프레임 비계의 구조비계는 수직이여아 하고 흔들림과 이동을 방지하기 위해 보강해야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25805,
+    "word": "upright",
+    "exam_en": "The structural members of fabricated frame scaffolds such as the legs, poles, posts, frames and <strong class=\"target-word\">uprights</strong> shall be plumb and braced to prevent swaying and displacement.",
+    "exam_ko": "다리, 가둥, 포스트, 프레임, 수직기둥과 같은 조립된 프레임 비계의 구조비계는 수직이여아 하고 흔들림과 이동을 방지하기 위해 보강해야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25806,
+    "word": "power of attorney",
+    "exam_en": "A <strong class=\"target-word\">power of attorney</strong> is a legal agreement between two people in which one person is able to act on behalf of the other person.",
+    "exam_ko": "<strong class=\"target-word\">위임장은</strong> 한 사람이 다른 사람을 대신하여 행동 할 수있는 두 사람 간의 법적 계약입니다."
+  },
+  {
+    "id": 25807,
+    "word": "Inspection Test Plans",
+    "exam_en": "<strong class=\"target-word\">Inspection Test Plans</strong> – detail of inspections and tests required on site or off-site for the project.",
+    "exam_ko": "<strong class=\"target-word\">검사</strong> 계획-– 프로젝트의 현장 또는 외부에서 필요한 검사 및 테스트에 대한 세부 정보."
+  },
+  {
+    "id": 25808,
+    "word": "ve",
+    "exam_en": "Value Engineering (<strong class=\"target-word\">VE</strong>) is a management technique for the best functional balance between cost, reliability and performance of a product, project, process or service.",
+    "exam_ko": "VE (Value Engineering)는 제품, 프로젝트, 프로세스 또는 서비스의 비용, 안정성 및 성능 간의 최상의 기능 균형을위한 관리 <strong class=\"target-word\">기술입니다</strong>."
+  },
+  {
+    "id": 25809,
+    "word": "cgl",
+    "exam_en": "Occurrence-based policy covering claims that arise out of damage or injury that took place during the policy period, regardless of when claims are made. Most commercial general liability (<strong class=\"target-word\">CGL</strong>) insurance is written on an occurrence form.",
+    "exam_ko": "손해사정기준 청구 기간에 관계없이 정책 기간 동안 발생한 손상이나 부상으로 인해 발생하는 청구에 대한 보상을 해주는 보험. 대부분의 상업용 일반 책임보험 (CGL)은 발생한 실적에 따라 <strong class=\"target-word\">쓰여진다</strong>."
+  },
+  {
+    "id": 25810,
+    "word": "asse",
+    "exam_en": "<strong class=\"target-word\">ASSE</strong> International, beginning as the American Society of Inspectors of Plumbing and Sanitary Engineers, was organized on a foundation of service, with definite aims, objects and purposes.",
+    "exam_ko": "미국 배관 및 위생 엔지니어 검사관으로 시작된 ASSE International은 명확한 목표, 목적 및 목적으로 서비스 기반을 기반으로 <strong class=\"target-word\">구성되었습니다</strong>."
+  },
+  {
+    "id": 25811,
+    "word": "truckload",
+    "exam_en": "In addition, sample each <strong class=\"target-word\">truckload</strong> used for columns, regardless of other frequencies listed above.",
+    "exam_ko": "또한, 위에 나열된 횟수에 관계없이 기둥에 사용된 콘크리트의 매 한차 분량 <strong class=\"target-word\">마다</strong> 샘플링 하시오."
+  },
+  {
+    "id": 25812,
+    "word": "culvert",
+    "exam_en": "Utilities shown to scale (lighting , transformers, pull boxes, manholes, inlets, lift stations, propane tankes, septic tanks, <strong class=\"target-word\">culverts</strong>, etc.)",
+    "exam_ko": "축소된 유틸리티(조명, 변압기, 풀박스, 맨홀, 주입구, 승강기 스테이션, 프로판 탱크, 정화조, <strong class=\"target-word\">지하 배수로</strong> 등)"
+  },
+  {
+    "id": 25812,
+    "word": "inlet",
+    "exam_en": "Utilities shown to scale (lighting , transformers, pull boxes, manholes, <strong class=\"target-word\">inlets</strong>, lift stations, propane tankes, septic tanks, culverts, etc.)",
+    "exam_ko": "축소된 유틸리티(조명, 변압기, 풀박스, 맨홀, <strong class=\"target-word\">주입구</strong>, 승강기 스테이션, 프로판 탱크, 정화조, 지하 배수로 등)"
+  },
+  {
+    "id": 25812,
+    "word": "transformer",
+    "exam_en": "Utilities shown to scale (lighting , <strong class=\"target-word\">transformers</strong>, pull boxes, manholes, inlets, lift stations, propane tankes, septic tanks, culverts, etc.)",
+    "exam_ko": "축소된 유틸리티(조명, <strong class=\"target-word\">변압기</strong>, 풀박스, 맨홀, 주입구, 승강기 스테이션, 프로판 탱크, 정화조, 지하 배수로 등)"
+  },
+  {
+    "id": 25813,
+    "word": "bilinear",
+    "exam_en": "<strong class=\"target-word\">bilinear</strong> interpolation",
+    "exam_ko": "<strong class=\"target-word\">이중선형보간법</strong>"
+  },
+  {
+    "id": 25814,
+    "word": "embedment",
+    "exam_en": "Concrete Joint Locations: Submit plans indicating locations and details of construction joints, contraction joints, waterstops, sleeves, <strong class=\"target-word\">embedments</strong>, etc that interact with the joints.",
+    "exam_ko": "콘크리트 줄눈 위치 : 조인트와 상호 작용하는 시공줄눈, 수축줄눈, 지수판, 슬리브, <strong class=\"target-word\">매설물</strong>(파이프, 덕트, 슬리브, 비닐 전선관)등의 위치와 세부사항을 나타내는 계획을 제출하시오."
+  },
+  {
+    "id": 25814,
+    "word": "sleeve",
+    "exam_en": "Concrete Joint Locations: Submit plans indicating locations and details of construction joints, contraction joints, waterstops, <strong class=\"target-word\">sleeves</strong>, embedments, etc that interact with the joints.",
+    "exam_ko": "콘크리트 줄눈 위치 : 조인트와 상호 작용하는 시공줄눈, 수축줄눈, 지수판, <strong class=\"target-word\">슬리브</strong>, 매설물(파이프, 덕트, 슬리브, 비닐 전선관)등의 위치와 세부사항을 나타내는 계획을 제출하시오."
+  },
+  {
+    "id": 25814,
+    "word": "waterstop",
+    "exam_en": "Concrete Joint Locations: Submit plans indicating locations and details of construction joints, contraction joints, <strong class=\"target-word\">waterstops</strong>, sleeves, embedments, etc that interact with the joints.",
+    "exam_ko": "콘크리트 줄눈 위치 : 조인트와 상호 작용하는 시공줄눈, 수축줄눈, <strong class=\"target-word\">지수판</strong>, 슬리브, 매설물(파이프, 덕트, 슬리브, 비닐 전선관)등의 위치와 세부사항을 나타내는 계획을 제출하시오."
+  },
+  {
+    "id": 25815,
+    "word": "vlsp",
+    "exam_en": "<strong class=\"target-word\">VLSP</strong> could take a century to complete.",
+    "exam_ko": "울란 바트르의 자발적 토지 교환계획은 완료하는데 한세기가 걸릴 수도 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25816,
+    "word": "preloading",
+    "exam_en": "<strong class=\"target-word\">Preloading</strong> method is used to remove pore water over time.",
+    "exam_ko": "재하공법은 시간이 경과함에 따라 간극수를 제거하는데 <strong class=\"target-word\">사용한다</strong>.."
+  },
+  {
+    "id": 25817,
+    "word": "hardscape",
+    "exam_en": "<strong class=\"target-word\">Hardscape</strong> is one of the two major subcategories of landscaping, the other being softscape.",
+    "exam_ko": "하드 스케이프는 조경의 두 가지 주요 하위 범주 중 하나이며 다른 하나는 소프트 <strong class=\"target-word\">스케이프입니다</strong>."
+  },
+  {
+    "id": 25818,
+    "word": "diathermal",
+    "exam_en": "A <strong class=\"target-word\">diathermal</strong> wall may pass energy as heat by thermal conduction, but not the matter.",
+    "exam_ko": "투열벽은 물질이 아닌 열전도에 의해 에너지를 <strong class=\"target-word\">통과시킨다</strong>."
+  },
+  {
+    "id": 25819,
+    "word": "Specification",
+    "exam_en": "<strong class=\"target-word\">Specification</strong>s are the details for the work that needs to be completed in a construction project. These details include information such as materials, the scope of work, installation process, and quality of work.",
+    "exam_ko": "<strong class=\"target-word\">시방서는</strong> 건설 프로젝트에서 완료해야하는 작업에 대한 세부 정보입니다. 이러한 세부 사항에는 재료, 작업 범위, 설치 프로세스 및 작업 품질과 같은 정보가 포함됩니다."
+  },
+  {
+    "id": 25820,
+    "word": "contaminants",
+    "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and <strong class=\"target-word\">contaminants</strong> by cleaning with solvents, vapor, alkalli, emulsion or steam",
+    "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 <strong class=\"target-word\">오염 물질</strong> 제거"
+  },
+  {
+    "id": 25820,
+    "word": "emulsion",
+    "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and contaminants by cleaning with solvents, vapor, alkalli, <strong class=\"target-word\">emulsion</strong> or steam",
+    "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, <strong class=\"target-word\">유제</strong> 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 오염 물질 제거"
+  },
+  {
+    "id": 25820,
+    "word": "salts",
+    "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, <strong class=\"target-word\">salts</strong> and contaminants by cleaning with solvents, vapor, alkalli, emulsion or steam",
+    "exam_ko": "솔벤트 세척-솔벤트, 증기, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, <strong class=\"target-word\">염분</strong> 및 오염 물질 제거"
+  },
+  {
+    "id": 25820,
+    "word": "vapor",
+    "exam_en": "Solvent cleaning - removal of oil, grease, dirt, soil, salts and contaminants by cleaning with solvents, <strong class=\"target-word\">vapor</strong>, alkalli, emulsion or steam",
+    "exam_ko": "솔벤트 세척-솔벤트, <strong class=\"target-word\">증기</strong>, 알칼리, 유제 또는 증기로 세척하여 오일, 그리스, 먼지, 토양, 염분 및 오염 물질 제거"
+  },
+  {
+    "id": 25821,
+    "word": "fv",
+    "exam_en": "Perform investment and efficiency analysis in numeric and monetary indicators by undertaking analyses such as net present value(NPV), future value(<strong class=\"target-word\">FV</strong>).",
+    "exam_ko": "순 현재 가치 (NPV), 미래 가치 (FV)와 같은 분석을 수행하여 숫자 및 화페로 나타내는 투자 및 효율성 분석을 <strong class=\"target-word\">수행합니다</strong>."
+  },
+  {
+    "id": 25821,
+    "word": "npv",
+    "exam_en": "Perform investment and efficiency analysis in numeric and monetary indicators by undertaking analyses such as net present value(<strong class=\"target-word\">NPV</strong>), future value(<strong class=\"target-word\">FV</strong>).",
+    "exam_ko": "순 현재 가치 (NPV), 미래 가치 (FV)와 같은 분석을 수행하여 숫자 및 화페로 나타내는 투자 및 효율성 분석을 <strong class=\"target-word\">수행합니다</strong>."
+  },
+  {
+    "id": 25822,
+    "word": "even-textured",
+    "exam_en": "Rake grounds that are neither planted nor paved to a smooth, <strong class=\"target-word\">even-textured</strong> surface.",
+    "exam_ko": "식물이 심어지지 않거나 포장되지 않은 땅은 표면이 <strong class=\"target-word\">매그럽고</strong> 평평하도록 땅을 고르새요."
+  },
+  {
+    "id": 25823,
+    "word": "extrados",
+    "exam_en": "The perpendicular distance between the intrados of arch to the <strong class=\"target-word\">extrados</strong> of arch is called depth of an arch or height of an arch.",
+    "exam_ko": "아치의 내부 둘레와 겉둘레 사이의 수직 거리를 아치의 깊이 또는 아치의 높이라고 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25823,
+    "word": "intrados",
+    "exam_en": "The perpendicular distance between the <strong class=\"target-word\">intrados</strong> of arch to the <strong class=\"target-word\">extrados</strong> of arch is called depth of an arch or height of an arch.",
+    "exam_ko": "아치의 내부 둘레와 겉둘레 사이의 수직 거리를 아치의 깊이 또는 아치의 높이라고 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25824,
+    "word": "château",
+    "exam_en": "A <strong class=\"target-word\">château</strong> is a manor house or a country house of nobility or gentry with or without fortifications, originally and still most frequently—in French-",
+    "exam_ko": "샤토 (Château)는 원래 영주 주택 또는, 귀족이나 상류층의 시골 주택으로 여전히 프랑스에는 <strong class=\"target-word\">흔합니다</strong>."
+  },
+  {
+    "id": 25825,
+    "word": "outgrower",
+    "exam_en": "GRM works for local communities, employees, <strong class=\"target-word\">outgrowers</strong>, and other stakeholders",
+    "exam_ko": "GRM(글로벌 자원 관리)은 지역 사회, 직원, <strong class=\"target-word\">계약 재배자</strong> 및 기타 이해 관계자를 위해 일합니다."
+  },
+  {
+    "id": 25826,
+    "word": "Structural caculations",
+    "exam_en": "<strong class=\"target-word\">Structural calculations</strong> shall be organized as follows: Site specific design criteria including applicable codes, ground snow load, snow importance factor, snow exposure factor etc.",
+    "exam_ko": "<strong class=\"target-word\">구조계산</strong>은 다음과 같이 구성되어야 한다: 적용 법규, 지상 적설 하중, 적설 중요도 계수, 적설 노출 계수 등"
+  },
+  {
+    "id": 25827,
+    "word": "sarking",
+    "exam_en": "<strong class=\"target-word\">Sarking</strong> material intended to collect and discharge any water that may penetrate a building (commonly described as RFL, or reflective foil laminate). Where <strong class=\"target-word\">Sarking</strong> also forms a vapour barrier, the vapour barrier properties must conform to this specification.",
+    "exam_ko": "살킹 자재란 건물에 침투 할 수있는 물 (일반적으로 RFL 또는 반사 호일 라미네이트라고 함)을 수집하고 배출하기 위한 자재이다. Sarking이 증기 장벽을 형성하는 경우 증기 장벽 특성이 시방서를 <strong class=\"target-word\">준수해야합니다</strong>."
+  },
+  {
+    "id": 25828,
+    "word": "water-logged",
+    "exam_en": "Liquefaction takes place when loosely packed, <strong class=\"target-word\">water-logged</strong> sediments at or near the ground surface lose their strength in response to strong ground shaking.",
+    "exam_ko": "지면에서 또는 근처에서 느슨하게 채워지고 <strong class=\"target-word\">물에 침착된</strong> 퇴적물이 강한 지진에 반응하여 강도를 잃으면 액화가 발생합니다."
+  },
+  {
+    "id": 25828,
+    "word": "water-logged",
+    "exam_en": "Liquefaction takes place when loosely packed, <strong class=\"target-word\">water-logged</strong> sediments at or near the ground surface lose their strength in response to strong ground shaking.",
+    "exam_ko": "지면에서 또는 근처에서 느슨하게 채워지고 <strong class=\"target-word\">물에 침착된</strong> 퇴적물이 강한 지진에 반응하여 강도를 잃으면 액화가 발생합니다."
+  },
+  {
+    "id": 25829,
+    "word": "muntin",
+    "exam_en": "A <strong class=\"target-word\">muntin</strong> is a strip of wood or metal separating and holding panes of glass in a window.",
+    "exam_ko": "창살은 유리판을 분리하고 창에 고정하는 목재 또는 금속 <strong class=\"target-word\">조각입니다</strong>."
+  },
+  {
+    "id": 25830,
+    "word": "aci",
+    "exam_en": "1. <strong class=\"target-word\">ACI</strong> 117 – Standard Specifications for Tolerances for Concrete Construction and Materials.",
+    "exam_ko": "1. <strong class=\"target-word\">ACI</strong> 117 - 콘크리트 건축 및 자재에 대한 공차의 표준 시방"
+  },
+  {
+    "id": 25831,
+    "word": "a/e",
+    "exam_en": "All caculations shall be reviewed by the <strong class=\"target-word\">A/E</strong>.",
+    "exam_ko": "모든 계산서는 건축 엔지니어에 의해 검토되어야 <strong class=\"target-word\">한다</strong>."
+  },
+  {
+    "id": 25832,
+    "word": "micropile",
+    "exam_en": "<strong class=\"target-word\">Micropiles</strong> are small diameter piles (up to 300 mm), with the capability of sustaining high loads (compressive loads of over 5000 KN).",
+    "exam_ko": "<strong class=\"target-word\">마이크로파일</strong>은 작은 직경의 파일 (최대 300mm)이며 높은 하중 (5000 KN 이상의 압축 하중)을 유지할 수 있습니다."
+  },
+  {
+    "id": 25833,
+    "word": "rft",
+    "exam_en": "Project Specific Requirement(s)-appear in <strong class=\"target-word\">RFT</strong> and refer to this document which is the Technical Specification for the project which is the subject of <strong class=\"target-word\">RFT</strong>.",
+    "exam_ko": "RFT (입찰 요청)에 프로젝트 별 요구 사항이 <strong class=\"target-word\">나타나</strong> RFT (입찰 요청) 목적인 프로젝트의 기술 시방서인 이 문서를 참조하십시오."
+  },
+  {
+    "id": 25834,
+    "word": "factory-installed",
+    "exam_en": "For equipment, include the following in addition to the above, as applicable: Wiring diagrams showing <strong class=\"target-word\">factory-installed</strong> wiring. Printed performance curves.",
+    "exam_ko": "장비의 경우, 해당되는 경우 위에 추가하여 다음을 포함하십시오. <strong class=\"target-word\">공장에서 설치된</strong> 배선을 보여주는 배선 다이어그램. 인쇄된 성능 곡선"
+  },
+  {
+    "id": 25835,
+    "word": "Classify",
+    "exam_en": "<strong class=\"target-word\">Classify</strong> blast furnace slag in accordance with ASTM C 989",
+    "exam_ko": "ASTM C 989에 따라 고로 슬래그를 <strong class=\"target-word\">분류하시오</strong>."
+  },
+  {
+    "id": 25836,
+    "word": "crsi",
+    "exam_en": "Founded in 1924, the Concrete Reinforcing Steel Institute (<strong class=\"target-word\">CRSI</strong>) is a technical institute and Standards Developing Organization (SDO) that stands as the authoritative resource for information related to steel reinforced concrete construction. <strong class=\"target-word\">CRSI</strong> offers many industry-trusted technical publications, standards documents, design aids, reference materials, and educational opportunities.",
+    "exam_ko": "1924년에 설립된 <strong class=\"target-word\">CRSI</strong>(철근 콘크리트 협회)는 철근 콘크리트 구조물 관련 정보에 대한 권위있는 자원인 기술 연구소 및 표준 개발기구(SDO)입니다. CRSI는 업계에서 신뢰할 수있는 많은 기술 출판물, 표준 문서, 디자인 보조 도구, 참조 자료 및 교육 기회를 <strong class=\"target-word\">제공합니다</strong>."
+  },
+  {
+    "id": 25837,
+    "word": "foliation",
+    "exam_en": "<strong class=\"target-word\">Foliation</strong> forms when pressure squeezes the flat or elongate minerals within a rock so they become aligned.",
+    "exam_ko": "암석 내의 평평하거나 길쭉한 광물을 압박하여 정렬 될 때 엽리가 <strong class=\"target-word\">형성됩니다</strong>."
+  },
+  {
+    "id": 25838,
+    "word": "denitrification",
+    "exam_en": "In wastewater treatment, <strong class=\"target-word\">denitrification</strong> is a vital process. It removes nitrates, which can cause health problems as well as harmful algal blooms.",
+    "exam_ko": "폐수 처리에서 <strong class=\"target-word\">탈질</strong>은 중요한 과정입니다. 건강상의 문제와 해조류를 유발할 수 있는 질산염을 제거하는 과정이다."
+  },
+  {
+    "id": 25838,
+    "word": "nitrate",
+    "exam_en": "In wastewater treatment, denitrification is a vital process. It removes <strong class=\"target-word\">nitrates</strong>, which can cause health problems as well as harmful algal blooms.",
+    "exam_ko": "폐수 처리에서 탈질은 중요한 과정입니다. 건강상의 문제와 해조류를 유발할 수 있는 <strong class=\"target-word\">질산염</strong>을 제거하는 과정이다."
+  },
+  {
+    "id": 25839,
+    "word": "composting",
+    "exam_en": "<strong class=\"target-word\">Composting</strong> allows for the recycling of organic waste into organic-rich material that enhances soil structure, cation exchange capacity and fertility.",
+    "exam_ko": "퇴비화는 유기 폐기물을 유기물이 풍부한 물질로 재활용하여 토양 구조, 양이온 교환 능력 및 비옥화를 <strong class=\"target-word\">향상시킵니다</strong>."
+  },
+  {
+    "id": 25840,
+    "word": "soling",
+    "exam_en": "<strong class=\"target-word\">Soling</strong> can be done either by bricks or by rubble stones laid under floors / foundations.Stone for <strong class=\"target-word\">soling</strong> shall be hard, sound, durable and free from defects like cavities, cracks, sand-holes, flaws, injurious veins etc.",
+    "exam_ko": "<strong class=\"target-word\">잡석 깔기</strong>는 기초나 바닥아래 잡석이나 벽돌로 할 수 있습니다. 잡석 깔기용 석재는 단단하고, 견고하며, 내구성이 있으며 구멍, 균열, 모래 구멍, 흠, 유해한 정맥 등과 같은 결함이 <strong class=\"target-word\">없어야합니다</strong>."
+  },
+  {
+    "id": 25841,
+    "word": "Windows",
+    "exam_en": "<strong class=\"target-word\">Windows</strong> — Aluminum, jalousie, vinyl, wood, and custom, including Milgard.",
+    "exam_ko": "<strong class=\"target-word\">창문</strong> — 알루미늄, 블라인드, 비닐, 목재 및 Milgard를 포함한 사용자 정의."
+  },
+  {
+    "id": 25842,
+    "word": "Soldering",
+    "exam_en": "<strong class=\"target-word\">Soldering</strong> is a process in which two or more items are joined together by melting and putting a filler metal (solder) into the joint, the filler metal having a lower melting point than the adjoining metal. Unlike welding, soldering does not involve melting the work pieces.",
+    "exam_ko": "<strong class=\"target-word\">납땜질은</strong> 필러 금속 (땜납)을 조인트에 녹이고 접합부에 두 개 이상의 아이템을 결합시키는 공정으로서, 필러 금속은 인접한 금속보다 낮은 녹는 점을 갖는다. 용접과 달리 납땜에는 공작물을 녹이는 일이 없습니다."
+  }
+]

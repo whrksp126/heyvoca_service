@@ -1,0 +1,262 @@
+[
+  {
+    "id": 19003,
+    "origin": "coinage",
+    "examples": [
+      {
+        "exam_en": "coinage act",
+        "exam_ko": "[경제] 화폐 주조법."
+      }
+    ]
+  },
+  {
+    "id": 19007,
+    "origin": "clasp",
+    "examples": [
+      {
+        "exam_en": "a clasp envelope",
+        "exam_ko": "죔쇠가 있는 큰 봉투."
+      },
+      {
+        "exam_en": "clasp one's hands",
+        "exam_ko": "깍지낀 양손을 꼭 쥐다(※기도나 절망 등의 표시)"
+      }
+    ]
+  },
+  {
+    "id": 19011,
+    "origin": "subsidence",
+    "examples": [
+      {
+        "exam_en": "Bad ground: Ground unsuitable for the purposes of the works, including fill liable to subsidence, ground containing cavities, faults or fissures, ground contaminated by harmful substances and ground which is or becomes soft, wet or unstable.",
+        "exam_ko": "침하하기 쉬운 지반에 흙 채움을 포함한 작업에 적합하지 않은 토양, 공동, 단층 또는 균열을 포함한 토양, 유해 물질로 오염된 토양, 연약지반, 습지, 불안정 지반"
+      },
+      {
+        "exam_en": "The city experienced subsidence as a result of the underground mining activities.",
+        "exam_ko": "도시는 지하 광산 활동으로 인해 침하 현상을 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 19012,
+    "origin": "striate",
+    "examples": [
+      {
+        "exam_en": "The artist used a brush to striate the colors on the canvas, creating a textured effect.",
+        "exam_ko": "예술가는 붓을 사용하여 캔버스의 색을 줄무늬로 표현하여 질감 효과를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 19013,
+    "origin": "streamlined",
+    "examples": [
+      {
+        "exam_en": "a streamlinedd racing car",
+        "exam_ko": "유선형 경주용 자동차."
+      }
+    ]
+  },
+  {
+    "id": 19017,
+    "origin": "stenography",
+    "examples": [
+      {
+        "exam_en": "Her exceptional stenography skills allowed her to transcribe the speech accurately.",
+        "exam_ko": "그녀의 탁월한 속기 실력 덕분에 그녀는 연설을 정확하게 기록할 수 있었다."
+      }
+    ]
+  },
+  {
+    "id": 19018,
+    "origin": "statuary",
+    "examples": [
+      {
+        "exam_en": "He is enrolled in a course in statuary at the Conservatory. ",
+        "exam_ko": " 그는 예술학교의 조각과에 등록했다."
+      },
+      {
+        "exam_en": "statuary art ",
+        "exam_ko": "조상술"
+      },
+      {
+        "exam_en": "He is enrolled in a course in statuary at the Conservatory.",
+        "exam_ko": "그는 예술학교의 조각과에 등록했다."
+      },
+      {
+        "exam_en": "statuary art",
+        "exam_ko": "조상술"
+      }
+    ]
+  },
+  {
+    "id": 19019,
+    "origin": "statewide",
+    "examples": [
+      {
+        "exam_en": "The statewide initiative aimed to improve access to education for all students.",
+        "exam_ko": "주 전체의 계획은 모든 학생들의 교육 접근성을 향상시키기 위해 계획되었다."
+      }
+    ]
+  },
+  {
+    "id": 19020,
+    "origin": "spoilage",
+    "examples": [
+      {
+        "exam_en": "Failure to ice the refrigerator cars resulted in heavy spoilage. ",
+        "exam_ko": "냉장차를 얼리지 않은 결과 막대한 손상이 생겼다. "
+      },
+      {
+        "exam_en": "Failure to ice the refrigerator cars resulted in heavy spoilage.",
+        "exam_ko": "냉장차를 얼리지 않은 결과 막대한 손상이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 19024,
+    "origin": "sop",
+    "examples": [
+      {
+        "exam_en": "throw a person a sop",
+        "exam_ko": "남에게 뇌물을 주다."
+      },
+      {
+        "exam_en": "a vast sop of water on the floor",
+        "exam_ko": "바닥에 넘치는 물."
+      }
+    ]
+  },
+  {
+    "id": 19025,
+    "origin": "solder",
+    "examples": [
+      {
+        "exam_en": "soft solder",
+        "exam_ko": "연질[경질] 땜납."
+      },
+      {
+        "exam_en": "This seam offers a strong, watertight joint. The rivets provide strength, while the solder provides a watertight seal.",
+        "exam_ko": "이 솔기는 강하고 물새지않는 조인트를 제공한다. 리벳은 강도를 납땜은 방수 밀봉을 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 19026,
+    "origin": "slanderous",
+    "examples": [
+      {
+        "exam_en": "a slanderous tongue",
+        "exam_ko": "독설."
+      }
+    ]
+  },
+  {
+    "id": 19027,
+    "origin": "siege",
+    "examples": [
+      {
+        "exam_en": "push a siege",
+        "exam_ko": "맹렬히 포위 공격하다"
+      },
+      {
+        "exam_en": "raise the siege of the city",
+        "exam_ko": "그 도시에 대한 포위를 풀다."
+      }
+    ]
+  },
+  {
+    "id": 19029,
+    "origin": "serum",
+    "examples": [
+      {
+        "exam_en": "serum sickness",
+        "exam_ko": "혈청병"
+      },
+      {
+        "exam_en": "serum hepatitis",
+        "exam_ko": "혈청 간염."
+      },
+      {
+        "exam_en": "The doctor collected a blood sample to analyze the serum and determine the patient's diabetes status.",
+        "exam_ko": "의사는 혈액을 채취하여 혈청을 분석하고 환자의 당뇨병 상태를 확인했다."
+      }
+    ]
+  },
+  {
+    "id": 19030,
+    "origin": "sensory",
+    "examples": [
+      {
+        "exam_en": "sensory deprivation",
+        "exam_ko": "감각 상실."
+      },
+      {
+        "exam_en": "The eyes and ears are sensory organs. ",
+        "exam_ko": "눈과 귀은 감각 기관이다."
+      },
+      {
+        "exam_en": "The eyes and ears are sensory organs.",
+        "exam_ko": "눈과 귀은 감각 기관이다."
+      }
+    ]
+  },
+  {
+    "id": 19036,
+    "origin": "savagery",
+    "examples": [
+      {
+        "exam_en": "That tribe has always lived in savagery.",
+        "exam_ko": "그 종족은 죽 원시 생활을 하고 있다."
+      },
+      {
+        "exam_en": "the savagery of a riotous mob",
+        "exam_ko": "폭도들의 흉포한 짓"
+      },
+      {
+        "exam_en": "This is the bloodiest shame, The wildest savagery, the vilest stroke",
+        "exam_ko": "이것은 가장 지독한 수치이자 야만적인 잔인함, 비열한 일격입니다."
+      }
+    ]
+  },
+  {
+    "id": 19037,
+    "origin": "rubric",
+    "examples": [
+      {
+        "exam_en": "The rubric for the assignment outlined the grading criteria.",
+        "exam_ko": "그 과제의 지시문은 성적 평가 기준을 나타낸다."
+      }
+    ]
+  },
+  {
+    "id": 19038,
+    "origin": "riparian",
+    "examples": [
+      {
+        "exam_en": "The project aims to protect riparian habitats along the river.",
+        "exam_ko": "이 프로젝트는 강변 서식지를 보호하는 것을 목표로 하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 19039,
+    "origin": "reprobate",
+    "examples": [
+      {
+        "exam_en": "He is an old reprobate who spends all his money on beer.",
+        "exam_ko": "그는 자기 돈을 몽땅 맥주를 마시는 데 쓰는 방탕한 노인이다."
+      }
+    ]
+  },
+  {
+    "id": 19041,
+    "origin": "reelect",
+    "examples": [
+      {
+        "exam_en": "He has been reelected to parliament.",
+        "exam_ko": "그는 국회에 재선되었다."
+      }
+    ]
+  }
+]

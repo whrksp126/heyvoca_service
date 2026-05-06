@@ -1,0 +1,226 @@
+[
+  {
+    "id": 31305,
+    "origin": "veiled",
+    "examples": [
+      {
+        "exam_en": "a veiled lady",
+        "exam_ko": "면사포를 쓴 여인."
+      },
+      {
+        "exam_en": "veiled hatred",
+        "exam_ko": "감추어진 증오"
+      }
+    ]
+  },
+  {
+    "id": 31309,
+    "origin": "unquiet",
+    "examples": [
+      {
+        "exam_en": "unquiet days",
+        "exam_ko": "동란기."
+      },
+      {
+        "exam_en": "an unquiet heart",
+        "exam_ko": "뒤숭숭한 마음."
+      }
+    ]
+  },
+  {
+    "id": 31316,
+    "origin": "shaver",
+    "examples": [
+      {
+        "exam_en": "a shaver outlet",
+        "exam_ko": "(욕실에 있는) 전기 면도기용 콘센트."
+      }
+    ]
+  },
+  {
+    "id": 31318,
+    "origin": "overstock",
+    "examples": [
+      {
+        "exam_en": "We are overstocked on this item.",
+        "exam_ko": "이 품목은 재고 과잉이다."
+      }
+    ]
+  },
+  {
+    "id": 31320,
+    "origin": "obliquely",
+    "examples": [
+      {
+        "exam_en": "They asked me obliquely about her.",
+        "exam_ko": "그들은 나에게 간접적으로 그녀에 관해 물었다."
+      }
+    ]
+  },
+  {
+    "id": 31321,
+    "origin": "laminated",
+    "examples": [
+      {
+        "exam_en": "laminated coal",
+        "exam_ko": "엽상탄(葉狀炭)"
+      },
+      {
+        "exam_en": "laminated magnet",
+        "exam_ko": "성층자석(成層磁石)."
+      }
+    ]
+  },
+  {
+    "id": 31322,
+    "origin": "biographical",
+    "examples": [
+      {
+        "exam_en": "a biographical dictionary",
+        "exam_ko": "인명 사전."
+      }
+    ]
+  },
+  {
+    "id": 31326,
+    "origin": "damning",
+    "examples": [
+      {
+        "exam_en": "damning evidence",
+        "exam_ko": "꼼짝할 수 없는 증거."
+      }
+    ]
+  },
+  {
+    "id": 31335,
+    "origin": "unbridle",
+    "examples": [
+      {
+        "exam_en": "have an unbridled tongue",
+        "exam_ko": "노골적으로 말하다."
+      }
+    ]
+  },
+  {
+    "id": 31336,
+    "origin": "riser",
+    "examples": [
+      {
+        "exam_en": "a late riser",
+        "exam_ko": "늦잠꾸러기"
+      },
+      {
+        "exam_en": "an early riser",
+        "exam_ko": "일찍 일어나는 사람."
+      }
+    ]
+  },
+  {
+    "id": 31339,
+    "origin": "apiece",
+    "examples": [
+      {
+        "exam_en": "The apples cost five cents apiece.",
+        "exam_ko": "사과는 개당 5센트이다."
+      }
+    ]
+  },
+  {
+    "id": 31355,
+    "origin": "ie",
+    "examples": [
+      {
+        "exam_en": "He threatened them with massive retaliation, i.e. the hydrogen bomb.",
+        "exam_ko": "그는 그들에게 거대한 보복, 즉 수소탄을 사용하겠다고 위협했다."
+      },
+      {
+        "exam_en": "Now you are for it. i.e. punishment.",
+        "exam_ko": "너 이제 야단났다, 즉 벌받게 되었다."
+      }
+    ]
+  },
+  {
+    "id": 31375,
+    "origin": "foldaway",
+    "examples": [
+      {
+        "exam_en": "a foldaway table",
+        "exam_ko": "접는 식 테이블."
+      }
+    ]
+  },
+  {
+    "id": 31376,
+    "origin": "appose",
+    "examples": [
+      {
+        "exam_en": "appose a seal to a document",
+        "exam_ko": "문서에 날인하다."
+      }
+    ]
+  },
+  {
+    "id": 31403,
+    "origin": "goer",
+    "examples": [
+      {
+        "exam_en": "a good goer",
+        "exam_ko": "발[움직임]이 빠른[느린] 사람[것]."
+      },
+      {
+        "exam_en": "a theater goer",
+        "exam_ko": "극장에 자주 가는 사람."
+      }
+    ]
+  },
+  {
+    "id": 31404,
+    "origin": "lamented",
+    "examples": [
+      {
+        "exam_en": "the late lamented",
+        "exam_ko": "고인(故人); (특히) 죽은 남편."
+      }
+    ]
+  },
+  {
+    "id": 31417,
+    "origin": "airman",
+    "examples": [
+      {
+        "exam_en": "a civilian airman",
+        "exam_ko": "민간 비행사."
+      }
+    ]
+  },
+  {
+    "id": 31418,
+    "origin": "antiaircraft",
+    "examples": [
+      {
+        "exam_en": "antiaircraft artillery",
+        "exam_ko": "(집합적) 고사포."
+      }
+    ]
+  },
+  {
+    "id": 31420,
+    "origin": "sandcastle",
+    "examples": [
+      {
+        "exam_en": "build a sandcastle",
+        "exam_ko": "모래성을 쌓다."
+      }
+    ]
+  },
+  {
+    "id": 31421,
+    "origin": "cognac",
+    "examples": [
+      {
+        "exam_en": "She had a glass of cognac after dinner.",
+        "exam_ko": "그녀는 저녁 식사 후에 코냑을 한 잔 마셨다."
+      }
+    ]
+  }
+]

@@ -33,6 +33,9 @@ services:
       - ./heyvoca_back/.env.local
     volumes:
       - ./heyvoca_back:/app
+      # 사전 DB 동기화: dict_sync.py와 dict_pointer.json을 백엔드 컨테이너에 노출
+      - ./scripts:/app/scripts:ro
+      - ./db/dict:/app/db/dict
     networks:
       - heyvoca_local
     depends_on:
@@ -60,13 +63,15 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: heyvoca
+      # MYSQL_DATABASE 제거: db/init/01_create_schemas.sql이 heyvoca_user + heyvoca_dict 자동 생성
       MYSQL_USER: voca
       MYSQL_PASSWORD: "voca!@34"
     ports:
       - "3310:3306"  # 외부에서 직접 접근 시 3310 사용
     volumes:
       - mysql_local_data:/var/lib/mysql
+      # 첫 기동 시 schema 자동 생성 (volume 비어 있을 때만 1회 실행)
+      - ./db/init:/docker-entrypoint-initdb.d:ro
     networks:
       - heyvoca_local
     restart: always

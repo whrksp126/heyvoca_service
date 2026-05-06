@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2560,
+    "origin": "content",
+    "examples": [
+      {
+        "exam_en": "She checked the <strong class=\"target-word\">contents</strong> of the drawer carefully.",
+        "exam_ko": "그녀는 서랍 <strong class=\"target-word\">내용물</strong>을 꼼꼼히 확인했다."
+      },
+      {
+        "exam_en": "She knew the <strong class=\"target-word\">contents</strong> of the note.",
+        "exam_ko": "그녀는 그 노트의 <strong class=\"target-word\">내용</strong>을 알았다."
+      }
+    ]
+  },
+  {
+    "id": 2561,
+    "origin": "mature",
+    "examples": [
+      {
+        "exam_en": "The cheese is fully <strong class=\"target-word\">matured</strong> and ready to eat.",
+        "exam_ko": "치즈가 완전히 <strong class=\"target-word\">숙성되어</strong> 먹을 준비가 됐다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">mature</strong> woman with great wisdom.",
+        "exam_ko": "그녀는 큰 지혜를 가진 <strong class=\"target-word\">성숙한</strong> 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 2562,
+    "origin": "colonial",
+    "examples": [
+      {
+        "exam_en": "The African people fought against <strong class=\"target-word\">colonial</strong> rule.",
+        "exam_ko": "아프리카인들은 <strong class=\"target-word\">식민지</strong> 통치에 맞서 싸웠다."
+      },
+      {
+        "exam_en": "The museum displayed artifacts from the <strong class=\"target-word\">colonial</strong> era.",
+        "exam_ko": "박물관은 <strong class=\"target-word\">식민지</strong> 시대 유물을 전시했다."
+      }
+    ]
+  },
+  {
+    "id": 2563,
+    "origin": "ambitious",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">ambitious</strong> politician sought higher office.",
+        "exam_ko": "<strong class=\"target-word\">야심 있는</strong> 정치가는 더 높은 자리를 노렸다."
+      },
+      {
+        "exam_en": "He was too <strong class=\"target-word\">ambitious</strong> to settle for a small role.",
+        "exam_ko": "그는 너무 <strong class=\"target-word\">야망이 커서</strong> 작은 역할에 만족하지 못했다."
+      }
+    ]
+  },
+  {
+    "id": 2564,
+    "origin": "evil",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">evil</strong> conduct shocked the entire community.",
+        "exam_ko": "그의 <strong class=\"target-word\">나쁜</strong> 행동은 마을 전체를 충격에 빠뜨렸다."
+      },
+      {
+        "exam_en": "The story features an <strong class=\"target-word\">evil</strong> dictator who oppresses people.",
+        "exam_ko": "그 이야기에는 사람들을 억압하는 <strong class=\"target-word\">부도덕한</strong> 독재자가 등장한다."
+      }
+    ]
+  },
+  {
+    "id": 2565,
+    "origin": "magnetic",
+    "examples": [
+      {
+        "exam_en": "The engineer designed a <strong class=\"target-word\">magnetic</strong> circuit for the device.",
+        "exam_ko": "엔지니어는 장치를 위한 <strong class=\"target-word\">자기</strong> 회로를 설계했다."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">magnetic</strong> personality that attracts everyone.",
+        "exam_ko": "그녀는 모든 사람을 끌어당기는 <strong class=\"target-word\">매력적인</strong> 성격을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 2566,
+    "origin": "verbal",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">verbal</strong> description of the suspect.",
+        "exam_ko": "그는 용의자에 대한 <strong class=\"target-word\">말로 된</strong> 묘사를 제공했다."
+      },
+      {
+        "exam_en": "They reached a <strong class=\"target-word\">verbal</strong> agreement over the phone.",
+        "exam_ko": "그들은 전화로 <strong class=\"target-word\">구두</strong> 합의에 도달했다."
+      }
+    ]
+  },
+  {
+    "id": 2567,
+    "origin": "legitimate",
+    "examples": [
+      {
+        "exam_en": "She took <strong class=\"target-word\">legitimate</strong> action to protect her rights.",
+        "exam_ko": "그녀는 자신의 권리를 보호하기 위해 <strong class=\"target-word\">합법적인</strong> 조치를 취했다."
+      },
+      {
+        "exam_en": "His argument led to a <strong class=\"target-word\">legitimate</strong> conclusion.",
+        "exam_ko": "그의 주장은 <strong class=\"target-word\">합당한</strong> 결론으로 이어졌다."
+      }
+    ]
+  },
+  {
+    "id": 2568,
+    "origin": "sympathetic",
+    "examples": [
+      {
+        "exam_en": "The counselor showed <strong class=\"target-word\">sympathetic</strong> understanding to the student.",
+        "exam_ko": "상담사는 학생에게 <strong class=\"target-word\">공감 어린</strong> 이해를 보여주었다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">sympathetic</strong> to the injured person's pain.",
+        "exam_ko": "그녀는 다친 사람의 고통에 <strong class=\"target-word\">동정적이었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2569,
+    "origin": "empirical",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Empirical</strong> philosophy relies on observation and experience.",
+        "exam_ko": "<strong class=\"target-word\">경험</strong> 철학은 관찰과 경험에 의존한다."
+      },
+      {
+        "exam_en": "Scientists build theories on <strong class=\"target-word\">empirical</strong> knowledge.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">경험적</strong> 지식을 바탕으로 이론을 세운다."
+      }
+    ]
+  },
+  {
+    "id": 2570,
+    "origin": "shallow",
+    "examples": [
+      {
+        "exam_en": "The children played in the <strong class=\"target-word\">shallow</strong> end of the pool.",
+        "exam_ko": "아이들은 수영장의 <strong class=\"target-word\">얕은</strong> 쪽에서 놀았다."
+      },
+      {
+        "exam_en": "This river is relatively <strong class=\"target-word\">shallow</strong> near the bank.",
+        "exam_ko": "이 강은 강가 근처에서 비교적 <strong class=\"target-word\">얕다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2571,
+    "origin": "vague",
+    "examples": [
+      {
+        "exam_en": "He gave only <strong class=\"target-word\">vague</strong> answers to the questions.",
+        "exam_ko": "그는 질문에 <strong class=\"target-word\">분명치 않은</strong> 대답만 했다."
+      },
+      {
+        "exam_en": "She felt a <strong class=\"target-word\">vague</strong> sense of distrust toward him.",
+        "exam_ko": "그녀는 그에 대해 막연한 <strong class=\"target-word\">불신감</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 2572,
+    "origin": "naval",
+    "examples": [
+      {
+        "exam_en": "The two countries fought a major <strong class=\"target-word\">naval</strong> battle.",
+        "exam_ko": "두 나라는 대규모 <strong class=\"target-word\">해전</strong>을 치렀다."
+      },
+      {
+        "exam_en": "The country invested heavily in its <strong class=\"target-word\">naval</strong> power.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">해군력</strong>에 막대한 투자를 했다."
+      }
+    ]
+  },
+  {
+    "id": 2573,
+    "origin": "added",
+    "examples": [
+      {
+        "exam_en": "The sugar <strong class=\"target-word\">added</strong> to the drink made it too sweet.",
+        "exam_ko": "음료에 <strong class=\"target-word\">추가된</strong> 설탕이 너무 달게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 2574,
+    "origin": "mid",
+    "examples": [
+      {
+        "exam_en": "She is a lovely woman in her <strong class=\"target-word\">mid</strong>-twenties.",
+        "exam_ko": "그녀는 20대 <strong class=\"target-word\">중반</strong>의 아름다운 여성이다."
+      },
+      {
+        "exam_en": "The festival takes place in <strong class=\"target-word\">mid</strong>-summer every year.",
+        "exam_ko": "그 축제는 매년 <strong class=\"target-word\">한</strong>여름에 열린다."
+      }
+    ]
+  },
+  {
+    "id": 2575,
+    "origin": "worthwhile",
+    "examples": [
+      {
+        "exam_en": "This is a <strong class=\"target-word\">worthwhile</strong> movie that everyone should watch.",
+        "exam_ko": "이것은 모두가 볼 <strong class=\"target-word\">가치 있는</strong> 영화다."
+      },
+      {
+        "exam_en": "He dedicated his life to <strong class=\"target-word\">worthwhile</strong> work.",
+        "exam_ko": "그는 <strong class=\"target-word\">보람 있는</strong> 일에 인생을 바쳤다."
+      }
+    ]
+  },
+  {
+    "id": 2576,
+    "origin": "qualified",
+    "examples": [
+      {
+        "exam_en": "Only a <strong class=\"target-word\">qualified</strong> doctor can prescribe medication.",
+        "exam_ko": "<strong class=\"target-word\">자격증이 있는</strong> 의사만이 약을 처방할 수 있다."
+      },
+      {
+        "exam_en": "We need well <strong class=\"target-word\">qualified</strong> officers for this position.",
+        "exam_ko": "이 자리에는 충분히 <strong class=\"target-word\">적격인</strong> 공무원이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 2577,
+    "origin": "missing",
+    "examples": [
+      {
+        "exam_en": "Police are searching for a <strong class=\"target-word\">missing</strong> child.",
+        "exam_ko": "경찰이 <strong class=\"target-word\">실종된</strong> 아이를 찾고 있다."
+      },
+      {
+        "exam_en": "The credit card number was <strong class=\"target-word\">missing</strong> from the form.",
+        "exam_ko": "신청서에 신용카드 번호가 <strong class=\"target-word\">빠져 있었다</strong>."
+      },
+      {
+        "exam_en": "You have two <strong class=\"target-word\">missing</strong> teeth.",
+        "exam_ko": "당신은 치아 두 개가 <strong class=\"target-word\">없습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2578,
+    "origin": "blank",
+    "examples": [
+      {
+        "exam_en": "He stared at the <strong class=\"target-word\">blank</strong> page for a long time.",
+        "exam_ko": "그는 오랫동안 <strong class=\"target-word\">백지</strong> 페이지를 바라봤다."
+      },
+      {
+        "exam_en": "Please fill out the <strong class=\"target-word\">blank</strong> application form.",
+        "exam_ko": "<strong class=\"target-word\">빈칸</strong>이 있는 신청 용지를 작성해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 2579,
+    "origin": "favorable",
+    "examples": [
+      {
+        "exam_en": "The team took advantage of <strong class=\"target-word\">favorable</strong> conditions.",
+        "exam_ko": "팀은 <strong class=\"target-word\">좋은</strong> 조건을 활용했다."
+      },
+      {
+        "exam_en": "This soil is <strong class=\"target-word\">favorable</strong> for growing cabbage.",
+        "exam_ko": "이 토양은 양배추 재배에 <strong class=\"target-word\">적합하다</strong>."
+      }
+    ]
+  }
+]

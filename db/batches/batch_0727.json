@@ -1,0 +1,210 @@
+[
+  {
+    "id": 36082,
+    "origin": "munchkin",
+    "examples": [
+      {
+        "exam_en": "low level munchkins",
+        "exam_ko": "하급 직원."
+      }
+    ]
+  },
+  {
+    "id": 36087,
+    "origin": "restlessly",
+    "examples": [
+      {
+        "exam_en": "He walked restlessly around the room.",
+        "exam_ko": "그는 초조하게 그 방을 왔다 갔다 했다."
+      }
+    ]
+  },
+  {
+    "id": 36109,
+    "origin": "undersea",
+    "examples": [
+      {
+        "exam_en": "undersea mining",
+        "exam_ko": "해저 채광."
+      }
+    ]
+  },
+  {
+    "id": 36111,
+    "origin": "proofreader",
+    "examples": [
+      {
+        "exam_en": "proofreaders' marks",
+        "exam_ko": "교정 기호."
+      }
+    ]
+  },
+  {
+    "id": 36115,
+    "origin": "overcooked",
+    "examples": [
+      {
+        "exam_en": "The noodles are overcooked.",
+        "exam_ko": "라면이 불었습니다."
+      }
+    ]
+  },
+  {
+    "id": 36116,
+    "origin": "diff",
+    "examples": [
+      {
+        "exam_en": "What's the diff?",
+        "exam_ko": "뭐가 다른가?"
+      }
+    ]
+  },
+  {
+    "id": 36180,
+    "origin": "poodle",
+    "examples": [
+      {
+        "exam_en": "be a person's poodle",
+        "exam_ko": "남의 앞잡이가 되다."
+      }
+    ]
+  },
+  {
+    "id": 36200,
+    "origin": "electability",
+    "examples": [
+      {
+        "exam_en": "the electability of the party",
+        "exam_ko": "그 당의 당선 가능성."
+      }
+    ]
+  },
+  {
+    "id": 36271,
+    "origin": "whew",
+    "examples": [
+      {
+        "exam_en": "Whew ! It's very hot and humid today.",
+        "exam_ko": "어유! 오늘은 정말 덥고 습하구나."
+      }
+    ]
+  },
+  {
+    "id": 36276,
+    "origin": "overextend",
+    "examples": [
+      {
+        "exam_en": "overextend oneself",
+        "exam_ko": "지급 능력 이상의 채무를 지다."
+      }
+    ]
+  },
+  {
+    "id": 36278,
+    "origin": "lithic",
+    "examples": [
+      {
+        "exam_en": "Paleolithic",
+        "exam_ko": "구석기 시대."
+      }
+    ]
+  },
+  {
+    "id": 36285,
+    "origin": "unanswered",
+    "examples": [
+      {
+        "exam_en": "unanswered love",
+        "exam_ko": "짝사랑."
+      }
+    ]
+  },
+  {
+    "id": 36317,
+    "origin": "homestay",
+    "examples": [
+      {
+        "exam_en": "take part in a homestay program in Canada",
+        "exam_ko": "캐나다에서 홈스테이에 참가하다."
+      }
+    ]
+  },
+  {
+    "id": 36318,
+    "origin": "faker",
+    "examples": [
+      {
+        "exam_en": "Both ladies then came to the conclusion that the fortune teller was a faker.",
+        "exam_ko": "그리고는 두 부인은 그 점장이가 협잡군이라는 결론을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 36338,
+    "origin": "jones",
+    "examples": [
+      {
+        "exam_en": "keep up with the Jones",
+        "exam_ko": "헤로인을 상용하다."
+      },
+      {
+        "exam_en": "I've quitted smoking for a week. I am jonesing for a cigarette.",
+        "exam_ko": "담배 끊은지 1주일째 담배가 넘 땡겨"
+      }
+    ]
+  },
+  {
+    "id": 36348,
+    "origin": "distributive",
+    "examples": [
+      {
+        "exam_en": "distributive costs",
+        "exam_ko": "유통 비용."
+      }
+    ]
+  },
+  {
+    "id": 36369,
+    "origin": "cide",
+    "examples": [
+      {
+        "exam_en": "insecticide",
+        "exam_ko": "살충제."
+      }
+    ]
+  },
+  {
+    "id": 36394,
+    "origin": "orchestral",
+    "examples": [
+      {
+        "exam_en": "an orchestral accompaniment",
+        "exam_ko": "관현악 반주."
+      },
+      {
+        "exam_en": "orchestral works",
+        "exam_ko": "관현악곡."
+      }
+    ]
+  },
+  {
+    "id": 36448,
+    "origin": "uncooked",
+    "examples": [
+      {
+        "exam_en": "uncooked food eating",
+        "exam_ko": "생식."
+      }
+    ]
+  },
+  {
+    "id": 36492,
+    "origin": "caesar",
+    "examples": [
+      {
+        "exam_en": "Render therefore to Caesar the things that are Caesar's, and to God the things that are God's.",
+        "exam_ko": "그런즉 시저의 것은 시저에게, 하나님의 것은 하나님께 바치라. cf. [성서]마태 복음 22:21."
+      }
+    ]
+  }
+]

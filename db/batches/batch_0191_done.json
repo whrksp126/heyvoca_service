@@ -1,0 +1,274 @@
+[
+  {
+    "id": 4316,
+    "origin": "admonish",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">admonished</strong> the student for cheating.",
+        "exam_ko": "선생님은 학생을 부정행위로 <strong class=\"target-word\">꾸짖었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">admonished</strong> him not to repeat the mistake.",
+        "exam_ko": "그녀는 그에게 실수를 반복하지 말라고 <strong class=\"target-word\">경고했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4318,
+    "origin": "compatibility",
+    "examples": [
+      {
+        "exam_en": "They checked the <strong class=\"target-word\">compatibility</strong> of the two systems.",
+        "exam_ko": "그들은 두 시스템의 <strong class=\"target-word\">호환성</strong>을 확인했다."
+      }
+    ]
+  },
+  {
+    "id": 4319,
+    "origin": "concealment",
+    "examples": [
+      {
+        "exam_en": "The police discovered his <strong class=\"target-word\">concealment</strong> of evidence.",
+        "exam_ko": "경찰은 그의 증거 <strong class=\"target-word\">은닉</strong>을 발견했다."
+      },
+      {
+        "exam_en": "The suspect remained in <strong class=\"target-word\">concealment</strong> for three days.",
+        "exam_ko": "용의자는 사흘간 <strong class=\"target-word\">은신</strong> 상태로 있었다."
+      },
+      {
+        "exam_en": "The foam required <strong class=\"target-word\">concealment</strong> from direct sunlight.",
+        "exam_ko": "그 폼은 직사광선으로부터 <strong class=\"target-word\">차단</strong>이 필요했다."
+      }
+    ]
+  },
+  {
+    "id": 4320,
+    "origin": "conditional",
+    "examples": [
+      {
+        "exam_en": "The contract included several <strong class=\"target-word\">conditional</strong> terms.",
+        "exam_ko": "계약에는 여러 <strong class=\"target-word\">조건부</strong> 조항이 포함되었다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">conditional</strong> acceptance to the offer.",
+        "exam_ko": "그녀는 제안을 <strong class=\"target-word\">조건부로</strong> 수용했다."
+      }
+    ]
+  },
+  {
+    "id": 4321,
+    "origin": "conditioned",
+    "examples": [
+      {
+        "exam_en": "The athlete was well <strong class=\"target-word\">conditioned</strong> for the race.",
+        "exam_ko": "그 선수는 경기를 위해 컨디션이 잘 <strong class=\"target-word\">조절되어</strong> 있었다."
+      },
+      {
+        "exam_en": "The wall separates <strong class=\"target-word\">conditioned</strong> and non-conditioned spaces.",
+        "exam_ko": "그 벽은 <strong class=\"target-word\">조절된</strong> 공간과 그렇지 않은 공간을 분리한다."
+      }
+    ]
+  },
+  {
+    "id": 4323,
+    "origin": "creditable",
+    "examples": [
+      {
+        "exam_en": "She made a <strong class=\"target-word\">creditable</strong> effort in the competition.",
+        "exam_ko": "그녀는 대회에서 <strong class=\"target-word\">칭찬할 만한</strong> 노력을 보였다."
+      },
+      {
+        "exam_en": "The team produced a <strong class=\"target-word\">creditable</strong> performance.",
+        "exam_ko": "팀은 <strong class=\"target-word\">훌륭한</strong> 성과를 냈다."
+      }
+    ]
+  },
+  {
+    "id": 4324,
+    "origin": "decompose",
+    "examples": [
+      {
+        "exam_en": "Scientists can <strong class=\"target-word\">decompose</strong> a compound into its elements.",
+        "exam_ko": "과학자들은 화합물을 구성 원소로 <strong class=\"target-word\">분해할</strong> 수 있다."
+      },
+      {
+        "exam_en": "Fallen leaves <strong class=\"target-word\">decompose</strong> slowly in winter.",
+        "exam_ko": "낙엽은 겨울에 천천히 <strong class=\"target-word\">썩는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4325,
+    "origin": "definitive",
+    "examples": [
+      {
+        "exam_en": "The court made a <strong class=\"target-word\">definitive</strong> decision on the case.",
+        "exam_ko": "법원은 사건에 대해 <strong class=\"target-word\">최종적인</strong> 결정을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 4326,
+    "origin": "deliberately",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">deliberately</strong> ignored me on the street.",
+        "exam_ko": "그녀는 길에서 나를 <strong class=\"target-word\">일부러</strong> 모르는 체 했다."
+      }
+    ]
+  },
+  {
+    "id": 4327,
+    "origin": "deliberation",
+    "examples": [
+      {
+        "exam_en": "The committee reached a verdict after long <strong class=\"target-word\">deliberation</strong>.",
+        "exam_ko": "위원회는 오랜 <strong class=\"target-word\">심의</strong> 끝에 결론을 내렸다."
+      },
+      {
+        "exam_en": "The proposal is currently under <strong class=\"target-word\">deliberation</strong>.",
+        "exam_ko": "그 제안은 현재 <strong class=\"target-word\">심의</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 4328,
+    "origin": "designate",
+    "examples": [
+      {
+        "exam_en": "The cross on the map <strong class=\"target-word\">designates</strong> the explosion site.",
+        "exam_ko": "지도의 ×표는 폭발 현장을 <strong class=\"target-word\">나타낸다</strong>."
+      },
+      {
+        "exam_en": "An officer's insignia <strong class=\"target-word\">designates</strong> his rank.",
+        "exam_ko": "사관의 휘장은 계급을 <strong class=\"target-word\">표시한다</strong>."
+      },
+      {
+        "exam_en": "The area was <strong class=\"target-word\">designated</strong> as a nature reserve.",
+        "exam_ko": "그 지역은 자연보호구역으로 <strong class=\"target-word\">지정되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4329,
+    "origin": "detain",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">detained</strong> by urgent business.",
+        "exam_ko": "그는 급한 업무로 <strong class=\"target-word\">지체되었다</strong>."
+      },
+      {
+        "exam_en": "I won't <strong class=\"target-word\">detain</strong> you more than five minutes.",
+        "exam_ko": "5분 이상 <strong class=\"target-word\">붙들지</strong>는 않겠다."
+      }
+    ]
+  },
+  {
+    "id": 4333,
+    "origin": "discard",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">discarded</strong> her old clothes before moving.",
+        "exam_ko": "그녀는 이사하기 전에 헌 옷을 <strong class=\"target-word\">버렸다</strong>."
+      },
+      {
+        "exam_en": "The original plan was <strong class=\"target-word\">discarded</strong> entirely.",
+        "exam_ko": "원래 계획은 완전히 <strong class=\"target-word\">폐기되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4334,
+    "origin": "abbreviate",
+    "examples": [
+      {
+        "exam_en": "New York is <strong class=\"target-word\">abbreviated</strong> to N.Y.",
+        "exam_ko": "New York은 N.Y.로 <strong class=\"target-word\">약기된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4335,
+    "origin": "abbreviated",
+    "examples": [
+      {
+        "exam_en": "He read an <strong class=\"target-word\">abbreviated</strong> version of the report.",
+        "exam_ko": "그는 보고서의 <strong class=\"target-word\">요약판</strong>을 읽었다."
+      },
+      {
+        "exam_en": "She wore an <strong class=\"target-word\">abbreviated</strong> dress to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">짧은</strong> 드레스를 입고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 4336,
+    "origin": "adamant",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">adamant</strong> about not changing his decision.",
+        "exam_ko": "그는 결정을 바꾸지 않겠다고 <strong class=\"target-word\">단호했다</strong>."
+      },
+      {
+        "exam_en": "She gave an <strong class=\"target-word\">adamant</strong> refusal to the request.",
+        "exam_ko": "그녀는 요청에 <strong class=\"target-word\">단호한</strong> 거절을 했다."
+      }
+    ]
+  },
+  {
+    "id": 4337,
+    "origin": "sarcastic",
+    "examples": [
+      {
+        "exam_en": "He is a very <strong class=\"target-word\">sarcastic</strong> person at work.",
+        "exam_ko": "그는 직장에서 매우 <strong class=\"target-word\">비꼬기 좋아하는</strong> 사람이다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">sarcastic</strong> comment about his mistake.",
+        "exam_ko": "그녀는 그의 실수에 대해 <strong class=\"target-word\">신랄한</strong> 말을 했다."
+      }
+    ]
+  },
+  {
+    "id": 4338,
+    "origin": "seemingly",
+    "examples": [
+      {
+        "exam_en": "These are <strong class=\"target-word\">seemingly</strong> impossible problems to solve.",
+        "exam_ko": "이것들은 <strong class=\"target-word\">겉보기에</strong> 해결 불가능한 문제들이다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Seemingly</strong>, they took no notice of me.",
+        "exam_ko": "<strong class=\"target-word\">겉보기에</strong> 그들은 나를 주목하지 않는 것 같았다."
+      }
+    ]
+  },
+  {
+    "id": 4339,
+    "origin": "shortly",
+    "examples": [
+      {
+        "exam_en": "He arrived <strong class=\"target-word\">shortly</strong> after landing in Paris.",
+        "exam_ko": "그는 파리에 도착하고 <strong class=\"target-word\">바로</strong> 왔다."
+      },
+      {
+        "exam_en": "She called me <strong class=\"target-word\">shortly</strong> after seven o'clock.",
+        "exam_ko": "그녀는 7시 <strong class=\"target-word\">조금 지나서</strong> 전화했다."
+      }
+    ]
+  },
+  {
+    "id": 4341,
+    "origin": "speculation",
+    "examples": [
+      {
+        "exam_en": "His book is full of <strong class=\"target-word\">speculation</strong> on life's meaning.",
+        "exam_ko": "그의 책은 인생의 의미에 대한 <strong class=\"target-word\">고찰</strong>로 가득하다."
+      },
+      {
+        "exam_en": "The rumor is based on pure <strong class=\"target-word\">speculation</strong>.",
+        "exam_ko": "그 소문은 순전한 <strong class=\"target-word\">억측</strong>에 기반한다."
+      }
+    ]
+  }
+]

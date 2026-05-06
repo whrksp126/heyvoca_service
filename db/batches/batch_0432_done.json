@@ -1,0 +1,282 @@
+[
+  {
+    "id": 12211,
+    "origin": "span",
+    "examples": [
+      {
+        "exam_en": "A human life <strong class=\"target-word\">span</strong> is about 80 years.",
+        "exam_ko": "인간의 <strong class=\"target-word\">수명</strong>은 약 80년이다."
+      },
+      {
+        "exam_en": "The bridge <strong class=\"target-word\">spans</strong> the wide river.",
+        "exam_ko": "그 다리는 넓은 강을 <strong class=\"target-word\">가로지른다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12215,
+    "origin": "indicator",
+    "examples": [
+      {
+        "exam_en": "The station has a clear train <strong class=\"target-word\">indicator</strong> board.",
+        "exam_ko": "역에는 선명한 열차 <strong class=\"target-word\">시간표</strong> 안내판이 있다."
+      },
+      {
+        "exam_en": "High cholesterol is an important <strong class=\"target-word\">indicator</strong> of heart disease.",
+        "exam_ko": "높은 콜레스테롤은 심장 질환의 중요한 <strong class=\"target-word\">지표</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12216,
+    "origin": "tested",
+    "examples": [
+      {
+        "exam_en": "The method has been thoroughly <strong class=\"target-word\">tested</strong> in clinical trials.",
+        "exam_ko": "그 방법은 임상 시험에서 철저히 <strong class=\"target-word\">검증되었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">tested</strong> the new software before the launch.",
+        "exam_ko": "그녀는 출시 전에 새 소프트웨어를 <strong class=\"target-word\">테스트했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12217,
+    "origin": "posture",
+    "examples": [
+      {
+        "exam_en": "He rested in a reclining <strong class=\"target-word\">posture</strong> on the sofa.",
+        "exam_ko": "그는 소파에 기댄 <strong class=\"target-word\">자세</strong>로 쉬었다."
+      },
+      {
+        "exam_en": "Good <strong class=\"target-word\">posture</strong> helps prevent back pain.",
+        "exam_ko": "올바른 <strong class=\"target-word\">자세</strong>는 허리 통증을 예방한다."
+      }
+    ]
+  },
+  {
+    "id": 12222,
+    "origin": "dioxide",
+    "examples": [
+      {
+        "exam_en": "The battery contains manganese <strong class=\"target-word\">dioxide</strong>.",
+        "exam_ko": "그 배터리에는 이산화 <strong class=\"target-word\">망간</strong>이 들어 있다."
+      },
+      {
+        "exam_en": "Carbon <strong class=\"target-word\">dioxide</strong> is the main greenhouse gas.",
+        "exam_ko": "이산화 <strong class=\"target-word\">탄소</strong>는 주요 온실가스이다."
+      }
+    ]
+  },
+  {
+    "id": 12224,
+    "origin": "admittance",
+    "examples": [
+      {
+        "exam_en": "She gained <strong class=\"target-word\">admittance</strong> to the museum for free.",
+        "exam_ko": "그녀는 무료로 박물관 <strong class=\"target-word\">입장</strong>을 허가받았다."
+      },
+      {
+        "exam_en": "He was denied <strong class=\"target-word\">admittance</strong> to the event.",
+        "exam_ko": "그는 행사 <strong class=\"target-word\">입장</strong>을 거절당했다."
+      }
+    ]
+  },
+  {
+    "id": 12225,
+    "origin": "expansion",
+    "examples": [
+      {
+        "exam_en": "The government announced a new territorial <strong class=\"target-word\">expansion</strong> policy.",
+        "exam_ko": "정부는 새로운 영토 <strong class=\"target-word\">확장</strong> 정책을 발표했다."
+      },
+      {
+        "exam_en": "The company is planning overseas <strong class=\"target-word\">expansion</strong> next year.",
+        "exam_ko": "그 회사는 내년에 해외 <strong class=\"target-word\">확장</strong>을 계획하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 12226,
+    "origin": "volumetric",
+    "examples": [
+      {
+        "exam_en": "The chemist used <strong class=\"target-word\">volumetric</strong> analysis to measure the solution.",
+        "exam_ko": "화학자는 용액을 측정하기 위해 <strong class=\"target-word\">용량</strong> 분석을 사용했다."
+      },
+      {
+        "exam_en": "The lab performed a <strong class=\"target-word\">volumetric</strong> test on the compound.",
+        "exam_ko": "실험실은 화합물에 <strong class=\"target-word\">부피</strong> 측정 검사를 실시했다."
+      }
+    ]
+  },
+  {
+    "id": 12232,
+    "origin": "hell",
+    "examples": [
+      {
+        "exam_en": "The road to <strong class=\"target-word\">hell</strong> is paved with good intentions.",
+        "exam_ko": "의도가 좋다고 반드시 좋은 결과가 오는 것은 아니며 <strong class=\"target-word\">지옥</strong>으로 가는 길도 선의로 포장된다."
+      },
+      {
+        "exam_en": "She went through <strong class=\"target-word\">hell</strong> during the difficult year.",
+        "exam_ko": "그녀는 힘든 한 해 동안 <strong class=\"target-word\">지옥</strong> 같은 시간을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 12233,
+    "origin": "inflammable",
+    "examples": [
+      {
+        "exam_en": "The warehouse stored <strong class=\"target-word\">inflammable</strong> liquid carefully.",
+        "exam_ko": "창고에는 <strong class=\"target-word\">인화성</strong> 액체가 조심스럽게 보관되었다."
+      },
+      {
+        "exam_en": "He has an <strong class=\"target-word\">inflammable</strong> temper that upsets everyone.",
+        "exam_ko": "그는 모두를 당황하게 만드는 <strong class=\"target-word\">불같은</strong> 성격을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 12234,
+    "origin": "monarch",
+    "examples": [
+      {
+        "exam_en": "The country was ruled by an absolute <strong class=\"target-word\">monarch</strong> for centuries.",
+        "exam_ko": "그 나라는 수백 년간 절대 <strong class=\"target-word\">군주</strong>의 지배를 받았다."
+      },
+      {
+        "exam_en": "He is regarded as a <strong class=\"target-word\">monarch</strong> of international banking.",
+        "exam_ko": "그는 국제 금융계의 <strong class=\"target-word\">거물</strong>로 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 12237,
+    "origin": "centered",
+    "examples": [
+      {
+        "exam_en": "The design is <strong class=\"target-word\">centered</strong> on the page.",
+        "exam_ko": "그 디자인은 페이지 <strong class=\"target-word\">중앙에 배치</strong>되어 있다."
+      },
+      {
+        "exam_en": "The app is consumer-<strong class=\"target-word\">centered</strong> in its design.",
+        "exam_ko": "그 앱은 소비자 <strong class=\"target-word\">중심</strong>으로 설계되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 12239,
+    "origin": "manufacturing",
+    "examples": [
+      {
+        "exam_en": "The city has a large <strong class=\"target-word\">manufacturing</strong> industry.",
+        "exam_ko": "그 도시에는 큰 <strong class=\"target-word\">제조</strong> 산업이 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">manufacturing</strong> process takes about two days.",
+        "exam_ko": "<strong class=\"target-word\">제조</strong> 과정은 약 이틀이 걸린다."
+      }
+    ]
+  },
+  {
+    "id": 12240,
+    "origin": "bronze",
+    "examples": [
+      {
+        "exam_en": "The statue was cast in <strong class=\"target-word\">bronze</strong> by a skilled artist.",
+        "exam_ko": "그 조각상은 숙련된 예술가가 <strong class=\"target-word\">청동</strong>으로 주조했다."
+      },
+      {
+        "exam_en": "She won a <strong class=\"target-word\">bronze</strong> medal at the Olympics.",
+        "exam_ko": "그녀는 올림픽에서 <strong class=\"target-word\">동메달</strong>을 땄다."
+      }
+    ]
+  },
+  {
+    "id": 12242,
+    "origin": "coefficient",
+    "examples": [
+      {
+        "exam_en": "We calculated the <strong class=\"target-word\">coefficient</strong> of expansion for the metal.",
+        "exam_ko": "우리는 금속의 팽창 <strong class=\"target-word\">계수</strong>를 계산했다."
+      },
+      {
+        "exam_en": "The friction <strong class=\"target-word\">coefficient</strong> was lower than expected.",
+        "exam_ko": "마찰 <strong class=\"target-word\">계수</strong>는 예상보다 낮았다."
+      }
+    ]
+  },
+  {
+    "id": 12247,
+    "origin": "spool",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">spool</strong> of tape at the store.",
+        "exam_ko": "그녀는 가게에서 테이프 <strong class=\"target-word\">한 롤</strong>을 샀다."
+      },
+      {
+        "exam_en": "He rewound the thread onto the <strong class=\"target-word\">spool</strong>.",
+        "exam_ko": "그는 실을 <strong class=\"target-word\">실패</strong>에 다시 감았다."
+      }
+    ]
+  },
+  {
+    "id": 12249,
+    "origin": "nagging",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">nagging</strong> suspicion that something was wrong.",
+        "exam_ko": "그녀는 무언가 잘못되었다는 <strong class=\"target-word\">떨쳐지지 않는</strong> 의심이 들었다."
+      },
+      {
+        "exam_en": "He ignored the <strong class=\"target-word\">nagging</strong> pain in his knee.",
+        "exam_ko": "그는 무릎의 <strong class=\"target-word\">계속되는</strong> 통증을 무시했다."
+      }
+    ]
+  },
+  {
+    "id": 12250,
+    "origin": "mire",
+    "examples": [
+      {
+        "exam_en": "The company got <strong class=\"target-word\">mired</strong> in financial debt.",
+        "exam_ko": "그 회사는 재정적 부채에 <strong class=\"target-word\">빠져들었다</strong>."
+      },
+      {
+        "exam_en": "The project was <strong class=\"target-word\">mired</strong> in bureaucratic delays.",
+        "exam_ko": "그 프로젝트는 관료적 지연에 <strong class=\"target-word\">발목이 잡혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12253,
+    "origin": "filler",
+    "examples": [
+      {
+        "exam_en": "The concert was a real stadium <strong class=\"target-word\">filler</strong>.",
+        "exam_ko": "그 콘서트는 경기장을 가득 채우는 진정한 <strong class=\"target-word\">흥행작</strong>이었다."
+      },
+      {
+        "exam_en": "The article was mostly <strong class=\"target-word\">filler</strong> with little real content.",
+        "exam_ko": "그 기사는 실질적 내용이 거의 없는 <strong class=\"target-word\">채우기식 글</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 12258,
+    "origin": "billet",
+    "examples": [
+      {
+        "exam_en": "Every bullet has its <strong class=\"target-word\">billet</strong>, as the old saying goes.",
+        "exam_ko": "옛말처럼 모든 총알에는 정해진 <strong class=\"target-word\">목적지</strong>가 있다."
+      },
+      {
+        "exam_en": "He finally found a good <strong class=\"target-word\">billet</strong> at the new company.",
+        "exam_ko": "그는 마침내 새 회사에서 좋은 <strong class=\"target-word\">일자리</strong>를 얻었다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "id": 263,
+    "origin": "arrange",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">arranged</strong> fresh flowers in a vase.",
+        "exam_ko": "그녀는 꽃병에 꽃을 <strong class=\"target-word\">꽂아 정리했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">arranged</strong> his hair neatly before the interview.",
+        "exam_ko": "그는 면접 전에 머리를 단정하게 <strong class=\"target-word\">정리했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 264,
+    "origin": "concentrate",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">concentrated</strong> her attention on the subject.",
+        "exam_ko": "그녀는 그 주제에 주의를 <strong class=\"target-word\">집중시켰다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">concentrated</strong> the ores by washing them.",
+        "exam_ko": "그는 광석을 물로 씻어 <strong class=\"target-word\">선광했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 265,
+    "origin": "lift",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">lifted</strong> up the heavy chair with effort.",
+        "exam_ko": "그녀는 힘을 써서 무거운 의자를 <strong class=\"target-word\">들어올렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">lifted</strong> the child in his arms gently.",
+        "exam_ko": "그는 아이를 두 팔로 조심스럽게 <strong class=\"target-word\">안아 올렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 266,
+    "origin": "cross",
+    "examples": [
+      {
+        "exam_en": "Jesus died on the <strong class=\"target-word\">cross</strong> for humanity.",
+        "exam_ko": "예수는 인류를 위해 <strong class=\"target-word\">십자가</strong>에서 돌아가셨다."
+      },
+      {
+        "exam_en": "She decided to follow the <strong class=\"target-word\">Cross</strong> after the sermon.",
+        "exam_ko": "그녀는 설교를 듣고 <strong class=\"target-word\">기독교를 따르기로</strong> 결심했다."
+      }
+    ]
+  },
+  {
+    "id": 267,
+    "origin": "approach",
+    "examples": [
+      {
+        "exam_en": "The soldiers slowly <strong class=\"target-word\">approached</strong> the castle walls.",
+        "exam_ko": "병사들은 천천히 성벽에 <strong class=\"target-word\">다가갔다</strong>."
+      },
+      {
+        "exam_en": "The plane <strong class=\"target-word\">approached</strong> the runway carefully.",
+        "exam_ko": "비행기가 활주로에 조심스럽게 <strong class=\"target-word\">접근했다</strong>."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">approach</strong> to the problem was very creative.",
+        "exam_ko": "그 문제에 대한 그의 <strong class=\"target-word\">접근 방식</strong>은 매우 창의적이었다."
+      }
+    ]
+  },
+  {
+    "id": 268,
+    "origin": "test",
+    "examples": [
+      {
+        "exam_en": "Hardship is a <strong class=\"target-word\">test</strong> of character.",
+        "exam_ko": "역경은 성격을 알아보는 <strong class=\"target-word\">시련</strong>이다."
+      },
+      {
+        "exam_en": "She passed the <strong class=\"target-word\">test</strong> in mathematics.",
+        "exam_ko": "그녀는 수학 <strong class=\"target-word\">시험</strong>에 합격했다."
+      }
+    ]
+  },
+  {
+    "id": 269,
+    "origin": "experience",
+    "examples": [
+      {
+        "exam_en": "She had a pleasant <strong class=\"target-word\">experience</strong> traveling abroad.",
+        "exam_ko": "그녀는 해외여행에서 즐거운 <strong class=\"target-word\">경험</strong>을 했다."
+      },
+      {
+        "exam_en": "An early <strong class=\"target-word\">experience</strong> taught me that he was very kind.",
+        "exam_ko": "초기의 <strong class=\"target-word\">경험</strong>으로 그가 매우 친절하다는 것을 알았다."
+      }
+    ]
+  },
+  {
+    "id": 270,
+    "origin": "touch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">touched</strong> the bell to call the waiter.",
+        "exam_ko": "그녀는 웨이터를 부르려고 벨을 <strong class=\"target-word\">눌렀다</strong>."
+      },
+      {
+        "exam_en": "He gently <strong class=\"target-word\">touched</strong> the person on the shoulder.",
+        "exam_ko": "그는 그 사람의 어깨에 살며시 <strong class=\"target-word\">손을 댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 271,
+    "origin": "other",
+    "examples": [
+      {
+        "exam_en": "I have some <strong class=\"target-word\">other</strong> things to do today.",
+        "exam_ko": "오늘 해야 할 <strong class=\"target-word\">다른</strong> 일이 몇 가지 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Other</strong> things being equal, I would choose this one.",
+        "exam_ko": "<strong class=\"target-word\">다른</strong> 조건이 같다면 이것을 택하겠다."
+      }
+    ]
+  },
+  {
+    "id": 272,
+    "origin": "good",
+    "examples": [
+      {
+        "exam_en": "She always carries a <strong class=\"target-word\">good</strong> dictionary with her.",
+        "exam_ko": "그녀는 항상 <strong class=\"target-word\">쓸 만한</strong> 사전을 갖고 다닌다."
+      },
+      {
+        "exam_en": "He wore a <strong class=\"target-word\">good</strong> watch to the meeting.",
+        "exam_ko": "그는 미팅에 <strong class=\"target-word\">정확한</strong> 시계를 차고 왔다."
+      }
+    ]
+  },
+  {
+    "id": 273,
+    "origin": "new",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">new</strong> book at the store.",
+        "exam_ko": "그녀는 서점에서 <strong class=\"target-word\">신간</strong> 책을 샀다."
+      },
+      {
+        "exam_en": "The country established a <strong class=\"target-word\">new</strong> regime after the election.",
+        "exam_ko": "그 나라는 선거 후 <strong class=\"target-word\">새</strong> 정권을 수립했다."
+      }
+    ]
+  },
+  {
+    "id": 274,
+    "origin": "old",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">old</strong> man sat quietly on the bench.",
+        "exam_ko": "<strong class=\"target-word\">노인</strong>이 벤치에 조용히 앉아 있었다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">old</strong> face showed years of hard work.",
+        "exam_ko": "그의 <strong class=\"target-word\">늙은</strong> 얼굴에는 수십 년의 노고가 담겨 있었다."
+      }
+    ]
+  },
+  {
+    "id": 275,
+    "origin": "great",
+    "examples": [
+      {
+        "exam_en": "London is a <strong class=\"target-word\">great</strong> city with rich history.",
+        "exam_ko": "런던은 풍부한 역사를 가진 <strong class=\"target-word\">위대한</strong> 도시다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">great</strong> earthquake struck the region last year.",
+        "exam_ko": "작년에 그 지역에 <strong class=\"target-word\">대</strong>지진이 발생했다."
+      }
+    ]
+  },
+  {
+    "id": 276,
+    "origin": "high",
+    "examples": [
+      {
+        "exam_en": "They built a <strong class=\"target-word\">high</strong> wall around the garden.",
+        "exam_ko": "그들은 정원 주위에 <strong class=\"target-word\">높은</strong> 담을 쌓았다."
+      },
+      {
+        "exam_en": "The prices are <strong class=\"target-word\">extremely high</strong> in this area.",
+        "exam_ko": "이 지역의 물가는 <strong class=\"target-word\">매우 높다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 277,
+    "origin": "small",
+    "examples": [
+      {
+        "exam_en": "She keeps a <strong class=\"target-word\">small</strong> notebook in her bag.",
+        "exam_ko": "그녀는 가방에 <strong class=\"target-word\">작은</strong> 수첩을 가지고 다닌다."
+      },
+      {
+        "exam_en": "They live in a <strong class=\"target-word\">small</strong> home near the park.",
+        "exam_ko": "그들은 공원 근처의 <strong class=\"target-word\">작은</strong> 집에 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 278,
+    "origin": "different",
+    "examples": [
+      {
+        "exam_en": "These two shirts are <strong class=\"target-word\">different</strong> in style.",
+        "exam_ko": "이 두 셔츠는 스타일이 <strong class=\"target-word\">다르다</strong>."
+      },
+      {
+        "exam_en": "They are not very <strong class=\"target-word\">different</strong> from each other in character.",
+        "exam_ko": "그들은 성격이 서로 별로 <strong class=\"target-word\">다를</strong> 바 없다."
+      }
+    ]
+  },
+  {
+    "id": 279,
+    "origin": "large",
+    "examples": [
+      {
+        "exam_en": "They rented a <strong class=\"target-word\">large</strong> room for the party.",
+        "exam_ko": "그들은 파티를 위해 <strong class=\"target-word\">넓은</strong> 방을 빌렸다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">large</strong> man who plays football.",
+        "exam_ko": "그는 미식축구를 하는 <strong class=\"target-word\">몸집이 큰</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 280,
+    "origin": "local",
+    "examples": [
+      {
+        "exam_en": "Adverbs of place are called <strong class=\"target-word\">local</strong> adverbs.",
+        "exam_ko": "장소를 나타내는 부사를 <strong class=\"target-word\">장소의</strong> 부사라고 한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">local</strong> name of the village is quite unique.",
+        "exam_ko": "그 마을의 <strong class=\"target-word\">지역</strong> 이름은 꽤 독특하다."
+      }
+    ]
+  },
+  {
+    "id": 281,
+    "origin": "social",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">social</strong> position improved after the promotion.",
+        "exam_ko": "승진 후 그녀의 <strong class=\"target-word\">사회적</strong> 지위가 높아졌다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Social</strong> interactions became harder during the pandemic.",
+        "exam_ko": "팬데믹 동안 <strong class=\"target-word\">사회적</strong> 교류가 더 어려워졌다."
+      }
+    ]
+  },
+  {
+    "id": 282,
+    "origin": "important",
+    "examples": [
+      {
+        "exam_en": "The graduation ceremony is an <strong class=\"target-word\">important</strong> occasion.",
+        "exam_ko": "졸업식은 <strong class=\"target-word\">중요한</strong> 행사다."
+      },
+      {
+        "exam_en": "Regular exercise is <strong class=\"target-word\">highly important</strong> for good health.",
+        "exam_ko": "규칙적인 운동은 건강에 <strong class=\"target-word\">매우 중요하다</strong>."
+      }
+    ]
+  }
+]

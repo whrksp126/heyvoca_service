@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2477,
+    "origin": "electrical",
+    "examples": [
+      {
+        "exam_en": "She unplugged all the <strong class=\"target-word\">electrical</strong> appliances before leaving.",
+        "exam_ko": "그녀는 떠나기 전에 모든 <strong class=\"target-word\">전기</strong> 기구를 뽑았다."
+      },
+      {
+        "exam_en": "The factory runs on an <strong class=\"target-word\">electrical</strong> generator during outages.",
+        "exam_ko": "공장은 정전 시 <strong class=\"target-word\">전기</strong> 발전기로 가동된다."
+      }
+    ]
+  },
+  {
+    "id": 2478,
+    "origin": "valid",
+    "examples": [
+      {
+        "exam_en": "She made a <strong class=\"target-word\">valid</strong> point during the debate.",
+        "exam_ko": "그녀는 토론 중에 <strong class=\"target-word\">타당한</strong> 주장을 했다."
+      },
+      {
+        "exam_en": "His assumption turned out to be <strong class=\"target-word\">valid</strong>.",
+        "exam_ko": "그의 가정은 <strong class=\"target-word\">온당한</strong> 것으로 밝혀졌다."
+      }
+    ]
+  },
+  {
+    "id": 2479,
+    "origin": "automatic",
+    "examples": [
+      {
+        "exam_en": "The door has an <strong class=\"target-word\">automatic</strong> locking system.",
+        "exam_ko": "그 문에는 <strong class=\"target-word\">자동</strong> 잠금 장치가 있다."
+      },
+      {
+        "exam_en": "The building installed an <strong class=\"target-word\">automatic</strong> elevator last year.",
+        "exam_ko": "건물에는 작년에 <strong class=\"target-word\">자동</strong> 엘리베이터가 설치됐다."
+      }
+    ]
+  },
+  {
+    "id": 2480,
+    "origin": "loud",
+    "examples": [
+      {
+        "exam_en": "The teacher spoke in a <strong class=\"target-word\">loud</strong> voice to reach everyone.",
+        "exam_ko": "선생님은 모두에게 들리도록 <strong class=\"target-word\">큰</strong> 목소리로 말했다."
+      },
+      {
+        "exam_en": "He is so <strong class=\"target-word\">loud</strong> that he dominates every conversation.",
+        "exam_ko": "그는 너무 <strong class=\"target-word\">수다스러워서</strong> 모든 대화를 주도한다."
+      }
+    ]
+  },
+  {
+    "id": 2481,
+    "origin": "mutual",
+    "examples": [
+      {
+        "exam_en": "The two countries share <strong class=\"target-word\">mutual</strong> respect.",
+        "exam_ko": "두 나라는 <strong class=\"target-word\">상호간의</strong> 존중을 나눈다."
+      },
+      {
+        "exam_en": "They signed a <strong class=\"target-word\">mutual</strong> security agreement last spring.",
+        "exam_ko": "그들은 지난 봄에 <strong class=\"target-word\">상호</strong> 안전 보장 협정을 체결했다."
+      }
+    ]
+  },
+  {
+    "id": 2482,
+    "origin": "liable",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">liable</strong> for the debt he owes.",
+        "exam_ko": "그는 자신이 진 빚에 대해 <strong class=\"target-word\">책임이 있다</strong>."
+      },
+      {
+        "exam_en": "All citizens are <strong class=\"target-word\">liable</strong> to follow the laws of the state.",
+        "exam_ko": "모든 시민은 국가 법률에 <strong class=\"target-word\">따를 의무가 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2483,
+    "origin": "multiple",
+    "examples": [
+      {
+        "exam_en": "The accident involved a <strong class=\"target-word\">multiple</strong> collision on the highway.",
+        "exam_ko": "그 사고는 고속도로에서 <strong class=\"target-word\">다중</strong> 충돌을 포함했다."
+      },
+      {
+        "exam_en": "She received <strong class=\"target-word\">multiple</strong> job offers after graduation.",
+        "exam_ko": "그녀는 졸업 후 <strong class=\"target-word\">여러</strong> 곳으로부터 취업 제안을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2484,
+    "origin": "ruling",
+    "examples": [
+      {
+        "exam_en": "The judge made a quick <strong class=\"target-word\">ruling</strong> on the case.",
+        "exam_ko": "판사는 그 사건에 대해 신속한 <strong class=\"target-word\">판결</strong>을 내렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">ruling</strong> class held most of the country's wealth.",
+        "exam_ko": "<strong class=\"target-word\">지배</strong> 계급이 나라 대부분의 부를 보유하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2485,
+    "origin": "curious",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">curious</strong> child asked endless questions.",
+        "exam_ko": "<strong class=\"target-word\">지식욕이 왕성한</strong> 아이는 끊임없이 질문을 했다."
+      },
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">curious</strong> look across the room.",
+        "exam_ko": "그녀는 방 너머에서 그에게 <strong class=\"target-word\">호기심 어린</strong> 표정을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 2487,
+    "origin": "sole",
+    "examples": [
+      {
+        "exam_en": "She was the <strong class=\"target-word\">sole</strong> prize-winner at the ceremony.",
+        "exam_ko": "그녀는 시상식에서 <strong class=\"target-word\">유일한</strong> 수상자였다."
+      },
+      {
+        "exam_en": "He was the <strong class=\"target-word\">sole</strong> American in the entire room.",
+        "exam_ko": "그는 방 안에서 <strong class=\"target-word\">단 한 명의</strong> 미국인이었다."
+      }
+    ]
+  },
+  {
+    "id": 2489,
+    "origin": "managing",
+    "examples": [
+      {
+        "exam_en": "He is a first-rate <strong class=\"target-word\">managing</strong> director at the firm.",
+        "exam_ko": "그는 그 회사의 일류 <strong class=\"target-word\">경영</strong> 이사다."
+      },
+      {
+        "exam_en": "She is a very <strong class=\"target-word\">managing</strong> person who controls everything.",
+        "exam_ko": "그녀는 모든 것을 통제하는 매우 <strong class=\"target-word\">간섭하는</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 2490,
+    "origin": "latin",
+    "examples": [
+      {
+        "exam_en": "Old <strong class=\"target-word\">Latin</strong> was spoken before 75 B.C.",
+        "exam_ko": "고대 <strong class=\"target-word\">라틴어</strong>는 기원전 75년 이전에 사용되었다."
+      },
+      {
+        "exam_en": "Classical <strong class=\"target-word\">Latin</strong> was the language of Roman literature.",
+        "exam_ko": "고전 <strong class=\"target-word\">라틴어</strong>는 로마 문학의 언어였다."
+      }
+    ]
+  },
+  {
+    "id": 2491,
+    "origin": "exact",
+    "examples": [
+      {
+        "exam_en": "The manager gave <strong class=\"target-word\">exact</strong> directions to each employee.",
+        "exam_ko": "관리자는 각 직원에게 <strong class=\"target-word\">정확한</strong> 지시를 내렸다."
+      },
+      {
+        "exam_en": "The portrait was an <strong class=\"target-word\">exact</strong> likeness of the queen.",
+        "exam_ko": "그 초상화는 여왕을 <strong class=\"target-word\">한치도 틀림없이</strong> 닮았다."
+      }
+    ]
+  },
+  {
+    "id": 2492,
+    "origin": "underlying",
+    "examples": [
+      {
+        "exam_en": "She tried to grasp the <strong class=\"target-word\">underlying</strong> meaning of the poem.",
+        "exam_ko": "그녀는 시의 <strong class=\"target-word\">숨은</strong> 뜻을 파악하려 했다."
+      },
+      {
+        "exam_en": "The news addressed the <strong class=\"target-word\">underlying</strong> causes of the crisis.",
+        "exam_ko": "뉴스는 위기의 <strong class=\"target-word\">근본적인</strong> 원인을 다뤘다."
+      }
+    ]
+  },
+  {
+    "id": 2493,
+    "origin": "identical",
+    "examples": [
+      {
+        "exam_en": "This is the <strong class=\"target-word\">identical</strong> book I mentioned last week.",
+        "exam_ko": "이것이 내가 지난주에 말했던 것과 <strong class=\"target-word\">똑같은</strong> 책이다."
+      },
+      {
+        "exam_en": "The twin sisters were so <strong class=\"target-word\">identical</strong> that their parents confused them.",
+        "exam_ko": "쌍둥이 자매는 너무 <strong class=\"target-word\">똑같아서</strong> 부모조차 헷갈려했다."
+      }
+    ]
+  },
+  {
+    "id": 2494,
+    "origin": "marginal",
+    "examples": [
+      {
+        "exam_en": "He wrote a <strong class=\"target-word\">marginal</strong> note beside the paragraph.",
+        "exam_ko": "그는 문단 옆에 <strong class=\"target-word\">방주</strong>를 달았다."
+      },
+      {
+        "exam_en": "They lived a <strong class=\"target-word\">marginal</strong> existence on the outskirts of the city.",
+        "exam_ko": "그들은 도시 외곽에서 <strong class=\"target-word\">간신히 살아가는</strong> 생활을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2495,
+    "origin": "distinctive",
+    "examples": [
+      {
+        "exam_en": "The dish has a <strong class=\"target-word\">distinctive</strong> taste unlike anything else.",
+        "exam_ko": "그 요리는 다른 어떤 것과도 다른 <strong class=\"target-word\">독특한</strong> 맛을 지닌다."
+      },
+      {
+        "exam_en": "She is a woman with a <strong class=\"target-word\">distinctive</strong> voice.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">특징적인</strong> 목소리를 가진 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 2496,
+    "origin": "electoral",
+    "examples": [
+      {
+        "exam_en": "Each candidate campaigned in their <strong class=\"target-word\">electoral</strong> district.",
+        "exam_ko": "각 후보는 자신의 <strong class=\"target-word\">선거</strong>구에서 선거 운동을 했다."
+      },
+      {
+        "exam_en": "The country reformed its <strong class=\"target-word\">electoral</strong> system last year.",
+        "exam_ko": "그 나라는 작년에 <strong class=\"target-word\">선거</strong> 제도를 개혁했다."
+      }
+    ]
+  },
+  {
+    "id": 2497,
+    "origin": "urgent",
+    "examples": [
+      {
+        "exam_en": "The CEO called an <strong class=\"target-word\">urgent</strong> meeting this morning.",
+        "exam_ko": "CEO는 오늘 아침 <strong class=\"target-word\">긴급</strong> 회의를 소집했다."
+      },
+      {
+        "exam_en": "It was <strong class=\"target-word\">urgent</strong> that she talk it over with him.",
+        "exam_ko": "그녀가 그와 이야기를 나누는 것이 <strong class=\"target-word\">다급한</strong> 문제였다."
+      }
+    ]
+  },
+  {
+    "id": 2498,
+    "origin": "presidential",
+    "examples": [
+      {
+        "exam_en": "Voter turnout is always high in a <strong class=\"target-word\">presidential</strong> election year.",
+        "exam_ko": "<strong class=\"target-word\">대통령</strong> 선거의 해에는 투표율이 항상 높다."
+      },
+      {
+        "exam_en": "Three <strong class=\"target-word\">presidential</strong> candidates joined the live debate.",
+        "exam_ko": "세 명의 <strong class=\"target-word\">대통령</strong> 후보가 생방송 토론에 참가했다."
+      }
+    ]
+  }
+]

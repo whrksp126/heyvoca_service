@@ -1,0 +1,250 @@
+[
+  {
+    "id": 14612,
+    "origin": "blithe",
+    "examples": [
+      {
+        "exam_en": "blithe and gay",
+        "exam_ko": "쾌활하고 명랑한."
+      }
+    ]
+  },
+  {
+    "id": 14613,
+    "origin": "fulsome",
+    "examples": [
+      {
+        "exam_en": "fulsome compliments",
+        "exam_ko": "역겨울 정도의 아첨."
+      }
+    ]
+  },
+  {
+    "id": 14614,
+    "origin": "brusque",
+    "examples": [
+      {
+        "exam_en": "a brusque person",
+        "exam_ko": "무뚝뚝한 사람[태도] cf. BLUNT 【유의어】."
+      }
+    ]
+  },
+  {
+    "id": 14615,
+    "origin": "perfidious",
+    "examples": [
+      {
+        "exam_en": "His perfidious actions betrayed the trust of his friends.",
+        "exam_ko": "그의 배반적인 행동은 친구들의 신뢰를 배신했다."
+      }
+    ]
+  },
+  {
+    "id": 14620,
+    "origin": "jocular",
+    "examples": [
+      {
+        "exam_en": "a jocular fellow",
+        "exam_ko": "재미있는 녀석"
+      },
+      {
+        "exam_en": "He is deadly serious behind his jocular facade.",
+        "exam_ko": "그는 겉보기는 익살스럽지만 실은 매우 고지식한 남자다."
+      }
+    ]
+  },
+  {
+    "id": 14621,
+    "origin": "limber",
+    "examples": [
+      {
+        "exam_en": "I limbered up my legs.",
+        "exam_ko": "다리를 (유연하게) 풀었다."
+      }
+    ]
+  },
+  {
+    "id": 14625,
+    "origin": "urbane",
+    "examples": [
+      {
+        "exam_en": "His urbane manners and sophisticated conversation impressed everyone at the party.",
+        "exam_ko": "그의 세련된 태도와 수준 높은 대화는 파티에 있는 모든 이들에게 인상적이었다."
+      }
+    ]
+  },
+  {
+    "id": 14626,
+    "origin": "polished",
+    "examples": [
+      {
+        "exam_en": "polished rice",
+        "exam_ko": "정미(精米)."
+      },
+      {
+        "exam_en": "a polished sentence",
+        "exam_ko": "세련된 문장"
+      }
+    ]
+  },
+  {
+    "id": 14627,
+    "origin": "facile",
+    "examples": [
+      {
+        "exam_en": "facile remarks",
+        "exam_ko": "유창한 말."
+      },
+      {
+        "exam_en": "facile success",
+        "exam_ko": "쉽게 이룬 성공."
+      },
+      {
+        "exam_en": "The experienced chef made cooking look facile as he effortlessly prepared a gourmet meal.",
+        "exam_ko": "숙련된 요리사는 손쉽게 고급 요리를 준비하여 요리를 쉽게 만들어 보였다."
+      }
+    ]
+  },
+  {
+    "id": 14628,
+    "origin": "wordy",
+    "examples": [
+      {
+        "exam_en": "a wordy explanation",
+        "exam_ko": "장황한 설명[문체]"
+      },
+      {
+        "exam_en": "a wordy speaker",
+        "exam_ko": "수다스러운 사람."
+      }
+    ]
+  },
+  {
+    "id": 14629,
+    "origin": "verbose",
+    "examples": [
+      {
+        "exam_en": "a verbose sermon",
+        "exam_ko": "장황한 설교"
+      },
+      {
+        "exam_en": "a verbose explanation",
+        "exam_ko": "말이 많은 해명"
+      },
+      {
+        "exam_en": "Having a long, verbose paragraph does not necessarily mean that it is meaningful. You can help to eliminate wordiness by writing in active tense, as opposed to passive tense.",
+        "exam_ko": "길고 장황한 단락이 있다고해서 반드시 의미가있는 것은 아닙니다.반대로 수동형 시제를 능동형으로 작성하여 장황함을 없앨 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 14630,
+    "origin": "cranial",
+    "examples": [
+      {
+        "exam_en": "cranial index",
+        "exam_ko": "두개 지수"
+      },
+      {
+        "exam_en": "a cranial nerve",
+        "exam_ko": "[해부] 뇌신경."
+      }
+    ]
+  },
+  {
+    "id": 14633,
+    "origin": "alluring",
+    "examples": [
+      {
+        "exam_en": "an alluring voice",
+        "exam_ko": "매혹적인 목소리."
+      }
+    ]
+  },
+  {
+    "id": 14634,
+    "origin": "enticing",
+    "examples": [
+      {
+        "exam_en": "an enticing advertisement",
+        "exam_ko": "유혹적인 광고"
+      }
+    ]
+  },
+  {
+    "id": 14637,
+    "origin": "negotiable",
+    "examples": [
+      {
+        "exam_en": "a negotiable instrument",
+        "exam_ko": "양도 가능한 증서"
+      },
+      {
+        "exam_en": "a negotiable certificate of deposit",
+        "exam_ko": "양도성 예금 증서."
+      }
+    ]
+  },
+  {
+    "id": 14638,
+    "origin": "underfoot",
+    "examples": [
+      {
+        "exam_en": "It is very damp underfoot.",
+        "exam_ko": "발 밑이 질퍽질퍽하다."
+      },
+      {
+        "exam_en": "get underfoot",
+        "exam_ko": "거치적거리다."
+      }
+    ]
+  },
+  {
+    "id": 14642,
+    "origin": "stringy",
+    "examples": [
+      {
+        "exam_en": "stringy meat",
+        "exam_ko": "심줄이 많은 고기."
+      }
+    ]
+  },
+  {
+    "id": 14644,
+    "origin": "sinewy",
+    "examples": [
+      {
+        "exam_en": "The athlete's sinewy muscles were a testament to years of intense training and dedication.",
+        "exam_ko": "선수의 건장한 근육은 몇 년 동안의 강인한 훈련과 헌신의 증거였다."
+      }
+    ]
+  },
+  {
+    "id": 14646,
+    "origin": "goodly",
+    "examples": [
+      {
+        "exam_en": "a goodly gift",
+        "exam_ko": "훌륭한 선물"
+      },
+      {
+        "exam_en": "a goodly youth",
+        "exam_ko": "잘생긴 청년"
+      }
+    ]
+  },
+  {
+    "id": 14647,
+    "origin": "tiresome",
+    "examples": [
+      {
+        "exam_en": "a tiresome sermon",
+        "exam_ko": "지루한 설교."
+      },
+      {
+        "exam_en": "It is tiresome of him to come incognito.",
+        "exam_ko": "이름을 숨기고 오다니 그자도 마음에 안 드는군."
+      }
+    ]
+  }
+]

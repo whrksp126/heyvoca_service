@@ -1,0 +1,258 @@
+[
+  {
+    "id": 12304,
+    "origin": "negligible",
+    "examples": [
+      {
+        "exam_en": "The damage from the storm was <strong class=\"target-word\">negligible</strong>.",
+        "exam_ko": "폭풍으로 인한 피해는 <strong class=\"target-word\">사소한</strong> 수준이었다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">negligible</strong> figure in the industry.",
+        "exam_ko": "그는 업계에서 <strong class=\"target-word\">하찮은</strong> 인물이다."
+      }
+    ]
+  },
+  {
+    "id": 12307,
+    "origin": "divergence",
+    "examples": [
+      {
+        "exam_en": "There was a sharp <strong class=\"target-word\">divergence</strong> between their views.",
+        "exam_ko": "그들의 견해에는 뚜렷한 <strong class=\"target-word\">차이</strong>가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12308,
+    "origin": "thanksgiving",
+    "examples": [
+      {
+        "exam_en": "The village held a harvest <strong class=\"target-word\">thanksgiving</strong> ceremony.",
+        "exam_ko": "마을은 추수 <strong class=\"target-word\">감사제</strong>를 열었다."
+      },
+      {
+        "exam_en": "We always eat turkey on <strong class=\"target-word\">Thanksgiving</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">추수감사절</strong>에 항상 칠면조를 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 12311,
+    "origin": "seating",
+    "examples": [
+      {
+        "exam_en": "The car has a <strong class=\"target-word\">seating</strong> capacity of eight.",
+        "exam_ko": "그 차의 <strong class=\"target-word\">좌석</strong> 수는 8개이다."
+      },
+      {
+        "exam_en": "The theater has <strong class=\"target-word\">seating</strong> for 500.",
+        "exam_ko": "그 극장의 <strong class=\"target-word\">좌석</strong>은 500석이다."
+      }
+    ]
+  },
+  {
+    "id": 12313,
+    "origin": "yearly",
+    "examples": [
+      {
+        "exam_en": "She takes a <strong class=\"target-word\">yearly</strong> vacation every summer.",
+        "exam_ko": "그녀는 매년 여름 <strong class=\"target-word\">연례</strong> 휴가를 떠난다."
+      },
+      {
+        "exam_en": "The city conducts a <strong class=\"target-word\">yearly</strong> automobile inspection.",
+        "exam_ko": "시는 <strong class=\"target-word\">연례</strong> 자동차 검사를 실시한다."
+      }
+    ]
+  },
+  {
+    "id": 12316,
+    "origin": "pant",
+    "examples": [
+      {
+        "exam_en": "He began to <strong class=\"target-word\">pant</strong> after running uphill.",
+        "exam_ko": "그는 언덕을 오른 후 <strong class=\"target-word\">헐떡이기</strong> 시작했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">panted</strong> as she climbed the stairs.",
+        "exam_ko": "그녀는 계단을 오르며 <strong class=\"target-word\">헐떡였다</strong>."
+      },
+      {
+        "exam_en": "The athletes <strong class=\"target-word\">panted</strong> after the marathon.",
+        "exam_ko": "선수들은 마라톤 후 <strong class=\"target-word\">헐떡였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12317,
+    "origin": "plunk",
+    "examples": [
+      {
+        "exam_en": "He sat down and began to <strong class=\"target-word\">plunk</strong> a banjo.",
+        "exam_ko": "그는 앉아서 밴조를 <strong class=\"target-word\">퉁기기</strong> 시작했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">plunked</strong> down $30,000 for the car.",
+        "exam_ko": "그녀는 차 값으로 3만 달러를 <strong class=\"target-word\">턱</strong> 내놓았다."
+      }
+    ]
+  },
+  {
+    "id": 12318,
+    "origin": "kneel",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">kneeled</strong> down in prayer.",
+        "exam_ko": "그는 기도하며 <strong class=\"target-word\">무릎을 꿇었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">kneeled</strong> before the judge to plead.",
+        "exam_ko": "그녀는 탄원하기 위해 판사 앞에 <strong class=\"target-word\">무릎을 꿇었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12324,
+    "origin": "flogging",
+    "examples": [
+      {
+        "exam_en": "The prisoner received a public <strong class=\"target-word\">flogging</strong>.",
+        "exam_ko": "죄수는 공개 <strong class=\"target-word\">매질</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 12327,
+    "origin": "vicar",
+    "examples": [
+      {
+        "exam_en": "The Pope is called the <strong class=\"target-word\">Vicar</strong> of Christ.",
+        "exam_ko": "교황은 그리스도의 <strong class=\"target-word\">대리자</strong>라고 불린다."
+      }
+    ]
+  },
+  {
+    "id": 12329,
+    "origin": "transcendent",
+    "examples": [
+      {
+        "exam_en": "She showed <strong class=\"target-word\">transcendent</strong> judgment in the crisis.",
+        "exam_ko": "그녀는 위기에서 <strong class=\"target-word\">탁월한</strong> 판단력을 보였다."
+      },
+      {
+        "exam_en": "He achieved success through a <strong class=\"target-word\">transcendent</strong> effort.",
+        "exam_ko": "그는 <strong class=\"target-word\">남다른</strong> 노력으로 성공을 이루었다."
+      }
+    ]
+  },
+  {
+    "id": 12332,
+    "origin": "finely",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">finely</strong> cut the vegetables for the soup.",
+        "exam_ko": "그녀는 수프를 위해 채소를 <strong class=\"target-word\">잘게</strong> 썰었다."
+      },
+      {
+        "exam_en": "These instruments are very <strong class=\"target-word\">finely</strong> set.",
+        "exam_ko": "이 악기들은 매우 <strong class=\"target-word\">정교하게</strong> 조립되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 12338,
+    "origin": "microphone",
+    "examples": [
+      {
+        "exam_en": "The spy planted a listening <strong class=\"target-word\">microphone</strong> in the room.",
+        "exam_ko": "스파이는 방에 도청용 <strong class=\"target-word\">마이크</strong>를 설치했다."
+      },
+      {
+        "exam_en": "He placed a floor <strong class=\"target-word\">microphone</strong> on the stage.",
+        "exam_ko": "그는 무대에 스탠드형 <strong class=\"target-word\">마이크</strong>를 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 12340,
+    "origin": "vitriol",
+    "examples": [
+      {
+        "exam_en": "His speech was full of <strong class=\"target-word\">vitriol</strong> against his rivals.",
+        "exam_ko": "그의 연설은 경쟁자들을 향한 <strong class=\"target-word\">독설</strong>로 가득했다."
+      }
+    ]
+  },
+  {
+    "id": 12342,
+    "origin": "cranny",
+    "examples": [
+      {
+        "exam_en": "The detective searched every <strong class=\"target-word\">cranny</strong> of the room.",
+        "exam_ko": "형사는 방의 모든 <strong class=\"target-word\">구석</strong>을 샅샅이 뒤졌다."
+      }
+    ]
+  },
+  {
+    "id": 12344,
+    "origin": "ferret",
+    "examples": [
+      {
+        "exam_en": "She finally managed to <strong class=\"target-word\">ferret</strong> out the truth.",
+        "exam_ko": "결국 그녀는 진실을 가까스로 <strong class=\"target-word\">캐냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12347,
+    "origin": "retribution",
+    "examples": [
+      {
+        "exam_en": "He feared divine <strong class=\"target-word\">retribution</strong> for his sins.",
+        "exam_ko": "그는 자신의 죄에 대한 신의 <strong class=\"target-word\">응보</strong>를 두려워했다."
+      },
+      {
+        "exam_en": "He received just <strong class=\"target-word\">retribution</strong> for his crime.",
+        "exam_ko": "그는 범죄에 대한 정당한 <strong class=\"target-word\">인과응보</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 12348,
+    "origin": "unsettled",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">unsettled</strong> nomads moved across the plains.",
+        "exam_ko": "<strong class=\"target-word\">정착하지 않은</strong> 유목민들이 평원을 가로질러 이동했다."
+      },
+      {
+        "exam_en": "The autumn skies were <strong class=\"target-word\">unsettled</strong> all week.",
+        "exam_ko": "가을 하늘은 일주일 내내 <strong class=\"target-word\">변덕스러웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12349,
+    "origin": "reckoning",
+    "examples": [
+      {
+        "exam_en": "By my <strong class=\"target-word\">reckoning</strong>, we arrive in an hour.",
+        "exam_ko": "나의 <strong class=\"target-word\">계산</strong>으로는 한 시간 안에 도착한다."
+      },
+      {
+        "exam_en": "Even <strong class=\"target-word\">reckoning</strong> makes lasting friends.",
+        "exam_ko": "대차 관계가 없으면 <strong class=\"target-word\">계산이 맞아</strong> 친구 사이는 오래간다."
+      }
+    ]
+  },
+  {
+    "id": 12350,
+    "origin": "planning",
+    "examples": [
+      {
+        "exam_en": "Good financial <strong class=\"target-word\">planning</strong> secures your future.",
+        "exam_ko": "올바른 재정 <strong class=\"target-word\">계획</strong>이 미래를 보장한다."
+      }
+    ]
+  }
+]

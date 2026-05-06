@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4594,
+    "origin": "foggy",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">foggy</strong> morning in the city.",
+        "exam_ko": "도시에 <strong class=\"target-word\">안개가 자욱한</strong> 아침이었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">foggy</strong> weather made driving dangerous.",
+        "exam_ko": "<strong class=\"target-word\">안개 낀</strong> 날씨가 운전을 위험하게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 4595,
+    "origin": "hurricane",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">hurricane</strong> hit the Caribbean islands.",
+        "exam_ko": "<strong class=\"target-word\">허리케인</strong>이 카리브 해의 섬들을 덮쳤다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">hurricane</strong> destroyed many homes along the coast.",
+        "exam_ko": "<strong class=\"target-word\">허리케인</strong>이 해안가의 많은 집들을 파괴했다."
+      }
+    ]
+  },
+  {
+    "id": 4596,
+    "origin": "lightning",
+    "examples": [
+      {
+        "exam_en": "A bolt of <strong class=\"target-word\">lightning</strong> struck the tree.",
+        "exam_ko": "<strong class=\"target-word\">번개</strong>가 나무에 내리쳤다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">lightning</strong> lit up the dark sky.",
+        "exam_ko": "<strong class=\"target-word\">번개</strong>가 어두운 하늘을 밝혔다."
+      }
+    ]
+  },
+  {
+    "id": 4597,
+    "origin": "rainy",
+    "examples": [
+      {
+        "exam_en": "We had a few <strong class=\"target-word\">rainy</strong> weeks in a row.",
+        "exam_ko": "몇 주 연속으로 <strong class=\"target-word\">비가 오는</strong> 날씨가 계속됐다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">rainy</strong> season lasts from June to August.",
+        "exam_ko": "<strong class=\"target-word\">우기</strong>는 6월부터 8월까지 이어진다."
+      }
+    ]
+  },
+  {
+    "id": 4598,
+    "origin": "snowy",
+    "examples": [
+      {
+        "exam_en": "The children played outside on a <strong class=\"target-word\">snowy</strong> day.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">눈 오는</strong> 날 밖에서 놀았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">snowy</strong> mountains looked beautiful from below.",
+        "exam_ko": "<strong class=\"target-word\">눈 덮인</strong> 산들이 아래에서 보기에 아름다웠다."
+      }
+    ]
+  },
+  {
+    "id": 4599,
+    "origin": "stormy",
+    "examples": [
+      {
+        "exam_en": "The ship struggled in the <strong class=\"target-word\">stormy</strong> sea.",
+        "exam_ko": "배는 <strong class=\"target-word\">거친</strong> 바다에서 힘겹게 나아갔다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">stormy</strong> sky warned of heavy rain ahead.",
+        "exam_ko": "<strong class=\"target-word\">험악한</strong> 하늘이 곧 폭우가 올 것임을 알렸다."
+      }
+    ]
+  },
+  {
+    "id": 4600,
+    "origin": "sunny",
+    "examples": [
+      {
+        "exam_en": "We went on a picnic on a <strong class=\"target-word\">sunny</strong> day.",
+        "exam_ko": "<strong class=\"target-word\">햇빛이 화창한</strong> 날에 소풍을 갔다."
+      },
+      {
+        "exam_en": "She chose a <strong class=\"target-word\">sunny</strong> apartment with large windows.",
+        "exam_ko": "그녀는 큰 창문이 있는 <strong class=\"target-word\">양지바른</strong> 아파트를 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 4601,
+    "origin": "windy",
+    "examples": [
+      {
+        "exam_en": "Spring is the most <strong class=\"target-word\">windy</strong> season here.",
+        "exam_ko": "이곳에서 봄이 가장 <strong class=\"target-word\">바람이 강한</strong> 계절이다."
+      },
+      {
+        "exam_en": "It is very <strong class=\"target-word\">windy</strong> today.",
+        "exam_ko": "오늘은 매우 <strong class=\"target-word\">바람이 세다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4603,
+    "origin": "drought",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">drought</strong> caused serious damage to the crops.",
+        "exam_ko": "<strong class=\"target-word\">가뭄</strong>이 농작물에 심각한 피해를 입혔다."
+      },
+      {
+        "exam_en": "The region suffered a long <strong class=\"target-word\">drought</strong> last summer.",
+        "exam_ko": "그 지역은 지난 여름 긴 <strong class=\"target-word\">가뭄</strong>을 겪었다."
+      }
+    ]
+  },
+  {
+    "id": 4604,
+    "origin": "earthquake",
+    "examples": [
+      {
+        "exam_en": "A strong <strong class=\"target-word\">earthquake</strong> struck the coastal region.",
+        "exam_ko": "강한 <strong class=\"target-word\">지진</strong>이 해안 지역을 강타했다."
+      },
+      {
+        "exam_en": "A slight <strong class=\"target-word\">earthquake</strong> was felt early this morning.",
+        "exam_ko": "오늘 이른 아침 약한 <strong class=\"target-word\">지진</strong>이 감지되었다."
+      }
+    ]
+  },
+  {
+    "id": 4605,
+    "origin": "landslide",
+    "examples": [
+      {
+        "exam_en": "She won the election by a <strong class=\"target-word\">landslide</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">압도적인 표차</strong>로 선거에서 이겼다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">landslide</strong> blocked the mountain road completely.",
+        "exam_ko": "<strong class=\"target-word\">산사태</strong>가 산길을 완전히 막아버렸다."
+      }
+    ]
+  },
+  {
+    "id": 4606,
+    "origin": "tornado",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">tornado</strong> swept through the town last night.",
+        "exam_ko": "<strong class=\"target-word\">토네이도</strong>가 어젯밤 마을을 휩쓸었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">tornado</strong> destroyed several houses in minutes.",
+        "exam_ko": "<strong class=\"target-word\">토네이도</strong>가 몇 분 만에 여러 집을 파괴했다."
+      }
+    ]
+  },
+  {
+    "id": 4607,
+    "origin": "hammer",
+    "examples": [
+      {
+        "exam_en": "He hit the nail with a <strong class=\"target-word\">hammer</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">망치</strong>로 못을 박았다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">hammered</strong> the broken shelf back into place.",
+        "exam_ko": "그녀는 부서진 선반을 <strong class=\"target-word\">망치질해서</strong> 제자리에 고정했다."
+      }
+    ]
+  },
+  {
+    "id": 4608,
+    "origin": "calculation",
+    "examples": [
+      {
+        "exam_en": "He made a quick <strong class=\"target-word\">calculation</strong> in his head.",
+        "exam_ko": "그는 머릿속으로 빠르게 <strong class=\"target-word\">계산</strong>을 했다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">calculations</strong> showed the project would take a year.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">계산</strong>에 따르면 프로젝트는 1년이 걸릴 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 4610,
+    "origin": "decade",
+    "examples": [
+      {
+        "exam_en": "The technology changed rapidly over the last <strong class=\"target-word\">decade</strong>.",
+        "exam_ko": "기술은 지난 <strong class=\"target-word\">10년</strong> 동안 빠르게 변화했다."
+      },
+      {
+        "exam_en": "She has worked at the company for nearly a <strong class=\"target-word\">decade</strong>.",
+        "exam_ko": "그녀는 거의 <strong class=\"target-word\">10년</strong> 동안 그 회사에서 일해왔다."
+      }
+    ]
+  },
+  {
+    "id": 4613,
+    "origin": "repel",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">repelled</strong> the enemy's attack.",
+        "exam_ko": "군인들은 적의 공격을 <strong class=\"target-word\">격퇴했다</strong>."
+      },
+      {
+        "exam_en": "The committee <strong class=\"target-word\">repelled</strong> the proposal without debate.",
+        "exam_ko": "위원회는 토론 없이 그 제안을 <strong class=\"target-word\">물리쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4616,
+    "origin": "westward",
+    "examples": [
+      {
+        "exam_en": "They made a long <strong class=\"target-word\">westward</strong> journey across the country.",
+        "exam_ko": "그들은 나라를 가로질러 긴 <strong class=\"target-word\">서쪽으로의</strong> 여행을 했다."
+      },
+      {
+        "exam_en": "Many settlers moved <strong class=\"target-word\">westward</strong> in the 19th century.",
+        "exam_ko": "19세기에 많은 정착민들이 <strong class=\"target-word\">서쪽으로</strong> 이동했다."
+      }
+    ]
+  },
+  {
+    "id": 4617,
+    "origin": "reprisal",
+    "examples": [
+      {
+        "exam_en": "The country imposed economic <strong class=\"target-word\">reprisals</strong> on its neighbor.",
+        "exam_ko": "그 나라는 이웃 나라에 경제적 <strong class=\"target-word\">보복 조치</strong>를 취했다."
+      },
+      {
+        "exam_en": "The attack was launched in <strong class=\"target-word\">reprisal</strong> for the bombing.",
+        "exam_ko": "그 공격은 폭격에 대한 <strong class=\"target-word\">보복</strong>으로 감행되었다."
+      }
+    ]
+  },
+  {
+    "id": 4618,
+    "origin": "reproach",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">reproached</strong> him for not answering her calls.",
+        "exam_ko": "그녀는 전화를 받지 않는다고 그를 <strong class=\"target-word\">비난했다</strong>."
+      },
+      {
+        "exam_en": "I have many things to <strong class=\"target-word\">reproach</strong> him for.",
+        "exam_ko": "그에게는 <strong class=\"target-word\">질책하고</strong> 싶은 말이 많다."
+      }
+    ]
+  },
+  {
+    "id": 4619,
+    "origin": "reprove",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">reproved</strong> the student for cheating.",
+        "exam_ko": "선생님은 부정행위를 한 학생을 <strong class=\"target-word\">꾸짖었다</strong>."
+      },
+      {
+        "exam_en": "His mother <strong class=\"target-word\">reproved</strong> him for being late again.",
+        "exam_ko": "그의 어머니는 또 지각했다며 그를 <strong class=\"target-word\">책망했다</strong>."
+      }
+    ]
+  }
+]

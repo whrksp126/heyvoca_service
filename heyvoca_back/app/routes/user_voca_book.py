@@ -132,16 +132,23 @@ def create_user_voca_book():
 @jwt_required
 def update_user_voca_book():
     data = request.get_json()
-    print("###단어장 수정 data : ",data)
+    user_id = UUID(g.user_id)
     user_voca_book_id = UUID(data.get('id'))
-    print("###단어장 수정 user_voca_book_id : ",user_voca_book_id)
     if not user_voca_book_id:
         return jsonify({'code': 400, 'message': 'ID가 필요합니다.'}), 400
 
-    user_voca_book = db.session.query(UserVocaBook).filter(UserVocaBook.id == user_voca_book_id).first()
-    print("###단어장 수정 user_voca_book : ",user_voca_book)
+    user_voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == user_voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
     if not user_voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
+
+    is_purchased = user_voca_book.bookstore_id is not None
+
+    # 구매한 단어장은 학습 진행 메타(total/memorized)만 허용 — 단어 내용은 변경 불가
+    if is_purchased and any(k in data for k in ('title', 'color', 'words')):
+        return jsonify({'code': 403, 'message': '구매한 단어장의 내용은 변경할 수 없어요.'}), 403
 
     # 넘어온 key만 업데이트
     if 'title' in data:
@@ -159,7 +166,7 @@ def update_user_voca_book():
     db.session.commit()
 
     data = {
-        'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9), 
+        'createdAt': user_voca_book.created_at + datetime.timedelta(hours=9),
         'updatedAt': user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None
     }
 
@@ -170,9 +177,20 @@ def update_user_voca_book():
 @jwt_required
 def delete_user_voca_book():
     data = request.get_json()
+    user_id = UUID(g.user_id)
     user_voca_book_id = UUID(data['id'])
 
-    user_voca_book = db.session.query(UserVocaBook).filter(UserVocaBook.id == user_voca_book_id).first()
+    user_voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == user_voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
+
+    if not user_voca_book:
+        return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
+
+    if user_voca_book.bookstore_id is not None:
+        return jsonify({'code': 403, 'message': '구매한 단어장은 삭제할 수 없어요.'}), 403
+
     db.session.delete(user_voca_book)
     db.session.commit()
 
@@ -309,6 +327,9 @@ def convert_to_frontend_format(parsed_items):
 @user_voca_book_bp.route('/upload/quizlet', methods=['POST'])
 @jwt_required
 def upload_user_voca_book():
+    # voca_books와 양방향 import가 되므로 함수 내부에서 import
+    from app.routes.voca_books import bulk_persist_vocas, build_voca_book_response
+
     data = request.get_json()
     title = data.get('title') # 단어장 이름
     voca_list = data.get('text') # 단어 데이터
@@ -351,12 +372,27 @@ def upload_user_voca_book():
                 'message': '파싱된 단어가 없습니다. 데이터 형식을 확인해주세요.'
             }), 400
 
-        # 프론트엔드 형식으로 변환
-        frontend_format_items = convert_to_frontend_format(parsed_items)
-        print("###frontend_format_items : ",frontend_format_items)
+        # bulk_persist_vocas 입력 형식으로 변환 (origin/meanings/examples)
+        # — 다른 업로드 경로(Excel/CSV/Anki/Quizlet PDF)와 동일하게
+        #   UserVoca + UserVocaBookMap 관계 테이블에 저장해야 단어장 조회 시 노출된다.
+        normalized_items = [
+            {
+                'origin': item['word'],
+                'meanings': [m.strip() for m in item['meaning'].split(',') if m.strip()],
+                'examples': [],
+            }
+            for item in parsed_items
+        ]
 
-        ### 1. 단어장 생성 (create_user_voca_book 로직 재사용)
+        ### 1. 단어장 생성
         user = db.session.query(User).filter(User.id == user_id).first()
+
+        # book_cnt 차감
+        if user.book_cnt < 1:
+            return jsonify({
+                'code': 400,
+                'message': '최대 단어장 생성 개수를 초과했습니다.'
+            }), 400
 
         user_voca_book = UserVocaBook(
             user_id=user_id,
@@ -369,49 +405,26 @@ def upload_user_voca_book():
             updated_at=None
         )
         db.session.add(user_voca_book)
-
-        # book_cnt 차감
-        if user.book_cnt < 1:
-            db.session.rollback()
-            return jsonify({
-                'code': 400, 
-                'message': '최대 단어장 생성 개수를 초과했습니다.'
-            }), 400
+        db.session.flush()
         user.book_cnt -= 1
 
-        db.session.commit()
-        book_id = user_voca_book.id # 생성된 단어장 ID
-
-        # ### 2. 단어장 업데이트
-        user_voca_book.voca_list = json.dumps(frontend_format_items)
-        user_voca_book.total_word_cnt = len(frontend_format_items)
+        ### 2. 단어 일괄 저장
+        added_count = bulk_persist_vocas(user_id, user_voca_book.id, normalized_items)
+        user_voca_book.total_word_cnt = added_count
         user_voca_book.updated_at = datetime.datetime.utcnow()
         db.session.commit()
 
         # 성공 메시지
-        message = f'{len(parsed_items)}개의 단어가 파싱되었습니다.'
+        message = f'{added_count}개의 단어가 파싱되었습니다.'
         if failed_lines:
             message += f' ({len(failed_lines)}개 라인 파싱 실패)'
-        
-        # 결과 반환
-        response_data = {
-            "id": book_id,
-            "title": title,
-            "color": color,
-            "total": len(frontend_format_items),
-            "memorized": 0,
-            "bookstore_id": None,
-            "createdAt": user_voca_book.created_at + datetime.timedelta(hours=9),
-            "updatedAt": user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else None,
-            'words': frontend_format_items,
-            'book_cnt': user.book_cnt,
-            'goals': []
-        }
 
-        # print("###response_data : ",response_data)
+        # 결과 반환 (단어장 응답 + book_cnt)
+        response_data = build_voca_book_response(user_voca_book)
+        response_data['book_cnt'] = user.book_cnt
 
         response = jsonify({
-            'code': 200, 
+            'code': 200,
             'message': message,
             'data': response_data
         })
@@ -471,64 +484,64 @@ def parse_quizlet_pdf(file_storage):
     with tempfile.NamedTemporaryFile(suffix='.pdf', delete=True) as tmp:
         file_storage.save(tmp)
         tmp.flush()
-        # print(f"[PDF DEBUG] 임시 파일 저장 완료: {tmp.name}")
 
         with pdfplumber.open(tmp.name) as pdf:
-            # print(f"[PDF DEBUG] 총 페이지 수: {len(pdf.pages)}")
 
             word_section_started = False  # '이 세트의 단어' 마커 이후만 파싱
 
             for page_idx, page in enumerate(pdf.pages):
-                # print(f"\n[PDF DEBUG] ===== 페이지 {page_idx + 1} =====")
 
                 # 1차: 테이블 감지
                 tables = page.extract_tables()
-                # print(f"[PDF DEBUG] 테이블 감지 수: {len(tables) if tables else 0}")
 
                 if tables:
                     for t_idx, table in enumerate(tables):
-                        # print(f"[PDF DEBUG]   테이블[{t_idx}] 행 수: {len(table)}")
                         for r_idx, row in enumerate(table):
                             if not row:
-                                # print(f"[PDF DEBUG]     행[{r_idx}]: None (스킵)")
                                 continue
-
-                            # 원본 행 출력
-                            # print(f"[PDF DEBUG]     행[{r_idx}] 원본: {row}")
 
                             # 셀 정리: None/빈값 제거
                             cells = [cell.strip() if cell else '' for cell in row]
                             cells = [cell for cell in cells if cell]
-                            # print(f"[PDF DEBUG]     행[{r_idx}] 정리후({len(cells)}셀): {cells}")
 
                             if len(cells) == 3:
                                 num, word, meaning = cells
                                 is_num = re.match(r'^\d+\.?$', num.strip())
-                                # print(f"[PDF DEBUG]     3컬럼 - 번호:'{num}' (is_num={bool(is_num)}), 단어:'{word}', 뜻:'{meaning}'")
                                 if is_num:
                                     noise_w = is_quizlet_noise(word)
                                     noise_m = is_quizlet_noise(meaning)
-                                    # print(f"[PDF DEBUG]     노이즈체크 - word={noise_w}, meaning={noise_m}")
                                     if not noise_w and not noise_m:
                                         parsed_items.append({"word": word.strip(), "meaning": meaning.strip()})
-                                        # print(f"[PDF DEBUG]     -> 추가됨!")
                                 else:
                                     word_candidate = cells[0]
                                     meaning_candidate = cells[1]
                                     noise_w = is_quizlet_noise(word_candidate)
                                     noise_m = is_quizlet_noise(meaning_candidate)
-                                    # print(f"[PDF DEBUG]     번호아님 -> word:'{word_candidate}', meaning:'{meaning_candidate}', 노이즈:{noise_w},{noise_m}")
                                     if not noise_w and not noise_m:
                                         parsed_items.append({"word": word_candidate.strip(), "meaning": meaning_candidate.strip()})
-                                        # print(f"[PDF DEBUG]     -> 추가됨!")
                             elif len(cells) == 2:
+                                # 일부 퀴즐렛 PDF(이미지가 일부 행에만 있는 양식)에서는
+                                # 이미지 없는 여러 행이 한 셀로 합쳐져서 word 셀에 줄바꿈이 들어올 수 있다.
+                                # 이때는 1셀 분기와 동일하게 라인별 "단어 + 비ASCII 뜻" 패턴으로 분해한다.
+                                if any('\n' in c for c in cells):
+                                    multiline_cell = cells[0] if '\n' in cells[0] else cells[1]
+                                    for cell_line in multiline_cell.split('\n'):
+                                        cell_line = cell_line.strip()
+                                        if not cell_line or is_quizlet_noise(cell_line):
+                                            continue
+                                        m = re.match(r'^(.+?)\s+([^\x00-\x7F].+)$', cell_line)
+                                        if m:
+                                            word = m.group(1).strip()
+                                            meaning = m.group(2).strip()
+                                            if word and meaning and not is_quizlet_noise(word) and not is_quizlet_noise(meaning):
+                                                parsed_items.append({"word": word, "meaning": meaning})
+                                    continue
+
                                 word, meaning = cells
                                 noise_w = is_quizlet_noise(word)
                                 noise_m = is_quizlet_noise(meaning)
-                                # print(f"[PDF DEBUG]     2컬럼 - 단어:'{word}', 뜻:'{meaning}', 노이즈:{noise_w},{noise_m}")
                                 if not noise_w and not noise_m:
                                     parsed_items.append({"word": word.strip(), "meaning": meaning.strip()})
-                                    # print(f"[PDF DEBUG]     -> 추가됨!")
                             elif len(cells) == 1:
                                 # 셀 내 여러 줄 단위로 재처리
                                 cell_lines = cells[0].split('\n')
@@ -539,10 +552,8 @@ def parse_quizlet_pdf(file_storage):
                                     # '이 세트의 단어 (n)' 마커 감지 → 이후부터 파싱 시작
                                     if re.search(r'이 세트의 단어', cell_line):
                                         word_section_started = True
-                                        # print(f"[PDF DEBUG]     1컬럼 단어섹션 시작 감지: '{cell_line[:60]}'")
                                         continue
                                     if not word_section_started:
-                                        # print(f"[PDF DEBUG]     1컬럼 섹션前 스킵: '{cell_line[:60]}'")
                                         continue
                                     if is_quizlet_noise(cell_line):
                                         continue
@@ -553,13 +564,8 @@ def parse_quizlet_pdf(file_storage):
                                         meaning = m.group(2).strip()
                                         if word and meaning and not is_quizlet_noise(word) and not is_quizlet_noise(meaning):
                                             parsed_items.append({"word": word, "meaning": meaning})
-                                            # print(f"[PDF DEBUG]     1컬럼 파싱 -> word:'{word}', meaning:'{meaning}'")
-                                    # else:
-                                        # print(f"[PDF DEBUG]     1컬럼 매칭실패: '{cell_line[:60]}'")
                                 # 마커가 한 번이라도 발견된 페이지 이후부터는 플래그 유지
                                 continue
-                            # else:
-                                # print(f"[PDF DEBUG]     {len(cells)}컬럼 - 예상외 (스킵): {cells}")
                     continue  # 테이블 있으면 텍스트 모드 스킵
 
                 # 2차: 좌표 기반 단어 추출 (x좌표로 좌/우 컬럼 분리)
@@ -567,7 +573,6 @@ def parse_quizlet_pdf(file_storage):
                 if words_on_page:
                     page_width = page.width
                     mid_x = page_width / 2
-                    # print(f"[PDF DEBUG] 좌표모드 - 단어 수: {len(words_on_page)}, 페이지 폭: {page_width}, mid_x: {mid_x}")
 
                     # y좌표로 같은 행 그룹핑 (tolerance 5px)
                     rows_by_y = {}
@@ -603,24 +608,20 @@ def parse_quizlet_pdf(file_storage):
                         parsed_items.append({"word": word_clean, "meaning": right_text})
                         coord_parsed += 1
 
-                    # print(f"[PDF DEBUG] 좌표모드 결과: {coord_parsed}개 파싱")
                     if coord_parsed > 0:
                         continue  # 좌표모드로 파싱 성공 시 텍스트 모드 스킵
 
                 # 3차: 텍스트 모드 (용어 레이아웃 등)
                 text = page.extract_text()
                 if not text:
-                    # print(f"[PDF DEBUG] 텍스트 없음 (스킵)")
                     continue
 
                 lines = text.split('\n')
-                # print(f"[PDF DEBUG] 텍스트 모드 - 총 {len(lines)}줄")
                 for line_idx, line in enumerate(lines):
                     line = line.strip()
                     if not line:
                         continue
                     if is_quizlet_noise(line):
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 노이즈: '{line[:60]}'")
                         continue
 
                     # 패턴 1: "번호. 단어: 뜻" (용어 레이아웃)
@@ -628,7 +629,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴1(번호.단어:뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -638,7 +638,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴2(번호.단어  뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -648,7 +647,6 @@ def parse_quizlet_pdf(file_storage):
                     if match:
                         word = match.group(1).strip()
                         meaning = match.group(2).strip()
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴4(번호.단어 비ASCII뜻) -> word:'{word}', meaning:'{meaning}'")
                         if word and meaning:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue
@@ -660,7 +658,6 @@ def parse_quizlet_pdf(file_storage):
                         meaning = match.group(2).strip()
                         noise_w = is_quizlet_noise(word)
                         noise_m = is_quizlet_noise(meaning)
-                        # print(f"[PDF DEBUG]   줄[{line_idx}] 패턴3(단어  뜻) -> word:'{word}', meaning:'{meaning}', 노이즈:{noise_w},{noise_m}")
                         if word and meaning and not noise_w and not noise_m:
                             parsed_items.append({"word": word, "meaning": meaning})
                         continue

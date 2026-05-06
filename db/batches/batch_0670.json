@@ -1,0 +1,230 @@
+[
+  {
+    "id": 25813,
+    "origin": "commendatory",
+    "examples": [
+      {
+        "exam_en": "a commendatory letter",
+        "exam_ko": "추천장"
+      },
+      {
+        "exam_en": "commendatory verses",
+        "exam_ko": "송덕시."
+      }
+    ]
+  },
+  {
+    "id": 25818,
+    "origin": "advisable",
+    "examples": [
+      {
+        "exam_en": "It is advisable to wear a safety belt at all times.",
+        "exam_ko": "항상 안전 벨트를 매는 것이 바람직하다."
+      }
+    ]
+  },
+  {
+    "id": 25824,
+    "origin": "afresh",
+    "examples": [
+      {
+        "exam_en": "start afresh",
+        "exam_ko": "다시 시작하다."
+      }
+    ]
+  },
+  {
+    "id": 25827,
+    "origin": "hearsay",
+    "examples": [
+      {
+        "exam_en": "know it only from hearsay",
+        "exam_ko": "그것을 소문을 듣고 알고 있을 뿐이다"
+      },
+      {
+        "exam_en": "That story is mere hearsay.",
+        "exam_ko": "그 얘기는 소문에 지나지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 25828,
+    "origin": "unmarried",
+    "examples": [
+      {
+        "exam_en": "an unmarried mother",
+        "exam_ko": "미혼모."
+      }
+    ]
+  },
+  {
+    "id": 25834,
+    "origin": "occlude",
+    "examples": [
+      {
+        "exam_en": "occlude light",
+        "exam_ko": "광선을 막다, 차광하다."
+      }
+    ]
+  },
+  {
+    "id": 25842,
+    "origin": "necessitous",
+    "examples": [
+      {
+        "exam_en": "necessitous quarters",
+        "exam_ko": "빈민 지구"
+      },
+      {
+        "exam_en": "in necessitous circumstances",
+        "exam_ko": "궁핍하여."
+      }
+    ]
+  },
+  {
+    "id": 25845,
+    "origin": "barnyard",
+    "examples": [
+      {
+        "exam_en": "barnyard golf",
+        "exam_ko": "(미·비격식) 말굽쇠 던지기 놀이."
+      }
+    ]
+  },
+  {
+    "id": 25851,
+    "origin": "bayonet",
+    "examples": [
+      {
+        "exam_en": "a bayonet charge",
+        "exam_ko": "총검 돌격"
+      },
+      {
+        "exam_en": "at the point of the bayonet",
+        "exam_ko": "총검을 들이대고; 무력으로"
+      }
+    ]
+  },
+  {
+    "id": 25854,
+    "origin": "beastly",
+    "examples": [
+      {
+        "exam_en": "beastly appetites",
+        "exam_ko": "수욕(獸慾)"
+      },
+      {
+        "exam_en": "beastly talk",
+        "exam_ko": "지저분한 이야기"
+      }
+    ]
+  },
+  {
+    "id": 25860,
+    "origin": "belle",
+    "examples": [
+      {
+        "exam_en": "She was the belle of the ball  last night.",
+        "exam_ko": "그녀는 어젯밤 무도회에서 가장 아름다웠다."
+      }
+    ]
+  },
+  {
+    "id": 25869,
+    "origin": "bio",
+    "examples": [
+      {
+        "exam_en": "biocatalyst",
+        "exam_ko": "[생화학] 생체 촉매"
+      },
+      {
+        "exam_en": "bioelectric",
+        "exam_ko": "생체 전기의."
+      }
+    ]
+  },
+  {
+    "id": 25881,
+    "origin": "corpuscle",
+    "examples": [
+      {
+        "exam_en": "red corpuscles",
+        "exam_ko": "적[백]혈구."
+      }
+    ]
+  },
+  {
+    "id": 25888,
+    "origin": "cote",
+    "examples": [
+      {
+        "exam_en": "a dove-cote",
+        "exam_ko": "비둘기집."
+      }
+    ]
+  },
+  {
+    "id": 25890,
+    "origin": "cottony",
+    "examples": [
+      {
+        "exam_en": "cottony clouds",
+        "exam_ko": "솜구름."
+      }
+    ]
+  },
+  {
+    "id": 25897,
+    "origin": "gentility",
+    "examples": [
+      {
+        "exam_en": "shabby gentility",
+        "exam_ko": "(체면 차리기 위한) 구차한 양반 행세."
+      }
+    ]
+  },
+  {
+    "id": 25938,
+    "origin": "mousse",
+    "examples": [
+      {
+        "exam_en": "I'd like to order a chocolate mousse.",
+        "exam_ko": "나는 초콜릿 무스를 주문하고 싶다."
+      }
+    ]
+  },
+  {
+    "id": 25939,
+    "origin": "curtsy",
+    "examples": [
+      {
+        "exam_en": "make a curtsy to",
+        "exam_ko": "…에게 인사[절]를 하다."
+      }
+    ]
+  },
+  {
+    "id": 25945,
+    "origin": "dearly",
+    "examples": [
+      {
+        "exam_en": "He paid dearly for his folly.",
+        "exam_ko": "바보짓을 해서 큰 대가를 치렀다[톡톡히 혼났다]"
+      },
+      {
+        "exam_en": "Our happiness was dearly bought.",
+        "exam_ko": "우리들의 행복은 큰 희생 끝에 얻은 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 25957,
+    "origin": "depute",
+    "examples": [
+      {
+        "exam_en": "I deputed him to look after the factory during my absence.",
+        "exam_ko": "나의 부재 중에 그를 공장 관리의 대행자로 삼았다."
+      }
+    ]
+  }
+]

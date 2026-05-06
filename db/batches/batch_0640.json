@@ -1,0 +1,258 @@
+[
+  {
+    "id": 22597,
+    "origin": "ermine",
+    "examples": [
+      {
+        "exam_en": "wear the ermine",
+        "exam_ko": "판사직에 취임하다."
+      }
+    ]
+  },
+  {
+    "id": 22604,
+    "origin": "riddled",
+    "examples": [
+      {
+        "exam_en": "The report was riddled with errors and inaccuracies.",
+        "exam_ko": "그 보고서는 오류와 부정확한 내용으로 가득 차 있었다."
+      }
+    ]
+  },
+  {
+    "id": 22605,
+    "origin": "pall",
+    "examples": [
+      {
+        "exam_en": "His jokes began to pall on me.",
+        "exam_ko": "그의 농담도 신물이 나기 시작했다."
+      },
+      {
+        "exam_en": "I palled of too many sweets.",
+        "exam_ko": "과자를 너무 먹어서 신물이 난다."
+      }
+    ]
+  },
+  {
+    "id": 22610,
+    "origin": "conceivably",
+    "examples": [
+      {
+        "exam_en": "Our plan could conceivably fail.",
+        "exam_ko": "우리의 계획은 어쩌면 실패할 수 있다(※의문문의 Could our plan conceivably fail?은 좋지만, *Conceivably, could our plan fail?은 불가)."
+      },
+      {
+        "exam_en": "They can't conceivably leave now.",
+        "exam_ko": "그들은 지금은 아무래도 떠날 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 22614,
+    "origin": "shrewdness",
+    "examples": [
+      {
+        "exam_en": "With great shrewdness, Jane decided not to tell him the news she had heard that morning.",
+        "exam_ko": "아주 현명하게도. 제인은 그녀가 그날 아침에 들은 뉴스를 그에게 전하지 않기로 했다."
+      }
+    ]
+  },
+  {
+    "id": 22616,
+    "origin": "adjudge",
+    "examples": [
+      {
+        "exam_en": "adjudge the criminal  guilty",
+        "exam_ko": "죄인에게 유죄의 판결을 내리다"
+      },
+      {
+        "exam_en": "The signature in the contract was adjudged invalid.",
+        "exam_ko": "그 계약서의 서명은 무효라고 판결되었다."
+      }
+    ]
+  },
+  {
+    "id": 22621,
+    "origin": "whiten",
+    "examples": [
+      {
+        "exam_en": "whiten a wall",
+        "exam_ko": "벽을 희게 칠하다"
+      },
+      {
+        "exam_en": "Snow whitened the mountains.",
+        "exam_ko": "산들이 눈으로 하얗게 뒤덮였다."
+      }
+    ]
+  },
+  {
+    "id": 22629,
+    "origin": "climacteric",
+    "examples": [
+      {
+        "exam_en": "the grand climacteric",
+        "exam_ko": "대액년(63세)."
+      }
+    ]
+  },
+  {
+    "id": 22630,
+    "origin": "annuity",
+    "examples": [
+      {
+        "exam_en": "an annuity bond",
+        "exam_ko": "연금 증서"
+      },
+      {
+        "exam_en": "a life annuity",
+        "exam_ko": "종신 연금."
+      }
+    ]
+  },
+  {
+    "id": 22632,
+    "origin": "mechanics",
+    "examples": [
+      {
+        "exam_en": "celestial mechanics",
+        "exam_ko": "천체 역학"
+      },
+      {
+        "exam_en": "practical mechanics",
+        "exam_ko": "기계 공학."
+      }
+    ]
+  },
+  {
+    "id": 22634,
+    "origin": "summons",
+    "examples": [
+      {
+        "exam_en": "He received a summons to appear in court.  ",
+        "exam_ko": "그는 법정에 출두하라는 소환장을 받았다."
+      },
+      {
+        "exam_en": "He has received several summonses in the past few months. ",
+        "exam_ko": "그는 지난 몇 달 동안에 소환장을 여러 장 받았다."
+      },
+      {
+        "exam_en": "He received a summons to appear in court.",
+        "exam_ko": "그는 법정에 출두하라는 소환장을 받았다."
+      },
+      {
+        "exam_en": "He has received several summonses in the past few months.",
+        "exam_ko": "그는 지난 몇 달 동안에 소환장을 여러 장 받았다."
+      }
+    ]
+  },
+  {
+    "id": 22636,
+    "origin": "questioning",
+    "examples": [
+      {
+        "exam_en": "give a person a questioning look",
+        "exam_ko": "의아스러운 표정으로 남을 보다."
+      }
+    ]
+  },
+  {
+    "id": 22638,
+    "origin": "voting",
+    "examples": [
+      {
+        "exam_en": "voting paper",
+        "exam_ko": "(영) 투표 용지(=(미) ballot)"
+      },
+      {
+        "exam_en": "voting stock",
+        "exam_ko": "결의권 주."
+      }
+    ]
+  },
+  {
+    "id": 22640,
+    "origin": "mimicry",
+    "examples": [
+      {
+        "exam_en": "in mimicry of",
+        "exam_ko": "…을 흉내내어."
+      },
+      {
+        "exam_en": "My brother is very good at mimicry.",
+        "exam_ko": "내 남동생 흉내 정말 잘 내."
+      }
+    ]
+  },
+  {
+    "id": 22643,
+    "origin": "infested",
+    "examples": [
+      {
+        "exam_en": "the rat-infested slums",
+        "exam_ko": "쥐가 들끓는 슬럼가"
+      },
+      {
+        "exam_en": "the shark-infested waters",
+        "exam_ko": "상어가 들끓는 해역."
+      }
+    ]
+  },
+  {
+    "id": 22644,
+    "origin": "anchorage",
+    "examples": [
+      {
+        "exam_en": "Her closest friend became her anchorage.",
+        "exam_ko": "그녀의 절친한 친구가 의지가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 22646,
+    "origin": "mucus",
+    "examples": [
+      {
+        "exam_en": "nasal mucus",
+        "exam_ko": "콧물"
+      },
+      {
+        "exam_en": "cough up mucus",
+        "exam_ko": "기침하여 점액을 내뱉다."
+      }
+    ]
+  },
+  {
+    "id": 22657,
+    "origin": "gang",
+    "examples": [
+      {
+        "exam_en": "the gang at the office",
+        "exam_ko": "회사의 동료"
+      },
+      {
+        "exam_en": "be of a gang",
+        "exam_ko": "한 패[같은 패거리]다."
+      }
+    ]
+  },
+  {
+    "id": 22662,
+    "origin": "bombing",
+    "examples": [
+      {
+        "exam_en": "Heavy bombing did great damage to the town.",
+        "exam_ko": "격렬한 폭격이 그 도시에 큰 피해를 주었다."
+      }
+    ]
+  },
+  {
+    "id": 22663,
+    "origin": "magnetize",
+    "examples": [
+      {
+        "exam_en": "The actor's words magnetized the audience.",
+        "exam_ko": "그 배우의 대사는 청중을 매료했다."
+      }
+    ]
+  }
+]

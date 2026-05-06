@@ -1,0 +1,270 @@
+[
+  {
+    "id": 18761,
+    "origin": "losing",
+    "examples": [
+      {
+        "exam_en": "play on a losing side",
+        "exam_ko": "지는 편에 붙다[에서 플레이하다]."
+      }
+    ]
+  },
+  {
+    "id": 18766,
+    "origin": "handicapped",
+    "examples": [
+      {
+        "exam_en": "a physically handicapped person",
+        "exam_ko": "신체 장애인"
+      },
+      {
+        "exam_en": "a handicapped toilet",
+        "exam_ko": "장애인용 변기."
+      }
+    ]
+  },
+  {
+    "id": 18770,
+    "origin": "illusory",
+    "examples": [
+      {
+        "exam_en": "All such impressions are illusory.",
+        "exam_ko": "그러한 인상은 모두가 허황된 것이다."
+      },
+      {
+        "exam_en": "an illusory sense of security",
+        "exam_ko": "환상의 평화."
+      }
+    ]
+  },
+  {
+    "id": 18773,
+    "origin": "heyday",
+    "examples": [
+      {
+        "exam_en": "a great singer in his heyday",
+        "exam_ko": "절정기에 있는 인기 가수."
+      }
+    ]
+  },
+  {
+    "id": 18777,
+    "origin": "emblem",
+    "examples": [
+      {
+        "exam_en": "the emblem of a company",
+        "exam_ko": "사장(社章)"
+      },
+      {
+        "exam_en": "The olive branch is the emblem of peace.",
+        "exam_ko": "올리브 가지는 평화의 상징이다."
+      }
+    ]
+  },
+  {
+    "id": 18778,
+    "origin": "elude",
+    "examples": [
+      {
+        "exam_en": "elude one's pursuers",
+        "exam_ko": "추적자로부터 벗어나다"
+      },
+      {
+        "exam_en": "elude one's responsibilities",
+        "exam_ko": "책임을 면하다"
+      }
+    ]
+  },
+  {
+    "id": 18779,
+    "origin": "disarmament",
+    "examples": [
+      {
+        "exam_en": "nuclear disarmament",
+        "exam_ko": "핵군축"
+      },
+      {
+        "exam_en": "unilateral disarmament",
+        "exam_ko": "일방적 군축."
+      }
+    ]
+  },
+  {
+    "id": 18780,
+    "origin": "devoid",
+    "examples": [
+      {
+        "exam_en": "a well devoid of water",
+        "exam_ko": "물이 없는 우물"
+      },
+      {
+        "exam_en": "He is devoid of human feeling.",
+        "exam_ko": "그는 인간미가[상식이] 없다."
+      }
+    ]
+  },
+  {
+    "id": 18781,
+    "origin": "contiguous",
+    "examples": [
+      {
+        "exam_en": "a lot contiguous to the road",
+        "exam_ko": "도로에 접한 대지."
+      },
+      {
+        "exam_en": "Cut stone from one block or contiguous, matched blocks (in which) natural markings occur.",
+        "exam_ko": "자연적 표시가 있는 하나의 블록 또는 인접하고 일치하는 블록에서 돌을 자르십시오."
+      }
+    ]
+  },
+  {
+    "id": 18782,
+    "origin": "assiduous",
+    "examples": [
+      {
+        "exam_en": "assiduous study",
+        "exam_ko": "꾸준한 연구."
+      },
+      {
+        "exam_en": "an assiduous student",
+        "exam_ko": "부지런히 공부하는 학생"
+      }
+    ]
+  },
+  {
+    "id": 18783,
+    "origin": "adulterate",
+    "examples": [
+      {
+        "exam_en": "adulterate milk with water",
+        "exam_ko": "우유에 물을 타다."
+      }
+    ]
+  },
+  {
+    "id": 18784,
+    "origin": "adjoining",
+    "examples": [
+      {
+        "exam_en": "the adjoining room",
+        "exam_ko": "붙어 있는 방"
+      },
+      {
+        "exam_en": "an adjoining garden",
+        "exam_ko": "인접한 정원."
+      }
+    ]
+  },
+  {
+    "id": 18785,
+    "origin": "abase",
+    "examples": [
+      {
+        "exam_en": "abase oneself",
+        "exam_ko": "저자세가 되다; 품위를 손상하다."
+      },
+      {
+        "exam_en": "He abased himself before his employer.",
+        "exam_ko": "그는 고용주 앞에서 스스로 자신을 낮추었다."
+      }
+    ]
+  },
+  {
+    "id": 18786,
+    "origin": "abash",
+    "examples": [
+      {
+        "exam_en": "abash a person by sneering",
+        "exam_ko": "조소하여 남을 당황하게 하다."
+      }
+    ]
+  },
+  {
+    "id": 18787,
+    "origin": "abet",
+    "examples": [
+      {
+        "exam_en": "abet a crime",
+        "exam_ko": "범죄를 교사하다"
+      },
+      {
+        "exam_en": "abet a person in a theft",
+        "exam_ko": "남을 꼬드겨 도둑질을 시키다."
+      }
+    ]
+  },
+  {
+    "id": 18788,
+    "origin": "abjure",
+    "examples": [
+      {
+        "exam_en": "abjure one's doctrine",
+        "exam_ko": "자기의 학설을 정식으로 철회하다."
+      },
+      {
+        "exam_en": "abjure one's oath",
+        "exam_ko": "맹세를 저버리다."
+      },
+      {
+        "exam_en": "After witnessing the tragic consequences of violence, she made a firm decision to abjure aggression and promote peaceful resolutions.",
+        "exam_ko": "폭력의 비참한 결과를 목격한 후, 그녀는 적극적인 공격을 포기하고 평화로운 해결책을 추진하기로 확고한 결심을 했다."
+      }
+    ]
+  },
+  {
+    "id": 18789,
+    "origin": "abrade",
+    "examples": [
+      {
+        "exam_en": "All seams and unprimed margins and abraded areas shall be treated in accordance with the degree of surface preparation specified.",
+        "exam_ko": "모든 이음새, 밑칠 되지 않은 가장자리, 마모된 영역은 명시된 표면 준비에 따라 처리되어야 한다."
+      },
+      {
+        "exam_en": "The rough surface of the sandpaper gradually began to abrade the wood, smoothing out its rough edges.",
+        "exam_ko": "사포(沙布)의 거친 표면은 점차 목재를 닦아내며 그 거친 모서리를 매끄럽게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 18790,
+    "origin": "abrogate",
+    "examples": [
+      {
+        "exam_en": "The ministry proposed to abrogate the electoral law of 1849, and restore universal suffrage.",
+        "exam_ko": "내각은 1849년 선거법을 폐지하고 보통 선거권을 회복할 것을 제안했다."
+      }
+    ]
+  },
+  {
+    "id": 18791,
+    "origin": "abscond",
+    "examples": [
+      {
+        "exam_en": "The thief absconded from the country.",
+        "exam_ko": "도둑은 국외로 달아났다."
+      },
+      {
+        "exam_en": "abscond with the company's money",
+        "exam_ko": "회사 공금을 가지고 달아나다."
+      }
+    ]
+  },
+  {
+    "id": 18792,
+    "origin": "abstemious",
+    "examples": [
+      {
+        "exam_en": "an abstemious life",
+        "exam_ko": "금욕[절제] 생활"
+      },
+      {
+        "exam_en": "He was of abstemious habit.",
+        "exam_ko": "그는 평소에 폭음 폭식을 삼갔다."
+      },
+      {
+        "exam_en": "He maintained an abstemious lifestyle, avoiding excessive indulgence in food and drink.",
+        "exam_ko": "그는 절제된 생활을 유지하여 음식과 술에 과도한 탐닉을 피했다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1413,
+    "origin": "preferable",
+    "examples": [
+      {
+        "exam_en": "It is <strong class=\"target-word\">preferable</strong> that he arrives by tomorrow.",
+        "exam_ko": "그가 내일까지 도착하는 것이 <strong class=\"target-word\">바람직하다</strong>."
+      },
+      {
+        "exam_en": "Working is <strong class=\"target-word\">preferable</strong> to doing nothing.",
+        "exam_ko": "아무것도 안 하는 것보다 일하는 편이 <strong class=\"target-word\">낫다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1414,
+    "origin": "possibility",
+    "examples": [
+      {
+        "exam_en": "There is a good <strong class=\"target-word\">possibility</strong> he will pass.",
+        "exam_ko": "그가 합격할 <strong class=\"target-word\">가능성</strong>이 상당히 높다."
+      },
+      {
+        "exam_en": "There is a <strong class=\"target-word\">possibility</strong> he will be promoted soon.",
+        "exam_ko": "그는 곧 승진할 <strong class=\"target-word\">가능성</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 1415,
+    "origin": "motivation",
+    "examples": [
+      {
+        "exam_en": "Workers need <strong class=\"target-word\">motivation</strong> to raise productivity.",
+        "exam_ko": "노동자에게는 생산성 향상을 위한 <strong class=\"target-word\">동기 부여</strong>가 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 1416,
+    "origin": "loyalty",
+    "examples": [
+      {
+        "exam_en": "She showed great <strong class=\"target-word\">loyalty</strong> to the cause.",
+        "exam_ko": "그녀는 그 신조에 강한 <strong class=\"target-word\">충성심</strong>을 보였다."
+      },
+      {
+        "exam_en": "Personal <strong class=\"target-word\">loyalty</strong> matters most to him.",
+        "exam_ko": "그에게는 개인적인 <strong class=\"target-word\">의리</strong>가 가장 중요하다."
+      }
+    ]
+  },
+  {
+    "id": 1417,
+    "origin": "lesson",
+    "examples": [
+      {
+        "exam_en": "Today's <strong class=\"target-word\">lesson</strong> covers articles like \"a\" and \"the\".",
+        "exam_ko": "오늘 <strong class=\"target-word\">수업</strong>은 \"a\"와 \"the\" 같은 관사를 다룬다."
+      },
+      {
+        "exam_en": "She attends piano <strong class=\"target-word\">lessons</strong> every Saturday.",
+        "exam_ko": "그녀는 매주 토요일 피아노 <strong class=\"target-word\">수업</strong>에 참석한다."
+      }
+    ]
+  },
+  {
+    "id": 1418,
+    "origin": "information",
+    "examples": [
+      {
+        "exam_en": "Please provide relevant <strong class=\"target-word\">information</strong> about the case.",
+        "exam_ko": "사건에 관한 관련 <strong class=\"target-word\">정보</strong>를 제공해 주세요."
+      },
+      {
+        "exam_en": "The report contains detailed <strong class=\"target-word\">information</strong> about the results.",
+        "exam_ko": "그 보고서에는 결과에 대한 상세한 <strong class=\"target-word\">정보</strong>가 담겨 있다."
+      },
+      {
+        "exam_en": "So, we can get more detailed <strong class=\"target-word\">information</strong> about your condition.",
+        "exam_ko": "그래서 저희가 환자분의 상태를 더 자세한 <strong class=\"target-word\">정보</strong>를 파악할 수 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 1419,
+    "origin": "influence",
+    "examples": [
+      {
+        "exam_en": "The media has an indirect <strong class=\"target-word\">influence</strong> on public opinion.",
+        "exam_ko": "미디어는 여론에 간접적인 <strong class=\"target-word\">영향</strong>을 미친다."
+      },
+      {
+        "exam_en": "Parents have a great <strong class=\"target-word\">influence</strong> on their children.",
+        "exam_ko": "부모는 자녀에게 막대한 <strong class=\"target-word\">영향</strong>을 준다."
+      }
+    ]
+  },
+  {
+    "id": 1420,
+    "origin": "haggle",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">haggled</strong> with the seller over the price.",
+        "exam_ko": "그녀는 판매자와 가격을 <strong class=\"target-word\">흥정했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">haggled</strong> over a small amount of money.",
+        "exam_ko": "그들은 적은 돈을 두고 <strong class=\"target-word\">옥신각신했다</strong>."
+      },
+      {
+        "exam_en": "At the flea market, it is common to <strong class=\"target-word\">haggle</strong> over prices.",
+        "exam_ko": "벼룩 시장에서는 가격을 <strong class=\"target-word\">흥정하는</strong> 것이 흔하다."
+      }
+    ]
+  },
+  {
+    "id": 1421,
+    "origin": "goods",
+    "examples": [
+      {
+        "exam_en": "Refrigerators are classified as durable <strong class=\"target-word\">goods</strong>.",
+        "exam_ko": "냉장고는 내구 <strong class=\"target-word\">재화</strong>로 분류된다."
+      },
+      {
+        "exam_en": "The economy depends on the exchange of <strong class=\"target-word\">goods</strong> and services.",
+        "exam_ko": "경제는 <strong class=\"target-word\">재화</strong>와 서비스의 교환에 의존한다."
+      }
+    ]
+  },
+  {
+    "id": 1422,
+    "origin": "essential",
+    "examples": [
+      {
+        "exam_en": "Trust is an <strong class=\"target-word\">essential</strong> part of any relationship.",
+        "exam_ko": "신뢰는 모든 관계에서 <strong class=\"target-word\">필수적인</strong> 부분이다."
+      },
+      {
+        "exam_en": "Good timing is <strong class=\"target-word\">essential</strong> to our plans.",
+        "exam_ko": "적절한 시기를 택하는 것이 우리 계획에 <strong class=\"target-word\">필수적이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1423,
+    "origin": "emotion",
+    "examples": [
+      {
+        "exam_en": "The speech appealed to <strong class=\"target-word\">emotion</strong> rather than reason.",
+        "exam_ko": "그 연설은 이성보다 <strong class=\"target-word\">감정</strong>에 호소했다."
+      },
+      {
+        "exam_en": "His voice betrayed his <strong class=\"target-word\">emotions</strong>.",
+        "exam_ko": "그의 목소리가 그의 <strong class=\"target-word\">감정</strong>을 드러냈다."
+      }
+    ]
+  },
+  {
+    "id": 1424,
+    "origin": "effort",
+    "examples": [
+      {
+        "exam_en": "The team launched a rescue <strong class=\"target-word\">effort</strong> immediately.",
+        "exam_ko": "팀은 즉시 구출 <strong class=\"target-word\">작업</strong>에 착수했다."
+      },
+      {
+        "exam_en": "He achieved success through sheer <strong class=\"target-word\">effort</strong>.",
+        "exam_ko": "그는 순전한 <strong class=\"target-word\">노력</strong>으로 성공을 거뒀다."
+      }
+    ]
+  },
+  {
+    "id": 1425,
+    "origin": "effective",
+    "examples": [
+      {
+        "exam_en": "The doctor recommended an <strong class=\"target-word\">effective</strong> medical treatment.",
+        "exam_ko": "의사는 <strong class=\"target-word\">효과적인</strong> 치료법을 권했다."
+      },
+      {
+        "exam_en": "This vaccine is <strong class=\"target-word\">effective</strong> against polio.",
+        "exam_ko": "이 백신은 소아마비에 <strong class=\"target-word\">효과적이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1426,
+    "origin": "distract",
+    "examples": [
+      {
+        "exam_en": "The television <strong class=\"target-word\">distracts</strong> me from my studies.",
+        "exam_ko": "텔레비전 때문에 공부에 <strong class=\"target-word\">집중이 안 된다</strong>."
+      },
+      {
+        "exam_en": "Worry <strong class=\"target-word\">distracts</strong> her attention.",
+        "exam_ko": "걱정이 그녀의 주의를 <strong class=\"target-word\">산만하게 한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1427,
+    "origin": "disrupt",
+    "examples": [
+      {
+        "exam_en": "The news <strong class=\"target-word\">disrupted</strong> the meeting.",
+        "exam_ko": "그 소식이 회의를 <strong class=\"target-word\">어수선하게 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1428,
+    "origin": "deliver",
+    "examples": [
+      {
+        "exam_en": "The postman <strong class=\"target-word\">delivers</strong> letters every morning.",
+        "exam_ko": "우체부는 매일 아침 편지를 <strong class=\"target-word\">배달한다</strong>."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">delivers</strong> excellent services to customers.",
+        "exam_ko": "그 회사는 고객에게 훌륭한 서비스를 <strong class=\"target-word\">제공한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1429,
+    "origin": "confident",
+    "examples": [
+      {
+        "exam_en": "The team felt <strong class=\"target-word\">confident</strong> of victory.",
+        "exam_ko": "팀은 승리를 <strong class=\"target-word\">확신했다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">confident</strong> his patient will recover.",
+        "exam_ko": "그는 환자가 반드시 회복하리라고 <strong class=\"target-word\">확신하고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1430,
+    "origin": "competition",
+    "examples": [
+      {
+        "exam_en": "There is fierce <strong class=\"target-word\">competition</strong> for good grades.",
+        "exam_ko": "좋은 성적을 위한 치열한 <strong class=\"target-word\">경쟁</strong>이 있다."
+      },
+      {
+        "exam_en": "The two companies are in fierce <strong class=\"target-word\">competition</strong>.",
+        "exam_ko": "두 회사는 치열한 <strong class=\"target-word\">경쟁</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 1431,
+    "origin": "commute",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">commutes</strong> to work by train every day.",
+        "exam_ko": "그는 매일 기차로 직장에 <strong class=\"target-word\">통근한다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">commutes</strong> two hours each way.",
+        "exam_ko": "그녀는 편도 두 시간을 <strong class=\"target-word\">통근한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1432,
+    "origin": "atmosphere",
+    "examples": [
+      {
+        "exam_en": "Venus has a thick <strong class=\"target-word\">atmosphere</strong> of carbon dioxide.",
+        "exam_ko": "금성은 이산화탄소로 이루어진 두꺼운 <strong class=\"target-word\">대기</strong>를 가지고 있다."
+      },
+      {
+        "exam_en": "The shuttle Columbia reentered the <strong class=\"target-word\">atmosphere</strong>.",
+        "exam_ko": "우주 왕복선 콜롬비아가 <strong class=\"target-word\">대기권</strong>으로 재돌입했다."
+      }
+    ]
+  }
+]

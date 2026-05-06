@@ -1,0 +1,270 @@
+[
+  {
+    "id": 11062,
+    "origin": "fortify",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">fortified</strong> the city against attack.",
+        "exam_ko": "그들은 공격에 대비해 도시를 <strong class=\"target-word\">요새화했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">fortified</strong> himself with a glass of whiskey.",
+        "exam_ko": "그는 위스키 한 잔으로 기운을 <strong class=\"target-word\">북돋웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11066,
+    "origin": "shunt",
+    "examples": [
+      {
+        "exam_en": "The children were <strong class=\"target-word\">shunted</strong> into special classes.",
+        "exam_ko": "아이들은 특수 학급으로 <strong class=\"target-word\">밀려났다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">shunted</strong> the talk to a lighter topic.",
+        "exam_ko": "그들은 대화를 가벼운 주제로 <strong class=\"target-word\">돌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11068,
+    "origin": "bipartisan",
+    "examples": [
+      {
+        "exam_en": "They pursued a <strong class=\"target-word\">bipartisan</strong> approach to foreign policy.",
+        "exam_ko": "그들은 외교 정책에 <strong class=\"target-word\">초당파적</strong> 접근을 추구했다."
+      },
+      {
+        "exam_en": "The bill passed with <strong class=\"target-word\">bipartisan</strong> support.",
+        "exam_ko": "그 법안은 <strong class=\"target-word\">양당의</strong> 지지로 통과되었다."
+      }
+    ]
+  },
+  {
+    "id": 11069,
+    "origin": "strangulation",
+    "examples": [
+      {
+        "exam_en": "Death was caused by <strong class=\"target-word\">strangulation</strong>.",
+        "exam_ko": "사망 원인은 <strong class=\"target-word\">교살</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 11070,
+    "origin": "scuffle",
+    "examples": [
+      {
+        "exam_en": "A mouse <strong class=\"target-word\">scuffled</strong> through the dry leaves.",
+        "exam_ko": "생쥐 한 마리가 마른 나뭇잎 사이를 <strong class=\"target-word\">버석거리며</strong> 지나갔다."
+      },
+      {
+        "exam_en": "A brief <strong class=\"target-word\">scuffle</strong> broke out near the entrance.",
+        "exam_ko": "입구 근처에서 짧은 <strong class=\"target-word\">난투극</strong>이 벌어졌다."
+      }
+    ]
+  },
+  {
+    "id": 11071,
+    "origin": "bureaucrat",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">bureaucrats</strong> delayed the project for months.",
+        "exam_ko": "<strong class=\"target-word\">관료들</strong>이 그 프로젝트를 수개월간 지연시켰다."
+      }
+    ]
+  },
+  {
+    "id": 11075,
+    "origin": "homey",
+    "examples": [
+      {
+        "exam_en": "The little inn felt warm and <strong class=\"target-word\">homey</strong>.",
+        "exam_ko": "그 작은 여인숙은 따뜻하고 <strong class=\"target-word\">아늑했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11076,
+    "origin": "tipped",
+    "examples": [
+      {
+        "exam_en": "The sword was <strong class=\"target-word\">tipped</strong> with poison.",
+        "exam_ko": "그 칼은 끝에 독이 <strong class=\"target-word\">묻어 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11078,
+    "origin": "scrub",
+    "examples": [
+      {
+        "exam_en": "She got down on her knees to <strong class=\"target-word\">scrub</strong> the floor.",
+        "exam_ko": "그녀는 무릎을 꿇고 바닥을 <strong class=\"target-word\">박박 닦았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">scrubbed</strong> the cold cream off her face.",
+        "exam_ko": "그녀는 얼굴의 콜드크림을 <strong class=\"target-word\">닦아냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11079,
+    "origin": "mixture",
+    "examples": [
+      {
+        "exam_en": "Stir the <strong class=\"target-word\">mixture</strong> of flour and eggs well.",
+        "exam_ko": "밀가루와 달걀의 <strong class=\"target-word\">혼합물</strong>을 잘 저으세요."
+      },
+      {
+        "exam_en": "The doctor prescribed a cough <strong class=\"target-word\">mixture</strong>.",
+        "exam_ko": "의사는 기침 <strong class=\"target-word\">시럽</strong>을 처방했다."
+      }
+    ]
+  },
+  {
+    "id": 11081,
+    "origin": "rinse",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">rinse</strong> the bucket before using it.",
+        "exam_ko": "사용하기 전에 양동이를 <strong class=\"target-word\">헹궈</strong> 주세요."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rinsed</strong> the soap out of the shirts.",
+        "exam_ko": "그녀는 셔츠에서 비누를 <strong class=\"target-word\">헹궈냈다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Rinse</strong> your mouth after brushing.",
+        "exam_ko": "양치 후 입안을 <strong class=\"target-word\">헹구세요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11082,
+    "origin": "soak",
+    "examples": [
+      {
+        "exam_en": "Leave the beans to <strong class=\"target-word\">soak</strong> in water overnight.",
+        "exam_ko": "콩을 물에 하룻밤 <strong class=\"target-word\">담가</strong> 두세요."
+      },
+      {
+        "exam_en": "The mud <strong class=\"target-word\">soaked</strong> through his shoes.",
+        "exam_ko": "진흙이 그의 신발 속으로 <strong class=\"target-word\">스며들었다</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Soak</strong> the rice in clean water for 30 minutes.",
+        "exam_ko": "깨끗한 물에 쌀을 30분간 <strong class=\"target-word\">담가</strong> 두세요."
+      }
+    ]
+  },
+  {
+    "id": 11083,
+    "origin": "flour",
+    "examples": [
+      {
+        "exam_en": "Mix the <strong class=\"target-word\">flour</strong> and water into a dough.",
+        "exam_ko": "<strong class=\"target-word\">밀가루</strong>와 물을 반죽이 되도록 섞으세요."
+      }
+    ]
+  },
+  {
+    "id": 11084,
+    "origin": "dough",
+    "examples": [
+      {
+        "exam_en": "He throws his <strong class=\"target-word\">dough</strong> around like it's nothing.",
+        "exam_ko": "그는 <strong class=\"target-word\">돈</strong>을 아무것도 아닌 것처럼 낭비한다."
+      },
+      {
+        "exam_en": "She is rolling in <strong class=\"target-word\">dough</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">돈</strong>이 넘쳐난다."
+      }
+    ]
+  },
+  {
+    "id": 11085,
+    "origin": "broil",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">broiled</strong> a steak for dinner.",
+        "exam_ko": "그는 저녁으로 스테이크를 <strong class=\"target-word\">구웠다</strong>."
+      },
+      {
+        "exam_en": "It was <strong class=\"target-word\">broiling</strong> hot outside.",
+        "exam_ko": "밖은 <strong class=\"target-word\">찌는 듯이</strong> 더웠다."
+      }
+    ]
+  },
+  {
+    "id": 11086,
+    "origin": "roast",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">roasted</strong> meat on a spit over the fire.",
+        "exam_ko": "그들은 불 위에서 꼬챙이에 고기를 꽂아 <strong class=\"target-word\">구웠다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">roasted</strong> the coffee beans until they turned brown.",
+        "exam_ko": "그녀는 커피 원두가 갈색이 될 때까지 <strong class=\"target-word\">볶았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11088,
+    "origin": "simmer",
+    "examples": [
+      {
+        "exam_en": "The stew was <strong class=\"target-word\">simmering</strong> gently in the pot.",
+        "exam_ko": "스튜가 냄비 안에서 살살 <strong class=\"target-word\">끓고 있었다</strong>."
+      },
+      {
+        "exam_en": "The soup is <strong class=\"target-word\">simmering</strong> on the stove.",
+        "exam_ko": "수프가 가스레인지 위에서 <strong class=\"target-word\">끓고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11093,
+    "origin": "valve",
+    "examples": [
+      {
+        "exam_en": "The boiler has a safety <strong class=\"target-word\">valve</strong> to prevent explosions.",
+        "exam_ko": "보일러에는 폭발을 막는 안전 <strong class=\"target-word\">밸브</strong>가 있다."
+      },
+      {
+        "exam_en": "Turn the throttle <strong class=\"target-word\">valve</strong> to control the flow.",
+        "exam_ko": "유량을 조절하려면 조절 <strong class=\"target-word\">밸브</strong>를 돌리세요."
+      },
+      {
+        "exam_en": "Cap the <strong class=\"target-word\">valve</strong> to prevent moisture from entering.",
+        "exam_ko": "습기가 들어오지 않도록 <strong class=\"target-word\">밸브</strong>를 막으세요."
+      }
+    ]
+  },
+  {
+    "id": 11094,
+    "origin": "blanch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">blanched</strong> the vegetables before freezing them.",
+        "exam_ko": "그녀는 채소를 냉동하기 전에 <strong class=\"target-word\">데쳤다</strong>."
+      },
+      {
+        "exam_en": "Old age <strong class=\"target-word\">blanches</strong> the hair.",
+        "exam_ko": "나이가 들면 머리카락이 <strong class=\"target-word\">희어진다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 11095,
+    "origin": "abhorrence",
+    "examples": [
+      {
+        "exam_en": "She felt deep <strong class=\"target-word\">abhorrence</strong> for any form of cruelty.",
+        "exam_ko": "그녀는 어떤 형태의 잔인함에도 깊은 <strong class=\"target-word\">혐오감</strong>을 느꼈다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1473,
+    "origin": "twist",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">twisted</strong> three strands together tightly.",
+        "exam_ko": "그녀는 세 가닥을 함께 단단히 <strong class=\"target-word\">꼬았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">twisted</strong> the threads to make a rope.",
+        "exam_ko": "그는 실을 <strong class=\"target-word\">꼬아</strong> 밧줄을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1474,
+    "origin": "respect",
+    "examples": [
+      {
+        "exam_en": "Students should show <strong class=\"target-word\">respect</strong> for the elderly.",
+        "exam_ko": "학생들은 연장자에 대한 <strong class=\"target-word\">경의</strong>를 표해야 한다."
+      },
+      {
+        "exam_en": "They held a ceremony in <strong class=\"target-word\">respect</strong> for the fallen soldiers.",
+        "exam_ko": "그들은 전사한 군인들에 대한 <strong class=\"target-word\">경의</strong>를 표하기 위해 행사를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 1475,
+    "origin": "administer",
+    "examples": [
+      {
+        "exam_en": "She was appointed to <strong class=\"target-word\">administer</strong> public affairs.",
+        "exam_ko": "그녀는 공무를 <strong class=\"target-word\">담당하도록</strong> 임명되었다."
+      },
+      {
+        "exam_en": "The judge <strong class=\"target-word\">administered</strong> justice fairly.",
+        "exam_ko": "판사는 공정하게 재판을 <strong class=\"target-word\">집행했다</strong>."
+      },
+      {
+        "exam_en": "The government will <strong class=\"target-word\">administer</strong> vaccines to all cattle farms.",
+        "exam_ko": "정부는 모든 소 사육 농가에 백신을 <strong class=\"target-word\">배분할</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 1476,
+    "origin": "command",
+    "examples": [
+      {
+        "exam_en": "The general <strong class=\"target-word\">commanded</strong> the troops to withdraw.",
+        "exam_ko": "장군은 부대에 후퇴 <strong class=\"target-word\">명령을 내렸다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">commanded</strong> that the reply be faxed at once.",
+        "exam_ko": "나는 즉시 팩스로 회답하라고 <strong class=\"target-word\">명령했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1477,
+    "origin": "educate",
+    "examples": [
+      {
+        "exam_en": "They hired a tutor to <strong class=\"target-word\">educate</strong> their child.",
+        "exam_ko": "그들은 아이를 <strong class=\"target-word\">교육하기</strong> 위해 가정 교사를 고용했다."
+      },
+      {
+        "exam_en": "Parents <strong class=\"target-word\">educate</strong> their children to be obedient.",
+        "exam_ko": "부모는 아이들이 순종하도록 <strong class=\"target-word\">가르친다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1478,
+    "origin": "invent",
+    "examples": [
+      {
+        "exam_en": "Bell <strong class=\"target-word\">invented</strong> the telephone in 1876.",
+        "exam_ko": "벨은 1876년에 전화를 <strong class=\"target-word\">발명했다</strong>."
+      },
+      {
+        "exam_en": "The newly <strong class=\"target-word\">invented</strong> device changed daily life.",
+        "exam_ko": "새로 <strong class=\"target-word\">발명된</strong> 장치가 일상생활을 바꾸었다."
+      }
+    ]
+  },
+  {
+    "id": 1479,
+    "origin": "abolish",
+    "examples": [
+      {
+        "exam_en": "How can we <strong class=\"target-word\">abolish</strong> war?",
+        "exam_ko": "어떻게 하면 전쟁을 <strong class=\"target-word\">없앨</strong> 수 있을까?"
+      },
+      {
+        "exam_en": "Many people fought to <strong class=\"target-word\">abolish</strong> slavery during the Civil War.",
+        "exam_ko": "남북전쟁 동안 많은 사람들이 노예 제도를 <strong class=\"target-word\">폐지하기</strong> 위해 싸웠다."
+      }
+    ]
+  },
+  {
+    "id": 1480,
+    "origin": "correct",
+    "examples": [
+      {
+        "exam_en": "The teacher asked students to <strong class=\"target-word\">correct</strong> their errors.",
+        "exam_ko": "선생님은 학생들에게 잘못을 <strong class=\"target-word\">바로잡으라고</strong> 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">corrected</strong> his watch by the time signal.",
+        "exam_ko": "그는 시보를 듣고 시계를 <strong class=\"target-word\">맞추었다</strong>."
+      },
+      {
+        "exam_en": "Make sure your address and phone number are <strong class=\"target-word\">correct</strong>.",
+        "exam_ko": "주소와 전화번호가 <strong class=\"target-word\">정확한지</strong> 확인해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1481,
+    "origin": "allege",
+    "examples": [
+      {
+        "exam_en": "The lawyer <strong class=\"target-word\">alleged</strong> the suspect's guilt.",
+        "exam_ko": "변호사는 용의자의 유죄를 <strong class=\"target-word\">주장했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">alleged</strong> the matter as a fact.",
+        "exam_ko": "그녀는 그 일을 사실이라고 <strong class=\"target-word\">주장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1482,
+    "origin": "frown",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">frowned</strong> with concern about the news.",
+        "exam_ko": "그는 소식을 듣고 근심으로 <strong class=\"target-word\">얼굴을 찌푸렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">frowned</strong> at me for laughing.",
+        "exam_ko": "내가 웃자 그녀는 나를 보며 <strong class=\"target-word\">인상을 찌푸렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1483,
+    "origin": "fetch",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">fetch</strong> me that box.",
+        "exam_ko": "그 상자를 <strong class=\"target-word\">가져다줘</strong>."
+      },
+      {
+        "exam_en": "Quick, <strong class=\"target-word\">fetch</strong> the ladder.",
+        "exam_ko": "빨리 사다리를 <strong class=\"target-word\">가져와</strong>."
+      },
+      {
+        "exam_en": "I went to <strong class=\"target-word\">fetch</strong> a towel for his bath.",
+        "exam_ko": "나는 그의 목욕을 위해 수건을 <strong class=\"target-word\">가져왔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1484,
+    "origin": "envisage",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">envisaged</strong> the new sewage disposal plant.",
+        "exam_ko": "그는 새로운 하수처리소를 마음속에 <strong class=\"target-word\">그렸다</strong>."
+      },
+      {
+        "exam_en": "Nature is <strong class=\"target-word\">envisaged</strong> as a nexus of laws.",
+        "exam_ko": "자연은 율법의 연쇄 관계로 <strong class=\"target-word\">여겨진다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1485,
+    "origin": "resemble",
+    "examples": [
+      {
+        "exam_en": "An avocado <strong class=\"target-word\">resembles</strong> a pear in shape.",
+        "exam_ko": "아보카도는 모양이 배와 <strong class=\"target-word\">닮았다</strong>."
+      },
+      {
+        "exam_en": "Pat and Lynda <strong class=\"target-word\">resemble</strong> each other.",
+        "exam_ko": "패트와 린다는 서로 <strong class=\"target-word\">닮았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1486,
+    "origin": "price",
+    "examples": [
+      {
+        "exam_en": "Market <strong class=\"target-word\">prices</strong> have gone up recently.",
+        "exam_ko": "최근 시장 <strong class=\"target-word\">가격</strong>이 올랐다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">price</strong> of the car is very high.",
+        "exam_ko": "그 자동차의 <strong class=\"target-word\">가격</strong>은 매우 비싸다."
+      }
+    ]
+  },
+  {
+    "id": 1487,
+    "origin": "repair",
+    "examples": [
+      {
+        "exam_en": "The mechanic <strong class=\"target-word\">repaired</strong> the engine.",
+        "exam_ko": "정비사가 엔진을 <strong class=\"target-word\">수리했다</strong>."
+      },
+      {
+        "exam_en": "She went on a trip to <strong class=\"target-word\">repair</strong> her spirits.",
+        "exam_ko": "그녀는 기력을 <strong class=\"target-word\">회복하기</strong> 위해 여행을 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 1488,
+    "origin": "exhibit",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">exhibited</strong> new products for sale.",
+        "exam_ko": "그들은 판매용 신상품을 <strong class=\"target-word\">진열했다</strong>."
+      },
+      {
+        "exam_en": "His painting was <strong class=\"target-word\">exhibited</strong> in Paris.",
+        "exam_ko": "그의 그림은 파리에서 <strong class=\"target-word\">전시되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1489,
+    "origin": "instruct",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">instructed</strong> him in English.",
+        "exam_ko": "선생님은 그에게 영어를 <strong class=\"target-word\">가르쳤다</strong>."
+      },
+      {
+        "exam_en": "The manual <strong class=\"target-word\">instructs</strong> buyers on TV installation.",
+        "exam_ko": "안내서는 구입자에게 TV 설치법을 <strong class=\"target-word\">알려준다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1490,
+    "origin": "resume",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">resumed</strong> the conversation after lunch.",
+        "exam_ko": "그들은 점심 후 대화를 <strong class=\"target-word\">재개했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">resumed</strong> her journey after a short rest.",
+        "exam_ko": "그녀는 잠시 쉰 후 여행을 <strong class=\"target-word\">다시 계속했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1491,
+    "origin": "plead",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pleaded</strong> with the judge for mercy.",
+        "exam_ko": "그는 판사에게 자비를 <strong class=\"target-word\">빌었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">pleaded</strong> with her not to leave him.",
+        "exam_ko": "그는 그녀에게 자기를 떠나지 말라고 <strong class=\"target-word\">애원했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1492,
+    "origin": "assign",
+    "examples": [
+      {
+        "exam_en": "The manager <strong class=\"target-word\">assigned</strong> the work to a new employee.",
+        "exam_ko": "매니저는 신입 직원에게 업무를 <strong class=\"target-word\">할당했다</strong>."
+      },
+      {
+        "exam_en": "The room was <strong class=\"target-word\">assigned</strong> to the girls.",
+        "exam_ko": "그 방은 여자애들에게 <strong class=\"target-word\">배정되었다</strong>."
+      }
+    ]
+  }
+]

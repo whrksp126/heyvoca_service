@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1433,
+    "origin": "ambition",
+    "examples": [
+      {
+        "exam_en": "She has strong <strong class=\"target-word\">ambitions</strong> in politics.",
+        "exam_ko": "그녀는 정치에 강한 <strong class=\"target-word\">야망</strong>을 품고 있다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">ambition</strong> drove him to work harder.",
+        "exam_ko": "그의 <strong class=\"target-word\">야망</strong>이 그를 더 열심히 일하게 했다."
+      }
+    ]
+  },
+  {
+    "id": 1434,
+    "origin": "advantage",
+    "examples": [
+      {
+        "exam_en": "They gained a clear <strong class=\"target-word\">advantage</strong> over rivals.",
+        "exam_ko": "그들은 경쟁자들보다 명확한 <strong class=\"target-word\">우위</strong>를 얻었다."
+      },
+      {
+        "exam_en": "Good health is a great <strong class=\"target-word\">advantage</strong> in life.",
+        "exam_ko": "건강은 삶에서 큰 <strong class=\"target-word\">강점</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1435,
+    "origin": "acceptable",
+    "examples": [
+      {
+        "exam_en": "The proposal was <strong class=\"target-word\">acceptable</strong> to everyone.",
+        "exam_ko": "그 제안은 모든 사람에게 <strong class=\"target-word\">수용 가능한</strong> 것이었다."
+      },
+      {
+        "exam_en": "They offered an <strong class=\"target-word\">acceptable</strong> price for the house.",
+        "exam_ko": "그들은 집에 대해 <strong class=\"target-word\">만족스러운</strong> 가격을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 1436,
+    "origin": "geometry",
+    "examples": [
+      {
+        "exam_en": "She studies <strong class=\"target-word\">geometry</strong> in math class.",
+        "exam_ko": "그녀는 수학 수업에서 <strong class=\"target-word\">기하학</strong>을 공부한다."
+      },
+      {
+        "exam_en": "He solved a difficult <strong class=\"target-word\">geometry</strong> problem.",
+        "exam_ko": "그는 어려운 <strong class=\"target-word\">기하학</strong> 문제를 풀었다."
+      }
+    ]
+  },
+  {
+    "id": 1437,
+    "origin": "devotee",
+    "examples": [
+      {
+        "exam_en": "He's a <strong class=\"target-word\">devotee</strong> of tennis.",
+        "exam_ko": "그는 테니스의 열렬한 <strong class=\"target-word\">애호가</strong>이다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">devotee</strong> of classical music.",
+        "exam_ko": "그녀는 클래식 음악의 열성적인 <strong class=\"target-word\">신봉자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1438,
+    "origin": "virtual",
+    "examples": [
+      {
+        "exam_en": "She became the <strong class=\"target-word\">virtual</strong> leader of the team.",
+        "exam_ko": "그녀는 팀의 <strong class=\"target-word\">사실상의</strong> 리더가 되었다."
+      },
+      {
+        "exam_en": "The accident caused a <strong class=\"target-word\">virtual</strong> loss of his memory.",
+        "exam_ko": "그 사고는 그의 기억을 <strong class=\"target-word\">사실상</strong> 잃게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1439,
+    "origin": "confront",
+    "examples": [
+      {
+        "exam_en": "He had to <strong class=\"target-word\">confront</strong> the danger alone.",
+        "exam_ko": "그는 혼자 위험에 <strong class=\"target-word\">직면해야</strong> 했다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">confronted</strong> each other in the hallway.",
+        "exam_ko": "그들은 복도에서 서로 <strong class=\"target-word\">맞섰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1440,
+    "origin": "witness",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">witnessed</strong> the accident from her window.",
+        "exam_ko": "그녀는 창문에서 그 사고를 <strong class=\"target-word\">목격했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">witnessed</strong> a beautiful sunset at sea.",
+        "exam_ko": "그는 바다에서 아름다운 일몰을 <strong class=\"target-word\">목격했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1441,
+    "origin": "mutter",
+    "examples": [
+      {
+        "exam_en": "He's always <strong class=\"target-word\">muttering</strong> under his breath.",
+        "exam_ko": "그는 항상 낮은 목소리로 <strong class=\"target-word\">중얼거리고</strong> 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">muttered</strong> complaints about the long wait.",
+        "exam_ko": "그녀는 긴 대기에 대해 투덜투덜 <strong class=\"target-word\">불평했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1442,
+    "origin": "brush",
+    "examples": [
+      {
+        "exam_en": "She used a hair <strong class=\"target-word\">brush</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 헤어 <strong class=\"target-word\">브러시</strong>를 사용했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">brushed</strong> his teeth before going to bed.",
+        "exam_ko": "그는 자기 전에 이를 <strong class=\"target-word\">닦았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1443,
+    "origin": "assert",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">assert</strong> that he is guilty.",
+        "exam_ko": "나는 그가 유죄라고 <strong class=\"target-word\">단언한다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">asserted</strong> her rights during the meeting.",
+        "exam_ko": "그녀는 회의 중에 자신의 권리를 <strong class=\"target-word\">주장했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1444,
+    "origin": "await",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">await</strong> a favorable change in the situation.",
+        "exam_ko": "그들은 상황이 호전되기를 <strong class=\"target-word\">기다리고 있다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">awaits</strong> your reply with great anticipation.",
+        "exam_ko": "그는 당신의 답장을 크게 기대하며 <strong class=\"target-word\">기다리고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1445,
+    "origin": "spell",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">spell</strong> your name in full.",
+        "exam_ko": "이름 전체를 <strong class=\"target-word\">철자대로</strong> 써 주세요."
+      },
+      {
+        "exam_en": "Can you <strong class=\"target-word\">spell</strong> the word satellite correctly?",
+        "exam_ko": "satellite라는 단어를 올바르게 <strong class=\"target-word\">철자할</strong> 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 1446,
+    "origin": "trap",
+    "examples": [
+      {
+        "exam_en": "They set a mouse <strong class=\"target-word\">trap</strong> in the kitchen.",
+        "exam_ko": "그들은 부엌에 쥐 <strong class=\"target-word\">덫</strong>을 놓았다."
+      },
+      {
+        "exam_en": "He fell into the <strong class=\"target-word\">trap</strong> set by the enemy.",
+        "exam_ko": "그는 적이 놓은 <strong class=\"target-word\">함정</strong>에 빠졌다."
+      }
+    ]
+  },
+  {
+    "id": 1447,
+    "origin": "comply",
+    "examples": [
+      {
+        "exam_en": "Everyone must <strong class=\"target-word\">comply</strong> with the safety regulations.",
+        "exam_ko": "모든 사람은 안전 규칙을 <strong class=\"target-word\">따라야</strong> 한다."
+      },
+      {
+        "exam_en": "He refused to <strong class=\"target-word\">comply</strong> with the request.",
+        "exam_ko": "그는 요청에 <strong class=\"target-word\">응하기를</strong> 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 1448,
+    "origin": "forgive",
+    "examples": [
+      {
+        "exam_en": "She could not <strong class=\"target-word\">forgive</strong> his betrayal.",
+        "exam_ko": "그녀는 그의 배신을 <strong class=\"target-word\">용서할</strong> 수 없었다."
+      },
+      {
+        "exam_en": "He learned to <strong class=\"target-word\">forgive</strong> his enemies.",
+        "exam_ko": "그는 적들을 <strong class=\"target-word\">용서하는</strong> 법을 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 1449,
+    "origin": "undermine",
+    "examples": [
+      {
+        "exam_en": "Floods can <strong class=\"target-word\">undermine</strong> the building's foundation.",
+        "exam_ko": "홍수는 건물의 기초를 <strong class=\"target-word\">약화시킬</strong> 수 있다."
+      },
+      {
+        "exam_en": "Constant criticism <strong class=\"target-word\">undermined</strong> his confidence.",
+        "exam_ko": "끊임없는 비판이 그의 자신감을 <strong class=\"target-word\">약화시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1450,
+    "origin": "squeeze",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">squeezed</strong> his hand to comfort him.",
+        "exam_ko": "그녀는 그를 위로하려고 그의 손을 <strong class=\"target-word\">꽉 쥐었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">squeezed</strong> the clay into a round ball.",
+        "exam_ko": "그는 점토를 눌러 동그란 공 모양으로 <strong class=\"target-word\">뭉쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1451,
+    "origin": "evolve",
+    "examples": [
+      {
+        "exam_en": "Birds are believed to have <strong class=\"target-word\">evolved</strong> from dinosaurs.",
+        "exam_ko": "새는 공룡에서 <strong class=\"target-word\">진화했다</strong>고 여겨진다."
+      },
+      {
+        "exam_en": "The plan <strong class=\"target-word\">evolved</strong> from a simple idea.",
+        "exam_ko": "그 계획은 단순한 아이디어에서 <strong class=\"target-word\">발전했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1452,
+    "origin": "stimulate",
+    "examples": [
+      {
+        "exam_en": "The new policy aims to <strong class=\"target-word\">stimulate</strong> the economy.",
+        "exam_ko": "새 정책은 경기를 <strong class=\"target-word\">자극하는</strong> 것을 목표로 한다."
+      },
+      {
+        "exam_en": "Good books <strong class=\"target-word\">stimulate</strong> interest in reading.",
+        "exam_ko": "좋은 책은 독서에 대한 흥미를 <strong class=\"target-word\">돋운다</strong>."
+      }
+    ]
+  }
+]

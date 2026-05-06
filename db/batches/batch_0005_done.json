@@ -1,0 +1,294 @@
+[
+  {
+    "id": 83,
+    "origin": "spend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">spent</strong> all his money on horses.",
+        "exam_ko": "그는 경마에 돈을 모두 <strong class=\"target-word\">쏟아부었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">spends</strong> more on food than rent.",
+        "exam_ko": "그녀는 집세보다 식비에 돈을 더 <strong class=\"target-word\">쓴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "origin": "steal",
+    "examples": [
+      {
+        "exam_en": "The police found the <strong class=\"target-word\">stolen</strong> goods.",
+        "exam_ko": "경찰이 <strong class=\"target-word\">훔친</strong> 물건을 발견했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">stole</strong> the money from the safe.",
+        "exam_ko": "그는 금고에서 돈을 <strong class=\"target-word\">훔쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "origin": "take",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">took</strong> a prisoner during battle.",
+        "exam_ko": "병사들은 전투 중에 포로를 <strong class=\"target-word\">붙잡았다</strong>."
+      },
+      {
+        "exam_en": "The hunter <strong class=\"target-word\">took</strong> a fox in a snare.",
+        "exam_ko": "사냥꾼은 덫으로 여우를 <strong class=\"target-word\">잡았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "origin": "teach",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">teach</strong> typing at a business school.",
+        "exam_ko": "나는 실업 학교에서 타자를 <strong class=\"target-word\">가르치고</strong> 있다."
+      },
+      {
+        "exam_en": "Mary <strong class=\"target-word\">taught</strong> her children swimming.",
+        "exam_ko": "메리는 아이들에게 수영법을 <strong class=\"target-word\">가르쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "origin": "tell",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">told</strong> a good joke at the party.",
+        "exam_ko": "그는 파티에서 재치 있는 농담을 <strong class=\"target-word\">했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">told</strong> him a bedtime story.",
+        "exam_ko": "그녀는 그에게 자기 전 이야기를 <strong class=\"target-word\">들려줬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "origin": "think",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">thought</strong> strange thoughts that night.",
+        "exam_ko": "그녀는 그날 밤 이상한 생각을 <strong class=\"target-word\">했다</strong>."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">thinking</strong> about something.",
+        "exam_ko": "그는 무언가를 <strong class=\"target-word\">생각하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "origin": "understand",
+    "examples": [
+      {
+        "exam_en": "She can <strong class=\"target-word\">understand</strong> Chinese very well.",
+        "exam_ko": "그녀는 중국어를 아주 잘 <strong class=\"target-word\">안다</strong>."
+      },
+      {
+        "exam_en": "Good teachers <strong class=\"target-word\">understand</strong> children well.",
+        "exam_ko": "훌륭한 선생님은 아이들을 잘 <strong class=\"target-word\">이해한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "origin": "wake",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">wakes up</strong> early every morning.",
+        "exam_ko": "그녀는 매일 아침 일찍 <strong class=\"target-word\">일어난다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">woke up</strong> at the sound of the telephone.",
+        "exam_ko": "나는 전화벨 소리에 잠을 <strong class=\"target-word\">깼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "origin": "wear",
+    "examples": [
+      {
+        "exam_en": "He always <strong class=\"target-word\">wears</strong> a shirt to work.",
+        "exam_ko": "그는 출근할 때 항상 와이셔츠를 <strong class=\"target-word\">입는다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">wears</strong> lipstick every day.",
+        "exam_ko": "그녀는 매일 립스틱을 <strong class=\"target-word\">칠한다</strong>."
+      },
+      {
+        "exam_en": "You should <strong class=\"target-word\">wear</strong> your dentures while you sleep tonight.",
+        "exam_ko": "오늘 밤에는 틀니를 <strong class=\"target-word\">끼우고</strong> 주무세요."
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "origin": "write",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">write</strong> your name on the application.",
+        "exam_ko": "신청서에 이름을 <strong class=\"target-word\">기입해</strong> 주세요."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">writes</strong> more than 300 pages a week.",
+        "exam_ko": "그녀는 일주일에 300페이지 이상을 <strong class=\"target-word\">쓴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "origin": "arrive",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">arrived</strong> late for his lesson again.",
+        "exam_ko": "그는 또 수업에 늦게 <strong class=\"target-word\">나타났다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">arrived</strong> at the hotel after midnight.",
+        "exam_ko": "우리는 자정이 지나 호텔에 <strong class=\"target-word\">도착했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "origin": "ask",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">asked</strong> the stranger politely for directions.",
+        "exam_ko": "그녀는 낯선 사람에게 정중하게 길을 <strong class=\"target-word\">물었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">asked</strong> me about my profession.",
+        "exam_ko": "그는 내 직업에 관해 <strong class=\"target-word\">물어봤다</strong>."
+      },
+      {
+        "exam_en": "Do you want me to <strong class=\"target-word\">ask</strong>?",
+        "exam_ko": "제가 <strong class=\"target-word\">물어봐</strong> 드릴까요?"
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "origin": "borrow",
+    "examples": [
+      {
+        "exam_en": "May I <strong class=\"target-word\">borrow</strong> your pen?",
+        "exam_ko": "펜을 좀 <strong class=\"target-word\">빌려</strong> 주실래요?"
+      },
+      {
+        "exam_en": "He had to <strong class=\"target-word\">borrow</strong> heavily to buy the house.",
+        "exam_ko": "그는 집을 사기 위해 큰돈을 <strong class=\"target-word\">빌려야</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">borrowed</strong> a book from the library.",
+        "exam_ko": "그녀는 도서관에서 책을 <strong class=\"target-word\">빌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "origin": "call",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">called</strong> her children into the room.",
+        "exam_ko": "그녀는 아이들을 방에 <strong class=\"target-word\">불러들였다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">called</strong> my neighbor over for dinner.",
+        "exam_ko": "나는 이웃을 저녁식사에 <strong class=\"target-word\">초대했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "origin": "close",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">closed</strong> his umbrella before entering.",
+        "exam_ko": "그는 들어가기 전에 우산을 <strong class=\"target-word\">접었다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">close</strong> the door when you leave.",
+        "exam_ko": "나갈 때 문을 <strong class=\"target-word\">닫아</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "origin": "cook",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">cooks</strong> food for himself every day.",
+        "exam_ko": "그는 매일 스스로 밥을 <strong class=\"target-word\">해 먹는다</strong>."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">cooking</strong> dinner in the kitchen.",
+        "exam_ko": "그녀는 부엌에서 저녁밥을 <strong class=\"target-word\">짓고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "origin": "decide",
+    "examples": [
+      {
+        "exam_en": "The committee <strong class=\"target-word\">decided</strong> the question quickly.",
+        "exam_ko": "위원회는 문제를 빠르게 <strong class=\"target-word\">해결했다</strong>."
+      },
+      {
+        "exam_en": "His home run <strong class=\"target-word\">decided</strong> the game.",
+        "exam_ko": "그 시합은 그의 홈런으로 <strong class=\"target-word\">결말이 났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "origin": "enjoy",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">enjoys</strong> life to the fullest.",
+        "exam_ko": "그녀는 인생을 최대한 <strong class=\"target-word\">즐긴다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">enjoys</strong> reading before bed.",
+        "exam_ko": "그는 자기 전에 독서를 <strong class=\"target-word\">즐긴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "origin": "finish",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">finished</strong> the book in one day.",
+        "exam_ko": "그녀는 하루 만에 책을 다 <strong class=\"target-word\">읽었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">finished</strong> high school last year.",
+        "exam_ko": "그는 작년에 고등학교를 <strong class=\"target-word\">졸업했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "origin": "learn",
+    "examples": [
+      {
+        "exam_en": "Kids <strong class=\"target-word\">learn</strong> new words quickly.",
+        "exam_ko": "아이들은 새 단어를 빠르게 <strong class=\"target-word\">배운다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">learned</strong> the language gradually over time.",
+        "exam_ko": "그녀는 시간이 지나면서 천천히 언어를 <strong class=\"target-word\">배웠다</strong>."
+      }
+    ]
+  }
+]

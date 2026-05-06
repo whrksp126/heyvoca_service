@@ -1,0 +1,274 @@
+[
+  {
+    "id": 5371,
+    "origin": "doing",
+    "examples": [
+      {
+        "exam_en": "It's your own <strong class=\"target-word\">doing</strong>.",
+        "exam_ko": "그것은 네 자신이 <strong class=\"target-word\">한 일</strong>이다."
+      },
+      {
+        "exam_en": "His scandalous <strong class=\"target-word\">doings</strong> shocked everyone.",
+        "exam_ko": "그의 창피한 <strong class=\"target-word\">행실</strong>은 모두를 충격에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 5373,
+    "origin": "tower",
+    "examples": [
+      {
+        "exam_en": "The church has a tall bell <strong class=\"target-word\">tower</strong>.",
+        "exam_ko": "그 교회에는 높은 <strong class=\"target-word\">종탑</strong>이 있다."
+      },
+      {
+        "exam_en": "The clock <strong class=\"target-word\">tower</strong> stands at the city center.",
+        "exam_ko": "<strong class=\"target-word\">시계탑</strong>은 도심에 서 있다."
+      }
+    ]
+  },
+  {
+    "id": 5374,
+    "origin": "days",
+    "examples": [
+      {
+        "exam_en": "He works <strong class=\"target-word\">days</strong> and goes to school nights.",
+        "exam_ko": "그는 <strong class=\"target-word\">낮에</strong> 일하고 밤에는 학교에 간다."
+      }
+    ]
+  },
+  {
+    "id": 5377,
+    "origin": "becoming",
+    "examples": [
+      {
+        "exam_en": "That dress is very <strong class=\"target-word\">becoming</strong> on her.",
+        "exam_ko": "그 드레스는 그녀에게 매우 <strong class=\"target-word\">잘 어울린다</strong>."
+      },
+      {
+        "exam_en": "It is not <strong class=\"target-word\">becoming</strong> for a lady to act that way.",
+        "exam_ko": "숙녀가 그런 식으로 행동하는 것은 <strong class=\"target-word\">어울리지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5378,
+    "origin": "oath",
+    "examples": [
+      {
+        "exam_en": "He made a false <strong class=\"target-word\">oath</strong> in court.",
+        "exam_ko": "그는 법정에서 거짓 <strong class=\"target-word\">맹세</strong>를 했다."
+      },
+      {
+        "exam_en": "Soldiers swear an <strong class=\"target-word\">oath</strong> of allegiance.",
+        "exam_ko": "군인들은 충성의 <strong class=\"target-word\">맹세</strong>를 한다."
+      }
+    ]
+  },
+  {
+    "id": 5379,
+    "origin": "raft",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">raft</strong> of worries on her mind.",
+        "exam_ko": "그녀는 마음속에 <strong class=\"target-word\">많은</strong> 걱정거리가 있었다."
+      },
+      {
+        "exam_en": "There were <strong class=\"target-word\">rafts</strong> of people I knew on the boat.",
+        "exam_ko": "보트에 내가 아는 사람들이 <strong class=\"target-word\">많았다</strong>."
+      },
+      {
+        "exam_en": "They built a <strong class=\"target-word\">raft</strong> to cross the river.",
+        "exam_ko": "그들은 강을 건너기 위해 <strong class=\"target-word\">뗏목</strong>을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 5380,
+    "origin": "difficulty",
+    "examples": [
+      {
+        "exam_en": "It was a task of great <strong class=\"target-word\">difficulty</strong>.",
+        "exam_ko": "그것은 대단히 <strong class=\"target-word\">어려운</strong> 과업이었다."
+      },
+      {
+        "exam_en": "She solved the problem without <strong class=\"target-word\">difficulty</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">어려움</strong> 없이 문제를 해결했다."
+      }
+    ]
+  },
+  {
+    "id": 5381,
+    "origin": "reality",
+    "examples": [
+      {
+        "exam_en": "He believes in the <strong class=\"target-word\">reality</strong> of God.",
+        "exam_ko": "그는 신의 <strong class=\"target-word\">실재</strong>를 믿는다."
+      },
+      {
+        "exam_en": "She brought him back to <strong class=\"target-word\">reality</strong>.",
+        "exam_ko": "그녀는 그를 <strong class=\"target-word\">현실</strong>로 돌아오게 했다."
+      }
+    ]
+  },
+  {
+    "id": 5382,
+    "origin": "throughout",
+    "examples": [
+      {
+        "exam_en": "The news spread <strong class=\"target-word\">throughout</strong> the land.",
+        "exam_ko": "그 소식은 <strong class=\"target-word\">전국</strong> 방방곡곡에 퍼졌다."
+      },
+      {
+        "exam_en": "She traveled <strong class=\"target-word\">throughout</strong> the country.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">전국</strong>을 두루 여행했다."
+      }
+    ]
+  },
+  {
+    "id": 5384,
+    "origin": "torpedo",
+    "examples": [
+      {
+        "exam_en": "The submarine launched an acoustic <strong class=\"target-word\">torpedo</strong>.",
+        "exam_ko": "잠수함이 음향 <strong class=\"target-word\">어뢰</strong>를 발사했다."
+      },
+      {
+        "exam_en": "His ship was blown up by a <strong class=\"target-word\">torpedo</strong>.",
+        "exam_ko": "그의 배는 <strong class=\"target-word\">어뢰</strong>에 폭파되었다."
+      }
+    ]
+  },
+  {
+    "id": 5385,
+    "origin": "threat",
+    "examples": [
+      {
+        "exam_en": "Censorship is a <strong class=\"target-word\">threat</strong> to academic freedom.",
+        "exam_ko": "검열은 학문의 자유에 대한 <strong class=\"target-word\">위협</strong>이다."
+      },
+      {
+        "exam_en": "The strike was a <strong class=\"target-word\">threat</strong> to management.",
+        "exam_ko": "파업은 경영진에 대한 <strong class=\"target-word\">위협</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 5386,
+    "origin": "searching",
+    "examples": [
+      {
+        "exam_en": "The doctor gave a <strong class=\"target-word\">searching</strong> examination.",
+        "exam_ko": "의사는 <strong class=\"target-word\">면밀한</strong> 검사를 했다."
+      },
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">searching</strong> look.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">날카로운</strong> 시선을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 5388,
+    "origin": "mrs",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Mrs.</strong> Jones arrived early.",
+        "exam_ko": "<strong class=\"target-word\">존스 부인</strong>이 일찍 도착했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Mrs.</strong> John Jones called this morning.",
+        "exam_ko": "<strong class=\"target-word\">존 존스 씨 부인</strong>이 오늘 아침에 전화했다."
+      }
+    ]
+  },
+  {
+    "id": 5389,
+    "origin": "showing",
+    "examples": [
+      {
+        "exam_en": "The team made a good <strong class=\"target-word\">showing</strong> at the competition.",
+        "exam_ko": "그 팀은 대회에서 좋은 <strong class=\"target-word\">성과</strong>를 거뒀다."
+      },
+      {
+        "exam_en": "On any <strong class=\"target-word\">showing</strong>, he is the best candidate.",
+        "exam_ko": "<strong class=\"target-word\">어느 모로 보나</strong> 그가 최고의 후보다."
+      }
+    ]
+  },
+  {
+    "id": 5390,
+    "origin": "segment",
+    "examples": [
+      {
+        "exam_en": "She peeled off a <strong class=\"target-word\">segment</strong> of an orange.",
+        "exam_ko": "그녀는 오렌지 한 <strong class=\"target-word\">조각</strong>을 떼어냈다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">segmented</strong> the apple into five pieces.",
+        "exam_ko": "그는 사과를 다섯 쪽으로 <strong class=\"target-word\">잘랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5391,
+    "origin": "hastily",
+    "examples": [
+      {
+        "exam_en": "The news conference was <strong class=\"target-word\">hastily</strong> arranged.",
+        "exam_ko": "그 기자 회견은 <strong class=\"target-word\">긴급하게</strong> 마련되었다."
+      }
+    ]
+  },
+  {
+    "id": 5392,
+    "origin": "blight",
+    "examples": [
+      {
+        "exam_en": "The scandal cast a <strong class=\"target-word\">blight</strong> on his hopes.",
+        "exam_ko": "그 스캔들은 그의 희망에 <strong class=\"target-word\">어두운 그림자</strong>를 던졌다."
+      },
+      {
+        "exam_en": "Her life was <strong class=\"target-word\">blighted</strong> by ill health.",
+        "exam_ko": "그녀의 인생은 건강 악화로 <strong class=\"target-word\">엉망이 되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5393,
+    "origin": "wisdom",
+    "examples": [
+      {
+        "exam_en": "He is known for his worldly <strong class=\"target-word\">wisdom</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">처세술</strong>로 유명하다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Wisdom</strong> is better than gold or silver.",
+        "exam_ko": "<strong class=\"target-word\">지혜</strong>는 금은보다 낫다."
+      }
+    ]
+  },
+  {
+    "id": 5394,
+    "origin": "automatically",
+    "examples": [
+      {
+        "exam_en": "This machine turns off <strong class=\"target-word\">automatically</strong> after five minutes.",
+        "exam_ko": "이 기계는 5분 뒤에 <strong class=\"target-word\">자동으로</strong> 꺼진다."
+      }
+    ]
+  },
+  {
+    "id": 5395,
+    "origin": "generally",
+    "examples": [
+      {
+        "exam_en": "His explanation is <strong class=\"target-word\">generally</strong> accurate.",
+        "exam_ko": "그의 설명은 <strong class=\"target-word\">대체로</strong> 정확하다."
+      },
+      {
+        "exam_en": "The bus <strong class=\"target-word\">generally</strong> arrives on time.",
+        "exam_ko": "버스는 <strong class=\"target-word\">보통</strong> 제 시간에 도착한다."
+      }
+    ]
+  }
+]

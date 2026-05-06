@@ -1,0 +1,602 @@
+[
+  {
+    "id": 25278,
+    "word": "sesqui",
+    "exam_en": "<strong class=\"target-word\">sesqui</strong>oxide",
+    "exam_ko": "<strong class=\"target-word\">삼이산화물</strong>."
+  },
+  {
+    "id": 25279,
+    "word": "rimmed",
+    "exam_en": "gold-<strong class=\"target-word\">rimmed</strong> glasses",
+    "exam_ko": "<strong class=\"target-word\">금테두리의</strong> 안경."
+  },
+  {
+    "id": 25280,
+    "word": "rimmed",
+    "exam_en": "red-<strong class=\"target-word\">rimmed</strong> eyes",
+    "exam_ko": "<strong class=\"target-word\">울어</strong>서 붉어진 눈."
+  },
+  {
+    "id": 25281,
+    "word": "tera",
+    "exam_en": "<strong class=\"target-word\">tera</strong>ton",
+    "exam_ko": "1<strong class=\"target-word\">조[10¹²]톤</strong>"
+  },
+  {
+    "id": 25282,
+    "word": "tera",
+    "exam_en": "<strong class=\"target-word\">tera</strong>bit",
+    "exam_ko": "1<strong class=\"target-word\">조 bit에 해당하는 정보량의 단위.</strong>"
+  },
+  {
+    "id": 25283,
+    "word": "giga",
+    "exam_en": "<strong class=\"target-word\">giga</strong>meter",
+    "exam_ko": "<strong class=\"target-word\">기가미터</strong>(100만 킬로미터)"
+  },
+  {
+    "id": 25284,
+    "word": "giga",
+    "exam_en": "<strong class=\"target-word\">giga</strong>watt",
+    "exam_ko": "<strong class=\"target-word\">10억 와트</strong>."
+  },
+  {
+    "id": 25285,
+    "word": "myria",
+    "exam_en": "<strong class=\"target-word\">myria</strong>gram",
+    "exam_ko": "<strong class=\"target-word\">10kg</strong>"
+  },
+  {
+    "id": 25286,
+    "word": "postmenopausal",
+    "exam_en": "<strong class=\"target-word\">postmenopausal</strong> syndrome",
+    "exam_ko": "<strong class=\"target-word\">폐경</strong> 후 증후군."
+  },
+  {
+    "id": 25287,
+    "word": "terminable",
+    "exam_en": "a <strong class=\"target-word\">terminable</strong> annuity",
+    "exam_ko": "<strong class=\"target-word\">기한부</strong> 연금."
+  },
+  {
+    "id": 25288,
+    "word": "arbitrament",
+    "exam_en": "abide by the <strong class=\"target-word\">arbitrament</strong> of the committee",
+    "exam_ko": "위원회의 재결에 <strong class=\"target-word\">따르다</strong>."
+  },
+  {
+    "id": 25289,
+    "word": "gracilis",
+    "exam_en": "a <strong class=\"target-word\">gracilis</strong> muscle",
+    "exam_ko": "<strong class=\"target-word\">박근</strong>(薄筋)."
+  },
+  {
+    "id": 25290,
+    "word": "mono",
+    "exam_en": "<strong class=\"target-word\">mono</strong>phony",
+    "exam_ko": "<strong class=\"target-word\">단선율곡</strong>."
+  },
+  {
+    "id": 25291,
+    "word": "mono",
+    "exam_en": "<strong class=\"target-word\">mono</strong>hydrate",
+    "exam_ko": "<strong class=\"target-word\">1수화물</strong>"
+  },
+  {
+    "id": 25292,
+    "word": "gath",
+    "exam_en": "Tell it not in <strong class=\"target-word\">Gath</strong>.",
+    "exam_ko": "이 일을 <strong class=\"target-word\">가드에게</strong> 고하지 마라. ＜[성서] 사무엘 하 1:20＞."
+  },
+  {
+    "id": 25293,
+    "word": "relational",
+    "exam_en": "<strong class=\"target-word\">relational</strong> duties",
+    "exam_ko": "<strong class=\"target-word\">친척으로서의</strong> 의무."
+  },
+  {
+    "id": 25294,
+    "word": "relational",
+    "exam_en": "a <strong class=\"target-word\">relational</strong> term",
+    "exam_ko": "<strong class=\"target-word\">관계어</strong>."
+  },
+  {
+    "id": 25295,
+    "word": "thyrotropic",
+    "exam_en": "<strong class=\"target-word\">thyrotropic</strong> hormone",
+    "exam_ko": "<strong class=\"target-word\">갑상선</strong> 자극 호르몬(thyrotropin)."
+  },
+  {
+    "id": 25296,
+    "word": "celtic",
+    "exam_en": "the <strong class=\"target-word\">Celtic</strong> fringe",
+    "exam_ko": "<strong class=\"target-word\">잉글랜드</strong> 연합 왕국의 주변을 이루는 켈트족(스코틀랜드·아일랜드·웨일스의 주민)."
+  },
+  {
+    "id": 25297,
+    "word": "reich",
+    "exam_en": "the First <strong class=\"target-word\">Reich</strong>",
+    "exam_ko": "<strong class=\"target-word\">신성</strong> 로마 제국(962-1806)"
+  },
+  {
+    "id": 25298,
+    "word": "reich",
+    "exam_en": "the Second <strong class=\"target-word\">Reich</strong>",
+    "exam_ko": "(비스마르크 시대의) <strong class=\"target-word\">독일</strong> 제국(1871-1919)"
+  },
+  {
+    "id": 25299,
+    "word": "complected",
+    "exam_en": "dark-<strong class=\"target-word\">complected</strong>",
+    "exam_ko": "<strong class=\"target-word\">얼굴</strong>(빛)이 검은."
+  },
+  {
+    "id": 25300,
+    "word": "reintroduce",
+    "exam_en": "They <strong class=\"target-word\">reintroduced</strong> a scheme to provide housing for refugees.",
+    "exam_ko": "그들은 난민들에게 주택을 제공하는 계획을 다시 <strong class=\"target-word\">도입했다</strong>."
+  },
+  {
+    "id": 25301,
+    "word": "doggo",
+    "exam_en": "lie <strong class=\"target-word\">doggo</strong>",
+    "exam_ko": "꼼짝 않고 숨어 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 25302,
+    "word": "nakedness",
+    "exam_en": "the <strong class=\"target-word\">nakedness</strong> of the land",
+    "exam_ko": "<strong class=\"target-word\">나라의 틈[허점], 국가의 무자력[무방비] 상태</strong> ＜[성서] 창세기 42:9＞."
+  },
+  {
+    "id": 25303,
+    "word": "twat",
+    "exam_en": "You <strong class=\"target-word\">twat</strong>.",
+    "exam_ko": "<strong class=\"target-word\">(너는) 꼴도 보기 싫어</strong>."
+  },
+  {
+    "id": 25304,
+    "word": "catamaran",
+    "exam_en": "a shrieking <strong class=\"target-word\">catamaran</strong>",
+    "exam_ko": "<strong class=\"target-word\">째지는</strong> 듯한 목소리로 소리지르는 여자."
+  },
+  {
+    "id": 25305,
+    "word": "aport",
+    "exam_en": "Hard <strong class=\"target-word\">aport</strong>!",
+    "exam_ko": "(키를) <strong class=\"target-word\">최대한</strong> 좌현으로!, 좌현으로 힘껏!"
+  },
+  {
+    "id": 25306,
+    "word": "excelsior",
+    "exam_en": "The country was as dry as <strong class=\"target-word\">excelsior</strong>.",
+    "exam_ko": "그 지방은 대팻밥처럼 <strong class=\"target-word\">말랐다</strong>."
+  },
+  {
+    "id": 25307,
+    "word": "congelation",
+    "exam_en": "a point of <strong class=\"target-word\">congelation</strong>",
+    "exam_ko": "<strong class=\"target-word\">응고</strong>점."
+  },
+  {
+    "id": 25308,
+    "word": "luteal",
+    "exam_en": "<strong class=\"target-word\">luteal</strong> hormone",
+    "exam_ko": "<strong class=\"target-word\">황체</strong> 호르몬."
+  },
+  {
+    "id": 25309,
+    "word": "mydriasis",
+    "exam_en": "alternating <strong class=\"target-word\">mydriasis</strong>",
+    "exam_ko": "<strong class=\"target-word\">교대성</strong>[마비성] 산동."
+  },
+  {
+    "id": 25310,
+    "word": "cellophane",
+    "exam_en": "Meat is wrapped in <strong class=\"target-word\">cellophane</strong> to keep it fresh.",
+    "exam_ko": "고기는 신선도를 유지하기 위해 셀로판에 싸 <strong class=\"target-word\">둔다</strong>."
+  },
+  {
+    "id": 25311,
+    "word": "sandman",
+    "exam_en": "The <strong class=\"target-word\">sandman</strong> has come.",
+    "exam_ko": "<strong class=\"target-word\">졸려</strong>."
+  },
+  {
+    "id": 25314,
+    "word": "excrescence",
+    "exam_en": "The new hall is an <strong class=\"target-word\">excrescence</strong> on this historic town.",
+    "exam_ko": "새로운 공회당은 그 역사적인 마을에 <strong class=\"target-word\">어울리지 않는 무용지물</strong>이다."
+  },
+  {
+    "id": 25315,
+    "word": "suchlike",
+    "exam_en": "I like cakes, candies and <strong class=\"target-word\">suchlike</strong> foods.",
+    "exam_ko": "나는 케이크, 캔디 같은 식품을 <strong class=\"target-word\">좋아한다</strong>."
+  },
+  {
+    "id": 25316,
+    "word": "suchlike",
+    "exam_en": "and <strong class=\"target-word\">suchlike</strong>",
+    "exam_ko": "…<strong class=\"target-word\">등등</strong>."
+  },
+  {
+    "id": 25317,
+    "word": "contradistinction",
+    "exam_en": "in <strong class=\"target-word\">contradistinction</strong> to",
+    "exam_ko": "…과 <strong class=\"target-word\">대조</strong> 구별하여."
+  },
+  {
+    "id": 25318,
+    "word": "incommensurable",
+    "exam_en": "Furniture and human life are <strong class=\"target-word\">incommensurable</strong>.",
+    "exam_ko": "가구와 인명과는 비교가 될 수 <strong class=\"target-word\">없다</strong>."
+  },
+  {
+    "id": 25319,
+    "word": "moloch",
+    "exam_en": "The examination system is a terrible <strong class=\"target-word\">Moloch</strong>.",
+    "exam_ko": "그 시험 제도는 무시무시한 희생을 <strong class=\"target-word\">강요한다</strong>."
+  },
+  {
+    "id": 25320,
+    "word": "chevalier",
+    "exam_en": "a <strong class=\"target-word\">chevalier</strong> of the Legion of Honor",
+    "exam_ko": "<strong class=\"target-word\">레종</strong> 도뇌르 훈위(勳位) 소유자."
+  },
+  {
+    "id": 25321,
+    "word": "demineralize",
+    "exam_en": "<strong class=\"target-word\">demineralized</strong> water",
+    "exam_ko": "<strong class=\"target-word\">탈염</strong>[탈이온]수."
+  },
+  {
+    "id": 25322,
+    "word": "peradventure",
+    "exam_en": "if <strong class=\"target-word\">peradventure</strong>",
+    "exam_ko": "혹시나[행여] 하는 일이 <strong class=\"target-word\">있다</strong>면[없도록]."
+  },
+  {
+    "id": 25323,
+    "word": "outspend",
+    "exam_en": "<strong class=\"target-word\">outspend</strong> one's income",
+    "exam_ko": "지출이 수입을 <strong class=\"target-word\">초과하다</strong>."
+  },
+  {
+    "id": 25324,
+    "word": "firebomb",
+    "exam_en": "Two months ago his car was <strong class=\"target-word\">firebombed</strong>, the last in a series of attacks.",
+    "exam_ko": "두 달 전에 그의 차가 <strong class=\"target-word\">소이탄 공격을 당했는데</strong>, 일련의 공격들 중 <strong class=\"target-word\">마지막</strong>이었다."
+  },
+  {
+    "id": 25325,
+    "word": "cardioactive",
+    "exam_en": "<strong class=\"target-word\">cardioactive</strong> agent",
+    "exam_ko": "<strong class=\"target-word\">심장</strong> 작용약."
+  },
+  {
+    "id": 25326,
+    "word": "cutie",
+    "exam_en": "Hey there, <strong class=\"target-word\">cutie</strong>.",
+    "exam_ko": "<strong class=\"target-word\">이봐</strong> 예쁜이."
+  },
+  {
+    "id": 25327,
+    "word": "cutie",
+    "exam_en": "He pulled a <strong class=\"target-word\">cutie</strong>.",
+    "exam_ko": "그는 <strong class=\"target-word\">교묘한 술책을 부렸다</strong>."
+  },
+  {
+    "id": 25328,
+    "word": "pharming",
+    "exam_en": "In <strong class=\"target-word\">pharming</strong>, these genetically modified  animals are mostly used to make human proteins.",
+    "exam_ko": "제약농에서는 이들 유전자 조작 동물이 <strong class=\"target-word\">인간의 단백질을 만드는 데 이용된다</strong>."
+  },
+  {
+    "id": 25329,
+    "word": "pharming",
+    "exam_en": "alarm over <strong class=\"target-word\">pharming</strong> attacks",
+    "exam_ko": "<strong class=\"target-word\">파밍</strong> 공격에 대한 불안."
+  },
+  {
+    "id": 25330,
+    "word": "kerfuffle",
+    "exam_en": "fuss and <strong class=\"target-word\">kerfuffle</strong>",
+    "exam_ko": "<strong class=\"target-word\">대소동</strong>."
+  },
+  {
+    "id": 25331,
+    "word": "bucked",
+    "exam_en": "feel <strong class=\"target-word\">bucked</strong>",
+    "exam_ko": "<strong class=\"target-word\">(칭찬받거나 성공하여) 자신 만만하다</strong>."
+  },
+  {
+    "id": 25332,
+    "word": "manque",
+    "exam_en": "a writer <strong class=\"target-word\">manque</strong>",
+    "exam_ko": "<strong class=\"target-word\">되다가 만</strong> 작가."
+  },
+  {
+    "id": 25333,
+    "word": "organogram",
+    "exam_en": "an <strong class=\"target-word\">organogram</strong> showing the senior structure and reporting lines within the Commission",
+    "exam_ko": "그 위원회 내부의 <strong class=\"target-word\">상위 구조와 보고 라인을 보여 주는 조직도</strong>."
+  },
+  {
+    "id": 25334,
+    "word": "sextuple",
+    "exam_en": "<strong class=\"target-word\">sextuple</strong> rhythm",
+    "exam_ko": "<strong class=\"target-word\">6박자의 리듬</strong>."
+  },
+  {
+    "id": 25335,
+    "word": "storied",
+    "exam_en": "a four-<strong class=\"target-word\">storied</strong> concrete building",
+    "exam_ko": "<strong class=\"target-word\">4층</strong> 콘크리트 빌딩."
+  },
+  {
+    "id": 25336,
+    "word": "frontage",
+    "exam_en": "office buildings with <strong class=\"target-word\">frontage</strong> on two streets",
+    "exam_ko": "두 면을 가로에 <strong class=\"target-word\">면하고</strong> 있는 사무용 빌딩들."
+  },
+  {
+    "id": 25337,
+    "word": "flexural",
+    "exam_en": "<strong class=\"target-word\">flexural</strong> rigidity",
+    "exam_ko": "[공학] <strong class=\"target-word\">굽힘 강성(剛性)</strong>."
+  },
+  {
+    "id": 25338,
+    "word": "methadone",
+    "exam_en": "the <strong class=\"target-word\">methadone</strong> maintenance",
+    "exam_ko": "<strong class=\"target-word\">메타돈</strong> 치료법."
+  },
+  {
+    "id": 25339,
+    "word": "crystallized",
+    "exam_en": "<strong class=\"target-word\">crystallized</strong> fruit",
+    "exam_ko": "<strong class=\"target-word\">설탕</strong> 절임 과일."
+  },
+  {
+    "id": 25340,
+    "word": "hypnagogic",
+    "exam_en": "<strong class=\"target-word\">hypnagogic</strong> hallucination",
+    "exam_ko": "<strong class=\"target-word\">입면시</strong> 환각."
+  },
+  {
+    "id": 25341,
+    "word": "pupilary",
+    "exam_en": "<strong class=\"target-word\">pupilary</strong> membrane",
+    "exam_ko": "<strong class=\"target-word\">동공막</strong>."
+  },
+  {
+    "id": 25342,
+    "word": "ricksha",
+    "exam_en": "pull a <strong class=\"target-word\">ricksha</strong>",
+    "exam_ko": "인력거를 <strong class=\"target-word\">끌다</strong>(※자전거형은 pedal a ricksha)"
+  },
+  {
+    "id": 25343,
+    "word": "ricksha",
+    "exam_en": "ride in a <strong class=\"target-word\">ricksha</strong>",
+    "exam_ko": "인력거를 <strong class=\"target-word\">타다</strong>. (또는 rikisha, rikshaw) [[ɔː]의 발음은 「인력거」가 영어에 차입된 당시, 영어의 모음은 역사적 변화의 과정에 있어서 [aː]의 모음이 없었기 때문]"
+  },
+  {
+    "id": 25344,
+    "word": "bankable",
+    "exam_en": "a <strong class=\"target-word\">bankable</strong> writer",
+    "exam_ko": "<strong class=\"target-word\">베스트셀러</strong> 작가."
+  },
+  {
+    "id": 25345,
+    "word": "dusting",
+    "exam_en": "a light <strong class=\"target-word\">dusting</strong> of snow",
+    "exam_ko": "<strong class=\"target-word\">소량의</strong> 눈."
+  },
+  {
+    "id": 25346,
+    "word": "dusting",
+    "exam_en": "Your insolence will earn you a good <strong class=\"target-word\">dusting</strong>.",
+    "exam_ko": "그런 건방진 소리를 하면 나중에 <strong class=\"target-word\">혼날 줄</strong> <strong class=\"target-word\">알아</strong>라."
+  },
+  {
+    "id": 25347,
+    "word": "twisting",
+    "exam_en": "Stop <strong class=\"target-word\">twisting</strong> my words around.",
+    "exam_ko": "<strong class=\"target-word\">말꼬리</strong> 잡지마."
+  },
+  {
+    "id": 25348,
+    "word": "weighting",
+    "exam_en": "a London <strong class=\"target-word\">weighting</strong> of ￡15 a month",
+    "exam_ko": "<strong class=\"target-word\">(런던 근무자의) 월 15파운드의 물가 조정 가산급</strong>."
+  },
+  {
+    "id": 25349,
+    "word": "dicrotic",
+    "exam_en": "a <strong class=\"target-word\">dicrotic</strong> pulse",
+    "exam_ko": "<strong class=\"target-word\">중박맥</strong>."
+  },
+  {
+    "id": 25350,
+    "word": "gi",
+    "exam_en": "<strong class=\"target-word\">GI</strong> Joe",
+    "exam_ko": "<strong class=\"target-word\">미국</strong> 군인, 미군"
+  },
+  {
+    "id": 25351,
+    "word": "gi",
+    "exam_en": "<strong class=\"target-word\">GI</strong> Jane",
+    "exam_ko": "<strong class=\"target-word\">미국</strong> 여군."
+  },
+  {
+    "id": 25352,
+    "word": "bloomer",
+    "exam_en": "make a <strong class=\"target-word\">bloomer</strong>",
+    "exam_ko": "<strong class=\"target-word\">바보짓을 하다</strong>."
+  },
+  {
+    "id": 25353,
+    "word": "handprint",
+    "exam_en": "a <strong class=\"target-word\">handprint</strong> scanner",
+    "exam_ko": "<strong class=\"target-word\">손바닥</strong> 지문 스캐너."
+  },
+  {
+    "id": 25354,
+    "word": "pasteboard",
+    "exam_en": "She brings its lunch in <strong class=\"target-word\">pasteboard</strong> box.",
+    "exam_ko": "그녀는 판지로 만든 상자에 도시락을 싸서 <strong class=\"target-word\">다닌다</strong>."
+  },
+  {
+    "id": 25355,
+    "word": "meed",
+    "exam_en": "one's <strong class=\"target-word\">meed</strong> of praise",
+    "exam_ko": "<strong class=\"target-word\">당연한</strong>[정당한] 칭찬[비난, 명예]."
+  },
+  {
+    "id": 25357,
+    "word": "hued",
+    "exam_en": "many-<strong class=\"target-word\">hued</strong>",
+    "exam_ko": "<strong class=\"target-word\">다채로운</strong>."
+  },
+  {
+    "id": 25358,
+    "word": "hued",
+    "exam_en": "rainbow-<strong class=\"target-word\">hued</strong>",
+    "exam_ko": "<strong class=\"target-word\">무지개</strong> 색의."
+  },
+  {
+    "id": 25359,
+    "word": "vassalage",
+    "exam_en": "in <strong class=\"target-word\">vassalage</strong> to",
+    "exam_ko": "…에 <strong class=\"target-word\">사로잡혀</strong>."
+  },
+  {
+    "id": 25360,
+    "word": "basilisk",
+    "exam_en": "a <strong class=\"target-word\">basilisk</strong> glance",
+    "exam_ko": "(비유) <strong class=\"target-word\">무섭게</strong> 쏘아보는 눈초리."
+  },
+  {
+    "id": 25361,
+    "word": "toneless",
+    "exam_en": "He gave a <strong class=\"target-word\">toneless</strong> answer to her question.",
+    "exam_ko": "그는 그녀의 질문에 기력 없이 <strong class=\"target-word\">대답했다</strong>."
+  },
+  {
+    "id": 25364,
+    "word": "roomed",
+    "exam_en": "a 100-<strong class=\"target-word\">roomed</strong> hotel",
+    "exam_ko": "<strong class=\"target-word\">객실수</strong> 100개인 호텔."
+  },
+  {
+    "id": 25365,
+    "word": "aristotelian",
+    "exam_en": "<strong class=\"target-word\">Aristotelian</strong> logic",
+    "exam_ko": "<strong class=\"target-word\">아리스토텔레스</strong> 논리학; 삼단 논법."
+  },
+  {
+    "id": 25366,
+    "word": "cartesian",
+    "exam_en": "the <strong class=\"target-word\">Cartesian</strong> product",
+    "exam_ko": "[수학] <strong class=\"target-word\">데카르트 곱</strong>"
+  },
+  {
+    "id": 25367,
+    "word": "cartesian",
+    "exam_en": "<strong class=\"target-word\">Cartesian</strong> coordinates",
+    "exam_ko": "[수학] <strong class=\"target-word\">데카르트[평행] 좌표</strong>."
+  },
+  {
+    "id": 25368,
+    "word": "spotting",
+    "exam_en": "train<strong class=\"target-word\">spotting</strong>",
+    "exam_ko": "<strong class=\"target-word\">(취미로) 기관차의 번호를 기록하기</strong>."
+  },
+  {
+    "id": 25369,
+    "word": "upcountry",
+    "exam_en": "an <strong class=\"target-word\">upcountry</strong> village",
+    "exam_ko": "<strong class=\"target-word\">내륙의</strong> 마을."
+  },
+  {
+    "id": 25370,
+    "word": "bespatter",
+    "exam_en": "The trousers were <strong class=\"target-word\">bespatter</strong>ed with mud.",
+    "exam_ko": "바지에 진흙이 튀어 <strong class=\"target-word\">있었다.</strong>"
+  },
+  {
+    "id": 25371,
+    "word": "parnassus",
+    "exam_en": "climb <strong class=\"target-word\">Parnassus</strong>",
+    "exam_ko": "시가(詩歌) 공부에 <strong class=\"target-word\">힘쓰다</strong>."
+  },
+  {
+    "id": 25372,
+    "word": "erebus",
+    "exam_en": "dark as <strong class=\"target-word\">Erebus</strong>",
+    "exam_ko": "<strong class=\"target-word\">칠흑같이</strong> 어두운, 새까만."
+  },
+  {
+    "id": 25373,
+    "word": "dative",
+    "exam_en": "the <strong class=\"target-word\">dative</strong> case",
+    "exam_ko": "<strong class=\"target-word\">여격</strong>"
+  },
+  {
+    "id": 25374,
+    "word": "dative",
+    "exam_en": "a <strong class=\"target-word\">dative</strong> verb",
+    "exam_ko": "<strong class=\"target-word\">여격</strong>(을 취하는) 동사."
+  },
+  {
+    "id": 25375,
+    "word": "unchain",
+    "exam_en": "<strong class=\"target-word\">unchain</strong> a door",
+    "exam_ko": "문의 체인을 <strong class=\"target-word\">풀다</strong>."
+  },
+  {
+    "id": 25376,
+    "word": "pliers",
+    "exam_en": "These <strong class=\"target-word\">pliers</strong> art too large.",
+    "exam_ko": "이 집게는 너무 <strong class=\"target-word\">크다</strong>."
+  },
+  {
+    "id": 25377,
+    "word": "towaway",
+    "exam_en": "a <strong class=\"target-word\">towaway</strong> zone",
+    "exam_ko": "<strong class=\"target-word\">주차</strong> 금지 구역."
+  },
+  {
+    "id": 25378,
+    "word": "ur",
+    "exam_en": "<strong class=\"target-word\">ur</strong>-sprache",
+    "exam_ko": "인도-유럽 <strong class=\"target-word\">원어</strong>"
+  },
+  {
+    "id": 25379,
+    "word": "phooey",
+    "exam_en": "<strong class=\"target-word\">Phooey</strong> on him!",
+    "exam_ko": "원! 별꼴 다 <strong class=\"target-word\">본다</strong>."
+  },
+  {
+    "id": 25380,
+    "word": "untruthful",
+    "exam_en": "The reporter wrote <strong class=\"target-word\">untruthful</strong> reports to get attention.",
+    "exam_ko": "그 기자는 주의를 끌기 위해서 허위 기사를 <strong class=\"target-word\">썼다</strong>."
+  },
+  {
+    "id": 25381,
+    "word": "untruthful",
+    "exam_en": "an <strong class=\"target-word\">untruthful</strong> boy",
+    "exam_ko": "<strong class=\"target-word\">거짓말</strong> 잘하는 소년."
+  },
+  {
+    "id": 25382,
+    "word": "overstay",
+    "exam_en": "<strong class=\"target-word\">overstay</strong> one's welcome",
+    "exam_ko": "너무 오래 머물러 미움을 <strong class=\"target-word\">사다</strong>."
+  }
+]

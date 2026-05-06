@@ -1,0 +1,266 @@
+[
+  {
+    "id": 19042,
+    "origin": "reduction",
+    "examples": [
+      {
+        "exam_en": "some  reduction in the price of food",
+        "exam_ko": "식품 가격의 약간의 절감"
+      },
+      {
+        "exam_en": "price reductions",
+        "exam_ko": "가격 할인"
+      }
+    ]
+  },
+  {
+    "id": 19044,
+    "origin": "electron",
+    "examples": [
+      {
+        "exam_en": "electron configuration",
+        "exam_ko": "전자 배치."
+      }
+    ]
+  },
+  {
+    "id": 19046,
+    "origin": "earthen",
+    "examples": [
+      {
+        "exam_en": "an earthen wall",
+        "exam_ko": "흙벽"
+      },
+      {
+        "exam_en": "an earthen jar",
+        "exam_ko": "옹기 항아리."
+      }
+    ]
+  },
+  {
+    "id": 19049,
+    "origin": "doubtless",
+    "examples": [
+      {
+        "exam_en": "You will doubtless succeed, but you still have to be cautious.",
+        "exam_ko": "아마 잘 되리라고 생각되지만, 역시 신중을 기할 필요가 있겠지요"
+      },
+      {
+        "exam_en": "She is doubtless rich, but he isn't happy.",
+        "exam_ko": "확실히 그녀는 부자지만 행복하지는 않다. (※현재는 「의심 없이」라는 강한 확신을 나타내는 경우는 거의 없음)."
+      }
+    ]
+  },
+  {
+    "id": 19052,
+    "origin": "dissimilar",
+    "examples": [
+      {
+        "exam_en": "The two writers are not dissimilar in style.",
+        "exam_ko": "그 두 작가는 문체가 닮았다."
+      }
+    ]
+  },
+  {
+    "id": 19054,
+    "origin": "dissenter",
+    "examples": [
+      {
+        "exam_en": "Don't mind his not agreeing; he likes to be a dissenter. ",
+        "exam_ko": "그의 반대를 염려할 것은 없다. 그는 반대자 노릇하기를 좋아하니까."
+      },
+      {
+        "exam_en": "Don't mind his not agreeing; he likes to be a dissenter.",
+        "exam_ko": "그의 반대를 염려할 것은 없다. 그는 반대자 노릇하기를 좋아하니까."
+      }
+    ]
+  },
+  {
+    "id": 19055,
+    "origin": "disobedient",
+    "examples": [
+      {
+        "exam_en": "He was disobedient to his mother.",
+        "exam_ko": "그는 엄마의 말을 듣지 않았다."
+      },
+      {
+        "exam_en": "It was very beautiful, but the disobedient fairies were too frightened to notice the beauty of the trees.",
+        "exam_ko": "그곳은 매우 아름다웠지만, 반항하는 요정들은 너무 겁이나 미처 알아채지 못했습니다. 아름다움을 나무의"
+      }
+    ]
+  },
+  {
+    "id": 19058,
+    "origin": "dictatorship",
+    "examples": [
+      {
+        "exam_en": "the dictatorship of the proletariat",
+        "exam_ko": "프롤레타리아 독재."
+      }
+    ]
+  },
+  {
+    "id": 19060,
+    "origin": "dexterous",
+    "examples": [
+      {
+        "exam_en": "a dexterous artisan",
+        "exam_ko": "솜씨 좋은 장인."
+      },
+      {
+        "exam_en": "be dexterous in handling people",
+        "exam_ko": "사람을 다루는 솜씨가 좋다."
+      }
+    ]
+  },
+  {
+    "id": 19064,
+    "origin": "denude",
+    "examples": [
+      {
+        "exam_en": "a denuded hill",
+        "exam_ko": "민둥산."
+      }
+    ]
+  },
+  {
+    "id": 19065,
+    "origin": "deleterious",
+    "examples": [
+      {
+        "exam_en": "a deleterious drug",
+        "exam_ko": "독약"
+      },
+      {
+        "exam_en": "These drugs have a deleterious effect on the nervous system.",
+        "exam_ko": "이 약들은 신경계에 해로운 영향을 미친다."
+      },
+      {
+        "exam_en": "Ultraviolet(UV) Exposure; No peeling, chipping, flaking, pitting, crazing, erosion or other deleterious effects were observed.",
+        "exam_ko": "자외선에 노출 된곳은 껍질 벗겨짐, 부스러지무, 금, 조각조가 벗겨짐, 곰보자국, 잔금, 부식, 다른 유해한 영향이 보이지 않는다."
+      },
+      {
+        "exam_en": "Smoking has deleterious effects on one's health.",
+        "exam_ko": "흡연은 건강에 해로운 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 19070,
+    "origin": "dampen",
+    "examples": [
+      {
+        "exam_en": "dampen a cloth",
+        "exam_ko": "걸레를 축이다."
+      },
+      {
+        "exam_en": "Adversity dampened their ardor. ",
+        "exam_ko": "역경이 그들의 열의를 꺾었다.\n"
+      },
+      {
+        "exam_en": "Adversity dampened their ardor.",
+        "exam_ko": "역경이 그들의 열의를 꺾었다."
+      }
+    ]
+  },
+  {
+    "id": 19071,
+    "origin": "flaming",
+    "examples": [
+      {
+        "exam_en": "a flaming sunset",
+        "exam_ko": "불타는 듯한 저녁놀."
+      },
+      {
+        "exam_en": "I was in a flaming temper.",
+        "exam_ko": "나는 불같이 화가 나 있었다."
+      }
+    ]
+  },
+  {
+    "id": 19074,
+    "origin": "fallacious",
+    "examples": [
+      {
+        "exam_en": "a fallacious argument",
+        "exam_ko": "불합리한 논쟁."
+      }
+    ]
+  },
+  {
+    "id": 19075,
+    "origin": "exude",
+    "examples": [
+      {
+        "exam_en": "a young man who exuded charm",
+        "exam_ko": "매력이 넘치는 청년"
+      },
+      {
+        "exam_en": "exude will power",
+        "exam_ko": "의지력을 보이다."
+      }
+    ]
+  },
+  {
+    "id": 19079,
+    "origin": "euclidean",
+    "examples": [
+      {
+        "exam_en": "Euclidean space",
+        "exam_ko": "유클리드 공간"
+      },
+      {
+        "exam_en": "Euclidean geometry",
+        "exam_ko": "유클리드 기하학."
+      }
+    ]
+  },
+  {
+    "id": 19083,
+    "origin": "equatorial",
+    "examples": [
+      {
+        "exam_en": "the equatorial rain forest",
+        "exam_ko": "적도 우림지."
+      },
+      {
+        "exam_en": "an equatorial climate",
+        "exam_ko": "혹서."
+      }
+    ]
+  },
+  {
+    "id": 19088,
+    "origin": "emigrant",
+    "examples": [
+      {
+        "exam_en": "Korean emigrants to Hawaii",
+        "exam_ko": "하와이로 간 한국인 이주자(※한국에서는 emigrant이지만, 하와이쪽에서 보면 한국으로부터의 immigrant가 됨)."
+      }
+    ]
+  },
+  {
+    "id": 19089,
+    "origin": "emergent",
+    "examples": [
+      {
+        "exam_en": "rocks emergent above the waves",
+        "exam_ko": "파도 위로 솟아 있는 바위."
+      },
+      {
+        "exam_en": "the emergent nations of Africa",
+        "exam_ko": "아프리카의 신생 국가들."
+      }
+    ]
+  },
+  {
+    "id": 19090,
+    "origin": "emergence",
+    "examples": [
+      {
+        "exam_en": "the emergence of a prosperous nation out of the war's devastation",
+        "exam_ko": "전쟁으로 인한 황폐로부터의 부유한 나라의 출현."
+      }
+    ]
+  }
+]

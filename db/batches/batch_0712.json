@@ -1,0 +1,238 @@
+[
+  {
+    "id": 32282,
+    "origin": "superhuman",
+    "examples": [
+      {
+        "exam_en": "He had a superhuman ability to work long hours.",
+        "exam_ko": "그는 오랫동안 일할 수 있는 초인적인 능력을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 32291,
+    "origin": "irreducible",
+    "examples": [
+      {
+        "exam_en": "the irreducible minimum",
+        "exam_ko": "최소한, 극소."
+      },
+      {
+        "exam_en": "be irreducible to rule",
+        "exam_ko": "규칙성을 찾아볼 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 32302,
+    "origin": "demesne",
+    "examples": [
+      {
+        "exam_en": "land held in demesne",
+        "exam_ko": "사유지."
+      },
+      {
+        "exam_en": "a state demesne",
+        "exam_ko": "국유지[왕실 소유지]."
+      }
+    ]
+  },
+  {
+    "id": 32305,
+    "origin": "extramural",
+    "examples": [
+      {
+        "exam_en": "an extramural track and field event",
+        "exam_ko": "학교 대항 육상 경기."
+      },
+      {
+        "exam_en": "extramural classes",
+        "exam_ko": "교외 공개 강좌"
+      }
+    ]
+  },
+  {
+    "id": 32342,
+    "origin": "disadvantaged",
+    "examples": [
+      {
+        "exam_en": "disadvantaged children",
+        "exam_ko": "빈곤한 가정의[혜택받지 못한] 아이들."
+      }
+    ]
+  },
+  {
+    "id": 32349,
+    "origin": "sleepless",
+    "examples": [
+      {
+        "exam_en": "I've spent a sleepless night thinking about you.",
+        "exam_ko": "너를 생각하면서 잠 못 이루는 밤을 보냈어."
+      }
+    ]
+  },
+  {
+    "id": 32354,
+    "origin": "circumpolar",
+    "examples": [
+      {
+        "exam_en": "circumpolar stars",
+        "exam_ko": "천극 둘레의 별, 주극성(周極星)"
+      },
+      {
+        "exam_en": "the circumpolar ocean",
+        "exam_ko": "극지를 둘러싸는 해양."
+      }
+    ]
+  },
+  {
+    "id": 32360,
+    "origin": "unacquainted",
+    "examples": [
+      {
+        "exam_en": "He is unacquainted with music.",
+        "exam_ko": "그는 음악을 모른다."
+      }
+    ]
+  },
+  {
+    "id": 32366,
+    "origin": "hysteric",
+    "examples": [
+      {
+        "exam_en": "go into hysterics",
+        "exam_ko": "히스테리를 일으키다; 울화가 치밀다; 발작적인 웃음을 터뜨리다."
+      },
+      {
+        "exam_en": "Hysterics are painful to watch.",
+        "exam_ko": "히스테리의 발작은 보기에 고통스럽다."
+      }
+    ]
+  },
+  {
+    "id": 32368,
+    "origin": "soundproof",
+    "examples": [
+      {
+        "exam_en": "a soundproof chamber",
+        "exam_ko": "방음실"
+      },
+      {
+        "exam_en": "a soundproof door",
+        "exam_ko": "방음 도어."
+      }
+    ]
+  },
+  {
+    "id": 32374,
+    "origin": "fuddle",
+    "examples": [
+      {
+        "exam_en": "be in a fuddle",
+        "exam_ko": "혼란 상태이다."
+      }
+    ]
+  },
+  {
+    "id": 32377,
+    "origin": "troth",
+    "examples": [
+      {
+        "exam_en": "by my troth",
+        "exam_ko": "맹세코, 절대로"
+      },
+      {
+        "exam_en": "in troth",
+        "exam_ko": "정말로, 참으로."
+      }
+    ]
+  },
+  {
+    "id": 32381,
+    "origin": "fangle",
+    "examples": [
+      {
+        "exam_en": "new fangles of hats",
+        "exam_ko": "모자의 새 유행."
+      }
+    ]
+  },
+  {
+    "id": 32386,
+    "origin": "clangor",
+    "examples": [
+      {
+        "exam_en": "The clangor coming from the street woke me early in the morning.",
+        "exam_ko": "길에서 들리는 땡그랑 땡그랑하는 소리가 이른 아침에 나를 깨웠다."
+      }
+    ]
+  },
+  {
+    "id": 32389,
+    "origin": "bibulous",
+    "examples": [
+      {
+        "exam_en": "The material is bibulous.",
+        "exam_ko": "그 자재는 흡수성이 좋다."
+      },
+      {
+        "exam_en": "He was already mildly drunk, and Amy knew from experience that it would be a long, bibulous evening.",
+        "exam_ko": "그는 이미 약간 술에 취해 있었고 에이미는 경험을 통해 길고 멋진(흥청망청한) 저녁이 될 것이라는 것을 알았습니다."
+      }
+    ]
+  },
+  {
+    "id": 32394,
+    "origin": "postprandial",
+    "examples": [
+      {
+        "exam_en": "postprandial belches",
+        "exam_ko": "식후의 트림."
+      }
+    ]
+  },
+  {
+    "id": 32401,
+    "origin": "exchequer",
+    "examples": [
+      {
+        "exam_en": "the Chancellor of the Exchequer",
+        "exam_ko": "재무 장관."
+      },
+      {
+        "exam_en": "a family exchequer",
+        "exam_ko": "가계(家計)"
+      }
+    ]
+  },
+  {
+    "id": 32406,
+    "origin": "frowzy",
+    "examples": [
+      {
+        "exam_en": "frowzy hair",
+        "exam_ko": "지저분한 머리털."
+      }
+    ]
+  },
+  {
+    "id": 32407,
+    "origin": "hirsute",
+    "examples": [
+      {
+        "exam_en": "His chest is hirsute.",
+        "exam_ko": "그의 가슴은 털이 많다."
+      }
+    ]
+  },
+  {
+    "id": 32408,
+    "origin": "hunker",
+    "examples": [
+      {
+        "exam_en": "on one's hunkers",
+        "exam_ko": "쭈그리고 앉아서, 웅크려."
+      }
+    ]
+  }
+]

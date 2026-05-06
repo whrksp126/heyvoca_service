@@ -1,0 +1,250 @@
+[
+  {
+    "id": 14889,
+    "origin": "constituent",
+    "examples": [
+      {
+        "exam_en": "the constituent parts of a machine",
+        "exam_ko": "기계의 부품."
+      },
+      {
+        "exam_en": "a constituent body",
+        "exam_ko": "선거 모체."
+      }
+    ]
+  },
+  {
+    "id": 14891,
+    "origin": "logically",
+    "examples": [
+      {
+        "exam_en": "It is logically impossible.",
+        "exam_ko": "그것은 논리상 불가능하다."
+      }
+    ]
+  },
+  {
+    "id": 14892,
+    "origin": "accessory",
+    "examples": [
+      {
+        "exam_en": "an accessory before the fact",
+        "exam_ko": "사전[사후] 종범."
+      },
+      {
+        "exam_en": "an accessory calyx",
+        "exam_ko": "[식물] 부악(副萼)"
+      },
+      {
+        "exam_en": "The handbag is a fashionable accessory that complements her outfit.",
+        "exam_ko": "핸드백은 그녀의 복장을 보완해주는 유행 액세서리이다."
+      }
+    ]
+  },
+  {
+    "id": 14898,
+    "origin": "innovation",
+    "examples": [
+      {
+        "exam_en": "an unheard of innovation",
+        "exam_ko": "전대미문의 신기축."
+      },
+      {
+        "exam_en": "technological innovation",
+        "exam_ko": "기술 혁신."
+      }
+    ]
+  },
+  {
+    "id": 14901,
+    "origin": "roadside",
+    "examples": [
+      {
+        "exam_en": "by the roadside",
+        "exam_ko": "길가에."
+      },
+      {
+        "exam_en": "at a roadside hamburger stand",
+        "exam_ko": "길가의 햄버거 포장마차에서."
+      }
+    ]
+  },
+  {
+    "id": 14904,
+    "origin": "iniquity",
+    "examples": [
+      {
+        "exam_en": "a den of iniquity",
+        "exam_ko": "(익살) 악의 소굴."
+      }
+    ]
+  },
+  {
+    "id": 14906,
+    "origin": "seaboard",
+    "examples": [
+      {
+        "exam_en": "a seaboard city",
+        "exam_ko": "연안 도시."
+      }
+    ]
+  },
+  {
+    "id": 14912,
+    "origin": "evacuation",
+    "examples": [
+      {
+        "exam_en": "evacuation orders",
+        "exam_ko": "피난[소개] 명령."
+      }
+    ]
+  },
+  {
+    "id": 14915,
+    "origin": "zap",
+    "examples": [
+      {
+        "exam_en": "get zaped",
+        "exam_ko": "(공격)당하다[죽다]"
+      },
+      {
+        "exam_en": "He zaped the car into fourth gear and screeched off.",
+        "exam_ko": "그는 기어를 재빨리 4단으로 바꾸고 요란한 소리를 내며 사라졌다."
+      }
+    ]
+  },
+  {
+    "id": 14918,
+    "origin": "lucifer",
+    "examples": [
+      {
+        "exam_en": "as proud as Lucifer",
+        "exam_ko": "마왕같이 거만한."
+      }
+    ]
+  },
+  {
+    "id": 14922,
+    "origin": "demon",
+    "examples": [
+      {
+        "exam_en": "a demon for work",
+        "exam_ko": "일[연습] 벌레"
+      },
+      {
+        "exam_en": "a demon at golf",
+        "exam_ko": "골프의 대가."
+      }
+    ]
+  },
+  {
+    "id": 14923,
+    "origin": "centigrade",
+    "examples": [
+      {
+        "exam_en": "20℃",
+        "exam_ko": "섭씨 20도(※twenty degrees centigrade로 읽음)"
+      },
+      {
+        "exam_en": "a centigrade thermometer",
+        "exam_ko": "100분도[섭씨] 온도계."
+      }
+    ]
+  },
+  {
+    "id": 14924,
+    "origin": "fahrenheit",
+    "examples": [
+      {
+        "exam_en": "90 degrees F-",
+        "exam_ko": "화씨 90도(※ninety degrees Fahrenheit라고 읽음)."
+      }
+    ]
+  },
+  {
+    "id": 14925,
+    "origin": "undesirable",
+    "examples": [
+      {
+        "exam_en": "undesirable elements",
+        "exam_ko": "유해 요소"
+      },
+      {
+        "exam_en": "undesirable outcome",
+        "exam_ko": "탐탁치 않은 결과"
+      }
+    ]
+  },
+  {
+    "id": 14926,
+    "origin": "estrange",
+    "examples": [
+      {
+        "exam_en": "become estranged from one's friends",
+        "exam_ko": "친구들과 소원해지다"
+      },
+      {
+        "exam_en": "estrange oneself from",
+        "exam_ko": "…에서 멀어지다"
+      }
+    ]
+  },
+  {
+    "id": 14928,
+    "origin": "sinful",
+    "examples": [
+      {
+        "exam_en": "a sinful life",
+        "exam_ko": "죄 많은 생활"
+      },
+      {
+        "exam_en": "the sinful world",
+        "exam_ko": "죄 많은[사악한] 세상."
+      }
+    ]
+  },
+  {
+    "id": 14930,
+    "origin": "denominational",
+    "examples": [
+      {
+        "exam_en": "denominational schools",
+        "exam_ko": "종파(가 경영하는) 학교."
+      }
+    ]
+  },
+  {
+    "id": 14931,
+    "origin": "amends",
+    "examples": [
+      {
+        "exam_en": "a full amends",
+        "exam_ko": "충분한 보상"
+      },
+      {
+        "exam_en": "every possible amends",
+        "exam_ko": "가능한 한의 변상."
+      }
+    ]
+  },
+  {
+    "id": 14933,
+    "origin": "accommodating",
+    "examples": [
+      {
+        "exam_en": "She is very accommodating to foreigners.",
+        "exam_ko": "그녀는 외국인들에게 아주 친절하다."
+      }
+    ]
+  },
+  {
+    "id": 14935,
+    "origin": "understandable",
+    "examples": [
+      {
+        "exam_en": "It is understandable that she got so mad.",
+        "exam_ko": "그녀가 그렇게 화를 내는 것은 이해할 만하다."
+      }
+    ]
+  }
+]

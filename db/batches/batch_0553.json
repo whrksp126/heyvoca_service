@@ -1,0 +1,254 @@
+[
+  {
+    "id": 18002,
+    "origin": "peremptory",
+    "examples": [
+      {
+        "exam_en": "a peremptory rule",
+        "exam_ko": "확정 명령"
+      },
+      {
+        "exam_en": "a peremptory writ",
+        "exam_ko": "확정 소환장"
+      }
+    ]
+  },
+  {
+    "id": 18004,
+    "origin": "wistful",
+    "examples": [
+      {
+        "exam_en": "in a wistful mood",
+        "exam_ko": "생각에 잠기어"
+      },
+      {
+        "exam_en": "look with wistful eyes at the dolls in the window",
+        "exam_ko": "쇼 윈도의 인형을 탐나는 듯이 쳐다보다."
+      }
+    ]
+  },
+  {
+    "id": 18005,
+    "origin": "woodland",
+    "examples": [
+      {
+        "exam_en": "birds of the woodland",
+        "exam_ko": "숲에 사는 새"
+      },
+      {
+        "exam_en": "a stretch of woodland",
+        "exam_ko": "널리 뻗어난 삼림 지대."
+      }
+    ]
+  },
+  {
+    "id": 18010,
+    "origin": "pylon",
+    "examples": [
+      {
+        "exam_en": "nacelle pylon",
+        "exam_ko": "엔진 파일론."
+      }
+    ]
+  },
+  {
+    "id": 18012,
+    "origin": "annul",
+    "examples": [
+      {
+        "exam_en": "annul a contract",
+        "exam_ko": "계약을 취소하다."
+      }
+    ]
+  },
+  {
+    "id": 18013,
+    "origin": "noticeable",
+    "examples": [
+      {
+        "exam_en": "a noticeable difference",
+        "exam_ko": "쉽게 구별되는 차이"
+      },
+      {
+        "exam_en": "a noticeable improvement",
+        "exam_ko": "괄목할 만한 진보"
+      }
+    ]
+  },
+  {
+    "id": 18014,
+    "origin": "realization",
+    "examples": [
+      {
+        "exam_en": "the realization of my hopes",
+        "exam_ko": "내 희망의 성취"
+      },
+      {
+        "exam_en": "the realization of one's dream",
+        "exam_ko": "꿈의 실현."
+      }
+    ]
+  },
+  {
+    "id": 18015,
+    "origin": "restricted",
+    "examples": [
+      {
+        "exam_en": "a restricted area",
+        "exam_ko": "(미) (군인) 출입 금지 구역; (영) 속도 제한 구역"
+      },
+      {
+        "exam_en": "have a restricted application",
+        "exam_ko": "응용 범위가 좁다."
+      }
+    ]
+  },
+  {
+    "id": 18024,
+    "origin": "aged",
+    "examples": [
+      {
+        "exam_en": "an aged man",
+        "exam_ko": "노인"
+      },
+      {
+        "exam_en": "an aged parent",
+        "exam_ko": "늙은 부모."
+      }
+    ]
+  },
+  {
+    "id": 18025,
+    "origin": "degrade",
+    "examples": [
+      {
+        "exam_en": "degrade a person from a position of honor",
+        "exam_ko": "남을 명예스러운 지위에서 물러나게 하다[낮은 지위로 떨어뜨리다]."
+      },
+      {
+        "exam_en": "degrade oneself by telling lies",
+        "exam_ko": "거짓말을 함으로써 자기의 품위를 떨어뜨리다"
+      }
+    ]
+  },
+  {
+    "id": 18027,
+    "origin": "imposing",
+    "examples": [
+      {
+        "exam_en": "an imposing mansion",
+        "exam_ko": "으리으리한 대저택"
+      },
+      {
+        "exam_en": "a tall imposing woman",
+        "exam_ko": "키가 큰 인상적인 여성."
+      }
+    ]
+  },
+  {
+    "id": 18029,
+    "origin": "businessman",
+    "examples": [
+      {
+        "exam_en": "a businessman's risk",
+        "exam_ko": "(주식 등) 상당히 큰 위험이 따르는 투자."
+      }
+    ]
+  },
+  {
+    "id": 18030,
+    "origin": "commerce",
+    "examples": [
+      {
+        "exam_en": "foreign commerce",
+        "exam_ko": "외국[국제] 무역"
+      },
+      {
+        "exam_en": "domestic commerce",
+        "exam_ko": "국내 상업"
+      }
+    ]
+  },
+  {
+    "id": 18031,
+    "origin": "unlawful",
+    "examples": [
+      {
+        "exam_en": "unlawful money",
+        "exam_ko": "부정한 돈."
+      }
+    ]
+  },
+  {
+    "id": 18032,
+    "origin": "partiality",
+    "examples": [
+      {
+        "exam_en": "the painter's partiality for blue",
+        "exam_ko": "그 화가의 청색에 대한 강한 기호"
+      },
+      {
+        "exam_en": "have a partiality toward blondes",
+        "exam_ko": "금발 아가씨라면 사족을 못 쓰다."
+      }
+    ]
+  },
+  {
+    "id": 18033,
+    "origin": "sustaining",
+    "examples": [
+      {
+        "exam_en": "a sustaining member",
+        "exam_ko": "유지 회원."
+      }
+    ]
+  },
+  {
+    "id": 18034,
+    "origin": "undivided",
+    "examples": [
+      {
+        "exam_en": "undivided profits",
+        "exam_ko": "미분배 이익"
+      },
+      {
+        "exam_en": "undivided support",
+        "exam_ko": "연속된 지지."
+      }
+    ]
+  },
+  {
+    "id": 18035,
+    "origin": "justifiable",
+    "examples": [
+      {
+        "exam_en": "justifiable defense",
+        "exam_ko": "정당 방위"
+      },
+      {
+        "exam_en": "It is surely justifiable for him to have rejected it.",
+        "exam_ko": "그가 그것을 거절한 것은 분명히 정당하다고 할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 18039,
+    "origin": "cog",
+    "examples": [
+      {
+        "exam_en": "slip a cog",
+        "exam_ko": "실수하다, 일을 그르치다."
+      }
+    ]
+  },
+  {
+    "id": 18045,
+    "origin": "projecting",
+    "examples": [
+      {
+        "exam_en": "projecting eyes",
+        "exam_ko": "퉁방울눈."
+      }
+    ]
+  }
+]

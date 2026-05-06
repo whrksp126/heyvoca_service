@@ -1,0 +1,234 @@
+[
+  {
+    "id": 13883,
+    "origin": "coerce",
+    "examples": [
+      {
+        "exam_en": "Her parents coerced her into marrying the man.",
+        "exam_ko": "부모는 그녀를 억지로 그 남자와 결혼시켰다."
+      }
+    ]
+  },
+  {
+    "id": 13885,
+    "origin": "brim",
+    "examples": [
+      {
+        "exam_en": "fill a glass to the brim",
+        "exam_ko": "컵을 가득 채우다"
+      },
+      {
+        "exam_en": "The glass was full to the brim.",
+        "exam_ko": "잔은 철철 넘칠 만큼 가득 찼다."
+      }
+    ]
+  },
+  {
+    "id": 13886,
+    "origin": "parable",
+    "examples": [
+      {
+        "exam_en": "speak in parables",
+        "exam_ko": "비유해서 말하다."
+      }
+    ]
+  },
+  {
+    "id": 13887,
+    "origin": "uplift",
+    "examples": [
+      {
+        "exam_en": "be uplifted by the news",
+        "exam_ko": "그 소식에 사기가 오르다."
+      },
+      {
+        "exam_en": "an uplifting sermon",
+        "exam_ko": "목소리를 높인 설교."
+      }
+    ]
+  },
+  {
+    "id": 13888,
+    "origin": "atone",
+    "examples": [
+      {
+        "exam_en": "atone for hurting a person's feelings",
+        "exam_ko": "남의 감정을 상하게 한 보상을 하다"
+      },
+      {
+        "exam_en": "I think your loss was fully atoned for.",
+        "exam_ko": "네 손해는 충분히 벌충되었다고 생각한다."
+      }
+    ]
+  },
+  {
+    "id": 13889,
+    "origin": "magistrate",
+    "examples": [
+      {
+        "exam_en": "the chief magistrate",
+        "exam_ko": "최고 행정관(※대통령·국왕·원수·지사·시장 등)."
+      }
+    ]
+  },
+  {
+    "id": 13890,
+    "origin": "outlive",
+    "examples": [
+      {
+        "exam_en": "He outlived his son.",
+        "exam_ko": "그는 아들보다 오래 살았다."
+      }
+    ]
+  },
+  {
+    "id": 13894,
+    "origin": "risque",
+    "examples": [
+      {
+        "exam_en": "a very risque conversation",
+        "exam_ko": "매우 음란한 대화."
+      }
+    ]
+  },
+  {
+    "id": 13897,
+    "origin": "shoal",
+    "examples": [
+      {
+        "exam_en": "a shoal of herring",
+        "exam_ko": "청어 떼"
+      },
+      {
+        "exam_en": "shoals of people",
+        "exam_ko": "수많은 사람들"
+      }
+    ]
+  },
+  {
+    "id": 13898,
+    "origin": "cloister",
+    "examples": [
+      {
+        "exam_en": "He cloistered himself  in his laboratory.",
+        "exam_ko": "그는 실험실에 틀어박혔다."
+      },
+      {
+        "exam_en": "a cloistered garden",
+        "exam_ko": "회랑으로 둘러싸인 뜰."
+      }
+    ]
+  },
+  {
+    "id": 13899,
+    "origin": "uptick",
+    "examples": [
+      {
+        "exam_en": "on the uptick",
+        "exam_ko": "강세에."
+      },
+      {
+        "exam_en": "The huge uptick is raising fears of more record-breaking injured numbers ahead.",
+        "exam_ko": "급격한 경사로 인해 앞으로 기록적인 수치로 환자가 더 늘어날 것이라는 우려가 커지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 13900,
+    "origin": "hitherto",
+    "examples": [
+      {
+        "exam_en": "problems hitherto neglected",
+        "exam_ko": "지금까지 무시되었던 문제."
+      }
+    ]
+  },
+  {
+    "id": 13902,
+    "origin": "lewd",
+    "examples": [
+      {
+        "exam_en": "lewd language",
+        "exam_ko": "음란한 말."
+      }
+    ]
+  },
+  {
+    "id": 13905,
+    "origin": "stark",
+    "examples": [
+      {
+        "exam_en": "stark terror",
+        "exam_ko": "공포심 그 자체"
+      },
+      {
+        "exam_en": "in stark contrast to",
+        "exam_ko": "…과 완전한 대조를 이루어."
+      }
+    ]
+  },
+  {
+    "id": 13906,
+    "origin": "dissuade",
+    "examples": [
+      {
+        "exam_en": "He dissuaded his son from quitting school.",
+        "exam_ko": "그는 아들을 설득하여 자퇴를 단념시켰다."
+      }
+    ]
+  },
+  {
+    "id": 13907,
+    "origin": "draconian",
+    "examples": [
+      {
+        "exam_en": "Draconian tax",
+        "exam_ko": "엄한 조세[수단]."
+      }
+    ]
+  },
+  {
+    "id": 13910,
+    "origin": "rebuff",
+    "examples": [
+      {
+        "exam_en": "an unexpected rebuff",
+        "exam_ko": "예상치 못한 거절."
+      }
+    ]
+  },
+  {
+    "id": 13912,
+    "origin": "linen",
+    "examples": [
+      {
+        "exam_en": "change one's linen",
+        "exam_ko": "속옷을 갈아 입다"
+      },
+      {
+        "exam_en": "They have a good stock of linens at that shop.",
+        "exam_ko": "저 가게에서는 리넨류의 재고품을 상당히 많이 갖고 있다"
+      }
+    ]
+  },
+  {
+    "id": 13913,
+    "origin": "placate",
+    "examples": [
+      {
+        "exam_en": "I tried to placate her by offering to pay for the repairs.",
+        "exam_ko": "나는 수리비를 지불하겠다는 제의로 그녀를 달래려고 했다."
+      }
+    ]
+  },
+  {
+    "id": 13916,
+    "origin": "reinstate",
+    "examples": [
+      {
+        "exam_en": "reinstate him in his former post",
+        "exam_ko": "그를 원래의 지위[대사의 지위]로 복귀시키다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "id": 35334,
+    "origin": "sunburned",
+    "examples": [
+      {
+        "exam_en": "sunburned shoulder",
+        "exam_ko": "햇볕에 탄 어깨."
+      }
+    ]
+  },
+  {
+    "id": 35378,
+    "origin": "waterborne",
+    "examples": [
+      {
+        "exam_en": "an waterborne diseases",
+        "exam_ko": "수인성 전염병."
+      }
+    ]
+  },
+  {
+    "id": 35397,
+    "origin": "notarial",
+    "examples": [
+      {
+        "exam_en": "a notarial deed",
+        "exam_ko": "공증 증서."
+      }
+    ]
+  },
+  {
+    "id": 35404,
+    "origin": "matted",
+    "examples": [
+      {
+        "exam_en": "a weed-matted garden",
+        "exam_ko": "잡초가 온통 우거진 뜰."
+      },
+      {
+        "exam_en": "Her wet hair was matted to her scalp.",
+        "exam_ko": "그녀의 젖은 머리털은 엉켜 머리에 딱 붙어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 35456,
+    "origin": "homing",
+    "examples": [
+      {
+        "exam_en": "the homing instinct",
+        "exam_ko": "귀소 본능."
+      }
+    ]
+  },
+  {
+    "id": 35519,
+    "origin": "oceanfront",
+    "examples": [
+      {
+        "exam_en": "an oceanfront hotel",
+        "exam_ko": "임해 호텔."
+      }
+    ]
+  },
+  {
+    "id": 35528,
+    "origin": "waster",
+    "examples": [
+      {
+        "exam_en": "This lesson is a real time-waster.",
+        "exam_ko": "이 학과는 참으로 시간 낭비구나."
+      }
+    ]
+  },
+  {
+    "id": 35606,
+    "origin": "pickled",
+    "examples": [
+      {
+        "exam_en": "pickled onions",
+        "exam_ko": "양파 피클즈[절인 것]."
+      }
+    ]
+  },
+  {
+    "id": 35623,
+    "origin": "besprinkle",
+    "examples": [
+      {
+        "exam_en": "The flowers were besprinkled with morning dew.",
+        "exam_ko": "화초에 아침 이슬이 내려앉아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 35631,
+    "origin": "smartly",
+    "examples": [
+      {
+        "exam_en": "a smartly dressed woman",
+        "exam_ko": "말쑥하게 차려입은 여자."
+      }
+    ]
+  },
+  {
+    "id": 35663,
+    "origin": "quiche",
+    "examples": [
+      {
+        "exam_en": "eat quiche",
+        "exam_ko": "(미·속어) 비열한 짓을 하다."
+      }
+    ]
+  },
+  {
+    "id": 35702,
+    "origin": "goodbye",
+    "examples": [
+      {
+        "exam_en": "We must say goodby now.",
+        "exam_ko": "이제 헤어져야 할 시간입니다."
+      }
+    ]
+  },
+  {
+    "id": 35717,
+    "origin": "nitroglycerin",
+    "examples": [
+      {
+        "exam_en": "a nitroglycerin pill",
+        "exam_ko": "니트로글리세린정(※협심증 치료약)."
+      }
+    ]
+  },
+  {
+    "id": 35721,
+    "origin": "untitled",
+    "examples": [
+      {
+        "exam_en": "untitled citizens",
+        "exam_ko": "직함 없는 시민들"
+      },
+      {
+        "exam_en": "an untitled poem",
+        "exam_ko": "제명이 없는 시."
+      }
+    ]
+  },
+  {
+    "id": 35740,
+    "origin": "secularize",
+    "examples": [
+      {
+        "exam_en": "secularize schools",
+        "exam_ko": "학교를 종교에서 분리하다"
+      },
+      {
+        "exam_en": "American life has become secularized.",
+        "exam_ko": "미국의 생활은 세속화되었다."
+      }
+    ]
+  },
+  {
+    "id": 35741,
+    "origin": "masked",
+    "examples": [
+      {
+        "exam_en": "a masked ball",
+        "exam_ko": "가면[가장] 무도회."
+      },
+      {
+        "exam_en": "masked wickedness",
+        "exam_ko": "숨은 악."
+      }
+    ]
+  },
+  {
+    "id": 35767,
+    "origin": "seaway",
+    "examples": [
+      {
+        "exam_en": "make seaway",
+        "exam_ko": "항진하다."
+      },
+      {
+        "exam_en": "in a seaway",
+        "exam_ko": "격랑 속에서."
+      }
+    ]
+  },
+  {
+    "id": 35774,
+    "origin": "gaga",
+    "examples": [
+      {
+        "exam_en": "be gaga about",
+        "exam_ko": "…에 열중해 있다."
+      },
+      {
+        "exam_en": "go gaga",
+        "exam_ko": "노망하다."
+      }
+    ]
+  },
+  {
+    "id": 35777,
+    "origin": "exchangeable",
+    "examples": [
+      {
+        "exam_en": "exchangeable goods",
+        "exam_ko": "교환 상품"
+      },
+      {
+        "exam_en": "exchangeable value",
+        "exam_ko": "교환 가치."
+      }
+    ]
+  },
+  {
+    "id": 35807,
+    "origin": "briny",
+    "examples": [
+      {
+        "exam_en": "briny water",
+        "exam_ko": "소금물"
+      },
+      {
+        "exam_en": "the briny deep",
+        "exam_ko": "(문어) 바다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+[
+  {
+    "id": 900,
+    "origin": "behave",
+    "examples": [
+      {
+        "exam_en": "Children should <strong class=\"target-word\">behave</strong> well in public.",
+        "exam_ko": "아이들은 공공장소에서 올바르게 <strong class=\"target-word\">행동해야</strong> 한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Behave</strong> yourself at the dinner table.",
+        "exam_ko": "저녁 식사 자리에서 <strong class=\"target-word\">예의 바르게 굴어라</strong>."
+      }
+    ]
+  },
+  {
+    "id": 901,
+    "origin": "extinct",
+    "examples": [
+      {
+        "exam_en": "The dodo became <strong class=\"target-word\">extinct</strong> centuries ago.",
+        "exam_ko": "도도새는 수백 년 전에 <strong class=\"target-word\">멸종했다</strong>."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">extinct</strong> species are preserved as fossils.",
+        "exam_ko": "많은 <strong class=\"target-word\">멸종</strong> 종들이 화석으로 보존되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 902,
+    "origin": "besides",
+    "examples": [
+      {
+        "exam_en": "The game was great, and <strong class=\"target-word\">besides</strong>, admission was free.",
+        "exam_ko": "경기는 훌륭했으며, <strong class=\"target-word\">게다가</strong> 입장료도 무료였다."
+      },
+      {
+        "exam_en": "He knows grammar but little <strong class=\"target-word\">besides</strong>.",
+        "exam_ko": "그는 문법은 알지만 <strong class=\"target-word\">그 밖에는</strong> 거의 모른다."
+      }
+    ]
+  },
+  {
+    "id": 903,
+    "origin": "appliance",
+    "examples": [
+      {
+        "exam_en": "She bought a new kitchen <strong class=\"target-word\">appliance</strong> last week.",
+        "exam_ko": "그녀는 지난주에 새 주방 <strong class=\"target-word\">기기</strong>를 샀다."
+      },
+      {
+        "exam_en": "The store sells various electrical <strong class=\"target-word\">appliances</strong>.",
+        "exam_ko": "그 가게는 다양한 전기 <strong class=\"target-word\">기기</strong>를 판매한다."
+      }
+    ]
+  },
+  {
+    "id": 904,
+    "origin": "appearance",
+    "examples": [
+      {
+        "exam_en": "She made several television <strong class=\"target-word\">appearances</strong> this year.",
+        "exam_ko": "그녀는 올해 텔레비전에 여러 번 <strong class=\"target-word\">출연했다</strong>."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">appearance</strong> on stage surprised the crowd.",
+        "exam_ko": "무대에서의 그의 <strong class=\"target-word\">등장</strong>이 관중을 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 905,
+    "origin": "appealing",
+    "examples": [
+      {
+        "exam_en": "She gave him an <strong class=\"target-word\">appealing</strong> smile.",
+        "exam_ko": "그녀는 그에게 <strong class=\"target-word\">매력적인</strong> 미소를 보냈다."
+      },
+      {
+        "exam_en": "The job offer sounds very <strong class=\"target-word\">appealing</strong> to me.",
+        "exam_ko": "그 취업 제안은 내게 매우 <strong class=\"target-word\">매력적으로</strong> 들린다."
+      }
+    ]
+  },
+  {
+    "id": 906,
+    "origin": "apologize",
+    "examples": [
+      {
+        "exam_en": "He had to <strong class=\"target-word\">apologize</strong> for his behavior.",
+        "exam_ko": "그는 자신의 행동에 대해 <strong class=\"target-word\">사과해야</strong> 했다."
+      },
+      {
+        "exam_en": "You must <strong class=\"target-word\">apologize</strong> to her for your rudeness.",
+        "exam_ko": "당신의 무례함에 대해 그녀에게 <strong class=\"target-word\">사과해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 907,
+    "origin": "anxious",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">anxious</strong> about his father's health.",
+        "exam_ko": "그는 아버지의 건강을 <strong class=\"target-word\">걱정하고</strong> 있다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">anxious</strong> about being left alone.",
+        "exam_ko": "그녀는 혼자 남겨질까 봐 <strong class=\"target-word\">불안해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 908,
+    "origin": "anticipate",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">anticipate</strong> a favorable change in the market.",
+        "exam_ko": "우리는 시장에서 유리한 변화를 <strong class=\"target-word\">기대한다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">anticipate</strong> much pleasure from our London trip.",
+        "exam_ko": "우리는 런던 여행이 매우 즐거울 것으로 <strong class=\"target-word\">기대한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 909,
+    "origin": "anonymous",
+    "examples": [
+      {
+        "exam_en": "She received an <strong class=\"target-word\">anonymous</strong> letter in the mail.",
+        "exam_ko": "그녀는 우편으로 <strong class=\"target-word\">익명의</strong> 편지를 받았다."
+      },
+      {
+        "exam_en": "The donation was made by an <strong class=\"target-word\">anonymous</strong> donor.",
+        "exam_ko": "그 기부는 <strong class=\"target-word\">익명의</strong> 기부자가 했다."
+      }
+    ]
+  },
+  {
+    "id": 910,
+    "origin": "announcement",
+    "examples": [
+      {
+        "exam_en": "The company made an official <strong class=\"target-word\">announcement</strong> today.",
+        "exam_ko": "회사는 오늘 공식 <strong class=\"target-word\">발표</strong>를 했다."
+      },
+      {
+        "exam_en": "The principal made an important <strong class=\"target-word\">announcement</strong> at assembly.",
+        "exam_ko": "교장은 조례 시간에 중요한 <strong class=\"target-word\">공지</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 911,
+    "origin": "annexation",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">annexation</strong> of Austria by Germany shocked Europe.",
+        "exam_ko": "독일의 오스트리아 <strong class=\"target-word\">병합</strong>은 유럽을 충격에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 912,
+    "origin": "analysis",
+    "examples": [
+      {
+        "exam_en": "The report includes a logical <strong class=\"target-word\">analysis</strong> of human behavior.",
+        "exam_ko": "보고서에는 인간 행동에 대한 논리적 <strong class=\"target-word\">분석</strong>이 포함되어 있다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">analysis</strong> of the data was very accurate.",
+        "exam_ko": "데이터에 대한 그녀의 <strong class=\"target-word\">분석</strong>은 매우 정확했다."
+      }
+    ]
+  },
+  {
+    "id": 913,
+    "origin": "amusement",
+    "examples": [
+      {
+        "exam_en": "He reads comic books for <strong class=\"target-word\">amusement</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">재미로</strong> 만화책을 읽는다."
+      },
+      {
+        "exam_en": "She smiled in <strong class=\"target-word\">amusement</strong> at his joke.",
+        "exam_ko": "그녀는 그의 농담에 <strong class=\"target-word\">재미있어하며</strong> 미소 지었다."
+      }
+    ]
+  },
+  {
+    "id": 914,
+    "origin": "amount",
+    "examples": [
+      {
+        "exam_en": "He spent a large <strong class=\"target-word\">amount</strong> of money on the trip.",
+        "exam_ko": "그는 여행에 많은 <strong class=\"target-word\">금액</strong>을 썼다."
+      },
+      {
+        "exam_en": "A considerable <strong class=\"target-word\">amount</strong> of rain fell last night.",
+        "exam_ko": "어젯밤에 상당한 <strong class=\"target-word\">양</strong>의 비가 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 915,
+    "origin": "accommodation",
+    "examples": [
+      {
+        "exam_en": "The hotel provided comfortable <strong class=\"target-word\">accommodation</strong> for guests.",
+        "exam_ko": "호텔은 투숙객에게 편안한 <strong class=\"target-word\">숙박 시설</strong>을 제공했다."
+      },
+      {
+        "exam_en": "His quick <strong class=\"target-word\">accommodation</strong> to city life impressed everyone.",
+        "exam_ko": "도시 생활에 대한 그의 빠른 <strong class=\"target-word\">적응</strong>이 모두를 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 916,
+    "origin": "accommodate",
+    "examples": [
+      {
+        "exam_en": "The hotel can <strong class=\"target-word\">accommodate</strong> up to 200 guests.",
+        "exam_ko": "그 호텔은 최대 200명의 투숙객을 <strong class=\"target-word\">수용할</strong> 수 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">accommodated</strong> her friend with a night's lodging.",
+        "exam_ko": "그녀는 친구에게 하룻밤 숙소를 <strong class=\"target-word\">마련해 주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 917,
+    "origin": "abstain",
+    "examples": [
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">abstain</strong> from drinking alcohol.",
+        "exam_ko": "그는 알코올을 <strong class=\"target-word\">삼가기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">abstained</strong> from sweets to maintain a healthy diet.",
+        "exam_ko": "건강한 식단을 위해 단것을 <strong class=\"target-word\">자제했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 918,
+    "origin": "account",
+    "examples": [
+      {
+        "exam_en": "The newspaper published detailed <strong class=\"target-word\">accounts</strong> of the event.",
+        "exam_ko": "신문은 그 사건에 대한 상세한 <strong class=\"target-word\">기사</strong>를 실었다."
+      },
+      {
+        "exam_en": "She gave a vivid <strong class=\"target-word\">account</strong> of her space flight.",
+        "exam_ko": "그녀는 자신의 우주 비행에 대한 생생한 <strong class=\"target-word\">이야기</strong>를 들려주었다."
+      }
+    ]
+  },
+  {
+    "id": 919,
+    "origin": "accordingly",
+    "examples": [
+      {
+        "exam_en": "He is guilty and must be punished <strong class=\"target-word\">accordingly</strong>.",
+        "exam_ko": "그는 유죄이므로 <strong class=\"target-word\">그에 맞게</strong> 처벌받아야 한다."
+      },
+      {
+        "exam_en": "He was told to be brief and spoke <strong class=\"target-word\">accordingly</strong>.",
+        "exam_ko": "그는 간단히 말하라는 요청을 받고 <strong class=\"target-word\">그에 따라</strong> 발언했다."
+      }
+    ]
+  }
+]

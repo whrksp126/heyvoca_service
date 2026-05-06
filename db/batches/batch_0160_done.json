@@ -1,0 +1,278 @@
+[
+  {
+    "id": 3489,
+    "origin": "oppress",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">oppressed</strong> by endless work.",
+        "exam_ko": "그녀는 끝없는 일에 <strong class=\"target-word\">짓눌리는</strong> 느낌이었다."
+      },
+      {
+        "exam_en": "He felt <strong class=\"target-word\">oppressed</strong> by the summer heat.",
+        "exam_ko": "그는 여름 더위에 <strong class=\"target-word\">짓눌리는</strong> 느낌이었다."
+      }
+    ]
+  },
+  {
+    "id": 3490,
+    "origin": "one",
+    "examples": [
+      {
+        "exam_en": "It will take <strong class=\"target-word\">one</strong> or two weeks.",
+        "exam_ko": "그것은 <strong class=\"target-word\">1</strong>, 2주일 걸릴 것이다."
+      }
+    ]
+  },
+  {
+    "id": 3491,
+    "origin": "once",
+    "examples": [
+      {
+        "exam_en": "I have visited Paris more than <strong class=\"target-word\">once</strong>.",
+        "exam_ko": "나는 파리를 <strong class=\"target-word\">여러 번</strong> 방문한 적이 있다."
+      },
+      {
+        "exam_en": "She calls her mom <strong class=\"target-word\">once</strong> a week.",
+        "exam_ko": "그녀는 일주일에 <strong class=\"target-word\">한 번</strong> 엄마에게 전화한다."
+      }
+    ]
+  },
+  {
+    "id": 3492,
+    "origin": "on",
+    "examples": [
+      {
+        "exam_en": "He carried a child <strong class=\"target-word\">on</strong> his back.",
+        "exam_ko": "그는 아이를 등에 <strong class=\"target-word\">업고</strong> 걸었다."
+      },
+      {
+        "exam_en": "A fly landed <strong class=\"target-word\">on</strong> the ceiling.",
+        "exam_ko": "파리 한 마리가 천장에 <strong class=\"target-word\">붙었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3493,
+    "origin": "oil",
+    "examples": [
+      {
+        "exam_en": "They use animal <strong class=\"target-word\">oil</strong> in cooking.",
+        "exam_ko": "그들은 요리에 동물성 <strong class=\"target-word\">기름</strong>을 사용한다."
+      },
+      {
+        "exam_en": "The perfume contains essential <strong class=\"target-word\">oil</strong>.",
+        "exam_ko": "그 향수에는 정유(精油)가 포함되어 있다. 그 향수에는 에센셜 <strong class=\"target-word\">오일</strong>이 들어 있다."
+      }
+    ]
+  },
+  {
+    "id": 3494,
+    "origin": "officer",
+    "examples": [
+      {
+        "exam_en": "He became a commissioned <strong class=\"target-word\">officer</strong> last year.",
+        "exam_ko": "그는 작년에 <strong class=\"target-word\">장교</strong>가 되었다."
+      },
+      {
+        "exam_en": "She served as a military <strong class=\"target-word\">officer</strong> for ten years.",
+        "exam_ko": "그녀는 10년간 군 <strong class=\"target-word\">장교</strong>로 복무했다."
+      }
+    ]
+  },
+  {
+    "id": 3495,
+    "origin": "office",
+    "examples": [
+      {
+        "exam_en": "She works as an <strong class=\"target-word\">office</strong> worker downtown.",
+        "exam_ko": "그녀는 시내에서 <strong class=\"target-word\">회사원</strong>으로 일한다."
+      },
+      {
+        "exam_en": "The meeting is held in the manager's <strong class=\"target-word\">office</strong>.",
+        "exam_ko": "회의는 지배인 <strong class=\"target-word\">사무실</strong>에서 열린다."
+      }
+    ]
+  },
+  {
+    "id": 3496,
+    "origin": "offensive",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">offensive</strong> manner upset everyone.",
+        "exam_ko": "그의 <strong class=\"target-word\">무례한</strong> 태도는 모두를 화나게 했다."
+      },
+      {
+        "exam_en": "She made an <strong class=\"target-word\">offensive</strong> remark about his appearance.",
+        "exam_ko": "그녀는 그의 외모에 대해 <strong class=\"target-word\">비위에 거슬리는</strong> 말을 했다."
+      }
+    ]
+  },
+  {
+    "id": 3497,
+    "origin": "of",
+    "examples": [
+      {
+        "exam_en": "The store is a mile east <strong class=\"target-word\">of</strong> here.",
+        "exam_ko": "그 가게는 여기서 동쪽으로 1마일 <strong class=\"target-word\">떨어진</strong> 곳에 있다."
+      },
+      {
+        "exam_en": "The school is within a mile <strong class=\"target-word\">of</strong> my house.",
+        "exam_ko": "학교는 내 집에서 1마일 이내 <strong class=\"target-word\">거리에</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 3498,
+    "origin": "ocean",
+    "examples": [
+      {
+        "exam_en": "They sailed across the Atlantic <strong class=\"target-word\">Ocean</strong>.",
+        "exam_ko": "그들은 대서양을 <strong class=\"target-word\">가로질러</strong> 항해했다."
+      },
+      {
+        "exam_en": "The valley looked like an <strong class=\"target-word\">ocean</strong> of wheat.",
+        "exam_ko": "그 계곡은 밀의 <strong class=\"target-word\">바다</strong>처럼 보였다."
+      }
+    ]
+  },
+  {
+    "id": 3499,
+    "origin": "number",
+    "examples": [
+      {
+        "exam_en": "Two is an even <strong class=\"target-word\">number</strong>.",
+        "exam_ko": "2는 짝 <strong class=\"target-word\">수</strong>이다."
+      },
+      {
+        "exam_en": "She studied cardinal <strong class=\"target-word\">numbers</strong> in math class.",
+        "exam_ko": "그녀는 수학 시간에 기 <strong class=\"target-word\">수</strong>를 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 3500,
+    "origin": "now",
+    "examples": [
+      {
+        "exam_en": "He is working in London <strong class=\"target-word\">now</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">지금</strong> 런던에서 일하고 있다."
+      },
+      {
+        "exam_en": "We must start <strong class=\"target-word\">now</strong>.",
+        "exam_ko": "<strong class=\"target-word\">지금 당장</strong> 시작해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3501,
+    "origin": "not",
+    "examples": [
+      {
+        "exam_en": "He will <strong class=\"target-word\">not</strong> go.",
+        "exam_ko": "그는 가지 <strong class=\"target-word\">않을</strong> 것이다."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">not</strong> so difficult as you think.",
+        "exam_ko": "네가 생각하는 만큼 어렵지는 <strong class=\"target-word\">않다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3502,
+    "origin": "nose",
+    "examples": [
+      {
+        "exam_en": "She has a freckle on the tip of her <strong class=\"target-word\">nose</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">코</strong>끝에 주근깨가 있다."
+      },
+      {
+        "exam_en": "He has a big <strong class=\"target-word\">nose</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">코</strong>가 높다."
+      }
+    ]
+  },
+  {
+    "id": 3503,
+    "origin": "north",
+    "examples": [
+      {
+        "exam_en": "A cool breeze came from the <strong class=\"target-word\">north</strong>.",
+        "exam_ko": "<strong class=\"target-word\">북쪽</strong>에서 시원한 바람이 불어왔다."
+      },
+      {
+        "exam_en": "I was born in the <strong class=\"target-word\">north</strong> of France.",
+        "exam_ko": "나는 프랑스 <strong class=\"target-word\">북부</strong>에서 태어났다."
+      }
+    ]
+  },
+  {
+    "id": 3504,
+    "origin": "noon",
+    "examples": [
+      {
+        "exam_en": "They meet for lunch at <strong class=\"target-word\">noon</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">정오</strong>에 점심을 먹으러 만난다."
+      },
+      {
+        "exam_en": "She arrived just after <strong class=\"target-word\">noon</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">정오</strong> 직후에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 3505,
+    "origin": "noise",
+    "examples": [
+      {
+        "exam_en": "We heard strange <strong class=\"target-word\">noises</strong> at night.",
+        "exam_ko": "우리는 밤에 이상한 <strong class=\"target-word\">소리</strong>를 들었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">noise</strong> from the factory was unbearable.",
+        "exam_ko": "공장에서 나는 <strong class=\"target-word\">소음</strong>은 참기 힘들었다."
+      }
+    ]
+  },
+  {
+    "id": 3506,
+    "origin": "no",
+    "examples": [
+      {
+        "exam_en": "\"Will you go?\" \"<strong class=\"target-word\">No</strong>, I won't.\"",
+        "exam_ko": "\"갈래?\" \"<strong class=\"target-word\">아니</strong>, 안 갈래.\""
+      },
+      {
+        "exam_en": "\"Can't you play tennis?\" \"<strong class=\"target-word\">No</strong>, I can't.\"",
+        "exam_ko": "\"테니스를 못 치시오?\" \"<strong class=\"target-word\">예</strong>, 못 칩니다.\""
+      }
+    ]
+  },
+  {
+    "id": 3508,
+    "origin": "nine",
+    "examples": [
+      {
+        "exam_en": "She drew the <strong class=\"target-word\">nine</strong> of spades.",
+        "exam_ko": "그녀는 스페이드 <strong class=\"target-word\">9</strong>를 뽑았다."
+      },
+      {
+        "exam_en": "They played the front <strong class=\"target-word\">nine</strong> holes.",
+        "exam_ko": "그들은 전반 <strong class=\"target-word\">9</strong>홀을 플레이했다."
+      }
+    ]
+  },
+  {
+    "id": 3509,
+    "origin": "night",
+    "examples": [
+      {
+        "exam_en": "It rained heavily last <strong class=\"target-word\">night</strong>.",
+        "exam_ko": "어젯<strong class=\"target-word\">밤</strong>에 비가 많이 내렸다."
+      },
+      {
+        "exam_en": "He couldn't sleep the <strong class=\"target-word\">night</strong> before last.",
+        "exam_ko": "그는 그저께 <strong class=\"target-word\">밤</strong>에 잠을 못 잤다."
+      }
+    ]
+  }
+]

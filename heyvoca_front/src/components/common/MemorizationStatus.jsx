@@ -2,7 +2,7 @@ import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false }) => {
+const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false, hideOverdue = false }) => {
   // 암기 상태 판단 함수
   const getMemoryState = () => {
     // 진짜 미학습 상태 체크 (한 번도 학습하지 않은 단어)
@@ -73,7 +73,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
   // 상태별 텍스트 가져오기 (isCorrect가 null일 때)
   const getStatusText = (state, repetition, interval, ef, seed, useRandom, nextReviewDate) => {
     // 복습 지연 상태 확인
-    if (isReviewOverdue(nextReviewDate)) {
+    if (!hideOverdue && isReviewOverdue(nextReviewDate)) {
       return '복습 지연';
     }
 
@@ -151,7 +151,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
   // 정답/오답 후 멘트 가져오기
   const getResultMessage = (state, isCorrect, interval, nextReviewDate, repetition, seed, useRandom, updateType) => {
     // 복습 지연 상태 확인 (정답/오답 후에도 확인)
-    if (isReviewOverdue(nextReviewDate)) {
+    if (!hideOverdue && isReviewOverdue(nextReviewDate)) {
       return '복습 지연';
     }
 
@@ -350,7 +350,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
     const styles = baseStyles[state];
 
     // 복습 지연 상태인 경우 빨간색으로 변경 (아이콘은 원래 상태 유지)
-    if (isReviewOverdue(nextReviewDate)) {
+    if (!hideOverdue && isReviewOverdue(nextReviewDate)) {
       return {
         ...styles,
         border: 'border-[#F26A6A]',

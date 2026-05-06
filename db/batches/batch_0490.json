@@ -1,0 +1,262 @@
+[
+  {
+    "id": 14702,
+    "origin": "mordant",
+    "examples": [
+      {
+        "exam_en": "a mordant wit",
+        "exam_ko": "통렬한 해학[유머, 비판]"
+      },
+      {
+        "exam_en": "a mordant speaker",
+        "exam_ko": "독설가."
+      }
+    ]
+  },
+  {
+    "id": 14703,
+    "origin": "sultry",
+    "examples": [
+      {
+        "exam_en": "a sultry afternoon",
+        "exam_ko": "찌는 듯한 오후"
+      },
+      {
+        "exam_en": "a sultry climate",
+        "exam_ko": "무더운 기후."
+      }
+    ]
+  },
+  {
+    "id": 14704,
+    "origin": "sulfurous",
+    "examples": [
+      {
+        "exam_en": "sulfurous gases (springs, smells)",
+        "exam_ko": "유황가스(온천, 냄새)"
+      },
+      {
+        "exam_en": "sulfurous acid",
+        "exam_ko": "(화학) 아황산"
+      },
+      {
+        "exam_en": "sulfurous gases (springs, smells) ",
+        "exam_ko": "유황가스(온천, 냄새)"
+      },
+      {
+        "exam_en": "sulfurous acid ",
+        "exam_ko": "(화학) 아황산"
+      }
+    ]
+  },
+  {
+    "id": 14705,
+    "origin": "blistering",
+    "examples": [
+      {
+        "exam_en": "a blistering sun",
+        "exam_ko": "작열하는 태양."
+      },
+      {
+        "exam_en": "a blistering tongue",
+        "exam_ko": "독설"
+      }
+    ]
+  },
+  {
+    "id": 14707,
+    "origin": "virulent",
+    "examples": [
+      {
+        "exam_en": "virulent serpents",
+        "exam_ko": "독사."
+      },
+      {
+        "exam_en": "Cholera and smallpox are virulent diseases.",
+        "exam_ko": "콜레라와 천연두는 전염성이 강하고 치명적인 질병이다."
+      }
+    ]
+  },
+  {
+    "id": 14711,
+    "origin": "unspeakable",
+    "examples": [
+      {
+        "exam_en": "unspeakable relief",
+        "exam_ko": "말로 나타낼 수 없는 안도감[슬픔]."
+      },
+      {
+        "exam_en": "There was some unspeakable dialogue in his plays.",
+        "exam_ko": "그의 몇 가지 희곡에는 입에 담을 수 없는 대사가 약간 있었다."
+      }
+    ]
+  },
+  {
+    "id": 14712,
+    "origin": "grievous",
+    "examples": [
+      {
+        "exam_en": "grievous news",
+        "exam_ko": "비보"
+      },
+      {
+        "exam_en": "a grievous parting",
+        "exam_ko": "쓰라린 이별."
+      }
+    ]
+  },
+  {
+    "id": 14713,
+    "origin": "baleful",
+    "examples": [
+      {
+        "exam_en": "She gave me a baleful stare.",
+        "exam_ko": "그녀는 나를 악의에 찬 시선으로 빤히 쳐다보았다."
+      }
+    ]
+  },
+  {
+    "id": 14714,
+    "origin": "whining",
+    "examples": [
+      {
+        "exam_en": "Stop whining like a baby.",
+        "exam_ko": "아기처럼 징징거리지 마."
+      }
+    ]
+  },
+  {
+    "id": 14717,
+    "origin": "vexatious",
+    "examples": [
+      {
+        "exam_en": "a vexatious complication",
+        "exam_ko": "번잡한 일[골치 아픈 문제]"
+      },
+      {
+        "exam_en": "a vexatious question",
+        "exam_ko": "많이 논의되어 온 문제, 현안."
+      }
+    ]
+  },
+  {
+    "id": 14721,
+    "origin": "scratchy",
+    "examples": [
+      {
+        "exam_en": "a scratchy pen",
+        "exam_ko": "종이에 긁히는 펜"
+      },
+      {
+        "exam_en": "a scratchy record",
+        "exam_ko": "(긁혀서) 잡음이 많은 레코드판"
+      }
+    ]
+  },
+  {
+    "id": 14726,
+    "origin": "discriminative",
+    "examples": [
+      {
+        "exam_en": "the discriminative features of species of birds",
+        "exam_ko": "새의 각각의 종의 특징."
+      },
+      {
+        "exam_en": "discriminative organs",
+        "exam_ko": "식별하는 감각 기관."
+      }
+    ]
+  },
+  {
+    "id": 14727,
+    "origin": "preferential",
+    "examples": [
+      {
+        "exam_en": "a preferential claim",
+        "exam_ko": "우선되는 요구"
+      },
+      {
+        "exam_en": "preferential right",
+        "exam_ko": "선취 특권, 우선권."
+      }
+    ]
+  },
+  {
+    "id": 14728,
+    "origin": "invidious",
+    "examples": [
+      {
+        "exam_en": "an invidious honor",
+        "exam_ko": "남에게 시샘을 느끼게 하는 영예"
+      },
+      {
+        "exam_en": "an invidious remark",
+        "exam_ko": "비위에 거슬리는 말."
+      }
+    ]
+  },
+  {
+    "id": 14729,
+    "origin": "baneful",
+    "examples": [
+      {
+        "exam_en": "a baneful influence",
+        "exam_ko": "악영향."
+      }
+    ]
+  },
+  {
+    "id": 14732,
+    "origin": "intrepid",
+    "examples": [
+      {
+        "exam_en": "I am both vulnerable and intrepid at the same time.",
+        "exam_ko": "저는 유약하기도 하고 용감하기도 해요."
+      }
+    ]
+  },
+  {
+    "id": 14735,
+    "origin": "hardy",
+    "examples": [
+      {
+        "exam_en": "Red deer are hardy animals.",
+        "exam_ko": "붉은 사슴은 강인한 동물이다."
+      }
+    ]
+  },
+  {
+    "id": 14736,
+    "origin": "spry",
+    "examples": [
+      {
+        "exam_en": "My father is eighty, but he is remarkably spry for his age.",
+        "exam_ko": "나의 아버지는 80이지만 나이에 비해서 대단히 기운차고 활발하다."
+      }
+    ]
+  },
+  {
+    "id": 14737,
+    "origin": "irascible",
+    "examples": [
+      {
+        "exam_en": "an irascible matron",
+        "exam_ko": "신경질적인 (여)사감."
+      },
+      {
+        "exam_en": "an irascible reply",
+        "exam_ko": "홧김에 하는 대답."
+      }
+    ]
+  },
+  {
+    "id": 14738,
+    "origin": "choleric",
+    "examples": [
+      {
+        "exam_en": "a choleric nature",
+        "exam_ko": "화를 잘 내는 성질."
+      }
+    ]
+  }
+]

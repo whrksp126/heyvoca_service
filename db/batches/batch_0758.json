@@ -1,0 +1,214 @@
+[
+  {
+    "id": 46042,
+    "origin": "catamaran",
+    "examples": [
+      {
+        "exam_en": "a shrieking catamaran",
+        "exam_ko": "째지는 듯한 목소리로 소리지르는 여자."
+      }
+    ]
+  },
+  {
+    "id": 46081,
+    "origin": "congelation",
+    "examples": [
+      {
+        "exam_en": "a point of congelation",
+        "exam_ko": "응고점."
+      }
+    ]
+  },
+  {
+    "id": 46086,
+    "origin": "luteal",
+    "examples": [
+      {
+        "exam_en": "luteal hormone",
+        "exam_ko": "황체 호르몬."
+      }
+    ]
+  },
+  {
+    "id": 46105,
+    "origin": "mydriasis",
+    "examples": [
+      {
+        "exam_en": "alternating mydriasis",
+        "exam_ko": "교대성[마비성] 산동."
+      }
+    ]
+  },
+  {
+    "id": 46129,
+    "origin": "excelsior",
+    "examples": [
+      {
+        "exam_en": "The country was as dry as excelsior.",
+        "exam_ko": "그 지방은 대팻밥처럼 말랐다."
+      }
+    ]
+  },
+  {
+    "id": 46165,
+    "origin": "cellophane",
+    "examples": [
+      {
+        "exam_en": "Meat is wrapped in cellophane to keep it fresh.",
+        "exam_ko": "고기는 신선도를 유지하기 위해 셀로판에 싸 둔다."
+      }
+    ]
+  },
+  {
+    "id": 46209,
+    "origin": "sandman",
+    "examples": [
+      {
+        "exam_en": "The sandman has come.",
+        "exam_ko": "졸려."
+      }
+    ]
+  },
+  {
+    "id": 46253,
+    "origin": "excrescence",
+    "examples": [
+      {
+        "exam_en": "The new hall is an excrescence on this historic town.",
+        "exam_ko": "새로운 공회당은 그 역사적인 마을에 어울리지 않는 무용지물이다."
+      }
+    ]
+  },
+  {
+    "id": 46254,
+    "origin": "suchlike",
+    "examples": [
+      {
+        "exam_en": "I like cakes, candies and suchlike foods.",
+        "exam_ko": "나는 케이크, 캔디 같은 식품을 좋아한다."
+      },
+      {
+        "exam_en": "and suchlike",
+        "exam_ko": "…등등."
+      }
+    ]
+  },
+  {
+    "id": 46262,
+    "origin": "contradistinction",
+    "examples": [
+      {
+        "exam_en": "in contradistinction to",
+        "exam_ko": "…과 대조 구별하여."
+      }
+    ]
+  },
+  {
+    "id": 46292,
+    "origin": "incommensurable",
+    "examples": [
+      {
+        "exam_en": "Furniture and human life are incommensurable.",
+        "exam_ko": "가구와 인명과는 비교가 될 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 46298,
+    "origin": "moloch",
+    "examples": [
+      {
+        "exam_en": "The examination system is a terrible Moloch.",
+        "exam_ko": "그 시험 제도는 무시무시한 희생을 강요한다."
+      }
+    ]
+  },
+  {
+    "id": 46308,
+    "origin": "chevalier",
+    "examples": [
+      {
+        "exam_en": "a chevalier of the Legion of Honor",
+        "exam_ko": "레종 도뇌르 훈위(勳位) 소유자."
+      }
+    ]
+  },
+  {
+    "id": 46347,
+    "origin": "demineralize",
+    "examples": [
+      {
+        "exam_en": "demineralized water",
+        "exam_ko": "탈염[탈이온]수."
+      }
+    ]
+  },
+  {
+    "id": 46360,
+    "origin": "cardioactive",
+    "examples": [
+      {
+        "exam_en": "cardioactive agent",
+        "exam_ko": "심장 작용약."
+      }
+    ]
+  },
+  {
+    "id": 46380,
+    "origin": "peradventure",
+    "examples": [
+      {
+        "exam_en": "if peradventure",
+        "exam_ko": "혹시나[행여] 하는 일이 있다면[없도록]."
+      }
+    ]
+  },
+  {
+    "id": 46398,
+    "origin": "outspend",
+    "examples": [
+      {
+        "exam_en": "outspend one's income",
+        "exam_ko": "지출이 수입을 초과하다."
+      }
+    ]
+  },
+  {
+    "id": 46404,
+    "origin": "firebomb",
+    "examples": [
+      {
+        "exam_en": "Two months ago his car was firebombed, the last in a series of attacks.",
+        "exam_ko": "두 달 전에 그의 차가 소이탄 공격을 당했는데, 일련의 공격들 중 마지막이었다."
+      }
+    ]
+  },
+  {
+    "id": 46435,
+    "origin": "cutie",
+    "examples": [
+      {
+        "exam_en": "Hey there, cutie.",
+        "exam_ko": "이봐 예쁜이."
+      },
+      {
+        "exam_en": "He pulled a cutie.",
+        "exam_ko": "그는 교묘한 술책을 부렸다."
+      }
+    ]
+  },
+  {
+    "id": 46471,
+    "origin": "pharming",
+    "examples": [
+      {
+        "exam_en": "In pharming, these genetically modified  animals are mostly used to make human proteins.",
+        "exam_ko": "제약농에서는 이들 유전자 조작 동물이 대부분 인간의 단백질을 만드는 데 이용된다."
+      },
+      {
+        "exam_en": "alarm over pharming attacks",
+        "exam_ko": "파밍 공격에 대한 불안."
+      }
+    ]
+  }
+]

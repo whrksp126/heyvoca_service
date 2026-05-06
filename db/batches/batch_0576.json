@@ -1,0 +1,238 @@
+[
+  {
+    "id": 19092,
+    "origin": "embossed",
+    "examples": [
+      {
+        "exam_en": "embossed work",
+        "exam_ko": "돋을 새김 세공[무늬]."
+      }
+    ]
+  },
+  {
+    "id": 19093,
+    "origin": "namely",
+    "examples": [
+      {
+        "exam_en": "Two boys came, namely, Bill and Jack.",
+        "exam_ko": "두 소년, 즉 빌과 잭이 왔다(※문두에는 쓰이지 않음. (영)에서는 namely의 바로 뒤의 콤마는 생략하는 경우도 많음)."
+      }
+    ]
+  },
+  {
+    "id": 19096,
+    "origin": "mucous",
+    "examples": [
+      {
+        "exam_en": "the mucous gland",
+        "exam_ko": "점액선."
+      }
+    ]
+  },
+  {
+    "id": 19097,
+    "origin": "motif",
+    "examples": [
+      {
+        "exam_en": "an excellent motif for a novel",
+        "exam_ko": "소설에 아주 알맞은 모티프."
+      }
+    ]
+  },
+  {
+    "id": 19100,
+    "origin": "molasses",
+    "examples": [
+      {
+        "exam_en": "slow as molasses",
+        "exam_ko": "동작[머리 회전]이 몹시 느린[둔한]."
+      }
+    ]
+  },
+  {
+    "id": 19105,
+    "origin": "minded",
+    "examples": [
+      {
+        "exam_en": "feeble-minded",
+        "exam_ko": "의지가 박약한; 정신 지체의, 저능의"
+      },
+      {
+        "exam_en": "evil-minded",
+        "exam_ko": "사악한 마음이 있는"
+      }
+    ]
+  },
+  {
+    "id": 19106,
+    "origin": "mimetic",
+    "examples": [
+      {
+        "exam_en": "a mimetic crystal",
+        "exam_ko": "의정(擬晶)."
+      }
+    ]
+  },
+  {
+    "id": 19108,
+    "origin": "miller",
+    "examples": [
+      {
+        "exam_en": "Every miller draws water to his own mill.",
+        "exam_ko": "아전인수(我田引水)."
+      }
+    ]
+  },
+  {
+    "id": 19109,
+    "origin": "metamorphic",
+    "examples": [
+      {
+        "exam_en": "a metamorphic stage",
+        "exam_ko": "변태기."
+      },
+      {
+        "exam_en": "metamorphic rocks",
+        "exam_ko": "변성암."
+      },
+      {
+        "exam_en": "Metamorphic Gneiss has many uses as a building material such as flooring, ornamental stones, gravestones, facing stones on buildings.",
+        "exam_ko": "변성 편마암은 바닥용, 장식용 돌, 묘비, 건물의 외장재와 같은 건축자재로 많이 샤용된다."
+      }
+    ]
+  },
+  {
+    "id": 19110,
+    "origin": "metallic",
+    "examples": [
+      {
+        "exam_en": "metallic currency",
+        "exam_ko": "경화"
+      },
+      {
+        "exam_en": "a metallic sound",
+        "exam_ko": "금속성 소리"
+      }
+    ]
+  },
+  {
+    "id": 19111,
+    "origin": "mercantile",
+    "examples": [
+      {
+        "exam_en": "the mercantile field",
+        "exam_ko": "상업계"
+      },
+      {
+        "exam_en": "mercantile law",
+        "exam_ko": "상법."
+      }
+    ]
+  },
+  {
+    "id": 19114,
+    "origin": "mastery",
+    "examples": [
+      {
+        "exam_en": "mastery of the air",
+        "exam_ko": "제공[해]권"
+      },
+      {
+        "exam_en": "have complete mastery over",
+        "exam_ko": "…을 완전히 지배하다."
+      }
+    ]
+  },
+  {
+    "id": 19118,
+    "origin": "malaria",
+    "examples": [
+      {
+        "exam_en": "malaria fever",
+        "exam_ko": "말라리아 열."
+      }
+    ]
+  },
+  {
+    "id": 19123,
+    "origin": "localized",
+    "examples": [
+      {
+        "exam_en": "localized torrential rain",
+        "exam_ko": "국지적인 집중 호우."
+      }
+    ]
+  },
+  {
+    "id": 19129,
+    "origin": "liner",
+    "examples": [
+      {
+        "exam_en": "an ocean liner",
+        "exam_ko": "해양 정기선."
+      }
+    ]
+  },
+  {
+    "id": 19134,
+    "origin": "libel",
+    "examples": [
+      {
+        "exam_en": "sue a magazine for libel",
+        "exam_ko": "어떤 잡지를 명예 훼손으로 고소하다."
+      }
+    ]
+  },
+  {
+    "id": 19140,
+    "origin": "rebate",
+    "examples": [
+      {
+        "exam_en": "sales rebates",
+        "exam_ko": "(대량 매입 등에 대한) 매상 리베이트"
+      },
+      {
+        "exam_en": "give a 10 percent rebate for prompt payment",
+        "exam_ko": "조기 지불에 대하여 10의 리베이트를 하다."
+      }
+    ]
+  },
+  {
+    "id": 19143,
+    "origin": "rainfall",
+    "examples": [
+      {
+        "exam_en": "the average annual rainfall",
+        "exam_ko": "연평균 강수량."
+      }
+    ]
+  },
+  {
+    "id": 19145,
+    "origin": "radioactive",
+    "examples": [
+      {
+        "exam_en": "radioactive substances",
+        "exam_ko": "방사성 물질"
+      },
+      {
+        "exam_en": "a leak of radioactive stream",
+        "exam_ko": "방사선 누출"
+      }
+    ]
+  },
+  {
+    "id": 19148,
+    "origin": "pump",
+    "examples": [
+      {
+        "exam_en": "a bicycle pump",
+        "exam_ko": "(자전거의) 공기 펌프"
+      },
+      {
+        "exam_en": "a gas pump",
+        "exam_ko": "(주유소의) 급유기."
+      }
+    ]
+  }
+]

@@ -1,0 +1,246 @@
+[
+  {
+    "id": 12779,
+    "origin": "contemplation",
+    "examples": [
+      {
+        "exam_en": "She sat in deep <strong class=\"target-word\">contemplation</strong> after the meeting.",
+        "exam_ko": "그녀는 회의 후 깊은 <strong class=\"target-word\">묵상</strong>에 잠겼다."
+      },
+      {
+        "exam_en": "He found peace through daily <strong class=\"target-word\">contemplation</strong>.",
+        "exam_ko": "그는 매일 <strong class=\"target-word\">성찰</strong>을 통해 평화를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 12780,
+    "origin": "reminiscent",
+    "examples": [
+      {
+        "exam_en": "The scenery was <strong class=\"target-word\">reminiscent</strong> of Switzerland.",
+        "exam_ko": "그 풍경은 스위스를 <strong class=\"target-word\">연상시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12782,
+    "origin": "ambivalent",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">ambivalent</strong> about changing her career.",
+        "exam_ko": "그녀는 커리어를 바꾸는 것에 <strong class=\"target-word\">양가감정</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 12785,
+    "origin": "algebra",
+    "examples": [
+      {
+        "exam_en": "He struggled with <strong class=\"target-word\">algebra</strong> in high school.",
+        "exam_ko": "그는 고등학교 때 <strong class=\"target-word\">대수학</strong>을 어려워했다."
+      }
+    ]
+  },
+  {
+    "id": 12789,
+    "origin": "betting",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">betting</strong> odds were three to one.",
+        "exam_ko": "<strong class=\"target-word\">베팅</strong> 배율은 3대 1이었다."
+      }
+    ]
+  },
+  {
+    "id": 12797,
+    "origin": "throttle",
+    "examples": [
+      {
+        "exam_en": "The driver pushed the <strong class=\"target-word\">throttle</strong> to full speed.",
+        "exam_ko": "운전자는 <strong class=\"target-word\">스로틀</strong>을 최고 속도로 밀었다."
+      },
+      {
+        "exam_en": "The murderer <strong class=\"target-word\">throttled</strong> his victim.",
+        "exam_ko": "살인자는 피해자의 목을 <strong class=\"target-word\">졸랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12799,
+    "origin": "deductive",
+    "examples": [
+      {
+        "exam_en": "He solved the case using <strong class=\"target-word\">deductive</strong> reasoning.",
+        "exam_ko": "그는 <strong class=\"target-word\">연역적</strong> 추론으로 사건을 해결했다."
+      }
+    ]
+  },
+  {
+    "id": 12801,
+    "origin": "candor",
+    "examples": [
+      {
+        "exam_en": "The article impressed readers with its <strong class=\"target-word\">candor</strong>.",
+        "exam_ko": "그 기사는 솔직함으로 독자들에게 깊은 인상을 남겼다."
+      },
+      {
+        "exam_en": "She spoke with complete <strong class=\"target-word\">candor</strong> about her mistakes.",
+        "exam_ko": "그녀는 자신의 실수에 대해 완전한 <strong class=\"target-word\">솔직함</strong>으로 말했다."
+      },
+      {
+        "exam_en": "I appreciate your <strong class=\"target-word\">candor</strong> in giving honest feedback.",
+        "exam_ko": "솔직한 피드백을 주신 <strong class=\"target-word\">솔직함</strong>에 감사드립니다."
+      }
+    ]
+  },
+  {
+    "id": 12805,
+    "origin": "predilection",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">predilection</strong> for classic literature.",
+        "exam_ko": "그녀는 고전 문학에 대한 <strong class=\"target-word\">편애</strong>가 있다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">predilection</strong> for mysteries.",
+        "exam_ko": "그는 추리 소설을 특별히 <strong class=\"target-word\">좋아한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12806,
+    "origin": "fungible",
+    "examples": [
+      {
+        "exam_en": "Money is considered a <strong class=\"target-word\">fungible</strong> asset.",
+        "exam_ko": "돈은 <strong class=\"target-word\">대체 가능한</strong> 자산으로 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 12807,
+    "origin": "bludgeon",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bludgeoned</strong> her into taking the job.",
+        "exam_ko": "그는 그녀를 <strong class=\"target-word\">강압하여</strong> 그 일을 맡게 했다."
+      }
+    ]
+  },
+  {
+    "id": 12812,
+    "origin": "digress",
+    "examples": [
+      {
+        "exam_en": "The speaker often <strong class=\"target-word\">digressed</strong> from the main topic.",
+        "exam_ko": "연사는 종종 주제에서 <strong class=\"target-word\">벗어났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12818,
+    "origin": "overrule",
+    "examples": [
+      {
+        "exam_en": "The judge <strong class=\"target-word\">overruled</strong> the objection.",
+        "exam_ko": "판사는 이의를 <strong class=\"target-word\">각하했다</strong>."
+      },
+      {
+        "exam_en": "The court <strong class=\"target-word\">overruled</strong> the earlier decision.",
+        "exam_ko": "법원은 이전 판결을 <strong class=\"target-word\">번복했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12820,
+    "origin": "insufferable",
+    "examples": [
+      {
+        "exam_en": "The man is an <strong class=\"target-word\">insufferable</strong> jackass.",
+        "exam_ko": "그 남자는 참을 수 없이 <strong class=\"target-word\">견딜 수 없는</strong> 바보다."
+      },
+      {
+        "exam_en": "His arrogance made him <strong class=\"target-word\">insufferable</strong> to work with.",
+        "exam_ko": "그의 오만함은 함께 일하기 <strong class=\"target-word\">참을 수 없게</strong> 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 12821,
+    "origin": "fidelity",
+    "examples": [
+      {
+        "exam_en": "The servant showed great <strong class=\"target-word\">fidelity</strong> to his master.",
+        "exam_ko": "그 하인은 주인에게 큰 <strong class=\"target-word\">충성심</strong>을 보였다."
+      },
+      {
+        "exam_en": "He pledged <strong class=\"target-word\">fidelity</strong> to his country.",
+        "exam_ko": "그는 나라에 대한 <strong class=\"target-word\">충성</strong>을 맹세했다."
+      }
+    ]
+  },
+  {
+    "id": 12827,
+    "origin": "inconsistent",
+    "examples": [
+      {
+        "exam_en": "The witness gave an <strong class=\"target-word\">inconsistent</strong> testimony.",
+        "exam_ko": "목격자는 <strong class=\"target-word\">앞뒤가 맞지 않는</strong> 증언을 했다."
+      },
+      {
+        "exam_en": "His behavior was <strong class=\"target-word\">inconsistent</strong> with his duty.",
+        "exam_ko": "그의 행동은 의무와 <strong class=\"target-word\">일치하지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12829,
+    "origin": "boating",
+    "examples": [
+      {
+        "exam_en": "She enjoyed <strong class=\"target-word\">boating</strong> on the lake every summer.",
+        "exam_ko": "그녀는 매 여름 호수에서 <strong class=\"target-word\">보트놀이</strong>를 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 12830,
+    "origin": "unnatural",
+    "examples": [
+      {
+        "exam_en": "Scientists observed an <strong class=\"target-word\">unnatural</strong> phenomenon in the lab.",
+        "exam_ko": "과학자들은 실험실에서 <strong class=\"target-word\">기이한</strong> 현상을 관찰했다."
+      },
+      {
+        "exam_en": "He died an <strong class=\"target-word\">unnatural</strong> death at a young age.",
+        "exam_ko": "그는 젊은 나이에 <strong class=\"target-word\">변사</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 12831,
+    "origin": "causative",
+    "examples": [
+      {
+        "exam_en": "The incident was <strong class=\"target-word\">causative</strong> of social unrest.",
+        "exam_ko": "그 사건은 사회적 불안을 <strong class=\"target-word\">야기하는</strong> 원인이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 12832,
+    "origin": "kickoff",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">kickoff</strong> meeting starts the election campaign.",
+        "exam_ko": "선거 운동의 <strong class=\"target-word\">시작</strong> 집회가 열린다."
+      },
+      {
+        "exam_en": "Let's begin with introductions as a <strong class=\"target-word\">kickoff</strong>.",
+        "exam_ko": "우선 <strong class=\"target-word\">시작</strong>으로 자기소개를 합시다."
+      }
+    ]
+  }
+]

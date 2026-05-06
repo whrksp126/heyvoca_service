@@ -114,7 +114,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsSpeaking(false);
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
-      if (!['cardMatch', 'cardMatchListening'].includes(question.questionType) && question.origin) {
+      if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
         (async () => {
           setIsSpeaking(true);
           try {
@@ -142,14 +142,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 선택지 선택 시
   const handleOptionClick = (index, option) => {
     if (isAnswered) return;
-    if (userSelected === index) {
-      setUserSelected(null);
-    } else {
-      setUserSelected(index);
-    }
-    if (testType === "exam") {
-      handleClickExamOption(index, option);
-    }
+    setUserSelected(index);
+    handleClickExamOption(index, option);
   }
 
   // React Compiler가 자동으로 useCallback 처리
@@ -501,7 +495,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       <motion.div
         className="
           flex flex-col
-          h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
+          h-[calc(100vh-var(--current-header-height)-var(--status-bar-height))]
           px-[16px] pt-[5px] pb-[20px]
         "
         initial={{ opacity: 0, x: 20 }}
@@ -562,7 +556,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     <motion.div
       className="
         flex flex-col
-        h-[calc(100vh-theme(height.header)-var(--status-bar-height))]
+        h-[calc(100vh-var(--current-header-height)-var(--status-bar-height))]
         px-[16px] pt-[5px] pb-[20px]
       "
       initial={{ opacity: 0, x: 20 }}
@@ -890,31 +884,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   })}
 
                 </div>
-                {testType === "test" && (
-                  <motion.button
-                    onClick={() => {
-                      vibrate({ duration: 5 });
-                      handleClickNext();
-                    }}
-                    whileTap={{
-                      scale: userSelected !== null ? 0.93 : 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17
-                      }
-                    }}
-                    style={{ willChange: 'transform' }}
-                    className={`
-                    w-full h-[45px]
-                    rounded-[8px]
-                    text-[16px] text-layout-white dark:text-layout-black font-[700] 
-                    ${userSelected !== null ? "bg-primary-main-600" : "bg-layout-gray-200"}
-                  `}
-                  >
-                    확인
-                  </motion.button>
-                )}
               </>
             )}
           </motion.div>

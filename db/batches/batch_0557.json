@@ -1,0 +1,266 @@
+[
+  {
+    "id": 18222,
+    "origin": "invasive",
+    "examples": [
+      {
+        "exam_en": "invasive cancer cells",
+        "exam_ko": "침습성[전이성] 암세포."
+      },
+      {
+        "exam_en": "an invasive surgery",
+        "exam_ko": "외과 수술."
+      }
+    ]
+  },
+  {
+    "id": 18227,
+    "origin": "precautionary",
+    "examples": [
+      {
+        "exam_en": "take precautionary measures",
+        "exam_ko": "예방책을 강구하다."
+      }
+    ]
+  },
+  {
+    "id": 18228,
+    "origin": "lore",
+    "examples": [
+      {
+        "exam_en": "the lore of herbs",
+        "exam_ko": "약초에 관한 지식."
+      }
+    ]
+  },
+  {
+    "id": 18229,
+    "origin": "amorous",
+    "examples": [
+      {
+        "exam_en": "amorous affairs",
+        "exam_ko": "정사(情事)."
+      },
+      {
+        "exam_en": "amorous glances",
+        "exam_ko": "추파."
+      }
+    ]
+  },
+  {
+    "id": 18231,
+    "origin": "stupefy",
+    "examples": [
+      {
+        "exam_en": "be stupefied with grief",
+        "exam_ko": "슬픔으로 넋을 잃다."
+      },
+      {
+        "exam_en": "be stupefied at winning the lottery",
+        "exam_ko": "추첨에 당첨되어 대경실색하다."
+      }
+    ]
+  },
+  {
+    "id": 18232,
+    "origin": "irrevocable",
+    "examples": [
+      {
+        "exam_en": "an irrevocable letter of credit",
+        "exam_ko": "[상업] 취소 불능 신용장"
+      },
+      {
+        "exam_en": "the irrevocable past",
+        "exam_ko": "돌이킬 수 없는 과거"
+      }
+    ]
+  },
+  {
+    "id": 18235,
+    "origin": "impoverish",
+    "examples": [
+      {
+        "exam_en": "a family impoverished by misfortune and illness",
+        "exam_ko": "불행과 질병으로 가난해진 일가."
+      },
+      {
+        "exam_en": "A long period of isolation impoverishes the mind.",
+        "exam_ko": "장기간 외부로부터 격리되면 정신력이 쇠퇴한다."
+      }
+    ]
+  },
+  {
+    "id": 18236,
+    "origin": "ineluctable",
+    "examples": [
+      {
+        "exam_en": "an ineluctable destiny",
+        "exam_ko": "피할 수 없는 운명."
+      }
+    ]
+  },
+  {
+    "id": 18238,
+    "origin": "incongruous",
+    "examples": [
+      {
+        "exam_en": "conduct incongruous with one's principles",
+        "exam_ko": "원칙에 위배되는 행동"
+      },
+      {
+        "exam_en": "The modern church looks incongruous in that old-fashioned village.",
+        "exam_ko": "그 현대적인 교회는 저 예스러운 마을에 어울리지 않는 것 같다."
+      }
+    ]
+  },
+  {
+    "id": 18239,
+    "origin": "desultory",
+    "examples": [
+      {
+        "exam_en": "desultory studies",
+        "exam_ko": "목적 없는 공부."
+      },
+      {
+        "exam_en": "a desultory remark",
+        "exam_ko": "당돌한 말."
+      }
+    ]
+  },
+  {
+    "id": 18240,
+    "origin": "deceased",
+    "examples": [
+      {
+        "exam_en": "his recently deceased mother",
+        "exam_ko": "최근에 고인이 된 그의 어머니."
+      },
+      {
+        "exam_en": "the family of the deceased",
+        "exam_ko": "유족."
+      }
+    ]
+  },
+  {
+    "id": 18243,
+    "origin": "rickety",
+    "examples": [
+      {
+        "exam_en": "a rickety motorcar",
+        "exam_ko": "덜거덕거리는 자동차"
+      },
+      {
+        "exam_en": "a rickety chair",
+        "exam_ko": "흔들흔들하는 의자."
+      }
+    ]
+  },
+  {
+    "id": 18244,
+    "origin": "absorbed",
+    "examples": [
+      {
+        "exam_en": "absorbed in the music",
+        "exam_ko": "음악에 열중한"
+      },
+      {
+        "exam_en": "listen with absorbed interest",
+        "exam_ko": "열심히 귀를 기울이다"
+      }
+    ]
+  },
+  {
+    "id": 18245,
+    "origin": "inertia",
+    "examples": [
+      {
+        "exam_en": "under one's own inertia",
+        "exam_ko": "관성에 의해서."
+      }
+    ]
+  },
+  {
+    "id": 18246,
+    "origin": "lateral",
+    "examples": [
+      {
+        "exam_en": "a lateral view",
+        "exam_ko": "측면도; 측면에서 바라본 모양"
+      },
+      {
+        "exam_en": "lateral communication",
+        "exam_ko": "횡적 연락"
+      }
+    ]
+  },
+  {
+    "id": 18248,
+    "origin": "uneasiness",
+    "examples": [
+      {
+        "exam_en": "be under some uneasiness at",
+        "exam_ko": "…에 좀 불쾌감을 느끼고 있다."
+      }
+    ]
+  },
+  {
+    "id": 18249,
+    "origin": "darken",
+    "examples": [
+      {
+        "exam_en": "The stage was darkened.",
+        "exam_ko": "무대가 어두워졌다."
+      },
+      {
+        "exam_en": "The sky darkened.",
+        "exam_ko": "하늘이 어두워졌다."
+      }
+    ]
+  },
+  {
+    "id": 18250,
+    "origin": "triumphant",
+    "examples": [
+      {
+        "exam_en": "triumphant generals",
+        "exam_ko": "개선장군"
+      },
+      {
+        "exam_en": "the triumphant runner",
+        "exam_ko": "우승한 주자"
+      }
+    ]
+  },
+  {
+    "id": 18252,
+    "origin": "named",
+    "examples": [
+      {
+        "exam_en": "Susan had a boyfriend named Daniel.",
+        "exam_ko": "수잔은 다니엘이라는 남자 친구가 있었다."
+      },
+      {
+        "exam_en": "He was a boy named David.",
+        "exam_ko": "그는 데이비드라는 이름의 소년이었다."
+      },
+      {
+        "exam_en": "Susan had a boyfriend named Daniel.",
+        "exam_ko": " 수잔은 다니엘이라는 남자 친구가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 18256,
+    "origin": "suicidal",
+    "examples": [
+      {
+        "exam_en": "at a suicidal pace",
+        "exam_ko": "무모한 페이스로"
+      },
+      {
+        "exam_en": "Driving too fast is suicidal.",
+        "exam_ko": "과속 운전은 자살 행위나 마찬가지다."
+      }
+    ]
+  }
+]

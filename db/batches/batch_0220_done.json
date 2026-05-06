@@ -1,0 +1,262 @@
+[
+  {
+    "id": 5099,
+    "origin": "thus",
+    "examples": [
+      {
+        "exam_en": "She solved the problem and <strong class=\"target-word\">thus</strong> saved time.",
+        "exam_ko": "그녀는 문제를 해결했고 <strong class=\"target-word\">그리하여</strong> 시간을 절약했다."
+      },
+      {
+        "exam_en": "He spoke <strong class=\"target-word\">thus</strong> to the crowd.",
+        "exam_ko": "그는 군중에게 <strong class=\"target-word\">이렇게</strong> 말했다."
+      }
+    ]
+  },
+  {
+    "id": 5100,
+    "origin": "corridor",
+    "examples": [
+      {
+        "exam_en": "She walked down the long <strong class=\"target-word\">corridor</strong> quickly.",
+        "exam_ko": "그녀는 긴 <strong class=\"target-word\">복도</strong>를 빠르게 걸어갔다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">corridor</strong> connects the two buildings.",
+        "exam_ko": "<strong class=\"target-word\">복도</strong>가 두 건물을 연결한다."
+      }
+    ]
+  },
+  {
+    "id": 5101,
+    "origin": "movement",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">movement</strong> of the planets follows fixed paths.",
+        "exam_ko": "행성의 <strong class=\"target-word\">운동</strong>은 고정된 궤도를 따른다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">movement</strong> for civil rights changed history.",
+        "exam_ko": "시민권 <strong class=\"target-word\">운동</strong>은 역사를 바꾸었다."
+      }
+    ]
+  },
+  {
+    "id": 5102,
+    "origin": "metric",
+    "examples": [
+      {
+        "exam_en": "The country adopted the <strong class=\"target-word\">metric</strong> system last year.",
+        "exam_ko": "그 나라는 작년에 <strong class=\"target-word\">미터법</strong> 체계를 채택했다."
+      }
+    ]
+  },
+  {
+    "id": 5103,
+    "origin": "whenever",
+    "examples": [
+      {
+        "exam_en": "Call me <strong class=\"target-word\">whenever</strong> you need help.",
+        "exam_ko": "도움이 필요할 때는 <strong class=\"target-word\">언제든지</strong> 전화하세요."
+      },
+      {
+        "exam_en": "You can come <strong class=\"target-word\">whenever</strong> you like.",
+        "exam_ko": "<strong class=\"target-word\">언제든지</strong> 오고 싶을 때 오세요."
+      }
+    ]
+  },
+  {
+    "id": 5104,
+    "origin": "repeated",
+    "examples": [
+      {
+        "exam_en": "He made <strong class=\"target-word\">repeated</strong> attempts to contact her.",
+        "exam_ko": "그는 그녀에게 연락하려고 <strong class=\"target-word\">반복된</strong> 시도를 했다."
+      }
+    ]
+  },
+  {
+    "id": 5107,
+    "origin": "peanut",
+    "examples": [
+      {
+        "exam_en": "He works hard but earns <strong class=\"target-word\">peanuts</strong>.",
+        "exam_ko": "그는 열심히 일하지만 <strong class=\"target-word\">쥐꼬리만한</strong> 돈을 번다."
+      }
+    ]
+  },
+  {
+    "id": 5110,
+    "origin": "pressed",
+    "examples": [
+      {
+        "exam_en": "I'm <strong class=\"target-word\">pressed</strong> for money this month.",
+        "exam_ko": "나는 이번 달에 돈이 <strong class=\"target-word\">궁하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5111,
+    "origin": "applied",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">applied</strong> science at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">응용</strong> 과학을 공부했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Applied</strong> linguistics helps teachers improve methods.",
+        "exam_ko": "<strong class=\"target-word\">응용</strong> 언어학은 교사들이 교수법을 개선하도록 돕는다."
+      }
+    ]
+  },
+  {
+    "id": 5112,
+    "origin": "zone",
+    "examples": [
+      {
+        "exam_en": "The city expanded its green <strong class=\"target-word\">zones</strong> last year.",
+        "exam_ko": "그 도시는 작년에 녹지 <strong class=\"target-word\">구역</strong>을 확장했다."
+      },
+      {
+        "exam_en": "Soldiers were deployed to the combat <strong class=\"target-word\">zone</strong>.",
+        "exam_ko": "군인들이 전투 <strong class=\"target-word\">지대</strong>에 배치되었다."
+      }
+    ]
+  },
+  {
+    "id": 5113,
+    "origin": "calmly",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">calmly</strong> pointed out my lack of experience.",
+        "exam_ko": "그는 나의 경험 부족을 <strong class=\"target-word\">냉정하게</strong> 지적했다."
+      }
+    ]
+  },
+  {
+    "id": 5116,
+    "origin": "hurried",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Hurried</strong> commuters rushed through the station.",
+        "exam_ko": "<strong class=\"target-word\">서두르는</strong> 통근자들이 역을 급히 지나쳤다."
+      },
+      {
+        "exam_en": "They had a <strong class=\"target-word\">hurried</strong> dinner before the show.",
+        "exam_ko": "그들은 공연 전에 <strong class=\"target-word\">허둥지둥</strong> 저녁을 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 5118,
+    "origin": "non",
+    "examples": [
+      {
+        "exam_en": "This cream is <strong class=\"target-word\">non</strong>-allergenic and safe for sensitive skin.",
+        "exam_ko": "이 크림은 <strong class=\"target-word\">비</strong>알레르기성으로 민감한 피부에 안전하다."
+      },
+      {
+        "exam_en": "The event is open to <strong class=\"target-word\">non</strong>-members as well.",
+        "exam_ko": "그 행사는 <strong class=\"target-word\">비</strong>회원에게도 열려 있다."
+      }
+    ]
+  },
+  {
+    "id": 5119,
+    "origin": "spoken",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Spoken</strong> language differs from written language.",
+        "exam_ko": "<strong class=\"target-word\">구어</strong>는 문어와 다르다."
+      },
+      {
+        "exam_en": "She left a <strong class=\"target-word\">spoken</strong> message for her colleague.",
+        "exam_ko": "그녀는 동료에게 <strong class=\"target-word\">구두</strong> 메시지를 남겼다."
+      }
+    ]
+  },
+  {
+    "id": 5120,
+    "origin": "character",
+    "examples": [
+      {
+        "exam_en": "The film captures the American <strong class=\"target-word\">character</strong> well.",
+        "exam_ko": "그 영화는 미국인의 <strong class=\"target-word\">기질</strong>을 잘 담아낸다."
+      },
+      {
+        "exam_en": "The novel describes the national <strong class=\"target-word\">character</strong> vividly.",
+        "exam_ko": "그 소설은 국민 <strong class=\"target-word\">성격</strong>을 생생하게 묘사한다."
+      }
+    ]
+  },
+  {
+    "id": 5121,
+    "origin": "arrow",
+    "examples": [
+      {
+        "exam_en": "A shower of <strong class=\"target-word\">arrows</strong> flew across the battlefield.",
+        "exam_ko": "전장을 가로질러 <strong class=\"target-word\">화살</strong>이 빗발쳤다."
+      },
+      {
+        "exam_en": "He shot the <strong class=\"target-word\">arrow</strong> straight at the target.",
+        "exam_ko": "그는 과녁을 향해 <strong class=\"target-word\">화살</strong>을 똑바로 쐈다."
+      }
+    ]
+  },
+  {
+    "id": 5122,
+    "origin": "region",
+    "examples": [
+      {
+        "exam_en": "The desert <strong class=\"target-word\">region</strong> receives very little rain.",
+        "exam_ko": "사막 <strong class=\"target-word\">지역</strong>은 비가 거의 오지 않는다."
+      },
+      {
+        "exam_en": "The forest <strong class=\"target-word\">regions</strong> are home to rare species.",
+        "exam_ko": "삼림 <strong class=\"target-word\">지대</strong>에는 희귀 종들이 산다."
+      }
+    ]
+  },
+  {
+    "id": 5123,
+    "origin": "grown",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">grown</strong> man shouldn't act like a child.",
+        "exam_ko": "<strong class=\"target-word\">다 큰</strong> 어른이 어린아이처럼 행동해서는 안 된다."
+      },
+      {
+        "exam_en": "You have <strong class=\"target-word\">grown</strong> so much since last year.",
+        "exam_ko": "너는 작년보다 정말 많이 <strong class=\"target-word\">자랐</strong>구나."
+      }
+    ]
+  },
+  {
+    "id": 5127,
+    "origin": "nor",
+    "examples": [
+      {
+        "exam_en": "Neither you <strong class=\"target-word\">nor</strong> anyone else can control me.",
+        "exam_ko": "너도 다른 누구도 나를 통제할 수 <strong class=\"target-word\">없다</strong>."
+      },
+      {
+        "exam_en": "He was not present, <strong class=\"target-word\">nor</strong> was I.",
+        "exam_ko": "그는 출석하지 않았고, 나도 <strong class=\"target-word\">마찬가지였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5128,
+    "origin": "holding",
+    "examples": [
+      {
+        "exam_en": "The company has large <strong class=\"target-word\">holdings</strong> in real estate.",
+        "exam_ko": "그 회사는 부동산에 큰 <strong class=\"target-word\">소유지</strong>를 가지고 있다."
+      },
+      {
+        "exam_en": "She has only small stock <strong class=\"target-word\">holdings</strong> in the firm.",
+        "exam_ko": "그녀는 그 회사에 소량의 주식 <strong class=\"target-word\">보유분</strong>만 있다."
+      }
+    ]
+  }
+]

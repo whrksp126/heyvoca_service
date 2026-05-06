@@ -1,0 +1,218 @@
+[
+  {
+    "id": 45199,
+    "origin": "recusal",
+    "examples": [
+      {
+        "exam_en": "Recusal became a highly debated topic in politics during the Trump administration, with many questioning whether it was necessary for officials to distance themselves from certain decisions and investigations.",
+        "exam_ko": "'기피'는 트럼프 행정부에서 정치적으로 매우 논란이 되는 주제가 되었으며, 공무원이 특정 결정과 조사에서 거리를 두는 것이 타당한지 여부에 대해 많은 사람들이 의문을 제기했다."
+      }
+    ]
+  },
+  {
+    "id": 45207,
+    "origin": "brushfire",
+    "examples": [
+      {
+        "exam_en": "brushfire wars",
+        "exam_ko": "국지전."
+      }
+    ]
+  },
+  {
+    "id": 45236,
+    "origin": "sidelong",
+    "examples": [
+      {
+        "exam_en": "give a person a sidelong glance",
+        "exam_ko": "남을 곁눈으로 보다, 곁눈질하다."
+      },
+      {
+        "exam_en": "sidelong comments",
+        "exam_ko": "우회적인 설명."
+      }
+    ]
+  },
+  {
+    "id": 45237,
+    "origin": "womankind",
+    "examples": [
+      {
+        "exam_en": "his womankind",
+        "exam_ko": "그의 가정의 여성들."
+      }
+    ]
+  },
+  {
+    "id": 45242,
+    "origin": "regnant",
+    "examples": [
+      {
+        "exam_en": "Queen Regnant",
+        "exam_ko": "(국왕의 부인으로서가 아니라) 군주로서 통치하는 여왕."
+      },
+      {
+        "exam_en": "a regnant determination",
+        "exam_ko": "번복할 수 없는 결정."
+      }
+    ]
+  },
+  {
+    "id": 45252,
+    "origin": "specs",
+    "examples": [
+      {
+        "exam_en": "wear specs",
+        "exam_ko": "안경을 끼고 있다."
+      }
+    ]
+  },
+  {
+    "id": 45254,
+    "origin": "bellyful",
+    "examples": [
+      {
+        "exam_en": "a bellyful of advice",
+        "exam_ko": "신물이 날 정도의 충고"
+      },
+      {
+        "exam_en": "get a bellyful",
+        "exam_ko": "실컷 두들겨 맞다."
+      }
+    ]
+  },
+  {
+    "id": 45268,
+    "origin": "caged",
+    "examples": [
+      {
+        "exam_en": "a caged bird",
+        "exam_ko": "새장의 새."
+      }
+    ]
+  },
+  {
+    "id": 45296,
+    "origin": "cellulosic",
+    "examples": [
+      {
+        "exam_en": "cellulosic fiber",
+        "exam_ko": "셀룰로오스 섬유."
+      }
+    ]
+  },
+  {
+    "id": 45301,
+    "origin": "architectonic",
+    "examples": [
+      {
+        "exam_en": "architectonic beauty",
+        "exam_ko": "구성미."
+      }
+    ]
+  },
+  {
+    "id": 45317,
+    "origin": "subgrade",
+    "examples": [
+      {
+        "exam_en": "Subgrade: The trimmed or prepared portion of the formation on which the pavement or slab is constructed. Generally taken to relate to the upper line of the formation.",
+        "exam_ko": "도로 포장이나 슬라브를 형성을 준비하고 다듬는 부분"
+      }
+    ]
+  },
+  {
+    "id": 45331,
+    "origin": "dec",
+    "examples": [
+      {
+        "exam_en": "decastyle",
+        "exam_ko": "10주식 주랑(十柱式柱廊). cf. DECI-."
+      }
+    ]
+  },
+  {
+    "id": 45335,
+    "origin": "galvano",
+    "examples": [
+      {
+        "exam_en": "galvanograph",
+        "exam_ko": "전기판(인쇄물)."
+      }
+    ]
+  },
+  {
+    "id": 45423,
+    "origin": "watermark",
+    "examples": [
+      {
+        "exam_en": "the high watermark",
+        "exam_ko": "최고[최저] 수위선."
+      }
+    ]
+  },
+  {
+    "id": 45468,
+    "origin": "expurgated",
+    "examples": [
+      {
+        "exam_en": "an expurgated edition of a novel",
+        "exam_ko": "소설의 삭제판."
+      }
+    ]
+  },
+  {
+    "id": 45492,
+    "origin": "timbuktu",
+    "examples": [
+      {
+        "exam_en": "from here to Timbuktu",
+        "exam_ko": "이곳에서 아주 먼 곳으로."
+      }
+    ]
+  },
+  {
+    "id": 45499,
+    "origin": "interfacial",
+    "examples": [
+      {
+        "exam_en": "interfacial tension",
+        "exam_ko": "계면 장력."
+      }
+    ]
+  },
+  {
+    "id": 45520,
+    "origin": "sesqui",
+    "examples": [
+      {
+        "exam_en": "sesquioxide",
+        "exam_ko": "삼이산화물."
+      }
+    ]
+  },
+  {
+    "id": 45567,
+    "origin": "rimmed",
+    "examples": [
+      {
+        "exam_en": "gold-rimmed glasses",
+        "exam_ko": "금테두리의 안경."
+      },
+      {
+        "exam_en": "red-rimmed eyes",
+        "exam_ko": "울어서 붉어진 눈."
+      }
+    ]
+  },
+  {
+    "id": 45612,
+    "origin": "quoin",
+    "examples": [
+      {
+        "exam_en": "A quoin is an angle at the outside corner of a building. You can call the corner itself a quoin, or use the word for the special stones or bricks that reinforce corners of brick or stone buildings.",
+        "exam_ko": "귀돌은 건물의 바깥 쪽 모서리에있는 귀퉁이입니다. 모퉁이 자체를 모서리돌이라고 부르거나 벽돌 또는 석조 건물의 모서리를 보강하는 특수 석재 또는 벽돌에 대해 사용할 수 있습니다."
+      }
+    ]
+  }
+]

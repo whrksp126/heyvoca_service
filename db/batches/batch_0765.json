@@ -1,0 +1,214 @@
+[
+  {
+    "id": 49516,
+    "origin": "jawed",
+    "examples": [
+      {
+        "exam_en": "square-jawed",
+        "exam_ko": "턱이 모난."
+      }
+    ]
+  },
+  {
+    "id": 49518,
+    "origin": "scribal",
+    "examples": [
+      {
+        "exam_en": "a scribal error",
+        "exam_ko": "오자(誤字)."
+      }
+    ]
+  },
+  {
+    "id": 49535,
+    "origin": "phyte",
+    "examples": [
+      {
+        "exam_en": "hydrophyte",
+        "exam_ko": "수생 식물."
+      }
+    ]
+  },
+  {
+    "id": 49539,
+    "origin": "tailed",
+    "examples": [
+      {
+        "exam_en": "long-tailed",
+        "exam_ko": "꼬리가 긴."
+      }
+    ]
+  },
+  {
+    "id": 49546,
+    "origin": "sentimentalize",
+    "examples": [
+      {
+        "exam_en": "sentimentalize a movie role",
+        "exam_ko": "영화의 역을 감상적으로 연기하다."
+      }
+    ]
+  },
+  {
+    "id": 49550,
+    "origin": "deuterium",
+    "examples": [
+      {
+        "exam_en": "deuterium oxide",
+        "exam_ko": "[화학] 산화듀테륨(중수(重水)의 일종)."
+      }
+    ]
+  },
+  {
+    "id": 49562,
+    "origin": "slighting",
+    "examples": [
+      {
+        "exam_en": "a slighting remark",
+        "exam_ko": "모욕적 언사."
+      }
+    ]
+  },
+  {
+    "id": 49564,
+    "origin": "unbeaten",
+    "examples": [
+      {
+        "exam_en": "an unbeaten streak",
+        "exam_ko": "불패의 연승 행진 (기록)."
+      },
+      {
+        "exam_en": "unbeaten paths",
+        "exam_ko": "사람이 지나간 적이 없는 길."
+      }
+    ]
+  },
+  {
+    "id": 49631,
+    "origin": "overset",
+    "examples": [
+      {
+        "exam_en": "overset the government",
+        "exam_ko": "정부를 쓰러뜨리다"
+      },
+      {
+        "exam_en": "overset a chair",
+        "exam_ko": "의자를 뒤집어엎다"
+      }
+    ]
+  },
+  {
+    "id": 49663,
+    "origin": "enabled",
+    "examples": [
+      {
+        "exam_en": "a Java-enabled mobile phone Java",
+        "exam_ko": "자바 구동의 모바일 폰 자바"
+      }
+    ]
+  },
+  {
+    "id": 49667,
+    "origin": "bellied",
+    "examples": [
+      {
+        "exam_en": "big-bellied",
+        "exam_ko": "올챙이배의"
+      },
+      {
+        "exam_en": "empty-bellied",
+        "exam_ko": "공복의, 배곯은."
+      }
+    ]
+  },
+  {
+    "id": 49708,
+    "origin": "gaming",
+    "examples": [
+      {
+        "exam_en": "a gaming table",
+        "exam_ko": "도박용 탁자."
+      }
+    ]
+  },
+  {
+    "id": 49744,
+    "origin": "sectorial",
+    "examples": [
+      {
+        "exam_en": "sectorial teeth",
+        "exam_ko": "송곳니, 견치(犬齒)."
+      }
+    ]
+  },
+  {
+    "id": 49750,
+    "origin": "write-off",
+    "examples": [
+      {
+        "exam_en": "After the accident, my car was a complete write-off.",
+        "exam_ko": "그사고 후에 내차는 완전 폐차 수준"
+      }
+    ]
+  },
+  {
+    "id": 49797,
+    "origin": "worshipful",
+    "examples": [
+      {
+        "exam_en": "a worshipful attitude",
+        "exam_ko": "숭배하는 태도."
+      }
+    ]
+  },
+  {
+    "id": 49846,
+    "origin": "scabrous",
+    "examples": [
+      {
+        "exam_en": "These scabrous stories keep turning up ; they've been attached to every great man for centuries.",
+        "exam_ko": "이런 아슬아슬한 이야기는 늘 나타나고 있다. 그런 이야기는 수세기 동안 모든 위인에게 붙어 다녔다."
+      }
+    ]
+  },
+  {
+    "id": 49860,
+    "origin": "theanthropic",
+    "examples": [
+      {
+        "exam_en": "a theanthropic image of Christ",
+        "exam_ko": "신인적 그리스도관(觀)."
+      }
+    ]
+  },
+  {
+    "id": 49883,
+    "origin": "scatological",
+    "examples": [
+      {
+        "exam_en": "a scatological humor",
+        "exam_ko": "지저분한 [외설적인] 유머."
+      }
+    ]
+  },
+  {
+    "id": 49892,
+    "origin": "underived",
+    "examples": [
+      {
+        "exam_en": "an underived axiom",
+        "exam_ko": "기본적 공리[공준(公準)]."
+      }
+    ]
+  },
+  {
+    "id": 49920,
+    "origin": "woodworking",
+    "examples": [
+      {
+        "exam_en": "woodworking tools",
+        "exam_ko": "목공구."
+      }
+    ]
+  }
+]

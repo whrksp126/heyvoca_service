@@ -1,0 +1,238 @@
+[
+  {
+    "id": 22541,
+    "origin": "blinker",
+    "examples": [
+      {
+        "exam_en": "be in blinkers",
+        "exam_ko": "(비유) 주위 사정을 모르고 있다."
+      }
+    ]
+  },
+  {
+    "id": 22543,
+    "origin": "clover",
+    "examples": [
+      {
+        "exam_en": "a four leaf clover",
+        "exam_ko": "네 잎 클로버(※행운을 나타냄)."
+      }
+    ]
+  },
+  {
+    "id": 22544,
+    "origin": "tidings",
+    "examples": [
+      {
+        "exam_en": "evil tidings",
+        "exam_ko": "흉보[비보, 속보]"
+      },
+      {
+        "exam_en": "good tidings",
+        "exam_ko": "희소식."
+      }
+    ]
+  },
+  {
+    "id": 22546,
+    "origin": "clime",
+    "examples": [
+      {
+        "exam_en": "seek some happier clime",
+        "exam_ko": "더 나은 신천지를 찾다."
+      },
+      {
+        "exam_en": "This moist and foggy clime.",
+        "exam_ko": "이 축축하고 안개짙은 기후."
+      }
+    ]
+  },
+  {
+    "id": 22553,
+    "origin": "plait",
+    "examples": [
+      {
+        "exam_en": "wear one's hair in a plait",
+        "exam_ko": "머리를 땋아 늘이다."
+      },
+      {
+        "exam_en": "plaited hair",
+        "exam_ko": "땋은 머리."
+      }
+    ]
+  },
+  {
+    "id": 22554,
+    "origin": "cheep",
+    "examples": [
+      {
+        "exam_en": "not a cheep",
+        "exam_ko": "(비격식) 아무 소리도 안 나는."
+      }
+    ]
+  },
+  {
+    "id": 22556,
+    "origin": "motherly",
+    "examples": [
+      {
+        "exam_en": "motherly love",
+        "exam_ko": "모성애."
+      },
+      {
+        "exam_en": "a motherly teacher",
+        "exam_ko": "어머니 같이 자애로운 선생님."
+      }
+    ]
+  },
+  {
+    "id": 22560,
+    "origin": "aimlessly",
+    "examples": [
+      {
+        "exam_en": "wander about aimlessly",
+        "exam_ko": "정처 없이 헤매다."
+      }
+    ]
+  },
+  {
+    "id": 22561,
+    "origin": "inapplicable",
+    "examples": [
+      {
+        "exam_en": "The rule is inapplicable to this case.",
+        "exam_ko": "그 규칙은 이 경우에 적용할 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 22563,
+    "origin": "inexhaustible",
+    "examples": [
+      {
+        "exam_en": "Natural resources are not inexhaustible.",
+        "exam_ko": "천연 자원은 무진장 있는 것이 아니다."
+      },
+      {
+        "exam_en": "an inexhaustible worker",
+        "exam_ko": "지칠 줄 모르는 노동자."
+      }
+    ]
+  },
+  {
+    "id": 22567,
+    "origin": "seditious",
+    "examples": [
+      {
+        "exam_en": "seditious harangue",
+        "exam_ko": "선동 연설"
+      },
+      {
+        "exam_en": "a seditious demagogue",
+        "exam_ko": "민중 선동가, 선동적 정치가."
+      }
+    ]
+  },
+  {
+    "id": 22568,
+    "origin": "bulldoze",
+    "examples": [
+      {
+        "exam_en": "Despite public opposition, she bulldozed her plan through Parliament.",
+        "exam_ko": "국민의 반대에도 불구하고 그녀는 의회에 자신의 안을 억지로 통과시켰다."
+      }
+    ]
+  },
+  {
+    "id": 22569,
+    "origin": "inquest",
+    "examples": [
+      {
+        "exam_en": "conduct an inquest on",
+        "exam_ko": "…에 대해서 사문을 하다."
+      }
+    ]
+  },
+  {
+    "id": 22570,
+    "origin": "inquisition",
+    "examples": [
+      {
+        "exam_en": "propose an inquisition into",
+        "exam_ko": "…의 조사를 제안하다."
+      }
+    ]
+  },
+  {
+    "id": 22571,
+    "origin": "nub",
+    "examples": [
+      {
+        "exam_en": "to the nub",
+        "exam_ko": "녹초가 될 때까지."
+      }
+    ]
+  },
+  {
+    "id": 22574,
+    "origin": "pedigree",
+    "examples": [
+      {
+        "exam_en": "He is a peasant by pedigree.",
+        "exam_ko": "그는 농민 출신이다."
+      },
+      {
+        "exam_en": "a family of pedigree",
+        "exam_ko": "명문가."
+      }
+    ]
+  },
+  {
+    "id": 22575,
+    "origin": "masterly",
+    "examples": [
+      {
+        "exam_en": "a masterly performance",
+        "exam_ko": "명연기, 묘기."
+      }
+    ]
+  },
+  {
+    "id": 22588,
+    "origin": "impacted",
+    "examples": [
+      {
+        "exam_en": "a foreign body impacted in the larynx",
+        "exam_ko": "목구멍에 걸린 이물질."
+      },
+      {
+        "exam_en": "an impacted tooth",
+        "exam_ko": "매복치."
+      }
+    ]
+  },
+  {
+    "id": 22591,
+    "origin": "sweepstakes",
+    "examples": [
+      {
+        "exam_en": "He won three sweepstakes. ",
+        "exam_ko": "그는 세 판을 쓸어 이겼다."
+      },
+      {
+        "exam_en": "He won three sweepstakes.",
+        "exam_ko": "그는 세 판을 쓸어 이겼다."
+      }
+    ]
+  },
+  {
+    "id": 22593,
+    "origin": "philosopher",
+    "examples": [
+      {
+        "exam_en": "a linguistic philosopher",
+        "exam_ko": "언어[정치] 철학자."
+      }
+    ]
+  }
+]

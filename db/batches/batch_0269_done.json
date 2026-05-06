@@ -1,0 +1,274 @@
+[
+  {
+    "id": 6655,
+    "origin": "sanity",
+    "examples": [
+      {
+        "exam_en": "He began to doubt her <strong class=\"target-word\">sanity</strong>.",
+        "exam_ko": "그는 그녀의 <strong class=\"target-word\">정신 건강</strong>을 의심하기 시작했다."
+      },
+      {
+        "exam_en": "She kept her <strong class=\"target-word\">sanity</strong> during the crisis.",
+        "exam_ko": "그녀는 위기 동안 <strong class=\"target-word\">제정신</strong>을 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 6656,
+    "origin": "rouge",
+    "examples": [
+      {
+        "exam_en": "She applied <strong class=\"target-word\">rouge</strong> lightly to her cheeks.",
+        "exam_ko": "그녀는 뺨에 <strong class=\"target-word\">볼터치</strong>를 가볍게 발랐다."
+      }
+    ]
+  },
+  {
+    "id": 6657,
+    "origin": "risky",
+    "examples": [
+      {
+        "exam_en": "Mountain climbing is a <strong class=\"target-word\">risky</strong> sport.",
+        "exam_ko": "등산은 <strong class=\"target-word\">위험한</strong> 스포츠다."
+      },
+      {
+        "exam_en": "Investing all your savings is a <strong class=\"target-word\">risky</strong> move.",
+        "exam_ko": "저축을 모두 투자하는 것은 <strong class=\"target-word\">위험한</strong> 행동이다."
+      }
+    ]
+  },
+  {
+    "id": 6658,
+    "origin": "noose",
+    "examples": [
+      {
+        "exam_en": "His debts were a <strong class=\"target-word\">noose</strong> around his neck.",
+        "exam_ko": "그의 빚은 그의 목을 조이는 <strong class=\"target-word\">올가미</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 6660,
+    "origin": "strap",
+    "examples": [
+      {
+        "exam_en": "She tied a <strong class=\"target-word\">strap</strong> around the luggage.",
+        "exam_ko": "그녀는 여행 가방에 <strong class=\"target-word\">끈</strong>을 묶었다."
+      },
+      {
+        "exam_en": "Don't let go of the <strong class=\"target-word\">strap</strong>.",
+        "exam_ko": "<strong class=\"target-word\">손잡이 끈</strong>을 놓지 마세요."
+      }
+    ]
+  },
+  {
+    "id": 6661,
+    "origin": "sunburn",
+    "examples": [
+      {
+        "exam_en": "Red-heads <strong class=\"target-word\">sunburn</strong> easily.",
+        "exam_ko": "머리카락이 붉은 사람은 <strong class=\"target-word\">햇볕에 타기</strong> 쉽다."
+      }
+    ]
+  },
+  {
+    "id": 6663,
+    "origin": "smear",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">smeared</strong> ointment on her face.",
+        "exam_ko": "그녀는 얼굴에 연고를 <strong class=\"target-word\">발랐다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">smeared</strong> the wet ink with his finger.",
+        "exam_ko": "그는 손가락으로 젖은 잉크를 <strong class=\"target-word\">문질러 번지게 했다</strong>."
+      },
+      {
+        "exam_en": "The politician's rival tried to <strong class=\"target-word\">smear</strong> his reputation.",
+        "exam_ko": "그 정치인의 경쟁자는 그의 명성을 <strong class=\"target-word\">훼손하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 6664,
+    "origin": "sinister",
+    "examples": [
+      {
+        "exam_en": "He had a <strong class=\"target-word\">sinister</strong> look on his face.",
+        "exam_ko": "그의 얼굴에는 <strong class=\"target-word\">불길한</strong> 표정이 떠올랐다."
+      },
+      {
+        "exam_en": "The villain had a <strong class=\"target-word\">sinister</strong> plan.",
+        "exam_ko": "그 악당은 <strong class=\"target-word\">사악한</strong> 계획을 갖고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6669,
+    "origin": "impetuous",
+    "examples": [
+      {
+        "exam_en": "He made an <strong class=\"target-word\">impetuous</strong> decision without thinking.",
+        "exam_ko": "그는 생각 없이 <strong class=\"target-word\">충동적인</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">impetuous</strong> nature often got her into trouble.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">성급한</strong> 성격은 종종 그녀를 곤경에 빠뜨렸다."
+      },
+      {
+        "exam_en": "The river flowed with <strong class=\"target-word\">impetuous</strong> force after the storm.",
+        "exam_ko": "폭풍 후 강은 <strong class=\"target-word\">거센</strong> 힘으로 흘렀다."
+      }
+    ]
+  },
+  {
+    "id": 6670,
+    "origin": "infernal",
+    "examples": [
+      {
+        "exam_en": "That <strong class=\"target-word\">infernal</strong> noise kept me awake all night.",
+        "exam_ko": "그 <strong class=\"target-word\">지독한</strong> 소음 때문에 밤새 잠을 못 잤다."
+      }
+    ]
+  },
+  {
+    "id": 6673,
+    "origin": "clatter",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">clattered</strong> down the hall in her heels.",
+        "exam_ko": "그녀는 하이힐을 신고 복도를 <strong class=\"target-word\">퉁탕거리며</strong> 걸어갔다."
+      },
+      {
+        "exam_en": "The dishes <strong class=\"target-word\">clattered</strong> when he dropped them.",
+        "exam_ko": "그가 접시를 떨어뜨리자 <strong class=\"target-word\">달그락</strong> 소리가 났다."
+      }
+    ]
+  },
+  {
+    "id": 6675,
+    "origin": "wrath",
+    "examples": [
+      {
+        "exam_en": "The people feared the <strong class=\"target-word\">wrath</strong> of God.",
+        "exam_ko": "사람들은 신의 <strong class=\"target-word\">진노</strong>를 두려워했다."
+      },
+      {
+        "exam_en": "He faced his father's <strong class=\"target-word\">wrath</strong> after the accident.",
+        "exam_ko": "그는 사고 후 아버지의 <strong class=\"target-word\">분노</strong>를 마주했다."
+      }
+    ]
+  },
+  {
+    "id": 6676,
+    "origin": "validate",
+    "examples": [
+      {
+        "exam_en": "My passport was <strong class=\"target-word\">validated</strong> for five years.",
+        "exam_ko": "내 여권은 5년간 <strong class=\"target-word\">유효했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6677,
+    "origin": "trespass",
+    "examples": [
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">trespassing</strong> on private property.",
+        "exam_ko": "그는 사유지에 <strong class=\"target-word\">무단 침입한</strong> 혐의로 체포됐다."
+      },
+      {
+        "exam_en": "She apologized for <strong class=\"target-word\">trespassing</strong> on his time.",
+        "exam_ko": "그녀는 그의 시간을 <strong class=\"target-word\">침해한</strong> 것을 사과했다."
+      }
+    ]
+  },
+  {
+    "id": 6678,
+    "origin": "solace",
+    "examples": [
+      {
+        "exam_en": "She found <strong class=\"target-word\">solace</strong> in reading during hard times.",
+        "exam_ko": "그녀는 힘든 시기에 독서에서 <strong class=\"target-word\">위안</strong>을 찾았다."
+      },
+      {
+        "exam_en": "Music has always been a <strong class=\"target-word\">solace</strong> for her.",
+        "exam_ko": "음악은 언제나 그녀에게 <strong class=\"target-word\">위로</strong>가 되어왔다."
+      }
+    ]
+  },
+  {
+    "id": 6679,
+    "origin": "shear",
+    "examples": [
+      {
+        "exam_en": "The machine can <strong class=\"target-word\">shear</strong> a bar of iron cleanly.",
+        "exam_ko": "그 기계는 쇠막대기를 깔끔하게 <strong class=\"target-word\">전단할</strong> 수 있다."
+      },
+      {
+        "exam_en": "Farmers <strong class=\"target-word\">shear</strong> sheep in the spring.",
+        "exam_ko": "농부들은 봄에 양의 털을 <strong class=\"target-word\">깎는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6680,
+    "origin": "scrumptious",
+    "examples": [
+      {
+        "exam_en": "The bakery made a <strong class=\"target-word\">scrumptious</strong> cheese-cake.",
+        "exam_ko": "그 빵집은 <strong class=\"target-word\">맛있는</strong> 치즈케이크를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 6682,
+    "origin": "scoop",
+    "examples": [
+      {
+        "exam_en": "Use a measuring <strong class=\"target-word\">scoop</strong> for the powder.",
+        "exam_ko": "가루를 덜 때는 계량용 <strong class=\"target-word\">스쿠프</strong>를 사용하세요."
+      },
+      {
+        "exam_en": "She ordered three <strong class=\"target-word\">scoops</strong> of ice cream.",
+        "exam_ko": "그녀는 아이스크림 세 <strong class=\"target-word\">스쿱</strong>을 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 6683,
+    "origin": "scavenger",
+    "examples": [
+      {
+        "exam_en": "Vultures are among the most repulsive <strong class=\"target-word\">scavengers</strong>.",
+        "exam_ko": "독수리는 가장 불쾌한 <strong class=\"target-word\">청소 동물</strong> 중 하나다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">scavenger</strong> searched the dumpster for useful items.",
+        "exam_ko": "그 <strong class=\"target-word\">넝마주이</strong>는 쓰레기통에서 쓸 만한 물건을 찾았다."
+      },
+      {
+        "exam_en": "Hyenas are well-known <strong class=\"target-word\">scavengers</strong> of the savanna.",
+        "exam_ko": "하이에나는 사바나의 유명한 <strong class=\"target-word\">청소부</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 6684,
+    "origin": "viable",
+    "examples": [
+      {
+        "exam_en": "He found a <strong class=\"target-word\">viable</strong> solution to the problem.",
+        "exam_ko": "그는 그 문제에 대한 <strong class=\"target-word\">실현 가능한</strong> 해결책을 찾았다."
+      },
+      {
+        "exam_en": "The region is <strong class=\"target-word\">viable</strong> for economic development.",
+        "exam_ko": "그 지역은 경제 개발이 <strong class=\"target-word\">가능한</strong> 곳이다."
+      },
+      {
+        "exam_en": "The business plan seemed <strong class=\"target-word\">viable</strong> to investors.",
+        "exam_ko": "그 사업 계획은 투자자들에게 <strong class=\"target-word\">실행 가능해</strong> 보였다."
+      }
+    ]
+  }
+]

@@ -41,11 +41,13 @@ const Header = () => {
   };
 
   return (
-    <div className='
+    <div
+      data-page-header
+      className='
       flex items-center justify-between
       w-full h-[55px]
       px-[16px] py-[14px]
-      bg-layout-white 
+      bg-layout-white
       dark:bg-layout-black
     '>
       <div className="left">

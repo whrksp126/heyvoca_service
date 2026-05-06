@@ -1,0 +1,270 @@
+[
+  {
+    "id": 16003,
+    "origin": "barber",
+    "examples": [
+      {
+        "exam_en": "at a barber's",
+        "exam_ko": "이발소에서(※허물없는 표현으로는 at the barber도 쓰임)"
+      },
+      {
+        "exam_en": "go to the barber",
+        "exam_ko": "이발소에 가다."
+      }
+    ]
+  },
+  {
+    "id": 16005,
+    "origin": "wavy",
+    "examples": [
+      {
+        "exam_en": "a wavy course",
+        "exam_ko": "기복이 많은 코스"
+      },
+      {
+        "exam_en": "wavy blonde hair",
+        "exam_ko": "찰랑거리는 금발."
+      }
+    ]
+  },
+  {
+    "id": 16006,
+    "origin": "fishery",
+    "examples": [
+      {
+        "exam_en": "inshore fishery",
+        "exam_ko": "연안 어업."
+      }
+    ]
+  },
+  {
+    "id": 16013,
+    "origin": "parenthesis",
+    "examples": [
+      {
+        "exam_en": "by way of parenthesis",
+        "exam_ko": "말이 난 김에."
+      }
+    ]
+  },
+  {
+    "id": 16019,
+    "origin": "eldest",
+    "examples": [
+      {
+        "exam_en": "one's eldest brother",
+        "exam_ko": "맏형"
+      },
+      {
+        "exam_en": "one's eldest son",
+        "exam_ko": "장남[장녀]. cf. ELDER¹ 1."
+      }
+    ]
+  },
+  {
+    "id": 16020,
+    "origin": "bless",
+    "examples": [
+      {
+        "exam_en": "Fortune blessed her with beauty.",
+        "exam_ko": "운명의 여신은 그녀에게 미모를 주었다"
+      },
+      {
+        "exam_en": "She is blessed in having such a husband.",
+        "exam_ko": "그녀가 그런 남편을 만난 것은 축복 받은 일이다"
+      }
+    ]
+  },
+  {
+    "id": 16021,
+    "origin": "whopper",
+    "examples": [
+      {
+        "exam_en": "Did you catch that fish? What a whopper!",
+        "exam_ko": "그 고기를 네가 잡았느냐? 엄청나게 큰 월척이군. 그래!"
+      }
+    ]
+  },
+  {
+    "id": 16023,
+    "origin": "uncontrollable",
+    "examples": [
+      {
+        "exam_en": "an uncontrollable urge to go out",
+        "exam_ko": "나가고 싶은 강렬한 충동"
+      },
+      {
+        "exam_en": "in uncontrollable excitement",
+        "exam_ko": "흥분을 억제하지 못하고."
+      }
+    ]
+  },
+  {
+    "id": 16031,
+    "origin": "decimal",
+    "examples": [
+      {
+        "exam_en": "the second decimal place",
+        "exam_ko": "소수 둘째 자리."
+      },
+      {
+        "exam_en": "decimal currency",
+        "exam_ko": "10진법의 통화 (제도)"
+      },
+      {
+        "exam_en": "In mathematics, students learn to work with decimal numbers, including addition and multiplication.",
+        "exam_ko": "수학에서 학생들은 소수점을 포함한 십진수와 덧셈 및 곱셈을 다루는 법을 배운다."
+      }
+    ]
+  },
+  {
+    "id": 16032,
+    "origin": "tipsy",
+    "examples": [
+      {
+        "exam_en": "a tipsy stagger",
+        "exam_ko": "갈지자걸음"
+      },
+      {
+        "exam_en": "\"Have another drink.\" \"No, thanks. I'm already a bit tipsy.\"",
+        "exam_ko": "「한잔 더 하세요.」 「아닙니다. 벌써 좀 취했습니다.」"
+      }
+    ]
+  },
+  {
+    "id": 16033,
+    "origin": "capability",
+    "examples": [
+      {
+        "exam_en": "develop a nuclear capability",
+        "exam_ko": "핵전력을 개발하다"
+      },
+      {
+        "exam_en": "He had the capability to succeed.",
+        "exam_ko": "그에게는 성공할 능력이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 16034,
+    "origin": "pecker",
+    "examples": [
+      {
+        "exam_en": "He looks down in the pecker today.",
+        "exam_ko": "그는 오늘 기운이 없는 것 같다"
+      },
+      {
+        "exam_en": "Keep your pecker up.",
+        "exam_ko": "기운을 내라(※미국에서는 6의 뜻으로 받아들이므로 주의할 것)."
+      }
+    ]
+  },
+  {
+    "id": 16038,
+    "origin": "thunderbolt",
+    "examples": [
+      {
+        "exam_en": "Word of his dismissal came as a thunderbolt to all of us.",
+        "exam_ko": "그의 해임 소식은 우리 모두에게는 참으로 뜻밖의 일이었다."
+      }
+    ]
+  },
+  {
+    "id": 16040,
+    "origin": "igneous",
+    "examples": [
+      {
+        "exam_en": "igneous rock",
+        "exam_ko": "화성암."
+      },
+      {
+        "exam_en": "Granite is an example of an igneous rock formed from volcanic activity.",
+        "exam_ko": "화강암은 화산 활동으로 형성된 화성암의 예이다. *granite [ˈɡræn_ɪt : 'g뢔_니t] (화강암)"
+      }
+    ]
+  },
+  {
+    "id": 16043,
+    "origin": "harmless",
+    "examples": [
+      {
+        "exam_en": "harmless as a dove",
+        "exam_ko": "아주 순진한"
+      },
+      {
+        "exam_en": "harmless joke",
+        "exam_ko": "악의없는 농담[장난, 놀림]."
+      }
+    ]
+  },
+  {
+    "id": 16047,
+    "origin": "hangover",
+    "examples": [
+      {
+        "exam_en": "have a hangover",
+        "exam_ko": "(어제 마신) 술이 덜 깨다."
+      },
+      {
+        "exam_en": "I have a hangover.",
+        "exam_ko": "나 숙취가 있어."
+      },
+      {
+        "exam_en": "I have a hangover. ",
+        "exam_ko": "나 숙취가 있어."
+      }
+    ]
+  },
+  {
+    "id": 16050,
+    "origin": "hump",
+    "examples": [
+      {
+        "exam_en": "a camel with two humps",
+        "exam_ko": "혹이 둘 있는 낙타, 쌍봉 낙타."
+      },
+      {
+        "exam_en": "on the hump",
+        "exam_ko": "활동하여"
+      }
+    ]
+  },
+  {
+    "id": 16051,
+    "origin": "scissors",
+    "examples": [
+      {
+        "exam_en": "a pair  of scissors",
+        "exam_ko": "가위 한[두] 자루(※two scissors라고는 하지 않음)"
+      },
+      {
+        "exam_en": "These scissors cut very well.",
+        "exam_ko": "이 가위는 아주 잘 든다"
+      }
+    ]
+  },
+  {
+    "id": 16052,
+    "origin": "baker",
+    "examples": [
+      {
+        "exam_en": "These potatoes are good bakers.",
+        "exam_ko": "이 감자는 구우면 맛이 있다."
+      }
+    ]
+  },
+  {
+    "id": 16054,
+    "origin": "opera",
+    "examples": [
+      {
+        "exam_en": "a comic opera",
+        "exam_ko": "희가극"
+      },
+      {
+        "exam_en": "stage a Verdi opera",
+        "exam_ko": "베르디 오페라를 상연하다"
+      }
+    ]
+  }
+]

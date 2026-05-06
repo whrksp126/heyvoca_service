@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1005,
+    "origin": "separately",
+    "examples": [
+      {
+        "exam_en": "They decided to live <strong class=\"target-word\">separately</strong> after the divorce.",
+        "exam_ko": "그들은 이혼 후 <strong class=\"target-word\">따로따로</strong> 살기로 결정했다."
+      },
+      {
+        "exam_en": "Please wrap this gift <strong class=\"target-word\">separately</strong> from the others.",
+        "exam_ko": "이 선물은 다른 것들과 <strong class=\"target-word\">따로</strong> 포장해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1006,
+    "origin": "together",
+    "examples": [
+      {
+        "exam_en": "We sat down and talked <strong class=\"target-word\">together</strong> for hours.",
+        "exam_ko": "우리는 앉아서 몇 시간 동안 <strong class=\"target-word\">함께</strong> 이야기했다."
+      },
+      {
+        "exam_en": "The couple walked <strong class=\"target-word\">together</strong> along the beach.",
+        "exam_ko": "그 커플은 해변을 따라 <strong class=\"target-word\">같이</strong> 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 1007,
+    "origin": "miniature",
+    "examples": [
+      {
+        "exam_en": "She built a <strong class=\"target-word\">miniature</strong> of the British Museum.",
+        "exam_ko": "그녀는 대영 박물관의 <strong class=\"target-word\">모형</strong>을 만들었다."
+      },
+      {
+        "exam_en": "The garden is a <strong class=\"target-word\">miniature</strong> version of the royal park.",
+        "exam_ko": "그 정원은 왕립 공원의 <strong class=\"target-word\">축소판</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1008,
+    "origin": "material",
+    "examples": [
+      {
+        "exam_en": "They used quality construction <strong class=\"target-word\">materials</strong> for the bridge.",
+        "exam_ko": "그들은 다리에 품질 좋은 건축 <strong class=\"target-word\">재료</strong>를 사용했다."
+      },
+      {
+        "exam_en": "The factory stores inflammable <strong class=\"target-word\">material</strong> in a secure area.",
+        "exam_ko": "공장은 인화성 <strong class=\"target-word\">재료</strong>를 안전한 구역에 보관한다."
+      }
+    ]
+  },
+  {
+    "id": 1009,
+    "origin": "harmful",
+    "examples": [
+      {
+        "exam_en": "Drinking and smoking are <strong class=\"target-word\">harmful</strong> to health.",
+        "exam_ko": "음주와 흡연은 건강에 <strong class=\"target-word\">해롭다</strong>."
+      },
+      {
+        "exam_en": "Too much screen time is <strong class=\"target-word\">harmful</strong> to children.",
+        "exam_ko": "과도한 스크린 시간은 어린이에게 <strong class=\"target-word\">해롭다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1010,
+    "origin": "safety",
+    "examples": [
+      {
+        "exam_en": "The city launched a traffic <strong class=\"target-word\">safety</strong> campaign this week.",
+        "exam_ko": "시는 이번 주에 교통 <strong class=\"target-word\">안전</strong> 캠페인을 시작했다."
+      },
+      {
+        "exam_en": "She was anxious about her son's <strong class=\"target-word\">safety</strong> abroad.",
+        "exam_ko": "그녀는 해외에 있는 아들의 <strong class=\"target-word\">안부</strong>를 걱정했다."
+      }
+    ]
+  },
+  {
+    "id": 1012,
+    "origin": "outgoing",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">outgoing</strong> ship left the harbor at dawn.",
+        "exam_ko": "<strong class=\"target-word\">출항하는</strong> 배가 새벽에 항구를 떠났다."
+      },
+      {
+        "exam_en": "The beach was exposed as the <strong class=\"target-word\">outgoing</strong> tide retreated.",
+        "exam_ko": "<strong class=\"target-word\">썰물</strong>이 빠지면서 해변이 드러났다."
+      }
+    ]
+  },
+  {
+    "id": 1013,
+    "origin": "performance",
+    "examples": [
+      {
+        "exam_en": "The theater gave a <strong class=\"target-word\">performance</strong> of Othello last night.",
+        "exam_ko": "극장은 어젯밤 오셀로 <strong class=\"target-word\">공연</strong>을 선보였다."
+      },
+      {
+        "exam_en": "The public <strong class=\"target-word\">performance</strong> drew a large crowd.",
+        "exam_ko": "공개 <strong class=\"target-word\">공연</strong>에 많은 관중이 몰렸다."
+      }
+    ]
+  },
+  {
+    "id": 1014,
+    "origin": "resident",
+    "examples": [
+      {
+        "exam_en": "Many Korean <strong class=\"target-word\">residents</strong> in America gathered for the festival.",
+        "exam_ko": "미국에 사는 많은 한국인 <strong class=\"target-word\">거주자</strong>들이 축제에 모였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">residents</strong> of the city protested the high taxes.",
+        "exam_ko": "그 도시의 <strong class=\"target-word\">주민</strong>들은 과중한 세금에 항의했다."
+      }
+    ]
+  },
+  {
+    "id": 1015,
+    "origin": "commercial",
+    "examples": [
+      {
+        "exam_en": "They exchanged <strong class=\"target-word\">commercial</strong> correspondence for months.",
+        "exam_ko": "그들은 몇 달간 <strong class=\"target-word\">상업</strong> 서신을 주고받았다."
+      },
+      {
+        "exam_en": "The two companies finalized their <strong class=\"target-word\">commercial</strong> transactions.",
+        "exam_ko": "두 회사는 <strong class=\"target-word\">상거래</strong>를 마무리했다."
+      }
+    ]
+  },
+  {
+    "id": 1016,
+    "origin": "residential",
+    "examples": [
+      {
+        "exam_en": "They stayed at a <strong class=\"target-word\">residential</strong> hotel near the university.",
+        "exam_ko": "그들은 대학교 근처의 <strong class=\"target-word\">거주용</strong> 호텔에 머물렀다."
+      },
+      {
+        "exam_en": "The law requires <strong class=\"target-word\">residential</strong> qualifications for land ownership.",
+        "exam_ko": "법은 토지 소유에 <strong class=\"target-word\">거주</strong> 자격을 요구한다."
+      }
+    ]
+  },
+  {
+    "id": 1017,
+    "origin": "exploration",
+    "examples": [
+      {
+        "exam_en": "The team led an <strong class=\"target-word\">exploration</strong> of the Amazon rainforest.",
+        "exam_ko": "팀은 아마존 열대우림 <strong class=\"target-word\">탐사</strong>를 이끌었다."
+      },
+      {
+        "exam_en": "The site is currently under <strong class=\"target-word\">exploration</strong> by scientists.",
+        "exam_ko": "그 유적지는 현재 과학자들의 <strong class=\"target-word\">조사</strong>를 받고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1018,
+    "origin": "expedition",
+    "examples": [
+      {
+        "exam_en": "The university funded an archaeological <strong class=\"target-word\">expedition</strong> to Egypt.",
+        "exam_ko": "대학교는 이집트로의 고고학 <strong class=\"target-word\">탐사 여행</strong>을 후원했다."
+      },
+      {
+        "exam_en": "They made a hunting <strong class=\"target-word\">expedition</strong> into the mountains.",
+        "exam_ko": "그들은 산으로 사냥 <strong class=\"target-word\">여행</strong>을 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 1019,
+    "origin": "appeal",
+    "examples": [
+      {
+        "exam_en": "The player made an <strong class=\"target-word\">appeal</strong> to the referee.",
+        "exam_ko": "선수는 심판에게 <strong class=\"target-word\">어필</strong>했다."
+      },
+      {
+        "exam_en": "The organization made an <strong class=\"target-word\">appeal</strong> for help.",
+        "exam_ko": "그 단체는 도움을 <strong class=\"target-word\">간청</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 1020,
+    "origin": "climb",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">climbed</strong> up the ladder to fix the roof.",
+        "exam_ko": "그는 지붕을 고치려고 사다리를 <strong class=\"target-word\">올랐다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">climbed</strong> to the top of the hill alone.",
+        "exam_ko": "그녀는 혼자 언덕 꼭대기까지 <strong class=\"target-word\">기어올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1021,
+    "origin": "march",
+    "examples": [
+      {
+        "exam_en": "The soldiers <strong class=\"target-word\">marched</strong> bravely toward the front line.",
+        "exam_ko": "군인들은 전선을 향해 용감히 <strong class=\"target-word\">진군했다</strong>."
+      },
+      {
+        "exam_en": "Protesters <strong class=\"target-word\">marched</strong> through the streets downtown.",
+        "exam_ko": "시위대는 도심 거리를 <strong class=\"target-word\">행진했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1022,
+    "origin": "pitch",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">pitched</strong> a tent near the river.",
+        "exam_ko": "그들은 강 근처에 천막을 <strong class=\"target-word\">쳤다</strong>."
+      },
+      {
+        "exam_en": "The vendor <strong class=\"target-word\">pitched</strong> poles along the market line.",
+        "exam_ko": "상인은 시장 줄을 따라 장대를 <strong class=\"target-word\">꽂았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1024,
+    "origin": "facilitate",
+    "examples": [
+      {
+        "exam_en": "The new machines will <strong class=\"target-word\">facilitate</strong> the job.",
+        "exam_ko": "새로운 기계들이 일을 <strong class=\"target-word\">수월하게</strong> 해 줄 것이다."
+      },
+      {
+        "exam_en": "The new software will <strong class=\"target-word\">facilitate</strong> team collaboration.",
+        "exam_ko": "새 소프트웨어는 팀 협업을 <strong class=\"target-word\">촉진할</strong> 것이다."
+      },
+      {
+        "exam_en": "The manager helped <strong class=\"target-word\">facilitate</strong> the consultation meeting.",
+        "exam_ko": "관리자는 상담 회의를 <strong class=\"target-word\">진행하는</strong> 데 도움을 줬다."
+      }
+    ]
+  },
+  {
+    "id": 1025,
+    "origin": "formation",
+    "examples": [
+      {
+        "exam_en": "School shapes the <strong class=\"target-word\">formation</strong> of a child's character.",
+        "exam_ko": "학교는 아이의 인격 <strong class=\"target-word\">형성</strong>에 영향을 준다."
+      },
+      {
+        "exam_en": "The president announced the <strong class=\"target-word\">formation</strong> of a new Cabinet.",
+        "exam_ko": "대통령은 새 내각의 <strong class=\"target-word\">조직</strong>을 발표했다."
+      }
+    ]
+  },
+  {
+    "id": 1026,
+    "origin": "positive",
+    "examples": [
+      {
+        "exam_en": "The court required <strong class=\"target-word\">positive</strong> proof of guilt.",
+        "exam_ko": "법원은 유죄에 대한 <strong class=\"target-word\">확실한</strong> 증거를 요구했다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">positive</strong> denial of the accusations.",
+        "exam_ko": "그녀는 혐의를 <strong class=\"target-word\">단호하게</strong> 부인했다."
+      }
+    ]
+  }
+]

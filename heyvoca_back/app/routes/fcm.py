@@ -17,7 +17,6 @@ from uuid import UUID
 
 import firebase_admin
 from firebase_admin import credentials, messaging
-from pyfcm import FCMNotification
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import atexit

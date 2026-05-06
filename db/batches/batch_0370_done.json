@@ -1,0 +1,282 @@
+[
+  {
+    "id": 10001,
+    "origin": "glum",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">glum</strong> about world affairs.",
+        "exam_ko": "그는 세계 문제에 대해서 <strong class=\"target-word\">침울해</strong> 한다."
+      },
+      {
+        "exam_en": "She looked <strong class=\"target-word\">glum</strong> after hearing the news.",
+        "exam_ko": "그녀는 소식을 듣고 <strong class=\"target-word\">침울한</strong> 표정을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 10002,
+    "origin": "exasperated",
+    "examples": [
+      {
+        "exam_en": "She spoke in an <strong class=\"target-word\">exasperated</strong> voice.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">격분한</strong> 목소리로 말했다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">exasperated</strong> by the constant delays.",
+        "exam_ko": "그는 계속되는 지연에 <strong class=\"target-word\">격노했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10003,
+    "origin": "flinch",
+    "examples": [
+      {
+        "exam_en": "He did not <strong class=\"target-word\">flinch</strong> from the difficult task.",
+        "exam_ko": "그는 어려운 임무에서 <strong class=\"target-word\">꽁무니를 빼지</strong> 않았다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">flinched</strong> at the loud noise.",
+        "exam_ko": "그녀는 큰 소음에 <strong class=\"target-word\">움찔했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10005,
+    "origin": "downright",
+    "examples": [
+      {
+        "exam_en": "That was a <strong class=\"target-word\">downright</strong> lie.",
+        "exam_ko": "그것은 <strong class=\"target-word\">새빨간</strong> 거짓말이었다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">downright</strong> honest person.",
+        "exam_ko": "그는 <strong class=\"target-word\">완전히</strong> 솔직한 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 10007,
+    "origin": "contentment",
+    "examples": [
+      {
+        "exam_en": "She lived in perfect <strong class=\"target-word\">contentment</strong> after retiring.",
+        "exam_ko": "그녀는 은퇴 후 완전한 <strong class=\"target-word\">만족</strong> 속에서 살았다."
+      },
+      {
+        "exam_en": "Happiness consists in <strong class=\"target-word\">contentment</strong>.",
+        "exam_ko": "행복은 <strong class=\"target-word\">만족하는</strong> 데에 있다."
+      }
+    ]
+  },
+  {
+    "id": 10008,
+    "origin": "grammatical",
+    "examples": [
+      {
+        "exam_en": "He made a <strong class=\"target-word\">grammatical</strong> mistake in the essay.",
+        "exam_ko": "그는 에세이에서 <strong class=\"target-word\">문법적인</strong> 실수를 했다."
+      },
+      {
+        "exam_en": "My <strong class=\"target-word\">grammatical</strong> knowledge of French is poor.",
+        "exam_ko": "나는 불어 <strong class=\"target-word\">문법</strong> 지식이 부족하다."
+      }
+    ]
+  },
+  {
+    "id": 10009,
+    "origin": "plural",
+    "examples": [
+      {
+        "exam_en": "They live in a <strong class=\"target-word\">plural</strong> society with many cultures.",
+        "exam_ko": "그들은 다양한 문화가 공존하는 <strong class=\"target-word\">복합</strong> 사회에서 산다."
+      },
+      {
+        "exam_en": "Is the word \"people\" <strong class=\"target-word\">plural</strong> or singular?",
+        "exam_ko": "\"people\"이라는 단어는 <strong class=\"target-word\">복수형</strong>인가, 단수형인가?"
+      }
+    ]
+  },
+  {
+    "id": 10010,
+    "origin": "nap",
+    "examples": [
+      {
+        "exam_en": "He took a short <strong class=\"target-word\">nap</strong> after lunch.",
+        "exam_ko": "그는 점심 후 짧은 <strong class=\"target-word\">낮잠</strong>을 잤다."
+      },
+      {
+        "exam_en": "She had a quick <strong class=\"target-word\">nap</strong> before the meeting.",
+        "exam_ko": "그녀는 회의 전에 잠깐 <strong class=\"target-word\">토막잠</strong>을 잤다."
+      }
+    ]
+  },
+  {
+    "id": 10011,
+    "origin": "exhibition",
+    "examples": [
+      {
+        "exam_en": "The gallery put on a new <strong class=\"target-word\">exhibition</strong> last week.",
+        "exam_ko": "그 갤러리는 지난주에 새로운 <strong class=\"target-word\">전시회</strong>를 열었다."
+      },
+      {
+        "exam_en": "His speech was an <strong class=\"target-word\">exhibition</strong> of great courage.",
+        "exam_ko": "그의 연설은 대단한 용기의 <strong class=\"target-word\">표시</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 10012,
+    "origin": "enlist",
+    "examples": [
+      {
+        "exam_en": "He decided to <strong class=\"target-word\">enlist</strong> in the army.",
+        "exam_ko": "그는 육군에 <strong class=\"target-word\">입대하기로</strong> 결심했다."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">enlist</strong> their support for the project.",
+        "exam_ko": "그녀는 프로젝트에 대한 그들의 지지를 <strong class=\"target-word\">얻으려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 10014,
+    "origin": "disappointment",
+    "examples": [
+      {
+        "exam_en": "She felt great <strong class=\"target-word\">disappointment</strong> after the result.",
+        "exam_ko": "그녀는 결과를 보고 큰 <strong class=\"target-word\">실망</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "His hopes ended in <strong class=\"target-word\">disappointment</strong>.",
+        "exam_ko": "그의 희망은 <strong class=\"target-word\">실망</strong>으로 끝났다."
+      }
+    ]
+  },
+  {
+    "id": 10016,
+    "origin": "dormant",
+    "examples": [
+      {
+        "exam_en": "The volcano has been <strong class=\"target-word\">dormant</strong> for centuries.",
+        "exam_ko": "그 화산은 수백 년간 <strong class=\"target-word\">휴면</strong> 상태였다."
+      },
+      {
+        "exam_en": "The talent remained <strong class=\"target-word\">dormant</strong> until she was discovered.",
+        "exam_ko": "그 재능은 그녀가 발견되기 전까지 <strong class=\"target-word\">잠재된</strong> 상태였다."
+      }
+    ]
+  },
+  {
+    "id": 10017,
+    "origin": "billiards",
+    "examples": [
+      {
+        "exam_en": "They had a game of <strong class=\"target-word\">billiards</strong> after dinner.",
+        "exam_ko": "그들은 저녁 식사 후 <strong class=\"target-word\">당구</strong>를 한 판 쳤다."
+      },
+      {
+        "exam_en": "He plays <strong class=\"target-word\">billiards</strong> every weekend.",
+        "exam_ko": "그는 매주 주말에 <strong class=\"target-word\">당구</strong>를 친다."
+      }
+    ]
+  },
+  {
+    "id": 10018,
+    "origin": "fragrance",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">fragrance</strong> of roses filled the room.",
+        "exam_ko": "장미 <strong class=\"target-word\">향기</strong>가 방을 가득 채웠다."
+      },
+      {
+        "exam_en": "She chose a light <strong class=\"target-word\">fragrance</strong> for the evening.",
+        "exam_ko": "그녀는 저녁을 위해 가벼운 <strong class=\"target-word\">향수</strong>를 골랐다."
+      }
+    ]
+  },
+  {
+    "id": 10020,
+    "origin": "motivated",
+    "examples": [
+      {
+        "exam_en": "The students were highly <strong class=\"target-word\">motivated</strong> to succeed.",
+        "exam_ko": "학생들은 성공하려는 의지가 매우 <strong class=\"target-word\">강했다</strong>."
+      },
+      {
+        "exam_en": "It was a politically <strong class=\"target-word\">motivated</strong> decision.",
+        "exam_ko": "그것은 정치적으로 <strong class=\"target-word\">동기부여된</strong> 결정이었다."
+      }
+    ]
+  },
+  {
+    "id": 10022,
+    "origin": "deceive",
+    "examples": [
+      {
+        "exam_en": "Don't <strong class=\"target-word\">deceive</strong> yourself about the situation.",
+        "exam_ko": "상황에 대해 스스로를 <strong class=\"target-word\">속이지</strong> 마라."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">deceived</strong> by her friendly appearance.",
+        "exam_ko": "그는 그녀의 친근한 외모에 <strong class=\"target-word\">속았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10025,
+    "origin": "mechanism",
+    "examples": [
+      {
+        "exam_en": "Scientists studied the <strong class=\"target-word\">mechanism</strong> of the human body.",
+        "exam_ko": "과학자들은 인체의 <strong class=\"target-word\">구조</strong>를 연구했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">mechanism</strong> of the clock stopped working.",
+        "exam_ko": "시계의 <strong class=\"target-word\">기계 구조</strong>가 작동을 멈췄다."
+      }
+    ]
+  },
+  {
+    "id": 10026,
+    "origin": "sharing",
+    "examples": [
+      {
+        "exam_en": "Cost <strong class=\"target-word\">sharing</strong> reduces the burden on individuals.",
+        "exam_ko": "비용 <strong class=\"target-word\">분담</strong>은 개인의 부담을 줄여 준다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Sharing</strong> resources helped the team finish faster.",
+        "exam_ko": "자원 <strong class=\"target-word\">공유</strong>가 팀이 더 빨리 끝내는 데 도움이 됐다."
+      }
+    ]
+  },
+  {
+    "id": 10031,
+    "origin": "pristine",
+    "examples": [
+      {
+        "exam_en": "The old book was still in <strong class=\"target-word\">pristine</strong> condition.",
+        "exam_ko": "그 오래된 책은 여전히 <strong class=\"target-word\">완벽한</strong> 상태였다."
+      },
+      {
+        "exam_en": "They hiked through <strong class=\"target-word\">pristine</strong> wilderness.",
+        "exam_ko": "그들은 <strong class=\"target-word\">원시</strong> 그대로의 자연 속을 하이킹했다."
+      }
+    ]
+  },
+  {
+    "id": 10032,
+    "origin": "extenuating",
+    "examples": [
+      {
+        "exam_en": "The judge considered the <strong class=\"target-word\">extenuating</strong> circumstances.",
+        "exam_ko": "판사는 <strong class=\"target-word\">참작할 만한</strong> 정상을 고려했다."
+      },
+      {
+        "exam_en": "His lawyer presented <strong class=\"target-word\">extenuating</strong> factors to reduce the sentence.",
+        "exam_ko": "그의 변호사는 형량을 줄이기 위해 <strong class=\"target-word\">정상참작</strong> 요소를 제시했다."
+      }
+    ]
+  }
+]

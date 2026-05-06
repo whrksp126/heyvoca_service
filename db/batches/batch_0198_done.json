@@ -1,0 +1,262 @@
+[
+  {
+    "id": 4496,
+    "origin": "crowd",
+    "examples": [
+      {
+        "exam_en": "A large <strong class=\"target-word\">crowd</strong> gathered in the square.",
+        "exam_ko": "광장에 많은 <strong class=\"target-word\">군중</strong>이 모였다."
+      },
+      {
+        "exam_en": "The holiday <strong class=\"target-word\">crowd</strong> filled the park.",
+        "exam_ko": "휴일 <strong class=\"target-word\">인파</strong>가 공원을 가득 메웠다."
+      }
+    ]
+  },
+  {
+    "id": 4497,
+    "origin": "completely",
+    "examples": [
+      {
+        "exam_en": "He isn't <strong class=\"target-word\">completely</strong> satisfied with the result.",
+        "exam_ko": "그는 결과에 <strong class=\"target-word\">완전히</strong> 만족하지는 않는다."
+      },
+      {
+        "exam_en": "Is the work <strong class=\"target-word\">completely</strong> finished?",
+        "exam_ko": "그 일을 <strong class=\"target-word\">완전히</strong> 마쳤나요?"
+      }
+    ]
+  },
+  {
+    "id": 4499,
+    "origin": "concerning",
+    "examples": [
+      {
+        "exam_en": "She asked a question <strong class=\"target-word\">concerning</strong> the new policy.",
+        "exam_ko": "그녀는 새 정책에 <strong class=\"target-word\">관하여</strong> 질문했다."
+      }
+    ]
+  },
+  {
+    "id": 4500,
+    "origin": "concert",
+    "examples": [
+      {
+        "exam_en": "They gave a <strong class=\"target-word\">concert</strong> at the city hall.",
+        "exam_ko": "그들은 시청에서 <strong class=\"target-word\">음악회</strong>를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 4501,
+    "origin": "conflict",
+    "examples": [
+      {
+        "exam_en": "My interests <strong class=\"target-word\">conflict</strong> with his plans.",
+        "exam_ko": "나의 이해관계는 그의 계획과 <strong class=\"target-word\">상충된다</strong>."
+      },
+      {
+        "exam_en": "The picnic <strong class=\"target-word\">conflicts</strong> with my piano lesson.",
+        "exam_ko": "소풍과 피아노 레슨이 <strong class=\"target-word\">겹친다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4502,
+    "origin": "closure",
+    "examples": [
+      {
+        "exam_en": "They reached <strong class=\"target-word\">closure</strong> after months of talks.",
+        "exam_ko": "수개월간의 회담 끝에 <strong class=\"target-word\">합의</strong>에 이르렀다."
+      }
+    ]
+  },
+  {
+    "id": 4503,
+    "origin": "coach",
+    "examples": [
+      {
+        "exam_en": "The king arrived in a royal <strong class=\"target-word\">coach</strong>.",
+        "exam_ko": "왕은 왕실 <strong class=\"target-word\">마차</strong>를 타고 도착했다."
+      },
+      {
+        "exam_en": "Is your ticket first class or <strong class=\"target-word\">coach</strong>?",
+        "exam_ko": "탑승권이 일등석인가요, 아니면 <strong class=\"target-word\">일반석</strong>인가요?"
+      }
+    ]
+  },
+  {
+    "id": 4504,
+    "origin": "ceramic",
+    "examples": [
+      {
+        "exam_en": "She works in the <strong class=\"target-word\">ceramic</strong> industry.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">도자기</strong> 산업에서 일한다."
+      },
+      {
+        "exam_en": "He studied <strong class=\"target-word\">ceramic</strong> art in college.",
+        "exam_ko": "그는 대학에서 <strong class=\"target-word\">도예</strong>를 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 4505,
+    "origin": "chapter",
+    "examples": [
+      {
+        "exam_en": "Please read the first <strong class=\"target-word\">chapter</strong> tonight.",
+        "exam_ko": "오늘 밤 첫 번째 <strong class=\"target-word\">장</strong>을 읽어보세요."
+      },
+      {
+        "exam_en": "She opened a new <strong class=\"target-word\">chapter</strong> in her life.",
+        "exam_ko": "그녀는 인생의 새로운 <strong class=\"target-word\">장</strong>을 열었다."
+      }
+    ]
+  },
+  {
+    "id": 4506,
+    "origin": "charm",
+    "examples": [
+      {
+        "exam_en": "His physical <strong class=\"target-word\">charm</strong> attracted many people.",
+        "exam_ko": "그의 육체적 <strong class=\"target-word\">매력</strong>이 많은 사람을 끌어당겼다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">charm</strong> of his writing style is unique.",
+        "exam_ko": "그의 문체의 <strong class=\"target-word\">매력</strong>은 독특하다."
+      }
+    ]
+  },
+  {
+    "id": 4507,
+    "origin": "cheat",
+    "examples": [
+      {
+        "exam_en": "The land sale turned out to be a <strong class=\"target-word\">cheat</strong>.",
+        "exam_ko": "그 토지 매각은 <strong class=\"target-word\">사기</strong>임이 드러났다."
+      },
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">cheat</strong> the customer.",
+        "exam_ko": "그는 손님을 <strong class=\"target-word\">속이려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 4508,
+    "origin": "cherry",
+    "examples": [
+      {
+        "exam_en": "She bought fresh <strong class=\"target-word\">cherries</strong> at the market.",
+        "exam_ko": "그녀는 시장에서 신선한 <strong class=\"target-word\">체리</strong>를 샀다."
+      },
+      {
+        "exam_en": "Life is no bag of <strong class=\"target-word\">cherries</strong>.",
+        "exam_ko": "인생에 <strong class=\"target-word\">체리</strong>만 있는 것은 아니다."
+      }
+    ]
+  },
+  {
+    "id": 4509,
+    "origin": "childhood",
+    "examples": [
+      {
+        "exam_en": "She has loved music since her <strong class=\"target-word\">childhood</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">어린 시절</strong>부터 음악을 좋아했다."
+      },
+      {
+        "exam_en": "He grew up in a happy <strong class=\"target-word\">childhood</strong>.",
+        "exam_ko": "그는 행복한 <strong class=\"target-word\">어린 시절</strong>을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 4510,
+    "origin": "childish",
+    "examples": [
+      {
+        "exam_en": "Stop being so <strong class=\"target-word\">childish</strong> about the problem.",
+        "exam_ko": "그 문제에 대해 너무 <strong class=\"target-word\">유치하게</strong> 굴지 마세요."
+      },
+      {
+        "exam_en": "That was a <strong class=\"target-word\">childish</strong> thought to have.",
+        "exam_ko": "그것은 <strong class=\"target-word\">어린애 같은</strong> 생각이었다."
+      }
+    ]
+  },
+  {
+    "id": 4511,
+    "origin": "childlike",
+    "examples": [
+      {
+        "exam_en": "She approached life with <strong class=\"target-word\">childlike</strong> wonder.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">어린아이 같은</strong> 경이로움으로 삶을 대했다."
+      }
+    ]
+  },
+  {
+    "id": 4512,
+    "origin": "choice",
+    "examples": [
+      {
+        "exam_en": "She made a good <strong class=\"target-word\">choice</strong> when picking a career.",
+        "exam_ko": "그녀는 직업을 선택할 때 좋은 <strong class=\"target-word\">선택</strong>을 했다."
+      },
+      {
+        "exam_en": "He had no <strong class=\"target-word\">choice</strong> but to accept the offer.",
+        "exam_ko": "그는 제안을 받아들이는 것 외에 <strong class=\"target-word\">선택</strong>의 여지가 없었다."
+      }
+    ]
+  },
+  {
+    "id": 4514,
+    "origin": "circumstance",
+    "examples": [
+      {
+        "exam_en": "He left due to <strong class=\"target-word\">circumstances</strong> beyond his control.",
+        "exam_ko": "그는 자신이 통제할 수 없는 <strong class=\"target-word\">상황</strong>으로 인해 떠났다."
+      },
+      {
+        "exam_en": "She adapted to the changing <strong class=\"target-word\">circumstances</strong> quickly.",
+        "exam_ko": "그녀는 변화하는 <strong class=\"target-word\">상황</strong>에 빠르게 적응했다."
+      }
+    ]
+  },
+  {
+    "id": 4515,
+    "origin": "bride",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">bride</strong> walked down the aisle.",
+        "exam_ko": "<strong class=\"target-word\">신부</strong>가 통로를 걸어 내려갔다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">bride</strong> wore a beautiful diamond ring.",
+        "exam_ko": "<strong class=\"target-word\">신부</strong>는 아름다운 다이아몬드 반지를 끼고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4516,
+    "origin": "buffalo",
+    "examples": [
+      {
+        "exam_en": "The gang tried to <strong class=\"target-word\">buffalo</strong> him into signing.",
+        "exam_ko": "일당은 그를 <strong class=\"target-word\">협박하여</strong> 서명하게 하려 했다."
+      }
+    ]
+  },
+  {
+    "id": 4517,
+    "origin": "builder",
+    "examples": [
+      {
+        "exam_en": "He is a skilled <strong class=\"target-word\">builder</strong> with many projects.",
+        "exam_ko": "그는 많은 프로젝트를 가진 숙련된 <strong class=\"target-word\">건설자</strong>다."
+      },
+      {
+        "exam_en": "She was known as an empire <strong class=\"target-word\">builder</strong> in business.",
+        "exam_ko": "그녀는 사업에서 제국을 세운 <strong class=\"target-word\">건설자</strong>로 알려졌다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1285,
+    "origin": "avenue",
+    "examples": [
+      {
+        "exam_en": "She strolled down the <strong class=\"target-word\">avenue</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 그 <strong class=\"target-word\">거리</strong>를 거닐었다."
+      },
+      {
+        "exam_en": "Education is an <strong class=\"target-word\">avenue</strong> to a better life.",
+        "exam_ko": "교육은 더 나은 삶으로 가는 <strong class=\"target-word\">길</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1286,
+    "origin": "cab",
+    "examples": [
+      {
+        "exam_en": "He paid the <strong class=\"target-word\">cab</strong> fare with cash.",
+        "exam_ko": "그는 <strong class=\"target-word\">택시</strong> 요금을 현금으로 냈다."
+      },
+      {
+        "exam_en": "She took a <strong class=\"target-word\">cab</strong> to the hotel.",
+        "exam_ko": "그녀는 호텔까지 <strong class=\"target-word\">택시</strong>를 탔다."
+      }
+    ]
+  },
+  {
+    "id": 1287,
+    "origin": "first",
+    "examples": [
+      {
+        "exam_en": "Please read the <strong class=\"target-word\">first</strong> chapter tonight.",
+        "exam_ko": "오늘 밤 <strong class=\"target-word\">첫</strong> 번째 챕터를 읽어 주세요."
+      },
+      {
+        "exam_en": "She arrived on the <strong class=\"target-word\">first</strong> of April.",
+        "exam_ko": "그녀는 4월 <strong class=\"target-word\">1일</strong>에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 1288,
+    "origin": "maybe",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Maybe</strong> she forgot my birthday.",
+        "exam_ko": "<strong class=\"target-word\">어쩌면</strong> 그녀는 내 생일을 잊었을지도 모른다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Maybe</strong> he will come, maybe he won't.",
+        "exam_ko": "<strong class=\"target-word\">아마</strong> 그가 올 수도 있고, 안 올 수도 있다."
+      }
+    ]
+  },
+  {
+    "id": 1289,
+    "origin": "person",
+    "examples": [
+      {
+        "exam_en": "They booked a hotel room for two <strong class=\"target-word\">persons</strong>.",
+        "exam_ko": "그들은 2<strong class=\"target-word\">인</strong>용 호텔 방을 예약했다."
+      },
+      {
+        "exam_en": "I thought him a very pleasant <strong class=\"target-word\">person</strong>.",
+        "exam_ko": "나는 그가 매우 호감 가는 <strong class=\"target-word\">사람</strong>이라고 생각했다."
+      }
+    ]
+  },
+  {
+    "id": 1290,
+    "origin": "director",
+    "examples": [
+      {
+        "exam_en": "She was appointed managing <strong class=\"target-word\">director</strong> last year.",
+        "exam_ko": "그녀는 작년에 상무 <strong class=\"target-word\">이사</strong>로 임명되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">director</strong> gave a speech at the opening ceremony.",
+        "exam_ko": "<strong class=\"target-word\">국장</strong>은 개막식에서 연설을 했다."
+      }
+    ]
+  },
+  {
+    "id": 1291,
+    "origin": "famous",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">famous</strong> actor around the world.",
+        "exam_ko": "그는 전 세계적으로 <strong class=\"target-word\">유명한</strong> 배우다."
+      },
+      {
+        "exam_en": "France is <strong class=\"target-word\">famous</strong> for its wine.",
+        "exam_ko": "프랑스는 포도주로 <strong class=\"target-word\">유명하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1292,
+    "origin": "musical",
+    "examples": [
+      {
+        "exam_en": "She has strong <strong class=\"target-word\">musical</strong> talent from a young age.",
+        "exam_ko": "그녀는 어릴 때부터 뛰어난 <strong class=\"target-word\">음악적</strong> 재능을 가지고 있다."
+      },
+      {
+        "exam_en": "He became the <strong class=\"target-word\">musical</strong> director of the orchestra.",
+        "exam_ko": "그는 오케스트라의 <strong class=\"target-word\">음악</strong> 감독이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1293,
+    "origin": "type",
+    "examples": [
+      {
+        "exam_en": "There are two <strong class=\"target-word\">types</strong> of intonation in English.",
+        "exam_ko": "영어에는 두 가지 <strong class=\"target-word\">유형</strong>의 억양이 있다."
+      },
+      {
+        "exam_en": "She is the blonde <strong class=\"target-word\">type</strong> of woman.",
+        "exam_ko": "그녀는 금발 <strong class=\"target-word\">타입</strong>의 여자다."
+      }
+    ]
+  },
+  {
+    "id": 1294,
+    "origin": "during",
+    "examples": [
+      {
+        "exam_en": "They stayed calm <strong class=\"target-word\">during</strong> and after the crisis.",
+        "exam_ko": "그들은 위기가 계속되는 <strong class=\"target-word\">동안</strong>과 그 이후에도 침착했다."
+      },
+      {
+        "exam_en": "We visited the mountains <strong class=\"target-word\">during</strong> the summer.",
+        "exam_ko": "우리는 <strong class=\"target-word\">여름 동안</strong> 산을 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 1295,
+    "origin": "score",
+    "examples": [
+      {
+        "exam_en": "The final <strong class=\"target-word\">score</strong> was three to one.",
+        "exam_ko": "최종 <strong class=\"target-word\">득점</strong>은 3대 1이었다."
+      },
+      {
+        "exam_en": "He kept <strong class=\"target-word\">score</strong> during the game.",
+        "exam_ko": "그는 경기 중 <strong class=\"target-word\">점수</strong>를 기록했다."
+      },
+      {
+        "exam_en": "The brick was <strong class=\"target-word\">scored</strong> on all sides before cutting.",
+        "exam_ko": "벽돌은 절단 전 모든 면에 <strong class=\"target-word\">자국이 새겨졌다</strong>."
+      },
+      {
+        "exam_en": "She studied the orchestral <strong class=\"target-word\">score</strong> carefully.",
+        "exam_ko": "그녀는 오케스트라 <strong class=\"target-word\">악보</strong>를 꼼꼼히 살펴보았다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">score</strong> of cars were parked outside.",
+        "exam_ko": "<strong class=\"target-word\">스무</strong> 대의 차가 밖에 주차되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1296,
+    "origin": "basketball",
+    "examples": [
+      {
+        "exam_en": "They play <strong class=\"target-word\">basketball</strong> every weekend.",
+        "exam_ko": "그들은 매주 주말에 <strong class=\"target-word\">농구</strong>를 한다."
+      }
+    ]
+  },
+  {
+    "id": 1297,
+    "origin": "sport",
+    "examples": [
+      {
+        "exam_en": "She plays <strong class=\"target-word\">sports</strong> every morning before work.",
+        "exam_ko": "그녀는 출근 전 매일 아침 <strong class=\"target-word\">운동</strong>을 한다."
+      },
+      {
+        "exam_en": "He truly enjoys outdoor <strong class=\"target-word\">sports</strong> in all seasons.",
+        "exam_ko": "그는 사계절 내내 야외 <strong class=\"target-word\">스포츠</strong>를 즐긴다."
+      }
+    ]
+  },
+  {
+    "id": 1298,
+    "origin": "favorite",
+    "examples": [
+      {
+        "exam_en": "He has always been fortune's <strong class=\"target-word\">favorite</strong>.",
+        "exam_ko": "그는 늘 운명의 <strong class=\"target-word\">총아</strong>였다."
+      },
+      {
+        "exam_en": "The teacher should not play <strong class=\"target-word\">favorites</strong> in class.",
+        "exam_ko": "교사는 수업에서 <strong class=\"target-word\">편애</strong>를 해서는 안 된다."
+      }
+    ]
+  },
+  {
+    "id": 1299,
+    "origin": "singer",
+    "examples": [
+      {
+        "exam_en": "He is a talented male <strong class=\"target-word\">singer</strong> with a deep voice.",
+        "exam_ko": "그는 목소리가 깊은 재능 있는 남자 <strong class=\"target-word\">가수</strong>다."
+      },
+      {
+        "exam_en": "She dreamed of becoming an opera <strong class=\"target-word\">singer</strong>.",
+        "exam_ko": "그녀는 오페라 <strong class=\"target-word\">가수</strong>가 되길 꿈꿨다."
+      }
+    ]
+  },
+  {
+    "id": 1300,
+    "origin": "most",
+    "examples": [
+      {
+        "exam_en": "That horse has the <strong class=\"target-word\">most</strong> speed on the track.",
+        "exam_ko": "저 말이 경주로에서 <strong class=\"target-word\">가장</strong> 빠르다."
+      },
+      {
+        "exam_en": "She has the <strong class=\"target-word\">most</strong> stage talent in the group.",
+        "exam_ko": "그녀는 그룹에서 배우 재능이 <strong class=\"target-word\">가장</strong> 풍부하다."
+      }
+    ]
+  },
+  {
+    "id": 1301,
+    "origin": "kind",
+    "examples": [
+      {
+        "exam_en": "She is a very <strong class=\"target-word\">kind</strong> mother to her children.",
+        "exam_ko": "그녀는 아이들에게 매우 <strong class=\"target-word\">다정한</strong> 엄마다."
+      },
+      {
+        "exam_en": "Helping a stranger was a <strong class=\"target-word\">kind</strong> act.",
+        "exam_ko": "낯선 사람을 돕는 것은 <strong class=\"target-word\">친절한</strong> 행동이었다."
+      }
+    ]
+  },
+  {
+    "id": 1302,
+    "origin": "kid",
+    "examples": [
+      {
+        "exam_en": "He bought a wallet made of <strong class=\"target-word\">kid</strong> leather.",
+        "exam_ko": "그는 <strong class=\"target-word\">키드 가죽</strong>으로 만든 지갑을 샀다."
+      },
+      {
+        "exam_en": "That high school <strong class=\"target-word\">kid</strong> is very bright.",
+        "exam_ko": "저 고등학생 <strong class=\"target-word\">아이</strong>는 매우 똑똑하다."
+      }
+    ]
+  },
+  {
+    "id": 1303,
+    "origin": "word",
+    "examples": [
+      {
+        "exam_en": "That <strong class=\"target-word\">word</strong> is now considered obsolete.",
+        "exam_ko": "그 <strong class=\"target-word\">단어</strong>는 이제 폐어로 여겨진다."
+      },
+      {
+        "exam_en": "Choose a short <strong class=\"target-word\">word</strong> that is easy to spell.",
+        "exam_ko": "철자가 쉬운 짧은 <strong class=\"target-word\">단어</strong>를 고르세요."
+      }
+    ]
+  },
+  {
+    "id": 1304,
+    "origin": "action",
+    "examples": [
+      {
+        "exam_en": "The machine was out of <strong class=\"target-word\">action</strong> all day.",
+        "exam_ko": "그 기계는 하루 종일 <strong class=\"target-word\">작동</strong>하지 않았다."
+      },
+      {
+        "exam_en": "The rescue team was in <strong class=\"target-word\">action</strong> within minutes.",
+        "exam_ko": "구조대는 몇 분 안에 <strong class=\"target-word\">활동</strong>에 들어갔다."
+      },
+      {
+        "exam_en": "It is an accustomed <strong class=\"target-word\">action</strong> with her to wash her hands.",
+        "exam_ko": "손을 씻는 것은 그녀에게 익숙한 <strong class=\"target-word\">행동</strong>이다."
+      }
+    ]
+  }
+]

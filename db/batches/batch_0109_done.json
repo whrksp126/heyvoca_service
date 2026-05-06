@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2258,
+    "origin": "administrative",
+    "examples": [
+      {
+        "exam_en": "She has strong <strong class=\"target-word\">administrative</strong> skills.",
+        "exam_ko": "그녀는 뛰어난 <strong class=\"target-word\">행정</strong> 능력을 갖추고 있다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Administrative</strong> law governs government decisions.",
+        "exam_ko": "<strong class=\"target-word\">행정</strong>법은 정부의 결정을 규율한다."
+      }
+    ]
+  },
+  {
+    "id": 2259,
+    "origin": "wooden",
+    "examples": [
+      {
+        "exam_en": "They live in a <strong class=\"target-word\">wooden</strong> house.",
+        "exam_ko": "그들은 <strong class=\"target-word\">목조</strong> 집에 산다."
+      },
+      {
+        "exam_en": "The table is <strong class=\"target-word\">wooden</strong>.",
+        "exam_ko": "그 테이블은 <strong class=\"target-word\">목제</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 2260,
+    "origin": "remarkable",
+    "examples": [
+      {
+        "exam_en": "He has a <strong class=\"target-word\">remarkable</strong> memory.",
+        "exam_ko": "그는 <strong class=\"target-word\">놀라운</strong> 기억력을 가지고 있다."
+      },
+      {
+        "exam_en": "People here are <strong class=\"target-word\">remarkable</strong> for their longevity.",
+        "exam_ko": "이곳 사람들은 장수로 <strong class=\"target-word\">유명하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2261,
+    "origin": "comprehensive",
+    "examples": [
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">comprehensive</strong> report on the issue.",
+        "exam_ko": "그녀는 그 문제에 대해 <strong class=\"target-word\">포괄적인</strong> 보고서를 제출했다."
+      },
+      {
+        "exam_en": "The book offers a <strong class=\"target-word\">comprehensive</strong> guide to grammar.",
+        "exam_ko": "그 책은 문법에 대한 <strong class=\"target-word\">종합적인</strong> 안내서를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 2262,
+    "origin": "surprising",
+    "examples": [
+      {
+        "exam_en": "She finished the race with <strong class=\"target-word\">surprising</strong> speed.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">놀라운</strong> 속도로 경주를 마쳤다."
+      },
+      {
+        "exam_en": "The result was quite <strong class=\"target-word\">surprising</strong>.",
+        "exam_ko": "그 결과는 꽤 <strong class=\"target-word\">놀라웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2263,
+    "origin": "solid",
+    "examples": [
+      {
+        "exam_en": "The doctor recommended eating <strong class=\"target-word\">solid</strong> food.",
+        "exam_ko": "의사는 <strong class=\"target-word\">고형</strong> 음식을 먹도록 권장했다."
+      },
+      {
+        "exam_en": "The juice in the bottle froze <strong class=\"target-word\">solid</strong>.",
+        "exam_ko": "병 속의 주스가 완전히 <strong class=\"target-word\">굳어버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2264,
+    "origin": "mere",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">mere</strong> conjecture with no proof.",
+        "exam_ko": "그것은 근거 없는 <strong class=\"target-word\">단순한</strong> 추측이었다."
+      },
+      {
+        "exam_en": "His smile was <strong class=\"target-word\">mere</strong> politeness.",
+        "exam_ko": "그의 미소는 <strong class=\"target-word\">가식적인</strong> 정중함에 불과했다."
+      }
+    ]
+  },
+  {
+    "id": 2265,
+    "origin": "brilliant",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Brilliant</strong> sunshine filled the morning sky.",
+        "exam_ko": "<strong class=\"target-word\">찬란한</strong> 햇빛이 아침 하늘을 가득 채웠다."
+      },
+      {
+        "exam_en": "She received praise for her <strong class=\"target-word\">brilliant</strong> achievements.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">빛나는</strong> 업적으로 칭찬을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2266,
+    "origin": "maximum",
+    "examples": [
+      {
+        "exam_en": "The law sets the <strong class=\"target-word\">maximum</strong> noise level for aircraft.",
+        "exam_ko": "법은 항공기의 <strong class=\"target-word\">최대</strong> 소음 수준을 규정한다."
+      },
+      {
+        "exam_en": "They worked at <strong class=\"target-word\">maximum</strong> capacity.",
+        "exam_ko": "그들은 <strong class=\"target-word\">최대</strong> 역량으로 일했다."
+      }
+    ]
+  },
+  {
+    "id": 2267,
+    "origin": "absolute",
+    "examples": [
+      {
+        "exam_en": "We need <strong class=\"target-word\">absolute</strong> honesty in this matter.",
+        "exam_ko": "이 문제에는 <strong class=\"target-word\">절대적인</strong> 정직함이 필요하다."
+      },
+      {
+        "exam_en": "What he said was an <strong class=\"target-word\">absolute</strong> lie.",
+        "exam_ko": "그가 말한 것은 <strong class=\"target-word\">완전한</strong> 거짓말이었다."
+      },
+      {
+        "exam_en": "She showed <strong class=\"target-word\">absolute</strong> fairness in every decision.",
+        "exam_ko": "그녀는 모든 결정에서 <strong class=\"target-word\">절대적인</strong> 공정함을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 2269,
+    "origin": "electronic",
+    "examples": [
+      {
+        "exam_en": "They bought expensive <strong class=\"target-word\">electronic</strong> equipment.",
+        "exam_ko": "그들은 고가의 <strong class=\"target-word\">전자</strong> 기기를 구입했다."
+      },
+      {
+        "exam_en": "The building uses <strong class=\"target-word\">electronic</strong> surveillance systems.",
+        "exam_ko": "그 건물은 <strong class=\"target-word\">전자</strong> 보안 감시 시스템을 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 2270,
+    "origin": "visual",
+    "examples": [
+      {
+        "exam_en": "The test measures your <strong class=\"target-word\">visual</strong> acuity.",
+        "exam_ko": "그 검사는 당신의 <strong class=\"target-word\">시각</strong> 예민도를 측정한다."
+      },
+      {
+        "exam_en": "Children benefit from <strong class=\"target-word\">visual</strong> training.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">시각</strong> 훈련으로 도움을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 2271,
+    "origin": "electric",
+    "examples": [
+      {
+        "exam_en": "The engineer checked the <strong class=\"target-word\">electric</strong> circuit.",
+        "exam_ko": "기술자가 <strong class=\"target-word\">전기</strong> 회로를 점검했다."
+      },
+      {
+        "exam_en": "A strong <strong class=\"target-word\">electric</strong> current ran through the wire.",
+        "exam_ko": "강한 <strong class=\"target-word\">전류</strong>가 전선을 통해 흘렀다."
+      }
+    ]
+  },
+  {
+    "id": 2272,
+    "origin": "nursing",
+    "examples": [
+      {
+        "exam_en": "She chose <strong class=\"target-word\">nursing</strong> as her profession.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">간호</strong>를 직업으로 선택했다."
+      }
+    ]
+  },
+  {
+    "id": 2273,
+    "origin": "toxic",
+    "examples": [
+      {
+        "exam_en": "The patient showed signs of a <strong class=\"target-word\">toxic</strong> state.",
+        "exam_ko": "그 환자는 <strong class=\"target-word\">중독</strong> 증상을 보였다."
+      },
+      {
+        "exam_en": "This chemical is a <strong class=\"target-word\">toxic</strong> drug.",
+        "exam_ko": "이 화학물질은 <strong class=\"target-word\">독성</strong> 약물이다."
+      }
+    ]
+  },
+  {
+    "id": 2274,
+    "origin": "redundant",
+    "examples": [
+      {
+        "exam_en": "The editor removed the <strong class=\"target-word\">redundant</strong> sentences.",
+        "exam_ko": "편집자는 <strong class=\"target-word\">장황한</strong> 문장들을 삭제했다."
+      },
+      {
+        "exam_en": "They may cut staff due to <strong class=\"target-word\">redundant</strong> positions.",
+        "exam_ko": "<strong class=\"target-word\">중복된</strong> 직책 때문에 인원을 감축할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 2275,
+    "origin": "integral",
+    "examples": [
+      {
+        "exam_en": "A compressor is an <strong class=\"target-word\">integral</strong> part of an air conditioner.",
+        "exam_ko": "압축기는 에어컨에 <strong class=\"target-word\">없어서는 안 될</strong> 부품이다."
+      },
+      {
+        "exam_en": "Trust is an <strong class=\"target-word\">integral</strong> part of any relationship.",
+        "exam_ko": "신뢰는 모든 관계에서 <strong class=\"target-word\">필수적인</strong> 요소이다."
+      }
+    ]
+  },
+  {
+    "id": 2276,
+    "origin": "probable",
+    "examples": [
+      {
+        "exam_en": "He is the most <strong class=\"target-word\">probable</strong> candidate for the role.",
+        "exam_ko": "그는 그 역할에 가장 <strong class=\"target-word\">유력한</strong> 후보다."
+      },
+      {
+        "exam_en": "Rain is the <strong class=\"target-word\">probable</strong> result of this weather.",
+        "exam_ko": "비가 이 날씨의 <strong class=\"target-word\">예상되는</strong> 결과다."
+      }
+    ]
+  },
+  {
+    "id": 2277,
+    "origin": "amateur",
+    "examples": [
+      {
+        "exam_en": "He is an <strong class=\"target-word\">amateur</strong> of the theater.",
+        "exam_ko": "그는 연극 <strong class=\"target-word\">애호가</strong>다."
+      },
+      {
+        "exam_en": "She performs as an <strong class=\"target-word\">amateur</strong> musician.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">아마추어</strong> 음악가로 활동한다."
+      }
+    ]
+  },
+  {
+    "id": 2278,
+    "origin": "passing",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">passing</strong> years have changed him greatly.",
+        "exam_ko": "<strong class=\"target-word\">흘러가는</strong> 세월이 그를 크게 변화시켰다."
+      },
+      {
+        "exam_en": "He forgot it in a <strong class=\"target-word\">passing</strong> moment.",
+        "exam_ko": "그는 <strong class=\"target-word\">잠깐</strong> 사이에 그것을 잊었다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": 26948,
+    "origin": "minus",
+    "examples": [
+      {
+        "exam_en": "Five minus one is four.",
+        "exam_ko": "5빼기 1은 4."
+      },
+      {
+        "exam_en": "go out minus a hat",
+        "exam_ko": "모자를 쓰지 않고 외출하다"
+      }
+    ]
+  },
+  {
+    "id": 26955,
+    "origin": "especial",
+    "examples": [
+      {
+        "exam_en": "my especial friend",
+        "exam_ko": "둘도 없는 친구."
+      }
+    ]
+  },
+  {
+    "id": 26960,
+    "origin": "winning",
+    "examples": [
+      {
+        "exam_en": "the winning hit",
+        "exam_ko": "승리의 일타, 결승타."
+      },
+      {
+        "exam_en": "His chief asset is his winning smile.",
+        "exam_ko": "그의 주된 장점은 매력적인 미소이다."
+      }
+    ]
+  },
+  {
+    "id": 26970,
+    "origin": "fishing",
+    "examples": [
+      {
+        "exam_en": "do fishing",
+        "exam_ko": "낚시질을 하다."
+      }
+    ]
+  },
+  {
+    "id": 26975,
+    "origin": "marketable",
+    "examples": [
+      {
+        "exam_en": "marketable products",
+        "exam_ko": "시장성이 있는 제품."
+      },
+      {
+        "exam_en": "marketable skill",
+        "exam_ko": "판매술."
+      },
+      {
+        "exam_en": "One of them Is a plain fish and no doubt marketable.",
+        "exam_ko": "그것 중 하나는 명백히 물고기이고, 수요가 있을 것을 의심하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": 26994,
+    "origin": "childcare",
+    "examples": [
+      {
+        "exam_en": "a childcare center",
+        "exam_ko": "탁아소, 보육원"
+      },
+      {
+        "exam_en": "a childcare leave",
+        "exam_ko": "육아 휴가."
+      }
+    ]
+  },
+  {
+    "id": 27004,
+    "origin": "fortnight",
+    "examples": [
+      {
+        "exam_en": "Sunday fortnight",
+        "exam_ko": "2주일 후[전]의 일요일"
+      },
+      {
+        "exam_en": "today fortnight",
+        "exam_ko": "2주일 후[전]의 오늘(※⑴ 「2주일 전의 오늘」은, a fortnight ago today라고도 함. ⑵ (미)에서는 「2주일 후의 오늘」은 two weeks from today, 「2주일 전의 오늘」은 two weeks ago today를 씀)"
+      }
+    ]
+  },
+  {
+    "id": 27017,
+    "origin": "switchboard",
+    "examples": [
+      {
+        "exam_en": "jam the switchboard",
+        "exam_ko": "(전화가 쇄도하여) 교환대를 마비시키다."
+      }
+    ]
+  },
+  {
+    "id": 27018,
+    "origin": "pretax",
+    "examples": [
+      {
+        "exam_en": "pretax income",
+        "exam_ko": "세금을 내기 전의 소득"
+      },
+      {
+        "exam_en": "a pretax price",
+        "exam_ko": "세금이 포함된 가격."
+      }
+    ]
+  },
+  {
+    "id": 27019,
+    "origin": "markdown",
+    "examples": [
+      {
+        "exam_en": "a markdown on tablecloths",
+        "exam_ko": "식탁보의 가격 인하."
+      }
+    ]
+  },
+  {
+    "id": 27025,
+    "origin": "unpack",
+    "examples": [
+      {
+        "exam_en": "unpack one's bags",
+        "exam_ko": "가방에서 내용물을 내다."
+      },
+      {
+        "exam_en": "unpack one's belongings",
+        "exam_ko": "소지품을 꺼내다."
+      }
+    ]
+  },
+  {
+    "id": 27032,
+    "origin": "barring",
+    "examples": [
+      {
+        "exam_en": "Nobody knows, barring me.",
+        "exam_ko": "나 말고는 아무도 모른다."
+      }
+    ]
+  },
+  {
+    "id": 27044,
+    "origin": "overheat",
+    "examples": [
+      {
+        "exam_en": "an overheated discussion",
+        "exam_ko": "과열된 토론"
+      },
+      {
+        "exam_en": "My car overheated and broke down.",
+        "exam_ko": "내 차가 과열되어 고장났다."
+      }
+    ]
+  },
+  {
+    "id": 27045,
+    "origin": "caller",
+    "examples": [
+      {
+        "exam_en": "John's a regular caller here.",
+        "exam_ko": "존은 여기 단골손님이다."
+      }
+    ]
+  },
+  {
+    "id": 27057,
+    "origin": "petrochemical",
+    "examples": [
+      {
+        "exam_en": "a petrochemical complex",
+        "exam_ko": "석유 화학 단지[공단]."
+      },
+      {
+        "exam_en": "Sweep paved areas broom clean. Remove petrochemical spills, stains, and other foreign deposits.",
+        "exam_ko": "포장된 구역은 비질 청소로 쓰시오. 석유 화학 제품 유출, 얼룩 및 기타 이물질 퇴적물을 제거하십시오."
+      }
+    ]
+  },
+  {
+    "id": 27058,
+    "origin": "firewood",
+    "examples": [
+      {
+        "exam_en": "They cut down the trees for firewood.",
+        "exam_ko": "그들은 장작으로 쓰기 위해서 나무를 베었다."
+      }
+    ]
+  },
+  {
+    "id": 27069,
+    "origin": "nutritional",
+    "examples": [
+      {
+        "exam_en": "the nutritional value",
+        "exam_ko": "영양가."
+      }
+    ]
+  },
+  {
+    "id": 27081,
+    "origin": "drafting",
+    "examples": [
+      {
+        "exam_en": "a drafting committee",
+        "exam_ko": "기초 위원회."
+      }
+    ]
+  },
+  {
+    "id": 27082,
+    "origin": "reportable",
+    "examples": [
+      {
+        "exam_en": "a reportable income",
+        "exam_ko": "요(要) 신고 소득."
+      }
+    ]
+  },
+  {
+    "id": 27085,
+    "origin": "inaccuracy",
+    "examples": [
+      {
+        "exam_en": "a book full of inaccuracies",
+        "exam_ko": "오류투성이의 책."
+      }
+    ]
+  }
+]

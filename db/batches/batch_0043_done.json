@@ -1,0 +1,282 @@
+[
+  {
+    "id": 858,
+    "origin": "consult",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">consulted</strong> an expert about the issue.",
+        "exam_ko": "그녀는 그 문제에 대해 전문가에게 <strong class=\"target-word\">의견을 물었다</strong>."
+      },
+      {
+        "exam_en": "Have you <strong class=\"target-word\">consulted</strong> your doctor about your illness?",
+        "exam_ko": "당신의 병에 대해 의사의 <strong class=\"target-word\">진찰을 받아</strong> 보셨습니까?"
+      }
+    ]
+  },
+  {
+    "id": 859,
+    "origin": "advise",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">advised</strong> him to leave early.",
+        "exam_ko": "그녀는 그에게 일찍 떠나라고 <strong class=\"target-word\">충고했다</strong>."
+      },
+      {
+        "exam_en": "He will <strong class=\"target-word\">advise</strong> you on your pronunciation.",
+        "exam_ko": "네 발음에 대해서는 그가 <strong class=\"target-word\">조언해</strong> 줄 것이다."
+      }
+    ]
+  },
+  {
+    "id": 860,
+    "origin": "counsel",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">counseled</strong> him before making the decision.",
+        "exam_ko": "그녀는 결정을 내리기 전에 그에게 <strong class=\"target-word\">조언했다</strong>."
+      },
+      {
+        "exam_en": "The therapist <strong class=\"target-word\">counseled</strong> the grieving family.",
+        "exam_ko": "치료사가 슬픔에 잠긴 가족을 <strong class=\"target-word\">상담해 주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 861,
+    "origin": "numerous",
+    "examples": [
+      {
+        "exam_en": "She made <strong class=\"target-word\">numerous</strong> visits to the bookstore.",
+        "exam_ko": "그녀는 서점을 <strong class=\"target-word\">수차례</strong> 방문했다."
+      },
+      {
+        "exam_en": "The stars are too <strong class=\"target-word\">numerous</strong> to count.",
+        "exam_ko": "별이 너무 <strong class=\"target-word\">많아서</strong> 셀 수도 없다."
+      }
+    ]
+  },
+  {
+    "id": 862,
+    "origin": "countless",
+    "examples": [
+      {
+        "exam_en": "He made <strong class=\"target-word\">countless</strong> mistakes before succeeding.",
+        "exam_ko": "그는 성공하기 전에 <strong class=\"target-word\">셀 수 없이 많은</strong> 실수를 했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Countless</strong> stars filled the night sky.",
+        "exam_ko": "<strong class=\"target-word\">무수히 많은</strong> 별들이 밤하늘을 가득 채웠다."
+      }
+    ]
+  },
+  {
+    "id": 863,
+    "origin": "code",
+    "examples": [
+      {
+        "exam_en": "The law is based on an ancient <strong class=\"target-word\">code</strong> of conduct.",
+        "exam_ko": "그 법은 오래된 행동 <strong class=\"target-word\">규범</strong>에 기반을 두고 있다."
+      },
+      {
+        "exam_en": "Students must follow the school's <strong class=\"target-word\">code</strong> of conduct.",
+        "exam_ko": "학생들은 학교의 행동 <strong class=\"target-word\">규범</strong>을 따라야 한다."
+      }
+    ]
+  },
+  {
+    "id": 864,
+    "origin": "closely",
+    "examples": [
+      {
+        "exam_en": "The two issues are <strong class=\"target-word\">closely</strong> connected.",
+        "exam_ko": "두 문제는 <strong class=\"target-word\">밀접하게</strong> 연결되어 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">closely</strong> resembles her mother.",
+        "exam_ko": "그녀는 어머니를 <strong class=\"target-word\">꼭</strong> 닮았다."
+      }
+    ]
+  },
+  {
+    "id": 865,
+    "origin": "classify",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">classified</strong> the animals into three groups.",
+        "exam_ko": "그들은 동물들을 세 가지 그룹으로 <strong class=\"target-word\">분류했다</strong>."
+      },
+      {
+        "exam_en": "The library <strong class=\"target-word\">classifies</strong> books by subject.",
+        "exam_ko": "도서관은 책을 주제별로 <strong class=\"target-word\">분류한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 866,
+    "origin": "clarify",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">clarify</strong> your point for the audience.",
+        "exam_ko": "청중을 위해 요점을 <strong class=\"target-word\">명확히 설명해</strong> 주세요."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">clarified</strong> his position during the meeting.",
+        "exam_ko": "그는 회의 중에 자신의 입장을 <strong class=\"target-word\">분명히 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 867,
+    "origin": "cite",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">cited</strong> several examples in her report.",
+        "exam_ko": "그녀는 보고서에서 여러 사례를 <strong class=\"target-word\">인용했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">cited</strong> a passage from the book.",
+        "exam_ko": "그는 책에서 한 문장을 <strong class=\"target-word\">인용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 868,
+    "origin": "circulation",
+    "examples": [
+      {
+        "exam_en": "Exercise improves blood <strong class=\"target-word\">circulation</strong> throughout the body.",
+        "exam_ko": "운동은 몸 전체의 혈액 <strong class=\"target-word\">순환</strong>을 개선한다."
+      },
+      {
+        "exam_en": "The magazine has a wide <strong class=\"target-word\">circulation</strong> across the country.",
+        "exam_ko": "그 잡지는 전국에서 <strong class=\"target-word\">발행 부수</strong>가 많다."
+      }
+    ]
+  },
+  {
+    "id": 869,
+    "origin": "chronic",
+    "examples": [
+      {
+        "exam_en": "He has been a <strong class=\"target-word\">chronic</strong> alcoholic for years.",
+        "exam_ko": "그는 수년간 <strong class=\"target-word\">만성</strong> 알코올 중독자였다."
+      },
+      {
+        "exam_en": "She suffers from <strong class=\"target-word\">chronic</strong> back pain.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">만성</strong> 허리 통증으로 고생하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 870,
+    "origin": "chilly",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">chilly</strong> morning in early spring.",
+        "exam_ko": "초봄의 <strong class=\"target-word\">쌀쌀한</strong> 아침이었다."
+      },
+      {
+        "exam_en": "The wind felt <strong class=\"target-word\">chilly</strong> on her bare arms.",
+        "exam_ko": "바람이 맨팔에 <strong class=\"target-word\">차갑게</strong> 느껴졌다."
+      }
+    ]
+  },
+  {
+    "id": 871,
+    "origin": "charity",
+    "examples": [
+      {
+        "exam_en": "She donated money to a <strong class=\"target-word\">charity</strong> for the poor.",
+        "exam_ko": "그녀는 빈민을 위한 <strong class=\"target-word\">자선단체</strong>에 돈을 기부했다."
+      },
+      {
+        "exam_en": "The event raised funds through <strong class=\"target-word\">charity</strong> auctions.",
+        "exam_ko": "그 행사는 <strong class=\"target-word\">자선</strong> 경매를 통해 자금을 모았다."
+      }
+    ]
+  },
+  {
+    "id": 872,
+    "origin": "certify",
+    "examples": [
+      {
+        "exam_en": "The lab <strong class=\"target-word\">certified</strong> the product as safe.",
+        "exam_ko": "실험실은 그 제품이 안전하다고 <strong class=\"target-word\">인증했다</strong>."
+      },
+      {
+        "exam_en": "A doctor must <strong class=\"target-word\">certify</strong> the patient's condition.",
+        "exam_ko": "의사는 환자의 상태를 <strong class=\"target-word\">확인해 증명해야</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 873,
+    "origin": "certainly",
+    "examples": [
+      {
+        "exam_en": "He will <strong class=\"target-word\">certainly</strong> attend the lecture.",
+        "exam_ko": "그는 <strong class=\"target-word\">틀림없이</strong> 강의에 참석할 것이다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">certainly</strong> worked hard on the project.",
+        "exam_ko": "그녀는 그 프로젝트에 <strong class=\"target-word\">분명히</strong> 열심히 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 874,
+    "origin": "censor",
+    "examples": [
+      {
+        "exam_en": "The film passed the <strong class=\"target-word\">censor</strong> without any cuts.",
+        "exam_ko": "그 영화는 아무런 삭제 없이 <strong class=\"target-word\">검열</strong>을 통과했다."
+      },
+      {
+        "exam_en": "Parts of this film were banned by the <strong class=\"target-word\">censor</strong>.",
+        "exam_ko": "이 영화의 일부가 <strong class=\"target-word\">검열관</strong>에 의해 금지되었다."
+      }
+    ]
+  },
+  {
+    "id": 875,
+    "origin": "celebrity",
+    "examples": [
+      {
+        "exam_en": "She became a <strong class=\"target-word\">celebrity</strong> after her first film.",
+        "exam_ko": "그녀는 첫 영화 이후 <strong class=\"target-word\">유명 인사</strong>가 되었다."
+      },
+      {
+        "exam_en": "The athlete gained <strong class=\"target-word\">celebrity</strong> after winning the championship.",
+        "exam_ko": "그 선수는 우승 후 <strong class=\"target-word\">명성</strong>을 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 876,
+    "origin": "caution",
+    "examples": [
+      {
+        "exam_en": "He drove with great <strong class=\"target-word\">caution</strong> on the icy road.",
+        "exam_ko": "그는 빙판길에서 매우 <strong class=\"target-word\">조심하며</strong> 운전했다."
+      },
+      {
+        "exam_en": "Please use <strong class=\"target-word\">caution</strong> when handling chemicals.",
+        "exam_ko": "화학물질을 다룰 때는 <strong class=\"target-word\">주의를 기울여</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 877,
+    "origin": "casualty",
+    "examples": [
+      {
+        "exam_en": "The battle resulted in heavy <strong class=\"target-word\">casualties</strong>.",
+        "exam_ko": "그 전투로 많은 <strong class=\"target-word\">사상자</strong>가 발생했다."
+      },
+      {
+        "exam_en": "There were ten serious <strong class=\"target-word\">casualties</strong> in the train crash.",
+        "exam_ko": "기차 충돌로 중상을 입은 <strong class=\"target-word\">사상자</strong>가 10명 나왔다."
+      }
+    ]
+  }
+]

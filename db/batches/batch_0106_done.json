@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2191,
+    "origin": "convincing",
+    "examples": [
+      {
+        "exam_en": "The lawyer presented a <strong class=\"target-word\">convincing</strong> argument in court.",
+        "exam_ko": "변호사는 법정에서 <strong class=\"target-word\">설득력 있는</strong> 주장을 제시했다."
+      },
+      {
+        "exam_en": "His explanation sounds <strong class=\"target-word\">convincing</strong>.",
+        "exam_ko": "그의 설명은 <strong class=\"target-word\">그럴듯하게</strong> 들린다."
+      }
+    ]
+  },
+  {
+    "id": 2193,
+    "origin": "decisive",
+    "examples": [
+      {
+        "exam_en": "The general won a <strong class=\"target-word\">decisive</strong> battle.",
+        "exam_ko": "장군은 <strong class=\"target-word\">결정적인</strong> 전투에서 승리했다."
+      },
+      {
+        "exam_en": "Price was the <strong class=\"target-word\">decisive</strong> factor in their choice.",
+        "exam_ko": "가격이 그들의 선택에서 <strong class=\"target-word\">결정적인</strong> 요인이었다."
+      }
+    ]
+  },
+  {
+    "id": 2194,
+    "origin": "competent",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">competent</strong> engineer for the job.",
+        "exam_ko": "그녀는 그 일에 <strong class=\"target-word\">적합한</strong> 엔지니어다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">competent</strong> to manage the store.",
+        "exam_ko": "그에게는 가게를 관리할 <strong class=\"target-word\">능력이 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2197,
+    "origin": "relieved",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">relieved</strong> after hearing the good news.",
+        "exam_ko": "그녀는 좋은 소식을 듣고 <strong class=\"target-word\">안도했다</strong>."
+      },
+      {
+        "exam_en": "He looked <strong class=\"target-word\">relieved</strong> after the exam.",
+        "exam_ko": "그는 시험 후 <strong class=\"target-word\">안도하는</strong> 표정을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 2198,
+    "origin": "crucial",
+    "examples": [
+      {
+        "exam_en": "This is a <strong class=\"target-word\">crucial</strong> issue for world peace.",
+        "exam_ko": "이것은 세계 평화를 위한 <strong class=\"target-word\">결정적인</strong> 문제다."
+      },
+      {
+        "exam_en": "The team made a <strong class=\"target-word\">crucial</strong> decision yesterday.",
+        "exam_ko": "팀은 어제 <strong class=\"target-word\">중대한</strong> 결정을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 2199,
+    "origin": "inner",
+    "examples": [
+      {
+        "exam_en": "He kept his phone in his <strong class=\"target-word\">inner</strong> pocket.",
+        "exam_ko": "그는 휴대폰을 <strong class=\"target-word\">안</strong>주머니에 넣었다."
+      },
+      {
+        "exam_en": "She shared her <strong class=\"target-word\">inner</strong> thoughts with her friend.",
+        "exam_ko": "그녀는 친구에게 자신의 <strong class=\"target-word\">내밀한</strong> 생각을 털어놓았다."
+      }
+    ]
+  },
+  {
+    "id": 2200,
+    "origin": "criminal",
+    "examples": [
+      {
+        "exam_en": "The detective investigated a <strong class=\"target-word\">criminal</strong> case.",
+        "exam_ko": "형사는 <strong class=\"target-word\">형사</strong> 사건을 수사했다."
+      },
+      {
+        "exam_en": "The case was heard in <strong class=\"target-word\">criminal</strong> court.",
+        "exam_ko": "사건은 <strong class=\"target-word\">형사</strong> 법원에서 심리됐다."
+      }
+    ]
+  },
+  {
+    "id": 2201,
+    "origin": "contemporary",
+    "examples": [
+      {
+        "exam_en": "Shakespeare was <strong class=\"target-word\">contemporary</strong> with Queen Elizabeth.",
+        "exam_ko": "셰익스피어는 엘리자베스 여왕과 <strong class=\"target-word\">동시대</strong> 사람이었다."
+      },
+      {
+        "exam_en": "She enjoys reading <strong class=\"target-word\">contemporary</strong> novels.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">현대</strong> 소설 읽기를 즐긴다."
+      }
+    ]
+  },
+  {
+    "id": 2202,
+    "origin": "sick",
+    "examples": [
+      {
+        "exam_en": "The doctor treated a <strong class=\"target-word\">sick</strong> child.",
+        "exam_ko": "의사는 <strong class=\"target-word\">아픈</strong> 아이를 치료했다."
+      },
+      {
+        "exam_en": "He stayed home because he felt <strong class=\"target-word\">sick</strong>.",
+        "exam_ko": "그는 몸이 <strong class=\"target-word\">아파서</strong> 집에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2203,
+    "origin": "near",
+    "examples": [
+      {
+        "exam_en": "People came from far and <strong class=\"target-word\">near</strong> to see him.",
+        "exam_ko": "사람들이 <strong class=\"target-word\">원근</strong> 각지에서 그를 보러 왔다."
+      },
+      {
+        "exam_en": "She stood <strong class=\"target-word\">near</strong> the entrance.",
+        "exam_ko": "그녀는 입구 <strong class=\"target-word\">가까이에</strong> 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2204,
+    "origin": "roman",
+    "examples": [
+      {
+        "exam_en": "He admired the <strong class=\"target-word\">Roman</strong> fortitude of ancient soldiers.",
+        "exam_ko": "그는 고대 병사들의 <strong class=\"target-word\">로마인</strong>다운 불굴의 정신을 존경했다."
+      },
+      {
+        "exam_en": "The museum displays ancient <strong class=\"target-word\">Roman</strong> artifacts.",
+        "exam_ko": "박물관은 고대 <strong class=\"target-word\">로마</strong> 유물을 전시하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2205,
+    "origin": "massive",
+    "examples": [
+      {
+        "exam_en": "The library holds a <strong class=\"target-word\">massive</strong> collection of books.",
+        "exam_ko": "도서관에는 <strong class=\"target-word\">방대한</strong> 장서가 있다."
+      },
+      {
+        "exam_en": "The earthquake caused <strong class=\"target-word\">massive</strong> damage to the city.",
+        "exam_ko": "지진은 도시에 <strong class=\"target-word\">엄청난</strong> 피해를 입혔다."
+      }
+    ]
+  },
+  {
+    "id": 2206,
+    "origin": "unique",
+    "examples": [
+      {
+        "exam_en": "This painting has a <strong class=\"target-word\">unique</strong> style.",
+        "exam_ko": "이 그림은 <strong class=\"target-word\">독특한</strong> 스타일을 가지고 있다."
+      },
+      {
+        "exam_en": "Each person has a <strong class=\"target-word\">unique</strong> personality.",
+        "exam_ko": "모든 사람에게는 저마다의 <strong class=\"target-word\">독특한</strong> 개성이 있다."
+      }
+    ]
+  },
+  {
+    "id": 2207,
+    "origin": "secondary",
+    "examples": [
+      {
+        "exam_en": "They took a <strong class=\"target-word\">secondary</strong> road to avoid traffic.",
+        "exam_ko": "그들은 교통 체증을 피하려고 <strong class=\"target-word\">2급</strong> 도로를 택했다."
+      },
+      {
+        "exam_en": "Cost is a <strong class=\"target-word\">secondary</strong> concern for them.",
+        "exam_ko": "비용은 그들에게 <strong class=\"target-word\">부차적인</strong> 문제다."
+      }
+    ]
+  },
+  {
+    "id": 2208,
+    "origin": "parliamentary",
+    "examples": [
+      {
+        "exam_en": "The country adopted a <strong class=\"target-word\">parliamentary</strong> democracy.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">의회제</strong> 민주주의를 채택했다."
+      },
+      {
+        "exam_en": "The bill passed through the <strong class=\"target-word\">parliamentary</strong> process.",
+        "exam_ko": "법안은 <strong class=\"target-word\">의회</strong> 절차를 통과했다."
+      }
+    ]
+  },
+  {
+    "id": 2210,
+    "origin": "unknown",
+    "examples": [
+      {
+        "exam_en": "The explorers traveled to an <strong class=\"target-word\">unknown</strong> land.",
+        "exam_ko": "탐험가들은 <strong class=\"target-word\">미지의</strong> 땅으로 떠났다."
+      },
+      {
+        "exam_en": "The painting was made by an <strong class=\"target-word\">unknown</strong> artist.",
+        "exam_ko": "그 그림은 <strong class=\"target-word\">무명의</strong> 화가가 그렸다."
+      }
+    ]
+  },
+  {
+    "id": 2211,
+    "origin": "subsequent",
+    "examples": [
+      {
+        "exam_en": "The ceremony and <strong class=\"target-word\">subsequent</strong> events lasted all day.",
+        "exam_ko": "식과 <strong class=\"target-word\">그 이후</strong> 행사들은 하루 종일 이어졌다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Subsequent</strong> volumes of the series were more popular.",
+        "exam_ko": "그 시리즈의 <strong class=\"target-word\">후속</strong> 편들이 더 인기를 끌었다."
+      }
+    ]
+  },
+  {
+    "id": 2212,
+    "origin": "alive",
+    "examples": [
+      {
+        "exam_en": "The miners were found <strong class=\"target-word\">alive</strong> after three days.",
+        "exam_ko": "광부들은 사흘 만에 <strong class=\"target-word\">살아서</strong> 발견됐다."
+      },
+      {
+        "exam_en": "The ranger caught the fox <strong class=\"target-word\">alive</strong>.",
+        "exam_ko": "산림 관리원이 여우를 <strong class=\"target-word\">살아있는 채로</strong> 잡았다."
+      }
+    ]
+  },
+  {
+    "id": 2213,
+    "origin": "guilty",
+    "examples": [
+      {
+        "exam_en": "The jury found him <strong class=\"target-word\">guilty</strong> of the crime.",
+        "exam_ko": "배심원단은 그를 범죄에 <strong class=\"target-word\">유죄</strong>로 판결했다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">guilty</strong> about lying to her friend.",
+        "exam_ko": "그녀는 친구에게 거짓말한 것에 <strong class=\"target-word\">죄책감을 느꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2214,
+    "origin": "enormous",
+    "examples": [
+      {
+        "exam_en": "The company earned <strong class=\"target-word\">enormous</strong> profits last year.",
+        "exam_ko": "그 회사는 지난해 <strong class=\"target-word\">막대한</strong> 이익을 올렸다."
+      },
+      {
+        "exam_en": "He made an <strong class=\"target-word\">enormous</strong> mistake at work.",
+        "exam_ko": "그는 직장에서 <strong class=\"target-word\">큰</strong> 실수를 범했다."
+      }
+    ]
+  }
+]

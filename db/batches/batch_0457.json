@@ -1,0 +1,262 @@
+[
+  {
+    "id": 13272,
+    "origin": "mutation",
+    "examples": [
+      {
+        "exam_en": "Terrorism is the latest mutation of leftist politics.",
+        "exam_ko": "테러는 극좌정치의 최근의 변형이다."
+      },
+      {
+        "exam_en": "a gene mutation",
+        "exam_ko": "유전자의 돌연변이."
+      }
+    ]
+  },
+  {
+    "id": 13273,
+    "origin": "penetrating",
+    "examples": [
+      {
+        "exam_en": "a penetrating scream",
+        "exam_ko": "날카로운 비명."
+      },
+      {
+        "exam_en": "a penetrating insight",
+        "exam_ko": "예리한 통찰력[의견]"
+      }
+    ]
+  },
+  {
+    "id": 13276,
+    "origin": "adorn",
+    "examples": [
+      {
+        "exam_en": "adorn a room with flowers",
+        "exam_ko": "방을 꽃으로 장식하다"
+      },
+      {
+        "exam_en": "adorn oneself with jewels",
+        "exam_ko": "보석으로 치장하다."
+      }
+    ]
+  },
+  {
+    "id": 13279,
+    "origin": "scouring",
+    "examples": [
+      {
+        "exam_en": "a scouring pad",
+        "exam_ko": "바닥 닦는 솔."
+      }
+    ]
+  },
+  {
+    "id": 13280,
+    "origin": "emancipate",
+    "examples": [
+      {
+        "exam_en": "emancipate a person from anxiety",
+        "exam_ko": "남을 걱정[편견, 노예 신분]에서 해방하다"
+      },
+      {
+        "exam_en": "emancipate a country from tyranny",
+        "exam_ko": "나라를 압제로부터 해방하다."
+      }
+    ]
+  },
+  {
+    "id": 13281,
+    "origin": "exempt",
+    "examples": [
+      {
+        "exam_en": "commodities exempted from customs duty",
+        "exam_ko": "면세품"
+      },
+      {
+        "exam_en": "exempt a person from taxation",
+        "exam_ko": "세금[기말 고사]을 면제하다."
+      }
+    ]
+  },
+  {
+    "id": 13282,
+    "origin": "abridge",
+    "examples": [
+      {
+        "exam_en": "abridge a novel",
+        "exam_ko": "소설을 요약하다"
+      },
+      {
+        "exam_en": "The book is abridged from the original work.",
+        "exam_ko": "그 책은 원본을 요약한 것이다."
+      },
+      {
+        "exam_en": "The editor decided to abridge the novel for a shorter version.",
+        "exam_ko": "편집자는 소설을 간추려 더 짧은 버전으로 만들기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 13283,
+    "origin": "repeal",
+    "examples": [
+      {
+        "exam_en": "repeal an amendment",
+        "exam_ko": "(법안 등의) 수정을 철회하다."
+      },
+      {
+        "exam_en": "the repeal of laws",
+        "exam_ko": "법률의 폐지."
+      }
+    ]
+  },
+  {
+    "id": 13284,
+    "origin": "languish",
+    "examples": [
+      {
+        "exam_en": "The flowers will languish in this extreme heat.",
+        "exam_ko": "이런 지독한 더위에는 꽃도 시들겠다."
+      },
+      {
+        "exam_en": "languish in prison",
+        "exam_ko": "옥중에서 비참하게 지내다."
+      },
+      {
+        "exam_en": "The flowers languished in the scorching heat without water.",
+        "exam_ko": "꽃들은 물 주지 않는 뜨거운 날씨에 시들었다."
+      }
+    ]
+  },
+  {
+    "id": 13285,
+    "origin": "seclude",
+    "examples": [
+      {
+        "exam_en": "seclude oneself from the world",
+        "exam_ko": "은둔하다."
+      },
+      {
+        "exam_en": "seclude one's children from companions",
+        "exam_ko": "아이를 친구들로부터 떼어놓다."
+      }
+    ]
+  },
+  {
+    "id": 13287,
+    "origin": "schoolboy",
+    "examples": [
+      {
+        "exam_en": "schoolboy humor",
+        "exam_ko": "실없는 유머."
+      }
+    ]
+  },
+  {
+    "id": 13288,
+    "origin": "platform",
+    "examples": [
+      {
+        "exam_en": "mount the platform",
+        "exam_ko": "연단에 오르다"
+      },
+      {
+        "exam_en": "speak from a platform",
+        "exam_ko": "연단에서 연설하다."
+      }
+    ]
+  },
+  {
+    "id": 13290,
+    "origin": "taxi",
+    "examples": [
+      {
+        "exam_en": "call a taxi",
+        "exam_ko": "(전화로) 택시를 부르다"
+      },
+      {
+        "exam_en": "get a taxi",
+        "exam_ko": "택시를 잡아 타다"
+      }
+    ]
+  },
+  {
+    "id": 13292,
+    "origin": "canoe",
+    "examples": [
+      {
+        "exam_en": "cross a river by canoe",
+        "exam_ko": "카누로 강을 건너다(※by 뒤는 무관사)."
+      }
+    ]
+  },
+  {
+    "id": 13297,
+    "origin": "pudding",
+    "examples": [
+      {
+        "exam_en": "The proof of the pudding is in the eating.",
+        "exam_ko": "푸딩의 맛은 먹어보아야 안다; 백문이 불여일견."
+      },
+      {
+        "exam_en": "Pudding rather than praise.",
+        "exam_ko": "금강산도 식후경."
+      }
+    ]
+  },
+  {
+    "id": 13298,
+    "origin": "pineapple",
+    "examples": [
+      {
+        "exam_en": "canned pineapple",
+        "exam_ko": "파인애플 통조림."
+      }
+    ]
+  },
+  {
+    "id": 13299,
+    "origin": "melon",
+    "examples": [
+      {
+        "exam_en": "cut   a melon",
+        "exam_ko": "특별 배당을 하다."
+      }
+    ]
+  },
+  {
+    "id": 13300,
+    "origin": "bacon",
+    "examples": [
+      {
+        "exam_en": "bacon and eggs",
+        "exam_ko": "베이컨에그(※bacon and eggs를 1단어로 받아들임)"
+      },
+      {
+        "exam_en": "a rasher of bacon",
+        "exam_ko": "(얇게 썬) 베이컨 한 조각"
+      }
+    ]
+  },
+  {
+    "id": 13301,
+    "origin": "typewriter",
+    "examples": [
+      {
+        "exam_en": "write a letter on a typewriter",
+        "exam_ko": "편지를 타자기로 치다."
+      }
+    ]
+  },
+  {
+    "id": 13302,
+    "origin": "napkin",
+    "examples": [
+      {
+        "exam_en": "He opened his napkin and placed it on his lap.",
+        "exam_ko": "그는 냅킨을 펼쳐서 무릎 위에 올려놓았다."
+      }
+    ]
+  }
+]

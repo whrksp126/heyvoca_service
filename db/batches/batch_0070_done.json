@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1453,
+    "origin": "enforce",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">enforce</strong> the law strictly.",
+        "exam_ko": "경찰은 법을 엄격하게 <strong class=\"target-word\">시행한다</strong>."
+      },
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">enforced</strong> classroom rules firmly.",
+        "exam_ko": "선생님은 교실 규칙을 단호하게 <strong class=\"target-word\">강제했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1454,
+    "origin": "provoke",
+    "examples": [
+      {
+        "exam_en": "Her refusal <strong class=\"target-word\">provoked</strong> his anger.",
+        "exam_ko": "그녀의 거절이 그의 분노를 <strong class=\"target-word\">불러일으켰다</strong>."
+      },
+      {
+        "exam_en": "His comment <strong class=\"target-word\">provoked</strong> a heated debate.",
+        "exam_ko": "그의 발언이 격렬한 논쟁을 <strong class=\"target-word\">유발했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1455,
+    "origin": "drift",
+    "examples": [
+      {
+        "exam_en": "The boat <strong class=\"target-word\">drifted</strong> slowly down the river.",
+        "exam_ko": "배가 강을 따라 천천히 <strong class=\"target-word\">흘러갔다</strong>."
+      },
+      {
+        "exam_en": "He let his thoughts <strong class=\"target-word\">drift</strong> freely.",
+        "exam_ko": "그는 생각이 자유롭게 <strong class=\"target-word\">흐르도록</strong> 내버려 뒀다."
+      }
+    ]
+  },
+  {
+    "id": 1456,
+    "origin": "situate",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">situated</strong> the school in the city center.",
+        "exam_ko": "그들은 도심에 학교를 <strong class=\"target-word\">세웠다</strong>."
+      },
+      {
+        "exam_en": "The judge <strong class=\"target-word\">situated</strong> the riot's cause in racial tension.",
+        "exam_ko": "판사는 폭동의 원인을 인종 갈등에 <strong class=\"target-word\">있다고 봤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1457,
+    "origin": "emphasize",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">emphasized</strong> the need for quick action.",
+        "exam_ko": "그녀는 신속한 행동의 필요성을 <strong class=\"target-word\">강조했다</strong>."
+      },
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">emphasized</strong> that the patient had only days to live.",
+        "exam_ko": "의사는 환자에게 며칠밖에 남지 않았다고 <strong class=\"target-word\">강조했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1458,
+    "origin": "research",
+    "examples": [
+      {
+        "exam_en": "Scientists are <strong class=\"target-word\">researching</strong> a cure for the disease.",
+        "exam_ko": "과학자들이 그 병의 치료법을 <strong class=\"target-word\">연구하고 있다</strong>."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">research</strong> on nuclear physics was groundbreaking.",
+        "exam_ko": "핵물리학에 관한 그녀의 <strong class=\"target-word\">연구</strong>는 획기적이었다."
+      }
+    ]
+  },
+  {
+    "id": 1459,
+    "origin": "freeze",
+    "examples": [
+      {
+        "exam_en": "Water <strong class=\"target-word\">freezes</strong> at 32 degrees Fahrenheit.",
+        "exam_ko": "물은 화씨 32도에서 <strong class=\"target-word\">언다</strong>."
+      },
+      {
+        "exam_en": "The lake <strong class=\"target-word\">froze</strong> over last night.",
+        "exam_ko": "어젯밤 호수가 꽁꽁 <strong class=\"target-word\">얼었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1460,
+    "origin": "hire",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">hired</strong> a private detective.",
+        "exam_ko": "그 회사는 사립 탐정을 <strong class=\"target-word\">고용했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">hired</strong> her for the marketing position.",
+        "exam_ko": "그들은 그녀를 마케팅 직책에 <strong class=\"target-word\">채용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1461,
+    "origin": "pop",
+    "examples": [
+      {
+        "exam_en": "The balloon <strong class=\"target-word\">popped</strong> with a loud bang.",
+        "exam_ko": "풍선이 큰 소리와 함께 <strong class=\"target-word\">펑 터졌다</strong>."
+      },
+      {
+        "exam_en": "A great idea <strong class=\"target-word\">popped</strong> into her mind.",
+        "exam_ko": "좋은 생각이 그녀의 머릿속에 <strong class=\"target-word\">떠올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1462,
+    "origin": "object",
+    "examples": [
+      {
+        "exam_en": "She found a tiny <strong class=\"target-word\">object</strong> on the floor.",
+        "exam_ko": "그녀는 바닥에서 작은 <strong class=\"target-word\">물체</strong>를 발견했다."
+      },
+      {
+        "exam_en": "A luminous <strong class=\"target-word\">object</strong> appeared in the night sky.",
+        "exam_ko": "발광하는 <strong class=\"target-word\">물체</strong>가 밤하늘에 나타났다."
+      }
+    ]
+  },
+  {
+    "id": 1463,
+    "origin": "recruit",
+    "examples": [
+      {
+        "exam_en": "He is a new <strong class=\"target-word\">recruit</strong> at the company.",
+        "exam_ko": "그는 그 회사의 신입 <strong class=\"target-word\">신참자</strong>이다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">recruited</strong> new members for the club.",
+        "exam_ko": "그들은 클럽에 신입 회원을 <strong class=\"target-word\">모집했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1464,
+    "origin": "beg",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">begged</strong> for forgiveness after the mistake.",
+        "exam_ko": "그는 실수 후 용서를 <strong class=\"target-word\">빌었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">begged</strong> for money from passersby.",
+        "exam_ko": "그녀는 행인들에게 돈을 <strong class=\"target-word\">구걸했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1465,
+    "origin": "float",
+    "examples": [
+      {
+        "exam_en": "A small boat was <strong class=\"target-word\">floating</strong> on the river.",
+        "exam_ko": "작은 배 한 척이 강 위에 <strong class=\"target-word\">떠 있었다</strong>."
+      },
+      {
+        "exam_en": "The balloon <strong class=\"target-word\">floated</strong> up into the sky.",
+        "exam_ko": "풍선이 하늘로 <strong class=\"target-word\">떠올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1466,
+    "origin": "echo",
+    "examples": [
+      {
+        "exam_en": "The cave produced a clear <strong class=\"target-word\">echo</strong>.",
+        "exam_ko": "동굴에서 선명한 <strong class=\"target-word\">메아리</strong>가 울렸다."
+      },
+      {
+        "exam_en": "Her voice <strong class=\"target-word\">echoed</strong> through the empty hall.",
+        "exam_ko": "그녀의 목소리가 빈 복도에 <strong class=\"target-word\">울려 퍼졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1467,
+    "origin": "consume",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">consumed</strong> hours reading the novel.",
+        "exam_ko": "그는 소설을 읽는 데 몇 시간을 <strong class=\"target-word\">소비했다</strong>."
+      },
+      {
+        "exam_en": "The fire <strong class=\"target-word\">consumed</strong> the entire building.",
+        "exam_ko": "불길이 건물 전체를 <strong class=\"target-word\">집어삼켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1468,
+    "origin": "equip",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">equipped</strong> the car for long-distance racing.",
+        "exam_ko": "그들은 장거리 레이스를 위해 차를 <strong class=\"target-word\">정비했다</strong>."
+      },
+      {
+        "exam_en": "The building was <strong class=\"target-word\">equipped</strong> as a hospital.",
+        "exam_ko": "그 건물은 병원으로 <strong class=\"target-word\">설비가 갖춰졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1469,
+    "origin": "reserve",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">reserved</strong> money for future needs.",
+        "exam_ko": "그녀는 미래를 위해 돈을 <strong class=\"target-word\">남겨 뒀다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">reserved</strong> time each day for relaxation.",
+        "exam_ko": "그는 매일 휴식을 위한 시간을 <strong class=\"target-word\">비워 뒀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1470,
+    "origin": "execute",
+    "examples": [
+      {
+        "exam_en": "The team <strong class=\"target-word\">executed</strong> the plan flawlessly.",
+        "exam_ko": "팀은 계획을 완벽하게 <strong class=\"target-word\">수행했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">executed</strong> her father's final wishes.",
+        "exam_ko": "그녀는 아버지의 유언을 <strong class=\"target-word\">이행했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1471,
+    "origin": "convey",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">conveyed</strong> the goods by express delivery.",
+        "exam_ko": "그들은 화물을 급행편으로 <strong class=\"target-word\">운반했다</strong>."
+      },
+      {
+        "exam_en": "The pipe <strong class=\"target-word\">conveys</strong> hot water from the boiler.",
+        "exam_ko": "그 파이프는 보일러에서 온수를 <strong class=\"target-word\">운반한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1472,
+    "origin": "park",
+    "examples": [
+      {
+        "exam_en": "They visited a beautiful national <strong class=\"target-word\">park</strong>.",
+        "exam_ko": "그들은 아름다운 국립 <strong class=\"target-word\">공원</strong>을 방문했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">parked</strong> her car near the entrance.",
+        "exam_ko": "그녀는 입구 근처에 차를 <strong class=\"target-word\">주차했다</strong>."
+      }
+    ]
+  }
+]

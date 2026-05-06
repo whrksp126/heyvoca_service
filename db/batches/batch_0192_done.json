@@ -1,0 +1,298 @@
+[
+  {
+    "id": 4342,
+    "origin": "speculative",
+    "examples": [
+      {
+        "exam_en": "His theory remains purely <strong class=\"target-word\">speculative</strong> without evidence.",
+        "exam_ko": "그의 이론은 증거 없이 순전히 <strong class=\"target-word\">추측적</strong>으로 남아 있다."
+      },
+      {
+        "exam_en": "She avoided <strong class=\"target-word\">speculative</strong> investments during the crisis.",
+        "exam_ko": "그녀는 위기 중에 <strong class=\"target-word\">투기적인</strong> 투자를 피했다."
+      }
+    ]
+  },
+  {
+    "id": 4343,
+    "origin": "spontaneous",
+    "examples": [
+      {
+        "exam_en": "The geyser had a <strong class=\"target-word\">spontaneous</strong> eruption at dawn.",
+        "exam_ko": "간헐천이 새벽에 <strong class=\"target-word\">자연적인</strong> 분출을 일으켰다."
+      },
+      {
+        "exam_en": "The audience broke into <strong class=\"target-word\">spontaneous</strong> applause.",
+        "exam_ko": "관객들이 <strong class=\"target-word\">자연스럽게 터져나오는</strong> 박수를 보냈다."
+      },
+      {
+        "exam_en": "She felt mild but <strong class=\"target-word\">spontaneous</strong> pain in her side.",
+        "exam_ko": "그녀는 옆구리에 경미하지만 <strong class=\"target-word\">지속적인</strong> 통증을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 4344,
+    "origin": "stringent",
+    "examples": [
+      {
+        "exam_en": "The lab follows <strong class=\"target-word\">stringent</strong> safety standards.",
+        "exam_ko": "그 실험실은 <strong class=\"target-word\">엄격한</strong> 안전 기준을 따른다."
+      },
+      {
+        "exam_en": "They applied the most <strong class=\"target-word\">stringent</strong> requirement available.",
+        "exam_ko": "그들은 가장 <strong class=\"target-word\">엄격한</strong> 요구사항을 적용했다."
+      }
+    ]
+  },
+  {
+    "id": 4345,
+    "origin": "swift",
+    "examples": [
+      {
+        "exam_en": "The cheetah is known for its <strong class=\"target-word\">swift</strong> speed.",
+        "exam_ko": "치타는 <strong class=\"target-word\">빠른</strong> 속도로 유명하다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">swift</strong> boat crossed the river in minutes.",
+        "exam_ko": "<strong class=\"target-word\">쾌속</strong> 보트가 몇 분 만에 강을 건넜다."
+      }
+    ]
+  },
+  {
+    "id": 4346,
+    "origin": "taint",
+    "examples": [
+      {
+        "exam_en": "He suffered a lingering <strong class=\"target-word\">taint</strong> of malaria for years.",
+        "exam_ko": "그는 수년간 말라리아의 오래 남는 <strong class=\"target-word\">후유증</strong>에 시달렸다."
+      },
+      {
+        "exam_en": "The scandal left a moral <strong class=\"target-word\">taint</strong> on his reputation.",
+        "exam_ko": "그 스캔들은 그의 명성에 도덕적인 <strong class=\"target-word\">오점</strong>을 남겼다."
+      }
+    ]
+  },
+  {
+    "id": 4348,
+    "origin": "tangible",
+    "examples": [
+      {
+        "exam_en": "The company reported <strong class=\"target-word\">tangible</strong> assets worth millions.",
+        "exam_ko": "그 회사는 수백만 달러 상당의 <strong class=\"target-word\">유형</strong> 자산을 보고했다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">tangible</strong> reason for her decision.",
+        "exam_ko": "그녀는 자신의 결정에 대해 <strong class=\"target-word\">명백한</strong> 이유를 제시했다."
+      },
+      {
+        "exam_en": "The results provided <strong class=\"target-word\">tangible</strong> evidence of progress.",
+        "exam_ko": "결과들은 발전의 <strong class=\"target-word\">실질적인</strong> 증거를 제공했다."
+      }
+    ]
+  },
+  {
+    "id": 4349,
+    "origin": "typically",
+    "examples": [
+      {
+        "exam_en": "The building is <strong class=\"target-word\">typically</strong> eighteenth-century in style.",
+        "exam_ko": "그 건물은 양식이 <strong class=\"target-word\">전형적인</strong> 18세기 스타일이다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">typically</strong> in a bad mood on Mondays.",
+        "exam_ko": "그는 월요일에 <strong class=\"target-word\">여느 때와 같이</strong> 기분이 좋지 않다."
+      }
+    ]
+  },
+  {
+    "id": 4350,
+    "origin": "unanimous",
+    "examples": [
+      {
+        "exam_en": "We were <strong class=\"target-word\">unanimous</strong> in supporting the reform.",
+        "exam_ko": "우리는 개혁 지지에 <strong class=\"target-word\">만장일치로</strong> 찬성했다."
+      },
+      {
+        "exam_en": "The board reached a <strong class=\"target-word\">unanimous</strong> decision to proceed.",
+        "exam_ko": "이사회는 진행하기로 <strong class=\"target-word\">만장일치</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "They were <strong class=\"target-word\">unanimous</strong> in rejecting the proposal.",
+        "exam_ko": "그들은 그 제안을 거부하는 데 <strong class=\"target-word\">이견이 없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4351,
+    "origin": "underdeveloped",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Underdeveloped</strong> countries struggle with poverty.",
+        "exam_ko": "<strong class=\"target-word\">저개발</strong> 국가들은 빈곤으로 어려움을 겪는다."
+      },
+      {
+        "exam_en": "The region remains economically <strong class=\"target-word\">underdeveloped</strong>.",
+        "exam_ko": "그 지역은 경제적으로 여전히 <strong class=\"target-word\">발전이 뒤처져</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 4352,
+    "origin": "unending",
+    "examples": [
+      {
+        "exam_en": "The film tells an <strong class=\"target-word\">unending</strong> story of love.",
+        "exam_ko": "그 영화는 사랑의 <strong class=\"target-word\">끝없는</strong> 이야기를 담는다."
+      },
+      {
+        "exam_en": "They faced an <strong class=\"target-word\">unending</strong> struggle to survive.",
+        "exam_ko": "그들은 살아남기 위한 <strong class=\"target-word\">끊임없는</strong> 투쟁에 직면했다."
+      }
+    ]
+  },
+  {
+    "id": 4353,
+    "origin": "villain",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">villain</strong> was finally caught by the detective.",
+        "exam_ko": "<strong class=\"target-word\">악당</strong>은 마침내 형사에게 잡혔다."
+      },
+      {
+        "exam_en": "He played the <strong class=\"target-word\">villain</strong> in the movie.",
+        "exam_ko": "그는 영화에서 <strong class=\"target-word\">악역</strong>을 연기했다."
+      }
+    ]
+  },
+  {
+    "id": 4354,
+    "origin": "volatile",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">volatile</strong> suspicions kept resurfacing.",
+        "exam_ko": "그의 <strong class=\"target-word\">사라졌다 되살아나는</strong> 의심이 계속 떠올랐다."
+      },
+      {
+        "exam_en": "The country faced a highly <strong class=\"target-word\">volatile</strong> economic situation.",
+        "exam_ko": "그 나라는 매우 <strong class=\"target-word\">불안정한</strong> 경제 상황에 직면했다."
+      }
+    ]
+  },
+  {
+    "id": 4365,
+    "origin": "respectful",
+    "examples": [
+      {
+        "exam_en": "Students are expected to show <strong class=\"target-word\">respectful</strong> behavior.",
+        "exam_ko": "학생들은 <strong class=\"target-word\">공손한</strong> 태도를 보이길 기대받는다."
+      },
+      {
+        "exam_en": "She was always <strong class=\"target-word\">respectful</strong> toward her superiors.",
+        "exam_ko": "그녀는 항상 윗사람에게 <strong class=\"target-word\">경의를 표했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4366,
+    "origin": "respectfully",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">respectfully</strong> declined the invitation.",
+        "exam_ko": "그는 초대를 <strong class=\"target-word\">정중히</strong> 거절했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">respectfully</strong> disagreed with the manager.",
+        "exam_ko": "그녀는 매니저에게 <strong class=\"target-word\">공손하게</strong> 반대 의견을 표했다."
+      }
+    ]
+  },
+  {
+    "id": 4367,
+    "origin": "roam",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">roamed</strong> around the town all afternoon.",
+        "exam_ko": "그들은 오후 내내 시내를 <strong class=\"target-word\">거닐었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">roamed</strong> about downtown looking for a cafe.",
+        "exam_ko": "그는 카페를 찾으며 번화가를 <strong class=\"target-word\">배회했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4368,
+    "origin": "row",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">rowed</strong> against the current to reach the shore.",
+        "exam_ko": "그들은 해안에 닿으려고 흐름을 거슬러 <strong class=\"target-word\">노를 저었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rowed</strong> up the river in the early morning.",
+        "exam_ko": "그녀는 이른 아침에 강을 따라 위로 <strong class=\"target-word\">노를 저어 갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4369,
+    "origin": "runny",
+    "examples": [
+      {
+        "exam_en": "The butter was too warm and turned <strong class=\"target-word\">runny</strong>.",
+        "exam_ko": "버터가 너무 따뜻해져서 <strong class=\"target-word\">물컹해졌다</strong>."
+      },
+      {
+        "exam_en": "The child has a <strong class=\"target-word\">runny</strong> nose from the cold.",
+        "exam_ko": "그 아이는 감기로 <strong class=\"target-word\">콧물이 흐른다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4371,
+    "origin": "barter",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">bartered</strong> with the locals for food.",
+        "exam_ko": "그들은 식량을 얻으려고 현지인들과 <strong class=\"target-word\">교역했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bartered</strong> rice for salt at the market.",
+        "exam_ko": "그녀는 시장에서 쌀을 소금과 <strong class=\"target-word\">교환했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4372,
+    "origin": "rank",
+    "examples": [
+      {
+        "exam_en": "He earned the <strong class=\"target-word\">rank</strong> of captain after ten years.",
+        "exam_ko": "그는 10년 만에 대위 <strong class=\"target-word\">계급</strong>을 얻었다."
+      },
+      {
+        "exam_en": "She is a writer of the first <strong class=\"target-word\">rank</strong>.",
+        "exam_ko": "그녀는 일류 <strong class=\"target-word\">수준</strong>의 작가이다."
+      }
+    ]
+  },
+  {
+    "id": 4373,
+    "origin": "recipe",
+    "examples": [
+      {
+        "exam_en": "She found the <strong class=\"target-word\">recipe</strong> in an old cookbook.",
+        "exam_ko": "그녀는 오래된 요리책에서 <strong class=\"target-word\">요리법</strong>을 찾았다."
+      },
+      {
+        "exam_en": "He shared a <strong class=\"target-word\">recipe</strong> for making homemade bread.",
+        "exam_ko": "그는 수제 빵을 만드는 <strong class=\"target-word\">레시피</strong>를 공유했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">recipes</strong> she recommended were all excellent.",
+        "exam_ko": "그녀가 추천한 <strong class=\"target-word\">요리법</strong>들은 모두 훌륭했다."
+      }
+    ]
+  }
+]

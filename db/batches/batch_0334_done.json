@@ -1,0 +1,262 @@
+[
+  {
+    "id": 8637,
+    "origin": "caliber",
+    "examples": [
+      {
+        "exam_en": "She is a scientist of high <strong class=\"target-word\">caliber</strong>.",
+        "exam_ko": "그녀는 높은 <strong class=\"target-word\">수준</strong>의 과학자다."
+      },
+      {
+        "exam_en": "He is a leader of presidential <strong class=\"target-word\">caliber</strong>.",
+        "exam_ko": "그는 대통령감의 <strong class=\"target-word\">역량</strong>을 가진 지도자다."
+      },
+      {
+        "exam_en": "The musician showed the high <strong class=\"target-word\">caliber</strong> of his skills.",
+        "exam_ko": "그 음악가는 높은 <strong class=\"target-word\">수준</strong>의 실력을 보여주었다."
+      }
+    ]
+  },
+  {
+    "id": 8643,
+    "origin": "primarily",
+    "examples": [
+      {
+        "exam_en": "This course is aimed <strong class=\"target-word\">primarily</strong> at freshmen.",
+        "exam_ko": "이 강좌는 <strong class=\"target-word\">주로</strong> 신입생을 대상으로 한다."
+      },
+      {
+        "exam_en": "This shop is <strong class=\"target-word\">primarily</strong> a furniture store.",
+        "exam_ko": "이곳은 <strong class=\"target-word\">원래</strong> 가구점이다."
+      }
+    ]
+  },
+  {
+    "id": 8646,
+    "origin": "sacrificial",
+    "examples": [
+      {
+        "exam_en": "They offered a <strong class=\"target-word\">sacrificial</strong> lamb at the ceremony.",
+        "exam_ko": "그들은 의식에서 <strong class=\"target-word\">제물로 바칠</strong> 새끼양을 드렸다."
+      },
+      {
+        "exam_en": "The store sold goods at <strong class=\"target-word\">sacrificial</strong> prices.",
+        "exam_ko": "가게는 상품을 <strong class=\"target-word\">투매</strong> 가격에 팔았다."
+      }
+    ]
+  },
+  {
+    "id": 8648,
+    "origin": "disrepute",
+    "examples": [
+      {
+        "exam_en": "The politician has fallen into <strong class=\"target-word\">disrepute</strong>.",
+        "exam_ko": "그 정치인은 <strong class=\"target-word\">불명예</strong>에 빠졌다."
+      },
+      {
+        "exam_en": "His actions brought the company into <strong class=\"target-word\">disrepute</strong>.",
+        "exam_ko": "그의 행동이 회사를 <strong class=\"target-word\">평판이 나쁜</strong> 상태로 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 8649,
+    "origin": "scion",
+    "examples": [
+      {
+        "exam_en": "He is the <strong class=\"target-word\">scion</strong> of a noble family.",
+        "exam_ko": "그는 명문가의 <strong class=\"target-word\">자손</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8650,
+    "origin": "narcotic",
+    "examples": [
+      {
+        "exam_en": "He was arrested for possessing <strong class=\"target-word\">narcotics</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">마약</strong>을 소지한 혐의로 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 8655,
+    "origin": "downward",
+    "examples": [
+      {
+        "exam_en": "She lay face <strong class=\"target-word\">downward</strong> on the mat.",
+        "exam_ko": "그녀는 매트 위에 <strong class=\"target-word\">아래를 향해</strong> 엎드렸다."
+      },
+      {
+        "exam_en": "He looked <strong class=\"target-word\">downward</strong> at the valley below.",
+        "exam_ko": "그는 아래쪽 계곡을 <strong class=\"target-word\">내려다보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8656,
+    "origin": "dope",
+    "examples": [
+      {
+        "exam_en": "The athlete was tested for <strong class=\"target-word\">dope</strong> after the race.",
+        "exam_ko": "선수는 경기 후 <strong class=\"target-word\">약물</strong> 검사를 받았다."
+      },
+      {
+        "exam_en": "He gave me the straight <strong class=\"target-word\">dope</strong> on the situation.",
+        "exam_ko": "그는 상황에 대한 정확한 <strong class=\"target-word\">정보</strong>를 알려주었다."
+      }
+    ]
+  },
+  {
+    "id": 8658,
+    "origin": "immunity",
+    "examples": [
+      {
+        "exam_en": "The vaccine gives children <strong class=\"target-word\">immunity</strong> to measles.",
+        "exam_ko": "그 백신은 어린이에게 홍역에 대한 <strong class=\"target-word\">면역</strong>을 준다."
+      },
+      {
+        "exam_en": "The injection builds up <strong class=\"target-word\">immunity</strong> to diphtheria.",
+        "exam_ko": "주사를 맞으면 디프테리아에 대한 <strong class=\"target-word\">면역</strong>이 생긴다."
+      }
+    ]
+  },
+  {
+    "id": 8659,
+    "origin": "mumps",
+    "examples": [
+      {
+        "exam_en": "Have you had <strong class=\"target-word\">mumps</strong>?",
+        "exam_ko": "<strong class=\"target-word\">유행성 이하선염</strong>을 앓은 적이 있나요?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Mumps</strong> is highly contagious among children.",
+        "exam_ko": "<strong class=\"target-word\">유행성 이하선염</strong>은 어린이들 사이에서 매우 전염성이 강하다."
+      }
+    ]
+  },
+  {
+    "id": 8661,
+    "origin": "lethargic",
+    "examples": [
+      {
+        "exam_en": "I feel so <strong class=\"target-word\">lethargic</strong> today.",
+        "exam_ko": "오늘 너무 <strong class=\"target-word\">무기력하다</strong>."
+      },
+      {
+        "exam_en": "He felt <strong class=\"target-word\">lethargic</strong> after working all day.",
+        "exam_ko": "그는 하루 종일 일한 후 <strong class=\"target-word\">무기력함</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 8662,
+    "origin": "irritable",
+    "examples": [
+      {
+        "exam_en": "She has an <strong class=\"target-word\">irritable</strong> personality.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">신경질적인</strong> 성격을 가지고 있다."
+      },
+      {
+        "exam_en": "He became <strong class=\"target-word\">irritable</strong> after missing sleep.",
+        "exam_ko": "그는 잠을 못 자고 나서 <strong class=\"target-word\">짜증을 잘 내게</strong> 되었다."
+      }
+    ]
+  },
+  {
+    "id": 8663,
+    "origin": "bloodshot",
+    "examples": [
+      {
+        "exam_en": "His eyes were <strong class=\"target-word\">bloodshot</strong> from too much drinking.",
+        "exam_ko": "그는 술을 너무 많이 마셔서 눈이 <strong class=\"target-word\">충혈</strong>되었다."
+      }
+    ]
+  },
+  {
+    "id": 8664,
+    "origin": "plummet",
+    "examples": [
+      {
+        "exam_en": "The airplane <strong class=\"target-word\">plummeted</strong> into the sea.",
+        "exam_ko": "비행기가 바다로 <strong class=\"target-word\">곤두박질쳤다</strong>."
+      },
+      {
+        "exam_en": "Share prices have <strong class=\"target-word\">plummeted</strong> this week.",
+        "exam_ko": "이번 주 주가가 <strong class=\"target-word\">폭락했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8667,
+    "origin": "goof",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">goofed</strong> on the final exam.",
+        "exam_ko": "그는 기말시험을 <strong class=\"target-word\">망쳤다</strong>."
+      },
+      {
+        "exam_en": "She tends to <strong class=\"target-word\">goof off</strong> when no one is watching.",
+        "exam_ko": "그녀는 아무도 안 볼 때 <strong class=\"target-word\">게으름을 피우는</strong> 경향이 있다."
+      }
+    ]
+  },
+  {
+    "id": 8669,
+    "origin": "prologue",
+    "examples": [
+      {
+        "exam_en": "The speech was a <strong class=\"target-word\">prologue</strong> to the full-scale attack.",
+        "exam_ko": "그 연설은 총공격의 <strong class=\"target-word\">서막</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 8670,
+    "origin": "reconsider",
+    "examples": [
+      {
+        "exam_en": "The plan will have to be <strong class=\"target-word\">reconsidered</strong>.",
+        "exam_ko": "그 계획은 <strong class=\"target-word\">재고</strong>되어야 할 것이다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">reconsider</strong> your decision before it's too late.",
+        "exam_ko": "너무 늦기 전에 결정을 <strong class=\"target-word\">다시 생각해</strong> 보세요."
+      }
+    ]
+  },
+  {
+    "id": 8672,
+    "origin": "sprawled",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">sprawled</strong> out on the sofa.",
+        "exam_ko": "그는 소파 위에 <strong class=\"target-word\">대자로 누워</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8674,
+    "origin": "grounded",
+    "examples": [
+      {
+        "exam_en": "The investigation was based on <strong class=\"target-word\">grounded</strong> suspicion.",
+        "exam_ko": "수사는 <strong class=\"target-word\">근거 있는</strong> 혐의를 바탕으로 했다."
+      }
+    ]
+  },
+  {
+    "id": 8676,
+    "origin": "scope",
+    "examples": [
+      {
+        "exam_en": "The report covers a broad <strong class=\"target-word\">scope</strong> of topics.",
+        "exam_ko": "그 보고서는 넓은 <strong class=\"target-word\">범위</strong>의 주제를 다룬다."
+      },
+      {
+        "exam_en": "She has a wide <strong class=\"target-word\">scope</strong> of knowledge.",
+        "exam_ko": "그녀는 넓은 <strong class=\"target-word\">시야</strong>의 지식을 갖고 있다."
+      }
+    ]
+  }
+]

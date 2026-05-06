@@ -1,0 +1,222 @@
+[
+  {
+    "id": 38351,
+    "origin": "adjudication",
+    "examples": [
+      {
+        "exam_en": "former adjudication",
+        "exam_ko": "[법률] 기판(旣判) 사항."
+      }
+    ]
+  },
+  {
+    "id": 38366,
+    "origin": "grist",
+    "examples": [
+      {
+        "exam_en": "All's grist that comes to his mill.",
+        "exam_ko": "그의 제분소에 오는 것은 모두 돈벌이의 대상이다; 어떠한 경우에도 자기 잇속은 챙긴다."
+      }
+    ]
+  },
+  {
+    "id": 38394,
+    "origin": "unbeknown",
+    "examples": [
+      {
+        "exam_en": "the land of the unbeknown",
+        "exam_ko": "미지의 나라"
+      },
+      {
+        "exam_en": "Unbeknown to me she had left town the day before.",
+        "exam_ko": "그 전날 그녀는 내가 미처 모르는 사이에 시내에서 떠나고 말았다."
+      }
+    ]
+  },
+  {
+    "id": 38395,
+    "origin": "wroth",
+    "examples": [
+      {
+        "exam_en": "Cain was very wroth, and his countenance fell.",
+        "exam_ko": "카인은 격분해서 안색이 변했다(Genesis 4:5)."
+      },
+      {
+        "exam_en": "The sea is wroth.",
+        "exam_ko": "바다는 파도가 심하다."
+      }
+    ]
+  },
+  {
+    "id": 38412,
+    "origin": "tankard",
+    "examples": [
+      {
+        "exam_en": "a tankard of ale",
+        "exam_ko": "큰 컵 한 잔의 맥주."
+      }
+    ]
+  },
+  {
+    "id": 38424,
+    "origin": "midfielder",
+    "examples": [
+      {
+        "exam_en": "the former French international midfielder Jean Tigana",
+        "exam_ko": "전 프랑스의 세계적인 미드필드였던 장 티가나"
+      }
+    ]
+  },
+  {
+    "id": 38477,
+    "origin": "abloom",
+    "examples": [
+      {
+        "exam_en": "The garden was abloom with tulips.",
+        "exam_ko": "뜰에는 튤립이 만발해 있었다."
+      },
+      {
+        "exam_en": "The garden was abloom with colorful flowers, creating a vibrant and captivating display.",
+        "exam_ko": "정원은 다채로운 꽃으로 만발하여 활기차고 매혹적인 풍경을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 38479,
+    "origin": "abidance",
+    "examples": [
+      {
+        "exam_en": "abidance by rules",
+        "exam_ko": "규칙[조항]의 준수."
+      }
+    ]
+  },
+  {
+    "id": 38482,
+    "origin": "congregational",
+    "examples": [
+      {
+        "exam_en": "congregational singing",
+        "exam_ko": "합창."
+      },
+      {
+        "exam_en": "the Congregational Church",
+        "exam_ko": "조합 교회."
+      }
+    ]
+  },
+  {
+    "id": 38518,
+    "origin": "indefeasible",
+    "examples": [
+      {
+        "exam_en": "indefeasible rights to freedom",
+        "exam_ko": "빼앗을 수 없는 자유의 권리."
+      }
+    ]
+  },
+  {
+    "id": 38528,
+    "origin": "regimental",
+    "examples": [
+      {
+        "exam_en": "regimental colors",
+        "exam_ko": "연대기."
+      }
+    ]
+  },
+  {
+    "id": 38533,
+    "origin": "deaden",
+    "examples": [
+      {
+        "exam_en": "a medicine to deaden the pain",
+        "exam_ko": "통증을 가라앉히는 약."
+      },
+      {
+        "exam_en": "deaden beer",
+        "exam_ko": "맥주의 김을 빼다."
+      }
+    ]
+  },
+  {
+    "id": 38534,
+    "origin": "potshot",
+    "examples": [
+      {
+        "exam_en": "take a potshot at",
+        "exam_ko": "…을 무턱대고 중상하다."
+      }
+    ]
+  },
+  {
+    "id": 38591,
+    "origin": "entranced",
+    "examples": [
+      {
+        "exam_en": "be entranced with the music",
+        "exam_ko": "음악에 황홀해지다."
+      }
+    ]
+  },
+  {
+    "id": 38606,
+    "origin": "ulcerous",
+    "examples": [
+      {
+        "exam_en": "ulcerous lesions",
+        "exam_ko": "궤양성 병변."
+      }
+    ]
+  },
+  {
+    "id": 38618,
+    "origin": "rollicking",
+    "examples": [
+      {
+        "exam_en": "give a person a rollicking",
+        "exam_ko": "남을 꾸짖다."
+      }
+    ]
+  },
+  {
+    "id": 38636,
+    "origin": "nonage",
+    "examples": [
+      {
+        "exam_en": "be in one's nonage",
+        "exam_ko": "미성년이다."
+      }
+    ]
+  },
+  {
+    "id": 38638,
+    "origin": "myrmidon",
+    "examples": [
+      {
+        "exam_en": "the Myrmidons of the law",
+        "exam_ko": "법의 파수꾼(경찰관 등)."
+      }
+    ]
+  },
+  {
+    "id": 38641,
+    "origin": "avast",
+    "examples": [
+      {
+        "exam_en": "Avast heaving!",
+        "exam_ko": "감기 그만!"
+      }
+    ]
+  },
+  {
+    "id": 38662,
+    "origin": "cartwheel",
+    "examples": [
+      {
+        "exam_en": "turn cartwheels",
+        "exam_ko": "옆으로 재주넘다."
+      }
+    ]
+  }
+]

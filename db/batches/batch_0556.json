@@ -1,0 +1,250 @@
+[
+  {
+    "id": 18161,
+    "origin": "converge",
+    "examples": [
+      {
+        "exam_en": "All these roads converge on the city.",
+        "exam_ko": "이들 길은 모두 그 도시로 집중해 있다."
+      },
+      {
+        "exam_en": "Our interest converges on that point.",
+        "exam_ko": "우리의 관심은 그 점에 집중한다."
+      }
+    ]
+  },
+  {
+    "id": 18165,
+    "origin": "outcast",
+    "examples": [
+      {
+        "exam_en": "an outcast son",
+        "exam_ko": "버림받은 아들."
+      }
+    ]
+  },
+  {
+    "id": 18166,
+    "origin": "undone",
+    "examples": [
+      {
+        "exam_en": "remain undone",
+        "exam_ko": "하지 않고 방치되어 있다"
+      },
+      {
+        "exam_en": "Leave it undone.",
+        "exam_ko": "그것은 하지 말고 그대로 두어라"
+      }
+    ]
+  },
+  {
+    "id": 18169,
+    "origin": "vouch",
+    "examples": [
+      {
+        "exam_en": "This letter will vouch for my sincerity.",
+        "exam_ko": "이 편지가 나의 성실성을 뒷받침해 줄 것이다."
+      },
+      {
+        "exam_en": "vouch for the truth of a person's story",
+        "exam_ko": "남의 이야기가 진실임을 보증하다."
+      }
+    ]
+  },
+  {
+    "id": 18172,
+    "origin": "psychotic",
+    "examples": [
+      {
+        "exam_en": "psychotic behavior",
+        "exam_ko": "정신병적 행위."
+      }
+    ]
+  },
+  {
+    "id": 18174,
+    "origin": "sandstone",
+    "examples": [
+      {
+        "exam_en": "The ancient temple was built from beautiful red sandstone, showcasing intricate carvings and detailed craftsmanship.",
+        "exam_ko": "고대 사원은 아름다운 붉은 사암으로 건축되어, 정교한 조각과 섬세한 장인 정신을 고스란히 드러냈다."
+      }
+    ]
+  },
+  {
+    "id": 18182,
+    "origin": "dome",
+    "examples": [
+      {
+        "exam_en": "the dome of the Capitol Building",
+        "exam_ko": "미국 국회 의사당의 돔."
+      },
+      {
+        "exam_en": "the dome of the sky",
+        "exam_ko": "푸른 하늘."
+      }
+    ]
+  },
+  {
+    "id": 18185,
+    "origin": "canvas",
+    "examples": [
+      {
+        "exam_en": "win by a canvas",
+        "exam_ko": "힘겹게 이기다."
+      }
+    ]
+  },
+  {
+    "id": 18189,
+    "origin": "moonlit",
+    "examples": [
+      {
+        "exam_en": "a moonlit night",
+        "exam_ko": "달밤."
+      }
+    ]
+  },
+  {
+    "id": 18193,
+    "origin": "jut",
+    "examples": [
+      {
+        "exam_en": "a little peninsula jutting into the lake",
+        "exam_ko": "호수로 튀어나온 작은 반도"
+      },
+      {
+        "exam_en": "His lower lip jutted out when he was thinking hard.",
+        "exam_ko": "그가 골똘히 생각을 하고 있을 때는 아랫입술이 튀어나왔다."
+      }
+    ]
+  },
+  {
+    "id": 18194,
+    "origin": "homeward",
+    "examples": [
+      {
+        "exam_en": "walk homeward",
+        "exam_ko": "걸어서 집으로 돌아가다."
+      },
+      {
+        "exam_en": "a homeward journey",
+        "exam_ko": "귀로의 여행."
+      }
+    ]
+  },
+  {
+    "id": 18195,
+    "origin": "mush",
+    "examples": [
+      {
+        "exam_en": "pick mushs",
+        "exam_ko": "버섯을 따다."
+      }
+    ]
+  },
+  {
+    "id": 18202,
+    "origin": "reanimate",
+    "examples": [
+      {
+        "exam_en": "The new leader reanimated the political party.",
+        "exam_ko": "새 지도자는 그 정당을 되살렸다."
+      }
+    ]
+  },
+  {
+    "id": 18204,
+    "origin": "bonded",
+    "examples": [
+      {
+        "exam_en": "a bonded debt",
+        "exam_ko": "공채[사채] 발행 차입금."
+      },
+      {
+        "exam_en": "bonded merchandise",
+        "exam_ko": "보세 물품."
+      }
+    ]
+  },
+  {
+    "id": 18207,
+    "origin": "dumbbell",
+    "examples": [
+      {
+        "exam_en": "a pair of dumbbells",
+        "exam_ko": "한 쌍의 아령."
+      }
+    ]
+  },
+  {
+    "id": 18210,
+    "origin": "rifle",
+    "examples": [
+      {
+        "exam_en": "rifle a single to center field",
+        "exam_ko": "센터 필드에 통렬한 싱글 히트를 날리다."
+      },
+      {
+        "exam_en": "rifle a safe of jewels",
+        "exam_ko": "금고를 털어 보석을 훔치다."
+      },
+      {
+        "exam_en": "The burglar took a pot at him with his rifle.",
+        "exam_ko": "그 절도범은 소총으로 그를 쏘았다."
+      }
+    ]
+  },
+  {
+    "id": 18213,
+    "origin": "infiltration",
+    "examples": [
+      {
+        "exam_en": "the infiltration of western ideas into Russia",
+        "exam_ko": "러시아로의 서양 사상의 침투."
+      }
+    ]
+  },
+  {
+    "id": 18215,
+    "origin": "dilate",
+    "examples": [
+      {
+        "exam_en": "The drug dilates the pupils of the eyes.",
+        "exam_ko": "그 약은 눈의 동공을 넓힌다."
+      },
+      {
+        "exam_en": "The pupils of our eyes dilate in the dark.",
+        "exam_ko": "눈동자는 어두운 곳에서 커진다."
+      }
+    ]
+  },
+  {
+    "id": 18218,
+    "origin": "outstrip",
+    "examples": [
+      {
+        "exam_en": "outstrip a rival in sales",
+        "exam_ko": "매출에서 경쟁 상대를 능가하다."
+      },
+      {
+        "exam_en": "The rapid technological advancements have the potential to outstrip our ability to adapt, challenging society to keep pace with the changes.",
+        "exam_ko": "급속한 기술 발전은 우리의 적응 능력을 앞지르게 되어 사회가 변화에 보조를 맞추는 데 어려움을 겪을 가능성이 있다."
+      }
+    ]
+  },
+  {
+    "id": 18220,
+    "origin": "acrimonious",
+    "examples": [
+      {
+        "exam_en": "an acrimonious debate",
+        "exam_ko": "격론."
+      },
+      {
+        "exam_en": "His tendency to utter acrimonious remarks alienated his roommates.",
+        "exam_ko": "험악한 발언을 하는 그의 경향은 룸메이트들을 멀리하게 했다."
+      }
+    ]
+  }
+]

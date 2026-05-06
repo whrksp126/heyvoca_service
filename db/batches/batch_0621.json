@@ -1,0 +1,246 @@
+[
+  {
+    "id": 21221,
+    "origin": "inquiring",
+    "examples": [
+      {
+        "exam_en": "an inquiring mind",
+        "exam_ko": "탐구 정신."
+      },
+      {
+        "exam_en": "with inquiring eyes",
+        "exam_ko": "의아한 눈으로."
+      }
+    ]
+  },
+  {
+    "id": 21226,
+    "origin": "imaginable",
+    "examples": [
+      {
+        "exam_en": "the finest thing imaginable",
+        "exam_ko": "상상할 수 있는 한의 가장 아름다운 것"
+      },
+      {
+        "exam_en": "I have tried every means imaginable.",
+        "exam_ko": "생각나는 온갖 수단을 다 썼다."
+      }
+    ]
+  },
+  {
+    "id": 21234,
+    "origin": "unlimited",
+    "examples": [
+      {
+        "exam_en": "unlimited desires",
+        "exam_ko": "한정 없는 욕망."
+      },
+      {
+        "exam_en": "unlimited franchise rights",
+        "exam_ko": "무조건의 (독점) 판매권."
+      }
+    ]
+  },
+  {
+    "id": 21236,
+    "origin": "unintentional",
+    "examples": [
+      {
+        "exam_en": "an unintentional offence",
+        "exam_ko": "고의가 아닌 침해."
+      }
+    ]
+  },
+  {
+    "id": 21238,
+    "origin": "obstructive",
+    "examples": [
+      {
+        "exam_en": "factors obstructive to the plan",
+        "exam_ko": "계획의 저해 요인."
+      }
+    ]
+  },
+  {
+    "id": 21239,
+    "origin": "transitory",
+    "examples": [
+      {
+        "exam_en": "a transitory service",
+        "exam_ko": "일시적인 봉사"
+      },
+      {
+        "exam_en": "a transitory life",
+        "exam_ko": "단명."
+      }
+    ]
+  },
+  {
+    "id": 21243,
+    "origin": "opposing",
+    "examples": [
+      {
+        "exam_en": "a negotiation between opposing parties",
+        "exam_ko": "대립하는 당사자간의 협상."
+      }
+    ]
+  },
+  {
+    "id": 21245,
+    "origin": "unintelligible",
+    "examples": [
+      {
+        "exam_en": "mutter something unintelligible",
+        "exam_ko": "알아들을 수 없는 소리를 중얼거리다."
+      }
+    ]
+  },
+  {
+    "id": 21247,
+    "origin": "aura",
+    "examples": [
+      {
+        "exam_en": "an aura of grandeur",
+        "exam_ko": "숭고함"
+      },
+      {
+        "exam_en": "There's an aura of sadness about him.",
+        "exam_ko": "그에게는 슬픈 분위기가 감돈다."
+      }
+    ]
+  },
+  {
+    "id": 21248,
+    "origin": "specially",
+    "examples": [
+      {
+        "exam_en": "I came specially to see you.",
+        "exam_ko": "당신을 만나러 일부러 왔습니다."
+      },
+      {
+        "exam_en": "a specially trained agent",
+        "exam_ko": "특수 훈련을 받은 요원."
+      }
+    ]
+  },
+  {
+    "id": 21255,
+    "origin": "lagging",
+    "examples": [
+      {
+        "exam_en": "the lagging economic recovery of France",
+        "exam_ko": "프랑스의 더딘 경제 부흥."
+      }
+    ]
+  },
+  {
+    "id": 21258,
+    "origin": "crosswise",
+    "examples": [
+      {
+        "exam_en": "lay ‥ crosswise",
+        "exam_ko": "…을 비스듬히 놓다[자르다]."
+      },
+      {
+        "exam_en": "a church built crosswise",
+        "exam_ko": "십자형으로 지은 교회\n"
+      },
+      {
+        "exam_en": "a church built crosswise",
+        "exam_ko": "십자형으로 지은 교회"
+      },
+      {
+        "exam_en": "The top course is laid crosswise to the lower course.",
+        "exam_ko": "맨위 줄은 아래줄의 가로 방향으로 배치한다."
+      }
+    ]
+  },
+  {
+    "id": 21259,
+    "origin": "transverse",
+    "examples": [
+      {
+        "exam_en": "a transverse break",
+        "exam_ko": "비스듬한 균열"
+      },
+      {
+        "exam_en": "a transverse beam",
+        "exam_ko": "(건물·배 등의) 가로보."
+      }
+    ]
+  },
+  {
+    "id": 21262,
+    "origin": "continual",
+    "examples": [
+      {
+        "exam_en": "this continual rain",
+        "exam_ko": "이 줄기찬 장마"
+      },
+      {
+        "exam_en": "a continual stream of phone calls",
+        "exam_ko": "빗발치는 전화"
+      }
+    ]
+  },
+  {
+    "id": 21264,
+    "origin": "disentangle",
+    "examples": [
+      {
+        "exam_en": "disentangle oneself from an intrigue",
+        "exam_ko": "음모에의 가담을 그만두다."
+      }
+    ]
+  },
+  {
+    "id": 21266,
+    "origin": "imperialism",
+    "examples": [
+      {
+        "exam_en": "Imperialism is the monopoly stage of capitalism.",
+        "exam_ko": "제국주의는 자본주의의 독점적 단계다 ＜Lenin＞."
+      }
+    ]
+  },
+  {
+    "id": 21269,
+    "origin": "execrate",
+    "examples": [
+      {
+        "exam_en": "execrate a person as",
+        "exam_ko": "…이라고 남을 저주하다."
+      }
+    ]
+  },
+  {
+    "id": 21271,
+    "origin": "manhood",
+    "examples": [
+      {
+        "exam_en": "arrive at manhood",
+        "exam_ko": "성년에 이르다. cf. WOMANHOOD."
+      }
+    ]
+  },
+  {
+    "id": 21272,
+    "origin": "brilliance",
+    "examples": [
+      {
+        "exam_en": "the brilliance of the sun",
+        "exam_ko": "태양의 빛남."
+      }
+    ]
+  },
+  {
+    "id": 21277,
+    "origin": "sully",
+    "examples": [
+      {
+        "exam_en": "sully a good reputation",
+        "exam_ko": "명성을 더럽히다."
+      }
+    ]
+  }
+]

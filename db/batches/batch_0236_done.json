@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5531,
+    "origin": "adversary",
+    "examples": [
+      {
+        "exam_en": "He faced a powerful <strong class=\"target-word\">adversary</strong> in the final match.",
+        "exam_ko": "그는 결승전에서 강력한 <strong class=\"target-word\">적</strong>과 맞섰다."
+      }
+    ]
+  },
+  {
+    "id": 5533,
+    "origin": "admirer",
+    "examples": [
+      {
+        "exam_en": "She is a devoted <strong class=\"target-word\">admirer</strong> of Shakespeare.",
+        "exam_ko": "그녀는 셰익스피어의 열렬한 <strong class=\"target-word\">숭배자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5534,
+    "origin": "yearn",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">yearns</strong> for freedom every day.",
+        "exam_ko": "그녀는 매일 자유를 <strong class=\"target-word\">동경한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">yearns</strong> for his mother abroad.",
+        "exam_ko": "그는 해외에 있는 어머니를 <strong class=\"target-word\">그리워한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">yearned</strong> for adventure his whole life.",
+        "exam_ko": "그는 평생 모험을 <strong class=\"target-word\">갈망했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5536,
+    "origin": "travesty",
+    "examples": [
+      {
+        "exam_en": "The parody was a <strong class=\"target-word\">travesty</strong> of the original play.",
+        "exam_ko": "그 패러디는 원작의 <strong class=\"target-word\">익살스러운 모방</strong>이었다."
+      },
+      {
+        "exam_en": "The verdict was a <strong class=\"target-word\">travesty</strong> of the law.",
+        "exam_ko": "그 판결은 법의 <strong class=\"target-word\">희화화</strong>였다."
+      },
+      {
+        "exam_en": "It was a <strong class=\"target-word\">travesty</strong> of justice when he was acquitted.",
+        "exam_ko": "그가 무죄로 풀려난 것은 정의의 <strong class=\"target-word\">우롱</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 5537,
+    "origin": "underestimate",
+    "examples": [
+      {
+        "exam_en": "Officials tend to <strong class=\"target-word\">underestimate</strong> the unemployment problem.",
+        "exam_ko": "관리들은 실업 문제를 <strong class=\"target-word\">경시</strong>하는 경향이 있다."
+      },
+      {
+        "exam_en": "The figure of 20% may be an <strong class=\"target-word\">underestimate</strong>.",
+        "exam_ko": "20%라는 수치는 <strong class=\"target-word\">과소평가</strong>된 것일 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 5538,
+    "origin": "recoup",
+    "examples": [
+      {
+        "exam_en": "He worked hard to <strong class=\"target-word\">recoup</strong> his losses.",
+        "exam_ko": "그는 손해를 <strong class=\"target-word\">만회하기</strong> 위해 열심히 일했다."
+      },
+      {
+        "exam_en": "She rested to <strong class=\"target-word\">recoup</strong> her strength.",
+        "exam_ko": "그녀는 기운을 <strong class=\"target-word\">되찾기</strong> 위해 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 5539,
+    "origin": "rash",
+    "examples": [
+      {
+        "exam_en": "He made a <strong class=\"target-word\">rash</strong> decision without thinking.",
+        "exam_ko": "그는 생각 없이 <strong class=\"target-word\">성급한</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "It would be <strong class=\"target-word\">rash</strong> of you to leave right now.",
+        "exam_ko": "지금 당장 떠나는 것은 <strong class=\"target-word\">무모한</strong> 일이다."
+      }
+    ]
+  },
+  {
+    "id": 5540,
+    "origin": "providence",
+    "examples": [
+      {
+        "exam_en": "He trusted in <strong class=\"target-word\">providence</strong> during hard times.",
+        "exam_ko": "그는 힘든 시절에 <strong class=\"target-word\">신의 섭리</strong>를 믿었다."
+      }
+    ]
+  },
+  {
+    "id": 5542,
+    "origin": "oyster",
+    "examples": [
+      {
+        "exam_en": "He ordered a dozen raw <strong class=\"target-word\">oysters</strong> at the restaurant.",
+        "exam_ko": "그는 식당에서 생 <strong class=\"target-word\">굴</strong> 열두 개를 주문했다."
+      },
+      {
+        "exam_en": "A pearl <strong class=\"target-word\">oyster</strong> can take years to form a pearl.",
+        "exam_ko": "진주 <strong class=\"target-word\">조개</strong>가 진주를 만드는 데 수년이 걸린다."
+      }
+    ]
+  },
+  {
+    "id": 5543,
+    "origin": "persistence",
+    "examples": [
+      {
+        "exam_en": "She solved the problem with great <strong class=\"target-word\">persistence</strong>.",
+        "exam_ko": "그녀는 대단한 <strong class=\"target-word\">집요함</strong>으로 문제를 해결했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Persistence</strong> is the road to accomplishment.",
+        "exam_ko": "<strong class=\"target-word\">집요함</strong>이 성취로 가는 길이다."
+      }
+    ]
+  },
+  {
+    "id": 5546,
+    "origin": "flatter",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">flatter</strong> her with compliments.",
+        "exam_ko": "그는 칭찬으로 그녀에게 <strong class=\"target-word\">아첨하려</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">flattered</strong> him about his singing talent.",
+        "exam_ko": "그녀는 그의 노래 실력을 <strong class=\"target-word\">추켜세웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5547,
+    "origin": "deceitful",
+    "examples": [
+      {
+        "exam_en": "Nobody trusted the <strong class=\"target-word\">deceitful</strong> person.",
+        "exam_ko": "아무도 그 <strong class=\"target-word\">거짓말쟁이</strong>를 믿지 않았다."
+      },
+      {
+        "exam_en": "The company was fined for <strong class=\"target-word\">deceitful</strong> advertising.",
+        "exam_ko": "그 회사는 <strong class=\"target-word\">기만적인</strong> 광고로 벌금을 맞았다."
+      }
+    ]
+  },
+  {
+    "id": 5548,
+    "origin": "disguise",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">disguised</strong> himself with a false mustache.",
+        "exam_ko": "그는 가짜 수염을 붙여 <strong class=\"target-word\">변장했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">disguised</strong> him in woman's clothes to escape.",
+        "exam_ko": "그들은 도망치려고 그를 여자 옷으로 <strong class=\"target-word\">변장시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5549,
+    "origin": "cane",
+    "examples": [
+      {
+        "exam_en": "The old man walks with the aid of a <strong class=\"target-word\">cane</strong>.",
+        "exam_ko": "그 노인은 <strong class=\"target-word\">지팡이</strong>를 짚고 걸어 다닌다."
+      },
+      {
+        "exam_en": "The teacher used a <strong class=\"target-word\">cane</strong> to discipline students.",
+        "exam_ko": "선생님은 학생들을 훈육하는 데 <strong class=\"target-word\">회초리</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 5550,
+    "origin": "convertible",
+    "examples": [
+      {
+        "exam_en": "Heat is <strong class=\"target-word\">convertible</strong> into electricity.",
+        "exam_ko": "열은 전기로 <strong class=\"target-word\">변환될 수 있다</strong>."
+      },
+      {
+        "exam_en": "They used a <strong class=\"target-word\">convertible</strong> currency for the trade.",
+        "exam_ko": "그들은 거래에 <strong class=\"target-word\">태환</strong> 통화를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 5555,
+    "origin": "absurd",
+    "examples": [
+      {
+        "exam_en": "He asked an <strong class=\"target-word\">absurd</strong> question during class.",
+        "exam_ko": "그는 수업 중에 <strong class=\"target-word\">어리석은</strong> 질문을 했다."
+      },
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">absurd</strong> and calm down.",
+        "exam_ko": "<strong class=\"target-word\">어리석은</strong> 짓 하지 말고 진정해라."
+      },
+      {
+        "exam_en": "The source of the <strong class=\"target-word\">absurd</strong> libel was never found.",
+        "exam_ko": "그 <strong class=\"target-word\">터무니없는</strong> 명예훼손의 출처는 밝혀지지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 5557,
+    "origin": "unprecedented",
+    "examples": [
+      {
+        "exam_en": "The disaster struck at an <strong class=\"target-word\">unprecedented</strong> scale.",
+        "exam_ko": "재난은 <strong class=\"target-word\">전례 없는</strong> 규모로 발생했다."
+      },
+      {
+        "exam_en": "The discovery was <strong class=\"target-word\">unprecedented</strong> in scientific history.",
+        "exam_ko": "그 발견은 과학 역사상 <strong class=\"target-word\">전례가 없는</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 5558,
+    "origin": "wiggle",
+    "examples": [
+      {
+        "exam_en": "The baby <strong class=\"target-word\">wiggled</strong> her toes with joy.",
+        "exam_ko": "아기는 기쁨에 발가락을 <strong class=\"target-word\">옴지락거렸다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">wiggle</strong> their hips to the pop music.",
+        "exam_ko": "그들은 팝 음악에 맞춰 엉덩이를 <strong class=\"target-word\">흔든다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5561,
+    "origin": "shriek",
+    "examples": [
+      {
+        "exam_en": "She let out a loud <strong class=\"target-word\">shriek</strong> in surprise.",
+        "exam_ko": "그녀는 놀라서 큰 <strong class=\"target-word\">비명</strong>을 질렀다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">shrieked</strong> with terror at the sight.",
+        "exam_ko": "그는 그 광경에 공포로 <strong class=\"target-word\">비명을 질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5562,
+    "origin": "slash",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">slash</strong> his wrists in despair.",
+        "exam_ko": "그는 절망 속에 손목을 <strong class=\"target-word\">그으려</strong> 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">slashed</strong> his way through the thick underbrush.",
+        "exam_ko": "그는 칼로 빽빽한 덤불을 <strong class=\"target-word\">베며</strong> 나아갔다."
+      }
+    ]
+  }
+]

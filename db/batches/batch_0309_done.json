@@ -1,0 +1,262 @@
+[
+  {
+    "id": 7788,
+    "origin": "seriously",
+    "examples": [
+      {
+        "exam_en": "She studies music <strong class=\"target-word\">seriously</strong> every day.",
+        "exam_ko": "그녀는 매일 음악을 <strong class=\"target-word\">진지하게</strong> 공부한다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">seriously</strong> injured in the accident.",
+        "exam_ko": "그는 사고로 <strong class=\"target-word\">심각하게</strong> 부상을 입었다."
+      }
+    ]
+  },
+  {
+    "id": 7789,
+    "origin": "privacy",
+    "examples": [
+      {
+        "exam_en": "The leak was a clear invasion of <strong class=\"target-word\">privacy</strong>.",
+        "exam_ko": "그 유출은 명백한 <strong class=\"target-word\">사생활</strong> 침해였다."
+      },
+      {
+        "exam_en": "Everyone has the right to protect their <strong class=\"target-word\">privacy</strong>.",
+        "exam_ko": "모든 사람은 자신의 <strong class=\"target-word\">사생활</strong>을 보호할 권리가 있다."
+      }
+    ]
+  },
+  {
+    "id": 7790,
+    "origin": "concept",
+    "examples": [
+      {
+        "exam_en": "Freedom is an abstract <strong class=\"target-word\">concept</strong> to explain.",
+        "exam_ko": "자유는 설명하기 어려운 추상적인 <strong class=\"target-word\">개념</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 7791,
+    "origin": "ringing",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">ringing</strong> voice filled the entire hall.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">울려 퍼지는</strong> 목소리가 홀 전체를 가득 채웠다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">ringing</strong> of bells echoed through the village.",
+        "exam_ko": "종의 <strong class=\"target-word\">울림</strong>이 마을 전체에 울려 퍼졌다."
+      }
+    ]
+  },
+  {
+    "id": 7792,
+    "origin": "distressing",
+    "examples": [
+      {
+        "exam_en": "They lived in <strong class=\"target-word\">distressing</strong> poverty for years.",
+        "exam_ko": "그들은 수년간 <strong class=\"target-word\">몹시 괴로운</strong> 빈곤 속에서 살았다."
+      }
+    ]
+  },
+  {
+    "id": 7795,
+    "origin": "bizarre",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">bizarre</strong> behavior surprised everyone around him.",
+        "exam_ko": "그의 <strong class=\"target-word\">기괴한</strong> 행동은 주변 모두를 놀라게 했다."
+      },
+      {
+        "exam_en": "The artist created a <strong class=\"target-word\">bizarre</strong> sculpture at the gallery.",
+        "exam_ko": "예술가는 갤러리에 <strong class=\"target-word\">기괴한</strong> 조각품을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 7798,
+    "origin": "mum",
+    "examples": [
+      {
+        "exam_en": "He stayed <strong class=\"target-word\">mum</strong> even under pressure.",
+        "exam_ko": "그는 압박을 받아도 <strong class=\"target-word\">침묵</strong>을 지켰다."
+      },
+      {
+        "exam_en": "She remained <strong class=\"target-word\">mum</strong> about what she saw.",
+        "exam_ko": "그녀는 자신이 본 것에 대해 <strong class=\"target-word\">잠자코</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7802,
+    "origin": "fairly",
+    "examples": [
+      {
+        "exam_en": "The judge treated all parties <strong class=\"target-word\">fairly</strong> in court.",
+        "exam_ko": "판사는 법정에서 모든 당사자를 <strong class=\"target-word\">공정하게</strong> 대했다."
+      },
+      {
+        "exam_en": "He will judge <strong class=\"target-word\">fairly</strong> between them.",
+        "exam_ko": "그는 그들 사이를 <strong class=\"target-word\">공정하게</strong> 판단할 것이다."
+      }
+    ]
+  },
+  {
+    "id": 7806,
+    "origin": "heavenly",
+    "examples": [
+      {
+        "exam_en": "The choir sang with a <strong class=\"target-word\">heavenly</strong> voice.",
+        "exam_ko": "합창단은 <strong class=\"target-word\">천상의</strong> 목소리로 노래했다."
+      },
+      {
+        "exam_en": "We prayed to our <strong class=\"target-word\">heavenly</strong> Father together.",
+        "exam_ko": "우리는 함께 <strong class=\"target-word\">하늘에 계신</strong> 아버지께 기도했다."
+      }
+    ]
+  },
+  {
+    "id": 7808,
+    "origin": "soaked",
+    "examples": [
+      {
+        "exam_en": "He was completely <strong class=\"target-word\">soaked</strong> after running in the rain.",
+        "exam_ko": "그는 빗속을 달린 후 완전히 <strong class=\"target-word\">흠뻑 젖었다</strong>."
+      },
+      {
+        "exam_en": "She found a blood-<strong class=\"target-word\">soaked</strong> shirt near the door.",
+        "exam_ko": "그녀는 문 근처에서 피에 <strong class=\"target-word\">흠뻑 젖은</strong> 셔츠를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 7809,
+    "origin": "apricot",
+    "examples": [
+      {
+        "exam_en": "She poured a glass of <strong class=\"target-word\">apricot</strong> brandy after dinner.",
+        "exam_ko": "그녀는 저녁 식사 후 <strong class=\"target-word\">살구</strong> 브랜디를 한 잔 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 7810,
+    "origin": "nibble",
+    "examples": [
+      {
+        "exam_en": "She tends to <strong class=\"target-word\">nibble</strong> her nails when nervous.",
+        "exam_ko": "그녀는 긴장하면 손톱을 <strong class=\"target-word\">물어뜯는</strong> 경향이 있다."
+      },
+      {
+        "exam_en": "The rabbit began to <strong class=\"target-word\">nibble</strong> on a piece of carrot.",
+        "exam_ko": "토끼가 당근 한 조각을 <strong class=\"target-word\">갉아먹기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 7812,
+    "origin": "sugary",
+    "examples": [
+      {
+        "exam_en": "This lemonade is refreshing but very <strong class=\"target-word\">sugary</strong>.",
+        "exam_ko": "이 레모네이드는 상큼하지만 너무 <strong class=\"target-word\">달다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7813,
+    "origin": "tidy",
+    "examples": [
+      {
+        "exam_en": "She has very <strong class=\"target-word\">tidy</strong> habits at home.",
+        "exam_ko": "그녀는 집에서 매우 <strong class=\"target-word\">깔끔한</strong> 습관을 가지고 있다."
+      },
+      {
+        "exam_en": "He kept his desk <strong class=\"target-word\">tidy</strong> throughout the day.",
+        "exam_ko": "그는 하루 종일 책상을 <strong class=\"target-word\">단정하게</strong> 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 7814,
+    "origin": "prostitute",
+    "examples": [
+      {
+        "exam_en": "He refused to <strong class=\"target-word\">prostitute</strong> his talent for money.",
+        "exam_ko": "그는 돈을 위해 자신의 재능을 <strong class=\"target-word\">팔기를</strong> 거부했다."
+      },
+      {
+        "exam_en": "She would never <strong class=\"target-word\">prostitute</strong> herself to the enemy.",
+        "exam_ko": "그녀는 결코 적에게 <strong class=\"target-word\">내통하지</strong> 않을 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 7818,
+    "origin": "signature",
+    "examples": [
+      {
+        "exam_en": "Please write your <strong class=\"target-word\">signature</strong> on the contract.",
+        "exam_ko": "계약서에 <strong class=\"target-word\">서명</strong>을 해주세요."
+      },
+      {
+        "exam_en": "The document required an official <strong class=\"target-word\">signature</strong> to proceed.",
+        "exam_ko": "그 문서는 진행을 위해 공식 <strong class=\"target-word\">서명</strong>이 필요했다."
+      }
+    ]
+  },
+  {
+    "id": 7819,
+    "origin": "autograph",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Autograph</strong> seekers waited outside the stadium.",
+        "exam_ko": "<strong class=\"target-word\">사인</strong>을 원하는 팬들이 경기장 밖에서 기다렸다."
+      },
+      {
+        "exam_en": "May I have your <strong class=\"target-word\">autograph</strong>?",
+        "exam_ko": "<strong class=\"target-word\">사인</strong> 좀 해주시겠어요?"
+      },
+      {
+        "exam_en": "I got Jin's <strong class=\"target-word\">autograph</strong> at the BTS concert.",
+        "exam_ko": "나는 BTS 콘서트에서 진의 <strong class=\"target-word\">사인</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 7821,
+    "origin": "ideally",
+    "examples": [
+      {
+        "exam_en": "The actress is <strong class=\"target-word\">ideally</strong> suited to the leading role.",
+        "exam_ko": "그 여배우는 주역에 <strong class=\"target-word\">이상적으로</strong> 딱 맞다."
+      }
+    ]
+  },
+  {
+    "id": 7822,
+    "origin": "impasse",
+    "examples": [
+      {
+        "exam_en": "The talks reached an <strong class=\"target-word\">impasse</strong> after hours of debate.",
+        "exam_ko": "수 시간의 논의 끝에 협상은 <strong class=\"target-word\">교착 상태</strong>에 빠졌다."
+      }
+    ]
+  },
+  {
+    "id": 7823,
+    "origin": "amusing",
+    "examples": [
+      {
+        "exam_en": "They had an <strong class=\"target-word\">amusing</strong> conversation over dinner.",
+        "exam_ko": "그들은 저녁 식사 중에 <strong class=\"target-word\">즐거운</strong> 대화를 나눴다."
+      },
+      {
+        "exam_en": "His story was very <strong class=\"target-word\">amusing</strong> to everyone.",
+        "exam_ko": "그의 이야기는 모두에게 매우 <strong class=\"target-word\">재미있었다</strong>."
+      }
+    ]
+  }
+]

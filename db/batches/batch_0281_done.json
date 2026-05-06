@@ -1,0 +1,282 @@
+[
+  {
+    "id": 6939,
+    "origin": "resent",
+    "examples": [
+      {
+        "exam_en": "I strongly <strong class=\"target-word\">resent</strong> your remarks.",
+        "exam_ko": "네 말에 정말 <strong class=\"target-word\">화가 난다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">resent</strong> you for spreading that rumor.",
+        "exam_ko": "네가 그 소문을 퍼뜨린 데 대해 나는 <strong class=\"target-word\">분개하고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6940,
+    "origin": "district",
+    "examples": [
+      {
+        "exam_en": "Each city is divided into postal <strong class=\"target-word\">districts</strong>.",
+        "exam_ko": "각 도시는 우편 배달 <strong class=\"target-word\">구역</strong>으로 나뉜다."
+      },
+      {
+        "exam_en": "They moved to a better school <strong class=\"target-word\">district</strong>.",
+        "exam_ko": "그들은 더 좋은 학군 <strong class=\"target-word\">지역</strong>으로 이사했다."
+      }
+    ]
+  },
+  {
+    "id": 6942,
+    "origin": "theme",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">theme</strong> of the meeting was productivity.",
+        "exam_ko": "그 회의의 <strong class=\"target-word\">주제</strong>는 생산성이었다."
+      },
+      {
+        "exam_en": "We need to choose a <strong class=\"target-word\">theme</strong> for the event.",
+        "exam_ko": "행사를 위한 <strong class=\"target-word\">주제</strong>를 선택해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 6943,
+    "origin": "comprehend",
+    "examples": [
+      {
+        "exam_en": "She struggled to <strong class=\"target-word\">comprehend</strong> its meaning.",
+        "exam_ko": "그녀는 그 의미를 <strong class=\"target-word\">이해하려고</strong> 애썼다."
+      },
+      {
+        "exam_en": "Even scientists do not <strong class=\"target-word\">comprehend</strong> these phenomena.",
+        "exam_ko": "심지어 과학자들도 이 현상들을 <strong class=\"target-word\">납득하지 못한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6944,
+    "origin": "colleague",
+    "examples": [
+      {
+        "exam_en": "He asked a senior <strong class=\"target-word\">colleague</strong> for advice.",
+        "exam_ko": "그는 선배 <strong class=\"target-word\">동료</strong>에게 조언을 구했다."
+      },
+      {
+        "exam_en": "She mentored her junior <strong class=\"target-word\">colleague</strong> every week.",
+        "exam_ko": "그녀는 매주 후배 <strong class=\"target-word\">동료</strong>를 지도했다."
+      }
+    ]
+  },
+  {
+    "id": 6945,
+    "origin": "detective",
+    "examples": [
+      {
+        "exam_en": "He hired a private <strong class=\"target-word\">detective</strong> to find the truth.",
+        "exam_ko": "그는 진실을 찾기 위해 사립 <strong class=\"target-word\">탐정</strong>을 고용했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">detective</strong> solved the case in two days.",
+        "exam_ko": "<strong class=\"target-word\">탐정</strong>은 이틀 만에 그 사건을 해결했다."
+      }
+    ]
+  },
+  {
+    "id": 6946,
+    "origin": "reform",
+    "examples": [
+      {
+        "exam_en": "The government announced an educational <strong class=\"target-word\">reform</strong> plan.",
+        "exam_ko": "정부는 교육 <strong class=\"target-word\">개혁</strong> 계획을 발표했다."
+      },
+      {
+        "exam_en": "The country needs deep social <strong class=\"target-word\">reforms</strong>.",
+        "exam_ko": "그 나라는 깊은 사회적 <strong class=\"target-word\">개혁</strong>이 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 6947,
+    "origin": "diagnose",
+    "examples": [
+      {
+        "exam_en": "The doctor <strong class=\"target-word\">diagnosed</strong> her illness as tuberculosis.",
+        "exam_ko": "의사는 그녀의 병을 결핵이라고 <strong class=\"target-word\">진단했다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">diagnosed</strong> as an alcohol abuser.",
+        "exam_ko": "그는 알코올 의존증이라는 <strong class=\"target-word\">진단을 받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6948,
+    "origin": "accord",
+    "examples": [
+      {
+        "exam_en": "His actions do not <strong class=\"target-word\">accord</strong> with his words.",
+        "exam_ko": "그의 행동은 그의 말과 <strong class=\"target-word\">일치하지 않는다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">accorded</strong> him a warm welcome.",
+        "exam_ko": "그들은 그에게 따뜻한 환영을 <strong class=\"target-word\">베풀었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6949,
+    "origin": "context",
+    "examples": [
+      {
+        "exam_en": "You should read the sentence in <strong class=\"target-word\">context</strong>.",
+        "exam_ko": "문장을 <strong class=\"target-word\">전후 사정</strong>을 고려하여 읽어야 한다."
+      },
+      {
+        "exam_en": "In this <strong class=\"target-word\">context</strong>, the word has a different meaning.",
+        "exam_ko": "이 <strong class=\"target-word\">맥락</strong>에서는 그 단어가 다른 의미를 가진다."
+      }
+    ]
+  },
+  {
+    "id": 6950,
+    "origin": "passage",
+    "examples": [
+      {
+        "exam_en": "She recited memorable <strong class=\"target-word\">passages</strong> from Shakespeare.",
+        "exam_ko": "그녀는 셰익스피어의 유명한 <strong class=\"target-word\">구절들</strong>을 암송했다."
+      },
+      {
+        "exam_en": "He quoted a well-known <strong class=\"target-word\">passage</strong> from the Bible.",
+        "exam_ko": "그는 성경의 잘 알려진 <strong class=\"target-word\">한 절</strong>을 인용했다."
+      }
+    ]
+  },
+  {
+    "id": 6951,
+    "origin": "agent",
+    "examples": [
+      {
+        "exam_en": "She works as the general <strong class=\"target-word\">agent</strong> for the company.",
+        "exam_ko": "그녀는 그 회사의 총 <strong class=\"target-word\">대리인</strong>으로 일한다."
+      },
+      {
+        "exam_en": "He became a commission <strong class=\"target-word\">agent</strong> last year.",
+        "exam_ko": "그는 작년에 위탁 판매 <strong class=\"target-word\">중개인</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 6952,
+    "origin": "organ",
+    "examples": [
+      {
+        "exam_en": "She plays the electric <strong class=\"target-word\">organ</strong> in the band.",
+        "exam_ko": "그녀는 밴드에서 전자 <strong class=\"target-word\">오르간</strong>을 연주한다."
+      },
+      {
+        "exam_en": "He learned to play the <strong class=\"target-word\">organ</strong> at church.",
+        "exam_ko": "그는 교회에서 <strong class=\"target-word\">오르간</strong> 치는 법을 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 6953,
+    "origin": "identity",
+    "examples": [
+      {
+        "exam_en": "The law of <strong class=\"target-word\">identity</strong> is a basic logic principle.",
+        "exam_ko": "<strong class=\"target-word\">동일률</strong>은 기본적인 논리 원칙이다."
+      },
+      {
+        "exam_en": "There is a strong <strong class=\"target-word\">identity</strong> of interests between them.",
+        "exam_ko": "그들 사이에는 이해관계의 강한 <strong class=\"target-word\">일치</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 6954,
+    "origin": "executive",
+    "examples": [
+      {
+        "exam_en": "The Chief <strong class=\"target-word\">Executive</strong> signed the new policy.",
+        "exam_ko": "<strong class=\"target-word\">최고 행정관</strong>이 새 정책에 서명했다."
+      },
+      {
+        "exam_en": "She was promoted to <strong class=\"target-word\">executive</strong> director last month.",
+        "exam_ko": "그녀는 지난달 <strong class=\"target-word\">전무</strong> 이사로 승진했다."
+      }
+    ]
+  },
+  {
+    "id": 6955,
+    "origin": "affair",
+    "examples": [
+      {
+        "exam_en": "That was a trifling <strong class=\"target-word\">affair</strong> I easily forgot.",
+        "exam_ko": "그것은 내가 쉽게 잊은 사소한 <strong class=\"target-word\">일</strong>이었다."
+      },
+      {
+        "exam_en": "The scandal became the chief <strong class=\"target-word\">affair</strong> of the year.",
+        "exam_ko": "그 스캔들은 그 해의 주요 <strong class=\"target-word\">사건</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 6956,
+    "origin": "profess",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">professes</strong> eagerness but never works hard.",
+        "exam_ko": "그는 열심인 척 <strong class=\"target-word\">가장하지만</strong> 결코 열심히 일하지 않는다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">professes</strong> to know the secret.",
+        "exam_ko": "그녀는 그 비밀을 아는 척 <strong class=\"target-word\">주장한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6957,
+    "origin": "consequently",
+    "examples": [
+      {
+        "exam_en": "He said he would come; <strong class=\"target-word\">consequently</strong>, I waited for him.",
+        "exam_ko": "그가 오겠다고 해서 <strong class=\"target-word\">그 결과</strong> 나는 그를 기다렸다."
+      },
+      {
+        "exam_en": "She missed the bus and <strong class=\"target-word\">consequently</strong> arrived late.",
+        "exam_ko": "그녀는 버스를 놓쳐서 <strong class=\"target-word\">결국</strong> 늦게 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 6958,
+    "origin": "significance",
+    "examples": [
+      {
+        "exam_en": "It was a crisis of worldwide <strong class=\"target-word\">significance</strong>.",
+        "exam_ko": "그것은 세계적 <strong class=\"target-word\">중요성</strong>을 가진 위기였다."
+      },
+      {
+        "exam_en": "The change is of no <strong class=\"target-word\">significance</strong> to the result.",
+        "exam_ko": "그 변화는 결과에 아무런 <strong class=\"target-word\">중요성</strong>이 없다."
+      }
+    ]
+  },
+  {
+    "id": 6959,
+    "origin": "anxiety",
+    "examples": [
+      {
+        "exam_en": "She waited for the results with <strong class=\"target-word\">anxiety</strong>.",
+        "exam_ko": "그녀는 결과를 <strong class=\"target-word\">걱정하며</strong> 기다렸다."
+      },
+      {
+        "exam_en": "He feels <strong class=\"target-word\">anxiety</strong> about his friend's health.",
+        "exam_ko": "그는 친구의 건강에 대해 <strong class=\"target-word\">불안감</strong>을 느낀다."
+      }
+    ]
+  }
+]

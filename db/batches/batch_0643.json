@@ -1,0 +1,246 @@
+[
+  {
+    "id": 22768,
+    "origin": "curved",
+    "examples": [
+      {
+        "exam_en": "a curved rule",
+        "exam_ko": "곡선자"
+      },
+      {
+        "exam_en": "a curved line",
+        "exam_ko": "곡선"
+      }
+    ]
+  },
+  {
+    "id": 22769,
+    "origin": "twisting",
+    "examples": [
+      {
+        "exam_en": "Stop twisting my words around.",
+        "exam_ko": "말꼬리 잡지마.\n"
+      },
+      {
+        "exam_en": "Stop twisting my words around.",
+        "exam_ko": "말꼬리 잡지마."
+      }
+    ]
+  },
+  {
+    "id": 22770,
+    "origin": "catching",
+    "examples": [
+      {
+        "exam_en": "Yawning is catching.",
+        "exam_ko": "하품은 전염성이 있다."
+      }
+    ]
+  },
+  {
+    "id": 22781,
+    "origin": "dotty",
+    "examples": [
+      {
+        "exam_en": "be dotty about a lass",
+        "exam_ko": "젊은 아가씨에게 열중하다."
+      }
+    ]
+  },
+  {
+    "id": 22782,
+    "origin": "sepia",
+    "examples": [
+      {
+        "exam_en": "sepia-toned portraits",
+        "exam_ko": "암갈색의 초상화."
+      }
+    ]
+  },
+  {
+    "id": 22783,
+    "origin": "desiccant",
+    "examples": [
+      {
+        "exam_en": "desiccant inside the profile in an IGU",
+        "exam_ko": "IGU(절연유리)의 프로파일 내부의 건조제"
+      }
+    ]
+  },
+  {
+    "id": 22789,
+    "origin": "stopover",
+    "examples": [
+      {
+        "exam_en": "have a two-day stopover in London",
+        "exam_ko": "런던에 2일간 도중 체류하다."
+      },
+      {
+        "exam_en": "have[make] a stopover ",
+        "exam_ko": "잠시 멈추다, 경유하다"
+      },
+      {
+        "exam_en": "have[make] a stopover",
+        "exam_ko": "잠시 멈추다, 경유하다"
+      }
+    ]
+  },
+  {
+    "id": 22794,
+    "origin": "rigidly",
+    "examples": [
+      {
+        "exam_en": "a rigidly controlled system",
+        "exam_ko": "엄격하게 통제된 조직."
+      }
+    ]
+  },
+  {
+    "id": 22795,
+    "origin": "localize",
+    "examples": [
+      {
+        "exam_en": "localize the story",
+        "exam_ko": "이야기에 지방색을 띠다."
+      },
+      {
+        "exam_en": "Anger localized on the scandal.",
+        "exam_ko": "그 부정 사건에 분노의 초점이 맞춰졌다."
+      }
+    ]
+  },
+  {
+    "id": 22797,
+    "origin": "colorless",
+    "examples": [
+      {
+        "exam_en": "colorless liquids",
+        "exam_ko": "무색 액체."
+      },
+      {
+        "exam_en": "a colorless sky",
+        "exam_ko": "찌푸린 하늘"
+      }
+    ]
+  },
+  {
+    "id": 22799,
+    "origin": "laughable",
+    "examples": [
+      {
+        "exam_en": "make laughable mistakes",
+        "exam_ko": "어이없는 잘못을 저지르다."
+      }
+    ]
+  },
+  {
+    "id": 22803,
+    "origin": "discontented",
+    "examples": [
+      {
+        "exam_en": "She was discontented with her small pay increase.",
+        "exam_ko": "그녀는 봉급이 적게 올라서 불만스러웠다."
+      }
+    ]
+  },
+  {
+    "id": 22817,
+    "origin": "speedy",
+    "examples": [
+      {
+        "exam_en": "a speedy reply",
+        "exam_ko": "즉답"
+      },
+      {
+        "exam_en": "A speedy settlement of the strike is essential.",
+        "exam_ko": "파업의 신속한 해결이 꼭 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 22819,
+    "origin": "cultivated",
+    "examples": [
+      {
+        "exam_en": "cultivated land",
+        "exam_ko": "경(작)지."
+      },
+      {
+        "exam_en": "a cultivated taste",
+        "exam_ko": "세련된 취미."
+      }
+    ]
+  },
+  {
+    "id": 22826,
+    "origin": "yonder",
+    "examples": [
+      {
+        "exam_en": "the yonder bank",
+        "exam_ko": "건너편 기슭"
+      },
+      {
+        "exam_en": "There are more of fruit trees in yonder valley.",
+        "exam_ko": "저쪽 골짜기에는 더 많은 과수가 있다."
+      }
+    ]
+  },
+  {
+    "id": 22827,
+    "origin": "amatory",
+    "examples": [
+      {
+        "exam_en": "an amatory poem",
+        "exam_ko": "연애시."
+      }
+    ]
+  },
+  {
+    "id": 22834,
+    "origin": "motor",
+    "examples": [
+      {
+        "exam_en": "He left the motor running.",
+        "exam_ko": "그는 엔진을 건 채로 내버려두었다."
+      },
+      {
+        "exam_en": "Investment capital is the motor of industrial growth.",
+        "exam_ko": "투자 자본은 산업 발전의 원동력이다."
+      }
+    ]
+  },
+  {
+    "id": 22837,
+    "origin": "spinal",
+    "examples": [
+      {
+        "exam_en": "spinal disease",
+        "exam_ko": "척추병"
+      },
+      {
+        "exam_en": "a spinal anesthesia",
+        "exam_ko": "척추 마취."
+      }
+    ]
+  },
+  {
+    "id": 22843,
+    "origin": "famed",
+    "examples": [
+      {
+        "exam_en": "The Rocky Mountains are famed for their beauty.",
+        "exam_ko": "로키 산맥은 아름답기로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 22844,
+    "origin": "astonishingly",
+    "examples": [
+      {
+        "exam_en": "The Rangers, astonishingly enough, were winning.",
+        "exam_ko": "깜짝놀랄지 모르겠지만 레인저스가 이기고 있었어."
+      }
+    ]
+  }
+]

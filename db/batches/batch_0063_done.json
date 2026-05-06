@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1305,
+    "origin": "yourself",
+    "examples": [
+      {
+        "exam_en": "You <strong class=\"target-word\">yourself</strong> are responsible for the lost book.",
+        "exam_ko": "그 책을 분실한 책임은 당신 <strong class=\"target-word\">자신</strong>에게 있습니다."
+      },
+      {
+        "exam_en": "You <strong class=\"target-word\">yourself</strong> told me so.",
+        "exam_ko": "너 <strong class=\"target-word\">자신</strong>이 내게 그렇게 말했다."
+      }
+    ]
+  },
+  {
+    "id": 1306,
+    "origin": "around",
+    "examples": [
+      {
+        "exam_en": "People crowded <strong class=\"target-word\">around</strong> to look at the wrecked car.",
+        "exam_ko": "사람들이 망가진 차를 보려고 <strong class=\"target-word\">주위에</strong> 떼지어 모였다."
+      },
+      {
+        "exam_en": "The trunk grows larger <strong class=\"target-word\">around</strong>.",
+        "exam_ko": "나무 줄기는 <strong class=\"target-word\">둘레가</strong> 점점 굵어진다."
+      }
+    ]
+  },
+  {
+    "id": 1307,
+    "origin": "nothing",
+    "examples": [
+      {
+        "exam_en": "He said <strong class=\"target-word\">nothing</strong> during the meeting.",
+        "exam_ko": "그는 회의 중에 <strong class=\"target-word\">아무것도</strong> 말하지 않았다."
+      },
+      {
+        "exam_en": "There was <strong class=\"target-word\">nothing</strong> in the room.",
+        "exam_ko": "그 방에는 <strong class=\"target-word\">아무것도</strong> 없었다."
+      }
+    ]
+  },
+  {
+    "id": 1308,
+    "origin": "tonight",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Tonight</strong> is no ordinary night.",
+        "exam_ko": "<strong class=\"target-word\">오늘 밤</strong>은 여느 때와 같은 밤이 아니다."
+      },
+      {
+        "exam_en": "Can you come for dinner <strong class=\"target-word\">tonight</strong>?",
+        "exam_ko": "<strong class=\"target-word\">오늘 밤</strong>에 식사하러 올 수 있겠어요?"
+      }
+    ]
+  },
+  {
+    "id": 1309,
+    "origin": "tough",
+    "examples": [
+      {
+        "exam_en": "The steel frame is incredibly <strong class=\"target-word\">tough</strong>.",
+        "exam_ko": "그 철골 구조물은 매우 <strong class=\"target-word\">단단하다</strong>."
+      },
+      {
+        "exam_en": "The steak was as <strong class=\"target-word\">tough</strong> as leather.",
+        "exam_ko": "그 스테이크는 가죽처럼 <strong class=\"target-word\">질겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1310,
+    "origin": "finally",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Finally</strong>, are you encouraged by the direction education is taking?",
+        "exam_ko": "<strong class=\"target-word\">마지막으로</strong>, 교육이 나아가는 방향에 확신하나요?"
+      },
+      {
+        "exam_en": "The sky turned red, then purple, and <strong class=\"target-word\">finally</strong> black.",
+        "exam_ko": "하늘은 붉은색, 자주색, 그리고 <strong class=\"target-word\">마침내</strong> 검은색으로 변했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">finally</strong> finished the long project.",
+        "exam_ko": "그녀는 긴 프로젝트를 <strong class=\"target-word\">마침내</strong> 끝냈다."
+      }
+    ]
+  },
+  {
+    "id": 1311,
+    "origin": "welcome",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">welcome</strong> all new members warmly.",
+        "exam_ko": "우리는 모든 신규 회원들을 따뜻하게 <strong class=\"target-word\">환영한다</strong>."
+      },
+      {
+        "exam_en": "The host <strong class=\"target-word\">welcomed</strong> the guests at the door.",
+        "exam_ko": "주인은 문에서 손님들을 <strong class=\"target-word\">맞이했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1312,
+    "origin": "something",
+    "examples": [
+      {
+        "exam_en": "I need <strong class=\"target-word\">something</strong> to eat right now.",
+        "exam_ko": "나는 지금 당장 먹을 <strong class=\"target-word\">무언가</strong>가 필요하다."
+      },
+      {
+        "exam_en": "He said <strong class=\"target-word\">something</strong> about the meeting.",
+        "exam_ko": "그는 회의에 대해 <strong class=\"target-word\">무언가</strong>를 말했다."
+      }
+    ]
+  },
+  {
+    "id": 1313,
+    "origin": "korean",
+    "examples": [
+      {
+        "exam_en": "He was born on the <strong class=\"target-word\">Korean</strong> Peninsula.",
+        "exam_ko": "그는 <strong class=\"target-word\">한국</strong> 반도에서 태어났다."
+      },
+      {
+        "exam_en": "She is studying <strong class=\"target-word\">Korean</strong> culture at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">한국</strong> 문화를 공부하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1315,
+    "origin": "from",
+    "examples": [
+      {
+        "exam_en": "She traveled <strong class=\"target-word\">from</strong> Paris to London by train.",
+        "exam_ko": "그녀는 기차를 타고 파리 <strong class=\"target-word\">에서</strong> 런던으로 여행했다."
+      },
+      {
+        "exam_en": "He stepped down <strong class=\"target-word\">from</strong> the platform.",
+        "exam_ko": "그는 연단 <strong class=\"target-word\">에서</strong> 내려왔다."
+      }
+    ]
+  },
+  {
+    "id": 1316,
+    "origin": "please",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Please</strong> come here.",
+        "exam_ko": "<strong class=\"target-word\">제발</strong> 이쪽으로 오십시오."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Please</strong> don't make a noise.",
+        "exam_ko": "<strong class=\"target-word\">제발</strong> 좀 조용히 하시오."
+      }
+    ]
+  },
+  {
+    "id": 1317,
+    "origin": "what",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">What</strong> is your name?",
+        "exam_ko": "당신 이름은 <strong class=\"target-word\">무엇</strong>이지요?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">What</strong>'s the matter?",
+        "exam_ko": "<strong class=\"target-word\">무슨</strong> 일입니까?"
+      }
+    ]
+  },
+  {
+    "id": 1319,
+    "origin": "everything",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Everything</strong> in the store is on sale.",
+        "exam_ko": "가게에 있는 <strong class=\"target-word\">모든 것</strong>이 할인 중입니다."
+      },
+      {
+        "exam_en": "He had <strong class=\"target-word\">everything</strong> an executive should have.",
+        "exam_ko": "그는 경영자가 지녀야 하는 조건을 <strong class=\"target-word\">모두</strong> 갖추었다."
+      }
+    ]
+  },
+  {
+    "id": 1321,
+    "origin": "weigh",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">weighed</strong> the flour before adding it.",
+        "exam_ko": "그녀는 밀가루를 넣기 전에 <strong class=\"target-word\">무게를 달았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">weighed</strong> himself on the bathroom scale.",
+        "exam_ko": "그는 욕실 체중계로 몸무게를 <strong class=\"target-word\">쟀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1322,
+    "origin": "celery",
+    "examples": [
+      {
+        "exam_en": "She added two crisp stalks of <strong class=\"target-word\">celery</strong> to the soup.",
+        "exam_ko": "그녀는 수프에 신선한 <strong class=\"target-word\">셀러리</strong> 두 줄기를 넣었다."
+      },
+      {
+        "exam_en": "He bought a head of <strong class=\"target-word\">celery</strong> at the market.",
+        "exam_ko": "그는 시장에서 <strong class=\"target-word\">셀러리</strong> 한 포기를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1323,
+    "origin": "cabbage",
+    "examples": [
+      {
+        "exam_en": "She cut a head of <strong class=\"target-word\">cabbage</strong> for the salad.",
+        "exam_ko": "그녀는 샐러드용으로 <strong class=\"target-word\">양배추</strong> 한 통을 잘랐다."
+      },
+      {
+        "exam_en": "The farmer grew fresh <strong class=\"target-word\">cabbage</strong> in the field.",
+        "exam_ko": "농부는 밭에서 신선한 <strong class=\"target-word\">양배추</strong>를 키웠다."
+      }
+    ]
+  },
+  {
+    "id": 1324,
+    "origin": "egg",
+    "examples": [
+      {
+        "exam_en": "She ordered a soft-boiled <strong class=\"target-word\">egg</strong> for breakfast.",
+        "exam_ko": "그녀는 아침으로 반숙 <strong class=\"target-word\">달걀</strong>을 주문했다."
+      },
+      {
+        "exam_en": "He cracked an <strong class=\"target-word\">egg</strong> into the frying pan.",
+        "exam_ko": "그는 프라이팬에 <strong class=\"target-word\">달걀</strong>을 깼다."
+      }
+    ]
+  },
+  {
+    "id": 1325,
+    "origin": "dozen",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">dozen</strong> beers for the party.",
+        "exam_ko": "그녀는 파티를 위해 맥주 한 <strong class=\"target-word\">다스</strong>를 샀다."
+      },
+      {
+        "exam_en": "He packed oranges in lots of a <strong class=\"target-word\">dozen</strong> each.",
+        "exam_ko": "그는 오렌지를 한 <strong class=\"target-word\">다스</strong>씩 담았다."
+      }
+    ]
+  },
+  {
+    "id": 1326,
+    "origin": "pair",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">pair</strong> of socks at the store.",
+        "exam_ko": "그녀는 가게에서 양말 한 <strong class=\"target-word\">켤레</strong>를 샀다."
+      },
+      {
+        "exam_en": "He owns five <strong class=\"target-word\">pairs</strong> of shoes.",
+        "exam_ko": "그는 구두 다섯 <strong class=\"target-word\">켤레</strong>를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1327,
+    "origin": "receipt",
+    "examples": [
+      {
+        "exam_en": "The cashier made out a <strong class=\"target-word\">receipt</strong> for the purchase.",
+        "exam_ko": "계산원은 구매에 대한 <strong class=\"target-word\">영수증</strong>을 발행했다."
+      },
+      {
+        "exam_en": "He signed the <strong class=\"target-word\">receipt</strong> and took his package.",
+        "exam_ko": "그는 <strong class=\"target-word\">영수증</strong>에 서명하고 물건을 가져갔다."
+      }
+    ]
+  }
+]

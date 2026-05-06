@@ -18,7 +18,7 @@ export const WithdrawNewBottomSheet = () => {
     <div className="relative">
       <div className="
         flex flex-col gap-[15px]
-        max-h-[calc(90vh-47px)] h-full
+        max-h-[calc(90vh-47px)]
         pt-[40px] px-[20px] pb-[105px]
         overflow-y-auto
       ">

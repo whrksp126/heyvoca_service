@@ -1,0 +1,266 @@
+[
+  {
+    "id": 7597,
+    "origin": "implication",
+    "examples": [
+      {
+        "exam_en": "This accident has serious <strong class=\"target-word\">implications</strong> for nuclear policy.",
+        "exam_ko": "이 사고는 원자력 정책에 심각한 <strong class=\"target-word\">영향</strong>을 미친다."
+      },
+      {
+        "exam_en": "He agreed by <strong class=\"target-word\">implication</strong> without saying a word.",
+        "exam_ko": "그는 아무 말 없이 <strong class=\"target-word\">암암리에</strong> 동의했다."
+      }
+    ]
+  },
+  {
+    "id": 7598,
+    "origin": "coward",
+    "examples": [
+      {
+        "exam_en": "He acted like a <strong class=\"target-word\">coward</strong> and ran away.",
+        "exam_ko": "그는 <strong class=\"target-word\">겁쟁이</strong>처럼 도망쳤다."
+      },
+      {
+        "exam_en": "Only a <strong class=\"target-word\">coward</strong> attacks from behind.",
+        "exam_ko": "뒤에서 공격하는 건 <strong class=\"target-word\">비겁한 자</strong>뿐이다."
+      }
+    ]
+  },
+  {
+    "id": 7599,
+    "origin": "chivalry",
+    "examples": [
+      {
+        "exam_en": "The novel celebrates the spirit of <strong class=\"target-word\">chivalry</strong>.",
+        "exam_ko": "그 소설은 <strong class=\"target-word\">기사도</strong> 정신을 예찬한다."
+      },
+      {
+        "exam_en": "He showed true <strong class=\"target-word\">chivalry</strong> by holding the door open.",
+        "exam_ko": "그는 문을 잡아 주며 진정한 <strong class=\"target-word\">기사도적 예의</strong>를 보였다."
+      }
+    ]
+  },
+  {
+    "id": 7600,
+    "origin": "variety",
+    "examples": [
+      {
+        "exam_en": "The menu offers a wide <strong class=\"target-word\">variety</strong> of dishes.",
+        "exam_ko": "메뉴에는 다양한 <strong class=\"target-word\">종류</strong>의 요리가 있다."
+      },
+      {
+        "exam_en": "She has a great <strong class=\"target-word\">variety</strong> of skills.",
+        "exam_ko": "그녀는 다양한 <strong class=\"target-word\">재능</strong>을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 7601,
+    "origin": "acquired",
+    "examples": [
+      {
+        "exam_en": "The patient developed <strong class=\"target-word\">acquired</strong> immunity over time.",
+        "exam_ko": "환자는 시간이 지나며 <strong class=\"target-word\">후천적</strong> 면역성을 갖게 됐다."
+      },
+      {
+        "exam_en": "Patience is an <strong class=\"target-word\">acquired</strong> trait, not a natural one.",
+        "exam_ko": "인내심은 타고난 것이 아니라 <strong class=\"target-word\">습득된</strong> 성질이다."
+      }
+    ]
+  },
+  {
+    "id": 7602,
+    "origin": "laborious",
+    "examples": [
+      {
+        "exam_en": "Building the wall by hand was a <strong class=\"target-word\">laborious</strong> task.",
+        "exam_ko": "손으로 벽을 쌓는 것은 <strong class=\"target-word\">힘든</strong> 작업이었다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">laborious</strong> craftsman who never rushes.",
+        "exam_ko": "그는 절대 서두르지 않는 <strong class=\"target-word\">부지런한</strong> 장인이다."
+      },
+      {
+        "exam_en": "The research was <strong class=\"target-word\">laborious</strong> and took months.",
+        "exam_ko": "연구는 <strong class=\"target-word\">고된</strong> 작업이었고 몇 달이 걸렸다."
+      }
+    ]
+  },
+  {
+    "id": 7604,
+    "origin": "recede",
+    "examples": [
+      {
+        "exam_en": "The tide began to <strong class=\"target-word\">recede</strong> after high water.",
+        "exam_ko": "만조 후 물이 <strong class=\"target-word\">빠지기</strong> 시작했다."
+      },
+      {
+        "exam_en": "The roar <strong class=\"target-word\">receded</strong> quickly into the distance.",
+        "exam_ko": "포효 소리는 금세 멀리 <strong class=\"target-word\">사라져 갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7607,
+    "origin": "affidavit",
+    "examples": [
+      {
+        "exam_en": "The witness swore an <strong class=\"target-word\">affidavit</strong> before the court.",
+        "exam_ko": "증인은 법원에서 <strong class=\"target-word\">진술서</strong>에 선서했다."
+      },
+      {
+        "exam_en": "The judge took her <strong class=\"target-word\">affidavit</strong> before the trial.",
+        "exam_ko": "판사는 재판 전에 그녀의 <strong class=\"target-word\">진술서</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 7610,
+    "origin": "mimic",
+    "examples": [
+      {
+        "exam_en": "She can <strong class=\"target-word\">mimic</strong> his voice perfectly.",
+        "exam_ko": "그녀는 그의 목소리를 완벽하게 <strong class=\"target-word\">흉내낼</strong> 수 있다."
+      },
+      {
+        "exam_en": "The peak <strong class=\"target-word\">mimics</strong> the shape of Mt. Halla.",
+        "exam_ko": "그 산봉우리는 한라산의 형태를 <strong class=\"target-word\">닮아 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7611,
+    "origin": "earning",
+    "examples": [
+      {
+        "exam_en": "Her average <strong class=\"target-word\">earnings</strong> rose after the promotion.",
+        "exam_ko": "승진 후 그녀의 평균 <strong class=\"target-word\">수입</strong>이 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 7612,
+    "origin": "emerging",
+    "examples": [
+      {
+        "exam_en": "The company is expanding into <strong class=\"target-word\">emerging</strong> markets.",
+        "exam_ko": "그 회사는 <strong class=\"target-word\">신흥</strong> 시장으로 진출하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 7613,
+    "origin": "frugal",
+    "examples": [
+      {
+        "exam_en": "She has <strong class=\"target-word\">frugal</strong> habits and rarely wastes money.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">절약하는</strong> 습관이 있어 돈을 거의 낭비하지 않는다."
+      },
+      {
+        "exam_en": "Be <strong class=\"target-word\">frugal</strong> with your time as well as money.",
+        "exam_ko": "돈뿐만 아니라 시간도 <strong class=\"target-word\">아껴</strong> 써야 한다."
+      }
+    ]
+  },
+  {
+    "id": 7615,
+    "origin": "treasury",
+    "examples": [
+      {
+        "exam_en": "The Secretary of the <strong class=\"target-word\">Treasury</strong> announced new tax cuts.",
+        "exam_ko": "<strong class=\"target-word\">재무부</strong> 장관이 새로운 감세 정책을 발표했다."
+      },
+      {
+        "exam_en": "Ministers sat on the <strong class=\"target-word\">Treasury</strong> Bench during the session.",
+        "exam_ko": "장관들은 의회 회기 중 <strong class=\"target-word\">국무 대신석</strong>에 앉아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7618,
+    "origin": "equity",
+    "examples": [
+      {
+        "exam_en": "The judge was noted for the <strong class=\"target-word\">equity</strong> of his decisions.",
+        "exam_ko": "그 판사는 판결의 <strong class=\"target-word\">공정성</strong>으로 유명했다."
+      }
+    ]
+  },
+  {
+    "id": 7619,
+    "origin": "bidding",
+    "examples": [
+      {
+        "exam_en": "He acted at his master's <strong class=\"target-word\">bidding</strong> without question.",
+        "exam_ko": "그는 아무 의문 없이 주인의 <strong class=\"target-word\">명령에 따라</strong> 행동했다."
+      },
+      {
+        "exam_en": "She always does her parents' <strong class=\"target-word\">bidding</strong>.",
+        "exam_ko": "그녀는 항상 부모님이 <strong class=\"target-word\">시키는 대로</strong> 한다."
+      }
+    ]
+  },
+  {
+    "id": 7621,
+    "origin": "broker",
+    "examples": [
+      {
+        "exam_en": "She works as a real estate <strong class=\"target-word\">broker</strong> downtown.",
+        "exam_ko": "그녀는 시내에서 부동산 <strong class=\"target-word\">중개인</strong>으로 일한다."
+      }
+    ]
+  },
+  {
+    "id": 7623,
+    "origin": "sticky",
+    "examples": [
+      {
+        "exam_en": "My hands are <strong class=\"target-word\">sticky</strong> with glue.",
+        "exam_ko": "손에 풀이 묻어서 <strong class=\"target-word\">끈적끈적하다</strong>."
+      },
+      {
+        "exam_en": "My hair feels <strong class=\"target-word\">sticky</strong> after the workout.",
+        "exam_ko": "운동 후 머리카락이 <strong class=\"target-word\">끈적거린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7626,
+    "origin": "equation",
+    "examples": [
+      {
+        "exam_en": "The budget <strong class=\"target-word\">equation</strong> must balance expenses with income.",
+        "exam_ko": "예산 <strong class=\"target-word\">균형</strong>은 지출과 수입을 맞춰야 한다."
+      },
+      {
+        "exam_en": "Students solved the chemical <strong class=\"target-word\">equation</strong> in class.",
+        "exam_ko": "학생들은 수업에서 화학 <strong class=\"target-word\">방정식</strong>을 풀었다."
+      }
+    ]
+  },
+  {
+    "id": 7627,
+    "origin": "impending",
+    "examples": [
+      {
+        "exam_en": "Everyone feared the <strong class=\"target-word\">impending</strong> war.",
+        "exam_ko": "모두가 <strong class=\"target-word\">임박한</strong> 전쟁을 두려워했다."
+      }
+    ]
+  },
+  {
+    "id": 7629,
+    "origin": "satin",
+    "examples": [
+      {
+        "exam_en": "The mirror had a smooth <strong class=\"target-word\">satin</strong> finish.",
+        "exam_ko": "거울에는 부드러운 <strong class=\"target-word\">새틴</strong> 마감이 되어 있었다."
+      },
+      {
+        "exam_en": "She wrapped the gift in <strong class=\"target-word\">satin</strong> paper.",
+        "exam_ko": "그녀는 선물을 <strong class=\"target-word\">새틴</strong> 종이로 쌌다."
+      }
+    ]
+  }
+]

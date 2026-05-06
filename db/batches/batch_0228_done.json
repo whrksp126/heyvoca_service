@@ -1,0 +1,266 @@
+[
+  {
+    "id": 5321,
+    "origin": "emperor",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">emperor</strong> ruled the vast empire.",
+        "exam_ko": "<strong class=\"target-word\">황제</strong>는 광대한 제국을 다스렸다."
+      }
+    ]
+  },
+  {
+    "id": 5322,
+    "origin": "sleeping",
+    "examples": [
+      {
+        "exam_en": "The baby looks peaceful in a <strong class=\"target-word\">sleeping</strong> bag.",
+        "exam_ko": "아기는 <strong class=\"target-word\">침낭</strong> 안에서 평화로워 보인다."
+      }
+    ]
+  },
+  {
+    "id": 5323,
+    "origin": "poisonous",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">poisonous</strong> snake bit the hiker's ankle.",
+        "exam_ko": "<strong class=\"target-word\">독</strong>이 있는 뱀이 등산객의 발목을 물었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Poisonous</strong> gas leaked from the factory.",
+        "exam_ko": "공장에서 <strong class=\"target-word\">유독</strong> 가스가 누출되었다."
+      }
+    ]
+  },
+  {
+    "id": 5324,
+    "origin": "honey",
+    "examples": [
+      {
+        "exam_en": "She spread <strong class=\"target-word\">honey</strong> on her toast.",
+        "exam_ko": "그녀는 토스트에 <strong class=\"target-word\">꿀</strong>을 발랐다."
+      },
+      {
+        "exam_en": "All right, <strong class=\"target-word\">honey</strong>, let's go home.",
+        "exam_ko": "알았어, <strong class=\"target-word\">자기</strong>, 집에 가자."
+      }
+    ]
+  },
+  {
+    "id": 5325,
+    "origin": "breathing",
+    "examples": [
+      {
+        "exam_en": "Deep <strong class=\"target-word\">breathing</strong> helps reduce stress.",
+        "exam_ko": "깊은 <strong class=\"target-word\">호흡</strong>은 스트레스를 줄이는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 5326,
+    "origin": "atop",
+    "examples": [
+      {
+        "exam_en": "His house is <strong class=\"target-word\">atop</strong> the hill.",
+        "exam_ko": "그의 집은 언덕 <strong class=\"target-word\">꼭대기에</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 5328,
+    "origin": "perfectly",
+    "examples": [
+      {
+        "exam_en": "That's <strong class=\"target-word\">perfectly</strong> all right.",
+        "exam_ko": "<strong class=\"target-word\">전혀</strong> 괜찮습니다."
+      },
+      {
+        "exam_en": "She speaks French <strong class=\"target-word\">perfectly</strong>.",
+        "exam_ko": "그녀는 프랑스어를 <strong class=\"target-word\">완벽하게</strong> 구사한다."
+      }
+    ]
+  },
+  {
+    "id": 5329,
+    "origin": "console",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">console</strong> her after the loss.",
+        "exam_ko": "그는 그녀가 실의에 빠졌을 때 <strong class=\"target-word\">위로하려</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">consoled</strong> herself with a cup of tea.",
+        "exam_ko": "그녀는 차 한 잔으로 스스로를 <strong class=\"target-word\">달랬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5330,
+    "origin": "depth",
+    "examples": [
+      {
+        "exam_en": "Scientists measured the <strong class=\"target-word\">depth</strong> of the ocean.",
+        "exam_ko": "과학자들은 바다의 <strong class=\"target-word\">깊이</strong>를 측정했다."
+      },
+      {
+        "exam_en": "The essay lacked <strong class=\"target-word\">depth</strong> and analysis.",
+        "exam_ko": "그 에세이는 <strong class=\"target-word\">깊이</strong>와 분석이 부족했다."
+      }
+    ]
+  },
+  {
+    "id": 5331,
+    "origin": "development",
+    "examples": [
+      {
+        "exam_en": "Early education supports child <strong class=\"target-word\">development</strong>.",
+        "exam_ko": "조기 교육은 아동의 <strong class=\"target-word\">발달</strong>을 돕는다."
+      },
+      {
+        "exam_en": "The city plans a new housing <strong class=\"target-word\">development</strong>.",
+        "exam_ko": "시는 새로운 주택 <strong class=\"target-word\">개발</strong>을 계획하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 5332,
+    "origin": "ourselves",
+    "examples": [
+      {
+        "exam_en": "We seated <strong class=\"target-word\">ourselves</strong> near the window.",
+        "exam_ko": "우리는 창가에 <strong class=\"target-word\">자리를 잡았다</strong>."
+      },
+      {
+        "exam_en": "We pushed <strong class=\"target-word\">ourselves</strong> to finish the project.",
+        "exam_ko": "우리는 프로젝트를 끝내기 위해 <strong class=\"target-word\">스스로를 몰아붙였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5333,
+    "origin": "naturally",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Naturally</strong>, she was nervous before the speech.",
+        "exam_ko": "<strong class=\"target-word\">당연히</strong> 그녀는 발표 전에 긴장했다."
+      },
+      {
+        "exam_en": "You're just <strong class=\"target-word\">naturally</strong> bright.",
+        "exam_ko": "당신은 정말 <strong class=\"target-word\">선천적으로</strong> 머리가 좋군요."
+      }
+    ]
+  },
+  {
+    "id": 5334,
+    "origin": "closing",
+    "examples": [
+      {
+        "exam_en": "The speaker gave a powerful <strong class=\"target-word\">closing</strong> statement.",
+        "exam_ko": "연사는 강력한 <strong class=\"target-word\">마무리</strong> 발언을 했다."
+      },
+      {
+        "exam_en": "The store announced its <strong class=\"target-word\">closing</strong> time.",
+        "exam_ko": "가게는 <strong class=\"target-word\">폐점</strong> 시간을 알렸다."
+      }
+    ]
+  },
+  {
+    "id": 5335,
+    "origin": "fourth",
+    "examples": [
+      {
+        "exam_en": "She finished in <strong class=\"target-word\">fourth</strong> place in the race.",
+        "exam_ko": "그녀는 경주에서 <strong class=\"target-word\">4위</strong>로 들어왔다."
+      },
+      {
+        "exam_en": "He moved in on the <strong class=\"target-word\">fourth</strong> of March.",
+        "exam_ko": "그는 3월 <strong class=\"target-word\">4일</strong>에 이사했다."
+      }
+    ]
+  },
+  {
+    "id": 5336,
+    "origin": "europe",
+    "examples": [
+      {
+        "exam_en": "She traveled across <strong class=\"target-word\">Europe</strong> last summer.",
+        "exam_ko": "그녀는 지난 여름 <strong class=\"target-word\">유럽</strong> 전역을 여행했다."
+      },
+      {
+        "exam_en": "The UK voted to leave <strong class=\"target-word\">Europe</strong> in 2016.",
+        "exam_ko": "영국은 2016년에 <strong class=\"target-word\">유럽연합</strong>을 탈퇴하기로 투표했다."
+      }
+    ]
+  },
+  {
+    "id": 5338,
+    "origin": "club",
+    "examples": [
+      {
+        "exam_en": "She joined a book <strong class=\"target-word\">club</strong> at school.",
+        "exam_ko": "그녀는 학교에서 독서 <strong class=\"target-word\">클럽</strong>에 가입했다."
+      },
+      {
+        "exam_en": "He joined an Alpine <strong class=\"target-word\">club</strong> last year.",
+        "exam_ko": "그는 작년에 산악 <strong class=\"target-word\">클럽</strong>에 가입했다."
+      },
+      {
+        "exam_en": "You only need a few <strong class=\"target-word\">clubs</strong> when first learning golf.",
+        "exam_ko": "골프를 처음 배울 때는 몇 개의 <strong class=\"target-word\">골프채</strong>만 필요하다."
+      }
+    ]
+  },
+  {
+    "id": 5341,
+    "origin": "mare",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">mare</strong> ran gracefully across the field.",
+        "exam_ko": "<strong class=\"target-word\">암말</strong>이 들판을 우아하게 달렸다."
+      }
+    ]
+  },
+  {
+    "id": 5342,
+    "origin": "badly",
+    "examples": [
+      {
+        "exam_en": "He performed <strong class=\"target-word\">badly</strong> on the exam.",
+        "exam_ko": "그는 시험에서 <strong class=\"target-word\">형편없이</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">badly</strong> needed a break from work.",
+        "exam_ko": "그녀는 일에서 <strong class=\"target-word\">몹시</strong> 휴식이 필요했다."
+      }
+    ]
+  },
+  {
+    "id": 5344,
+    "origin": "humanity",
+    "examples": [
+      {
+        "exam_en": "Poetry redeems <strong class=\"target-word\">humanity</strong>.",
+        "exam_ko": "시는 <strong class=\"target-word\">인간성</strong>을 회복한다."
+      },
+      {
+        "exam_en": "It was a crime against <strong class=\"target-word\">humanity</strong>.",
+        "exam_ko": "그것은 <strong class=\"target-word\">인류</strong>에 대한 범죄였다."
+      }
+    ]
+  },
+  {
+    "id": 5345,
+    "origin": "terminal",
+    "examples": [
+      {
+        "exam_en": "The doctor said the disease was <strong class=\"target-word\">terminal</strong>.",
+        "exam_ko": "의사는 그 병이 <strong class=\"target-word\">말기</strong>라고 했다."
+      },
+      {
+        "exam_en": "She waited at the airport <strong class=\"target-word\">terminal</strong> for an hour.",
+        "exam_ko": "그녀는 공항 <strong class=\"target-word\">터미널</strong>에서 한 시간을 기다렸다."
+      }
+    ]
+  }
+]

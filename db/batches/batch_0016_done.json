@@ -1,0 +1,290 @@
+[
+  {
+    "id": 303,
+    "origin": "clear",
+    "examples": [
+      {
+        "exam_en": "The sky is <strong class=\"target-word\">clear</strong> after the rain.",
+        "exam_ko": "비가 온 후 하늘이 <strong class=\"target-word\">맑다</strong>."
+      },
+      {
+        "exam_en": "Please make your instructions <strong class=\"target-word\">clear</strong>.",
+        "exam_ko": "지시 사항을 <strong class=\"target-word\">명확하게</strong> 해주세요."
+      }
+    ]
+  },
+  {
+    "id": 304,
+    "origin": "major",
+    "examples": [
+      {
+        "exam_en": "She chose history as her <strong class=\"target-word\">major</strong>.",
+        "exam_ko": "그녀는 역사학을 <strong class=\"target-word\">전공</strong>으로 선택했다."
+      },
+      {
+        "exam_en": "Philosophy was his <strong class=\"target-word\">major</strong> in college.",
+        "exam_ko": "대학에서는 철학이 그의 <strong class=\"target-word\">전공</strong>이었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Major</strong> John spoke ill of him.",
+        "exam_ko": "<strong class=\"target-word\">존 소령</strong>은 그를 비난했다."
+      }
+    ]
+  },
+  {
+    "id": 305,
+    "origin": "economic",
+    "examples": [
+      {
+        "exam_en": "The professor explained basic <strong class=\"target-word\">economic</strong> principles.",
+        "exam_ko": "교수는 기본적인 <strong class=\"target-word\">경제학</strong> 법칙을 설명했다."
+      },
+      {
+        "exam_en": "The country imposed an <strong class=\"target-word\">economic</strong> blockade.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">경제</strong> 봉쇄를 단행했다."
+      }
+    ]
+  },
+  {
+    "id": 306,
+    "origin": "only",
+    "examples": [
+      {
+        "exam_en": "She slept <strong class=\"target-word\">only</strong> a little last night.",
+        "exam_ko": "그녀는 어제 밤에 <strong class=\"target-word\">아주 조금</strong>밖에 자지 못했다."
+      },
+      {
+        "exam_en": "I will tell it <strong class=\"target-word\">only</strong> to you.",
+        "exam_ko": "너에게<strong class=\"target-word\">만</strong> 이야기할게."
+      }
+    ]
+  },
+  {
+    "id": 307,
+    "origin": "likely",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">likely</strong> to come.",
+        "exam_ko": "그는 올 것 <strong class=\"target-word\">같다</strong>."
+      },
+      {
+        "exam_en": "It seems <strong class=\"target-word\">likely</strong> that she will win.",
+        "exam_ko": "그녀가 이길 것 <strong class=\"target-word\">같다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 308,
+    "origin": "real",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">real</strong> diamond ring.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">진짜</strong> 다이아몬드 반지를 꼈다."
+      },
+      {
+        "exam_en": "Nobody knew his <strong class=\"target-word\">real</strong> identity.",
+        "exam_ko": "아무도 그의 <strong class=\"target-word\">진짜</strong> 정체를 몰랐다."
+      }
+    ]
+  },
+  {
+    "id": 309,
+    "origin": "black",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">black</strong> coat to the funeral.",
+        "exam_ko": "그녀는 장례식에 <strong class=\"target-word\">검은</strong> 코트를 입었다."
+      },
+      {
+        "exam_en": "He has <strong class=\"target-word\">black</strong> hair and brown eyes.",
+        "exam_ko": "그는 <strong class=\"target-word\">검은</strong> 머리카락과 갈색 눈을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 310,
+    "origin": "particular",
+    "examples": [
+      {
+        "exam_en": "Everyone has their own <strong class=\"target-word\">particular</strong> hobbies.",
+        "exam_ko": "모든 사람은 자신만의 <strong class=\"target-word\">개인적인</strong> 취미를 가지고 있다."
+      },
+      {
+        "exam_en": "Check each <strong class=\"target-word\">particular</strong> item on the list.",
+        "exam_ko": "목록의 <strong class=\"target-word\">개개의</strong> 항목을 확인하세요."
+      }
+    ]
+  },
+  {
+    "id": 311,
+    "origin": "international",
+    "examples": [
+      {
+        "exam_en": "She made an <strong class=\"target-word\">international</strong> call to her family.",
+        "exam_ko": "그녀는 가족에게 <strong class=\"target-word\">국제</strong> 전화를 걸었다."
+      },
+      {
+        "exam_en": "Leaders gathered for an <strong class=\"target-word\">international</strong> conference.",
+        "exam_ko": "지도자들이 <strong class=\"target-word\">국제</strong> 회의에 모였다."
+      }
+    ]
+  },
+  {
+    "id": 312,
+    "origin": "special",
+    "examples": [
+      {
+        "exam_en": "Each person has their own <strong class=\"target-word\">special</strong> characteristics.",
+        "exam_ko": "각 사람은 자신만의 <strong class=\"target-word\">특별한</strong> 특성을 가지고 있다."
+      },
+      {
+        "exam_en": "He opened a <strong class=\"target-word\">special</strong> bank account for savings.",
+        "exam_ko": "그는 저축을 위해 <strong class=\"target-word\">특수한</strong> 은행 계좌를 개설했다."
+      }
+    ]
+  },
+  {
+    "id": 313,
+    "origin": "difficult",
+    "examples": [
+      {
+        "exam_en": "The students failed the <strong class=\"target-word\">difficult</strong> exam.",
+        "exam_ko": "학생들은 <strong class=\"target-word\">어려운</strong> 시험에서 실패했다."
+      },
+      {
+        "exam_en": "It was a <strong class=\"target-word\">difficult</strong> choice to make.",
+        "exam_ko": "그것은 내리기 <strong class=\"target-word\">어려운</strong> 선택이었다."
+      }
+    ]
+  },
+  {
+    "id": 314,
+    "origin": "certain",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">certain</strong> of his honesty.",
+        "exam_ko": "나는 그가 정직하다는 것을 <strong class=\"target-word\">확신한다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">certain</strong> of winning the game.",
+        "exam_ko": "그는 시합에 이길 것을 <strong class=\"target-word\">확신했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 315,
+    "origin": "whole",
+    "examples": [
+      {
+        "exam_en": "The news spread across the <strong class=\"target-word\">whole</strong> country.",
+        "exam_ko": "그 소식은 <strong class=\"target-word\">전국</strong>에 퍼졌다."
+      },
+      {
+        "exam_en": "She helped him with her <strong class=\"target-word\">whole</strong> heart.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">온 마음을 다해</strong> 그를 도왔다."
+      }
+    ]
+  },
+  {
+    "id": 316,
+    "origin": "white",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">white</strong> dress to the event.",
+        "exam_ko": "그녀는 행사에 <strong class=\"target-word\">흰</strong> 드레스를 입었다."
+      },
+      {
+        "exam_en": "The mountain top was <strong class=\"target-word\">white</strong> with snow.",
+        "exam_ko": "산꼭대기가 눈으로 <strong class=\"target-word\">새하얗게</strong> 덮여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 317,
+    "origin": "free",
+    "examples": [
+      {
+        "exam_en": "All people deserve to be <strong class=\"target-word\">free</strong>.",
+        "exam_ko": "모든 사람은 <strong class=\"target-word\">자유로울</strong> 자격이 있다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">free</strong> as a bird after graduation.",
+        "exam_ko": "그녀는 졸업 후 새처럼 <strong class=\"target-word\">자유로움</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 318,
+    "origin": "easy",
+    "examples": [
+      {
+        "exam_en": "This is an <strong class=\"target-word\">easy</strong> trick to master.",
+        "exam_ko": "이것은 <strong class=\"target-word\">쉽게</strong> 익힐 수 있는 기술이다."
+      },
+      {
+        "exam_en": "Cleaning the room was an <strong class=\"target-word\">easy</strong> task.",
+        "exam_ko": "방 청소는 <strong class=\"target-word\">수월한</strong> 일이었다."
+      }
+    ]
+  },
+  {
+    "id": 319,
+    "origin": "strong",
+    "examples": [
+      {
+        "exam_en": "Men are often called the <strong class=\"target-word\">stronger</strong> sex.",
+        "exam_ko": "남성은 종종 더 <strong class=\"target-word\">강한</strong> 성이라고 불린다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">strong</strong> constitution.",
+        "exam_ko": "그는 원래 <strong class=\"target-word\">건강한</strong> 체질이다."
+      },
+      {
+        "exam_en": "He suggested the government focus on sectors where Vietnam is already <strong class=\"target-word\">strong</strong>.",
+        "exam_ko": "그는 베트남이 이미 <strong class=\"target-word\">강세</strong>를 보이는 분야에 집중하라고 정부에 조언했다."
+      }
+    ]
+  },
+  {
+    "id": 321,
+    "origin": "central",
+    "examples": [
+      {
+        "exam_en": "The museum is located in the <strong class=\"target-word\">central</strong> part of the city.",
+        "exam_ko": "박물관은 도시의 <strong class=\"target-word\">중심부</strong>에 위치해 있다."
+      },
+      {
+        "exam_en": "My house is very <strong class=\"target-word\">central</strong> for commuting.",
+        "exam_ko": "우리 집은 통근하기에 매우 <strong class=\"target-word\">중심적인</strong> 위치에 있다."
+      }
+    ]
+  },
+  {
+    "id": 322,
+    "origin": "similar",
+    "examples": [
+      {
+        "exam_en": "The two paintings look very <strong class=\"target-word\">similar</strong>.",
+        "exam_ko": "두 그림은 매우 <strong class=\"target-word\">유사해</strong> 보인다."
+      },
+      {
+        "exam_en": "Her coat is <strong class=\"target-word\">similar</strong> in color to mine.",
+        "exam_ko": "그녀의 코트 색은 내 것과 <strong class=\"target-word\">비슷하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 323,
+    "origin": "human",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">human</strong> brain is remarkably complex.",
+        "exam_ko": "<strong class=\"target-word\">인간의</strong> 뇌는 놀랍도록 복잡하다."
+      },
+      {
+        "exam_en": "The accident left him in a <strong class=\"target-word\">human</strong> vegetative state.",
+        "exam_ko": "사고로 그는 <strong class=\"target-word\">식물</strong> 인간 상태가 되었다."
+      }
+    ]
+  }
+]

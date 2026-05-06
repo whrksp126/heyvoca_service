@@ -1,0 +1,238 @@
+[
+  {
+    "id": 14779,
+    "origin": "pallid",
+    "examples": [
+      {
+        "exam_en": "a pallid sky",
+        "exam_ko": "약간 흐린 하늘."
+      }
+    ]
+  },
+  {
+    "id": 14780,
+    "origin": "waxy",
+    "examples": [
+      {
+        "exam_en": "a waxy face",
+        "exam_ko": "창백한 얼굴."
+      },
+      {
+        "exam_en": "get waxy",
+        "exam_ko": "화내다."
+      }
+    ]
+  },
+  {
+    "id": 14785,
+    "origin": "tensile",
+    "examples": [
+      {
+        "exam_en": "tensile force",
+        "exam_ko": "인장력(두 부분이 서로 당기는 힘)."
+      }
+    ]
+  },
+  {
+    "id": 14792,
+    "origin": "flaky",
+    "examples": [
+      {
+        "exam_en": "a flaky piecrust",
+        "exam_ko": "얇게 벗겨지는 파이 껍질."
+      }
+    ]
+  },
+  {
+    "id": 14795,
+    "origin": "heedful",
+    "examples": [
+      {
+        "exam_en": "be heedful of another's advice",
+        "exam_ko": "남의 충고에 유의하다."
+      }
+    ]
+  },
+  {
+    "id": 14798,
+    "origin": "retentive",
+    "examples": [
+      {
+        "exam_en": "be retentive of heat",
+        "exam_ko": "열[습기]을 보유하다."
+      },
+      {
+        "exam_en": "a retentive memory",
+        "exam_ko": "좋은 기억력"
+      }
+    ]
+  },
+  {
+    "id": 14799,
+    "origin": "imperturbable",
+    "examples": [
+      {
+        "exam_en": "be imperturbable in a crisis",
+        "exam_ko": "위기에 동요하지 않다."
+      }
+    ]
+  },
+  {
+    "id": 14803,
+    "origin": "residue",
+    "examples": [
+      {
+        "exam_en": "residue on the bottom of a pool",
+        "exam_ko": "풀장 바닥의 잔류물."
+      }
+    ]
+  },
+  {
+    "id": 14804,
+    "origin": "effluent",
+    "examples": [
+      {
+        "exam_en": "dangerous effluent",
+        "exam_ko": "유해한 폐수."
+      }
+    ]
+  },
+  {
+    "id": 14810,
+    "origin": "commissioned",
+    "examples": [
+      {
+        "exam_en": "a commissioned ship",
+        "exam_ko": "취역함."
+      }
+    ]
+  },
+  {
+    "id": 14812,
+    "origin": "replacement",
+    "examples": [
+      {
+        "exam_en": "the replacement of worn-out parts",
+        "exam_ko": "마멸된 부품의 교체."
+      },
+      {
+        "exam_en": "His replacement was General A.",
+        "exam_ko": "그의 후임자는 A장군이었다."
+      }
+    ]
+  },
+  {
+    "id": 14815,
+    "origin": "lubricate",
+    "examples": [
+      {
+        "exam_en": "lubricate the engine",
+        "exam_ko": "엔진에 기름을 치다."
+      },
+      {
+        "exam_en": "lubricate a high official",
+        "exam_ko": "고관을 매수하다."
+      }
+    ]
+  },
+  {
+    "id": 14817,
+    "origin": "proven",
+    "examples": [
+      {
+        "exam_en": "not proven",
+        "exam_ko": "(스코) [법률] 증거 불충분(에 의한 무죄)."
+      }
+    ]
+  },
+  {
+    "id": 14821,
+    "origin": "thermal",
+    "examples": [
+      {
+        "exam_en": "thermal agitation",
+        "exam_ko": "열교란"
+      },
+      {
+        "exam_en": "a thermal power plant",
+        "exam_ko": "화력 발전소"
+      }
+    ]
+  },
+  {
+    "id": 14826,
+    "origin": "diesel",
+    "examples": [
+      {
+        "exam_en": "a diesel locomotive",
+        "exam_ko": "디젤 기관차."
+      }
+    ]
+  },
+  {
+    "id": 14828,
+    "origin": "deficient",
+    "examples": [
+      {
+        "exam_en": "food deficient in iron",
+        "exam_ko": "철분이 부족한 식품"
+      },
+      {
+        "exam_en": "deficient in skill",
+        "exam_ko": "기술이 부족한"
+      }
+    ]
+  },
+  {
+    "id": 14830,
+    "origin": "distributor",
+    "examples": [
+      {
+        "exam_en": "an electrical goods distributor",
+        "exam_ko": "전기 제품 도매업자[판매 대리점]."
+      }
+    ]
+  },
+  {
+    "id": 14831,
+    "origin": "mill",
+    "examples": [
+      {
+        "exam_en": "Much water runs by the mill that the miller knows not of.",
+        "exam_ko": "알지 못하는 사이에 여러 가지 변화가 있게 마련이다"
+      },
+      {
+        "exam_en": "No mill, no meal.",
+        "exam_ko": "노력 없이 이루어지는 일은 없다"
+      }
+    ]
+  },
+  {
+    "id": 14832,
+    "origin": "preventive",
+    "examples": [
+      {
+        "exam_en": "preventive medicine",
+        "exam_ko": "예방 의학"
+      },
+      {
+        "exam_en": "a preventive war",
+        "exam_ko": "(큰 전쟁을 방지하는) 예방 전쟁"
+      }
+    ]
+  },
+  {
+    "id": 14833,
+    "origin": "duration",
+    "examples": [
+      {
+        "exam_en": "an illness of long duration",
+        "exam_ko": "오랜 병"
+      },
+      {
+        "exam_en": "of long duration",
+        "exam_ko": "장[단]기의, 오래 계속되는[되지 않는]."
+      }
+    ]
+  }
+]

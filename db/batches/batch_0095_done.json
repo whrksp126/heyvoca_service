@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1956,
+    "origin": "growing",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">growing</strong> reputation as a dancer.",
+        "exam_ko": "그녀는 무용가로서 <strong class=\"target-word\">높아지는</strong> 명성을 얻고 있다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">growing</strong> boy who needs more food.",
+        "exam_ko": "그는 더 많은 음식이 필요한 <strong class=\"target-word\">성장기의</strong> 소년이다."
+      }
+    ]
+  },
+  {
+    "id": 1957,
+    "origin": "sufficient",
+    "examples": [
+      {
+        "exam_en": "There is <strong class=\"target-word\">sufficient</strong> fuel for the trip.",
+        "exam_ko": "여행을 위한 <strong class=\"target-word\">충분한</strong> 연료가 있다."
+      },
+      {
+        "exam_en": "There is <strong class=\"target-word\">sufficient</strong> food for ten people.",
+        "exam_ko": "10명이 먹기에 <strong class=\"target-word\">충분한</strong> 음식이 있다."
+      }
+    ]
+  },
+  {
+    "id": 1958,
+    "origin": "scientific",
+    "examples": [
+      {
+        "exam_en": "He proposed a new <strong class=\"target-word\">scientific</strong> theory.",
+        "exam_ko": "그는 새로운 <strong class=\"target-word\">과학적</strong> 이론을 제시했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Scientific</strong> progress has improved our daily lives.",
+        "exam_ko": "<strong class=\"target-word\">과학</strong>의 진보는 우리의 일상을 개선했다."
+      }
+    ]
+  },
+  {
+    "id": 1959,
+    "origin": "eastern",
+    "examples": [
+      {
+        "exam_en": "She grew up in the <strong class=\"target-word\">eastern</strong> states.",
+        "exam_ko": "그녀는 미국 <strong class=\"target-word\">동부</strong> 주에서 자랐다."
+      },
+      {
+        "exam_en": "The storm hit the <strong class=\"target-word\">eastern</strong> half of the country.",
+        "exam_ko": "폭풍은 나라의 <strong class=\"target-word\">동쪽</strong> 절반을 강타했다."
+      }
+    ]
+  },
+  {
+    "id": 1960,
+    "origin": "irish",
+    "examples": [
+      {
+        "exam_en": "He got his <strong class=\"target-word\">Irish</strong> up over the unfair decision.",
+        "exam_ko": "그는 불공정한 결정에 <strong class=\"target-word\">분통을 터뜨렸다</strong>."
+      },
+      {
+        "exam_en": "She speaks with a strong <strong class=\"target-word\">Irish</strong> accent.",
+        "exam_ko": "그녀는 강한 <strong class=\"target-word\">아일랜드</strong> 억양으로 말한다."
+      }
+    ]
+  },
+  {
+    "id": 1961,
+    "origin": "expensive",
+    "examples": [
+      {
+        "exam_en": "He leads an <strong class=\"target-word\">expensive</strong> lifestyle.",
+        "exam_ko": "그는 <strong class=\"target-word\">사치스러운</strong> 생활 방식을 유지한다."
+      },
+      {
+        "exam_en": "The lab uses <strong class=\"target-word\">expensive</strong> equipment.",
+        "exam_ko": "그 연구소는 <strong class=\"target-word\">돈이 많이 드는</strong> 장비를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 1962,
+    "origin": "educational",
+    "examples": [
+      {
+        "exam_en": "She works at several <strong class=\"target-word\">educational</strong> institutions.",
+        "exam_ko": "그녀는 여러 <strong class=\"target-word\">교육</strong> 기관에서 일한다."
+      },
+      {
+        "exam_en": "The country reformed its <strong class=\"target-word\">educational</strong> system.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">교육</strong> 제도를 개혁했다."
+      }
+    ]
+  },
+  {
+    "id": 1963,
+    "origin": "mental",
+    "examples": [
+      {
+        "exam_en": "Reading books strengthens your <strong class=\"target-word\">mental</strong> powers.",
+        "exam_ko": "독서는 당신의 <strong class=\"target-word\">지적</strong> 능력을 강화한다."
+      },
+      {
+        "exam_en": "Stress can lead to <strong class=\"target-word\">mental</strong> weakness over time.",
+        "exam_ko": "스트레스는 시간이 지나면 <strong class=\"target-word\">정신적</strong> 허약으로 이어질 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1964,
+    "origin": "unlikely",
+    "examples": [
+      {
+        "exam_en": "That sounds like an <strong class=\"target-word\">unlikely</strong> story.",
+        "exam_ko": "그것은 <strong class=\"target-word\">있을 법하지 않은</strong> 이야기처럼 들린다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">unlikely</strong> to come to the party.",
+        "exam_ko": "그는 파티에 올 것 <strong class=\"target-word\">같지 않다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1965,
+    "origin": "tiny",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">tiny</strong> doubt about his story.",
+        "exam_ko": "그녀는 그의 이야기에 <strong class=\"target-word\">일말의</strong> 의혹을 품었다."
+      },
+      {
+        "exam_en": "Cells are too <strong class=\"target-word\">tiny</strong> to see without a microscope.",
+        "exam_ko": "세포는 현미경 없이는 볼 수 없을 만큼 <strong class=\"target-word\">미세하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1966,
+    "origin": "historical",
+    "examples": [
+      {
+        "exam_en": "The teacher explained the <strong class=\"target-word\">historical</strong> background.",
+        "exam_ko": "선생님은 <strong class=\"target-word\">역사적</strong> 배경을 설명했다."
+      },
+      {
+        "exam_en": "She wrote a <strong class=\"target-word\">historical</strong> novel set in ancient Rome.",
+        "exam_ko": "그녀는 고대 로마를 배경으로 한 <strong class=\"target-word\">역사</strong> 소설을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 1967,
+    "origin": "thin",
+    "examples": [
+      {
+        "exam_en": "Do not skate on the <strong class=\"target-word\">thin</strong> ice.",
+        "exam_ko": "<strong class=\"target-word\">얇은</strong> 얼음 위에서 스케이트를 타지 마라."
+      },
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">thin</strong> magazine at the bookstore.",
+        "exam_ko": "그녀는 서점에서 <strong class=\"target-word\">얄팍한</strong> 잡지를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1968,
+    "origin": "daily",
+    "examples": [
+      {
+        "exam_en": "Exercise is part of his <strong class=\"target-word\">daily</strong> life.",
+        "exam_ko": "운동은 그의 <strong class=\"target-word\">일상</strong> 생활의 일부이다."
+      },
+      {
+        "exam_en": "She shops for <strong class=\"target-word\">daily</strong> needs every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">일용</strong>품을 구입한다."
+      }
+    ]
+  },
+  {
+    "id": 1969,
+    "origin": "alone",
+    "examples": [
+      {
+        "exam_en": "I told her the truth when we were <strong class=\"target-word\">alone</strong>.",
+        "exam_ko": "우리가 <strong class=\"target-word\">단 둘이</strong> 있을 때 그녀에게 사실을 말했다."
+      },
+      {
+        "exam_en": "It is better to be <strong class=\"target-word\">alone</strong> than in bad company.",
+        "exam_ko": "나쁜 친구와 있느니 <strong class=\"target-word\">혼자</strong> 있는 편이 낫다."
+      }
+    ]
+  },
+  {
+    "id": 1970,
+    "origin": "urban",
+    "examples": [
+      {
+        "exam_en": "Many people moved to the <strong class=\"target-word\">urban</strong> area.",
+        "exam_ko": "많은 사람들이 <strong class=\"target-word\">도시</strong> 지역으로 이주했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Urban</strong> life can be fast-paced and stressful.",
+        "exam_ko": "<strong class=\"target-word\">도시</strong> 생활은 빠르고 스트레스가 많을 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1971,
+    "origin": "empty",
+    "examples": [
+      {
+        "exam_en": "She stared at the <strong class=\"target-word\">empty</strong> page for a long time.",
+        "exam_ko": "그녀는 오랫동안 <strong class=\"target-word\">아무것도 쓰이지 않은</strong> 페이지를 바라봤다."
+      },
+      {
+        "exam_en": "The kitchen had <strong class=\"target-word\">empty</strong> cupboards after the trip.",
+        "exam_ko": "여행 후 부엌 찬장은 <strong class=\"target-word\">텅 비어</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1972,
+    "origin": "married",
+    "examples": [
+      {
+        "exam_en": "They are a happily <strong class=\"target-word\">married</strong> couple.",
+        "exam_ko": "그들은 행복한 <strong class=\"target-word\">부부</strong>이다."
+      },
+      {
+        "exam_en": "They decided to <strong class=\"target-word\">get married</strong> next spring.",
+        "exam_ko": "그들은 내년 봄에 <strong class=\"target-word\">결혼하기로</strong> 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 1973,
+    "origin": "narrow",
+    "examples": [
+      {
+        "exam_en": "The hallway was too <strong class=\"target-word\">narrow</strong> to pass through.",
+        "exam_ko": "복도가 너무 <strong class=\"target-word\">좁아서</strong> 지나갈 수 없었다."
+      },
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">narrow</strong> skirt to the interview.",
+        "exam_ko": "그녀는 면접에 <strong class=\"target-word\">폭이 좁고 긴</strong> 스커트를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 1974,
+    "origin": "liberal",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">liberal</strong> giver who donates often.",
+        "exam_ko": "그는 자주 기부하는 <strong class=\"target-word\">아낌없이 주는</strong> 사람이다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">liberal</strong> with her money when helping others.",
+        "exam_ko": "그녀는 다른 사람을 도울 때 돈을 <strong class=\"target-word\">아끼지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1975,
+    "origin": "supposed",
+    "examples": [
+      {
+        "exam_en": "Let us consider the <strong class=\"target-word\">supposed</strong> situation.",
+        "exam_ko": "<strong class=\"target-word\">가정된</strong> 상황을 고려해 보자."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">supposed</strong> treasure turned out to be a trap.",
+        "exam_ko": "<strong class=\"target-word\">추정상의</strong> 보물은 함정으로 판명되었다."
+      }
+    ]
+  }
+]

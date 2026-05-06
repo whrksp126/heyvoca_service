@@ -1,0 +1,298 @@
+[
+  {
+    "id": 2216,
+    "origin": "net",
+    "examples": [
+      {
+        "exam_en": "The fisherman cast his <strong class=\"target-word\">net</strong> into the sea.",
+        "exam_ko": "어부는 바다에 <strong class=\"target-word\">그물</strong>을 던졌다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">netted</strong> a huge profit this quarter.",
+        "exam_ko": "그들은 이번 분기에 큰 <strong class=\"target-word\">순이익</strong>을 올렸다."
+      },
+      {
+        "exam_en": "They won the prize for the best <strong class=\"target-word\">net</strong> score.",
+        "exam_ko": "그들은 최고 <strong class=\"target-word\">순</strong> 점수로 상을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 2217,
+    "origin": "dear",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">dear</strong> friend to me.",
+        "exam_ko": "그녀는 나에게 <strong class=\"target-word\">친애하는</strong> 친구다."
+      },
+      {
+        "exam_en": "He holds his family very <strong class=\"target-word\">dear</strong>.",
+        "exam_ko": "그는 가족을 매우 <strong class=\"target-word\">소중히</strong> 여긴다."
+      }
+    ]
+  },
+  {
+    "id": 2218,
+    "origin": "extensive",
+    "examples": [
+      {
+        "exam_en": "The city has an <strong class=\"target-word\">extensive</strong> park system.",
+        "exam_ko": "그 도시는 <strong class=\"target-word\">광대한</strong> 공원 시스템을 갖추고 있다."
+      },
+      {
+        "exam_en": "They launched an <strong class=\"target-word\">extensive</strong> business campaign.",
+        "exam_ko": "그들은 <strong class=\"target-word\">광범위한</strong> 사업 캠페인을 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 2219,
+    "origin": "remaining",
+    "examples": [
+      {
+        "exam_en": "There are still <strong class=\"target-word\">remaining</strong> issues to resolve.",
+        "exam_ko": "아직 해결해야 할 <strong class=\"target-word\">남겨진</strong> 문제들이 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">remaining</strong> troops began to withdraw.",
+        "exam_ko": "<strong class=\"target-word\">잔류</strong> 부대는 철수하기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 2220,
+    "origin": "agricultural",
+    "examples": [
+      {
+        "exam_en": "The region exports many <strong class=\"target-word\">agricultural</strong> products.",
+        "exam_ko": "그 지역은 많은 <strong class=\"target-word\">농산</strong>물을 수출한다."
+      },
+      {
+        "exam_en": "Farmers use modern <strong class=\"target-word\">agricultural</strong> tools.",
+        "exam_ko": "농부들은 현대적인 <strong class=\"target-word\">농업</strong> 도구를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 2221,
+    "origin": "alright",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">alright</strong>.",
+        "exam_ko": "나는 <strong class=\"target-word\">괜찮아</strong>."
+      },
+      {
+        "exam_en": "Everything turned out <strong class=\"target-word\">alright</strong> in the end.",
+        "exam_ko": "결국 모든 것이 <strong class=\"target-word\">잘</strong> 해결되었다."
+      }
+    ]
+  },
+  {
+    "id": 2222,
+    "origin": "healthy",
+    "examples": [
+      {
+        "exam_en": "Exercise is key to a <strong class=\"target-word\">healthy</strong> mind.",
+        "exam_ko": "운동은 <strong class=\"target-word\">건전한</strong> 정신의 핵심이다."
+      },
+      {
+        "exam_en": "She gave birth to a <strong class=\"target-word\">healthy</strong> baby.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">건강한</strong> 아기를 낳았다."
+      },
+      {
+        "exam_en": "A balanced diet helps maintain a <strong class=\"target-word\">healthy</strong> life.",
+        "exam_ko": "균형 잡힌 식단은 <strong class=\"target-word\">건강한</strong> 삶을 유지하는 데 도움이 된다."
+      }
+    ]
+  },
+  {
+    "id": 2224,
+    "origin": "principal",
+    "examples": [
+      {
+        "exam_en": "Seoul is the <strong class=\"target-word\">principal</strong> city of Korea.",
+        "exam_ko": "서울은 한국의 <strong class=\"target-word\">주요</strong> 도시다."
+      },
+      {
+        "exam_en": "Rice is the <strong class=\"target-word\">principal</strong> food in this region.",
+        "exam_ko": "이 지역에서 쌀은 <strong class=\"target-word\">주식</strong>이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">principal</strong> signed several construction contracts.",
+        "exam_ko": "<strong class=\"target-word\">본인</strong>은 여러 건설 계약에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 2225,
+    "origin": "efficient",
+    "examples": [
+      {
+        "exam_en": "She is very <strong class=\"target-word\">efficient</strong> at her work.",
+        "exam_ko": "그녀는 업무에 매우 <strong class=\"target-word\">유능하다</strong>."
+      },
+      {
+        "exam_en": "They adopted a more <strong class=\"target-word\">efficient</strong> method.",
+        "exam_ko": "그들은 더 <strong class=\"target-word\">효율적인</strong> 방법을 채택했다."
+      }
+    ]
+  },
+  {
+    "id": 2226,
+    "origin": "chinese",
+    "examples": [
+      {
+        "exam_en": "He studied the history of the <strong class=\"target-word\">Chinese</strong> Communist Party.",
+        "exam_ko": "그는 <strong class=\"target-word\">중국</strong> 공산당의 역사를 공부했다."
+      },
+      {
+        "exam_en": "She learned to write <strong class=\"target-word\">Chinese</strong> characters.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">한자</strong> 쓰는 법을 배웠다."
+      }
+    ]
+  },
+  {
+    "id": 2227,
+    "origin": "conventional",
+    "examples": [
+      {
+        "exam_en": "He always makes <strong class=\"target-word\">conventional</strong> remarks.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">판에 박힌</strong> 말을 한다."
+      },
+      {
+        "exam_en": "He is fairly <strong class=\"target-word\">conventional</strong> in his views.",
+        "exam_ko": "그는 사물을 보는 눈이 꽤 <strong class=\"target-word\">진부하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2228,
+    "origin": "willing",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">willing</strong> to follow you.",
+        "exam_ko": "함께 가도 <strong class=\"target-word\">상관없습니다</strong>."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">willing</strong> for him to help me.",
+        "exam_ko": "그의 도움이라면 받아들이는 데 <strong class=\"target-word\">기꺼이 동의합니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2229,
+    "origin": "voluntary",
+    "examples": [
+      {
+        "exam_en": "She works as a <strong class=\"target-word\">voluntary</strong> helper at the shelter.",
+        "exam_ko": "그녀는 쉼터에서 <strong class=\"target-word\">자발적인</strong> 도우미로 일한다."
+      },
+      {
+        "exam_en": "It was a <strong class=\"target-word\">voluntary</strong> act of kindness.",
+        "exam_ko": "그것은 친절의 <strong class=\"target-word\">자발적</strong> 행위였다."
+      }
+    ]
+  },
+  {
+    "id": 2230,
+    "origin": "slight",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">slight</strong> decrease in sales.",
+        "exam_ko": "매출에 <strong class=\"target-word\">약간의</strong> 감소가 있었다."
+      },
+      {
+        "exam_en": "I don't have the <strong class=\"target-word\">slightest</strong> idea what you mean.",
+        "exam_ko": "네가 무슨 말을 하는지 <strong class=\"target-word\">조금도</strong> 알 수가 없다."
+      }
+    ]
+  },
+  {
+    "id": 2231,
+    "origin": "dramatic",
+    "examples": [
+      {
+        "exam_en": "The play had a <strong class=\"target-word\">dramatic</strong> ending.",
+        "exam_ko": "그 연극은 <strong class=\"target-word\">극적인</strong> 결말을 맞이했다."
+      },
+      {
+        "exam_en": "It was a truly <strong class=\"target-word\">dramatic</strong> event.",
+        "exam_ko": "그것은 정말 <strong class=\"target-word\">극적인</strong> 사건이었다."
+      }
+    ]
+  },
+  {
+    "id": 2232,
+    "origin": "golden",
+    "examples": [
+      {
+        "exam_en": "She has beautiful <strong class=\"target-word\">golden</strong> hair.",
+        "exam_ko": "그녀는 아름다운 <strong class=\"target-word\">금빛</strong> 머리카락을 가지고 있다."
+      },
+      {
+        "exam_en": "The king wore a <strong class=\"target-word\">golden</strong> crown.",
+        "exam_ko": "왕은 <strong class=\"target-word\">금</strong>관을 쓰고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2233,
+    "origin": "federal",
+    "examples": [
+      {
+        "exam_en": "Germany is a <strong class=\"target-word\">federal</strong> state.",
+        "exam_ko": "독일은 <strong class=\"target-word\">연방</strong> 국가다."
+      },
+      {
+        "exam_en": "The country operates under a <strong class=\"target-word\">federal</strong> system.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">연방</strong> 제도로 운영된다."
+      }
+    ]
+  },
+  {
+    "id": 2234,
+    "origin": "keen",
+    "examples": [
+      {
+        "exam_en": "The chef uses a <strong class=\"target-word\">keen</strong> blade.",
+        "exam_ko": "요리사는 <strong class=\"target-word\">예리한</strong> 칼날을 사용한다."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">keen</strong> interest in astronomy.",
+        "exam_ko": "그녀는 천문학에 <strong class=\"target-word\">열정적인</strong> 관심을 갖고 있다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">keen</strong> sense of smell.",
+        "exam_ko": "그는 <strong class=\"target-word\">예민한</strong> 후각을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2235,
+    "origin": "flat",
+    "examples": [
+      {
+        "exam_en": "The table has a perfectly <strong class=\"target-word\">flat</strong> surface.",
+        "exam_ko": "그 탁자는 완벽하게 <strong class=\"target-word\">평평한</strong> 표면을 가지고 있다."
+      },
+      {
+        "exam_en": "They built a house on <strong class=\"target-word\">flat</strong> ground.",
+        "exam_ko": "그들은 <strong class=\"target-word\">평탄한</strong> 땅에 집을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 2236,
+    "origin": "silent",
+    "examples": [
+      {
+        "exam_en": "The library is a <strong class=\"target-word\">silent</strong> room.",
+        "exam_ko": "도서관은 <strong class=\"target-word\">조용한</strong> 공간이다."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">silent</strong> man who rarely speaks.",
+        "exam_ko": "그는 거의 말하지 않는 <strong class=\"target-word\">말 없는</strong> 사람이다."
+      }
+    ]
+  }
+]

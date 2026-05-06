@@ -1,0 +1,282 @@
+[
+  {
+    "id": 960,
+    "origin": "investment",
+    "examples": [
+      {
+        "exam_en": "She made a wise <strong class=\"target-word\">investment</strong> in stocks.",
+        "exam_ko": "그녀는 주식에 현명한 <strong class=\"target-word\">투자</strong>를 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">investment</strong> paid off within a year.",
+        "exam_ko": "그 <strong class=\"target-word\">투자</strong>는 1년 안에 결실을 맺었다."
+      }
+    ]
+  },
+  {
+    "id": 961,
+    "origin": "expand",
+    "examples": [
+      {
+        "exam_en": "Reading helps you <strong class=\"target-word\">expand</strong> your knowledge.",
+        "exam_ko": "독서는 지식을 <strong class=\"target-word\">넓히는</strong> 데 도움이 된다."
+      },
+      {
+        "exam_en": "The company plans to <strong class=\"target-word\">expand</strong> its business overseas.",
+        "exam_ko": "그 회사는 해외로 사업을 <strong class=\"target-word\">확장할</strong> 계획이다."
+      }
+    ]
+  },
+  {
+    "id": 962,
+    "origin": "corporation",
+    "examples": [
+      {
+        "exam_en": "They founded a <strong class=\"target-word\">corporation</strong> to manage the assets.",
+        "exam_ko": "그들은 자산을 관리하기 위해 <strong class=\"target-word\">법인</strong>을 설립했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">corporation</strong> reported record profits this year.",
+        "exam_ko": "그 <strong class=\"target-word\">기업</strong>은 올해 역대 최고 수익을 보고했다."
+      }
+    ]
+  },
+  {
+    "id": 963,
+    "origin": "possessive",
+    "examples": [
+      {
+        "exam_en": "He is very <strong class=\"target-word\">possessive</strong> of his belongings.",
+        "exam_ko": "그는 자신의 소유물에 매우 <strong class=\"target-word\">독점적이다</strong>."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">possessive</strong> mother who controls her kids.",
+        "exam_ko": "그녀는 아이들을 통제하는 <strong class=\"target-word\">독점적인</strong> 어머니다."
+      }
+    ]
+  },
+  {
+    "id": 964,
+    "origin": "instead",
+    "examples": [
+      {
+        "exam_en": "Please give me this one <strong class=\"target-word\">instead</strong>.",
+        "exam_ko": "<strong class=\"target-word\">대신</strong> 이것을 주세요."
+      },
+      {
+        "exam_en": "He skipped lunch and had coffee <strong class=\"target-word\">instead</strong>.",
+        "exam_ko": "그는 점심을 건너뛰고 <strong class=\"target-word\">대신</strong> 커피를 마셨다."
+      }
+    ]
+  },
+  {
+    "id": 965,
+    "origin": "utter",
+    "examples": [
+      {
+        "exam_en": "She did not <strong class=\"target-word\">utter</strong> a single word.",
+        "exam_ko": "그녀는 한 마디도 <strong class=\"target-word\">말하지</strong> 않았다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">uttered</strong> a terrible cry in pain.",
+        "exam_ko": "그는 고통으로 무서운 비명을 <strong class=\"target-word\">질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 966,
+    "origin": "cling",
+    "examples": [
+      {
+        "exam_en": "The wet shirt <strong class=\"target-word\">clung</strong> to his body.",
+        "exam_ko": "젖은 셔츠가 그의 몸에 <strong class=\"target-word\">달라붙었다</strong>."
+      },
+      {
+        "exam_en": "The child <strong class=\"target-word\">clung</strong> to his mother tightly.",
+        "exam_ko": "아이는 어머니에게 꼭 <strong class=\"target-word\">매달렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 967,
+    "origin": "newly",
+    "examples": [
+      {
+        "exam_en": "They explored a <strong class=\"target-word\">newly</strong> discovered island.",
+        "exam_ko": "그들은 <strong class=\"target-word\">새로</strong> 발견된 섬을 탐험했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">newly</strong> independent nations joined the UN.",
+        "exam_ko": "<strong class=\"target-word\">신생</strong> 독립 국가들이 UN에 가입했다."
+      }
+    ]
+  },
+  {
+    "id": 968,
+    "origin": "future",
+    "examples": [
+      {
+        "exam_en": "We must prepare for our <strong class=\"target-word\">future</strong> together.",
+        "exam_ko": "우리는 함께 <strong class=\"target-word\">미래</strong>를 준비해야 한다."
+      },
+      {
+        "exam_en": "This will happen in the near <strong class=\"target-word\">future</strong>.",
+        "exam_ko": "이것은 머지않은 <strong class=\"target-word\">미래</strong>에 일어날 것이다."
+      }
+    ]
+  },
+  {
+    "id": 969,
+    "origin": "invite",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">invited</strong> several guests to her home.",
+        "exam_ko": "그녀는 여러 손님을 집으로 <strong class=\"target-word\">초대했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">invited</strong> his friends to the party.",
+        "exam_ko": "그는 친구들을 파티에 <strong class=\"target-word\">초대했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 970,
+    "origin": "friendly",
+    "examples": [
+      {
+        "exam_en": "She gave me some <strong class=\"target-word\">friendly</strong> advice.",
+        "exam_ko": "그녀는 나에게 <strong class=\"target-word\">친절한</strong> 충고를 해주었다."
+      },
+      {
+        "exam_en": "He greeted everyone in a <strong class=\"target-word\">friendly</strong> manner.",
+        "exam_ko": "그는 모두에게 <strong class=\"target-word\">친근한</strong> 태도로 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 971,
+    "origin": "status",
+    "examples": [
+      {
+        "exam_en": "Women have gained higher <strong class=\"target-word\">status</strong> in society.",
+        "exam_ko": "여성들은 사회에서 더 높은 <strong class=\"target-word\">지위</strong>를 얻었다."
+      },
+      {
+        "exam_en": "He worked hard to improve his social <strong class=\"target-word\">status</strong>.",
+        "exam_ko": "그는 사회적 <strong class=\"target-word\">지위</strong>를 높이기 위해 열심히 일했다."
+      }
+    ]
+  },
+  {
+    "id": 972,
+    "origin": "diplomatic",
+    "examples": [
+      {
+        "exam_en": "They signed a <strong class=\"target-word\">diplomatic</strong> agreement yesterday.",
+        "exam_ko": "그들은 어제 <strong class=\"target-word\">외교</strong> 협정에 서명했다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">diplomatic</strong> skills helped resolve the conflict.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">외교적</strong> 기술이 갈등 해결에 도움이 됐다."
+      }
+    ]
+  },
+  {
+    "id": 973,
+    "origin": "supporting",
+    "examples": [
+      {
+        "exam_en": "He played a <strong class=\"target-word\">supporting</strong> role in the film.",
+        "exam_ko": "그는 영화에서 <strong class=\"target-word\">조연</strong> 역할을 맡았다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">supporting</strong> her team through a tough season.",
+        "exam_ko": "그녀는 힘든 시즌 동안 팀을 <strong class=\"target-word\">지원하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 974,
+    "origin": "promotion",
+    "examples": [
+      {
+        "exam_en": "She finally received a <strong class=\"target-word\">promotion</strong> at work.",
+        "exam_ko": "그녀는 마침내 직장에서 <strong class=\"target-word\">승진</strong>했다."
+      },
+      {
+        "exam_en": "He worked overtime to earn a <strong class=\"target-word\">promotion</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">승진</strong>을 위해 야근을 했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">promotion</strong> came with a significant raise.",
+        "exam_ko": "<strong class=\"target-word\">승진</strong>에는 상당한 급여 인상이 따랐다."
+      }
+    ]
+  },
+  {
+    "id": 975,
+    "origin": "responsible",
+    "examples": [
+      {
+        "exam_en": "She holds a very <strong class=\"target-word\">responsible</strong> position.",
+        "exam_ko": "그녀는 매우 <strong class=\"target-word\">책임이 큰</strong> 직책을 맡고 있다."
+      },
+      {
+        "exam_en": "He felt <strong class=\"target-word\">responsible</strong> for the team's failure.",
+        "exam_ko": "그는 팀의 실패에 <strong class=\"target-word\">책임감</strong>을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 976,
+    "origin": "relation",
+    "examples": [
+      {
+        "exam_en": "There is a close <strong class=\"target-word\">relation</strong> between diet and health.",
+        "exam_ko": "식단과 건강 사이에는 밀접한 <strong class=\"target-word\">관계</strong>가 있다."
+      },
+      {
+        "exam_en": "He spoke in <strong class=\"target-word\">relation</strong> to the new policy.",
+        "exam_ko": "그는 새 정책과 <strong class=\"target-word\">관련하여</strong> 발언했다."
+      }
+    ]
+  },
+  {
+    "id": 977,
+    "origin": "supreme",
+    "examples": [
+      {
+        "exam_en": "He was the <strong class=\"target-word\">supreme</strong> ruler of the empire.",
+        "exam_ko": "그는 제국의 <strong class=\"target-word\">최고</strong> 통치자였다."
+      },
+      {
+        "exam_en": "She is considered a <strong class=\"target-word\">supreme</strong> artist of her time.",
+        "exam_ko": "그녀는 시대의 <strong class=\"target-word\">최고</strong> 예술가로 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 978,
+    "origin": "election",
+    "examples": [
+      {
+        "exam_en": "A special <strong class=\"target-word\">election</strong> was held to fill the vacancy.",
+        "exam_ko": "공석을 채우기 위해 보결 <strong class=\"target-word\">선거</strong>가 실시됐다."
+      },
+      {
+        "exam_en": "The midterm <strong class=\"target-word\">elections</strong> drew record voter turnout.",
+        "exam_ko": "중간 <strong class=\"target-word\">선거</strong>에서 역대 최고 투표율을 기록했다."
+      }
+    ]
+  },
+  {
+    "id": 979,
+    "origin": "commemorate",
+    "examples": [
+      {
+        "exam_en": "The statue <strong class=\"target-word\">commemorates</strong> the general's heroism.",
+        "exam_ko": "그 동상은 장군의 영웅적 행위를 <strong class=\"target-word\">기념한다</strong>."
+      }
+    ]
+  }
+]

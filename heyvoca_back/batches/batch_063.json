@@ -1,0 +1,602 @@
+[
+  {
+    "id": 6185,
+    "word": "him",
+    "exam_en": "Give <strong class=\"target-word\">him</strong> this book.",
+    "exam_ko": "이 책을 <strong class=\"target-word\">그에게</strong> 주어라"
+  },
+  {
+    "id": 6186,
+    "word": "hill",
+    "exam_en": "go up a <strong class=\"target-word\">hill</strong>",
+    "exam_ko": "언덕[비탈길]을 <strong class=\"target-word\">오르다</strong>[내려가다]"
+  },
+  {
+    "id": 6187,
+    "word": "hill",
+    "exam_en": "The villa is up on the <strong class=\"target-word\">hill</strong>.",
+    "exam_ko": "그 별장은 <strong class=\"target-word\">언덕</strong> 위에 있다."
+  },
+  {
+    "id": 6188,
+    "word": "hijack",
+    "exam_en": "Armed terrorists <strong class=\"target-word\">hijack</strong>ed an airc",
+    "exam_ko": "무장한 테러리스트가 항공기를 <strong class=\"target-word\">납치했다</strong>."
+  },
+  {
+    "id": 6189,
+    "word": "hijack",
+    "exam_en": "<strong class=\"target-word\">hijack</strong> a person into buying it",
+    "exam_ko": "남에게 그것을 강제로 사게 <strong class=\"target-word\">강요하다</strong>."
+  },
+  {
+    "id": 6190,
+    "word": "hers",
+    "exam_en": "a friend of <strong class=\"target-word\">hers</strong>",
+    "exam_ko": "<strong class=\"target-word\">그녀의</strong> 친구"
+  },
+  {
+    "id": 6191,
+    "word": "hers",
+    "exam_en": "The red car is <strong class=\"target-word\">hers</strong>.",
+    "exam_ko": "그 빨간 차는 그녀의 <strong class=\"target-word\">것이다</strong>"
+  },
+  {
+    "id": 6192,
+    "word": "her",
+    "exam_en": "This is a gift for <strong class=\"target-word\">her</strong>.",
+    "exam_ko": "그녀에게 주는 <strong class=\"target-word\">선물</strong>이다."
+  },
+  {
+    "id": 6193,
+    "word": "her",
+    "exam_en": "<strong class=\"target-word\">her</strong> cap",
+    "exam_ko": "<strong class=\"target-word\">그녀의</strong> 모자"
+  },
+  {
+    "id": 6194,
+    "word": "helicopter",
+    "exam_en": "a <strong class=\"target-word\">helicopter</strong> pad",
+    "exam_ko": "<strong class=\"target-word\">헬리콥터</strong> 발착장"
+  },
+  {
+    "id": 6195,
+    "word": "helicopter",
+    "exam_en": "a <strong class=\"target-word\">helicopter</strong> pilot",
+    "exam_ko": "<strong class=\"target-word\">헬리콥터</strong> 조종사"
+  },
+  {
+    "id": 6196,
+    "word": "heart",
+    "exam_en": "a strong <strong class=\"target-word\">heart</strong>",
+    "exam_ko": "<strong class=\"target-word\">강한</strong>[약한] 심장"
+  },
+  {
+    "id": 6197,
+    "word": "heart",
+    "exam_en": "have <strong class=\"target-word\">heart</strong> trouble",
+    "exam_ko": "<strong class=\"target-word\">심장</strong> 질환이 있다"
+  },
+  {
+    "id": 6198,
+    "word": "health",
+    "exam_en": "dental <strong class=\"target-word\">health</strong>",
+    "exam_ko": "치아[정신] <strong class=\"target-word\">건강</strong>"
+  },
+  {
+    "id": 6199,
+    "word": "health",
+    "exam_en": "for <strong class=\"target-word\">health</strong> reasons",
+    "exam_ko": "<strong class=\"target-word\">건강상의</strong> 이유로"
+  },
+  {
+    "id": 6200,
+    "word": "heal",
+    "exam_en": "<strong class=\"target-word\">heal</strong> the sick",
+    "exam_ko": "환자를 <strong class=\"target-word\">고치다</strong>"
+  },
+  {
+    "id": 6201,
+    "word": "heal",
+    "exam_en": "use a herb to <strong class=\"target-word\">heal</strong> wounds",
+    "exam_ko": "약초를 이용해 상처를 <strong class=\"target-word\">치료하다</strong>"
+  },
+  {
+    "id": 6202,
+    "word": "headquarters",
+    "exam_en": "police <strong class=\"target-word\">headquarters</strong>",
+    "exam_ko": "<strong class=\"target-word\">경찰</strong> 본서"
+  },
+  {
+    "id": 6203,
+    "word": "headquarters",
+    "exam_en": "the UN <strong class=\"target-word\">headquarters</strong>",
+    "exam_ko": "UN <strong class=\"target-word\">본부</strong>"
+  },
+  {
+    "id": 6204,
+    "word": "he",
+    "exam_en": "<strong class=\"target-word\">He</strong> is not a man of action.",
+    "exam_ko": "<strong class=\"target-word\">그는</strong> 행동가가 아니다."
+  },
+  {
+    "id": 6205,
+    "word": "he",
+    "exam_en": "<strong class=\"target-word\">He</strong> is a regular find, that horse of yours.",
+    "exam_ko": "<strong class=\"target-word\">그</strong> 말은 정말 횡재한 거야."
+  },
+  {
+    "id": 6206,
+    "word": "hat",
+    "exam_en": "put on one's <strong class=\"target-word\">hat</strong>",
+    "exam_ko": "모자를 <strong class=\"target-word\">쓰다</strong>[벗다]"
+  },
+  {
+    "id": 6207,
+    "word": "hat",
+    "exam_en": "have one's <strong class=\"target-word\">hat</strong> on",
+    "exam_ko": "<strong class=\"target-word\">모자</strong>를 쓰고 있다"
+  },
+  {
+    "id": 6208,
+    "word": "harmony",
+    "exam_en": "perfect <strong class=\"target-word\">harmony</strong> of mind and body",
+    "exam_ko": "심신의 완전한 <strong class=\"target-word\">조화</strong>"
+  },
+  {
+    "id": 6209,
+    "word": "harmony",
+    "exam_en": "<strong class=\"target-word\">harmony</strong> of color",
+    "exam_ko": "색채의 <strong class=\"target-word\">조화</strong>"
+  },
+  {
+    "id": 6210,
+    "word": "half",
+    "exam_en": "a <strong class=\"target-word\">half</strong> of an orange",
+    "exam_ko": "오렌지의 <strong class=\"target-word\">절반</strong>"
+  },
+  {
+    "id": 6211,
+    "word": "half",
+    "exam_en": "the former <strong class=\"target-word\">half</strong> of the 16th century",
+    "exam_ko": "16<strong class=\"target-word\">세기</strong> 전반[후반]"
+  },
+  {
+    "id": 6212,
+    "word": "group",
+    "exam_en": "a <strong class=\"target-word\">group</strong> of young technocrats",
+    "exam_ko": "젊은 기술 관료의 <strong class=\"target-word\">일단</strong>"
+  },
+  {
+    "id": 6213,
+    "word": "group",
+    "exam_en": "in a <strong class=\"target-word\">group</strong>",
+    "exam_ko": "<strong class=\"target-word\">단체로</strong>, 집단을 이루어"
+  },
+  {
+    "id": 6214,
+    "word": "ground",
+    "exam_en": "above <strong class=\"target-word\">ground</strong>",
+    "exam_ko": "<strong class=\"target-word\">지상에</strong>[지하에]"
+  },
+  {
+    "id": 6215,
+    "word": "ground",
+    "exam_en": "deep under the <strong class=\"target-word\">ground</strong>",
+    "exam_ko": "깊은 <strong class=\"target-word\">땅</strong> 속"
+  },
+  {
+    "id": 6216,
+    "word": "gold",
+    "exam_en": "18 karat <strong class=\"target-word\">gold</strong>",
+    "exam_ko": "<strong class=\"target-word\">18금</strong>"
+  },
+  {
+    "id": 6217,
+    "word": "god",
+    "exam_en": "the Almighty <strong class=\"target-word\">God</strong>",
+    "exam_ko": "전능하신 <strong class=\"target-word\">신</strong>"
+  },
+  {
+    "id": 6218,
+    "word": "god",
+    "exam_en": "<strong class=\"target-word\">God</strong> the Father, the Son, and the Holy Ghost",
+    "exam_ko": "성부와 성자와 성령, <strong class=\"target-word\">삼위일체</strong>(＝the Trinity)"
+  },
+  {
+    "id": 6219,
+    "word": "girl",
+    "exam_en": "a little <strong class=\"target-word\">girl</strong>",
+    "exam_ko": "(10세 이하의) 어린 <strong class=\"target-word\">소녀</strong>"
+  },
+  {
+    "id": 6220,
+    "word": "girl",
+    "exam_en": "a <strong class=\"target-word\">girl</strong> of eleven",
+    "exam_ko": "11살의 <strong class=\"target-word\">소녀</strong>"
+  },
+  {
+    "id": 6221,
+    "word": "gas",
+    "exam_en": "have <strong class=\"target-word\">gas</strong>",
+    "exam_ko": "가스에 <strong class=\"target-word\">중독되다</strong>"
+  },
+  {
+    "id": 6222,
+    "word": "gas",
+    "exam_en": "Ammonia exists as a liquid and a <strong class=\"target-word\">gas</strong>.",
+    "exam_ko": "암모니아는 액체 및 <strong class=\"target-word\">기체</strong> 상태로 존재한다."
+  },
+  {
+    "id": 6223,
+    "word": "game",
+    "exam_en": "a <strong class=\"target-word\">game</strong> of chance",
+    "exam_ko": "(<strong class=\"target-word\">기술보다</strong>) 운에 좌우되는 게임"
+  },
+  {
+    "id": 6224,
+    "word": "game",
+    "exam_en": "What a <strong class=\"target-word\">game</strong>!",
+    "exam_ko": "정말 <strong class=\"target-word\">대박</strong>[황당한]이군!"
+  },
+  {
+    "id": 6225,
+    "word": "fuel",
+    "exam_en": "<strong class=\"target-word\">fuel</strong> gauge",
+    "exam_ko": "<strong class=\"target-word\">연료계</strong>"
+  },
+  {
+    "id": 6226,
+    "word": "fuel",
+    "exam_en": "a gallon of <strong class=\"target-word\">fuel</strong>",
+    "exam_ko": "1갤런의 <strong class=\"target-word\">연료</strong>"
+  },
+  {
+    "id": 6227,
+    "word": "fruit",
+    "exam_en": "fresh <strong class=\"target-word\">fruit</strong>",
+    "exam_ko": "풋[익은] <strong class=\"target-word\">과일</strong>"
+  },
+  {
+    "id": 6228,
+    "word": "fruit",
+    "exam_en": "a <strong class=\"target-word\">fruit</strong> basket",
+    "exam_ko": "<strong class=\"target-word\">과일</strong> 바구니"
+  },
+  {
+    "id": 6229,
+    "word": "friend",
+    "exam_en": "a <strong class=\"target-word\">friend</strong> of mine",
+    "exam_ko": "<strong class=\"target-word\">나의</strong> 친구(중의 하나)"
+  },
+  {
+    "id": 6230,
+    "word": "friend",
+    "exam_en": "an old <strong class=\"target-word\">friend</strong>",
+    "exam_ko": "오랜 <strong class=\"target-word\">친구</strong>"
+  },
+  {
+    "id": 6231,
+    "word": "freedom",
+    "exam_en": "give a slave his <strong class=\"target-word\">freedom</strong>",
+    "exam_ko": "노예를 <strong class=\"target-word\">해방하다</strong>"
+  },
+  {
+    "id": 6232,
+    "word": "freedom",
+    "exam_en": "gain <strong class=\"target-word\">freedom</strong> from colonial rule",
+    "exam_ko": "식민지 지배로부터 독립을 <strong class=\"target-word\">쟁취하다</strong>."
+  },
+  {
+    "id": 6233,
+    "word": "frame",
+    "exam_en": "a man of fragile <strong class=\"target-word\">frame</strong>",
+    "exam_ko": "<strong class=\"target-word\">체격이</strong> 가냘픈 사람."
+  },
+  {
+    "id": 6234,
+    "word": "frame",
+    "exam_en": "a door <strong class=\"target-word\">frame</strong>",
+    "exam_ko": "<strong class=\"target-word\">문틀</strong>"
+  },
+  {
+    "id": 6235,
+    "word": "four",
+    "exam_en": "the <strong class=\"target-word\">four</strong> of spades",
+    "exam_ko": "스페이드의 <strong class=\"target-word\">4</strong>."
+  },
+  {
+    "id": 6236,
+    "word": "four",
+    "exam_en": "a carriage and <strong class=\"target-word\">four</strong>",
+    "exam_ko": "4두 <strong class=\"target-word\">마차</strong>."
+  },
+  {
+    "id": 6237,
+    "word": "forties",
+    "exam_en": "He is in his early <strong class=\"target-word\">forties</strong>.",
+    "exam_ko": "그는 <strong class=\"target-word\">40대</strong> 초이다"
+  },
+  {
+    "id": 6238,
+    "word": "forty",
+    "exam_en": "Life begins at <strong class=\"target-word\">forty</strong>.",
+    "exam_ko": "인생은 <strong class=\"target-word\">40</strong>부터다."
+  },
+  {
+    "id": 6239,
+    "word": "forest",
+    "exam_en": "be lost in the <strong class=\"target-word\">forest</strong>",
+    "exam_ko": "숲 속에서 길을 <strong class=\"target-word\">잃다</strong>."
+  },
+  {
+    "id": 6240,
+    "word": "forest",
+    "exam_en": "walk in[through] the <strong class=\"target-word\">forest</strong>",
+    "exam_ko": "<strong class=\"target-word\">숲</strong> 속을 걷다"
+  },
+  {
+    "id": 6241,
+    "word": "for",
+    "exam_en": "go <strong class=\"target-word\">for</strong> a walk",
+    "exam_ko": "산책[수영]하러 <strong class=\"target-word\">가다</strong>"
+  },
+  {
+    "id": 6242,
+    "word": "for",
+    "exam_en": "have no time <strong class=\"target-word\">for</strong> rest",
+    "exam_ko": "쉴 <strong class=\"target-word\">시간</strong>이 없다."
+  },
+  {
+    "id": 6243,
+    "word": "feet",
+    "exam_en": "in bare <strong class=\"target-word\">feet</strong>",
+    "exam_ko": "맨<strong class=\"target-word\">발</strong>로"
+  },
+  {
+    "id": 6244,
+    "word": "feet",
+    "exam_en": "jump to one's <strong class=\"target-word\">feet</strong>",
+    "exam_ko": "벌떡 <strong class=\"target-word\">일어서다</strong>(※이 표현에 쓰이는 동사 ◇ get, rise, start, struggle, stagger, heave, lumber, scramble, lurch)"
+  },
+  {
+    "id": 6245,
+    "word": "fool",
+    "exam_en": "a natural <strong class=\"target-word\">fool</strong>",
+    "exam_ko": "선천적인 <strong class=\"target-word\">바보</strong>, 백치"
+  },
+  {
+    "id": 6246,
+    "word": "fool",
+    "exam_en": "a big <strong class=\"target-word\">fool</strong>",
+    "exam_ko": "형편없는 <strong class=\"target-word\">바보</strong>"
+  },
+  {
+    "id": 6247,
+    "word": "food",
+    "exam_en": "animal <strong class=\"target-word\">food</strong>",
+    "exam_ko": "<strong class=\"target-word\">육식</strong>[채식]"
+  },
+  {
+    "id": 6248,
+    "word": "food",
+    "exam_en": "a staple <strong class=\"target-word\">food</strong>",
+    "exam_ko": "<strong class=\"target-word\">주식</strong>"
+  },
+  {
+    "id": 6249,
+    "word": "fog",
+    "exam_en": "a dense <strong class=\"target-word\">fog</strong>",
+    "exam_ko": "<strong class=\"target-word\">농무</strong>"
+  },
+  {
+    "id": 6250,
+    "word": "fog",
+    "exam_en": "The <strong class=\"target-word\">fog</strong> cleared.",
+    "exam_ko": "안개가 <strong class=\"target-word\">걷혔다</strong>."
+  },
+  {
+    "id": 6251,
+    "word": "fluid",
+    "exam_en": "<strong class=\"target-word\">fluid</strong> capital",
+    "exam_ko": "<strong class=\"target-word\">유동자본</strong>[자산]"
+  },
+  {
+    "id": 6252,
+    "word": "fluid",
+    "exam_en": "a <strong class=\"target-word\">fluid</strong> situation",
+    "exam_ko": "변하기 쉬운 <strong class=\"target-word\">상황</strong>."
+  },
+  {
+    "id": 6253,
+    "word": "floor",
+    "exam_en": "clean the <strong class=\"target-word\">floor</strong>",
+    "exam_ko": "마루를 <strong class=\"target-word\">청소하다</strong>"
+  },
+  {
+    "id": 6254,
+    "word": "floor",
+    "exam_en": "mop the <strong class=\"target-word\">floor</strong>",
+    "exam_ko": "마루를 대걸레로 <strong class=\"target-word\">닦다</strong>"
+  },
+  {
+    "id": 6255,
+    "word": "flag",
+    "exam_en": "with <strong class=\"target-word\">flag</strong>s flying",
+    "exam_ko": "<strong class=\"target-word\">깃발</strong>을 날리며"
+  },
+  {
+    "id": 6256,
+    "word": "flag",
+    "exam_en": "dip the <strong class=\"target-word\">flag</strong>",
+    "exam_ko": "(배가 서로) 기를 조금 내리고 <strong class=\"target-word\">인사하다</strong>"
+  },
+  {
+    "id": 6257,
+    "word": "five",
+    "exam_en": "a bunch of <strong class=\"target-word\">five</strong>s",
+    "exam_ko": "(속어) <strong class=\"target-word\">손가락</strong>, 주먹"
+  },
+  {
+    "id": 6258,
+    "word": "five",
+    "exam_en": "use one's <strong class=\"target-word\">five</strong>s",
+    "exam_ko": "주먹질하다, <strong class=\"target-word\">치고받다</strong>"
+  },
+  {
+    "id": 6259,
+    "word": "fish",
+    "exam_en": "fresh-water <strong class=\"target-word\">fish</strong>",
+    "exam_ko": "<strong class=\"target-word\">담수</strong>[해수]어"
+  },
+  {
+    "id": 6260,
+    "word": "fish",
+    "exam_en": "catch <strong class=\"target-word\">fish</strong>",
+    "exam_ko": "물고기를 <strong class=\"target-word\">잡다</strong>"
+  },
+  {
+    "id": 6261,
+    "word": "finger",
+    "exam_en": "<strong class=\"target-word\">finger</strong>s and toes",
+    "exam_ko": "<strong class=\"target-word\">손가락</strong>과 발가락"
+  },
+  {
+    "id": 6262,
+    "word": "finger",
+    "exam_en": "by a <strong class=\"target-word\">finger</strong>'s breadth",
+    "exam_ko": "<strong class=\"target-word\">아주</strong> 근소한 차이로, 하마터면"
+  },
+  {
+    "id": 6263,
+    "word": "film",
+    "exam_en": "a <strong class=\"target-word\">film</strong> of grease",
+    "exam_ko": "얇은 <strong class=\"target-word\">지방막</strong>."
+  },
+  {
+    "id": 6264,
+    "word": "film",
+    "exam_en": "catch birds on <strong class=\"target-word\">film</strong>",
+    "exam_ko": "새를 필름에 <strong class=\"target-word\">담다</strong>"
+  },
+  {
+    "id": 6265,
+    "word": "fifties",
+    "exam_en": "by <strong class=\"target-word\">fifties</strong>",
+    "exam_ko": "<strong class=\"target-word\">50명</strong>[개]씩."
+  },
+  {
+    "id": 6266,
+    "word": "fifties",
+    "exam_en": "be in one's early <strong class=\"target-word\">fifties</strong>",
+    "exam_ko": "50대 초반[중반, 후반]<strong class=\"target-word\">이다</strong>."
+  },
+  {
+    "id": 6267,
+    "word": "fifth",
+    "exam_en": "the <strong class=\"target-word\">fifth</strong> act",
+    "exam_ko": "제 5막, <strong class=\"target-word\">종막</strong>; 노경(老境)."
+  },
+  {
+    "id": 6268,
+    "word": "fifteen",
+    "exam_en": "a Rugby <strong class=\"target-word\">fifteen</strong>",
+    "exam_ko": "(15명 한 조의) <strong class=\"target-word\">팀</strong>."
+  },
+  {
+    "id": 6269,
+    "word": "fifteen",
+    "exam_en": "<strong class=\"target-word\">fifteen</strong> love",
+    "exam_ko": "<strong class=\"target-word\">피프틴</strong> 러브, 1 대 0."
+  },
+  {
+    "id": 6270,
+    "word": "field",
+    "exam_en": "a wheat <strong class=\"target-word\">field</strong>",
+    "exam_ko": "<strong class=\"target-word\">밀밭</strong>"
+  },
+  {
+    "id": 6271,
+    "word": "field",
+    "exam_en": "a grass <strong class=\"target-word\">field</strong>",
+    "exam_ko": "<strong class=\"target-word\">초지</strong>"
+  },
+  {
+    "id": 6272,
+    "word": "few",
+    "exam_en": "a man of <strong class=\"target-word\">few</strong> words",
+    "exam_ko": "말수가 <strong class=\"target-word\">적은</strong> 사람"
+  },
+  {
+    "id": 6273,
+    "word": "few",
+    "exam_en": "There were so <strong class=\"target-word\">few</strong> cups that we had to share .",
+    "exam_ko": "컵이 몇 개 없었으므로 돌려가며 <strong class=\"target-word\">마셨다</strong>.(※few 앞에는 so, too, very, extremely, relatively 등을 쓸 수 있음)"
+  },
+  {
+    "id": 6274,
+    "word": "fertile",
+    "exam_en": "<strong class=\"target-word\">fertile</strong> land",
+    "exam_ko": "<strong class=\"target-word\">비옥한</strong> 땅[흙]."
+  },
+  {
+    "id": 6275,
+    "word": "fertile",
+    "exam_en": "<strong class=\"target-word\">fertile</strong> rains",
+    "exam_ko": "<strong class=\"target-word\">단비</strong>"
+  },
+  {
+    "id": 6276,
+    "word": "feather",
+    "exam_en": "light as a <strong class=\"target-word\">feather</strong>",
+    "exam_ko": "아주 <strong class=\"target-word\">가벼운</strong>"
+  },
+  {
+    "id": 6277,
+    "word": "feather",
+    "exam_en": "in <strong class=\"target-word\">feather</strong>",
+    "exam_ko": "<strong class=\"target-word\">깃털이</strong> 있는, 깃털로 덮인"
+  },
+  {
+    "id": 6278,
+    "word": "father",
+    "exam_en": "a <strong class=\"target-word\">father</strong>-to-be",
+    "exam_ko": "곧 <strong class=\"target-word\">아버지</strong>가 될 사람"
+  },
+  {
+    "id": 6279,
+    "word": "father",
+    "exam_en": "a bereaved <strong class=\"target-word\">father</strong>",
+    "exam_ko": "<strong class=\"target-word\">자식을</strong> 잃은 아버지"
+  },
+  {
+    "id": 6280,
+    "word": "family",
+    "exam_en": "a <strong class=\"target-word\">family</strong> of two",
+    "exam_ko": "<strong class=\"target-word\">부부</strong> 두 사람만의 가정"
+  },
+  {
+    "id": 6281,
+    "word": "family",
+    "exam_en": "How is your <strong class=\"target-word\">family</strong>?",
+    "exam_ko": "댁<strong class=\"target-word\">내</strong> 모두 평안하십니까?"
+  },
+  {
+    "id": 6282,
+    "word": "factory",
+    "exam_en": "a soap <strong class=\"target-word\">factory</strong>",
+    "exam_ko": "비누[유리] <strong class=\"target-word\">공장</strong>"
+  },
+  {
+    "id": 6283,
+    "word": "factory",
+    "exam_en": "<strong class=\"target-word\">factory</strong> workers",
+    "exam_ko": "<strong class=\"target-word\">공장</strong> 노동자들."
+  },
+  {
+    "id": 6284,
+    "word": "eye",
+    "exam_en": "out of the corner of one's <strong class=\"target-word\">eye</strong>",
+    "exam_ko": "<strong class=\"target-word\">곁눈질로</strong>"
+  }
+]

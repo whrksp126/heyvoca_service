@@ -254,63 +254,58 @@ def get_products():
         }), 500
 
 
+# 단어장 1개당 차감되는 보석 단가
+BOOK_PRICE_PER_UNIT = 10
+# 한 번에 구매 가능한 최대 단어장 수
+BOOK_PURCHASE_MAX_AMOUNT = 100
+
+
 @purchase_bp.route('/book', methods=['POST'])
 @jwt_required
 def purchase_book():
-    """단어장 구매 API - 보석(하트) 사용"""
+    """빈 단어장 구매 API - 보석 차감 후 사용자 book_cnt 증가"""
     try:
-        data = request.get_json()
-        package_type = data.get('packageType') # 'single', 'small', 'large'
-        
-        # 패키지 정보 설정
-        packages = {
-            'single': {'amount': 1, 'cost': 10, 'name': '단어장 1개'},
-            'small': {'amount': 5, 'cost': 50, 'name': '단어장 5개'},
-            'large': {'amount': 10, 'cost': 100, 'name': '단어장 10개'}
-        }
-        
-        if package_type not in packages:
+        data = request.get_json() or {}
+        amount = data.get('amount')
+
+        if not isinstance(amount, int) or amount < 1 or amount > BOOK_PURCHASE_MAX_AMOUNT:
             return jsonify({
                 'code': 400,
-                'message': '유효하지 않은 패키지 타입입니다.'
+                'message': f'amount는 1~{BOOK_PURCHASE_MAX_AMOUNT} 사이의 정수여야 합니다.'
             }), 400
-            
-        package = packages[package_type]
+
+        cost = amount * BOOK_PRICE_PER_UNIT
         user_id = UUID(g.user_id)
         user = User.query.get(user_id)
-        
+
         if not user:
             return jsonify({
                 'code': 404,
                 'message': '사용자를 찾을 수 없습니다.'
             }), 404
-            
-        # 보석 잔액 확인
-        if user.gem_cnt < package['cost']:
+
+        if user.gem_cnt < cost:
             return jsonify({
                 'code': 400,
                 'message': '보석이 부족합니다.'
             }), 400
-            
+
         try:
-            # 보석 차감
-            user.gem_cnt -= package['cost']
-            # 단어장 개수 증가
-            user.book_cnt += package['amount']
-            
-            # 보석 로그 등록
+            user.gem_cnt -= cost
+            user.book_cnt += amount
+
             register_gem_log(
                 user_id=user_id,
-                amount=-package['cost'],
+                amount=-cost,
                 reason=GemReason.BOOK_PURCHASE,
-                description=f"상품 구매: {package['name']}",
+                description=f"빈 단어장 {amount}개 구매",
                 source_type="vocabulary_book",
                 source_id=None,
                 balance_after=user.gem_cnt
             )
-            
+
             db.session.commit()
-            
+
             return jsonify({
                 'code': 200,
                 'message': '구매가 완료되었습니다.',
@@ -319,7 +314,7 @@ def purchase_book():
                     'book_cnt': user.book_cnt
                 }
             }), 200
-            
+
         except Exception as e:
             db.session.rollback()
             return jsonify({

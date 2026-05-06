@@ -1,0 +1,234 @@
+[
+  {
+    "id": 30170,
+    "origin": "promissory",
+    "examples": [
+      {
+        "exam_en": "a promissory warranty",
+        "exam_ko": "약속 담보."
+      }
+    ]
+  },
+  {
+    "id": 30171,
+    "origin": "dramatize",
+    "examples": [
+      {
+        "exam_en": "dramatize a novel",
+        "exam_ko": "소설을 각색하다."
+      },
+      {
+        "exam_en": "dramatize one's misfortune",
+        "exam_ko": "자신의 불행을 과장되게 한탄하다."
+      }
+    ]
+  },
+  {
+    "id": 30172,
+    "origin": "sadly",
+    "examples": [
+      {
+        "exam_en": "He reacted sadly to the news of the accident.",
+        "exam_ko": "그는 사고의 소식을 듣고 슬픈 듯이 반응했다."
+      },
+      {
+        "exam_en": "Sadly,we failed in our attempt.",
+        "exam_ko": "불행히도 우리의 시도는 실패했다"
+      }
+    ]
+  },
+  {
+    "id": 30185,
+    "origin": "maker",
+    "examples": [
+      {
+        "exam_en": "a coffee maker",
+        "exam_ko": "커피 메이커[제조기]."
+      }
+    ]
+  },
+  {
+    "id": 30199,
+    "origin": "embosom",
+    "examples": [
+      {
+        "exam_en": "The house was embosomed in the surrounding hills.",
+        "exam_ko": "그 집은 둘레의 언덕에 감싸여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 30201,
+    "origin": "linkage",
+    "examples": [
+      {
+        "exam_en": "LAND USE AND AIR QUALITY LINKAGE • Strengthening existing communities by directing development towards infill locations • Promoting mixed land uses",
+        "exam_ko": "토지 이용 및 대기 질 연계 • 빈 공간 개발을 지시함으로써 기존 커뮤니티 강화 • 혼합 토지 이용 촉진"
+      }
+    ]
+  },
+  {
+    "id": 30227,
+    "origin": "superfine",
+    "examples": [
+      {
+        "exam_en": "superfine cloth",
+        "exam_ko": "최상급의 천."
+      },
+      {
+        "exam_en": "superfine manners",
+        "exam_ko": "지나치게 결벽한 태도."
+      }
+    ]
+  },
+  {
+    "id": 30241,
+    "origin": "sized",
+    "examples": [
+      {
+        "exam_en": "a life-sized statue of Lincoln",
+        "exam_ko": "링컨의 등신대(等身大)의 상."
+      },
+      {
+        "exam_en": "middle-sized",
+        "exam_ko": "중형의"
+      }
+    ]
+  },
+  {
+    "id": 30252,
+    "origin": "impertinence",
+    "examples": [
+      {
+        "exam_en": "utter impertinences",
+        "exam_ko": "건방진[버릇없는] 말을 하다."
+      }
+    ]
+  },
+  {
+    "id": 30264,
+    "origin": "mickle",
+    "examples": [
+      {
+        "exam_en": "Many a little makes a mickle.",
+        "exam_ko": "티끌 모아 태산."
+      }
+    ]
+  },
+  {
+    "id": 30285,
+    "origin": "enforced",
+    "examples": [
+      {
+        "exam_en": "enforced currency",
+        "exam_ko": "강제 통화."
+      }
+    ]
+  },
+  {
+    "id": 30288,
+    "origin": "therm",
+    "examples": [
+      {
+        "exam_en": "thermesthesia",
+        "exam_ko": "온각(溫覺)."
+      },
+      {
+        "exam_en": "microtherm",
+        "exam_ko": "(저온 식물), endotherm, isotherm."
+      }
+    ]
+  },
+  {
+    "id": 30375,
+    "origin": "gainer",
+    "examples": [
+      {
+        "exam_en": "come off a gainer",
+        "exam_ko": "승리자가 되다."
+      }
+    ]
+  },
+  {
+    "id": 30402,
+    "origin": "bookseller",
+    "examples": [
+      {
+        "exam_en": "a bookseller's",
+        "exam_ko": "서점."
+      }
+    ]
+  },
+  {
+    "id": 30406,
+    "origin": "bats",
+    "examples": [
+      {
+        "exam_en": "He's gone bats!",
+        "exam_ko": "저 녀석은 미쳐 버렸어!"
+      }
+    ]
+  },
+  {
+    "id": 30432,
+    "origin": "waybill",
+    "examples": [
+      {
+        "exam_en": "a waybill of lading",
+        "exam_ko": "화물 인환증(引換證)."
+      }
+    ]
+  },
+  {
+    "id": 30451,
+    "origin": "poker",
+    "examples": [
+      {
+        "exam_en": "stiff as a poker",
+        "exam_ko": "(태도·동작 등이) 몹시 딱딱한"
+      },
+      {
+        "exam_en": "by the holy poker",
+        "exam_ko": "(익살) 맹세코."
+      }
+    ]
+  },
+  {
+    "id": 30454,
+    "origin": "logo",
+    "examples": [
+      {
+        "exam_en": "bear a logo",
+        "exam_ko": "로고를 가지다"
+      },
+      {
+        "exam_en": "carry a logo",
+        "exam_ko": "로고를 담다"
+      }
+    ]
+  },
+  {
+    "id": 30480,
+    "origin": "printing",
+    "examples": [
+      {
+        "exam_en": "color printing",
+        "exam_ko": "컬러 인쇄."
+      },
+      {
+        "exam_en": "This is the third printing of the book.",
+        "exam_ko": "이것은 그 책의 3쇄판이다."
+      }
+    ]
+  },
+  {
+    "id": 30482,
+    "origin": "shapeless",
+    "examples": [
+      {
+        "exam_en": "a huge lady in a shapeless grey dress",
+        "exam_ko": "볼품없는 회색 드레스를 입은 뚱뚱한 여자."
+      }
+    ]
+  }
+]

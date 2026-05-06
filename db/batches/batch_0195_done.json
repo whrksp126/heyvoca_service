@@ -1,0 +1,286 @@
+[
+  {
+    "id": 4420,
+    "origin": "lunar",
+    "examples": [
+      {
+        "exam_en": "Scientists study the <strong class=\"target-word\">lunar</strong> orbit carefully.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">달의</strong> 궤도를 주의깊게 연구한다."
+      }
+    ]
+  },
+  {
+    "id": 4421,
+    "origin": "maiden",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">maiden</strong> innocence charmed everyone around her.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">소녀다운</strong> 천진함이 주변 모두를 매료시켰다."
+      },
+      {
+        "exam_en": "She remained a <strong class=\"target-word\">maiden</strong> lady all her life.",
+        "exam_ko": "그녀는 평생 <strong class=\"target-word\">미혼</strong> 여성으로 살았다."
+      }
+    ]
+  },
+  {
+    "id": 4422,
+    "origin": "makeup",
+    "examples": [
+      {
+        "exam_en": "She puts on her <strong class=\"target-word\">makeup</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">화장을</strong> 한다."
+      },
+      {
+        "exam_en": "She always wears <strong class=\"target-word\">makeup</strong> to work.",
+        "exam_ko": "그녀는 항상 <strong class=\"target-word\">화장을</strong> 하고 출근한다."
+      }
+    ]
+  },
+  {
+    "id": 4425,
+    "origin": "maze",
+    "examples": [
+      {
+        "exam_en": "The old city is a <strong class=\"target-word\">maze</strong> of narrow streets.",
+        "exam_ko": "그 오래된 도시는 좁은 골목의 <strong class=\"target-word\">미로</strong>이다."
+      },
+      {
+        "exam_en": "His story was a <strong class=\"target-word\">maze</strong> of lies and deceptions.",
+        "exam_ko": "그의 이야기는 거짓말과 속임수의 <strong class=\"target-word\">미로</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 4426,
+    "origin": "medium",
+    "examples": [
+      {
+        "exam_en": "They tried to strike a happy <strong class=\"target-word\">medium</strong> between both sides.",
+        "exam_ko": "그들은 양쪽 사이에서 적절한 <strong class=\"target-word\">중용</strong>을 찾으려 했다."
+      },
+      {
+        "exam_en": "Water is the <strong class=\"target-word\">medium</strong> in which bacteria thrive.",
+        "exam_ko": "물은 박테리아가 번식하는 <strong class=\"target-word\">환경</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4428,
+    "origin": "jungle",
+    "examples": [
+      {
+        "exam_en": "The city became an industrial <strong class=\"target-word\">jungle</strong> over the years.",
+        "exam_ko": "그 도시는 수십 년에 걸쳐 공업 <strong class=\"target-word\">밀집 지역</strong>이 되었다."
+      },
+      {
+        "exam_en": "He was lost in a <strong class=\"target-word\">jungle</strong> of rules and regulations.",
+        "exam_ko": "그는 복잡한 규정과 규칙의 <strong class=\"target-word\">미로</strong>에서 헤매었다."
+      }
+    ]
+  },
+  {
+    "id": 4429,
+    "origin": "landscape",
+    "examples": [
+      {
+        "exam_en": "The urban <strong class=\"target-word\">landscape</strong> changed dramatically after the war.",
+        "exam_ko": "전쟁 후 도시 <strong class=\"target-word\">경관</strong>이 크게 변했다."
+      },
+      {
+        "exam_en": "The mountainous <strong class=\"target-word\">landscape</strong> attracted many tourists.",
+        "exam_ko": "산악 <strong class=\"target-word\">경관</strong>이 많은 관광객을 끌어들였다."
+      },
+      {
+        "exam_en": "The architect designed the <strong class=\"target-word\">landscape</strong> around the building.",
+        "exam_ko": "건축가는 건물 주변의 <strong class=\"target-word\">조경</strong>을 설계했다."
+      }
+    ]
+  },
+  {
+    "id": 4430,
+    "origin": "lastly",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Lastly</strong>, I must thank my teachers for their encouragement.",
+        "exam_ko": "<strong class=\"target-word\">끝으로</strong>, 저를 격려해 주셨던 은사님께 감사드립니다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Lastly</strong>, I would like to ask about your future plans.",
+        "exam_ko": "<strong class=\"target-word\">마지막으로</strong>, 여러분의 장래 계획에 대해 묻고 싶습니다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Lastly</strong>, please remember to submit your report by Friday.",
+        "exam_ko": "<strong class=\"target-word\">마지막으로</strong>, 금요일까지 보고서를 제출하는 것을 잊지 마세요."
+      }
+    ]
+  },
+  {
+    "id": 4431,
+    "origin": "lawn",
+    "examples": [
+      {
+        "exam_en": "He mows the <strong class=\"target-word\">lawn</strong> every weekend.",
+        "exam_ko": "그는 매주 주말에 <strong class=\"target-word\">잔디</strong>를 깎는다."
+      },
+      {
+        "exam_en": "She sprinkled the <strong class=\"target-word\">lawn</strong> with water in the evening.",
+        "exam_ko": "그녀는 저녁에 <strong class=\"target-word\">잔디</strong>에 물을 뿌렸다."
+      }
+    ]
+  },
+  {
+    "id": 4432,
+    "origin": "lawyer",
+    "examples": [
+      {
+        "exam_en": "They hired a family <strong class=\"target-word\">lawyer</strong> to handle the estate.",
+        "exam_ko": "그들은 유산을 처리할 가족 <strong class=\"target-word\">변호사</strong>를 고용했다."
+      },
+      {
+        "exam_en": "The company kept a corporation <strong class=\"target-word\">lawyer</strong> on retainer.",
+        "exam_ko": "그 회사는 고문 <strong class=\"target-word\">변호사</strong>를 상시 고용했다."
+      }
+    ]
+  },
+  {
+    "id": 4433,
+    "origin": "leader",
+    "examples": [
+      {
+        "exam_en": "He became the <strong class=\"target-word\">leader</strong> of the opposition party.",
+        "exam_ko": "그는 야당의 <strong class=\"target-word\">당수</strong>가 되었다."
+      },
+      {
+        "exam_en": "She is respected as a <strong class=\"target-word\">leader</strong> in society.",
+        "exam_ko": "그녀는 사회의 <strong class=\"target-word\">지도자</strong>로 존경받는다."
+      }
+    ]
+  },
+  {
+    "id": 4434,
+    "origin": "license",
+    "examples": [
+      {
+        "exam_en": "She obtained a <strong class=\"target-word\">license</strong> to practice medicine.",
+        "exam_ko": "그녀는 의사 개업 <strong class=\"target-word\">면허</strong>를 취득했다."
+      },
+      {
+        "exam_en": "The product was sold under <strong class=\"target-word\">license</strong> from the government.",
+        "exam_ko": "그 제품은 정부의 <strong class=\"target-word\">허가</strong>를 받아 판매되었다."
+      }
+    ]
+  },
+  {
+    "id": 4435,
+    "origin": "lighten",
+    "examples": [
+      {
+        "exam_en": "The sky begins to <strong class=\"target-word\">lighten</strong> before daybreak.",
+        "exam_ko": "하늘은 해뜨기 전에 <strong class=\"target-word\">밝아지기</strong> 시작한다."
+      },
+      {
+        "exam_en": "It thundered and <strong class=\"target-word\">lightened</strong> all night long.",
+        "exam_ko": "밤새 천둥이 치고 번개가 <strong class=\"target-word\">번쩍였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4436,
+    "origin": "lily",
+    "examples": [
+      {
+        "exam_en": "Adding more decorations would only gild the <strong class=\"target-word\">lily</strong>.",
+        "exam_ko": "장식을 더 추가하는 것은 <strong class=\"target-word\">금상첨화</strong>에 불과할 것이다."
+      },
+      {
+        "exam_en": "She had <strong class=\"target-word\">lily</strong>-clean thoughts from a young age.",
+        "exam_ko": "그녀는 어릴 때부터 <strong class=\"target-word\">백합처럼</strong> 순수한 생각을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 4438,
+    "origin": "infer",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">infer</strong> from his letter that he wants to go abroad.",
+        "exam_ko": "편지로 미루어 그가 외국에 가고 싶다고 <strong class=\"target-word\">추측한다</strong>."
+      },
+      {
+        "exam_en": "We can <strong class=\"target-word\">infer</strong> responsibility from freedom.",
+        "exam_ko": "자유에서 책임을 <strong class=\"target-word\">추론할</strong> 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 4439,
+    "origin": "insect",
+    "examples": [
+      {
+        "exam_en": "He caught butterflies with an <strong class=\"target-word\">insect</strong> net.",
+        "exam_ko": "그는 <strong class=\"target-word\">곤충</strong> 채집망으로 나비를 잡았다."
+      },
+      {
+        "exam_en": "The museum displays specimens in an <strong class=\"target-word\">insect</strong> cabinet.",
+        "exam_ko": "박물관은 <strong class=\"target-word\">곤충</strong> 표본 상자에 표본을 전시한다."
+      }
+    ]
+  },
+  {
+    "id": 4440,
+    "origin": "instruction",
+    "examples": [
+      {
+        "exam_en": "The teacher gave <strong class=\"target-word\">instruction</strong> in Chinese to the students.",
+        "exam_ko": "선생님은 학생들에게 중국어 <strong class=\"target-word\">수업</strong>을 했다."
+      },
+      {
+        "exam_en": "The graduate program offers <strong class=\"target-word\">instruction</strong> in French literature.",
+        "exam_ko": "대학원 과정은 프랑스 문학 <strong class=\"target-word\">강의</strong>를 제공한다."
+      }
+    ]
+  },
+  {
+    "id": 4442,
+    "origin": "horizon",
+    "examples": [
+      {
+        "exam_en": "The sun sank below the <strong class=\"target-word\">horizon</strong> at dusk.",
+        "exam_ko": "해가 황혼에 <strong class=\"target-word\">지평선</strong> 아래로 졌다."
+      },
+      {
+        "exam_en": "There is a ship on the <strong class=\"target-word\">horizon</strong>.",
+        "exam_ko": "<strong class=\"target-word\">수평선</strong> 위에 배 한 척이 떠 있다."
+      }
+    ]
+  },
+  {
+    "id": 4443,
+    "origin": "host",
+    "examples": [
+      {
+        "exam_en": "Japan became the <strong class=\"target-word\">host</strong> country for the Olympics.",
+        "exam_ko": "일본이 올림픽 <strong class=\"target-word\">주최국</strong>이 되었다."
+      },
+      {
+        "exam_en": "He acted as <strong class=\"target-word\">host</strong> at the welcome party.",
+        "exam_ko": "그는 환영 파티에서 <strong class=\"target-word\">주인</strong> 역할을 했다."
+      }
+    ]
+  },
+  {
+    "id": 4444,
+    "origin": "hound",
+    "examples": [
+      {
+        "exam_en": "They went hunting with <strong class=\"target-word\">hounds</strong> through the forest.",
+        "exam_ko": "그들은 <strong class=\"target-word\">사냥개</strong>를 데리고 숲에서 사냥했다."
+      },
+      {
+        "exam_en": "He is a real jazz <strong class=\"target-word\">hound</strong> who never misses a concert.",
+        "exam_ko": "그는 콘서트를 절대 놓치지 않는 진짜 재즈 <strong class=\"target-word\">광</strong>이다."
+      }
+    ]
+  }
+]

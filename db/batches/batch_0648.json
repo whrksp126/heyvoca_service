@@ -1,0 +1,238 @@
+[
+  {
+    "id": 23243,
+    "origin": "arrears",
+    "examples": [
+      {
+        "exam_en": "arrears of wages",
+        "exam_ko": "임금의 체불"
+      },
+      {
+        "exam_en": "make up arrears of work",
+        "exam_ko": "밀린 일을 만회하다"
+      }
+    ]
+  },
+  {
+    "id": 23244,
+    "origin": "varsity",
+    "examples": [
+      {
+        "exam_en": "the Kennedy High School varsity baseball team",
+        "exam_ko": "케네디 고등학교의 대표 야구 팀."
+      },
+      {
+        "exam_en": "the Varsity match",
+        "exam_ko": "옥스퍼드와 케임브리지의 대항 경기."
+      }
+    ]
+  },
+  {
+    "id": 23247,
+    "origin": "postage",
+    "examples": [
+      {
+        "exam_en": "a postage charge",
+        "exam_ko": "우편 요금"
+      },
+      {
+        "exam_en": "postage due",
+        "exam_ko": "우편 요금 부족[무료]"
+      }
+    ]
+  },
+  {
+    "id": 23248,
+    "origin": "leaky",
+    "examples": [
+      {
+        "exam_en": "a leaky boat",
+        "exam_ko": "물이 새어 드는 배."
+      },
+      {
+        "exam_en": "a leaky vessel",
+        "exam_ko": "(비유) 비밀을 못 지키는 사람."
+      }
+    ]
+  },
+  {
+    "id": 23249,
+    "origin": "poacher",
+    "examples": [
+      {
+        "exam_en": "a poacher turned game-keeper",
+        "exam_ko": "(영) 범죄자의 처지에서 범죄 단속자가 된 사람; 권력에 반기를 들어 권력자가 된 사람."
+      }
+    ]
+  },
+  {
+    "id": 23250,
+    "origin": "tenor",
+    "examples": [
+      {
+        "exam_en": "the homely tenor of one's life",
+        "exam_ko": "평범한 인생 행로."
+      }
+    ]
+  },
+  {
+    "id": 23251,
+    "origin": "limbo",
+    "examples": [
+      {
+        "exam_en": "the limbo of infants",
+        "exam_ko": "유아 림보계(界)."
+      },
+      {
+        "exam_en": "be cast into limbo",
+        "exam_ko": "잊혀지다."
+      }
+    ]
+  },
+  {
+    "id": 23254,
+    "origin": "vocalize",
+    "examples": [
+      {
+        "exam_en": "At our weekly meetings, my boss encourages me to vocalize my thoughts on important issues.",
+        "exam_ko": "주례 정기 회의에서 내 상사는 중요한 문제에 대한 나의 생각을 말하도록 격려해 준다."
+      },
+      {
+        "exam_en": "'F' is vocalized into 'v'.",
+        "exam_ko": "f는 유성화되어 v가 된다."
+      }
+    ]
+  },
+  {
+    "id": 23270,
+    "origin": "extrusive",
+    "examples": [
+      {
+        "exam_en": "extrusive force",
+        "exam_ko": "밀어내는 힘."
+      }
+    ]
+  },
+  {
+    "id": 23274,
+    "origin": "barometric",
+    "examples": [
+      {
+        "exam_en": "barometric maximum",
+        "exam_ko": "고[저]기압."
+      }
+    ]
+  },
+  {
+    "id": 23287,
+    "origin": "baron",
+    "examples": [
+      {
+        "exam_en": "a baron of beef",
+        "exam_ko": "소의 등심."
+      },
+      {
+        "exam_en": "a coal baron",
+        "exam_ko": "석탄왕."
+      }
+    ]
+  },
+  {
+    "id": 23292,
+    "origin": "cuneiform",
+    "examples": [
+      {
+        "exam_en": "a cuneiform document",
+        "exam_ko": "설형 문자의 문헌."
+      }
+    ]
+  },
+  {
+    "id": 23298,
+    "origin": "stagflation",
+    "examples": [
+      {
+        "exam_en": "The rise in oil prices in 1973 led to a period of stagflation in the late 1970s.",
+        "exam_ko": "1973년의 유가 인상은 1970년대 후반에 스태그플레이션기를 가져왔다."
+      }
+    ]
+  },
+  {
+    "id": 23299,
+    "origin": "expansionary",
+    "examples": [
+      {
+        "exam_en": "an expansionary diplomatic policy",
+        "exam_ko": "확장적 외교 정책."
+      }
+    ]
+  },
+  {
+    "id": 23301,
+    "origin": "rehabilitation",
+    "examples": [
+      {
+        "exam_en": "a rehabilitation center",
+        "exam_ko": "(특히 알코올[마약] 의존증 등의) 복귀 치료소."
+      },
+      {
+        "exam_en": "rehabilitation work on houses damaged in the great earthquake",
+        "exam_ko": "대지진으로 파괴된 가옥들의 복구 작업."
+      }
+    ]
+  },
+  {
+    "id": 23302,
+    "origin": "abstention",
+    "examples": [
+      {
+        "exam_en": "abstention from drink",
+        "exam_ko": "금주"
+      },
+      {
+        "exam_en": "abstention from hard work",
+        "exam_ko": "중노동을 피함."
+      }
+    ]
+  },
+  {
+    "id": 23309,
+    "origin": "lucre",
+    "examples": [
+      {
+        "exam_en": "filthy lucre",
+        "exam_ko": "부당 이득."
+      }
+    ]
+  },
+  {
+    "id": 23327,
+    "origin": "cramming",
+    "examples": [
+      {
+        "exam_en": "If you are prone to overworking or cramming for a test, be sure to schedule chunks of your day to check out and just relax.",
+        "exam_ko": "시험을 보기 위해 무리하거나 벼락치기 하는 경향이 있다면 하루 중 많은 시간을 할애해 꼭 휴식을 취하세요."
+      }
+    ]
+  },
+  {
+    "id": 23335,
+    "origin": "ivy",
+    "examples": [
+      {
+        "exam_en": "an ivy covered building",
+        "exam_ko": "담쟁이로 덮인 건물."
+      }
+    ]
+  },
+  {
+    "id": 23355,
+    "origin": "chrome",
+    "examples": [
+      {
+        "exam_en": "chrome green",
+        "exam_ko": "녹색[적색] 안료."
+      }
+    ]
+  }
+]

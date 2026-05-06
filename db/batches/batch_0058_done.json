@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1193,
+    "origin": "worst",
+    "examples": [
+      {
+        "exam_en": "Today was the <strong class=\"target-word\">worst</strong> day of my life.",
+        "exam_ko": "오늘은 내 인생에서 <strong class=\"target-word\">최악의</strong> 날이었다."
+      },
+      {
+        "exam_en": "That was the <strong class=\"target-word\">worst</strong> decision he ever made.",
+        "exam_ko": "그것은 그가 내린 <strong class=\"target-word\">최악의</strong> 결정이었다."
+      }
+    ]
+  },
+  {
+    "id": 1194,
+    "origin": "terror",
+    "examples": [
+      {
+        "exam_en": "She screamed in <strong class=\"target-word\">terror</strong> when she saw the snake.",
+        "exam_ko": "그녀는 뱀을 보고 <strong class=\"target-word\">공포</strong>에 질려 비명을 질렀다."
+      },
+      {
+        "exam_en": "The city lived in <strong class=\"target-word\">terror</strong> during the attacks.",
+        "exam_ko": "도시는 공격이 이어지는 동안 <strong class=\"target-word\">공포</strong> 속에서 살았다."
+      }
+    ]
+  },
+  {
+    "id": 1195,
+    "origin": "population",
+    "examples": [
+      {
+        "exam_en": "The city's <strong class=\"target-word\">population</strong> has grown rapidly.",
+        "exam_ko": "그 도시의 <strong class=\"target-word\">인구</strong>가 빠르게 증가했다."
+      },
+      {
+        "exam_en": "What is the <strong class=\"target-word\">population</strong> of this country?",
+        "exam_ko": "이 나라의 <strong class=\"target-word\">인구</strong>는 얼마나 됩니까?"
+      }
+    ]
+  },
+  {
+    "id": 1196,
+    "origin": "especially",
+    "examples": [
+      {
+        "exam_en": "I like music, <strong class=\"target-word\">especially</strong> classical music.",
+        "exam_ko": "나는 음악, <strong class=\"target-word\">특히</strong> 클래식을 좋아한다."
+      },
+      {
+        "exam_en": "She studies hard, <strong class=\"target-word\">especially</strong> before exams.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">특히</strong> 시험 전에 열심히 공부한다."
+      }
+    ]
+  },
+  {
+    "id": 1197,
+    "origin": "rough",
+    "examples": [
+      {
+        "exam_en": "His hands were <strong class=\"target-word\">rough</strong> from years of hard work.",
+        "exam_ko": "그의 손은 수년간의 힘든 노동으로 <strong class=\"target-word\">거칠었다</strong>."
+      },
+      {
+        "exam_en": "The sea was too <strong class=\"target-word\">rough</strong> to sail safely.",
+        "exam_ko": "바다가 너무 <strong class=\"target-word\">거칠어서</strong> 안전하게 항해할 수 없었다."
+      },
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">rough</strong> estimate of the cost.",
+        "exam_ko": "그는 비용에 대한 <strong class=\"target-word\">대략적인</strong> 견적을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 1198,
+    "origin": "difference",
+    "examples": [
+      {
+        "exam_en": "There is a big <strong class=\"target-word\">difference</strong> of opinion between them.",
+        "exam_ko": "그들 사이에는 큰 의견 <strong class=\"target-word\">차이</strong>가 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">difference</strong> in their outlook was obvious.",
+        "exam_ko": "두 사람의 견해 <strong class=\"target-word\">차이</strong>는 분명했다."
+      }
+    ]
+  },
+  {
+    "id": 1199,
+    "origin": "spirit",
+    "examples": [
+      {
+        "exam_en": "The team played with great <strong class=\"target-word\">spirit</strong> in the final game.",
+        "exam_ko": "팀은 결승전에서 강한 <strong class=\"target-word\">투지</strong>로 경기했다."
+      },
+      {
+        "exam_en": "She was with us in <strong class=\"target-word\">spirit</strong> even though she was far away.",
+        "exam_ko": "그녀는 멀리 있었지만 <strong class=\"target-word\">마음속으로</strong> 우리와 함께였다."
+      }
+    ]
+  },
+  {
+    "id": 1200,
+    "origin": "positively",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">positively</strong> refused to accept the offer.",
+        "exam_ko": "그는 그 제안을 <strong class=\"target-word\">단호히</strong> 거절했다."
+      },
+      {
+        "exam_en": "She responded <strong class=\"target-word\">positively</strong> to the feedback.",
+        "exam_ko": "그녀는 피드백에 <strong class=\"target-word\">긍정적으로</strong> 반응했다."
+      }
+    ]
+  },
+  {
+    "id": 1201,
+    "origin": "shop",
+    "examples": [
+      {
+        "exam_en": "She bought roses at the flower <strong class=\"target-word\">shop</strong>.",
+        "exam_ko": "그녀는 꽃 <strong class=\"target-word\">가게</strong>에서 장미를 샀다."
+      },
+      {
+        "exam_en": "He stopped by the grocery <strong class=\"target-word\">shop</strong> on his way home.",
+        "exam_ko": "그는 집에 오는 길에 식료품 <strong class=\"target-word\">가게</strong>에 들렀다."
+      }
+    ]
+  },
+  {
+    "id": 1202,
+    "origin": "nightmare",
+    "examples": [
+      {
+        "exam_en": "She woke up crying after a terrible <strong class=\"target-word\">nightmare</strong>.",
+        "exam_ko": "그녀는 끔찍한 <strong class=\"target-word\">악몽</strong>을 꾸고 울며 깨어났다."
+      },
+      {
+        "exam_en": "The traffic jam turned the commute into a <strong class=\"target-word\">nightmare</strong>.",
+        "exam_ko": "교통 체증으로 출퇴근이 <strong class=\"target-word\">악몽</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1203,
+    "origin": "tradition",
+    "examples": [
+      {
+        "exam_en": "This festival is based on an ancient <strong class=\"target-word\">tradition</strong>.",
+        "exam_ko": "이 축제는 오래된 <strong class=\"target-word\">전통</strong>에 기반한다."
+      },
+      {
+        "exam_en": "The story was handed down by <strong class=\"target-word\">tradition</strong> for generations.",
+        "exam_ko": "그 이야기는 여러 세대에 걸쳐 <strong class=\"target-word\">전통</strong>으로 전해 내려왔다."
+      }
+    ]
+  },
+  {
+    "id": 1204,
+    "origin": "accent",
+    "examples": [
+      {
+        "exam_en": "In \"letter\" the <strong class=\"target-word\">accent</strong> falls on the first syllable.",
+        "exam_ko": "\"letter\"는 첫 번째 음절에 <strong class=\"target-word\">강세</strong>가 있다."
+      },
+      {
+        "exam_en": "She spoke English with a strong French <strong class=\"target-word\">accent</strong>.",
+        "exam_ko": "그녀는 강한 프랑스 <strong class=\"target-word\">억양</strong>으로 영어를 말했다."
+      },
+      {
+        "exam_en": "You can use plants to <strong class=\"target-word\">accent</strong> the living room.",
+        "exam_ko": "식물을 이용해 거실을 <strong class=\"target-word\">돋보이게</strong> 할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1208,
+    "origin": "occupation",
+    "examples": [
+      {
+        "exam_en": "Firefighting is a very dangerous <strong class=\"target-word\">occupation</strong>.",
+        "exam_ko": "소방관은 매우 위험한 <strong class=\"target-word\">직업</strong>이다."
+      },
+      {
+        "exam_en": "Please state your name, address, and <strong class=\"target-word\">occupation</strong>.",
+        "exam_ko": "성명, 주소, <strong class=\"target-word\">직업</strong>을 말씀해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1209,
+    "origin": "item",
+    "examples": [
+      {
+        "exam_en": "This is a fast-selling <strong class=\"target-word\">item</strong> in the store.",
+        "exam_ko": "이것은 매장에서 잘 팔리는 <strong class=\"target-word\">상품</strong>이다."
+      },
+      {
+        "exam_en": "Each <strong class=\"target-word\">item</strong> on the list must be checked.",
+        "exam_ko": "목록의 각 <strong class=\"target-word\">항목</strong>을 확인해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 1210,
+    "origin": "agenda",
+    "examples": [
+      {
+        "exam_en": "The manager shared the <strong class=\"target-word\">agenda</strong> before the meeting.",
+        "exam_ko": "매니저는 회의 전에 <strong class=\"target-word\">안건</strong>을 공유했다."
+      },
+      {
+        "exam_en": "Climate change topped the <strong class=\"target-word\">agenda</strong> at the summit.",
+        "exam_ko": "기후 변화가 정상회담의 <strong class=\"target-word\">의제</strong> 1순위였다."
+      }
+    ]
+  },
+  {
+    "id": 1211,
+    "origin": "without",
+    "examples": [
+      {
+        "exam_en": "She left the house <strong class=\"target-word\">without</strong> a coat.",
+        "exam_ko": "그녀는 코트 <strong class=\"target-word\">없이</strong> 집을 나섰다."
+      },
+      {
+        "exam_en": "He finished the project <strong class=\"target-word\">without</strong> any assistance.",
+        "exam_ko": "그는 아무런 도움 <strong class=\"target-word\">없이</strong> 프로젝트를 완료했다."
+      }
+    ]
+  },
+  {
+    "id": 1212,
+    "origin": "already",
+    "examples": [
+      {
+        "exam_en": "I have <strong class=\"target-word\">already</strong> met him before.",
+        "exam_ko": "나는 전에 그를 <strong class=\"target-word\">이미</strong> 만난 적이 있다."
+      },
+      {
+        "exam_en": "The matter is <strong class=\"target-word\">already</strong> too complicated to fix.",
+        "exam_ko": "그 문제는 <strong class=\"target-word\">이미</strong> 너무 복잡해서 해결하기 어렵다."
+      }
+    ]
+  },
+  {
+    "id": 1213,
+    "origin": "later",
+    "examples": [
+      {
+        "exam_en": "I will call you back <strong class=\"target-word\">later</strong> this evening.",
+        "exam_ko": "오늘 저녁 <strong class=\"target-word\">나중에</strong> 다시 전화할게요."
+      },
+      {
+        "exam_en": "She became a teacher in <strong class=\"target-word\">later</strong> life.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">만년에</strong> 교사가 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1214,
+    "origin": "risk",
+    "examples": [
+      {
+        "exam_en": "Smoking puts your health at high <strong class=\"target-word\">risk</strong>.",
+        "exam_ko": "흡연은 건강을 큰 <strong class=\"target-word\">위험</strong>에 빠뜨린다."
+      },
+      {
+        "exam_en": "He took a <strong class=\"target-word\">risk</strong> by investing all his savings.",
+        "exam_ko": "그는 모든 저축을 투자하는 <strong class=\"target-word\">위험</strong>을 감수했다."
+      }
+    ]
+  },
+  {
+    "id": 1215,
+    "origin": "own",
+    "examples": [
+      {
+        "exam_en": "She finally has her <strong class=\"target-word\">own</strong> apartment.",
+        "exam_ko": "그녀는 마침내 <strong class=\"target-word\">자신만의</strong> 아파트를 갖게 되었다."
+      },
+      {
+        "exam_en": "Mind your <strong class=\"target-word\">own</strong> business and stop interfering.",
+        "exam_ko": "<strong class=\"target-word\">자기</strong> 일이나 신경 쓰고 참견하지 마라."
+      }
+    ]
+  }
+]

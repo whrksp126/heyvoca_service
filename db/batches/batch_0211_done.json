@@ -1,0 +1,278 @@
+[
+  {
+    "id": 4854,
+    "origin": "farthest",
+    "examples": [
+      {
+        "exam_en": "Who can swim <strong class=\"target-word\">farthest</strong> in the class?",
+        "exam_ko": "반에서 누가 <strong class=\"target-word\">가장 멀리</strong> 수영할 수 있나요?"
+      }
+    ]
+  },
+  {
+    "id": 4855,
+    "origin": "fluent",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">fluent</strong> in three languages.",
+        "exam_ko": "그녀는 세 가지 언어를 <strong class=\"target-word\">유창하게</strong> 구사한다."
+      },
+      {
+        "exam_en": "He speaks English in a <strong class=\"target-word\">fluent</strong> manner.",
+        "exam_ko": "그는 <strong class=\"target-word\">유창한</strong> 영어로 말한다."
+      }
+    ]
+  },
+  {
+    "id": 4856,
+    "origin": "greater",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">greater</strong> Los Angeles area has many attractions.",
+        "exam_ko": "<strong class=\"target-word\">광역</strong> 로스앤젤레스 지역에는 볼거리가 많다."
+      }
+    ]
+  },
+  {
+    "id": 4857,
+    "origin": "poem",
+    "examples": [
+      {
+        "exam_en": "She wrote an epic <strong class=\"target-word\">poem</strong> about the war.",
+        "exam_ko": "그녀는 전쟁에 관한 서사 <strong class=\"target-word\">시</strong>를 썼다."
+      },
+      {
+        "exam_en": "He read a short <strong class=\"target-word\">poem</strong> at the ceremony.",
+        "exam_ko": "그는 식장에서 짧은 <strong class=\"target-word\">시</strong>를 낭독했다."
+      }
+    ]
+  },
+  {
+    "id": 4858,
+    "origin": "section",
+    "examples": [
+      {
+        "exam_en": "The doctor divided the report into three <strong class=\"target-word\">sections</strong>.",
+        "exam_ko": "의사는 보고서를 세 <strong class=\"target-word\">부분</strong>으로 나눴다."
+      },
+      {
+        "exam_en": "She cut the pie into equal <strong class=\"target-word\">sections</strong>.",
+        "exam_ko": "그녀는 파이를 동일한 <strong class=\"target-word\">조각</strong>으로 잘랐다."
+      }
+    ]
+  },
+  {
+    "id": 4859,
+    "origin": "solitary",
+    "examples": [
+      {
+        "exam_en": "He took a <strong class=\"target-word\">solitary</strong> walk along the beach.",
+        "exam_ko": "그는 해변을 따라 <strong class=\"target-word\">혼자</strong> 산책했다."
+      },
+      {
+        "exam_en": "She lives a <strong class=\"target-word\">solitary</strong> life in the mountains.",
+        "exam_ko": "그녀는 산속에서 <strong class=\"target-word\">고독한</strong> 삶을 산다."
+      }
+    ]
+  },
+  {
+    "id": 4860,
+    "origin": "whereas",
+    "examples": [
+      {
+        "exam_en": "He is reserved, <strong class=\"target-word\">whereas</strong> his wife is very sociable.",
+        "exam_ko": "그는 내성적인 성격이나 <strong class=\"target-word\">반면</strong> 아내는 매우 사교적이다."
+      },
+      {
+        "exam_en": "He drives to school, <strong class=\"target-word\">whereas</strong> I always walk.",
+        "exam_ko": "그는 차를 몰고 등교하지만, <strong class=\"target-word\">반면</strong> 나는 언제나 걷는다."
+      },
+      {
+        "exam_en": "She prefers coffee, <strong class=\"target-word\">whereas</strong> her brother drinks only tea.",
+        "exam_ko": "그녀는 커피를 좋아하는 <strong class=\"target-word\">반면</strong> 오빠는 차만 마신다."
+      }
+    ]
+  },
+  {
+    "id": 4861,
+    "origin": "flame",
+    "examples": [
+      {
+        "exam_en": "A single candle <strong class=\"target-word\">flame</strong> lit the dark room.",
+        "exam_ko": "촛불 하나의 <strong class=\"target-word\">불꽃</strong>이 어두운 방을 밝혔다."
+      },
+      {
+        "exam_en": "The dry leaves quickly caught <strong class=\"target-word\">flame</strong>.",
+        "exam_ko": "마른 나뭇잎이 순식간에 <strong class=\"target-word\">불</strong>이 붙었다."
+      }
+    ]
+  },
+  {
+    "id": 4862,
+    "origin": "vacant",
+    "examples": [
+      {
+        "exam_en": "He stared into the <strong class=\"target-word\">vacant</strong> space ahead.",
+        "exam_ko": "그는 앞의 <strong class=\"target-word\">텅 빈</strong> 공간을 응시했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">vacant</strong> apartment has been empty for months.",
+        "exam_ko": "<strong class=\"target-word\">비어 있는</strong> 아파트는 몇 달째 입주자가 없다."
+      }
+    ]
+  },
+  {
+    "id": 4864,
+    "origin": "engaged",
+    "examples": [
+      {
+        "exam_en": "Mr. Smith is <strong class=\"target-word\">engaged</strong> at the moment.",
+        "exam_ko": "스미스 씨는 지금 <strong class=\"target-word\">바빠서</strong> 시간을 낼 수 없습니다."
+      },
+      {
+        "exam_en": "The line is <strong class=\"target-word\">engaged</strong>, so please call back later.",
+        "exam_ko": "전화가 <strong class=\"target-word\">통화 중</strong>이니 나중에 다시 전화해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 4865,
+    "origin": "particularly",
+    "examples": [
+      {
+        "exam_en": "She likes the country, <strong class=\"target-word\">particularly</strong> in spring.",
+        "exam_ko": "그녀는 시골을 좋아하는데, <strong class=\"target-word\">특히</strong> 봄의 전원을 좋아한다."
+      },
+      {
+        "exam_en": "I don't <strong class=\"target-word\">particularly</strong> like playing tennis.",
+        "exam_ko": "나는 테니스를 <strong class=\"target-word\">특별히</strong> 좋아하지는 않는다."
+      }
+    ]
+  },
+  {
+    "id": 4866,
+    "origin": "veil",
+    "examples": [
+      {
+        "exam_en": "The city was hidden under a <strong class=\"target-word\">veil</strong> of darkness.",
+        "exam_ko": "도시는 어둠의 <strong class=\"target-word\">장막</strong> 아래 가려져 있었다."
+      },
+      {
+        "exam_en": "She lifted the <strong class=\"target-word\">veil</strong> to reveal the truth.",
+        "exam_ko": "그녀는 진실을 밝히기 위해 <strong class=\"target-word\">베일</strong>을 걷어냈다."
+      }
+    ]
+  },
+  {
+    "id": 4867,
+    "origin": "afflict",
+    "examples": [
+      {
+        "exam_en": "He has been <strong class=\"target-word\">afflicted</strong> with asthma since childhood.",
+        "exam_ko": "그는 어린 시절부터 천식에 <strong class=\"target-word\">시달려</strong> 왔다."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">afflict</strong> me with your constant complaints.",
+        "exam_ko": "끊임없는 불평으로 나를 <strong class=\"target-word\">괴롭히지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 4868,
+    "origin": "conspiracy",
+    "examples": [
+      {
+        "exam_en": "They formed a <strong class=\"target-word\">conspiracy</strong> to overthrow the government.",
+        "exam_ko": "그들은 정부를 전복시키려는 <strong class=\"target-word\">음모</strong>를 꾸몄다."
+      },
+      {
+        "exam_en": "The journalist uncovered a <strong class=\"target-word\">conspiracy</strong> of silence.",
+        "exam_ko": "그 기자는 침묵의 <strong class=\"target-word\">결탁</strong>을 폭로했다."
+      }
+    ]
+  },
+  {
+    "id": 4869,
+    "origin": "crumble",
+    "examples": [
+      {
+        "exam_en": "The old wall began to <strong class=\"target-word\">crumble</strong> after the earthquake.",
+        "exam_ko": "지진 후 오래된 벽이 <strong class=\"target-word\">무너지기</strong> 시작했다."
+      },
+      {
+        "exam_en": "His confidence <strong class=\"target-word\">crumbled</strong> after the failure.",
+        "exam_ko": "실패 후 그의 자신감이 <strong class=\"target-word\">허물어졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4870,
+    "origin": "curiosity",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">curiosity</strong> about the unknown drove her research.",
+        "exam_ko": "미지의 것에 대한 그녀의 <strong class=\"target-word\">호기심</strong>이 연구를 이끌었다."
+      },
+      {
+        "exam_en": "He opened the box out of <strong class=\"target-word\">curiosity</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">호기심</strong>에서 상자를 열었다."
+      }
+    ]
+  },
+  {
+    "id": 4871,
+    "origin": "correspondence",
+    "examples": [
+      {
+        "exam_en": "There is a <strong class=\"target-word\">correspondence</strong> between his words and actions.",
+        "exam_ko": "그의 말과 행동 사이에는 <strong class=\"target-word\">일치</strong>가 있다."
+      },
+      {
+        "exam_en": "All <strong class=\"target-word\">correspondence</strong> must include the project number.",
+        "exam_ko": "모든 <strong class=\"target-word\">서신</strong>에는 프로젝트 번호가 포함되어야 한다."
+      },
+      {
+        "exam_en": "We maintained regular <strong class=\"target-word\">correspondence</strong> by email.",
+        "exam_ko": "우리는 이메일로 정기적인 <strong class=\"target-word\">연락</strong>을 유지했다."
+      }
+    ]
+  },
+  {
+    "id": 4872,
+    "origin": "protein",
+    "examples": [
+      {
+        "exam_en": "Eggs are a great source of <strong class=\"target-word\">protein</strong>.",
+        "exam_ko": "달걀은 훌륭한 <strong class=\"target-word\">단백질</strong> 공급원이다."
+      }
+    ]
+  },
+  {
+    "id": 4874,
+    "origin": "swell",
+    "examples": [
+      {
+        "exam_en": "The buds were beginning to <strong class=\"target-word\">swell</strong> in early spring.",
+        "exam_ko": "초봄에 꽃봉오리가 <strong class=\"target-word\">부풀기</strong> 시작했다."
+      },
+      {
+        "exam_en": "Her feet <strong class=\"target-word\">swelled</strong> from standing all day.",
+        "exam_ko": "하루 종일 서 있었더니 발이 <strong class=\"target-word\">부었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4875,
+    "origin": "puffy",
+    "examples": [
+      {
+        "exam_en": "My eyes were slightly <strong class=\"target-word\">puffy</strong> from lack of sleep.",
+        "exam_ko": "수면 부족으로 눈이 약간 <strong class=\"target-word\">부어 있었다</strong>."
+      },
+      {
+        "exam_en": "His face looked <strong class=\"target-word\">puffy</strong> after crying all night.",
+        "exam_ko": "밤새 울고 나서 그의 얼굴이 <strong class=\"target-word\">부어 보였다</strong>."
+      }
+    ]
+  }
+]

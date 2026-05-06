@@ -332,54 +332,71 @@ const StudyResult = () => {
 
             {/* 단어 목록 영역 */}
             <div className='flex flex-col gap-[12px] px-[20px]'>
-              {testQuestions.map((question, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 + (index * 0.1) }}
-                  className={`
-                    flex flex-col gap-[10px] 
-                    px-[20px] py-[18px]
-                    rounded-[12px]
-                    ${question.isCorrect ? 'bg-status-success-100' : 'bg-status-error-50'}  
-                  `}
-                >
-                  <div className='flex items-center gap-[10px]'>
-                    <div className='flex-shrink-0'>
-                      {question.isCorrect ? (
-                        <Circle size={24} weight="bold" className='text-status-success-500' />
-                      ) : (
-                        <X size={24} weight="bold" className='text-status-error-500' />
-                      )}
-                    </div>
-                    <div className='flex flex-col flex-1 gap-[5px]'>
-                      <div className="flex items-center justify-between">
-                        <h3
-                          onClick={() => getTextSound(question.origin, "en")}
-                          className="text-[16px] font-[700] text-layout-black cursor-pointer"
-                        >
-                          {question.origin}
-                        </h3>
-                        <MemorizationStatus
-                          repetition={question.repetition ?? question.sm2?.repetition ?? 0}
-                          interval={question.interval ?? question.sm2?.interval ?? 0}
-                          ef={question.ef ?? question.sm2?.ef ?? 2.5}
-                          nextReview={question.nextReview ?? question.sm2?.nextReview}
-                          wordId={question.id}
-                          useRandomMessages={false}
-                        />
+              {(() => {
+                // cardMatch/cardMatchListening은 여러 단어를 한 세트로 묶어 출제하므로
+                // 결과 화면에서는 세트 안의 단어들을 각 카드로 펼쳐서 렌더한다.
+                const flat = [];
+                testQuestions.forEach((question) => {
+                  if (Array.isArray(question.words) && question.words.length > 0) {
+                    question.words.forEach((w) => {
+                      flat.push({ ...w, isCorrect: question.isCorrect });
+                    });
+                  } else {
+                    flat.push(question);
+                  }
+                });
+                return flat.map((item, index) => {
+                  const meaningsArr = Array.isArray(item.meanings) ? item.meanings : [];
+                  return (
+                    <motion.div
+                      key={`${item.id ?? 'q'}-${index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.2 + (index * 0.1) }}
+                      className={`
+                        flex flex-col gap-[10px]
+                        px-[20px] py-[18px]
+                        rounded-[12px]
+                        ${item.isCorrect ? 'bg-status-success-100' : 'bg-status-error-50'}
+                      `}
+                    >
+                      <div className='flex items-center gap-[10px]'>
+                        <div className='flex-shrink-0'>
+                          {item.isCorrect ? (
+                            <Circle size={24} weight="bold" className='text-status-success-500' />
+                          ) : (
+                            <X size={24} weight="bold" className='text-status-error-500' />
+                          )}
+                        </div>
+                        <div className='flex flex-col flex-1 gap-[5px]'>
+                          <div className="flex items-center justify-between">
+                            <h3
+                              onClick={() => getTextSound(item.origin, "en")}
+                              className="text-[16px] font-[700] text-layout-black cursor-pointer"
+                            >
+                              {item.origin}
+                            </h3>
+                            <MemorizationStatus
+                              repetition={item.repetition ?? item.sm2?.repetition ?? 0}
+                              interval={item.interval ?? item.sm2?.interval ?? 0}
+                              ef={item.ef ?? item.sm2?.ef ?? 2.5}
+                              nextReview={null}
+                              wordId={item.id}
+                              useRandomMessages={false}
+                            />
+                          </div>
+                          <p
+                            onClick={() => getTextSound(meaningsArr.join(", "), "ko")}
+                            className="text-[12px] font-[400] text-layout-gray-400 cursor-pointer"
+                          >
+                            {meaningsArr.join(', ')}
+                          </p>
+                        </div>
                       </div>
-                      <p
-                        onClick={() => getTextSound(question.meanings.join(", "), "ko")}
-                        className="text-[12px] font-[400] text-layout-gray-400 cursor-pointer"
-                      >
-                        {question.meanings.join(', ')}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                    </motion.div>
+                  );
+                });
+              })()}
             </div>
           </div>
           <div
@@ -392,7 +409,8 @@ const StudyResult = () => {
               background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}`
             }}
           >
-            <motion.button
+            {testType !== 'quick' && (
+              <motion.button
                 className="
                     flex-1
                     h-[45px]
@@ -411,6 +429,7 @@ const StudyResult = () => {
                   damping: 15
                 }}
               >테스트 다시 하기</motion.button>
+            )}
             <motion.button
               className="
                   flex-1

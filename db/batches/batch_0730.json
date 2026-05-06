@@ -1,0 +1,218 @@
+[
+  {
+    "id": 37140,
+    "origin": "worded",
+    "examples": [
+      {
+        "exam_en": "a carefully-word\">worded statement",
+        "exam_ko": "말을 신중하게 선택한 성명문."
+      }
+    ]
+  },
+  {
+    "id": 37189,
+    "origin": "clustered",
+    "examples": [
+      {
+        "exam_en": "a clustered pillar",
+        "exam_ko": "[건축] 다발 기둥."
+      }
+    ]
+  },
+  {
+    "id": 37193,
+    "origin": "bestir",
+    "examples": [
+      {
+        "exam_en": "bestir oneself",
+        "exam_ko": "분발하다."
+      }
+    ]
+  },
+  {
+    "id": 37200,
+    "origin": "beady",
+    "examples": [
+      {
+        "exam_en": "beady eyes",
+        "exam_ko": "작고 둥글며 반짝반짝 빛나는 눈."
+      }
+    ]
+  },
+  {
+    "id": 37201,
+    "origin": "textual",
+    "examples": [
+      {
+        "exam_en": "textual analysis",
+        "exam_ko": "텍스트 분석."
+      }
+    ]
+  },
+  {
+    "id": 37205,
+    "origin": "scorer",
+    "examples": [
+      {
+        "exam_en": "a high scorer",
+        "exam_ko": "높은[낮은] 점수의 사람."
+      }
+    ]
+  },
+  {
+    "id": 37234,
+    "origin": "turntable",
+    "examples": [
+      {
+        "exam_en": "The turntable on that old stereo is broken.",
+        "exam_ko": "그 낡은 스테레오 전축의 회전반이 고장났다."
+      }
+    ]
+  },
+  {
+    "id": 37237,
+    "origin": "footsore",
+    "examples": [
+      {
+        "exam_en": "I was footsore from walking around Paris all day.",
+        "exam_ko": "나는 하루 종일 파리를 걸어다니느라 발이 아팠다."
+      }
+    ]
+  },
+  {
+    "id": 37239,
+    "origin": "bender",
+    "examples": [
+      {
+        "exam_en": "go on a bender",
+        "exam_ko": "술 마시고 소란을 피우다."
+      }
+    ]
+  },
+  {
+    "id": 37246,
+    "origin": "drying",
+    "examples": [
+      {
+        "exam_en": "a drying shed",
+        "exam_ko": "건조 움막."
+      }
+    ]
+  },
+  {
+    "id": 37260,
+    "origin": "scorcher",
+    "examples": [
+      {
+        "exam_en": "Yesterday was a scorcher.",
+        "exam_ko": "어제는 타는 듯 더운 날이었다"
+      },
+      {
+        "exam_en": "Phew, what a scorcher!",
+        "exam_ko": "후유 정말 더운 날이구나!"
+      }
+    ]
+  },
+  {
+    "id": 37265,
+    "origin": "wonderland",
+    "examples": [
+      {
+        "exam_en": "a scenic wonderland",
+        "exam_ko": "놀라운 경승지"
+      },
+      {
+        "exam_en": "a summer wonderland",
+        "exam_ko": "여름 경치가 굉장한 곳."
+      }
+    ]
+  },
+  {
+    "id": 37276,
+    "origin": "feeler",
+    "examples": [
+      {
+        "exam_en": "throw out a feeler",
+        "exam_ko": "타진[염탐]하다."
+      }
+    ]
+  },
+  {
+    "id": 37284,
+    "origin": "yester",
+    "examples": [
+      {
+        "exam_en": "yestereve, yesterevning",
+        "exam_ko": "어젯밤, 어제 저녁"
+      },
+      {
+        "exam_en": "yesterweek, yesteryear",
+        "exam_ko": "지난주, 지난해"
+      }
+    ]
+  },
+  {
+    "id": 37290,
+    "origin": "isosceles",
+    "examples": [
+      {
+        "exam_en": "an isosceles triangle",
+        "exam_ko": "이등변 삼각형."
+      }
+    ]
+  },
+  {
+    "id": 37330,
+    "origin": "bucketful",
+    "examples": [
+      {
+        "exam_en": "a bucketful of water",
+        "exam_ko": "한 양동이의 물"
+      },
+      {
+        "exam_en": "They ate spaghetti by the bucketful.",
+        "exam_ko": "그들은 스파게티를 버킷에 담을 만큼 많이 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 37363,
+    "origin": "sportscaster",
+    "examples": [
+      {
+        "exam_en": "She wanted to be a sportscaster in USA .",
+        "exam_ko": "그녀는 미국에서 스포츠 캐스터가 되고 싶었다."
+      }
+    ]
+  },
+  {
+    "id": 37366,
+    "origin": "smithereens",
+    "examples": [
+      {
+        "exam_en": "smash a plate to smithereens",
+        "exam_ko": "접시를 산산조각을 내다."
+      }
+    ]
+  },
+  {
+    "id": 37369,
+    "origin": "evenings",
+    "examples": [
+      {
+        "exam_en": "Evenings, we sit at home and watch TV.",
+        "exam_ko": "저녁이면 늘 우리는 집에 앉아서 텔레비전을 본다."
+      }
+    ]
+  },
+  {
+    "id": 37570,
+    "origin": "beta",
+    "examples": [
+      {
+        "exam_en": "They are still in the beta mode with that software.",
+        "exam_ko": "그 소프트웨어는 아직 시험 단계에 있다."
+      }
+    ]
+  }
+]

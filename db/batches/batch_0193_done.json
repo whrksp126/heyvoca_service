@@ -1,0 +1,270 @@
+[
+  {
+    "id": 4374,
+    "origin": "recite",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">recited</strong> a poem in front of the class.",
+        "exam_ko": "그녀는 반 앞에서 시를 <strong class=\"target-word\">낭송했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">recited</strong> his adventures to his friends.",
+        "exam_ko": "그는 친구들에게 모험담을 <strong class=\"target-word\">이야기했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4376,
+    "origin": "reflection",
+    "examples": [
+      {
+        "exam_en": "The mirror showed a clear <strong class=\"target-word\">reflection</strong> of her face.",
+        "exam_ko": "거울에 그녀의 얼굴이 선명하게 <strong class=\"target-word\">반사</strong>되었다."
+      },
+      {
+        "exam_en": "His behavior is a <strong class=\"target-word\">reflection</strong> of his health condition.",
+        "exam_ko": "그의 행동은 건강 상태를 나타내는 <strong class=\"target-word\">반영</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4377,
+    "origin": "reopen",
+    "examples": [
+      {
+        "exam_en": "The case was <strong class=\"target-word\">reopened</strong> after new evidence was found.",
+        "exam_ko": "새로운 증거가 발견된 후 사건이 <strong class=\"target-word\">재개되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4378,
+    "origin": "band",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">band</strong> of wild dogs roamed the streets.",
+        "exam_ko": "들개 <strong class=\"target-word\">떼</strong>가 거리를 돌아다녔다."
+      },
+      {
+        "exam_en": "The military <strong class=\"target-word\">band</strong> played at the ceremony.",
+        "exam_ko": "<strong class=\"target-word\">군악대</strong>가 행사에서 연주했다."
+      }
+    ]
+  },
+  {
+    "id": 4379,
+    "origin": "banker",
+    "examples": [
+      {
+        "exam_en": "Who are your <strong class=\"target-word\">bankers</strong>?",
+        "exam_ko": "어느 <strong class=\"target-word\">은행</strong>을 이용하십니까?"
+      },
+      {
+        "exam_en": "Let me be your <strong class=\"target-word\">banker</strong>.",
+        "exam_ko": "제가 <strong class=\"target-word\">돈을 빌려</strong> 드리겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 4380,
+    "origin": "banquet",
+    "examples": [
+      {
+        "exam_en": "The chef served a delicious <strong class=\"target-word\">banquet</strong> for the guests.",
+        "exam_ko": "요리사가 손님들을 위해 맛있는 <strong class=\"target-word\">연회</strong> 음식을 내놓았다."
+      },
+      {
+        "exam_en": "They held a <strong class=\"target-word\">banquet</strong> to celebrate the victory.",
+        "exam_ko": "그들은 승리를 축하하기 위해 <strong class=\"target-word\">연회</strong>를 열었다."
+      },
+      {
+        "exam_en": "The hotel <strong class=\"target-word\">banquet</strong> was lavishly decorated.",
+        "exam_ko": "그 호텔 <strong class=\"target-word\">연회</strong>는 호화롭게 꾸며졌다."
+      }
+    ]
+  },
+  {
+    "id": 4381,
+    "origin": "prisoner",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">prisoner</strong> stood before the judge.",
+        "exam_ko": "<strong class=\"target-word\">피고인</strong>이 판사 앞에 섰다."
+      },
+      {
+        "exam_en": "He was held as a political <strong class=\"target-word\">prisoner</strong> for years.",
+        "exam_ko": "그는 수년간 정치 <strong class=\"target-word\">수감자</strong>로 갇혀 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4382,
+    "origin": "protection",
+    "examples": [
+      {
+        "exam_en": "There are several methods of <strong class=\"target-word\">protection</strong> against disease.",
+        "exam_ko": "질병에 대한 <strong class=\"target-word\">보호</strong> 방법이 여러 가지 있다."
+      },
+      {
+        "exam_en": "The law offers <strong class=\"target-word\">protection</strong> for children against abuse.",
+        "exam_ko": "법은 학대로부터 아이들을 <strong class=\"target-word\">보호</strong>한다."
+      }
+    ]
+  },
+  {
+    "id": 4383,
+    "origin": "punch",
+    "examples": [
+      {
+        "exam_en": "He got a <strong class=\"target-word\">punch</strong> on the nose in the fight.",
+        "exam_ko": "그는 싸움에서 코에 <strong class=\"target-word\">주먹</strong>을 맞았다."
+      },
+      {
+        "exam_en": "She threw a <strong class=\"target-word\">punch</strong> at her opponent.",
+        "exam_ko": "그녀는 상대방에게 <strong class=\"target-word\">주먹을 날렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4384,
+    "origin": "pyramid",
+    "examples": [
+      {
+        "exam_en": "The ancient <strong class=\"target-word\">pyramids</strong> still stand in Egypt.",
+        "exam_ko": "고대 <strong class=\"target-word\">피라미드</strong>는 여전히 이집트에 서 있다."
+      }
+    ]
+  },
+  {
+    "id": 4385,
+    "origin": "badge",
+    "examples": [
+      {
+        "exam_en": "The officer showed his police <strong class=\"target-word\">badge</strong>.",
+        "exam_ko": "경관이 경찰 <strong class=\"target-word\">배지</strong>를 보여 주었다."
+      },
+      {
+        "exam_en": "The soldier wore a <strong class=\"target-word\">badge</strong> of rank on his uniform.",
+        "exam_ko": "군인은 제복에 계급 <strong class=\"target-word\">휘장</strong>을 달고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4386,
+    "origin": "phonograph",
+    "examples": [
+      {
+        "exam_en": "He played music on a vintage <strong class=\"target-word\">phonograph</strong>.",
+        "exam_ko": "그는 빈티지 <strong class=\"target-word\">축음기</strong>로 음악을 틀었다."
+      }
+    ]
+  },
+  {
+    "id": 4387,
+    "origin": "pilgrim",
+    "examples": [
+      {
+        "exam_en": "Many <strong class=\"target-word\">pilgrims</strong> travel to Jerusalem each year.",
+        "exam_ko": "매년 많은 <strong class=\"target-word\">순례자</strong>들이 예루살렘을 찾는다."
+      },
+      {
+        "exam_en": "We are all <strong class=\"target-word\">pilgrims</strong> passing through this world.",
+        "exam_ko": "우리는 모두 이 세상을 지나가는 <strong class=\"target-word\">나그네</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 4388,
+    "origin": "planet",
+    "examples": [
+      {
+        "exam_en": "Earth is the only <strong class=\"target-word\">planet</strong> known to support life.",
+        "exam_ko": "지구는 생명을 지탱하는 것으로 알려진 유일한 <strong class=\"target-word\">행성</strong>이다."
+      },
+      {
+        "exam_en": "Jupiter is the largest <strong class=\"target-word\">planet</strong> in our solar system.",
+        "exam_ko": "목성은 태양계에서 가장 큰 <strong class=\"target-word\">행성</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 4389,
+    "origin": "plus",
+    "examples": [
+      {
+        "exam_en": "Two <strong class=\"target-word\">plus</strong> two equals four.",
+        "exam_ko": "2 <strong class=\"target-word\">더하기</strong> 2는 4이다."
+      },
+      {
+        "exam_en": "She has talent <strong class=\"target-word\">plus</strong> hard work on her side.",
+        "exam_ko": "그녀는 재능 <strong class=\"target-word\">게다가</strong> 노력도 겸비하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4390,
+    "origin": "pond",
+    "examples": [
+      {
+        "exam_en": "We went fishing in the <strong class=\"target-word\">pond</strong> near the park.",
+        "exam_ko": "우리는 공원 근처 <strong class=\"target-word\">연못</strong>에 낚시하러 갔다."
+      },
+      {
+        "exam_en": "We have a duck <strong class=\"target-word\">pond</strong> at the bottom of our garden.",
+        "exam_ko": "우리 정원 끝쪽에 오리 <strong class=\"target-word\">연못</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 4392,
+    "origin": "porridge",
+    "examples": [
+      {
+        "exam_en": "She ate a bowl of <strong class=\"target-word\">porridge</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">포리지</strong> 한 그릇을 먹었다."
+      }
+    ]
+  },
+  {
+    "id": 4393,
+    "origin": "pound",
+    "examples": [
+      {
+        "exam_en": "Thirty <strong class=\"target-word\">pounds</strong> is quite heavy for a turkey.",
+        "exam_ko": "30<strong class=\"target-word\">파운드</strong>는 칠면조로는 꽤 무거운 편이다."
+      },
+      {
+        "exam_en": "The ticket cost eight <strong class=\"target-word\">pounds</strong> and five pence.",
+        "exam_ko": "표 값은 8<strong class=\"target-word\">파운드</strong> 5펜스였다."
+      }
+    ]
+  },
+  {
+    "id": 4394,
+    "origin": "ache",
+    "examples": [
+      {
+        "exam_en": "His head <strong class=\"target-word\">ached</strong> after the long meeting.",
+        "exam_ko": "긴 회의 후 그의 머리가 <strong class=\"target-word\">아팠다</strong>."
+      },
+      {
+        "exam_en": "His body was <strong class=\"target-word\">aching</strong> from the injury.",
+        "exam_ko": "그의 몸은 부상으로 계속 <strong class=\"target-word\">쑤셨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4395,
+    "origin": "awesome",
+    "examples": [
+      {
+        "exam_en": "The volcano created an <strong class=\"target-word\">awesome</strong> sight.",
+        "exam_ko": "화산은 <strong class=\"target-word\">무시무시한</strong> 광경을 연출했다."
+      },
+      {
+        "exam_en": "That new car is totally <strong class=\"target-word\">awesome</strong>.",
+        "exam_ko": "저 신형 차는 정말 <strong class=\"target-word\">최고</strong>다."
+      }
+    ]
+  }
+]

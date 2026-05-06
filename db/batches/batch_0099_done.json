@@ -1,0 +1,294 @@
+[
+  {
+    "id": 2043,
+    "origin": "tremendous",
+    "examples": [
+      {
+        "exam_en": "The earthquake caused a <strong class=\"target-word\">tremendous</strong> amount of damage.",
+        "exam_ko": "그 지진은 <strong class=\"target-word\">엄청난</strong> 피해를 초래했다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">tremendous</strong> effort to finish on time.",
+        "exam_ko": "그녀는 제때 끝내기 위해 <strong class=\"target-word\">엄청난</strong> 노력을 기울였다."
+      }
+    ]
+  },
+  {
+    "id": 2044,
+    "origin": "mechanical",
+    "examples": [
+      {
+        "exam_en": "The plane was delayed due to a <strong class=\"target-word\">mechanical</strong> failure.",
+        "exam_ko": "비행기는 <strong class=\"target-word\">기계</strong> 고장으로 인해 지연되었다."
+      },
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">mechanical</strong> response without thinking.",
+        "exam_ko": "그는 생각 없이 <strong class=\"target-word\">기계적인</strong> 답변을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2045,
+    "origin": "retail",
+    "examples": [
+      {
+        "exam_en": "She works at a <strong class=\"target-word\">retail</strong> store downtown.",
+        "exam_ko": "그녀는 시내 <strong class=\"target-word\">소매</strong> 매장에서 일한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">retail</strong> price is higher than the wholesale price.",
+        "exam_ko": "<strong class=\"target-word\">소매</strong> 가격은 도매 가격보다 더 높다."
+      }
+    ]
+  },
+  {
+    "id": 2046,
+    "origin": "institutional",
+    "examples": [
+      {
+        "exam_en": "An <strong class=\"target-word\">institutional</strong> investor bought shares in the company.",
+        "exam_ko": "<strong class=\"target-word\">기관</strong> 투자자가 그 회사의 주식을 매입했다."
+      },
+      {
+        "exam_en": "The reform requires <strong class=\"target-word\">institutional</strong> support to succeed.",
+        "exam_ko": "그 개혁이 성공하려면 <strong class=\"target-word\">제도적</strong> 지원이 필요하다."
+      },
+      {
+        "exam_en": "Patients receive <strong class=\"target-word\">institutional</strong> care at the facility.",
+        "exam_ko": "환자들은 그 시설에서 <strong class=\"target-word\">시설</strong> 간호를 받는다."
+      }
+    ]
+  },
+  {
+    "id": 2047,
+    "origin": "mixed",
+    "examples": [
+      {
+        "exam_en": "The bartender prepared a <strong class=\"target-word\">mixed</strong> drink for the guests.",
+        "exam_ko": "바텐더가 손님들을 위해 <strong class=\"target-word\">혼합</strong> 음료를 만들었다."
+      },
+      {
+        "exam_en": "She bought a bag of <strong class=\"target-word\">mixed</strong> candies for the children.",
+        "exam_ko": "그녀는 아이들을 위해 <strong class=\"target-word\">혼합</strong> 사탕 한 봉지를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 2048,
+    "origin": "required",
+    "examples": [
+      {
+        "exam_en": "Math and English are <strong class=\"target-word\">required</strong> subjects at this school.",
+        "exam_ko": "수학과 영어는 이 학교의 <strong class=\"target-word\">필수</strong> 과목이다."
+      },
+      {
+        "exam_en": "The professor assigned <strong class=\"target-word\">required</strong> reading for the course.",
+        "exam_ko": "교수는 그 수업을 위한 <strong class=\"target-word\">필독</strong> 서적을 지정했다."
+      }
+    ]
+  },
+  {
+    "id": 2049,
+    "origin": "known",
+    "examples": [
+      {
+        "exam_en": "There are still more unknowns than <strong class=\"target-word\">knowns</strong> about hurricanes.",
+        "exam_ko": "허리케인에 대해서는 <strong class=\"target-word\">알려진</strong> 사실보다 알려지지 않은 사실이 더 많다."
+      },
+      {
+        "exam_en": "It is a <strong class=\"target-word\">known</strong> fact that exercise improves health.",
+        "exam_ko": "운동이 건강을 개선한다는 것은 <strong class=\"target-word\">잘 알려진</strong> 사실이다."
+      }
+    ]
+  },
+  {
+    "id": 2050,
+    "origin": "functional",
+    "examples": [
+      {
+        "exam_en": "The architect chose a <strong class=\"target-word\">functional</strong> design for the building.",
+        "exam_ko": "건축가는 건물에 <strong class=\"target-word\">기능</strong> 위주의 설계를 선택했다."
+      },
+      {
+        "exam_en": "They furnished the office with <strong class=\"target-word\">functional</strong> modern furniture.",
+        "exam_ko": "그들은 사무실을 <strong class=\"target-word\">실용적인</strong> 현대식 가구로 꾸몄다."
+      }
+    ]
+  },
+  {
+    "id": 2051,
+    "origin": "straightforward",
+    "examples": [
+      {
+        "exam_en": "The instructions were <strong class=\"target-word\">straightforward</strong> and easy to follow.",
+        "exam_ko": "지침은 <strong class=\"target-word\">명쾌하여</strong> 따르기 쉬웠다."
+      },
+      {
+        "exam_en": "It is a <strong class=\"target-word\">straightforward</strong> matter of conscience.",
+        "exam_ko": "그것은 분명히 양심의 <strong class=\"target-word\">명백한</strong> 문제다."
+      }
+    ]
+  },
+  {
+    "id": 2052,
+    "origin": "superior",
+    "examples": [
+      {
+        "exam_en": "He always follows the orders of his <strong class=\"target-word\">superior</strong> officer.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">상관</strong>의 명령을 따른다."
+      },
+      {
+        "exam_en": "This product is <strong class=\"target-word\">superior</strong> to all others on the market.",
+        "exam_ko": "이 제품은 시장의 다른 모든 제품보다 <strong class=\"target-word\">우수하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2053,
+    "origin": "digital",
+    "examples": [
+      {
+        "exam_en": "She stores all her photos in a <strong class=\"target-word\">digital</strong> format.",
+        "exam_ko": "그녀는 모든 사진을 <strong class=\"target-word\">디지털</strong> 형식으로 저장한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">digital</strong> clock shows the exact time.",
+        "exam_ko": "<strong class=\"target-word\">디지털</strong> 시계는 정확한 시간을 표시한다."
+      }
+    ]
+  },
+  {
+    "id": 2054,
+    "origin": "spectacular",
+    "examples": [
+      {
+        "exam_en": "We witnessed a <strong class=\"target-word\">spectacular</strong> scene at the waterfall.",
+        "exam_ko": "우리는 폭포에서 <strong class=\"target-word\">장엄한</strong> 광경을 목격했다."
+      },
+      {
+        "exam_en": "The results of the experiment have been <strong class=\"target-word\">spectacular</strong>.",
+        "exam_ko": "실험의 결과는 <strong class=\"target-word\">놀라울</strong> 정도였다."
+      }
+    ]
+  },
+  {
+    "id": 2055,
+    "origin": "unhappy",
+    "examples": [
+      {
+        "exam_en": "She felt <strong class=\"target-word\">unhappy</strong> with the movie's ending.",
+        "exam_ko": "그녀는 영화 결말에 <strong class=\"target-word\">불만족스러워했다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">unhappy</strong> about the last-minute change.",
+        "exam_ko": "그는 막판 변경에 대해 <strong class=\"target-word\">불쾌해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2056,
+    "origin": "aggressive",
+    "examples": [
+      {
+        "exam_en": "The country condemned the <strong class=\"target-word\">aggressive</strong> acts against its citizens.",
+        "exam_ko": "그 나라는 자국민에 대한 <strong class=\"target-word\">공격적인</strong> 행위를 규탄했다."
+      },
+      {
+        "exam_en": "He spoke in an <strong class=\"target-word\">aggressive</strong> tone during the argument.",
+        "exam_ko": "그는 논쟁 중에 <strong class=\"target-word\">공격적인</strong> 말투로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 2057,
+    "origin": "painful",
+    "examples": [
+      {
+        "exam_en": "My tooth is <strong class=\"target-word\">painful</strong> to touch.",
+        "exam_ko": "이빨을 건드리면 <strong class=\"target-word\">아프다</strong>."
+      },
+      {
+        "exam_en": "She had to study despite a <strong class=\"target-word\">painful</strong> headache.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">고통스러운</strong> 두통에도 공부해야 했다."
+      },
+      {
+        "exam_en": "Is the injection going to be <strong class=\"target-word\">painful</strong>?",
+        "exam_ko": "주사가 <strong class=\"target-word\">아플까요</strong>?"
+      }
+    ]
+  },
+  {
+    "id": 2058,
+    "origin": "abstract",
+    "examples": [
+      {
+        "exam_en": "Love and freedom are <strong class=\"target-word\">abstract</strong> concepts.",
+        "exam_ko": "사랑과 자유는 <strong class=\"target-word\">추상적인</strong> 개념이다."
+      },
+      {
+        "exam_en": "The painting had an <strong class=\"target-word\">abstract</strong> style with bold colors.",
+        "exam_ko": "그 그림은 강렬한 색채의 <strong class=\"target-word\">추상</strong> 양식이었다."
+      }
+    ]
+  },
+  {
+    "id": 2061,
+    "origin": "legislative",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">legislative</strong> body passed a new education law.",
+        "exam_ko": "<strong class=\"target-word\">입법부</strong>가 새로운 교육법을 통과시켰다."
+      },
+      {
+        "exam_en": "The senator introduced a <strong class=\"target-word\">legislative</strong> bill last week.",
+        "exam_ko": "그 상원의원은 지난주에 <strong class=\"target-word\">입법</strong> 법안을 제출했다."
+      }
+    ]
+  },
+  {
+    "id": 2062,
+    "origin": "monthly",
+    "examples": [
+      {
+        "exam_en": "She receives a <strong class=\"target-word\">monthly</strong> salary of two thousand dollars.",
+        "exam_ko": "그녀는 2,000달러의 <strong class=\"target-word\">월</strong> 급여를 받는다."
+      },
+      {
+        "exam_en": "He subscribes to a <strong class=\"target-word\">monthly</strong> magazine about science.",
+        "exam_ko": "그는 과학에 관한 <strong class=\"target-word\">월간</strong> 잡지를 구독한다."
+      }
+    ]
+  },
+  {
+    "id": 2063,
+    "origin": "explicit",
+    "examples": [
+      {
+        "exam_en": "The manager gave <strong class=\"target-word\">explicit</strong> directions to each team member.",
+        "exam_ko": "관리자는 각 팀원에게 <strong class=\"target-word\">명확한</strong> 지시를 내렸다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">explicit</strong> about his expectations in the meeting.",
+        "exam_ko": "그는 회의에서 자신의 기대사항을 <strong class=\"target-word\">명확하게</strong> 밝혔다."
+      }
+    ]
+  },
+  {
+    "id": 2064,
+    "origin": "nasty",
+    "examples": [
+      {
+        "exam_en": "She encountered a <strong class=\"target-word\">nasty</strong> person at the counter.",
+        "exam_ko": "그녀는 카운터에서 <strong class=\"target-word\">불쾌한</strong> 사람을 만났다."
+      },
+      {
+        "exam_en": "There was a <strong class=\"target-word\">nasty</strong> smell coming from the trash.",
+        "exam_ko": "쓰레기통에서 <strong class=\"target-word\">악취</strong>가 났다."
+      },
+      {
+        "exam_en": "The cafeteria served a <strong class=\"target-word\">nasty</strong> meal that nobody enjoyed.",
+        "exam_ko": "식당은 아무도 즐기지 못한 <strong class=\"target-word\">불쾌한</strong> 식사를 제공했다."
+      }
+    ]
+  }
+]

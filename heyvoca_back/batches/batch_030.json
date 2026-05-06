@@ -1,0 +1,602 @@
+[
+  {
+    "id": 2893,
+    "word": "desire",
+    "exam_en": "<strong class=\"target-word\">desire</strong> happiness",
+    "exam_ko": "행복[재산]을 <strong class=\"target-word\">바라다</strong>"
+  },
+  {
+    "id": 2894,
+    "word": "desire",
+    "exam_en": "He <strong class=\"target-word\">desired</strong> to achieve good results.",
+    "exam_ko": "그는 좋은 결과를 얻기를 <strong class=\"target-word\">바랐다</strong>"
+  },
+  {
+    "id": 2895,
+    "word": "compensate",
+    "exam_en": "<strong class=\"target-word\">compensate</strong> him for his trouble with a large sum of money",
+    "exam_ko": "그의 수고에 대해 많은 돈으로 <strong class=\"target-word\">보답하다</strong>"
+  },
+  {
+    "id": 2896,
+    "word": "compensate",
+    "exam_en": "Nothing can <strong class=\"target-word\">compensate</strong> me for the loss of my wife.",
+    "exam_ko": "나를 아내를 잃은 것으로 <strong class=\"target-word\">보상할</strong> 수 없다"
+  },
+  {
+    "id": 2897,
+    "word": "couple",
+    "exam_en": "a <strong class=\"target-word\">couple</strong> of players",
+    "exam_ko": "2인 <strong class=\"target-word\">1조</strong>의 경기자"
+  },
+  {
+    "id": 2898,
+    "word": "couple",
+    "exam_en": "a <strong class=\"target-word\">couple</strong> of apples",
+    "exam_ko": "사과 <strong class=\"target-word\">2개</strong>."
+  },
+  {
+    "id": 2899,
+    "word": "depart",
+    "exam_en": "<strong class=\"target-word\">depart</strong> from Paris for London",
+    "exam_ko": "파리를 떠나 런던으로 <strong class=\"target-word\">향하다</strong>"
+  },
+  {
+    "id": 2900,
+    "word": "depart",
+    "exam_en": "The plane <strong class=\"target-word\">departs</strong> at 10:25 for Chicago.",
+    "exam_ko": "비행기는 10시 25분에 시카고를 향해 <strong class=\"target-word\">출발한다</strong>."
+  },
+  {
+    "id": 2901,
+    "word": "circulate",
+    "exam_en": "Blood <strong class=\"target-word\">circulates</strong> through the body.",
+    "exam_ko": "피는 체내를 <strong class=\"target-word\">순환한다</strong>."
+  },
+  {
+    "id": 2902,
+    "word": "circulate",
+    "exam_en": "He <strong class=\"target-word\">circulated</strong> from table to table at the dinner party.",
+    "exam_ko": "그는 만찬회에서 이 식탁 저 식탁을 누비고 <strong class=\"target-word\">다녔다</strong>."
+  },
+  {
+    "id": 2903,
+    "word": "sum",
+    "exam_en": "figure out a <strong class=\"target-word\">sum</strong>",
+    "exam_ko": "합계를 <strong class=\"target-word\">내다</strong>"
+  },
+  {
+    "id": 2904,
+    "word": "sum",
+    "exam_en": "The <strong class=\"target-word\">sum</strong> of 7 and 9 is 16.",
+    "exam_ko": "7과 9의 합은 <strong class=\"target-word\">16이다</strong>."
+  },
+  {
+    "id": 2905,
+    "word": "stem",
+    "exam_en": "His illness <strong class=\"target-word\">stems</strong> from a car accident.",
+    "exam_ko": "그의 병의 근원은 교통 <strong class=\"target-word\">사고다</strong>."
+  },
+  {
+    "id": 2906,
+    "word": "stem",
+    "exam_en": "<strong class=\"target-word\">stem</strong> an attack",
+    "exam_ko": "공격을 <strong class=\"target-word\">저지하다</strong>"
+  },
+  {
+    "id": 2907,
+    "word": "weaken",
+    "exam_en": "<strong class=\"target-word\">weakened</strong> eyesight",
+    "exam_ko": "<strong class=\"target-word\">약해진</strong> 시력"
+  },
+  {
+    "id": 2908,
+    "word": "weaken",
+    "exam_en": "Fatigue <strong class=\"target-word\">weakened</strong> her resistance.",
+    "exam_ko": "피로해서 그녀의 저항력은 <strong class=\"target-word\">약해졌다</strong>"
+  },
+  {
+    "id": 2909,
+    "word": "shed",
+    "exam_en": "a cattle <strong class=\"target-word\">shed</strong>",
+    "exam_ko": "가축 <strong class=\"target-word\">우리</strong>[자전거 두는 광]."
+  },
+  {
+    "id": 2910,
+    "word": "shed",
+    "exam_en": "an engine <strong class=\"target-word\">shed</strong>",
+    "exam_ko": "<strong class=\"target-word\">기관차고</strong>."
+  },
+  {
+    "id": 2911,
+    "word": "slip",
+    "exam_en": "<strong class=\"target-word\">slip</strong> and fall",
+    "exam_ko": "미끄러져 <strong class=\"target-word\">구르다</strong>"
+  },
+  {
+    "id": 2912,
+    "word": "slip",
+    "exam_en": "<strong class=\"target-word\">slip</strong> on A",
+    "exam_ko": "A(장소 등)에서 <strong class=\"target-word\">미끄러지다</strong>"
+  },
+  {
+    "id": 2913,
+    "word": "hate",
+    "exam_en": "<strong class=\"target-word\">hate</strong> violence",
+    "exam_ko": "폭력을 몹시 <strong class=\"target-word\">싫어하다</strong>"
+  },
+  {
+    "id": 2914,
+    "word": "hate",
+    "exam_en": "I <strong class=\"target-word\">hate</strong> injustice.",
+    "exam_ko": "부정(不正)은 <strong class=\"target-word\">질색이다</strong>"
+  },
+  {
+    "id": 2915,
+    "word": "count",
+    "exam_en": "<strong class=\"target-word\">count</strong> heads",
+    "exam_ko": "인원수를 <strong class=\"target-word\">세다</strong>"
+  },
+  {
+    "id": 2916,
+    "word": "count",
+    "exam_en": "be able to <strong class=\"target-word\">count</strong> the number of people on  one hand",
+    "exam_ko": "(구어) 사람 수를 한 손으로 셀 수 있을 정도로 그 수가 <strong class=\"target-word\">적다</strong>"
+  },
+  {
+    "id": 2917,
+    "word": "lean",
+    "exam_en": "<strong class=\"target-word\">lean</strong> forward",
+    "exam_ko": "몸을 앞으로 구부리다[뒤로 <strong class=\"target-word\">젖히다</strong>]"
+  },
+  {
+    "id": 2918,
+    "word": "lean",
+    "exam_en": "<strong class=\"target-word\">lean</strong> down",
+    "exam_ko": "<strong class=\"target-word\">웅크리다</strong>"
+  },
+  {
+    "id": 2919,
+    "word": "exercise",
+    "exam_en": "outdoor <strong class=\"target-word\">exercises</strong>",
+    "exam_ko": "옥외 <strong class=\"target-word\">운동</strong>"
+  },
+  {
+    "id": 2920,
+    "word": "exercise",
+    "exam_en": "gymnastic <strong class=\"target-word\">exercises</strong>",
+    "exam_ko": "<strong class=\"target-word\">체조</strong>"
+  },
+  {
+    "id": 2921,
+    "word": "roll",
+    "exam_en": "<strong class=\"target-word\">roll</strong> on",
+    "exam_ko": "<strong class=\"target-word\">굴러가다</strong>"
+  },
+  {
+    "id": 2922,
+    "word": "roll",
+    "exam_en": "<strong class=\"target-word\">roll</strong> over",
+    "exam_ko": "한 바퀴 빙 <strong class=\"target-word\">돌다</strong>"
+  },
+  {
+    "id": 2923,
+    "word": "attach",
+    "exam_en": "a strong link that <strong class=\"target-word\">attaches</strong> the individual to the whole",
+    "exam_ko": "개체를 전체에 <strong class=\"target-word\">결합</strong>시키는 튼튼한 유대"
+  },
+  {
+    "id": 2924,
+    "word": "attach",
+    "exam_en": "<strong class=\"target-word\">attach</strong> a caboose to a freight train",
+    "exam_ko": "화물 열차에 승무원차를 <strong class=\"target-word\">연결하다</strong>"
+  },
+  {
+    "id": 2925,
+    "word": "house",
+    "exam_en": "a two-storied <strong class=\"target-word\">house</strong>",
+    "exam_ko": "<strong class=\"target-word\">2층집</strong>"
+  },
+  {
+    "id": 2926,
+    "word": "house",
+    "exam_en": "a <strong class=\"target-word\">wooden</strong> <strong class=\"target-word\">house</strong>",
+    "exam_ko": "<strong class=\"target-word\">목조</strong> 가옥"
+  },
+  {
+    "id": 2927,
+    "word": "wooden",
+    "exam_en": "a <strong class=\"target-word\">wooden</strong> house",
+    "exam_ko": "<strong class=\"target-word\">목조</strong> 가옥"
+  },
+  {
+    "id": 2928,
+    "word": "accuse",
+    "exam_en": "be <strong class=\"target-word\">accused</strong> of treason",
+    "exam_ko": "반역죄로 <strong class=\"target-word\">기소되다</strong>"
+  },
+  {
+    "id": 2929,
+    "word": "accuse",
+    "exam_en": "<strong class=\"target-word\">accuse</strong> a person of committing a fraud",
+    "exam_ko": "남을 사기죄로 <strong class=\"target-word\">고발하다</strong>"
+  },
+  {
+    "id": 2930,
+    "word": "judge",
+    "exam_en": "an associate <strong class=\"target-word\">judge</strong>",
+    "exam_ko": "배석 <strong class=\"target-word\">판사</strong>"
+  },
+  {
+    "id": 2931,
+    "word": "judge",
+    "exam_en": "<strong class=\"target-word\">Judge</strong> of the High Court",
+    "exam_ko": "고등 법원 <strong class=\"target-word\">판사</strong>"
+  },
+  {
+    "id": 2932,
+    "word": "bind",
+    "exam_en": "<strong class=\"target-word\">bind</strong> a captive hand and foot",
+    "exam_ko": "포로의 손발을 <strong class=\"target-word\">묶다</strong>"
+  },
+  {
+    "id": 2933,
+    "word": "bind",
+    "exam_en": "<strong class=\"target-word\">bind</strong> a person with chains",
+    "exam_ko": "남을 사슬로 <strong class=\"target-word\">묶다</strong>"
+  },
+  {
+    "id": 2934,
+    "word": "stretch",
+    "exam_en": "<strong class=\"target-word\">stretch</strong> one's limbs",
+    "exam_ko": "팔다리를 쭉 <strong class=\"target-word\">뻗다</strong>"
+  },
+  {
+    "id": 2935,
+    "word": "stretch",
+    "exam_en": "<strong class=\"target-word\">stretch</strong> out a helping hand",
+    "exam_ko": "원조의 손을 <strong class=\"target-word\">뻗치다</strong>"
+  },
+  {
+    "id": 2936,
+    "word": "comment",
+    "exam_en": "<strong class=\"target-word\">comments</strong> on a text",
+    "exam_ko": "본문의 <strong class=\"target-word\">주석</strong>."
+  },
+  {
+    "id": 2937,
+    "word": "comment",
+    "exam_en": "a biting <strong class=\"target-word\">comment</strong>",
+    "exam_ko": "신랄한 <strong class=\"target-word\">비평</strong>"
+  },
+  {
+    "id": 2938,
+    "word": "withdraw",
+    "exam_en": "<strong class=\"target-word\">withdraw</strong> oneself from",
+    "exam_ko": "…에서 몸을 <strong class=\"target-word\">빼다</strong>"
+  },
+  {
+    "id": 2939,
+    "word": "withdraw",
+    "exam_en": "<strong class=\"target-word\">withdraw</strong> one's eyes from a scene",
+    "exam_ko": "광경에서 눈을 <strong class=\"target-word\">돌리다</strong>."
+  },
+  {
+    "id": 2940,
+    "word": "exclude",
+    "exam_en": "<strong class=\"target-word\">exclude</strong> a ship from a port",
+    "exam_ko": "배를 항구에서 들이지 <strong class=\"target-word\">않다</strong>"
+  },
+  {
+    "id": 2941,
+    "word": "exclude",
+    "exam_en": "Perfect faith <strong class=\"target-word\">excludes</strong> doubt.",
+    "exam_ko": "완전한 믿음은 의심을 <strong class=\"target-word\">차단한다</strong>."
+  },
+  {
+    "id": 2942,
+    "word": "fix",
+    "exam_en": "<strong class=\"target-word\">fix</strong> it to the wall with a nail",
+    "exam_ko": "그것을 벽에 못으로 <strong class=\"target-word\">고정시키다</strong>"
+  },
+  {
+    "id": 2943,
+    "word": "fix",
+    "exam_en": "<strong class=\"target-word\">fix</strong> a flag-pole into the ground",
+    "exam_ko": "지면에 깃대를 <strong class=\"target-word\">붙박다</strong>"
+  },
+  {
+    "id": 2944,
+    "word": "back",
+    "exam_en": "a rounded <strong class=\"target-word\">back</strong>",
+    "exam_ko": "<strong class=\"target-word\">새우등</strong>"
+  },
+  {
+    "id": 2945,
+    "word": "back",
+    "exam_en": "the lower <strong class=\"target-word\">back</strong>",
+    "exam_ko": "<strong class=\"target-word\">허리</strong>"
+  },
+  {
+    "id": 2946,
+    "word": "justify",
+    "exam_en": "<strong class=\"target-word\">justify</strong> bail",
+    "exam_ko": "[법률] 보석 보증인의 자격이 있음을 <strong class=\"target-word\">증명하다</strong>"
+  },
+  {
+    "id": 2947,
+    "word": "justify",
+    "exam_en": "<strong class=\"target-word\">justify</strong> oneself by success",
+    "exam_ko": "성공함으로써 자기 행위를 <strong class=\"target-word\">정당화하다</strong>"
+  },
+  {
+    "id": 2948,
+    "word": "knock",
+    "exam_en": "She <strong class=\"target-word\">knocked</strong> at the door, but nobody answered.",
+    "exam_ko": "그녀는 문을 노크했으나 아무도 대답하지 <strong class=\"target-word\">않았다</strong>"
+  },
+  {
+    "id": 2949,
+    "word": "knock",
+    "exam_en": "Fortune <strong class=\"target-word\">knocks</strong> at least once at every man's gate.",
+    "exam_ko": "행운은 누구에게나 적어도 한 번은 <strong class=\"target-word\">온다</strong>."
+  },
+  {
+    "id": 2950,
+    "word": "permit",
+    "exam_en": "the maximum speed <strong class=\"target-word\">permitted</strong>",
+    "exam_ko": "최고 <strong class=\"target-word\">제한</strong> 속도"
+  },
+  {
+    "id": 2951,
+    "word": "permit",
+    "exam_en": "If I am <strong class=\"target-word\">permitted</strong> a word, I should like to raise a few objections.",
+    "exam_ko": "괜찮으시다면 반대 의견을 조금 말씀드리고 <strong class=\"target-word\">싶습니다</strong>"
+  },
+  {
+    "id": 2952,
+    "word": "occupy",
+    "exam_en": "An old piano <strong class=\"target-word\">occupies</strong> one corner.",
+    "exam_ko": "낡은 피아노 한 대가 방 한쪽 구석을 차지하고 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 2953,
+    "word": "occupy",
+    "exam_en": "The speeches <strong class=\"target-word\">occupied</strong> the whole afternoon.",
+    "exam_ko": "연설은 오후 내내 <strong class=\"target-word\">계속되었다</strong>"
+  },
+  {
+    "id": 2954,
+    "word": "surround",
+    "exam_en": "<strong class=\"target-word\">surround</strong> the enemy",
+    "exam_ko": "적군을 <strong class=\"target-word\">포위하다</strong>"
+  },
+  {
+    "id": 2955,
+    "word": "surround",
+    "exam_en": "The cabin was <strong class=\"target-word\">surrounded</strong> with darkness.",
+    "exam_ko": "오두막집은 어둠에 싸여 <strong class=\"target-word\">있었다</strong>"
+  },
+  {
+    "id": 2956,
+    "word": "list",
+    "exam_en": "a <strong class=\"target-word\">list</strong> of members",
+    "exam_ko": "회원[후보자, 출판물] <strong class=\"target-word\">일람표</strong>"
+  },
+  {
+    "id": 2957,
+    "word": "list",
+    "exam_en": "a price <strong class=\"target-word\">list</strong>",
+    "exam_ko": "<strong class=\"target-word\">가격표</strong>"
+  },
+  {
+    "id": 2958,
+    "word": "paint",
+    "exam_en": "a box of <strong class=\"target-word\">paints</strong>",
+    "exam_ko": "한 상자의 그림<strong class=\"target-word\">물감</strong>"
+  },
+  {
+    "id": 2959,
+    "word": "paint",
+    "exam_en": "peeling <strong class=\"target-word\">paint</strong>",
+    "exam_ko": "벗겨져 가는 <strong class=\"target-word\">칠</strong>"
+  },
+  {
+    "id": 2960,
+    "word": "connect",
+    "exam_en": "the long hallway that <strong class=\"target-word\">connects</strong> the rooms",
+    "exam_ko": "방들을 <strong class=\"target-word\">연결</strong>하는 긴 복도"
+  },
+  {
+    "id": 2961,
+    "word": "connect",
+    "exam_en": "<strong class=\"target-word\">connect</strong> the two islands by a bridge",
+    "exam_ko": "두 섬을 다리로 <strong class=\"target-word\">잇다</strong>"
+  },
+  {
+    "id": 2962,
+    "word": "abandon",
+    "exam_en": "<strong class=\"target-word\">abandon</strong> one's country",
+    "exam_ko": "조국을 <strong class=\"target-word\">떠나다</strong>"
+  },
+  {
+    "id": 2963,
+    "word": "abandon",
+    "exam_en": "<strong class=\"target-word\">abandon</strong> one's wife",
+    "exam_ko": "아내를 <strong class=\"target-word\">버리다</strong>"
+  },
+  {
+    "id": 2964,
+    "word": "construct",
+    "exam_en": "The detective story is well <strong class=\"target-word\">constructed</strong>.",
+    "exam_ko": "그 추리 소설은 구성이 잘 되어 <strong class=\"target-word\">있다</strong>."
+  },
+  {
+    "id": 2965,
+    "word": "quote",
+    "exam_en": "<strong class=\"target-word\">quote</strong> a verse from the poem",
+    "exam_ko": "시에서 1행을 <strong class=\"target-word\">인용하다</strong>"
+  },
+  {
+    "id": 2966,
+    "word": "quote",
+    "exam_en": "He often <strong class=\"target-word\">quotes</strong> the Bible.",
+    "exam_ko": "그는 자주 성서를 <strong class=\"target-word\">인용한다</strong>"
+  },
+  {
+    "id": 2967,
+    "word": "blame",
+    "exam_en": "I was <strong class=\"target-word\">blamed</strong> for the murder.",
+    "exam_ko": "살인 누명을 <strong class=\"target-word\">썼다</strong>"
+  },
+  {
+    "id": 2968,
+    "word": "blame",
+    "exam_en": "She <strong class=\"target-word\">blames</strong> the divorce on him.",
+    "exam_ko": "그녀는 이혼의 원인을 그의 탓이라고 하고 <strong class=\"target-word\">있다</strong>"
+  },
+  {
+    "id": 2969,
+    "word": "separate",
+    "exam_en": "<strong class=\"target-word\">separate</strong> the two quarreling players",
+    "exam_ko": "티격태격하고 있는 두 선수를 <strong class=\"target-word\">떼어놓다</strong>"
+  },
+  {
+    "id": 2970,
+    "word": "separate",
+    "exam_en": "<strong class=\"target-word\">separate</strong> an egg",
+    "exam_ko": "계란의 흰자와 노른자를 <strong class=\"target-word\">나누다</strong>"
+  },
+  {
+    "id": 2971,
+    "word": "dismiss",
+    "exam_en": "The class is <strong class=\"target-word\">dismissed</strong>.",
+    "exam_ko": "수업은 이만 <strong class=\"target-word\">끝</strong>(※교사가 수업 종료를 알리는 상투적 문구)"
+  },
+  {
+    "id": 2972,
+    "word": "dismiss",
+    "exam_en": "You are <strong class=\"target-word\">dismissed</strong>.",
+    "exam_ko": "(군대 등에서) <strong class=\"target-word\">해산</strong>!"
+  },
+  {
+    "id": 2973,
+    "word": "incorporate",
+    "exam_en": "<strong class=\"target-word\">incorporate</strong> a business",
+    "exam_ko": "사업을 회사 조직으로 <strong class=\"target-word\">만들다</strong>."
+  },
+  {
+    "id": 2974,
+    "word": "incorporate",
+    "exam_en": "<strong class=\"target-word\">incorporate</strong> changes in a proposal",
+    "exam_ko": "계획에 변경을 <strong class=\"target-word\">가하다</strong>"
+  },
+  {
+    "id": 2975,
+    "word": "acknowledge",
+    "exam_en": "The loser <strong class=\"target-word\">acknowledged</strong> defeat.",
+    "exam_ko": "패자는 패배를 <strong class=\"target-word\">인정했다</strong>"
+  },
+  {
+    "id": 2976,
+    "word": "acknowledge",
+    "exam_en": "We <strong class=\"target-word\">acknowledge</strong> him our chairman.",
+    "exam_ko": "우리는 그를 의장으로 <strong class=\"target-word\">인정한다</strong>"
+  },
+  {
+    "id": 2977,
+    "word": "interpret",
+    "exam_en": "<strong class=\"target-word\">interpret</strong> a dream",
+    "exam_ko": "<strong class=\"target-word\">해몽하다</strong>"
+  },
+  {
+    "id": 2978,
+    "word": "interpret",
+    "exam_en": "<strong class=\"target-word\">interpret</strong> the meaning of a passage",
+    "exam_ko": "구절의 뜻을 <strong class=\"target-word\">밝히다</strong>."
+  },
+  {
+    "id": 2979,
+    "word": "alter",
+    "exam_en": "<strong class=\"target-word\">alter</strong> a dress",
+    "exam_ko": "드레스를 몸에 맞게 <strong class=\"target-word\">고치다</strong>"
+  },
+  {
+    "id": 2980,
+    "word": "alter",
+    "exam_en": "<strong class=\"target-word\">alter</strong> radically one's lifestyle",
+    "exam_ko": "생활 양식을 완전히 <strong class=\"target-word\">변화시키다</strong>"
+  },
+  {
+    "id": 2981,
+    "word": "tie",
+    "exam_en": "<strong class=\"target-word\">tie</strong> up a package",
+    "exam_ko": "소포를 단단히 <strong class=\"target-word\">묶다</strong>"
+  },
+  {
+    "id": 2982,
+    "word": "tie",
+    "exam_en": "be <strong class=\"target-word\">tied</strong> hand and foot",
+    "exam_ko": "손발이 <strong class=\"target-word\">묶이다</strong>"
+  },
+  {
+    "id": 2983,
+    "word": "possess",
+    "exam_en": "He <strong class=\"target-word\">possesses</strong> a big tract of land.",
+    "exam_ko": "그는 넓은 땅을 <strong class=\"target-word\">소유하고</strong> 있다"
+  },
+  {
+    "id": 2984,
+    "word": "possess",
+    "exam_en": "The town was soon <strong class=\"target-word\">possessed</strong> by the enemy.",
+    "exam_ko": "그 도시는 곧 적의 수중에 <strong class=\"target-word\">들어갔다</strong>."
+  },
+  {
+    "id": 2985,
+    "word": "implement",
+    "exam_en": "farming  <strong class=\"target-word\">implements</strong>",
+    "exam_ko": "농<strong class=\"target-word\">기구</strong>"
+  },
+  {
+    "id": 2986,
+    "word": "implement",
+    "exam_en": "an <strong class=\"target-word\">implement</strong> of war",
+    "exam_ko": "<strong class=\"target-word\">병기</strong>"
+  },
+  {
+    "id": 2987,
+    "word": "calculate",
+    "exam_en": "<strong class=\"target-word\">calculate</strong> the cost of a journey",
+    "exam_ko": "여비를 <strong class=\"target-word\">계산하다</strong>."
+  },
+  {
+    "id": 2988,
+    "word": "calculate",
+    "exam_en": "accurately <strong class=\"target-word\">calculate</strong>",
+    "exam_ko": "정확하게 <strong class=\"target-word\">계산하다</strong>"
+  },
+  {
+    "id": 2989,
+    "word": "resolve",
+    "exam_en": "<strong class=\"target-word\">resolve</strong> to work harder",
+    "exam_ko": "더 열심히 일하기로 <strong class=\"target-word\">결심하다</strong>"
+  },
+  {
+    "id": 2990,
+    "word": "resolve",
+    "exam_en": "Have you <strong class=\"target-word\">resolved</strong> where you will go next?",
+    "exam_ko": "다음은 어디로 갈 것인지 <strong class=\"target-word\">작정했어요</strong>?"
+  },
+  {
+    "id": 2991,
+    "word": "suspect",
+    "exam_en": "<strong class=\"target-word\">suspect</strong> intrigue",
+    "exam_ko": "음모를 <strong class=\"target-word\">눈치채다</strong>"
+  },
+  {
+    "id": 2992,
+    "word": "suspect",
+    "exam_en": "I <strong class=\"target-word\">suspected</strong> the presence of fire from the odor.",
+    "exam_ko": "냄새로 불이 났음을 <strong class=\"target-word\">알았다</strong>."
+  }
+]

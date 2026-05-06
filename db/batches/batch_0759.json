@@ -1,0 +1,214 @@
+[
+  {
+    "id": 46528,
+    "origin": "bucked",
+    "examples": [
+      {
+        "exam_en": "feel bucked",
+        "exam_ko": "(칭찬받거나 성공하여) 자신 만만하다."
+      }
+    ]
+  },
+  {
+    "id": 46541,
+    "origin": "manque",
+    "examples": [
+      {
+        "exam_en": "a writer manque",
+        "exam_ko": "되다가 만 작가."
+      }
+    ]
+  },
+  {
+    "id": 46549,
+    "origin": "kerfuffle",
+    "examples": [
+      {
+        "exam_en": "fuss and kerfuffle",
+        "exam_ko": "대소동."
+      }
+    ]
+  },
+  {
+    "id": 46563,
+    "origin": "raceway",
+    "examples": [
+      {
+        "exam_en": "Access flooring and wire raceways are designed to provide economical passageways for wiring.",
+        "exam_ko": "엑세스 플로어 및 전선 배선관은 전선의 경제적 통로를 제공하도록 설계된다."
+      }
+    ]
+  },
+  {
+    "id": 46567,
+    "origin": "organogram",
+    "examples": [
+      {
+        "exam_en": "an organogram showing the senior structure and reporting lines within the Commission",
+        "exam_ko": "그 위원회 내부의 상위 구조와 보고 라인을 보여 주는 조직도."
+      }
+    ]
+  },
+  {
+    "id": 46587,
+    "origin": "sextuple",
+    "examples": [
+      {
+        "exam_en": "sextuple rhythm",
+        "exam_ko": "6박자의 리듬."
+      }
+    ]
+  },
+  {
+    "id": 46643,
+    "origin": "storied",
+    "examples": [
+      {
+        "exam_en": "a four-storied concrete building",
+        "exam_ko": "4층 콘크리트 빌딩."
+      }
+    ]
+  },
+  {
+    "id": 46646,
+    "origin": "frontage",
+    "examples": [
+      {
+        "exam_en": "office buildings with frontage on two streets",
+        "exam_ko": "두 면을 가로에 면하고 있는 사무용 빌딩들."
+      }
+    ]
+  },
+  {
+    "id": 46662,
+    "origin": "flexural",
+    "examples": [
+      {
+        "exam_en": "flexural rigidity",
+        "exam_ko": "[공학] 굽힘 강성(剛性)."
+      }
+    ]
+  },
+  {
+    "id": 46716,
+    "origin": "methadone",
+    "examples": [
+      {
+        "exam_en": "the methadone maintenance",
+        "exam_ko": "메타돈 치료법."
+      }
+    ]
+  },
+  {
+    "id": 46719,
+    "origin": "crystallized",
+    "examples": [
+      {
+        "exam_en": "crystallized fruit",
+        "exam_ko": "설탕 절임 과일."
+      }
+    ]
+  },
+  {
+    "id": 46731,
+    "origin": "hypnagogic",
+    "examples": [
+      {
+        "exam_en": "hypnagogic hallucination",
+        "exam_ko": "입면시 환각."
+      }
+    ]
+  },
+  {
+    "id": 46756,
+    "origin": "pupilary",
+    "examples": [
+      {
+        "exam_en": "pupilary membrane",
+        "exam_ko": "동공막."
+      }
+    ]
+  },
+  {
+    "id": 46761,
+    "origin": "ricksha",
+    "examples": [
+      {
+        "exam_en": "pull a ricksha",
+        "exam_ko": "인력거를 끌다(※자전거형은 pedal a ricksha)"
+      },
+      {
+        "exam_en": "ride in a ricksha",
+        "exam_ko": "인력거를 타다. (또는 rikisha, rikshaw) [[ɔː]의 발음은 「인력거」가 영어에 차입된 당시, 영어의 모음은 역사적 변화의 과정에 있어서 [aː]의 모음이 없었기 때문]"
+      }
+    ]
+  },
+  {
+    "id": 46800,
+    "origin": "dusting",
+    "examples": [
+      {
+        "exam_en": "a light dusting of snow",
+        "exam_ko": "소량의 눈."
+      },
+      {
+        "exam_en": "Your insolence will earn you a good dusting.",
+        "exam_ko": "그런 건방진 소리를 하면 나중에 혼날 줄 알아라."
+      }
+    ]
+  },
+  {
+    "id": 46810,
+    "origin": "bankable",
+    "examples": [
+      {
+        "exam_en": "a bankable writer",
+        "exam_ko": "베스트셀러 작가."
+      }
+    ]
+  },
+  {
+    "id": 46816,
+    "origin": "weighting",
+    "examples": [
+      {
+        "exam_en": "a London weighting of ￡15 a month",
+        "exam_ko": "(런던 근무자의) 월 15파운드의 물가 조정 가산급."
+      }
+    ]
+  },
+  {
+    "id": 46858,
+    "origin": "dicrotic",
+    "examples": [
+      {
+        "exam_en": "a dicrotic pulse",
+        "exam_ko": "중박맥."
+      }
+    ]
+  },
+  {
+    "id": 46921,
+    "origin": "marl",
+    "examples": [
+      {
+        "exam_en": "Marl, variegated, dominantly pink",
+        "exam_ko": "이회토, 잡색, 주로 핑크"
+      }
+    ]
+  },
+  {
+    "id": 46950,
+    "origin": "gi",
+    "examples": [
+      {
+        "exam_en": "GI Joe",
+        "exam_ko": "미국 군인, 미군"
+      },
+      {
+        "exam_en": "GI Jane",
+        "exam_ko": "미국 여군."
+      }
+    ]
+  }
+]

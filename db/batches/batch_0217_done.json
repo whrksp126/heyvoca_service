@@ -1,0 +1,262 @@
+[
+  {
+    "id": 5012,
+    "origin": "pinch",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">pinched</strong> out the cigarette between her fingers.",
+        "exam_ko": "그녀는 손가락으로 담뱃불을 <strong class=\"target-word\">비벼 껐다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">pinched</strong> his finger in the door.",
+        "exam_ko": "그는 문틈에 손가락이 <strong class=\"target-word\">끼었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5015,
+    "origin": "mall",
+    "examples": [
+      {
+        "exam_en": "They built a pedestrian <strong class=\"target-word\">mall</strong> in the city center.",
+        "exam_ko": "그들은 도심에 보행자 <strong class=\"target-word\">전용 도로</strong>를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 5016,
+    "origin": "unbutton",
+    "examples": [
+      {
+        "exam_en": "He finally <strong class=\"target-word\">unbuttoned</strong> his lips and told the truth.",
+        "exam_ko": "그는 마침내 마음을 <strong class=\"target-word\">털어놓고</strong> 사실을 말했다."
+      }
+    ]
+  },
+  {
+    "id": 5017,
+    "origin": "untie",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">untied</strong> the horse from the fence.",
+        "exam_ko": "그녀는 울타리에서 말을 <strong class=\"target-word\">풀어주었다</strong>."
+      },
+      {
+        "exam_en": "He bent down to <strong class=\"target-word\">untie</strong> his shoelaces.",
+        "exam_ko": "그는 몸을 굽혀 구두끈을 <strong class=\"target-word\">풀었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5018,
+    "origin": "comedy",
+    "examples": [
+      {
+        "exam_en": "They performed a light <strong class=\"target-word\">comedy</strong> on stage.",
+        "exam_ko": "그들은 무대에서 가벼운 <strong class=\"target-word\">희극</strong>을 공연했다."
+      },
+      {
+        "exam_en": "There is much <strong class=\"target-word\">comedy</strong> in everyday life.",
+        "exam_ko": "일상생활에는 <strong class=\"target-word\">희극적인</strong> 요소가 많다."
+      }
+    ]
+  },
+  {
+    "id": 5020,
+    "origin": "frustrated",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">frustrated</strong> after failing the exam again.",
+        "exam_ko": "그는 시험에 또 떨어진 후 <strong class=\"target-word\">좌절감을 느꼈다</strong>."
+      },
+      {
+        "exam_en": "She grew <strong class=\"target-word\">frustrated</strong> when no one listened to her.",
+        "exam_ko": "아무도 그녀의 말을 듣지 않자 그녀는 <strong class=\"target-word\">답답해졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5022,
+    "origin": "essay",
+    "examples": [
+      {
+        "exam_en": "She wrote an <strong class=\"target-word\">essay</strong> on Mark Twain.",
+        "exam_ko": "그녀는 마크 트웨인에 관한 <strong class=\"target-word\">에세이</strong>를 썼다."
+      },
+      {
+        "exam_en": "The professor gave an <strong class=\"target-word\">essay</strong> test to the students.",
+        "exam_ko": "교수는 학생들에게 <strong class=\"target-word\">논술</strong> 시험을 출제했다."
+      }
+    ]
+  },
+  {
+    "id": 5023,
+    "origin": "ceiling",
+    "examples": [
+      {
+        "exam_en": "The workers installed a new <strong class=\"target-word\">ceiling</strong> in the room.",
+        "exam_ko": "작업자들이 방에 새 <strong class=\"target-word\">천장</strong>을 설치했다."
+      },
+      {
+        "exam_en": "The government set a <strong class=\"target-word\">ceiling</strong> on housing prices.",
+        "exam_ko": "정부는 주택 가격에 <strong class=\"target-word\">상한선</strong>을 설정했다."
+      }
+    ]
+  },
+  {
+    "id": 5025,
+    "origin": "backyard",
+    "examples": [
+      {
+        "exam_en": "The children played in the <strong class=\"target-word\">backyard</strong> all afternoon.",
+        "exam_ko": "아이들은 오후 내내 <strong class=\"target-word\">뒷마당</strong>에서 놀았다."
+      }
+    ]
+  },
+  {
+    "id": 5027,
+    "origin": "bedroom",
+    "examples": [
+      {
+        "exam_en": "The house has two <strong class=\"target-word\">bedrooms</strong> and one bathroom.",
+        "exam_ko": "그 집은 <strong class=\"target-word\">침실</strong>이 두 개이고 욕실이 하나다."
+      },
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">bedroom</strong> look across the room.",
+        "exam_ko": "그녀는 방 너머로 그에게 <strong class=\"target-word\">유혹적인</strong> 눈빛을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 5028,
+    "origin": "bland",
+    "examples": [
+      {
+        "exam_en": "He has a <strong class=\"target-word\">bland</strong> personality that offends no one.",
+        "exam_ko": "그는 누구도 불쾌하게 하지 않는 <strong class=\"target-word\">온화한</strong> 성격을 가졌다."
+      },
+      {
+        "exam_en": "The soup tasted too <strong class=\"target-word\">bland</strong> without any seasoning.",
+        "exam_ko": "그 수프는 양념이 없어 너무 <strong class=\"target-word\">밋밋했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5029,
+    "origin": "savory",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">savory</strong> aroma drifted from the kitchen.",
+        "exam_ko": "주방에서 <strong class=\"target-word\">식욕을 돋우는</strong> 냄새가 풍겨왔다."
+      },
+      {
+        "exam_en": "She ordered a <strong class=\"target-word\">savory</strong> dish from the menu.",
+        "exam_ko": "그녀는 메뉴에서 <strong class=\"target-word\">맛깔스러운</strong> 요리를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 5030,
+    "origin": "stale",
+    "examples": [
+      {
+        "exam_en": "The water smelled <strong class=\"target-word\">stale</strong> after sitting for days.",
+        "exam_ko": "며칠 동안 고여 있던 물에서 <strong class=\"target-word\">퀴퀴한</strong> 냄새가 났다."
+      },
+      {
+        "exam_en": "He drank <strong class=\"target-word\">stale</strong> beer left over from the party.",
+        "exam_ko": "그는 파티에서 남은 <strong class=\"target-word\">김빠진</strong> 맥주를 마셨다."
+      }
+    ]
+  },
+  {
+    "id": 5031,
+    "origin": "tart",
+    "examples": [
+      {
+        "exam_en": "The lemon juice gave the dish a <strong class=\"target-word\">tart</strong> flavor.",
+        "exam_ko": "레몬즙이 요리에 <strong class=\"target-word\">새콤한</strong> 맛을 더해주었다."
+      }
+    ]
+  },
+  {
+    "id": 5034,
+    "origin": "stove",
+    "examples": [
+      {
+        "exam_en": "She turned on the gas <strong class=\"target-word\">stove</strong> to boil water.",
+        "exam_ko": "그녀는 물을 끓이려고 가스 <strong class=\"target-word\">레인지</strong>를 켰다."
+      },
+      {
+        "exam_en": "He warmed his hands near the wood <strong class=\"target-word\">stove</strong>.",
+        "exam_ko": "그는 나무 <strong class=\"target-word\">난로</strong> 옆에서 손을 녹였다."
+      }
+    ]
+  },
+  {
+    "id": 5037,
+    "origin": "cask",
+    "examples": [
+      {
+        "exam_en": "The cellar held a large <strong class=\"target-word\">cask</strong> of cider.",
+        "exam_ko": "지하실에 사과주가 가득 담긴 큰 <strong class=\"target-word\">통</strong>이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5038,
+    "origin": "kettle",
+    "examples": [
+      {
+        "exam_en": "She put the <strong class=\"target-word\">kettle</strong> on to make tea.",
+        "exam_ko": "그녀는 차를 끓이려고 <strong class=\"target-word\">주전자</strong>를 올려놓았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">kettle</strong> began to whistle on the stove.",
+        "exam_ko": "<strong class=\"target-word\">주전자</strong>가 레인지 위에서 소리를 내기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 5040,
+    "origin": "straw",
+    "examples": [
+      {
+        "exam_en": "The farmer spread <strong class=\"target-word\">straw</strong> on the stable floor.",
+        "exam_ko": "농부는 마구간 바닥에 <strong class=\"target-word\">짚</strong>을 깔았다."
+      },
+      {
+        "exam_en": "They lived in a house thatched with <strong class=\"target-word\">straw</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">짚</strong>으로 지붕을 인 집에서 살았다."
+      }
+    ]
+  },
+  {
+    "id": 5041,
+    "origin": "lid",
+    "examples": [
+      {
+        "exam_en": "She lifted the <strong class=\"target-word\">lid</strong> off the pot to check the soup.",
+        "exam_ko": "그녀는 수프를 확인하려고 냄비 <strong class=\"target-word\">뚜껑</strong>을 들어올렸다."
+      },
+      {
+        "exam_en": "I took the <strong class=\"target-word\">lid</strong> off the coffee can and scooped some out.",
+        "exam_ko": "나는 커피통의 <strong class=\"target-word\">뚜껑</strong>을 열고 커피를 약간 퍼냈다."
+      }
+    ]
+  },
+  {
+    "id": 5044,
+    "origin": "whisk",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">whisked</strong> the dust off his coat.",
+        "exam_ko": "그는 웃옷의 먼지를 <strong class=\"target-word\">털어냈다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">whisked</strong> the cups away quickly.",
+        "exam_ko": "그녀는 컵들을 재빠르게 <strong class=\"target-word\">치웠다</strong>."
+      }
+    ]
+  }
+]

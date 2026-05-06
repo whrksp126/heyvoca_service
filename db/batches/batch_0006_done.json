@@ -1,0 +1,286 @@
+[
+  {
+    "id": 103,
+    "origin": "live",
+    "examples": [
+      {
+        "exam_en": "We must eat to <strong class=\"target-word\">live</strong>.",
+        "exam_ko": "<strong class=\"target-word\">살기</strong> 위해서는 먹어야 한다."
+      },
+      {
+        "exam_en": "She still <strong class=\"target-word\">lives</strong> in the same town.",
+        "exam_ko": "그녀는 아직도 같은 마을에 <strong class=\"target-word\">살고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "origin": "like",
+    "examples": [
+      {
+        "exam_en": "These two shapes look <strong class=\"target-word\">like</strong> each other.",
+        "exam_ko": "이 두 모양은 서로 <strong class=\"target-word\">비슷하게</strong> 생겼다."
+      },
+      {
+        "exam_en": "She treats everyone <strong class=\"target-word\">like</strong> a friend.",
+        "exam_ko": "그녀는 모든 사람을 친구처럼 <strong class=\"target-word\">대한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "origin": "listen",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">listens</strong> to music every morning.",
+        "exam_ko": "그녀는 매일 아침 음악을 <strong class=\"target-word\">듣는다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">listen</strong> to him carefully.",
+        "exam_ko": "그의 말을 주의 깊게 <strong class=\"target-word\">들어</strong> 주세요."
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "origin": "look",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">looked</strong> out the window at the rain.",
+        "exam_ko": "그녀는 빗속에 창밖을 <strong class=\"target-word\">내다보았다</strong>."
+      },
+      {
+        "exam_en": "The policeman <strong class=\"target-word\">looked</strong> suspiciously at the boy.",
+        "exam_ko": "경관은 소년을 수상쩍게 <strong class=\"target-word\">바라보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "origin": "love",
+    "examples": [
+      {
+        "exam_en": "He finally declared his <strong class=\"target-word\">love</strong> for her.",
+        "exam_ko": "그는 마침내 그녀에 대한 <strong class=\"target-word\">사랑</strong>을 고백했다."
+      },
+      {
+        "exam_en": "She lost his <strong class=\"target-word\">love</strong> by being dishonest.",
+        "exam_ko": "그녀는 거짓말을 해서 그의 <strong class=\"target-word\">사랑</strong>을 잃었다."
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "origin": "miss",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">missed</strong> the mark with his arrow.",
+        "exam_ko": "그는 화살로 과녁을 <strong class=\"target-word\">빗맞혔다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">missed</strong> the nail when she swung the hammer.",
+        "exam_ko": "그녀는 망치를 휘둘렀지만 못을 <strong class=\"target-word\">맞히지 못했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "origin": "need",
+    "examples": [
+      {
+        "exam_en": "He felt the <strong class=\"target-word\">need</strong> to improve diplomatic relations.",
+        "exam_ko": "그는 외교 관계를 개선할 <strong class=\"target-word\">필요성</strong>을 느꼈다."
+      },
+      {
+        "exam_en": "We have no <strong class=\"target-word\">need</strong> of your help.",
+        "exam_ko": "우리는 당신의 도움을 <strong class=\"target-word\">필요로 하지 않습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "origin": "open",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">opened</strong> the windows to let in fresh air.",
+        "exam_ko": "그녀는 신선한 공기를 들이기 위해 창문을 <strong class=\"target-word\">열었다</strong>."
+      },
+      {
+        "exam_en": "The books were in an <strong class=\"target-word\">open</strong> box on the shelf.",
+        "exam_ko": "책들은 선반 위 뚜껑 없는 <strong class=\"target-word\">열린</strong> 상자 안에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "origin": "plan",
+    "examples": [
+      {
+        "exam_en": "We need a backup <strong class=\"target-word\">plan</strong> in case this fails.",
+        "exam_ko": "이것이 실패할 경우를 위한 대비 <strong class=\"target-word\">계획</strong>이 필요하다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">planned</strong> the expedition for six months.",
+        "exam_ko": "그들은 6개월 동안 탐험을 <strong class=\"target-word\">계획했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "origin": "play",
+    "examples": [
+      {
+        "exam_en": "We read one of Shakespeare's <strong class=\"target-word\">plays</strong> in class.",
+        "exam_ko": "우리는 수업 시간에 셰익스피어의 <strong class=\"target-word\">희곡</strong> 한 편을 읽었다."
+      },
+      {
+        "exam_en": "The children <strong class=\"target-word\">played</strong> in the park all afternoon.",
+        "exam_ko": "아이들은 오후 내내 공원에서 <strong class=\"target-word\">놀았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "origin": "prepare",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">prepared</strong> his lessons before class every day.",
+        "exam_ko": "그는 매일 수업 전에 학과를 <strong class=\"target-word\">예습했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">prepared</strong> for the expedition for months.",
+        "exam_ko": "그들은 몇 달 동안 탐험을 <strong class=\"target-word\">준비했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "origin": "start",
+    "examples": [
+      {
+        "exam_en": "The bus <strong class=\"target-word\">started</strong> on time.",
+        "exam_ko": "버스는 정각에 <strong class=\"target-word\">출발했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">started</strong> for the countryside early in the morning.",
+        "exam_ko": "그들은 이른 아침에 시골로 <strong class=\"target-word\">향해 떠났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "origin": "stay",
+    "examples": [
+      {
+        "exam_en": "She decided to <strong class=\"target-word\">stay</strong> out overnight with friends.",
+        "exam_ko": "그녀는 친구들과 함께 외박하기로 <strong class=\"target-word\">결정했다</strong>."
+      },
+      {
+        "exam_en": "He left, but the others <strong class=\"target-word\">stayed</strong>.",
+        "exam_ko": "그는 외출했으나 다른 사람들은 <strong class=\"target-word\">남아 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "origin": "stop",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Stop</strong> your nonsense right now.",
+        "exam_ko": "당장 시시한 소리 <strong class=\"target-word\">그만해</strong>."
+      },
+      {
+        "exam_en": "It finally <strong class=\"target-word\">stopped</strong> raining after hours.",
+        "exam_ko": "몇 시간 만에 드디어 비가 <strong class=\"target-word\">그쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "origin": "study",
+    "examples": [
+      {
+        "exam_en": "She is very fond of <strong class=\"target-word\">study</strong> and reads every day.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">공부</strong>를 무척 좋아해서 매일 책을 읽는다."
+      },
+      {
+        "exam_en": "He put in half an hour of <strong class=\"target-word\">study</strong> before dinner.",
+        "exam_ko": "그는 저녁 식사 전에 30분간 <strong class=\"target-word\">공부했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "origin": "talk",
+    "examples": [
+      {
+        "exam_en": "She often <strong class=\"target-word\">talks</strong> to herself while cooking.",
+        "exam_ko": "그녀는 요리하면서 종종 <strong class=\"target-word\">혼잣말을 한다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">talked</strong> with him for a long time.",
+        "exam_ko": "나는 그와 오랫동안 <strong class=\"target-word\">이야기를 나눴다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "origin": "try",
+    "examples": [
+      {
+        "exam_en": "He always <strong class=\"target-word\">tries</strong> his best in every task.",
+        "exam_ko": "그는 모든 일에 항상 최선을 <strong class=\"target-word\">다한다</strong>."
+      },
+      {
+        "exam_en": "The boy <strong class=\"target-word\">tried</strong> moving the heavy sofa.",
+        "exam_ko": "그 소년은 무거운 소파를 움직이려고 <strong class=\"target-word\">해보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "origin": "turn",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">turned</strong> the steering wheel to the left.",
+        "exam_ko": "그녀는 자동차 핸들을 왼쪽으로 <strong class=\"target-word\">돌렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">turned</strong> the door handle and walked in.",
+        "exam_ko": "그는 문 손잡이를 <strong class=\"target-word\">돌려</strong> 안으로 들어갔다."
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "origin": "use",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">used</strong> a knife to cut the vegetables.",
+        "exam_ko": "그녀는 채소를 자르기 위해 칼을 <strong class=\"target-word\">사용했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">used</strong> his judgment to make the right call.",
+        "exam_ko": "그는 올바른 결정을 내리기 위해 판단력을 <strong class=\"target-word\">구사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "origin": "visit",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">visited</strong> her aunt last weekend.",
+        "exam_ko": "그녀는 지난 주말에 숙모를 <strong class=\"target-word\">방문했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">visited</strong> the dentist for a checkup.",
+        "exam_ko": "그는 검진을 받으러 치과 의사에게 <strong class=\"target-word\">갔다</strong>."
+      },
+      {
+        "exam_en": "U.S. President Joe Biden <strong class=\"target-word\">visited</strong> Vietnam's capital, Hanoi.",
+        "exam_ko": "조 바이든 미국 대통령은 베트남 수도 하노이를 <strong class=\"target-word\">방문했다</strong>."
+      }
+    ]
+  }
+]

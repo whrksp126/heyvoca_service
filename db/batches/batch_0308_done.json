@@ -1,0 +1,266 @@
+[
+  {
+    "id": 7753,
+    "origin": "scald",
+    "examples": [
+      {
+        "exam_en": "The worker was <strong class=\"target-word\">scalded</strong> by hot steam.",
+        "exam_ko": "그 작업자는 뜨거운 증기에 <strong class=\"target-word\">데었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">scalded</strong> her hand with boiling water.",
+        "exam_ko": "그녀는 끓는 물에 손을 <strong class=\"target-word\">데었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7754,
+    "origin": "wobbly",
+    "examples": [
+      {
+        "exam_en": "He felt <strong class=\"target-word\">wobbly</strong> on his legs after the surgery.",
+        "exam_ko": "그는 수술 후 다리가 <strong class=\"target-word\">비틀비틀했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7757,
+    "origin": "slog",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">slogged</strong> away at the project for months.",
+        "exam_ko": "그녀는 몇 달 동안 프로젝트에 <strong class=\"target-word\">공을 들였다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">slogged</strong> through deep snow to reach the cabin.",
+        "exam_ko": "우리는 오두막에 가려고 깊은 눈 속을 <strong class=\"target-word\">힘겹게 걸어갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7760,
+    "origin": "mantle",
+    "examples": [
+      {
+        "exam_en": "She took up his <strong class=\"target-word\">mantle</strong> as team leader.",
+        "exam_ko": "그녀는 그의 팀 리더 <strong class=\"target-word\">역할</strong>을 이어받았다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">mantle</strong> of snow covered the mountain.",
+        "exam_ko": "눈의 <strong class=\"target-word\">장막</strong>이 산을 덮었다."
+      }
+    ]
+  },
+  {
+    "id": 7762,
+    "origin": "gridlock",
+    "examples": [
+      {
+        "exam_en": "The talks ended in complete <strong class=\"target-word\">gridlock</strong>.",
+        "exam_ko": "회담은 완전한 <strong class=\"target-word\">교착 상태</strong>로 끝났다."
+      }
+    ]
+  },
+  {
+    "id": 7763,
+    "origin": "oddball",
+    "examples": [
+      {
+        "exam_en": "That guy is a real <strong class=\"target-word\">oddball</strong>.",
+        "exam_ko": "그 사람은 정말 <strong class=\"target-word\">별난 사람</strong>이야."
+      },
+      {
+        "exam_en": "She was always the <strong class=\"target-word\">oddball</strong> in her class.",
+        "exam_ko": "그녀는 항상 반에서 <strong class=\"target-word\">별난 아이</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 7764,
+    "origin": "extemporize",
+    "examples": [
+      {
+        "exam_en": "He can <strong class=\"target-word\">extemporize</strong> on many subjects.",
+        "exam_ko": "그는 여러 주제에 대해 <strong class=\"target-word\">즉흥 연설</strong>을 할 수 있다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">extemporized</strong> a shelter with fallen branches.",
+        "exam_ko": "그들은 떨어진 나뭇가지로 임시 대피소를 <strong class=\"target-word\">즉흥적으로 만들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7766,
+    "origin": "backlog",
+    "examples": [
+      {
+        "exam_en": "The factory has a 30-day <strong class=\"target-word\">backlog</strong> of orders.",
+        "exam_ko": "그 공장은 30일치 주문 <strong class=\"target-word\">잔고</strong>가 쌓여 있다."
+      }
+    ]
+  },
+  {
+    "id": 7767,
+    "origin": "perish",
+    "examples": [
+      {
+        "exam_en": "Several animals <strong class=\"target-word\">perished</strong> in the fire.",
+        "exam_ko": "여러 동물이 화재로 <strong class=\"target-word\">죽었다</strong>."
+      },
+      {
+        "exam_en": "Many people <strong class=\"target-word\">perished</strong> in the flood.",
+        "exam_ko": "많은 사람이 홍수로 <strong class=\"target-word\">목숨을 잃었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7768,
+    "origin": "stalwart",
+    "examples": [
+      {
+        "exam_en": "He looks <strong class=\"target-word\">stalwart</strong> and uncompromising.",
+        "exam_ko": "그는 <strong class=\"target-word\">완고하고</strong> 비타협적으로 보인다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">stalwart</strong> supporter of the cause.",
+        "exam_ko": "그녀는 그 운동의 <strong class=\"target-word\">든든한</strong> 지지자이다."
+      }
+    ]
+  },
+  {
+    "id": 7769,
+    "origin": "scandal",
+    "examples": [
+      {
+        "exam_en": "The minister resigned over a political <strong class=\"target-word\">scandal</strong>.",
+        "exam_ko": "그 장관은 정치 <strong class=\"target-word\">스캔들</strong>로 사임했다."
+      },
+      {
+        "exam_en": "A bribery <strong class=\"target-word\">scandal</strong> shook the company.",
+        "exam_ko": "뇌물 <strong class=\"target-word\">스캔들</strong>이 회사를 뒤흔들었다."
+      }
+    ]
+  },
+  {
+    "id": 7772,
+    "origin": "stock",
+    "examples": [
+      {
+        "exam_en": "They kept a large <strong class=\"target-word\">stock</strong> of firewood for winter.",
+        "exam_ko": "그들은 겨울을 위해 장작을 많이 <strong class=\"target-word\">비축해</strong> 두었다."
+      },
+      {
+        "exam_en": "She has a wide <strong class=\"target-word\">stock</strong> of words.",
+        "exam_ko": "그녀는 폭넓은 어휘 <strong class=\"target-word\">재고</strong>를 갖고 있다."
+      }
+    ]
+  },
+  {
+    "id": 7774,
+    "origin": "utterly",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">utterly</strong> bewildered by the news.",
+        "exam_ko": "그녀는 그 소식에 <strong class=\"target-word\">완전히</strong> 당황했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">utterly</strong> despised her actions.",
+        "exam_ko": "그는 그녀의 행동을 <strong class=\"target-word\">아주</strong> 경멸했다."
+      }
+    ]
+  },
+  {
+    "id": 7776,
+    "origin": "christ",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Christ</strong>, I can't believe this happened.",
+        "exam_ko": "<strong class=\"target-word\">세상에</strong>, 이런 일이 일어났다니 믿기지 않아."
+      },
+      {
+        "exam_en": "Thank <strong class=\"target-word\">Christ</strong> you arrived in time.",
+        "exam_ko": "네가 제때 도착해서 <strong class=\"target-word\">정말 다행이야</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7781,
+    "origin": "bitch",
+    "examples": [
+      {
+        "exam_en": "The wolf's <strong class=\"target-word\">bitch</strong> raised her cubs alone.",
+        "exam_ko": "그 늑대의 <strong class=\"target-word\">암컷</strong>은 혼자서 새끼를 키웠다."
+      },
+      {
+        "exam_en": "This job is a real <strong class=\"target-word\">bitch</strong>.",
+        "exam_ko": "이 일은 정말 <strong class=\"target-word\">지겹다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7782,
+    "origin": "fabulous",
+    "examples": [
+      {
+        "exam_en": "He spent a <strong class=\"target-word\">fabulous</strong> sum on the painting.",
+        "exam_ko": "그는 그 그림에 <strong class=\"target-word\">엄청난</strong> 돈을 썼다."
+      },
+      {
+        "exam_en": "It was a truly <strong class=\"target-word\">fabulous</strong> concert.",
+        "exam_ko": "정말 <strong class=\"target-word\">멋진</strong> 콘서트였다."
+      }
+    ]
+  },
+  {
+    "id": 7783,
+    "origin": "beauty",
+    "examples": [
+      {
+        "exam_en": "She was admired for her physical <strong class=\"target-word\">beauty</strong>.",
+        "exam_ko": "그녀는 뛰어난 육체적 <strong class=\"target-word\">아름다움</strong>으로 칭송받았다."
+      },
+      {
+        "exam_en": "The landscape had a wild, natural <strong class=\"target-word\">beauty</strong>.",
+        "exam_ko": "그 풍경은 야생적이고 자연적인 <strong class=\"target-word\">아름다움</strong>을 지니고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7784,
+    "origin": "neatly",
+    "examples": [
+      {
+        "exam_en": "The flowers were <strong class=\"target-word\">neatly</strong> arranged on the table.",
+        "exam_ko": "꽃들이 테이블 위에 <strong class=\"target-word\">깔끔하게</strong> 꽂혀 있었다."
+      }
+    ]
+  },
+  {
+    "id": 7785,
+    "origin": "intrigued",
+    "examples": [
+      {
+        "exam_en": "He is more <strong class=\"target-word\">intrigued</strong> by animals than people.",
+        "exam_ko": "그는 사람보다 동물에 더 <strong class=\"target-word\">흥미를 느낀다</strong>."
+      },
+      {
+        "exam_en": "I was <strong class=\"target-word\">intrigued</strong> to learn the new facts.",
+        "exam_ko": "새로운 사실을 알게 되어 <strong class=\"target-word\">가슴이 두근거렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 7786,
+    "origin": "equally",
+    "examples": [
+      {
+        "exam_en": "The teacher treated all students <strong class=\"target-word\">equally</strong>.",
+        "exam_ko": "선생님은 모든 학생을 <strong class=\"target-word\">평등하게</strong> 대했다."
+      },
+      {
+        "exam_en": "They shared the work <strong class=\"target-word\">equally</strong> between them.",
+        "exam_ko": "그들은 일을 서로 <strong class=\"target-word\">균등하게</strong> 분담했다."
+      }
+    ]
+  }
+]

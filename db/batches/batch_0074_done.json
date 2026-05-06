@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1533,
+    "origin": "rescue",
+    "examples": [
+      {
+        "exam_en": "The team worked hard to <strong class=\"target-word\">rescue</strong> the environment.",
+        "exam_ko": "팀은 환경을 <strong class=\"target-word\">지키기</strong> 위해 열심히 일했다."
+      },
+      {
+        "exam_en": "The firemen <strong class=\"target-word\">rescued</strong> the people from the burning house.",
+        "exam_ko": "소방대원은 불타는 집에서 사람들을 <strong class=\"target-word\">구출해냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1534,
+    "origin": "deem",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">deemed</strong> the project a success.",
+        "exam_ko": "그녀는 그 프로젝트를 성공으로 <strong class=\"target-word\">여겼다</strong>."
+      },
+      {
+        "exam_en": "I'll <strong class=\"target-word\">deem</strong> it a favor if you accept my invitation.",
+        "exam_ko": "초대를 받아들이시면 영광으로 <strong class=\"target-word\">생각하겠습니다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1536,
+    "origin": "sponsor",
+    "examples": [
+      {
+        "exam_en": "The company agreed to <strong class=\"target-word\">sponsor</strong> the event.",
+        "exam_ko": "그 회사는 행사를 <strong class=\"target-word\">후원하기로</strong> 동의했다."
+      },
+      {
+        "exam_en": "I must find an American <strong class=\"target-word\">sponsor</strong> to live in the US.",
+        "exam_ko": "미국에 살려면 미국인 <strong class=\"target-word\">보증인</strong>을 구해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 1537,
+    "origin": "reproduce",
+    "examples": [
+      {
+        "exam_en": "The paintings were <strong class=\"target-word\">reproduced</strong> in black and white.",
+        "exam_ko": "그 그림들은 흑백으로 <strong class=\"target-word\">모사되었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">reproduced</strong> the photograph for the exhibit.",
+        "exam_ko": "그녀는 전시회를 위해 사진을 <strong class=\"target-word\">복사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1538,
+    "origin": "confess",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">confessed</strong> his secret to his best friend.",
+        "exam_ko": "그는 절친한 친구에게 비밀을 <strong class=\"target-word\">털어놓았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">confessed</strong> to me he had stolen a car.",
+        "exam_ko": "그는 차를 훔쳤다고 나에게 <strong class=\"target-word\">자백했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1539,
+    "origin": "endorse",
+    "examples": [
+      {
+        "exam_en": "The senator <strong class=\"target-word\">endorsed</strong> the new proposal.",
+        "exam_ko": "상원의원은 새 제안을 <strong class=\"target-word\">지지했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">endorsed</strong> the check at the bank.",
+        "exam_ko": "그는 은행에서 수표에 <strong class=\"target-word\">배서했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1540,
+    "origin": "coincide",
+    "examples": [
+      {
+        "exam_en": "The promotion <strong class=\"target-word\">coincided</strong> with his assignment to a detachment.",
+        "exam_ko": "승진은 파견대 배속과 <strong class=\"target-word\">동시에 이루어졌다</strong>."
+      },
+      {
+        "exam_en": "Their opinions <strong class=\"target-word\">coincide</strong> on most issues.",
+        "exam_ko": "그들의 의견은 대부분의 사안에서 <strong class=\"target-word\">일치한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1541,
+    "origin": "spare",
+    "examples": [
+      {
+        "exam_en": "The general decided to <strong class=\"target-word\">spare</strong> his enemy's life.",
+        "exam_ko": "장군은 적을 <strong class=\"target-word\">살려주기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">spare</strong> his feelings.",
+        "exam_ko": "그녀는 그의 기분을 <strong class=\"target-word\">상하지 않게 하려</strong> 노력했다."
+      }
+    ]
+  },
+  {
+    "id": 1542,
+    "origin": "creep",
+    "examples": [
+      {
+        "exam_en": "The worm <strong class=\"target-word\">crept</strong> along the table.",
+        "exam_ko": "벌레가 탁자 위를 <strong class=\"target-word\">기어갔다</strong>."
+      },
+      {
+        "exam_en": "The bean vines <strong class=\"target-word\">crept</strong> up the poles.",
+        "exam_ko": "강낭콩 덩굴이 기둥 위로 <strong class=\"target-word\">뻗어 올라갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1543,
+    "origin": "ship",
+    "examples": [
+      {
+        "exam_en": "A naval <strong class=\"target-word\">ship</strong> patrolled the harbor.",
+        "exam_ko": "군<strong class=\"target-word\">함</strong>이 항구를 순찰했다."
+      },
+      {
+        "exam_en": "A whaling <strong class=\"target-word\">ship</strong> set sail at dawn.",
+        "exam_ko": "포경<strong class=\"target-word\">선</strong>이 새벽에 출항했다."
+      }
+    ]
+  },
+  {
+    "id": 1544,
+    "origin": "market",
+    "examples": [
+      {
+        "exam_en": "Farmers sell cattle at the local <strong class=\"target-word\">market</strong>.",
+        "exam_ko": "농부들은 지역 <strong class=\"target-word\">시장</strong>에서 가축을 판다."
+      },
+      {
+        "exam_en": "He bought the goods at a black <strong class=\"target-word\">market</strong>.",
+        "exam_ko": "그는 암<strong class=\"target-word\">시장</strong>에서 물건을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1545,
+    "origin": "vanish",
+    "examples": [
+      {
+        "exam_en": "The suspect <strong class=\"target-word\">vanished</strong> from sight.",
+        "exam_ko": "용의자가 시야에서 <strong class=\"target-word\">사라졌다</strong>."
+      },
+      {
+        "exam_en": "He suddenly <strong class=\"target-word\">vanished</strong> without a trace.",
+        "exam_ko": "그는 갑자기 흔적도 없이 <strong class=\"target-word\">자취를 감췄다</strong>."
+      },
+      {
+        "exam_en": "The magician made the rabbit <strong class=\"target-word\">vanish</strong> from the hat.",
+        "exam_ko": "마술사는 모자에서 토끼를 <strong class=\"target-word\">사라지게</strong> 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1546,
+    "origin": "scatter",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">scattered</strong> seeds over the field.",
+        "exam_ko": "그는 밭에 씨를 <strong class=\"target-word\">뿌렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">scattered</strong> weedkiller across the lawn.",
+        "exam_ko": "그녀는 잔디밭에 제초제를 <strong class=\"target-word\">뿌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1547,
+    "origin": "sue",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">sued</strong> the company for negligence.",
+        "exam_ko": "그들은 과실로 그 회사를 <strong class=\"target-word\">고소했다</strong>."
+      },
+      {
+        "exam_en": "My wife <strong class=\"target-word\">sued</strong> for divorce.",
+        "exam_ko": "아내가 이혼 <strong class=\"target-word\">소송을 냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1548,
+    "origin": "tempt",
+    "examples": [
+      {
+        "exam_en": "The serpent <strong class=\"target-word\">tempted</strong> Eve in the garden.",
+        "exam_ko": "뱀이 정원에서 이브를 <strong class=\"target-word\">꾀었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">tempted</strong> me out for the afternoon.",
+        "exam_ko": "그는 그날 오후에 나를 <strong class=\"target-word\">꾀어냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1549,
+    "origin": "import",
+    "examples": [
+      {
+        "exam_en": "The city <strong class=\"target-word\">imports</strong> food from surrounding farms.",
+        "exam_ko": "그 도시는 근교 농장에서 식량을 <strong class=\"target-word\">반입한다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">import</strong> wheat from Canada every year.",
+        "exam_ko": "우리는 매년 캐나다에서 밀을 <strong class=\"target-word\">수입한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1550,
+    "origin": "formulate",
+    "examples": [
+      {
+        "exam_en": "The scientist <strong class=\"target-word\">formulated</strong> a new hypothesis.",
+        "exam_ko": "과학자는 새로운 가설을 <strong class=\"target-word\">공식화했다</strong>."
+      },
+      {
+        "exam_en": "The general <strong class=\"target-word\">formulated</strong> a plan of attack.",
+        "exam_ko": "장군은 공격 계획을 <strong class=\"target-word\">수립했다</strong>."
+      },
+      {
+        "exam_en": "The team <strong class=\"target-word\">formulated</strong> a plan for urban management.",
+        "exam_ko": "팀은 도시 관리를 위한 계획을 <strong class=\"target-word\">수립했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1551,
+    "origin": "aid",
+    "examples": [
+      {
+        "exam_en": "The government <strong class=\"target-word\">aided</strong> the developing nations.",
+        "exam_ko": "정부는 개발도상국을 <strong class=\"target-word\">원조했다</strong>."
+      },
+      {
+        "exam_en": "His mentor <strong class=\"target-word\">aided</strong> him to succeed.",
+        "exam_ko": "그의 멘토가 그를 도와 성공하도록 <strong class=\"target-word\">도왔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1552,
+    "origin": "advertise",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">advertised</strong> its new products online.",
+        "exam_ko": "회사는 새 제품을 온라인으로 <strong class=\"target-word\">선전했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">advertised</strong> for a missing child.",
+        "exam_ko": "그들은 미아 <strong class=\"target-word\">광고를 냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1553,
+    "origin": "impress",
+    "examples": [
+      {
+        "exam_en": "His performance <strong class=\"target-word\">impressed</strong> the audience greatly.",
+        "exam_ko": "그의 공연은 관객에게 깊은 <strong class=\"target-word\">인상을 주었다</strong>."
+      },
+      {
+        "exam_en": "I was deeply <strong class=\"target-word\">impressed</strong> with his words.",
+        "exam_ko": "나는 그의 말에 깊은 <strong class=\"target-word\">감명을 받았다</strong>."
+      }
+    ]
+  }
+]

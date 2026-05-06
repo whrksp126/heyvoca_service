@@ -1,0 +1,282 @@
+[
+  {
+    "id": 223,
+    "origin": "perform",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">performed</strong> the task efficiently.",
+        "exam_ko": "그녀는 그 일을 효율적으로 <strong class=\"target-word\">수행했다</strong>."
+      },
+      {
+        "exam_en": "The surgeon <strong class=\"target-word\">performed</strong> a complex operation.",
+        "exam_ko": "외과 의사가 복잡한 수술을 <strong class=\"target-word\">했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 224,
+    "origin": "result",
+    "examples": [
+      {
+        "exam_en": "The team announced the final <strong class=\"target-word\">result</strong>.",
+        "exam_ko": "팀이 최종 <strong class=\"target-word\">결과</strong>를 발표했다."
+      },
+      {
+        "exam_en": "She died as a <strong class=\"target-word\">result</strong> of her injuries.",
+        "exam_ko": "그녀는 부상 때문에 <strong class=\"target-word\">사망했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 225,
+    "origin": "travel",
+    "examples": [
+      {
+        "exam_en": "He wants to <strong class=\"target-word\">travel</strong> abroad next summer.",
+        "exam_ko": "그는 내년 여름에 해외 <strong class=\"target-word\">여행을 하고</strong> 싶어한다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">traveled</strong> through Europe for three months.",
+        "exam_ko": "그녀는 석 달 동안 유럽을 <strong class=\"target-word\">여행했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 226,
+    "origin": "protect",
+    "examples": [
+      {
+        "exam_en": "The law <strong class=\"target-word\">protects</strong> endangered species.",
+        "exam_ko": "법은 멸종 위기 동물을 <strong class=\"target-word\">보호한다</strong>."
+      },
+      {
+        "exam_en": "The government <strong class=\"target-word\">protected</strong> the steel industry.",
+        "exam_ko": "정부는 철강 산업을 <strong class=\"target-word\">보호했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 227,
+    "origin": "adopt",
+    "examples": [
+      {
+        "exam_en": "The committee <strong class=\"target-word\">adopted</strong> a new idea.",
+        "exam_ko": "위원회는 새로운 아이디어를 <strong class=\"target-word\">채택했다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">adopted</strong> a foreign word to express a new concept.",
+        "exam_ko": "그들은 새로운 개념을 표현하기 위해 외국어를 <strong class=\"target-word\">차용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 228,
+    "origin": "confirm",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">confirm</strong> your hotel reservations in advance.",
+        "exam_ko": "미리 호텔 예약을 <strong class=\"target-word\">확인해</strong> 주세요."
+      },
+      {
+        "exam_en": "This evidence <strong class=\"target-word\">confirms</strong> my opinion of him.",
+        "exam_ko": "이 증거가 그에 대한 내 의견을 <strong class=\"target-word\">뒷받침해</strong> 준다."
+      }
+    ]
+  },
+  {
+    "id": 229,
+    "origin": "stare",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">stared</strong> around the unfamiliar room.",
+        "exam_ko": "그는 낯선 방을 <strong class=\"target-word\">두리번거렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">stared</strong> at me without saying a word.",
+        "exam_ko": "그녀는 아무 말 없이 나를 <strong class=\"target-word\">빤히 쳐다보았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 230,
+    "origin": "demand",
+    "examples": [
+      {
+        "exam_en": "The customer <strong class=\"target-word\">demanded</strong> an apology from the manager.",
+        "exam_ko": "고객은 매니저에게 사과를 <strong class=\"target-word\">요구했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">demanded</strong> an answer from him immediately.",
+        "exam_ko": "그녀는 그에게 즉시 대답을 <strong class=\"target-word\">강요했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 231,
+    "origin": "imagine",
+    "examples": [
+      {
+        "exam_en": "I can't <strong class=\"target-word\">imagine</strong> meeting you here!",
+        "exam_ko": "여기서 당신을 만나다니 <strong class=\"target-word\">상상도 못 했어요</strong>!"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Imagine</strong> yourself to be in his place.",
+        "exam_ko": "그의 입장이 되어 <strong class=\"target-word\">상상해</strong> 봐라."
+      }
+    ]
+  },
+  {
+    "id": 232,
+    "origin": "beat",
+    "examples": [
+      {
+        "exam_en": "The parent <strong class=\"target-word\">beat</strong> the naughty child.",
+        "exam_ko": "부모는 장난꾸러기 아이를 <strong class=\"target-word\">때렸다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">beat</strong> the person on the head.",
+        "exam_ko": "그는 상대방의 머리를 <strong class=\"target-word\">때렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 233,
+    "origin": "attempt",
+    "examples": [
+      {
+        "exam_en": "The prisoner <strong class=\"target-word\">attempted</strong> an escape last night.",
+        "exam_ko": "죄수는 어젯밤 탈출을 <strong class=\"target-word\">시도했다</strong>."
+      },
+      {
+        "exam_en": "The climber <strong class=\"target-word\">attempted</strong> the Matterhorn alone.",
+        "exam_ko": "등반가는 혼자 마터호른 등정을 <strong class=\"target-word\">시도했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 234,
+    "origin": "born",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">born</strong> on April 21st.",
+        "exam_ko": "그녀는 4월 21일에 <strong class=\"target-word\">태어났다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">born</strong> in a small town in France.",
+        "exam_ko": "그는 프랑스의 작은 마을에서 <strong class=\"target-word\">태어났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 235,
+    "origin": "associate",
+    "examples": [
+      {
+        "exam_en": "People often <strong class=\"target-word\">associate</strong> peace with prosperity.",
+        "exam_ko": "사람들은 평화와 번영을 자주 <strong class=\"target-word\">연결지어 생각한다</strong>."
+      },
+      {
+        "exam_en": "In her mind, war is <strong class=\"target-word\">associated</strong> with misery.",
+        "exam_ko": "그녀의 마음속에서 전쟁은 비참함과 <strong class=\"target-word\">결부되어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 236,
+    "origin": "marry",
+    "examples": [
+      {
+        "exam_en": "She got <strong class=\"target-word\">married</strong> to her college sweetheart.",
+        "exam_ko": "그녀는 대학 시절 연인과 <strong class=\"target-word\">결혼했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">married</strong> a wealthy woman for her money.",
+        "exam_ko": "그는 돈 때문에 부유한 여성과 <strong class=\"target-word\">결혼했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 237,
+    "origin": "care",
+    "examples": [
+      {
+        "exam_en": "He is burdened with worldly <strong class=\"target-word\">cares</strong>.",
+        "exam_ko": "그는 세상사의 <strong class=\"target-word\">걱정거리</strong>로 힘들어한다."
+      },
+      {
+        "exam_en": "She lived free from <strong class=\"target-word\">care</strong> after retirement.",
+        "exam_ko": "그녀는 퇴직 후 아무 <strong class=\"target-word\">걱정</strong> 없이 살았다."
+      }
+    ]
+  },
+  {
+    "id": 238,
+    "origin": "voice",
+    "examples": [
+      {
+        "exam_en": "We heard the <strong class=\"target-word\">voice</strong> of a cuckoo in the forest.",
+        "exam_ko": "우리는 숲에서 뻐꾸기 <strong class=\"target-word\">소리</strong>를 들었다."
+      },
+      {
+        "exam_en": "He spoke in a deep <strong class=\"target-word\">voice</strong> at the meeting.",
+        "exam_ko": "그는 회의에서 낮은 <strong class=\"target-word\">목소리</strong>로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 239,
+    "origin": "collect",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">collects</strong> stamps as a hobby.",
+        "exam_ko": "그녀는 취미로 우표를 <strong class=\"target-word\">수집한다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">collected</strong> up his belongings and left.",
+        "exam_ko": "그는 소지품을 한데 <strong class=\"target-word\">모아</strong> 떠났다."
+      }
+    ]
+  },
+  {
+    "id": 240,
+    "origin": "employ",
+    "examples": [
+      {
+        "exam_en": "The factory <strong class=\"target-word\">employs</strong> over two hundred workers.",
+        "exam_ko": "그 공장은 200명 이상의 직원을 <strong class=\"target-word\">고용하고</strong> 있다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">employed</strong> Mr. Smith as an accountant.",
+        "exam_ko": "그들은 스미스 씨를 회계사로 <strong class=\"target-word\">고용했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 241,
+    "origin": "issue",
+    "examples": [
+      {
+        "exam_en": "The politicians debated several current <strong class=\"target-word\">issues</strong>.",
+        "exam_ko": "정치인들은 여러 현안 <strong class=\"target-word\">문제들</strong>을 토론했다."
+      },
+      {
+        "exam_en": "That is a side <strong class=\"target-word\">issue</strong> we can address later.",
+        "exam_ko": "그것은 나중에 다룰 수 있는 이차적인 <strong class=\"target-word\">문제</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 242,
+    "origin": "release",
+    "examples": [
+      {
+        "exam_en": "The judge <strong class=\"target-word\">released</strong> him from his obligation.",
+        "exam_ko": "판사는 그를 채무로부터 <strong class=\"target-word\">면제시켜</strong> 주었다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">released</strong> from the hospital yesterday.",
+        "exam_ko": "그녀는 어제 병원에서 <strong class=\"target-word\">퇴원</strong>했다."
+      }
+    ]
+  }
+]

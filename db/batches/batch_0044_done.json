@@ -1,0 +1,266 @@
+[
+  {
+    "id": 878,
+    "origin": "broaden",
+    "examples": [
+      {
+        "exam_en": "Travel <strong class=\"target-word\">broadens</strong> your perspective.",
+        "exam_ko": "여행은 시야를 <strong class=\"target-word\">넓혀</strong> 준다."
+      }
+    ]
+  },
+  {
+    "id": 879,
+    "origin": "broad",
+    "examples": [
+      {
+        "exam_en": "The river is very <strong class=\"target-word\">broad</strong> here.",
+        "exam_ko": "이 곳에서 강은 매우 <strong class=\"target-word\">넓다</strong>."
+      },
+      {
+        "exam_en": "He has <strong class=\"target-word\">broad</strong> shoulders and a strong build.",
+        "exam_ko": "그는 <strong class=\"target-word\">딱 벌어진</strong> 어깨와 강한 체격을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 880,
+    "origin": "brink",
+    "examples": [
+      {
+        "exam_en": "She stood at the <strong class=\"target-word\">brink</strong> of the cliff.",
+        "exam_ko": "그녀는 낭떠러지 <strong class=\"target-word\">끝</strong>에 서 있었다."
+      },
+      {
+        "exam_en": "The company was on the <strong class=\"target-word\">brink</strong> of bankruptcy.",
+        "exam_ko": "회사는 파산 <strong class=\"target-word\">직전</strong>에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 881,
+    "origin": "bright",
+    "examples": [
+      {
+        "exam_en": "The light is too <strong class=\"target-word\">bright</strong> for my eyes.",
+        "exam_ko": "빛이 눈에 너무 <strong class=\"target-word\">눈부시다</strong>."
+      },
+      {
+        "exam_en": "The moon shines <strong class=\"target-word\">bright</strong> tonight.",
+        "exam_ko": "오늘 밤 달이 <strong class=\"target-word\">밝게</strong> 빛난다."
+      }
+    ]
+  },
+  {
+    "id": 882,
+    "origin": "bribe",
+    "examples": [
+      {
+        "exam_en": "The official was arrested for accepting a <strong class=\"target-word\">bribe</strong>.",
+        "exam_ko": "그 공무원은 <strong class=\"target-word\">뇌물</strong>을 받은 혐의로 체포됐다."
+      },
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">bribe</strong> the reporter into silence.",
+        "exam_ko": "그는 기자에게 <strong class=\"target-word\">뇌물을 주어</strong> 입을 막으려 했다."
+      }
+    ]
+  },
+  {
+    "id": 884,
+    "origin": "book",
+    "examples": [
+      {
+        "exam_en": "She gave me a <strong class=\"target-word\">book</strong> of poems for my birthday.",
+        "exam_ko": "그녀는 내 생일에 시 <strong class=\"target-word\">책</strong>을 선물해 줬다."
+      },
+      {
+        "exam_en": "That <strong class=\"target-word\">book</strong> is very popular right now.",
+        "exam_ko": "저 <strong class=\"target-word\">책</strong>은 요즘 매우 인기 있다."
+      }
+    ]
+  },
+  {
+    "id": 885,
+    "origin": "blizzard",
+    "examples": [
+      {
+        "exam_en": "My flight was cancelled due to the <strong class=\"target-word\">blizzard</strong>.",
+        "exam_ko": "내 비행기가 <strong class=\"target-word\">눈보라</strong> 때문에 취소됐다."
+      }
+    ]
+  },
+  {
+    "id": 886,
+    "origin": "blink",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">blinked</strong> in the bright sunlight.",
+        "exam_ko": "그는 밝은 햇빛에 눈을 <strong class=\"target-word\">깜박였다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">blinked</strong> to hold back her tears.",
+        "exam_ko": "그녀는 눈물을 참으려고 눈을 <strong class=\"target-word\">깜박였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 887,
+    "origin": "flaw",
+    "examples": [
+      {
+        "exam_en": "His main <strong class=\"target-word\">flaw</strong> is his short temper.",
+        "exam_ko": "그의 가장 큰 <strong class=\"target-word\">결점</strong>은 급한 성격이다."
+      },
+      {
+        "exam_en": "There is a serious <strong class=\"target-word\">flaw</strong> in the plan.",
+        "exam_ko": "그 계획에는 심각한 <strong class=\"target-word\">결함</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 888,
+    "origin": "defect",
+    "examples": [
+      {
+        "exam_en": "The product was recalled due to a manufacturing <strong class=\"target-word\">defect</strong>.",
+        "exam_ko": "제품은 제조 <strong class=\"target-word\">결함</strong>으로 인해 회수됐다."
+      },
+      {
+        "exam_en": "He has a serious character <strong class=\"target-word\">defect</strong>.",
+        "exam_ko": "그는 심각한 성격 <strong class=\"target-word\">결함</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 889,
+    "origin": "bleach",
+    "examples": [
+      {
+        "exam_en": "Her hair was <strong class=\"target-word\">bleached</strong> by the sun.",
+        "exam_ko": "그녀의 머리는 햇빛에 <strong class=\"target-word\">탈색됐다</strong>."
+      },
+      {
+        "exam_en": "She used <strong class=\"target-word\">bleach</strong> to remove the stain.",
+        "exam_ko": "그녀는 얼룩을 제거하기 위해 <strong class=\"target-word\">표백제</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 890,
+    "origin": "bitterly",
+    "examples": [
+      {
+        "exam_en": "It was <strong class=\"target-word\">bitterly</strong> cold that winter morning.",
+        "exam_ko": "그 겨울 아침은 <strong class=\"target-word\">몹시</strong> 추웠다."
+      },
+      {
+        "exam_en": "She cried <strong class=\"target-word\">bitterly</strong> after hearing the news.",
+        "exam_ko": "그녀는 소식을 듣고 <strong class=\"target-word\">통곡했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 891,
+    "origin": "binding",
+    "examples": [
+      {
+        "exam_en": "The book has a beautiful leather <strong class=\"target-word\">binding</strong>.",
+        "exam_ko": "그 책은 아름다운 가죽 <strong class=\"target-word\">장정</strong>을 하고 있다."
+      },
+      {
+        "exam_en": "This contract is legally <strong class=\"target-word\">binding</strong> on both parties.",
+        "exam_ko": "이 계약은 양측 모두에게 법적으로 <strong class=\"target-word\">구속력이 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 892,
+    "origin": "bill",
+    "examples": [
+      {
+        "exam_en": "I got a large grocery <strong class=\"target-word\">bill</strong> this month.",
+        "exam_ko": "이번 달 식료품 <strong class=\"target-word\">청구서</strong>가 많이 나왔다."
+      },
+      {
+        "exam_en": "She forgot to pay the telephone <strong class=\"target-word\">bill</strong>.",
+        "exam_ko": "그녀는 전화 요금 <strong class=\"target-word\">청구서</strong>를 내는 것을 잊었다."
+      }
+    ]
+  },
+  {
+    "id": 894,
+    "origin": "beneficiary",
+    "examples": [
+      {
+        "exam_en": "She is the <strong class=\"target-word\">beneficiary</strong> of her father's pension.",
+        "exam_ko": "그녀는 아버지 연금의 <strong class=\"target-word\">수령인</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 895,
+    "origin": "enhance",
+    "examples": [
+      {
+        "exam_en": "This discovery has <strong class=\"target-word\">enhanced</strong> his reputation.",
+        "exam_ko": "이 발견으로 그의 명성이 <strong class=\"target-word\">높아졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 896,
+    "origin": "upgrade",
+    "examples": [
+      {
+        "exam_en": "Sales figures are on the <strong class=\"target-word\">upgrade</strong>.",
+        "exam_ko": "매출 수치가 <strong class=\"target-word\">상승세</strong>에 있다."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">upgraded</strong> its computer system.",
+        "exam_ko": "회사는 컴퓨터 시스템을 <strong class=\"target-word\">업그레이드했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 897,
+    "origin": "better",
+    "examples": [
+      {
+        "exam_en": "Her camera is much <strong class=\"target-word\">better</strong> than mine.",
+        "exam_ko": "그녀의 카메라는 내 것보다 훨씬 <strong class=\"target-word\">좋다</strong>."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">better</strong> swimmer than I am.",
+        "exam_ko": "그녀는 나보다 수영을 <strong class=\"target-word\">더 잘한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 898,
+    "origin": "beneficial",
+    "examples": [
+      {
+        "exam_en": "Bees are <strong class=\"target-word\">beneficial</strong> insects for the ecosystem.",
+        "exam_ko": "벌은 생태계에 <strong class=\"target-word\">이로운</strong> 곤충이다."
+      },
+      {
+        "exam_en": "Exercise has a <strong class=\"target-word\">beneficial</strong> effect on mental health.",
+        "exam_ko": "운동은 정신 건강에 <strong class=\"target-word\">유익한</strong> 효과가 있다."
+      }
+    ]
+  },
+  {
+    "id": 899,
+    "origin": "behavior",
+    "examples": [
+      {
+        "exam_en": "The teacher noticed his odd <strong class=\"target-word\">behavior</strong> in class.",
+        "exam_ko": "선생님은 수업 중 그의 이상한 <strong class=\"target-word\">행동</strong>을 알아챘다."
+      },
+      {
+        "exam_en": "His harsh <strong class=\"target-word\">behavior</strong> upset everyone around him.",
+        "exam_ko": "그의 거친 <strong class=\"target-word\">태도</strong>가 주변 사람들을 화나게 했다."
+      }
+    ]
+  }
+]

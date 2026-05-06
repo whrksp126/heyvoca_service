@@ -1,0 +1,298 @@
+[
+  {
+    "id": 793,
+    "origin": "plant",
+    "examples": [
+      {
+        "exam_en": "She waters the <strong class=\"target-word\">plants</strong> every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">식물</strong>에 물을 준다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">planted</strong> a tree in the backyard.",
+        "exam_ko": "그는 뒷마당에 나무를 <strong class=\"target-word\">심었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 794,
+    "origin": "perspective",
+    "examples": [
+      {
+        "exam_en": "The artist drew the scene in <strong class=\"target-word\">perspective</strong>.",
+        "exam_ko": "화가는 장면을 <strong class=\"target-word\">원근법</strong>으로 그렸다."
+      },
+      {
+        "exam_en": "She offered a new <strong class=\"target-word\">perspective</strong> on the issue.",
+        "exam_ko": "그녀는 그 문제에 대해 새로운 <strong class=\"target-word\">관점</strong>을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 795,
+    "origin": "belonging",
+    "examples": [
+      {
+        "exam_en": "Please keep your <strong class=\"target-word\">belongings</strong> with you at all times.",
+        "exam_ko": "항상 <strong class=\"target-word\">소지품</strong>을 지참해 주세요."
+      },
+      {
+        "exam_en": "She packed all her <strong class=\"target-word\">belongings</strong> into one bag.",
+        "exam_ko": "그녀는 모든 <strong class=\"target-word\">짐</strong>을 가방 하나에 쌌다."
+      }
+    ]
+  },
+  {
+    "id": 796,
+    "origin": "misplace",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">misplaced</strong> his confidence in the wrong person.",
+        "exam_ko": "그는 잘못된 사람에게 <strong class=\"target-word\">잘못된 신뢰</strong>를 보냈다."
+      },
+      {
+        "exam_en": "She often <strong class=\"target-word\">misplaces</strong> her keys at home.",
+        "exam_ko": "그녀는 집에서 열쇠를 자주 <strong class=\"target-word\">잃어버린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 797,
+    "origin": "modification",
+    "examples": [
+      {
+        "exam_en": "The team made a <strong class=\"target-word\">modification</strong> to the original plan.",
+        "exam_ko": "팀은 원래 계획에 <strong class=\"target-word\">수정</strong>을 가했다."
+      },
+      {
+        "exam_en": "A few simple <strong class=\"target-word\">modifications</strong> improved the design greatly.",
+        "exam_ko": "몇 가지 간단한 <strong class=\"target-word\">수정</strong>이 디자인을 크게 향상시켰다."
+      }
+    ]
+  },
+  {
+    "id": 799,
+    "origin": "minimize",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">minimize</strong> his colleague's contribution.",
+        "exam_ko": "그는 동료의 공헌을 <strong class=\"target-word\">축소</strong>하려 했다."
+      },
+      {
+        "exam_en": "Dean planned to <strong class=\"target-word\">minimize</strong> costs by camping on the tour.",
+        "exam_ko": "딘은 여행에서 야영을 하여 비용을 <strong class=\"target-word\">최소화</strong>할 계획이었다."
+      }
+    ]
+  },
+  {
+    "id": 800,
+    "origin": "minimal",
+    "examples": [
+      {
+        "exam_en": "The damage to the building was <strong class=\"target-word\">minimal</strong>.",
+        "exam_ko": "건물 피해는 <strong class=\"target-word\">최소한</strong>이었다."
+      },
+      {
+        "exam_en": "They completed the project at <strong class=\"target-word\">minimal</strong> cost.",
+        "exam_ko": "그들은 <strong class=\"target-word\">최소한의</strong> 비용으로 프로젝트를 완료했다."
+      }
+    ]
+  },
+  {
+    "id": 801,
+    "origin": "merit",
+    "examples": [
+      {
+        "exam_en": "The film was praised for its artistic <strong class=\"target-word\">merit</strong>.",
+        "exam_ko": "그 영화는 예술적 <strong class=\"target-word\">가치</strong>로 칭찬받았다."
+      },
+      {
+        "exam_en": "She was promoted based on her <strong class=\"target-word\">merit</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">능력</strong>을 인정받아 승진했다."
+      }
+    ]
+  },
+  {
+    "id": 802,
+    "origin": "means",
+    "examples": [
+      {
+        "exam_en": "They used visible markers as a <strong class=\"target-word\">means</strong> of identifying trees.",
+        "exam_ko": "그들은 나무를 식별하는 <strong class=\"target-word\">수단</strong>으로 표시물을 사용했다."
+      },
+      {
+        "exam_en": "Email is a quick <strong class=\"target-word\">means</strong> of communication.",
+        "exam_ko": "이메일은 빠른 소통 <strong class=\"target-word\">수단</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 803,
+    "origin": "meaning",
+    "examples": [
+      {
+        "exam_en": "He used the word in a figurative <strong class=\"target-word\">meaning</strong>.",
+        "exam_ko": "그는 단어를 비유적 <strong class=\"target-word\">의미</strong>로 사용했다."
+      },
+      {
+        "exam_en": "Look up the <strong class=\"target-word\">meaning</strong> of the word in the dictionary.",
+        "exam_ko": "사전에서 그 단어의 <strong class=\"target-word\">뜻</strong>을 찾아보세요."
+      }
+    ]
+  },
+  {
+    "id": 804,
+    "origin": "sense",
+    "examples": [
+      {
+        "exam_en": "Dogs have a strong <strong class=\"target-word\">sense</strong> of smell.",
+        "exam_ko": "개는 강한 후각 <strong class=\"target-word\">감각</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "She has a good <strong class=\"target-word\">sense</strong> of humor.",
+        "exam_ko": "그녀는 훌륭한 유머 <strong class=\"target-word\">감각</strong>을 지니고 있다."
+      }
+    ]
+  },
+  {
+    "id": 805,
+    "origin": "input",
+    "examples": [
+      {
+        "exam_en": "A keyboard is a common <strong class=\"target-word\">input</strong> device.",
+        "exam_ko": "키보드는 일반적인 <strong class=\"target-word\">입력</strong> 장치이다."
+      },
+      {
+        "exam_en": "Have you <strong class=\"target-word\">inputted</strong> the new data yet?",
+        "exam_ko": "새로운 자료를 아직 <strong class=\"target-word\">입력</strong>하지 않았니?"
+      },
+      {
+        "exam_en": "Please provide your <strong class=\"target-word\">input</strong> on the new policy.",
+        "exam_ko": "새 정책에 대한 <strong class=\"target-word\">의견</strong>을 제출해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 806,
+    "origin": "insert",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">inserted</strong> the key into the lock.",
+        "exam_ko": "그녀는 자물쇠에 열쇠를 <strong class=\"target-word\">꽂았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">inserted</strong> a bookmark between the pages.",
+        "exam_ko": "그는 책 페이지 사이에 책갈피를 <strong class=\"target-word\">끼웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 808,
+    "origin": "innocent",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">innocent</strong> child smiled at everyone.",
+        "exam_ko": "<strong class=\"target-word\">순진한</strong> 아이는 모두에게 미소를 지었다."
+      },
+      {
+        "exam_en": "The jury found him <strong class=\"target-word\">innocent</strong> of the charges.",
+        "exam_ko": "배심원단은 그가 혐의에 대해 <strong class=\"target-word\">무죄</strong>라고 판결했다."
+      }
+    ]
+  },
+  {
+    "id": 809,
+    "origin": "initiate",
+    "examples": [
+      {
+        "exam_en": "The government decided to <strong class=\"target-word\">initiate</strong> a reform program.",
+        "exam_ko": "정부는 개혁 프로그램에 <strong class=\"target-word\">착수하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">initiated</strong> new employees into their duties.",
+        "exam_ko": "그들은 신입 직원들에게 업무를 <strong class=\"target-word\">처음 가르쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 810,
+    "origin": "initiative",
+    "examples": [
+      {
+        "exam_en": "The government launched an <strong class=\"target-word\">initiative</strong> to help exporters.",
+        "exam_ko": "정부는 수출업자를 돕기 위한 <strong class=\"target-word\">계획</strong>을 시작했다."
+      },
+      {
+        "exam_en": "Mr. Jones took the <strong class=\"target-word\">initiative</strong> to start the project.",
+        "exam_ko": "존스 씨가 프로젝트를 시작하는 <strong class=\"target-word\">주도권</strong>을 잡았다."
+      },
+      {
+        "exam_en": "Local <strong class=\"target-word\">initiatives</strong> were documented to develop community programs.",
+        "exam_ko": "지역 <strong class=\"target-word\">계획들</strong>을 문서화하여 커뮤니티 프로그램을 개발했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">initiative</strong> in politics was strictly limited.",
+        "exam_ko": "정치에서 그의 <strong class=\"target-word\">주도력</strong>은 엄격히 제한되었다."
+      }
+    ]
+  },
+  {
+    "id": 811,
+    "origin": "initial",
+    "examples": [
+      {
+        "exam_en": "The doctor examined the <strong class=\"target-word\">initial</strong> symptoms of the disease.",
+        "exam_ko": "의사는 그 질병의 <strong class=\"target-word\">초기</strong> 증상을 진찰했다."
+      },
+      {
+        "exam_en": "You must pay an <strong class=\"target-word\">initial</strong> fee to join the club.",
+        "exam_ko": "클럽에 가입하려면 <strong class=\"target-word\">입회</strong> 비용을 내야 한다."
+      }
+    ]
+  },
+  {
+    "id": 812,
+    "origin": "informative",
+    "examples": [
+      {
+        "exam_en": "The talk was both <strong class=\"target-word\">informative</strong> and entertaining.",
+        "exam_ko": "그 강연은 <strong class=\"target-word\">유익하고</strong> 재미도 있었다."
+      },
+      {
+        "exam_en": "She gave an <strong class=\"target-word\">informative</strong> presentation on climate change.",
+        "exam_ko": "그녀는 기후 변화에 대해 <strong class=\"target-word\">유익한</strong> 발표를 했다."
+      }
+    ]
+  },
+  {
+    "id": 814,
+    "origin": "inform",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">informed</strong> me of his decision.",
+        "exam_ko": "그는 나에게 그의 결정을 <strong class=\"target-word\">알려</strong> 주었다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">informed</strong> my friends about the party.",
+        "exam_ko": "나는 친구들에게 파티에 관해 <strong class=\"target-word\">알렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 815,
+    "origin": "capacity",
+    "examples": [
+      {
+        "exam_en": "The hall has a seating <strong class=\"target-word\">capacity</strong> of 500.",
+        "exam_ko": "홀의 좌석 <strong class=\"target-word\">수용 인원</strong>은 500명이다."
+      },
+      {
+        "exam_en": "The venue was crowded beyond its <strong class=\"target-word\">capacity</strong>.",
+        "exam_ko": "행사장은 <strong class=\"target-word\">정원</strong>을 초과하여 초만원이었다."
+      },
+      {
+        "exam_en": "The building has a maximum <strong class=\"target-word\">capacity</strong> of 2,000 people.",
+        "exam_ko": "빌딩 최대 <strong class=\"target-word\">수용 인원</strong>은 2,000명이다."
+      }
+    ]
+  }
+]

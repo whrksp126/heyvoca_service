@@ -1,0 +1,238 @@
+[
+  {
+    "id": 21815,
+    "origin": "retinue",
+    "examples": [
+      {
+        "exam_en": "Two whole floors of the hotel were booked for the President's retinue.",
+        "exam_ko": "그 호텔 두 층 전체가 대통령 수행원단용으로 예약되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 21818,
+    "origin": "insubordinate",
+    "examples": [
+      {
+        "exam_en": "be insubordinate to one's superiors",
+        "exam_ko": "손윗사람의 말을 듣지 않다."
+      }
+    ]
+  },
+  {
+    "id": 21819,
+    "origin": "civilize",
+    "examples": [
+      {
+        "exam_en": "civilize a band of savages",
+        "exam_ko": "일군의 야만인들을 교화하다"
+      },
+      {
+        "exam_en": "civilize a primitive region",
+        "exam_ko": "미개 지역을 문명화하다."
+      }
+    ]
+  },
+  {
+    "id": 21820,
+    "origin": "cowardice",
+    "examples": [
+      {
+        "exam_en": "moral cowardice",
+        "exam_ko": "남의 비난을 겁내는 소심함."
+      }
+    ]
+  },
+  {
+    "id": 21824,
+    "origin": "histrionic",
+    "examples": [
+      {
+        "exam_en": "the histrionic tribe",
+        "exam_ko": "연극계의 사람들, 배우들."
+      }
+    ]
+  },
+  {
+    "id": 21826,
+    "origin": "unsteady",
+    "examples": [
+      {
+        "exam_en": "an unsteady table",
+        "exam_ko": "흔들거리는 책상"
+      },
+      {
+        "exam_en": "an unsteady flame",
+        "exam_ko": "흔들리는 불길"
+      }
+    ]
+  },
+  {
+    "id": 21828,
+    "origin": "cheapen",
+    "examples": [
+      {
+        "exam_en": "You cheapen yourself by telling petty lies.",
+        "exam_ko": "당신은 시시한 거짓말을 하여 품위를 떨어뜨리고 있다."
+      }
+    ]
+  },
+  {
+    "id": 21829,
+    "origin": "hateful",
+    "examples": [
+      {
+        "exam_en": "a hateful task",
+        "exam_ko": "몹시 싫은 일."
+      }
+    ]
+  },
+  {
+    "id": 21840,
+    "origin": "movable",
+    "examples": [
+      {
+        "exam_en": "movable type",
+        "exam_ko": "(초기의 활판 인쇄의) 활자."
+      },
+      {
+        "exam_en": "movable property",
+        "exam_ko": "동산."
+      }
+    ]
+  },
+  {
+    "id": 21842,
+    "origin": "hotly",
+    "examples": [
+      {
+        "exam_en": "a hotly contested match",
+        "exam_ko": "접전."
+      }
+    ]
+  },
+  {
+    "id": 21844,
+    "origin": "estuary",
+    "examples": [
+      {
+        "exam_en": "the Thames estuary",
+        "exam_ko": "템스 강 어귀."
+      },
+      {
+        "exam_en": "Washout (concrete washwater) will be returned back to a surface water, e.g., river, lake, or estuary.",
+        "exam_ko": "세척 (콘크리트 세척수)은 지표수 (예 : 강, 호수 또는 강어귀)로 다시 반환됩니다."
+      }
+    ]
+  },
+  {
+    "id": 21849,
+    "origin": "gutted",
+    "examples": [
+      {
+        "exam_en": "I am gutted.",
+        "exam_ko": "나 완전 실망했어."
+      },
+      {
+        "exam_en": "You look gutted.",
+        "exam_ko": "너 정말 지쳐보여."
+      }
+    ]
+  },
+  {
+    "id": 21852,
+    "origin": "immortality",
+    "examples": [
+      {
+        "exam_en": "the immortality of the soul",
+        "exam_ko": "영혼의 불멸."
+      },
+      {
+        "exam_en": "win one's immortality",
+        "exam_ko": "불후의 명성을 얻다."
+      }
+    ]
+  },
+  {
+    "id": 21856,
+    "origin": "caudal",
+    "examples": [
+      {
+        "exam_en": "a caudal fin",
+        "exam_ko": "꼬리지느러미."
+      }
+    ]
+  },
+  {
+    "id": 21857,
+    "origin": "spiny",
+    "examples": [
+      {
+        "exam_en": "creatures with spiny skins",
+        "exam_ko": "표피에 가시가 있는 동물."
+      }
+    ]
+  },
+  {
+    "id": 21860,
+    "origin": "longitudinal",
+    "examples": [
+      {
+        "exam_en": "yellow longitudinal stripes",
+        "exam_ko": "노란색의 세로 무늬."
+      }
+    ]
+  },
+  {
+    "id": 21866,
+    "origin": "orbiting",
+    "examples": [
+      {
+        "exam_en": "orbiting Astronomical Observatory",
+        "exam_ko": "천체 관측 위성. 약어 OAD"
+      },
+      {
+        "exam_en": "orbiting Geophysical Observatory",
+        "exam_ko": "지구 물리 관측 위성. 약어 OGO"
+      }
+    ]
+  },
+  {
+    "id": 21868,
+    "origin": "biological",
+    "examples": [
+      {
+        "exam_en": "a biological mother",
+        "exam_ko": "생모."
+      }
+    ]
+  },
+  {
+    "id": 21873,
+    "origin": "battlefield",
+    "examples": [
+      {
+        "exam_en": "the battlefield of life",
+        "exam_ko": "인생이라는 투쟁의 장"
+      },
+      {
+        "exam_en": "die on the battlefield",
+        "exam_ko": "전사하다."
+      }
+    ]
+  },
+  {
+    "id": 21881,
+    "origin": "visibility",
+    "examples": [
+      {
+        "exam_en": "high visibility",
+        "exam_ko": "양호한 시도"
+      },
+      {
+        "exam_en": "Take-off was delayed because of poor visibility.",
+        "exam_ko": "시계가 나빠서 이륙이 지연되었다."
+      }
+    ]
+  }
+]

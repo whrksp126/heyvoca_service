@@ -1,0 +1,218 @@
+[
+  {
+    "id": 43337,
+    "origin": "colloidal",
+    "examples": [
+      {
+        "exam_en": "a colloidal solution",
+        "exam_ko": "콜로이드 용액"
+      },
+      {
+        "exam_en": "a colloidal system",
+        "exam_ko": "콜로이드계."
+      }
+    ]
+  },
+  {
+    "id": 43348,
+    "origin": "affine",
+    "examples": [
+      {
+        "exam_en": "affine geometry",
+        "exam_ko": "아핀 기하학"
+      },
+      {
+        "exam_en": "affine coordinates",
+        "exam_ko": "아핀 좌표."
+      }
+    ]
+  },
+  {
+    "id": 43365,
+    "origin": "polymeric",
+    "examples": [
+      {
+        "exam_en": "polymeric genes",
+        "exam_ko": "동의(同義) 유전자."
+      }
+    ]
+  },
+  {
+    "id": 43367,
+    "origin": "articular",
+    "examples": [
+      {
+        "exam_en": "articular inflammation",
+        "exam_ko": "관절염."
+      }
+    ]
+  },
+  {
+    "id": 43370,
+    "origin": "intraocular",
+    "examples": [
+      {
+        "exam_en": "intraocular pressure",
+        "exam_ko": "안내압(眼內壓)."
+      }
+    ]
+  },
+  {
+    "id": 43376,
+    "origin": "modulus",
+    "examples": [
+      {
+        "exam_en": "the modulus of expansion",
+        "exam_ko": "팽창 계수."
+      },
+      {
+        "exam_en": "Normalweight Concrete: Density per ASTM C 138. Design the mix to produce the strength, modulus of elasticity and density as indicated on the Contract Documents.",
+        "exam_ko": "보통 콘크리트: ASTM C 138 따른 농도. 계약서에 명시된 농도와 탄성의 기준으로 강도가 나올수 있도록 콘크리트 믹스를 설계하시오."
+      }
+    ]
+  },
+  {
+    "id": 43379,
+    "origin": "subtend",
+    "examples": [
+      {
+        "exam_en": "a chord subtending an arc",
+        "exam_ko": "호에 대한 현."
+      }
+    ]
+  },
+  {
+    "id": 43397,
+    "origin": "groomed",
+    "examples": [
+      {
+        "exam_en": "neatly groomed",
+        "exam_ko": "말쑥하게 차려입은."
+      }
+    ]
+  },
+  {
+    "id": 43408,
+    "origin": "extractive",
+    "examples": [
+      {
+        "exam_en": "extractive technology",
+        "exam_ko": "(석탄·석유 등의) 채굴 기술."
+      }
+    ]
+  },
+  {
+    "id": 43426,
+    "origin": "calculating",
+    "examples": [
+      {
+        "exam_en": "a calculating machine",
+        "exam_ko": "계산기(calculator)."
+      }
+    ]
+  },
+  {
+    "id": 43436,
+    "origin": "tachy",
+    "examples": [
+      {
+        "exam_en": "tachyphylaxis",
+        "exam_ko": "[의학] 급속 면역법."
+      }
+    ]
+  },
+  {
+    "id": 43448,
+    "origin": "suctorial",
+    "examples": [
+      {
+        "exam_en": "a suctorial organ",
+        "exam_ko": "흡입 기관."
+      }
+    ]
+  },
+  {
+    "id": 43454,
+    "origin": "mascara",
+    "examples": [
+      {
+        "exam_en": "apply mascara",
+        "exam_ko": "마스카라를 바르다[칠하다]."
+      }
+    ]
+  },
+  {
+    "id": 43484,
+    "origin": "yearling",
+    "examples": [
+      {
+        "exam_en": "a yearling heifer",
+        "exam_ko": "한 살배기의 암소"
+      },
+      {
+        "exam_en": "a yearling bride",
+        "exam_ko": "결혼 생활 1년 된 새색시."
+      }
+    ]
+  },
+  {
+    "id": 43492,
+    "origin": "airwaves",
+    "examples": [
+      {
+        "exam_en": "on the airwaves",
+        "exam_ko": "방송으로."
+      }
+    ]
+  },
+  {
+    "id": 43530,
+    "origin": "pitting",
+    "examples": [
+      {
+        "exam_en": "Ultraviolet(UV) Exposure; No peeling, chipping, flaking, pitting, crazing, erosion or other deleterious effects were observed.",
+        "exam_ko": "노출 된곳은 껍질 벗겨짐, 부스러지무, 금, 조각조가 벗겨짐, 곰보자국, 잔금, 부식, 다른 유해한 영향이 관찰되지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 43540,
+    "origin": "fundus",
+    "examples": [
+      {
+        "exam_en": "the fundus oculi",
+        "exam_ko": "안저(眼底)."
+      }
+    ]
+  },
+  {
+    "id": 43541,
+    "origin": "adenoid",
+    "examples": [
+      {
+        "exam_en": "He's got adenoids.",
+        "exam_ko": "(비격식) 그는 아데노이드에 걸려 있다."
+      }
+    ]
+  },
+  {
+    "id": 43545,
+    "origin": "sublingual",
+    "examples": [
+      {
+        "exam_en": "the sublingual gland",
+        "exam_ko": "혀밑샘[동맥]."
+      }
+    ]
+  },
+  {
+    "id": 43582,
+    "origin": "pintle",
+    "examples": [
+      {
+        "exam_en": "A pintle is a pin or bolt, usually inserted into a gudgeon, which is used as part of a pivot or hinge. Other applications include pintle and lunette ring for towing, and pintle pins securing casters in furniture.",
+        "exam_ko": "핀틀 (pintle)은 핀 또는 볼트 (pin or bolt)로, 일반적으로 피봇이나 힌지의 부품으로 굴대꼭지(gudgeon)에 삽입된다. 기타 응용 분야로는 견인 용 핀틀 및 루넷 링, 가구의 캐스터를 고정하는 핀틀 핀이 있다."
+      }
+    ]
+  }
+]

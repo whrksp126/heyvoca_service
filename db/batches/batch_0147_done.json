@@ -1,0 +1,298 @@
+[
+  {
+    "id": 3215,
+    "origin": "shuffle",
+    "examples": [
+      {
+        "exam_en": "The old man <strong class=\"target-word\">shuffled</strong> sadly along the street.",
+        "exam_ko": "노인은 애처롭게 <strong class=\"target-word\">발을 끌며</strong> 길을 걸어갔다."
+      },
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">shuffle</strong> out of his responsibilities.",
+        "exam_ko": "그는 속임수로 책임을 <strong class=\"target-word\">회피하려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 3216,
+    "origin": "necessity",
+    "examples": [
+      {
+        "exam_en": "Food and shelter are basic <strong class=\"target-word\">necessities</strong> of life.",
+        "exam_ko": "음식과 주거는 삶의 기본 <strong class=\"target-word\">필수품</strong>이다."
+      },
+      {
+        "exam_en": "Water is a <strong class=\"target-word\">necessity</strong> of life.",
+        "exam_ko": "물은 살아가는 데 없어서는 안 될 <strong class=\"target-word\">필수품</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3217,
+    "origin": "overdue",
+    "examples": [
+      {
+        "exam_en": "The plane is several hours <strong class=\"target-word\">overdue</strong>.",
+        "exam_ko": "그 비행기는 몇 시간 <strong class=\"target-word\">연착</strong>되고 있다."
+      },
+      {
+        "exam_en": "The library book is <strong class=\"target-word\">overdue</strong> by two weeks.",
+        "exam_ko": "그 도서관 책은 반납 기한이 2주 <strong class=\"target-word\">지났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3219,
+    "origin": "betide",
+    "examples": [
+      {
+        "exam_en": "No matter what <strong class=\"target-word\">betides</strong>, we will stay together.",
+        "exam_ko": "어떤 일이 <strong class=\"target-word\">일어나더라도</strong> 우리는 함께할 것이다."
+      },
+      {
+        "exam_en": "Woe <strong class=\"target-word\">betide</strong> our enemies!",
+        "exam_ko": "적에게 <strong class=\"target-word\">재앙이 닥치기를</strong>!"
+      }
+    ]
+  },
+  {
+    "id": 3220,
+    "origin": "instinct",
+    "examples": [
+      {
+        "exam_en": "Animals rely on a feral <strong class=\"target-word\">instinct</strong> to survive.",
+        "exam_ko": "동물들은 생존을 위해 야생 <strong class=\"target-word\">본능</strong>에 의존한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">instinct</strong> for survival drives all living creatures.",
+        "exam_ko": "생존 <strong class=\"target-word\">본능</strong>은 모든 생명체를 움직인다."
+      }
+    ]
+  },
+  {
+    "id": 3221,
+    "origin": "unhook",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">unhooked</strong> the clasp on her dress.",
+        "exam_ko": "그녀는 드레스의 훅을 <strong class=\"target-word\">풀었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">unhooked</strong> the gate latch to enter.",
+        "exam_ko": "그는 들어가기 위해 대문의 빗장을 <strong class=\"target-word\">벗겼다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3223,
+    "origin": "phase",
+    "examples": [
+      {
+        "exam_en": "The project is in an early <strong class=\"target-word\">phase</strong> of development.",
+        "exam_ko": "프로젝트는 개발의 초기 <strong class=\"target-word\">단계</strong>에 있다."
+      },
+      {
+        "exam_en": "The war entered a crucial <strong class=\"target-word\">phase</strong> last month.",
+        "exam_ko": "전쟁은 지난달 중요한 <strong class=\"target-word\">국면</strong>에 접어들었다."
+      }
+    ]
+  },
+  {
+    "id": 3224,
+    "origin": "tan",
+    "examples": [
+      {
+        "exam_en": "The sun <strong class=\"target-word\">tanned</strong> her skin dark brown.",
+        "exam_ko": "햇볕에 그녀의 피부가 짙은 갈색으로 <strong class=\"target-word\">탔다</strong>."
+      },
+      {
+        "exam_en": "The worker <strong class=\"target-word\">tanned</strong> the calfskin into leather.",
+        "exam_ko": "작업자가 송아지 가죽을 <strong class=\"target-word\">무두질하여</strong> 가죽으로 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 3225,
+    "origin": "accentuate",
+    "examples": [
+      {
+        "exam_en": "The report <strong class=\"target-word\">accentuates</strong> the need for social reform.",
+        "exam_ko": "보고서는 사회 개혁의 필요성을 <strong class=\"target-word\">강조한다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">accentuated</strong> her eyes with dark makeup.",
+        "exam_ko": "그녀는 어두운 화장으로 눈매를 <strong class=\"target-word\">강조했다</strong>."
+      },
+      {
+        "exam_en": "The dress <strong class=\"target-word\">accentuates</strong> the bride's most attractive features.",
+        "exam_ko": "그 드레스는 신부의 가장 매력적인 특징을 <strong class=\"target-word\">부각시킨다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3227,
+    "origin": "dignified",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">dignified</strong> behavior impressed everyone present.",
+        "exam_ko": "그의 <strong class=\"target-word\">위엄 있는</strong> 태도는 참석자 모두를 감동시켰다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">dignified</strong> gentleman bowed gracefully.",
+        "exam_ko": "그 <strong class=\"target-word\">품위 있는</strong> 신사는 우아하게 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 3229,
+    "origin": "summit",
+    "examples": [
+      {
+        "exam_en": "They reached the <strong class=\"target-word\">summit</strong> of Mt. Everest.",
+        "exam_ko": "그들은 에베레스트 산 <strong class=\"target-word\">정상</strong>에 도달했다."
+      },
+      {
+        "exam_en": "She stood at the <strong class=\"target-word\">summit</strong> of her power.",
+        "exam_ko": "그녀는 권력의 <strong class=\"target-word\">정점</strong>에 서 있었다."
+      },
+      {
+        "exam_en": "The leaders met at the annual <strong class=\"target-word\">summit</strong> in Geneva.",
+        "exam_ko": "지도자들은 제네바에서 연례 <strong class=\"target-word\">정상회담</strong>에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 3230,
+    "origin": "nominate",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">nominated</strong> for President.",
+        "exam_ko": "그녀는 대통령 후보로 <strong class=\"target-word\">지명</strong>되었다."
+      },
+      {
+        "exam_en": "The Prime Minister <strong class=\"target-word\">nominated</strong> him as Foreign Minister.",
+        "exam_ko": "국무총리는 그를 외무부 장관으로 <strong class=\"target-word\">임명했다</strong>."
+      },
+      {
+        "exam_en": "The committee <strong class=\"target-word\">nominated</strong> her for the prestigious award.",
+        "exam_ko": "위원회는 그녀를 권위 있는 상에 <strong class=\"target-word\">지명했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3231,
+    "origin": "nomination",
+    "examples": [
+      {
+        "exam_en": "Her <strong class=\"target-word\">nomination</strong> for the award surprised everyone.",
+        "exam_ko": "그 상에 대한 그녀의 <strong class=\"target-word\">지명</strong>은 모두를 놀라게 했다."
+      },
+      {
+        "exam_en": "He won the <strong class=\"target-word\">nomination</strong> for President.",
+        "exam_ko": "그는 대통령 후보 <strong class=\"target-word\">지명</strong>을 획득했다."
+      }
+    ]
+  },
+  {
+    "id": 3232,
+    "origin": "nominal",
+    "examples": [
+      {
+        "exam_en": "He holds a <strong class=\"target-word\">nominal</strong> title with no real power.",
+        "exam_ko": "그는 실권 없이 <strong class=\"target-word\">명목상의</strong> 직함을 갖고 있다."
+      },
+      {
+        "exam_en": "The entry fee is just a <strong class=\"target-word\">nominal</strong> amount.",
+        "exam_ko": "입장료는 그저 <strong class=\"target-word\">명목상의</strong> 금액에 불과하다."
+      }
+    ]
+  },
+  {
+    "id": 3233,
+    "origin": "inactive",
+    "examples": [
+      {
+        "exam_en": "The mine has been <strong class=\"target-word\">inactive</strong> for decades.",
+        "exam_ko": "그 광산은 수십 년째 <strong class=\"target-word\">가동되지 않고</strong> 있다."
+      },
+      {
+        "exam_en": "He leads an <strong class=\"target-word\">inactive</strong> life with no exercise.",
+        "exam_ko": "그는 운동 없이 <strong class=\"target-word\">활동하지 않는</strong> 생활을 한다."
+      }
+    ]
+  },
+  {
+    "id": 3235,
+    "origin": "fee",
+    "examples": [
+      {
+        "exam_en": "He paid a monthly insurance <strong class=\"target-word\">fee</strong>.",
+        "exam_ko": "그는 월 보험 <strong class=\"target-word\">료</strong>를 납부했다."
+      },
+      {
+        "exam_en": "All members must pay the membership <strong class=\"target-word\">fee</strong>.",
+        "exam_ko": "모든 회원은 회원 <strong class=\"target-word\">비</strong>를 내야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3236,
+    "origin": "toll",
+    "examples": [
+      {
+        "exam_en": "The bell <strong class=\"target-word\">tolled</strong> to announce a person's death.",
+        "exam_ko": "종이 <strong class=\"target-word\">울려</strong> 누군가의 죽음을 알렸다."
+      },
+      {
+        "exam_en": "The church <strong class=\"target-word\">tolled</strong> the bell to gather the people.",
+        "exam_ko": "교회는 종을 <strong class=\"target-word\">울려</strong> 사람들을 모았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">toll</strong> of the bell signaled the end of the day.",
+        "exam_ko": "종의 <strong class=\"target-word\">울림</strong>이 하루의 끝을 알렸다."
+      }
+    ]
+  },
+  {
+    "id": 3237,
+    "origin": "pit",
+    "examples": [
+      {
+        "exam_en": "Hunters dug a <strong class=\"target-word\">pit</strong> to trap the tiger.",
+        "exam_ko": "사냥꾼들은 호랑이를 잡기 위해 <strong class=\"target-word\">함정</strong>을 팠다."
+      },
+      {
+        "exam_en": "They dug a <strong class=\"target-word\">pit</strong> for the garbage.",
+        "exam_ko": "그들은 쓰레기 처리용 <strong class=\"target-word\">구덩이</strong>를 팠다."
+      }
+    ]
+  },
+  {
+    "id": 3238,
+    "origin": "donor",
+    "examples": [
+      {
+        "exam_en": "The country acted as a <strong class=\"target-word\">donor</strong> nation.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">공여국</strong>으로서 역할을 했다."
+      },
+      {
+        "exam_en": "She registered as a kidney <strong class=\"target-word\">donor</strong>.",
+        "exam_ko": "그녀는 신장 <strong class=\"target-word\">기증자</strong>로 등록했다."
+      }
+    ]
+  },
+  {
+    "id": 3241,
+    "origin": "installment",
+    "examples": [
+      {
+        "exam_en": "She paid for the television in <strong class=\"target-word\">installments</strong>.",
+        "exam_ko": "그녀는 텔레비전 값을 <strong class=\"target-word\">할부</strong>로 지불했다."
+      },
+      {
+        "exam_en": "This is the final <strong class=\"target-word\">installment</strong> of the twelve-part series.",
+        "exam_ko": "이것이 12부작 시리즈의 마지막 <strong class=\"target-word\">편</strong>이다."
+      }
+    ]
+  }
+]

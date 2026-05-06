@@ -1,0 +1,262 @@
+[
+  {
+    "id": 10062,
+    "origin": "equivocate",
+    "examples": [
+      {
+        "exam_en": "Answer yes or no, but don't <strong class=\"target-word\">equivocate</strong>!",
+        "exam_ko": "<strong class=\"target-word\">애매하게 말하지 말고</strong> 예, 아니오로 대답해!"
+      }
+    ]
+  },
+  {
+    "id": 10063,
+    "origin": "intervention",
+    "examples": [
+      {
+        "exam_en": "The conflict ended through military <strong class=\"target-word\">intervention</strong>.",
+        "exam_ko": "그 분쟁은 군사 <strong class=\"target-word\">개입</strong>을 통해 끝났다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">intervention</strong> helped resolve the dispute.",
+        "exam_ko": "그의 <strong class=\"target-word\">중재</strong>가 분쟁 해결에 도움이 됐다."
+      }
+    ]
+  },
+  {
+    "id": 10064,
+    "origin": "immaculate",
+    "examples": [
+      {
+        "exam_en": "She always wore an <strong class=\"target-word\">immaculate</strong> white dress.",
+        "exam_ko": "그녀는 항상 <strong class=\"target-word\">흠잡을 데 없는</strong> 흰 드레스를 입었다."
+      },
+      {
+        "exam_en": "He is known for his <strong class=\"target-word\">immaculate</strong> conduct.",
+        "exam_ko": "그는 <strong class=\"target-word\">청렴한</strong> 품행으로 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 10065,
+    "origin": "conjugal",
+    "examples": [
+      {
+        "exam_en": "They have enjoyed a happy <strong class=\"target-word\">conjugal</strong> life for decades.",
+        "exam_ko": "그들은 수십 년간 행복한 <strong class=\"target-word\">부부</strong> 생활을 누렸다."
+      },
+      {
+        "exam_en": "Their <strong class=\"target-word\">conjugal</strong> affection grew stronger over the years.",
+        "exam_ko": "그들의 <strong class=\"target-word\">부부</strong>간 애정은 세월이 지날수록 깊어졌다."
+      }
+    ]
+  },
+  {
+    "id": 10066,
+    "origin": "sissy",
+    "examples": [
+      {
+        "exam_en": "His friends called him a <strong class=\"target-word\">sissy</strong> for avoiding fights.",
+        "exam_ko": "친구들은 싸움을 피한다며 그를 <strong class=\"target-word\">겁쟁이</strong>라고 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 10071,
+    "origin": "parole",
+    "examples": [
+      {
+        "exam_en": "He was released on <strong class=\"target-word\">parole</strong> after five years.",
+        "exam_ko": "그는 5년 후 <strong class=\"target-word\">가석방</strong>으로 풀려났다."
+      },
+      {
+        "exam_en": "He fled the country and broke his <strong class=\"target-word\">parole</strong>.",
+        "exam_ko": "그는 나라를 떠나 <strong class=\"target-word\">가석방</strong> 조건을 어겼다."
+      }
+    ]
+  },
+  {
+    "id": 10072,
+    "origin": "penitentiary",
+    "examples": [
+      {
+        "exam_en": "He was sentenced to ten years in a federal <strong class=\"target-word\">penitentiary</strong>.",
+        "exam_ko": "그는 연방 <strong class=\"target-word\">교도소</strong>에서 10년 형을 선고받았다."
+      }
+    ]
+  },
+  {
+    "id": 10073,
+    "origin": "incarcerate",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">incarcerated</strong> in a broken elevator for five hours.",
+        "exam_ko": "그녀는 고장난 승강기에 5시간 동안 <strong class=\"target-word\">갇혀</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 10074,
+    "origin": "malice",
+    "examples": [
+      {
+        "exam_en": "He has no <strong class=\"target-word\">malice</strong> toward me.",
+        "exam_ko": "그는 내게 <strong class=\"target-word\">적개심</strong>을 품고 있지 않다."
+      },
+      {
+        "exam_en": "He acted out of pure <strong class=\"target-word\">malice</strong>.",
+        "exam_ko": "그는 순전한 <strong class=\"target-word\">악의</strong>로 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 10076,
+    "origin": "plea",
+    "examples": [
+      {
+        "exam_en": "She left early on the <strong class=\"target-word\">plea</strong> of having a headache.",
+        "exam_ko": "그녀는 머리가 아프다는 <strong class=\"target-word\">핑계</strong>로 일찍 퇴근했다."
+      },
+      {
+        "exam_en": "He entered a <strong class=\"target-word\">plea</strong> of not guilty in court.",
+        "exam_ko": "그는 법정에서 무죄 <strong class=\"target-word\">주장</strong>을 제출했다."
+      }
+    ]
+  },
+  {
+    "id": 10077,
+    "origin": "representation",
+    "examples": [
+      {
+        "exam_en": "The painting is a vivid <strong class=\"target-word\">representation</strong> of city life.",
+        "exam_ko": "그 그림은 도시 생활의 생생한 <strong class=\"target-word\">묘사</strong>다."
+      },
+      {
+        "exam_en": "The dove is a symbolic <strong class=\"target-word\">representation</strong> of peace.",
+        "exam_ko": "비둘기는 평화의 상징적 <strong class=\"target-word\">표현</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 10080,
+    "origin": "disposed",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">disposed</strong> to meditation every morning.",
+        "exam_ko": "그는 매일 아침 명상에 <strong class=\"target-word\">잘 빠지는</strong> 편이다."
+      },
+      {
+        "exam_en": "I'm not <strong class=\"target-word\">disposed</strong> to work today.",
+        "exam_ko": "나는 오늘 일할 <strong class=\"target-word\">마음이 나지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10081,
+    "origin": "reception",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">reception</strong> into the club was warmly celebrated.",
+        "exam_ko": "클럽에 대한 그의 <strong class=\"target-word\">가입</strong>은 따뜻하게 축하받았다."
+      },
+      {
+        "exam_en": "The idea got a positive <strong class=\"target-word\">reception</strong> from the team.",
+        "exam_ko": "그 아이디어는 팀으로부터 긍정적인 <strong class=\"target-word\">반응</strong>을 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 10082,
+    "origin": "chew",
+    "examples": [
+      {
+        "exam_en": "You should <strong class=\"target-word\">chew</strong> your food well before swallowing.",
+        "exam_ko": "삼키기 전에 음식을 잘 <strong class=\"target-word\">씹어야</strong> 한다."
+      },
+      {
+        "exam_en": "I'll <strong class=\"target-word\">chew</strong> it over for a few days.",
+        "exam_ko": "며칠 동안 신중히 <strong class=\"target-word\">생각해</strong> 보겠다."
+      }
+    ]
+  },
+  {
+    "id": 10083,
+    "origin": "gossip",
+    "examples": [
+      {
+        "exam_en": "She overheard a bit of <strong class=\"target-word\">gossip</strong> in the hallway.",
+        "exam_ko": "그녀는 복도에서 짤막한 <strong class=\"target-word\">가십</strong>을 우연히 들었다."
+      },
+      {
+        "exam_en": "They sat together and <strong class=\"target-word\">gossiped</strong> about old times.",
+        "exam_ko": "그들은 함께 앉아 옛날이야기를 <strong class=\"target-word\">수다 떨었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10085,
+    "origin": "bloom",
+    "examples": [
+      {
+        "exam_en": "The roses are in full <strong class=\"target-word\">bloom</strong> this spring.",
+        "exam_ko": "장미가 이번 봄에 활짝 <strong class=\"target-word\">피어</strong> 있다."
+      },
+      {
+        "exam_en": "The cherry trees began to <strong class=\"target-word\">bloom</strong> in early April.",
+        "exam_ko": "벚나무들이 4월 초에 <strong class=\"target-word\">꽃을 피우기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 10087,
+    "origin": "rag",
+    "examples": [
+      {
+        "exam_en": "The old man was dressed in <strong class=\"target-word\">rags</strong>.",
+        "exam_ko": "그 노인은 <strong class=\"target-word\">누더기</strong>를 입고 있었다."
+      },
+      {
+        "exam_en": "She wiped the table with an old <strong class=\"target-word\">rag</strong>.",
+        "exam_ko": "그녀는 낡은 <strong class=\"target-word\">걸레</strong>로 테이블을 닦았다."
+      }
+    ]
+  },
+  {
+    "id": 10088,
+    "origin": "enjoyable",
+    "examples": [
+      {
+        "exam_en": "It was a very <strong class=\"target-word\">enjoyable</strong> novel to read.",
+        "exam_ko": "그것은 읽기에 매우 <strong class=\"target-word\">재미있는</strong> 소설이었다."
+      },
+      {
+        "exam_en": "The festival was <strong class=\"target-word\">enjoyable</strong> for people of all ages.",
+        "exam_ko": "그 축제는 모든 연령대에게 <strong class=\"target-word\">즐거운</strong> 행사였다."
+      }
+    ]
+  },
+  {
+    "id": 10089,
+    "origin": "fitted",
+    "examples": [
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">fitted</strong> coat to the ceremony.",
+        "exam_ko": "그녀는 행사에 몸에 꼭 맞는 <strong class=\"target-word\">핏</strong>의 코트를 입었다."
+      }
+    ]
+  },
+  {
+    "id": 10090,
+    "origin": "happily",
+    "examples": [
+      {
+        "exam_en": "The children played <strong class=\"target-word\">happily</strong> in the park.",
+        "exam_ko": "아이들은 공원에서 <strong class=\"target-word\">즐겁게</strong> 놀았다."
+      },
+      {
+        "exam_en": "I'd <strong class=\"target-word\">happily</strong> take care of your parents.",
+        "exam_ko": "당신의 부모님을 <strong class=\"target-word\">기꺼이</strong> 돌봐 드리겠습니다."
+      }
+    ]
+  }
+]

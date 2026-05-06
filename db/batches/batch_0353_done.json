@@ -1,0 +1,262 @@
+[
+  {
+    "id": 9333,
+    "origin": "carcass",
+    "examples": [
+      {
+        "exam_en": "He risked his life just to save his own <strong class=\"target-word\">carcass</strong>.",
+        "exam_ko": "그는 자신의 <strong class=\"target-word\">목숨</strong>을 구하려고 위험을 감수했다."
+      },
+      {
+        "exam_en": "Move your <strong class=\"target-word\">carcass</strong> out of the way!",
+        "exam_ko": "거기서 <strong class=\"target-word\">비켜</strong>!"
+      }
+    ]
+  },
+  {
+    "id": 9334,
+    "origin": "pole",
+    "examples": [
+      {
+        "exam_en": "A worker climbed the telegraph <strong class=\"target-word\">pole</strong> to fix the wire.",
+        "exam_ko": "작업자가 전선을 고치려고 <strong class=\"target-word\">전주</strong>에 올라갔다."
+      },
+      {
+        "exam_en": "She used a long <strong class=\"target-word\">pole</strong> to reach the high shelf.",
+        "exam_ko": "그녀는 높은 선반에 닿으려고 긴 <strong class=\"target-word\">장대</strong>를 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 9335,
+    "origin": "harshly",
+    "examples": [
+      {
+        "exam_en": "The prisoners were treated <strong class=\"target-word\">harshly</strong> by the guards.",
+        "exam_ko": "죄수들은 간수들에게 <strong class=\"target-word\">거칠게</strong> 취급당했다."
+      }
+    ]
+  },
+  {
+    "id": 9337,
+    "origin": "converted",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">converted</strong> sinner asked for forgiveness.",
+        "exam_ko": "<strong class=\"target-word\">회개한</strong> 죄인이 용서를 구했다."
+      }
+    ]
+  },
+  {
+    "id": 9338,
+    "origin": "vermin",
+    "examples": [
+      {
+        "exam_en": "The room was crawling with <strong class=\"target-word\">vermin</strong>.",
+        "exam_ko": "그 방은 <strong class=\"target-word\">해충</strong>이 우글대고 있었다."
+      },
+      {
+        "exam_en": "The farmer used traps to get rid of <strong class=\"target-word\">vermin</strong>.",
+        "exam_ko": "농부는 <strong class=\"target-word\">해충</strong>을 없애려고 덫을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 9339,
+    "origin": "nocturnal",
+    "examples": [
+      {
+        "exam_en": "Owls are <strong class=\"target-word\">nocturnal</strong> birds active at night.",
+        "exam_ko": "부엉이는 밤에 활동하는 <strong class=\"target-word\">야행성</strong> 새이다."
+      }
+    ]
+  },
+  {
+    "id": 9342,
+    "origin": "petty",
+    "examples": [
+      {
+        "exam_en": "She ignored his <strong class=\"target-word\">petty</strong> complaints.",
+        "exam_ko": "그녀는 그의 <strong class=\"target-word\">사소한</strong> 불만을 무시했다."
+      },
+      {
+        "exam_en": "The manager approved the <strong class=\"target-word\">petty</strong> expenses.",
+        "exam_ko": "매니저가 <strong class=\"target-word\">잡비</strong>를 승인했다."
+      }
+    ]
+  },
+  {
+    "id": 9343,
+    "origin": "bail",
+    "examples": [
+      {
+        "exam_en": "He committed another crime while out on <strong class=\"target-word\">bail</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">보석</strong> 중에 또 다른 범죄를 저질렀다."
+      },
+      {
+        "exam_en": "His family paid <strong class=\"target-word\">bail</strong> to release him from jail.",
+        "exam_ko": "그의 가족은 그를 석방시키려고 <strong class=\"target-word\">보석금</strong>을 냈다."
+      }
+    ]
+  },
+  {
+    "id": 9345,
+    "origin": "dimension",
+    "examples": [
+      {
+        "exam_en": "She measured the <strong class=\"target-word\">dimensions</strong> of the desk carefully.",
+        "exam_ko": "그녀는 책상의 <strong class=\"target-word\">치수</strong>를 꼼꼼히 쟀다."
+      },
+      {
+        "exam_en": "The temple was impressive due to its vast <strong class=\"target-word\">dimensions</strong>.",
+        "exam_ko": "그 절은 거대한 <strong class=\"target-word\">규모</strong> 덕분에 인상적이었다."
+      }
+    ]
+  },
+  {
+    "id": 9347,
+    "origin": "attachment",
+    "examples": [
+      {
+        "exam_en": "She formed a deep <strong class=\"target-word\">attachment</strong> to her mentor.",
+        "exam_ko": "그녀는 멘토에게 깊은 <strong class=\"target-word\">애착</strong>을 갖게 되었다."
+      },
+      {
+        "exam_en": "There was a strong <strong class=\"target-word\">attachment</strong> between the two.",
+        "exam_ko": "둘 사이에는 강한 <strong class=\"target-word\">애정</strong>이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 9348,
+    "origin": "collection",
+    "examples": [
+      {
+        "exam_en": "The city scheduled garbage <strong class=\"target-word\">collection</strong> every Monday.",
+        "exam_ko": "시는 매주 월요일에 쓰레기 <strong class=\"target-word\">수거</strong>를 계획했다."
+      },
+      {
+        "exam_en": "The agent handled the field <strong class=\"target-word\">collection</strong> of payments.",
+        "exam_ko": "직원이 방문 <strong class=\"target-word\">수금</strong>을 처리했다."
+      }
+    ]
+  },
+  {
+    "id": 9351,
+    "origin": "attached",
+    "examples": [
+      {
+        "exam_en": "The house has an <strong class=\"target-word\">attached</strong> garage.",
+        "exam_ko": "그 집에는 <strong class=\"target-word\">붙어 있는</strong> 차고가 있다."
+      }
+    ]
+  },
+  {
+    "id": 9352,
+    "origin": "unavailable",
+    "examples": [
+      {
+        "exam_en": "This facility is <strong class=\"target-word\">unavailable</strong> now.",
+        "exam_ko": "이 시설은 현재 <strong class=\"target-word\">이용할 수 없다</strong>."
+      },
+      {
+        "exam_en": "The mayor is <strong class=\"target-word\">unavailable</strong> just now.",
+        "exam_ko": "지금은 시장이 <strong class=\"target-word\">자리에 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9354,
+    "origin": "providing",
+    "examples": [
+      {
+        "exam_en": "You can go out, <strong class=\"target-word\">providing</strong> you finish your homework first.",
+        "exam_ko": "숙제를 먼저 끝내면 나가도 된다 — <strong class=\"target-word\">~하는 조건으로</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9356,
+    "origin": "proportion",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">proportion</strong> of births to the population rose last year.",
+        "exam_ko": "인구 대비 출생 <strong class=\"target-word\">비율</strong>이 작년에 올랐다."
+      },
+      {
+        "exam_en": "The mixture was made in the <strong class=\"target-word\">proportion</strong> of four to one.",
+        "exam_ko": "혼합물은 4대 1의 <strong class=\"target-word\">비율</strong>로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 9357,
+    "origin": "stereotyped",
+    "examples": [
+      {
+        "exam_en": "The film had a <strong class=\"target-word\">stereotyped</strong> ending that everyone expected.",
+        "exam_ko": "영화는 모두가 예상한 <strong class=\"target-word\">틀에 박힌</strong> 결말이었다."
+      },
+      {
+        "exam_en": "He played a <strong class=\"target-word\">stereotyped</strong> villain with no depth.",
+        "exam_ko": "그는 깊이 없는 <strong class=\"target-word\">판에 박은</strong> 악당을 연기했다."
+      }
+    ]
+  },
+  {
+    "id": 9360,
+    "origin": "overdose",
+    "examples": [
+      {
+        "exam_en": "She took an <strong class=\"target-word\">overdose</strong> and was in the hospital for weeks.",
+        "exam_ko": "그녀는 약물을 <strong class=\"target-word\">과다 복용</strong>해서 몇 주간 입원했다."
+      },
+      {
+        "exam_en": "The addict <strong class=\"target-word\">overdosed</strong> on heroin and died.",
+        "exam_ko": "그 중독자는 헤로인을 <strong class=\"target-word\">과다 복용</strong>하고 사망했다."
+      }
+    ]
+  },
+  {
+    "id": 9363,
+    "origin": "mundane",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">mundane</strong> explanation for the strange event.",
+        "exam_ko": "그는 이상한 사건에 <strong class=\"target-word\">평범한</strong> 설명을 했다."
+      },
+      {
+        "exam_en": "She was tired of <strong class=\"target-word\">mundane</strong> daily routines.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">평범한</strong> 일상에 지쳐 있었다."
+      }
+    ]
+  },
+  {
+    "id": 9364,
+    "origin": "personnel",
+    "examples": [
+      {
+        "exam_en": "The hospital hired more medical <strong class=\"target-word\">personnel</strong> this year.",
+        "exam_ko": "병원은 올해 의료 <strong class=\"target-word\">직원</strong>을 더 고용했다."
+      },
+      {
+        "exam_en": "Budget cuts led to reductions in <strong class=\"target-word\">personnel</strong>.",
+        "exam_ko": "예산 삭감으로 <strong class=\"target-word\">인원</strong>이 줄었다."
+      },
+      {
+        "exam_en": "Maintenance <strong class=\"target-word\">personnel</strong> repaired the broken equipment.",
+        "exam_ko": "유지 관리 <strong class=\"target-word\">담당자</strong>가 고장난 장비를 수리했다."
+      }
+    ]
+  },
+  {
+    "id": 9365,
+    "origin": "infraction",
+    "examples": [
+      {
+        "exam_en": "The company was fined for minor <strong class=\"target-word\">infractions</strong> of EU regulations.",
+        "exam_ko": "회사는 EU 규정에 대한 사소한 <strong class=\"target-word\">위반</strong>으로 벌금을 받았다."
+      }
+    ]
+  }
+]

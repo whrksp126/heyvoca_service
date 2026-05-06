@@ -1,0 +1,242 @@
+[
+  {
+    "id": 12384,
+    "origin": "wayside",
+    "examples": [
+      {
+        "exam_en": "The flowers grow along the <strong class=\"target-word\">wayside</strong>.",
+        "exam_ko": "꽃들이 <strong class=\"target-word\">길가</strong>를 따라 피어 있다."
+      }
+    ]
+  },
+  {
+    "id": 12388,
+    "origin": "prevention",
+    "examples": [
+      {
+        "exam_en": "Crime <strong class=\"target-word\">prevention</strong> requires community effort.",
+        "exam_ko": "범죄 <strong class=\"target-word\">예방</strong>은 지역사회의 노력이 필요하다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Prevention</strong> is better than treatment.",
+        "exam_ko": "<strong class=\"target-word\">예방</strong>이 치료보다 낫다."
+      }
+    ]
+  },
+  {
+    "id": 12389,
+    "origin": "revolver",
+    "examples": [
+      {
+        "exam_en": "The detective drew a <strong class=\"target-word\">revolver</strong> from his holster.",
+        "exam_ko": "형사는 권총집에서 <strong class=\"target-word\">리볼버</strong>를 꺼냈다."
+      }
+    ]
+  },
+  {
+    "id": 12390,
+    "origin": "thankless",
+    "examples": [
+      {
+        "exam_en": "Caring for others is often a <strong class=\"target-word\">thankless</strong> job.",
+        "exam_ko": "남을 돌보는 일은 종종 <strong class=\"target-word\">보람 없는</strong> 일이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">thankless</strong> child ignored his parents' sacrifices.",
+        "exam_ko": "<strong class=\"target-word\">은혜를 모르는</strong> 아이는 부모의 희생을 무시했다."
+      }
+    ]
+  },
+  {
+    "id": 12391,
+    "origin": "suburban",
+    "examples": [
+      {
+        "exam_en": "They moved into a quiet <strong class=\"target-word\">suburban</strong> neighborhood.",
+        "exam_ko": "그들은 조용한 <strong class=\"target-word\">교외</strong> 동네로 이사했다."
+      },
+      {
+        "exam_en": "She grew up in a <strong class=\"target-word\">suburban</strong> town near the city.",
+        "exam_ko": "그녀는 도시 근처 <strong class=\"target-word\">교외</strong> 마을에서 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 12393,
+    "origin": "deathlike",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">deathlike</strong> silence fell over the room.",
+        "exam_ko": "방 안에 <strong class=\"target-word\">죽음 같은</strong> 침묵이 흘렀다."
+      }
+    ]
+  },
+  {
+    "id": 12394,
+    "origin": "therefor",
+    "examples": [
+      {
+        "exam_en": "He broke the rule and was punished <strong class=\"target-word\">therefor</strong>.",
+        "exam_ko": "그는 규칙을 어겨서 <strong class=\"target-word\">그 때문에</strong> 벌을 받았다."
+      },
+      {
+        "exam_en": "She filed a claim and received payment <strong class=\"target-word\">therefor</strong>.",
+        "exam_ko": "그녀는 청구서를 제출하고 <strong class=\"target-word\">그에 대한</strong> 대금을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 12396,
+    "origin": "saute",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sauteed</strong> shrimp in butter and garlic.",
+        "exam_ko": "그녀는 새우를 버터와 마늘에 <strong class=\"target-word\">소테했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12397,
+    "origin": "deductible",
+    "examples": [
+      {
+        "exam_en": "Medical expenses are tax <strong class=\"target-word\">deductible</strong> in some cases.",
+        "exam_ko": "의료비는 경우에 따라 세금 <strong class=\"target-word\">공제</strong>가 된다."
+      }
+    ]
+  },
+  {
+    "id": 12398,
+    "origin": "vaccinate",
+    "examples": [
+      {
+        "exam_en": "The nurse <strong class=\"target-word\">vaccinated</strong> the baby against smallpox.",
+        "exam_ko": "간호사가 아기에게 천연두 <strong class=\"target-word\">예방접종을 했다</strong>."
+      },
+      {
+        "exam_en": "I was <strong class=\"target-word\">vaccinated</strong> against TB with BCG.",
+        "exam_ko": "나는 결핵 예방을 위해 BCG <strong class=\"target-word\">접종을 받았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12401,
+    "origin": "compass",
+    "examples": [
+      {
+        "exam_en": "He checked the <strong class=\"target-word\">compass</strong> to find the right direction.",
+        "exam_ko": "그는 올바른 방향을 찾기 위해 <strong class=\"target-word\">나침반</strong>을 확인했다."
+      },
+      {
+        "exam_en": "They navigated by <strong class=\"target-word\">compass</strong> across the desert.",
+        "exam_ko": "그들은 사막을 <strong class=\"target-word\">나침반</strong>에 의지해 이동했다."
+      }
+    ]
+  },
+  {
+    "id": 12404,
+    "origin": "pitiful",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">pitiful</strong> excuse for missing the meeting.",
+        "exam_ko": "그는 회의에 빠진 것에 대해 <strong class=\"target-word\">한심한</strong> 변명을 했다."
+      },
+      {
+        "exam_en": "His school performance was <strong class=\"target-word\">pitiful</strong>.",
+        "exam_ko": "그의 학교 성적은 <strong class=\"target-word\">한심한</strong> 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 12405,
+    "origin": "resourceful",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">resourceful</strong> leader who solves problems quickly.",
+        "exam_ko": "그녀는 문제를 빠르게 해결하는 <strong class=\"target-word\">재치 있는</strong> 리더다."
+      }
+    ]
+  },
+  {
+    "id": 12406,
+    "origin": "puzzled",
+    "examples": [
+      {
+        "exam_en": "She gave him a <strong class=\"target-word\">puzzled</strong> look after his comment.",
+        "exam_ko": "그녀는 그의 말을 듣고 <strong class=\"target-word\">어리둥절한</strong> 표정을 지었다."
+      }
+    ]
+  },
+  {
+    "id": 12407,
+    "origin": "regretful",
+    "examples": [
+      {
+        "exam_en": "He gave a <strong class=\"target-word\">regretful</strong> apology for his mistake.",
+        "exam_ko": "그는 자신의 실수에 대해 <strong class=\"target-word\">유감스러운</strong> 사과를 했다."
+      },
+      {
+        "exam_en": "She watched him leave with <strong class=\"target-word\">regretful</strong> eyes.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">섭섭한</strong> 눈빛으로 그가 떠나는 것을 바라봤다."
+      }
+    ]
+  },
+  {
+    "id": 12408,
+    "origin": "apologetic",
+    "examples": [
+      {
+        "exam_en": "He wrote an <strong class=\"target-word\">apologetic</strong> letter to his teacher.",
+        "exam_ko": "그는 선생님께 <strong class=\"target-word\">사과</strong> 편지를 썼다."
+      },
+      {
+        "exam_en": "She was not <strong class=\"target-word\">apologetic</strong> for arriving late.",
+        "exam_ko": "그녀는 늦게 온 것에 대해 <strong class=\"target-word\">사과하지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12409,
+    "origin": "contented",
+    "examples": [
+      {
+        "exam_en": "He wore a <strong class=\"target-word\">contented</strong> smile after dinner.",
+        "exam_ko": "그는 저녁 식사 후 <strong class=\"target-word\">만족한</strong> 미소를 지었다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">contented</strong> with her simple life.",
+        "exam_ko": "그녀는 소박한 삶에 <strong class=\"target-word\">만족했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12410,
+    "origin": "encouraged",
+    "examples": [
+      {
+        "exam_en": "I felt <strong class=\"target-word\">encouraged</strong> by her kind letter.",
+        "exam_ko": "나는 그녀의 친절한 편지에 <strong class=\"target-word\">고무되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12413,
+    "origin": "guile",
+    "examples": [
+      {
+        "exam_en": "She used <strong class=\"target-word\">guile</strong> to outsmart her opponents.",
+        "exam_ko": "그녀는 상대를 이기기 위해 <strong class=\"target-word\">교활함</strong>을 이용했다."
+      }
+    ]
+  },
+  {
+    "id": 12414,
+    "origin": "fortuitous",
+    "examples": [
+      {
+        "exam_en": "Their <strong class=\"target-word\">fortuitous</strong> meeting changed both their lives.",
+        "exam_ko": "그들의 <strong class=\"target-word\">우연한</strong> 만남은 두 사람의 삶을 바꿨다."
+      }
+    ]
+  }
+]

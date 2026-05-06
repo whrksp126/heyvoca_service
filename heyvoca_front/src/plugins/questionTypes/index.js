@@ -1,5 +1,6 @@
 import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
+import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 
 const shuffleArray = (array) => {
   const shuffled = [...array];
@@ -26,6 +27,46 @@ export const QUESTION_TYPE_PLUGINS = [
     minWords: 4,
     component: null,
     setupQuestions: null,
+  },
+  {
+    id: 'fillInTheBlank',
+    label: '빈칸 채우기',
+    enabled: true,
+    minWords: 4,
+    component: FillInTheBlankQuestion,
+    setupQuestions: (selectedWords, allWords) => {
+      const extractTargetWord = (text) => {
+        const m = text?.match(/<strong[^>]*class="target-word"[^>]*>(.*?)<\/strong>/);
+        return m ? m[1] : null;
+      };
+
+      const questions = [];
+      for (const word of selectedWords) {
+        if (!word.examples?.length) continue;
+        const validExample = word.examples.find(ex => extractTargetWord(ex.origin));
+        if (!validExample) continue;
+
+        const targetWord = extractTargetWord(validExample.origin);
+        const wrongOptions = allWords
+          .filter(w => w.id !== word.id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3)
+          .map(w => w.origin);
+
+        const opts = shuffleArray([targetWord, ...wrongOptions]);
+        questions.push({
+          ...word,
+          questionType: 'fillInTheBlank',
+          exampleText: validExample.origin,
+          exampleTranslation: validExample.meaning,
+          targetWord,
+          options: opts,
+          resultIndex: opts.indexOf(targetWord),
+          isCorrect: null,
+        });
+      }
+      return questions;
+    },
   },
   {
     id: 'cardMatch',

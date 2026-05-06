@@ -8,6 +8,17 @@ from app.models.models import db, UserVoca, UserVocaBookMap, UserVocaBook
 from app.utils.jwt_utils import jwt_required
 
 
+def _is_purchased_book_id(user_id, voca_book_id):
+    """주어진 단어장 ID가 구매한 단어장(bookstore_id가 NULL이 아님)인지 확인."""
+    if voca_book_id is None:
+        return False
+    book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == UUID(str(voca_book_id)),
+        UserVocaBook.user_id == user_id
+    ).first()
+    return book is not None and book.bookstore_id is not None
+
+
 def merge_meanings(existing_json, new_list):
     """기존 meanings JSON과 새 meanings 리스트를 합산 (중복 제거)"""
     existing = json.loads(existing_json) if existing_json else []
@@ -133,6 +144,9 @@ def create_voca_index():
         if not voca_book:
             return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
+        if voca_book.bookstore_id is not None:
+            return jsonify({'code': 403, 'message': '구매한 단어장에는 단어를 추가할 수 없어요.'}), 403
+
         # 같은 단어가 UserVoca에 이미 있는지 확인
         user_voca = db.session.query(UserVoca).filter(
             UserVoca.user_id == user_id,
@@ -228,6 +242,9 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
     if not book_map:
         return jsonify({'code': 404, 'message': '해당 단어장 매핑을 찾을 수 없습니다.'}), 404
 
+    if _is_purchased_book_id(user_id, vocaBookId):
+        return jsonify({'code': 403, 'message': '구매한 단어장의 단어는 수정할 수 없어요.'}), 403
+
     try:
         meanings = req.get('meanings')
         examples = req.get('examples')
@@ -276,6 +293,17 @@ def delete_voca_index(vocaIndexId):
     if not user_voca:
         return jsonify({'code': 404, 'message': '해당 단어를 찾을 수 없습니다.'}), 404
 
+    # 이 단어가 구매한 단어장에 속해 있다면 전체 삭제 차단
+    purchased_map_exists = db.session.query(UserVocaBookMap).join(
+        UserVocaBook, UserVocaBook.id == UserVocaBookMap.user_voca_book_id
+    ).filter(
+        UserVocaBookMap.user_voca_id == vocaIndexId,
+        UserVocaBook.bookstore_id.isnot(None)
+    ).first()
+
+    if purchased_map_exists:
+        return jsonify({'code': 403, 'message': '구매한 단어장의 단어는 삭제할 수 없어요.'}), 403
+
     try:
         # 관련 UserVocaBookMap 모두 삭제
         db.session.query(UserVocaBookMap).filter(
@@ -317,6 +345,9 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
 
     if not voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
+
+    if voca_book.bookstore_id is not None:
+        return jsonify({'code': 403, 'message': '구매한 단어장에는 단어를 추가할 수 없어요.'}), 403
 
     # 이미 매핑되어 있는지 확인
     existing_map = db.session.query(UserVocaBookMap).filter(
@@ -380,6 +411,9 @@ def delete_voca_index_book(vocaIndexId, vocaBookId):
 
     if not book_map:
         return jsonify({'code': 404, 'message': '해당 단어장 매핑을 찾을 수 없습니다.'}), 404
+
+    if _is_purchased_book_id(user_id, vocaBookId):
+        return jsonify({'code': 403, 'message': '구매한 단어장의 단어는 삭제할 수 없어요.'}), 403
 
     try:
         # 1. 매핑 삭제

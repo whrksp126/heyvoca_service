@@ -1,0 +1,242 @@
+[
+  {
+    "id": 24743,
+    "origin": "perambulate",
+    "examples": [
+      {
+        "exam_en": "perambulate a town",
+        "exam_ko": "도시[거리]를 돌아다니다."
+      }
+    ]
+  },
+  {
+    "id": 24744,
+    "origin": "ambulatory",
+    "examples": [
+      {
+        "exam_en": "an ambulatory people",
+        "exam_ko": "이동성 민족"
+      },
+      {
+        "exam_en": "an ambulatory excursion",
+        "exam_ko": "도보 여행."
+      },
+      {
+        "exam_en": "The patient was able to walk around freely thanks to his ambulatory condition.",
+        "exam_ko": "환자는 통원 가능한 상태 덕분에 자유롭게 걸을 수 있었다."
+      }
+    ]
+  },
+  {
+    "id": 24759,
+    "origin": "crusted",
+    "examples": [
+      {
+        "exam_en": "crusted habits",
+        "exam_ko": "굳어버린 습관"
+      },
+      {
+        "exam_en": "a crusted prejudice",
+        "exam_ko": "케케묵은 편견."
+      }
+    ]
+  },
+  {
+    "id": 24785,
+    "origin": "exclusivity",
+    "examples": [
+      {
+        "exam_en": "The manufacturer will have seven-year marketing exclusivity for the drug.",
+        "exam_ko": "그 제조사는 그 약에 대해 7년간 독점 판매권을 갖게 될 것이다."
+      }
+    ]
+  },
+  {
+    "id": 24790,
+    "origin": "unitary",
+    "examples": [
+      {
+        "exam_en": "a unitary matrix",
+        "exam_ko": "[수학] 유니터리 행렬."
+      },
+      {
+        "exam_en": "the unitary policy",
+        "exam_ko": "통일된 정책."
+      }
+    ]
+  },
+  {
+    "id": 24801,
+    "origin": "mandated",
+    "examples": [
+      {
+        "exam_en": "a mandated territory of the United states",
+        "exam_ko": "미국 위임 통치령."
+      }
+    ]
+  },
+  {
+    "id": 24804,
+    "origin": "flushing",
+    "examples": [
+      {
+        "exam_en": "a flushing tank",
+        "exam_ko": "(수세식 변소의) 물탱크."
+      }
+    ]
+  },
+  {
+    "id": 24815,
+    "origin": "immanent",
+    "examples": [
+      {
+        "exam_en": "immanent and external factors in social evolution",
+        "exam_ko": "사회 발전의 내적·외적 요인."
+      }
+    ]
+  },
+  {
+    "id": 24818,
+    "origin": "aleatory",
+    "examples": [
+      {
+        "exam_en": "aleatory music",
+        "exam_ko": "우연성 음악."
+      }
+    ]
+  },
+  {
+    "id": 24820,
+    "origin": "preferentially",
+    "examples": [
+      {
+        "exam_en": "be treated preferentially",
+        "exam_ko": "특별 대우를 받다."
+      }
+    ]
+  },
+  {
+    "id": 24821,
+    "origin": "ham",
+    "examples": [
+      {
+        "exam_en": "ham and eggs",
+        "exam_ko": "햄에그."
+      },
+      {
+        "exam_en": "squat on one's hams",
+        "exam_ko": "쭈그리다, 웅크리다."
+      }
+    ]
+  },
+  {
+    "id": 24829,
+    "origin": "suffragist",
+    "examples": [
+      {
+        "exam_en": "a universal suffragist",
+        "exam_ko": "보통 선거권[여성 참정권]론자."
+      }
+    ]
+  },
+  {
+    "id": 24865,
+    "origin": "amelioration",
+    "examples": [
+      {
+        "exam_en": "The implementation of new policies led to the amelioration of living conditions for the underprivileged communities.",
+        "exam_ko": "새로운 정책의 시행으로 불우한 지역 사회의 생활 조건이 개선되었다."
+      }
+    ]
+  },
+  {
+    "id": 24866,
+    "origin": "gusty",
+    "examples": [
+      {
+        "exam_en": "gusty winds",
+        "exam_ko": "세차게 부는 바람"
+      },
+      {
+        "exam_en": "It was gusty last night.",
+        "exam_ko": "어젯밤은 비(바람)이 심했다."
+      }
+    ]
+  },
+  {
+    "id": 24867,
+    "origin": "sodden",
+    "examples": [
+      {
+        "exam_en": "a coat sodden with rain",
+        "exam_ko": "비에 젖은 코트."
+      },
+      {
+        "exam_en": "wine-sodden",
+        "exam_ko": "와인으로 몹시 취한."
+      }
+    ]
+  },
+  {
+    "id": 24885,
+    "origin": "dissatisfied",
+    "examples": [
+      {
+        "exam_en": "She seemed dissatisfied with my explanation.",
+        "exam_ko": "그녀는 내 설명에 불만을 느끼는 듯했다."
+      },
+      {
+        "exam_en": "a dissatisfied look",
+        "exam_ko": "불만스러운 표정."
+      }
+    ]
+  },
+  {
+    "id": 24886,
+    "origin": "protuberance",
+    "examples": [
+      {
+        "exam_en": "the protuberance of the eyeballs",
+        "exam_ko": "안구의 돌출."
+      },
+      {
+        "exam_en": "a protuberance on a tree",
+        "exam_ko": "나무의 옹두리."
+      }
+    ]
+  },
+  {
+    "id": 24889,
+    "origin": "inhere",
+    "examples": [
+      {
+        "exam_en": "Jealousy inheres in love.",
+        "exam_ko": "사랑에는 질투가 있기 마련이다."
+      }
+    ]
+  },
+  {
+    "id": 24892,
+    "origin": "indivisible",
+    "examples": [
+      {
+        "exam_en": "an indivisible entity",
+        "exam_ko": "불가분의 실재"
+      },
+      {
+        "exam_en": "These particles are thought to be indivisible into smaller particles.",
+        "exam_ko": "이 입자들은 더 작은 입자들로 분할할 수 없다고 여겨진다."
+      }
+    ]
+  },
+  {
+    "id": 24899,
+    "origin": "pendent",
+    "examples": [
+      {
+        "exam_en": "a pendent flower basket",
+        "exam_ko": "드리워진 꽃바구니."
+      }
+    ]
+  }
+]

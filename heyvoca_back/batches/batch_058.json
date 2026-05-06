@@ -1,0 +1,602 @@
+[
+  {
+    "id": 5686,
+    "word": "treason",
+    "exam_en": "commit <strong class=\"target-word\">treason</strong>",
+    "exam_ko": "반역죄를 <strong class=\"target-word\">범하다</strong>."
+  },
+  {
+    "id": 5687,
+    "word": "traffic",
+    "exam_en": "<strong class=\"target-word\">traffic</strong> density",
+    "exam_ko": "<strong class=\"target-word\">교통량</strong>"
+  },
+  {
+    "id": 5688,
+    "word": "traffic",
+    "exam_en": "a line of <strong class=\"target-word\">traffic</strong>",
+    "exam_ko": "<strong class=\"target-word\">차량</strong> 행렬"
+  },
+  {
+    "id": 5689,
+    "word": "town",
+    "exam_en": "a man from the <strong class=\"target-word\">town</strong>",
+    "exam_ko": "<strong class=\"target-word\">도회지사람</strong>."
+  },
+  {
+    "id": 5690,
+    "word": "town",
+    "exam_en": "the talk of the <strong class=\"target-word\">town</strong>",
+    "exam_ko": "<strong class=\"target-word\">읍내의</strong> 소문."
+  },
+  {
+    "id": 5691,
+    "word": "torture",
+    "exam_en": "by water <strong class=\"target-word\">torture</strong>",
+    "exam_ko": "물<strong class=\"target-word\">고문</strong>으로"
+  },
+  {
+    "id": 5692,
+    "word": "torture",
+    "exam_en": "put a person to <strong class=\"target-word\">torture</strong>",
+    "exam_ko": "남을 <strong class=\"target-word\">고문하다</strong>."
+  },
+  {
+    "id": 5693,
+    "word": "tool",
+    "exam_en": "a multipurpose <strong class=\"target-word\">tool</strong>",
+    "exam_ko": "다목적 <strong class=\"target-word\">공구</strong>"
+  },
+  {
+    "id": 5694,
+    "word": "tool",
+    "exam_en": "down <strong class=\"target-word\">tool</strong>s",
+    "exam_ko": "(영) <strong class=\"target-word\">연장</strong>을 내려놓다; 일을 그만두다"
+  },
+  {
+    "id": 5695,
+    "word": "tongue",
+    "exam_en": "a coated <strong class=\"target-word\">tongue</strong>",
+    "exam_ko": "<strong class=\"target-word\">설태</strong>(舌苔)[백태]"
+  },
+  {
+    "id": 5696,
+    "word": "tongue",
+    "exam_en": "put out one's <strong class=\"target-word\">tongue</strong>[＝put one's <strong class=\"target-word\">tongue</strong> out]",
+    "exam_ko": "(진찰할 때) 혀를 <strong class=\"target-word\">내보이다</strong>; (경멸·익살의 뜻으로) 혀를 내밀다."
+  },
+  {
+    "id": 5697,
+    "word": "tomorrow",
+    "exam_en": "<strong class=\"target-word\">tomorrow</strong> morning",
+    "exam_ko": "<strong class=\"target-word\">내일</strong> 아침[오후, 밤]"
+  },
+  {
+    "id": 5698,
+    "word": "tomorrow",
+    "exam_en": "a week from <strong class=\"target-word\">tomorrow</strong>",
+    "exam_ko": "<strong class=\"target-word\">다음</strong> 주의 내일"
+  },
+  {
+    "id": 5699,
+    "word": "today",
+    "exam_en": "<strong class=\"target-word\">today</strong>'s newspaper",
+    "exam_ko": "<strong class=\"target-word\">오늘</strong> 신문"
+  },
+  {
+    "id": 5700,
+    "word": "today",
+    "exam_en": "the schedule for <strong class=\"target-word\">today</strong>",
+    "exam_ko": "<strong class=\"target-word\">오늘의</strong> 일정"
+  },
+  {
+    "id": 5701,
+    "word": "through",
+    "exam_en": "pass <strong class=\"target-word\">through</strong> a village",
+    "exam_ko": "마을을 <strong class=\"target-word\">통과하다</strong>"
+  },
+  {
+    "id": 5702,
+    "word": "through",
+    "exam_en": "fly <strong class=\"target-word\">through</strong> the air",
+    "exam_ko": "공중을 <strong class=\"target-word\">날다</strong>"
+  },
+  {
+    "id": 5703,
+    "word": "three",
+    "exam_en": "<strong class=\"target-word\">three</strong> parts",
+    "exam_ko": "<strong class=\"target-word\">3분의</strong> 4, 거의"
+  },
+  {
+    "id": 5704,
+    "word": "three",
+    "exam_en": "a man of <strong class=\"target-word\">three</strong> letters",
+    "exam_ko": "세 <strong class=\"target-word\">글자의</strong> 사나이, 도둑(※라틴어에서 도둑을 fur라고 한데서)"
+  },
+  {
+    "id": 5705,
+    "word": "thousand",
+    "exam_en": "three <strong class=\"target-word\">thousand</strong>",
+    "exam_ko": "<strong class=\"target-word\">3천</strong>(※수사 뒤에서는 복수형 불가)"
+  },
+  {
+    "id": 5706,
+    "word": "thousand",
+    "exam_en": "a hundred <strong class=\"target-word\">thousand</strong>",
+    "exam_ko": "<strong class=\"target-word\">10만</strong>"
+  },
+  {
+    "id": 5707,
+    "word": "thought",
+    "exam_en": "medieval <strong class=\"target-word\">thought</strong>",
+    "exam_ko": "중세 <strong class=\"target-word\">사상</strong>"
+  },
+  {
+    "id": 5708,
+    "word": "thought",
+    "exam_en": "scientific <strong class=\"target-word\">thought</strong> in the 19th century",
+    "exam_ko": "19세기의 과학 <strong class=\"target-word\">사조</strong>."
+  },
+  {
+    "id": 5709,
+    "word": "this",
+    "exam_en": "<strong class=\"target-word\">This</strong> is my book.",
+    "exam_ko": "이것은 내 <strong class=\"target-word\">책이다</strong>"
+  },
+  {
+    "id": 5710,
+    "word": "this",
+    "exam_en": "<strong class=\"target-word\">This</strong> is my favorite spot.",
+    "exam_ko": "여기는 내가 가장 좋아하는 <strong class=\"target-word\">곳이다</strong>"
+  },
+  {
+    "id": 5711,
+    "word": "thirties",
+    "exam_en": "during the <strong class=\"target-word\">thirties</strong>",
+    "exam_ko": "30<strong class=\"target-word\">년대에</strong>"
+  },
+  {
+    "id": 5712,
+    "word": "thirties",
+    "exam_en": "just out of one's <strong class=\"target-word\">thirties</strong>",
+    "exam_ko": "30<strong class=\"target-word\">대를</strong> 갓 넘은."
+  },
+  {
+    "id": 5713,
+    "word": "thirteen",
+    "exam_en": "unlucky <strong class=\"target-word\">thirteen</strong>",
+    "exam_ko": "<strong class=\"target-word\">불길한</strong> 13"
+  },
+  {
+    "id": 5714,
+    "word": "thirteen",
+    "exam_en": "the <strong class=\"target-word\">thirteen</strong> superstition",
+    "exam_ko": "13을 <strong class=\"target-word\">불길하다</strong>고 하는 미신."
+  },
+  {
+    "id": 5715,
+    "word": "third",
+    "exam_en": "the <strong class=\"target-word\">third</strong> floor",
+    "exam_ko": "(미) <strong class=\"target-word\">3층</strong>, (영) 4층"
+  },
+  {
+    "id": 5716,
+    "word": "third",
+    "exam_en": "Henry the <strong class=\"target-word\">Third</strong>",
+    "exam_ko": "<strong class=\"target-word\">헨리</strong> 3세(Henry Ⅲ로도 씀)"
+  },
+  {
+    "id": 5717,
+    "word": "thing",
+    "exam_en": "a <strong class=\"target-word\">thing</strong> and its properties",
+    "exam_ko": "<strong class=\"target-word\">물체와</strong> 그 속성."
+  },
+  {
+    "id": 5718,
+    "word": "thing",
+    "exam_en": "all <strong class=\"target-word\">thing</strong>s",
+    "exam_ko": "<strong class=\"target-word\">만물</strong>, 우주"
+  },
+  {
+    "id": 5719,
+    "word": "they",
+    "exam_en": "As for his family, <strong class=\"target-word\">they</strong> are all early risers.",
+    "exam_ko": "그의 가족들로 말하면 모두 아침 일찍 <strong class=\"target-word\">일어난다</strong>."
+  },
+  {
+    "id": 5720,
+    "word": "they",
+    "exam_en": "'Where are your friends?', '<strong class=\"target-word\">They</strong> went home.'",
+    "exam_ko": "\"친구들은 어디갔니?\", \"그들은 집에 <strong class=\"target-word\">갔어</strong>.\""
+  },
+  {
+    "id": 5721,
+    "word": "there",
+    "exam_en": "Stay <strong class=\"target-word\">there</strong>.",
+    "exam_ko": "거기 <strong class=\"target-word\">있어</strong>라(※Stay in there.라고도 함)"
+  },
+  {
+    "id": 5722,
+    "word": "there",
+    "exam_en": "Look <strong class=\"target-word\">there</strong>.",
+    "exam_ko": "저기를 <strong class=\"target-word\">보아</strong>라"
+  },
+  {
+    "id": 5723,
+    "word": "theory",
+    "exam_en": "the quantum <strong class=\"target-word\">theory</strong>",
+    "exam_ko": "<strong class=\"target-word\">양자론</strong>"
+  },
+  {
+    "id": 5724,
+    "word": "theory",
+    "exam_en": "Einstein's <strong class=\"target-word\">theory</strong> of relativity",
+    "exam_ko": "아인슈타인의 상대성 <strong class=\"target-word\">이론</strong>"
+  },
+  {
+    "id": 5725,
+    "word": "them",
+    "exam_en": "I will visit <strong class=\"target-word\">them</strong> tomorrow.",
+    "exam_ko": "내일 그들을 <strong class=\"target-word\">방문합니다</strong>."
+  },
+  {
+    "id": 5726,
+    "word": "them",
+    "exam_en": "Did you eat all of <strong class=\"target-word\">them</strong>?",
+    "exam_ko": "<strong class=\"target-word\">그것들을</strong> 다 먹었니?"
+  },
+  {
+    "id": 5727,
+    "word": "theirs",
+    "exam_en": "Our customs are not like <strong class=\"target-word\">theirs</strong>.",
+    "exam_ko": "우리의 습관은 그들과는 <strong class=\"target-word\">다르다</strong>"
+  },
+  {
+    "id": 5728,
+    "word": "theirs",
+    "exam_en": "Is this our bowl or one of <strong class=\"target-word\">theirs</strong>?",
+    "exam_ko": "<strong class=\"target-word\">이것은</strong> 우리들의 대접인가 아니면 그들이 소유한 대접 중의 하나인가?"
+  },
+  {
+    "id": 5729,
+    "word": "their",
+    "exam_en": "<strong class=\"target-word\">their</strong> home",
+    "exam_ko": "<strong class=\"target-word\">그들의</strong> 가정[학교]"
+  },
+  {
+    "id": 5730,
+    "word": "their",
+    "exam_en": "<strong class=\"target-word\">their</strong> rescuers",
+    "exam_ko": "<strong class=\"target-word\">그들을</strong> 구해낸 사람들"
+  },
+  {
+    "id": 5731,
+    "word": "theater",
+    "exam_en": "a drive-in <strong class=\"target-word\">theater</strong>",
+    "exam_ko": "<strong class=\"target-word\">드라이브인</strong> 극장"
+  },
+  {
+    "id": 5732,
+    "word": "theater",
+    "exam_en": "a first-run <strong class=\"target-word\">theater</strong>",
+    "exam_ko": "<strong class=\"target-word\">개봉관</strong>"
+  },
+  {
+    "id": 5733,
+    "word": "the",
+    "exam_en": "I saw a dog. <strong class=\"target-word\">The</strong> dog had a piece of meat in his mouth.",
+    "exam_ko": "개를 보았다. 그 개는 고기를 한 조각 물고 <strong class=\"target-word\">있었다</strong>"
+  },
+  {
+    "id": 5734,
+    "word": "the",
+    "exam_en": "There are two dolls.  one is for you and <strong class=\"target-word\">the</strong> other is for your sister.",
+    "exam_ko": "인형이 2개 있다. 하나는 네게 또 하나는 누나[동생]에게 <strong class=\"target-word\">주겠다</strong>."
+  },
+  {
+    "id": 5735,
+    "word": "that",
+    "exam_en": "Where did you buy <strong class=\"target-word\">that</strong> ?",
+    "exam_ko": "<strong class=\"target-word\">그것을</strong> 어디서 샀니?"
+  },
+  {
+    "id": 5736,
+    "word": "that",
+    "exam_en": "Who is <strong class=\"target-word\">that</strong>?",
+    "exam_ko": "저 <strong class=\"target-word\">사람은</strong> 누구지?"
+  },
+  {
+    "id": 5737,
+    "word": "territory",
+    "exam_en": "British <strong class=\"target-word\">territory</strong>",
+    "exam_ko": "<strong class=\"target-word\">영국령</strong>."
+  },
+  {
+    "id": 5738,
+    "word": "territory",
+    "exam_en": "The <strong class=\"target-word\">territory</strong> to the west is largely uninhabited.",
+    "exam_ko": "서쪽 지역에는 사람이 거의 살고 있지 <strong class=\"target-word\">않다</strong>."
+  },
+  {
+    "id": 5739,
+    "word": "ten",
+    "exam_en": "I'd <strong class=\"target-word\">ten</strong> times rather stay here.",
+    "exam_ko": "여기에 있는 것이 <strong class=\"target-word\">열배</strong> 낫다."
+  },
+  {
+    "id": 5740,
+    "word": "team",
+    "exam_en": "an observation <strong class=\"target-word\">team</strong>",
+    "exam_ko": "<strong class=\"target-word\">시찰단</strong>"
+  },
+  {
+    "id": 5741,
+    "word": "team",
+    "exam_en": "the defense <strong class=\"target-word\">team</strong> in a murder case",
+    "exam_ko": "그 살인 사건의 <strong class=\"target-word\">변호인단</strong>"
+  },
+  {
+    "id": 5742,
+    "word": "tea",
+    "exam_en": "a cup of <strong class=\"target-word\">tea</strong>",
+    "exam_ko": "한 잔의 <strong class=\"target-word\">차</strong>"
+  },
+  {
+    "id": 5743,
+    "word": "tea",
+    "exam_en": "iced <strong class=\"target-word\">tea</strong>",
+    "exam_ko": "<strong class=\"target-word\">냉차</strong>"
+  },
+  {
+    "id": 5744,
+    "word": "tail",
+    "exam_en": "tread on one's own <strong class=\"target-word\">tail</strong>",
+    "exam_ko": "남을 해치려다가 도리어 자신이 <strong class=\"target-word\">다치다</strong>."
+  },
+  {
+    "id": 5745,
+    "word": "tail",
+    "exam_en": "the <strong class=\"target-word\">tail</strong> of 'g' or 'y'",
+    "exam_ko": "<strong class=\"target-word\">문자</strong> g, y의 밑으로 나오는 부분."
+  },
+  {
+    "id": 5746,
+    "word": "table",
+    "exam_en": "a work <strong class=\"target-word\">table</strong>",
+    "exam_ko": "<strong class=\"target-word\">작업대</strong>."
+  },
+  {
+    "id": 5747,
+    "word": "table",
+    "exam_en": "sit around a <strong class=\"target-word\">table</strong>",
+    "exam_ko": "테이블에 <strong class=\"target-word\">둘러앉다</strong>"
+  },
+  {
+    "id": 5748,
+    "word": "system",
+    "exam_en": "a water <strong class=\"target-word\">system</strong>",
+    "exam_ko": "(하천) <strong class=\"target-word\">수계</strong>"
+  },
+  {
+    "id": 5749,
+    "word": "system",
+    "exam_en": "a railroad <strong class=\"target-word\">system</strong>",
+    "exam_ko": "<strong class=\"target-word\">철도망</strong>"
+  },
+  {
+    "id": 5750,
+    "word": "sympathy",
+    "exam_en": "feel a deep <strong class=\"target-word\">sympathy</strong> for the poor",
+    "exam_ko": "가난한 사람들에게 깊이 <strong class=\"target-word\">동정하다</strong>"
+  },
+  {
+    "id": 5751,
+    "word": "sympathies",
+    "exam_en": "telegraph one's <strong class=\"target-word\">sympathies</strong> on the death of Mr. Smith",
+    "exam_ko": "스미스씨의 죽음을 애도하여 조전을 <strong class=\"target-word\">보내다</strong>"
+  },
+  {
+    "id": 5752,
+    "word": "surface",
+    "exam_en": "the choppy <strong class=\"target-word\">surface</strong> of the lake",
+    "exam_ko": "<strong class=\"target-word\">물결</strong> 이는 호수면."
+  },
+  {
+    "id": 5753,
+    "word": "surface",
+    "exam_en": "come[rise] to the <strong class=\"target-word\">surface</strong>",
+    "exam_ko": "표면에 <strong class=\"target-word\">떠오르다</strong>"
+  },
+  {
+    "id": 5754,
+    "word": "sun",
+    "exam_en": "The <strong class=\"target-word\">sun</strong> rises.",
+    "exam_ko": "해가 뜬다[<strong class=\"target-word\">진다</strong>]"
+  },
+  {
+    "id": 5755,
+    "word": "sun",
+    "exam_en": "The <strong class=\"target-word\">sun</strong> is high.",
+    "exam_ko": "해는 벌써 높이 <strong class=\"target-word\">떠올랐다</strong>"
+  },
+  {
+    "id": 5756,
+    "word": "summer",
+    "exam_en": "during  <strong class=\"target-word\">summer</strong>",
+    "exam_ko": "<strong class=\"target-word\">여름</strong> 동안"
+  },
+  {
+    "id": 5757,
+    "word": "summer",
+    "exam_en": "in  <strong class=\"target-word\">summer</strong>",
+    "exam_ko": "<strong class=\"target-word\">여름에</strong>(※보통 무관사이나 in, during 뒤에서는 the를 붙이는 경우가 많음)"
+  },
+  {
+    "id": 5758,
+    "word": "sugar",
+    "exam_en": "a grain of <strong class=\"target-word\">sugar</strong>",
+    "exam_ko": "<strong class=\"target-word\">설탕</strong> 한 알갱이"
+  },
+  {
+    "id": 5759,
+    "word": "sugar",
+    "exam_en": "a spoonful of <strong class=\"target-word\">sugar</strong>",
+    "exam_ko": "한 스푼의 <strong class=\"target-word\">설탕</strong>"
+  },
+  {
+    "id": 5760,
+    "word": "substance",
+    "exam_en": "an explosive <strong class=\"target-word\">substance</strong>",
+    "exam_ko": "<strong class=\"target-word\">폭발물</strong>"
+  },
+  {
+    "id": 5761,
+    "word": "substance",
+    "exam_en": "a solid <strong class=\"target-word\">substance</strong>",
+    "exam_ko": "<strong class=\"target-word\">고체</strong>"
+  },
+  {
+    "id": 5762,
+    "word": "structure",
+    "exam_en": "the power <strong class=\"target-word\">structure</strong>",
+    "exam_ko": "<strong class=\"target-word\">권력</strong> 구조"
+  },
+  {
+    "id": 5763,
+    "word": "structure",
+    "exam_en": "the <strong class=\"target-word\">structure</strong> of the human body",
+    "exam_ko": "<strong class=\"target-word\">인체의</strong> 구조"
+  },
+  {
+    "id": 5764,
+    "word": "story",
+    "exam_en": "a nursery <strong class=\"target-word\">story</strong>",
+    "exam_ko": "<strong class=\"target-word\">옛날</strong> 이야기, 동화"
+  },
+  {
+    "id": 5765,
+    "word": "story",
+    "exam_en": "a true <strong class=\"target-word\">story</strong>",
+    "exam_ko": "<strong class=\"target-word\">실화</strong>"
+  },
+  {
+    "id": 5766,
+    "word": "storm",
+    "exam_en": "a heavy <strong class=\"target-word\">storm</strong>",
+    "exam_ko": "<strong class=\"target-word\">심한</strong> 폭풍"
+  },
+  {
+    "id": 5767,
+    "word": "storm",
+    "exam_en": "Now is the calm before the <strong class=\"target-word\">storm</strong>.",
+    "exam_ko": "지금은 폭풍 전의 <strong class=\"target-word\">고요다</strong>."
+  },
+  {
+    "id": 5768,
+    "word": "stone",
+    "exam_en": "cold as <strong class=\"target-word\">stone</strong>",
+    "exam_ko": "<strong class=\"target-word\">돌처럼</strong> 차가운[단단한, 냉혹한]"
+  },
+  {
+    "id": 5769,
+    "word": "stone",
+    "exam_en": "a heart of <strong class=\"target-word\">stone</strong>",
+    "exam_ko": "<strong class=\"target-word\">돌처럼</strong> 차가운 마음, 냉혹, 잔인"
+  },
+  {
+    "id": 5770,
+    "word": "steel",
+    "exam_en": "stainless <strong class=\"target-word\">steel</strong>",
+    "exam_ko": "<strong class=\"target-word\">스테인리스강</strong>."
+  },
+  {
+    "id": 5771,
+    "word": "steel",
+    "exam_en": "nerves of <strong class=\"target-word\">steel</strong>",
+    "exam_ko": "<strong class=\"target-word\">강철</strong> 같은 신경."
+  },
+  {
+    "id": 5772,
+    "word": "steam",
+    "exam_en": "saturated <strong class=\"target-word\">steam</strong>",
+    "exam_ko": "포화 <strong class=\"target-word\">증기</strong>"
+  },
+  {
+    "id": 5773,
+    "word": "steam",
+    "exam_en": "turn on the <strong class=\"target-word\">steam</strong>",
+    "exam_ko": "증기를 통하게 하다[<strong class=\"target-word\">막다</strong>]"
+  },
+  {
+    "id": 5774,
+    "word": "statue",
+    "exam_en": "carve a <strong class=\"target-word\">statue</strong>",
+    "exam_ko": "상을 <strong class=\"target-word\">조각하다</strong>"
+  },
+  {
+    "id": 5775,
+    "word": "statue",
+    "exam_en": "They put up a <strong class=\"target-word\">statue</strong> to him after his death.",
+    "exam_ko": "그가 죽은 뒤 그의 상을 <strong class=\"target-word\">세웠다</strong>."
+  },
+  {
+    "id": 5776,
+    "word": "star",
+    "exam_en": "a fixed <strong class=\"target-word\">star</strong>",
+    "exam_ko": "<strong class=\"target-word\">항성</strong>"
+  },
+  {
+    "id": 5777,
+    "word": "star",
+    "exam_en": "a falling <strong class=\"target-word\">star</strong>",
+    "exam_ko": "<strong class=\"target-word\">유성</strong>, 별똥별"
+  },
+  {
+    "id": 5778,
+    "word": "spy",
+    "exam_en": "a military <strong class=\"target-word\">spy</strong>",
+    "exam_ko": "<strong class=\"target-word\">군사</strong> 스파이"
+  },
+  {
+    "id": 5779,
+    "word": "spy",
+    "exam_en": "act the <strong class=\"target-word\">spy</strong>",
+    "exam_ko": "<strong class=\"target-word\">스파이질하다</strong>."
+  },
+  {
+    "id": 5780,
+    "word": "space",
+    "exam_en": "time and <strong class=\"target-word\">space</strong>",
+    "exam_ko": "시간과 <strong class=\"target-word\">공간</strong>."
+  },
+  {
+    "id": 5781,
+    "word": "space",
+    "exam_en": "amount of <strong class=\"target-word\">space</strong>",
+    "exam_ko": "<strong class=\"target-word\">공간</strong>의 양"
+  },
+  {
+    "id": 5782,
+    "word": "south",
+    "exam_en": "in the <strong class=\"target-word\">south</strong> of",
+    "exam_ko": "…의 <strong class=\"target-word\">남부</strong>[남쪽]에"
+  },
+  {
+    "id": 5783,
+    "word": "south",
+    "exam_en": "the <strong class=\"target-word\">South</strong> of France",
+    "exam_ko": "프랑스 <strong class=\"target-word\">남부</strong> 지방"
+  },
+  {
+    "id": 5784,
+    "word": "soul",
+    "exam_en": "the immortality of the <strong class=\"target-word\">soul</strong>",
+    "exam_ko": "<strong class=\"target-word\">영혼의</strong> 불멸"
+  },
+  {
+    "id": 5785,
+    "word": "soul",
+    "exam_en": "the transmigration of <strong class=\"target-word\">soul</strong>s",
+    "exam_ko": "<strong class=\"target-word\">영혼</strong>의 윤회"
+  }
+]

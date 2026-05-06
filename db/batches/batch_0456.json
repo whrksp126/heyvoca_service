@@ -1,0 +1,254 @@
+[
+  {
+    "id": 13226,
+    "origin": "insidious",
+    "examples": [
+      {
+        "exam_en": "an insidious enemy",
+        "exam_ko": "방심할 수 없는 적"
+      },
+      {
+        "exam_en": "insidious intent",
+        "exam_ko": "악의."
+      }
+    ]
+  },
+  {
+    "id": 13231,
+    "origin": "diminished",
+    "examples": [
+      {
+        "exam_en": "hide one's diminished head",
+        "exam_ko": "위신이 떨어져 자태를 감추다."
+      }
+    ]
+  },
+  {
+    "id": 13232,
+    "origin": "inflammatory",
+    "examples": [
+      {
+        "exam_en": "His inflammatory remarks only served to escalate the tension in the room.",
+        "exam_ko": "그의 선동적인 발언은 방 안의 긴장을 더 심하게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 13235,
+    "origin": "counteract",
+    "examples": [
+      {
+        "exam_en": "counteract the effects of a medicine",
+        "exam_ko": "약의 효력을 없애다."
+      }
+    ]
+  },
+  {
+    "id": 13236,
+    "origin": "ghrelin",
+    "examples": [
+      {
+        "exam_en": "a hormone called ghrelin which makes people hungry",
+        "exam_ko": "사람들로 하여금 시장기를 느끼게 만드는, 그렐린이라 불리는 호르몬."
+      }
+    ]
+  },
+  {
+    "id": 13241,
+    "origin": "quaff",
+    "examples": [
+      {
+        "exam_en": "sit quaffing all day",
+        "exam_ko": "종일 마시고 있다."
+      },
+      {
+        "exam_en": "take a quaff of beer",
+        "exam_ko": "맥주를 벌컥벌컥 마시다."
+      }
+    ]
+  },
+  {
+    "id": 13247,
+    "origin": "aquatic",
+    "examples": [
+      {
+        "exam_en": "aquatic animals",
+        "exam_ko": "수생 동물."
+      }
+    ]
+  },
+  {
+    "id": 13248,
+    "origin": "admittedly",
+    "examples": [
+      {
+        "exam_en": "Admittedly the rules are strict.",
+        "exam_ko": "확실히 규칙은 엄하다"
+      },
+      {
+        "exam_en": "The technique is painful, admittedly, but it benefits the patient greatly.",
+        "exam_ko": "그 기법은 고통스럽기는 하지만 환자에게는 확실히 크게 도움이 된다(※종종 but, though등을 수반하여 양보의 뜻을 나타냄)."
+      }
+    ]
+  },
+  {
+    "id": 13250,
+    "origin": "quarry",
+    "examples": [
+      {
+        "exam_en": "a quarry of information",
+        "exam_ko": "지식의 원천."
+      },
+      {
+        "exam_en": "quarry  marble",
+        "exam_ko": "대리석을 잘라내다."
+      },
+      {
+        "exam_en": "Waste management has become a real priority for all operators, job sites, quarries and construction management.",
+        "exam_ko": "폐기물 관리는 모든 운영자, 작업장, 채석장 및 건설 관리에있어 가장 중요한 우선 순위가되었습니다."
+      }
+    ]
+  },
+  {
+    "id": 13251,
+    "origin": "larder",
+    "examples": [
+      {
+        "exam_en": "raid the larder",
+        "exam_ko": "(비격식) 저장 식품을 훔쳐[무단으로] 먹다."
+      }
+    ]
+  },
+  {
+    "id": 13253,
+    "origin": "escapade",
+    "examples": [
+      {
+        "exam_en": "childish escapades",
+        "exam_ko": "어린애 같은 장난."
+      },
+      {
+        "exam_en": "a youthful escapade",
+        "exam_ko": "젊은 시절의 탈선 행위."
+      }
+    ]
+  },
+  {
+    "id": 13256,
+    "origin": "normative",
+    "examples": [
+      {
+        "exam_en": "normative grammar",
+        "exam_ko": "규범 문법"
+      },
+      {
+        "exam_en": "normative ethics",
+        "exam_ko": "규범 윤리."
+      }
+    ]
+  },
+  {
+    "id": 13259,
+    "origin": "gossamer",
+    "examples": [
+      {
+        "exam_en": "as light as gossamer",
+        "exam_ko": "아주 가벼운."
+      }
+    ]
+  },
+  {
+    "id": 13260,
+    "origin": "trafficker",
+    "examples": [
+      {
+        "exam_en": "a jewel trafficker",
+        "exam_ko": "보석 밀매상."
+      }
+    ]
+  },
+  {
+    "id": 13261,
+    "origin": "herald",
+    "examples": [
+      {
+        "exam_en": "The lark is a herald of morning.",
+        "exam_ko": "종달새는 아침의 전령이다."
+      },
+      {
+        "exam_en": "the Miami Herald",
+        "exam_ko": "마이애미 헤럴드지"
+      }
+    ]
+  },
+  {
+    "id": 13262,
+    "origin": "protracted",
+    "examples": [
+      {
+        "exam_en": "protracteded talks",
+        "exam_ko": "긴 대화"
+      },
+      {
+        "exam_en": "a protracteded argument",
+        "exam_ko": "오래 계속된 토론"
+      }
+    ]
+  },
+  {
+    "id": 13266,
+    "origin": "veteran",
+    "examples": [
+      {
+        "exam_en": "a veteran soldier",
+        "exam_ko": "역전의 용사."
+      },
+      {
+        "exam_en": "He is a veteran newspaper reporter.",
+        "exam_ko": "그는 노련한 신문 기자다."
+      }
+    ]
+  },
+  {
+    "id": 13267,
+    "origin": "onset",
+    "examples": [
+      {
+        "exam_en": "the onset of a fever",
+        "exam_ko": "발열"
+      },
+      {
+        "exam_en": "at the first onset",
+        "exam_ko": "개시로."
+      }
+    ]
+  },
+  {
+    "id": 13268,
+    "origin": "audacious",
+    "examples": [
+      {
+        "exam_en": "an audacious pilot",
+        "exam_ko": "용감한 파일럿."
+      },
+      {
+        "exam_en": "audacious words",
+        "exam_ko": "무례한[거리낌없는] 말."
+      }
+    ]
+  },
+  {
+    "id": 13269,
+    "origin": "avid",
+    "examples": [
+      {
+        "exam_en": "be avid for new things",
+        "exam_ko": "새로운 것을 몹시 탐내다."
+      },
+      {
+        "exam_en": "an avid reader",
+        "exam_ko": "열렬한 독자."
+      }
+    ]
+  }
+]

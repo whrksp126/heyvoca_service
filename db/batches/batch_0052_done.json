@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1050,
+    "origin": "anywhere",
+    "examples": [
+      {
+        "exam_en": "Did you go <strong class=\"target-word\">anywhere</strong> after supper?",
+        "exam_ko": "저녁 식사 후 <strong class=\"target-word\">어딘가</strong> 갔었습니까?"
+      },
+      {
+        "exam_en": "Tell her so if you meet her <strong class=\"target-word\">anywhere</strong>.",
+        "exam_ko": "<strong class=\"target-word\">어딘가에서</strong> 그녀를 만나거든 그렇게 전해줘."
+      }
+    ]
+  },
+  {
+    "id": 1051,
+    "origin": "somewhere",
+    "examples": [
+      {
+        "exam_en": "She lives <strong class=\"target-word\">somewhere</strong> in Michigan.",
+        "exam_ko": "그녀는 미시간 주 <strong class=\"target-word\">어딘가에</strong> 산다."
+      },
+      {
+        "exam_en": "He went <strong class=\"target-word\">somewhere</strong> else.",
+        "exam_ko": "그는 <strong class=\"target-word\">어딘가</strong> 딴 곳으로 갔다."
+      }
+    ]
+  },
+  {
+    "id": 1052,
+    "origin": "lock",
+    "examples": [
+      {
+        "exam_en": "She put a <strong class=\"target-word\">lock</strong> on the gate.",
+        "exam_ko": "그녀는 대문에 <strong class=\"target-word\">자물쇠</strong>를 달았다."
+      },
+      {
+        "exam_en": "Make sure to <strong class=\"target-word\">lock</strong> the door before leaving.",
+        "exam_ko": "나가기 전에 문을 반드시 <strong class=\"target-word\">잠가</strong>라."
+      }
+    ]
+  },
+  {
+    "id": 1053,
+    "origin": "lack",
+    "examples": [
+      {
+        "exam_en": "His failure was due to a <strong class=\"target-word\">lack</strong> of experience.",
+        "exam_ko": "그의 실패는 경험 <strong class=\"target-word\">부족</strong> 때문이었다."
+      },
+      {
+        "exam_en": "She showed a <strong class=\"target-word\">lack</strong> of confidence during the interview.",
+        "exam_ko": "그녀는 면접에서 자신감 <strong class=\"target-word\">결여</strong>를 보였다."
+      }
+    ]
+  },
+  {
+    "id": 1054,
+    "origin": "load",
+    "examples": [
+      {
+        "exam_en": "The truck carried a heavy <strong class=\"target-word\">load</strong> of bricks.",
+        "exam_ko": "트럭은 무거운 벽돌 <strong class=\"target-word\">짐</strong>을 실었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">loaded</strong> the boxes onto the truck.",
+        "exam_ko": "그는 상자들을 트럭에 <strong class=\"target-word\">실었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1055,
+    "origin": "lane",
+    "examples": [
+      {
+        "exam_en": "They walked down a narrow country <strong class=\"target-word\">lane</strong>.",
+        "exam_ko": "그들은 좁은 시골 <strong class=\"target-word\">길</strong>을 걸어 내려갔다."
+      },
+      {
+        "exam_en": "Runners must stay in their assigned <strong class=\"target-word\">lanes</strong>.",
+        "exam_ko": "달리기 선수들은 배정된 <strong class=\"target-word\">레인</strong>을 지켜야 한다."
+      }
+    ]
+  },
+  {
+    "id": 1056,
+    "origin": "relationship",
+    "examples": [
+      {
+        "exam_en": "They have a strong <strong class=\"target-word\">relationship</strong> with each other.",
+        "exam_ko": "그들은 서로 강한 <strong class=\"target-word\">관계</strong>를 맺고 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">relationship</strong> between diet and health is well proven.",
+        "exam_ko": "식단과 건강의 <strong class=\"target-word\">관계</strong>는 잘 증명되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 1057,
+    "origin": "somehow",
+    "examples": [
+      {
+        "exam_en": "We must get the car fixed <strong class=\"target-word\">somehow</strong>.",
+        "exam_ko": "<strong class=\"target-word\">어떻게든</strong> 차를 수리해야 한다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">somehow</strong> managed to finish it on time.",
+        "exam_ko": "<strong class=\"target-word\">어떻게든</strong> 제때 끝냈다."
+      }
+    ]
+  },
+  {
+    "id": 1058,
+    "origin": "plunge",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">plunged</strong> his hands into his pockets.",
+        "exam_ko": "그는 양손을 주머니에 <strong class=\"target-word\">찔러 넣었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">plunged</strong> into despair after the news.",
+        "exam_ko": "그녀는 소식을 듣고 절망에 <strong class=\"target-word\">빠져들었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1059,
+    "origin": "handsome",
+    "examples": [
+      {
+        "exam_en": "He has a very <strong class=\"target-word\">handsome</strong> face.",
+        "exam_ko": "그는 매우 <strong class=\"target-word\">수려한</strong> 얼굴을 가지고 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">handsome</strong> gentleman greeted everyone kindly.",
+        "exam_ko": "<strong class=\"target-word\">의젓한</strong> 신사가 모두에게 친절히 인사했다."
+      }
+    ]
+  },
+  {
+    "id": 1060,
+    "origin": "dump",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">dumped</strong> him after only two weeks.",
+        "exam_ko": "그녀는 단 2주 만에 그를 <strong class=\"target-word\">찼다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">dumped</strong> the trash near the river.",
+        "exam_ko": "그는 쓰레기를 강 근처에 <strong class=\"target-word\">버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1061,
+    "origin": "sprint",
+    "examples": [
+      {
+        "exam_en": "The policeman <strong class=\"target-word\">sprinted</strong> after the fleeing robber.",
+        "exam_ko": "경찰관은 도망치는 강도를 뒤쫓아 <strong class=\"target-word\">전력 질주했다</strong>."
+      },
+      {
+        "exam_en": "He made a final <strong class=\"target-word\">sprint</strong> to the finish line.",
+        "exam_ko": "그는 결승선을 향해 마지막 <strong class=\"target-word\">전력 질주</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 1062,
+    "origin": "guide",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">guided</strong> them through the mountain pass.",
+        "exam_ko": "그녀는 그들을 산길로 <strong class=\"target-word\">안내했다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">guided</strong> ourselves with a compass.",
+        "exam_ko": "우리는 나침반을 의지하며 <strong class=\"target-word\">나아갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1064,
+    "origin": "fiber",
+    "examples": [
+      {
+        "exam_en": "This jacket is made of synthetic <strong class=\"target-word\">fiber</strong>.",
+        "exam_ko": "이 재킷은 합성 <strong class=\"target-word\">섬유</strong>로 만들어졌다."
+      },
+      {
+        "exam_en": "Eating more <strong class=\"target-word\">fiber</strong> improves your digestion.",
+        "exam_ko": "<strong class=\"target-word\">섬유질</strong>을 더 많이 먹으면 소화가 좋아진다."
+      }
+    ]
+  },
+  {
+    "id": 1065,
+    "origin": "popular",
+    "examples": [
+      {
+        "exam_en": "She is the most <strong class=\"target-word\">popular</strong> singer this year.",
+        "exam_ko": "그녀는 올해 가장 <strong class=\"target-word\">인기 있는</strong> 가수다."
+      },
+      {
+        "exam_en": "The teacher is very <strong class=\"target-word\">popular</strong> with his students.",
+        "exam_ko": "그 교사는 학생들에게 매우 <strong class=\"target-word\">인기가 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1066,
+    "origin": "intelligent",
+    "examples": [
+      {
+        "exam_en": "She gave an <strong class=\"target-word\">intelligent</strong> answer to the question.",
+        "exam_ko": "그녀는 질문에 <strong class=\"target-word\">재치 있는</strong> 대답을 했다."
+      },
+      {
+        "exam_en": "He is one of the most <strong class=\"target-word\">intelligent</strong> students in class.",
+        "exam_ko": "그는 반에서 가장 <strong class=\"target-word\">머리가 좋은</strong> 학생 중 하나다."
+      }
+    ]
+  },
+  {
+    "id": 1067,
+    "origin": "promising",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">promising</strong> young scholar in his field.",
+        "exam_ko": "그는 자기 분야에서 <strong class=\"target-word\">장래가 촉망되는</strong> 젊은 학자다."
+      },
+      {
+        "exam_en": "The new project had a <strong class=\"target-word\">promising</strong> beginning.",
+        "exam_ko": "새 프로젝트는 <strong class=\"target-word\">순조로운</strong> 출발을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 1069,
+    "origin": "pleasant",
+    "examples": [
+      {
+        "exam_en": "The island has a very <strong class=\"target-word\">pleasant</strong> climate all year.",
+        "exam_ko": "그 섬은 일 년 내내 매우 <strong class=\"target-word\">좋은</strong> 기후를 가진다."
+      },
+      {
+        "exam_en": "They sat in a <strong class=\"target-word\">pleasant</strong> garden after lunch.",
+        "exam_ko": "그들은 점심 후 <strong class=\"target-word\">아름다운</strong> 정원에 앉았다."
+      }
+    ]
+  },
+  {
+    "id": 1071,
+    "origin": "indeed",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Indeed</strong>, the President resigned today.",
+        "exam_ko": "<strong class=\"target-word\">확실히</strong> 대통령은 오늘 사임하였다."
+      },
+      {
+        "exam_en": "Thank you very much <strong class=\"target-word\">indeed</strong>.",
+        "exam_ko": "<strong class=\"target-word\">정말로</strong> 고맙습니다."
+      }
+    ]
+  },
+  {
+    "id": 1072,
+    "origin": "embarrassing",
+    "examples": [
+      {
+        "exam_en": "He asked several <strong class=\"target-word\">embarrassing</strong> questions at the meeting.",
+        "exam_ko": "그는 회의에서 여러 <strong class=\"target-word\">난처한</strong> 질문을 했다."
+      },
+      {
+        "exam_en": "It was an <strong class=\"target-word\">embarrassing</strong> moment for everyone.",
+        "exam_ko": "그것은 모두에게 <strong class=\"target-word\">민망한</strong> 순간이었다."
+      }
+    ]
+  }
+]

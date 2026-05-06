@@ -1,0 +1,274 @@
+[
+  {
+    "id": 4121,
+    "origin": "lifetime",
+    "examples": [
+      {
+        "exam_en": "This is the chance of a <strong class=\"target-word\">lifetime</strong>.",
+        "exam_ko": "이건 <strong class=\"target-word\">일생에 한 번</strong> 있는 기회다."
+      },
+      {
+        "exam_en": "The memory lasts a <strong class=\"target-word\">lifetime</strong>.",
+        "exam_ko": "그 기억은 <strong class=\"target-word\">평생</strong> 남는다."
+      }
+    ]
+  },
+  {
+    "id": 4122,
+    "origin": "sour",
+    "examples": [
+      {
+        "exam_en": "These apples taste very <strong class=\"target-word\">sour</strong>.",
+        "exam_ko": "이 사과들은 매우 <strong class=\"target-word\">시다</strong>."
+      },
+      {
+        "exam_en": "The milk has gone <strong class=\"target-word\">sour</strong> overnight.",
+        "exam_ko": "우유가 하룻밤 새 <strong class=\"target-word\">상해버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4123,
+    "origin": "tourism",
+    "examples": [
+      {
+        "exam_en": "The country depends heavily on <strong class=\"target-word\">tourism</strong> for income.",
+        "exam_ko": "그 나라는 수입을 <strong class=\"target-word\">관광업</strong>에 크게 의존한다."
+      }
+    ]
+  },
+  {
+    "id": 4126,
+    "origin": "arabian",
+    "examples": [
+      {
+        "exam_en": "The trader sold <strong class=\"target-word\">Arabian</strong> gum at the market.",
+        "exam_ko": "그 상인은 시장에서 <strong class=\"target-word\">아라비아</strong> 고무를 팔았다."
+      }
+    ]
+  },
+  {
+    "id": 4127,
+    "origin": "heartbreaker",
+    "examples": [
+      {
+        "exam_en": "You are such a <strong class=\"target-word\">heartbreaker</strong>!",
+        "exam_ko": "넌 정말 <strong class=\"target-word\">매정한 사람</strong>이야!"
+      }
+    ]
+  },
+  {
+    "id": 4129,
+    "origin": "blaze",
+    "examples": [
+      {
+        "exam_en": "The building was in a <strong class=\"target-word\">blaze</strong> when we arrived.",
+        "exam_ko": "우리가 도착했을 때 건물이 <strong class=\"target-word\">불길에 휩싸여</strong> 있었다."
+      },
+      {
+        "exam_en": "The midday sun <strong class=\"target-word\">blazed</strong> down on the desert.",
+        "exam_ko": "대낮의 태양이 사막 위로 <strong class=\"target-word\">이글이글 타올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4130,
+    "origin": "savage",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">savage</strong> dog attacked the child.",
+        "exam_ko": "<strong class=\"target-word\">사나운</strong> 개가 아이를 공격했다."
+      },
+      {
+        "exam_en": "The dissidents faced <strong class=\"target-word\">savage</strong> persecution.",
+        "exam_ko": "반체제 인사들은 <strong class=\"target-word\">잔인한</strong> 박해를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 4131,
+    "origin": "unattended",
+    "examples": [
+      {
+        "exam_en": "Please do not leave luggage <strong class=\"target-word\">unattended</strong>.",
+        "exam_ko": "수하물을 <strong class=\"target-word\">방치해 두지</strong> 마십시오."
+      },
+      {
+        "exam_en": "The project was left <strong class=\"target-word\">unattended</strong> for weeks.",
+        "exam_ko": "그 프로젝트는 몇 주간 <strong class=\"target-word\">돌봐지지 않은</strong> 채로 방치됐다."
+      }
+    ]
+  },
+  {
+    "id": 4133,
+    "origin": "barren",
+    "examples": [
+      {
+        "exam_en": "The land was too <strong class=\"target-word\">barren</strong> to grow crops.",
+        "exam_ko": "그 땅은 너무 <strong class=\"target-word\">척박해서</strong> 작물을 키울 수 없었다."
+      },
+      {
+        "exam_en": "The debate was completely <strong class=\"target-word\">barren</strong> of results.",
+        "exam_ko": "그 토론은 결론이 <strong class=\"target-word\">전혀 없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4134,
+    "origin": "ignorant",
+    "examples": [
+      {
+        "exam_en": "He is completely <strong class=\"target-word\">ignorant</strong> of the physical sciences.",
+        "exam_ko": "그는 자연 과학에 대해 완전히 <strong class=\"target-word\">무지하다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">ignorant</strong> of the reason for their quarrel.",
+        "exam_ko": "그녀는 그들의 싸움의 원인을 <strong class=\"target-word\">알지 못했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4136,
+    "origin": "fulfill",
+    "examples": [
+      {
+        "exam_en": "He always <strong class=\"target-word\">fulfills</strong> his promises on time.",
+        "exam_ko": "그는 항상 약속을 제때 <strong class=\"target-word\">이행한다</strong>."
+      },
+      {
+        "exam_en": "She finally <strong class=\"target-word\">fulfilled</strong> her lifelong dream.",
+        "exam_ko": "그녀는 마침내 평생의 꿈을 <strong class=\"target-word\">이루었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4137,
+    "origin": "impatient",
+    "examples": [
+      {
+        "exam_en": "The teacher was <strong class=\"target-word\">impatient</strong> with our ignorance.",
+        "exam_ko": "선생님은 우리의 무지에 <strong class=\"target-word\">짜증을 내셨다</strong>."
+      },
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">impatient</strong> with the children.",
+        "exam_ko": "아이들에게 <strong class=\"target-word\">짜증내지</strong> 마세요."
+      }
+    ]
+  },
+  {
+    "id": 4138,
+    "origin": "track",
+    "examples": [
+      {
+        "exam_en": "The train runs on a single <strong class=\"target-word\">track</strong>.",
+        "exam_ko": "기차는 단선 <strong class=\"target-word\">선로</strong> 위를 달린다."
+      },
+      {
+        "exam_en": "The car left the <strong class=\"target-word\">track</strong> and crashed.",
+        "exam_ko": "차가 <strong class=\"target-word\">선로</strong>를 이탈해 충돌했다."
+      },
+      {
+        "exam_en": "Detectives are on the right <strong class=\"target-word\">track</strong> to solve the case.",
+        "exam_ko": "형사들은 사건 해결의 올바른 <strong class=\"target-word\">방향</strong>에 있다."
+      }
+    ]
+  },
+  {
+    "id": 4139,
+    "origin": "conquer",
+    "examples": [
+      {
+        "exam_en": "The Normans <strong class=\"target-word\">conquered</strong> England in 1066.",
+        "exam_ko": "노르만족은 1066년에 잉글랜드를 <strong class=\"target-word\">정복했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">conquered</strong> the hearts of the audience.",
+        "exam_ko": "그는 관객의 마음을 <strong class=\"target-word\">사로잡았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4140,
+    "origin": "independence",
+    "examples": [
+      {
+        "exam_en": "The nation enjoys <strong class=\"target-word\">independence</strong> from outside control.",
+        "exam_ko": "그 나라는 외부 지배로부터 <strong class=\"target-word\">독립</strong>을 누리고 있다."
+      },
+      {
+        "exam_en": "They declared <strong class=\"target-word\">independence</strong> from colonial rule.",
+        "exam_ko": "그들은 식민지 지배로부터 <strong class=\"target-word\">독립</strong>을 선언했다."
+      }
+    ]
+  },
+  {
+    "id": 4141,
+    "origin": "portray",
+    "examples": [
+      {
+        "exam_en": "The novel <strong class=\"target-word\">portrays</strong> his contemporaries as corrupt.",
+        "exam_ko": "그 소설은 그의 동시대인들을 타락한 모습으로 <strong class=\"target-word\">그린다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">portrayed</strong> Richard II in the film.",
+        "exam_ko": "그는 영화에서 리처드 2세를 <strong class=\"target-word\">연기했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4142,
+    "origin": "strive",
+    "examples": [
+      {
+        "exam_en": "We always <strong class=\"target-word\">strive</strong> to be fair in our decisions.",
+        "exam_ko": "우리는 결정에서 항상 공정하기 위해 <strong class=\"target-word\">노력한다</strong>."
+      },
+      {
+        "exam_en": "Athletes <strong class=\"target-word\">strive</strong> hard for victory every day.",
+        "exam_ko": "선수들은 매일 승리를 위해 열심히 <strong class=\"target-word\">노력한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4145,
+    "origin": "reptile",
+    "examples": [
+      {
+        "exam_en": "Snakes and lizards are <strong class=\"target-word\">reptiles</strong>.",
+        "exam_ko": "뱀과 도마뱀은 <strong class=\"target-word\">파충류</strong>이다."
+      },
+      {
+        "exam_en": "He acted like a <strong class=\"target-word\">reptile</strong> to get what he wanted.",
+        "exam_ko": "그는 원하는 것을 얻기 위해 <strong class=\"target-word\">비열하게</strong> 행동했다."
+      }
+    ]
+  },
+  {
+    "id": 4146,
+    "origin": "swirl",
+    "examples": [
+      {
+        "exam_en": "The water <strong class=\"target-word\">swirled</strong> around the drain.",
+        "exam_ko": "물이 배수구 주변에서 <strong class=\"target-word\">소용돌이쳤다</strong>."
+      },
+      {
+        "exam_en": "Waves <strong class=\"target-word\">swirled</strong> up strongly along the beach.",
+        "exam_ko": "파도가 해변을 따라 세차게 <strong class=\"target-word\">소용돌이쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4147,
+    "origin": "worldwide",
+    "examples": [
+      {
+        "exam_en": "The company operates on a <strong class=\"target-word\">worldwide</strong> level.",
+        "exam_ko": "그 회사는 <strong class=\"target-word\">세계적인</strong> 규모로 운영된다."
+      },
+      {
+        "exam_en": "His success made him <strong class=\"target-word\">worldwide</strong> famous.",
+        "exam_ko": "그의 성공은 그를 <strong class=\"target-word\">세계적으로</strong> 유명하게 만들었다."
+      }
+    ]
+  }
+]

@@ -321,8 +321,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   };
 
   return (
-    <div className="relative bg-layout-white dark:bg-layout-black">
-      <div className="overflow-y-auto max-h-[calc(90vh-47px)] pb-[115px]">
+    <div className="relative">
       <div>
         <div className="left"></div>
         <div className="
@@ -335,7 +334,9 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       </div>
       <div className="
         flex flex-col gap-[30px]
-        p-[20px]
+        max-h-[calc(90vh-47px)]
+        p-[20px] pb-[115px]
+        overflow-y-auto
       ">
         <div
           className="
@@ -535,7 +536,6 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             </motion.button>
           </div>
         </div>
-      </div>
       </div>
       <div className="
         absolute bottom-0 left-0 right-0

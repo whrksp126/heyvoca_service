@@ -1,0 +1,246 @@
+[
+  {
+    "id": 19671,
+    "origin": "wonted",
+    "examples": [
+      {
+        "exam_en": "lose one's wonted calm",
+        "exam_ko": "여느 때의 냉정을 잃다."
+      }
+    ]
+  },
+  {
+    "id": 19673,
+    "origin": "indefatigable",
+    "examples": [
+      {
+        "exam_en": "an indefatigable worker",
+        "exam_ko": "끈기 있게 일하는 사람, 싫증을 모르는 노력가"
+      },
+      {
+        "exam_en": "an indefatigable gossip",
+        "exam_ko": "지칠 줄 모르는 수다쟁이."
+      }
+    ]
+  },
+  {
+    "id": 19674,
+    "origin": "underwrite",
+    "examples": [
+      {
+        "exam_en": "the underwritten signatures",
+        "exam_ko": "서명자, 하기명(下記名)."
+      },
+      {
+        "exam_en": "underwrite a statement",
+        "exam_ko": "진술[결정, 증언]에 서명 동의하다"
+      }
+    ]
+  },
+  {
+    "id": 19677,
+    "origin": "nonsensical",
+    "examples": [
+      {
+        "exam_en": "a nonsensical question",
+        "exam_ko": "어처구니없는 질문."
+      }
+    ]
+  },
+  {
+    "id": 19678,
+    "origin": "nonaggression",
+    "examples": [
+      {
+        "exam_en": "a nonaggression treaty",
+        "exam_ko": "불가침 조약."
+      }
+    ]
+  },
+  {
+    "id": 19681,
+    "origin": "macrocosm",
+    "examples": [
+      {
+        "exam_en": "the state as a macrocosm of the family",
+        "exam_ko": "가정을 확대한 모형으로서의 국가."
+      }
+    ]
+  },
+  {
+    "id": 19688,
+    "origin": "bellicosity",
+    "examples": [
+      {
+        "exam_en": "His aggressive tone and bellicosity were evident during the meeting.",
+        "exam_ko": "그의 공격적인 어조와 호전적인 성향은 회의 중에 명백히 드러났다."
+      }
+    ]
+  },
+  {
+    "id": 19691,
+    "origin": "dour",
+    "examples": [
+      {
+        "exam_en": "a dour look",
+        "exam_ko": "뚱한 얼굴"
+      },
+      {
+        "exam_en": "in dour silence",
+        "exam_ko": "무뚝뚝하여."
+      }
+    ]
+  },
+  {
+    "id": 19695,
+    "origin": "malevolent",
+    "examples": [
+      {
+        "exam_en": "a malevolent spirit",
+        "exam_ko": "악령."
+      },
+      {
+        "exam_en": "The malevolent character plotted to ruin the protagonist's life.",
+        "exam_ko": "악의적인 인물은 주인공의 삶을 망치기 위해 계획을 꾸몄다"
+      }
+    ]
+  },
+  {
+    "id": 19699,
+    "origin": "malefactor",
+    "examples": [
+      {
+        "exam_en": "malefactors of great wealth",
+        "exam_ko": "거부이면서 나쁜 사람들(※Theodore Roosevelt가 연설에서 철도왕들을 비판한 말)."
+      }
+    ]
+  },
+  {
+    "id": 19700,
+    "origin": "debase",
+    "examples": [
+      {
+        "exam_en": "debase the value of the won",
+        "exam_ko": "원화를 절하(切下)하다"
+      },
+      {
+        "exam_en": "Inflation has debased the country's currency.",
+        "exam_ko": "인플레이션은 그 나라의 통화 가치를 떨어뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 19704,
+    "origin": "interstice",
+    "examples": [
+      {
+        "exam_en": "Blends between harsh and smooth edges. Interstice Width: 0.0 - 1.0. Sets interstice (gap size).",
+        "exam_ko": "거친 가장자리와 부드러운 가장자리를 혼합합니다. 틈새 폭 : 0.0-1.0. 인터스티스 (갭 크기)을 설정합니다."
+      }
+    ]
+  },
+  {
+    "id": 19705,
+    "origin": "interstellar",
+    "examples": [
+      {
+        "exam_en": "interstellar space",
+        "exam_ko": "태양계 우주 공간, 행성간 공간"
+      },
+      {
+        "exam_en": "interstellar gas",
+        "exam_ko": "성간 가스[진, 물질]."
+      }
+    ]
+  },
+  {
+    "id": 19708,
+    "origin": "transpose",
+    "examples": [
+      {
+        "exam_en": "transpose French into English",
+        "exam_ko": "프랑스어를 영어로 번역하다."
+      }
+    ]
+  },
+  {
+    "id": 19711,
+    "origin": "instigation",
+    "examples": [
+      {
+        "exam_en": "at the instigation of Mr. Smith[＝at Mr. Smith's instigation]",
+        "exam_ko": "스미스씨에게 부추김을 받아서, 스미스씨의 선동으로."
+      }
+    ]
+  },
+  {
+    "id": 19712,
+    "origin": "iniquitous",
+    "examples": [
+      {
+        "exam_en": "iniquitous disregard of the rights of small nations ",
+        "exam_ko": "약소국가 권리의 부당한 무시"
+      },
+      {
+        "exam_en": "iniquitous disregard of the rights of small nations",
+        "exam_ko": "약소국가 권리의 부당한 무시"
+      }
+    ]
+  },
+  {
+    "id": 19713,
+    "origin": "insinuate",
+    "examples": [
+      {
+        "exam_en": "He insinuated  that the firm was nearly bankrupt.",
+        "exam_ko": "회사는 도산의 위기에 처해 있다고 그는 넌지시 (내게) 말했다."
+      },
+      {
+        "exam_en": "insinuate doubt into a person's mind",
+        "exam_ko": "남의 마음에 서서히 의심을 품게 하다"
+      }
+    ]
+  },
+  {
+    "id": 19716,
+    "origin": "repletion",
+    "examples": [
+      {
+        "exam_en": "be filled to repletion with children",
+        "exam_ko": "아이들로 가득 차 있다."
+      },
+      {
+        "exam_en": "drink to repletion",
+        "exam_ko": "실컷 마시다."
+      }
+    ]
+  },
+  {
+    "id": 19717,
+    "origin": "articulation",
+    "examples": [
+      {
+        "exam_en": "double articulation",
+        "exam_ko": "이중 조음[분절]."
+      },
+      {
+        "exam_en": "the articulation of a proposal",
+        "exam_ko": "제안의 명확한 표현."
+      }
+    ]
+  },
+  {
+    "id": 19719,
+    "origin": "inordinate",
+    "examples": [
+      {
+        "exam_en": "a sermon of inordinate length",
+        "exam_ko": "터무니없이 긴 설교."
+      },
+      {
+        "exam_en": "keep inordinate hours",
+        "exam_ko": "불규칙한 생활하다."
+      }
+    ]
+  }
+]

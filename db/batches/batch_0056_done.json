@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1148,
+    "origin": "unit",
+    "examples": [
+      {
+        "exam_en": "The army sent a mobile service <strong class=\"target-word\">unit</strong> to the area.",
+        "exam_ko": "군대는 그 지역에 이동 수리 <strong class=\"target-word\">부대</strong>를 보냈다."
+      },
+      {
+        "exam_en": "The team operates as a cohesive <strong class=\"target-word\">unit</strong>.",
+        "exam_ko": "그 팀은 하나의 단결된 <strong class=\"target-word\">집단</strong>으로 활동한다."
+      }
+    ]
+  },
+  {
+    "id": 1149,
+    "origin": "contract",
+    "examples": [
+      {
+        "exam_en": "She signed a temporary <strong class=\"target-word\">contract</strong> with the company.",
+        "exam_ko": "그녀는 회사와 임시 <strong class=\"target-word\">계약</strong>을 체결했다."
+      },
+      {
+        "exam_en": "They agreed to a written <strong class=\"target-word\">contract</strong> for the project.",
+        "exam_ko": "그들은 프로젝트에 대해 서면 <strong class=\"target-word\">계약</strong>을 맺었다."
+      }
+    ]
+  },
+  {
+    "id": 1150,
+    "origin": "contact",
+    "examples": [
+      {
+        "exam_en": "The sport involves a lot of physical <strong class=\"target-word\">contact</strong>.",
+        "exam_ko": "그 스포츠는 신체적 <strong class=\"target-word\">접촉</strong>이 많이 일어난다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">contact</strong> me if you have any questions.",
+        "exam_ko": "질문이 있으면 저에게 <strong class=\"target-word\">연락</strong>해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 1151,
+    "origin": "knot",
+    "examples": [
+      {
+        "exam_en": "She loosened the <strong class=\"target-word\">knot</strong> in the rope.",
+        "exam_ko": "그녀는 밧줄의 <strong class=\"target-word\">매듭</strong>을 느슨하게 풀었다."
+      },
+      {
+        "exam_en": "He tied a <strong class=\"target-word\">knot</strong> in his handkerchief to remember.",
+        "exam_ko": "그는 기억하려고 손수건에 <strong class=\"target-word\">매듭</strong>을 지어 두었다."
+      }
+    ]
+  },
+  {
+    "id": 1152,
+    "origin": "knit",
+    "examples": [
+      {
+        "exam_en": "She wore a hand-<strong class=\"target-word\">knit</strong> cardigan to the party.",
+        "exam_ko": "그녀는 파티에 손으로 <strong class=\"target-word\">짠</strong> 카디건을 입고 갔다."
+      },
+      {
+        "exam_en": "My grandmother <strong class=\"target-word\">knits</strong> socks from wool every winter.",
+        "exam_ko": "할머니는 매겨울 털실로 양말을 <strong class=\"target-word\">뜬다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1153,
+    "origin": "congest",
+    "examples": [
+      {
+        "exam_en": "The shopping area was <strong class=\"target-word\">congested</strong> with the Sunday crowd.",
+        "exam_ko": "상점가는 일요일 인파로 몹시 <strong class=\"target-word\">붐볐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1154,
+    "origin": "summary",
+    "examples": [
+      {
+        "exam_en": "Please make a <strong class=\"target-word\">summary</strong> of the report.",
+        "exam_ko": "보고서를 <strong class=\"target-word\">요약</strong>해 주세요."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">summary</strong> analysis of the data.",
+        "exam_ko": "그녀는 데이터에 대한 간략한 <strong class=\"target-word\">요약</strong> 분석을 제시했다."
+      }
+    ]
+  },
+  {
+    "id": 1155,
+    "origin": "digest",
+    "examples": [
+      {
+        "exam_en": "Our bodies do not <strong class=\"target-word\">digest</strong> certain foods quickly.",
+        "exam_ko": "우리 몸은 특정 음식을 빨리 <strong class=\"target-word\">소화</strong>하지 못한다."
+      },
+      {
+        "exam_en": "He read the article to <strong class=\"target-word\">digest</strong> the key information.",
+        "exam_ko": "그는 핵심 정보를 <strong class=\"target-word\">파악</strong>하려고 기사를 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 1156,
+    "origin": "post",
+    "examples": [
+      {
+        "exam_en": "The fence <strong class=\"target-word\">posts</strong> were firmly set in the ground.",
+        "exam_ko": "담장 <strong class=\"target-word\">기둥</strong>들이 땅에 단단히 박혀 있었다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">posted</strong> a poster on the wall.",
+        "exam_ko": "그녀는 벽에 게시물을 <strong class=\"target-word\">붙였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1157,
+    "origin": "rule",
+    "examples": [
+      {
+        "exam_en": "You must follow the <strong class=\"target-word\">rules</strong> of baseball.",
+        "exam_ko": "야구의 <strong class=\"target-word\">규칙</strong>을 따라야 한다."
+      },
+      {
+        "exam_en": "The organization adopted new standing <strong class=\"target-word\">rules</strong>.",
+        "exam_ko": "그 단체는 새로운 상임 <strong class=\"target-word\">규정</strong>을 채택했다."
+      }
+    ]
+  },
+  {
+    "id": 1158,
+    "origin": "instantly",
+    "examples": [
+      {
+        "exam_en": "I'll be back <strong class=\"target-word\">instantly</strong>.",
+        "exam_ko": "<strong class=\"target-word\">곧</strong> 돌아올게."
+      },
+      {
+        "exam_en": "The passengers were killed <strong class=\"target-word\">instantly</strong> in the crash.",
+        "exam_ko": "승객들은 충돌 사고로 <strong class=\"target-word\">즉시</strong> 사망했다."
+      }
+    ]
+  },
+  {
+    "id": 1159,
+    "origin": "fragile",
+    "examples": [
+      {
+        "exam_en": "Be careful with that <strong class=\"target-word\">fragile</strong> vase.",
+        "exam_ko": "저 <strong class=\"target-word\">깨지기 쉬운</strong> 꽃병을 조심해."
+      },
+      {
+        "exam_en": "Their relationship is still <strong class=\"target-word\">fragile</strong> after the argument.",
+        "exam_ko": "말다툼 후 그들의 관계는 여전히 <strong class=\"target-word\">불안정하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1160,
+    "origin": "tragedy",
+    "examples": [
+      {
+        "exam_en": "\"Hamlet\" is Shakespeare's greatest <strong class=\"target-word\">tragedy</strong>.",
+        "exam_ko": "「햄릿」은 셰익스피어의 최고 <strong class=\"target-word\">비극</strong>이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">tragedy</strong> of war affects entire generations.",
+        "exam_ko": "전쟁의 <strong class=\"target-word\">비극</strong>은 전 세대에 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 1161,
+    "origin": "religion",
+    "examples": [
+      {
+        "exam_en": "Everyone has the right to freedom of <strong class=\"target-word\">religion</strong>.",
+        "exam_ko": "모든 사람은 <strong class=\"target-word\">종교</strong>의 자유를 가진다."
+      },
+      {
+        "exam_en": "The country enforces separation of <strong class=\"target-word\">religion</strong> and politics.",
+        "exam_ko": "그 나라는 <strong class=\"target-word\">종교</strong>와 정치의 분리를 시행한다."
+      }
+    ]
+  },
+  {
+    "id": 1162,
+    "origin": "joke",
+    "examples": [
+      {
+        "exam_en": "He told a dirty <strong class=\"target-word\">joke</strong> at the party.",
+        "exam_ko": "그는 파티에서 외설스러운 <strong class=\"target-word\">농담</strong>을 했다."
+      },
+      {
+        "exam_en": "That was a sick <strong class=\"target-word\">joke</strong> and it upset everyone.",
+        "exam_ko": "그건 불쾌한 <strong class=\"target-word\">농담</strong>이었고 모두를 기분 나쁘게 했다."
+      }
+    ]
+  },
+  {
+    "id": 1163,
+    "origin": "access",
+    "examples": [
+      {
+        "exam_en": "This road gives easy <strong class=\"target-word\">access</strong> to the freeway.",
+        "exam_ko": "이 길로 가면 고속도로로 <strong class=\"target-word\">접근</strong>하기 쉽다."
+      },
+      {
+        "exam_en": "Students have <strong class=\"target-word\">access</strong> to the library anytime.",
+        "exam_ko": "학생들은 언제든지 도서관에 <strong class=\"target-word\">접근</strong>할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1164,
+    "origin": "dawn",
+    "examples": [
+      {
+        "exam_en": "The birds start singing at <strong class=\"target-word\">dawn</strong>.",
+        "exam_ko": "새들은 <strong class=\"target-word\">새벽</strong>에 노래하기 시작한다."
+      },
+      {
+        "exam_en": "They worked from <strong class=\"target-word\">dawn</strong> till dark.",
+        "exam_ko": "그들은 <strong class=\"target-word\">동틀</strong> 녘부터 해질녘까지 일했다."
+      },
+      {
+        "exam_en": "Come inside; it is almost <strong class=\"target-word\">dawn</strong>.",
+        "exam_ko": "안으로 들어와, 이제 곧 <strong class=\"target-word\">새벽</strong>이야."
+      }
+    ]
+  },
+  {
+    "id": 1166,
+    "origin": "drowsy",
+    "examples": [
+      {
+        "exam_en": "I feel <strong class=\"target-word\">drowsy</strong> after a big lunch.",
+        "exam_ko": "점심을 많이 먹고 나서 <strong class=\"target-word\">졸리다</strong>."
+      },
+      {
+        "exam_en": "The medication can make you feel <strong class=\"target-word\">drowsy</strong>.",
+        "exam_ko": "그 약은 <strong class=\"target-word\">졸음</strong>을 유발할 수 있다."
+      }
+    ]
+  },
+  {
+    "id": 1167,
+    "origin": "about",
+    "examples": [
+      {
+        "exam_en": "She read a book <strong class=\"target-word\">about</strong> animals.",
+        "exam_ko": "그녀는 동물에 <strong class=\"target-word\">관한</strong> 책을 읽었다."
+      },
+      {
+        "exam_en": "They had a quarrel <strong class=\"target-word\">about</strong> money.",
+        "exam_ko": "그들은 돈에 <strong class=\"target-word\">대해</strong> 말다툼을 했다."
+      }
+    ]
+  },
+  {
+    "id": 1168,
+    "origin": "anything",
+    "examples": [
+      {
+        "exam_en": "I didn't say <strong class=\"target-word\">anything</strong> about it to him.",
+        "exam_ko": "그것에 대해서는 그에게 <strong class=\"target-word\">아무 말도</strong> 하지 않았다."
+      },
+      {
+        "exam_en": "Do you need <strong class=\"target-word\">anything</strong> else?",
+        "exam_ko": "그 밖에 <strong class=\"target-word\">무언가</strong> 필요한 것이 있습니까?"
+      }
+    ]
+  }
+]

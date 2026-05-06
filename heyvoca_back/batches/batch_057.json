@@ -1,0 +1,602 @@
+[
+  {
+    "id": 5587,
+    "word": "wire",
+    "exam_en": "copper <strong class=\"target-word\">wire</strong>",
+    "exam_ko": "<strong class=\"target-word\">동선</strong>[전선, 가시 철사]"
+  },
+  {
+    "id": 5588,
+    "word": "winter",
+    "exam_en": "a black <strong class=\"target-word\">winter</strong>",
+    "exam_ko": "눈이 내리지 않는 <strong class=\"target-word\">겨울</strong>"
+  },
+  {
+    "id": 5589,
+    "word": "winter",
+    "exam_en": "in  <strong class=\"target-word\">winter</strong>",
+    "exam_ko": "<strong class=\"target-word\">겨울에</strong>(는)"
+  },
+  {
+    "id": 5590,
+    "word": "wing",
+    "exam_en": "His <strong class=\"target-word\">wing</strong>s are sprouting.",
+    "exam_ko": "그의 <strong class=\"target-word\">날개</strong>가 자라나고 있다."
+  },
+  {
+    "id": 5591,
+    "word": "wing",
+    "exam_en": "the left <strong class=\"target-word\">wing</strong>",
+    "exam_ko": "좌[우]<strong class=\"target-word\">익</strong>, 급진[보수]파."
+  },
+  {
+    "id": 5592,
+    "word": "wine",
+    "exam_en": "a glass of <strong class=\"target-word\">wine</strong>",
+    "exam_ko": "<strong class=\"target-word\">포도주</strong> 한 잔[병]"
+  },
+  {
+    "id": 5593,
+    "word": "wine",
+    "exam_en": "green <strong class=\"target-word\">wine</strong>",
+    "exam_ko": "(양조 후 1년 미만의) 새 <strong class=\"target-word\">포도주</strong>"
+  },
+  {
+    "id": 5594,
+    "word": "window",
+    "exam_en": "at the <strong class=\"target-word\">window</strong>",
+    "exam_ko": "<strong class=\"target-word\">창가에서</strong>"
+  },
+  {
+    "id": 5595,
+    "word": "window",
+    "exam_en": "look out  the <strong class=\"target-word\">window</strong>",
+    "exam_ko": "<strong class=\"target-word\">창문</strong>에서 내다보다(※(미)에서는 of를 보통 생략함)"
+  },
+  {
+    "id": 5596,
+    "word": "wife",
+    "exam_en": "John and his <strong class=\"target-word\">wife</strong>",
+    "exam_ko": "존 <strong class=\"target-word\">부부</strong>"
+  },
+  {
+    "id": 5597,
+    "word": "wives",
+    "exam_en": "an officers <strong class=\"target-word\">wives</strong>' club",
+    "exam_ko": "장교 <strong class=\"target-word\">부인</strong> 클럽"
+  },
+  {
+    "id": 5598,
+    "word": "why",
+    "exam_en": "<strong class=\"target-word\">Why</strong> do you think so?",
+    "exam_ko": "어째서 <strong class=\"target-word\">그렇게</strong> 생각하니?"
+  },
+  {
+    "id": 5599,
+    "word": "why",
+    "exam_en": "<strong class=\"target-word\">Why</strong> wasn't he at the meeting?",
+    "exam_ko": "왜 <strong class=\"target-word\">그는</strong> 그 모임에 나가지 않았지?"
+  },
+  {
+    "id": 5600,
+    "word": "while",
+    "exam_en": "a little <strong class=\"target-word\">while</strong> later",
+    "exam_ko": "<strong class=\"target-word\">잠시</strong> 후에"
+  },
+  {
+    "id": 5601,
+    "word": "while",
+    "exam_en": "a <strong class=\"target-word\">while</strong>",
+    "exam_ko": "<strong class=\"target-word\">잠시</strong>"
+  },
+  {
+    "id": 5602,
+    "word": "which",
+    "exam_en": "<strong class=\"target-word\">Which</strong> of these do you want?",
+    "exam_ko": "<strong class=\"target-word\">이것들</strong> 중에서 어느 것을 원하니?"
+  },
+  {
+    "id": 5603,
+    "word": "which",
+    "exam_en": "Give me one of those; I don't care <strong class=\"target-word\">which</strong>.",
+    "exam_ko": "그 중 하나를 주십시오, <strong class=\"target-word\">어느 것이든</strong> 상관없습니다"
+  },
+  {
+    "id": 5604,
+    "word": "where",
+    "exam_en": "<strong class=\"target-word\">Where</strong> do you work?",
+    "exam_ko": "어디서 <strong class=\"target-word\">일하고</strong> 계십니까?"
+  },
+  {
+    "id": 5605,
+    "word": "where",
+    "exam_en": "<strong class=\"target-word\">Where</strong> am I?",
+    "exam_ko": "<strong class=\"target-word\">여기는</strong> 어디입니까?"
+  },
+  {
+    "id": 5606,
+    "word": "when",
+    "exam_en": "<strong class=\"target-word\">When</strong> did you graduate from high school?",
+    "exam_ko": "<strong class=\"target-word\">언제</strong> 고등 학교를 졸업했니?"
+  },
+  {
+    "id": 5607,
+    "word": "when",
+    "exam_en": "<strong class=\"target-word\">When</strong> did you promise to meet him?",
+    "exam_ko": "<strong class=\"target-word\">언제</strong>[몇 시에] 그와 만나기로 했습니까[그와 만날 약속을 한 것은 언제 입니까] (※when이 meet에 걸리는지 promise에 걸리는지 모호함)"
+  },
+  {
+    "id": 5608,
+    "word": "wheel",
+    "exam_en": "a driving <strong class=\"target-word\">wheel</strong>",
+    "exam_ko": "<strong class=\"target-word\">자동차의</strong> 구동륜(驅動輪)"
+  },
+  {
+    "id": 5609,
+    "word": "wheel",
+    "exam_en": "a toothed <strong class=\"target-word\">wheel</strong>",
+    "exam_ko": "<strong class=\"target-word\">톱니바퀴</strong>"
+  },
+  {
+    "id": 5610,
+    "word": "wheat",
+    "exam_en": "spring  <strong class=\"target-word\">wheat</strong>",
+    "exam_ko": "봄[겨울] <strong class=\"target-word\">밀</strong>"
+  },
+  {
+    "id": 5611,
+    "word": "wheat",
+    "exam_en": "grow <strong class=\"target-word\">wheat</strong>",
+    "exam_ko": "밀을 <strong class=\"target-word\">재배하다</strong>"
+  },
+  {
+    "id": 5612,
+    "word": "west",
+    "exam_en": "The sun set slowly in the <strong class=\"target-word\">west</strong> .",
+    "exam_ko": "태양은 천천히 서쪽으로 <strong class=\"target-word\">졌다</strong>"
+  },
+  {
+    "id": 5613,
+    "word": "west",
+    "exam_en": "The historical capital was in the <strong class=\"target-word\">west</strong> of China.",
+    "exam_ko": "그 역사적인 도시는 중국의 서쪽에 <strong class=\"target-word\">있었다</strong>."
+  },
+  {
+    "id": 5614,
+    "word": "week",
+    "exam_en": "this <strong class=\"target-word\">week</strong>",
+    "exam_ko": "금[내, 전]<strong class=\"target-word\">주</strong>(※종종 부사적으로 사용)"
+  },
+  {
+    "id": 5615,
+    "word": "week",
+    "exam_en": "a <strong class=\"target-word\">week</strong> from today",
+    "exam_ko": "<strong class=\"target-word\">내주의</strong> 오늘[일요일]"
+  },
+  {
+    "id": 5616,
+    "word": "weather",
+    "exam_en": "<strong class=\"target-word\">weather</strong> conditions",
+    "exam_ko": "<strong class=\"target-word\">기상</strong> 상황"
+  },
+  {
+    "id": 5617,
+    "word": "weather",
+    "exam_en": "unusual <strong class=\"target-word\">weather</strong>",
+    "exam_ko": "<strong class=\"target-word\">이상</strong> 기후[기상]"
+  },
+  {
+    "id": 5618,
+    "word": "weapon",
+    "exam_en": "nuclear <strong class=\"target-word\">weapon</strong>s",
+    "exam_ko": "<strong class=\"target-word\">핵무기</strong>"
+  },
+  {
+    "id": 5619,
+    "word": "deadly",
+    "exam_en": "a <strong class=\"target-word\">deadly</strong> <strong class=\"target-word\">weapon</strong>",
+    "exam_ko": "<strong class=\"target-word\">흉기</strong>"
+  },
+  {
+    "id": 5619,
+    "word": "weapon",
+    "exam_en": "a deadly <strong class=\"target-word\">weapon</strong>",
+    "exam_ko": "<strong class=\"target-word\">흉기</strong>"
+  },
+  {
+    "id": 5620,
+    "word": "we",
+    "exam_en": "If you had to stay in town <strong class=\"target-word\">we</strong> might have dinner together.",
+    "exam_ko": "당신이 도시에 머문다면 <strong class=\"target-word\">우리는</strong> 함께 저녁을 먹을 텐데요."
+  },
+  {
+    "id": 5621,
+    "word": "we",
+    "exam_en": "<strong class=\"target-word\">We</strong> Korean",
+    "exam_ko": "<strong class=\"target-word\">우리들</strong> 한국인."
+  },
+  {
+    "id": 5622,
+    "word": "way",
+    "exam_en": "the only <strong class=\"target-word\">way</strong> into the room",
+    "exam_ko": "방으로 들어가는 단 하나의 <strong class=\"target-word\">통로</strong>"
+  },
+  {
+    "id": 5623,
+    "word": "way",
+    "exam_en": "the <strong class=\"target-word\">way</strong> of the just",
+    "exam_ko": "<strong class=\"target-word\">정의의</strong> 길"
+  },
+  {
+    "id": 5624,
+    "word": "water",
+    "exam_en": "fresh <strong class=\"target-word\">water</strong>",
+    "exam_ko": "<strong class=\"target-word\">민물</strong>[바닷물]"
+  },
+  {
+    "id": 5625,
+    "word": "water",
+    "exam_en": "hard <strong class=\"target-word\">water</strong>",
+    "exam_ko": "<strong class=\"target-word\">경수</strong>[연수]"
+  },
+  {
+    "id": 5626,
+    "word": "wall",
+    "exam_en": "a composite <strong class=\"target-word\">wall</strong>",
+    "exam_ko": "<strong class=\"target-word\">조립식</strong> 벽"
+  },
+  {
+    "id": 5627,
+    "word": "wall",
+    "exam_en": "a plaster  <strong class=\"target-word\">wall</strong>",
+    "exam_ko": "<strong class=\"target-word\">회반죽</strong>[흙] 벽"
+  },
+  {
+    "id": 5628,
+    "word": "wage",
+    "exam_en": "at <strong class=\"target-word\">wage</strong>s of $40 a week",
+    "exam_ko": "주당 40달러의 <strong class=\"target-word\">급여</strong>로"
+  },
+  {
+    "id": 5629,
+    "word": "violence",
+    "exam_en": "an act of <strong class=\"target-word\">violence</strong>",
+    "exam_ko": "<strong class=\"target-word\">폭력</strong> 행위"
+  },
+  {
+    "id": 5630,
+    "word": "violence",
+    "exam_en": "domestic <strong class=\"target-word\">violence</strong>",
+    "exam_ko": "<strong class=\"target-word\">가정</strong> 폭력"
+  },
+  {
+    "id": 5631,
+    "word": "violate",
+    "exam_en": "<strong class=\"target-word\">violate</strong> an oath",
+    "exam_ko": "맹세[약속]를 <strong class=\"target-word\">어기다</strong>."
+  },
+  {
+    "id": 5632,
+    "word": "violate",
+    "exam_en": "<strong class=\"target-word\">violate</strong> the dead",
+    "exam_ko": "죽은 이를 <strong class=\"target-word\">모독하다</strong>."
+  },
+  {
+    "id": 5633,
+    "word": "village",
+    "exam_en": "The whole <strong class=\"target-word\">village</strong> was out to welcome him.",
+    "exam_ko": "온 마을 사람이 나와서 그를 <strong class=\"target-word\">환영했다</strong>."
+  },
+  {
+    "id": 5634,
+    "word": "village",
+    "exam_en": "a prairie dog <strong class=\"target-word\">village</strong>",
+    "exam_ko": "<strong class=\"target-word\">프레리</strong> 독의 군서(群棲)."
+  },
+  {
+    "id": 5635,
+    "word": "victory",
+    "exam_en": "a narrow <strong class=\"target-word\">victory</strong>",
+    "exam_ko": "<strong class=\"target-word\">신승</strong>"
+  },
+  {
+    "id": 5636,
+    "word": "victory",
+    "exam_en": "a resounding <strong class=\"target-word\">victory</strong>",
+    "exam_ko": "<strong class=\"target-word\">대승리</strong>"
+  },
+  {
+    "id": 5637,
+    "word": "victim",
+    "exam_en": "<strong class=\"target-word\">victim</strong>s of the storm",
+    "exam_ko": "폭풍의 <strong class=\"target-word\">피해자</strong>"
+  },
+  {
+    "id": 5638,
+    "word": "victim",
+    "exam_en": "war <strong class=\"target-word\">victim</strong>s",
+    "exam_ko": "전쟁의 <strong class=\"target-word\">피해자</strong>"
+  },
+  {
+    "id": 5639,
+    "word": "vicious",
+    "exam_en": "<strong class=\"target-word\">vicious</strong> habits",
+    "exam_ko": "<strong class=\"target-word\">악습</strong>"
+  },
+  {
+    "id": 5640,
+    "word": "vicious",
+    "exam_en": "a <strong class=\"target-word\">vicious</strong> fraud",
+    "exam_ko": "<strong class=\"target-word\">악질적인</strong> 사기"
+  },
+  {
+    "id": 5641,
+    "word": "veto",
+    "exam_en": "exercise one's <strong class=\"target-word\">veto</strong>",
+    "exam_ko": "거부권을 <strong class=\"target-word\">행사하다</strong>."
+  },
+  {
+    "id": 5642,
+    "word": "veto",
+    "exam_en": "put a <strong class=\"target-word\">veto</strong> on his entrance",
+    "exam_ko": "그의 입장을 <strong class=\"target-word\">금지하다</strong>."
+  },
+  {
+    "id": 5643,
+    "word": "version",
+    "exam_en": "the English <strong class=\"target-word\">version</strong> of the document",
+    "exam_ko": "그 문서의 <strong class=\"target-word\">영어</strong>판"
+  },
+  {
+    "id": 5644,
+    "word": "version",
+    "exam_en": "the Authorized <strong class=\"target-word\">Version</strong>",
+    "exam_ko": "<strong class=\"target-word\">흠정역</strong> 성서"
+  },
+  {
+    "id": 5645,
+    "word": "vehicle",
+    "exam_en": "army <strong class=\"target-word\">vehicle</strong>s",
+    "exam_ko": "<strong class=\"target-word\">군용차</strong>"
+  },
+  {
+    "id": 5646,
+    "word": "vehicle",
+    "exam_en": "a passenger <strong class=\"target-word\">vehicle</strong>",
+    "exam_ko": "<strong class=\"target-word\">승용차</strong>"
+  },
+  {
+    "id": 5647,
+    "word": "vegetable",
+    "exam_en": "garden <strong class=\"target-word\">vegetable</strong>s",
+    "exam_ko": "정원 <strong class=\"target-word\">야채</strong>"
+  },
+  {
+    "id": 5648,
+    "word": "vegetable",
+    "exam_en": "put in <strong class=\"target-word\">vegetable</strong>s",
+    "exam_ko": "<strong class=\"target-word\">야채</strong>의 모종을 심다"
+  },
+  {
+    "id": 5649,
+    "word": "us",
+    "exam_en": "He took <strong class=\"target-word\">us</strong> to the zoo.",
+    "exam_ko": "그는 우리를 동물원에 데리고 <strong class=\"target-word\">갔었다</strong>"
+  },
+  {
+    "id": 5650,
+    "word": "us",
+    "exam_en": "Will you come with <strong class=\"target-word\">us</strong>?",
+    "exam_ko": "<strong class=\"target-word\">우리와</strong> 같이 가지 않겠어요?"
+  },
+  {
+    "id": 5651,
+    "word": "up",
+    "exam_en": "the third shelf <strong class=\"target-word\">up</strong>",
+    "exam_ko": "<strong class=\"target-word\">아래에서</strong> 세 번째 선반"
+  },
+  {
+    "id": 5652,
+    "word": "up",
+    "exam_en": "fly 30,000 feet <strong class=\"target-word\">up</strong>",
+    "exam_ko": "고도 3만 피트를 <strong class=\"target-word\">비행하다</strong>"
+  },
+  {
+    "id": 5653,
+    "word": "until",
+    "exam_en": "work from 10 a.m. <strong class=\"target-word\">until</strong> 7 p.m.",
+    "exam_ko": "오전 10시에서 오후 7시까지 일하다[<strong class=\"target-word\">계속하다</strong>](※from A until B는 B시점을 포함하는지 포함하지 않는 지가 애매하여, B를 포함함을 명확히 할 경우에 (미)에서는 (from) A through B를 씀)"
+  },
+  {
+    "id": 5654,
+    "word": "until",
+    "exam_en": "<strong class=\"target-word\">until</strong> after dark",
+    "exam_ko": "날이 완전히 어두워져 버릴 때[전후]까지(※전치사구나 부사(구)가 until의 <strong class=\"target-word\">목적어</strong> 되는 경우가 있음)"
+  },
+  {
+    "id": 5655,
+    "word": "universe",
+    "exam_en": "the origin of the <strong class=\"target-word\">universe</strong>",
+    "exam_ko": "<strong class=\"target-word\">우주의</strong> 기원"
+  },
+  {
+    "id": 5656,
+    "word": "universe",
+    "exam_en": "reach a new <strong class=\"target-word\">universe</strong>",
+    "exam_ko": "새 항성에 <strong class=\"target-word\">도달하다</strong>."
+  },
+  {
+    "id": 5657,
+    "word": "under",
+    "exam_en": "a field <strong class=\"target-word\">under</strong> wheat",
+    "exam_ko": "<strong class=\"target-word\">밀을</strong> 심은[풀에 뒤덮인] 밭"
+  },
+  {
+    "id": 5658,
+    "word": "under",
+    "exam_en": "a house <strong class=\"target-word\">under</strong> a hill",
+    "exam_ko": "<strong class=\"target-word\">언덕</strong> 기슭의 집"
+  },
+  {
+    "id": 5659,
+    "word": "two",
+    "exam_en": "<strong class=\"target-word\">Two</strong> and <strong class=\"target-word\">two</strong> make four.",
+    "exam_ko": "둘 <strong class=\"target-word\">더하기</strong> 둘은 넷."
+  },
+  {
+    "id": 5660,
+    "word": "two",
+    "exam_en": "<strong class=\"target-word\">two</strong> and <strong class=\"target-word\">two</strong>",
+    "exam_ko": "2명[2개]씩, <strong class=\"target-word\">짝지어</strong>, 쌍쌍으로"
+  },
+  {
+    "id": 5661,
+    "word": "twice",
+    "exam_en": "once or <strong class=\"target-word\">twice</strong>",
+    "exam_ko": "<strong class=\"target-word\">한두</strong> 번(cf. 【어법】 ⑵)"
+  },
+  {
+    "id": 5662,
+    "word": "twice",
+    "exam_en": "<strong class=\"target-word\">twice</strong> a month",
+    "exam_ko": "한 <strong class=\"target-word\">달에</strong> 두 차례"
+  },
+  {
+    "id": 5663,
+    "word": "twenties",
+    "exam_en": "He is still in his <strong class=\"target-word\">twenties</strong>.",
+    "exam_ko": "그는 나이가 아직 <strong class=\"target-word\">20대다</strong>."
+  },
+  {
+    "id": 5664,
+    "word": "twelve",
+    "exam_en": "in <strong class=\"target-word\">twelve</strong>s",
+    "exam_ko": "<strong class=\"target-word\">열두</strong>판의"
+  },
+  {
+    "id": 5665,
+    "word": "tube",
+    "exam_en": "an exhaust <strong class=\"target-word\">tube</strong>",
+    "exam_ko": "<strong class=\"target-word\">배기관</strong>"
+  },
+  {
+    "id": 5666,
+    "word": "tube",
+    "exam_en": "an iron <strong class=\"target-word\">tube</strong>",
+    "exam_ko": "<strong class=\"target-word\">철관</strong>"
+  },
+  {
+    "id": 5667,
+    "word": "truck",
+    "exam_en": "load a <strong class=\"target-word\">truck</strong>",
+    "exam_ko": "트럭에 화물을 싣다[에서 화물을 <strong class=\"target-word\">내리다</strong>]."
+  },
+  {
+    "id": 5668,
+    "word": "truck",
+    "exam_en": "a long <strong class=\"target-word\">truck</strong> loaded with bricks",
+    "exam_ko": "<strong class=\"target-word\">벽돌을</strong> 실은 긴 무개 화차"
+  },
+  {
+    "id": 5669,
+    "word": "troop",
+    "exam_en": "a <strong class=\"target-word\">troop</strong> of hunters",
+    "exam_ko": "한 <strong class=\"target-word\">떼의</strong> 사냥꾼[기수]"
+  },
+  {
+    "id": 5670,
+    "word": "troop",
+    "exam_en": "in <strong class=\"target-word\">troop</strong>s",
+    "exam_ko": "<strong class=\"target-word\">떼지어</strong>"
+  },
+  {
+    "id": 5671,
+    "word": "trip",
+    "exam_en": "a pleasure <strong class=\"target-word\">trip</strong>",
+    "exam_ko": "<strong class=\"target-word\">관광</strong> 여행"
+  },
+  {
+    "id": 5672,
+    "word": "trip",
+    "exam_en": "a abroad <strong class=\"target-word\">trip</strong>",
+    "exam_ko": "<strong class=\"target-word\">해외</strong> 여행"
+  },
+  {
+    "id": 5673,
+    "word": "trick",
+    "exam_en": "perform card <strong class=\"target-word\">trick</strong>s",
+    "exam_ko": "카드 <strong class=\"target-word\">요술</strong>을 부리다"
+  },
+  {
+    "id": 5674,
+    "word": "trick",
+    "exam_en": "He's learned the <strong class=\"target-word\">trick</strong> of riding a bicycle with no hands.",
+    "exam_ko": "그는 손을 떼고 자전거를 타는 재주를 <strong class=\"target-word\">배웠다</strong>."
+  },
+  {
+    "id": 5675,
+    "word": "tribe",
+    "exam_en": "a nomadic <strong class=\"target-word\">tribe</strong>",
+    "exam_ko": "<strong class=\"target-word\">유목민</strong>"
+  },
+  {
+    "id": 5676,
+    "word": "tribe",
+    "exam_en": "the Bantu <strong class=\"target-word\">tribe</strong>s",
+    "exam_ko": "<strong class=\"target-word\">반투족</strong>"
+  },
+  {
+    "id": 5677,
+    "word": "trial",
+    "exam_en": "a criminal <strong class=\"target-word\">trial</strong>",
+    "exam_ko": "<strong class=\"target-word\">형사</strong> 재판"
+  },
+  {
+    "id": 5678,
+    "word": "trial",
+    "exam_en": "a case under <strong class=\"target-word\">trial</strong>",
+    "exam_ko": "<strong class=\"target-word\">심리</strong> 중인 사건"
+  },
+  {
+    "id": 5679,
+    "word": "tree",
+    "exam_en": "an apple <strong class=\"target-word\">tree</strong>",
+    "exam_ko": "<strong class=\"target-word\">사과</strong>[바나나] 나무"
+  },
+  {
+    "id": 5680,
+    "word": "tree",
+    "exam_en": "the <strong class=\"target-word\">tree</strong> of Buddha",
+    "exam_ko": "<strong class=\"target-word\">보리수</strong>"
+  },
+  {
+    "id": 5681,
+    "word": "treaty",
+    "exam_en": "a secret <strong class=\"target-word\">treaty</strong>",
+    "exam_ko": "<strong class=\"target-word\">비밀</strong> 협정"
+  },
+  {
+    "id": 5682,
+    "word": "treaty",
+    "exam_en": "sign a <strong class=\"target-word\">treaty</strong>",
+    "exam_ko": "조약을 조인하다[<strong class=\"target-word\">추진하다</strong>]"
+  },
+  {
+    "id": 5683,
+    "word": "treatment",
+    "exam_en": "special  <strong class=\"target-word\">treatment</strong>",
+    "exam_ko": "<strong class=\"target-word\">특별</strong> 대우"
+  },
+  {
+    "id": 5684,
+    "word": "treatment",
+    "exam_en": "have unfair <strong class=\"target-word\">treatment</strong>",
+    "exam_ko": "불공평한 취급을 <strong class=\"target-word\">당하다</strong>"
+  },
+  {
+    "id": 5685,
+    "word": "treason",
+    "exam_en": "high <strong class=\"target-word\">treason</strong>",
+    "exam_ko": "<strong class=\"target-word\">대역죄</strong>; (영) 국왕[여왕]에 대한 살해 행위"
+  }
+]

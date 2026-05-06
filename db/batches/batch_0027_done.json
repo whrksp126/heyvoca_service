@@ -1,0 +1,282 @@
+[
+  {
+    "id": 524,
+    "origin": "penetrate",
+    "examples": [
+      {
+        "exam_en": "The bullet failed to <strong class=\"target-word\">penetrate</strong> the armor.",
+        "exam_ko": "총알은 갑옷을 <strong class=\"target-word\">관통</strong>하지 못했다."
+      },
+      {
+        "exam_en": "The spotlights <strong class=\"target-word\">penetrated</strong> the darkness.",
+        "exam_ko": "스포트라이트가 어둠을 <strong class=\"target-word\">꿰뚫었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 525,
+    "origin": "multiply",
+    "examples": [
+      {
+        "exam_en": "You need to <strong class=\"target-word\">multiply</strong> 4 by 6.",
+        "exam_ko": "4에 6을 <strong class=\"target-word\">곱해야</strong> 한다."
+      },
+      {
+        "exam_en": "6 <strong class=\"target-word\">multiplied</strong> by 4 is 24.",
+        "exam_ko": "6에 4를 <strong class=\"target-word\">곱하면</strong> 24다."
+      }
+    ]
+  },
+  {
+    "id": 526,
+    "origin": "stuff",
+    "examples": [
+      {
+        "exam_en": "The house was built of poor <strong class=\"target-word\">stuff</strong>.",
+        "exam_ko": "그 집은 좋지 않은 <strong class=\"target-word\">재료</strong>로 지어졌다."
+      },
+      {
+        "exam_en": "What <strong class=\"target-word\">stuff</strong> is this made of?",
+        "exam_ko": "이것은 어떤 <strong class=\"target-word\">물질</strong>로 만들어졌습니까?"
+      }
+    ]
+  },
+  {
+    "id": 527,
+    "origin": "exert",
+    "examples": [
+      {
+        "exam_en": "He still <strong class=\"target-word\">exerts</strong> a strong influence on politics.",
+        "exam_ko": "그는 여전히 정계에 강한 영향력을 <strong class=\"target-word\">발휘하고</strong> 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">exerted</strong> sovereign authority over the region.",
+        "exam_ko": "그녀는 그 지역에 주권을 <strong class=\"target-word\">행사했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 528,
+    "origin": "abuse",
+    "examples": [
+      {
+        "exam_en": "The official <strong class=\"target-word\">abused</strong> his authority.",
+        "exam_ko": "그 관리는 직권을 <strong class=\"target-word\">남용했다</strong>."
+      },
+      {
+        "exam_en": "He verbally <strong class=\"target-word\">abused</strong> her in public.",
+        "exam_ko": "그는 공개적으로 그녀를 언어적으로 <strong class=\"target-word\">모욕했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 529,
+    "origin": "compel",
+    "examples": [
+      {
+        "exam_en": "My father <strong class=\"target-word\">compelled</strong> us to stay indoors.",
+        "exam_ko": "아버지는 우리가 집에 있도록 <strong class=\"target-word\">강요했다</strong>."
+      },
+      {
+        "exam_en": "The law <strong class=\"target-word\">compels</strong> everyone to pay taxes.",
+        "exam_ko": "법은 모든 사람에게 세금을 납부하도록 <strong class=\"target-word\">강제한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 530,
+    "origin": "presume",
+    "examples": [
+      {
+        "exam_en": "It is <strong class=\"target-word\">presumed</strong> that he was drunk.",
+        "exam_ko": "그는 취해 있었다고 <strong class=\"target-word\">추정된다</strong>."
+      },
+      {
+        "exam_en": "I will not <strong class=\"target-word\">presume</strong> to give an opinion.",
+        "exam_ko": "감히 의견을 <strong class=\"target-word\">내세우지</strong> 않겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 531,
+    "origin": "scratch",
+    "examples": [
+      {
+        "exam_en": "The cat may <strong class=\"target-word\">scratch</strong> you.",
+        "exam_ko": "고양이가 당신을 <strong class=\"target-word\">할퀼지</strong> 모른다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">scratched</strong> her hand on the fence.",
+        "exam_ko": "그녀는 울타리에 손을 <strong class=\"target-word\">긁혔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 532,
+    "origin": "boil",
+    "examples": [
+      {
+        "exam_en": "Water <strong class=\"target-word\">boils</strong> at 100 degrees centigrade.",
+        "exam_ko": "물은 섭씨 100도에서 <strong class=\"target-word\">끓는다</strong>."
+      },
+      {
+        "exam_en": "The coffee in the pot <strong class=\"target-word\">boiled</strong> up.",
+        "exam_ko": "포트의 커피가 <strong class=\"target-word\">끓어올랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 533,
+    "origin": "exhaust",
+    "examples": [
+      {
+        "exam_en": "The drought <strong class=\"target-word\">exhausted</strong> the water supply.",
+        "exam_ko": "가뭄으로 저수량이 <strong class=\"target-word\">바닥났다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">exhausted</strong> all their resources quickly.",
+        "exam_ko": "그들은 모든 자금을 빠르게 <strong class=\"target-word\">다 써버렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 534,
+    "origin": "snatch",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">snatch</strong> her handbag.",
+        "exam_ko": "그는 그녀의 핸드백을 <strong class=\"target-word\">잡아채려</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">snatched</strong> the ball before it rolled away.",
+        "exam_ko": "그녀는 공이 굴러가기 전에 공을 <strong class=\"target-word\">낚아챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 535,
+    "origin": "motivate",
+    "examples": [
+      {
+        "exam_en": "I don't know what <strong class=\"target-word\">motivated</strong> me to come here.",
+        "exam_ko": "무슨 이유로 여기에 왔는지 나도 <strong class=\"target-word\">알 수 없다</strong>."
+      },
+      {
+        "exam_en": "The lie was <strong class=\"target-word\">motivated</strong> by fear.",
+        "exam_ko": "그 거짓말은 공포심에서 <strong class=\"target-word\">비롯된 것</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 536,
+    "origin": "inhibit",
+    "examples": [
+      {
+        "exam_en": "Stress can <strong class=\"target-word\">inhibit</strong> brain function.",
+        "exam_ko": "스트레스는 두뇌 작용을 <strong class=\"target-word\">방해할</strong> 수 있다."
+      },
+      {
+        "exam_en": "Pollution <strong class=\"target-word\">inhibits</strong> plant growth in the area.",
+        "exam_ko": "오염은 그 지역의 식물 성장을 <strong class=\"target-word\">억제한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 537,
+    "origin": "prevail",
+    "examples": [
+      {
+        "exam_en": "Hatred <strong class=\"target-word\">prevails</strong> among them.",
+        "exam_ko": "그들 사이에는 증오심이 <strong class=\"target-word\">팽배해</strong> 있다."
+      },
+      {
+        "exam_en": "The belief that a recession is coming <strong class=\"target-word\">prevails</strong>.",
+        "exam_ko": "불경기가 다가온다는 믿음이 <strong class=\"target-word\">널리 퍼져 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 538,
+    "origin": "rate",
+    "examples": [
+      {
+        "exam_en": "The discount <strong class=\"target-word\">rate</strong> dropped this month.",
+        "exam_ko": "이번 달 할인 <strong class=\"target-word\">율</strong>이 떨어졌다."
+      },
+      {
+        "exam_en": "The birth <strong class=\"target-word\">rate</strong> has been declining for years.",
+        "exam_ko": "출생 <strong class=\"target-word\">률</strong>이 수년째 감소하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 539,
+    "origin": "garden",
+    "examples": [
+      {
+        "exam_en": "She grows vegetables in her kitchen <strong class=\"target-word\">garden</strong>.",
+        "exam_ko": "그녀는 가정용 채소 <strong class=\"target-word\">밭</strong>에서 채소를 키운다."
+      },
+      {
+        "exam_en": "They walked through the rose <strong class=\"target-word\">garden</strong>.",
+        "exam_ko": "그들은 장미 <strong class=\"target-word\">정원</strong>을 거닐었다."
+      }
+    ]
+  },
+  {
+    "id": 540,
+    "origin": "restaurant",
+    "examples": [
+      {
+        "exam_en": "We ate at a fast-food <strong class=\"target-word\">restaurant</strong>.",
+        "exam_ko": "우리는 패스트푸드 <strong class=\"target-word\">식당</strong>에서 먹었다."
+      },
+      {
+        "exam_en": "They met at a <strong class=\"target-word\">restaurant</strong> downtown.",
+        "exam_ko": "그들은 시내 <strong class=\"target-word\">레스토랑</strong>에서 만났다."
+      }
+    ]
+  },
+  {
+    "id": 541,
+    "origin": "chef",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">chef</strong> prepared a special dish today.",
+        "exam_ko": "<strong class=\"target-word\">셰프</strong>가 오늘의 스페셜 요리를 준비했다."
+      },
+      {
+        "exam_en": "She trained as a <strong class=\"target-word\">chef</strong> in Paris.",
+        "exam_ko": "그녀는 파리에서 <strong class=\"target-word\">요리사</strong>로 훈련받았다."
+      }
+    ]
+  },
+  {
+    "id": 542,
+    "origin": "dish",
+    "examples": [
+      {
+        "exam_en": "He served the salad on a wooden <strong class=\"target-word\">dish</strong>.",
+        "exam_ko": "그는 나무 <strong class=\"target-word\">접시</strong>에 샐러드를 담았다."
+      },
+      {
+        "exam_en": "This vegetable <strong class=\"target-word\">dish</strong> is my favorite.",
+        "exam_ko": "이 채소 <strong class=\"target-word\">요리</strong>는 내가 가장 좋아하는 것이다."
+      }
+    ]
+  },
+  {
+    "id": 543,
+    "origin": "glass",
+    "examples": [
+      {
+        "exam_en": "The window was made of frosted <strong class=\"target-word\">glass</strong>.",
+        "exam_ko": "창문은 불투명 <strong class=\"target-word\">유리</strong>로 만들어졌다."
+      },
+      {
+        "exam_en": "He replaced two panes of <strong class=\"target-word\">glass</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">유리</strong> 두 장을 교체했다."
+      }
+    ]
+  }
+]

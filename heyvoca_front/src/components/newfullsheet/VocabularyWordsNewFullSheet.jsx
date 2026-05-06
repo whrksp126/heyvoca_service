@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { CaretLeft, Plus, Trash, CaretDown, CaretUp } from '@phosphor-icons/react';
+import { CaretLeft, Plus, Trash, CaretDown, CaretUp, Timer } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion, AnimatePresence } from 'framer-motion';
 // import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
-import { getTextSound } from '../../utils/common';
+import { getTextSound, isWordOverdue } from '../../utils/common';
 import UpdateVocabularyWordsNewFullSheet from './UpdateVocabularyWordsNewFullSheet';
 import MemorizationStatus from "../common/MemorizationStatus";
 // import DeleteWordNewBottomSheet from '../newBottomSheet/DeleteWordNewBottomSheet';
@@ -276,9 +276,11 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   }
 
 
+  const isPurchasedBook = vocabularySheet?.vocaBookStoreId != null;
+
   const handleAddClick = () => {
     vibrate({ duration: 5 });
-    // showWordSetBottomSheet({vocabularyId: vocabularySheet.id});
+    if (isPurchasedBook) return;
     pushNewBottomSheet(AddWordNewBottomSheet, { vocabularyId: vocabularySheet.id }, {
       smFull: true,
       closeOnBackdropClick: true
@@ -313,6 +315,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header - h-58.5px matches Figma */}
       <div
+        data-page-header
         style={{
           position: 'relative',
           display: 'flex',
@@ -358,25 +361,27 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         <div className="flex items-center gap-[10px]">
 
           <div className="relative">
-            <motion.button
-              style={{
-                width: '20px',
-                height: '20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--primary-main-600)'
-              }}
-              variants={buttonVariants}
-              whileTap="tap"
-              onClick={handleAddClick}
-              aria-label="새 단어 추가"
-            >
-              <Plus size={20} weight="light" />
-            </motion.button>
+            {!isPurchasedBook && (
+              <motion.button
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--primary-main-600)'
+                }}
+                variants={buttonVariants}
+                whileTap="tap"
+                onClick={handleAddClick}
+                aria-label="새 단어 추가"
+              >
+                <Plus size={20} weight="light" />
+              </motion.button>
+            )}
 
             {/* Tooltip when empty - Positioned relative to the 20x20 button container */}
-            {vocabularySheet?.words?.length === 0 && (
+            {!isPurchasedBook && vocabularySheet?.words?.length === 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -569,37 +574,45 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               marginBottom: '20px',
               fontFamily: "'Pretendard Variable', sans-serif"
             }}>
-              <p style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}`, margin: 0 }}>아직 추가된 단어가 없어요!</p>
-              <p style={{ margin: 0 }}>
-                <span style={{ fontWeight: 700, color: 'var(--primary-main-500)' }}>단어</span>
-                <span style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}` }}>를 추가해보세요 🤗</span>
-              </p>
+              {isPurchasedBook ? (
+                <p style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}`, margin: 0 }}>이 단어장에는 단어가 없어요.</p>
+              ) : (
+                <>
+                  <p style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}`, margin: 0 }}>아직 추가된 단어가 없어요!</p>
+                  <p style={{ margin: 0 }}>
+                    <span style={{ fontWeight: 700, color: 'var(--primary-main-500)' }}>단어</span>
+                    <span style={{ fontWeight: 400, color: `${isDark ? 'var(--layout-white)' : 'var(--layout-black)'}` }}>를 추가해보세요 🤗</span>
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Add Button - 136x40, rounded-8px */}
-            <motion.button
-              onClick={handleAddClick}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '5px',
-                width: '136px',
-                height: '40px',
-                backgroundColor: 'var(--primary-main-600)',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              <Plus size={16} color={isDark ? 'var(--layout-black)' : 'var(--layout-white)'} weight="light" />
-              <span
-                className="text-[14px] font-[700] text-layout-white dark:text-layout-black"
+            {!isPurchasedBook && (
+              <motion.button
+                onClick={handleAddClick}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '5px',
+                  width: '136px',
+                  height: '40px',
+                  backgroundColor: 'var(--primary-main-600)',
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
               >
-                단어 추가하기
-              </span>
-            </motion.button>
+                <Plus size={16} color={isDark ? 'var(--layout-black)' : 'var(--layout-white)'} weight="light" />
+                <span
+                  className="text-[14px] font-[700] text-layout-white dark:text-layout-black"
+                >
+                  단어 추가하기
+                </span>
+              </motion.button>
+            )}
           </div>
         ) : (
           <>
@@ -609,18 +622,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             )}
 
             {displayedWords.map((item, localIndex) => {
-
+              const overdue = isWordOverdue(item);
 
               return (
                 <div
                   key={item.id}
-                  className="
+                  className={`
                     flex flex-col gap-[10px] items-start
                     p-[20px] mx-[16px] mb-[10px]
                     rounded-[12px]
-                    bg-layout-gray-50
+                    ${overdue ? 'bg-status-error-100' : 'bg-layout-gray-50'}
                     cursor-pointer
-                  "
+                  `}
                   onClick={() => handleCardClick(item.id)}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -635,21 +648,36 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           tracking-[-0.32px]
                           cursor-pointer relative
                           overflow-hidden
-                          break-words 
+                          break-words
                         "
                       >
                         {item.origin}
                       </h3>
                     </div>
 
-                    <MemorizationStatus
-                      repetition={item.sm2?.repetition ?? item.repetition ?? 0}
-                      interval={item.sm2?.interval ?? item.interval ?? 0}
-                      ef={item.sm2?.ef ?? item.ef ?? 2.5}
-                      nextReview={item.sm2?.nextReview ?? item.nextReview}
-                      wordId={item.id}
-                      useRandomMessages={false}
-                    />
+                    <div className="flex items-center gap-[5px] shrink-0">
+                      {overdue && (
+                        <div
+                          className="
+                            flex items-center justify-center
+                            w-[16px] h-[16px]
+                            bg-status-error-500
+                            rounded-full
+                          "
+                        >
+                          <Timer size={10} weight="fill" className="text-white" />
+                        </div>
+                      )}
+                      <MemorizationStatus
+                        hideOverdue
+                        repetition={item.sm2?.repetition ?? item.repetition ?? 0}
+                        interval={item.sm2?.interval ?? item.interval ?? 0}
+                        ef={item.sm2?.ef ?? item.ef ?? 2.5}
+                        nextReview={item.sm2?.nextReview ?? item.nextReview}
+                        wordId={item.id}
+                        useRandomMessages={false}
+                      />
+                    </div>
                   </div>
 
                   <div className="flex flex-wrap w-full">

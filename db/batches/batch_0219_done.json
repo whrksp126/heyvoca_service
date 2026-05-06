@@ -1,0 +1,266 @@
+[
+  {
+    "id": 5070,
+    "origin": "scholar",
+    "examples": [
+      {
+        "exam_en": "She became a respected classical <strong class=\"target-word\">scholar</strong>.",
+        "exam_ko": "그녀는 존경받는 고전 <strong class=\"target-word\">학자</strong>가 되었다."
+      },
+      {
+        "exam_en": "He is a leading Milton <strong class=\"target-word\">scholar</strong>.",
+        "exam_ko": "그는 저명한 밀턴 <strong class=\"target-word\">연구가</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5071,
+    "origin": "clerk",
+    "examples": [
+      {
+        "exam_en": "She works as a bank <strong class=\"target-word\">clerk</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">은행원</strong>으로 일한다."
+      }
+    ]
+  },
+  {
+    "id": 5074,
+    "origin": "leaf",
+    "examples": [
+      {
+        "exam_en": "The dead <strong class=\"target-word\">leaves</strong> covered the ground.",
+        "exam_ko": "<strong class=\"target-word\">낙엽</strong>이 땅을 뒤덮었다."
+      },
+      {
+        "exam_en": "She pressed a dry <strong class=\"target-word\">leaf</strong> in the book.",
+        "exam_ko": "그녀는 책에 마른 <strong class=\"target-word\">잎</strong>을 눌러 두었다."
+      }
+    ]
+  },
+  {
+    "id": 5077,
+    "origin": "pet",
+    "examples": [
+      {
+        "exam_en": "They keep a <strong class=\"target-word\">pet</strong> dog at home.",
+        "exam_ko": "그들은 집에서 <strong class=\"target-word\">애완</strong>견을 기른다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">petted</strong> the cat gently.",
+        "exam_ko": "그는 고양이를 부드럽게 <strong class=\"target-word\">쓰다듬었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5078,
+    "origin": "newspaper",
+    "examples": [
+      {
+        "exam_en": "He reads a daily <strong class=\"target-word\">newspaper</strong> every morning.",
+        "exam_ko": "그는 매일 아침 일간 <strong class=\"target-word\">신문</strong>을 읽는다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">newspaper</strong> article covered the election results.",
+        "exam_ko": "<strong class=\"target-word\">신문</strong> 기사가 선거 결과를 다루었다."
+      }
+    ]
+  },
+  {
+    "id": 5079,
+    "origin": "daytime",
+    "examples": [
+      {
+        "exam_en": "Most flights depart during the <strong class=\"target-word\">daytime</strong>.",
+        "exam_ko": "대부분의 항공편은 <strong class=\"target-word\">낮</strong> 동안 출발한다."
+      },
+      {
+        "exam_en": "She prefers to work in the <strong class=\"target-word\">daytime</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">주간</strong>에 일하는 것을 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 5080,
+    "origin": "doll",
+    "examples": [
+      {
+        "exam_en": "The child loves to play with her <strong class=\"target-word\">doll</strong>.",
+        "exam_ko": "아이는 자신의 <strong class=\"target-word\">인형</strong>을 가지고 노는 것을 좋아한다."
+      },
+      {
+        "exam_en": "She received a rag <strong class=\"target-word\">doll</strong> as a gift.",
+        "exam_ko": "그녀는 선물로 헝겊 <strong class=\"target-word\">인형</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 5081,
+    "origin": "weekend",
+    "examples": [
+      {
+        "exam_en": "They took a long <strong class=\"target-word\">weekend</strong> trip to the mountains.",
+        "exam_ko": "그들은 긴 <strong class=\"target-word\">주말</strong>을 이용해 산으로 여행을 갔다."
+      },
+      {
+        "exam_en": "What are you doing this <strong class=\"target-word\">weekend</strong>?",
+        "exam_ko": "이번 <strong class=\"target-word\">주말</strong>에 무엇을 할 생각이니?"
+      }
+    ]
+  },
+  {
+    "id": 5082,
+    "origin": "subway",
+    "examples": [
+      {
+        "exam_en": "She takes the <strong class=\"target-word\">subway</strong> to work every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">지하철</strong>을 타고 출근한다."
+      },
+      {
+        "exam_en": "He got on the <strong class=\"target-word\">subway</strong> at Central Station.",
+        "exam_ko": "그는 중앙역에서 <strong class=\"target-word\">지하철</strong>을 탔다."
+      }
+    ]
+  },
+  {
+    "id": 5085,
+    "origin": "chicken",
+    "examples": [
+      {
+        "exam_en": "She grilled a whole <strong class=\"target-word\">chicken</strong> for dinner.",
+        "exam_ko": "그녀는 저녁으로 닭 한 마리를 통째로 <strong class=\"target-word\">구웠다</strong>."
+      },
+      {
+        "exam_en": "Don't count your <strong class=\"target-word\">chickens</strong> before they hatch.",
+        "exam_ko": "김칫국부터 마시지 말라는 말처럼, 아직 <strong class=\"target-word\">닭</strong>이 부화하기 전에 세지 마라."
+      }
+    ]
+  },
+  {
+    "id": 5087,
+    "origin": "piano",
+    "examples": [
+      {
+        "exam_en": "They bought a grand <strong class=\"target-word\">piano</strong> for the concert hall.",
+        "exam_ko": "그들은 공연장을 위해 그랜드 <strong class=\"target-word\">피아노</strong>를 구입했다."
+      },
+      {
+        "exam_en": "She takes <strong class=\"target-word\">piano</strong> lessons twice a week.",
+        "exam_ko": "그녀는 일주일에 두 번 <strong class=\"target-word\">피아노</strong> 레슨을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 5088,
+    "origin": "class",
+    "examples": [
+      {
+        "exam_en": "He belongs to a <strong class=\"target-word\">class</strong> of dedicated readers.",
+        "exam_ko": "그는 열성적인 독자 <strong class=\"target-word\">계층</strong>에 속한다."
+      },
+      {
+        "exam_en": "The professor addressed an intelligent <strong class=\"target-word\">class</strong> of students.",
+        "exam_ko": "교수는 지적 수준이 높은 학생 <strong class=\"target-word\">집단</strong>을 가르쳤다."
+      }
+    ]
+  },
+  {
+    "id": 5089,
+    "origin": "juice",
+    "examples": [
+      {
+        "exam_en": "She drank a glass of apple <strong class=\"target-word\">juice</strong> at breakfast.",
+        "exam_ko": "그녀는 아침에 사과 <strong class=\"target-word\">주스</strong> 한 잔을 마셨다."
+      },
+      {
+        "exam_en": "Two orange <strong class=\"target-word\">juices</strong>, please.",
+        "exam_ko": "오렌지 <strong class=\"target-word\">주스</strong> 두 잔 주세요."
+      }
+    ]
+  },
+  {
+    "id": 5091,
+    "origin": "joy",
+    "examples": [
+      {
+        "exam_en": "She jumped for <strong class=\"target-word\">joy</strong> when she heard the news.",
+        "exam_ko": "그녀는 소식을 듣고 <strong class=\"target-word\">기쁨</strong>에 껑충 뛰었다."
+      },
+      {
+        "exam_en": "They stood by each other in <strong class=\"target-word\">joy</strong> and sorrow.",
+        "exam_ko": "그들은 <strong class=\"target-word\">기쁠</strong> 때나 슬플 때나 서로 곁에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5092,
+    "origin": "banana",
+    "examples": [
+      {
+        "exam_en": "He bought a bunch of <strong class=\"target-word\">bananas</strong> at the market.",
+        "exam_ko": "그는 시장에서 <strong class=\"target-word\">바나나</strong> 한 송이를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 5093,
+    "origin": "player",
+    "examples": [
+      {
+        "exam_en": "He is a professional football <strong class=\"target-word\">player</strong>.",
+        "exam_ko": "그는 프로 축구 <strong class=\"target-word\">선수</strong>이다."
+      },
+      {
+        "exam_en": "She is the best <strong class=\"target-word\">player</strong> on the team.",
+        "exam_ko": "그녀는 팀에서 가장 뛰어난 <strong class=\"target-word\">선수</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5095,
+    "origin": "china",
+    "examples": [
+      {
+        "exam_en": "She set the table with her finest <strong class=\"target-word\">china</strong>.",
+        "exam_ko": "그녀는 가장 좋은 <strong class=\"target-word\">도자기</strong>로 식탁을 차렸다."
+      }
+    ]
+  },
+  {
+    "id": 5096,
+    "origin": "tennis",
+    "examples": [
+      {
+        "exam_en": "They play <strong class=\"target-word\">tennis</strong> every Saturday morning.",
+        "exam_ko": "그들은 매주 토요일 아침 <strong class=\"target-word\">테니스</strong>를 친다."
+      }
+    ]
+  },
+  {
+    "id": 5097,
+    "origin": "worn",
+    "examples": [
+      {
+        "exam_en": "He put on his old <strong class=\"target-word\">worn</strong> coat.",
+        "exam_ko": "그는 낡고 <strong class=\"target-word\">해진</strong> 외투를 입었다."
+      },
+      {
+        "exam_en": "She looked <strong class=\"target-word\">worn</strong> after the long trip.",
+        "exam_ko": "그녀는 긴 여행 후 <strong class=\"target-word\">지쳐</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 5098,
+    "origin": "wizard",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">wizard</strong> at financial planning.",
+        "exam_ko": "그는 재무 계획의 <strong class=\"target-word\">천재</strong>이다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">wizard</strong> at solving math problems.",
+        "exam_ko": "그녀는 수학 문제를 푸는 데 탁월한 <strong class=\"target-word\">귀재</strong>이다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 920,
+    "origin": "accomplishment",
+    "examples": [
+      {
+        "exam_en": "Winning the award was her greatest <strong class=\"target-word\">accomplishment</strong>.",
+        "exam_ko": "그 상을 받은 것이 그녀의 가장 큰 <strong class=\"target-word\">업적</strong>이었다."
+      },
+      {
+        "exam_en": "He listed his <strong class=\"target-word\">accomplishments</strong> on the resume.",
+        "exam_ko": "그는 이력서에 자신의 <strong class=\"target-word\">성취들</strong>을 나열했다."
+      }
+    ]
+  },
+  {
+    "id": 921,
+    "origin": "accompany",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">accompanied</strong> her friend to the hospital.",
+        "exam_ko": "그녀는 친구를 병원까지 <strong class=\"target-word\">동행했다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">accompanied</strong> by his wife.",
+        "exam_ko": "그는 부인을 <strong class=\"target-word\">동반하고</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 922,
+    "origin": "refrain",
+    "examples": [
+      {
+        "exam_en": "Please <strong class=\"target-word\">refrain</strong> from talking during the test.",
+        "exam_ko": "시험 중에는 말하는 것을 <strong class=\"target-word\">삼가</strong> 주세요."
+      },
+      {
+        "exam_en": "I couldn't <strong class=\"target-word\">refrain</strong> from crying.",
+        "exam_ko": "울지 않을 수 <strong class=\"target-word\">없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 923,
+    "origin": "complex",
+    "examples": [
+      {
+        "exam_en": "The two cities are connected by a <strong class=\"target-word\">complex</strong> road network.",
+        "exam_ko": "두 도시는 <strong class=\"target-word\">복잡한</strong> 도로망으로 연결되어 있다."
+      },
+      {
+        "exam_en": "This is a very <strong class=\"target-word\">complex</strong> device to operate.",
+        "exam_ko": "이것은 작동하기 매우 <strong class=\"target-word\">복잡한</strong> 장치이다."
+      }
+    ]
+  },
+  {
+    "id": 924,
+    "origin": "activity",
+    "examples": [
+      {
+        "exam_en": "Scientists monitored the <strong class=\"target-word\">activity</strong> of the volcano.",
+        "exam_ko": "과학자들은 화산 <strong class=\"target-word\">활동</strong>을 관찰했다."
+      },
+      {
+        "exam_en": "The team was in full <strong class=\"target-word\">activity</strong> all day.",
+        "exam_ko": "그 팀은 하루 종일 활발하게 <strong class=\"target-word\">활동했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 925,
+    "origin": "regarding",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Regarding</strong> your recent inquiry, we will respond soon.",
+        "exam_ko": "최근 문의 사항에 <strong class=\"target-word\">관하여</strong>, 곧 답변드리겠습니다."
+      },
+      {
+        "exam_en": "She had questions <strong class=\"target-word\">regarding</strong> the new policy.",
+        "exam_ko": "그녀는 새 정책에 <strong class=\"target-word\">관한</strong> 질문이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 926,
+    "origin": "measure",
+    "examples": [
+      {
+        "exam_en": "The tailor took his <strong class=\"target-word\">measurements</strong> carefully.",
+        "exam_ko": "재단사는 그의 <strong class=\"target-word\">치수</strong>를 꼼꼼히 쟀다."
+      },
+      {
+        "exam_en": "The government took strict <strong class=\"target-word\">measures</strong> to prevent the spread.",
+        "exam_ko": "정부는 확산을 막기 위해 엄격한 <strong class=\"target-word\">조치</strong>를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 927,
+    "origin": "suspend",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">suspended</strong> a banner from the window.",
+        "exam_ko": "그들은 창문에 현수막을 <strong class=\"target-word\">내걸었다</strong>."
+      },
+      {
+        "exam_en": "The school <strong class=\"target-word\">suspended</strong> the student for a week.",
+        "exam_ko": "학교는 그 학생을 일주일간 <strong class=\"target-word\">정학시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 928,
+    "origin": "annual",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">annual</strong> income increased significantly.",
+        "exam_ko": "그의 <strong class=\"target-word\">연간</strong> 수입이 크게 늘었다."
+      },
+      {
+        "exam_en": "We hold an <strong class=\"target-word\">annual</strong> meeting every spring.",
+        "exam_ko": "우리는 매년 봄에 <strong class=\"target-word\">연례</strong> 회의를 개최한다."
+      }
+    ]
+  },
+  {
+    "id": 929,
+    "origin": "sight",
+    "examples": [
+      {
+        "exam_en": "She has very good <strong class=\"target-word\">sight</strong> even without glasses.",
+        "exam_ko": "그녀는 안경 없이도 <strong class=\"target-word\">시력</strong>이 매우 좋다."
+      },
+      {
+        "exam_en": "The mountain view was a beautiful <strong class=\"target-word\">sight</strong>.",
+        "exam_ko": "산의 전망은 아름다운 <strong class=\"target-word\">광경</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 930,
+    "origin": "unusual",
+    "examples": [
+      {
+        "exam_en": "She is a writer of <strong class=\"target-word\">unusual</strong> talent.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">비범한</strong> 재주를 가진 작가이다."
+      },
+      {
+        "exam_en": "That was a most <strong class=\"target-word\">unusual</strong> film.",
+        "exam_ko": "그 영화는 아주 <strong class=\"target-word\">특이한</strong> 작품이었다."
+      }
+    ]
+  },
+  {
+    "id": 931,
+    "origin": "pretend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">pretended</strong> to be asleep when I entered.",
+        "exam_ko": "내가 들어갔을 때 그는 자는 척 <strong class=\"target-word\">가장했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">pretended</strong> nothing was wrong.",
+        "exam_ko": "그녀는 아무 이상이 없는 것처럼 <strong class=\"target-word\">태연한 척했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 932,
+    "origin": "brave",
+    "examples": [
+      {
+        "exam_en": "The firefighter performed a <strong class=\"target-word\">brave</strong> act to save the child.",
+        "exam_ko": "소방관은 아이를 구하기 위해 <strong class=\"target-word\">용감한</strong> 행동을 했다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">brave</strong> enough to speak the truth.",
+        "exam_ko": "그는 진실을 말할 만큼 <strong class=\"target-word\">용감하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 933,
+    "origin": "arrest",
+    "examples": [
+      {
+        "exam_en": "The police <strong class=\"target-word\">arrested</strong> him for murder.",
+        "exam_ko": "경찰은 그를 살인 혐의로 <strong class=\"target-word\">체포했다</strong>."
+      },
+      {
+        "exam_en": "Officers <strong class=\"target-word\">arrested</strong> the suspect near the station.",
+        "exam_ko": "경찰관들은 역 근처에서 용의자를 <strong class=\"target-word\">체포했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 934,
+    "origin": "overcome",
+    "examples": [
+      {
+        "exam_en": "She worked hard to <strong class=\"target-word\">overcome</strong> her fear of public speaking.",
+        "exam_ko": "그녀는 대중 앞에서 말하는 두려움을 <strong class=\"target-word\">극복하기</strong> 위해 열심히 노력했다."
+      },
+      {
+        "exam_en": "They managed to <strong class=\"target-word\">overcome</strong> strong opposition.",
+        "exam_ko": "그들은 강한 반대 의견을 <strong class=\"target-word\">극복하는</strong> 데 성공했다."
+      }
+    ]
+  },
+  {
+    "id": 935,
+    "origin": "prompt",
+    "examples": [
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">prompt</strong> reply to every question.",
+        "exam_ko": "그녀는 모든 질문에 <strong class=\"target-word\">즉각적인</strong> 답변을 했다."
+      },
+      {
+        "exam_en": "The company is known for its <strong class=\"target-word\">prompt</strong> service.",
+        "exam_ko": "그 회사는 <strong class=\"target-word\">신속한</strong> 서비스로 유명하다."
+      }
+    ]
+  },
+  {
+    "id": 936,
+    "origin": "mainly",
+    "examples": [
+      {
+        "exam_en": "We deal <strong class=\"target-word\">mainly</strong> in imported goods.",
+        "exam_ko": "저희는 <strong class=\"target-word\">주로</strong> 수입품을 취급합니다."
+      },
+      {
+        "exam_en": "The project failed <strong class=\"target-word\">mainly</strong> due to poor planning.",
+        "exam_ko": "그 프로젝트는 <strong class=\"target-word\">주로</strong> 계획 부실로 실패했다."
+      }
+    ]
+  },
+  {
+    "id": 937,
+    "origin": "legacy",
+    "examples": [
+      {
+        "exam_en": "She inherited a valuable <strong class=\"target-word\">legacy</strong> from her grandfather.",
+        "exam_ko": "그녀는 할아버지로부터 귀중한 <strong class=\"target-word\">유산</strong>을 물려받았다."
+      },
+      {
+        "exam_en": "His scientific work left a lasting <strong class=\"target-word\">legacy</strong>.",
+        "exam_ko": "그의 과학적 업적은 지속적인 <strong class=\"target-word\">유산</strong>을 남겼다."
+      }
+    ]
+  },
+  {
+    "id": 938,
+    "origin": "aggression",
+    "examples": [
+      {
+        "exam_en": "The country condemned the <strong class=\"target-word\">aggression</strong> against its neighbor.",
+        "exam_ko": "그 나라는 이웃 국가에 대한 <strong class=\"target-word\">침략</strong>을 규탄했다."
+      },
+      {
+        "exam_en": "His unexpected <strong class=\"target-word\">aggression</strong> shocked everyone.",
+        "exam_ko": "그의 예상치 못한 <strong class=\"target-word\">공격성</strong>은 모두를 충격에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 939,
+    "origin": "mass",
+    "examples": [
+      {
+        "exam_en": "A large <strong class=\"target-word\">mass</strong> of rock blocked the road.",
+        "exam_ko": "커다란 바위 <strong class=\"target-word\">덩어리</strong>가 도로를 막았다."
+      },
+      {
+        "exam_en": "He received a <strong class=\"target-word\">mass</strong> of letters after the speech.",
+        "exam_ko": "연설 후 그는 수많은 편지가 담긴 <strong class=\"target-word\">더미</strong>를 받았다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "id": 5497,
+    "origin": "made",
+    "examples": [
+      {
+        "exam_en": "This vase is hand-<strong class=\"target-word\">made</strong> by a local artist.",
+        "exam_ko": "이 꽃병은 지역 예술가가 <strong class=\"target-word\">손으로 만든</strong> 것이다."
+      },
+      {
+        "exam_en": "She prefers home-<strong class=\"target-word\">made</strong> bread over store-bought.",
+        "exam_ko": "그녀는 시판 빵보다 <strong class=\"target-word\">집에서 만든</strong> 빵을 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 5498,
+    "origin": "don",
+    "examples": [
+      {
+        "exam_en": "He is a real <strong class=\"target-word\">don</strong> at chess.",
+        "exam_ko": "그는 체스의 진정한 <strong class=\"target-word\">명수</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5499,
+    "origin": "me",
+    "examples": [
+      {
+        "exam_en": "She loves <strong class=\"target-word\">me</strong> deeply.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">나를</strong> 깊이 사랑한다."
+      },
+      {
+        "exam_en": "Please listen to <strong class=\"target-word\">me</strong> carefully.",
+        "exam_ko": "<strong class=\"target-word\">내</strong> 말을 주의 깊게 들어봐."
+      }
+    ]
+  },
+  {
+    "id": 5500,
+    "origin": "said",
+    "examples": [
+      {
+        "exam_en": "The contract was signed by the <strong class=\"target-word\">said</strong> Jack Smith.",
+        "exam_ko": "계약서는 <strong class=\"target-word\">상술한</strong> 잭 스미스가 서명했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">said</strong> person denied all charges.",
+        "exam_ko": "<strong class=\"target-word\">당해</strong> 인물은 모든 혐의를 부인했다."
+      }
+    ]
+  },
+  {
+    "id": 5502,
+    "origin": "puff",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">puff</strong> of smoke rose from the chimney.",
+        "exam_ko": "굴뚝에서 연기 <strong class=\"target-word\">한 줄기</strong>가 피어올랐다."
+      },
+      {
+        "exam_en": "He was out of <strong class=\"target-word\">puff</strong> after climbing the stairs.",
+        "exam_ko": "그는 계단을 오른 후 <strong class=\"target-word\">숨을 헐떡였다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5503,
+    "origin": "dude",
+    "examples": [
+      {
+        "exam_en": "That big <strong class=\"target-word\">dude</strong> looks really intimidating.",
+        "exam_ko": "저 덩치 큰 <strong class=\"target-word\">남자</strong>는 정말 무섭게 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 5504,
+    "origin": "perk",
+    "examples": [
+      {
+        "exam_en": "I began to <strong class=\"target-word\">perk</strong> up during dinner.",
+        "exam_ko": "식사하는 동안 <strong class=\"target-word\">기운이 나기</strong> 시작했다."
+      },
+      {
+        "exam_en": "The dog <strong class=\"target-word\">perked</strong> its ears up at the sound.",
+        "exam_ko": "개는 소리를 듣고 귀를 <strong class=\"target-word\">쫑긋 세웠다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5505,
+    "origin": "addictive",
+    "examples": [
+      {
+        "exam_en": "Nicotine in cigarettes is an <strong class=\"target-word\">addictive</strong> drug.",
+        "exam_ko": "담배 속 니코틴은 <strong class=\"target-word\">중독성</strong> 약물이다."
+      }
+    ]
+  },
+  {
+    "id": 5508,
+    "origin": "wreak",
+    "examples": [
+      {
+        "exam_en": "The storm <strong class=\"target-word\">wreaked</strong> havoc on the coastal town.",
+        "exam_ko": "폭풍은 해안 마을에 큰 <strong class=\"target-word\">피해를 입혔다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">wreaked</strong> vengeance on his enemies.",
+        "exam_ko": "그는 적들에게 <strong class=\"target-word\">복수했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5510,
+    "origin": "vengeance",
+    "examples": [
+      {
+        "exam_en": "She swore to <strong class=\"target-word\">wreak vengeance</strong> on those who betrayed her.",
+        "exam_ko": "그녀는 자신을 배신한 자들에게 <strong class=\"target-word\">복수</strong>하겠다고 맹세했다."
+      },
+      {
+        "exam_en": "Heaven's <strong class=\"target-word\">vengeance</strong> is slow but certain.",
+        "exam_ko": "하늘의 <strong class=\"target-word\">천벌</strong>은 더디지만 반드시 내린다."
+      }
+    ]
+  },
+  {
+    "id": 5512,
+    "origin": "thwart",
+    "examples": [
+      {
+        "exam_en": "His ambitions were <strong class=\"target-word\">thwarted</strong> by the failure.",
+        "exam_ko": "그의 야망은 실패로 <strong class=\"target-word\">꺾였다</strong>."
+      },
+      {
+        "exam_en": "The detective <strong class=\"target-word\">thwarted</strong> the robbery in time.",
+        "exam_ko": "형사는 제때 강도를 <strong class=\"target-word\">저지했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5513,
+    "origin": "shiftless",
+    "examples": [
+      {
+        "exam_en": "He's lazy and <strong class=\"target-word\">shiftless</strong>.",
+        "exam_ko": "그는 게으르고 <strong class=\"target-word\">야심이 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5514,
+    "origin": "strut",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">struts</strong> support the entire bridge structure.",
+        "exam_ko": "<strong class=\"target-word\">버팀대</strong>가 다리 전체 구조를 지탱하고 있다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">strutted</strong> down the hall with confidence.",
+        "exam_ko": "그녀는 자신감 있게 복도를 <strong class=\"target-word\">활보했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5516,
+    "origin": "molto",
+    "examples": [
+      {
+        "exam_en": "The piece was marked <strong class=\"target-word\">molto</strong> adagio by the composer.",
+        "exam_ko": "그 곡은 작곡가에 의해 <strong class=\"target-word\">매우</strong> 느리게로 표기되었다."
+      }
+    ]
+  },
+  {
+    "id": 5519,
+    "origin": "jawbone",
+    "examples": [
+      {
+        "exam_en": "He survives on credit alone, relying only on his <strong class=\"target-word\">jawbone</strong>.",
+        "exam_ko": "그는 오직 신용, 즉 <strong class=\"target-word\">구두 약속</strong>에만 의존해 살아간다."
+      },
+      {
+        "exam_en": "The President <strong class=\"target-word\">jawboned</strong> the union into accepting the deal.",
+        "exam_ko": "대통령은 노조가 합의를 수락하도록 <strong class=\"target-word\">강경하게 설득했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5521,
+    "origin": "gouge",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">gouged</strong> a hole in the wood with a knife.",
+        "exam_ko": "그는 칼로 나무에 구멍을 <strong class=\"target-word\">파냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5524,
+    "origin": "equitable",
+    "examples": [
+      {
+        "exam_en": "They made an <strong class=\"target-word\">equitable</strong> division of the money.",
+        "exam_ko": "그들은 돈을 <strong class=\"target-word\">공평하게</strong> 나눴다."
+      }
+    ]
+  },
+  {
+    "id": 5525,
+    "origin": "ferry",
+    "examples": [
+      {
+        "exam_en": "We crossed the river by <strong class=\"target-word\">ferry</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">나룻배</strong>로 강을 건넜다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">ferried</strong> passengers across the river daily.",
+        "exam_ko": "그는 매일 승객들을 강 건너로 <strong class=\"target-word\">실어 날랐다</strong>."
+      },
+      {
+        "exam_en": "We took a <strong class=\"target-word\">ferry</strong> to the nearby island.",
+        "exam_ko": "우리는 가까운 섬으로 가는 <strong class=\"target-word\">여객선</strong>을 탔다."
+      }
+    ]
+  },
+  {
+    "id": 5526,
+    "origin": "crook",
+    "examples": [
+      {
+        "exam_en": "She carried her books in the <strong class=\"target-word\">crook</strong> of her arm.",
+        "exam_ko": "그녀는 팔의 <strong class=\"target-word\">안쪽</strong>에 책을 안고 걸었다."
+      },
+      {
+        "exam_en": "The police finally caught the <strong class=\"target-word\">crook</strong> after months.",
+        "exam_ko": "경찰은 수개월 만에 그 <strong class=\"target-word\">사기꾼</strong>을 잡았다."
+      }
+    ]
+  },
+  {
+    "id": 5528,
+    "origin": "chisel",
+    "examples": [
+      {
+        "exam_en": "He used a cold <strong class=\"target-word\">chisel</strong> to cut the metal.",
+        "exam_ko": "그는 금속을 자르기 위해 <strong class=\"target-word\">정</strong>을 사용했다."
+      },
+      {
+        "exam_en": "The sculptor <strong class=\"target-word\">chiseled</strong> a figure out of rock.",
+        "exam_ko": "조각가는 바위에 상을 <strong class=\"target-word\">새겼다</strong>."
+      },
+      {
+        "exam_en": "A blunt <strong class=\"target-word\">chisel</strong> makes carving very difficult.",
+        "exam_ko": "뭉툭한 <strong class=\"target-word\">끌</strong>은 조각을 매우 어렵게 만든다."
+      }
+    ]
+  }
+]

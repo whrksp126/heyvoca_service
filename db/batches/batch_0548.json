@@ -1,0 +1,258 @@
+[
+  {
+    "id": 17736,
+    "origin": "rosy",
+    "examples": [
+      {
+        "exam_en": "rosy lips",
+        "exam_ko": "장밋빛 입술[볼]."
+      },
+      {
+        "exam_en": "a rosy-eyed view",
+        "exam_ko": "낙관적인 견해"
+      }
+    ]
+  },
+  {
+    "id": 17738,
+    "origin": "miraculous",
+    "examples": [
+      {
+        "exam_en": "a miraculous achievement",
+        "exam_ko": "놀라운 위업[회복]."
+      },
+      {
+        "exam_en": "a miraculous cure for diabetes",
+        "exam_ko": "당뇨병에 특효가 있는 치료법."
+      }
+    ]
+  },
+  {
+    "id": 17740,
+    "origin": "billboard",
+    "examples": [
+      {
+        "exam_en": "a notice on the billboard",
+        "exam_ko": "게시판의 통지."
+      }
+    ]
+  },
+  {
+    "id": 17743,
+    "origin": "boo",
+    "examples": [
+      {
+        "exam_en": "before you can say boo",
+        "exam_ko": "순식간에"
+      },
+      {
+        "exam_en": "can't say boo to a goose",
+        "exam_ko": "몹시 겁이 많다, 기가 약하다."
+      }
+    ]
+  },
+  {
+    "id": 17744,
+    "origin": "smutty",
+    "examples": [
+      {
+        "exam_en": "smutty joke",
+        "exam_ko": "음담."
+      }
+    ]
+  },
+  {
+    "id": 17747,
+    "origin": "sensibility",
+    "examples": [
+      {
+        "exam_en": "the artistic sensibility",
+        "exam_ko": "예술적 감각"
+      },
+      {
+        "exam_en": "the sensibility of the epidermis",
+        "exam_ko": "피부 감각"
+      }
+    ]
+  },
+  {
+    "id": 17750,
+    "origin": "sieve",
+    "examples": [
+      {
+        "exam_en": "spend money like a sieve",
+        "exam_ko": "돈을 물쓰듯 하다"
+      },
+      {
+        "exam_en": "be  leaky as a sieve",
+        "exam_ko": "들은 대로 다 말해버리다."
+      },
+      {
+        "exam_en": "Test sieves are designated by the nominal aperture size.",
+        "exam_ko": "시험 체는 공칭 구경 크기로 지정됩니다."
+      }
+    ]
+  },
+  {
+    "id": 17751,
+    "origin": "margarine",
+    "examples": [
+      {
+        "exam_en": "a pat of margarine",
+        "exam_ko": "한 조각의 마가린."
+      }
+    ]
+  },
+  {
+    "id": 17754,
+    "origin": "jibe",
+    "examples": [
+      {
+        "exam_en": "His words and his actions do not jibe.",
+        "exam_ko": "그는 언행이 일치하지 않는다."
+      },
+      {
+        "exam_en": "His words and his actions do not jibe. ",
+        "exam_ko": "그는 언행이 일치하지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 17756,
+    "origin": "fanfare",
+    "examples": [
+      {
+        "exam_en": "sound a fanfare",
+        "exam_ko": "팡파르를 울리다."
+      },
+      {
+        "exam_en": "A fanfare signalled her entrance at the entrance.",
+        "exam_ko": "팡파르가 입구에서 그녀의 입장을 알렸다."
+      }
+    ]
+  },
+  {
+    "id": 17759,
+    "origin": "apropos",
+    "examples": [
+      {
+        "exam_en": "Your letter came apropos as usual.",
+        "exam_ko": "너의 편지는 평소와 같이 알맞은 때에 왔다."
+      },
+      {
+        "exam_en": "His joke was not apropos for the occasion.",
+        "exam_ko": "그의 농담은 그 상황에 적절하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 17760,
+    "origin": "umpteenth",
+    "examples": [
+      {
+        "exam_en": "the umpteenth translation of that novel",
+        "exam_ko": "그 소설의 최신 번역"
+      },
+      {
+        "exam_en": "I'm telling you this umpteenth time.",
+        "exam_ko": "몇 번이나 이야기해야 알겠니."
+      },
+      {
+        "exam_en": "They're showing \"The Wizard of Oz\" for the umpteenth time.",
+        "exam_ko": "그들은 \"오즈의 마법사\"를 몇 번째인지 모를 정도로 여러 번 보여주고 있다."
+      }
+    ]
+  },
+  {
+    "id": 17763,
+    "origin": "unbending",
+    "examples": [
+      {
+        "exam_en": "an unbending determination",
+        "exam_ko": "굽힐 줄 모르는 결단력."
+      }
+    ]
+  },
+  {
+    "id": 17765,
+    "origin": "bungle",
+    "examples": [
+      {
+        "exam_en": "make a bungle of",
+        "exam_ko": "…을 엉망으로 만들다, 소용없게 하다."
+      }
+    ]
+  },
+  {
+    "id": 17766,
+    "origin": "comical",
+    "examples": [
+      {
+        "exam_en": "a comical face",
+        "exam_ko": "익살스러운 얼굴"
+      },
+      {
+        "exam_en": "Everyone laughed at her comical remarks.",
+        "exam_ko": "그녀의 재미있는 말을 듣고 모두가 웃었다."
+      }
+    ]
+  },
+  {
+    "id": 17767,
+    "origin": "kaput",
+    "examples": [
+      {
+        "exam_en": "go kaput",
+        "exam_ko": "폐허가 되다, 실패하다"
+      },
+      {
+        "exam_en": "The plan is kaput.",
+        "exam_ko": "그 계획은 실패다."
+      }
+    ]
+  },
+  {
+    "id": 17768,
+    "origin": "dawdle",
+    "examples": [
+      {
+        "exam_en": "Don't dawdle away the morning.",
+        "exam_ko": "오전을 헛되이 보내지 마라."
+      }
+    ]
+  },
+  {
+    "id": 17769,
+    "origin": "daft",
+    "examples": [
+      {
+        "exam_en": "go daft",
+        "exam_ko": "미치다."
+      }
+    ]
+  },
+  {
+    "id": 17770,
+    "origin": "chord",
+    "examples": [
+      {
+        "exam_en": "strike a tender chord",
+        "exam_ko": "심금을 울리다."
+      }
+    ]
+  },
+  {
+    "id": 17771,
+    "origin": "misty",
+    "examples": [
+      {
+        "exam_en": "a misty morning",
+        "exam_ko": "안개가 자욱한 아침."
+      },
+      {
+        "exam_en": "misty rain",
+        "exam_ko": "이슬비."
+      }
+    ]
+  }
+]

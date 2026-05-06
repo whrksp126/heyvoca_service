@@ -1,0 +1,270 @@
+[
+  {
+    "id": 6631,
+    "origin": "explosive",
+    "examples": [
+      {
+        "exam_en": "The bomb squad safely removed the <strong class=\"target-word\">explosive</strong> device.",
+        "exam_ko": "폭발물 처리반이 <strong class=\"target-word\">폭발</strong> 장치를 안전하게 제거했다."
+      },
+      {
+        "exam_en": "The volcano erupted with <strong class=\"target-word\">explosive</strong> force.",
+        "exam_ko": "화산이 <strong class=\"target-word\">폭발적인</strong> 힘으로 분출했다."
+      },
+      {
+        "exam_en": "Workers are banned from using <strong class=\"target-word\">explosives</strong> near the site.",
+        "exam_ko": "현장 근처에서 <strong class=\"target-word\">폭발물</strong> 사용이 금지되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 6632,
+    "origin": "tardy",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">tardy</strong> response frustrated the team.",
+        "exam_ko": "그의 <strong class=\"target-word\">늦은</strong> 대응이 팀을 답답하게 했다."
+      },
+      {
+        "exam_en": "The child showed <strong class=\"target-word\">tardy</strong> development compared to peers.",
+        "exam_ko": "그 아이는 또래에 비해 <strong class=\"target-word\">느린</strong> 발달을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 6633,
+    "origin": "spunk",
+    "examples": [
+      {
+        "exam_en": "She showed real <strong class=\"target-word\">spunk</strong> by standing up to the bully.",
+        "exam_ko": "그녀는 괴롭히는 사람에 맞서며 진짜 <strong class=\"target-word\">용기</strong>를 보여줬다."
+      }
+    ]
+  },
+  {
+    "id": 6634,
+    "origin": "sanitary",
+    "examples": [
+      {
+        "exam_en": "The city hired a <strong class=\"target-word\">sanitary</strong> engineer to improve water quality.",
+        "exam_ko": "시는 수질 개선을 위해 <strong class=\"target-word\">위생</strong> 기사를 고용했다."
+      },
+      {
+        "exam_en": "He studied <strong class=\"target-word\">sanitary</strong> engineering at university.",
+        "exam_ko": "그는 대학에서 <strong class=\"target-word\">위생</strong> 공학을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 6636,
+    "origin": "prostitution",
+    "examples": [
+      {
+        "exam_en": "The city banned licensed <strong class=\"target-word\">prostitution</strong> years ago.",
+        "exam_ko": "그 도시는 수년 전 공인된 <strong class=\"target-word\">성매매</strong>를 금지했다."
+      },
+      {
+        "exam_en": "He refused to engage in political <strong class=\"target-word\">prostitution</strong> for votes.",
+        "exam_ko": "그는 표를 위한 정치적 <strong class=\"target-word\">타락</strong>에 가담하기를 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 6638,
+    "origin": "prosecution",
+    "examples": [
+      {
+        "exam_en": "He faced criminal <strong class=\"target-word\">prosecution</strong> for fraud.",
+        "exam_ko": "그는 사기죄로 형사 <strong class=\"target-word\">기소</strong>에 직면했다."
+      },
+      {
+        "exam_en": "The witness testified on behalf of the <strong class=\"target-word\">prosecution</strong>.",
+        "exam_ko": "<strong class=\"target-word\">검찰</strong>을 위해 증인이 증언했다."
+      }
+    ]
+  },
+  {
+    "id": 6639,
+    "origin": "astound",
+    "examples": [
+      {
+        "exam_en": "The news of their divorce <strong class=\"target-word\">astounded</strong> me.",
+        "exam_ko": "그들의 이혼 소식에 나는 크게 <strong class=\"target-word\">놀랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6640,
+    "origin": "implicate",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">implicated</strong> in the conspiracy.",
+        "exam_ko": "그는 음모에 <strong class=\"target-word\">연루되었다</strong>."
+      },
+      {
+        "exam_en": "This evidence <strong class=\"target-word\">implicates</strong> them in the robbery.",
+        "exam_ko": "이 증거는 그들이 강도 사건에 <strong class=\"target-word\">관련되었음</strong>을 나타낸다."
+      }
+    ]
+  },
+  {
+    "id": 6641,
+    "origin": "gratitude",
+    "examples": [
+      {
+        "exam_en": "She sent flowers in <strong class=\"target-word\">gratitude</strong> for his help.",
+        "exam_ko": "그녀는 그의 도움에 대한 <strong class=\"target-word\">감사</strong>의 표시로 꽃을 보냈다."
+      },
+      {
+        "exam_en": "He owed a debt of <strong class=\"target-word\">gratitude</strong> to his mentor.",
+        "exam_ko": "그는 스승에게 <strong class=\"target-word\">감사의 빚</strong>을 지고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6642,
+    "origin": "frolic",
+    "examples": [
+      {
+        "exam_en": "The children are having a <strong class=\"target-word\">frolic</strong> before bedtime.",
+        "exam_ko": "아이들이 잠자기 전에 <strong class=\"target-word\">법석</strong>을 떨고 있다."
+      },
+      {
+        "exam_en": "The puppies <strong class=\"target-word\">frolicked</strong> in the yard all afternoon.",
+        "exam_ko": "강아지들이 오후 내내 마당에서 <strong class=\"target-word\">뛰놀았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6643,
+    "origin": "extortion",
+    "examples": [
+      {
+        "exam_en": "He was arrested for <strong class=\"target-word\">extortion</strong> last week.",
+        "exam_ko": "그는 지난주에 <strong class=\"target-word\">강탈</strong> 혐의로 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 6644,
+    "origin": "disheveled",
+    "examples": [
+      {
+        "exam_en": "She arrived with <strong class=\"target-word\">disheveled</strong> hair after the run.",
+        "exam_ko": "그녀는 달리기 후 <strong class=\"target-word\">헝클어진</strong> 머리로 도착했다."
+      },
+      {
+        "exam_en": "He looked <strong class=\"target-word\">disheveled</strong> in his wrinkled clothing.",
+        "exam_ko": "그는 구겨진 옷을 입고 <strong class=\"target-word\">단정치 못해</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 6645,
+    "origin": "conduit",
+    "examples": [
+      {
+        "exam_en": "The electrician ran cables through a plastic <strong class=\"target-word\">conduit</strong>.",
+        "exam_ko": "전기 기사는 플라스틱 <strong class=\"target-word\">전선관</strong>을 통해 케이블을 연결했다."
+      }
+    ]
+  },
+  {
+    "id": 6646,
+    "origin": "concoct",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">concocted</strong> a splendid meal from the leftovers.",
+        "exam_ko": "그녀는 남은 음식으로 훌륭한 식사를 <strong class=\"target-word\">만들어 냈다</strong>."
+      },
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">concoct</strong> a believable alibi.",
+        "exam_ko": "그는 그럴듯한 알리바이를 <strong class=\"target-word\">꾸며내려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 6648,
+    "origin": "complimentary",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">complimentary</strong> comment about her work.",
+        "exam_ko": "그녀는 자신의 작업에 대해 <strong class=\"target-word\">칭찬하는</strong> 말을 들었다."
+      },
+      {
+        "exam_en": "The speaker gave a <strong class=\"target-word\">complimentary</strong> address at the ceremony.",
+        "exam_ko": "연사는 행사에서 <strong class=\"target-word\">축사</strong>를 했다."
+      }
+    ]
+  },
+  {
+    "id": 6650,
+    "origin": "tumble",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">tumbled</strong> off the ladder and hurt his arm.",
+        "exam_ko": "그는 사다리에서 <strong class=\"target-word\">떨어져</strong> 팔을 다쳤다."
+      },
+      {
+        "exam_en": "The hiker <strong class=\"target-word\">tumbled</strong> over the cliff edge.",
+        "exam_ko": "등산객이 절벽 끝에서 <strong class=\"target-word\">굴러 떨어졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6651,
+    "origin": "testimony",
+    "examples": [
+      {
+        "exam_en": "Her success bears <strong class=\"target-word\">testimony</strong> to her hard work.",
+        "exam_ko": "그녀의 성공은 노력을 <strong class=\"target-word\">증명한다</strong>."
+      },
+      {
+        "exam_en": "The lawyer called a witness to give <strong class=\"target-word\">testimony</strong>.",
+        "exam_ko": "변호사는 <strong class=\"target-word\">증언</strong>을 위해 증인을 불렀다."
+      }
+    ]
+  },
+  {
+    "id": 6652,
+    "origin": "sleazy",
+    "examples": [
+      {
+        "exam_en": "He offered a <strong class=\"target-word\">sleazy</strong> alibi that no one believed.",
+        "exam_ko": "그는 아무도 믿지 않는 <strong class=\"target-word\">속이 빤히 보이는</strong> 알리바이를 댔다."
+      },
+      {
+        "exam_en": "She refused to read the <strong class=\"target-word\">sleazy</strong> novel.",
+        "exam_ko": "그녀는 그 <strong class=\"target-word\">저속한</strong> 소설을 읽기를 거부했다."
+      }
+    ]
+  },
+  {
+    "id": 6653,
+    "origin": "shark",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">shark</strong> patrol plane circled the beach.",
+        "exam_ko": "<strong class=\"target-word\">상어</strong> 경계 순찰기가 해변을 선회했다."
+      },
+      {
+        "exam_en": "He fell into the hands of loan <strong class=\"target-word\">sharks</strong> after losing his job.",
+        "exam_ko": "그는 실직 후 고리 대금업자들, 즉 <strong class=\"target-word\">사기꾼들</strong>의 손에 넘어갔다."
+      }
+    ]
+  },
+  {
+    "id": 6654,
+    "origin": "shattered",
+    "examples": [
+      {
+        "exam_en": "The cup fell and was completely <strong class=\"target-word\">shattered</strong>.",
+        "exam_ko": "컵이 떨어져 완전히 <strong class=\"target-word\">산산이 부서졌다</strong>."
+      },
+      {
+        "exam_en": "Years of stress left his health completely <strong class=\"target-word\">shattered</strong>.",
+        "exam_ko": "수년간의 스트레스로 그의 건강이 완전히 <strong class=\"target-word\">망가졌다</strong>."
+      }
+    ]
+  }
+]

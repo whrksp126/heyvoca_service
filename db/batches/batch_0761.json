@@ -1,0 +1,218 @@
+[
+  {
+    "id": 47525,
+    "origin": "pliers",
+    "examples": [
+      {
+        "exam_en": "These pliers art too large.",
+        "exam_ko": "이 집게는 너무 크다."
+      }
+    ]
+  },
+  {
+    "id": 47543,
+    "origin": "ur",
+    "examples": [
+      {
+        "exam_en": "ur-sprache",
+        "exam_ko": "인도-유럽 원어"
+      }
+    ]
+  },
+  {
+    "id": 47590,
+    "origin": "towaway",
+    "examples": [
+      {
+        "exam_en": "a towaway zone",
+        "exam_ko": "주차 금지 구역."
+      }
+    ]
+  },
+  {
+    "id": 47704,
+    "origin": "phooey",
+    "examples": [
+      {
+        "exam_en": "Phooey on him!",
+        "exam_ko": "원! 별꼴 다 본다."
+      }
+    ]
+  },
+  {
+    "id": 47714,
+    "origin": "untruthful",
+    "examples": [
+      {
+        "exam_en": "The reporter wrote untruthful reports to get attention.",
+        "exam_ko": "그 기자는 주의를 끌기 위해서 허위 기사를 썼다."
+      },
+      {
+        "exam_en": "an untruthful boy",
+        "exam_ko": "거짓말 잘하는 소년."
+      }
+    ]
+  },
+  {
+    "id": 47729,
+    "origin": "overstay",
+    "examples": [
+      {
+        "exam_en": "overstay one's welcome",
+        "exam_ko": "너무 오래 머물러 미움을 사다."
+      }
+    ]
+  },
+  {
+    "id": 47751,
+    "origin": "bedazzle",
+    "examples": [
+      {
+        "exam_en": "a bedazzling blonde",
+        "exam_ko": "매혹적인 금발 미인."
+      }
+    ]
+  },
+  {
+    "id": 47758,
+    "origin": "knickers",
+    "examples": [
+      {
+        "exam_en": "This pair of knickers is torn.",
+        "exam_ko": "이 니커 바지는 찢어졌다."
+      },
+      {
+        "exam_en": "These knickers are torn.",
+        "exam_ko": "이 니커 바지는 찢어졌다."
+      }
+    ]
+  },
+  {
+    "id": 47796,
+    "origin": "phytosanitary",
+    "examples": [
+      {
+        "exam_en": "phytosanitary products, fungicides and pesticides",
+        "exam_ko": "식물 위생 검역용 상품, 살균제, 농약."
+      }
+    ]
+  },
+  {
+    "id": 47820,
+    "origin": "unconditioned",
+    "examples": [
+      {
+        "exam_en": "an unconditioned reflex",
+        "exam_ko": "무조건 반사[반응]."
+      }
+    ]
+  },
+  {
+    "id": 47942,
+    "origin": "steno",
+    "examples": [
+      {
+        "exam_en": "stenopetalous",
+        "exam_ko": "[식물] 좁은 꽃잎의."
+      }
+    ]
+  },
+  {
+    "id": 47971,
+    "origin": "tuple",
+    "examples": [
+      {
+        "exam_en": "a 3--tuple",
+        "exam_ko": "3개 한 벌."
+      }
+    ]
+  },
+  {
+    "id": 47973,
+    "origin": "transparently",
+    "examples": [
+      {
+        "exam_en": "The book is remarkably accurate and transparently fair-minded.",
+        "exam_ko": "그 책은 상당히 정확하고 투명할 정도로 편견이 없다."
+      }
+    ]
+  },
+  {
+    "id": 47977,
+    "origin": "triennial",
+    "examples": [
+      {
+        "exam_en": "a triennial election",
+        "exam_ko": "3년마다의 선거"
+      },
+      {
+        "exam_en": "triennial plants",
+        "exam_ko": "3년생 식물."
+      }
+    ]
+  },
+  {
+    "id": 47985,
+    "origin": "capitate",
+    "examples": [
+      {
+        "exam_en": "capitate flowers",
+        "exam_ko": "두상화."
+      }
+    ]
+  },
+  {
+    "id": 47998,
+    "origin": "bung",
+    "examples": [
+      {
+        "exam_en": "be bunged up",
+        "exam_ko": "(코·관 등이) 막혀 있다."
+      },
+      {
+        "exam_en": "go bung",
+        "exam_ko": "실패하다; 파산하다; 죽다."
+      }
+    ]
+  },
+  {
+    "id": 48019,
+    "origin": "autoclave",
+    "examples": [
+      {
+        "exam_en": "ALC-Autoclaved Light Weight Concrete",
+        "exam_ko": "ALC-고압가온의 경량 콘크리트(준단열 효과 이/ㅅ음)"
+      }
+    ]
+  },
+  {
+    "id": 48038,
+    "origin": "microblog",
+    "examples": [
+      {
+        "exam_en": "a website which allows users to keep a microblog",
+        "exam_ko": "사용자에게 마이크로블로그를 할 수 있도록 허용하는 웹사이트."
+      }
+    ]
+  },
+  {
+    "id": 48051,
+    "origin": "blameworthy",
+    "examples": [
+      {
+        "exam_en": "blameworthy conduct",
+        "exam_ko": "무례한 행동."
+      }
+    ]
+  },
+  {
+    "id": 48062,
+    "origin": "respecter",
+    "examples": [
+      {
+        "exam_en": "God is no respecter of persons.",
+        "exam_ko": "하나님은 사람의 외모를 취하지 아니하신다 ＜[성서] 사도행전 10:34＞."
+      }
+    ]
+  }
+]

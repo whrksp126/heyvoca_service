@@ -1,0 +1,266 @@
+[
+  {
+    "id": 10033,
+    "origin": "intent",
+    "examples": [
+      {
+        "exam_en": "The lawyer questioned the suspect's true <strong class=\"target-word\">intent</strong>.",
+        "exam_ko": "변호사는 용의자의 진짜 <strong class=\"target-word\">의도</strong>를 물었다."
+      },
+      {
+        "exam_en": "The judge ruled that he acted with criminal <strong class=\"target-word\">intent</strong>.",
+        "exam_ko": "판사는 그가 <strong class=\"target-word\">범의</strong>를 가지고 행동했다고 판결했다."
+      },
+      {
+        "exam_en": "She seems <strong class=\"target-word\">intent</strong> on finishing the project alone.",
+        "exam_ko": "그녀는 혼자 프로젝트를 끝내려는 <strong class=\"target-word\">의지가 강한</strong> 것 같다."
+      }
+    ]
+  },
+  {
+    "id": 10034,
+    "origin": "enlighten",
+    "examples": [
+      {
+        "exam_en": "The teacher tried to <strong class=\"target-word\">enlighten</strong> the ignorant students.",
+        "exam_ko": "선생님은 무지한 학생들을 <strong class=\"target-word\">계몽하려</strong> 했다."
+      },
+      {
+        "exam_en": "His lecture greatly <strong class=\"target-word\">enlightened</strong> the audience.",
+        "exam_ko": "그의 강연은 청중을 크게 <strong class=\"target-word\">깨우쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10035,
+    "origin": "complication",
+    "examples": [
+      {
+        "exam_en": "There were <strong class=\"target-word\">complications</strong> following the surgery.",
+        "exam_ko": "수술 후 <strong class=\"target-word\">합병증</strong>이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 10036,
+    "origin": "smack",
+    "examples": [
+      {
+        "exam_en": "The soup had a strong <strong class=\"target-word\">smack</strong> of garlic.",
+        "exam_ko": "그 수프에는 마늘의 강한 <strong class=\"target-word\">맛</strong>이 났다."
+      },
+      {
+        "exam_en": "There is a <strong class=\"target-word\">smack</strong> of arrogance in his tone.",
+        "exam_ko": "그의 말투에는 오만한 <strong class=\"target-word\">기색</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 10038,
+    "origin": "stake",
+    "examples": [
+      {
+        "exam_en": "He drove a <strong class=\"target-word\">stake</strong> into the ground.",
+        "exam_ko": "그는 땅에 <strong class=\"target-word\">말뚝</strong>을 박았다."
+      },
+      {
+        "exam_en": "The heretic was burnt at the <strong class=\"target-word\">stake</strong>.",
+        "exam_ko": "그 이단자는 <strong class=\"target-word\">화형</strong>에 처해졌다."
+      }
+    ]
+  },
+  {
+    "id": 10043,
+    "origin": "credibility",
+    "examples": [
+      {
+        "exam_en": "The politician struggled to gain <strong class=\"target-word\">credibility</strong> with voters.",
+        "exam_ko": "그 정치인은 유권자들의 <strong class=\"target-word\">신뢰</strong>를 얻으려 애썼다."
+      }
+    ]
+  },
+  {
+    "id": 10044,
+    "origin": "felon",
+    "examples": [
+      {
+        "exam_en": "A convicted <strong class=\"target-word\">felon</strong> cannot vote in some states.",
+        "exam_ko": "유죄 판결을 받은 <strong class=\"target-word\">중죄인</strong>은 일부 주에서 투표할 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 10045,
+    "origin": "exonerate",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">exonerated</strong> from the charge of theft.",
+        "exam_ko": "그는 절도 혐의를 <strong class=\"target-word\">벗었다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">exonerated</strong> from the payment obligation.",
+        "exam_ko": "그녀는 지불 의무에서 <strong class=\"target-word\">면제되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10046,
+    "origin": "altercation",
+    "examples": [
+      {
+        "exam_en": "He had a heated <strong class=\"target-word\">altercation</strong> with his neighbor.",
+        "exam_ko": "그는 이웃과 격렬한 <strong class=\"target-word\">언쟁</strong>을 벌였다."
+      }
+    ]
+  },
+  {
+    "id": 10047,
+    "origin": "ram",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">rammed</strong> his head against the post.",
+        "exam_ko": "그는 기둥에 머리를 <strong class=\"target-word\">들이받았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">rammed</strong> a stake into the earth.",
+        "exam_ko": "그녀는 말뚝을 땅에 <strong class=\"target-word\">박아 넣었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10048,
+    "origin": "defendant",
+    "examples": [
+      {
+        "exam_en": "The prosecutor charged the <strong class=\"target-word\">defendant</strong> with fraud.",
+        "exam_ko": "검사는 <strong class=\"target-word\">피고</strong>를 사기 혐의로 기소했다."
+      },
+      {
+        "exam_en": "The lawyer worked hard to defend the <strong class=\"target-word\">defendant</strong>.",
+        "exam_ko": "변호사는 <strong class=\"target-word\">피고</strong>를 변호하기 위해 열심히 일했다."
+      }
+    ]
+  },
+  {
+    "id": 10049,
+    "origin": "persuasion",
+    "examples": [
+      {
+        "exam_en": "She used all her powers of <strong class=\"target-word\">persuasion</strong> to convince him.",
+        "exam_ko": "그녀는 그를 설득하기 위해 모든 <strong class=\"target-word\">설득력</strong>을 동원했다."
+      },
+      {
+        "exam_en": "They hold a different political <strong class=\"target-word\">persuasion</strong>.",
+        "exam_ko": "그들은 다른 정치적 <strong class=\"target-word\">신조</strong>를 가지고 있다."
+      },
+      {
+        "exam_en": "Effective <strong class=\"target-word\">persuasion</strong> is a valuable skill in relationships.",
+        "exam_ko": "효과적인 <strong class=\"target-word\">설득</strong>은 관계에서 소중한 기술이다."
+      }
+    ]
+  },
+  {
+    "id": 10051,
+    "origin": "rave",
+    "examples": [
+      {
+        "exam_en": "He began to rant and <strong class=\"target-word\">rave</strong> about the unfair decision.",
+        "exam_ko": "그는 불공평한 결정에 대해 <strong class=\"target-word\">고함치며</strong> 난리를 피웠다."
+      },
+      {
+        "exam_en": "The patient <strong class=\"target-word\">raved</strong> in a high fever all night.",
+        "exam_ko": "환자는 밤새 고열에 들떠 <strong class=\"target-word\">헛소리를 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10052,
+    "origin": "contingency",
+    "examples": [
+      {
+        "exam_en": "They prepared a <strong class=\"target-word\">contingency</strong> plan for emergencies.",
+        "exam_ko": "그들은 비상사태를 위한 <strong class=\"target-word\">비상</strong> 계획을 준비했다."
+      },
+      {
+        "exam_en": "We must be prepared for all <strong class=\"target-word\">contingencies</strong>.",
+        "exam_ko": "우리는 모든 <strong class=\"target-word\">돌발 사태</strong>에 대비해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 10053,
+    "origin": "transcend",
+    "examples": [
+      {
+        "exam_en": "This discovery <strong class=\"target-word\">transcends</strong> the limits of human knowledge.",
+        "exam_ko": "이 발견은 인간 지식의 한계를 <strong class=\"target-word\">초월한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10055,
+    "origin": "extracurricular",
+    "examples": [
+      {
+        "exam_en": "She participates in many <strong class=\"target-word\">extracurricular</strong> activities after school.",
+        "exam_ko": "그녀는 방과 후 많은 <strong class=\"target-word\">과외</strong> 활동에 참여한다."
+      }
+    ]
+  },
+  {
+    "id": 10058,
+    "origin": "tingle",
+    "examples": [
+      {
+        "exam_en": "His jaw <strong class=\"target-word\">tingled</strong> with the blow.",
+        "exam_ko": "그는 맞은 턱이 <strong class=\"target-word\">얼얼하게</strong> 아팠다."
+      },
+      {
+        "exam_en": "Her skin <strong class=\"target-word\">tingled</strong> with excitement.",
+        "exam_ko": "그녀의 피부는 흥분으로 <strong class=\"target-word\">짜릿하게</strong> 느껴졌다."
+      }
+    ]
+  },
+  {
+    "id": 10059,
+    "origin": "propagate",
+    "examples": [
+      {
+        "exam_en": "Weeds of this strain <strong class=\"target-word\">propagate</strong> themselves rapidly.",
+        "exam_ko": "이 종류의 잡초는 빠르게 <strong class=\"target-word\">번식한다</strong>."
+      },
+      {
+        "exam_en": "They started a newspaper to <strong class=\"target-word\">propagate</strong> their ideas.",
+        "exam_ko": "그들은 자신들의 사상을 <strong class=\"target-word\">전파하기</strong> 위해 신문사를 세웠다."
+      }
+    ]
+  },
+  {
+    "id": 10060,
+    "origin": "verse",
+    "examples": [
+      {
+        "exam_en": "She recited a modern lyrical <strong class=\"target-word\">verse</strong> in class.",
+        "exam_ko": "그녀는 수업에서 현대 서정 <strong class=\"target-word\">시</strong>를 낭송했다."
+      },
+      {
+        "exam_en": "He enjoys reading contemporary <strong class=\"target-word\">verse</strong> in his spare time.",
+        "exam_ko": "그는 여가 시간에 현대 <strong class=\"target-word\">시</strong>를 즐겨 읽는다."
+      }
+    ]
+  },
+  {
+    "id": 10061,
+    "origin": "excellency",
+    "examples": [
+      {
+        "exam_en": "The ambassador was addressed as Your <strong class=\"target-word\">Excellency</strong>.",
+        "exam_ko": "대사는 <strong class=\"target-word\">각하</strong>라고 호칭되었다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">Excellency</strong> arrived at the ceremony on time.",
+        "exam_ko": "<strong class=\"target-word\">각하</strong>께서 제시간에 행사에 도착하셨다."
+      }
+    ]
+  }
+]

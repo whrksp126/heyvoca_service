@@ -1,0 +1,282 @@
+[
+  {
+    "id": 14741,
+    "origin": "intolerant",
+    "examples": [
+      {
+        "exam_en": "be intolerant of bad manners",
+        "exam_ko": "무례함을 견딜 수 없다."
+      }
+    ]
+  },
+  {
+    "id": 14743,
+    "origin": "bigoted",
+    "examples": [
+      {
+        "exam_en": "be bigoted in one's opinions",
+        "exam_ko": "자기 의견을 고집하다."
+      }
+    ]
+  },
+  {
+    "id": 14744,
+    "origin": "imperfect",
+    "examples": [
+      {
+        "exam_en": "imperfect color vision",
+        "exam_ko": "색약(色弱)"
+      },
+      {
+        "exam_en": "an imperfect knowledge of Greek",
+        "exam_ko": "그리스어의 불완전한 지식"
+      }
+    ]
+  },
+  {
+    "id": 14745,
+    "origin": "astute",
+    "examples": [
+      {
+        "exam_en": "an astute investor",
+        "exam_ko": "통찰력이 있는 투자자"
+      },
+      {
+        "exam_en": "an astute merchandising program",
+        "exam_ko": "빈틈없는 판매 계획."
+      }
+    ]
+  },
+  {
+    "id": 14746,
+    "origin": "shrewd",
+    "examples": [
+      {
+        "exam_en": "be shrewd about money",
+        "exam_ko": "돈에 약삭빠르다"
+      },
+      {
+        "exam_en": "make a shrewd remark",
+        "exam_ko": "예리한 의견을 말하다"
+      },
+      {
+        "exam_en": "A resident engineer should be shrewd and hardworking.",
+        "exam_ko": "상주 엔지니어는 상황 판단이 빠르고 부지런해야 합니다."
+      },
+      {
+        "exam_en": "He was a shrewd man with a natural aptitude for business.",
+        "exam_ko": "그는 상황 판단이 빠르고 사업적 재능을 가진 남자다."
+      }
+    ]
+  },
+  {
+    "id": 14749,
+    "origin": "jaunty",
+    "examples": [
+      {
+        "exam_en": "with jaunty step",
+        "exam_ko": "경쾌한 걸음걸이로."
+      },
+      {
+        "exam_en": "wear a hat at a jaunty angle",
+        "exam_ko": "모자를 멋있게 비스듬히 쓰다."
+      }
+    ]
+  },
+  {
+    "id": 14752,
+    "origin": "tepid",
+    "examples": [
+      {
+        "exam_en": "tepid water",
+        "exam_ko": "(영) 미지근한 물(※같은 뜻의 lukewarm water는 영·미에서 쓰임)."
+      },
+      {
+        "exam_en": "The tepid water in the pool was neither too hot nor too cold, perfect for swimming.",
+        "exam_ko": "수영장의 미지근한 물은 너무 뜨거워도 너무 춥지도 않아 수영하기에 완벽했다."
+      }
+    ]
+  },
+  {
+    "id": 14753,
+    "origin": "vapid",
+    "examples": [
+      {
+        "exam_en": "vapid champagne",
+        "exam_ko": "김 빠진 샴페인"
+      },
+      {
+        "exam_en": "go vapid",
+        "exam_ko": "김 빠지다, 맥 빠지다."
+      }
+    ]
+  },
+  {
+    "id": 14754,
+    "origin": "insipid",
+    "examples": [
+      {
+        "exam_en": "an insipid conversation",
+        "exam_ko": "지루한 대화."
+      },
+      {
+        "exam_en": "insipid wine",
+        "exam_ko": "김빠진 포도주."
+      }
+    ]
+  },
+  {
+    "id": 14756,
+    "origin": "prolific",
+    "examples": [
+      {
+        "exam_en": "prolific plants",
+        "exam_ko": "수확량이 많은 식물"
+      },
+      {
+        "exam_en": "a family prolific of children",
+        "exam_ko": "아이를 많이 낳은 가정"
+      },
+      {
+        "exam_en": "A lot of artists use Social Networks to show their artwork. Especially they are prolific and looking for places to exhibit the works.",
+        "exam_ko": "많은 예술가들이 소셜 네트워크를 사용하여 작품을 보여줍니다. 특히 그들은 다작을 하고 작품을 전시 할 장소를 찾고 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 14758,
+    "origin": "willful",
+    "examples": [
+      {
+        "exam_en": "willful murder",
+        "exam_ko": "고의적 살인"
+      },
+      {
+        "exam_en": "willful distortion of the facts",
+        "exam_ko": "의도적인 사실의 왜곡."
+      }
+    ]
+  },
+  {
+    "id": 14761,
+    "origin": "lurid",
+    "examples": [
+      {
+        "exam_en": "the lurid sunset",
+        "exam_ko": "불타는 듯한 석양[하늘]."
+      },
+      {
+        "exam_en": "books with lurid covers",
+        "exam_ko": "야단스러운 표지의 책."
+      }
+    ]
+  },
+  {
+    "id": 14762,
+    "origin": "shocking",
+    "examples": [
+      {
+        "exam_en": "a shocking accident",
+        "exam_ko": "소름 끼치는 사고"
+      },
+      {
+        "exam_en": "shocking conduct",
+        "exam_ko": "괘씸한 짓"
+      }
+    ]
+  },
+  {
+    "id": 14768,
+    "origin": "sparing",
+    "examples": [
+      {
+        "exam_en": "be sparing of time",
+        "exam_ko": "시간을 아끼다"
+      },
+      {
+        "exam_en": "make sparing use of resources",
+        "exam_ko": "자원을 절약하여 쓰다"
+      }
+    ]
+  },
+  {
+    "id": 14769,
+    "origin": "scotch",
+    "examples": [
+      {
+        "exam_en": "scotch a rumor",
+        "exam_ko": "소문을 뭉개 없애다"
+      },
+      {
+        "exam_en": "scotch a plan",
+        "exam_ko": "계획을 망쳐놓다."
+      }
+    ]
+  },
+  {
+    "id": 14770,
+    "origin": "economical",
+    "examples": [
+      {
+        "exam_en": "an economical housekeeper",
+        "exam_ko": "알뜰한 주부"
+      },
+      {
+        "exam_en": "be economical of one's time",
+        "exam_ko": "시간[돈]을 절약하다"
+      }
+    ]
+  },
+  {
+    "id": 14771,
+    "origin": "consuming",
+    "examples": [
+      {
+        "exam_en": "consuming public",
+        "exam_ko": "일반 소비자."
+      }
+    ]
+  },
+  {
+    "id": 14773,
+    "origin": "scarlet",
+    "examples": [
+      {
+        "exam_en": "wear scarlet",
+        "exam_ko": "진홍색 옷을 입고 있다, 고관이다."
+      },
+      {
+        "exam_en": "turn scarlet with anger",
+        "exam_ko": "화가 나서 얼굴이 새빨개지다."
+      },
+      {
+        "exam_en": "She wore a stunning scarlet dress to the gala event.",
+        "exam_ko": "그녀는 화려한 주홍색 드레스로 연회 행사에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 14776,
+    "origin": "carmine",
+    "examples": [
+      {
+        "exam_en": "carmine red",
+        "exam_ko": "카민적(赤)."
+      }
+    ]
+  },
+  {
+    "id": 14778,
+    "origin": "ruddy",
+    "examples": [
+      {
+        "exam_en": "a ruddy face",
+        "exam_ko": "혈색이 좋은 얼굴."
+      },
+      {
+        "exam_en": "the ruddy cheeks of the children",
+        "exam_ko": "아이들의 볼그스름한 뺨."
+      }
+    ]
+  }
+]

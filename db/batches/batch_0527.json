@@ -1,0 +1,242 @@
+[
+  {
+    "id": 16621,
+    "origin": "castrate",
+    "examples": [
+      {
+        "exam_en": "Animal doctors castrate male horses.",
+        "exam_ko": "수의사들은 수말을 거세한다."
+      }
+    ]
+  },
+  {
+    "id": 16622,
+    "origin": "gooey",
+    "examples": [
+      {
+        "exam_en": "go gooey over",
+        "exam_ko": "…의 일로 감상적이 되다."
+      }
+    ]
+  },
+  {
+    "id": 16626,
+    "origin": "icing",
+    "examples": [
+      {
+        "exam_en": "the icing on the cake",
+        "exam_ko": "(비유) 무익한 장식, 첨가물; 두 배의 기쁨, 최고."
+      }
+    ]
+  },
+  {
+    "id": 16629,
+    "origin": "depredation",
+    "examples": [
+      {
+        "exam_en": "the depredations of the coastline by the waves",
+        "exam_ko": "파도가 해안선을 침식한 흔적."
+      }
+    ]
+  },
+  {
+    "id": 16633,
+    "origin": "arterial",
+    "examples": [
+      {
+        "exam_en": "arterial blood",
+        "exam_ko": "동맥혈."
+      },
+      {
+        "exam_en": "an arterial road",
+        "exam_ko": "간선 도로."
+      }
+    ]
+  },
+  {
+    "id": 16634,
+    "origin": "scurvy",
+    "examples": [
+      {
+        "exam_en": "a scurvy trick",
+        "exam_ko": "비열한 속임수"
+      },
+      {
+        "exam_en": "a scurvy knave",
+        "exam_ko": "천한 놈"
+      },
+      {
+        "exam_en": "a scurvy trick ",
+        "exam_ko": "비열한 속임수"
+      },
+      {
+        "exam_en": "a scurvy knave ",
+        "exam_ko": "천한 놈"
+      }
+    ]
+  },
+  {
+    "id": 16635,
+    "origin": "saber",
+    "examples": [
+      {
+        "exam_en": "draw one's saber",
+        "exam_ko": "군도를 뽑다"
+      },
+      {
+        "exam_en": "brandish a saber",
+        "exam_ko": "무력을 휘두르다"
+      }
+    ]
+  },
+  {
+    "id": 16637,
+    "origin": "coalesce",
+    "examples": [
+      {
+        "exam_en": "coalesce into one",
+        "exam_ko": "합체하여 하나가 되다."
+      },
+      {
+        "exam_en": "Over time, the diverse group of individuals began to coalesce into a unified team with a common goal.",
+        "exam_ko": "시간이 흐름에 따라 다양한 개인들이 하나의 공통 목표를 가진 통합된 팀으로 결합하기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 16639,
+    "origin": "constipate",
+    "examples": [
+      {
+        "exam_en": "be constipated",
+        "exam_ko": "변비에 걸리다."
+      }
+    ]
+  },
+  {
+    "id": 16645,
+    "origin": "buffoon",
+    "examples": [
+      {
+        "exam_en": "play the buffoon",
+        "exam_ko": "익살부리다."
+      }
+    ]
+  },
+  {
+    "id": 16652,
+    "origin": "innuendo",
+    "examples": [
+      {
+        "exam_en": "She couldn't help but smirk at his clever innuendo during the conversation.",
+        "exam_ko": "그녀는 대화 중 그의 기발한 빈정거림에 비웃음이 나오지 않을 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 16653,
+    "origin": "eschew",
+    "examples": [
+      {
+        "exam_en": "eschew bad company",
+        "exam_ko": "나쁜 친구[술]를 피하다[삼가다]."
+      }
+    ]
+  },
+  {
+    "id": 16655,
+    "origin": "befall",
+    "examples": [
+      {
+        "exam_en": "A misfortune befell to him.",
+        "exam_ko": "재앙이 그에게 들이닥쳤다."
+      },
+      {
+        "exam_en": "He's very late―perhaps some accident has befallen him.",
+        "exam_ko": "그 사람 몹시 늦는데, 아마 무슨 사고가 났나 보다."
+      }
+    ]
+  },
+  {
+    "id": 16656,
+    "origin": "tireless",
+    "examples": [
+      {
+        "exam_en": "Her efforts for her clients are tireless.",
+        "exam_ko": "고객을 위한 그녀의 노력은 지칠 줄을 모른다."
+      },
+      {
+        "exam_en": "be tireless in wrongdoing",
+        "exam_ko": "한결같이 나쁜 짓만 저지르다."
+      }
+    ]
+  },
+  {
+    "id": 16658,
+    "origin": "harry",
+    "examples": [
+      {
+        "exam_en": "My publisher is harrying me to write another book.",
+        "exam_ko": "출판사에서 나에게 책을 하나 더 쓰라고 조르고 있다."
+      }
+    ]
+  },
+  {
+    "id": 16660,
+    "origin": "tableau",
+    "examples": [
+      {
+        "exam_en": "The artist created a beautiful tableau depicting scenes from the local history.",
+        "exam_ko": "예술가는 지역 역사의 장면을 묘사한 아름다운 풍경화를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 16661,
+    "origin": "encumbrance",
+    "examples": [
+      {
+        "exam_en": "Overeducation is an encumbrance to success.",
+        "exam_ko": "과잉 교육은 성공에 방해가 된다."
+      },
+      {
+        "exam_en": "a life without encumbrances",
+        "exam_ko": "자식이 없는 인생."
+      }
+    ]
+  },
+  {
+    "id": 16666,
+    "origin": "castoff",
+    "examples": [
+      {
+        "exam_en": "castoff clothing",
+        "exam_ko": "벗어 내버린 옷가지, 헌 옷."
+      }
+    ]
+  },
+  {
+    "id": 16667,
+    "origin": "marque",
+    "examples": [
+      {
+        "exam_en": "the dignified marque",
+        "exam_ko": "위엄있게 보이는 차종[형]."
+      }
+    ]
+  },
+  {
+    "id": 16668,
+    "origin": "disparage",
+    "examples": [
+      {
+        "exam_en": "disparage one's family",
+        "exam_ko": "가문을 더럽히다."
+      },
+      {
+        "exam_en": "He called his opponent a fool and disparaged his abilities.",
+        "exam_ko": "그는 상대방을 바보라고 부르고 그의 능력을 깔보았다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1614,
+    "origin": "fix",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">fixed</strong> the shelf to the wall.",
+        "exam_ko": "그는 선반을 벽에 <strong class=\"target-word\">고정시켰다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">fixed</strong> the broken chair leg.",
+        "exam_ko": "그녀는 부러진 의자 다리를 <strong class=\"target-word\">고쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1615,
+    "origin": "back",
+    "examples": [
+      {
+        "exam_en": "He has pain in his lower <strong class=\"target-word\">back</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">허리</strong>에 통증이 있다."
+      },
+      {
+        "exam_en": "She sat in the <strong class=\"target-word\">back</strong> of the room.",
+        "exam_ko": "그녀는 방 <strong class=\"target-word\">뒤쪽</strong>에 앉았다."
+      }
+    ]
+  },
+  {
+    "id": 1616,
+    "origin": "justify",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">justify</strong> his actions.",
+        "exam_ko": "그는 자신의 행동을 <strong class=\"target-word\">정당화</strong>하려 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">justified</strong> herself by her success.",
+        "exam_ko": "그녀는 성공으로 자신의 행위를 <strong class=\"target-word\">정당화했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1617,
+    "origin": "knock",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">knocked</strong> at the door, but nobody answered.",
+        "exam_ko": "그녀는 문을 <strong class=\"target-word\">노크했지만</strong> 아무도 대답하지 않았다."
+      },
+      {
+        "exam_en": "Fortune <strong class=\"target-word\">knocks</strong> at least once at every man's gate.",
+        "exam_ko": "행운은 누구에게나 적어도 한 번은 <strong class=\"target-word\">찾아온다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1618,
+    "origin": "permit",
+    "examples": [
+      {
+        "exam_en": "You are not <strong class=\"target-word\">permitted</strong> to enter this area.",
+        "exam_ko": "이 구역에는 <strong class=\"target-word\">출입이 허가되지</strong> 않는다."
+      },
+      {
+        "exam_en": "If I am <strong class=\"target-word\">permitted</strong> a word, I would raise some objections.",
+        "exam_ko": "괜찮으시다면 반대 의견을 <strong class=\"target-word\">말씀드려도 될까요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1619,
+    "origin": "occupy",
+    "examples": [
+      {
+        "exam_en": "An old piano <strong class=\"target-word\">occupies</strong> one corner of the room.",
+        "exam_ko": "낡은 피아노 한 대가 방 한쪽 구석을 <strong class=\"target-word\">차지하고</strong> 있다."
+      },
+      {
+        "exam_en": "The speeches <strong class=\"target-word\">occupied</strong> the whole afternoon.",
+        "exam_ko": "연설은 오후 내내 <strong class=\"target-word\">계속되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1620,
+    "origin": "surround",
+    "examples": [
+      {
+        "exam_en": "Police <strong class=\"target-word\">surrounded</strong> the building quickly.",
+        "exam_ko": "경찰이 건물을 신속하게 <strong class=\"target-word\">포위했다</strong>."
+      },
+      {
+        "exam_en": "The cabin was <strong class=\"target-word\">surrounded</strong> by darkness.",
+        "exam_ko": "오두막집은 어둠에 <strong class=\"target-word\">둘러싸여</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1621,
+    "origin": "list",
+    "examples": [
+      {
+        "exam_en": "He checked the <strong class=\"target-word\">list</strong> of members.",
+        "exam_ko": "그는 회원 <strong class=\"target-word\">명단</strong>을 확인했다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">list</strong> of things to buy.",
+        "exam_ko": "그녀는 살 것들의 <strong class=\"target-word\">목록</strong>을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1622,
+    "origin": "paint",
+    "examples": [
+      {
+        "exam_en": "He opened a box of <strong class=\"target-word\">paints</strong> and started drawing.",
+        "exam_ko": "그는 <strong class=\"target-word\">그림물감</strong> 상자를 열고 그림을 그리기 시작했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">paint</strong> on the wall is peeling.",
+        "exam_ko": "벽의 <strong class=\"target-word\">페인트</strong>가 벗겨지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1623,
+    "origin": "connect",
+    "examples": [
+      {
+        "exam_en": "A long hallway <strong class=\"target-word\">connects</strong> all the rooms.",
+        "exam_ko": "긴 복도가 모든 방을 <strong class=\"target-word\">연결한다</strong>."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">connected</strong> the two islands with a bridge.",
+        "exam_ko": "그들은 두 섬을 다리로 <strong class=\"target-word\">연결했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1624,
+    "origin": "abandon",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">abandoned</strong> his country during the war.",
+        "exam_ko": "그는 전쟁 중에 조국을 <strong class=\"target-word\">떠났다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">abandoned</strong> his wife without reason.",
+        "exam_ko": "그는 이유 없이 아내를 <strong class=\"target-word\">버렸다</strong>."
+      },
+      {
+        "exam_en": "She couldn't <strong class=\"target-word\">abandon</strong> her babies to him.",
+        "exam_ko": "그녀는 그에게 아기를 <strong class=\"target-word\">포기할</strong> 수 없었다."
+      }
+    ]
+  },
+  {
+    "id": 1625,
+    "origin": "construct",
+    "examples": [
+      {
+        "exam_en": "The detective story is well <strong class=\"target-word\">constructed</strong>.",
+        "exam_ko": "그 추리 소설은 <strong class=\"target-word\">구성이</strong> 잘 되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 1626,
+    "origin": "quote",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">quoted</strong> a verse from the poem.",
+        "exam_ko": "그녀는 시에서 한 행을 <strong class=\"target-word\">인용했다</strong>."
+      },
+      {
+        "exam_en": "He often <strong class=\"target-word\">quotes</strong> the Bible.",
+        "exam_ko": "그는 자주 성서를 <strong class=\"target-word\">인용한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1627,
+    "origin": "blame",
+    "examples": [
+      {
+        "exam_en": "I was <strong class=\"target-word\">blamed</strong> for the murder.",
+        "exam_ko": "나는 살인 누명을 <strong class=\"target-word\">썼다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">blames</strong> the divorce on him.",
+        "exam_ko": "그녀는 이혼의 원인을 그의 <strong class=\"target-word\">탓으로 돌린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1628,
+    "origin": "separate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">separated</strong> the two quarreling players.",
+        "exam_ko": "그는 다투는 두 선수를 <strong class=\"target-word\">떼어놓았다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">separated</strong> the egg white from the yolk.",
+        "exam_ko": "그녀는 달걀흰자와 노른자를 <strong class=\"target-word\">분리했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1629,
+    "origin": "dismiss",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">dismissed</strong> the class early.",
+        "exam_ko": "선생님은 수업을 일찍 <strong class=\"target-word\">끝냈다</strong>."
+      },
+      {
+        "exam_en": "The soldiers were <strong class=\"target-word\">dismissed</strong> after training.",
+        "exam_ko": "군인들은 훈련 후 <strong class=\"target-word\">해산되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1630,
+    "origin": "incorporate",
+    "examples": [
+      {
+        "exam_en": "They <strong class=\"target-word\">incorporated</strong> the business as a company.",
+        "exam_ko": "그들은 사업을 회사로 <strong class=\"target-word\">법인화했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">incorporated</strong> the changes into the proposal.",
+        "exam_ko": "그녀는 변경 사항을 제안서에 <strong class=\"target-word\">반영했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1631,
+    "origin": "acknowledge",
+    "examples": [
+      {
+        "exam_en": "The loser <strong class=\"target-word\">acknowledged</strong> defeat.",
+        "exam_ko": "패자는 패배를 <strong class=\"target-word\">인정했다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">acknowledge</strong> him as our chairman.",
+        "exam_ko": "우리는 그를 의장으로 <strong class=\"target-word\">인정한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1632,
+    "origin": "interpret",
+    "examples": [
+      {
+        "exam_en": "She asked him to <strong class=\"target-word\">interpret</strong> her dream.",
+        "exam_ko": "그녀는 그에게 꿈을 <strong class=\"target-word\">해석해</strong> 달라고 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">interpreted</strong> the meaning of the passage.",
+        "exam_ko": "그는 구절의 의미를 <strong class=\"target-word\">풀이했다</strong>."
+      },
+      {
+        "exam_en": "Experts <strong class=\"target-word\">interpreted</strong> the test results carefully.",
+        "exam_ko": "전문가들이 시험 결과를 신중하게 <strong class=\"target-word\">해석했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1633,
+    "origin": "alter",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">altered</strong> the dress to fit her.",
+        "exam_ko": "그녀는 몸에 맞게 드레스를 <strong class=\"target-word\">수선했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">altered</strong> his lifestyle completely.",
+        "exam_ko": "그는 생활 방식을 완전히 <strong class=\"target-word\">바꿨다</strong>."
+      }
+    ]
+  }
+]

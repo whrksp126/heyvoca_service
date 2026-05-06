@@ -1,0 +1,282 @@
+[
+  {
+    "id": 709,
+    "origin": "relative",
+    "examples": [
+      {
+        "exam_en": "She is my closest <strong class=\"target-word\">relative</strong>.",
+        "exam_ko": "그녀는 나의 가장 가까운 <strong class=\"target-word\">친척</strong>이다."
+      },
+      {
+        "exam_en": "I have a distant <strong class=\"target-word\">relative</strong> in Canada.",
+        "exam_ko": "나는 캐나다에 먼 <strong class=\"target-word\">친척</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 710,
+    "origin": "mouse",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">mouse</strong> ran across the kitchen floor.",
+        "exam_ko": "<strong class=\"target-word\">쥐</strong> 한 마리가 주방 바닥을 가로질러 달렸다."
+      },
+      {
+        "exam_en": "Click the <strong class=\"target-word\">mouse</strong> to select the file.",
+        "exam_ko": "파일을 선택하려면 <strong class=\"target-word\">마우스</strong>를 클릭하세요."
+      }
+    ]
+  },
+  {
+    "id": 711,
+    "origin": "model",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">model</strong> of patience.",
+        "exam_ko": "그녀는 인내의 <strong class=\"target-word\">본보기</strong>이다."
+      },
+      {
+        "exam_en": "He bought the latest car <strong class=\"target-word\">model</strong>.",
+        "exam_ko": "그는 최신 자동차 <strong class=\"target-word\">모델</strong>을 구입했다."
+      }
+    ]
+  },
+  {
+    "id": 712,
+    "origin": "metal",
+    "examples": [
+      {
+        "exam_en": "Gold is a precious <strong class=\"target-word\">metal</strong>.",
+        "exam_ko": "금은 귀한 <strong class=\"target-word\">금속</strong>이다."
+      },
+      {
+        "exam_en": "The bridge is made of <strong class=\"target-word\">metal</strong>.",
+        "exam_ko": "그 다리는 <strong class=\"target-word\">금속</strong>으로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 713,
+    "origin": "meal",
+    "examples": [
+      {
+        "exam_en": "We always talk during <strong class=\"target-word\">meals</strong>.",
+        "exam_ko": "우리는 항상 <strong class=\"target-word\">식사</strong> 중에 이야기한다."
+      },
+      {
+        "exam_en": "He eats fruit between <strong class=\"target-word\">meals</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">식사</strong> 사이에 과일을 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 714,
+    "origin": "match",
+    "examples": [
+      {
+        "exam_en": "He lit the candle with a <strong class=\"target-word\">match</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">성냥</strong>으로 촛불을 켰다."
+      },
+      {
+        "exam_en": "She bought a box of <strong class=\"target-word\">matches</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">성냥</strong> 한 통을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 715,
+    "origin": "magic",
+    "examples": [
+      {
+        "exam_en": "The magician performed stunning <strong class=\"target-word\">magic</strong> tricks.",
+        "exam_ko": "마술사가 놀라운 <strong class=\"target-word\">마법</strong> 묘기를 선보였다."
+      },
+      {
+        "exam_en": "The forest had a <strong class=\"target-word\">magic</strong> atmosphere at night.",
+        "exam_ko": "그 숲은 밤에 <strong class=\"target-word\">마법</strong> 같은 분위기를 풍겼다."
+      }
+    ]
+  },
+  {
+    "id": 716,
+    "origin": "lip",
+    "examples": [
+      {
+        "exam_en": "She bit her <strong class=\"target-word\">lip</strong> nervously.",
+        "exam_ko": "그녀는 긴장하여 <strong class=\"target-word\">입술</strong>을 깨물었다."
+      },
+      {
+        "exam_en": "He curled his <strong class=\"target-word\">lip</strong> in contempt.",
+        "exam_ko": "그는 경멸하며 <strong class=\"target-word\">입술</strong>을 비죽거렸다."
+      }
+    ]
+  },
+  {
+    "id": 717,
+    "origin": "habit",
+    "examples": [
+      {
+        "exam_en": "She has sensible daily <strong class=\"target-word\">habits</strong>.",
+        "exam_ko": "그녀는 현명한 일상 <strong class=\"target-word\">습관</strong>을 가지고 있다."
+      },
+      {
+        "exam_en": "He is a creature of <strong class=\"target-word\">habit</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">습관</strong>에 매인 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 718,
+    "origin": "gun",
+    "examples": [
+      {
+        "exam_en": "The soldier fired the <strong class=\"target-word\">gun</strong> at the target.",
+        "exam_ko": "군인이 표적을 향해 <strong class=\"target-word\">총</strong>을 발사했다."
+      },
+      {
+        "exam_en": "He kept a <strong class=\"target-word\">gun</strong> for self-defense.",
+        "exam_ko": "그는 자기 방어를 위해 <strong class=\"target-word\">총</strong>을 소지했다."
+      }
+    ]
+  },
+  {
+    "id": 719,
+    "origin": "goal",
+    "examples": [
+      {
+        "exam_en": "She worked hard to achieve her <strong class=\"target-word\">goal</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">목표</strong>를 달성하기 위해 열심히 노력했다."
+      },
+      {
+        "exam_en": "He never gave up pursuing his <strong class=\"target-word\">goal</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">목표</strong>를 추구하는 것을 결코 포기하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 720,
+    "origin": "gift",
+    "examples": [
+      {
+        "exam_en": "She received a Christmas <strong class=\"target-word\">gift</strong> from her friend.",
+        "exam_ko": "그녀는 친구로부터 크리스마스 <strong class=\"target-word\">선물</strong>을 받았다."
+      },
+      {
+        "exam_en": "He has a natural <strong class=\"target-word\">gift</strong> for music.",
+        "exam_ko": "그는 음악에 타고난 <strong class=\"target-word\">재능</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 721,
+    "origin": "furniture",
+    "examples": [
+      {
+        "exam_en": "They bought a piece of costly <strong class=\"target-word\">furniture</strong>.",
+        "exam_ko": "그들은 값비싼 <strong class=\"target-word\">가구</strong> 한 점을 구입했다."
+      },
+      {
+        "exam_en": "The room has built-in <strong class=\"target-word\">furniture</strong>.",
+        "exam_ko": "그 방에는 붙박이 <strong class=\"target-word\">가구</strong>가 있다."
+      }
+    ]
+  },
+  {
+    "id": 722,
+    "origin": "fun",
+    "examples": [
+      {
+        "exam_en": "They played tennis just for <strong class=\"target-word\">fun</strong>.",
+        "exam_ko": "그들은 그냥 <strong class=\"target-word\">재미</strong>로 테니스를 쳤다."
+      },
+      {
+        "exam_en": "I didn't see the <strong class=\"target-word\">fun</strong> of playing cards.",
+        "exam_ko": "카드놀이를 해도 아무 <strong class=\"target-word\">재미</strong>가 없었다."
+      }
+    ]
+  },
+  {
+    "id": 723,
+    "origin": "frog",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">frog</strong> jumped into the pond.",
+        "exam_ko": "<strong class=\"target-word\">개구리</strong> 한 마리가 연못으로 뛰어들었다."
+      },
+      {
+        "exam_en": "She had a <strong class=\"target-word\">frog</strong> in her throat.",
+        "exam_ko": "그녀는 목소리가 <strong class=\"target-word\">개구리</strong> 울음소리처럼 걸걸했다."
+      }
+    ]
+  },
+  {
+    "id": 724,
+    "origin": "friendship",
+    "examples": [
+      {
+        "exam_en": "A misunderstanding broke up their <strong class=\"target-word\">friendship</strong>.",
+        "exam_ko": "오해가 그들의 <strong class=\"target-word\">우정</strong>을 깨뜨렸다."
+      },
+      {
+        "exam_en": "Shared experiences cement a <strong class=\"target-word\">friendship</strong>.",
+        "exam_ko": "공유된 경험이 <strong class=\"target-word\">우정</strong>을 굳힌다."
+      }
+    ]
+  },
+  {
+    "id": 725,
+    "origin": "cave",
+    "examples": [
+      {
+        "exam_en": "People lived in <strong class=\"target-word\">caves</strong> long ago.",
+        "exam_ko": "옛날에는 사람들이 <strong class=\"target-word\">동굴</strong>에서 살았다."
+      },
+      {
+        "exam_en": "The ceiling <strong class=\"target-word\">caved</strong> in on top of them.",
+        "exam_ko": "천장이 그들 위로 <strong class=\"target-word\">내려앉았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 726,
+    "origin": "castle",
+    "examples": [
+      {
+        "exam_en": "The old <strong class=\"target-word\">castle</strong> stood on a hill.",
+        "exam_ko": "오래된 <strong class=\"target-word\">성</strong>이 언덕 위에 서 있었다."
+      },
+      {
+        "exam_en": "They toured the medieval <strong class=\"target-word\">castle</strong> last summer.",
+        "exam_ko": "그들은 지난여름에 중세 <strong class=\"target-word\">성</strong>을 관람했다."
+      }
+    ]
+  },
+  {
+    "id": 727,
+    "origin": "captain",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">captain</strong> gave orders to the crew.",
+        "exam_ko": "<strong class=\"target-word\">선장</strong>이 승무원에게 명령을 내렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">captain</strong> was stripped of his rank.",
+        "exam_ko": "그 <strong class=\"target-word\">대위</strong>는 계급장을 박탈당했다."
+      }
+    ]
+  },
+  {
+    "id": 728,
+    "origin": "capital",
+    "examples": [
+      {
+        "exam_en": "Paris is the fashion <strong class=\"target-word\">capital</strong> of the world.",
+        "exam_ko": "파리는 세계의 패션 <strong class=\"target-word\">수도</strong>이다."
+      },
+      {
+        "exam_en": "The company raised <strong class=\"target-word\">capital</strong> to expand.",
+        "exam_ko": "회사는 확장을 위해 <strong class=\"target-word\">자본</strong>을 조달했다."
+      }
+    ]
+  }
+]

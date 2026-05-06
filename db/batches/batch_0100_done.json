@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2065,
+    "origin": "faint",
+    "examples": [
+      {
+        "exam_en": "She detected a <strong class=\"target-word\">faint</strong> odor of gas in the room.",
+        "exam_ko": "그녀는 방에서 <strong class=\"target-word\">희미한</strong> 가스 냄새를 맡았다."
+      },
+      {
+        "exam_en": "He spoke in a <strong class=\"target-word\">faint</strong> voice after surgery.",
+        "exam_ko": "그는 수술 후 <strong class=\"target-word\">가냘픈</strong> 목소리로 말했다."
+      }
+    ]
+  },
+  {
+    "id": 2066,
+    "origin": "amazing",
+    "examples": [
+      {
+        "exam_en": "It is <strong class=\"target-word\">amazing</strong> how much they finished already.",
+        "exam_ko": "그들이 벌써 그만큼 끝냈다니 <strong class=\"target-word\">놀랍다</strong>."
+      },
+      {
+        "exam_en": "This wine is really <strong class=\"target-word\">amazing</strong>.",
+        "exam_ko": "이 와인은 정말 <strong class=\"target-word\">기막히게</strong> 좋다."
+      }
+    ]
+  },
+  {
+    "id": 2067,
+    "origin": "comparable",
+    "examples": [
+      {
+        "exam_en": "I believe my income is <strong class=\"target-word\">comparable</strong> with the average.",
+        "exam_ko": "나는 내 수입이 평균과 <strong class=\"target-word\">비교할 만하다</strong>고 생각한다."
+      },
+      {
+        "exam_en": "This shop is <strong class=\"target-word\">comparable</strong> to the finest in Rome.",
+        "exam_ko": "이 가게는 로마 최고의 양복점과 <strong class=\"target-word\">견줄 만하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2068,
+    "origin": "successive",
+    "examples": [
+      {
+        "exam_en": "It rained for four <strong class=\"target-word\">successive</strong> days.",
+        "exam_ko": "<strong class=\"target-word\">연달아</strong> 4일 동안 비가 내렸다."
+      },
+      {
+        "exam_en": "She won on the tenth <strong class=\"target-word\">successive</strong> attempt.",
+        "exam_ko": "그녀는 열 번째 <strong class=\"target-word\">연속</strong> 시도에서 성공했다."
+      }
+    ]
+  },
+  {
+    "id": 2069,
+    "origin": "realistic",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">realistic</strong> view of life.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">현실적인</strong> 인생관을 가지고 있다."
+      },
+      {
+        "exam_en": "There is no <strong class=\"target-word\">realistic</strong> need for it.",
+        "exam_ko": "<strong class=\"target-word\">현실적으로</strong> 그것의 필요가 없다."
+      }
+    ]
+  },
+  {
+    "id": 2070,
+    "origin": "decent",
+    "examples": [
+      {
+        "exam_en": "He earns a <strong class=\"target-word\">decent</strong> living as a teacher.",
+        "exam_ko": "그는 교사로서 <strong class=\"target-word\">분수에 맞는</strong> 생활을 한다."
+      },
+      {
+        "exam_en": "Please use <strong class=\"target-word\">decent</strong> language in public.",
+        "exam_ko": "공공장소에서는 <strong class=\"target-word\">품위 있는</strong> 말을 써라."
+      }
+    ]
+  },
+  {
+    "id": 2071,
+    "origin": "unnecessary",
+    "examples": [
+      {
+        "exam_en": "Avoid <strong class=\"target-word\">unnecessary</strong> expenses this month.",
+        "exam_ko": "이번 달에는 <strong class=\"target-word\">불필요한</strong> 지출을 피해라."
+      },
+      {
+        "exam_en": "That was an <strong class=\"target-word\">unnecessary</strong> risk to take.",
+        "exam_ko": "그것은 감수할 <strong class=\"target-word\">불필요한</strong> 위험이었다."
+      }
+    ]
+  },
+  {
+    "id": 2072,
+    "origin": "flying",
+    "examples": [
+      {
+        "exam_en": "She enrolled in a <strong class=\"target-word\">flying</strong> school last year.",
+        "exam_ko": "그녀는 작년에 <strong class=\"target-word\">항공</strong> 학교에 등록했다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">flying</strong> insect landed on the window.",
+        "exam_ko": "<strong class=\"target-word\">나는</strong> 곤충이 창문에 앉았다."
+      }
+    ]
+  },
+  {
+    "id": 2073,
+    "origin": "fucking",
+    "examples": [
+      {
+        "exam_en": "What a <strong class=\"target-word\">fucking</strong> hat you have on!",
+        "exam_ko": "정말 <strong class=\"target-word\">형편없는</strong> 모자를 쓰고 있군!"
+      }
+    ]
+  },
+  {
+    "id": 2074,
+    "origin": "random",
+    "examples": [
+      {
+        "exam_en": "That was just a <strong class=\"target-word\">random</strong> guess.",
+        "exam_ko": "그것은 그냥 <strong class=\"target-word\">어림짐작</strong>이었다."
+      },
+      {
+        "exam_en": "He made <strong class=\"target-word\">random</strong> associations during the talk.",
+        "exam_ko": "그는 대화 중에 <strong class=\"target-word\">두서없는</strong> 연상을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2075,
+    "origin": "influential",
+    "examples": [
+      {
+        "exam_en": "He is an <strong class=\"target-word\">influential</strong> man in politics.",
+        "exam_ko": "그는 정치에서 <strong class=\"target-word\">유력한</strong> 사람이다."
+      },
+      {
+        "exam_en": "This is a highly <strong class=\"target-word\">influential</strong> newspaper.",
+        "exam_ko": "이것은 <strong class=\"target-word\">영향력이</strong> 매우 <strong class=\"target-word\">큰</strong> 신문이다."
+      }
+    ]
+  },
+  {
+    "id": 2076,
+    "origin": "genetic",
+    "examples": [
+      {
+        "exam_en": "The test revealed important <strong class=\"target-word\">genetic</strong> information.",
+        "exam_ko": "검사 결과 중요한 <strong class=\"target-word\">유전자</strong> 정보가 드러났다."
+      },
+      {
+        "exam_en": "She was born with a <strong class=\"target-word\">genetic</strong> defect.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">유전적</strong> 결함을 안고 태어났다."
+      }
+    ]
+  },
+  {
+    "id": 2077,
+    "origin": "neat",
+    "examples": [
+      {
+        "exam_en": "She is a very <strong class=\"target-word\">neat</strong> person in her appearance.",
+        "exam_ko": "그녀는 옷차림이 매우 <strong class=\"target-word\">깔끔한</strong> 사람이다."
+      },
+      {
+        "exam_en": "His desk was always <strong class=\"target-word\">neat</strong> and tidy.",
+        "exam_ko": "그의 책상은 항상 <strong class=\"target-word\">깔끔하게</strong> 정돈되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2078,
+    "origin": "marvelous",
+    "examples": [
+      {
+        "exam_en": "That was a truly <strong class=\"target-word\">marvelous</strong> idea.",
+        "exam_ko": "그것은 정말 <strong class=\"target-word\">놀라운</strong> 생각이었다."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">marvelous</strong> that he did such a thing.",
+        "exam_ko": "그가 그런 일을 해냈다니 <strong class=\"target-word\">놀랍다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2079,
+    "origin": "crazy",
+    "examples": [
+      {
+        "exam_en": "He was nearly <strong class=\"target-word\">crazy</strong> with worry.",
+        "exam_ko": "그는 걱정이 되어 거의 <strong class=\"target-word\">미친</strong> 듯했다."
+      },
+      {
+        "exam_en": "Are you <strong class=\"target-word\">crazy</strong>?",
+        "exam_ko": "<strong class=\"target-word\">제정신</strong>이니?"
+      }
+    ]
+  },
+  {
+    "id": 2080,
+    "origin": "damp",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">damp</strong> air made the room feel cold.",
+        "exam_ko": "<strong class=\"target-word\">축축한</strong> 공기가 방을 춥게 느끼게 했다."
+      },
+      {
+        "exam_en": "The bad news cast a <strong class=\"target-word\">damp</strong> on the party.",
+        "exam_ko": "나쁜 소식이 파티에 <strong class=\"target-word\">어두운 그림자</strong>를 드리웠다."
+      }
+    ]
+  },
+  {
+    "id": 2081,
+    "origin": "gigantic",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">gigantic</strong> garbage heap near the site.",
+        "exam_ko": "현장 근처에 <strong class=\"target-word\">거대한</strong> 쓰레기 더미가 있었다."
+      },
+      {
+        "exam_en": "They launched a <strong class=\"target-word\">gigantic</strong> construction project.",
+        "exam_ko": "그들은 <strong class=\"target-word\">거대한</strong> 건설 프로젝트를 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 2082,
+    "origin": "bottom",
+    "examples": [
+      {
+        "exam_en": "There are notes at the <strong class=\"target-word\">bottom</strong> of the page.",
+        "exam_ko": "페이지 <strong class=\"target-word\">하단</strong>에 각주가 있다."
+      },
+      {
+        "exam_en": "The ship reached the <strong class=\"target-word\">bottom</strong> of the sea.",
+        "exam_ko": "배가 바다 <strong class=\"target-word\">바닥</strong>에 가라앉았다."
+      },
+      {
+        "exam_en": "You only have one cavity on the <strong class=\"target-word\">bottom</strong>.",
+        "exam_ko": "<strong class=\"target-word\">아래쪽</strong>에 한 개의 충치가 있습니다."
+      }
+    ]
+  },
+  {
+    "id": 2083,
+    "origin": "skilled",
+    "examples": [
+      {
+        "exam_en": "We need a <strong class=\"target-word\">skilled</strong> worker for this job.",
+        "exam_ko": "이 작업에는 <strong class=\"target-word\">숙련된</strong> 인력이 필요하다."
+      },
+      {
+        "exam_en": "She is a highly <strong class=\"target-word\">skilled</strong> specialist.",
+        "exam_ko": "그녀는 기술이 매우 뛰어난 <strong class=\"target-word\">숙련된</strong> 전문가다."
+      }
+    ]
+  },
+  {
+    "id": 2084,
+    "origin": "subtle",
+    "examples": [
+      {
+        "exam_en": "There was a <strong class=\"target-word\">subtle</strong> odor of perfume in the air.",
+        "exam_ko": "공기 중에 <strong class=\"target-word\">은은한</strong> 향수 냄새가 났다."
+      },
+      {
+        "exam_en": "Her speech was full of <strong class=\"target-word\">subtle</strong> irony.",
+        "exam_ko": "그녀의 연설에는 <strong class=\"target-word\">미묘한</strong> 풍자가 가득했다."
+      }
+    ]
+  }
+]

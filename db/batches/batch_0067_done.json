@@ -1,0 +1,298 @@
+[
+  {
+    "id": 1391,
+    "origin": "very",
+    "examples": [
+      {
+        "exam_en": "The box is <strong class=\"target-word\">very</strong> heavy to carry.",
+        "exam_ko": "그 상자는 들기에 <strong class=\"target-word\">매우</strong> 무겁다."
+      },
+      {
+        "exam_en": "Dogs are <strong class=\"target-word\">very</strong> useful animals for humans.",
+        "exam_ko": "개는 인간에게 <strong class=\"target-word\">매우</strong> 유용한 동물이다."
+      }
+    ]
+  },
+  {
+    "id": 1392,
+    "origin": "guy",
+    "examples": [
+      {
+        "exam_en": "He is a really good <strong class=\"target-word\">guy</strong> to work with.",
+        "exam_ko": "그는 함께 일하기 정말 좋은 <strong class=\"target-word\">녀석</strong>이다."
+      },
+      {
+        "exam_en": "That tough <strong class=\"target-word\">guy</strong> never backs down from a fight.",
+        "exam_ko": "그 억센 <strong class=\"target-word\">놈</strong>은 싸움에서 절대 물러서지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 1394,
+    "origin": "june",
+    "examples": [
+      {
+        "exam_en": "She became a beautiful <strong class=\"target-word\">June</strong> bride.",
+        "exam_ko": "그녀는 아름다운 <strong class=\"target-word\">6월</strong>의 신부가 되었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">June</strong> marriages are said to bring happiness.",
+        "exam_ko": "<strong class=\"target-word\">6월</strong>의 결혼은 행복을 가져다준다고 한다."
+      }
+    ]
+  },
+  {
+    "id": 1395,
+    "origin": "congratulation",
+    "examples": [
+      {
+        "exam_en": "The news of her promotion is worthy of <strong class=\"target-word\">congratulation</strong>.",
+        "exam_ko": "그녀의 승진 소식은 <strong class=\"target-word\">축하</strong>받을 만한 일이다."
+      },
+      {
+        "exam_en": "He offered his <strong class=\"target-word\">congratulations</strong> on her success.",
+        "exam_ko": "그는 그녀의 성공에 <strong class=\"target-word\">축하</strong>의 말을 전했다."
+      }
+    ]
+  },
+  {
+    "id": 1396,
+    "origin": "age",
+    "examples": [
+      {
+        "exam_en": "The doctor asked about the patient's <strong class=\"target-word\">age</strong>.",
+        "exam_ko": "의사는 환자의 <strong class=\"target-word\">나이</strong>를 물었다."
+      },
+      {
+        "exam_en": "They are about the same <strong class=\"target-word\">age</strong> as each other.",
+        "exam_ko": "그들은 서로 비슷한 <strong class=\"target-word\">나이</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1397,
+    "origin": "same",
+    "examples": [
+      {
+        "exam_en": "You bought the <strong class=\"target-word\">same</strong> book that I have.",
+        "exam_ko": "너는 내가 가진 것과 <strong class=\"target-word\">같은</strong> 책을 샀다."
+      },
+      {
+        "exam_en": "This is the <strong class=\"target-word\">same</strong> car we were in yesterday.",
+        "exam_ko": "이 차는 어제 우리가 탄 바로 <strong class=\"target-word\">그</strong> 차다."
+      }
+    ]
+  },
+  {
+    "id": 1398,
+    "origin": "than",
+    "examples": [
+      {
+        "exam_en": "She is smaller <strong class=\"target-word\">than</strong> I am.",
+        "exam_ko": "그녀는 나<strong class=\"target-word\">보다</strong> 키가 작다."
+      },
+      {
+        "exam_en": "He is more wise <strong class=\"target-word\">than</strong> clever.",
+        "exam_ko": "그는 영리하다기<strong class=\"target-word\">보다는</strong> 슬기롭다."
+      }
+    ]
+  },
+  {
+    "id": 1399,
+    "origin": "younger",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">younger</strong> generation thinks very differently.",
+        "exam_ko": "<strong class=\"target-word\">젊은</strong> 세대는 매우 다르게 생각한다."
+      },
+      {
+        "exam_en": "My <strong class=\"target-word\">younger</strong> brother just started high school.",
+        "exam_ko": "내 <strong class=\"target-word\">남동생</strong>이 이제 막 고등학교에 입학했다."
+      }
+    ]
+  },
+  {
+    "id": 1400,
+    "origin": "youngest",
+    "examples": [
+      {
+        "exam_en": "He is the <strong class=\"target-word\">youngest</strong> employee in the office.",
+        "exam_ko": "그는 사무실에서 <strong class=\"target-word\">가장 어린</strong> 사원이다."
+      },
+      {
+        "exam_en": "Their <strong class=\"target-word\">youngest</strong> son just turned five years old.",
+        "exam_ko": "그들의 <strong class=\"target-word\">막내</strong>아들이 방금 다섯 살이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 1401,
+    "origin": "productivity",
+    "examples": [
+      {
+        "exam_en": "High costs and low <strong class=\"target-word\">productivity</strong> hurt the business.",
+        "exam_ko": "높은 비용과 낮은 <strong class=\"target-word\">생산성</strong>이 사업에 타격을 주었다."
+      },
+      {
+        "exam_en": "Remote work improved her overall <strong class=\"target-word\">productivity</strong>.",
+        "exam_ko": "재택근무가 그녀의 전반적인 <strong class=\"target-word\">생산성</strong>을 높였다."
+      }
+    ]
+  },
+  {
+    "id": 1402,
+    "origin": "relieve",
+    "examples": [
+      {
+        "exam_en": "Music helped <strong class=\"target-word\">relieve</strong> his homesickness.",
+        "exam_ko": "음악이 그의 향수병을 <strong class=\"target-word\">달래는</strong> 데 도움이 되었다."
+      },
+      {
+        "exam_en": "A walk outside can <strong class=\"target-word\">relieve</strong> stress quickly.",
+        "exam_ko": "밖에서 걷는 것이 스트레스를 빠르게 <strong class=\"target-word\">해소해</strong> 줄 수 있다."
+      },
+      {
+        "exam_en": "The medicine <strong class=\"target-word\">relieved</strong> her pain within an hour.",
+        "exam_ko": "약이 한 시간 안에 그녀의 통증을 <strong class=\"target-word\">완화시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1404,
+    "origin": "vulnerable",
+    "examples": [
+      {
+        "exam_en": "His moral stance is <strong class=\"target-word\">vulnerable</strong> to criticism.",
+        "exam_ko": "그의 도덕적 입장은 비판에 <strong class=\"target-word\">취약하다</strong>."
+      },
+      {
+        "exam_en": "The soldiers were in a position <strong class=\"target-word\">vulnerable</strong> to attack.",
+        "exam_ko": "병사들은 공격에 <strong class=\"target-word\">노출된</strong> 위치에 있었다."
+      },
+      {
+        "exam_en": "Children are especially <strong class=\"target-word\">vulnerable</strong> to this disease.",
+        "exam_ko": "어린이들은 이 질병에 특히 <strong class=\"target-word\">취약하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1405,
+    "origin": "valuable",
+    "examples": [
+      {
+        "exam_en": "They sold some <strong class=\"target-word\">valuable</strong> furniture at the auction.",
+        "exam_ko": "그들은 경매에서 <strong class=\"target-word\">값비싼</strong> 가구를 팔았다."
+      },
+      {
+        "exam_en": "The museum displayed a <strong class=\"target-word\">valuable</strong> antique vase.",
+        "exam_ko": "박물관이 <strong class=\"target-word\">값진</strong> 고대 꽃병을 전시했다."
+      }
+    ]
+  },
+  {
+    "id": 1406,
+    "origin": "strengthen",
+    "examples": [
+      {
+        "exam_en": "The engineer worked to <strong class=\"target-word\">strengthen</strong> the old bridge.",
+        "exam_ko": "엔지니어는 낡은 다리를 <strong class=\"target-word\">보강하기</strong> 위해 작업했다."
+      },
+      {
+        "exam_en": "Exercising every day <strong class=\"target-word\">strengthens</strong> the heart.",
+        "exam_ko": "매일 운동하는 것은 심장을 <strong class=\"target-word\">강화한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1407,
+    "origin": "response",
+    "examples": [
+      {
+        "exam_en": "We received a quick <strong class=\"target-word\">response</strong> from the team.",
+        "exam_ko": "우리는 팀으로부터 빠른 <strong class=\"target-word\">답변</strong>을 받았다."
+      },
+      {
+        "exam_en": "His body showed a strong <strong class=\"target-word\">response</strong> to the medication.",
+        "exam_ko": "그의 몸은 약에 강한 <strong class=\"target-word\">반응</strong>을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 1408,
+    "origin": "regardless",
+    "examples": [
+      {
+        "exam_en": "I want the best result <strong class=\"target-word\">regardless</strong> of the cost.",
+        "exam_ko": "나는 비용에 <strong class=\"target-word\">상관없이</strong> 최상의 결과를 원한다."
+      },
+      {
+        "exam_en": "She continued working <strong class=\"target-word\">regardless</strong> of the difficulty.",
+        "exam_ko": "그녀는 어려움에 <strong class=\"target-word\">개의치 않고</strong> 계속 일했다."
+      }
+    ]
+  },
+  {
+    "id": 1409,
+    "origin": "recharge",
+    "examples": [
+      {
+        "exam_en": "He needs a vacation to <strong class=\"target-word\">recharge</strong> his energy.",
+        "exam_ko": "그는 에너지를 <strong class=\"target-word\">재충전하기</strong> 위해 휴가가 필요하다."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">recharge</strong> your phone before the trip.",
+        "exam_ko": "여행 전에 휴대폰을 <strong class=\"target-word\">충전해</strong> 두세요."
+      }
+    ]
+  },
+  {
+    "id": 1410,
+    "origin": "pursue",
+    "examples": [
+      {
+        "exam_en": "The dog began to <strong class=\"target-word\">pursue</strong> the rabbit across the field.",
+        "exam_ko": "개가 들판을 가로질러 토끼를 <strong class=\"target-word\">쫓기</strong> 시작했다."
+      },
+      {
+        "exam_en": "The hunters <strong class=\"target-word\">pursued</strong> the deer through the forest.",
+        "exam_ko": "사냥꾼들은 숲을 가로질러 사슴을 <strong class=\"target-word\">뒤쫓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1411,
+    "origin": "prohibit",
+    "examples": [
+      {
+        "exam_en": "The city decided to <strong class=\"target-word\">prohibit</strong> liquor sales on Sundays.",
+        "exam_ko": "시는 일요일에 주류 판매를 <strong class=\"target-word\">금지하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "Smoking in this building is strictly <strong class=\"target-word\">prohibited</strong>.",
+        "exam_ko": "이 건물에서 흡연은 엄격히 <strong class=\"target-word\">금지되어</strong> 있다."
+      },
+      {
+        "exam_en": "The school <strong class=\"target-word\">prohibits</strong> phone use during class.",
+        "exam_ko": "학교는 수업 중 휴대폰 사용을 <strong class=\"target-word\">금지한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1412,
+    "origin": "prejudice",
+    "examples": [
+      {
+        "exam_en": "Racial <strong class=\"target-word\">prejudice</strong> still exists in many societies.",
+        "exam_ko": "인종적 <strong class=\"target-word\">편견</strong>은 여전히 많은 사회에 존재한다."
+      },
+      {
+        "exam_en": "He has a strong <strong class=\"target-word\">prejudice</strong> against foreigners.",
+        "exam_ko": "그는 외국인에 대한 강한 <strong class=\"target-word\">편견</strong>을 갖고 있다."
+      },
+      {
+        "exam_en": "Any delay will <strong class=\"target-word\">prejudice</strong> the entire project.",
+        "exam_ko": "어떤 지체든 프로젝트 전체에 <strong class=\"target-word\">악영향을 끼칠</strong> 것이다."
+      }
+    ]
+  }
+]

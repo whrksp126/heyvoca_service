@@ -1,0 +1,602 @@
+[
+  {
+    "id": 25490,
+    "word": "worshipful",
+    "exam_en": "a <strong class=\"target-word\">worshipful</strong> attitude",
+    "exam_ko": "<strong class=\"target-word\">숭배하는</strong> 태도."
+  },
+  {
+    "id": 25491,
+    "word": "scabrous",
+    "exam_en": "These <strong class=\"target-word\">scabrous</strong> stories keep turning up ; they've been attached to every great man for centuries.",
+    "exam_ko": "이런 아슬아슬한 이야기는 늘 나타나고 있다. 그런 이야기는 수세기 동안 모든 위인에게 붙어 <strong class=\"target-word\">다녔다</strong>."
+  },
+  {
+    "id": 25492,
+    "word": "theanthropic",
+    "exam_en": "a <strong class=\"target-word\">theanthropic</strong> image of Christ",
+    "exam_ko": "<strong class=\"target-word\">신인(神人)적</strong> 그리스도관(觀)."
+  },
+  {
+    "id": 25493,
+    "word": "scatological",
+    "exam_en": "a <strong class=\"target-word\">scatological</strong> humor",
+    "exam_ko": "<strong class=\"target-word\">지저분한</strong> [외설적인] 유머."
+  },
+  {
+    "id": 25494,
+    "word": "underived",
+    "exam_en": "an <strong class=\"target-word\">underived</strong> axiom",
+    "exam_ko": "<strong class=\"target-word\">기본적</strong> 공리[공준(公準)]."
+  },
+  {
+    "id": 25495,
+    "word": "woodworking",
+    "exam_en": "<strong class=\"target-word\">woodworking</strong> tools",
+    "exam_ko": "<strong class=\"target-word\">목공구</strong>."
+  },
+  {
+    "id": 25496,
+    "word": "tetragon",
+    "exam_en": "regular <strong class=\"target-word\">tetragon</strong>",
+    "exam_ko": "<strong class=\"target-word\">정사각형</strong>."
+  },
+  {
+    "id": 25497,
+    "word": "baro",
+    "exam_en": "<strong class=\"target-word\">baro</strong>dynamics",
+    "exam_ko": "<strong class=\"target-word\">중량</strong> 역학"
+  },
+  {
+    "id": 25498,
+    "word": "baro",
+    "exam_en": "<strong class=\"target-word\">baro</strong>metry",
+    "exam_ko": "<strong class=\"target-word\">기압</strong> 측정법."
+  },
+  {
+    "id": 25499,
+    "word": "joking",
+    "exam_en": "Don't try <strong class=\"target-word\">joking</strong> anymore.  Don't try <strong class=\"target-word\">joking</strong> anymore.",
+    "exam_ko": "<strong class=\"target-word\">까불고</strong> 있어.  다음부터는 까불지마."
+  },
+  {
+    "id": 25500,
+    "word": "marrying",
+    "exam_en": "<strong class=\"target-word\">marrying</strong> couple",
+    "exam_ko": "<strong class=\"target-word\">결혼할</strong> 커플."
+  },
+  {
+    "id": 25501,
+    "word": "heh",
+    "exam_en": "<strong class=\"target-word\">Heh</strong>, <strong class=\"target-word\">heh</strong>, <strong class=\"target-word\">heh</strong>, fooled you.",
+    "exam_ko": "헤, 헤, 헤, <strong class=\"target-word\">속았지</strong>."
+  },
+  {
+    "id": 25502,
+    "word": "chandler",
+    "exam_en": "a corn <strong class=\"target-word\">chandler</strong>",
+    "exam_ko": "<strong class=\"target-word\">잡곡상</strong>."
+  },
+  {
+    "id": 25503,
+    "word": "handfasting",
+    "exam_en": "They hope to renew their wedding vows with a <strong class=\"target-word\">handfasting</strong> ceremony.",
+    "exam_ko": "그들은 현대식 <strong class=\"target-word\">결혼식</strong>으로 혼인 서약을 다시 하고 싶어 한다."
+  },
+  {
+    "id": 25504,
+    "word": "intersectional",
+    "exam_en": "<strong class=\"target-word\">intersectional</strong> games",
+    "exam_ko": "<strong class=\"target-word\">지구</strong>(地區) 대항 경기."
+  },
+  {
+    "id": 25505,
+    "word": "lifesaving",
+    "exam_en": "<strong class=\"target-word\">Lifesaving</strong> Service",
+    "exam_ko": "<strong class=\"target-word\">수난</strong> 구조대."
+  },
+  {
+    "id": 25506,
+    "word": "unceremonious",
+    "exam_en": "He is rather too <strong class=\"target-word\">unceremonious</strong> for my taste.",
+    "exam_ko": "그는 너무 <strong class=\"target-word\">버릇이 없어서</strong> 내 성미에 맞지 않는다."
+  },
+  {
+    "id": 25507,
+    "word": "doctrinal",
+    "exam_en": "a <strong class=\"target-word\">doctrinal</strong> dispute",
+    "exam_ko": "<strong class=\"target-word\">교리상의</strong> 논쟁."
+  },
+  {
+    "id": 25508,
+    "word": "rapier",
+    "exam_en": "a <strong class=\"target-word\">rapier</strong> glance",
+    "exam_ko": "(비유) 힐끗 <strong class=\"target-word\">쏘아</strong>보기."
+  },
+  {
+    "id": 25509,
+    "word": "iphone",
+    "exam_en": "The <strong class=\"target-word\">iPhone</strong> is an internet and multimedia-enabled smartphone.",
+    "exam_ko": "<strong class=\"target-word\">아이폰</strong>은 인터넷과 멀티미디어가 가능한 스마트폰이다."
+  },
+  {
+    "id": 25510,
+    "word": "freewill",
+    "exam_en": "a <strong class=\"target-word\">freewill</strong> contribution",
+    "exam_ko": "<strong class=\"target-word\">자발적인</strong> 기부."
+  },
+  {
+    "id": 25511,
+    "word": "etic",
+    "exam_en": "limn<strong class=\"target-word\">etic</strong>, genetic.",
+    "exam_ko": "※<strong class=\"target-word\">종종</strong> -esis형의 명사에 대응."
+  },
+  {
+    "id": 25512,
+    "word": "carload",
+    "exam_en": "<strong class=\"target-word\">carload</strong> lot",
+    "exam_ko": "<strong class=\"target-word\">화차</strong> 전세 취급 기준량"
+  },
+  {
+    "id": 25513,
+    "word": "carload",
+    "exam_en": "<strong class=\"target-word\">carload</strong> rate",
+    "exam_ko": "<strong class=\"target-word\">화차</strong> 전세 운임률."
+  },
+  {
+    "id": 25514,
+    "word": "inconceivably",
+    "exam_en": "The magazine has sold an <strong class=\"target-word\">inconceivably</strong> large number of copies.",
+    "exam_ko": "그 잡지는 <strong class=\"target-word\">상상할 수 없을 정도로</strong> 많은 부수가 팔렸다."
+  },
+  {
+    "id": 25515,
+    "word": "matchwood",
+    "exam_en": "make <strong class=\"target-word\">matchwood</strong> of",
+    "exam_ko": "…을 <strong class=\"target-word\">산산조각으로 하다</strong>"
+  },
+  {
+    "id": 25516,
+    "word": "matchwood",
+    "exam_en": "reduce to <strong class=\"target-word\">matchwood</strong>",
+    "exam_ko": "<strong class=\"target-word\">박살내다</strong>."
+  },
+  {
+    "id": 25517,
+    "word": "nacreous",
+    "exam_en": "a <strong class=\"target-word\">nacreous</strong> cloud",
+    "exam_ko": "(고공에 나타나는) <strong class=\"target-word\">무지개색</strong> 구름."
+  },
+  {
+    "id": 25518,
+    "word": "chair-days",
+    "exam_en": "in thy reverence and thy <strong class=\"target-word\">chair-days</strong>, thus To die in ruffian battle?",
+    "exam_ko": "<strong class=\"target-word\">그대의</strong> 위엄과 그대의 노년기에, 그래서 잔인한 포화 속에 죽는 건가요?"
+  },
+  {
+    "id": 25519,
+    "word": "vasty",
+    "exam_en": "I can call spirits from the <strong class=\"target-word\">vasty</strong> deep.",
+    "exam_ko": "나는 저 <strong class=\"target-word\">깊은</strong> 곳에서 영혼을 부를 수 있네."
+  },
+  {
+    "id": 25520,
+    "word": "unhelpful",
+    "exam_en": "Even so myself bewails good Gloucester’s case With sad <strong class=\"target-word\">unhelpful</strong> tears, and with dimmed eyes",
+    "exam_ko": "나 자신도 <strong class=\"target-word\">도움되지 않는</strong> 슬픔의 눈물과 흐릿한 눈으로 글로스터의 사건을 애통해합니다."
+  },
+  {
+    "id": 25521,
+    "word": "rubious",
+    "exam_en": "Diana’s lip Is not more smooth and <strong class=\"target-word\">rubious</strong>,",
+    "exam_ko": "<strong class=\"target-word\">다이아나</strong>의 입술은 더이상 부드럽거나 붉지 않소."
+  },
+  {
+    "id": 25522,
+    "word": "blue-veined",
+    "exam_en": "These <strong class=\"target-word\">blue-veined</strong> violets whereon we lean Never can blab, nor know not what we mean.",
+    "exam_ko": "우리 옆의 이 <strong class=\"target-word\">정맥과 같은 무늬의 제비꽃</strong>들은 비밀을 떠벌릴 수도, 우리가 하는 말의 의미를 할 수도 없습니다."
+  },
+  {
+    "id": 25523,
+    "word": "soundless",
+    "exam_en": "and <strong class=\"target-word\">soundless</strong> too, For you have stolen their buzzing, Antony, And very wisely threat before you sting.",
+    "exam_ko": "그리고 <strong class=\"target-word\">조용하기도 하죠</strong>. 안토니우스, 당신이 벌들의 소리를 빼앗고 현명하게도 당신이 쏠 거라 위협했으니까요."
+  },
+  {
+    "id": 25524,
+    "word": "unthrifty",
+    "exam_en": "<strong class=\"target-word\">Unthrifty</strong> loveliness, why dost thou spend Upon thyself thy beauty’s legacy?",
+    "exam_ko": "<strong class=\"target-word\">사치스런</strong> 이여, 어째서 그대 아름다움의 유산을 스스로에게 낭비하는가?"
+  },
+  {
+    "id": 25525,
+    "word": "headshake",
+    "exam_en": "With arms encumbered thus, or this <strong class=\"target-word\">headshake</strong>, Or by pronouncing of some doubtful phrase,",
+    "exam_ko": "구속된 팔로, 혹은 <strong class=\"target-word\">머리를 흔드는 것</strong>으로, 아니면 의심스러운 구절을 내뱉음으로써"
+  },
+  {
+    "id": 25526,
+    "word": "bow-wow",
+    "exam_en": "The watchdogs bark. Burden dispersedly, within: <strong class=\"target-word\">Bow-wow</strong>.",
+    "exam_ko": "파수견들이 짖는다. 후렴은 여기저기서, <strong class=\"target-word\">멍멍</strong>."
+  },
+  {
+    "id": 25527,
+    "word": "copybook",
+    "exam_en": "Fair as a text B in a <strong class=\"target-word\">copybook</strong>.",
+    "exam_ko": "<strong class=\"target-word\">습자책</strong> 속 글처럼 공정하지."
+  },
+  {
+    "id": 25528,
+    "word": "gibber",
+    "exam_en": "Did squeak and <strong class=\"target-word\">gibber</strong> in the Roman streets;",
+    "exam_ko": "로마 거리에서 <strong class=\"target-word\">끽끽대며 씨부렸지</strong>."
+  },
+  {
+    "id": 25529,
+    "word": "immediacy",
+    "exam_en": "He led our powers, Bore the commission of my place and person, The which <strong class=\"target-word\">immediacy</strong> may well stand up And call itself your brother.",
+    "exam_ko": "그는 내 자리와 수족을 위임받아 우리의 힘을 이끌었으니, 이 <strong class=\"target-word\">밀접함</strong>이 일어나 그 자체를 당신의 형제라 부를 것이오."
+  },
+  {
+    "id": 25530,
+    "word": "tranquil",
+    "exam_en": "Farewell the <strong class=\"target-word\">tranquil</strong> mind! Farewell content!",
+    "exam_ko": "<strong class=\"target-word\">평온한</strong> 마음이여 안녕, 충만한 일상이여 안녕!"
+  },
+  {
+    "id": 25531,
+    "word": "unearthly",
+    "exam_en": "O, the sacrifice, How ceremonious, solemn, and <strong class=\"target-word\">unearthly</strong>",
+    "exam_ko": "오, 희생, 그것은 얼마나 엄숙하고 근엄한 동시에 <strong class=\"target-word\">고귀한가</strong>."
+  },
+  {
+    "id": 25532,
+    "word": "accommodation",
+    "exam_en": "I crave fit disposition for my wife, Due reference of place and exhibition, With such <strong class=\"target-word\">accommodation</strong> and besort As levels with her breeding",
+    "exam_ko": "아내에게 마땅한 <strong class=\"target-word\">숙소와 수당 배정</strong>, 그리고 그녀의 사회적 신분에 어울리며 편의를 제공하는 적절한 조치를 취해주시기 바랍니다."
+  },
+  {
+    "id": 25533,
+    "word": "palmy",
+    "exam_en": "In the most high and <strong class=\"target-word\">palmy</strong> state of Rome,",
+    "exam_ko": "로마가 가장 <strong class=\"target-word\">번성하고</strong> 영광스럽던 때에,"
+  },
+  {
+    "id": 25534,
+    "word": "compact",
+    "exam_en": "what is the course and drift of your <strong class=\"target-word\">compact</strong>?",
+    "exam_ko": "당신이 가진 <strong class=\"target-word\">음모</strong>가 향하는 곳은 어디입니까?"
+  },
+  {
+    "id": 25535,
+    "word": "hint",
+    "exam_en": "It is a <strong class=\"target-word\">hint</strong> That wrings mine eyes to ‘t.",
+    "exam_ko": "제가 아버지 앞에서 눈물을 흘리는 것이 바로 <strong class=\"target-word\">신호입니다</strong>."
+  },
+  {
+    "id": 25536,
+    "word": "unintelligent",
+    "exam_en": "your senses, <strong class=\"target-word\">unintelligent</strong> of our insufficience",
+    "exam_ko": "우리가 <strong class=\"target-word\">부족하다는 것</strong>을 이해하지 못하는 당신의 감각"
+  },
+  {
+    "id": 25537,
+    "word": "gloomy",
+    "exam_en": "Forced in the ruthless, vast, and <strong class=\"target-word\">gloomy</strong> woods?",
+    "exam_ko": "무자비하고 광활하며 <strong class=\"target-word\">음울한</strong> 숲에서 강요당하면서요?"
+  },
+  {
+    "id": 25538,
+    "word": "undreamed",
+    "exam_en": "A course more promising Than a wild dedication of yourselves To unpathed waters, <strong class=\"target-word\">undreamed</strong> shores,",
+    "exam_ko": "<strong class=\"target-word\">개척되지 않은 물</strong>이나 상상도 못한 해변을 향한 당신 자신의 사나운 헌신보다 희망적인 길"
+  },
+  {
+    "id": 25539,
+    "word": "impartial",
+    "exam_en": "<strong class=\"target-word\">impartial</strong> are our eyes and ears.",
+    "exam_ko": "우리의 눈과 귀는 <strong class=\"target-word\">공정하다</strong>."
+  },
+  {
+    "id": 25540,
+    "word": "dislocate",
+    "exam_en": "Were 't my fitness To let these hands obey my blood, They are apt enough to <strong class=\"target-word\">dislocate</strong> and tear Thy flesh and bones.",
+    "exam_ko": "이 손들이 나를 따르게 하지 않았더라면, 그대의 뼈와 살을 <strong class=\"target-word\">꺾고 찢기</strong> 충분했을 것입니다."
+  },
+  {
+    "id": 25541,
+    "word": "majestic",
+    "exam_en": "This is a most <strong class=\"target-word\">majestic</strong> vision, and Harmonious charmingly.",
+    "exam_ko": "이것은 가장 <strong class=\"target-word\">위엄 있는</strong> 통찰이자 매력적인 조화다."
+  },
+  {
+    "id": 25542,
+    "word": "fitful",
+    "exam_en": "After life’s <strong class=\"target-word\">fitful</strong> fever he sleeps well.",
+    "exam_ko": "<strong class=\"target-word\">변덕스러운</strong> 삶의 열기가 지나간 뒤 그는 숙면을 취한다."
+  },
+  {
+    "id": 25543,
+    "word": "arch",
+    "exam_en": "Where thou thyself dost air—the Queen o’ th’ sky, Whose wat’ry <strong class=\"target-word\">arch</strong> and messenger am I,",
+    "exam_ko": "그대가 바람을 맞는 그곳, 하늘의 여왕, <strong class=\"target-word\">무지개</strong>이자 전령, 그것이 나입니다."
+  },
+  {
+    "id": 25544,
+    "word": "cater",
+    "exam_en": "He that doth the ravens feed, Yea, providently <strong class=\"target-word\">cater</strong>s for the sparrow,",
+    "exam_ko": "<strong class=\"target-word\">까마귀에게 먹이를 주는</strong> 그는, 네, 참새에게 검소한 연회를 제공하지요."
+  },
+  {
+    "id": 25545,
+    "word": "arouse",
+    "exam_en": "loud-howling wolves <strong class=\"target-word\">arouse</strong> the jades That drag the tragic melancholy night,",
+    "exam_ko": "시끄럽게 울부짖는 늑대들이 비극적으로 우울한 밤을 끄는 말들을 <strong class=\"target-word\">불러일으킨다</strong>."
+  },
+  {
+    "id": 25546,
+    "word": "coumpulsive",
+    "exam_en": "when the <strong class=\"target-word\">coumpulsive</strong> ardor gives the charge,",
+    "exam_ko": "<strong class=\"target-word\">강제적인</strong> 열정이 책임을 지울 때,"
+  },
+  {
+    "id": 25547,
+    "word": "film",
+    "exam_en": "It will but skin and <strong class=\"target-word\">film</strong> the ulcerous place,",
+    "exam_ko": "부패한 곳을 <strong class=\"target-word\">드러내고 또 덮을</strong> 것입니다."
+  },
+  {
+    "id": 25548,
+    "word": "savagery",
+    "exam_en": "This is the bloodiest shame, The wildest <strong class=\"target-word\">savagery</strong>, the vilest stroke",
+    "exam_ko": "이것은 가장 지독한 수치이자 <strong class=\"target-word\">야만적인 잔인함</strong>, 비열한 일격입니다."
+  },
+  {
+    "id": 25549,
+    "word": "vast",
+    "exam_en": "To find the empty, <strong class=\"target-word\">vast</strong>, and wand'ring air,",
+    "exam_ko": "텅 비어 <strong class=\"target-word\">거대한</strong>, 방랑하는 공기를 찾기 위해서"
+  },
+  {
+    "id": 25550,
+    "word": "moody",
+    "exam_en": "So his unhallowed haste her words delays, And <strong class=\"target-word\">moody</strong> Pluto winks while Orpheus plays.",
+    "exam_ko": "그의 부정한 조바심이 그녀의 말을 미루고, <strong class=\"target-word\">변덕스러운</strong> 명왕이 오르페우스가 연주하는 동안 눈짓한다."
+  },
+  {
+    "id": 25551,
+    "word": "flaw",
+    "exam_en": "My love to thee is sound, sans crack or <strong class=\"target-word\">flaw</strong>.",
+    "exam_ko": "당신을 향한 나의 사랑은 <strong class=\"target-word\">틈이나 결함</strong> 없는 소리와 같습니다."
+  },
+  {
+    "id": 25552,
+    "word": "castigate",
+    "exam_en": "If thou didst put this sour cold habit on To <strong class=\"target-word\">castigate</strong> thy pride, 'twere well",
+    "exam_ko": "당신이 이 시고 차가운 습관을 들인 것이 당신의 <strong class=\"target-word\">자존심을 벌하기</strong> 위해서라면, 잘했습니다."
+  },
+  {
+    "id": 25553,
+    "word": "bellied",
+    "exam_en": "Your breath with full consent <strong class=\"target-word\">bellied</strong> his sails",
+    "exam_ko": "<strong class=\"target-word\">동조로 가득찬 당신의 숨결</strong>이 그의 돛을 부풀어 오르게 했습니다."
+  },
+  {
+    "id": 25554,
+    "word": "bloody",
+    "exam_en": "A most harsh one, and not to be understood without <strong class=\"target-word\">bloody</strong> succeeding.",
+    "exam_ko": "<strong class=\"target-word\">피비린내 나는</strong> 성공 없이는 이해될 수 없는 가장 가혹한 것"
+  },
+  {
+    "id": 25555,
+    "word": "bloody",
+    "exam_en": "<strong class=\"target-word\">bloody</strong> hell",
+    "exam_ko": "<strong class=\"target-word\">빌어</strong>먹을"
+  },
+  {
+    "id": 25556,
+    "word": "surety",
+    "exam_en": "Then you shall be his <strong class=\"target-word\">surety</strong>.",
+    "exam_ko": "그럼 당신은 그의 <strong class=\"target-word\">보증인</strong>이 되실 겁니다."
+  },
+  {
+    "id": 25557,
+    "word": "embrace",
+    "exam_en": "Arms, take your last <strong class=\"target-word\">embrace</strong>.",
+    "exam_ko": "그대를 마지막으로 <strong class=\"target-word\">끌어안으리</strong>."
+  },
+  {
+    "id": 25558,
+    "word": "hurries",
+    "exam_en": "A second fear through all her sinews spread, Which madly <strong class=\"target-word\">hurries</strong> her",
+    "exam_ko": "그녀의 모든 힘줄에 퍼지는 두번째 두려움이 그녀를 <strong class=\"target-word\">미친듯이 재촉한다</strong>."
+  },
+  {
+    "id": 25559,
+    "word": "incapable",
+    "exam_en": "<strong class=\"target-word\">Incapable</strong> and shallow innocents, You cannot guess who caused your father’s death.",
+    "exam_ko": "<strong class=\"target-word\">무능하고</strong> 천박한 멍청이들, 당신네들은 당신들의 아버지를 살해한 사람을 짐작할 수조차 없어."
+  },
+  {
+    "id": 25560,
+    "word": "incapable",
+    "exam_en": "<strong class=\"target-word\">Incapable</strong> of more, replete with you,",
+    "exam_ko": "<strong class=\"target-word\">당신으로 가득차</strong> 더는 받을 수 없네."
+  },
+  {
+    "id": 25561,
+    "word": "curl",
+    "exam_en": "Hyperion’s <strong class=\"target-word\">curls</strong>, the front of Jove himself, An eye like Mars’ to threaten and command,",
+    "exam_ko": "히페리온의 <strong class=\"target-word\">말린 머리</strong>와 주피터 그 자체의 앞모습, 위협과 명령을 위한 마르스의 눈"
+  },
+  {
+    "id": 25562,
+    "word": "dawn",
+    "exam_en": "Come away; it is almost clear <strong class=\"target-word\">dawn</strong>.",
+    "exam_ko": "이리와, 이제 곧 <strong class=\"target-word\">새벽</strong>이야."
+  },
+  {
+    "id": 25563,
+    "word": "lonely",
+    "exam_en": "though I go alone, like to a <strong class=\"target-word\">lonely</strong> dragon",
+    "exam_ko": "비록 나는 <strong class=\"target-word\">고독한</strong> 용처럼 혼자 걸었지만"
+  },
+  {
+    "id": 25564,
+    "word": "assassination",
+    "exam_en": "If th’ <strong class=\"target-word\">assassination</strong> Could trammel up the consequence and catch With his surcease success,",
+    "exam_ko": "<strong class=\"target-word\">암살</strong>이 그 결과를 방해하고 그의 성공을 멈출 수 있다면,"
+  },
+  {
+    "id": 25565,
+    "word": "bright",
+    "exam_en": "The moon shines <strong class=\"target-word\">bright</strong>.",
+    "exam_ko": "달이 <strong class=\"target-word\">밝게 빛난다</strong>."
+  },
+  {
+    "id": 25566,
+    "word": "auspicious",
+    "exam_en": "I'll deliver all, And promise you calm seas, <strong class=\"target-word\">auspicious</strong> gales,",
+    "exam_ko": "내가 모든 것을 가져다주겠다. 그리고 너희에게 <strong class=\"target-word\">잔잔한 바다와 유리한 파도</strong>를 약속하겠다."
+  },
+  {
+    "id": 25567,
+    "word": "dishearten",
+    "exam_en": "no man should possess him with any appearance of fear, lest he, by showing it, should <strong class=\"target-word\">dishearten</strong> his army.",
+    "exam_ko": "그가 그것을 보여줌으로써 그의 <strong class=\"target-word\">군대를 낙담</strong>시키지 않게, 아무도 그를 두려워하는 모습으로 알아서는 안 된다."
+  },
+  {
+    "id": 25568,
+    "word": "aerial",
+    "exam_en": "Even till we make the main and th' <strong class=\"target-word\">aerial</strong> blue an indistinct regard.",
+    "exam_ko": "<strong class=\"target-word\">대양과 푸른 하늘</strong>을 분간 못할 때까지"
+  },
+  {
+    "id": 25569,
+    "word": "aerial",
+    "exam_en": "<strong class=\"target-word\">aerial</strong> cable",
+    "exam_ko": "<strong class=\"target-word\">가공</strong>(架空) 케이블"
+  },
+  {
+    "id": 25570,
+    "word": "angel",
+    "exam_en": "I must still be good <strong class=\"target-word\">angel</strong> to thee. The money is paid back again.",
+    "exam_ko": "나는 <strong class=\"target-word\">천사</strong>처럼 그대를 대하오. 그 돈은 다시 지불되고 있으니."
+  },
+  {
+    "id": 25571,
+    "word": "marketable",
+    "exam_en": "One of them Is a plain fish and no doubt <strong class=\"target-word\">marketable</strong>.",
+    "exam_ko": "그것 중 하나는 명백히 물고기이고, <strong class=\"target-word\">수요가 있을</strong> 것을 의심하지 않습니다."
+  },
+  {
+    "id": 25572,
+    "word": "hostile",
+    "exam_en": "So thrive I in my dangerous affairs Of <strong class=\"target-word\">hostile</strong> arms!",
+    "exam_ko": "그러니 나는 <strong class=\"target-word\">적군에 맞서는</strong> 위험한 일을 해내겠다."
+  },
+  {
+    "id": 25573,
+    "word": "critic",
+    "exam_en": "A <strong class=\"target-word\">critic</strong>, nay, a nightwatch constable, A domineering pedant o’er the boy, Than whom no mortal so magnificent.",
+    "exam_ko": "<strong class=\"target-word\">비평가</strong>, 아니 야간 순찰병, 소년에게 고지식한 자, 그보다 굉장한 불멸자여"
+  },
+  {
+    "id": 25574,
+    "word": "eyeball",
+    "exam_en": "Rolling his greedy <strong class=\"target-word\">eyeball</strong>s in his head.",
+    "exam_ko": "머리 안에서 그의 탐욕스러운 <strong class=\"target-word\">눈알</strong>을 굴리며"
+  },
+  {
+    "id": 25575,
+    "word": "beetle",
+    "exam_en": "Here are the <strong class=\"target-word\">beetle</strong> brows shall blush for me.",
+    "exam_ko": "여기 나를 위해 부끄러워하는 <strong class=\"target-word\">도드라진 눈썹</strong>이 있군."
+  },
+  {
+    "id": 25576,
+    "word": "generous",
+    "exam_en": "Your dinner, and the <strong class=\"target-word\">generous</strong> islanders By you invited, do attend your presence.",
+    "exam_ko": "당신의 만찬과 당신이 초대한 <strong class=\"target-word\">너그러운 섬사람들</strong>이 당신의 존재에 따라옵니다."
+  },
+  {
+    "id": 25577,
+    "word": "eventful",
+    "exam_en": "Last scene of all, That ends this strange <strong class=\"target-word\">eventful</strong> history,",
+    "exam_ko": "이 낡고 <strong class=\"target-word\">파란만장한</strong> 역사를 끝내는 마지막 장면"
+  },
+  {
+    "id": 25578,
+    "word": "indistinguishable",
+    "exam_en": "Why, no, you ruinous butt, you whoreson <strong class=\"target-word\">indistinguishable</strong> cur, no.",
+    "exam_ko": "아니, 이 망할 놈, <strong class=\"target-word\">분간 못할</strong> 저주에 걸린 놈이."
+  },
+  {
+    "id": 25579,
+    "word": "deafing",
+    "exam_en": "Curling their monstrous heads and hanging them With <strong class=\"target-word\">deafing</strong> clamor in the slippery clouds",
+    "exam_ko": "그들의 괴물 같은 머리를 휘감고 알 수 없는 구름 속에서 <strong class=\"target-word\">귀가 먹먹한 소음</strong>과 매달며"
+  },
+  {
+    "id": 25580,
+    "word": "manager",
+    "exam_en": "Where is our usual <strong class=\"target-word\">manager</strong> of mirth?",
+    "exam_ko": "우리 평소 <strong class=\"target-word\">환희의 관리자</strong>는 어디에 있소?"
+  },
+  {
+    "id": 25581,
+    "word": "hopeful",
+    "exam_en": "She’s the <strong class=\"target-word\">hopeful</strong> lady of my earth.",
+    "exam_ko": "그녀는 내 세상의 <strong class=\"target-word\">희망찬 숙녀</strong>야."
+  },
+  {
+    "id": 25582,
+    "word": "vulnerable",
+    "exam_en": "Let fall thy blade on <strong class=\"target-word\">vulnerable</strong> crests;",
+    "exam_ko": "그대의 칼날을 <strong class=\"target-word\">연약한</strong> 투구에 내리꽂으시오."
+  },
+  {
+    "id": 25583,
+    "word": "countless",
+    "exam_en": "And one sweet kiss shall pay this <strong class=\"target-word\">countless</strong> debt.",
+    "exam_ko": "그리고 한 번의 달콤한 입맞춤이 이 <strong class=\"target-word\">수많은</strong> 빚을 갚을 것이다."
+  },
+  {
+    "id": 25584,
+    "word": "dwindle",
+    "exam_en": "Do I not bate? Do I not <strong class=\"target-word\">dwindle</strong>?",
+    "exam_ko": "내 입지가 <strong class=\"target-word\">줄지는</strong> 않았는가? 쇠락하진 않았는가?"
+  },
+  {
+    "id": 25585,
+    "word": "action",
+    "exam_en": "It is an accustomed <strong class=\"target-word\">action</strong> with her to seem thus washing her hands.",
+    "exam_ko": "이렇게 손을 씻는 것처럼 보이는 것은 그녀에게 익숙한 <strong class=\"target-word\">동작</strong>이다."
+  },
+  {
+    "id": 25586,
+    "word": "magic",
+    "exam_en": "O, she’s warm! If this be <strong class=\"target-word\">magic</strong>, let it be an art Lawful as eating.",
+    "exam_ko": "오, 그녀가 따뜻해! 만약 이것이 <strong class=\"target-word\">마법</strong>이라면, 이것이 먹는 것과 같이 합당한 예술이 되도록 해주시오."
+  },
+  {
+    "id": 25587,
+    "word": "baseless",
+    "exam_en": "And like the <strong class=\"target-word\">baseless</strong> fabric of this vision,",
+    "exam_ko": "이 통찰의 <strong class=\"target-word\">근거없는 구조</strong>처럼,"
+  },
+  {
+    "id": 25588,
+    "word": "exposure",
+    "exam_en": "And when we have our naked frailties hid, That suffer in <strong class=\"target-word\">exposure</strong>,",
+    "exam_ko": "노출되어 고생하는 우리들의 연약한 알몸을 <strong class=\"target-word\">가린</strong> 뒤에"
+  },
+  {
+    "id": 25589,
+    "word": "courtship",
+    "exam_en": "More validity, More honorable state, more <strong class=\"target-word\">courtship</strong> lives In carrion flies than Romeo.",
+    "exam_ko": "사체에 들러붙는 파리가 로미오보다 더 정당하고 더 명예로운, 더 <strong class=\"target-word\">귀족다운 삶</strong>을 산다."
+  }
+]

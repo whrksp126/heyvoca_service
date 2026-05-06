@@ -1,0 +1,274 @@
+[
+  {
+    "id": 3309,
+    "origin": "violence",
+    "examples": [
+      {
+        "exam_en": "The city reported many acts of <strong class=\"target-word\">violence</strong> last year.",
+        "exam_ko": "그 도시는 작년에 많은 <strong class=\"target-word\">폭력</strong> 행위를 보고했다."
+      },
+      {
+        "exam_en": "Domestic <strong class=\"target-word\">violence</strong> affects many families worldwide.",
+        "exam_ko": "가정 <strong class=\"target-word\">폭력</strong>은 전 세계 많은 가정에 영향을 미친다."
+      }
+    ]
+  },
+  {
+    "id": 3310,
+    "origin": "violate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">violated</strong> his oath by lying to the court.",
+        "exam_ko": "그는 법정에서 거짓말을 하여 맹세를 <strong class=\"target-word\">어겼다</strong>."
+      },
+      {
+        "exam_en": "It is wrong to <strong class=\"target-word\">violate</strong> someone's privacy.",
+        "exam_ko": "다른 사람의 사생활을 <strong class=\"target-word\">침해하는</strong> 것은 잘못된 일이다."
+      }
+    ]
+  },
+  {
+    "id": 3311,
+    "origin": "village",
+    "examples": [
+      {
+        "exam_en": "The whole <strong class=\"target-word\">village</strong> came out to welcome him.",
+        "exam_ko": "온 <strong class=\"target-word\">마을</strong> 사람이 나와서 그를 환영했다."
+      },
+      {
+        "exam_en": "She grew up in a small <strong class=\"target-word\">village</strong> near the mountains.",
+        "exam_ko": "그녀는 산 근처의 작은 <strong class=\"target-word\">마을</strong>에서 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 3312,
+    "origin": "victory",
+    "examples": [
+      {
+        "exam_en": "The team achieved a narrow <strong class=\"target-word\">victory</strong> in the final match.",
+        "exam_ko": "그 팀은 결승전에서 간신히 <strong class=\"target-word\">승리</strong>를 거뒀다."
+      },
+      {
+        "exam_en": "They celebrated their resounding <strong class=\"target-word\">victory</strong> with great joy.",
+        "exam_ko": "그들은 압도적인 <strong class=\"target-word\">승리</strong>를 기쁨으로 축하했다."
+      }
+    ]
+  },
+  {
+    "id": 3313,
+    "origin": "victim",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">victims</strong> of the storm lost their homes.",
+        "exam_ko": "폭풍의 <strong class=\"target-word\">피해자들</strong>은 집을 잃었다."
+      },
+      {
+        "exam_en": "Aid organizations helped the war <strong class=\"target-word\">victims</strong> recover.",
+        "exam_ko": "구호 단체들이 전쟁 <strong class=\"target-word\">희생자들</strong>의 회복을 도왔다."
+      }
+    ]
+  },
+  {
+    "id": 3314,
+    "origin": "vicious",
+    "examples": [
+      {
+        "exam_en": "He was known for his <strong class=\"target-word\">vicious</strong> habits and bad temper.",
+        "exam_ko": "그는 <strong class=\"target-word\">악랄한</strong> 습관과 나쁜 성질로 알려져 있었다."
+      },
+      {
+        "exam_en": "The detective uncovered a <strong class=\"target-word\">vicious</strong> fraud scheme.",
+        "exam_ko": "그 형사는 <strong class=\"target-word\">악질적인</strong> 사기 계획을 밝혀냈다."
+      }
+    ]
+  },
+  {
+    "id": 3315,
+    "origin": "veto",
+    "examples": [
+      {
+        "exam_en": "The president decided to exercise his <strong class=\"target-word\">veto</strong> on the bill.",
+        "exam_ko": "대통령은 그 법안에 <strong class=\"target-word\">거부권</strong>을 행사하기로 결정했다."
+      },
+      {
+        "exam_en": "The committee put a <strong class=\"target-word\">veto</strong> on the proposed changes.",
+        "exam_ko": "위원회는 제안된 변경안에 <strong class=\"target-word\">거부권</strong>을 행사했다."
+      }
+    ]
+  },
+  {
+    "id": 3316,
+    "origin": "version",
+    "examples": [
+      {
+        "exam_en": "Please read the English <strong class=\"target-word\">version</strong> of the document.",
+        "exam_ko": "문서의 영어 <strong class=\"target-word\">버전</strong>을 읽어 주세요."
+      },
+      {
+        "exam_en": "They released a new <strong class=\"target-word\">version</strong> of the software.",
+        "exam_ko": "그들은 소프트웨어의 새 <strong class=\"target-word\">버전</strong>을 출시했다."
+      }
+    ]
+  },
+  {
+    "id": 3317,
+    "origin": "vehicle",
+    "examples": [
+      {
+        "exam_en": "The soldiers rode in army <strong class=\"target-word\">vehicles</strong> to the base.",
+        "exam_ko": "군인들은 군용 <strong class=\"target-word\">차량</strong>을 타고 기지로 이동했다."
+      },
+      {
+        "exam_en": "He rented a passenger <strong class=\"target-word\">vehicle</strong> for the trip.",
+        "exam_ko": "그는 여행을 위해 승용 <strong class=\"target-word\">차량</strong>을 빌렸다."
+      }
+    ]
+  },
+  {
+    "id": 3318,
+    "origin": "vegetable",
+    "examples": [
+      {
+        "exam_en": "She grows fresh <strong class=\"target-word\">vegetables</strong> in her garden.",
+        "exam_ko": "그녀는 정원에서 신선한 <strong class=\"target-word\">채소</strong>를 기른다."
+      },
+      {
+        "exam_en": "He added <strong class=\"target-word\">vegetables</strong> to the soup for flavor.",
+        "exam_ko": "그는 풍미를 위해 수프에 <strong class=\"target-word\">채소</strong>를 넣었다."
+      }
+    ]
+  },
+  {
+    "id": 3319,
+    "origin": "us",
+    "examples": [
+      {
+        "exam_en": "He took <strong class=\"target-word\">us</strong> to the zoo last weekend.",
+        "exam_ko": "그는 지난 주말에 <strong class=\"target-word\">우리를</strong> 동물원에 데려갔다."
+      },
+      {
+        "exam_en": "Will you come with <strong class=\"target-word\">us</strong> to the party?",
+        "exam_ko": "파티에 <strong class=\"target-word\">우리와</strong> 함께 가지 않을래요?"
+      }
+    ]
+  },
+  {
+    "id": 3320,
+    "origin": "up",
+    "examples": [
+      {
+        "exam_en": "The plane flew <strong class=\"target-word\">up</strong> to 30,000 feet in the sky.",
+        "exam_ko": "비행기는 하늘 3만 피트 <strong class=\"target-word\">위로</strong> 날아올랐다."
+      },
+      {
+        "exam_en": "She looked <strong class=\"target-word\">up</strong> at the stars in the night sky.",
+        "exam_ko": "그녀는 밤하늘의 별들을 <strong class=\"target-word\">위로</strong> 올려다보았다."
+      }
+    ]
+  },
+  {
+    "id": 3321,
+    "origin": "until",
+    "examples": [
+      {
+        "exam_en": "She worked <strong class=\"target-word\">until</strong> seven in the evening.",
+        "exam_ko": "그녀는 저녁 일곱 시 <strong class=\"target-word\">까지</strong> 일했다."
+      },
+      {
+        "exam_en": "He waited <strong class=\"target-word\">until</strong> she arrived home safely.",
+        "exam_ko": "그는 그녀가 안전하게 집에 도착할 때 <strong class=\"target-word\">까지</strong> 기다렸다."
+      }
+    ]
+  },
+  {
+    "id": 3322,
+    "origin": "universe",
+    "examples": [
+      {
+        "exam_en": "Scientists study the origin of the <strong class=\"target-word\">universe</strong>.",
+        "exam_ko": "과학자들은 <strong class=\"target-word\">우주</strong>의 기원을 연구한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">universe</strong> is constantly expanding in all directions.",
+        "exam_ko": "<strong class=\"target-word\">우주</strong>는 모든 방향으로 끊임없이 팽창하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3323,
+    "origin": "under",
+    "examples": [
+      {
+        "exam_en": "The cat hid <strong class=\"target-word\">under</strong> the bed during the storm.",
+        "exam_ko": "고양이는 폭풍 동안 침대 <strong class=\"target-word\">아래에</strong> 숨었다."
+      },
+      {
+        "exam_en": "The village sits <strong class=\"target-word\">under</strong> a large hill.",
+        "exam_ko": "그 마을은 큰 언덕 <strong class=\"target-word\">아래에</strong> 자리잡고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3324,
+    "origin": "two",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Two</strong> and two make four.",
+        "exam_ko": "<strong class=\"target-word\">둘</strong> 더하기 둘은 넷이다."
+      },
+      {
+        "exam_en": "The children walked in <strong class=\"target-word\">two</strong> by <strong class=\"target-word\">two</strong> lines.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">두</strong> 줄로 짝지어 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 3325,
+    "origin": "twice",
+    "examples": [
+      {
+        "exam_en": "I have visited that museum once or <strong class=\"target-word\">twice</strong>.",
+        "exam_ko": "나는 그 박물관을 한두 <strong class=\"target-word\">번</strong> 방문한 적이 있다."
+      },
+      {
+        "exam_en": "She exercises <strong class=\"target-word\">twice</strong> a week to stay healthy.",
+        "exam_ko": "그녀는 건강을 유지하기 위해 일주일에 <strong class=\"target-word\">두 번</strong> 운동한다."
+      }
+    ]
+  },
+  {
+    "id": 3326,
+    "origin": "twenty",
+    "examples": [
+      {
+        "exam_en": "He is still in his <strong class=\"target-word\">twenties</strong> and full of energy.",
+        "exam_ko": "그는 아직 <strong class=\"target-word\">20대</strong>이고 활기가 넘친다."
+      }
+    ]
+  },
+  {
+    "id": 3327,
+    "origin": "twelve",
+    "examples": [
+      {
+        "exam_en": "The meeting starts at <strong class=\"target-word\">twelve</strong> o'clock sharp.",
+        "exam_ko": "회의는 정각 <strong class=\"target-word\">열두</strong> 시에 시작된다."
+      }
+    ]
+  },
+  {
+    "id": 3328,
+    "origin": "tube",
+    "examples": [
+      {
+        "exam_en": "The mechanic replaced the exhaust <strong class=\"target-word\">tube</strong> on the car.",
+        "exam_ko": "정비사가 차의 배기 <strong class=\"target-word\">관</strong>을 교체했다."
+      },
+      {
+        "exam_en": "She squeezed the <strong class=\"target-word\">tube</strong> of toothpaste gently.",
+        "exam_ko": "그녀는 치약 <strong class=\"target-word\">튜브</strong>를 살며시 짜냈다."
+      }
+    ]
+  }
+]

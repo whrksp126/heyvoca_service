@@ -1,0 +1,602 @@
+[
+  {
+    "id": 998,
+    "word": "injure",
+    "exam_en": "crops <strong class=\"target-word\">injured</strong> by the flood",
+    "exam_ko": "홍수 피해를 <strong class=\"target-word\">입은</strong> 작물"
+  },
+  {
+    "id": 999,
+    "word": "injure",
+    "exam_en": "He <strong class=\"target-word\">injured</strong> his shoulder playing football.",
+    "exam_ko": "그는 축구를 하다가 어깨를 <strong class=\"target-word\">다쳤다</strong>"
+  },
+  {
+    "id": 1000,
+    "word": "eminent",
+    "exam_en": "<strong class=\"target-word\">eminent</strong> as a historian",
+    "exam_ko": "역사가로서 <strong class=\"target-word\">저명한</strong>"
+  },
+  {
+    "id": 1001,
+    "word": "eminent",
+    "exam_en": "<strong class=\"target-word\">eminent</strong> for one's virtues",
+    "exam_ko": "여러 가지 덕행으로 <strong class=\"target-word\">유명한</strong>"
+  },
+  {
+    "id": 1002,
+    "word": "pregnant",
+    "exam_en": "a <strong class=\"target-word\">pregnant</strong> cow",
+    "exam_ko": "<strong class=\"target-word\">새끼를 밴</strong> 소"
+  },
+  {
+    "id": 1003,
+    "word": "pregnant",
+    "exam_en": "be seven months <strong class=\"target-word\">pregnant</strong>",
+    "exam_ko": "<strong class=\"target-word\">임신</strong> 7개월이다"
+  },
+  {
+    "id": 1004,
+    "word": "update",
+    "exam_en": "an <strong class=\"target-word\">updated</strong> version of the data",
+    "exam_ko": "<strong class=\"target-word\">최신판</strong> 데이터"
+  },
+  {
+    "id": 1005,
+    "word": "update",
+    "exam_en": "<strong class=\"target-word\">update</strong> the information",
+    "exam_ko": "정보를 <strong class=\"target-word\">최신의</strong> 것으로 하다"
+  },
+  {
+    "id": 1006,
+    "word": "salesman",
+    "exam_en": "a door-to-door <strong class=\"target-word\">salesman</strong>",
+    "exam_ko": "방문 <strong class=\"target-word\">판매원</strong>"
+  },
+  {
+    "id": 1007,
+    "word": "property",
+    "exam_en": "private <strong class=\"target-word\">property</strong>",
+    "exam_ko": "사유[공유, 국유] <strong class=\"target-word\">재산</strong>"
+  },
+  {
+    "id": 1008,
+    "word": "property",
+    "exam_en": "fixed <strong class=\"target-word\">property</strong>",
+    "exam_ko": "고정 <strong class=\"target-word\">자산</strong>"
+  },
+  {
+    "id": 1009,
+    "word": "value",
+    "exam_en": "sentimental <strong class=\"target-word\">value</strong>",
+    "exam_ko": "감상적 <strong class=\"target-word\">가치</strong>(※개인의 회상이 지닌 어떤 가치)"
+  },
+  {
+    "id": 1010,
+    "word": "value",
+    "exam_en": "the <strong class=\"target-word\">value</strong> of a good upbringing",
+    "exam_ko": "훌륭한 가정 교육의 <strong class=\"target-word\">중요성</strong>"
+  },
+  {
+    "id": 1011,
+    "word": "delay",
+    "exam_en": "<strong class=\"target-word\">delay</strong> a party",
+    "exam_ko": "파티를 <strong class=\"target-word\">연기하다</strong>"
+  },
+  {
+    "id": 1012,
+    "word": "delay",
+    "exam_en": "<strong class=\"target-word\">delay</strong> one's journey",
+    "exam_ko": "여행을[출발을] 연기하다[<strong class=\"target-word\">늦추다</strong>]"
+  },
+  {
+    "id": 1013,
+    "word": "select",
+    "exam_en": "<strong class=\"target-word\">select</strong> a toy for a child",
+    "exam_ko": "아이에게 장난감을 <strong class=\"target-word\">골라주다</strong>"
+  },
+  {
+    "id": 1014,
+    "word": "select",
+    "exam_en": "<strong class=\"target-word\">select</strong> the best among many works",
+    "exam_ko": "많은 작품 중에서 최우수작을 <strong class=\"target-word\">가려내다</strong>"
+  },
+  {
+    "id": 1015,
+    "word": "guarantee",
+    "exam_en": "a letter of <strong class=\"target-word\">guarantee</strong>",
+    "exam_ko": "<strong class=\"target-word\">보증서</strong>"
+  },
+  {
+    "id": 1016,
+    "word": "guarantee",
+    "exam_en": "goods with  money back <strong class=\"target-word\">guarantee</strong>",
+    "exam_ko": "대금 반환 <strong class=\"target-word\">보증부</strong> 상품"
+  },
+  {
+    "id": 1017,
+    "word": "ahead",
+    "exam_en": "straight <strong class=\"target-word\">ahead</strong>",
+    "exam_ko": "곧장[바로] <strong class=\"target-word\">앞쪽</strong>에"
+  },
+  {
+    "id": 1018,
+    "word": "ahead",
+    "exam_en": "Breakers <strong class=\"target-word\">ahead</strong>!",
+    "exam_ko": "[항해] 침로상에 파랑[암초] 있음; (비유) <strong class=\"target-word\">앞쪽</strong>에 위험 있음."
+  },
+  {
+    "id": 1019,
+    "word": "manufacture",
+    "exam_en": "glass <strong class=\"target-word\">manufacture</strong>",
+    "exam_ko": "유리[철물] <strong class=\"target-word\">제조업</strong>"
+  },
+  {
+    "id": 1020,
+    "word": "manufacture",
+    "exam_en": "This car is of foreign <strong class=\"target-word\">manufacture</strong>.",
+    "exam_ko": "이 자동차는 외국<strong class=\"target-word\">산</strong>이다."
+  },
+  {
+    "id": 1021,
+    "word": "agency",
+    "exam_en": "a general sales <strong class=\"target-word\">agency</strong>",
+    "exam_ko": "판매 <strong class=\"target-word\">총대리점</strong>"
+  },
+  {
+    "id": 1022,
+    "word": "agency",
+    "exam_en": "an employment <strong class=\"target-word\">agency</strong>",
+    "exam_ko": "직업 <strong class=\"target-word\">소개소</strong>"
+  },
+  {
+    "id": 1023,
+    "word": "request",
+    "exam_en": "make a <strong class=\"target-word\">request</strong> to a person for help",
+    "exam_ko": "남에게 도움을 <strong class=\"target-word\">구하다</strong>"
+  },
+  {
+    "id": 1024,
+    "word": "request",
+    "exam_en": "refuse a <strong class=\"target-word\">request</strong>",
+    "exam_ko": "<strong class=\"target-word\">요청</strong>을 거절하다"
+  },
+  {
+    "id": 1025,
+    "word": "warn",
+    "exam_en": "The doctor <strong class=\"target-word\">warned</strong> me of the dangers of smoking.",
+    "exam_ko": "의사는 내게 흡연이 위험하다고 <strong class=\"target-word\">경고했다</strong>"
+  },
+  {
+    "id": 1026,
+    "word": "warn",
+    "exam_en": "We were <strong class=\"target-word\">warned</strong> against swimming in that river.",
+    "exam_ko": "그 강에서 수영하지 말라고 <strong class=\"target-word\">경고</strong>를 받았다"
+  },
+  {
+    "id": 1027,
+    "word": "trouble",
+    "exam_en": "be <strong class=\"target-word\">troubled</strong> by a groundless rumor",
+    "exam_ko": "근거 없는 소문으로 괴로움을 <strong class=\"target-word\">당하다</strong>"
+  },
+  {
+    "id": 1028,
+    "word": "trouble",
+    "exam_en": "be <strong class=\"target-word\">troubled</strong> with rheumatism",
+    "exam_ko": "류머티즘 때문에 <strong class=\"target-word\">고생하다</strong>"
+  },
+  {
+    "id": 1029,
+    "word": "totally",
+    "exam_en": "I am not <strong class=\"target-word\">totally</strong> unaware of these things.",
+    "exam_ko": "이것을 <strong class=\"target-word\">다</strong> 모른다는 뜻은 아니다"
+  },
+  {
+    "id": 1030,
+    "word": "totally",
+    "exam_en": "This is <strong class=\"target-word\">totally</strong> different from that.",
+    "exam_ko": "이것과 저것은 <strong class=\"target-word\">전혀</strong> 다르다."
+  },
+  {
+    "id": 1031,
+    "word": "triple",
+    "exam_en": "a <strong class=\"target-word\">triple</strong> knot",
+    "exam_ko": "<strong class=\"target-word\">3중</strong> 매듭[벽]"
+  },
+  {
+    "id": 1032,
+    "word": "triple",
+    "exam_en": "a <strong class=\"target-word\">triple</strong> difficulty",
+    "exam_ko": "<strong class=\"target-word\">3중</strong>고(苦)."
+  },
+  {
+    "id": 1033,
+    "word": "transfer",
+    "exam_en": "be <strong class=\"target-word\">transferred</strong> to a new post",
+    "exam_ko": "새 지위로 <strong class=\"target-word\">전임되다</strong>"
+  },
+  {
+    "id": 1034,
+    "word": "transfer",
+    "exam_en": "<strong class=\"target-word\">transfer</strong> the book  to one's left hand",
+    "exam_ko": "책을 (오른손에서) 왼손으로 바꾸어 <strong class=\"target-word\">들다</strong>."
+  },
+  {
+    "id": 1035,
+    "word": "technology",
+    "exam_en": "<strong class=\"target-word\">technology</strong> transfer",
+    "exam_ko": "<strong class=\"target-word\">기술</strong> 이전"
+  },
+  {
+    "id": 1036,
+    "word": "technology",
+    "exam_en": "new computer <strong class=\"target-word\">technologies</strong>",
+    "exam_ko": "새로운 컴퓨터 <strong class=\"target-word\">기술</strong>."
+  },
+  {
+    "id": 1037,
+    "word": "talkative",
+    "exam_en": "a <strong class=\"target-word\">talkative</strong> girl",
+    "exam_ko": "<strong class=\"target-word\">수다스러운</strong> 계집아이."
+  },
+  {
+    "id": 1038,
+    "word": "rapidly",
+    "exam_en": "a <strong class=\"target-word\">rapidly</strong> changing society",
+    "exam_ko": "<strong class=\"target-word\">급속히</strong> 변화하고 있는 사회"
+  },
+  {
+    "id": 1039,
+    "word": "rapidly",
+    "exam_en": "Crime figures are rising <strong class=\"target-word\">rapidly</strong>.",
+    "exam_ko": "범죄 숫자가 <strong class=\"target-word\">급속히</strong> 늘고 있다."
+  },
+  {
+    "id": 1040,
+    "word": "speculate",
+    "exam_en": "<strong class=\"target-word\">speculate</strong> about the meaning of life",
+    "exam_ko": "인생의 의미에 대해서 골똘히 <strong class=\"target-word\">생각하다</strong>."
+  },
+  {
+    "id": 1041,
+    "word": "speculate",
+    "exam_en": "<strong class=\"target-word\">speculate</strong> on where the satellite will fall",
+    "exam_ko": "인공 위성의 낙하 지점을 <strong class=\"target-word\">추측하다</strong>"
+  },
+  {
+    "id": 1042,
+    "word": "souvenir",
+    "exam_en": "He gave a <strong class=\"target-word\">souvenir</strong> of Greece.",
+    "exam_ko": "그는 그리스의 <strong class=\"target-word\">기념품</strong>을 주었다."
+  },
+  {
+    "id": 1043,
+    "word": "souvenir",
+    "exam_en": "a <strong class=\"target-word\">souvenir</strong> of journey",
+    "exam_ko": "여행 <strong class=\"target-word\">기념품</strong>"
+  },
+  {
+    "id": 1044,
+    "word": "firmly",
+    "exam_en": "believe <strong class=\"target-word\">firmly</strong> in Islam",
+    "exam_ko": "이슬람교를 <strong class=\"target-word\">굳게</strong> 믿다."
+  },
+  {
+    "id": 1045,
+    "word": "revise",
+    "exam_en": "a <strong class=\"target-word\">revised</strong> edition",
+    "exam_ko": "<strong class=\"target-word\">개정판</strong>"
+  },
+  {
+    "id": 1046,
+    "word": "revise",
+    "exam_en": "<strong class=\"target-word\">revised</strong> and enlarged",
+    "exam_ko": "<strong class=\"target-word\">개정 증보</strong>한, 증보판의."
+  },
+  {
+    "id": 1047,
+    "word": "reverse",
+    "exam_en": "the <strong class=\"target-word\">reverse</strong> direction",
+    "exam_ko": "<strong class=\"target-word\">반대</strong> 방향"
+  },
+  {
+    "id": 1048,
+    "word": "reverse",
+    "exam_en": "in <strong class=\"target-word\">reverse</strong> order",
+    "exam_ko": "<strong class=\"target-word\">역순</strong>으로"
+  },
+  {
+    "id": 1049,
+    "word": "income",
+    "exam_en": "an <strong class=\"target-word\">income</strong> statement",
+    "exam_ko": "<strong class=\"target-word\">손익</strong> 계산서"
+  },
+  {
+    "id": 1050,
+    "word": "income",
+    "exam_en": "gross <strong class=\"target-word\">income</strong>",
+    "exam_ko": "<strong class=\"target-word\">총[실]수입</strong>"
+  },
+  {
+    "id": 1051,
+    "word": "profit",
+    "exam_en": "<strong class=\"target-word\">profit</strong> and loss",
+    "exam_ko": "<strong class=\"target-word\">손익</strong>(계정)"
+  },
+  {
+    "id": 1052,
+    "word": "profit",
+    "exam_en": "net <strong class=\"target-word\">profit</strong>",
+    "exam_ko": "<strong class=\"target-word\">순익</strong>"
+  },
+  {
+    "id": 1053,
+    "word": "gross",
+    "exam_en": "<strong class=\"target-word\">gross</strong> income",
+    "exam_ko": "<strong class=\"target-word\">총수입</strong>."
+  },
+  {
+    "id": 1054,
+    "word": "gross",
+    "exam_en": "a <strong class=\"target-word\">gross</strong> description",
+    "exam_ko": "<strong class=\"target-word\">대체적인</strong> 묘사"
+  },
+  {
+    "id": 1055,
+    "word": "revenue",
+    "exam_en": "internal <strong class=\"target-word\">revenue</strong>",
+    "exam_ko": "내국세 <strong class=\"target-word\">수입</strong>"
+  },
+  {
+    "id": 1056,
+    "word": "revenue",
+    "exam_en": "<strong class=\"target-word\">revenue</strong> enhancement",
+    "exam_ko": "<strong class=\"target-word\">세수</strong>의 증수"
+  },
+  {
+    "id": 1057,
+    "word": "repeat",
+    "exam_en": "The teacher <strong class=\"target-word\">repeated</strong> the question.",
+    "exam_ko": "선생은 질문을 <strong class=\"target-word\">되풀이했다</strong>"
+  },
+  {
+    "id": 1058,
+    "word": "repeat",
+    "exam_en": "<strong class=\"target-word\">Repeat</strong> each sentence after me.",
+    "exam_ko": "각 문장을 나를 따라 <strong class=\"target-word\">복창</strong>하라"
+  },
+  {
+    "id": 1059,
+    "word": "remote",
+    "exam_en": "a hamlet <strong class=\"target-word\">remote</strong> from the mainstream of life",
+    "exam_ko": "<strong class=\"target-word\">외떨어진</strong> 작은 부락"
+  },
+  {
+    "id": 1060,
+    "word": "remote",
+    "exam_en": "His farm is <strong class=\"target-word\">remote</strong> from any town.",
+    "exam_ko": "그의 농장은 어느 도시에서나 <strong class=\"target-word\">멀다</strong>."
+  },
+  {
+    "id": 1061,
+    "word": "remind",
+    "exam_en": "<strong class=\"target-word\">Remind</strong> me to write my brother tomorrow.",
+    "exam_ko": "내일 동생에게 잊지 말고 편지를 쓰도록 <strong class=\"target-word\">저에게 일러주세요</strong>"
+  },
+  {
+    "id": 1062,
+    "word": "remind",
+    "exam_en": "Please <strong class=\"target-word\">remind</strong> me of the time of the meeting.",
+    "exam_ko": "모임의 시간을 잊지 않도록 <strong class=\"target-word\">내게 알려 주시오</strong>"
+  },
+  {
+    "id": 1063,
+    "word": "remedy",
+    "exam_en": "an effective <strong class=\"target-word\">remedy</strong> for the flu",
+    "exam_ko": "독감에 잘 듣는 <strong class=\"target-word\">약</strong>"
+  },
+  {
+    "id": 1064,
+    "word": "remedy",
+    "exam_en": "apply the best <strong class=\"target-word\">remedy</strong> against",
+    "exam_ko": "…에 최선의 <strong class=\"target-word\">치료법</strong>을 쓰다."
+  },
+  {
+    "id": 1065,
+    "word": "remark",
+    "exam_en": "as <strong class=\"target-word\">remarked</strong> above",
+    "exam_ko": "<strong class=\"target-word\">상술한</strong> 바와 같이"
+  },
+  {
+    "id": 1066,
+    "word": "remark",
+    "exam_en": "He <strong class=\"target-word\">remarked</strong> that tomorrow would be a cold day.",
+    "exam_ko": "내일은 추워질 것이라고 그는 (내게) <strong class=\"target-word\">말했다</strong>"
+  },
+  {
+    "id": 1067,
+    "word": "recall",
+    "exam_en": "as I <strong class=\"target-word\">recall</strong>",
+    "exam_ko": "(구어) <strong class=\"target-word\">아마</strong>, 틀림없이"
+  },
+  {
+    "id": 1068,
+    "word": "recall",
+    "exam_en": "<strong class=\"target-word\">recall</strong> something to mind",
+    "exam_ko": "어떤 일을 <strong class=\"target-word\">회상하다</strong>"
+  },
+  {
+    "id": 1069,
+    "word": "reason",
+    "exam_en": "the <strong class=\"target-word\">reason</strong> for the decision",
+    "exam_ko": "결정의 <strong class=\"target-word\">이유</strong>"
+  },
+  {
+    "id": 1070,
+    "word": "reason",
+    "exam_en": "for no <strong class=\"target-word\">reason</strong>",
+    "exam_ko": "(전혀) <strong class=\"target-word\">이유</strong> 없이"
+  },
+  {
+    "id": 1071,
+    "word": "ready",
+    "exam_en": "get <strong class=\"target-word\">ready</strong> for an outing",
+    "exam_ko": "소풍 갈 <strong class=\"target-word\">준비</strong>를 하다"
+  },
+  {
+    "id": 1072,
+    "word": "ready",
+    "exam_en": "get the room <strong class=\"target-word\">ready</strong> for guests",
+    "exam_ko": "손님들을 위해 방을 <strong class=\"target-word\">정돈하다</strong>"
+  },
+  {
+    "id": 1073,
+    "word": "react",
+    "exam_en": "Kindness often <strong class=\"target-word\">reacts</strong> upon the kind.",
+    "exam_ko": "친절은 그것을 베푼 사람에게 돌아오는 일이 <strong class=\"target-word\">많다</strong>."
+  },
+  {
+    "id": 1074,
+    "word": "react",
+    "exam_en": "\"How did she <strong class=\"target-word\">react</strong> to your suggestion?\" \"She reacted unfavorably to my suggestion.\"",
+    "exam_ko": "「네 제안에 그녀는 <strong class=\"target-word\">반응</strong>을 보였니?」 「내 제안에 그녀의 반응은 부정적이었어.」"
+  },
+  {
+    "id": 1075,
+    "word": "conclusion",
+    "exam_en": "at the <strong class=\"target-word\">conclusion</strong> of the ceremony",
+    "exam_ko": "의식 <strong class=\"target-word\">끝</strong>에"
+  },
+  {
+    "id": 1076,
+    "word": "conclusion",
+    "exam_en": "bring a play to a happy <strong class=\"target-word\">conclusion</strong>",
+    "exam_ko": "연극을 해피 엔드로 <strong class=\"target-word\">이끌다</strong>."
+  },
+  {
+    "id": 1077,
+    "word": "rapid",
+    "exam_en": "a <strong class=\"target-word\">rapid</strong> journey",
+    "exam_ko": "<strong class=\"target-word\">황급한</strong> 여행"
+  },
+  {
+    "id": 1078,
+    "word": "rapid",
+    "exam_en": "the <strong class=\"target-word\">rapid</strong> growth of the Internet",
+    "exam_ko": "인터넷의 <strong class=\"target-word\">급속한</strong> 성장"
+  },
+  {
+    "id": 1079,
+    "word": "quite",
+    "exam_en": "<strong class=\"target-word\">quite</strong> impossible",
+    "exam_ko": "<strong class=\"target-word\">아주</strong> 불가능한[무해한, 완벽한, 확실한]"
+  },
+  {
+    "id": 1080,
+    "word": "quite",
+    "exam_en": "<strong class=\"target-word\">quite</strong> right",
+    "exam_ko": "<strong class=\"target-word\">전적으로</strong> 옳은[틀린]"
+  },
+  {
+    "id": 1081,
+    "word": "purpose",
+    "exam_en": "an all-<strong class=\"target-word\">purpose</strong> knife",
+    "exam_ko": "<strong class=\"target-word\">만능칼</strong>"
+  },
+  {
+    "id": 1082,
+    "word": "purpose",
+    "exam_en": "a lofty <strong class=\"target-word\">purpose</strong>",
+    "exam_ko": "높은 <strong class=\"target-word\">목표</strong>"
+  },
+  {
+    "id": 1083,
+    "word": "prosper",
+    "exam_en": "<strong class=\"target-word\">prosper</strong> in business",
+    "exam_ko": "사업에 <strong class=\"target-word\">성공하다</strong>"
+  },
+  {
+    "id": 1084,
+    "word": "prosper",
+    "exam_en": "His business <strong class=\"target-word\">prospered</strong>.",
+    "exam_ko": "그의 사업은 <strong class=\"target-word\">번창했다</strong>"
+  },
+  {
+    "id": 1085,
+    "word": "promote",
+    "exam_en": "He was <strong class=\"target-word\">promoted</strong> captain.",
+    "exam_ko": "그는 대위로 <strong class=\"target-word\">진급되었다</strong>"
+  },
+  {
+    "id": 1086,
+    "word": "promote",
+    "exam_en": "After this win, Manchester United were <strong class=\"target-word\">promoted</strong> to the First Division.",
+    "exam_ko": "이 경기를 이긴 후 맨체스터 유나이티드팀은 1부 리그로 <strong class=\"target-word\">승격되었다</strong>."
+  },
+  {
+    "id": 1087,
+    "word": "promise",
+    "exam_en": "a verbal <strong class=\"target-word\">promise</strong>",
+    "exam_ko": "구두 <strong class=\"target-word\">약속</strong>"
+  },
+  {
+    "id": 1088,
+    "word": "promise",
+    "exam_en": "an implied <strong class=\"target-word\">promise</strong>",
+    "exam_ko": "<strong class=\"target-word\">묵약</strong>"
+  },
+  {
+    "id": 1089,
+    "word": "prominent",
+    "exam_en": "<strong class=\"target-word\">prominent</strong> eyes",
+    "exam_ko": "<strong class=\"target-word\">퉁방울눈</strong>"
+  },
+  {
+    "id": 1090,
+    "word": "prominent",
+    "exam_en": "<strong class=\"target-word\">prominent</strong> teeth",
+    "exam_ko": "<strong class=\"target-word\">뻐드렁니</strong>."
+  },
+  {
+    "id": 1091,
+    "word": "profession",
+    "exam_en": "the world's oldest <strong class=\"target-word\">profession</strong>",
+    "exam_ko": "(익살) 세계 최고(最古)의 <strong class=\"target-word\">직업</strong>(매춘을 이름)"
+  },
+  {
+    "id": 1092,
+    "word": "profession",
+    "exam_en": "make it one's <strong class=\"target-word\">profession</strong> to hunt seals",
+    "exam_ko": "바다표범 사냥을 <strong class=\"target-word\">직업</strong>으로 하다"
+  },
+  {
+    "id": 1093,
+    "word": "product",
+    "exam_en": "industrial <strong class=\"target-word\">products</strong>",
+    "exam_ko": "공업 <strong class=\"target-word\">제품</strong>"
+  },
+  {
+    "id": 1094,
+    "word": "product",
+    "exam_en": "gross national <strong class=\"target-word\">product</strong>",
+    "exam_ko": "국민 <strong class=\"target-word\">총생산</strong>(고)(약자: GNP)."
+  },
+  {
+    "id": 1095,
+    "word": "process",
+    "exam_en": "the <strong class=\"target-word\">process</strong> of making cheese",
+    "exam_ko": "치즈 <strong class=\"target-word\">제조법</strong>"
+  },
+  {
+    "id": 1096,
+    "word": "process",
+    "exam_en": "the <strong class=\"target-word\">process</strong> of learning to read",
+    "exam_ko": "<strong class=\"target-word\">읽기 학습의</strong> 습득법"
+  },
+  {
+    "id": 1097,
+    "word": "proceed",
+    "exam_en": "<strong class=\"target-word\">proceed</strong> to Washington",
+    "exam_ko": "워싱턴으로 <strong class=\"target-word\">가다</strong>"
+  }
+]

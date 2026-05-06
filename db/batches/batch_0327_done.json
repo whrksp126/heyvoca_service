@@ -1,0 +1,258 @@
+[
+  {
+    "id": 8384,
+    "origin": "duplex",
+    "examples": [
+      {
+        "exam_en": "They moved into a <strong class=\"target-word\">duplex</strong> last month.",
+        "exam_ko": "그들은 지난달 <strong class=\"target-word\">복층 아파트</strong>로 이사했다."
+      }
+    ]
+  },
+  {
+    "id": 8386,
+    "origin": "observer",
+    "examples": [
+      {
+        "exam_en": "She attended the summit as an <strong class=\"target-word\">observer</strong>.",
+        "exam_ko": "그녀는 정상회담에 <strong class=\"target-word\">옵서버</strong>로 참석했다."
+      },
+      {
+        "exam_en": "He is a keen <strong class=\"target-word\">observer</strong> of political trends.",
+        "exam_ko": "그는 정치 동향을 예리하게 <strong class=\"target-word\">관찰하는 사람</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8389,
+    "origin": "preservation",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">preservation</strong> of forests is essential.",
+        "exam_ko": "산림 <strong class=\"target-word\">보호</strong>는 매우 중요하다."
+      },
+      {
+        "exam_en": "He dedicated his life to the <strong class=\"target-word\">preservation</strong> of cultural heritage.",
+        "exam_ko": "그는 문화유산 <strong class=\"target-word\">보존</strong>에 평생을 바쳤다."
+      }
+    ]
+  },
+  {
+    "id": 8391,
+    "origin": "watchful",
+    "examples": [
+      {
+        "exam_en": "She kept a <strong class=\"target-word\">watchful</strong> eye on political developments.",
+        "exam_ko": "그녀는 정치적 동향을 <strong class=\"target-word\">예의 주시하는</strong> 눈으로 지켜봤다."
+      },
+      {
+        "exam_en": "Be <strong class=\"target-word\">watchful</strong> for strangers in the area.",
+        "exam_ko": "주변의 낯선 사람을 <strong class=\"target-word\">조심</strong>하세요."
+      }
+    ]
+  },
+  {
+    "id": 8392,
+    "origin": "watcher",
+    "examples": [
+      {
+        "exam_en": "He works as a Kremlin <strong class=\"target-word\">watcher</strong> for a think tank.",
+        "exam_ko": "그는 싱크탱크에서 크렘린 <strong class=\"target-word\">전문 분석가</strong>로 일한다."
+      },
+      {
+        "exam_en": "She is an avid bird <strong class=\"target-word\">watcher</strong> who visits forests weekly.",
+        "exam_ko": "그녀는 매주 숲을 찾는 열렬한 조류 <strong class=\"target-word\">관찰자</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 8394,
+    "origin": "waiter",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">waiter</strong> brought the check right away.",
+        "exam_ko": "<strong class=\"target-word\">웨이터</strong>가 바로 계산서를 가져왔다."
+      }
+    ]
+  },
+  {
+    "id": 8395,
+    "origin": "inspection",
+    "examples": [
+      {
+        "exam_en": "On closer <strong class=\"target-word\">inspection</strong>, the painting was a forgery.",
+        "exam_ko": "더 자세히 <strong class=\"target-word\">조사해</strong> 보니 그 그림은 가짜였다."
+      },
+      {
+        "exam_en": "The car underwent a safety <strong class=\"target-word\">inspection</strong> before the trip.",
+        "exam_ko": "차는 여행 전에 안전 <strong class=\"target-word\">점검</strong>을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 8396,
+    "origin": "suspicion",
+    "examples": [
+      {
+        "exam_en": "She harbored a <strong class=\"target-word\">suspicion</strong> that he was lying.",
+        "exam_ko": "그녀는 그가 거짓말을 한다는 <strong class=\"target-word\">의심</strong>을 품었다."
+      },
+      {
+        "exam_en": "He was arrested on <strong class=\"target-word\">suspicion</strong> of theft.",
+        "exam_ko": "그는 절도 <strong class=\"target-word\">혐의</strong>로 체포되었다."
+      }
+    ]
+  },
+  {
+    "id": 8397,
+    "origin": "expectation",
+    "examples": [
+      {
+        "exam_en": "The results exceeded everyone's <strong class=\"target-word\">expectation</strong>.",
+        "exam_ko": "결과는 모두의 <strong class=\"target-word\">예상</strong>을 뛰어넘었다."
+      },
+      {
+        "exam_en": "There is an <strong class=\"target-word\">expectation</strong> of rain this afternoon.",
+        "exam_ko": "오늘 오후 비가 올 <strong class=\"target-word\">예상</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8399,
+    "origin": "spectacle",
+    "examples": [
+      {
+        "exam_en": "The massive traffic jam was quite a <strong class=\"target-word\">spectacle</strong>.",
+        "exam_ko": "그 대규모 교통 체증은 실로 볼 만한 <strong class=\"target-word\">광경</strong>이었다."
+      },
+      {
+        "exam_en": "The fireworks display was an appalling <strong class=\"target-word\">spectacle</strong>.",
+        "exam_ko": "불꽃놀이는 압도적인 <strong class=\"target-word\">장관</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 8400,
+    "origin": "specter",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">specter</strong> of poverty loomed over the community.",
+        "exam_ko": "가난의 <strong class=\"target-word\">공포</strong>가 그 지역 사회를 뒤덮었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">specter</strong> of unemployment haunted the land.",
+        "exam_ko": "실업이란 <strong class=\"target-word\">공포</strong>가 그 나라를 괴롭혔다."
+      }
+    ]
+  },
+  {
+    "id": 8401,
+    "origin": "overview",
+    "examples": [
+      {
+        "exam_en": "She gave a brief <strong class=\"target-word\">overview</strong> of the project.",
+        "exam_ko": "그녀는 프로젝트의 간략한 <strong class=\"target-word\">개요</strong>를 설명했다."
+      }
+    ]
+  },
+  {
+    "id": 8405,
+    "origin": "viewer",
+    "examples": [
+      {
+        "exam_en": "Heavy <strong class=\"target-word\">viewers</strong> spend hours in front of the TV daily.",
+        "exam_ko": "텔레비전을 많이 보는 <strong class=\"target-word\">시청자</strong>는 매일 몇 시간씩 TV 앞에 앉아 있다."
+      }
+    ]
+  },
+  {
+    "id": 8406,
+    "origin": "evidently",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Evidently</strong>, they made a fatal mistake.",
+        "exam_ko": "그들은 <strong class=\"target-word\">분명히</strong> 치명적인 실수를 저질렀다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Evidently</strong>, the salesclerk miscalculated.",
+        "exam_ko": "<strong class=\"target-word\">아무래도</strong> 점원이 계산을 잘못한 것 같다."
+      }
+    ]
+  },
+  {
+    "id": 8407,
+    "origin": "individuality",
+    "examples": [
+      {
+        "exam_en": "She is a person who lacks <strong class=\"target-word\">individuality</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">개성</strong>이 없는 사람이다."
+      },
+      {
+        "exam_en": "He is a man of marked <strong class=\"target-word\">individuality</strong>.",
+        "exam_ko": "그는 뚜렷한 <strong class=\"target-word\">개성</strong>을 지닌 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 8408,
+    "origin": "individually",
+    "examples": [
+      {
+        "exam_en": "She always thinks very <strong class=\"target-word\">individually</strong>.",
+        "exam_ko": "그녀는 늘 매우 <strong class=\"target-word\">개성적으로</strong> 생각한다."
+      },
+      {
+        "exam_en": "We were introduced <strong class=\"target-word\">individually</strong> to the guests.",
+        "exam_ko": "우리는 손님들에게 <strong class=\"target-word\">한 명씩</strong> 소개되었다."
+      }
+    ]
+  },
+  {
+    "id": 8410,
+    "origin": "provider",
+    "examples": [
+      {
+        "exam_en": "He is the chief <strong class=\"target-word\">provider</strong> for his family.",
+        "exam_ko": "그는 가족의 주요 <strong class=\"target-word\">부양자</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 8411,
+    "origin": "provision",
+    "examples": [
+      {
+        "exam_en": "The government increased public <strong class=\"target-word\">provision</strong> for the poor.",
+        "exam_ko": "정부는 빈민에 대한 공적 <strong class=\"target-word\">지원</strong>을 늘렸다."
+      },
+      {
+        "exam_en": "He made financial <strong class=\"target-word\">provisions</strong> for his family.",
+        "exam_ko": "그는 가족을 위한 재정적 <strong class=\"target-word\">대비책</strong>을 마련했다."
+      }
+    ]
+  },
+  {
+    "id": 8412,
+    "origin": "vision",
+    "examples": [
+      {
+        "exam_en": "The fog reduced the range of <strong class=\"target-word\">vision</strong> significantly.",
+        "exam_ko": "안개가 <strong class=\"target-word\">시야</strong>를 크게 줄였다."
+      },
+      {
+        "exam_en": "The leader had a clear <strong class=\"target-word\">vision</strong> for the future.",
+        "exam_ko": "그 지도자는 미래에 대한 명확한 <strong class=\"target-word\">비전</strong>을 갖고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8413,
+    "origin": "supervision",
+    "examples": [
+      {
+        "exam_en": "The patient recovered under medical <strong class=\"target-word\">supervision</strong>.",
+        "exam_ko": "환자는 의사의 <strong class=\"target-word\">감독</strong> 하에 회복되었다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,258 @@
+[
+  {
+    "id": 25606,
+    "origin": "gallows",
+    "examples": [
+      {
+        "exam_en": "There was a gallows. ",
+        "exam_ko": "교수대 하나가 있었다."
+      },
+      {
+        "exam_en": "There were many gallows. ",
+        "exam_ko": "많은 교수대가 있었다. "
+      },
+      {
+        "exam_en": "There was a gallows.",
+        "exam_ko": "교수대 하나가 있었다."
+      },
+      {
+        "exam_en": "There were many gallows.",
+        "exam_ko": "많은 교수대가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 25609,
+    "origin": "gabble",
+    "examples": [
+      {
+        "exam_en": "He gabbled away about nothing.",
+        "exam_ko": "그는 시시한 잡담을 지껄여 댔다."
+      },
+      {
+        "exam_en": "gabble out an apology",
+        "exam_ko": "빠른 말로 사과하다."
+      },
+      {
+        "exam_en": "Excitement caused the children to gabble about their weekend adventures.",
+        "exam_ko": "흥분해서 아이들이 주말 모험에 대해 잡담을 지껄이기 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 25612,
+    "origin": "gazette",
+    "examples": [
+      {
+        "exam_en": "the Marlowe Gazette",
+        "exam_ko": "말로 신문"
+      },
+      {
+        "exam_en": "an official gazette",
+        "exam_ko": "관보."
+      }
+    ]
+  },
+  {
+    "id": 25618,
+    "origin": "coruscate",
+    "examples": [
+      {
+        "exam_en": "a coruscating wit",
+        "exam_ko": "번득이는 재치[화려한 문체]."
+      }
+    ]
+  },
+  {
+    "id": 25627,
+    "origin": "guesswork",
+    "examples": [
+      {
+        "exam_en": "by guesswork",
+        "exam_ko": "어림짐작으로."
+      }
+    ]
+  },
+  {
+    "id": 25638,
+    "origin": "innermost",
+    "examples": [
+      {
+        "exam_en": "the innermost depth of the cave",
+        "exam_ko": "동굴의 가장 깊숙한 곳"
+      },
+      {
+        "exam_en": "one's innermost desires",
+        "exam_ko": "가슴 깊이 간직한 욕망."
+      }
+    ]
+  },
+  {
+    "id": 25639,
+    "origin": "inestimable",
+    "examples": [
+      {
+        "exam_en": "a thing of inestimable value",
+        "exam_ko": "헤아릴 수 없을 만큼 귀중한 물건."
+      },
+      {
+        "exam_en": "His opinion was of inestimable value. ",
+        "exam_ko": "그의 의견은 더할나위 없이 귀중했다."
+      },
+      {
+        "exam_en": "His opinion was of inestimable value.",
+        "exam_ko": "그의 의견은 더할나위 없이 귀중했다."
+      }
+    ]
+  },
+  {
+    "id": 25642,
+    "origin": "benumbed",
+    "examples": [
+      {
+        "exam_en": "He was benumbed by the news.",
+        "exam_ko": "그는 그 소식을 듣고 어리둥절해졌다."
+      }
+    ]
+  },
+  {
+    "id": 25648,
+    "origin": "inarticulate",
+    "examples": [
+      {
+        "exam_en": "an inarticulate cry",
+        "exam_ko": "말 아닌 외침"
+      },
+      {
+        "exam_en": "inarticulate sounds",
+        "exam_ko": "말이 안 되는 소리"
+      }
+    ]
+  },
+  {
+    "id": 25650,
+    "origin": "impalpable",
+    "examples": [
+      {
+        "exam_en": "impalpable distinctions of meaning",
+        "exam_ko": "매우 미묘한 의미상의 차이[구별]."
+      },
+      {
+        "exam_en": "impalpable powder",
+        "exam_ko": "고운 가루."
+      }
+    ]
+  },
+  {
+    "id": 25657,
+    "origin": "involution",
+    "examples": [
+      {
+        "exam_en": "involutions of the plot",
+        "exam_ko": "복잡하게 뒤얽힌 줄거리."
+      }
+    ]
+  },
+  {
+    "id": 25659,
+    "origin": "isle",
+    "examples": [
+      {
+        "exam_en": "the British Isles",
+        "exam_ko": "브리튼 제도."
+      }
+    ]
+  },
+  {
+    "id": 25665,
+    "origin": "inglorious",
+    "examples": [
+      {
+        "exam_en": "an inglorious defeat",
+        "exam_ko": "수치스러운 패배."
+      }
+    ]
+  },
+  {
+    "id": 25668,
+    "origin": "immovable",
+    "examples": [
+      {
+        "exam_en": "an immovable foundation",
+        "exam_ko": "굳건한 토대."
+      },
+      {
+        "exam_en": "an immovable will",
+        "exam_ko": "흔들리지 않는 의지"
+      }
+    ]
+  },
+  {
+    "id": 25671,
+    "origin": "unthinking",
+    "examples": [
+      {
+        "exam_en": "an unthinking insult",
+        "exam_ko": "경솔하고 무례한 행위."
+      },
+      {
+        "exam_en": "Logic is of no use to an unthinking person.",
+        "exam_ko": "논리는 사고하지 않는 사람에게는 소용없다."
+      }
+    ]
+  },
+  {
+    "id": 25674,
+    "origin": "permissive",
+    "examples": [
+      {
+        "exam_en": "a permissive society",
+        "exam_ko": "(성(性)이나 도덕상의 규제가) 관대한 사회."
+      }
+    ]
+  },
+  {
+    "id": 25680,
+    "origin": "jabber",
+    "examples": [
+      {
+        "exam_en": "He jabbered out a speech no one understood.",
+        "exam_ko": "그는 아무도 알아듣지 못할 말을 빨리 지껄였다."
+      },
+      {
+        "exam_en": "He jabbered away about football.",
+        "exam_ko": "그는 축구에 대해서 재잘재잘 지껄였다."
+      }
+    ]
+  },
+  {
+    "id": 25686,
+    "origin": "lacquer",
+    "examples": [
+      {
+        "exam_en": "The small box is finished in lacquer.",
+        "exam_ko": "그 작은 상자는 옻칠이 되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 25692,
+    "origin": "erogenous",
+    "examples": [
+      {
+        "exam_en": "an erogenous zone",
+        "exam_ko": "성감대."
+      }
+    ]
+  },
+  {
+    "id": 25698,
+    "origin": "lynch",
+    "examples": [
+      {
+        "exam_en": "Cowboys lynched the cattle thief after they caught him.",
+        "exam_ko": "카우보이들은 소 도둑을 잡은 후 린치를 가하여 죽였다."
+      }
+    ]
+  }
+]

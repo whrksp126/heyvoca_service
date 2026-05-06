@@ -1,0 +1,206 @@
+[
+  {
+    "id": 32669,
+    "origin": "volt",
+    "examples": [
+      {
+        "exam_en": "a 500-volt current",
+        "exam_ko": "500볼트의 전류."
+      }
+    ]
+  },
+  {
+    "id": 32674,
+    "origin": "footed",
+    "examples": [
+      {
+        "exam_en": "a four-footed beast",
+        "exam_ko": "네발짐승."
+      }
+    ]
+  },
+  {
+    "id": 32707,
+    "origin": "dualistic",
+    "examples": [
+      {
+        "exam_en": "the dualistic theory",
+        "exam_ko": "이원론[설]."
+      }
+    ]
+  },
+  {
+    "id": 32710,
+    "origin": "gyrate",
+    "examples": [
+      {
+        "exam_en": "The dancers gyrated to the music.",
+        "exam_ko": "댄서들은 음악에 맞추어 빙빙 돌았다."
+      }
+    ]
+  },
+  {
+    "id": 32724,
+    "origin": "drudge",
+    "examples": [
+      {
+        "exam_en": "drudge away at tedious work",
+        "exam_ko": "지겨운 일을 하다."
+      }
+    ]
+  },
+  {
+    "id": 32726,
+    "origin": "amalgam",
+    "examples": [
+      {
+        "exam_en": "a strange amalgam of Korean and Western traditions",
+        "exam_ko": "한국 전통과 서양 전통의 기묘한 혼합."
+      }
+    ]
+  },
+  {
+    "id": 32760,
+    "origin": "jumpstart",
+    "examples": [
+      {
+        "exam_en": "jumpstart the economy once again",
+        "exam_ko": "경제를 다시 소생시키다."
+      }
+    ]
+  },
+  {
+    "id": 32761,
+    "origin": "metro",
+    "examples": [
+      {
+        "exam_en": "metrorrhagia",
+        "exam_ko": "자궁 출혈."
+      }
+    ]
+  },
+  {
+    "id": 32840,
+    "origin": "incommensurate",
+    "examples": [
+      {
+        "exam_en": "abilities incommensurate to the task",
+        "exam_ko": "일에 맞지 않는 능력."
+      }
+    ]
+  },
+  {
+    "id": 32862,
+    "origin": "piecrust",
+    "examples": [
+      {
+        "exam_en": "Promises are like piecrust, made to be broken.",
+        "exam_ko": "약속이란 파이 껍질같이 깨어지기 쉬운 것이다."
+      }
+    ]
+  },
+  {
+    "id": 32865,
+    "origin": "unsight",
+    "examples": [
+      {
+        "exam_en": "unsight, unseen",
+        "exam_ko": "보지도 조사하지도 않고."
+      }
+    ]
+  },
+  {
+    "id": 32898,
+    "origin": "placatory",
+    "examples": [
+      {
+        "exam_en": "placatory words",
+        "exam_ko": "위로의 말."
+      }
+    ]
+  },
+  {
+    "id": 32913,
+    "origin": "hoarding",
+    "examples": [
+      {
+        "exam_en": "Building site hoarding is mandatory for any construction site.",
+        "exam_ko": "건축 현장에 임시 담장은 모든 건설 현자에 필수적 입니다."
+      }
+    ]
+  },
+  {
+    "id": 32916,
+    "origin": "unclog",
+    "examples": [
+      {
+        "exam_en": "unclog a drain",
+        "exam_ko": "배수로의 막힌 것을 제거하다."
+      }
+    ]
+  },
+  {
+    "id": 32930,
+    "origin": "kindling",
+    "examples": [
+      {
+        "exam_en": "use paper as kindling",
+        "exam_ko": "종이를 불쏘시개로 쓰다."
+      }
+    ]
+  },
+  {
+    "id": 32964,
+    "origin": "boxing",
+    "examples": [
+      {
+        "exam_en": "a boxing match",
+        "exam_ko": "권투 시합."
+      }
+    ]
+  },
+  {
+    "id": 32965,
+    "origin": "accordion",
+    "examples": [
+      {
+        "exam_en": "an accordion door",
+        "exam_ko": "신축성 자재로 된 문."
+      }
+    ]
+  },
+  {
+    "id": 32966,
+    "origin": "golf",
+    "examples": [
+      {
+        "exam_en": "go golfing",
+        "exam_ko": "골프를 치러 가다."
+      },
+      {
+        "exam_en": "How often do you golf these days?",
+        "exam_ko": "요새 골프장에 얼마나 자주 가시나요?"
+      }
+    ]
+  },
+  {
+    "id": 32986,
+    "origin": "diatonic",
+    "examples": [
+      {
+        "exam_en": "the diatonic scale",
+        "exam_ko": "온음계."
+      }
+    ]
+  },
+  {
+    "id": 33021,
+    "origin": "smarten",
+    "examples": [
+      {
+        "exam_en": "smarten up one's room",
+        "exam_ko": "방을 깨끗이 하다."
+      }
+    ]
+  }
+]

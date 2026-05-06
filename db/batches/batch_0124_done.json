@@ -1,0 +1,286 @@
+[
+  {
+    "id": 2580,
+    "origin": "polish",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">polished</strong> the floor until it shone.",
+        "exam_ko": "그녀는 바닥이 빛날 때까지 <strong class=\"target-word\">닦았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">polished</strong> his shoes before the interview.",
+        "exam_ko": "그는 면접 전에 신발을 <strong class=\"target-word\">닦았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2582,
+    "origin": "developed",
+    "examples": [
+      {
+        "exam_en": "Japan is a highly <strong class=\"target-word\">developed</strong> country.",
+        "exam_ko": "일본은 고도로 <strong class=\"target-word\">발달한</strong> 나라다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">developed</strong> strong leadership skills over time.",
+        "exam_ko": "그녀는 시간이 지나면서 강한 리더십을 <strong class=\"target-word\">발전시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2583,
+    "origin": "profound",
+    "examples": [
+      {
+        "exam_en": "The professor had a <strong class=\"target-word\">profound</strong> understanding of history.",
+        "exam_ko": "그 교수는 역사에 대한 <strong class=\"target-word\">깊은</strong> 이해를 갖고 있었다."
+      },
+      {
+        "exam_en": "The tragedy had a <strong class=\"target-word\">profound</strong> impact on the community.",
+        "exam_ko": "그 비극은 지역 사회에 <strong class=\"target-word\">심오한</strong> 영향을 미쳤다."
+      }
+    ]
+  },
+  {
+    "id": 2584,
+    "origin": "representative",
+    "examples": [
+      {
+        "exam_en": "She was the last <strong class=\"target-word\">representative</strong> of the royal family.",
+        "exam_ko": "그녀는 왕가의 마지막 <strong class=\"target-word\">대표자</strong>였다."
+      },
+      {
+        "exam_en": "He served as a diplomatic <strong class=\"target-word\">representative</strong> abroad.",
+        "exam_ko": "그는 해외에서 외교 <strong class=\"target-word\">대표</strong>로 활동했다."
+      }
+    ]
+  },
+  {
+    "id": 2585,
+    "origin": "enthusiastic",
+    "examples": [
+      {
+        "exam_en": "The crowd gave an <strong class=\"target-word\">enthusiastic</strong> response to the performance.",
+        "exam_ko": "군중은 공연에 <strong class=\"target-word\">열광적인</strong> 반응을 보였다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">enthusiastic</strong> about learning new languages.",
+        "exam_ko": "그녀는 새로운 언어를 배우는 것에 <strong class=\"target-word\">열중해</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 2586,
+    "origin": "dreadful",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">dreadful</strong> earthquake struck the region last night.",
+        "exam_ko": "어젯밤 그 지역에 <strong class=\"target-word\">무서운</strong> 지진이 발생했다."
+      },
+      {
+        "exam_en": "The food at the restaurant was absolutely <strong class=\"target-word\">dreadful</strong>.",
+        "exam_ko": "그 식당 음식은 완전히 <strong class=\"target-word\">형편없었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2587,
+    "origin": "rigid",
+    "examples": [
+      {
+        "exam_en": "The frame is made of <strong class=\"target-word\">rigid</strong> plastic that does not bend.",
+        "exam_ko": "그 프레임은 구부러지지 않는 <strong class=\"target-word\">단단한</strong> 플라스틱으로 만들어졌다."
+      },
+      {
+        "exam_en": "His face was <strong class=\"target-word\">rigid</strong> with pain after the accident.",
+        "exam_ko": "사고 후 그의 얼굴은 고통으로 <strong class=\"target-word\">굳어</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2588,
+    "origin": "reduced",
+    "examples": [
+      {
+        "exam_en": "The family lived in <strong class=\"target-word\">reduced</strong> circumstances after the bankruptcy.",
+        "exam_ko": "그 가족은 파산 후 <strong class=\"target-word\">몰락한</strong> 상황에서 살았다."
+      },
+      {
+        "exam_en": "Ticket prices are <strong class=\"target-word\">reduced</strong> for students.",
+        "exam_ko": "학생들에게는 티켓 가격이 <strong class=\"target-word\">할인된다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2589,
+    "origin": "cruel",
+    "examples": [
+      {
+        "exam_en": "Don't be <strong class=\"target-word\">cruel</strong> to animals.",
+        "exam_ko": "동물에게 <strong class=\"target-word\">잔인하게</strong> 대하지 마라."
+      },
+      {
+        "exam_en": "The judge imposed a <strong class=\"target-word\">cruel</strong> punishment on the offender.",
+        "exam_ko": "판사는 범죄자에게 <strong class=\"target-word\">가혹한</strong> 형벌을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": 2590,
+    "origin": "coastal",
+    "examples": [
+      {
+        "exam_en": "They visited a charming <strong class=\"target-word\">coastal</strong> town during their trip.",
+        "exam_ko": "그들은 여행 중에 매력적인 <strong class=\"target-word\">해안가</strong> 마을을 방문했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">coastal</strong> plain stretches for hundreds of kilometers.",
+        "exam_ko": "<strong class=\"target-word\">해안</strong> 평야는 수백 킬로미터에 걸쳐 펼쳐져 있다."
+      }
+    ]
+  },
+  {
+    "id": 2591,
+    "origin": "peculiar",
+    "examples": [
+      {
+        "exam_en": "Hemingway developed a writing style <strong class=\"target-word\">peculiar</strong> to him.",
+        "exam_ko": "헤밍웨이는 그에게 <strong class=\"target-word\">독특한</strong> 문체를 발전시켰다."
+      },
+      {
+        "exam_en": "Language is <strong class=\"target-word\">peculiar</strong> to mankind.",
+        "exam_ko": "언어는 인간에게만 <strong class=\"target-word\">특유한</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 2592,
+    "origin": "racial",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Racial</strong> discrimination is illegal in many countries.",
+        "exam_ko": "<strong class=\"target-word\">인종</strong> 차별은 많은 나라에서 불법이다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Racial</strong> conflict broke out in the city last week.",
+        "exam_ko": "지난주 그 도시에서 <strong class=\"target-word\">인종간의</strong> 충돌이 발생했다."
+      }
+    ]
+  },
+  {
+    "id": 2594,
+    "origin": "crude",
+    "examples": [
+      {
+        "exam_en": "The factory processes <strong class=\"target-word\">crude</strong> materials into finished products.",
+        "exam_ko": "그 공장은 <strong class=\"target-word\">원료</strong>를 완제품으로 가공한다."
+      },
+      {
+        "exam_en": "In <strong class=\"target-word\">crude</strong> terms, the plan failed completely.",
+        "exam_ko": "<strong class=\"target-word\">간단히</strong> 말하면, 그 계획은 완전히 실패했다."
+      }
+    ]
+  },
+  {
+    "id": 2595,
+    "origin": "extended",
+    "examples": [
+      {
+        "exam_en": "They went on an <strong class=\"target-word\">extended</strong> tour of Southeast Asia.",
+        "exam_ko": "그들은 동남아시아로 <strong class=\"target-word\">장기</strong> 여행을 떠났다."
+      },
+      {
+        "exam_en": "The meeting was <strong class=\"target-word\">extended</strong> by another hour.",
+        "exam_ko": "회의는 한 시간 더 <strong class=\"target-word\">연장되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2597,
+    "origin": "feminist",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">feminist</strong> movement changed laws in many countries.",
+        "exam_ko": "<strong class=\"target-word\">여성 해방</strong> 운동은 많은 나라의 법을 바꿨다."
+      },
+      {
+        "exam_en": "She identifies as a <strong class=\"target-word\">feminist</strong> and advocates for equal pay.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">여권 신장론자</strong>로서 동등한 임금을 지지한다."
+      }
+    ]
+  },
+  {
+    "id": 2598,
+    "origin": "bold",
+    "examples": [
+      {
+        "exam_en": "The general launched a <strong class=\"target-word\">bold</strong> attack at dawn.",
+        "exam_ko": "장군은 새벽에 <strong class=\"target-word\">대담한</strong> 공격을 개시했다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">bold</strong> decision to start her own business.",
+        "exam_ko": "그녀는 자신의 사업을 시작하는 <strong class=\"target-word\">대담한</strong> 결정을 내렸다."
+      },
+      {
+        "exam_en": "I prefer <strong class=\"target-word\">bold</strong> wines to light ones.",
+        "exam_ko": "나는 가벼운 와인보다 맛이 <strong class=\"target-word\">진한</strong> 와인을 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 2600,
+    "origin": "corresponding",
+    "examples": [
+      {
+        "exam_en": "He works as a <strong class=\"target-word\">corresponding</strong> clerk at the headquarters.",
+        "exam_ko": "그는 본사에서 <strong class=\"target-word\">통신</strong> 계원으로 일한다."
+      },
+      {
+        "exam_en": "She became a <strong class=\"target-word\">corresponding</strong> member of the research institute.",
+        "exam_ko": "그녀는 그 연구소의 <strong class=\"target-word\">통신</strong> 회원이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 2601,
+    "origin": "running",
+    "examples": [
+      {
+        "exam_en": "The coach praised the player's excellent base <strong class=\"target-word\">running</strong>.",
+        "exam_ko": "감독은 선수의 훌륭한 <strong class=\"target-word\">주루</strong>를 칭찬했다."
+      },
+      {
+        "exam_en": "She handles the day-to-day <strong class=\"target-word\">running</strong> of the firm.",
+        "exam_ko": "그녀는 회사의 일상적인 <strong class=\"target-word\">운영</strong>을 담당한다."
+      }
+    ]
+  },
+  {
+    "id": 2603,
+    "origin": "applicable",
+    "examples": [
+      {
+        "exam_en": "The rule is not <strong class=\"target-word\">applicable</strong> to this case.",
+        "exam_ko": "그 규칙은 이 경우에 <strong class=\"target-word\">해당되지</strong> 않는다."
+      },
+      {
+        "exam_en": "Please attach samples where <strong class=\"target-word\">applicable</strong>.",
+        "exam_ko": "<strong class=\"target-word\">해당되는</strong> 경우 샘플을 첨부해 주세요."
+      }
+    ]
+  },
+  {
+    "id": 2604,
+    "origin": "immense",
+    "examples": [
+      {
+        "exam_en": "The project required an <strong class=\"target-word\">immense</strong> sum of money.",
+        "exam_ko": "그 프로젝트에는 <strong class=\"target-word\">막대한</strong> 자금이 필요했다."
+      },
+      {
+        "exam_en": "His work had an <strong class=\"target-word\">immense</strong> influence on modern medicine.",
+        "exam_ko": "그의 업적은 현대 의학에 <strong class=\"target-word\">막대한</strong> 영향을 미쳤다."
+      }
+    ]
+  }
+]

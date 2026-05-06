@@ -1,0 +1,230 @@
+[
+  {
+    "id": 29888,
+    "origin": "deliverable",
+    "examples": [
+      {
+        "exam_en": "cooperate other disciplinal engineers to get final deliverables",
+        "exam_ko": "최종 납품물을 얻기 위해 타분야 엔지니어와 협럭하라."
+      }
+    ]
+  },
+  {
+    "id": 29893,
+    "origin": "sponsored",
+    "examples": [
+      {
+        "exam_en": "a sponsored walk",
+        "exam_ko": "자선 도보(일정한 거리를 걸을 때 마다 모금하는 행사)."
+      },
+      {
+        "exam_en": "a government-sponsored enterprise",
+        "exam_ko": "정부 지원 사업."
+      }
+    ]
+  },
+  {
+    "id": 29912,
+    "origin": "pooped",
+    "examples": [
+      {
+        "exam_en": "I'm too pooped to go shopping today.",
+        "exam_ko": "오늘은 너무 피곤해서 쇼핑하러 못 가."
+      }
+    ]
+  },
+  {
+    "id": 29918,
+    "origin": "wooded",
+    "examples": [
+      {
+        "exam_en": "a wooded hill",
+        "exam_ko": "숲이 있는 언덕"
+      },
+      {
+        "exam_en": "wooded valleys",
+        "exam_ko": "나무가 우거진 계곡."
+      }
+    ]
+  },
+  {
+    "id": 29929,
+    "origin": "governing",
+    "examples": [
+      {
+        "exam_en": "the governing classes",
+        "exam_ko": "지배 계급"
+      },
+      {
+        "exam_en": "a governing council",
+        "exam_ko": "운영 심의회."
+      }
+    ]
+  },
+  {
+    "id": 29935,
+    "origin": "mountainous",
+    "examples": [
+      {
+        "exam_en": "mountainous country",
+        "exam_ko": "산이 많은 나라."
+      },
+      {
+        "exam_en": "mountainous waves",
+        "exam_ko": "거대한 파도"
+      }
+    ]
+  },
+  {
+    "id": 29941,
+    "origin": "dividing",
+    "examples": [
+      {
+        "exam_en": "dividing bars",
+        "exam_ko": "격자골"
+      },
+      {
+        "exam_en": "a dividing line",
+        "exam_ko": "경계선"
+      }
+    ]
+  },
+  {
+    "id": 29956,
+    "origin": "continuance",
+    "examples": [
+      {
+        "exam_en": "continuance of species",
+        "exam_ko": "종(種)의 존속"
+      },
+      {
+        "exam_en": "one's continuance in office",
+        "exam_ko": "재직 중"
+      }
+    ]
+  },
+  {
+    "id": 29958,
+    "origin": "inhumanity",
+    "examples": [
+      {
+        "exam_en": "man's inhumanity to man",
+        "exam_ko": "인간이 인간에게 행하는 잔혹 행위."
+      }
+    ]
+  },
+  {
+    "id": 29988,
+    "origin": "whither",
+    "examples": [
+      {
+        "exam_en": "Whither goest thou?",
+        "exam_ko": "그대는 어디로 가는가?"
+      },
+      {
+        "exam_en": "Whither computer technology?",
+        "exam_ko": "(신문의 제목 등에서) 컴퓨터 기술은 어디까지 왔는가?"
+      }
+    ]
+  },
+  {
+    "id": 29991,
+    "origin": "brotherly",
+    "examples": [
+      {
+        "exam_en": "in a most brotherly manner",
+        "exam_ko": "매우 친밀히."
+      }
+    ]
+  },
+  {
+    "id": 30015,
+    "origin": "fireside",
+    "examples": [
+      {
+        "exam_en": "sit by the fireside",
+        "exam_ko": "난롯가에 앉다."
+      }
+    ]
+  },
+  {
+    "id": 30031,
+    "origin": "nights",
+    "examples": [
+      {
+        "exam_en": "I work nights and sleep days.",
+        "exam_ko": "밤에는 일하고 낮에는 잔다."
+      }
+    ]
+  },
+  {
+    "id": 30043,
+    "origin": "transatlantic",
+    "examples": [
+      {
+        "exam_en": "a transatlantic cable",
+        "exam_ko": "대서양 횡단 케이블[비행기]."
+      }
+    ]
+  },
+  {
+    "id": 30079,
+    "origin": "abnormally",
+    "examples": [
+      {
+        "exam_en": "abnormally dry weather",
+        "exam_ko": "비정상적으로 건조한 날씨."
+      }
+    ]
+  },
+  {
+    "id": 30116,
+    "origin": "borderland",
+    "examples": [
+      {
+        "exam_en": "the borderland between waking and sleeping",
+        "exam_ko": "비몽사몽의 상태."
+      }
+    ]
+  },
+  {
+    "id": 30126,
+    "origin": "hairsplitting",
+    "examples": [
+      {
+        "exam_en": "This is no time for hairsplitting.",
+        "exam_ko": "사소한 일에 구애받을 때가 아니다."
+      }
+    ]
+  },
+  {
+    "id": 30136,
+    "origin": "prewar",
+    "examples": [
+      {
+        "exam_en": "conditions in prewar Europe",
+        "exam_ko": "전쟁 전의 유럽의 정세."
+      }
+    ]
+  },
+  {
+    "id": 30137,
+    "origin": "congressional",
+    "examples": [
+      {
+        "exam_en": "a Congressional district",
+        "exam_ko": "(미국 의회의) 하원 의원 선거구."
+      }
+    ]
+  },
+  {
+    "id": 30138,
+    "origin": "limiting",
+    "examples": [
+      {
+        "exam_en": "a limiting case",
+        "exam_ko": "극단적인 경우."
+      }
+    ]
+  }
+]

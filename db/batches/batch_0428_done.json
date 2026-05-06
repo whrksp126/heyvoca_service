@@ -1,0 +1,254 @@
+[
+  {
+    "id": 12024,
+    "origin": "debit",
+    "examples": [
+      {
+        "exam_en": "The account showed a <strong class=\"target-word\">debit</strong> balance.",
+        "exam_ko": "계좌에 <strong class=\"target-word\">차변</strong> 잔액이 표시되었다."
+      },
+      {
+        "exam_en": "She filled out a <strong class=\"target-word\">debit</strong> slip at the bank.",
+        "exam_ko": "그녀는 은행에서 <strong class=\"target-word\">출금</strong> 전표를 작성했다."
+      }
+    ]
+  },
+  {
+    "id": 12026,
+    "origin": "mast",
+    "examples": [
+      {
+        "exam_en": "The sailor clung to the <strong class=\"target-word\">mast</strong> in the storm.",
+        "exam_ko": "선원은 폭풍 속에서 <strong class=\"target-word\">돛대</strong>에 매달렸다."
+      }
+    ]
+  },
+  {
+    "id": 12027,
+    "origin": "oval",
+    "examples": [
+      {
+        "exam_en": "She has a beautiful <strong class=\"target-word\">oval</strong> face.",
+        "exam_ko": "그녀는 아름다운 <strong class=\"target-word\">계란형</strong> 얼굴을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 12030,
+    "origin": "drastically",
+    "examples": [
+      {
+        "exam_en": "The Internet <strong class=\"target-word\">drastically</strong> changed how people communicate.",
+        "exam_ko": "인터넷은 사람들의 소통 방식을 <strong class=\"target-word\">철저히</strong> 변화시켰다."
+      }
+    ]
+  },
+  {
+    "id": 12032,
+    "origin": "verbally",
+    "examples": [
+      {
+        "exam_en": "I will share your views <strong class=\"target-word\">verbally</strong> with the committee.",
+        "exam_ko": "당신의 견해를 위원회에 <strong class=\"target-word\">구두로</strong> 전하겠습니다."
+      }
+    ]
+  },
+  {
+    "id": 12034,
+    "origin": "oscillate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">oscillated</strong> between two different plans.",
+        "exam_ko": "그는 두 가지 계획 사이에서 <strong class=\"target-word\">망설였다</strong>."
+      },
+      {
+        "exam_en": "The device produces an <strong class=\"target-word\">oscillating</strong> current.",
+        "exam_ko": "그 장치는 <strong class=\"target-word\">진동하는</strong> 전류를 생성한다."
+      }
+    ]
+  },
+  {
+    "id": 12036,
+    "origin": "underdog",
+    "examples": [
+      {
+        "exam_en": "She always sides with the <strong class=\"target-word\">underdog</strong>.",
+        "exam_ko": "그녀는 항상 <strong class=\"target-word\">약자</strong> 편을 든다."
+      }
+    ]
+  },
+  {
+    "id": 12039,
+    "origin": "litter",
+    "examples": [
+      {
+        "exam_en": "He picked up a piece of <strong class=\"target-word\">litter</strong> from the ground.",
+        "exam_ko": "그는 바닥에서 <strong class=\"target-word\">쓰레기</strong> 조각을 주웠다."
+      },
+      {
+        "exam_en": "Please do not <strong class=\"target-word\">litter</strong> in the park.",
+        "exam_ko": "공원에서 <strong class=\"target-word\">쓰레기를 버리지</strong> 마세요."
+      }
+    ]
+  },
+  {
+    "id": 12041,
+    "origin": "talented",
+    "examples": [
+      {
+        "exam_en": "She is a very <strong class=\"target-word\">talented</strong> writer.",
+        "exam_ko": "그녀는 매우 <strong class=\"target-word\">재능 있는</strong> 작가다."
+      },
+      {
+        "exam_en": "The whole family was so <strong class=\"target-word\">talented</strong>.",
+        "exam_ko": "온 가족이 정말 <strong class=\"target-word\">재능이 넘쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12042,
+    "origin": "competitor",
+    "examples": [
+      {
+        "exam_en": "They are strong <strong class=\"target-word\">competitors</strong> in business.",
+        "exam_ko": "그들은 사업의 강력한 <strong class=\"target-word\">경쟁자들</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12045,
+    "origin": "cub",
+    "examples": [
+      {
+        "exam_en": "A lion protected her <strong class=\"target-word\">cubs</strong> from danger.",
+        "exam_ko": "사자가 <strong class=\"target-word\">새끼들</strong>을 위험으로부터 보호했다."
+      },
+      {
+        "exam_en": "The young <strong class=\"target-word\">cub</strong> had poor manners.",
+        "exam_ko": "그 어린 <strong class=\"target-word\">풋내기</strong>는 예의가 없었다."
+      }
+    ]
+  },
+  {
+    "id": 12047,
+    "origin": "approximate",
+    "examples": [
+      {
+        "exam_en": "The report is <strong class=\"target-word\">approximate</strong> to the truth.",
+        "exam_ko": "그 보고는 진상에 <strong class=\"target-word\">가깝다</strong>."
+      },
+      {
+        "exam_en": "All these totals are <strong class=\"target-word\">approximate</strong>.",
+        "exam_ko": "이것들의 합계액은 모두 <strong class=\"target-word\">어림잡은</strong> 것이다."
+      }
+    ]
+  },
+  {
+    "id": 12048,
+    "origin": "airmail",
+    "examples": [
+      {
+        "exam_en": "Please send this package by <strong class=\"target-word\">airmail</strong>.",
+        "exam_ko": "이 소포를 <strong class=\"target-word\">항공 우편으로</strong> 보내 주세요."
+      },
+      {
+        "exam_en": "He sent the letter by <strong class=\"target-word\">airmail</strong> to save time.",
+        "exam_ko": "그는 시간을 아끼려 편지를 <strong class=\"target-word\">항공편으로</strong> 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 12049,
+    "origin": "airline",
+    "examples": [
+      {
+        "exam_en": "She works for a major <strong class=\"target-word\">airline</strong>.",
+        "exam_ko": "그녀는 대형 <strong class=\"target-word\">항공사</strong>에서 일한다."
+      },
+      {
+        "exam_en": "The distance is measured as an <strong class=\"target-word\">airline</strong> distance.",
+        "exam_ko": "거리는 <strong class=\"target-word\">직선</strong> 거리로 측정된다."
+      }
+    ]
+  },
+  {
+    "id": 12053,
+    "origin": "vacancy",
+    "examples": [
+      {
+        "exam_en": "The desert was filled with utter <strong class=\"target-word\">vacancy</strong>.",
+        "exam_ko": "사막은 완전한 <strong class=\"target-word\">공허함</strong>으로 가득했다."
+      },
+      {
+        "exam_en": "He stared into <strong class=\"target-word\">vacancy</strong> without a word.",
+        "exam_ko": "그는 말없이 <strong class=\"target-word\">허공</strong>을 응시했다."
+      }
+    ]
+  },
+  {
+    "id": 12056,
+    "origin": "honesty",
+    "examples": [
+      {
+        "exam_en": "She spoke with complete <strong class=\"target-word\">honesty</strong>.",
+        "exam_ko": "그녀는 완전한 <strong class=\"target-word\">정직함</strong>으로 말했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">honesty</strong> of purpose earned respect.",
+        "exam_ko": "그의 목적에 대한 <strong class=\"target-word\">성실함</strong>이 존경을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 12059,
+    "origin": "reek",
+    "examples": [
+      {
+        "exam_en": "The garbage can had a horrible <strong class=\"target-word\">reek</strong>.",
+        "exam_ko": "쓰레기통에서 끔찍한 <strong class=\"target-word\">악취</strong>가 났다."
+      },
+      {
+        "exam_en": "The lab <strong class=\"target-word\">reeked</strong> of ammonia all day.",
+        "exam_ko": "실험실에서 하루 종일 암모니아 냄새가 <strong class=\"target-word\">진동했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12060,
+    "origin": "cylindrical",
+    "examples": [
+      {
+        "exam_en": "The telescope uses a <strong class=\"target-word\">cylindrical</strong> lens.",
+        "exam_ko": "그 망원경은 <strong class=\"target-word\">원기둥형</strong> 렌즈를 사용한다."
+      },
+      {
+        "exam_en": "The tank has a smooth <strong class=\"target-word\">cylindrical</strong> surface.",
+        "exam_ko": "그 탱크는 매끄러운 <strong class=\"target-word\">원기둥</strong> 표면을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 12062,
+    "origin": "spokesman",
+    "examples": [
+      {
+        "exam_en": "He acted as a <strong class=\"target-word\">spokesman</strong> for the group.",
+        "exam_ko": "그는 그 단체의 <strong class=\"target-word\">대변인</strong>으로 활동했다."
+      }
+    ]
+  },
+  {
+    "id": 12063,
+    "origin": "sustenance",
+    "examples": [
+      {
+        "exam_en": "How shall we find <strong class=\"target-word\">sustenance</strong> this winter?",
+        "exam_ko": "이번 겨울에 어떻게 <strong class=\"target-word\">생계</strong>를 꾸려야 할까?"
+      },
+      {
+        "exam_en": "They survived without any <strong class=\"target-word\">sustenance</strong> for days.",
+        "exam_ko": "그들은 며칠간 아무 <strong class=\"target-word\">먹을 것</strong>도 없이 버텼다."
+      }
+    ]
+  }
+]

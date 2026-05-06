@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4569,
+    "origin": "significantly",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">significantly</strong> improved his English skills.",
+        "exam_ko": "그는 영어 실력을 <strong class=\"target-word\">크게</strong> 향상시켰다."
+      },
+      {
+        "exam_en": "His promotion <strong class=\"target-word\">significantly</strong> increased his income.",
+        "exam_ko": "승진으로 그의 소득은 <strong class=\"target-word\">현저하게</strong> 증가했다."
+      }
+    ]
+  },
+  {
+    "id": 4570,
+    "origin": "site",
+    "examples": [
+      {
+        "exam_en": "They chose a <strong class=\"target-word\">site</strong> for the new school.",
+        "exam_ko": "그들은 새 학교 <strong class=\"target-word\">부지</strong>를 선정했다."
+      },
+      {
+        "exam_en": "The construction <strong class=\"target-word\">site</strong> was closed on weekends.",
+        "exam_ko": "공사 <strong class=\"target-word\">현장</strong>은 주말에 문을 닫았다."
+      }
+    ]
+  },
+  {
+    "id": 4571,
+    "origin": "skip",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">skipped</strong> over the fence easily.",
+        "exam_ko": "그녀는 울타리를 가볍게 <strong class=\"target-word\">뛰어넘었다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">skipped</strong> class without telling anyone.",
+        "exam_ko": "그는 아무에게도 말하지 않고 수업을 <strong class=\"target-word\">빠졌다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4572,
+    "origin": "slender",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">slender</strong> figure and looks elegant.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">날씬한</strong> 체형으로 우아해 보인다."
+      },
+      {
+        "exam_en": "The spider hung from a <strong class=\"target-word\">slender</strong> thread.",
+        "exam_ko": "거미가 <strong class=\"target-word\">가는</strong> 실에 매달려 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4574,
+    "origin": "softly",
+    "examples": [
+      {
+        "exam_en": "She spoke <strong class=\"target-word\">softly</strong> so as not to wake him.",
+        "exam_ko": "그녀는 그를 깨우지 않으려고 <strong class=\"target-word\">조용히</strong> 말했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">softly</strong> touched her shoulder to comfort her.",
+        "exam_ko": "그는 그녀를 위로하려고 어깨를 <strong class=\"target-word\">부드럽게</strong> 두드렸다."
+      }
+    ]
+  },
+  {
+    "id": 4575,
+    "origin": "beef",
+    "examples": [
+      {
+        "exam_en": "She grilled the <strong class=\"target-word\">beef</strong> for dinner.",
+        "exam_ko": "그녀는 저녁 식사로 <strong class=\"target-word\">쇠고기</strong>를 구웠다."
+      },
+      {
+        "exam_en": "He ordered a <strong class=\"target-word\">beef</strong> burger at the restaurant.",
+        "exam_ko": "그는 식당에서 <strong class=\"target-word\">소고기</strong> 버거를 주문했다."
+      }
+    ]
+  },
+  {
+    "id": 4576,
+    "origin": "sandal",
+    "examples": [
+      {
+        "exam_en": "She bought a new pair of <strong class=\"target-word\">sandals</strong> for summer.",
+        "exam_ko": "그녀는 여름을 위해 새 <strong class=\"target-word\">샌들</strong> 한 켤레를 샀다."
+      },
+      {
+        "exam_en": "He wore <strong class=\"target-word\">sandals</strong> to the beach.",
+        "exam_ko": "그는 해변에 <strong class=\"target-word\">샌들</strong>을 신고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 4577,
+    "origin": "scarf",
+    "examples": [
+      {
+        "exam_en": "She wrapped a <strong class=\"target-word\">scarf</strong> around her neck.",
+        "exam_ko": "그녀는 목에 <strong class=\"target-word\">스카프</strong>를 둘렀다."
+      },
+      {
+        "exam_en": "He bought colorful <strong class=\"target-word\">scarves</strong> as souvenirs.",
+        "exam_ko": "그는 기념품으로 화려한 <strong class=\"target-word\">스카프</strong>들을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 4578,
+    "origin": "screw",
+    "examples": [
+      {
+        "exam_en": "He tightened the <strong class=\"target-word\">screw</strong> with a screwdriver.",
+        "exam_ko": "그는 드라이버로 <strong class=\"target-word\">나사</strong>를 조였다."
+      },
+      {
+        "exam_en": "One <strong class=\"target-word\">screw</strong> was missing from the shelf.",
+        "exam_ko": "선반에 <strong class=\"target-word\">나사</strong> 하나가 빠져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 4579,
+    "origin": "secondhand",
+    "examples": [
+      {
+        "exam_en": "She bought a <strong class=\"target-word\">secondhand</strong> bike at a low price.",
+        "exam_ko": "그녀는 저렴한 가격에 <strong class=\"target-word\">중고</strong> 자전거를 샀다."
+      },
+      {
+        "exam_en": "He read <strong class=\"target-word\">secondhand</strong> books from the library sale.",
+        "exam_ko": "그는 도서관 세일에서 <strong class=\"target-word\">헌</strong> 책들을 읽었다."
+      }
+    ]
+  },
+  {
+    "id": 4580,
+    "origin": "buddy",
+    "examples": [
+      {
+        "exam_en": "He called his old <strong class=\"target-word\">buddy</strong> after many years.",
+        "exam_ko": "그는 오랜만에 오래된 <strong class=\"target-word\">친구</strong>에게 전화했다."
+      },
+      {
+        "exam_en": "They have been <strong class=\"target-word\">buddies</strong> since high school.",
+        "exam_ko": "그들은 고등학교 때부터 <strong class=\"target-word\">친구</strong>였다."
+      }
+    ]
+  },
+  {
+    "id": 4583,
+    "origin": "component",
+    "examples": [
+      {
+        "exam_en": "Trust is a key <strong class=\"target-word\">component</strong> of any relationship.",
+        "exam_ko": "신뢰는 모든 관계의 핵심 <strong class=\"target-word\">요소</strong>다."
+      },
+      {
+        "exam_en": "The engineer replaced the broken <strong class=\"target-word\">component</strong>.",
+        "exam_ko": "엔지니어가 고장 난 <strong class=\"target-word\">부품</strong>을 교체했다."
+      }
+    ]
+  },
+  {
+    "id": 4584,
+    "origin": "con",
+    "examples": [
+      {
+        "exam_en": "They discussed the pros and <strong class=\"target-word\">cons</strong> of the plan.",
+        "exam_ko": "그들은 계획의 장단점과 <strong class=\"target-word\">반대 의견</strong>을 논의했다."
+      },
+      {
+        "exam_en": "He listed every <strong class=\"target-word\">con</strong> before making a decision.",
+        "exam_ko": "그는 결정을 내리기 전에 모든 <strong class=\"target-word\">단점</strong>을 열거했다."
+      }
+    ]
+  },
+  {
+    "id": 4585,
+    "origin": "obsolete",
+    "examples": [
+      {
+        "exam_en": "That technology has become completely <strong class=\"target-word\">obsolete</strong>.",
+        "exam_ko": "그 기술은 완전히 <strong class=\"target-word\">구식</strong>이 되었다."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">obsolete</strong> words no longer appear in dictionaries.",
+        "exam_ko": "많은 <strong class=\"target-word\">사어</strong>가 더 이상 사전에 나오지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 4586,
+    "origin": "pro",
+    "examples": [
+      {
+        "exam_en": "Are you <strong class=\"target-word\">pro</strong> or anti the death penalty?",
+        "exam_ko": "사형 제도에 <strong class=\"target-word\">찬성</strong>하는가 반대하는가?"
+      },
+      {
+        "exam_en": "He listed every <strong class=\"target-word\">pro</strong> before making his choice.",
+        "exam_ko": "그는 선택하기 전에 모든 <strong class=\"target-word\">장점</strong>을 나열했다."
+      }
+    ]
+  },
+  {
+    "id": 4588,
+    "origin": "recess",
+    "examples": [
+      {
+        "exam_en": "The children played outside during <strong class=\"target-word\">recess</strong>.",
+        "exam_ko": "아이들은 <strong class=\"target-word\">쉬는 시간</strong>에 밖에서 놀았다."
+      },
+      {
+        "exam_en": "Congress is in <strong class=\"target-word\">recess</strong> until next month.",
+        "exam_ko": "의회는 다음 달까지 <strong class=\"target-word\">휴회</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 4590,
+    "origin": "reside",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">resides</strong> in a small town near the coast.",
+        "exam_ko": "그녀는 해안 근처 작은 마을에 <strong class=\"target-word\">거주한다</strong>."
+      },
+      {
+        "exam_en": "He has <strong class=\"target-word\">resided</strong> abroad for over ten years.",
+        "exam_ko": "그는 10년 넘게 외국에 <strong class=\"target-word\">거주해</strong> 왔다."
+      }
+    ]
+  },
+  {
+    "id": 4591,
+    "origin": "troublesome",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">troublesome</strong> student disrupted the whole class.",
+        "exam_ko": "그 <strong class=\"target-word\">골치 아픈</strong> 학생이 수업 전체를 방해했다."
+      },
+      {
+        "exam_en": "Fixing that error was a <strong class=\"target-word\">troublesome</strong> task.",
+        "exam_ko": "그 오류를 수정하는 것은 <strong class=\"target-word\">번거로운</strong> 작업이었다."
+      }
+    ]
+  },
+  {
+    "id": 4592,
+    "origin": "untidy",
+    "examples": [
+      {
+        "exam_en": "His desk is always <strong class=\"target-word\">untidy</strong> and hard to work at.",
+        "exam_ko": "그의 책상은 항상 <strong class=\"target-word\">지저분해서</strong> 일하기 힘들다."
+      },
+      {
+        "exam_en": "She felt embarrassed by her <strong class=\"target-word\">untidy</strong> room.",
+        "exam_ko": "그녀는 자신의 <strong class=\"target-word\">어질러진</strong> 방이 부끄러웠다."
+      }
+    ]
+  },
+  {
+    "id": 4593,
+    "origin": "cloudy",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">cloudy</strong> day with no sun.",
+        "exam_ko": "햇빛 없는 <strong class=\"target-word\">흐린</strong> 날이었다."
+      },
+      {
+        "exam_en": "The sky turned <strong class=\"target-word\">cloudy</strong> before the storm arrived.",
+        "exam_ko": "폭풍이 오기 전에 하늘이 <strong class=\"target-word\">흐려졌다</strong>."
+      }
+    ]
+  }
+]

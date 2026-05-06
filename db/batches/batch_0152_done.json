@@ -1,0 +1,294 @@
+[
+  {
+    "id": 3329,
+    "origin": "truck",
+    "examples": [
+      {
+        "exam_en": "The workers <strong class=\"target-word\">loaded</strong> the truck with heavy boxes.",
+        "exam_ko": "작업자들이 무거운 상자를 <strong class=\"target-word\">트럭에 실었다</strong>."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">truck</strong> full of bricks arrived at the site.",
+        "exam_ko": "벽돌을 가득 실은 <strong class=\"target-word\">트럭</strong>이 현장에 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 3330,
+    "origin": "troop",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">troop</strong> of hunters moved through the forest.",
+        "exam_ko": "사냥꾼 <strong class=\"target-word\">한 무리</strong>가 숲을 헤치고 나아갔다."
+      },
+      {
+        "exam_en": "The soldiers marched in <strong class=\"target-word\">troops</strong> along the road.",
+        "exam_ko": "병사들이 <strong class=\"target-word\">떼를 지어</strong> 길을 따라 행진했다."
+      }
+    ]
+  },
+  {
+    "id": 3331,
+    "origin": "trip",
+    "examples": [
+      {
+        "exam_en": "They planned a pleasure <strong class=\"target-word\">trip</strong> to the coast.",
+        "exam_ko": "그들은 해안으로 관광 <strong class=\"target-word\">여행</strong>을 계획했다."
+      },
+      {
+        "exam_en": "She went on a <strong class=\"target-word\">trip</strong> abroad last summer.",
+        "exam_ko": "그녀는 지난 여름에 해외 <strong class=\"target-word\">여행</strong>을 다녀왔다."
+      }
+    ]
+  },
+  {
+    "id": 3332,
+    "origin": "trick",
+    "examples": [
+      {
+        "exam_en": "The magician performed amazing card <strong class=\"target-word\">tricks</strong>.",
+        "exam_ko": "마술사는 놀라운 카드 <strong class=\"target-word\">묘기</strong>를 선보였다."
+      },
+      {
+        "exam_en": "He learned the <strong class=\"target-word\">trick</strong> of riding a bike with no hands.",
+        "exam_ko": "그는 손을 떼고 자전거 타는 <strong class=\"target-word\">재주</strong>를 익혔다."
+      }
+    ]
+  },
+  {
+    "id": 3333,
+    "origin": "tribe",
+    "examples": [
+      {
+        "exam_en": "A nomadic <strong class=\"target-word\">tribe</strong> crossed the desert each year.",
+        "exam_ko": "유목 <strong class=\"target-word\">부족</strong>이 매년 사막을 건넜다."
+      },
+      {
+        "exam_en": "The Bantu <strong class=\"target-word\">tribes</strong> have rich oral traditions.",
+        "exam_ko": "반투 <strong class=\"target-word\">부족들</strong>은 풍부한 구전 전통을 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 3334,
+    "origin": "trial",
+    "examples": [
+      {
+        "exam_en": "The criminal <strong class=\"target-word\">trial</strong> lasted three weeks.",
+        "exam_ko": "형사 <strong class=\"target-word\">재판</strong>은 3주 동안 진행됐다."
+      },
+      {
+        "exam_en": "The case is currently under <strong class=\"target-word\">trial</strong> in court.",
+        "exam_ko": "그 사건은 현재 법원에서 <strong class=\"target-word\">심리</strong> 중이다."
+      }
+    ]
+  },
+  {
+    "id": 3335,
+    "origin": "tree",
+    "examples": [
+      {
+        "exam_en": "There is an apple <strong class=\"target-word\">tree</strong> in our backyard.",
+        "exam_ko": "우리 뒤뜰에 사과 <strong class=\"target-word\">나무</strong>가 한 그루 있다."
+      },
+      {
+        "exam_en": "The Buddha meditated under the Bodhi <strong class=\"target-word\">tree</strong>.",
+        "exam_ko": "부처는 보리 <strong class=\"target-word\">나무</strong> 아래에서 명상했다."
+      }
+    ]
+  },
+  {
+    "id": 3336,
+    "origin": "treaty",
+    "examples": [
+      {
+        "exam_en": "The two countries signed a secret <strong class=\"target-word\">treaty</strong>.",
+        "exam_ko": "두 나라는 비밀 <strong class=\"target-word\">조약</strong>을 체결했다."
+      },
+      {
+        "exam_en": "The leaders gathered to sign the peace <strong class=\"target-word\">treaty</strong>.",
+        "exam_ko": "지도자들이 평화 <strong class=\"target-word\">조약</strong>에 서명하기 위해 모였다."
+      }
+    ]
+  },
+  {
+    "id": 3337,
+    "origin": "treatment",
+    "examples": [
+      {
+        "exam_en": "The VIP guests received special <strong class=\"target-word\">treatment</strong> at the hotel.",
+        "exam_ko": "VIP 손님들은 호텔에서 특별 <strong class=\"target-word\">대우</strong>를 받았다."
+      },
+      {
+        "exam_en": "She complained about the unfair <strong class=\"target-word\">treatment</strong> at work.",
+        "exam_ko": "그녀는 직장에서의 불공평한 <strong class=\"target-word\">처우</strong>에 대해 불만을 토로했다."
+      },
+      {
+        "exam_en": "The cavity is deep and the <strong class=\"target-word\">treatment</strong> would be painful without anesthesia.",
+        "exam_ko": "충치가 깊어서 마취 없이는 <strong class=\"target-word\">치료</strong>가 많이 아플 거예요."
+      }
+    ]
+  },
+  {
+    "id": 3338,
+    "origin": "treason",
+    "examples": [
+      {
+        "exam_en": "He was charged with high <strong class=\"target-word\">treason</strong> against the state.",
+        "exam_ko": "그는 국가에 대한 대 <strong class=\"target-word\">반역죄</strong>로 기소됐다."
+      },
+      {
+        "exam_en": "The spy committed <strong class=\"target-word\">treason</strong> by leaking secrets.",
+        "exam_ko": "그 스파이는 기밀을 유출해 <strong class=\"target-word\">반역죄</strong>를 저질렀다."
+      }
+    ]
+  },
+  {
+    "id": 3339,
+    "origin": "traffic",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">traffic</strong> density was high during rush hour.",
+        "exam_ko": "출퇴근 시간에는 <strong class=\"target-word\">교통</strong>량이 많았다."
+      },
+      {
+        "exam_en": "A long line of <strong class=\"target-word\">traffic</strong> formed on the highway.",
+        "exam_ko": "고속도로에 긴 <strong class=\"target-word\">차량</strong> 행렬이 생겼다."
+      }
+    ]
+  },
+  {
+    "id": 3340,
+    "origin": "town",
+    "examples": [
+      {
+        "exam_en": "He is a man from a small <strong class=\"target-word\">town</strong> in the south.",
+        "exam_ko": "그는 남부의 작은 <strong class=\"target-word\">도시</strong> 출신이다."
+      },
+      {
+        "exam_en": "Their story became the talk of the <strong class=\"target-word\">town</strong>.",
+        "exam_ko": "그들의 이야기는 <strong class=\"target-word\">마을</strong>의 화젯거리가 됐다."
+      }
+    ]
+  },
+  {
+    "id": 3341,
+    "origin": "torture",
+    "examples": [
+      {
+        "exam_en": "The prisoner confessed after water <strong class=\"target-word\">torture</strong>.",
+        "exam_ko": "죄수는 물 <strong class=\"target-word\">고문</strong> 후 자백했다."
+      },
+      {
+        "exam_en": "They put the suspect to <strong class=\"target-word\">torture</strong> for information.",
+        "exam_ko": "그들은 정보를 얻기 위해 용의자를 <strong class=\"target-word\">고문</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 3342,
+    "origin": "tool",
+    "examples": [
+      {
+        "exam_en": "He bought a multipurpose <strong class=\"target-word\">tool</strong> for the repair work.",
+        "exam_ko": "그는 수리 작업을 위해 다목적 <strong class=\"target-word\">공구</strong>를 구입했다."
+      },
+      {
+        "exam_en": "The workers put down their <strong class=\"target-word\">tools</strong> and went on strike.",
+        "exam_ko": "작업자들은 <strong class=\"target-word\">연장</strong>을 내려놓고 파업에 들어갔다."
+      }
+    ]
+  },
+  {
+    "id": 3343,
+    "origin": "tongue",
+    "examples": [
+      {
+        "exam_en": "The doctor noticed a coated <strong class=\"target-word\">tongue</strong> during the exam.",
+        "exam_ko": "의사는 진찰 중에 백태가 낀 <strong class=\"target-word\">혀</strong>를 발견했다."
+      },
+      {
+        "exam_en": "The child stuck out her <strong class=\"target-word\">tongue</strong> in defiance.",
+        "exam_ko": "아이는 반항하듯 <strong class=\"target-word\">혀</strong>를 내밀었다."
+      },
+      {
+        "exam_en": "Your <strong class=\"target-word\">tongue</strong> and lower lip will feel numb from the anesthesia.",
+        "exam_ko": "마취 때문에 <strong class=\"target-word\">혀</strong>와 아랫입술 감각이 이상할 거예요."
+      }
+    ]
+  },
+  {
+    "id": 3344,
+    "origin": "tomorrow",
+    "examples": [
+      {
+        "exam_en": "She has an important meeting <strong class=\"target-word\">tomorrow</strong> morning.",
+        "exam_ko": "<strong class=\"target-word\">내일</strong> 아침에 중요한 회의가 있다."
+      },
+      {
+        "exam_en": "The package will arrive a week from <strong class=\"target-word\">tomorrow</strong>.",
+        "exam_ko": "소포는 <strong class=\"target-word\">내일</strong>로부터 일주일 후에 도착한다."
+      },
+      {
+        "exam_en": "Make sure you come back <strong class=\"target-word\">tomorrow</strong>.",
+        "exam_ko": "<strong class=\"target-word\">내일</strong> 반드시 오세요."
+      }
+    ]
+  },
+  {
+    "id": 3345,
+    "origin": "today",
+    "examples": [
+      {
+        "exam_en": "Have you read <strong class=\"target-word\">today</strong>'s newspaper?",
+        "exam_ko": "<strong class=\"target-word\">오늘</strong> 신문 읽었어요?"
+      },
+      {
+        "exam_en": "Let me check the schedule for <strong class=\"target-word\">today</strong>.",
+        "exam_ko": "<strong class=\"target-word\">오늘</strong> 일정을 확인해 볼게요."
+      }
+    ]
+  },
+  {
+    "id": 3346,
+    "origin": "through",
+    "examples": [
+      {
+        "exam_en": "We drove <strong class=\"target-word\">through</strong> a small village on the way.",
+        "exam_ko": "우리는 가는 길에 작은 마을을 <strong class=\"target-word\">통과해</strong> 지나갔다."
+      },
+      {
+        "exam_en": "The bird flew <strong class=\"target-word\">through</strong> the open window.",
+        "exam_ko": "새가 열린 창문 <strong class=\"target-word\">사이로</strong> 날아들었다."
+      }
+    ]
+  },
+  {
+    "id": 3347,
+    "origin": "three",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Three</strong> students stayed after class to ask questions.",
+        "exam_ko": "<strong class=\"target-word\">세 명</strong>의 학생이 질문하려고 수업 후에 남았다."
+      },
+      {
+        "exam_en": "She finished the project in <strong class=\"target-word\">three</strong> days.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">사흘</strong> 만에 프로젝트를 끝냈다."
+      }
+    ]
+  },
+  {
+    "id": 3348,
+    "origin": "thousand",
+    "examples": [
+      {
+        "exam_en": "Over three <strong class=\"target-word\">thousand</strong> people attended the concert.",
+        "exam_ko": "<strong class=\"target-word\">3천</strong> 명이 넘는 사람들이 콘서트에 참석했다."
+      },
+      {
+        "exam_en": "A hundred <strong class=\"target-word\">thousand</strong> copies were sold in a week.",
+        "exam_ko": "일주일 만에 <strong class=\"target-word\">10만</strong> 부가 팔렸다."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1125,
+    "origin": "almost",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Almost</strong> everyone arrived on time.",
+        "exam_ko": "<strong class=\"target-word\">거의</strong> 모든 사람이 제때 도착했다."
+      },
+      {
+        "exam_en": "She finished the test with <strong class=\"target-word\">almost</strong> no mistakes.",
+        "exam_ko": "그녀는 실수가 <strong class=\"target-word\">거의</strong> 없이 시험을 마쳤다."
+      }
+    ]
+  },
+  {
+    "id": 1126,
+    "origin": "anybody",
+    "examples": [
+      {
+        "exam_en": "There isn't <strong class=\"target-word\">anybody</strong> in the house.",
+        "exam_ko": "집에는 <strong class=\"target-word\">아무도</strong> 없다."
+      },
+      {
+        "exam_en": "Is <strong class=\"target-word\">anybody</strong> home?",
+        "exam_ko": "집에 <strong class=\"target-word\">누가</strong> 있습니까?"
+      }
+    ]
+  },
+  {
+    "id": 1127,
+    "origin": "sweet",
+    "examples": [
+      {
+        "exam_en": "This cake is too <strong class=\"target-word\">sweet</strong> for me.",
+        "exam_ko": "이 케이크는 나에게 너무 <strong class=\"target-word\">달다</strong>."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">sweet</strong> smile.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">사랑스러운</strong> 미소를 가지고 있다."
+      }
+    ]
+  },
+  {
+    "id": 1128,
+    "origin": "spicy",
+    "examples": [
+      {
+        "exam_en": "The soup has a <strong class=\"target-word\">spicy</strong> flavor.",
+        "exam_ko": "그 수프는 <strong class=\"target-word\">매콤한</strong> 맛이 난다."
+      },
+      {
+        "exam_en": "She prefers <strong class=\"target-word\">spicy</strong> food over mild dishes.",
+        "exam_ko": "그녀는 순한 음식보다 <strong class=\"target-word\">매운</strong> 음식을 더 좋아한다."
+      }
+    ]
+  },
+  {
+    "id": 1129,
+    "origin": "tasty",
+    "examples": [
+      {
+        "exam_en": "They cooked a <strong class=\"target-word\">tasty</strong> meal for the guests.",
+        "exam_ko": "그들은 손님을 위해 <strong class=\"target-word\">맛있는</strong> 식사를 준비했다."
+      },
+      {
+        "exam_en": "They sure look <strong class=\"target-word\">tasty</strong> to me.",
+        "exam_ko": "나에게는 정말 <strong class=\"target-word\">맛있어</strong> 보인다."
+      }
+    ]
+  },
+  {
+    "id": 1130,
+    "origin": "bitter",
+    "examples": [
+      {
+        "exam_en": "This coffee tastes very <strong class=\"target-word\">bitter</strong>.",
+        "exam_ko": "이 커피는 매우 <strong class=\"target-word\">쓴</strong> 맛이 난다."
+      },
+      {
+        "exam_en": "She felt <strong class=\"target-word\">bitter</strong> about losing the competition.",
+        "exam_ko": "그녀는 대회에서 진 것에 대해 <strong class=\"target-word\">괴로움을 느꼈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1131,
+    "origin": "sauce",
+    "examples": [
+      {
+        "exam_en": "She poured tomato <strong class=\"target-word\">sauce</strong> over the pasta.",
+        "exam_ko": "그녀는 파스타에 토마토 <strong class=\"target-word\">소스</strong>를 뿌렸다."
+      },
+      {
+        "exam_en": "He added soy <strong class=\"target-word\">sauce</strong> to the dish.",
+        "exam_ko": "그는 요리에 간장 <strong class=\"target-word\">소스</strong>를 추가했다."
+      }
+    ]
+  },
+  {
+    "id": 1134,
+    "origin": "soap",
+    "examples": [
+      {
+        "exam_en": "She washed her hands with <strong class=\"target-word\">soap</strong> and water.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">비누</strong>와 물로 손을 씻었다."
+      },
+      {
+        "exam_en": "He bought a bar of <strong class=\"target-word\">soap</strong> at the store.",
+        "exam_ko": "그는 가게에서 <strong class=\"target-word\">비누</strong> 한 개를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 1135,
+    "origin": "toilet",
+    "examples": [
+      {
+        "exam_en": "He is in the <strong class=\"target-word\">toilet</strong> right now.",
+        "exam_ko": "그는 지금 <strong class=\"target-word\">화장실</strong>에 있다."
+      },
+      {
+        "exam_en": "She went to visit the <strong class=\"target-word\">toilet</strong> before the show.",
+        "exam_ko": "그녀는 공연 전에 <strong class=\"target-word\">화장실</strong>에 다녀왔다."
+      }
+    ]
+  },
+  {
+    "id": 1137,
+    "origin": "bathroom",
+    "examples": [
+      {
+        "exam_en": "May I go to the <strong class=\"target-word\">bathroom</strong>, please?",
+        "exam_ko": "<strong class=\"target-word\">화장실</strong>에 가도 될까요?"
+      },
+      {
+        "exam_en": "Where is the <strong class=\"target-word\">bathroom</strong>?",
+        "exam_ko": "<strong class=\"target-word\">화장실</strong>은 어딘가요?"
+      }
+    ]
+  },
+  {
+    "id": 1138,
+    "origin": "kitchen",
+    "examples": [
+      {
+        "exam_en": "She spent the morning cooking in the <strong class=\"target-word\">kitchen</strong>.",
+        "exam_ko": "그녀는 오전을 <strong class=\"target-word\">부엌</strong>에서 요리하며 보냈다."
+      },
+      {
+        "exam_en": "The smell from the <strong class=\"target-word\">kitchen</strong> made everyone hungry.",
+        "exam_ko": "<strong class=\"target-word\">부엌</strong>에서 나는 냄새가 모두를 배고프게 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 1139,
+    "origin": "consist",
+    "examples": [
+      {
+        "exam_en": "The committee <strong class=\"target-word\">consists</strong> of five members.",
+        "exam_ko": "위원회는 5명으로 <strong class=\"target-word\">구성되어 있다</strong>."
+      },
+      {
+        "exam_en": "Water <strong class=\"target-word\">consists</strong> of hydrogen and oxygen.",
+        "exam_ko": "물은 수소와 산소로 <strong class=\"target-word\">이루어진다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1140,
+    "origin": "comfortable",
+    "examples": [
+      {
+        "exam_en": "This sofa is very <strong class=\"target-word\">comfortable</strong> to sit on.",
+        "exam_ko": "이 소파는 앉기에 매우 <strong class=\"target-word\">편안하다</strong>."
+      },
+      {
+        "exam_en": "They stayed at a <strong class=\"target-word\">comfortable</strong> hotel near the beach.",
+        "exam_ko": "그들은 해변 근처의 <strong class=\"target-word\">쾌적한</strong> 호텔에 머물렀다."
+      }
+    ]
+  },
+  {
+    "id": 1141,
+    "origin": "slippery",
+    "examples": [
+      {
+        "exam_en": "The wet floor was very <strong class=\"target-word\">slippery</strong>.",
+        "exam_ko": "젖은 바닥은 매우 <strong class=\"target-word\">미끄러웠다</strong>."
+      },
+      {
+        "exam_en": "He is a <strong class=\"target-word\">slippery</strong> crook who avoids every charge.",
+        "exam_ko": "그는 모든 혐의를 피하는 <strong class=\"target-word\">종잡을 수 없는</strong> 사기꾼이다."
+      }
+    ]
+  },
+  {
+    "id": 1142,
+    "origin": "complement",
+    "examples": [
+      {
+        "exam_en": "Music is a good <strong class=\"target-word\">complement</strong> to a lively party.",
+        "exam_ko": "음악은 활기찬 파티에 좋은 <strong class=\"target-word\">보완 요소</strong>이다."
+      },
+      {
+        "exam_en": "Love is the <strong class=\"target-word\">complement</strong> of the law.",
+        "exam_ko": "사랑은 법률의 <strong class=\"target-word\">보완</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 1143,
+    "origin": "compliment",
+    "examples": [
+      {
+        "exam_en": "She received a high <strong class=\"target-word\">compliment</strong> for her work.",
+        "exam_ko": "그녀는 자신의 작업에 대해 대단한 <strong class=\"target-word\">찬사</strong>를 받았다."
+      },
+      {
+        "exam_en": "He gave her a heartfelt <strong class=\"target-word\">compliment</strong> on her speech.",
+        "exam_ko": "그는 그녀의 연설에 진심 어린 <strong class=\"target-word\">칭찬</strong>을 건넸다."
+      }
+    ]
+  },
+  {
+    "id": 1144,
+    "origin": "explode",
+    "examples": [
+      {
+        "exam_en": "The tension in the room was about to <strong class=\"target-word\">explode</strong>.",
+        "exam_ko": "방 안의 긴장감이 곧 <strong class=\"target-word\">폭발할</strong> 것 같았다."
+      },
+      {
+        "exam_en": "Her suspicion <strong class=\"target-word\">exploded</strong> into jealous accusations.",
+        "exam_ko": "그녀의 의심이 질투 가득한 비난으로 <strong class=\"target-word\">폭발했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1145,
+    "origin": "furnish",
+    "examples": [
+      {
+        "exam_en": "He was asked to <strong class=\"target-word\">furnish</strong> sufficient evidence.",
+        "exam_ko": "그는 충분한 증거를 <strong class=\"target-word\">제공하도록</strong> 요청받았다."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">furnished</strong> the expedition with all necessary gear.",
+        "exam_ko": "그들은 원정대에 필요한 모든 장비를 <strong class=\"target-word\">갖추어 주었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1146,
+    "origin": "dominate",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">dominated</strong> by greedy egotism.",
+        "exam_ko": "그는 탐욕적인 이기심에 <strong class=\"target-word\">사로잡혀 있다</strong>."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">dominates</strong> the local market.",
+        "exam_ko": "그 회사는 지역 시장을 <strong class=\"target-word\">지배하고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1147,
+    "origin": "unite",
+    "examples": [
+      {
+        "exam_en": "They decided to <strong class=\"target-word\">unite</strong> the neighboring villages.",
+        "exam_ko": "그들은 이웃 마을들을 <strong class=\"target-word\">합병하기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "The couple were <strong class=\"target-word\">united</strong> in a Christian ceremony.",
+        "exam_ko": "두 사람은 교회 예식에서 <strong class=\"target-word\">결합되었다</strong>."
+      }
+    ]
+  }
+]

@@ -1,0 +1,302 @@
+[
+  {
+    "id": 12069,
+    "origin": "ornament",
+    "examples": [
+      {
+        "exam_en": "She wore golden <strong class=\"target-word\">ornaments</strong> on her wrist.",
+        "exam_ko": "그녀는 손목에 금 <strong class=\"target-word\">장신구</strong>를 착용했다."
+      },
+      {
+        "exam_en": "The kids hung <strong class=\"target-word\">ornaments</strong> on the Christmas tree.",
+        "exam_ko": "아이들은 크리스마스 트리에 <strong class=\"target-word\">장식품</strong>을 걸었다."
+      },
+      {
+        "exam_en": "Thieves stole the silver <strong class=\"target-word\">ornaments</strong> from the palace.",
+        "exam_ko": "도둑들은 궁전에서 은 <strong class=\"target-word\">장신구</strong>를 훔쳤다."
+      },
+      {
+        "exam_en": "The tree was covered with beautiful <strong class=\"target-word\">ornaments</strong>.",
+        "exam_ko": "트리는 아름다운 <strong class=\"target-word\">장식품</strong>으로 덮여 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12070,
+    "origin": "uncanny",
+    "examples": [
+      {
+        "exam_en": "It was an <strong class=\"target-word\">uncanny</strong> sight in the dark forest.",
+        "exam_ko": "어두운 숲속에서 <strong class=\"target-word\">섬뜩한</strong> 광경이었다."
+      },
+      {
+        "exam_en": "She has an <strong class=\"target-word\">uncanny</strong> ability to read people.",
+        "exam_ko": "그녀는 사람을 읽는 <strong class=\"target-word\">놀라운</strong> 능력이 있다."
+      },
+      {
+        "exam_en": "It's <strong class=\"target-word\">uncanny</strong> that a three-year-old can write words.",
+        "exam_ko": "세 살짜리가 단어를 쓸 수 있다는 것이 <strong class=\"target-word\">기묘하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12071,
+    "origin": "qualifier",
+    "examples": [
+      {
+        "exam_en": "He became a <strong class=\"target-word\">qualifier</strong> for the second round.",
+        "exam_ko": "그는 2회전 <strong class=\"target-word\">진출자</strong>가 되었다."
+      },
+      {
+        "exam_en": "Only three teams earned a <strong class=\"target-word\">qualifier</strong> spot.",
+        "exam_ko": "세 팀만이 <strong class=\"target-word\">자격</strong>을 얻었다."
+      }
+    ]
+  },
+  {
+    "id": 12077,
+    "origin": "impulsive",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">impulsive</strong> child grabbed the toy without asking.",
+        "exam_ko": "<strong class=\"target-word\">충동적인</strong> 아이는 묻지도 않고 장난감을 집었다."
+      },
+      {
+        "exam_en": "He made an <strong class=\"target-word\">impulsive</strong> remark he later regretted.",
+        "exam_ko": "그는 나중에 후회할 <strong class=\"target-word\">충동적인</strong> 말을 했다."
+      }
+    ]
+  },
+  {
+    "id": 12078,
+    "origin": "impulse",
+    "examples": [
+      {
+        "exam_en": "He acted on <strong class=\"target-word\">impulse</strong> and quit his job.",
+        "exam_ko": "그는 <strong class=\"target-word\">충동</strong>에 따라 직장을 그만뒀다."
+      },
+      {
+        "exam_en": "The new policy gave an <strong class=\"target-word\">impulse</strong> to trade.",
+        "exam_ko": "새 정책은 무역에 <strong class=\"target-word\">촉진</strong>이 되었다."
+      }
+    ]
+  },
+  {
+    "id": 12086,
+    "origin": "articulate",
+    "examples": [
+      {
+        "exam_en": "She is remarkably <strong class=\"target-word\">articulate</strong> for her age.",
+        "exam_ko": "그녀는 나이에 비해 놀랍도록 <strong class=\"target-word\">말을 잘한다</strong>."
+      },
+      {
+        "exam_en": "The girl is unusually <strong class=\"target-word\">articulate</strong> for a seven-year-old.",
+        "exam_ko": "그 소녀는 일곱 살 치고는 비상하게 <strong class=\"target-word\">또렷하게 말한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12088,
+    "origin": "distort",
+    "examples": [
+      {
+        "exam_en": "The reporter tried to <strong class=\"target-word\">distort</strong> the truth.",
+        "exam_ko": "기자는 사실을 <strong class=\"target-word\">왜곡하려</strong> 했다."
+      },
+      {
+        "exam_en": "His face was <strong class=\"target-word\">distorted</strong> by pain.",
+        "exam_ko": "그의 얼굴은 고통으로 <strong class=\"target-word\">일그러져</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 12091,
+    "origin": "identic",
+    "examples": [
+      {
+        "exam_en": "They sent an <strong class=\"target-word\">identic</strong> note to all governments.",
+        "exam_ko": "그들은 모든 정부에 <strong class=\"target-word\">동문</strong> 통첩을 보냈다."
+      },
+      {
+        "exam_en": "The Allies sent <strong class=\"target-word\">identic</strong> answers to the ultimatum.",
+        "exam_ko": "연합국은 최후통첩에 <strong class=\"target-word\">동일한</strong> 회답을 보냈다."
+      }
+    ]
+  },
+  {
+    "id": 12094,
+    "origin": "mosaic",
+    "examples": [
+      {
+        "exam_en": "The floor was covered with colorful <strong class=\"target-word\">mosaic</strong> tiles.",
+        "exam_ko": "바닥은 알록달록한 <strong class=\"target-word\">모자이크</strong> 타일로 덮여 있었다."
+      },
+      {
+        "exam_en": "She created a beautiful <strong class=\"target-word\">mosaic</strong> on the wall.",
+        "exam_ko": "그녀는 벽에 아름다운 <strong class=\"target-word\">모자이크</strong>를 만들었다."
+      }
+    ]
+  },
+  {
+    "id": 12097,
+    "origin": "industrious",
+    "examples": [
+      {
+        "exam_en": "She is the most <strong class=\"target-word\">industrious</strong> student in class.",
+        "exam_ko": "그녀는 반에서 가장 <strong class=\"target-word\">근면한</strong> 학생이다."
+      },
+      {
+        "exam_en": "An <strong class=\"target-word\">industrious</strong> worker earns respect.",
+        "exam_ko": "<strong class=\"target-word\">근면한</strong> 사람은 존경을 받는다."
+      }
+    ]
+  },
+  {
+    "id": 12101,
+    "origin": "noxious",
+    "examples": [
+      {
+        "exam_en": "The gas was <strong class=\"target-word\">noxious</strong> to children's health.",
+        "exam_ko": "그 가스는 아이들의 건강에 <strong class=\"target-word\">해로웠다</strong>."
+      },
+      {
+        "exam_en": "The film was <strong class=\"target-word\">noxious</strong> and harmful to viewers.",
+        "exam_ko": "그 영화는 시청자에게 <strong class=\"target-word\">유해하고</strong> 해로웠다."
+      }
+    ]
+  },
+  {
+    "id": 12102,
+    "origin": "tarry",
+    "examples": [
+      {
+        "exam_en": "Shall we <strong class=\"target-word\">tarry</strong> at the inn for a while?",
+        "exam_ko": "잠시 여인숙에서 <strong class=\"target-word\">머물까</strong>요?"
+      },
+      {
+        "exam_en": "Do not <strong class=\"target-word\">tarry</strong> too long on the road.",
+        "exam_ko": "길에서 너무 오래 <strong class=\"target-word\">지체하지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 12103,
+    "origin": "linger",
+    "examples": [
+      {
+        "exam_en": "Students <strong class=\"target-word\">lingered</strong> around the coffee shop.",
+        "exam_ko": "학생들은 커피숍 주변에서 <strong class=\"target-word\">어슬렁거렸다</strong>."
+      },
+      {
+        "exam_en": "Her voice still <strong class=\"target-word\">lingers</strong> in my ears.",
+        "exam_ko": "그녀의 목소리가 여전히 귓가에 <strong class=\"target-word\">맴돈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12105,
+    "origin": "bemoan",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bemoaned</strong> his unlucky fate.",
+        "exam_ko": "그는 불운한 자신의 운명을 <strong class=\"target-word\">한탄했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bemoaned</strong> the loss of her old friends.",
+        "exam_ko": "그녀는 오래된 친구들을 잃은 것을 <strong class=\"target-word\">슬퍼했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12106,
+    "origin": "shameless",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">shameless</strong> liar who denies everything.",
+        "exam_ko": "그는 모든 것을 부정하는 <strong class=\"target-word\">뻔뻔한</strong> 거짓말쟁이다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">shameless</strong> behavior shocked everyone.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">파렴치한</strong> 행동은 모두를 충격에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 12107,
+    "origin": "sham",
+    "examples": [
+      {
+        "exam_en": "These jewels are all <strong class=\"target-word\">shams</strong>.",
+        "exam_ko": "이 보석들은 전부 <strong class=\"target-word\">가짜</strong>다."
+      },
+      {
+        "exam_en": "His kindness is just a <strong class=\"target-word\">sham</strong>.",
+        "exam_ko": "그의 친절함은 그저 <strong class=\"target-word\">위선</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 12108,
+    "origin": "erroneous",
+    "examples": [
+      {
+        "exam_en": "The report was based on <strong class=\"target-word\">erroneous</strong> data.",
+        "exam_ko": "그 보고서는 <strong class=\"target-word\">잘못된</strong> 데이터를 기반으로 했다."
+      },
+      {
+        "exam_en": "She held the <strong class=\"target-word\">erroneous</strong> belief that Earth is flat.",
+        "exam_ko": "그녀는 지구가 평평하다는 <strong class=\"target-word\">틀린</strong> 믿음을 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 12109,
+    "origin": "batter",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">battered</strong> the chair against the wall.",
+        "exam_ko": "그는 의자를 벽에 <strong class=\"target-word\">세게 부딪쳤다</strong>."
+      },
+      {
+        "exam_en": "Heavy waves <strong class=\"target-word\">battered</strong> the ship all night.",
+        "exam_ko": "밤새 거센 파도가 배를 <strong class=\"target-word\">강타했다</strong>."
+      },
+      {
+        "exam_en": "Pour the <strong class=\"target-word\">batter</strong> into the pan evenly.",
+        "exam_ko": "팬에 <strong class=\"target-word\">반죽</strong>을 고르게 부으세요."
+      },
+      {
+        "exam_en": "They <strong class=\"target-word\">battered</strong> down the fortress with cannon.",
+        "exam_ko": "그들은 대포로 요새를 <strong class=\"target-word\">포격했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 12112,
+    "origin": "hourglass",
+    "examples": [
+      {
+        "exam_en": "She flipped the <strong class=\"target-word\">hourglass</strong> to restart the timer.",
+        "exam_ko": "그녀는 타이머를 다시 시작하려고 <strong class=\"target-word\">모래시계</strong>를 뒤집었다."
+      },
+      {
+        "exam_en": "She has an <strong class=\"target-word\">hourglass</strong> figure.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">모래시계형</strong> 몸매를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 12113,
+    "origin": "scrubbed",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">scrubbed</strong> the floor until it was clean.",
+        "exam_ko": "그녀는 바닥이 깨끗해질 때까지 <strong class=\"target-word\">박박 문질렀다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">scrubbed</strong> his hands before the surgery.",
+        "exam_ko": "그는 수술 전에 손을 <strong class=\"target-word\">깨끗이 씻었다</strong>."
+      }
+    ]
+  }
+]

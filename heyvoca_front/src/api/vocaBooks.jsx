@@ -39,6 +39,18 @@ export const createVocaBookApi = async (data) => {
   }
 };
 
+// 단어장에 단어 청크 추가 (대용량 업로드 분할 저장용)
+export const appendVocasToBookApi = async (vocaBookId, vocaList) => {
+  const url = `${backendUrl}/vocaBooks/${vocaBookId}/vocas`;
+  const method = 'POST';
+  try {
+    return await fetchDataAsync(url, method, { vocaList });
+  } catch (error) {
+    console.error('appendVocasToBookApi 오류:', error);
+    throw error;
+  }
+};
+
 // 단어장 수정
 export const updateVocaBookApi = async (vocaBookId, updates) => {
   const url = `${backendUrl}/vocaBooks/${vocaBookId}`;
@@ -151,6 +163,60 @@ export const fetchGoogleSheetDataApi = async (accessToken, spreadsheetId, sheetT
   } catch (error) {
     console.error('fetchGoogleSheetDataApi 오류:', error);
     return { code: 500, message: '시트 데이터 조회 중 오류가 발생했습니다.' };
+  }
+};
+
+// Anki 파일 미리보기 (파싱)
+export const uploadAnkiPreviewApi = async (file) => {
+  const url = `${backendUrl}/vocaBooks/upload/anki/preview`;
+  const method = 'POST';
+  const data = {
+    json_data: {},
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadAnkiPreviewApi 오류:', error);
+    throw error;
+  }
+};
+
+// Anki 파일 업로드로 단어장 생성
+export const uploadAnkiApi = async (file, title, color, mapping, selectedNoteTypeId) => {
+  const url = `${backendUrl}/vocaBooks/upload/anki`;
+  const method = 'POST';
+  const data = {
+    json_data: { title, color, mapping, selectedNoteTypeId },
+    form_data: [{ key: 'file', value: file }],
+  };
+  try {
+    const result = await fetchDataAsync(url, method, data, true);
+
+    if (result instanceof Response) {
+      const errorData = await result.json().catch(() => ({ message: '알 수 없는 오류가 발생했습니다.' }));
+      return {
+        code: result.status,
+        message: errorData.message || errorData.error || `요청 실패 (${result.status})`,
+        ...errorData
+      };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('uploadAnkiApi 오류:', error);
+    throw error;
   }
 };
 

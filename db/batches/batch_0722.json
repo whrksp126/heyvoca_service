@@ -1,0 +1,222 @@
+[
+  {
+    "id": 34244,
+    "origin": "sweetly",
+    "examples": [
+      {
+        "exam_en": "He spoke sweetly to his wife.",
+        "exam_ko": "그는 아내에게 상냥하게 말했다."
+      }
+    ]
+  },
+  {
+    "id": 34248,
+    "origin": "wreathe",
+    "examples": [
+      {
+        "exam_en": "daisies wreathed into a garland",
+        "exam_ko": "화환을 만든 데이지."
+      },
+      {
+        "exam_en": "wreathe the doors with garlands",
+        "exam_ko": "입구를 화환으로 장식하다."
+      }
+    ]
+  },
+  {
+    "id": 34249,
+    "origin": "workman",
+    "examples": [
+      {
+        "exam_en": "a good workman",
+        "exam_ko": "솜씨가 좋은 직공"
+      },
+      {
+        "exam_en": "a careful workman",
+        "exam_ko": "꼼꼼히 일하는 사람"
+      }
+    ]
+  },
+  {
+    "id": 34251,
+    "origin": "wordless",
+    "examples": [
+      {
+        "exam_en": "wordless shame",
+        "exam_ko": "말 못 할 부끄러움."
+      }
+    ]
+  },
+  {
+    "id": 34253,
+    "origin": "womanhood",
+    "examples": [
+      {
+        "exam_en": "reach womanhood",
+        "exam_ko": "성숙한[완전한] 여성이 되다."
+      }
+    ]
+  },
+  {
+    "id": 34257,
+    "origin": "whereat",
+    "examples": [
+      {
+        "exam_en": "I know the things whereat you are displeased.",
+        "exam_ko": "네 마음에 안 든다는 것을 잘 알고 있어."
+      },
+      {
+        "exam_en": "The girl wept; whereat he shed a few tears himself.",
+        "exam_ko": "소녀가 울었다, 그래서 그도 약간 눈물을 흘렸다."
+      }
+    ]
+  },
+  {
+    "id": 34259,
+    "origin": "weathercock",
+    "examples": [
+      {
+        "exam_en": "The Senator has often been accused of being a weathercock.",
+        "exam_ko": "그 상원 의원은 종종 기회주의자라는 비난을 받아왔다."
+      }
+    ]
+  },
+  {
+    "id": 34263,
+    "origin": "ton",
+    "examples": [
+      {
+        "exam_en": "two ton of coal",
+        "exam_ko": "석탄 2톤."
+      },
+      {
+        "exam_en": "tons of homework",
+        "exam_ko": "과다한 숙제"
+      }
+    ]
+  },
+  {
+    "id": 34264,
+    "origin": "thyself",
+    "examples": [
+      {
+        "exam_en": "Know thyself",
+        "exam_ko": "너 자신을 알라(※고대그리스의 금언)"
+      }
+    ]
+  },
+  {
+    "id": 34272,
+    "origin": "uncountable",
+    "examples": [
+      {
+        "exam_en": "an uncountable number of acquaintances",
+        "exam_ko": "무수한 친지들."
+      }
+    ]
+  },
+  {
+    "id": 34287,
+    "origin": "milky",
+    "examples": [
+      {
+        "exam_en": "prepare a milky mixture for the child",
+        "exam_ko": "아이를 위해 우유를 탄 음료를 만들다"
+      },
+      {
+        "exam_en": "Some plants yield a milky juice.",
+        "exam_ko": "유백색의 수액을 분비하는 식물도 있다."
+      }
+    ]
+  },
+  {
+    "id": 34291,
+    "origin": "mechanically",
+    "examples": [
+      {
+        "exam_en": "He is mechanically minded.",
+        "exam_ko": "그는 기계에 강하다."
+      }
+    ]
+  },
+  {
+    "id": 34293,
+    "origin": "intensification",
+    "examples": [
+      {
+        "exam_en": "Intensification strategies typically involve establishing an urban boundary to prevent sprawl, and directing future development at higher densities to peripheral greenfield areas within the boundary, and intensification at existing urban centres.",
+        "exam_ko": "강화 전략은 보통 마구잡이 개발을 방지하기 위해 도시경계를 설립하고 경계 내의 주변의 그린필드 지역의 고밀도 미래 개발계획을 지도하고,기존 도시 중심부의 강화를 포함한다."
+      }
+    ]
+  },
+  {
+    "id": 34317,
+    "origin": "anthropomorphize",
+    "examples": [
+      {
+        "exam_en": "The tendency is ubiquitous in modern life and, according to Kennedy (1992), people anthropomorphize compulsively because the tendency is preprogrammed genetically. In post-industrial societies, anthropomorphizing is most obvious in enterment media such as books, movies, and cartoons.",
+        "exam_ko": "경향은 현대 생활에서 어디에나 존재하며, Kennedy (1992)에 따르면, 경향은 유 전적으로 사전 프로그램되어 있기 때문에 사람들은 강박 적으로 의인화된다. 산업화 이후 사회에서, 의인화는 책, 영화 및 만화와 같은 엔터테인먼트 매체에서 가장 분명하다."
+      }
+    ]
+  },
+  {
+    "id": 34322,
+    "origin": "singleness",
+    "examples": [
+      {
+        "exam_en": "with singleness of purpose",
+        "exam_ko": "오로지, 전념하여."
+      }
+    ]
+  },
+  {
+    "id": 34331,
+    "origin": "oratorical",
+    "examples": [
+      {
+        "exam_en": "an oratorical style",
+        "exam_ko": "연설조."
+      }
+    ]
+  },
+  {
+    "id": 34356,
+    "origin": "depressive",
+    "examples": [
+      {
+        "exam_en": "a depressive patient",
+        "exam_ko": "우울증 환자."
+      }
+    ]
+  },
+  {
+    "id": 34382,
+    "origin": "hurray",
+    "examples": [
+      {
+        "exam_en": "Hurray for the Queen!",
+        "exam_ko": "여왕 폐하 만세!"
+      }
+    ]
+  },
+  {
+    "id": 34394,
+    "origin": "implosion",
+    "examples": [
+      {
+        "exam_en": "the implosion of the population into cities",
+        "exam_ko": "인구의 폭발적인 도시 유입."
+      }
+    ]
+  },
+  {
+    "id": 34421,
+    "origin": "stockinged",
+    "examples": [
+      {
+        "exam_en": "in one's stockinged feet",
+        "exam_ko": "(구두를 신지 않고) 양말만 신고."
+      }
+    ]
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "id": 3848,
+    "origin": "grief",
+    "examples": [
+      {
+        "exam_en": "She was overwhelmed by <strong class=\"target-word\">grief</strong> after the loss.",
+        "exam_ko": "그녀는 상실 후 <strong class=\"target-word\">슬픔</strong>에 압도되었다."
+      },
+      {
+        "exam_en": "He suffered deep <strong class=\"target-word\">grief</strong> for months.",
+        "exam_ko": "그는 몇 달 동안 깊은 <strong class=\"target-word\">비탄</strong>에 잠겼다."
+      }
+    ]
+  },
+  {
+    "id": 3850,
+    "origin": "banish",
+    "examples": [
+      {
+        "exam_en": "The king <strong class=\"target-word\">banished</strong> the traitor from the country.",
+        "exam_ko": "왕은 그 반역자를 나라에서 <strong class=\"target-word\">추방했다</strong>."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">banished</strong> for committing high treason.",
+        "exam_ko": "그는 반역죄를 저질러 <strong class=\"target-word\">추방되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3851,
+    "origin": "declared",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">declared</strong> supporter of the government.",
+        "exam_ko": "그는 공공연한 정부 <strong class=\"target-word\">지지자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3852,
+    "origin": "fortification",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">fortification</strong> of foods with vitamins improves nutrition.",
+        "exam_ko": "식품에 비타민을 <strong class=\"target-word\">강화</strong>하면 영양이 향상된다."
+      }
+    ]
+  },
+  {
+    "id": 3854,
+    "origin": "reliance",
+    "examples": [
+      {
+        "exam_en": "He acted in <strong class=\"target-word\">reliance</strong> on her promise.",
+        "exam_ko": "그는 그녀의 약속을 <strong class=\"target-word\">믿고</strong> 행동했다."
+      },
+      {
+        "exam_en": "She placed great <strong class=\"target-word\">reliance</strong> on her closest friend.",
+        "exam_ko": "그녀는 가장 친한 친구를 크게 <strong class=\"target-word\">신뢰했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3855,
+    "origin": "subjugate",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">subjugate</strong> his emotions to reason.",
+        "exam_ko": "그는 감정을 이성에 <strong class=\"target-word\">복종시키려</strong> 했다."
+      }
+    ]
+  },
+  {
+    "id": 3856,
+    "origin": "condensation",
+    "examples": [
+      {
+        "exam_en": "This book is a <strong class=\"target-word\">condensation</strong> of a classical work.",
+        "exam_ko": "이 책은 고전 작품의 <strong class=\"target-word\">축약본</strong>이다."
+      },
+      {
+        "exam_en": "There was a lot of <strong class=\"target-word\">condensation</strong> on the windows.",
+        "exam_ko": "창문에 많은 <strong class=\"target-word\">물방울</strong>이 서렸다."
+      },
+      {
+        "exam_en": "The primer must be resistant to <strong class=\"target-word\">condensation</strong> during transport.",
+        "exam_ko": "프라이머는 운송 중 <strong class=\"target-word\">결로</strong>에 강해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3857,
+    "origin": "cosmetic",
+    "examples": [
+      {
+        "exam_en": "The policy change was merely a <strong class=\"target-word\">cosmetic</strong> solution.",
+        "exam_ko": "그 정책 변화는 단순한 <strong class=\"target-word\">미봉책</strong>에 불과했다."
+      }
+    ]
+  },
+  {
+    "id": 3858,
+    "origin": "nimble",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">nimble</strong> on her feet.",
+        "exam_ko": "그녀는 걸음걸이가 <strong class=\"target-word\">빠르다</strong>."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">nimble</strong> mind that solves problems quickly.",
+        "exam_ko": "그는 문제를 빠르게 푸는 <strong class=\"target-word\">영리한</strong> 두뇌를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 3860,
+    "origin": "alignment",
+    "examples": [
+      {
+        "exam_en": "The wheels are in perfect <strong class=\"target-word\">alignment</strong> with each other.",
+        "exam_ko": "바퀴들이 서로 완벽하게 <strong class=\"target-word\">일직선</strong>으로 맞춰져 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">alignment</strong> of the mountains formed a long ridge.",
+        "exam_ko": "산들의 <strong class=\"target-word\">줄지어 늘어선 배열</strong>이 긴 능선을 이루었다."
+      }
+    ]
+  },
+  {
+    "id": 3861,
+    "origin": "clique",
+    "examples": [
+      {
+        "exam_en": "A military <strong class=\"target-word\">clique</strong> seized control of the government.",
+        "exam_ko": "군사 <strong class=\"target-word\">파벌</strong>이 정부를 장악했다."
+      },
+      {
+        "exam_en": "She felt excluded by the school <strong class=\"target-word\">clique</strong>.",
+        "exam_ko": "그녀는 학교 <strong class=\"target-word\">패거리</strong>에서 소외감을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 3863,
+    "origin": "predicament",
+    "examples": [
+      {
+        "exam_en": "He found himself in a serious <strong class=\"target-word\">predicament</strong>.",
+        "exam_ko": "그는 심각한 <strong class=\"target-word\">곤경</strong>에 빠졌다."
+      }
+    ]
+  },
+  {
+    "id": 3864,
+    "origin": "quandary",
+    "examples": [
+      {
+        "exam_en": "She was in a real <strong class=\"target-word\">quandary</strong> about what to do.",
+        "exam_ko": "그녀는 어찌할 바를 몰라 진짜 <strong class=\"target-word\">난처한 상황</strong>에 처했다."
+      },
+      {
+        "exam_en": "He is in a <strong class=\"target-word\">quandary</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">난처한 지경</strong>에 있다."
+      },
+      {
+        "exam_en": "She found herself in a <strong class=\"target-word\">quandary</strong>, unable to make a decision.",
+        "exam_ko": "그녀는 결정을 내리지 못하는 <strong class=\"target-word\">딜레마</strong>에 처했다."
+      }
+    ]
+  },
+  {
+    "id": 3865,
+    "origin": "replica",
+    "examples": [
+      {
+        "exam_en": "The museum displayed a <strong class=\"target-word\">replica</strong> of the famous painting.",
+        "exam_ko": "박물관은 그 유명한 그림의 <strong class=\"target-word\">모사품</strong>을 전시했다."
+      },
+      {
+        "exam_en": "He bought a miniature <strong class=\"target-word\">replica</strong> of the Washington Monument.",
+        "exam_ko": "그는 워싱턴 기념탑의 작은 <strong class=\"target-word\">모형</strong>을 구입했다."
+      }
+    ]
+  },
+  {
+    "id": 3866,
+    "origin": "sausage",
+    "examples": [
+      {
+        "exam_en": "She ordered a plate of <strong class=\"target-word\">sausages</strong> at the restaurant.",
+        "exam_ko": "그녀는 식당에서 <strong class=\"target-word\">소시지</strong> 한 접시를 주문했다."
+      },
+      {
+        "exam_en": "We eat pork <strong class=\"target-word\">sausage</strong> for breakfast.",
+        "exam_ko": "우리는 아침 식사로 돼지고기 <strong class=\"target-word\">소시지</strong>를 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 3867,
+    "origin": "usage",
+    "examples": [
+      {
+        "exam_en": "They followed the custom according to ancient <strong class=\"target-word\">usage</strong>.",
+        "exam_ko": "그들은 예로부터의 <strong class=\"target-word\">관습</strong>에 따라 그 전통을 따랐다."
+      },
+      {
+        "exam_en": "The dictionary explains modern English <strong class=\"target-word\">usage</strong> clearly.",
+        "exam_ko": "그 사전은 현대 영어의 <strong class=\"target-word\">관용법</strong>을 명확하게 설명한다."
+      }
+    ]
+  },
+  {
+    "id": 3868,
+    "origin": "bushy",
+    "examples": [
+      {
+        "exam_en": "The old man had thick, <strong class=\"target-word\">bushy</strong> eyebrows.",
+        "exam_ko": "그 노인은 짙고 <strong class=\"target-word\">숱이 많은</strong> 눈썹을 가지고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3872,
+    "origin": "mummy",
+    "examples": [
+      {
+        "exam_en": "The archaeologist discovered an ancient <strong class=\"target-word\">mummy</strong> in the tomb.",
+        "exam_ko": "고고학자는 무덤에서 고대 <strong class=\"target-word\">미라</strong>를 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 3874,
+    "origin": "cock",
+    "examples": [
+      {
+        "exam_en": "As the old <strong class=\"target-word\">cock</strong> crows, so crows the young.",
+        "exam_ko": "늙은 <strong class=\"target-word\">수탉</strong>이 우는 대로 새끼도 운다."
+      },
+      {
+        "exam_en": "The fisherman caught a large <strong class=\"target-word\">cock</strong> lobster.",
+        "exam_ko": "어부는 큰 <strong class=\"target-word\">수컷</strong> 바닷가재를 잡았다."
+      }
+    ]
+  },
+  {
+    "id": 3875,
+    "origin": "damn",
+    "examples": [
+      {
+        "exam_en": "The play was <strong class=\"target-word\">damned</strong> by all the critics.",
+        "exam_ko": "그 연극은 모든 비평가들에게 <strong class=\"target-word\">혹평을 받았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">damned</strong> himself with one stupid remark.",
+        "exam_ko": "그는 한 번의 어리석은 말로 자신을 <strong class=\"target-word\">파멸시켰다</strong>."
+      }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+[
+  {
+    "id": 8414,
+    "origin": "revision",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">revision</strong> of this dictionary took six years.",
+        "exam_ko": "이 사전의 <strong class=\"target-word\">개정</strong>에는 6년이 걸렸다."
+      },
+      {
+        "exam_en": "She submitted a <strong class=\"target-word\">revision</strong> of the original draft.",
+        "exam_ko": "그녀는 원본 초안의 <strong class=\"target-word\">수정본</strong>을 제출했다."
+      }
+    ]
+  },
+  {
+    "id": 8415,
+    "origin": "adviser",
+    "examples": [
+      {
+        "exam_en": "She hired a legal <strong class=\"target-word\">adviser</strong> for the case.",
+        "exam_ko": "그녀는 사건을 위해 법률 <strong class=\"target-word\">고문</strong>을 고용했다."
+      },
+      {
+        "exam_en": "He served as an <strong class=\"target-word\">adviser</strong> to the President.",
+        "exam_ko": "그는 대통령의 <strong class=\"target-word\">고문</strong>으로 일했다."
+      }
+    ]
+  },
+  {
+    "id": 8416,
+    "origin": "visualize",
+    "examples": [
+      {
+        "exam_en": "The painting <strong class=\"target-word\">visualizes</strong> despair perfectly.",
+        "exam_ko": "그 그림은 절망을 완벽하게 <strong class=\"target-word\">시각화</strong>하고 있다."
+      },
+      {
+        "exam_en": "I can't <strong class=\"target-word\">visualize</strong> living anywhere else.",
+        "exam_ko": "여기 말고 사는 것은 <strong class=\"target-word\">상상</strong>도 못 하겠다."
+      }
+    ]
+  },
+  {
+    "id": 8420,
+    "origin": "insight",
+    "examples": [
+      {
+        "exam_en": "She is a critic of great <strong class=\"target-word\">insight</strong>.",
+        "exam_ko": "그녀는 대단한 <strong class=\"target-word\">통찰력</strong>을 가진 비평가다."
+      },
+      {
+        "exam_en": "The book gave me <strong class=\"target-word\">insight</strong> into human nature.",
+        "exam_ko": "그 책은 인간 본성에 대한 <strong class=\"target-word\">통찰</strong>을 주었다."
+      }
+    ]
+  },
+  {
+    "id": 8421,
+    "origin": "foresight",
+    "examples": [
+      {
+        "exam_en": "She showed great <strong class=\"target-word\">foresight</strong> in planning ahead.",
+        "exam_ko": "그녀는 미리 계획하는 데 탁월한 <strong class=\"target-word\">선견지명</strong>을 보였다."
+      },
+      {
+        "exam_en": "He had the <strong class=\"target-word\">foresight</strong> to invest his money in stocks.",
+        "exam_ko": "그는 주식에 투자하는 <strong class=\"target-word\">선견지명</strong>이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8423,
+    "origin": "foresee",
+    "examples": [
+      {
+        "exam_en": "No one can <strong class=\"target-word\">foresee</strong> the future with certainty.",
+        "exam_ko": "아무도 미래를 확실히 <strong class=\"target-word\">예측</strong>할 수 없다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">foresaw</strong> that he would succeed.",
+        "exam_ko": "나는 그가 성공할 것이라고 <strong class=\"target-word\">예견</strong>했다."
+      }
+    ]
+  },
+  {
+    "id": 8424,
+    "origin": "oversight",
+    "examples": [
+      {
+        "exam_en": "The error occurred due to a simple <strong class=\"target-word\">oversight</strong>.",
+        "exam_ko": "그 오류는 단순한 <strong class=\"target-word\">실수</strong>로 발생했다."
+      },
+      {
+        "exam_en": "The committee has <strong class=\"target-word\">oversight</strong> of all financial decisions.",
+        "exam_ko": "위원회는 모든 재정 결정에 대한 <strong class=\"target-word\">감독</strong> 권한을 갖는다."
+      }
+    ]
+  },
+  {
+    "id": 8427,
+    "origin": "royalty",
+    "examples": [
+      {
+        "exam_en": "The flag is only raised when <strong class=\"target-word\">royalty</strong> is present.",
+        "exam_ko": "<strong class=\"target-word\">왕족</strong>이 참석했을 때만 그 깃발이 게양된다."
+      },
+      {
+        "exam_en": "He was elevated to <strong class=\"target-word\">royalty</strong> by marriage.",
+        "exam_ko": "그는 결혼을 통해 <strong class=\"target-word\">왕족</strong>의 지위에 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 8428,
+    "origin": "regent",
+    "examples": [
+      {
+        "exam_en": "The prince served as <strong class=\"target-word\">regent</strong> while the king was ill.",
+        "exam_ko": "왕이 병중일 때 왕자가 <strong class=\"target-word\">섭정</strong>을 맡았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">regent</strong> ruled the country for ten years.",
+        "exam_ko": "<strong class=\"target-word\">섭정</strong>은 10년간 나라를 통치했다."
+      }
+    ]
+  },
+  {
+    "id": 8430,
+    "origin": "regina",
+    "examples": [
+      {
+        "exam_en": "Elizabeth <strong class=\"target-word\">Regina</strong> signed the royal decree.",
+        "exam_ko": "엘리자베스 <strong class=\"target-word\">여왕</strong>이 왕실 칙령에 서명했다."
+      },
+      {
+        "exam_en": "The coin bore the inscription Elizabeth <strong class=\"target-word\">Regina</strong>.",
+        "exam_ko": "동전에는 엘리자베스 <strong class=\"target-word\">여왕</strong>이라는 글자가 새겨져 있었다."
+      }
+    ]
+  },
+  {
+    "id": 8431,
+    "origin": "regal",
+    "examples": [
+      {
+        "exam_en": "She walked with a <strong class=\"target-word\">regal</strong> grace and dignity.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">왕족다운</strong> 우아함과 품위로 걸었다."
+      },
+      {
+        "exam_en": "The lion has a <strong class=\"target-word\">regal</strong> presence in the wild.",
+        "exam_ko": "사자는 야생에서 <strong class=\"target-word\">위엄 있는</strong> 존재감을 풍긴다."
+      }
+    ]
+  },
+  {
+    "id": 8434,
+    "origin": "allegation",
+    "examples": [
+      {
+        "exam_en": "He denied the <strong class=\"target-word\">allegation</strong> of fraud.",
+        "exam_ko": "그는 사기 <strong class=\"target-word\">혐의</strong>를 부인했다."
+      },
+      {
+        "exam_en": "The judge dismissed the <strong class=\"target-word\">allegation</strong> as baseless.",
+        "exam_ko": "판사는 그 <strong class=\"target-word\">주장</strong>을 근거 없다며 일축했다."
+      }
+    ]
+  },
+  {
+    "id": 8438,
+    "origin": "legalize",
+    "examples": [
+      {
+        "exam_en": "They voted to <strong class=\"target-word\">legalize</strong> the medical use of marijuana.",
+        "exam_ko": "그들은 마리화나의 의료적 사용을 <strong class=\"target-word\">합법화</strong>하기로 투표했다."
+      },
+      {
+        "exam_en": "The government plans to <strong class=\"target-word\">legalize</strong> same-sex marriage.",
+        "exam_ko": "정부는 동성 결혼을 <strong class=\"target-word\">합법화</strong>할 계획이다."
+      }
+    ]
+  },
+  {
+    "id": 8443,
+    "origin": "compress",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">compressed</strong> her lips tightly in frustration.",
+        "exam_ko": "그녀는 좌절감에 입술을 꽉 <strong class=\"target-word\">다물었다</strong>."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">compressed</strong> my one-week vacation into two days.",
+        "exam_ko": "나는 일주일간의 휴가를 이틀로 <strong class=\"target-word\">압축했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8444,
+    "origin": "impressionist",
+    "examples": [
+      {
+        "exam_en": "She studied the works of <strong class=\"target-word\">impressionist</strong> painters in Paris.",
+        "exam_ko": "그녀는 파리에서 <strong class=\"target-word\">인상파</strong> 화가들의 작품을 연구했다."
+      }
+    ]
+  },
+  {
+    "id": 8448,
+    "origin": "stellar",
+    "examples": [
+      {
+        "exam_en": "The observatory captures faint <strong class=\"target-word\">stellar</strong> light from distant stars.",
+        "exam_ko": "천문대는 먼 별들의 희미한 <strong class=\"target-word\">별빛</strong>을 포착한다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">stellar</strong> performance on opening night.",
+        "exam_ko": "그녀는 개막 공연에서 <strong class=\"target-word\">뛰어난</strong> 연기를 펼쳤다."
+      }
+    ]
+  },
+  {
+    "id": 8450,
+    "origin": "disapproval",
+    "examples": [
+      {
+        "exam_en": "She openly expressed her <strong class=\"target-word\">disapproval</strong> of the plan.",
+        "exam_ko": "그녀는 그 계획에 대한 <strong class=\"target-word\">반대</strong>를 공개적으로 표명했다."
+      },
+      {
+        "exam_en": "He shook his head in <strong class=\"target-word\">disapproval</strong> of the decision.",
+        "exam_ko": "그는 그 결정에 <strong class=\"target-word\">불만</strong>의 표시로 고개를 가로저었다."
+      }
+    ]
+  },
+  {
+    "id": 8451,
+    "origin": "approval",
+    "examples": [
+      {
+        "exam_en": "The project received full <strong class=\"target-word\">approval</strong> from the board.",
+        "exam_ko": "그 프로젝트는 이사회의 전폭적인 <strong class=\"target-word\">승인</strong>을 받았다."
+      },
+      {
+        "exam_en": "She nodded in <strong class=\"target-word\">approval</strong> when she heard the news.",
+        "exam_ko": "그녀는 소식을 듣고 <strong class=\"target-word\">찬성</strong>의 표시로 고개를 끄덕였다."
+      }
+    ]
+  },
+  {
+    "id": 8452,
+    "origin": "improbable",
+    "examples": [
+      {
+        "exam_en": "That sounds like a rather <strong class=\"target-word\">improbable</strong> idea.",
+        "exam_ko": "그것은 다소 <strong class=\"target-word\">믿기 어려운</strong> 생각처럼 들린다."
+      },
+      {
+        "exam_en": "Winning twice in a row seemed <strong class=\"target-word\">improbable</strong>.",
+        "exam_ko": "연속 두 번 이기는 것은 <strong class=\"target-word\">일어날 것 같지 않아</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 8453,
+    "origin": "probe",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">probed</strong> the wound until he found the bullet.",
+        "exam_ko": "그는 탄환을 찾을 때까지 상처를 <strong class=\"target-word\">탐침으로 살폈다</strong>."
+      },
+      {
+        "exam_en": "Scientists <strong class=\"target-word\">probed</strong> space with radio telescopes.",
+        "exam_ko": "과학자들은 전파 망원경으로 우주를 <strong class=\"target-word\">탐사했다</strong>."
+      }
+    ]
+  }
+]

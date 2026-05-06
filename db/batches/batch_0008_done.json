@@ -1,0 +1,294 @@
+[
+  {
+    "id": 143,
+    "origin": "going",
+    "examples": [
+      {
+        "exam_en": "This is a <strong class=\"target-word\">going</strong> business with steady profits.",
+        "exam_ko": "이것은 꾸준한 수익을 내는 <strong class=\"target-word\">영업 중인</strong> 사업이다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">going</strong> rate for this service is reasonable.",
+        "exam_ko": "이 서비스의 <strong class=\"target-word\">현행</strong> 요금은 합리적이다."
+      }
+    ]
+  },
+  {
+    "id": 144,
+    "origin": "help",
+    "examples": [
+      {
+        "exam_en": "Can I <strong class=\"target-word\">help</strong> you find something today?",
+        "exam_ko": "오늘 찾으시는 것을 <strong class=\"target-word\">도와</strong> 드릴까요?"
+      },
+      {
+        "exam_en": "Is there anything I can <strong class=\"target-word\">help</strong> you with?",
+        "exam_ko": "제가 <strong class=\"target-word\">도와</strong> 드릴 것이 있을까요?"
+      },
+      {
+        "exam_en": "Let me <strong class=\"target-word\">help</strong> you carry those bags.",
+        "exam_ko": "그 가방들을 옮기는 것을 제가 <strong class=\"target-word\">도와</strong> 드릴게요."
+      }
+    ]
+  },
+  {
+    "id": 145,
+    "origin": "run",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">ran</strong> upstairs to answer the phone.",
+        "exam_ko": "그녀는 전화를 받으러 2층으로 <strong class=\"target-word\">뛰어 올라갔다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">ran</strong> down the street to catch the bus.",
+        "exam_ko": "그는 버스를 잡으려고 거리를 <strong class=\"target-word\">뛰어갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "origin": "set",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">set</strong> a lamp on the TV stand.",
+        "exam_ko": "그녀는 TV 위에 램프를 <strong class=\"target-word\">놓았다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">set</strong> the vase on its side carefully.",
+        "exam_ko": "그는 꽃병을 조심스럽게 <strong class=\"target-word\">눕혀 놓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 147,
+    "origin": "move",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">moved</strong> uneasily in his chair during the meeting.",
+        "exam_ko": "그는 회의 중에 의자에서 불편하게 <strong class=\"target-word\">옴쭉거렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">moved</strong> to and fro looking for her keys.",
+        "exam_ko": "그녀는 열쇠를 찾으며 이곳저곳 <strong class=\"target-word\">돌아다녔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 148,
+    "origin": "include",
+    "examples": [
+      {
+        "exam_en": "The sample <strong class=\"target-word\">includes</strong> several harmful impurities.",
+        "exam_ko": "그 샘플은 해로운 불순물을 <strong class=\"target-word\">함유하고 있다</strong>."
+      },
+      {
+        "exam_en": "The book <strong class=\"target-word\">includes</strong> a detailed index.",
+        "exam_ko": "그 책은 상세한 색인이 <strong class=\"target-word\">포함되어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 149,
+    "origin": "believe",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">believed</strong> his story without any doubt.",
+        "exam_ko": "그녀는 아무 의심 없이 그의 이야기를 <strong class=\"target-word\">진실이라 믿었다</strong>."
+      },
+      {
+        "exam_en": "I do not <strong class=\"target-word\">believe</strong> a word of what he said.",
+        "exam_ko": "나는 그가 한 말을 한 마디도 <strong class=\"target-word\">믿지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 150,
+    "origin": "allow",
+    "examples": [
+      {
+        "exam_en": "Smoking is not <strong class=\"target-word\">allowed</strong> in this building.",
+        "exam_ko": "이 건물 안에서는 흡연이 <strong class=\"target-word\">허용되지 않습니다</strong>."
+      },
+      {
+        "exam_en": "You are not <strong class=\"target-word\">allowed</strong> to use a flash in this museum.",
+        "exam_ko": "이 미술관에서는 플래시 사용이 <strong class=\"target-word\">금지되어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 151,
+    "origin": "lead",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">led</strong> his dog on a leash through the park.",
+        "exam_ko": "그는 가죽끈을 잡고 공원에서 개를 <strong class=\"target-word\">끌고 갔다</strong>."
+      },
+      {
+        "exam_en": "The guide will <strong class=\"target-word\">lead</strong> you to the monument.",
+        "exam_ko": "안내자가 기념비까지 <strong class=\"target-word\">안내할</strong> 겁니다."
+      }
+    ]
+  },
+  {
+    "id": 152,
+    "origin": "stand",
+    "examples": [
+      {
+        "exam_en": "The soldiers decided to <strong class=\"target-word\">stand</strong> and fight the enemy.",
+        "exam_ko": "병사들은 멈춰서서 적과 <strong class=\"target-word\">싸우기로</strong> 결정했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">stood</strong> fast like a rock under pressure.",
+        "exam_ko": "그녀는 압박 속에서도 바위처럼 꼼짝 않고 <strong class=\"target-word\">서 있었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 153,
+    "origin": "happen",
+    "examples": [
+      {
+        "exam_en": "Whatever may <strong class=\"target-word\">happen</strong>, we will face it together.",
+        "exam_ko": "어떤 일이 <strong class=\"target-word\">일어나더라도</strong> 우리는 함께 맞설 것이다."
+      },
+      {
+        "exam_en": "The same mistake <strong class=\"target-word\">happened</strong> again this morning.",
+        "exam_ko": "오늘 아침에 똑같은 실수가 또 <strong class=\"target-word\">일어났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 154,
+    "origin": "carry",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">carried</strong> the bag on his shoulder all day.",
+        "exam_ko": "그는 하루 종일 가방을 어깨에 <strong class=\"target-word\">메고 날랐다</strong>."
+      },
+      {
+        "exam_en": "Please <strong class=\"target-word\">carry</strong> this stool back to its place.",
+        "exam_ko": "이 걸상을 제자리에 도로 <strong class=\"target-word\">갖다 놓아라</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">carried</strong> the heavy box up the stairs alone.",
+        "exam_ko": "그녀는 무거운 상자를 혼자 계단 위로 <strong class=\"target-word\">날랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 155,
+    "origin": "appear",
+    "examples": [
+      {
+        "exam_en": "A small island <strong class=\"target-word\">appeared</strong> in sight through the fog.",
+        "exam_ko": "안개 속에서 작은 섬이 시야에 <strong class=\"target-word\">보이게 되었다</strong>."
+      },
+      {
+        "exam_en": "A stranger suddenly <strong class=\"target-word\">appeared</strong> in the doorway.",
+        "exam_ko": "낯선 사람이 갑자기 문간에 <strong class=\"target-word\">나타났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 156,
+    "origin": "produce",
+    "examples": [
+      {
+        "exam_en": "The new policy <strong class=\"target-word\">produced</strong> very good results.",
+        "exam_ko": "새 정책은 매우 좋은 결과를 <strong class=\"target-word\">낳았다</strong>."
+      },
+      {
+        "exam_en": "This factory <strong class=\"target-word\">produces</strong> steel for major industries.",
+        "exam_ko": "이 공장은 주요 산업을 위해 철강을 <strong class=\"target-word\">생산한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 157,
+    "origin": "sit",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">sat</strong> on a chair and waited quietly.",
+        "exam_ko": "그는 의자에 <strong class=\"target-word\">앉아서</strong> 조용히 기다렸다."
+      },
+      {
+        "exam_en": "The children <strong class=\"target-word\">sat</strong> on the floor to listen to the story.",
+        "exam_ko": "아이들은 이야기를 들으려고 바닥에 <strong class=\"target-word\">앉았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 158,
+    "origin": "offer",
+    "examples": [
+      {
+        "exam_en": "The official was caught <strong class=\"target-word\">offering</strong> a bribe.",
+        "exam_ko": "그 공무원은 뇌물을 <strong class=\"target-word\">주다가</strong> 잡혔다."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">offered</strong> her a well-paying job.",
+        "exam_ko": "그 회사는 그녀에게 급여가 좋은 일자리를 <strong class=\"target-word\">제공했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 159,
+    "origin": "consider",
+    "examples": [
+      {
+        "exam_en": "We carefully <strong class=\"target-word\">considered</strong> his suggestion.",
+        "exam_ko": "우리는 그의 제안을 신중하게 <strong class=\"target-word\">검토했다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">considered</strong> going tomorrow but decided against it.",
+        "exam_ko": "우리는 내일 갈까 <strong class=\"target-word\">생각했지만</strong> 가지 않기로 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 160,
+    "origin": "suggest",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">suggested</strong> having a rest before continuing.",
+        "exam_ko": "그녀는 계속하기 전에 잠깐 쉬자고 <strong class=\"target-word\">제안했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">suggested</strong> that the old tower be restored.",
+        "exam_ko": "그는 오래된 탑이 복구되어야 한다고 <strong class=\"target-word\">제안했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">suggested</strong> focusing on areas where we are already strong.",
+        "exam_ko": "그녀는 우리가 이미 강세인 분야에 집중하라고 <strong class=\"target-word\">조언했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 161,
+    "origin": "expect",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">expects</strong> to find a good job after graduation.",
+        "exam_ko": "그녀는 졸업 후 좋은 일자리를 얻으리라고 <strong class=\"target-word\">기대한다</strong>."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">expect</strong> the flying time to be around one hour.",
+        "exam_ko": "우리는 비행 시간으로 약 1시간을 <strong class=\"target-word\">예정하고 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 162,
+    "origin": "let",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">let</strong> him go when he asked to leave.",
+        "exam_ko": "그가 가고 싶다고 하자 그녀는 그를 <strong class=\"target-word\">보내주었다</strong>."
+      },
+      {
+        "exam_en": "Will you <strong class=\"target-word\">let</strong> me smoke here?",
+        "exam_ko": "여기서 담배를 피워도 <strong class=\"target-word\">되겠습니까</strong>?"
+      }
+    ]
+  }
+]

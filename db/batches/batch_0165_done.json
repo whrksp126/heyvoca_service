@@ -1,0 +1,282 @@
+[
+  {
+    "id": 3592,
+    "origin": "history",
+    "examples": [
+      {
+        "exam_en": "She studies Korean <strong class=\"target-word\">history</strong> at university.",
+        "exam_ko": "그녀는 대학에서 한국 <strong class=\"target-word\">역사</strong>를 공부한다."
+      },
+      {
+        "exam_en": "He has a long <strong class=\"target-word\">history</strong> of heart disease.",
+        "exam_ko": "그는 심장 질환의 긴 <strong class=\"target-word\">병력</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 3593,
+    "origin": "his",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">His</strong> homework isn't done yet.",
+        "exam_ko": "<strong class=\"target-word\">그의</strong> 숙제는 아직 끝나지 않았다."
+      },
+      {
+        "exam_en": "Is there any evidence in <strong class=\"target-word\">his</strong> favor?",
+        "exam_ko": "<strong class=\"target-word\">그에게</strong> 유리한 증거가 있는가?"
+      }
+    ]
+  },
+  {
+    "id": 3594,
+    "origin": "him",
+    "examples": [
+      {
+        "exam_en": "She bought a gift for <strong class=\"target-word\">him</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">그를</strong> 위해 선물을 샀다."
+      },
+      {
+        "exam_en": "Give <strong class=\"target-word\">him</strong> this book.",
+        "exam_ko": "이 책을 <strong class=\"target-word\">그에게</strong> 주어라."
+      }
+    ]
+  },
+  {
+    "id": 3595,
+    "origin": "hill",
+    "examples": [
+      {
+        "exam_en": "They climbed the steep <strong class=\"target-word\">hill</strong> together.",
+        "exam_ko": "그들은 함께 가파른 <strong class=\"target-word\">언덕</strong>을 올랐다."
+      },
+      {
+        "exam_en": "The villa is up on the <strong class=\"target-word\">hill</strong>.",
+        "exam_ko": "그 별장은 <strong class=\"target-word\">언덕</strong> 위에 있다."
+      }
+    ]
+  },
+  {
+    "id": 3596,
+    "origin": "hijack",
+    "examples": [
+      {
+        "exam_en": "Armed terrorists <strong class=\"target-word\">hijacked</strong> an aircraft.",
+        "exam_ko": "무장한 테러리스트가 항공기를 <strong class=\"target-word\">납치했다</strong>."
+      },
+      {
+        "exam_en": "Someone <strong class=\"target-word\">hijacked</strong> the meeting agenda.",
+        "exam_ko": "누군가 회의 안건을 <strong class=\"target-word\">가로챘다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3597,
+    "origin": "hers",
+    "examples": [
+      {
+        "exam_en": "He is a close friend of <strong class=\"target-word\">hers</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">그녀의</strong> 친한 친구이다."
+      },
+      {
+        "exam_en": "The red car is <strong class=\"target-word\">hers</strong>.",
+        "exam_ko": "그 빨간 차는 <strong class=\"target-word\">그녀의 것</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3598,
+    "origin": "her",
+    "examples": [
+      {
+        "exam_en": "This is a gift for <strong class=\"target-word\">her</strong>.",
+        "exam_ko": "이것은 <strong class=\"target-word\">그녀</strong>를 위한 선물이다."
+      },
+      {
+        "exam_en": "He borrowed <strong class=\"target-word\">her</strong> cap without asking.",
+        "exam_ko": "그는 묻지도 않고 <strong class=\"target-word\">그녀의</strong> 모자를 빌렸다."
+      }
+    ]
+  },
+  {
+    "id": 3599,
+    "origin": "helicopter",
+    "examples": [
+      {
+        "exam_en": "The rescue team arrived by <strong class=\"target-word\">helicopter</strong>.",
+        "exam_ko": "구조대가 <strong class=\"target-word\">헬리콥터</strong>를 타고 도착했다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">helicopter</strong> hovered above the building.",
+        "exam_ko": "<strong class=\"target-word\">헬리콥터</strong> 한 대가 건물 위를 맴돌았다."
+      }
+    ]
+  },
+  {
+    "id": 3600,
+    "origin": "heart",
+    "examples": [
+      {
+        "exam_en": "Regular exercise keeps your <strong class=\"target-word\">heart</strong> strong.",
+        "exam_ko": "규칙적인 운동은 <strong class=\"target-word\">심장</strong>을 튼튼하게 한다."
+      },
+      {
+        "exam_en": "She has had <strong class=\"target-word\">heart</strong> trouble since childhood.",
+        "exam_ko": "그녀는 어릴 때부터 <strong class=\"target-word\">심장</strong> 질환이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3601,
+    "origin": "health",
+    "examples": [
+      {
+        "exam_en": "Good sleep is essential for your <strong class=\"target-word\">health</strong>.",
+        "exam_ko": "충분한 수면은 <strong class=\"target-word\">건강</strong>에 필수적이다."
+      },
+      {
+        "exam_en": "He retired early for <strong class=\"target-word\">health</strong> reasons.",
+        "exam_ko": "그는 <strong class=\"target-word\">건강</strong>상의 이유로 일찍 은퇴했다."
+      }
+    ]
+  },
+  {
+    "id": 3602,
+    "origin": "heal",
+    "examples": [
+      {
+        "exam_en": "The doctor used herbs to <strong class=\"target-word\">heal</strong> the wounds.",
+        "exam_ko": "의사는 약초로 상처를 <strong class=\"target-word\">치료했다</strong>."
+      },
+      {
+        "exam_en": "It takes time for a broken bone to <strong class=\"target-word\">heal</strong>.",
+        "exam_ko": "골절이 <strong class=\"target-word\">낫는</strong> 데는 시간이 걸린다."
+      }
+    ]
+  },
+  {
+    "id": 3603,
+    "origin": "headquarters",
+    "examples": [
+      {
+        "exam_en": "The suspect was taken to police <strong class=\"target-word\">headquarters</strong>.",
+        "exam_ko": "용의자는 경찰 <strong class=\"target-word\">본부</strong>로 이송되었다."
+      },
+      {
+        "exam_en": "The UN <strong class=\"target-word\">headquarters</strong> is located in New York.",
+        "exam_ko": "UN <strong class=\"target-word\">본부</strong>는 뉴욕에 있다."
+      }
+    ]
+  },
+  {
+    "id": 3604,
+    "origin": "he",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">He</strong> is not a man of action.",
+        "exam_ko": "<strong class=\"target-word\">그는</strong> 행동가가 아니다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">He</strong> finished the project ahead of schedule.",
+        "exam_ko": "<strong class=\"target-word\">그는</strong> 일정보다 일찍 프로젝트를 끝냈다."
+      }
+    ]
+  },
+  {
+    "id": 3605,
+    "origin": "hat",
+    "examples": [
+      {
+        "exam_en": "She put on her <strong class=\"target-word\">hat</strong> before going out.",
+        "exam_ko": "그녀는 외출 전에 <strong class=\"target-word\">모자</strong>를 썼다."
+      },
+      {
+        "exam_en": "He was wearing a brown <strong class=\"target-word\">hat</strong>.",
+        "exam_ko": "그는 갈색 <strong class=\"target-word\">모자</strong>를 쓰고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 3606,
+    "origin": "harmony",
+    "examples": [
+      {
+        "exam_en": "The two cultures lived in <strong class=\"target-word\">harmony</strong>.",
+        "exam_ko": "두 문화는 <strong class=\"target-word\">조화</strong> 속에서 공존했다."
+      },
+      {
+        "exam_en": "The painting shows a perfect <strong class=\"target-word\">harmony</strong> of color.",
+        "exam_ko": "그 그림은 색채의 완벽한 <strong class=\"target-word\">조화</strong>를 보여준다."
+      }
+    ]
+  },
+  {
+    "id": 3607,
+    "origin": "half",
+    "examples": [
+      {
+        "exam_en": "She ate only <strong class=\"target-word\">half</strong> of the orange.",
+        "exam_ko": "그녀는 오렌지의 <strong class=\"target-word\">절반</strong>만 먹었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Half</strong> of the students passed the exam.",
+        "exam_ko": "학생의 <strong class=\"target-word\">절반</strong>이 시험에 합격했다."
+      }
+    ]
+  },
+  {
+    "id": 3608,
+    "origin": "group",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">group</strong> of students gathered in the hall.",
+        "exam_ko": "학생들 <strong class=\"target-word\">무리</strong>가 홀에 모였다."
+      },
+      {
+        "exam_en": "They traveled in a <strong class=\"target-word\">group</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">단체</strong>로 여행했다."
+      }
+    ]
+  },
+  {
+    "id": 3609,
+    "origin": "ground",
+    "examples": [
+      {
+        "exam_en": "The seeds were buried deep under the <strong class=\"target-word\">ground</strong>.",
+        "exam_ko": "씨앗이 <strong class=\"target-word\">땅</strong> 깊이 묻혔다."
+      },
+      {
+        "exam_en": "He fell and hit the <strong class=\"target-word\">ground</strong> hard.",
+        "exam_ko": "그는 넘어져 <strong class=\"target-word\">바닥</strong>에 세게 부딪혔다."
+      }
+    ]
+  },
+  {
+    "id": 3610,
+    "origin": "gold",
+    "examples": [
+      {
+        "exam_en": "The ring is made of pure <strong class=\"target-word\">gold</strong>.",
+        "exam_ko": "그 반지는 순수한 <strong class=\"target-word\">금</strong>으로 만들어졌다."
+      },
+      {
+        "exam_en": "She won the <strong class=\"target-word\">gold</strong> medal at the Olympics.",
+        "exam_ko": "그녀는 올림픽에서 <strong class=\"target-word\">금</strong>메달을 땄다."
+      }
+    ]
+  },
+  {
+    "id": 3611,
+    "origin": "god",
+    "examples": [
+      {
+        "exam_en": "They prayed to <strong class=\"target-word\">God</strong> for guidance.",
+        "exam_ko": "그들은 인도를 구하며 <strong class=\"target-word\">신</strong>께 기도했다."
+      },
+      {
+        "exam_en": "The ancient Greeks worshipped many <strong class=\"target-word\">gods</strong>.",
+        "exam_ko": "고대 그리스인들은 많은 <strong class=\"target-word\">신들</strong>을 숭배했다."
+      }
+    ]
+  }
+]

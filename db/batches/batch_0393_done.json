@@ -1,0 +1,270 @@
+[
+  {
+    "id": 10761,
+    "origin": "threatening",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">threatening</strong> letter from a stranger.",
+        "exam_ko": "그녀는 낯선 사람에게서 <strong class=\"target-word\">협박</strong> 편지를 받았다."
+      },
+      {
+        "exam_en": "He gave me a <strong class=\"target-word\">threatening</strong> look.",
+        "exam_ko": "그는 <strong class=\"target-word\">위협적인</strong> 표정으로 나를 보았다."
+      }
+    ]
+  },
+  {
+    "id": 10763,
+    "origin": "worldly",
+    "examples": [
+      {
+        "exam_en": "She gave up all her <strong class=\"target-word\">worldly</strong> goods.",
+        "exam_ko": "그녀는 자신의 모든 <strong class=\"target-word\">세속적인</strong> 재산을 포기했다."
+      },
+      {
+        "exam_en": "He focused his thoughts on <strong class=\"target-word\">worldly</strong> affairs.",
+        "exam_ko": "그는 <strong class=\"target-word\">세상</strong> 일에 생각을 집중했다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">worldly</strong> woman with broad experience.",
+        "exam_ko": "그녀는 폭넓은 경험을 가진 <strong class=\"target-word\">세상 물정에 밝은</strong> 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 10764,
+    "origin": "discretion",
+    "examples": [
+      {
+        "exam_en": "You may act at your own <strong class=\"target-word\">discretion</strong>.",
+        "exam_ko": "당신은 자신의 <strong class=\"target-word\">판단</strong>에 따라 행동해도 됩니다."
+      },
+      {
+        "exam_en": "The manager used his <strong class=\"target-word\">discretion</strong> to approve the request.",
+        "exam_ko": "관리자는 자신의 <strong class=\"target-word\">재량</strong>으로 요청을 승인했다."
+      }
+    ]
+  },
+  {
+    "id": 10765,
+    "origin": "prudence",
+    "examples": [
+      {
+        "exam_en": "He showed great <strong class=\"target-word\">prudence</strong> in dealing with the problem.",
+        "exam_ko": "그는 문제를 처리하는 데 큰 <strong class=\"target-word\">신중함</strong>을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 10767,
+    "origin": "denomination",
+    "examples": [
+      {
+        "exam_en": "Plants are grouped by <strong class=\"target-word\">denomination</strong> in this catalog.",
+        "exam_ko": "식물들은 이 목록에서 <strong class=\"target-word\">종류</strong>별로 분류된다."
+      },
+      {
+        "exam_en": "The church belongs to a Protestant <strong class=\"target-word\">denomination</strong>.",
+        "exam_ko": "그 교회는 프로테스탄트 <strong class=\"target-word\">교파</strong>에 속한다."
+      }
+    ]
+  },
+  {
+    "id": 10768,
+    "origin": "despair",
+    "examples": [
+      {
+        "exam_en": "He acted out of <strong class=\"target-word\">despair</strong> after losing everything.",
+        "exam_ko": "그는 모든 것을 잃은 후 <strong class=\"target-word\">절망</strong>으로 행동했다."
+      },
+      {
+        "exam_en": "She fell into <strong class=\"target-word\">despair</strong> when she heard the news.",
+        "exam_ko": "그녀는 그 소식을 듣고 <strong class=\"target-word\">절망</strong>에 빠졌다."
+      }
+    ]
+  },
+  {
+    "id": 10769,
+    "origin": "spurn",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">spurned</strong> his advances.",
+        "exam_ko": "그녀는 그의 구애를 <strong class=\"target-word\">쌀쌀맞게 거절했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 10770,
+    "origin": "improper",
+    "examples": [
+      {
+        "exam_en": "The doctor made an <strong class=\"target-word\">improper</strong> diagnosis.",
+        "exam_ko": "의사는 <strong class=\"target-word\">잘못된</strong> 진단을 내렸다."
+      },
+      {
+        "exam_en": "He drew an <strong class=\"target-word\">improper</strong> conclusion from the data.",
+        "exam_ko": "그는 데이터에서 <strong class=\"target-word\">얼토당토않은</strong> 결론을 도출했다."
+      }
+    ]
+  },
+  {
+    "id": 10771,
+    "origin": "legally",
+    "examples": [
+      {
+        "exam_en": "The contract is <strong class=\"target-word\">legally</strong> binding on both parties.",
+        "exam_ko": "계약은 양측에 <strong class=\"target-word\">법적으로</strong> 구속력이 있다."
+      },
+      {
+        "exam_en": "The right to remain silent is <strong class=\"target-word\">legally</strong> respected.",
+        "exam_ko": "묵비권은 <strong class=\"target-word\">법률적으로</strong> 인정되고 있다."
+      }
+    ]
+  },
+  {
+    "id": 10772,
+    "origin": "migration",
+    "examples": [
+      {
+        "exam_en": "The seasonal <strong class=\"target-word\">migration</strong> of workers affects the economy.",
+        "exam_ko": "노동자들의 계절적 <strong class=\"target-word\">이동</strong>은 경제에 영향을 준다."
+      },
+      {
+        "exam_en": "Scientists track the <strong class=\"target-word\">migration</strong> of birds each year.",
+        "exam_ko": "과학자들은 매년 새들의 <strong class=\"target-word\">이동</strong>을 추적한다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">migration</strong> of peoples from Asia shaped the Americas.",
+        "exam_ko": "아시아 사람들의 <strong class=\"target-word\">이주</strong>가 아메리카 대륙을 형성했다."
+      }
+    ]
+  },
+  {
+    "id": 10773,
+    "origin": "oppressive",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">oppressive</strong> heat made it hard to work.",
+        "exam_ko": "<strong class=\"target-word\">견딜 수 없는</strong> 더위로 일하기가 힘들었다."
+      },
+      {
+        "exam_en": "Citizens protested against the <strong class=\"target-word\">oppressive</strong> taxes.",
+        "exam_ko": "시민들은 <strong class=\"target-word\">가혹한</strong> 세금에 항의했다."
+      }
+    ]
+  },
+  {
+    "id": 10777,
+    "origin": "restful",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">restful</strong> music helped me relax.",
+        "exam_ko": "<strong class=\"target-word\">마음이 편안해지는</strong> 음악이 긴장을 풀어 주었다."
+      },
+      {
+        "exam_en": "We enjoyed the <strong class=\"target-word\">restful</strong> scene by the lake.",
+        "exam_ko": "우리는 호숫가의 <strong class=\"target-word\">평화로운</strong> 풍경을 즐겼다."
+      }
+    ]
+  },
+  {
+    "id": 10778,
+    "origin": "rotten",
+    "examples": [
+      {
+        "exam_en": "She threw away the <strong class=\"target-word\">rotten</strong> egg.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">썩은</strong> 달걀을 버렸다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">rotten</strong> air in the basement was unbearable.",
+        "exam_ko": "지하실의 <strong class=\"target-word\">불결한</strong> 공기는 견디기 어려웠다."
+      }
+    ]
+  },
+  {
+    "id": 10779,
+    "origin": "spoiled",
+    "examples": [
+      {
+        "exam_en": "He is <strong class=\"target-word\">spoiled</strong> rotten.",
+        "exam_ko": "그는 아주 <strong class=\"target-word\">버릇없이</strong> 자랐다."
+      }
+    ]
+  },
+  {
+    "id": 10781,
+    "origin": "blossom",
+    "examples": [
+      {
+        "exam_en": "The cherry trees came into <strong class=\"target-word\">blossom</strong> this week.",
+        "exam_ko": "벚나무들이 이번 주에 <strong class=\"target-word\">꽃을 피우기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 10782,
+    "origin": "odor",
+    "examples": [
+      {
+        "exam_en": "Everyone has a unique personal <strong class=\"target-word\">odor</strong>.",
+        "exam_ko": "모든 사람은 고유한 <strong class=\"target-word\">체취</strong>를 가지고 있다."
+      },
+      {
+        "exam_en": "A sickly <strong class=\"target-word\">odor</strong> came from the garbage.",
+        "exam_ko": "쓰레기에서 구역질 나는 <strong class=\"target-word\">악취</strong>가 났다."
+      }
+    ]
+  },
+  {
+    "id": 10783,
+    "origin": "faculty",
+    "examples": [
+      {
+        "exam_en": "She has a <strong class=\"target-word\">faculty</strong> for making friends quickly.",
+        "exam_ko": "그녀는 금방 친구를 사귀는 <strong class=\"target-word\">재간</strong>이 있다."
+      },
+      {
+        "exam_en": "He developed a <strong class=\"target-word\">faculty</strong> for learning languages.",
+        "exam_ko": "그는 언어를 배우는 <strong class=\"target-word\">능력</strong>을 키웠다."
+      }
+    ]
+  },
+  {
+    "id": 10785,
+    "origin": "deception",
+    "examples": [
+      {
+        "exam_en": "He practiced <strong class=\"target-word\">deception</strong> to get what he wanted.",
+        "exam_ko": "그는 원하는 것을 얻기 위해 <strong class=\"target-word\">속임수</strong>를 썼다."
+      },
+      {
+        "exam_en": "The extent of their <strong class=\"target-word\">deception</strong> was incredible.",
+        "exam_ko": "그들의 <strong class=\"target-word\">속임수</strong>의 규모는 믿기 어려웠다."
+      }
+    ]
+  },
+  {
+    "id": 10786,
+    "origin": "stuffed",
+    "examples": [
+      {
+        "exam_en": "The museum displayed a <strong class=\"target-word\">stuffed</strong> fox in the exhibit.",
+        "exam_ko": "박물관은 전시회에 <strong class=\"target-word\">박제된</strong> 여우를 전시했다."
+      },
+      {
+        "exam_en": "\"Would you like more?\" \"No, thanks. I'm <strong class=\"target-word\">stuffed</strong>.\"",
+        "exam_ko": "\"더 드시겠어요?\" \"아니요, <strong class=\"target-word\">배가 부릅니다</strong>.\"  "
+      }
+    ]
+  },
+  {
+    "id": 10787,
+    "origin": "ostensible",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">ostensible</strong> reason was budget cuts.",
+        "exam_ko": "<strong class=\"target-word\">표면상의</strong> 이유는 예산 삭감이었다."
+      }
+    ]
+  }
+]

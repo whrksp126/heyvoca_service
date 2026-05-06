@@ -1,0 +1,286 @@
+[
+  {
+    "id": 609,
+    "origin": "cure",
+    "examples": [
+      {
+        "exam_en": "Rest and sleep can <strong class=\"target-word\">cure</strong> mild fatigue.",
+        "exam_ko": "휴식과 수면은 가벼운 피로를 <strong class=\"target-word\">치료할</strong> 수 있다."
+      },
+      {
+        "exam_en": "The doctor found a way to <strong class=\"target-word\">cure</strong> the disease.",
+        "exam_ko": "의사는 그 병을 <strong class=\"target-word\">치료할</strong> 방법을 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 610,
+    "origin": "charge",
+    "examples": [
+      {
+        "exam_en": "The bookstore <strong class=\"target-word\">charged</strong> the student $50 for the books.",
+        "exam_ko": "책방은 학생에게 책값으로 50달러를 <strong class=\"target-word\">청구했다</strong>."
+      },
+      {
+        "exam_en": "How much will you <strong class=\"target-word\">charge</strong> for repairing this car?",
+        "exam_ko": "이 차 수리비를 얼마나 <strong class=\"target-word\">청구할</strong> 건가요?"
+      }
+    ]
+  },
+  {
+    "id": 611,
+    "origin": "celebrate",
+    "examples": [
+      {
+        "exam_en": "We <strong class=\"target-word\">celebrated</strong> her birthday with a party.",
+        "exam_ko": "우리는 파티를 열어 그녀의 생일을 <strong class=\"target-word\">축하했다</strong>."
+      },
+      {
+        "exam_en": "The team <strong class=\"target-word\">celebrated</strong> their victory on the field.",
+        "exam_ko": "팀은 경기장에서 승리를 <strong class=\"target-word\">축하했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 612,
+    "origin": "bury",
+    "examples": [
+      {
+        "exam_en": "The pirate <strong class=\"target-word\">buried</strong> the treasure on the island.",
+        "exam_ko": "해적은 섬에 보물을 <strong class=\"target-word\">묻었다</strong>."
+      },
+      {
+        "exam_en": "The workers were <strong class=\"target-word\">buried</strong> alive in the collapsed mine.",
+        "exam_ko": "광부들은 무너진 광산에 <strong class=\"target-word\">생매장되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 613,
+    "origin": "breathe",
+    "examples": [
+      {
+        "exam_en": "She slowly <strong class=\"target-word\">breathed</strong> in and tried to calm down.",
+        "exam_ko": "그녀는 천천히 숨을 <strong class=\"target-word\">들이쉬며</strong> 진정하려 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">breathed</strong> into the balloon to inflate it.",
+        "exam_ko": "그는 풍선을 부풀리기 위해 <strong class=\"target-word\">숨을 불어넣었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 614,
+    "origin": "bother",
+    "examples": [
+      {
+        "exam_en": "Don't <strong class=\"target-word\">bother</strong> your head about small mistakes.",
+        "exam_ko": "사소한 실수에 대해 머리를 <strong class=\"target-word\">썩히지</strong> 마라."
+      },
+      {
+        "exam_en": "That's what <strong class=\"target-word\">bothers</strong> me most.",
+        "exam_ko": "그것이 바로 나를 가장 <strong class=\"target-word\">괴롭히는</strong> 일이야."
+      }
+    ]
+  },
+  {
+    "id": 615,
+    "origin": "bet",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bet</strong> ten pounds on the winning horse.",
+        "exam_ko": "그는 우승한 말에 10파운드를 <strong class=\"target-word\">걸었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bet</strong> them $20 that she would win.",
+        "exam_ko": "그녀는 자신이 이길 것이라며 그들에게 20달러를 <strong class=\"target-word\">걸었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 616,
+    "origin": "bend",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bent</strong> his head to greet the elder.",
+        "exam_ko": "그는 어른에게 인사하려고 고개를 <strong class=\"target-word\">숙였다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">bent</strong> her neck in submission.",
+        "exam_ko": "그녀는 복종하며 고개를 <strong class=\"target-word\">떨궜다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 617,
+    "origin": "amuse",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">amused</strong> the child with a funny story.",
+        "exam_ko": "그녀는 재미있는 이야기로 아이를 <strong class=\"target-word\">즐겁게 해주었다</strong>."
+      },
+      {
+        "exam_en": "The joke <strong class=\"target-word\">amused</strong> the audience greatly.",
+        "exam_ko": "그 농담은 청중을 크게 <strong class=\"target-word\">즐겁게 했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 618,
+    "origin": "alarm",
+    "examples": [
+      {
+        "exam_en": "The sudden noise filled her with <strong class=\"target-word\">alarm</strong>.",
+        "exam_ko": "갑작스러운 소음이 그녀를 <strong class=\"target-word\">깜짝 놀라게</strong> 했다."
+      },
+      {
+        "exam_en": "Citizens viewed the growing power with <strong class=\"target-word\">alarm</strong>.",
+        "exam_ko": "시민들은 커지는 권력을 <strong class=\"target-word\">위기감</strong>을 품고 바라봤다."
+      }
+    ]
+  },
+  {
+    "id": 619,
+    "origin": "loose",
+    "examples": [
+      {
+        "exam_en": "The prisoner broke <strong class=\"target-word\">loose</strong> and ran away.",
+        "exam_ko": "죄수는 <strong class=\"target-word\">탈출하여</strong> 도망쳤다."
+      },
+      {
+        "exam_en": "She let the dog <strong class=\"target-word\">loose</strong> in the park.",
+        "exam_ko": "그녀는 공원에서 개를 <strong class=\"target-word\">풀어주었다</strong>."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">loose</strong> rust was removed with a wire brush.",
+        "exam_ko": "<strong class=\"target-word\">들뜬</strong> 녹은 와이어 브러시로 제거되었다."
+      }
+    ]
+  },
+  {
+    "id": 620,
+    "origin": "indoor",
+    "examples": [
+      {
+        "exam_en": "Swimming is a popular <strong class=\"target-word\">indoor</strong> sport in winter.",
+        "exam_ko": "수영은 겨울에 인기 있는 <strong class=\"target-word\">실내</strong> 스포츠이다."
+      },
+      {
+        "exam_en": "The school has a large <strong class=\"target-word\">indoor</strong> swimming pool.",
+        "exam_ko": "학교에는 넓은 <strong class=\"target-word\">실내</strong> 수영장이 있다."
+      }
+    ]
+  },
+  {
+    "id": 621,
+    "origin": "green",
+    "examples": [
+      {
+        "exam_en": "She wore a bracelet made of <strong class=\"target-word\">green</strong> jade.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">녹색</strong> 비취로 만든 팔찌를 착용했다."
+      },
+      {
+        "exam_en": "I didn't know where the hole was on the 18th <strong class=\"target-word\">green</strong>.",
+        "exam_ko": "18번 홀의 <strong class=\"target-word\">그린</strong>이 어디에 있는지 몰랐어요."
+      }
+    ]
+  },
+  {
+    "id": 622,
+    "origin": "gray",
+    "examples": [
+      {
+        "exam_en": "She had beautiful <strong class=\"target-word\">gray</strong> eyes.",
+        "exam_ko": "그녀는 아름다운 <strong class=\"target-word\">회색</strong> 눈을 가지고 있었다."
+      },
+      {
+        "exam_en": "He stared at the <strong class=\"target-word\">gray</strong> sky for a long time.",
+        "exam_ko": "그는 오랫동안 <strong class=\"target-word\">잿빛</strong> 하늘을 응시했다."
+      }
+    ]
+  },
+  {
+    "id": 623,
+    "origin": "grave",
+    "examples": [
+      {
+        "exam_en": "He visited his father's <strong class=\"target-word\">grave</strong> every year.",
+        "exam_ko": "그는 매년 아버지의 <strong class=\"target-word\">무덤</strong>을 찾았다."
+      },
+      {
+        "exam_en": "She cared for him from the cradle to the <strong class=\"target-word\">grave</strong>.",
+        "exam_ko": "그녀는 태어날 때부터 <strong class=\"target-word\">죽을 때까지</strong> 그를 돌봤다."
+      }
+    ]
+  },
+  {
+    "id": 624,
+    "origin": "grand",
+    "examples": [
+      {
+        "exam_en": "The hikers admired the <strong class=\"target-word\">grand</strong> mountain view.",
+        "exam_ko": "등산객들은 <strong class=\"target-word\">웅장한</strong> 산의 경치에 감탄했다."
+      },
+      {
+        "exam_en": "The event was organized on a <strong class=\"target-word\">grand</strong> scale.",
+        "exam_ko": "행사는 <strong class=\"target-word\">대규모</strong>로 진행되었다."
+      }
+    ]
+  },
+  {
+    "id": 625,
+    "origin": "absent",
+    "examples": [
+      {
+        "exam_en": "Your friend was <strong class=\"target-word\">absent</strong> from class today.",
+        "exam_ko": "네 친구는 오늘 수업에 <strong class=\"target-word\">결석했다</strong>."
+      },
+      {
+        "exam_en": "He has never been <strong class=\"target-word\">absent</strong> from school.",
+        "exam_ko": "그는 학교를 <strong class=\"target-word\">결석한</strong> 적이 없다."
+      }
+    ]
+  },
+  {
+    "id": 626,
+    "origin": "worth",
+    "examples": [
+      {
+        "exam_en": "This antique vase is <strong class=\"target-word\">worth</strong> a lot of money.",
+        "exam_ko": "이 골동품 꽃병은 많은 돈의 <strong class=\"target-word\">가치가 있다</strong>."
+      },
+      {
+        "exam_en": "This book is well <strong class=\"target-word\">worth</strong> twenty dollars.",
+        "exam_ko": "이 책은 20달러의 <strong class=\"target-word\">값어치가 충분히 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 627,
+    "origin": "wedding",
+    "examples": [
+      {
+        "exam_en": "They held a small <strong class=\"target-word\">wedding</strong> party at the restaurant.",
+        "exam_ko": "그들은 레스토랑에서 작은 <strong class=\"target-word\">결혼</strong> 피로연을 열었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">wedding</strong> ceremony was held in a beautiful garden.",
+        "exam_ko": "<strong class=\"target-word\">결혼식</strong>은 아름다운 정원에서 열렸다."
+      }
+    ]
+  },
+  {
+    "id": 628,
+    "origin": "wealth",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">wealth</strong> of a country depends on its resources.",
+        "exam_ko": "국가의 <strong class=\"target-word\">부</strong>는 그 나라의 자원에 달려 있다."
+      },
+      {
+        "exam_en": "He was a man of great <strong class=\"target-word\">wealth</strong> and influence.",
+        "exam_ko": "그는 엄청난 <strong class=\"target-word\">재산</strong>과 영향력을 가진 사람이었다."
+      }
+    ]
+  }
+]

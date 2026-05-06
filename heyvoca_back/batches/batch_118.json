@@ -1,0 +1,602 @@
+[
+  {
+    "id": 11688,
+    "word": "drastic",
+    "exam_en": "a <strong class=\"target-word\">drastic</strong> lifestyle change",
+    "exam_ko": "<strong class=\"target-word\">급격한</strong> 생활 양식의 변화"
+  },
+  {
+    "id": 11689,
+    "word": "divorced",
+    "exam_en": "a <strong class=\"target-word\">divorced</strong> man",
+    "exam_ko": "<strong class=\"target-word\">이혼한</strong> 남성"
+  },
+  {
+    "id": 11690,
+    "word": "divorced",
+    "exam_en": "He was <strong class=\"target-word\">divorced</strong> from his wife.",
+    "exam_ko": "그는 아내와 <strong class=\"target-word\">이혼했다</strong>(※어느 쪽이 제의했는지는 불명임)"
+  },
+  {
+    "id": 11691,
+    "word": "diversity",
+    "exam_en": "a <strong class=\"target-word\">diversity</strong> of methods",
+    "exam_ko": "<strong class=\"target-word\">여러</strong> 가지 방법"
+  },
+  {
+    "id": 11692,
+    "word": "diversity",
+    "exam_en": "the racial and cultural <strong class=\"target-word\">diversity</strong> of California",
+    "exam_ko": "<strong class=\"target-word\">캘리포니아</strong>의 다양한 인종과 문화."
+  },
+  {
+    "id": 11693,
+    "word": "disobey",
+    "exam_en": "<strong class=\"target-word\">disobey</strong> one's parents",
+    "exam_ko": "부모 말을 <strong class=\"target-word\">거역하다</strong>"
+  },
+  {
+    "id": 11694,
+    "word": "disobey",
+    "exam_en": "<strong class=\"target-word\">disobey</strong> the rules",
+    "exam_ko": "규칙을 <strong class=\"target-word\">위반하다</strong>."
+  },
+  {
+    "id": 11695,
+    "word": "dishonest",
+    "exam_en": "a <strong class=\"target-word\">dishonest</strong> person",
+    "exam_ko": "<strong class=\"target-word\">부정직한</strong> 사람."
+  },
+  {
+    "id": 11696,
+    "word": "dishonest",
+    "exam_en": "<strong class=\"target-word\">dishonest</strong> gains",
+    "exam_ko": "<strong class=\"target-word\">부정</strong> 이득"
+  },
+  {
+    "id": 11697,
+    "word": "disability",
+    "exam_en": "<strong class=\"target-word\">disability</strong> to pay",
+    "exam_ko": "지불 <strong class=\"target-word\">불능</strong>."
+  },
+  {
+    "id": 11698,
+    "word": "disability",
+    "exam_en": "get a <strong class=\"target-word\">disability</strong> pension",
+    "exam_ko": "신체 장애 수당을 <strong class=\"target-word\">받다</strong>."
+  },
+  {
+    "id": 11699,
+    "word": "dine",
+    "exam_en": "We <strong class=\"target-word\">dined</strong> at a restaurant.",
+    "exam_ko": "우리는 레스토랑에서 <strong class=\"target-word\">식사</strong>를 했다."
+  },
+  {
+    "id": 11700,
+    "word": "dine",
+    "exam_en": "<strong class=\"target-word\">dine</strong> a person handsomely",
+    "exam_ko": "남에게 후하게 식사를 <strong class=\"target-word\">대접하다</strong>."
+  },
+  {
+    "id": 11701,
+    "word": "detector",
+    "exam_en": "a lie <strong class=\"target-word\">detector</strong>",
+    "exam_ko": "<strong class=\"target-word\">거짓말</strong> 탐지기"
+  },
+  {
+    "id": 11702,
+    "word": "detector",
+    "exam_en": "a metal <strong class=\"target-word\">detector</strong>",
+    "exam_ko": "<strong class=\"target-word\">금속</strong> 탐지기."
+  },
+  {
+    "id": 11703,
+    "word": "deed",
+    "exam_en": "a kind <strong class=\"target-word\">deed</strong>",
+    "exam_ko": "<strong class=\"target-word\">친절한</strong> 행동"
+  },
+  {
+    "id": 11704,
+    "word": "deed",
+    "exam_en": "in <strong class=\"target-word\">deed</strong> as well as in name",
+    "exam_ko": "<strong class=\"target-word\">명실</strong> 공히"
+  },
+  {
+    "id": 11705,
+    "word": "deduction",
+    "exam_en": "income tax <strong class=\"target-word\">deduction</strong>",
+    "exam_ko": "<strong class=\"target-word\">세금</strong> 차감[공제]."
+  },
+  {
+    "id": 11706,
+    "word": "deduction",
+    "exam_en": "His <strong class=\"target-word\">deduction</strong> that she was now dead was correct.",
+    "exam_ko": "그녀는 이제 죽었을 것이라는 그의 추론은 <strong class=\"target-word\">옳았다</strong>."
+  },
+  {
+    "id": 11707,
+    "word": "cubic",
+    "exam_en": "<strong class=\"target-word\">cubic</strong> blocks of concrete",
+    "exam_ko": "<strong class=\"target-word\">입방체</strong> 콘크리트 블록"
+  },
+  {
+    "id": 11708,
+    "word": "cubic",
+    "exam_en": "a <strong class=\"target-word\">cubic</strong> interchange",
+    "exam_ko": "<strong class=\"target-word\">입체</strong> 교차."
+  },
+  {
+    "id": 11709,
+    "word": "crust",
+    "exam_en": "earn one's <strong class=\"target-word\">crust</strong>",
+    "exam_ko": "생활비를 <strong class=\"target-word\">벌어들이다</strong>."
+  },
+  {
+    "id": 11710,
+    "word": "crust",
+    "exam_en": "The blood was dried in a <strong class=\"target-word\">crust</strong>.",
+    "exam_ko": "피가 말라 <strong class=\"target-word\">딱지</strong>가 되었다."
+  },
+  {
+    "id": 11711,
+    "word": "cough",
+    "exam_en": "The engine <strong class=\"target-word\">cough</strong>ed once or twice, but wouldn't start.",
+    "exam_ko": "엔진은 한 두번 덜덜거렸을 뿐 시동이 걸리지 <strong class=\"target-word\">않았다</strong>."
+  },
+  {
+    "id": 11712,
+    "word": "cough",
+    "exam_en": "<strong class=\"target-word\">cough</strong> up a fish bone",
+    "exam_ko": "기침하여 가시를 <strong class=\"target-word\">뱉다</strong>"
+  },
+  {
+    "id": 11713,
+    "word": "confusing",
+    "exam_en": "Our relationship is <strong class=\"target-word\">confusing</strong>.",
+    "exam_ko": "우리 사이가 <strong class=\"target-word\">애매하다</strong>."
+  },
+  {
+    "id": 11714,
+    "word": "complaint",
+    "exam_en": "a <strong class=\"target-word\">complaint</strong> about rising taxes",
+    "exam_ko": "<strong class=\"target-word\">세금이</strong> 오른 것에 대한 불평"
+  },
+  {
+    "id": 11715,
+    "word": "complaint",
+    "exam_en": "a letter of <strong class=\"target-word\">complaint</strong>",
+    "exam_ko": "<strong class=\"target-word\">불만의</strong> 편지"
+  },
+  {
+    "id": 11716,
+    "word": "commuter",
+    "exam_en": "a <strong class=\"target-word\">commuter</strong> ticket",
+    "exam_ko": "<strong class=\"target-word\">정기</strong> (승차)권"
+  },
+  {
+    "id": 11717,
+    "word": "commuter",
+    "exam_en": "a <strong class=\"target-word\">commuter</strong> bus",
+    "exam_ko": "(특정 구간의) <strong class=\"target-word\">통근</strong> 버스."
+  },
+  {
+    "id": 11718,
+    "word": "coma",
+    "exam_en": "fall into a <strong class=\"target-word\">coma</strong>",
+    "exam_ko": "혼수 상태에 <strong class=\"target-word\">빠지다</strong>"
+  },
+  {
+    "id": 11719,
+    "word": "coma",
+    "exam_en": "come out of a <strong class=\"target-word\">coma</strong>",
+    "exam_ko": "혼수 상태에서 <strong class=\"target-word\">깨어나다</strong>"
+  },
+  {
+    "id": 11720,
+    "word": "citation",
+    "exam_en": "a <strong class=\"target-word\">citation</strong> slip",
+    "exam_ko": "(인용문 등의) <strong class=\"target-word\">카드</strong>."
+  },
+  {
+    "id": 11721,
+    "word": "citation",
+    "exam_en": "a Presidential <strong class=\"target-word\">citation</strong>",
+    "exam_ko": "<strong class=\"target-word\">대통령</strong> 감사장."
+  },
+  {
+    "id": 11722,
+    "word": "cigarette",
+    "exam_en": "a pack of <strong class=\"target-word\">cigarette</strong>s",
+    "exam_ko": "<strong class=\"target-word\">담배</strong> 한 갑"
+  },
+  {
+    "id": 11723,
+    "word": "cigarette",
+    "exam_en": "light  a <strong class=\"target-word\">cigarette</strong>",
+    "exam_ko": "담배에 불을 <strong class=\"target-word\">붙이다</strong>"
+  },
+  {
+    "id": 11724,
+    "word": "christmas",
+    "exam_en": "a <strong class=\"target-word\">Christmas</strong> present",
+    "exam_ko": "<strong class=\"target-word\">크리스마스</strong> 선물"
+  },
+  {
+    "id": 11725,
+    "word": "christmas",
+    "exam_en": "on <strong class=\"target-word\">Christmas</strong> day",
+    "exam_ko": "<strong class=\"target-word\">크리스마스</strong> 날에"
+  },
+  {
+    "id": 11726,
+    "word": "chaos",
+    "exam_en": "After the earthquake, the area was in <strong class=\"target-word\">chaos</strong>.",
+    "exam_ko": "지진 후에 그 지역은 혼란 상태에 <strong class=\"target-word\">빠졌다</strong>."
+  },
+  {
+    "id": 11727,
+    "word": "championship",
+    "exam_en": "win the county swimming <strong class=\"target-word\">championship</strong>",
+    "exam_ko": "군(郡) 수영 선수권을 <strong class=\"target-word\">따다</strong>"
+  },
+  {
+    "id": 11728,
+    "word": "championship",
+    "exam_en": "lose a <strong class=\"target-word\">championship</strong>",
+    "exam_ko": "선수권을 잃다[<strong class=\"target-word\">유지하다</strong>]"
+  },
+  {
+    "id": 11729,
+    "word": "celebration",
+    "exam_en": "in <strong class=\"target-word\">celebration</strong> of",
+    "exam_ko": "…을 <strong class=\"target-word\">축하하여</strong>."
+  },
+  {
+    "id": 11730,
+    "word": "celebration",
+    "exam_en": "hold a <strong class=\"target-word\">celebration</strong>",
+    "exam_ko": "축하연을 <strong class=\"target-word\">열다</strong>."
+  },
+  {
+    "id": 11731,
+    "word": "careless",
+    "exam_en": "a <strong class=\"target-word\">careless</strong> driver",
+    "exam_ko": "<strong class=\"target-word\">조심성</strong> 없는 운전자"
+  },
+  {
+    "id": 11732,
+    "word": "careless",
+    "exam_en": "be <strong class=\"target-word\">careless</strong> of one's dress",
+    "exam_ko": "옷에 <strong class=\"target-word\">무관심하다</strong>"
+  },
+  {
+    "id": 11733,
+    "word": "captivity",
+    "exam_en": "in <strong class=\"target-word\">captivity</strong>",
+    "exam_ko": "<strong class=\"target-word\">붙들려</strong>"
+  },
+  {
+    "id": 11734,
+    "word": "captivity",
+    "exam_en": "The hostages were released from <strong class=\"target-word\">captivity</strong>.",
+    "exam_ko": "인질들은 감금 상태에서 <strong class=\"target-word\">풀려났다</strong>."
+  },
+  {
+    "id": 11735,
+    "word": "candy",
+    "exam_en": "hard <strong class=\"target-word\">candy</strong>",
+    "exam_ko": "<strong class=\"target-word\">딱딱한</strong> 사탕"
+  },
+  {
+    "id": 11736,
+    "word": "candy",
+    "exam_en": "a <strong class=\"target-word\">candy</strong> bar",
+    "exam_ko": "<strong class=\"target-word\">막대</strong> 사탕"
+  },
+  {
+    "id": 11737,
+    "word": "cabin",
+    "exam_en": "a log <strong class=\"target-word\">cabin</strong>",
+    "exam_ko": "<strong class=\"target-word\">통나무</strong> 오두막집."
+  },
+  {
+    "id": 11738,
+    "word": "cabin",
+    "exam_en": "the first-class <strong class=\"target-word\">cabin</strong>",
+    "exam_ko": "1등 <strong class=\"target-word\">선실</strong>[객실]."
+  },
+  {
+    "id": 11739,
+    "word": "bureau",
+    "exam_en": "the <strong class=\"target-word\">Bureau</strong> of the Mint",
+    "exam_ko": "(미국 재무부의) <strong class=\"target-word\">조폐국</strong>"
+  },
+  {
+    "id": 11740,
+    "word": "bureau",
+    "exam_en": "the Federal <strong class=\"target-word\">Bureau</strong> of Investigation",
+    "exam_ko": "(미) <strong class=\"target-word\">연방</strong> 수사국(FBI)."
+  },
+  {
+    "id": 11741,
+    "word": "booth",
+    "exam_en": "the carnival <strong class=\"target-word\">booth</strong>s",
+    "exam_ko": "<strong class=\"target-word\">사육제의</strong> 노점."
+  },
+  {
+    "id": 11742,
+    "word": "booth",
+    "exam_en": "a telephone <strong class=\"target-word\">booth</strong>",
+    "exam_ko": "<strong class=\"target-word\">전화</strong> 박스"
+  },
+  {
+    "id": 11743,
+    "word": "bonfire",
+    "exam_en": "make a <strong class=\"target-word\">bonfire</strong> of something",
+    "exam_ko": "…을 태워 <strong class=\"target-word\">없애다</strong>."
+  },
+  {
+    "id": 11744,
+    "word": "bleeding",
+    "exam_en": "<strong class=\"target-word\">bleeding</strong> to death",
+    "exam_ko": "<strong class=\"target-word\">출혈사</strong>(死)."
+  },
+  {
+    "id": 11745,
+    "word": "bargain",
+    "exam_en": "a losing <strong class=\"target-word\">bargain</strong>",
+    "exam_ko": "<strong class=\"target-word\">손해보는</strong> 계약"
+  },
+  {
+    "id": 11746,
+    "word": "bargain",
+    "exam_en": "make a good <strong class=\"target-word\">bargain</strong>",
+    "exam_ko": "유리[불리]한 거래를 <strong class=\"target-word\">하다</strong>; 싸게[비싸게] 사다"
+  },
+  {
+    "id": 11747,
+    "word": "background",
+    "exam_en": "his profile against a blue <strong class=\"target-word\">background</strong>",
+    "exam_ko": "<strong class=\"target-word\">푸른</strong> 색을 배경으로 한 그의 옆얼굴"
+  },
+  {
+    "id": 11748,
+    "word": "background",
+    "exam_en": "the blue \"H\" on a white <strong class=\"target-word\">background</strong>",
+    "exam_ko": "흰 <strong class=\"target-word\">바탕에</strong> 청색으로 된 H자(※런던의 소화전 기호)"
+  },
+  {
+    "id": 11749,
+    "word": "appreciation",
+    "exam_en": "<strong class=\"target-word\">appreciation</strong> of our culture",
+    "exam_ko": "<strong class=\"target-word\">우리</strong> 문화에 대한 올바른 이해"
+  },
+  {
+    "id": 11750,
+    "word": "appreciation",
+    "exam_en": "She showed her fine <strong class=\"target-word\">appreciation</strong> of music.",
+    "exam_ko": "그녀는 음악에 대한 섬세한 감상력을 <strong class=\"target-word\">나타냈다</strong>."
+  },
+  {
+    "id": 11751,
+    "word": "antacid",
+    "exam_en": "an <strong class=\"target-word\">antacid</strong> pill",
+    "exam_ko": "<strong class=\"target-word\">제산정</strong>."
+  },
+  {
+    "id": 11752,
+    "word": "alcohol",
+    "exam_en": "absolute <strong class=\"target-word\">alcohol</strong>",
+    "exam_ko": "<strong class=\"target-word\">무수</strong>(無水) 알코올."
+  },
+  {
+    "id": 11753,
+    "word": "alcohol",
+    "exam_en": "<strong class=\"target-word\">alcohol</strong> dependence",
+    "exam_ko": "<strong class=\"target-word\">알코올</strong> 의존증"
+  },
+  {
+    "id": 11754,
+    "word": "agreed",
+    "exam_en": "the <strong class=\"target-word\">agreed</strong> rate",
+    "exam_ko": "<strong class=\"target-word\">협정</strong> (할인) 요금."
+  },
+  {
+    "id": 11755,
+    "word": "agreed",
+    "exam_en": "All the members are <strong class=\"target-word\">agreed</strong> on this point.",
+    "exam_ko": "전(全)회원이 이 점에 대해 의견이 <strong class=\"target-word\">일치</strong>__하고 ."
+  },
+  {
+    "id": 11756,
+    "word": "addicted",
+    "exam_en": "be <strong class=\"target-word\">addicted</strong> to drugs",
+    "exam_ko": "마약에 <strong class=\"target-word\">중독</strong>__되어 ."
+  },
+  {
+    "id": 11757,
+    "word": "acre",
+    "exam_en": "a 400-<strong class=\"target-word\">acre</strong> farm",
+    "exam_ko": "400<strong class=\"target-word\">에이커의</strong> 농지(※불변화 복수형)."
+  },
+  {
+    "id": 11758,
+    "word": "acre",
+    "exam_en": "one's ancestral <strong class=\"target-word\">acre</strong>s",
+    "exam_ko": "<strong class=\"target-word\">조상</strong> 전래의 토지."
+  },
+  {
+    "id": 11759,
+    "word": "accidental",
+    "exam_en": "an <strong class=\"target-word\">accidental</strong> death",
+    "exam_ko": "<strong class=\"target-word\">횡사</strong>(橫死)"
+  },
+  {
+    "id": 11760,
+    "word": "accidental",
+    "exam_en": "an <strong class=\"target-word\">accidental</strong> fire",
+    "exam_ko": "<strong class=\"target-word\">실화</strong>(失火)."
+  },
+  {
+    "id": 11761,
+    "word": "abusive",
+    "exam_en": "an <strong class=\"target-word\">abusive</strong> letter",
+    "exam_ko": "독설을 <strong class=\"target-word\">늘어</strong>놓은 편지"
+  },
+  {
+    "id": 11762,
+    "word": "abusive",
+    "exam_en": "be <strong class=\"target-word\">abusive</strong> to one's son",
+    "exam_ko": "자기 아들을 <strong class=\"target-word\">학대하다</strong>."
+  },
+  {
+    "id": 11763,
+    "word": "abbreviation",
+    "exam_en": "\"What's an CEO?\" \"It's the <strong class=\"target-word\">abbreviation</strong> for chief executive officer.\"",
+    "exam_ko": "「CEO가 뭐지?」 「<strong class=\"target-word\">최고</strong>경영자의 약자야.」"
+  },
+  {
+    "id": 11764,
+    "word": "saltwater",
+    "exam_en": "<strong class=\"target-word\">saltwater</strong> fish",
+    "exam_ko": "<strong class=\"target-word\">바닷물고</strong>기."
+  },
+  {
+    "id": 11765,
+    "word": "groan",
+    "exam_en": "give a <strong class=\"target-word\">groan</strong> of dismay",
+    "exam_ko": "낙심하여 신음 소리를 <strong class=\"target-word\">내다</strong>"
+  },
+  {
+    "id": 11766,
+    "word": "groan",
+    "exam_en": "She heard faint <strong class=\"target-word\">groan</strong>s coming from the next room.",
+    "exam_ko": "그녀는 옆방에서 나는 희미한 신음 소리를 <strong class=\"target-word\">들었다</strong>."
+  },
+  {
+    "id": 11767,
+    "word": "crystal",
+    "exam_en": "The water was as clear as <strong class=\"target-word\">crystal</strong>.",
+    "exam_ko": "물은 수정처럼 <strong class=\"target-word\">맑았다</strong>."
+  },
+  {
+    "id": 11768,
+    "word": "crystal",
+    "exam_en": "<strong class=\"target-word\">crystal</strong>s of sugar",
+    "exam_ko": "<strong class=\"target-word\">설탕</strong>[눈]의 결정."
+  },
+  {
+    "id": 11769,
+    "word": "blur",
+    "exam_en": "a page <strong class=\"target-word\">blur</strong>red with ink",
+    "exam_ko": "<strong class=\"target-word\">잉크로</strong> 얼룩이 진 페이지"
+  },
+  {
+    "id": 11770,
+    "word": "blur",
+    "exam_en": "Static <strong class=\"target-word\">blur</strong>red the television screen.",
+    "exam_ko": "전파 장애로 텔레비전의 화면이 <strong class=\"target-word\">흐려졌다</strong>."
+  },
+  {
+    "id": 11771,
+    "word": "terrified",
+    "exam_en": "He was <strong class=\"target-word\">terrified</strong> of being left alone in the room.",
+    "exam_ko": "그는 방에 혼자 남게 되는 것을 <strong class=\"target-word\">무서워했다</strong>."
+  },
+  {
+    "id": 11772,
+    "word": "betrayal",
+    "exam_en": "a case of <strong class=\"target-word\">betrayal</strong>",
+    "exam_ko": "<strong class=\"target-word\">배신</strong> 행위."
+  },
+  {
+    "id": 11773,
+    "word": "orphan",
+    "exam_en": "a war <strong class=\"target-word\">orphan</strong>",
+    "exam_ko": "전쟁 <strong class=\"target-word\">고아</strong>."
+  },
+  {
+    "id": 11774,
+    "word": "orphan",
+    "exam_en": "an <strong class=\"target-word\">orphan</strong> home",
+    "exam_ko": "<strong class=\"target-word\">고아</strong>원."
+  },
+  {
+    "id": 11775,
+    "word": "complicate",
+    "exam_en": "a headache <strong class=\"target-word\">complicated</strong> by a cold",
+    "exam_ko": "<strong class=\"target-word\">감기가</strong> 겹쳐서 더욱 심해진 두통"
+  },
+  {
+    "id": 11776,
+    "word": "complicate",
+    "exam_en": "<strong class=\"target-word\">complicate</strong> a situation",
+    "exam_ko": "사태를 복잡하게 <strong class=\"target-word\">만들다</strong>."
+  },
+  {
+    "id": 11777,
+    "word": "cryptic",
+    "exam_en": "a <strong class=\"target-word\">cryptic</strong> remark",
+    "exam_ko": "수수께끼 같은 말, 그 뜻을 <strong class=\"target-word\">헤아</strong>리기 어려운 말."
+  },
+  {
+    "id": 11778,
+    "word": "cryptic",
+    "exam_en": "<strong class=\"target-word\">cryptic</strong> coloring",
+    "exam_ko": "<strong class=\"target-word\">보호색</strong>, 은폐색."
+  },
+  {
+    "id": 11779,
+    "word": "nuance",
+    "exam_en": "It was not difficult to catch the delicate <strong class=\"target-word\">nuance</strong> of what she said.",
+    "exam_ko": "그녀의 발언의 미묘한 <strong class=\"target-word\">차이</strong>를 알아차리기란 어렵지 않았다."
+  },
+  {
+    "id": 11780,
+    "word": "brutal",
+    "exam_en": "be <strong class=\"target-word\">brutal</strong> to dogs",
+    "exam_ko": "개를 못살게 <strong class=\"target-word\">굴다</strong>."
+  },
+  {
+    "id": 11781,
+    "word": "brutal",
+    "exam_en": "<strong class=\"target-word\">brutal</strong> weather",
+    "exam_ko": "<strong class=\"target-word\">혹독한</strong> 날씨."
+  },
+  {
+    "id": 11782,
+    "word": "puppet",
+    "exam_en": "She had in general acted but as a <strong class=\"target-word\">puppet</strong> in the hands of others.",
+    "exam_ko": "(Maria Edgeworth, Belinda) 그녀는 대개 한낱 꼭두각시처럼 남의 손에서 <strong class=\"target-word\">놀았다</strong>."
+  },
+  {
+    "id": 11783,
+    "word": "puppet",
+    "exam_en": "a <strong class=\"target-word\">puppet</strong> regime",
+    "exam_ko": "<strong class=\"target-word\">괴뢰</strong> 정권."
+  },
+  {
+    "id": 11784,
+    "word": "sublime",
+    "exam_en": "<strong class=\"target-word\">sublime</strong> self-sacrifice",
+    "exam_ko": "<strong class=\"target-word\">숭고</strong>한 자기 희생"
+  },
+  {
+    "id": 11785,
+    "word": "sublime",
+    "exam_en": "<strong class=\"target-word\">sublime</strong> mountain scenery",
+    "exam_ko": "<strong class=\"target-word\">웅대한</strong> 산악 풍경."
+  },
+  {
+    "id": 11786,
+    "word": "blighter",
+    "exam_en": "a poor <strong class=\"target-word\">blighter</strong>",
+    "exam_ko": "<strong class=\"target-word\">불쌍한</strong> 녀석"
+  },
+  {
+    "id": 11787,
+    "word": "blighter",
+    "exam_en": "You lucky <strong class=\"target-word\">blighter</strong>!",
+    "exam_ko": "이 <strong class=\"target-word\">재수 좋은 놈아</strong>!"
+  }
+]

@@ -1,0 +1,246 @@
+[
+  {
+    "id": 9636,
+    "origin": "cuckoo",
+    "examples": [
+      {
+        "exam_en": "The new employee was a <strong class=\"target-word\">cuckoo</strong> in the nest.",
+        "exam_ko": "새 직원은 조직 내 <strong class=\"target-word\">불청객</strong>이었다."
+      }
+    ]
+  },
+  {
+    "id": 9637,
+    "origin": "crocodile",
+    "examples": [
+      {
+        "exam_en": "She wore <strong class=\"target-word\">crocodile</strong> shoes to the event.",
+        "exam_ko": "그녀는 행사에 <strong class=\"target-word\">악어 가죽</strong> 신발을 신고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 9638,
+    "origin": "cricket",
+    "examples": [
+      {
+        "exam_en": "She was as chirpy as a <strong class=\"target-word\">cricket</strong> all morning.",
+        "exam_ko": "그녀는 오전 내내 <strong class=\"target-word\">귀뚜라미</strong>처럼 아주 쾌활했다."
+      },
+      {
+        "exam_en": "Cheating on the test is simply not <strong class=\"target-word\">cricket</strong>.",
+        "exam_ko": "시험에서 부정행위를 하는 것은 전혀 <strong class=\"target-word\">공명정대</strong>하지 않다."
+      }
+    ]
+  },
+  {
+    "id": 9641,
+    "origin": "cormorant",
+    "examples": [
+      {
+        "exam_en": "He eats like a <strong class=\"target-word\">cormorant</strong> at every meal.",
+        "exam_ko": "그는 매 식사마다 <strong class=\"target-word\">가마우지</strong>처럼 게걸스럽게 먹는다."
+      }
+    ]
+  },
+  {
+    "id": 9642,
+    "origin": "coral",
+    "examples": [
+      {
+        "exam_en": "The divers discovered a rare red <strong class=\"target-word\">coral</strong> reef.",
+        "exam_ko": "잠수부들은 희귀한 붉은 <strong class=\"target-word\">산호</strong> 군락을 발견했다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">coral</strong> polyp builds its skeleton from calcium.",
+        "exam_ko": "<strong class=\"target-word\">산호</strong> 폴립은 칼슘으로 골격을 만든다."
+      }
+    ]
+  },
+  {
+    "id": 9647,
+    "origin": "catfish",
+    "examples": [
+      {
+        "exam_en": "He was <strong class=\"target-word\">catfished</strong> by someone he met online.",
+        "exam_ko": "그는 온라인에서 만난 사람에게 <strong class=\"target-word\">신분 사기</strong>를 당했다."
+      }
+    ]
+  },
+  {
+    "id": 9652,
+    "origin": "butterfly",
+    "examples": [
+      {
+        "exam_en": "Float like a <strong class=\"target-word\">butterfly</strong>, sting like a bee.",
+        "exam_ko": "<strong class=\"target-word\">나비</strong>처럼 날아서 벌처럼 쏴라."
+      },
+      {
+        "exam_en": "She is a social <strong class=\"target-word\">butterfly</strong> who knows everyone.",
+        "exam_ko": "그녀는 모든 사람을 아는 <strong class=\"target-word\">사교적인 사람</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 9662,
+    "origin": "bee",
+    "examples": [
+      {
+        "exam_en": "The queen <strong class=\"target-word\">bee</strong> lays thousands of eggs daily.",
+        "exam_ko": "여왕 <strong class=\"target-word\">벌</strong>은 매일 수천 개의 알을 낳는다."
+      },
+      {
+        "exam_en": "Worker <strong class=\"target-word\">bees</strong> collect pollen all day long.",
+        "exam_ko": "일 <strong class=\"target-word\">벌</strong>들은 하루 종일 꽃가루를 모은다."
+      }
+    ]
+  },
+  {
+    "id": 9663,
+    "origin": "badger",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">badgered</strong> his parents for a new car.",
+        "exam_ko": "그는 부모님에게 새 차를 사달라고 <strong class=\"target-word\">졸라댔다</strong>."
+      },
+      {
+        "exam_en": "The children <strong class=\"target-word\">badgered</strong> me into taking them to the cinema.",
+        "exam_ko": "아이들은 나에게 영화관에 데려가 달라고 <strong class=\"target-word\">졸라댔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9664,
+    "origin": "ass",
+    "examples": [
+      {
+        "exam_en": "Don't be an <strong class=\"target-word\">ass</strong> about this situation.",
+        "exam_ko": "이 상황에서 <strong class=\"target-word\">바보</strong> 같은 짓은 하지 마."
+      },
+      {
+        "exam_en": "Get your <strong class=\"target-word\">ass</strong> out of here right now.",
+        "exam_ko": "지금 당장 여기서 <strong class=\"target-word\">꺼져</strong>."
+      }
+    ]
+  },
+  {
+    "id": 9667,
+    "origin": "ape",
+    "examples": [
+      {
+        "exam_en": "The crowd went <strong class=\"target-word\">ape</strong> when the band came on stage.",
+        "exam_ko": "밴드가 무대에 오르자 관중들이 <strong class=\"target-word\">열광</strong>했다."
+      },
+      {
+        "exam_en": "He tends to <strong class=\"target-word\">ape</strong> his older brother's habits.",
+        "exam_ko": "그는 형의 습관을 <strong class=\"target-word\">흉내 내는</strong> 경향이 있다."
+      }
+    ]
+  },
+  {
+    "id": 9670,
+    "origin": "ant",
+    "examples": [
+      {
+        "exam_en": "She works as busily as an <strong class=\"target-word\">ant</strong> every day.",
+        "exam_ko": "그녀는 매일 <strong class=\"target-word\">개미</strong>처럼 부지런히 일한다."
+      }
+    ]
+  },
+  {
+    "id": 9675,
+    "origin": "kinship",
+    "examples": [
+      {
+        "exam_en": "There is a strong <strong class=\"target-word\">kinship</strong> between the two families.",
+        "exam_ko": "두 가족 사이에는 강한 <strong class=\"target-word\">친족 유대감</strong>이 있다."
+      }
+    ]
+  },
+  {
+    "id": 9681,
+    "origin": "stylish",
+    "examples": [
+      {
+        "exam_en": "She always looks <strong class=\"target-word\">stylish</strong> in simple outfits.",
+        "exam_ko": "그녀는 단순한 옷차림으로도 항상 <strong class=\"target-word\">세련되어</strong> 보인다."
+      }
+    ]
+  },
+  {
+    "id": 9690,
+    "origin": "easygoing",
+    "examples": [
+      {
+        "exam_en": "He is an <strong class=\"target-word\">easygoing</strong> person who rarely gets stressed.",
+        "exam_ko": "그는 스트레스를 거의 받지 않는 <strong class=\"target-word\">느긋한</strong> 사람이다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">easygoing</strong> attitude makes her popular at work.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">여유로운</strong> 태도가 직장에서 인기를 얻게 한다."
+      }
+    ]
+  },
+  {
+    "id": 9691,
+    "origin": "cuban",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">Cuban</strong> missile crisis threatened global peace in 1962.",
+        "exam_ko": "<strong class=\"target-word\">쿠바</strong> 미사일 위기는 1962년 세계 평화를 위협했다."
+      }
+    ]
+  },
+  {
+    "id": 9695,
+    "origin": "streetcar",
+    "examples": [
+      {
+        "exam_en": "She rides a <strong class=\"target-word\">streetcar</strong> to work every morning.",
+        "exam_ko": "그녀는 매일 아침 <strong class=\"target-word\">시가 전차</strong>를 타고 출근한다."
+      }
+    ]
+  },
+  {
+    "id": 9697,
+    "origin": "entertainment",
+    "examples": [
+      {
+        "exam_en": "The host provided wonderful <strong class=\"target-word\">entertainment</strong> for all guests.",
+        "exam_ko": "주최자는 모든 손님에게 훌륭한 <strong class=\"target-word\">대접</strong>을 제공했다."
+      },
+      {
+        "exam_en": "The company spent a lot on <strong class=\"target-word\">entertainment</strong> expenses last year.",
+        "exam_ko": "회사는 지난해 <strong class=\"target-word\">교제비</strong>에 많은 돈을 썼다."
+      }
+    ]
+  },
+  {
+    "id": 9699,
+    "origin": "rhythm",
+    "examples": [
+      {
+        "exam_en": "She moved her body to the <strong class=\"target-word\">rhythm</strong> of the music.",
+        "exam_ko": "그녀는 음악의 <strong class=\"target-word\">리듬</strong>에 맞춰 몸을 움직였다."
+      },
+      {
+        "exam_en": "The doctor checked the <strong class=\"target-word\">rhythm</strong> of his heartbeat.",
+        "exam_ko": "의사는 그의 심장 <strong class=\"target-word\">박동</strong>을 확인했다."
+      }
+    ]
+  },
+  {
+    "id": 9700,
+    "origin": "couch",
+    "examples": [
+      {
+        "exam_en": "He fell asleep on the <strong class=\"target-word\">couch</strong> while watching TV.",
+        "exam_ko": "그는 TV를 보다가 <strong class=\"target-word\">소파</strong>에서 잠이 들었다."
+      },
+      {
+        "exam_en": "She has been on the <strong class=\"target-word\">couch</strong> for therapy sessions.",
+        "exam_ko": "그녀는 치료 세션을 위해 <strong class=\"target-word\">상담 침대</strong>에 누워 있었다."
+      }
+    ]
+  }
+]

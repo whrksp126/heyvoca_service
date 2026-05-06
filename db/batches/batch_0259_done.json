@@ -1,0 +1,290 @@
+[
+  {
+    "id": 6320,
+    "origin": "bounty",
+    "examples": [
+      {
+        "exam_en": "She enjoyed the <strong class=\"target-word\">bounty</strong> of nature every day.",
+        "exam_ko": "그녀는 매일 자연의 <strong class=\"target-word\">풍요로움</strong>을 즐겼다."
+      },
+      {
+        "exam_en": "The refugees depended on the <strong class=\"target-word\">bounty</strong> of local donors.",
+        "exam_ko": "난민들은 지역 기부자들의 <strong class=\"target-word\">후한 지원</strong>에 의존했다."
+      }
+    ]
+  },
+  {
+    "id": 6321,
+    "origin": "vengeful",
+    "examples": [
+      {
+        "exam_en": "He held a <strong class=\"target-word\">vengeful</strong> grudge against his rival.",
+        "exam_ko": "그는 경쟁자에게 <strong class=\"target-word\">앙심 깊은</strong> 원한을 품었다."
+      },
+      {
+        "exam_en": "Her <strong class=\"target-word\">vengeful</strong> behavior shocked everyone around her.",
+        "exam_ko": "그녀의 <strong class=\"target-word\">보복적인</strong> 행동은 주변 모두를 충격에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 6323,
+    "origin": "talon",
+    "examples": [
+      {
+        "exam_en": "The eagle's sharp <strong class=\"target-word\">talons</strong> gripped the prey tightly.",
+        "exam_ko": "독수리의 날카로운 <strong class=\"target-word\">발톱</strong>이 먹이를 꽉 움켜쥐었다."
+      }
+    ]
+  },
+  {
+    "id": 6325,
+    "origin": "steer",
+    "examples": [
+      {
+        "exam_en": "He carefully <strong class=\"target-word\">steered</strong> the truck through the narrow road.",
+        "exam_ko": "그는 좁은 도로를 따라 트럭을 조심스럽게 <strong class=\"target-word\">조종했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">steered</strong> the boat safely into the harbor.",
+        "exam_ko": "그녀는 보트를 항구로 안전하게 <strong class=\"target-word\">조종했다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">steered</strong> the horse in the right direction.",
+        "exam_ko": "그는 말을 올바른 방향으로 <strong class=\"target-word\">조종했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6327,
+    "origin": "shabby",
+    "examples": [
+      {
+        "exam_en": "He wore <strong class=\"target-word\">shabby</strong> clothes to the interview.",
+        "exam_ko": "그는 면접에 <strong class=\"target-word\">헐어빠진</strong> 옷을 입고 갔다."
+      },
+      {
+        "exam_en": "The President appeared <strong class=\"target-word\">shabby</strong> next to the movie star.",
+        "exam_ko": "대통령은 그 영화 스타 옆에서 <strong class=\"target-word\">초라해</strong> 보였다."
+      }
+    ]
+  },
+  {
+    "id": 6329,
+    "origin": "provocative",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">provocative</strong> language angered the crowd.",
+        "exam_ko": "그의 <strong class=\"target-word\">도발적인</strong> 언사가 군중을 화나게 했다."
+      },
+      {
+        "exam_en": "She wore a <strong class=\"target-word\">provocative</strong> dress to the party.",
+        "exam_ko": "그녀는 파티에 <strong class=\"target-word\">자극적인</strong> 옷을 입고 갔다."
+      }
+    ]
+  },
+  {
+    "id": 6330,
+    "origin": "prank",
+    "examples": [
+      {
+        "exam_en": "The boys played a <strong class=\"target-word\">prank</strong> on their teacher.",
+        "exam_ko": "남자아이들은 선생님에게 <strong class=\"target-word\">장난</strong>을 쳤다."
+      },
+      {
+        "exam_en": "The meadows were <strong class=\"target-word\">pranked</strong> with colorful wildflowers.",
+        "exam_ko": "초원은 알록달록한 들꽃으로 <strong class=\"target-word\">화려하게 꾸며져</strong> 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6331,
+    "origin": "prop",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">propped</strong> a ladder against the building.",
+        "exam_ko": "그는 건물에 사다리를 <strong class=\"target-word\">기대어 세웠다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">propped</strong> the window open with a board.",
+        "exam_ko": "그녀는 판자로 창문을 <strong class=\"target-word\">받쳐 열어놓았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6332,
+    "origin": "physique",
+    "examples": [
+      {
+        "exam_en": "The athlete had a magnificent <strong class=\"target-word\">physique</strong>.",
+        "exam_ko": "그 운동선수는 훌륭한 <strong class=\"target-word\">체격</strong>을 가지고 있었다."
+      },
+      {
+        "exam_en": "He worked hard to develop a strong <strong class=\"target-word\">physique</strong>.",
+        "exam_ko": "그는 강건한 <strong class=\"target-word\">체격</strong>을 만들기 위해 열심히 운동했다."
+      }
+    ]
+  },
+  {
+    "id": 6334,
+    "origin": "perpetrate",
+    "examples": [
+      {
+        "exam_en": "The gang <strong class=\"target-word\">perpetrated</strong> a series of crimes downtown.",
+        "exam_ko": "그 갱단은 시내에서 여러 범죄를 <strong class=\"target-word\">저질렀다</strong>."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">perpetrated</strong> a cruel joke on his coworker.",
+        "exam_ko": "그는 동료에게 잔인한 농담을 <strong class=\"target-word\">저질렀다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6335,
+    "origin": "hoax",
+    "examples": [
+      {
+        "exam_en": "Someone made a <strong class=\"target-word\">hoax</strong> call to the police.",
+        "exam_ko": "누군가가 경찰에 <strong class=\"target-word\">장난</strong> 전화를 했다."
+      },
+      {
+        "exam_en": "They played a <strong class=\"target-word\">hoax</strong> on the new employee.",
+        "exam_ko": "그들은 신입 직원에게 <strong class=\"target-word\">장난</strong>을 쳤다."
+      }
+    ]
+  },
+  {
+    "id": 6337,
+    "origin": "gnaw",
+    "examples": [
+      {
+        "exam_en": "Rats <strong class=\"target-word\">gnawed</strong> a hole through the wall.",
+        "exam_ko": "쥐들이 벽을 <strong class=\"target-word\">갉아</strong> 구멍을 냈다."
+      },
+      {
+        "exam_en": "Worry <strong class=\"target-word\">gnawed</strong> at her all night long.",
+        "exam_ko": "근심이 밤새 그녀를 <strong class=\"target-word\">갉아먹었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6340,
+    "origin": "crackle",
+    "examples": [
+      {
+        "exam_en": "A fire was <strong class=\"target-word\">crackling</strong> in the hearth.",
+        "exam_ko": "벽난로 속에서 불이 <strong class=\"target-word\">탁탁 소리를 내며</strong> 타고 있었다."
+      },
+      {
+        "exam_en": "His poem <strong class=\"target-word\">crackles</strong> with wit.",
+        "exam_ko": "그의 시는 기지로 <strong class=\"target-word\">가득 차 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6343,
+    "origin": "wheelbarrow",
+    "examples": [
+      {
+        "exam_en": "The worker pushed a <strong class=\"target-word\">wheelbarrow</strong> across the yard.",
+        "exam_ko": "인부가 마당을 가로질러 <strong class=\"target-word\">외바퀴 손수레</strong>를 밀었다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Wheelbarrows</strong> and hand tools also need to be washed down.",
+        "exam_ko": "<strong class=\"target-word\">손수레</strong>와 수공구도 세척해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 6344,
+    "origin": "twirl",
+    "examples": [
+      {
+        "exam_en": "The dancer <strong class=\"target-word\">twirled</strong> her cane gracefully on stage.",
+        "exam_ko": "무용수가 무대 위에서 지팡이를 우아하게 <strong class=\"target-word\">빙빙 돌렸다</strong>."
+      },
+      {
+        "exam_en": "The girl <strong class=\"target-word\">twirled</strong> a rope over her head.",
+        "exam_ko": "소녀는 머리 위로 밧줄을 <strong class=\"target-word\">빙빙 돌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6345,
+    "origin": "stump",
+    "examples": [
+      {
+        "exam_en": "A tree <strong class=\"target-word\">stump</strong> remained after the old oak fell.",
+        "exam_ko": "오래된 참나무가 쓰러진 후 <strong class=\"target-word\">그루터기</strong>가 남았다."
+      },
+      {
+        "exam_en": "They burned out the <strong class=\"target-word\">stump</strong> in the field.",
+        "exam_ko": "그들은 밭에 있는 <strong class=\"target-word\">그루터기</strong>를 태워버렸다."
+      }
+    ]
+  },
+  {
+    "id": 6347,
+    "origin": "strangle",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">strangled</strong> a scream and stayed silent.",
+        "exam_ko": "그녀는 비명을 <strong class=\"target-word\">억누르고</strong> 침묵을 지켰다."
+      },
+      {
+        "exam_en": "Regulations <strong class=\"target-word\">strangle</strong> competition in the market.",
+        "exam_ko": "규제는 시장의 경쟁을 <strong class=\"target-word\">억압한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6349,
+    "origin": "profuse",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">profuse</strong> mass of curls.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">풍성한</strong> 곱슬머리를 가지고 있었다."
+      },
+      {
+        "exam_en": "He was <strong class=\"target-word\">profuse</strong> with his money at the market.",
+        "exam_ko": "그는 시장에서 돈을 <strong class=\"target-word\">아낌없이</strong> 썼다."
+      },
+      {
+        "exam_en": "The architect made <strong class=\"target-word\">profuse</strong> use of arched windows.",
+        "exam_ko": "그 건축가는 아치형 창문을 <strong class=\"target-word\">풍부하게</strong> 사용했다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">profuse</strong> weight gain concerned his doctor.",
+        "exam_ko": "그의 <strong class=\"target-word\">지나친</strong> 체중 증가가 의사를 걱정하게 했다."
+      }
+    ]
+  },
+  {
+    "id": 6350,
+    "origin": "paw",
+    "examples": [
+      {
+        "exam_en": "The dog lifted its <strong class=\"target-word\">paw</strong> for a handshake.",
+        "exam_ko": "개가 악수를 위해 <strong class=\"target-word\">발</strong>을 들었다."
+      },
+      {
+        "exam_en": "Don't lay your <strong class=\"target-word\">paws</strong> on me!",
+        "exam_ko": "내게 <strong class=\"target-word\">손</strong>대지 마라!"
+      }
+    ]
+  },
+  {
+    "id": 6351,
+    "origin": "oar",
+    "examples": [
+      {
+        "exam_en": "The rowers bent to the <strong class=\"target-word\">oars</strong> against the current.",
+        "exam_ko": "노잡이들이 조류를 거슬러 <strong class=\"target-word\">노</strong>를 힘껏 저었다."
+      },
+      {
+        "exam_en": "He pulled a good <strong class=\"target-word\">oar</strong> and kept pace with the crew.",
+        "exam_ko": "그는 <strong class=\"target-word\">노</strong>를 잘 저어 승무원들과 속도를 맞췄다."
+      }
+    ]
+  }
+]

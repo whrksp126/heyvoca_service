@@ -1,0 +1,222 @@
+[
+  {
+    "id": 22435,
+    "origin": "satirical",
+    "examples": [
+      {
+        "exam_en": "a satirical poem",
+        "exam_ko": "풍자시."
+      },
+      {
+        "exam_en": "Swift's satirical comments. ",
+        "exam_ko": "스위프트의 풍자적인 평언."
+      },
+      {
+        "exam_en": "Swift's satirical comments.",
+        "exam_ko": "스위프트의 풍자적인 평언."
+      }
+    ]
+  },
+  {
+    "id": 22439,
+    "origin": "forger",
+    "examples": [
+      {
+        "exam_en": "The $100 bills were made by a forger.",
+        "exam_ko": "그 100 달러짜리 지폐들은 위조범이 만든 것이다."
+      }
+    ]
+  },
+  {
+    "id": 22445,
+    "origin": "sepulchral",
+    "examples": [
+      {
+        "exam_en": "a sepulchral visage",
+        "exam_ko": "음울한 표정."
+      }
+    ]
+  },
+  {
+    "id": 22446,
+    "origin": "sepulcher",
+    "examples": [
+      {
+        "exam_en": "the Holy Sepulcher",
+        "exam_ko": "(그리스도의) 성묘(聖墓)."
+      }
+    ]
+  },
+  {
+    "id": 22450,
+    "origin": "steerage",
+    "examples": [
+      {
+        "exam_en": "go steerage",
+        "exam_ko": "삼등칸으로 여행하다."
+      }
+    ]
+  },
+  {
+    "id": 22461,
+    "origin": "arrant",
+    "examples": [
+      {
+        "exam_en": "an arrant liar",
+        "exam_ko": "터무니없는 거짓말쟁이."
+      }
+    ]
+  },
+  {
+    "id": 22465,
+    "origin": "conjugation",
+    "examples": [
+      {
+        "exam_en": "in conjugation with",
+        "exam_ko": "…과 함께."
+      }
+    ]
+  },
+  {
+    "id": 22477,
+    "origin": "furbelow",
+    "examples": [
+      {
+        "exam_en": "frills and furbelows",
+        "exam_ko": "불필요한 허식."
+      }
+    ]
+  },
+  {
+    "id": 22480,
+    "origin": "mace",
+    "examples": [
+      {
+        "exam_en": "mace a person's face",
+        "exam_ko": "남의 얼굴에 최루 신경 가스를 뿌리다; 난폭한 짓을 하다."
+      }
+    ]
+  },
+  {
+    "id": 22484,
+    "origin": "spiel",
+    "examples": [
+      {
+        "exam_en": "the salesman's spiel",
+        "exam_ko": "판매원의 빠른 선전 연설."
+      }
+    ]
+  },
+  {
+    "id": 22500,
+    "origin": "stratagem",
+    "examples": [
+      {
+        "exam_en": "use a stratagem",
+        "exam_ko": "책략을 쓰다."
+      }
+    ]
+  },
+  {
+    "id": 22501,
+    "origin": "recitation",
+    "examples": [
+      {
+        "exam_en": "an English recitation contest",
+        "exam_ko": "영어 암송 콘테스트."
+      }
+    ]
+  },
+  {
+    "id": 22506,
+    "origin": "deafen",
+    "examples": [
+      {
+        "exam_en": "She was momentarily deafened by the loud noise.",
+        "exam_ko": "그녀는 소음으로 잠시 귀가 먹먹해졌다."
+      }
+    ]
+  },
+  {
+    "id": 22508,
+    "origin": "sally",
+    "examples": [
+      {
+        "exam_en": "make a sally",
+        "exam_ko": "반격하다."
+      },
+      {
+        "exam_en": "a sally of delight",
+        "exam_ko": "기쁨의 폭발"
+      }
+    ]
+  },
+  {
+    "id": 22512,
+    "origin": "aback",
+    "examples": [
+      {
+        "exam_en": "all aback",
+        "exam_ko": "＜돛이＞ 모두 앞바람을 받아; ＜배가＞ 정지[후진]하여."
+      }
+    ]
+  },
+  {
+    "id": 22521,
+    "origin": "bushel",
+    "examples": [
+      {
+        "exam_en": "a bushel of lies",
+        "exam_ko": "거짓말투성이"
+      },
+      {
+        "exam_en": "bushels of letters",
+        "exam_ko": "산더미 같은 편지"
+      }
+    ]
+  },
+  {
+    "id": 22525,
+    "origin": "superintendence",
+    "examples": [
+      {
+        "exam_en": "under the superintendence of",
+        "exam_ko": "…의 감독 아래에."
+      }
+    ]
+  },
+  {
+    "id": 22527,
+    "origin": "studded",
+    "examples": [
+      {
+        "exam_en": "a cake studded with almonds",
+        "exam_ko": "아몬드가 많이 들어 있는 케이크."
+      }
+    ]
+  },
+  {
+    "id": 22534,
+    "origin": "thresh",
+    "examples": [
+      {
+        "exam_en": "Farmers thresh grain with threshing machines.",
+        "exam_ko": "농부는 탈곡기로 곡식을 타작한다."
+      },
+      {
+        "exam_en": "The wind threshed the corn.",
+        "exam_ko": "바람으로 옥수수가 퍼덕거렸다."
+      }
+    ]
+  },
+  {
+    "id": 22539,
+    "origin": "parasitic",
+    "examples": [
+      {
+        "exam_en": "be parasitic on",
+        "exam_ko": "…에 기생하고 있다; (비유) …에 의존하고 있다."
+      }
+    ]
+  }
+]

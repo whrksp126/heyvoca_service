@@ -1,0 +1,222 @@
+[
+  {
+    "id": 32545,
+    "origin": "transformer",
+    "examples": [
+      {
+        "exam_en": "Utilities shown to scale (lighting , transformers, pull boxes, manholes, inlets, lift stations, propane tankes, septic tanks, culverts, etc.)",
+        "exam_ko": "축소된 유틸리티(조명, 변압기,풀박스, 맨홀, 주입구, 승강기 스테이션, 프로판 탱크, 정화조, 지하 배수로 등)"
+      }
+    ]
+  },
+  {
+    "id": 32550,
+    "origin": "wigging",
+    "examples": [
+      {
+        "exam_en": "get a wigging",
+        "exam_ko": "호되게 꾸중을 듣다."
+      }
+    ]
+  },
+  {
+    "id": 32552,
+    "origin": "pate",
+    "examples": [
+      {
+        "exam_en": "a shallow pate",
+        "exam_ko": "생각이 모자라는 녀석."
+      }
+    ]
+  },
+  {
+    "id": 32553,
+    "origin": "scupper",
+    "examples": [
+      {
+        "exam_en": "We're scuppered!",
+        "exam_ko": "이젠 틀렸다!"
+      }
+    ]
+  },
+  {
+    "id": 32563,
+    "origin": "funicular",
+    "examples": [
+      {
+        "exam_en": "a funicular railway",
+        "exam_ko": "케이블카, 강삭(鋼索) 철도."
+      }
+    ]
+  },
+  {
+    "id": 32568,
+    "origin": "geostationary",
+    "examples": [
+      {
+        "exam_en": "a geostationary satellite",
+        "exam_ko": "정지 위성."
+      }
+    ]
+  },
+  {
+    "id": 32570,
+    "origin": "transliterate",
+    "examples": [
+      {
+        "exam_en": "transliterate Chinese characters into Roman letters",
+        "exam_ko": "한자를 로마자로 고치다."
+      }
+    ]
+  },
+  {
+    "id": 32571,
+    "origin": "fillip",
+    "examples": [
+      {
+        "exam_en": "give a fillip",
+        "exam_ko": "손끝으로 튀기다."
+      },
+      {
+        "exam_en": "give a fillip to ‥",
+        "exam_ko": "(문어) ＜사람·물건을＞ 분기시키다, 자극하다, 활기를 띠게 하다."
+      }
+    ]
+  },
+  {
+    "id": 32573,
+    "origin": "toehold",
+    "examples": [
+      {
+        "exam_en": "gain a toehold in politics",
+        "exam_ko": "정계에서 발판을 구축하다."
+      }
+    ]
+  },
+  {
+    "id": 32575,
+    "origin": "tripe",
+    "examples": [
+      {
+        "exam_en": "That movie is just tripe.",
+        "exam_ko": "그 영화는 참 졸작이다."
+      }
+    ]
+  },
+  {
+    "id": 32583,
+    "origin": "votive",
+    "examples": [
+      {
+        "exam_en": "a votive picture",
+        "exam_ko": "봉헌한 그림[편액(扁額)]."
+      },
+      {
+        "exam_en": "a votive song",
+        "exam_ko": "기원의 노래."
+      }
+    ]
+  },
+  {
+    "id": 32597,
+    "origin": "retrenchment",
+    "examples": [
+      {
+        "exam_en": "The worsening economic situation has forced the government into a policy of retrenchment.",
+        "exam_ko": "나빠지는 경제 사정 때문에 정부는 부득불 긴축 정책을 쓰게 되었다."
+      }
+    ]
+  },
+  {
+    "id": 32599,
+    "origin": "occidental",
+    "examples": [
+      {
+        "exam_en": "Occidental culture",
+        "exam_ko": "서양 문화[문명]."
+      }
+    ]
+  },
+  {
+    "id": 32615,
+    "origin": "farrago",
+    "examples": [
+      {
+        "exam_en": "The story was a farrago of lies and deceit.",
+        "exam_ko": "그 이야기는 거짓과 속임수를 뒤섞어 놓은 것이었다."
+      }
+    ]
+  },
+  {
+    "id": 32638,
+    "origin": "biff",
+    "examples": [
+      {
+        "exam_en": "give a person a biff on the head",
+        "exam_ko": "머리에 한 방 먹이다."
+      }
+    ]
+  },
+  {
+    "id": 32640,
+    "origin": "ferric",
+    "examples": [
+      {
+        "exam_en": "ferric oxide",
+        "exam_ko": "산화제이철, 철단(鐵丹)."
+      }
+    ]
+  },
+  {
+    "id": 32649,
+    "origin": "fettle",
+    "examples": [
+      {
+        "exam_en": "in good fettle",
+        "exam_ko": "건강한 상태로, 원기왕성하여."
+      }
+    ]
+  },
+  {
+    "id": 32651,
+    "origin": "clack",
+    "examples": [
+      {
+        "exam_en": "Her high heels clacked down the hall.",
+        "exam_ko": "딸깍거리는 그녀의 하이힐 소리가 홀을 울렸다."
+      },
+      {
+        "exam_en": "Hold your clack!",
+        "exam_ko": "입 닥쳐!"
+      }
+    ]
+  },
+  {
+    "id": 32664,
+    "origin": "cervical",
+    "examples": [
+      {
+        "exam_en": "cervical cancer",
+        "exam_ko": "자궁암"
+      },
+      {
+        "exam_en": "cervical screening",
+        "exam_ko": "자궁암 검진."
+      }
+    ]
+  },
+  {
+    "id": 32665,
+    "origin": "starboard",
+    "examples": [
+      {
+        "exam_en": "put the helm to starboard",
+        "exam_ko": "키를 우현으로 잡다."
+      },
+      {
+        "exam_en": "a starboard anchor",
+        "exam_ko": "우현의 큰 닻"
+      }
+    ]
+  }
+]

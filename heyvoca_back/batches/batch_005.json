@@ -1,0 +1,602 @@
+[
+  {
+    "id": 399,
+    "word": "hard",
+    "exam_en": "<strong class=\"target-word\">hard</strong> ground",
+    "exam_ko": "<strong class=\"target-word\">굳은</strong> 땅"
+  },
+  {
+    "id": 400,
+    "word": "private",
+    "exam_en": "one's <strong class=\"target-word\">private</strong> affairs",
+    "exam_ko": "<strong class=\"target-word\">사적인</strong> 일"
+  },
+  {
+    "id": 401,
+    "word": "private",
+    "exam_en": "a <strong class=\"target-word\">private</strong> view",
+    "exam_ko": "<strong class=\"target-word\">사견</strong>"
+  },
+  {
+    "id": 402,
+    "word": "poor",
+    "exam_en": "a <strong class=\"target-word\">poor</strong> country",
+    "exam_ko": "<strong class=\"target-word\">가난한</strong> 나라"
+  },
+  {
+    "id": 403,
+    "word": "poor",
+    "exam_en": "the <strong class=\"target-word\">poorest</strong> section of the working class",
+    "exam_ko": "<strong class=\"target-word\">가장 빈곤한</strong> 노동자 계층"
+  },
+  {
+    "id": 404,
+    "word": "financial",
+    "exam_en": "<strong class=\"target-word\">financial</strong> affairs",
+    "exam_ko": "<strong class=\"target-word\">재무</strong>, 금전문제"
+  },
+  {
+    "id": 405,
+    "word": "financial",
+    "exam_en": "a <strong class=\"target-word\">financial</strong> success",
+    "exam_ko": "<strong class=\"target-word\">금전적인</strong> 성공"
+  },
+  {
+    "id": 406,
+    "word": "wide",
+    "exam_en": "a <strong class=\"target-word\">wide</strong> river",
+    "exam_ko": "<strong class=\"target-word\">폭이 넓은</strong> 강"
+  },
+  {
+    "id": 407,
+    "word": "wide",
+    "exam_en": "a table five feet <strong class=\"target-word\">wide</strong>",
+    "exam_ko": "<strong class=\"target-word\">폭이</strong> 5피트인 탁자."
+  },
+  {
+    "id": 408,
+    "word": "foreign",
+    "exam_en": "a car of a <strong class=\"target-word\">foreign</strong> make",
+    "exam_ko": "<strong class=\"target-word\">외제</strong> 자동차"
+  },
+  {
+    "id": 409,
+    "word": "foreign",
+    "exam_en": "<strong class=\"target-word\">foreign</strong> currency",
+    "exam_ko": "<strong class=\"target-word\">외화</strong>"
+  },
+  {
+    "id": 410,
+    "word": "simple",
+    "exam_en": "a <strong class=\"target-word\">simple</strong> question",
+    "exam_ko": "<strong class=\"target-word\">단순한</strong> 질문"
+  },
+  {
+    "id": 411,
+    "word": "simple",
+    "exam_en": "<strong class=\"target-word\">simple</strong> English",
+    "exam_ko": "<strong class=\"target-word\">쉬운</strong> 영어."
+  },
+  {
+    "id": 412,
+    "word": "recent",
+    "exam_en": "<strong class=\"target-word\">recent</strong> history",
+    "exam_ko": "<strong class=\"target-word\">근대사</strong>"
+  },
+  {
+    "id": 413,
+    "word": "recent",
+    "exam_en": "the most <strong class=\"target-word\">recent</strong> album",
+    "exam_ko": "가장 <strong class=\"target-word\">최근의</strong> 앨범"
+  },
+  {
+    "id": 414,
+    "word": "concerned",
+    "exam_en": "the authorities <strong class=\"target-word\">concerned</strong>",
+    "exam_ko": "<strong class=\"target-word\">관계 당국</strong>"
+  },
+  {
+    "id": 415,
+    "word": "concerned",
+    "exam_en": "the parties <strong class=\"target-word\">concerned</strong>",
+    "exam_ko": "<strong class=\"target-word\">이해 관계자</strong>, 당사자"
+  },
+  {
+    "id": 416,
+    "word": "american",
+    "exam_en": "the <strong class=\"target-word\">American</strong> flag",
+    "exam_ko": "<strong class=\"target-word\">미국</strong> 국기"
+  },
+  {
+    "id": 417,
+    "word": "american",
+    "exam_en": "<strong class=\"target-word\">American</strong> as cherry pie",
+    "exam_ko": "<strong class=\"target-word\">아주 미국적으로</strong>"
+  },
+  {
+    "id": 418,
+    "word": "various",
+    "exam_en": "<strong class=\"target-word\">various</strong> species",
+    "exam_ko": "<strong class=\"target-word\">다양한</strong> 종류"
+  },
+  {
+    "id": 419,
+    "word": "various",
+    "exam_en": "<strong class=\"target-word\">various</strong> ways",
+    "exam_ko": "<strong class=\"target-word\">갖가지</strong> 방법"
+  },
+  {
+    "id": 420,
+    "word": "fine",
+    "exam_en": "a <strong class=\"target-word\">fine</strong> view",
+    "exam_ko": "<strong class=\"target-word\">절경</strong>, 장관"
+  },
+  {
+    "id": 421,
+    "word": "fine",
+    "exam_en": "a <strong class=\"target-word\">fine</strong> character",
+    "exam_ko": "<strong class=\"target-word\">훌륭한</strong> 인물"
+  },
+  {
+    "id": 422,
+    "word": "english",
+    "exam_en": "He is <strong class=\"target-word\">English</strong>.",
+    "exam_ko": "그는 <strong class=\"target-word\">영국인</strong>이다"
+  },
+  {
+    "id": 423,
+    "word": "english",
+    "exam_en": "Cricket is the most <strong class=\"target-word\">English</strong> game.",
+    "exam_ko": "크리켓은 가장 <strong class=\"target-word\">영국적인</strong> 경기이다."
+  },
+  {
+    "id": 424,
+    "word": "wrong",
+    "exam_en": "a <strong class=\"target-word\">wrong</strong> act",
+    "exam_ko": "<strong class=\"target-word\">사악한</strong> 행위"
+  },
+  {
+    "id": 425,
+    "word": "wrong",
+    "exam_en": "Her parents are <strong class=\"target-word\">wrong</strong> in making her study so hard.",
+    "exam_ko": "그녀에게 그렇게 심하게 공부를 시키다니 그녀의 부모는 <strong class=\"target-word\">잘못</strong>되어 있다"
+  },
+  {
+    "id": 426,
+    "word": "present",
+    "exam_en": "<strong class=\"target-word\">present</strong> company excepted",
+    "exam_ko": "현재 여기 계시는 분들은 <strong class=\"target-word\">제외하고</strong>"
+  },
+  {
+    "id": 427,
+    "word": "present",
+    "exam_en": "<strong class=\"target-word\">Present</strong>",
+    "exam_ko": "<strong class=\"target-word\">네</strong>(※Here가 보통)"
+  },
+  {
+    "id": 428,
+    "word": "royal",
+    "exam_en": "a <strong class=\"target-word\">royal</strong> house",
+    "exam_ko": "<strong class=\"target-word\">왕가</strong>, 왕실"
+  },
+  {
+    "id": 429,
+    "word": "royal",
+    "exam_en": "a <strong class=\"target-word\">royal</strong> visit",
+    "exam_ko": "<strong class=\"target-word\">거둥</strong>"
+  },
+  {
+    "id": 430,
+    "word": "natural",
+    "exam_en": "<strong class=\"target-word\">natural</strong> rubber",
+    "exam_ko": "<strong class=\"target-word\">천연</strong> 고무."
+  },
+  {
+    "id": 431,
+    "word": "natural",
+    "exam_en": "completely[totally] <strong class=\"target-word\">natural</strong>",
+    "exam_ko": "<strong class=\"target-word\">완전히 천연</strong>으로 된"
+  },
+  {
+    "id": 432,
+    "word": "individual",
+    "exam_en": "each <strong class=\"target-word\">individual</strong> person",
+    "exam_ko": "각 <strong class=\"target-word\">개인</strong>."
+  },
+  {
+    "id": 433,
+    "word": "individual",
+    "exam_en": "<strong class=\"target-word\">individual</strong> view",
+    "exam_ko": "<strong class=\"target-word\">개인적인</strong> 견해"
+  },
+  {
+    "id": 434,
+    "word": "nice",
+    "exam_en": "a <strong class=\"target-word\">nice</strong> day",
+    "exam_ko": "<strong class=\"target-word\">좋은</strong> 날씨"
+  },
+  {
+    "id": 435,
+    "word": "nice",
+    "exam_en": "a <strong class=\"target-word\">nice</strong> taste",
+    "exam_ko": "<strong class=\"target-word\">좋은</strong> 맛"
+  },
+  {
+    "id": 436,
+    "word": "french",
+    "exam_en": "translated from the <strong class=\"target-word\">French</strong>",
+    "exam_ko": "<strong class=\"target-word\">프랑스어</strong>에서 번역된(※the를 붙이는 경우가 많음)"
+  },
+  {
+    "id": 437,
+    "word": "french",
+    "exam_en": "speak <strong class=\"target-word\">French</strong>",
+    "exam_ko": "프랑스어를 <strong class=\"target-word\">말하다</strong>."
+  },
+  {
+    "id": 438,
+    "word": "following",
+    "exam_en": "The magazine has a large <strong class=\"target-word\">following</strong>.",
+    "exam_ko": "그 잡지는 독자가 <strong class=\"target-word\">많다</strong>."
+  },
+  {
+    "id": 439,
+    "word": "following",
+    "exam_en": "Refer to the <strong class=\"target-word\">following</strong> for a summary.",
+    "exam_ko": "<strong class=\"target-word\">아래</strong>를 참조하여 요약을 보시오(※2페이지 이상에 걸치는 경우도 있음)"
+  },
+  {
+    "id": 440,
+    "word": "current",
+    "exam_en": "<strong class=\"target-word\">current</strong> English",
+    "exam_ko": "현대[시사] <strong class=\"target-word\">영어</strong>"
+  },
+  {
+    "id": 441,
+    "word": "current",
+    "exam_en": "the <strong class=\"target-word\">current</strong> fiscal year",
+    "exam_ko": "<strong class=\"target-word\">새 회계</strong> 연도"
+  },
+  {
+    "id": 442,
+    "word": "modern",
+    "exam_en": "<strong class=\"target-word\">modern</strong> city life",
+    "exam_ko": "<strong class=\"target-word\">현대의</strong> 도시 생활"
+  },
+  {
+    "id": 443,
+    "word": "modern",
+    "exam_en": "<strong class=\"target-word\">modern</strong> times",
+    "exam_ko": "<strong class=\"target-word\">현대</strong>."
+  },
+  {
+    "id": 444,
+    "word": "labor",
+    "exam_en": "mental <strong class=\"target-word\">labor</strong>",
+    "exam_ko": "<strong class=\"target-word\">정신</strong>[육체] 노동"
+  },
+  {
+    "id": 445,
+    "word": "labor",
+    "exam_en": "hard <strong class=\"target-word\">labor</strong>",
+    "exam_ko": "(형벌로서의) <strong class=\"target-word\">중노동</strong>"
+  },
+  {
+    "id": 446,
+    "word": "legal",
+    "exam_en": "a <strong class=\"target-word\">legal</strong> fare",
+    "exam_ko": "<strong class=\"target-word\">법정</strong> 운임[속도]"
+  },
+  {
+    "id": 447,
+    "word": "legal",
+    "exam_en": "a <strong class=\"target-word\">legal</strong> wife",
+    "exam_ko": "<strong class=\"target-word\">법률상</strong> 정식으로 결혼한 아내(※common-law wife 내연의 처)"
+  },
+  {
+    "id": 448,
+    "word": "final",
+    "exam_en": "the <strong class=\"target-word\">final</strong> chapter",
+    "exam_ko": "<strong class=\"target-word\">마지막</strong> 장"
+  },
+  {
+    "id": 449,
+    "word": "final",
+    "exam_en": "the <strong class=\"target-word\">final</strong> goal",
+    "exam_ko": "<strong class=\"target-word\">궁극의</strong> 목표"
+  },
+  {
+    "id": 450,
+    "word": "red",
+    "exam_en": "<strong class=\"target-word\">red</strong> hair",
+    "exam_ko": "<strong class=\"target-word\">붉은</strong> 털."
+  },
+  {
+    "id": 451,
+    "word": "red",
+    "exam_en": "go[turn] <strong class=\"target-word\">red</strong>",
+    "exam_ko": "빨갛게 <strong class=\"target-word\">되다</strong>"
+  },
+  {
+    "id": 452,
+    "word": "normal",
+    "exam_en": "<strong class=\"target-word\">normal</strong> weight",
+    "exam_ko": "<strong class=\"target-word\">표준</strong> 체중[혈압]"
+  },
+  {
+    "id": 453,
+    "word": "normal",
+    "exam_en": "The rainfall is above <strong class=\"target-word\">normal</strong> this year.",
+    "exam_ko": "올해의 강우량은 평균 이상[이하]<strong class=\"target-word\">이다</strong>"
+  },
+  {
+    "id": 454,
+    "word": "serious",
+    "exam_en": "a <strong class=\"target-word\">serious</strong> expression on her face",
+    "exam_ko": "<strong class=\"target-word\">진지한</strong> 그녀의 얼굴 표정."
+  },
+  {
+    "id": 455,
+    "word": "serious",
+    "exam_en": "<strong class=\"target-word\">serious</strong> about",
+    "exam_ko": "…에 <strong class=\"target-word\">대해</strong> 진지한"
+  },
+  {
+    "id": 456,
+    "word": "previous",
+    "exam_en": "a <strong class=\"target-word\">previous</strong> record",
+    "exam_ko": "<strong class=\"target-word\">이전의</strong> 기록"
+  },
+  {
+    "id": 457,
+    "word": "previous",
+    "exam_en": "any <strong class=\"target-word\">previous</strong> experience",
+    "exam_ko": "<strong class=\"target-word\">이전의</strong> 어떠한 경험"
+  },
+  {
+    "id": 458,
+    "word": "total",
+    "exam_en": "the sum <strong class=\"target-word\">total</strong>",
+    "exam_ko": "<strong class=\"target-word\">총액</strong>"
+  },
+  {
+    "id": 459,
+    "word": "total",
+    "exam_en": "one's <strong class=\"target-word\">total</strong> personality",
+    "exam_ko": "<strong class=\"target-word\">전인격</strong>."
+  },
+  {
+    "id": 460,
+    "word": "prime",
+    "exam_en": "of <strong class=\"target-word\">prime</strong> importance",
+    "exam_ko": "<strong class=\"target-word\">가장 중대한</strong>"
+  },
+  {
+    "id": 461,
+    "word": "prime",
+    "exam_en": "a <strong class=\"target-word\">prime</strong> reason",
+    "exam_ko": "<strong class=\"target-word\">주요한</strong> 이유"
+  },
+  {
+    "id": 462,
+    "word": "significant",
+    "exam_en": "a <strong class=\"target-word\">significant</strong> date",
+    "exam_ko": "<strong class=\"target-word\">중요한</strong> 날(※축일·기념일 등)"
+  },
+  {
+    "id": 463,
+    "word": "significant",
+    "exam_en": "This success is <strong class=\"target-word\">significant</strong> for your future.",
+    "exam_ko": "이 성공은 당신의 장래에 대해 <strong class=\"target-word\">중대한 뜻을 가진다</strong>."
+  },
+  {
+    "id": 464,
+    "word": "industrial",
+    "exam_en": "<strong class=\"target-word\">industrial</strong> products",
+    "exam_ko": "<strong class=\"target-word\">공업</strong> 생산품"
+  },
+  {
+    "id": 465,
+    "word": "industrial",
+    "exam_en": "<strong class=\"target-word\">industrial</strong> spying",
+    "exam_ko": "<strong class=\"target-word\">산업</strong> 스파이"
+  },
+  {
+    "id": 466,
+    "word": "sorry",
+    "exam_en": "I am <strong class=\"target-word\">sorry</strong> for her.",
+    "exam_ko": "그녀가 <strong class=\"target-word\">가엾다</strong>"
+  },
+  {
+    "id": 467,
+    "word": "sorry",
+    "exam_en": "I am <strong class=\"target-word\">sorry</strong> about his accident.",
+    "exam_ko": "그가 당한 사고에 대해 <strong class=\"target-word\">동정해 마지않는다</strong>"
+  },
+  {
+    "id": 468,
+    "word": "dead",
+    "exam_en": "<strong class=\"target-word\">dead</strong> flowers",
+    "exam_ko": "<strong class=\"target-word\">마른</strong> 잎, 고엽"
+  },
+  {
+    "id": 469,
+    "word": "dead",
+    "exam_en": "the <strong class=\"target-word\">dead</strong> offices",
+    "exam_ko": "<strong class=\"target-word\">죽은 자들</strong>의 장례 의식"
+  },
+  {
+    "id": 470,
+    "word": "specific",
+    "exam_en": "for a <strong class=\"target-word\">specific</strong> reason",
+    "exam_ko": "<strong class=\"target-word\">구체적인</strong> 이유로"
+  },
+  {
+    "id": 471,
+    "word": "specific",
+    "exam_en": "to be <strong class=\"target-word\">specific</strong>",
+    "exam_ko": "<strong class=\"target-word\">분명히</strong> [구체적으로] 말하자면"
+  },
+  {
+    "id": 472,
+    "word": "angry",
+    "exam_en": "an <strong class=\"target-word\">angry</strong> look",
+    "exam_ko": "<strong class=\"target-word\">성난</strong> 얼굴"
+  },
+  {
+    "id": 473,
+    "word": "angry",
+    "exam_en": "make a person <strong class=\"target-word\">angry</strong>",
+    "exam_ko": "남을 화나게 <strong class=\"target-word\">하다</strong>"
+  },
+  {
+    "id": 474,
+    "word": "tired",
+    "exam_en": "He was <strong class=\"target-word\">tired</strong>  from reading.",
+    "exam_ko": "그는 독서로 <strong class=\"target-word\">지쳐</strong> 있었다(※He was tired by reading.의 tired는 과거 분사) ◇ You look tired out. 너는 몹시 피곤해 <strong class=\"target-word\">보인다</strong>."
+  },
+  {
+    "id": 475,
+    "word": "tired",
+    "exam_en": "look <strong class=\"target-word\">tired</strong>",
+    "exam_ko": "피곤해 <strong class=\"target-word\">보이다</strong>"
+  },
+  {
+    "id": 476,
+    "word": "beautiful",
+    "exam_en": "a <strong class=\"target-word\">beautiful</strong> girl",
+    "exam_ko": "<strong class=\"target-word\">아름다운</strong> 소녀[호수/일몰]"
+  },
+  {
+    "id": 477,
+    "word": "beautiful",
+    "exam_en": "The soup is really <strong class=\"target-word\">beautiful</strong>.",
+    "exam_ko": "수프 맛이 정말 <strong class=\"target-word\">좋다</strong>"
+  },
+  {
+    "id": 478,
+    "word": "mad",
+    "exam_en": "go <strong class=\"target-word\">mad</strong>",
+    "exam_ko": "<strong class=\"target-word\">미치다</strong>."
+  },
+  {
+    "id": 479,
+    "word": "mad",
+    "exam_en": "be hopping <strong class=\"target-word\">mad</strong>",
+    "exam_ko": "<strong class=\"target-word\">노발대발하다</strong>"
+  },
+  {
+    "id": 480,
+    "word": "hot",
+    "exam_en": "<strong class=\"target-word\">hot</strong> weather",
+    "exam_ko": "<strong class=\"target-word\">더운</strong> 날씨"
+  },
+  {
+    "id": 481,
+    "word": "hot",
+    "exam_en": "Would you give me a  <strong class=\"target-word\">hot</strong> coffee?",
+    "exam_ko": "<strong class=\"target-word\">뜨거운</strong> 커피 한 잔 주시겠습니까?"
+  },
+  {
+    "id": 482,
+    "word": "scared",
+    "exam_en": "a <strong class=\"target-word\">scared</strong> look",
+    "exam_ko": "<strong class=\"target-word\">두려워하는</strong> 표정"
+  },
+  {
+    "id": 483,
+    "word": "scared",
+    "exam_en": "be <strong class=\"target-word\">scared</strong> at the strange noise",
+    "exam_ko": "이상한 소리를 듣고 <strong class=\"target-word\">무서워하다</strong>"
+  },
+  {
+    "id": 484,
+    "word": "gorgeous",
+    "exam_en": "a <strong class=\"target-word\">gorgeous</strong> room",
+    "exam_ko": "<strong class=\"target-word\">호화찬란한</strong> 방"
+  },
+  {
+    "id": 485,
+    "word": "gorgeous",
+    "exam_en": "a <strong class=\"target-word\">gorgeous</strong> sunset",
+    "exam_ko": "<strong class=\"target-word\">화려한</strong> 석양."
+  },
+  {
+    "id": 486,
+    "word": "pretty",
+    "exam_en": "a <strong class=\"target-word\">pretty</strong> baby",
+    "exam_ko": "<strong class=\"target-word\">귀여운</strong> 아기"
+  },
+  {
+    "id": 487,
+    "word": "pretty",
+    "exam_en": "a <strong class=\"target-word\">pretty</strong> face",
+    "exam_ko": "<strong class=\"target-word\">귀여운</strong> 얼굴"
+  },
+  {
+    "id": 488,
+    "word": "cute",
+    "exam_en": "a <strong class=\"target-word\">cute</strong> baby",
+    "exam_ko": "<strong class=\"target-word\">귀여운</strong> 아기[옷]."
+  },
+  {
+    "id": 489,
+    "word": "cute",
+    "exam_en": "excessively <strong class=\"target-word\">cute</strong> behavior",
+    "exam_ko": "<strong class=\"target-word\">지나치게 거드럭거리는</strong> 태도."
+  },
+  {
+    "id": 490,
+    "word": "force",
+    "exam_en": "the <strong class=\"target-word\">forces</strong> of nature",
+    "exam_ko": "<strong class=\"target-word\">자연의 힘</strong>"
+  },
+  {
+    "id": 491,
+    "word": "force",
+    "exam_en": "The storm grew in <strong class=\"target-word\">force</strong>.",
+    "exam_ko": "폭풍은 기세를 <strong class=\"target-word\">더하였다</strong>."
+  },
+  {
+    "id": 492,
+    "word": "replace",
+    "exam_en": "Hostility was <strong class=\"target-word\">replaced</strong> by love.",
+    "exam_ko": "적의가 애정으로 <strong class=\"target-word\">바뀌었다</strong>"
+  },
+  {
+    "id": 493,
+    "word": "replace",
+    "exam_en": "Ms. Jones will <strong class=\"target-word\">replace</strong> Mr. Smith as president.",
+    "exam_ko": "존슨씨는 스미스씨의 후임으로 사장이 될 <strong class=\"target-word\">것이다</strong>."
+  },
+  {
+    "id": 494,
+    "word": "improve",
+    "exam_en": "<strong class=\"target-word\">improve</strong> one's writing",
+    "exam_ko": "작문을 <strong class=\"target-word\">향상시키다</strong>"
+  },
+  {
+    "id": 495,
+    "word": "improve",
+    "exam_en": "<strong class=\"target-word\">improve</strong> the situation",
+    "exam_ko": "상황을 <strong class=\"target-word\">호전시키다</strong>"
+  },
+  {
+    "id": 496,
+    "word": "mention",
+    "exam_en": "as <strong class=\"target-word\">mentioned</strong> above",
+    "exam_ko": "<strong class=\"target-word\">앞에서</strong> 언급한 대로(※문장의 가운데서 쓰임)"
+  },
+  {
+    "id": 497,
+    "word": "mention",
+    "exam_en": "as I <strong class=\"target-word\">mentioned</strong> before",
+    "exam_ko": "전에 말씀드린 <strong class=\"target-word\">바와</strong> 같이"
+  },
+  {
+    "id": 498,
+    "word": "drop",
+    "exam_en": "a <strong class=\"target-word\">drop</strong> of water",
+    "exam_ko": "<strong class=\"target-word\">물방울</strong>"
+  }
+]

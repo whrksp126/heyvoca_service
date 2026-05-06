@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5396,
+    "origin": "glow",
+    "examples": [
+      {
+        "exam_en": "The neon sign cast a red <strong class=\"target-word\">glow</strong> on the street.",
+        "exam_ko": "네온사인이 거리에 붉은 <strong class=\"target-word\">빛</strong>을 드리웠다."
+      },
+      {
+        "exam_en": "Her face had a warm <strong class=\"target-word\">glow</strong> after the run.",
+        "exam_ko": "달리기 후 그녀의 얼굴이 따뜻하게 <strong class=\"target-word\">빛났다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5399,
+    "origin": "fighting",
+    "examples": [
+      {
+        "exam_en": "The soldiers moved into a <strong class=\"target-word\">fighting</strong> formation.",
+        "exam_ko": "군인들은 <strong class=\"target-word\">전투</strong> 대형으로 이동했다."
+      },
+      {
+        "exam_en": "He used <strong class=\"target-word\">fighting</strong> words and started a brawl.",
+        "exam_ko": "그는 <strong class=\"target-word\">도발적인</strong> 말을 해서 싸움을 일으켰다."
+      }
+    ]
+  },
+  {
+    "id": 5400,
+    "origin": "higher",
+    "examples": [
+      {
+        "exam_en": "She studied <strong class=\"target-word\">higher</strong> mathematics at university.",
+        "exam_ko": "그녀는 대학에서 <strong class=\"target-word\">고등</strong> 수학을 공부했다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Higher</strong> mammals have more complex brains.",
+        "exam_ko": "<strong class=\"target-word\">고등</strong> 포유동물은 더 복잡한 뇌를 가진다."
+      }
+    ]
+  },
+  {
+    "id": 5401,
+    "origin": "boot",
+    "examples": [
+      {
+        "exam_en": "She bought a new pair of <strong class=\"target-word\">boots</strong> for winter.",
+        "exam_ko": "그녀는 겨울을 위해 새 <strong class=\"target-word\">부츠</strong> 한 켤레를 샀다."
+      },
+      {
+        "exam_en": "He wore tall <strong class=\"target-word\">boots</strong> while hiking in the mud.",
+        "exam_ko": "그는 진흙 속을 하이킹할 때 긴 <strong class=\"target-word\">장화</strong>를 신었다."
+      }
+    ]
+  },
+  {
+    "id": 5402,
+    "origin": "bath",
+    "examples": [
+      {
+        "exam_en": "She takes a <strong class=\"target-word\">bath</strong> every evening before bed.",
+        "exam_ko": "그녀는 매일 저녁 자기 전에 <strong class=\"target-word\">목욕</strong>을 한다."
+      },
+      {
+        "exam_en": "The nurse gave the patient a <strong class=\"target-word\">bath</strong> carefully.",
+        "exam_ko": "간호사는 환자를 조심스럽게 <strong class=\"target-word\">목욕</strong>시켰다."
+      }
+    ]
+  },
+  {
+    "id": 5403,
+    "origin": "leather",
+    "examples": [
+      {
+        "exam_en": "He cut a piece of <strong class=\"target-word\">leather</strong> to make a wallet.",
+        "exam_ko": "그는 지갑을 만들기 위해 <strong class=\"target-word\">가죽</strong> 한 장을 잘랐다."
+      },
+      {
+        "exam_en": "The meat was tough like <strong class=\"target-word\">leather</strong>.",
+        "exam_ko": "그 고기는 <strong class=\"target-word\">가죽</strong>처럼 질겼다."
+      }
+    ]
+  },
+  {
+    "id": 5404,
+    "origin": "directory",
+    "examples": [
+      {
+        "exam_en": "She looked up his number in the telephone <strong class=\"target-word\">directory</strong>.",
+        "exam_ko": "그녀는 전화 <strong class=\"target-word\">번호부</strong>에서 그의 번호를 찾았다."
+      },
+      {
+        "exam_en": "The address <strong class=\"target-word\">directory</strong> listed every resident in town.",
+        "exam_ko": "주소 <strong class=\"target-word\">목록</strong>에는 마을의 모든 주민이 나열되어 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5405,
+    "origin": "task",
+    "examples": [
+      {
+        "exam_en": "She is busy with her daily <strong class=\"target-word\">tasks</strong> at work.",
+        "exam_ko": "그녀는 직장에서 매일 <strong class=\"target-word\">업무</strong>로 바쁘다."
+      },
+      {
+        "exam_en": "The manager assigned a difficult <strong class=\"target-word\">task</strong> to the team.",
+        "exam_ko": "매니저는 팀에 어려운 <strong class=\"target-word\">과제</strong>를 부여했다."
+      }
+    ]
+  },
+  {
+    "id": 5407,
+    "origin": "output",
+    "examples": [
+      {
+        "exam_en": "The factory increased its daily <strong class=\"target-word\">output</strong> significantly.",
+        "exam_ko": "공장은 하루 <strong class=\"target-word\">생산량</strong>을 크게 늘렸다."
+      },
+      {
+        "exam_en": "The agricultural <strong class=\"target-word\">output</strong> rose after the good harvest.",
+        "exam_ko": "풍년 이후 농업 <strong class=\"target-word\">생산고</strong>가 올랐다."
+      }
+    ]
+  },
+  {
+    "id": 5408,
+    "origin": "header",
+    "examples": [
+      {
+        "exam_en": "Add a clear <strong class=\"target-word\">header</strong> to each section of the report.",
+        "exam_ko": "보고서의 각 섹션에 명확한 <strong class=\"target-word\">헤더</strong>를 추가하라."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">header</strong> displays the page title at the top.",
+        "exam_ko": "<strong class=\"target-word\">헤더</strong>는 페이지 제목을 상단에 표시한다."
+      }
+    ]
+  },
+  {
+    "id": 5409,
+    "origin": "fortress",
+    "examples": [
+      {
+        "exam_en": "The army captured the enemy <strong class=\"target-word\">fortress</strong> at dawn.",
+        "exam_ko": "군대는 새벽에 적의 <strong class=\"target-word\">요새</strong>를 점령했다."
+      },
+      {
+        "exam_en": "A mighty <strong class=\"target-word\">fortress</strong> stood at the top of the hill.",
+        "exam_ko": "언덕 꼭대기에 거대한 <strong class=\"target-word\">요새</strong>가 서 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5410,
+    "origin": "hanging",
+    "examples": [
+      {
+        "exam_en": "The criminal was sentenced to death by <strong class=\"target-word\">hanging</strong>.",
+        "exam_ko": "그 범인은 <strong class=\"target-word\">교수형</strong>을 선고받았다."
+      },
+      {
+        "exam_en": "Colorful <strong class=\"target-word\">hangings</strong> decorated the walls of the hall.",
+        "exam_ko": "화려한 <strong class=\"target-word\">벽걸이 장식</strong>이 홀의 벽을 꾸몄다."
+      }
+    ]
+  },
+  {
+    "id": 5411,
+    "origin": "whose",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Whose</strong> pen is this on the desk?",
+        "exam_ko": "책상 위에 있는 이 펜은 <strong class=\"target-word\">누구의</strong> 것인가?"
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Whose</strong> side are you on in this argument?",
+        "exam_ko": "이 논쟁에서 당신은 <strong class=\"target-word\">누구의</strong> 편인가?"
+      }
+    ]
+  },
+  {
+    "id": 5413,
+    "origin": "pointed",
+    "examples": [
+      {
+        "exam_en": "The cat has a <strong class=\"target-word\">pointed</strong> nose and sharp eyes.",
+        "exam_ko": "그 고양이는 <strong class=\"target-word\">뾰족한</strong> 코와 날카로운 눈을 가지고 있다."
+      },
+      {
+        "exam_en": "She made a <strong class=\"target-word\">pointed</strong> comment about his poor work.",
+        "exam_ko": "그녀는 그의 부실한 작업에 대해 <strong class=\"target-word\">날카로운</strong> 비평을 했다."
+      }
+    ]
+  },
+  {
+    "id": 5415,
+    "origin": "spear",
+    "examples": [
+      {
+        "exam_en": "The warrior hurled a <strong class=\"target-word\">spear</strong> toward the enemy.",
+        "exam_ko": "전사는 적을 향해 <strong class=\"target-word\">창</strong>을 던졌다."
+      },
+      {
+        "exam_en": "He trained daily to throw a <strong class=\"target-word\">spear</strong> accurately.",
+        "exam_ko": "그는 <strong class=\"target-word\">창</strong>을 정확히 던지려고 매일 훈련했다."
+      }
+    ]
+  },
+  {
+    "id": 5416,
+    "origin": "forced",
+    "examples": [
+      {
+        "exam_en": "Many workers endured <strong class=\"target-word\">forced</strong> labor during that period.",
+        "exam_ko": "많은 노동자들이 그 시기에 <strong class=\"target-word\">강제</strong> 노역을 견뎌냈다."
+      },
+      {
+        "exam_en": "His writing felt <strong class=\"target-word\">forced</strong> and unnatural to read.",
+        "exam_ko": "그의 글은 읽기에 <strong class=\"target-word\">부자연스럽게</strong> 느껴졌다."
+      }
+    ]
+  },
+  {
+    "id": 5417,
+    "origin": "sir",
+    "examples": [
+      {
+        "exam_en": "How do you do, <strong class=\"target-word\">sir</strong>? It is nice to meet you.",
+        "exam_ko": "안녕하십니까, <strong class=\"target-word\">선생님</strong>? 만나서 반갑습니다."
+      },
+      {
+        "exam_en": "Would you please follow me, <strong class=\"target-word\">sir</strong>?",
+        "exam_ko": "저를 따라오시겠습니까, <strong class=\"target-word\">선생님</strong>?"
+      }
+    ]
+  },
+  {
+    "id": 5419,
+    "origin": "speaker",
+    "examples": [
+      {
+        "exam_en": "She is a confident <strong class=\"target-word\">speaker</strong> in front of crowds.",
+        "exam_ko": "그녀는 군중 앞에서 자신감 있는 <strong class=\"target-word\">연설가</strong>이다."
+      },
+      {
+        "exam_en": "A native <strong class=\"target-word\">speaker</strong> helped us practice pronunciation.",
+        "exam_ko": "원어민 <strong class=\"target-word\">화자</strong>가 우리의 발음 연습을 도와주었다."
+      }
+    ]
+  },
+  {
+    "id": 5421,
+    "origin": "per",
+    "examples": [
+      {
+        "exam_en": "Each student pays fifty dollars <strong class=\"target-word\">per</strong> month.",
+        "exam_ko": "각 학생은 <strong class=\"target-word\">매</strong>달 50달러를 낸다."
+      },
+      {
+        "exam_en": "This beef costs four dollars <strong class=\"target-word\">per</strong> pound.",
+        "exam_ko": "이 쇠고기는 파운드<strong class=\"target-word\">당</strong> 4달러이다."
+      }
+    ]
+  },
+  {
+    "id": 5422,
+    "origin": "abruptly",
+    "examples": [
+      {
+        "exam_en": "The government changed its policy <strong class=\"target-word\">abruptly</strong>.",
+        "exam_ko": "정부는 정책을 <strong class=\"target-word\">갑자기</strong> 변경했다."
+      },
+      {
+        "exam_en": "He turned <strong class=\"target-word\">abruptly</strong> and left the room.",
+        "exam_ko": "그는 <strong class=\"target-word\">갑자기</strong> 몸을 돌려 방을 나갔다."
+      }
+    ]
+  }
+]

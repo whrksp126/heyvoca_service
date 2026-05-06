@@ -1,0 +1,258 @@
+[
+  {
+    "id": 8323,
+    "origin": "footprint",
+    "examples": [
+      {
+        "exam_en": "There were no <strong class=\"target-word\">footprints</strong> near the door.",
+        "exam_ko": "문 근처에 <strong class=\"target-word\">발자국</strong>이 없었다."
+      },
+      {
+        "exam_en": "She left a <strong class=\"target-word\">footprint</strong> in the snow.",
+        "exam_ko": "그녀는 눈 위에 <strong class=\"target-word\">발자국</strong>을 남겼다."
+      },
+      {
+        "exam_en": "The building's <strong class=\"target-word\">footprint</strong> covers the entire block.",
+        "exam_ko": "건물의 <strong class=\"target-word\">점유 면적</strong>이 블록 전체를 덮는다."
+      }
+    ]
+  },
+  {
+    "id": 8324,
+    "origin": "negligence",
+    "examples": [
+      {
+        "exam_en": "She was sued for <strong class=\"target-word\">negligence</strong> in her studies.",
+        "exam_ko": "그녀는 학업에 대한 <strong class=\"target-word\">태만</strong>으로 비판받았다."
+      },
+      {
+        "exam_en": "He was fired for <strong class=\"target-word\">negligence</strong> in carrying out his duties.",
+        "exam_ko": "그는 직무 이행상의 <strong class=\"target-word\">태만</strong>으로 해고되었다."
+      }
+    ]
+  },
+  {
+    "id": 8326,
+    "origin": "negation",
+    "examples": [
+      {
+        "exam_en": "She shook her head in <strong class=\"target-word\">negation</strong> of his claim.",
+        "exam_ko": "그녀는 그의 주장을 <strong class=\"target-word\">부정</strong>하며 고개를 가로저었다."
+      },
+      {
+        "exam_en": "Chaos is the <strong class=\"target-word\">negation</strong> of order.",
+        "exam_ko": "혼돈은 질서의 <strong class=\"target-word\">부정</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8327,
+    "origin": "offset",
+    "examples": [
+      {
+        "exam_en": "The bonus served as an <strong class=\"target-word\">offset</strong> to the pay cut.",
+        "exam_ko": "보너스는 급여 삭감에 대한 <strong class=\"target-word\">보상</strong> 역할을 했다."
+      },
+      {
+        "exam_en": "She claimed an <strong class=\"target-word\">offset</strong> for the damaged goods.",
+        "exam_ko": "그녀는 파손된 상품에 대한 <strong class=\"target-word\">보상</strong>을 청구했다."
+      }
+    ]
+  },
+  {
+    "id": 8329,
+    "origin": "presidency",
+    "examples": [
+      {
+        "exam_en": "He died during his <strong class=\"target-word\">presidency</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">대통령 임기</strong> 중에 사망했다."
+      }
+    ]
+  },
+  {
+    "id": 8330,
+    "origin": "conclusive",
+    "examples": [
+      {
+        "exam_en": "The forensic team found <strong class=\"target-word\">conclusive</strong> proof of guilt.",
+        "exam_ko": "법의학팀은 유죄의 <strong class=\"target-word\">확실한</strong> 증거를 찾았다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">conclusive</strong> reply to all objections.",
+        "exam_ko": "그녀는 모든 반론에 <strong class=\"target-word\">반박의 여지 없는</strong> 답변을 내놓았다."
+      }
+    ]
+  },
+  {
+    "id": 8331,
+    "origin": "inclusion",
+    "examples": [
+      {
+        "exam_en": "The program promotes <strong class=\"target-word\">inclusion</strong> and reduces racism.",
+        "exam_ko": "그 프로그램은 <strong class=\"target-word\">포용</strong>을 장려하고 인종 차별을 줄인다."
+      }
+    ]
+  },
+  {
+    "id": 8332,
+    "origin": "disclosure",
+    "examples": [
+      {
+        "exam_en": "The company is required to make full <strong class=\"target-word\">disclosure</strong> of information.",
+        "exam_ko": "회사는 정보를 완전히 <strong class=\"target-word\">공개</strong>해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 8334,
+    "origin": "traction",
+    "examples": [
+      {
+        "exam_en": "The new app gained <strong class=\"target-word\">traction</strong> among young users.",
+        "exam_ko": "새 앱이 젊은 사용자들 사이에서 <strong class=\"target-word\">주목을 받기 시작했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8339,
+    "origin": "ambulance",
+    "examples": [
+      {
+        "exam_en": "The patient was airlifted by an <strong class=\"target-word\">ambulance</strong> helicopter.",
+        "exam_ko": "환자는 <strong class=\"target-word\">구급</strong> 헬리콥터로 이송되었다."
+      },
+      {
+        "exam_en": "He was rushed to hospital by <strong class=\"target-word\">ambulance</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">구급차</strong>로 병원에 급히 이송되었다."
+      }
+    ]
+  },
+  {
+    "id": 8340,
+    "origin": "ambulant",
+    "examples": [
+      {
+        "exam_en": "They used an <strong class=\"target-word\">ambulant</strong> radio station during the mission.",
+        "exam_ko": "그들은 임무 중에 <strong class=\"target-word\">이동식</strong> 라디오 기지국을 사용했다."
+      }
+    ]
+  },
+  {
+    "id": 8341,
+    "origin": "ambit",
+    "examples": [
+      {
+        "exam_en": "This case falls within the <strong class=\"target-word\">ambit</strong> of civil law.",
+        "exam_ko": "이 사건은 민법의 <strong class=\"target-word\">범위</strong> 안에 속한다."
+      }
+    ]
+  },
+  {
+    "id": 8342,
+    "origin": "proficient",
+    "examples": [
+      {
+        "exam_en": "She is a <strong class=\"target-word\">proficient</strong> violinist.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">능숙한</strong> 바이올리니스트이다."
+      },
+      {
+        "exam_en": "He is <strong class=\"target-word\">proficient</strong> in English.",
+        "exam_ko": "그는 영어 회화에 <strong class=\"target-word\">능숙하다</strong>."
+      },
+      {
+        "exam_en": "They hired a <strong class=\"target-word\">proficient</strong> construction company.",
+        "exam_ko": "그들은 <strong class=\"target-word\">유능한</strong> 건설 회사를 고용했다."
+      }
+    ]
+  },
+  {
+    "id": 8344,
+    "origin": "beneficent",
+    "examples": [
+      {
+        "exam_en": "She was always <strong class=\"target-word\">beneficent</strong> to the poor.",
+        "exam_ko": "그녀는 항상 가난한 사람들에게 <strong class=\"target-word\">인정이 많았다</strong>."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">beneficent</strong> projects must be dropped without funding.",
+        "exam_ko": "자금 없이는 많은 <strong class=\"target-word\">유익한</strong> 프로젝트를 포기해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 8346,
+    "origin": "fitting",
+    "examples": [
+      {
+        "exam_en": "It was a <strong class=\"target-word\">fitting</strong> end to the story.",
+        "exam_ko": "그것은 이야기에 <strong class=\"target-word\">어울리는</strong> 결말이었다."
+      },
+      {
+        "exam_en": "He chose <strong class=\"target-word\">fitting</strong> words to express his thoughts.",
+        "exam_ko": "그는 자신의 생각을 표현하기 위해 <strong class=\"target-word\">꼭 들어맞는</strong> 말을 골랐다."
+      }
+    ]
+  },
+  {
+    "id": 8347,
+    "origin": "healer",
+    "examples": [
+      {
+        "exam_en": "Time is the great <strong class=\"target-word\">healer</strong> of all wounds.",
+        "exam_ko": "시간은 모든 상처를 치유하는 위대한 <strong class=\"target-word\">치유자</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 8349,
+    "origin": "wholly",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">wholly</strong> recovered after surgery.",
+        "exam_ko": "그녀는 수술 후 <strong class=\"target-word\">완전히</strong> 회복되었다."
+      },
+      {
+        "exam_en": "I cannot <strong class=\"target-word\">wholly</strong> agree with his opinion.",
+        "exam_ko": "나는 그의 의견에 <strong class=\"target-word\">완전히</strong> 동의할 수는 없다."
+      }
+    ]
+  },
+  {
+    "id": 8350,
+    "origin": "imputation",
+    "examples": [
+      {
+        "exam_en": "The false <strong class=\"target-word\">imputation</strong> damaged his reputation.",
+        "exam_ko": "거짓 <strong class=\"target-word\">비난</strong>이 그의 명성을 손상시켰다."
+      }
+    ]
+  },
+  {
+    "id": 8351,
+    "origin": "impute",
+    "examples": [
+      {
+        "exam_en": "She tried to <strong class=\"target-word\">impute</strong> the fault to her colleague.",
+        "exam_ko": "그녀는 잘못을 동료의 탓으로 <strong class=\"target-word\">돌리려</strong> 했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">imputed</strong> his failure to laziness.",
+        "exam_ko": "그는 자신의 실패를 나태 탓으로 <strong class=\"target-word\">돌렸다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8352,
+    "origin": "reputable",
+    "examples": [
+      {
+        "exam_en": "She works for a <strong class=\"target-word\">reputable</strong> company.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">명망 있는</strong> 회사에서 일한다."
+      },
+      {
+        "exam_en": "He has always led a <strong class=\"target-word\">reputable</strong> life.",
+        "exam_ko": "그는 항상 <strong class=\"target-word\">훌륭한</strong> 삶을 살아왔다."
+      }
+    ]
+  }
+]

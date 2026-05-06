@@ -1,0 +1,282 @@
+[
+  {
+    "id": 4978,
+    "origin": "cousin",
+    "examples": [
+      {
+        "exam_en": "She is my first <strong class=\"target-word\">cousin</strong> on my mother's side.",
+        "exam_ko": "그녀는 외가 쪽 <strong class=\"target-word\">사촌</strong>이야."
+      },
+      {
+        "exam_en": "My second <strong class=\"target-word\">cousin</strong> lives in Busan.",
+        "exam_ko": "내 <strong class=\"target-word\">육촌</strong>은 부산에 살아."
+      }
+    ]
+  },
+  {
+    "id": 4979,
+    "origin": "communication",
+    "examples": [
+      {
+        "exam_en": "We maintain <strong class=\"target-word\">communication</strong> with our overseas partners.",
+        "exam_ko": "우리는 해외 파트너들과 <strong class=\"target-word\">연락</strong>을 유지한다."
+      },
+      {
+        "exam_en": "She is in <strong class=\"target-word\">communication</strong> with the rescue team.",
+        "exam_ko": "그녀는 구조대와 <strong class=\"target-word\">연락</strong>을 취하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4980,
+    "origin": "fashion",
+    "examples": [
+      {
+        "exam_en": "She always follows the latest <strong class=\"target-word\">fashion</strong>.",
+        "exam_ko": "그녀는 항상 최신 <strong class=\"target-word\">유행</strong>을 따른다."
+      },
+      {
+        "exam_en": "Vintage style is back in <strong class=\"target-word\">fashion</strong> this year.",
+        "exam_ko": "빈티지 스타일이 올해 다시 <strong class=\"target-word\">유행</strong>하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4981,
+    "origin": "song",
+    "examples": [
+      {
+        "exam_en": "She sang a beautiful <strong class=\"target-word\">song</strong> at the concert.",
+        "exam_ko": "그녀는 콘서트에서 아름다운 <strong class=\"target-word\">노래</strong>를 불렀다."
+      },
+      {
+        "exam_en": "He hummed a familiar <strong class=\"target-word\">song</strong> while cooking.",
+        "exam_ko": "그는 요리하면서 익숙한 <strong class=\"target-word\">노래</strong>를 흥얼거렸다."
+      }
+    ]
+  },
+  {
+    "id": 4982,
+    "origin": "bucket",
+    "examples": [
+      {
+        "exam_en": "She filled the <strong class=\"target-word\">bucket</strong> with water from the well.",
+        "exam_ko": "그녀는 우물에서 <strong class=\"target-word\">양동이</strong>에 물을 채웠다."
+      },
+      {
+        "exam_en": "The rain came down in <strong class=\"target-word\">buckets</strong> all afternoon.",
+        "exam_ko": "오후 내내 <strong class=\"target-word\">억수</strong>같은 비가 쏟아졌다."
+      }
+    ]
+  },
+  {
+    "id": 4986,
+    "origin": "perm",
+    "examples": [
+      {
+        "exam_en": "She got a <strong class=\"target-word\">perm</strong> at the salon last weekend.",
+        "exam_ko": "그녀는 지난 주말에 미용실에서 <strong class=\"target-word\">파마</strong>를 했다."
+      },
+      {
+        "exam_en": "She had her hair <strong class=\"target-word\">permed</strong> before the wedding.",
+        "exam_ko": "그녀는 결혼식 전에 머리를 <strong class=\"target-word\">파마했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4987,
+    "origin": "outfit",
+    "examples": [
+      {
+        "exam_en": "The climber wore a full safety <strong class=\"target-word\">outfit</strong> on the mountain.",
+        "exam_ko": "등산가는 산에서 완전한 안전 <strong class=\"target-word\">장비</strong>를 착용했다."
+      },
+      {
+        "exam_en": "She picked a stylish <strong class=\"target-word\">outfit</strong> for the interview.",
+        "exam_ko": "그녀는 면접을 위해 세련된 <strong class=\"target-word\">복장</strong>을 골랐다."
+      }
+    ]
+  },
+  {
+    "id": 4989,
+    "origin": "laundry",
+    "examples": [
+      {
+        "exam_en": "There is a pile of dirty <strong class=\"target-word\">laundry</strong> in the basket.",
+        "exam_ko": "바구니에 더러운 <strong class=\"target-word\">빨랫감</strong>이 쌓여 있다."
+      },
+      {
+        "exam_en": "She bought new <strong class=\"target-word\">laundry</strong> detergent at the store.",
+        "exam_ko": "그녀는 가게에서 새 <strong class=\"target-word\">세탁</strong>용 세제를 샀다."
+      }
+    ]
+  },
+  {
+    "id": 4991,
+    "origin": "exam",
+    "examples": [
+      {
+        "exam_en": "He took an <strong class=\"target-word\">exam</strong> in math this morning.",
+        "exam_ko": "그는 오늘 아침 수학 <strong class=\"target-word\">시험</strong>을 봤다."
+      },
+      {
+        "exam_en": "She passed the final <strong class=\"target-word\">exam</strong> with a high score.",
+        "exam_ko": "그녀는 높은 점수로 최종 <strong class=\"target-word\">시험</strong>에 합격했다."
+      }
+    ]
+  },
+  {
+    "id": 4995,
+    "origin": "coin",
+    "examples": [
+      {
+        "exam_en": "He found an old copper <strong class=\"target-word\">coin</strong> in his pocket.",
+        "exam_ko": "그는 주머니에서 오래된 구리 <strong class=\"target-word\">동전</strong>을 발견했다."
+      },
+      {
+        "exam_en": "They tossed a <strong class=\"target-word\">coin</strong> to decide who would go first.",
+        "exam_ko": "그들은 누가 먼저 갈지 <strong class=\"target-word\">동전</strong>을 던져 결정했다."
+      }
+    ]
+  },
+  {
+    "id": 4996,
+    "origin": "paperback",
+    "examples": [
+      {
+        "exam_en": "The novel appeared in <strong class=\"target-word\">paperback</strong> six months after release.",
+        "exam_ko": "그 소설은 출시 6개월 후 <strong class=\"target-word\">페이퍼백</strong>으로 출판됐다."
+      },
+      {
+        "exam_en": "She prefers reading <strong class=\"target-word\">paperback</strong> books over e-books.",
+        "exam_ko": "그녀는 전자책보다 <strong class=\"target-word\">페이퍼백</strong> 책 읽기를 선호한다."
+      }
+    ]
+  },
+  {
+    "id": 4997,
+    "origin": "atlas",
+    "examples": [
+      {
+        "exam_en": "He studied an anatomical <strong class=\"target-word\">atlas</strong> before the surgery.",
+        "exam_ko": "그는 수술 전에 해부 <strong class=\"target-word\">도해서</strong>를 공부했다."
+      },
+      {
+        "exam_en": "She found the route on an old road <strong class=\"target-word\">atlas</strong>.",
+        "exam_ko": "그녀는 오래된 도로 <strong class=\"target-word\">지도책</strong>에서 경로를 찾았다."
+      }
+    ]
+  },
+  {
+    "id": 4998,
+    "origin": "encyclopedia",
+    "examples": [
+      {
+        "exam_en": "She looked up the term in an <strong class=\"target-word\">encyclopedia</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">백과사전</strong>에서 그 용어를 찾아봤다."
+      },
+      {
+        "exam_en": "The Encyclopaedia Britannica is a famous <strong class=\"target-word\">encyclopedia</strong>.",
+        "exam_ko": "브리태니커는 유명한 <strong class=\"target-word\">백과사전</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 5000,
+    "origin": "basin",
+    "examples": [
+      {
+        "exam_en": "She washed her hands in the <strong class=\"target-word\">basin</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">세면대</strong>에서 손을 씻었다."
+      },
+      {
+        "exam_en": "The river <strong class=\"target-word\">basin</strong> is home to many species.",
+        "exam_ko": "강 <strong class=\"target-word\">유역</strong>에는 많은 종이 서식한다."
+      }
+    ]
+  },
+  {
+    "id": 5001,
+    "origin": "sponge",
+    "examples": [
+      {
+        "exam_en": "She cleaned the table with a wet <strong class=\"target-word\">sponge</strong>.",
+        "exam_ko": "그녀는 젖은 <strong class=\"target-word\">스펀지</strong>로 테이블을 닦았다."
+      },
+      {
+        "exam_en": "He used a <strong class=\"target-word\">sponge</strong> to wipe away the ink.",
+        "exam_ko": "그는 <strong class=\"target-word\">스펀지</strong>로 잉크를 닦아냈다."
+      }
+    ]
+  },
+  {
+    "id": 5003,
+    "origin": "towel",
+    "examples": [
+      {
+        "exam_en": "She grabbed a bath <strong class=\"target-word\">towel</strong> after the shower.",
+        "exam_ko": "그녀는 샤워 후 목욕 <strong class=\"target-word\">타월</strong>을 집었다."
+      },
+      {
+        "exam_en": "He dried his hands on a clean <strong class=\"target-word\">towel</strong>.",
+        "exam_ko": "그는 깨끗한 <strong class=\"target-word\">수건</strong>으로 손을 닦았다."
+      }
+    ]
+  },
+  {
+    "id": 5006,
+    "origin": "niece",
+    "examples": [
+      {
+        "exam_en": "Mary is Mr. James's <strong class=\"target-word\">niece</strong>.",
+        "exam_ko": "메리는 제임스씨의 <strong class=\"target-word\">조카딸</strong>이다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">niece</strong> visits him every summer vacation.",
+        "exam_ko": "그의 <strong class=\"target-word\">조카딸</strong>은 매년 여름방학마다 그를 찾아온다."
+      }
+    ]
+  },
+  {
+    "id": 5009,
+    "origin": "nephew",
+    "examples": [
+      {
+        "exam_en": "John is Mr. James's <strong class=\"target-word\">nephew</strong>.",
+        "exam_ko": "존은 제임스씨의 <strong class=\"target-word\">조카</strong>이다."
+      },
+      {
+        "exam_en": "She bought a gift for her <strong class=\"target-word\">nephew</strong>'s birthday.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">조카</strong>의 생일을 위해 선물을 샀다."
+      }
+    ]
+  },
+  {
+    "id": 5010,
+    "origin": "uncle",
+    "examples": [
+      {
+        "exam_en": "My <strong class=\"target-word\">uncle</strong> taught me how to fish.",
+        "exam_ko": "내 <strong class=\"target-word\">삼촌</strong>이 나에게 낚시하는 법을 가르쳐 줬다."
+      },
+      {
+        "exam_en": "She called her <strong class=\"target-word\">uncle</strong> on his birthday.",
+        "exam_ko": "그녀는 생일에 <strong class=\"target-word\">삼촌</strong>에게 전화했다."
+      }
+    ]
+  },
+  {
+    "id": 5011,
+    "origin": "poke",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">poked</strong> his friend in the face as a joke.",
+        "exam_ko": "그는 장난으로 친구의 얼굴을 <strong class=\"target-word\">찔렀다</strong>."
+      },
+      {
+        "exam_en": "She gently <strong class=\"target-word\">poked</strong> him in the ribs to get his attention.",
+        "exam_ko": "그녀는 주의를 끌려고 그의 옆구리를 살짝 <strong class=\"target-word\">찔렀다</strong>."
+      }
+    ]
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 2170,
+    "origin": "defensive",
+    "examples": [
+      {
+        "exam_en": "The team used <strong class=\"target-word\">defensive</strong> tactics to protect their lead.",
+        "exam_ko": "팀은 리드를 지키기 위해 <strong class=\"target-word\">수비</strong> 전술을 사용했다."
+      },
+      {
+        "exam_en": "He took a <strong class=\"target-word\">defensive</strong> position behind the wall.",
+        "exam_ko": "그는 벽 뒤에 <strong class=\"target-word\">방어</strong> 자세를 취했다."
+      }
+    ]
+  },
+  {
+    "id": 2171,
+    "origin": "divine",
+    "examples": [
+      {
+        "exam_en": "The judge delivered what he called <strong class=\"target-word\">divine</strong> judgment.",
+        "exam_ko": "판사는 자신이 <strong class=\"target-word\">신의</strong> 심판이라고 부른 판결을 내렸다."
+      },
+      {
+        "exam_en": "She felt a <strong class=\"target-word\">divine</strong> calling to serve others.",
+        "exam_ko": "그녀는 다른 사람을 섬기라는 <strong class=\"target-word\">신성한</strong> 소명을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 2173,
+    "origin": "driving",
+    "examples": [
+      {
+        "exam_en": "He is the <strong class=\"target-word\">driving</strong> force behind this project.",
+        "exam_ko": "그는 이 프로젝트의 <strong class=\"target-word\">추진</strong> 원동력이다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">driving</strong> young entrepreneur with great ambition.",
+        "exam_ko": "그녀는 큰 야망을 가진 <strong class=\"target-word\">정력적인</strong> 젊은 기업가다."
+      }
+    ]
+  },
+  {
+    "id": 2174,
+    "origin": "invisible",
+    "examples": [
+      {
+        "exam_en": "He tried to remain <strong class=\"target-word\">invisible</strong> in the crowd.",
+        "exam_ko": "그는 군중 속에서 <strong class=\"target-word\">눈에 띄지 않으려</strong> 했다."
+      },
+      {
+        "exam_en": "Dust particles are <strong class=\"target-word\">invisible</strong> to the naked eye.",
+        "exam_ko": "먼지 입자는 육안으로는 <strong class=\"target-word\">보이지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2175,
+    "origin": "misleading",
+    "examples": [
+      {
+        "exam_en": "The company ran a <strong class=\"target-word\">misleading</strong> advertisement online.",
+        "exam_ko": "그 회사는 온라인에 <strong class=\"target-word\">사람을 현혹하는</strong> 광고를 실었다."
+      },
+      {
+        "exam_en": "The article was <strong class=\"target-word\">misleading</strong> and caused public confusion.",
+        "exam_ko": "그 기사는 <strong class=\"target-word\">오해를 불러일으켜</strong> 대중 혼란을 야기했다."
+      }
+    ]
+  },
+  {
+    "id": 2176,
+    "origin": "circular",
+    "examples": [
+      {
+        "exam_en": "The architect designed a <strong class=\"target-word\">circular</strong> building for the plaza.",
+        "exam_ko": "건축가는 광장에 <strong class=\"target-word\">원형</strong> 건물을 설계했다."
+      },
+      {
+        "exam_en": "The planet moves in a <strong class=\"target-word\">circular</strong> motion around the sun.",
+        "exam_ko": "행성은 태양 주위를 <strong class=\"target-word\">원</strong> 운동으로 이동한다."
+      }
+    ]
+  },
+  {
+    "id": 2177,
+    "origin": "mathematical",
+    "examples": [
+      {
+        "exam_en": "She solved the <strong class=\"target-word\">mathematical</strong> equation in seconds.",
+        "exam_ko": "그녀는 몇 초 만에 <strong class=\"target-word\">수학</strong> 방정식을 풀었다."
+      },
+      {
+        "exam_en": "The analyst calculated the <strong class=\"target-word\">mathematical</strong> expectation of the outcome.",
+        "exam_ko": "분석가는 결과의 <strong class=\"target-word\">수학적</strong> 기댓값을 계산했다."
+      }
+    ]
+  },
+  {
+    "id": 2178,
+    "origin": "inappropriate",
+    "examples": [
+      {
+        "exam_en": "Your short dress is <strong class=\"target-word\">inappropriate</strong> for a formal party.",
+        "exam_ko": "당신의 짧은 드레스는 공식 파티에 <strong class=\"target-word\">어울리지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2179,
+    "origin": "liquid",
+    "examples": [
+      {
+        "exam_en": "The patient was put on a <strong class=\"target-word\">liquid</strong> diet after surgery.",
+        "exam_ko": "환자는 수술 후 <strong class=\"target-word\">유동</strong> 식이를 처방받았다."
+      },
+      {
+        "exam_en": "The rocket runs on <strong class=\"target-word\">liquid</strong> fuel.",
+        "exam_ko": "그 로켓은 <strong class=\"target-word\">액체</strong> 연료로 작동한다."
+      }
+    ]
+  },
+  {
+    "id": 2180,
+    "origin": "persistent",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">persistent</strong> boxer kept fighting until the final round.",
+        "exam_ko": "그 <strong class=\"target-word\">불굴의</strong> 권투 선수는 마지막 라운드까지 싸웠다."
+      },
+      {
+        "exam_en": "The activists showed <strong class=\"target-word\">persistent</strong> resistance to the new policy.",
+        "exam_ko": "활동가들은 새 정책에 <strong class=\"target-word\">완강한</strong> 저항을 보였다."
+      }
+    ]
+  },
+  {
+    "id": 2181,
+    "origin": "solar",
+    "examples": [
+      {
+        "exam_en": "Scientists observed large <strong class=\"target-word\">solar</strong> spots on the sun's surface.",
+        "exam_ko": "과학자들은 태양 표면의 큰 <strong class=\"target-word\">태양</strong> 흑점을 관측했다."
+      },
+      {
+        "exam_en": "The museum displays an ancient <strong class=\"target-word\">solar</strong> clock in its garden.",
+        "exam_ko": "박물관은 정원에 고대 <strong class=\"target-word\">해</strong>시계를 전시하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2182,
+    "origin": "manual",
+    "examples": [
+      {
+        "exam_en": "The job requires great <strong class=\"target-word\">manual</strong> dexterity.",
+        "exam_ko": "그 일은 뛰어난 <strong class=\"target-word\">손</strong>재주가 필요하다."
+      },
+      {
+        "exam_en": "The machine switched to <strong class=\"target-word\">manual</strong> control during the test.",
+        "exam_ko": "기계는 테스트 중에 <strong class=\"target-word\">수동</strong> 제어로 전환되었다."
+      },
+      {
+        "exam_en": "Please read the <strong class=\"target-word\">manual</strong> before assembling the product.",
+        "exam_ko": "제품을 조립하기 전에 <strong class=\"target-word\">설명서</strong>를 읽어보세요."
+      }
+    ]
+  },
+  {
+    "id": 2183,
+    "origin": "architectural",
+    "examples": [
+      {
+        "exam_en": "The firm specializes in <strong class=\"target-word\">architectural</strong> salvage from old buildings.",
+        "exam_ko": "그 회사는 오래된 건물의 <strong class=\"target-word\">건축</strong> 자재 재활용을 전문으로 한다."
+      },
+      {
+        "exam_en": "The city preserves its <strong class=\"target-word\">architectural</strong> heritage carefully.",
+        "exam_ko": "그 도시는 <strong class=\"target-word\">건축</strong> 유산을 소중히 보존한다."
+      }
+    ]
+  },
+  {
+    "id": 2184,
+    "origin": "intact",
+    "examples": [
+      {
+        "exam_en": "She grew up in an <strong class=\"target-word\">intact</strong> family with both parents.",
+        "exam_ko": "그녀는 부모가 모두 있는 <strong class=\"target-word\">온전한</strong> 가정에서 자랐다."
+      },
+      {
+        "exam_en": "The vase remained <strong class=\"target-word\">intact</strong> despite rough handling.",
+        "exam_ko": "그 꽃병은 함부로 다뤘는데도 <strong class=\"target-word\">온전히</strong> 남아 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2185,
+    "origin": "incredible",
+    "examples": [
+      {
+        "exam_en": "He told an <strong class=\"target-word\">incredible</strong> story that no one believed.",
+        "exam_ko": "그는 아무도 믿지 않는 <strong class=\"target-word\">믿기 어려운</strong> 이야기를 했다."
+      },
+      {
+        "exam_en": "It is <strong class=\"target-word\">incredible</strong> that she finished the race so quickly.",
+        "exam_ko": "그녀가 경주를 그렇게 빨리 마쳤다니 <strong class=\"target-word\">믿기지 않는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2186,
+    "origin": "devoted",
+    "examples": [
+      {
+        "exam_en": "He is a <strong class=\"target-word\">devoted</strong> husband who always puts his family first.",
+        "exam_ko": "그는 항상 가족을 먼저 생각하는 <strong class=\"target-word\">헌신적인</strong> 남편이다."
+      },
+      {
+        "exam_en": "Tom is <strong class=\"target-word\">devoted</strong> to reading every evening.",
+        "exam_ko": "톰은 매일 저녁 독서에 <strong class=\"target-word\">몰두하고</strong> 있다."
+      }
+    ]
+  },
+  {
+    "id": 2187,
+    "origin": "prior",
+    "examples": [
+      {
+        "exam_en": "She had a <strong class=\"target-word\">prior</strong> engagement that she could not cancel.",
+        "exam_ko": "그녀는 취소할 수 없는 <strong class=\"target-word\">선약</strong>이 있었다."
+      },
+      {
+        "exam_en": "The team held <strong class=\"target-word\">prior</strong> consultation before making a decision.",
+        "exam_ko": "팀은 결정을 내리기 전에 <strong class=\"target-word\">사전</strong> 협의를 가졌다."
+      }
+    ]
+  },
+  {
+    "id": 2188,
+    "origin": "tragic",
+    "examples": [
+      {
+        "exam_en": "Shakespeare was a famous <strong class=\"target-word\">tragic</strong> dramatist of his era.",
+        "exam_ko": "셰익스피어는 그 시대의 유명한 <strong class=\"target-word\">비극</strong> 작가였다."
+      },
+      {
+        "exam_en": "The film ends with a <strong class=\"target-word\">tragic</strong> and deeply moving scene.",
+        "exam_ko": "영화는 <strong class=\"target-word\">비극적이고</strong> 깊이 감동적인 장면으로 끝난다."
+      }
+    ]
+  },
+  {
+    "id": 2189,
+    "origin": "respectable",
+    "examples": [
+      {
+        "exam_en": "I did it from <strong class=\"target-word\">respectable</strong> motives, not personal gain.",
+        "exam_ko": "나는 개인적 이익이 아닌 <strong class=\"target-word\">훌륭한</strong> 동기로 그것을 했다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">respectable</strong> young woman from a good family.",
+        "exam_ko": "그녀는 좋은 가정에서 자란 <strong class=\"target-word\">착실한</strong> 젊은 여성이다."
+      }
+    ]
+  },
+  {
+    "id": 2190,
+    "origin": "optimistic",
+    "examples": [
+      {
+        "exam_en": "She remains <strong class=\"target-word\">optimistic</strong> about her career prospects.",
+        "exam_ko": "그녀는 자신의 취업 전망에 대해 <strong class=\"target-word\">낙관적인</strong> 태도를 유지한다."
+      },
+      {
+        "exam_en": "He is always <strong class=\"target-word\">optimistic</strong> even in difficult situations.",
+        "exam_ko": "그는 어려운 상황에서도 항상 <strong class=\"target-word\">낙관적이다</strong>."
+      }
+    ]
+  }
+]

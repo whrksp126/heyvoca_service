@@ -1,0 +1,262 @@
+[
+  {
+    "id": 5423,
+    "origin": "walking",
+    "examples": [
+      {
+        "exam_en": "She wore her <strong class=\"target-word\">walking</strong> shoes on the trail.",
+        "exam_ko": "그녀는 산책로에서 <strong class=\"target-word\">워킹</strong> 신발을 신었다."
+      },
+      {
+        "exam_en": "They joined a <strong class=\"target-word\">walking</strong> tour of the city.",
+        "exam_ko": "그들은 도시 <strong class=\"target-word\">도보</strong> 여행에 참가했다."
+      }
+    ]
+  },
+  {
+    "id": 5424,
+    "origin": "clearly",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Clearly</strong>, he knows the answer.",
+        "exam_ko": "<strong class=\"target-word\">틀림없이</strong> 그는 답을 알고 있다."
+      }
+    ]
+  },
+  {
+    "id": 5425,
+    "origin": "needs",
+    "examples": [
+      {
+        "exam_en": "You must <strong class=\"target-word\">needs</strong> do your duty.",
+        "exam_ko": "의무를 <strong class=\"target-word\">반드시</strong> 수행해야 한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Needs</strong> must when the devil drives.",
+        "exam_ko": "다급하면 <strong class=\"target-word\">하지 않을 수 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5426,
+    "origin": "king",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">King</strong> Henry the Eighth ruled England.",
+        "exam_ko": "<strong class=\"target-word\">왕</strong> 헨리 8세가 영국을 통치했다."
+      },
+      {
+        "exam_en": "His Majesty the <strong class=\"target-word\">King</strong> attended the ceremony.",
+        "exam_ko": "국왕 <strong class=\"target-word\">폐하</strong>께서 행사에 참석하셨다."
+      }
+    ]
+  },
+  {
+    "id": 5427,
+    "origin": "jerry",
+    "examples": [
+      {
+        "exam_en": "He took a <strong class=\"target-word\">jerry</strong> to the situation suddenly.",
+        "exam_ko": "그는 그 상황을 <strong class=\"target-word\">문득</strong> 눈치챘다."
+      }
+    ]
+  },
+  {
+    "id": 5428,
+    "origin": "turning",
+    "examples": [
+      {
+        "exam_en": "Take the next <strong class=\"target-word\">turning</strong> on the right.",
+        "exam_ko": "다음 <strong class=\"target-word\">모퉁이</strong>에서 오른쪽으로 도세요."
+      }
+    ]
+  },
+  {
+    "id": 5429,
+    "origin": "shadow",
+    "examples": [
+      {
+        "exam_en": "The building cast a long <strong class=\"target-word\">shadow</strong> at sunset.",
+        "exam_ko": "건물이 석양에 긴 <strong class=\"target-word\">그림자</strong>를 드리웠다."
+      },
+      {
+        "exam_en": "A tree <strong class=\"target-word\">shadow</strong> stretched across the path.",
+        "exam_ko": "나무 <strong class=\"target-word\">그림자</strong>가 길 위에 드리워졌다."
+      }
+    ]
+  },
+  {
+    "id": 5430,
+    "origin": "submarine",
+    "examples": [
+      {
+        "exam_en": "The navy launched a nuclear <strong class=\"target-word\">submarine</strong>.",
+        "exam_ko": "해군이 원자력 <strong class=\"target-word\">잠수함</strong>을 진수했다."
+      },
+      {
+        "exam_en": "Workers laid a <strong class=\"target-word\">submarine</strong> cable across the ocean.",
+        "exam_ko": "작업자들이 해양 횡단 <strong class=\"target-word\">해저</strong> 전선을 설치했다."
+      }
+    ]
+  },
+  {
+    "id": 5431,
+    "origin": "seeing",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Seeing</strong> it is 10 o'clock, we will wait no longer.",
+        "exam_ko": "10시인 것을 <strong class=\"target-word\">보아</strong>, 더 이상 기다리지 않겠다."
+      },
+      {
+        "exam_en": "This is a sight worth <strong class=\"target-word\">seeing</strong>.",
+        "exam_ko": "이곳은 한번 <strong class=\"target-word\">볼</strong> 만한 명소다."
+      }
+    ]
+  },
+  {
+    "id": 5432,
+    "origin": "connected",
+    "examples": [
+      {
+        "exam_en": "He is a well-<strong class=\"target-word\">connected</strong> person in the industry.",
+        "exam_ko": "그는 업계에서 <strong class=\"target-word\">연줄이 좋은</strong> 사람이다."
+      }
+    ]
+  },
+  {
+    "id": 5434,
+    "origin": "software",
+    "examples": [
+      {
+        "exam_en": "She installed the <strong class=\"target-word\">software</strong> on her laptop.",
+        "exam_ko": "그녀는 노트북에 <strong class=\"target-word\">소프트웨어</strong>를 설치했다."
+      },
+      {
+        "exam_en": "He downloaded free <strong class=\"target-word\">software</strong> from the internet.",
+        "exam_ko": "그는 인터넷에서 무료 <strong class=\"target-word\">소프트웨어</strong>를 내려받았다."
+      }
+    ]
+  },
+  {
+    "id": 5435,
+    "origin": "till",
+    "examples": [
+      {
+        "exam_en": "Please wait <strong class=\"target-word\">till</strong> the end of the month.",
+        "exam_ko": "월말 <strong class=\"target-word\">까지</strong> 기다려 주세요."
+      },
+      {
+        "exam_en": "She lived <strong class=\"target-word\">till</strong> eighty in good health.",
+        "exam_ko": "그녀는 건강하게 80세 <strong class=\"target-word\">까지</strong> 살았다."
+      }
+    ]
+  },
+  {
+    "id": 5436,
+    "origin": "quietly",
+    "examples": [
+      {
+        "exam_en": "Talk as <strong class=\"target-word\">quietly</strong> as possible.",
+        "exam_ko": "가급적 <strong class=\"target-word\">조용히</strong> 이야기하세요."
+      },
+      {
+        "exam_en": "He resides <strong class=\"target-word\">quietly</strong> in the country.",
+        "exam_ko": "그는 시골에서 <strong class=\"target-word\">조용히</strong> 살고 있다."
+      }
+    ]
+  },
+  {
+    "id": 5437,
+    "origin": "finished",
+    "examples": [
+      {
+        "exam_en": "They inspected the <strong class=\"target-word\">finished</strong> product carefully.",
+        "exam_ko": "그들은 <strong class=\"target-word\">완성된</strong> 제품을 꼼꼼히 검사했다."
+      },
+      {
+        "exam_en": "If the bank refuses the loan, we're <strong class=\"target-word\">finished</strong>.",
+        "exam_ko": "은행이 융자를 거절하면 우리는 <strong class=\"target-word\">끝장</strong>이야."
+      }
+    ]
+  },
+  {
+    "id": 5438,
+    "origin": "considered",
+    "examples": [
+      {
+        "exam_en": "That is my <strong class=\"target-word\">considered</strong> opinion on the matter.",
+        "exam_ko": "그것이 그 문제에 대한 내 <strong class=\"target-word\">숙고한</strong> 의견이다."
+      },
+      {
+        "exam_en": "She is a highly <strong class=\"target-word\">considered</strong> lawyer in court.",
+        "exam_ko": "그녀는 법정에서 높이 <strong class=\"target-word\">존경받는</strong> 변호사다."
+      }
+    ]
+  },
+  {
+    "id": 5439,
+    "origin": "wearing",
+    "examples": [
+      {
+        "exam_en": "Caring for children all day is a <strong class=\"target-word\">wearing</strong> job.",
+        "exam_ko": "하루 종일 아이를 돌보는 일은 <strong class=\"target-word\">지치게 하는</strong> 일이다."
+      }
+    ]
+  },
+  {
+    "id": 5440,
+    "origin": "reference",
+    "examples": [
+      {
+        "exam_en": "She used a <strong class=\"target-word\">reference</strong> Bible during the lecture.",
+        "exam_ko": "그녀는 강의 중에 <strong class=\"target-word\">참조</strong> 성경을 사용했다."
+      },
+      {
+        "exam_en": "He shared the report for others' <strong class=\"target-word\">reference</strong>.",
+        "exam_ko": "그는 다른 사람들의 <strong class=\"target-word\">참고</strong>를 위해 보고서를 공유했다."
+      }
+    ]
+  },
+  {
+    "id": 5441,
+    "origin": "fallen",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Fallen</strong> leaves covered the ground in autumn.",
+        "exam_ko": "<strong class=\"target-word\">낙엽</strong>이 가을에 땅을 덮었다."
+      },
+      {
+        "exam_en": "The memorial honors every <strong class=\"target-word\">fallen</strong> soldier.",
+        "exam_ko": "기념비는 모든 <strong class=\"target-word\">전사한</strong> 병사를 기린다."
+      }
+    ]
+  },
+  {
+    "id": 5442,
+    "origin": "touched",
+    "examples": [
+      {
+        "exam_en": "She was <strong class=\"target-word\">touched</strong> with remorse after the argument.",
+        "exam_ko": "그녀는 말다툼 후 <strong class=\"target-word\">후회</strong>했다."
+      },
+      {
+        "exam_en": "He is a little <strong class=\"target-word\">touched</strong> in the head.",
+        "exam_ko": "그는 정신이 좀 <strong class=\"target-word\">이상하다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5443,
+    "origin": "cable",
+    "examples": [
+      {
+        "exam_en": "They laid a submarine <strong class=\"target-word\">cable</strong> across the ocean floor.",
+        "exam_ko": "그들은 해저에 <strong class=\"target-word\">케이블</strong>을 설치했다."
+      },
+      {
+        "exam_en": "The telephone <strong class=\"target-word\">cable</strong> runs along the street.",
+        "exam_ko": "전화 <strong class=\"target-word\">케이블</strong>이 거리를 따라 이어진다."
+      }
+    ]
+  }
+]

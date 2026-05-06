@@ -1,0 +1,602 @@
+[
+  {
+    "id": 26317,
+    "word": "obnoxious",
+    "exam_en": "That girl kept talking during the entire movie even though I asked her politely to stop! How <strong class=\"target-word\">obnoxious</strong>!",
+    "exam_ko": "영화 내내 저 여자가 계속 떠드네...내가 정중히 조용해 달라고 <strong class=\"target-word\">부탁했는데</strong> .. 진짜 짜증나는 사람이네"
+  },
+  {
+    "id": 26318,
+    "word": "discharge",
+    "exam_en": "I will faithfully <strong class=\"target-word\">discharge</strong> my duties.",
+    "exam_ko": "나는 <strong class=\"target-word\">충실히</strong> 의무를 이행 할 것이다."
+  },
+  {
+    "id": 26319,
+    "word": "penultimate",
+    "exam_en": "That pizz was <strong class=\"target-word\">penultimate</strong>.",
+    "exam_ko": "저 피자 <strong class=\"target-word\">끝내 줬다</strong>."
+  },
+  {
+    "id": 26320,
+    "word": "embrace",
+    "exam_en": "I <strong class=\"target-word\">embrace</strong> the opportunity to educate people about Korean culture and K-pop.",
+    "exam_ko": "한국 문화와 K-pop에 대해 사람들에게 교육 할 기회를 <strong class=\"target-word\">열렬히 받아들인다</strong>."
+  },
+  {
+    "id": 26321,
+    "word": "glitch",
+    "exam_en": "Sometimes, tweak the point of view and the <strong class=\"target-word\">glitch</strong> will be gone.",
+    "exam_ko": "때때로 조금만 관점을 변경 하면 <strong class=\"target-word\">오류</strong>가 바로 잡아 진다."
+  },
+  {
+    "id": 26321,
+    "word": "tweak",
+    "exam_en": "Sometimes, <strong class=\"target-word\">tweak</strong> the point of view and the glitch will be gone.",
+    "exam_ko": "때때로 조금만 관점을 <strong class=\"target-word\">변경</strong> 하면 오류가 잡혀진다."
+  },
+  {
+    "id": 26322,
+    "word": "inclusion",
+    "exam_en": "It is a positive way to increase <strong class=\"target-word\">inclusion</strong> and decrease anti-Asian racism.",
+    "exam_ko": "<strong class=\"target-word\">포용성</strong>을 높이고 반 아시아 인종 차별을 줄이는 긍정적인 방법입니다."
+  },
+  {
+    "id": 26323,
+    "word": "condescending",
+    "exam_en": "I'm fed up with your money and your whole <strong class=\"target-word\">condescending</strong> attitude.",
+    "exam_ko": "저는 당신의 돈과 전부 <strong class=\"target-word\">잘난척하는</strong> 태도에 질리네요."
+  },
+  {
+    "id": 26324,
+    "word": "manoeuvre",
+    "exam_en": "A ninja comes running out of the dark, jumps up and <strong class=\"target-word\">manoeuvre</strong>s to the room.",
+    "exam_ko": "닌자가 어둠속에서 달려나와 뛰어 오르고 방으로 <strong class=\"target-word\">민첩하게 움직인다</strong>."
+  },
+  {
+    "id": 26325,
+    "word": "attire",
+    "exam_en": "Informal meetings in the company don't require a formal <strong class=\"target-word\">attire</strong>.",
+    "exam_ko": "회사의 비격식 회의에선 <strong class=\"target-word\">정장</strong> 입을 필요가 없다."
+  },
+  {
+    "id": 26326,
+    "word": "ergonomic",
+    "exam_en": "<strong class=\"target-word\">ergonomic</strong> design",
+    "exam_ko": "<strong class=\"target-word\">인체공학적인</strong> 설계"
+  },
+  {
+    "id": 26327,
+    "word": "write-off",
+    "exam_en": "After the accident, my car was a complete <strong class=\"target-word\">write-off</strong>.",
+    "exam_ko": "그 사고 후에 내차는 <strong class=\"target-word\">완전 폐차</strong> 수준"
+  },
+  {
+    "id": 26328,
+    "word": "boozy",
+    "exam_en": "He's normally quite a <strong class=\"target-word\">boozy</strong> person, but isn't drinking so much these days.",
+    "exam_ko": "그는 꾀 <strong class=\"target-word\">술을 많이 마시는</strong> 사람이지만 요즘은 그렇게 많이 마시지는 않아요."
+  },
+  {
+    "id": 26329,
+    "word": "dude",
+    "exam_en": "I am scared with a mean-looking big <strong class=\"target-word\">dude</strong>.",
+    "exam_ko": "험상궂게 생긴 덩치큰 <strong class=\"target-word\">남자</strong>는 무섭드라."
+  },
+  {
+    "id": 26330,
+    "word": "verbose",
+    "exam_en": "Having a long, <strong class=\"target-word\">verbose</strong> paragraph does not necessarily mean that it is meaningful. You can help to eliminate wordiness by writing in active tense, as opposed to passive tense.",
+    "exam_ko": "길고 <strong class=\"target-word\">장황한</strong> 단락이 있다고해서 반드시 의미가있는 것은 아닙니다.반대로 수동형 시제를 능동형으로 작성하여 장황함을 없앨 수 있습니다."
+  },
+  {
+    "id": 26330,
+    "word": "wordiness",
+    "exam_en": "Having a long, verbose paragraph does not necessarily mean that it is meaningful. You can help to eliminate <strong class=\"target-word\">wordiness</strong> by writing in active tense, as opposed to passive tense.",
+    "exam_ko": "길고 장황한 단락이 있다고해서 반드시 의미가있는 것은 아닙니다.반대로 수동형 시제를 능동형으로 작성하여 <strong class=\"target-word\">장황함을 없앨 수</strong> 있습니다."
+  },
+  {
+    "id": 26331,
+    "word": "flick",
+    "exam_en": "Chick <strong class=\"target-word\">flick</strong> is a slang term for a film genre mainly dealing with love and romance and designed to appeal to largely female target audience.",
+    "exam_ko": "Chick <strong class=\"target-word\">flick</strong>는 주로 사랑과 로맨스를 다루는 <strong class=\"target-word\">영화 장르</strong>의 속어이며 주로 여성 대상 청중에게 호소합니다."
+  },
+  {
+    "id": 26332,
+    "word": "savor",
+    "exam_en": "I <strong class=\"target-word\">savored</strong> each bite because the chocolate was so great.",
+    "exam_ko": "초콜렛이 너무 맛있어서 한입 한입 <strong class=\"target-word\">음미했다</strong>."
+  },
+  {
+    "id": 26333,
+    "word": "travesty",
+    "exam_en": "It was a <strong class=\"target-word\">travesty</strong> of Justice when the Minister of Justice stepped down.",
+    "exam_ko": "법무장관이 물러 난건 정말 사법 정의에 <strong class=\"target-word\">우롱한 거</strong>야."
+  },
+  {
+    "id": 26334,
+    "word": "total",
+    "exam_en": "When you've <strong class=\"target-word\">totaled</strong> your car, or have a total loss vehicle, it means that your vehicle is not worth the cost it would take to repair it. It could also mean it is simply too damaged and is unable to be repaired.",
+    "exam_ko": "당신이 당신차를 <strong class=\"target-word\">전손처리</strong> 한다는 것은 당신의 차량은 고칠 가치가 없다는 것이다. 고치기에 너무 손상되어 수리 할 수 없다는 의미이다."
+  },
+  {
+    "id": 26335,
+    "word": "awe",
+    "exam_en": "Banyan trees can be seen all over the Hawaiian Islands. People who see these trees for the first time often gaze at them in <strong class=\"target-word\">awe</strong>.",
+    "exam_ko": "반얀 나무는 하와이 섬 전역에서 볼 수 있습니다. 이 나무를 처음 본 사람들은 종종 <strong class=\"target-word\">경외심</strong>으로 나무를 쳐다 봅니다."
+  },
+  {
+    "id": 26336,
+    "word": "repercussion",
+    "exam_en": "The collapse of the company will have <strong class=\"target-word\">repercussions</strong> for the whole industry.",
+    "exam_ko": "회사의 붕괴는 전체 산업에 <strong class=\"target-word\">파장</strong>을 미칠 것입니다."
+  },
+  {
+    "id": 26337,
+    "word": "chafe",
+    "exam_en": "The rough fabric will <strong class=\"target-word\">chafe</strong> your skin.",
+    "exam_ko": "거친 천은 피부를 <strong class=\"target-word\">비벼</strong> 상처낼 것입니다."
+  },
+  {
+    "id": 26338,
+    "word": "jones",
+    "exam_en": "I've quit smoking for a week. I am <strong class=\"target-word\">jonesing</strong> for a cigarette.",
+    "exam_ko": "1주일째 담배를 끊었는데 담배가 <strong class=\"target-word\">몹시 땡긴다</strong>"
+  },
+  {
+    "id": 26339,
+    "word": "prolific",
+    "exam_en": "A lot of artists use Social Networks to show their artwork. Especially they are <strong class=\"target-word\">prolific</strong> and looking for places to exhibit the works.",
+    "exam_ko": "많은 예술가들이 소셜 네트워크를 사용하여 작품을 보여줍니다. 특히 그들은 <strong class=\"target-word\">다작을 하고</strong> 작품을 전시 할 장소를 찾고 있습니다."
+  },
+  {
+    "id": 26340,
+    "word": "gimmick",
+    "exam_en": "Is White Day just a marketing <strong class=\"target-word\">gimmick</strong>?",
+    "exam_ko": "화이트 데이, 마케팅 <strong class=\"target-word\">속임수</strong>일까??"
+  },
+  {
+    "id": 26341,
+    "word": "bombshell",
+    "exam_en": "The biggest <strong class=\"target-word\">bombshell</strong> for me is my best friend will divorce due to her husband cheating.",
+    "exam_ko": "내 친구 남편이 바람나서 이혼한다는 게 <strong class=\"target-word\">넘 충격적인 소식</strong>이다."
+  },
+  {
+    "id": 26342,
+    "word": "trailblazer",
+    "exam_en": "Ando was a <strong class=\"target-word\">trailblazer</strong> in contemporary architecture.",
+    "exam_ko": "안도 다다오는 현대 건축의 <strong class=\"target-word\">선구자</strong>였습니다."
+  },
+  {
+    "id": 26343,
+    "word": "equinox",
+    "exam_en": "Each solstice is upon the ecliptic midway between the <strong class=\"target-word\">equinoxes</strong>.",
+    "exam_ko": "각 하지는 (춘)<strong class=\"target-word\">추분</strong> 사이에 황도 중간에 있다."
+  },
+  {
+    "id": 26343,
+    "word": "solstice",
+    "exam_en": "Each <strong class=\"target-word\">solstice</strong> is upon the ecliptic midway between the equinoxes.",
+    "exam_ko": "각 <strong class=\"target-word\">하지</strong>는 (춘)추분 사이에 황도 중간에 있다."
+  },
+  {
+    "id": 26344,
+    "word": "contrive",
+    "exam_en": "I <strong class=\"target-word\">contrived</strong> to pass a note to my boss without the others seeing it when he was in the meeting.",
+    "exam_ko": "회의 중일 때 내 상사에게 <strong class=\"target-word\">남몰래 쪽지를 건넸다</strong>."
+  },
+  {
+    "id": 26345,
+    "word": "sedentary",
+    "exam_en": "A <strong class=\"target-word\">sedentary</strong> job is not good for your health.",
+    "exam_ko": "<strong class=\"target-word\">앉아있는</strong> 직업은 건강에 좋지 않습니다."
+  },
+  {
+    "id": 26346,
+    "word": "ravine",
+    "exam_en": "A <strong class=\"target-word\">ravine</strong> is a landform that is narrower than a canyon and is often the product of streamcutting erosion.",
+    "exam_ko": "<strong class=\"target-word\">협곡</strong>은 canyon 보다는 작은 하류 침식형 협곡이다."
+  },
+  {
+    "id": 26347,
+    "word": "fetch",
+    "exam_en": "I went to <strong class=\"target-word\">fetch</strong> a towel for his bath.",
+    "exam_ko": "나는 그의 목욕을 위해 <strong class=\"target-word\">수건을 가져왔다</strong>."
+  },
+  {
+    "id": 26348,
+    "word": "recalibrate",
+    "exam_en": "I am getting happier and happier after I <strong class=\"target-word\">recalibrated</strong> my goal of the rest of my life.",
+    "exam_ko": "남은 인생의 목표를 <strong class=\"target-word\">재조정</strong> 한 후에 더욱더 행복해지고 있습니다."
+  },
+  {
+    "id": 26349,
+    "word": "patronize",
+    "exam_en": "When your colleague <strong class=\"target-word\">patronizes</strong> you, it is hard to be patient.",
+    "exam_ko": "동료가 나를 <strong class=\"target-word\">무시하며 대하다</strong> 참기 어렵다."
+  },
+  {
+    "id": 26350,
+    "word": "devour",
+    "exam_en": "She <strong class=\"target-word\">devoured</strong> everything on her plate.",
+    "exam_ko": "그녀는 접시의 모든 것을 <strong class=\"target-word\">게걸스럽게 먹어치웠다</strong>."
+  },
+  {
+    "id": 26351,
+    "word": "self-conscious",
+    "exam_en": "I feel very <strong class=\"target-word\">self-conscious</strong> when I am with him.",
+    "exam_ko": "나는 그와 함께 있으면 <strong class=\"target-word\">쑥스러워진다</strong>."
+  },
+  {
+    "id": 26352,
+    "word": "asteroid",
+    "exam_en": "Believing that an <strong class=\"target-word\">asteroid</strong> would one day strike the Earth, the citizens decided to live on Mars.",
+    "exam_ko": "<strong class=\"target-word\">소행성</strong>이 언젠가 지구를 강타할 것이라고 믿고 시민들은 화성에 살기로 결정했습니다."
+  },
+  {
+    "id": 26353,
+    "word": "reincarnation",
+    "exam_en": "Do you believe in <strong class=\"target-word\">reincarnation</strong>? Yes, I believe that I am the reincarnation of Marie-Antoinette.",
+    "exam_ko": "<strong class=\"target-word\">환생</strong>을 믿으십니까? 예, 저는 제가 마리 앙투아네트의 환생이라고 믿습니다."
+  },
+  {
+    "id": 26354,
+    "word": "jaundice",
+    "exam_en": "Mild <strong class=\"target-word\">jaundice</strong> in the newborn is common and often clears without treatment.",
+    "exam_ko": "신생아의 옅은 <strong class=\"target-word\">황달</strong>은 흔하고 종종 치료 없이 괜찮아진다."
+  },
+  {
+    "id": 26355,
+    "word": "belittle",
+    "exam_en": "It really galls me that Josh is always encouraging Lori with her work, but he never misses an opportunity to <strong class=\"target-word\">belittle</strong> mine.",
+    "exam_ko": "Josh가 항상 로리가 한 일은 칭찬하고 내가 한 건 <strong class=\"target-word\">하찮게 만들</strong> 기회를 놓치지 않아! 정말 억울해"
+  },
+  {
+    "id": 26355,
+    "word": "gall",
+    "exam_en": "It really <strong class=\"target-word\">galls</strong> me that Josh is always encouraging Lori with her work, but he never misses an opportunity to belittle mine.",
+    "exam_ko": "Josh가 항상 로리가 한 일은 칭찬하고 내가 한 건 하찮게 만들 기회를 놓치지 않아서 <strong class=\"target-word\">정말 화난다</strong>!"
+  },
+  {
+    "id": 26356,
+    "word": "perp",
+    "exam_en": "Factors influencing <strong class=\"target-word\">perp</strong> arrest time in child abduction cases in South Korea.",
+    "exam_ko": "한국의 아동 납치 사건에서 <strong class=\"target-word\">가해자</strong> 체포 시간에 영향을 미치는 요인."
+  },
+  {
+    "id": 26357,
+    "word": "gangway",
+    "exam_en": "Sir, your suitcase is blocking the <strong class=\"target-word\">gangway</strong>, please move it.",
+    "exam_ko": "선생님의 가방이 <strong class=\"target-word\">통로</strong>를 막고 있어요. 치워주세요"
+  },
+  {
+    "id": 26358,
+    "word": "uncanny",
+    "exam_en": "It's <strong class=\"target-word\">uncanny</strong> that my 3-year-old niece can write words.",
+    "exam_ko": "내 3살짜리 조카가 단어를 쓸 수 있다는 것은 <strong class=\"target-word\">기묘한</strong> 일입니다."
+  },
+  {
+    "id": 26359,
+    "word": "jar",
+    "exam_en": "Right out of the gate, the perp <strong class=\"target-word\">jarred</strong> the door to escape with a hammer.",
+    "exam_ko": "범인이 탈출하기 위해 문을 망치로 <strong class=\"target-word\">흔들어서 열었다</strong>"
+  },
+  {
+    "id": 26360,
+    "word": "footprint",
+    "exam_en": "However, NRM1 then goes on to give a second, slightly different definition: ‘Where the external works is to be measured separately, the site area (SA) is to be measured. The SA is the total area of the site within the site title boundaries (or the total area within the site title boundaries defined by the employer as the site for the building or buildings), excluding the <strong class=\"target-word\">footprint</strong> of the new building(s), measured on a horizontal plane.’",
+    "exam_ko": "그러나 NRM1은 약간 다른 정의를 제공합니다. 외부 작업을 개별적으로 측정해야 하는 경우 대지 면적을 측정해야 한다. 대지면적 (SA) 수평면에서 새 건물의 <strong class=\"target-word\">차지하는 공간</strong>을 제외한 대지의 소유증서의 대지 경계 내에 대지 전체 면적이다.(또는 사용자가 건물의 대지로 정의한 대지의 소유증서의 경계 내의 전체 면적)"
+  },
+  {
+    "id": 26360,
+    "word": "title",
+    "exam_en": "However, NRM1 then goes on to give a second, slightly different definition: ‘Where the external works is to be measured separately, the site area (SA) is to be measured. The SA is the total area of the site within the site <strong class=\"target-word\">title</strong> boundaries (or the total area within the site title boundaries defined by the employer as the site for the building or buildings), excluding the footprint of the new building(s), measured on a horizontal plane.’",
+    "exam_ko": "그러나 NRM1은 약간 다른 정의를 제공합니다. 외부 작업을 개별적으로 측정해야 하는 경우 대지 면적을 측정해야 한다. 대지면적(SA)은 수평면에서 새 건물의 차지하는 공간을 제외한 대지의 <strong class=\"target-word\">소유증서의 대지 경계</strong> 내에 대지 전체 면적이다.(또는 사용자가 건물의 대지로 정의한 대지의 소유증서의 경계 내의 전체 면적)"
+  },
+  {
+    "id": 26361,
+    "word": "brackish",
+    "exam_en": "Mangrove trees grow in places where other trees would never take root, such as in seaside marshes, in saltwater or <strong class=\"target-word\">brackish</strong> water.",
+    "exam_ko": "맹그로브 나무는 해변 습지나 바닷물 또는 <strong class=\"target-word\">소금기 있는</strong> 물과 같이 다른 나무가 뿌리를 내리지 않는 곳에서 자랍니다."
+  },
+  {
+    "id": 26362,
+    "word": "yolk",
+    "exam_en": "double-<strong class=\"target-word\">yolk</strong> egg",
+    "exam_ko": "<strong class=\"target-word\">쌍란</strong> (계란노른자가 2개)"
+  },
+  {
+    "id": 26363,
+    "word": "duly",
+    "exam_en": "The singer <strong class=\"target-word\">duly</strong> appeared back on stage for an encore.",
+    "exam_ko": "가수는 <strong class=\"target-word\">마땅히</strong> 앵콜 무대에 다시 등장했다."
+  },
+  {
+    "id": 26364,
+    "word": "colloquial",
+    "exam_en": "Avoiding <strong class=\"target-word\">colloquial</strong> (informal) writing: While it may be acceptable in friendly e-mails and chat rooms, a major pitfall that has been bringing down the quality of formal, written text is the use of excessive colloquialism. Here are some steps/tips that you can follow to help improve your overall writing.",
+    "exam_ko": "<strong class=\"target-word\">구어체적인</strong> (비공식적) 글 작성 방지: 가까운 사람과의 이메일과 대화방에서는 받아들일 수 있지만, 공식적인 서면 글의 질을 낮추는 주요한 함정은 과도한 구어체를 사용하는 것이다. 다음은 전반적인 글쓰기를 향상시키기 위해 따라야 할 몇 가지 단계/팁이다."
+  },
+  {
+    "id": 26365,
+    "word": "exert",
+    "exam_en": "I continued to <strong class=\"target-word\">exert</strong> all my powers to restrain my boyfriend from cheating.",
+    "exam_ko": "나는 남자 친구가 바람을 피우지 못하도록 <strong class=\"target-word\">모든 힘을 계속 발휘했다</strong>."
+  },
+  {
+    "id": 26366,
+    "word": "exert",
+    "exam_en": "<strong class=\"target-word\">Exert</strong> sovereign authority.",
+    "exam_ko": "주권을 <strong class=\"target-word\">행사하다</strong>."
+  },
+  {
+    "id": 26367,
+    "word": "inauguration",
+    "exam_en": "The construction of a Spectator Facility intended for the <strong class=\"target-word\">inauguration</strong> of the Olympic Games scheduled to take place in Pyeong Chang, Korea in 2018.",
+    "exam_ko": "<strong class=\"target-word\">2018</strong> 년 평창에서 개최 될 예정인 올림픽 게임의 개회식을 위한 관중 시설 건설."
+  },
+  {
+    "id": 26368,
+    "word": "vandalism",
+    "exam_en": "The forest is now protected as a national reserve against <strong class=\"target-word\">vandalism</strong> and commercialism.",
+    "exam_ko": "이 숲은 이제 기물 파손과 <strong class=\"target-word\">상업주의로부터</strong> 국가 보호 구역으로 보호됩니다."
+  },
+  {
+    "id": 26369,
+    "word": "infringement",
+    "exam_en": "If there was no <strong class=\"target-word\">infringement</strong> or no risk of infringement, the alleged infringer may claim compensation for the damage caused to him by the production or inspection sought in accordance with subsection (1) from the person who sought the production or inspection.",
+    "exam_ko": "침해가 <strong class=\"target-word\">없었거나</strong> 침해의 위험이 없다면, 침해 혐의자는 생산 또는 검사를 요청한 사람에게 (1) 항에 따라 추구하는 생산 또는 검사로 인해 발생한 손해에 대한 보상을 청구 할 수 있습니다."
+  },
+  {
+    "id": 26370,
+    "word": "pitfall",
+    "exam_en": "Plastic cups used for cold drinks make ideal <strong class=\"target-word\">pitfall</strong> traps.",
+    "exam_ko": "차가운 음료에 사용되는 <strong class=\"target-word\">플라스틱</strong> 컵은 엄청난 우험을 만듭니다."
+  },
+  {
+    "id": 26371,
+    "word": "grope",
+    "exam_en": "A man tried to <strong class=\"target-word\">grope</strong> me on the subway this morning. I reported him to Metro Police.",
+    "exam_ko": "오늘 아침에 한 남자가 날 <strong class=\"target-word\">더듬으려고</strong> 했어. 나는 즉시 지하철 경찰대에 신고했어."
+  },
+  {
+    "id": 26372,
+    "word": "bronchitis",
+    "exam_en": "Urbanites often suffer from intermittent bouts of runny noses and brain fog, which experts have long-suspected are caused by pollution. Dubbed “London Throat”, this ongoing low-level illness can lead to more serious infections such as pneumonia and <strong class=\"target-word\">bronchitis</strong>.",
+    "exam_ko": "도시인들은 오염으로 인한 것으로 오랫동안 의심되는 콧물과 멍한 상테를 간헐적으로 앓음으로 자주 고통 받느다. “런던 <strong class=\"target-word\">인후염”라고</strong> 불리는이 진행중인 저급 질병은 폐렴 및 기관지염과 같은 더 심각한 감염으로 이어질 수 있습니다."
+  },
+  {
+    "id": 26373,
+    "word": "batter",
+    "exam_en": "Pour <strong class=\"target-word\">batter</strong> into frying pan to desired size.",
+    "exam_ko": "원하는 크기로 프라이 팬에 반죽을 <strong class=\"target-word\">부으세요~</strong>"
+  },
+  {
+    "id": 26374,
+    "word": "ascertain",
+    "exam_en": "Make sure that you look up the synonym in the dictionary to <strong class=\"target-word\">ascertain</strong> that the meaning is correct.",
+    "exam_ko": "<strong class=\"target-word\">사전에서</strong> 동의어를 찾아서 의미가 올바른지 확인하십시오."
+  },
+  {
+    "id": 26375,
+    "word": "rebut",
+    "exam_en": "The lawyer said he had been given too little time to <strong class=\"target-word\">rebut</strong> the report's conclusions ahead of a board vote later this week.",
+    "exam_ko": "변호사는 이번 주 후반에 표결에 앞서 보고서의 결론을 반박 할 시간이 너무 <strong class=\"target-word\">적다고</strong> 말했다."
+  },
+  {
+    "id": 26376,
+    "word": "enumerate",
+    "exam_en": "<strong class=\"target-word\">Enumerate</strong> bits of information.",
+    "exam_ko": "<strong class=\"target-word\">단편</strong> 정보를 나열 해라."
+  },
+  {
+    "id": 26377,
+    "word": "padlock",
+    "exam_en": "•Fitted with a hasp and staple for use with a <strong class=\"target-word\">padlock</strong> (not included)",
+    "exam_ko": "<strong class=\"target-word\">자물쇠와</strong> 함께 사용하기 위해 걸쇠와 스테이플이 장착되어 있습니다 (포함되지 않음)"
+  },
+  {
+    "id": 26378,
+    "word": "anthropomorphize",
+    "exam_en": "The tendency is ubiquitous in modern life and, according to Kennedy (1992), people <strong class=\"target-word\">anthropomorphize</strong> compulsively because the tendency is preprogrammed genetically. In post-industrial societies, anthropomorphizing is most obvious in enterment media such as books, movies, and cartoons.",
+    "exam_ko": "경향은 현대 생활에서 어디에나 존재하며, <strong class=\"target-word\">Kennedy</strong> (1992)에 따르면, 경향은 유 전적으로 사전 프로그램되어 있기 때문에 사람들은 강박 적으로 의인화된다. 산업화 이후 사회에서, 의인화는 책, 영화 및 만화와 같은 엔터테인먼트 매체에서 가장 분명하다."
+  },
+  {
+    "id": 26378,
+    "word": "ubiquitous",
+    "exam_en": "The tendency is <strong class=\"target-word\">ubiquitous</strong> in modern life and, according to Kennedy (1992), people anthropomorphize compulsively because the tendency is preprogrammed genetically. In post-industrial societies, anthropomorphizing is most obvious in enterment media such as books, movies, and cartoons.",
+    "exam_ko": "경향은 현대 생활에서 어디에나 존재하며, <strong class=\"target-word\">Kennedy</strong> (1992)에 따르면, 경향은 유 전적으로 사전 프로그램되어 있기 때문에 사람들은 강박 적으로 의인화된다. 산업화 이후 사회에서, 의인화는 책, 영화 및 만화와 같은 엔터테인먼트 매체에서 가장 분명하다."
+  },
+  {
+    "id": 26379,
+    "word": "decipher",
+    "exam_en": "I like to <strong class=\"target-word\">decipher</strong> the secret codes from the novel.",
+    "exam_ko": "저는 그소설에 나오는 비밀 코드를 해독하는 것을 <strong class=\"target-word\">좋아해요</strong>."
+  },
+  {
+    "id": 26380,
+    "word": "perplexed",
+    "exam_en": "My niece always look <strong class=\"target-word\">perplexed</strong> when her parents ask about the marrige plan.",
+    "exam_ko": "부모님이 결혼 계획에 대해 물을 때 조카는 항상 <strong class=\"target-word\">당황하게</strong> 보입니다."
+  },
+  {
+    "id": 26381,
+    "word": "ailment",
+    "exam_en": "Howaiians treasured the Noni fruit for its many uses, including the treatment of common <strong class=\"target-word\">ailment</strong>s, such as wounds and pain.",
+    "exam_ko": "하와이사람들은 상처와 통증과 같은 <strong class=\"target-word\">병</strong> 질병의 치료를 포함하여 많은 용도로 Noni 과일을 소중히 여겼습니다."
+  },
+  {
+    "id": 26382,
+    "word": "gumption",
+    "exam_en": "Do you really have the <strong class=\"target-word\">gumption</strong> to sing in front of a million people?",
+    "exam_ko": "백만 관중 앞에서 노래할 용기 <strong class=\"target-word\">있니??</strong>"
+  },
+  {
+    "id": 26383,
+    "word": "dichotomy",
+    "exam_en": "This line of development underlines the base/superstructure <strong class=\"target-word\">dichotomy</strong> and reduces consciousness to a simple reflection of the material base of society.",
+    "exam_ko": "이 개발 라인은 기본 / 상부 구조 이분법을 <strong class=\"target-word\">강조하고</strong> 사회의 물질적 기반을 간단히 반영하여 생각을 줄입니다."
+  },
+  {
+    "id": 26384,
+    "word": "pseudonym",
+    "exam_en": "His <strong class=\"target-word\">pseudonym</strong> is \"Killimanzaro\".",
+    "exam_ko": "그의 필명은 킬리만 <strong class=\"target-word\">자로이다</strong>."
+  },
+  {
+    "id": 26385,
+    "word": "conservatory",
+    "exam_en": "It was a startled couple that we found when we reached the <strong class=\"target-word\">conservatory</strong>.",
+    "exam_ko": "그등의 <strong class=\"target-word\">유일한</strong> 위안은 완전히 파괴된 온실의 광경이었다."
+  },
+  {
+    "id": 26386,
+    "word": "churn",
+    "exam_en": "Changing whole milk to butter is a process of <strong class=\"target-word\">churn</strong>ing a fat-in-water emulsion (milk) to a water-in-fat emulsion (butter).",
+    "exam_ko": "전유를 버터로 바꾸는 것은 수중 지방 에멀젼 (우유)을 지방 중수 에멀젼 (버터)로 <strong class=\"target-word\">휘젓다</strong> 과"
+  },
+  {
+    "id": 26387,
+    "word": "transfusion",
+    "exam_en": "Many people who have surgery need blood <strong class=\"target-word\">transfusion</strong>s because they lose blood during their operations.",
+    "exam_ko": "<strong class=\"target-word\">수혈</strong>을받는 많은 사람들은 수술 중에 혈액을 잃기 때문에 수혈이 필요합니다."
+  },
+  {
+    "id": 26388,
+    "word": "subsidiary",
+    "exam_en": "Parent companies usually acquire <strong class=\"target-word\">subsidiary</strong> companies either through mergers or acquisitions.",
+    "exam_ko": "모회사는 일반적으로 <strong class=\"target-word\">합병</strong> 또는 인수를 통해 자회사를 인수합니다."
+  },
+  {
+    "id": 26389,
+    "word": "squander",
+    "exam_en": "He was accused of <strong class=\"target-word\">squander</strong>ing public funds.",
+    "exam_ko": "그는 공공 자금을 <strong class=\"target-word\">낭비하다</strong> 혐의로 기소되었습니다."
+  },
+  {
+    "id": 26390,
+    "word": "encompass",
+    "exam_en": "In the same vein, relational capital <strong class=\"target-word\">encompass</strong>es present knowledge in organisational connections already developed with the environment.",
+    "exam_ko": "같은 맥락에서, <strong class=\"target-word\">포함하다</strong> 자본은 이미 환경과 함께 개발 된 조직적 연결에 대한 현재 지식을 포괄합니다."
+  },
+  {
+    "id": 26391,
+    "word": "regimen",
+    "exam_en": "The <strong class=\"target-word\">regimen</strong> was strict, the food everywhere abounding, was not for them, and the vicinity of the wild Chunchos was not reassuring.",
+    "exam_ko": "식이요법은 <strong class=\"target-word\">엄격했고</strong> 음식은 어디에나 많았으나 그들을 위한 것이 아니었고 야생 Chunchos의 주변은 안심하지 못했습니다."
+  },
+  {
+    "id": 26392,
+    "word": "revision",
+    "exam_en": "<strong class=\"target-word\">Revision</strong>, a term of Latin origin, tends to imply a reconsideration and replacement of an originally, or earlier, satisfactory, but by now discarded, idea.",
+    "exam_ko": "라틴어의 용어 인 수정은 원래 또는 이전의 만족 스럽지만 현재는 폐기 된 아이디어의 <strong class=\"target-word\">재검토</strong> 및 대체를 암시하는 경향이 있습니다."
+  },
+  {
+    "id": 26393,
+    "word": "arsonist",
+    "exam_en": "Police: Alleged 68-year-old <strong class=\"target-word\">arsonist</strong> flew from Missouri to Set South Bay Fire",
+    "exam_ko": "경찰 : 68 세의 방화범이 미주리에서 <strong class=\"target-word\">사우스</strong> 베이 화재로 날아간 것으로 추정 됨"
+  },
+  {
+    "id": 26394,
+    "word": "château",
+    "exam_en": "The royal family lived in a <strong class=\"target-word\">château</strong> in the countryside.",
+    "exam_ko": "왕족은 시골의 <strong class=\"target-word\">성관</strong>에서 살았습니다."
+  },
+  {
+    "id": 26395,
+    "word": "input",
+    "exam_en": "Provide equivalent <strong class=\"target-word\">input</strong>s and assist the international land management/resettlement specialist in providing training programs",
+    "exam_ko": "<strong class=\"target-word\">입력</strong> 전문지식을 제공하고 국제 토지 관리 / 재 정착 전문가가 교육 프로그램을 제공 할 수 있도록 지원해라"
+  },
+  {
+    "id": 26396,
+    "word": "worldly",
+    "exam_en": "It is time you woke up and focused your thoughts on more <strong class=\"target-word\">worldly</strong> matters.",
+    "exam_ko": "<strong class=\"target-word\">세속적</strong> 인 문제에 당신의 생각을 집중시킬 때다."
+  },
+  {
+    "id": 26397,
+    "word": "tautology",
+    "exam_en": "\" The reason why\" could be used in a <strong class=\"target-word\">tautology</strong> such as \" the reason why I love her is because she is beautiful.\"",
+    "exam_ko": "\" <strong class=\"target-word\">The</strong> reason why\"는 \"내가 ㄱ그녀를 사랑하는 이유는 그녀가 아름답기 때문이다\" 처럼 타톨로지로 사용될 수 있다."
+  },
+  {
+    "id": 26398,
+    "word": "shrewd",
+    "exam_en": "He was a <strong class=\"target-word\">shrewd</strong> man with a natural aptitude for business.",
+    "exam_ko": "그는 상황 판단이 <strong class=\"target-word\">빠르고</strong> 사업적 재능을 가진 남자다."
+  },
+  {
+    "id": 26399,
+    "word": "abduction",
+    "exam_en": "Factors influencing perpetrator arrest time in child <strong class=\"target-word\">abduction</strong> cases in South Korea.",
+    "exam_ko": "한국의 아동 납치 <strong class=\"target-word\">사건에서</strong> 가해자 체포 시간에 영향을 미치는 요인."
+  },
+  {
+    "id": 26400,
+    "word": "autograph",
+    "exam_en": "Wow, I got Jin's <strong class=\"target-word\">autograph</strong> at BTS's concert tweeks ago. I still feel like a dream.",
+    "exam_ko": "나 2주전에 BTS콘서트에서 진이 <strong class=\"target-word\">사인받았어</strong>. 아직도 꿈 같아."
+  },
+  {
+    "id": 26401,
+    "word": "bibulous",
+    "exam_en": "He was already mildly drunk, and Amy knew from experience that it would be a long, <strong class=\"target-word\">bibulous</strong> evening.",
+    "exam_ko": "그는 이미 약간 술에 취해 있었고 에이미는 경험을 통해 길고 멋진(<strong class=\"target-word\">흥청망청한</strong>) 저녁이 될 것이라는 것을 알았습니다."
+  },
+  {
+    "id": 26402,
+    "word": "spine",
+    "exam_en": "Identify each binder on the front and <strong class=\"target-word\">spine</strong> with the typed or printed title \"WARRANTIES,\" Project name, and name of Contractor.",
+    "exam_ko": "\"<strong class=\"target-word\">보증서</strong>\", 프로젝트 이름, 계약자 이름을 사용하여 각 바인더의 전면 및 등에 제목을 입력 또는 인쇄 하여 식별하십시오.."
+  },
+  {
+    "id": 26403,
+    "word": "gratis",
+    "exam_en": "The government provides meals to high school <strong class=\"target-word\">gratis</strong>.",
+    "exam_ko": "정부는 <strong class=\"target-word\">고등학교에</strong> 무료로 식사를 제공합니다."
+  },
+  {
+    "id": 26404,
+    "word": "regular",
+    "exam_en": "There is a special service for <strong class=\"target-word\">regular</strong> at the department store.",
+    "exam_ko": "<strong class=\"target-word\">백화점엔</strong> 고정고객에게 특별 서비스가 있다."
+  },
+  {
+    "id": 26405,
+    "word": "queasy",
+    "exam_en": "Blowing chunks and feeling <strong class=\"target-word\">queasy</strong> is one of telltale signs of pregnancy.",
+    "exam_ko": "토하고 <strong class=\"target-word\">헛구역질</strong> 하는건 임신 증후중에 하나이다."
+  },
+  {
+    "id": 26406,
+    "word": "insolvency",
+    "exam_en": "An ipso facto clause is a contractual provision that allows one party to terminate or modify the operation of the contract (or provides for this to occur automatically) upon the occurrence of a specified <strong class=\"target-word\">insolvency</strong> related event.",
+    "exam_ko": "<strong class=\"target-word\">ipso</strong> facto 조항은 특정 파산 관련 사건 발생시 한 당사자가 계약 운영을 종료 또는 수정 (또는 자동으로 수행하도록)하는 계약 조항입니다."
+  },
+  {
+    "id": 26407,
+    "word": "blizzard",
+    "exam_en": "My flight is cancelled due to the <strong class=\"target-word\">blizzard</strong>.",
+    "exam_ko": "내 비향기가 취고 됐어 <strong class=\"target-word\">눈보라</strong> 때문에"
+  },
+  {
+    "id": 26408,
+    "word": "lab",
+    "exam_en": "Fermented milk products known as cutured dairy foods are dairy foods that have been fermented with <strong class=\"target-word\">LAB</strong> such as lactibacillus.",
+    "exam_ko": "배양 유제품으로 <strong class=\"target-word\">알려진</strong> 발효유 제품은 락토 바실러스와 같은 유산균으로 발효 된 유제품입니다."
+  },
+  {
+    "id": 26409,
+    "word": "realm",
+    "exam_en": "The <strong class=\"target-word\">realm</strong> of literature",
+    "exam_ko": "문학의 영역 (<strong class=\"target-word\">1927년</strong> 헨리 윌리스 작품)"
+  },
+  {
+    "id": 26410,
+    "word": "preclude",
+    "exam_en": "According to the bylaws, this action <strong class=\"target-word\">preclude</strong>s delegation to any committee of the Board.",
+    "exam_ko": "조례에 <strong class=\"target-word\">배제하다</strong>,이 조치는 이사회의 모든위원회에 위임하는 것을 금지합니다."
+  }
+]

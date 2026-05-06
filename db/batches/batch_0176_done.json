@@ -1,0 +1,270 @@
+[
+  {
+    "id": 3818,
+    "origin": "against",
+    "examples": [
+      {
+        "exam_en": "The lawyer presented evidence <strong class=\"target-word\">against</strong> the suspect.",
+        "exam_ko": "변호사는 용의자에게 불리한 증거를 <strong class=\"target-word\">제시했다</strong>."
+      },
+      {
+        "exam_en": "She argued <strong class=\"target-word\">against</strong> the new proposal.",
+        "exam_ko": "그녀는 새 제안에 <strong class=\"target-word\">반대했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3819,
+    "origin": "again",
+    "examples": [
+      {
+        "exam_en": "Please try <strong class=\"target-word\">again</strong> if you fail.",
+        "exam_ko": "실패하면 <strong class=\"target-word\">다시</strong> 시도해 보세요."
+      },
+      {
+        "exam_en": "Don't do that <strong class=\"target-word\">again</strong>.",
+        "exam_ko": "<strong class=\"target-word\">다시는</strong> 그런 짓을 하지 마라."
+      }
+    ]
+  },
+  {
+    "id": 3820,
+    "origin": "after",
+    "examples": [
+      {
+        "exam_en": "Come <strong class=\"target-word\">after</strong> me.",
+        "exam_ko": "나를 <strong class=\"target-word\">따라</strong> 오시오."
+      },
+      {
+        "exam_en": "Put the object <strong class=\"target-word\">after</strong> the verb.",
+        "exam_ko": "동사 <strong class=\"target-word\">뒤에</strong> 목적어를 두어라."
+      }
+    ]
+  },
+  {
+    "id": 3821,
+    "origin": "advertisement",
+    "examples": [
+      {
+        "exam_en": "The paper has an <strong class=\"target-word\">advertisement</strong> column.",
+        "exam_ko": "신문에는 <strong class=\"target-word\">광고</strong>란이 있다."
+      },
+      {
+        "exam_en": "I saw a newspaper <strong class=\"target-word\">advertisement</strong> for the job.",
+        "exam_ko": "나는 그 일자리에 대한 신문 <strong class=\"target-word\">광고</strong>를 봤다."
+      }
+    ]
+  },
+  {
+    "id": 3822,
+    "origin": "actor",
+    "examples": [
+      {
+        "exam_en": "He is a famous film <strong class=\"target-word\">actor</strong>.",
+        "exam_ko": "그는 유명한 영화 <strong class=\"target-word\">배우</strong>다."
+      }
+    ]
+  },
+  {
+    "id": 3824,
+    "origin": "across",
+    "examples": [
+      {
+        "exam_en": "She swam <strong class=\"target-word\">across</strong> the channel.",
+        "exam_ko": "그녀는 해협을 헤엄쳐 <strong class=\"target-word\">건넜다</strong>."
+      },
+      {
+        "exam_en": "He walked <strong class=\"target-word\">across</strong> the street carefully.",
+        "exam_ko": "그는 조심스럽게 거리를 <strong class=\"target-word\">횡단했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3825,
+    "origin": "accident",
+    "examples": [
+      {
+        "exam_en": "Two people were injured in a car <strong class=\"target-word\">accident</strong>.",
+        "exam_ko": "두 명이 자동차 <strong class=\"target-word\">사고</strong>로 다쳤다."
+      },
+      {
+        "exam_en": "It was a mere <strong class=\"target-word\">accident</strong>, not on purpose.",
+        "exam_ko": "그것은 순전한 <strong class=\"target-word\">우연</strong>이었고 고의가 아니었다."
+      }
+    ]
+  },
+  {
+    "id": 3826,
+    "origin": "a",
+    "examples": [
+      {
+        "exam_en": "I have <strong class=\"target-word\">a</strong> pen.",
+        "exam_ko": "<strong class=\"target-word\">한</strong> 자루의 펜을 가지고 있다."
+      },
+      {
+        "exam_en": "She is <strong class=\"target-word\">a</strong> Christian.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">한</strong> 기독교인이다."
+      }
+    ]
+  },
+  {
+    "id": 3827,
+    "origin": "anatomy",
+    "examples": [
+      {
+        "exam_en": "Students study general <strong class=\"target-word\">anatomy</strong> in their first year.",
+        "exam_ko": "학생들은 1학년 때 <strong class=\"target-word\">해부학</strong> 총론을 공부한다."
+      },
+      {
+        "exam_en": "The course covers human <strong class=\"target-word\">anatomy</strong> in detail.",
+        "exam_ko": "그 과목은 인체 <strong class=\"target-word\">해부학</strong>을 자세히 다룬다."
+      }
+    ]
+  },
+  {
+    "id": 3828,
+    "origin": "bankrupt",
+    "examples": [
+      {
+        "exam_en": "He is considered a moral <strong class=\"target-word\">bankrupt</strong>.",
+        "exam_ko": "그는 도덕적 <strong class=\"target-word\">파탄자</strong>로 여겨진다."
+      },
+      {
+        "exam_en": "The company went <strong class=\"target-word\">bankrupt</strong> last year.",
+        "exam_ko": "그 회사는 작년에 <strong class=\"target-word\">파산했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3830,
+    "origin": "deck",
+    "examples": [
+      {
+        "exam_en": "Sailors gathered on the forecastle <strong class=\"target-word\">deck</strong>.",
+        "exam_ko": "선원들이 앞 <strong class=\"target-word\">갑판</strong>에 모였다."
+      },
+      {
+        "exam_en": "Passengers relaxed on the upper <strong class=\"target-word\">deck</strong>.",
+        "exam_ko": "승객들이 상부 <strong class=\"target-word\">갑판</strong>에서 쉬었다."
+      }
+    ]
+  },
+  {
+    "id": 3832,
+    "origin": "disorder",
+    "examples": [
+      {
+        "exam_en": "The city fell into <strong class=\"target-word\">disorder</strong> after the disaster.",
+        "exam_ko": "재난 후 도시가 <strong class=\"target-word\">혼란</strong>에 빠졌다."
+      },
+      {
+        "exam_en": "His actions threw the team into <strong class=\"target-word\">disorder</strong>.",
+        "exam_ko": "그의 행동은 팀을 <strong class=\"target-word\">혼란</strong>에 빠뜨렸다."
+      }
+    ]
+  },
+  {
+    "id": 3833,
+    "origin": "downfall",
+    "examples": [
+      {
+        "exam_en": "The scandal caused the <strong class=\"target-word\">downfall</strong> of the government.",
+        "exam_ko": "그 스캔들로 정부가 <strong class=\"target-word\">몰락했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 3834,
+    "origin": "offspring",
+    "examples": [
+      {
+        "exam_en": "They have no <strong class=\"target-word\">offspring</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">자손</strong>이 없다."
+      }
+    ]
+  },
+  {
+    "id": 3835,
+    "origin": "surfing",
+    "examples": [
+      {
+        "exam_en": "They went <strong class=\"target-word\">surfing</strong> at the beach.",
+        "exam_ko": "그들은 해변에 <strong class=\"target-word\">서핑</strong>하러 갔다."
+      }
+    ]
+  },
+  {
+    "id": 3836,
+    "origin": "tolerance",
+    "examples": [
+      {
+        "exam_en": "She has a high <strong class=\"target-word\">tolerance</strong> for humidity.",
+        "exam_ko": "그녀는 습기에 대한 <strong class=\"target-word\">내성</strong>이 강하다."
+      },
+      {
+        "exam_en": "He acquired a <strong class=\"target-word\">tolerance</strong> to the medication.",
+        "exam_ko": "그는 약물에 대한 <strong class=\"target-word\">내성</strong>을 얻었다."
+      },
+      {
+        "exam_en": "We must promote <strong class=\"target-word\">tolerance</strong> in our community.",
+        "exam_ko": "우리는 지역 사회에서 <strong class=\"target-word\">관용</strong>을 증진해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 3837,
+    "origin": "via",
+    "examples": [
+      {
+        "exam_en": "She flew to Paris <strong class=\"target-word\">via</strong> London.",
+        "exam_ko": "그녀는 런던 <strong class=\"target-word\">경유</strong>로 파리까지 비행했다."
+      },
+      {
+        "exam_en": "He succeeded <strong class=\"target-word\">via</strong> years of hard work.",
+        "exam_ko": "그는 수년간의 노력을 <strong class=\"target-word\">통해</strong> 성공했다."
+      }
+    ]
+  },
+  {
+    "id": 3840,
+    "origin": "addict",
+    "examples": [
+      {
+        "exam_en": "He became a drug <strong class=\"target-word\">addict</strong> at a young age.",
+        "exam_ko": "그는 어린 나이에 마약 <strong class=\"target-word\">중독자</strong>가 됐다."
+      },
+      {
+        "exam_en": "My brother is a baseball <strong class=\"target-word\">addict</strong>.",
+        "exam_ko": "내 남동생은 야구 <strong class=\"target-word\">광</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 3842,
+    "origin": "invitation",
+    "examples": [
+      {
+        "exam_en": "She came at the <strong class=\"target-word\">invitation</strong> of the director.",
+        "exam_ko": "그녀는 감독의 <strong class=\"target-word\">초대</strong>로 왔다."
+      },
+      {
+        "exam_en": "She accepted the <strong class=\"target-word\">invitation</strong> to dinner.",
+        "exam_ko": "그녀는 정찬 <strong class=\"target-word\">초대</strong>에 응했다."
+      }
+    ]
+  },
+  {
+    "id": 3846,
+    "origin": "ace",
+    "examples": [
+      {
+        "exam_en": "He drew the <strong class=\"target-word\">ace</strong> of hearts.",
+        "exam_ko": "그는 하트 <strong class=\"target-word\">에이스</strong>를 뽑았다."
+      },
+      {
+        "exam_en": "She is a golf <strong class=\"target-word\">ace</strong> on the tour.",
+        "exam_ko": "그녀는 투어의 골프 <strong class=\"target-word\">명수</strong>다."
+      }
+    ]
+  }
+]

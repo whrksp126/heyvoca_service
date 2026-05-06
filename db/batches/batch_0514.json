@@ -1,0 +1,242 @@
+[
+  {
+    "id": 15882,
+    "origin": "failing",
+    "examples": [
+      {
+        "exam_en": "human failings",
+        "exam_ko": "인간적인 약점."
+      }
+    ]
+  },
+  {
+    "id": 15884,
+    "origin": "propel",
+    "examples": [
+      {
+        "exam_en": "The wind propelled the boat.",
+        "exam_ko": "바람은 배를 나아가게 했다."
+      },
+      {
+        "exam_en": "be propelled by powerful ambition",
+        "exam_ko": "강렬한 야심에 이끌리다"
+      }
+    ]
+  },
+  {
+    "id": 15886,
+    "origin": "census",
+    "examples": [
+      {
+        "exam_en": "take a census",
+        "exam_ko": "국세 조사를 하다"
+      },
+      {
+        "exam_en": "the Bureau of the Census",
+        "exam_ko": "(미) 국세 조사국."
+      }
+    ]
+  },
+  {
+    "id": 15887,
+    "origin": "exaggeration",
+    "examples": [
+      {
+        "exam_en": "gross exaggeration",
+        "exam_ko": "심한 과장"
+      },
+      {
+        "exam_en": "without exaggeration",
+        "exam_ko": "과장하지 않고"
+      }
+    ]
+  },
+  {
+    "id": 15888,
+    "origin": "familiarity",
+    "examples": [
+      {
+        "exam_en": "My familiarity with their customs was helpful.",
+        "exam_ko": "내가 그들의 관습에 정통한 것이 도움이 되었다."
+      },
+      {
+        "exam_en": "have personal familiarity with",
+        "exam_ko": "…과 개인적으로 친하다."
+      }
+    ]
+  },
+  {
+    "id": 15889,
+    "origin": "speculator",
+    "examples": [
+      {
+        "exam_en": "a speculator in real estate",
+        "exam_ko": "부동산 투기(업)자."
+      }
+    ]
+  },
+  {
+    "id": 15890,
+    "origin": "penury",
+    "examples": [
+      {
+        "exam_en": "reduced to penury",
+        "exam_ko": "몹시 곤란하여, 궁핍하여."
+      }
+    ]
+  },
+  {
+    "id": 15891,
+    "origin": "schematic",
+    "examples": [
+      {
+        "exam_en": "a schematic outline",
+        "exam_ko": "개략적인 윤곽."
+      }
+    ]
+  },
+  {
+    "id": 15892,
+    "origin": "asteroid",
+    "examples": [
+      {
+        "exam_en": "Believing that an asteroid would one day strike the Earth, the citizens decided to live on Mars.",
+        "exam_ko": "소행성이 언젠가 지구를 강타 할 것이라고 믿고 시민들은 화성에 살기로 결정했습니다."
+      }
+    ]
+  },
+  {
+    "id": 15893,
+    "origin": "upstate",
+    "examples": [
+      {
+        "exam_en": "upstate country folk",
+        "exam_ko": "주의 북부 지방 사람들."
+      }
+    ]
+  },
+  {
+    "id": 15896,
+    "origin": "abolition",
+    "examples": [
+      {
+        "exam_en": "the abolition of nuclear tests",
+        "exam_ko": "핵실험의 폐지."
+      },
+      {
+        "exam_en": "Not that this led to any movement for the abolition of slavery.",
+        "exam_ko": "이것이 노예제 폐지를 위한 어떤 운동으로도 이어지지는 않았다."
+      }
+    ]
+  },
+  {
+    "id": 15898,
+    "origin": "congruent",
+    "examples": [
+      {
+        "exam_en": "His actions were not congruent with his words.",
+        "exam_ko": "그는 언행이 일치하지 않았다."
+      }
+    ]
+  },
+  {
+    "id": 15899,
+    "origin": "analogous",
+    "examples": [
+      {
+        "exam_en": "The human brain is analogous to a computer.",
+        "exam_ko": "인간의 두뇌는 컴퓨터와 유사하다"
+      },
+      {
+        "exam_en": "The major poems of Dante and Milton are somewhat analogous in conception.",
+        "exam_ko": "단테와 밀턴의 중요한 시는 착상이 다소 닮았다."
+      }
+    ]
+  },
+  {
+    "id": 15900,
+    "origin": "sprawl",
+    "examples": [
+      {
+        "exam_en": "send a person sprawling",
+        "exam_ko": "남을 때려눕히다"
+      },
+      {
+        "exam_en": "The boy lay sprawling on the lawn.",
+        "exam_ko": "그 소년은 잔디 위에 큰대자로 드러누웠다."
+      }
+    ]
+  },
+  {
+    "id": 15902,
+    "origin": "endemic",
+    "examples": [
+      {
+        "exam_en": "endemic plants",
+        "exam_ko": "고유 식물"
+      },
+      {
+        "exam_en": "a disease endemic to the tropics",
+        "exam_ko": "열대 지방에 특유한 병."
+      }
+    ]
+  },
+  {
+    "id": 15904,
+    "origin": "miraculously",
+    "examples": [
+      {
+        "exam_en": "Miraculously, there were some survivors.",
+        "exam_ko": "기적적으로 생존자가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 15905,
+    "origin": "overland",
+    "examples": [
+      {
+        "exam_en": "go overland to Europe",
+        "exam_ko": "유럽까지 육로로 가다."
+      },
+      {
+        "exam_en": "Overland Trail",
+        "exam_ko": "(미) 서부로의 이주 루트[경로]."
+      }
+    ]
+  },
+  {
+    "id": 15913,
+    "origin": "infra",
+    "examples": [
+      {
+        "exam_en": "infrahuman",
+        "exam_ko": "인간 이하의."
+      },
+      {
+        "exam_en": "infract",
+        "exam_ko": "어기다"
+      }
+    ]
+  },
+  {
+    "id": 15915,
+    "origin": "binaural",
+    "examples": [
+      {
+        "exam_en": "a binaural stethoscope",
+        "exam_ko": "양(兩)귀(를 쓰는) 청진기."
+      }
+    ]
+  },
+  {
+    "id": 15918,
+    "origin": "hooligan",
+    "examples": [
+      {
+        "exam_en": "Hooligans turned over cars and set them on fire.",
+        "exam_ko": "부랑아들이 차들을 전복시켜 불을 질렀다."
+      }
+    ]
+  }
+]

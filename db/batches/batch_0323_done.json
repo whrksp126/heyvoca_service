@@ -1,0 +1,266 @@
+[
+  {
+    "id": 8262,
+    "origin": "simulate",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">simulated</strong> remorse to avoid punishment.",
+        "exam_ko": "그는 처벌을 피하려고 후회를 <strong class=\"target-word\">가장했다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">simulated</strong> enthusiasm during the meeting.",
+        "exam_ko": "그녀는 회의 중에 열정을 <strong class=\"target-word\">흉내 냈다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8263,
+    "origin": "unwary",
+    "examples": [
+      {
+        "exam_en": "The pickpocket targeted an <strong class=\"target-word\">unwary</strong> tourist.",
+        "exam_ko": "소매치기는 <strong class=\"target-word\">방심한</strong> 관광객을 노렸다."
+      }
+    ]
+  },
+  {
+    "id": 8264,
+    "origin": "wary",
+    "examples": [
+      {
+        "exam_en": "You should be <strong class=\"target-word\">wary</strong> of strangers.",
+        "exam_ko": "낯선 사람을 <strong class=\"target-word\">경계해야</strong> 한다."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">wary</strong> of his story.",
+        "exam_ko": "그녀는 그의 이야기를 <strong class=\"target-word\">쉽게 믿지 않았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8265,
+    "origin": "ware",
+    "examples": [
+      {
+        "exam_en": "Vendors displayed their <strong class=\"target-word\">wares</strong> on the ground.",
+        "exam_ko": "행상인들은 <strong class=\"target-word\">물건</strong>을 땅바닥에 늘어놓았다."
+      },
+      {
+        "exam_en": "The shop sells earthen <strong class=\"target-word\">ware</strong> and pottery.",
+        "exam_ko": "그 가게는 토기와 <strong class=\"target-word\">도기</strong>를 판매한다."
+      }
+    ]
+  },
+  {
+    "id": 8266,
+    "origin": "mediation",
+    "examples": [
+      {
+        "exam_en": "The dispute was resolved through <strong class=\"target-word\">mediation</strong>.",
+        "exam_ko": "분쟁은 <strong class=\"target-word\">중재</strong>를 통해 해결되었다."
+      },
+      {
+        "exam_en": "Both sides agreed to enter <strong class=\"target-word\">mediation</strong>.",
+        "exam_ko": "양측은 <strong class=\"target-word\">조정</strong> 절차에 들어가기로 합의했다."
+      }
+    ]
+  },
+  {
+    "id": 8267,
+    "origin": "midday",
+    "examples": [
+      {
+        "exam_en": "We scheduled the meeting at <strong class=\"target-word\">midday</strong>.",
+        "exam_ko": "우리는 <strong class=\"target-word\">정오</strong>에 회의를 잡았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">midday</strong> sun was unbearably hot.",
+        "exam_ko": "<strong class=\"target-word\">한낮</strong>의 태양은 참을 수 없이 뜨거웠다."
+      }
+    ]
+  },
+  {
+    "id": 8268,
+    "origin": "midst",
+    "examples": [
+      {
+        "exam_en": "She stood in the <strong class=\"target-word\">midst</strong> of the crowd.",
+        "exam_ko": "그녀는 군중 <strong class=\"target-word\">한가운데</strong>에 서 있었다."
+      },
+      {
+        "exam_en": "He fell asleep in the <strong class=\"target-word\">midst</strong> of the concert.",
+        "exam_ko": "그는 콘서트가 <strong class=\"target-word\">한창인 중</strong>에 잠이 들었다."
+      }
+    ]
+  },
+  {
+    "id": 8269,
+    "origin": "medication",
+    "examples": [
+      {
+        "exam_en": "She is currently on <strong class=\"target-word\">medication</strong> for anxiety.",
+        "exam_ko": "그녀는 현재 불안증으로 <strong class=\"target-word\">약물 치료</strong> 중이다."
+      },
+      {
+        "exam_en": "The doctor took him off his <strong class=\"target-word\">medication</strong>.",
+        "exam_ko": "의사는 그의 <strong class=\"target-word\">투약</strong>을 중지했다."
+      }
+    ]
+  },
+  {
+    "id": 8270,
+    "origin": "medic",
+    "examples": [
+      {
+        "exam_en": "He served as a <strong class=\"target-word\">medic</strong> for two years.",
+        "exam_ko": "그는 2년간 <strong class=\"target-word\">위생병</strong>으로 복무했다."
+      }
+    ]
+  },
+  {
+    "id": 8274,
+    "origin": "league",
+    "examples": [
+      {
+        "exam_en": "She joined a <strong class=\"target-word\">league</strong> of environmental groups.",
+        "exam_ko": "그녀는 환경 단체 <strong class=\"target-word\">연맹</strong>에 가입했다."
+      },
+      {
+        "exam_en": "The two nations formed a <strong class=\"target-word\">league</strong> against the enemy.",
+        "exam_ko": "두 나라는 적에 맞서 <strong class=\"target-word\">동맹</strong>을 맺었다."
+      }
+    ]
+  },
+  {
+    "id": 8276,
+    "origin": "etiquette",
+    "examples": [
+      {
+        "exam_en": "His behavior was a clear breach of <strong class=\"target-word\">etiquette</strong>.",
+        "exam_ko": "그의 행동은 명백한 <strong class=\"target-word\">예의</strong> 위반이었다."
+      },
+      {
+        "exam_en": "Guests must follow strict court <strong class=\"target-word\">etiquette</strong>.",
+        "exam_ko": "손님들은 엄격한 궁정 <strong class=\"target-word\">예법</strong>을 따라야 한다."
+      }
+    ]
+  },
+  {
+    "id": 8278,
+    "origin": "ticklish",
+    "examples": [
+      {
+        "exam_en": "She is <strong class=\"target-word\">ticklish</strong> and hates being tickled.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">간지럼을 잘 타서</strong> 간질이는 걸 싫어한다."
+      },
+      {
+        "exam_en": "This is a <strong class=\"target-word\">ticklish</strong> situation to handle.",
+        "exam_ko": "이것은 다루기 <strong class=\"target-word\">까다로운</strong> 상황이다."
+      }
+    ]
+  },
+  {
+    "id": 8279,
+    "origin": "tick",
+    "examples": [
+      {
+        "exam_en": "He arrived at seven o'clock on the <strong class=\"target-word\">tick</strong>.",
+        "exam_ko": "그는 정각 7시 <strong class=\"target-word\">딱 맞춰</strong> 도착했다."
+      },
+      {
+        "exam_en": "I'll be back in a <strong class=\"target-word\">tick</strong>.",
+        "exam_ko": "<strong class=\"target-word\">순식간에</strong> 돌아올게."
+      }
+    ]
+  },
+  {
+    "id": 8280,
+    "origin": "pacific",
+    "examples": [
+      {
+        "exam_en": "Three states border the <strong class=\"target-word\">Pacific</strong> Ocean.",
+        "exam_ko": "세 개의 주가 <strong class=\"target-word\">태평양</strong>에 접해 있다."
+      }
+    ]
+  },
+  {
+    "id": 8282,
+    "origin": "pact",
+    "examples": [
+      {
+        "exam_en": "They made a <strong class=\"target-word\">pact</strong> to keep the secret.",
+        "exam_ko": "그들은 비밀을 지키겠다는 <strong class=\"target-word\">약속</strong>을 했다."
+      },
+      {
+        "exam_en": "The two countries signed a peace <strong class=\"target-word\">pact</strong>.",
+        "exam_ko": "두 나라는 평화 <strong class=\"target-word\">조약</strong>에 서명했다."
+      }
+    ]
+  },
+  {
+    "id": 8283,
+    "origin": "pax",
+    "examples": [
+      {
+        "exam_en": "They finally made <strong class=\"target-word\">pax</strong> after the argument.",
+        "exam_ko": "그들은 다툼 후 마침내 <strong class=\"target-word\">화해했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 8285,
+    "origin": "abandonment",
+    "examples": [
+      {
+        "exam_en": "The project ended in complete <strong class=\"target-word\">abandonment</strong>.",
+        "exam_ko": "프로젝트는 완전한 <strong class=\"target-word\">포기</strong>로 끝났다."
+      },
+      {
+        "exam_en": "The dog showed signs of <strong class=\"target-word\">abandonment</strong>.",
+        "exam_ko": "그 개는 <strong class=\"target-word\">유기</strong>의 흔적을 보였다."
+      },
+      {
+        "exam_en": "The child felt a deep sense of <strong class=\"target-word\">abandonment</strong>.",
+        "exam_ko": "그 아이는 깊은 <strong class=\"target-word\">버림받음</strong>의 감정을 느꼈다."
+      }
+    ]
+  },
+  {
+    "id": 8290,
+    "origin": "freely",
+    "examples": [
+      {
+        "exam_en": "You can <strong class=\"target-word\">freely</strong> read all the books here.",
+        "exam_ko": "여기 있는 모든 책을 <strong class=\"target-word\">자유롭게</strong> 읽을 수 있다."
+      },
+      {
+        "exam_en": "I <strong class=\"target-word\">freely</strong> admit I made mistakes.",
+        "exam_ko": "나는 실수를 했다고 <strong class=\"target-word\">솔직히</strong> 인정한다."
+      }
+    ]
+  },
+  {
+    "id": 8291,
+    "origin": "inhabitable",
+    "examples": [
+      {
+        "exam_en": "Scientists found an <strong class=\"target-word\">inhabitable</strong> area on the planet.",
+        "exam_ko": "과학자들은 그 행성에서 <strong class=\"target-word\">거주 가능한</strong> 지역을 발견했다."
+      }
+    ]
+  },
+  {
+    "id": 8293,
+    "origin": "inhabitant",
+    "examples": [
+      {
+        "exam_en": "The original <strong class=\"target-word\">inhabitants</strong> lived here for centuries.",
+        "exam_ko": "원래 <strong class=\"target-word\">원주민</strong>들은 수세기 동안 이곳에 살았다."
+      },
+      {
+        "exam_en": "The city has 100,000 <strong class=\"target-word\">inhabitants</strong>.",
+        "exam_ko": "그 도시의 <strong class=\"target-word\">주민</strong>은 10만 명이다."
+      }
+    ]
+  }
+]

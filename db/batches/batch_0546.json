@@ -1,0 +1,266 @@
+[
+  {
+    "id": 17652,
+    "origin": "shelve",
+    "examples": [
+      {
+        "exam_en": "shelve the issue",
+        "exam_ko": "문제를 뒤로 미루다."
+      },
+      {
+        "exam_en": "shelve a closet",
+        "exam_ko": "벽장에 선반을 달다."
+      }
+    ]
+  },
+  {
+    "id": 17653,
+    "origin": "disparate",
+    "examples": [
+      {
+        "exam_en": "The two ideas seem disparate and unrelated to each other.",
+        "exam_ko": "두 가지 아이디어는 이질적이고 상관이 없어 보인다."
+      }
+    ]
+  },
+  {
+    "id": 17655,
+    "origin": "notation",
+    "examples": [
+      {
+        "exam_en": "musical notation",
+        "exam_ko": "기보(記譜)법"
+      },
+      {
+        "exam_en": "decimal notation",
+        "exam_ko": "십진법."
+      }
+    ]
+  },
+  {
+    "id": 17657,
+    "origin": "carnivorous",
+    "examples": [
+      {
+        "exam_en": "carnivorous animals",
+        "exam_ko": "육식 동물[식충 식물]. cf. HERBIVOROUS, OMNIVOROUS 1."
+      }
+    ]
+  },
+  {
+    "id": 17662,
+    "origin": "remainder",
+    "examples": [
+      {
+        "exam_en": "the remainder of the property",
+        "exam_ko": "잔여 재산."
+      },
+      {
+        "exam_en": "the remainder of the excitement",
+        "exam_ko": "흥분의 여운"
+      }
+    ]
+  },
+  {
+    "id": 17663,
+    "origin": "correlate",
+    "examples": [
+      {
+        "exam_en": "correlate geography with other studies",
+        "exam_ko": "지리학을 다른 학문과 연관시키다"
+      },
+      {
+        "exam_en": "Smoking and lung cancer are closely correlated.",
+        "exam_ko": "흡연과 폐암은 밀접한 관련이 있다."
+      }
+    ]
+  },
+  {
+    "id": 17664,
+    "origin": "monotonous",
+    "examples": [
+      {
+        "exam_en": "a monotonous job",
+        "exam_ko": "단조로운 일"
+      },
+      {
+        "exam_en": "Is it monotonous to live in the country?",
+        "exam_ko": "시골에서 사는 것이 지루합니까?"
+      }
+    ]
+  },
+  {
+    "id": 17667,
+    "origin": "prescriptive",
+    "examples": [
+      {
+        "exam_en": "prescriptive grammar",
+        "exam_ko": "규범 문법."
+      },
+      {
+        "exam_en": "a prescriptive right",
+        "exam_ko": "시효에 의해 취득한 권리."
+      }
+    ]
+  },
+  {
+    "id": 17668,
+    "origin": "notwithstanding",
+    "examples": [
+      {
+        "exam_en": "Notwithstanding the danger, he climbed the mountain.",
+        "exam_ko": "위험을 무릅쓰고 그는 그 산에 올라갔다"
+      },
+      {
+        "exam_en": "Inflation notwithstanding, the Government decided to spend more.",
+        "exam_ko": "인플레이션에도 불구하고 정부는 지출을 늘리기로 결정했다"
+      }
+    ]
+  },
+  {
+    "id": 17671,
+    "origin": "appurtenance",
+    "examples": [
+      {
+        "exam_en": "furniture and other appurtenances of the room",
+        "exam_ko": "가구와 기타의 실내 부속품."
+      }
+    ]
+  },
+  {
+    "id": 17672,
+    "origin": "unilateral",
+    "examples": [
+      {
+        "exam_en": "unilateral disarmament",
+        "exam_ko": "일방적 군비 축소"
+      },
+      {
+        "exam_en": "unilateral reply",
+        "exam_ko": "일방적인 대답"
+      }
+    ]
+  },
+  {
+    "id": 17673,
+    "origin": "harrowing",
+    "examples": [
+      {
+        "exam_en": "a harrowing experience",
+        "exam_ko": "괴로운 경험"
+      },
+      {
+        "exam_en": "harrowing pictures of the children who had been murdered",
+        "exam_ko": "살해된 아이들의 참혹한 사진."
+      }
+    ]
+  },
+  {
+    "id": 17675,
+    "origin": "deterrence",
+    "examples": [
+      {
+        "exam_en": "mutual deterrence",
+        "exam_ko": "상호 억제."
+      }
+    ]
+  },
+  {
+    "id": 17677,
+    "origin": "renunciation",
+    "examples": [
+      {
+        "exam_en": "make a renunciation of",
+        "exam_ko": "…을 단념하다."
+      },
+      {
+        "exam_en": "Monks lead a life of renunciation.",
+        "exam_ko": "수도사들은 절제된 생활을 하고 있다."
+      }
+    ]
+  },
+  {
+    "id": 17678,
+    "origin": "imprisonment",
+    "examples": [
+      {
+        "exam_en": "life imprisonment",
+        "exam_ko": "종신형"
+      },
+      {
+        "exam_en": "be sentenced to twenty years' imprisonment",
+        "exam_ko": "20년의 금고형에 처해지다."
+      }
+    ]
+  },
+  {
+    "id": 17680,
+    "origin": "assassination",
+    "examples": [
+      {
+        "exam_en": "assassination attempt",
+        "exam_ko": "암살 미수."
+      },
+      {
+        "exam_en": "If th’ assassination Could trammel up the consequence and catch With his surcease success,",
+        "exam_ko": "암살이 그 결과를 방해하고 그의 성공을 멈출 수 있다면,"
+      },
+      {
+        "exam_en": "The recent bombings in this town was in reprisal for the assassination of their general.",
+        "exam_ko": "이 마을을 최근에 폭격한 것은 그들의 장군을 암살한 것에 대한 보복이었다."
+      }
+    ]
+  },
+  {
+    "id": 17681,
+    "origin": "rouse",
+    "examples": [
+      {
+        "exam_en": "rouse a person from his sleep",
+        "exam_ko": "남을 잠[침묵]에서 깨우다."
+      },
+      {
+        "exam_en": "rouse the masses",
+        "exam_ko": "대중을 선동하다"
+      }
+    ]
+  },
+  {
+    "id": 17682,
+    "origin": "avenge",
+    "examples": [
+      {
+        "exam_en": "avenge one's brother",
+        "exam_ko": "형제의 원수를 갚다"
+      },
+      {
+        "exam_en": "avenge oneself on a person",
+        "exam_ko": "남에게 복수하다"
+      }
+    ]
+  },
+  {
+    "id": 17684,
+    "origin": "outwit",
+    "examples": [
+      {
+        "exam_en": "The thief outwitted the police and escaped.",
+        "exam_ko": "그 도둑은 경찰을 따돌리고 도망쳤다."
+      }
+    ]
+  },
+  {
+    "id": 17689,
+    "origin": "unauthorized",
+    "examples": [
+      {
+        "exam_en": "unauthorized photocopying",
+        "exam_ko": "불법 복사"
+      },
+      {
+        "exam_en": "unauthorized use of trademark",
+        "exam_ko": "불법적인 상표 사용."
+      }
+    ]
+  }
+]

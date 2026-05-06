@@ -1,0 +1,250 @@
+[
+  {
+    "id": 20971,
+    "origin": "repository",
+    "examples": [
+      {
+        "exam_en": "a repository for merchandise",
+        "exam_ko": "상품 두는 곳."
+      },
+      {
+        "exam_en": "a repository of knowledge",
+        "exam_ko": "지식의 보고."
+      }
+    ]
+  },
+  {
+    "id": 20972,
+    "origin": "misconduct",
+    "examples": [
+      {
+        "exam_en": "commit misconduct",
+        "exam_ko": "비행을 저지르다"
+      },
+      {
+        "exam_en": "commit a misconduct with",
+        "exam_ko": "…과 간통하다."
+      }
+    ]
+  },
+  {
+    "id": 20984,
+    "origin": "layered",
+    "examples": [
+      {
+        "exam_en": "five-layered",
+        "exam_ko": "5층의"
+      },
+      {
+        "exam_en": "multi-layered",
+        "exam_ko": "다층[단층] 구조의."
+      }
+    ]
+  },
+  {
+    "id": 20988,
+    "origin": "weathering",
+    "examples": [
+      {
+        "exam_en": "The paint was dull with weathering .",
+        "exam_ko": "페인트는 비바람에 바래 있었다"
+      }
+    ]
+  },
+  {
+    "id": 20990,
+    "origin": "chemist",
+    "examples": [
+      {
+        "exam_en": "a research chemist  \n",
+        "exam_ko": "화학 연구원\n"
+      },
+      {
+        "exam_en": "a chemist's",
+        "exam_ko": "(영) 약국((미) drugstore)."
+      },
+      {
+        "exam_en": "a research chemist",
+        "exam_ko": "화학 연구원"
+      }
+    ]
+  },
+  {
+    "id": 20991,
+    "origin": "inconsequential",
+    "examples": [
+      {
+        "exam_en": "The minor typo in the report was inconsequential to the overall message.",
+        "exam_ko": "보고서의 미묘한 오타는 전반적인 메시지에는 무의미했다."
+      }
+    ]
+  },
+  {
+    "id": 20992,
+    "origin": "infancy",
+    "examples": [
+      {
+        "exam_en": "in one's infancy",
+        "exam_ko": "어릴 적에, 유아기에."
+      },
+      {
+        "exam_en": "Television was still in its infancy in 1946.",
+        "exam_ko": "텔레비전은 1946년에는 아직 초기 단계에 있었다."
+      }
+    ]
+  },
+  {
+    "id": 21001,
+    "origin": "illuminating",
+    "examples": [
+      {
+        "exam_en": "illuminating gas",
+        "exam_ko": "등용(燈用) 가스"
+      },
+      {
+        "exam_en": "an illuminating mirror",
+        "exam_ko": "(현미경의) 반사경."
+      }
+    ]
+  },
+  {
+    "id": 21004,
+    "origin": "predisposed",
+    "examples": [
+      {
+        "exam_en": "Children are predisposed to believe what adults say.",
+        "exam_ko": "아이들은 어른이 하는 이야기를 믿기 쉽다."
+      }
+    ]
+  },
+  {
+    "id": 21006,
+    "origin": "fascination",
+    "examples": [
+      {
+        "exam_en": "He stared in fascination at her.",
+        "exam_ko": "그는 홀린 듯이 그녀를 응시했다."
+      },
+      {
+        "exam_en": "have a fascination for a person",
+        "exam_ko": "남을 매혹하는 힘이 있다."
+      }
+    ]
+  },
+  {
+    "id": 21010,
+    "origin": "ceramics",
+    "examples": [
+      {
+        "exam_en": "Ceramics is taught in some colleges.",
+        "exam_ko": "몇몇 대학에서는 제도술을 가르친다."
+      },
+      {
+        "exam_en": "Those ceramics are beautiful.",
+        "exam_ko": "그 도자기들은 아름답다.\n"
+      },
+      {
+        "exam_en": "Those ceramics are beautiful.",
+        "exam_ko": "그 도자기들은 아름답다."
+      }
+    ]
+  },
+  {
+    "id": 21012,
+    "origin": "untreated",
+    "examples": [
+      {
+        "exam_en": "untreated apple juice",
+        "exam_ko": "살균하지 않은 사과 주스."
+      }
+    ]
+  },
+  {
+    "id": 21020,
+    "origin": "storyteller",
+    "examples": [
+      {
+        "exam_en": "My mother is a very good storyteller.",
+        "exam_ko": "어머니는 이야기를 매우 잘 한다."
+      }
+    ]
+  },
+  {
+    "id": 21022,
+    "origin": "mutually",
+    "examples": [
+      {
+        "exam_en": "mutually exclusive",
+        "exam_ko": "상호 배타적인."
+      }
+    ]
+  },
+  {
+    "id": 21026,
+    "origin": "rejection",
+    "examples": [
+      {
+        "exam_en": "Design Architect will notify Contractor through Design-Builder of acceptance or rejection of proposed substitution within 15 days of receipt of substitution request, or seven days of receipt of additional information or documentation, whichever is later.",
+        "exam_ko": "설계자는 디자인 빌더를 통해 대체품 요청 수령후 15일 이내에 추가 정보나 문서 수령후 7일이내 수락 또는 거부를 계약자에게 통지한다."
+      }
+    ]
+  },
+  {
+    "id": 21028,
+    "origin": "continuation",
+    "examples": [
+      {
+        "exam_en": "the senseless continuation of the nuclear arms race",
+        "exam_ko": "핵군비 경쟁의 어리석은 계속."
+      }
+    ]
+  },
+  {
+    "id": 21030,
+    "origin": "reproduction",
+    "examples": [
+      {
+        "exam_en": "reproduction of literary works on film",
+        "exam_ko": "문학 작품의 영화화"
+      },
+      {
+        "exam_en": "the reproduction of Auschwitz",
+        "exam_ko": "아우슈비츠의 재현."
+      }
+    ]
+  },
+  {
+    "id": 21031,
+    "origin": "assemblage",
+    "examples": [
+      {
+        "exam_en": "an assemblage of hypocrites",
+        "exam_ko": "위선자들의 무리, 모여든 위선자들."
+      }
+    ]
+  },
+  {
+    "id": 21039,
+    "origin": "plume",
+    "examples": [
+      {
+        "exam_en": "a plume of smoke",
+        "exam_ko": "한 줄기의 담배 연기."
+      },
+      {
+        "exam_en": "Birds plume their feathers.",
+        "exam_ko": "새는 깃털을 다듬는다."
+      }
+    ]
+  },
+  {
+    "id": 21040,
+    "origin": "bituminous",
+    "examples": [
+      {
+        "exam_en": "bituminous shale",
+        "exam_ko": "역청 혈암."
+      }
+    ]
+  }
+]

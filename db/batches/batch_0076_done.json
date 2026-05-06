@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1574,
+    "origin": "depict",
+    "examples": [
+      {
+        "exam_en": "The artist <strong class=\"target-word\">depicted</strong> the scene in pen-and-ink.",
+        "exam_ko": "그 화가는 장면을 펜화로 <strong class=\"target-word\">묘사했다</strong>."
+      },
+      {
+        "exam_en": "This painting <strong class=\"target-word\">depicts</strong> the birth of Venus.",
+        "exam_ko": "이 그림은 비너스의 탄생을 <strong class=\"target-word\">묘사한다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1575,
+    "origin": "spoil",
+    "examples": [
+      {
+        "exam_en": "The rain <strong class=\"target-word\">spoiled</strong> our outdoor plans.",
+        "exam_ko": "비가 우리의 야외 계획을 <strong class=\"target-word\">망쳐버렸다</strong>."
+      },
+      {
+        "exam_en": "Eating snacks <strong class=\"target-word\">spoiled</strong> her appetite.",
+        "exam_ko": "간식을 먹은 것이 그녀의 식욕을 <strong class=\"target-word\">망쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1576,
+    "origin": "target",
+    "examples": [
+      {
+        "exam_en": "The soldier hit the <strong class=\"target-word\">target</strong> on his first shot.",
+        "exam_ko": "그 병사는 첫 번째 사격에 <strong class=\"target-word\">목표물</strong>을 맞혔다."
+      },
+      {
+        "exam_en": "The company <strong class=\"target-word\">targeted</strong> young adults with its campaign.",
+        "exam_ko": "그 회사는 캠페인으로 젊은 성인을 <strong class=\"target-word\">타겟으로 삼았다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1577,
+    "origin": "reward",
+    "examples": [
+      {
+        "exam_en": "She received a <strong class=\"target-word\">reward</strong> for finding the lost dog.",
+        "exam_ko": "그녀는 잃어버린 개를 찾아준 것에 대한 <strong class=\"target-word\">보상</strong>을 받았다."
+      },
+      {
+        "exam_en": "The manager <strong class=\"target-word\">rewarded</strong> the team for their hard work.",
+        "exam_ko": "매니저는 팀의 노고에 <strong class=\"target-word\">보답했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1578,
+    "origin": "file",
+    "examples": [
+      {
+        "exam_en": "She kept all the documents in a <strong class=\"target-word\">file</strong>.",
+        "exam_ko": "그녀는 모든 서류를 <strong class=\"target-word\">파일</strong>에 보관했다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">filed</strong> a complaint with the manager.",
+        "exam_ko": "그는 매니저에게 불만을 <strong class=\"target-word\">제출했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1579,
+    "origin": "contrast",
+    "examples": [
+      {
+        "exam_en": "The teacher <strong class=\"target-word\">contrasted</strong> the two writing styles.",
+        "exam_ko": "선생님은 두 가지 글쓰기 방식을 <strong class=\"target-word\">대조했다</strong>."
+      },
+      {
+        "exam_en": "Her cheerful mood was a sharp <strong class=\"target-word\">contrast</strong> to his sadness.",
+        "exam_ko": "그녀의 밝은 기분은 그의 슬픔과 뚜렷한 <strong class=\"target-word\">대조</strong>를 이뤘다."
+      }
+    ]
+  },
+  {
+    "id": 1580,
+    "origin": "seal",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">sealed</strong> the envelope before mailing it.",
+        "exam_ko": "그녀는 편지를 부치기 전에 봉투를 <strong class=\"target-word\">봉했다</strong>."
+      },
+      {
+        "exam_en": "The pipe was <strong class=\"target-word\">sealed</strong> to prevent moisture from entering.",
+        "exam_ko": "습기가 들어오지 않도록 파이프가 <strong class=\"target-word\">봉합되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1581,
+    "origin": "round",
+    "examples": [
+      {
+        "exam_en": "They sat at a <strong class=\"target-word\">round</strong> table to discuss the issue.",
+        "exam_ko": "그들은 문제를 논의하기 위해 <strong class=\"target-word\">둥근</strong> 탁자에 앉았다."
+      },
+      {
+        "exam_en": "The boxer won the match in the final <strong class=\"target-word\">round</strong>.",
+        "exam_ko": "그 권투 선수는 마지막 <strong class=\"target-word\">라운드</strong>에서 경기에서 이겼다."
+      }
+    ]
+  },
+  {
+    "id": 1582,
+    "origin": "originate",
+    "examples": [
+      {
+        "exam_en": "The gas leak <strong class=\"target-word\">originated</strong> in the basement.",
+        "exam_ko": "가스 누출은 지하실에서 <strong class=\"target-word\">시작되었다</strong>."
+      },
+      {
+        "exam_en": "The custom <strong class=\"target-word\">originated</strong> in ancient China.",
+        "exam_ko": "그 풍습은 고대 중국에서 <strong class=\"target-word\">유래했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1583,
+    "origin": "tuck",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">tucked</strong> himself away in a corner to read.",
+        "exam_ko": "그는 책을 읽으려고 구석에 <strong class=\"target-word\">틀어박혔다</strong>."
+      },
+      {
+        "exam_en": "The restaurant is <strong class=\"target-word\">tucked</strong> away in a small building.",
+        "exam_ko": "그 식당은 작은 건물 안에 <strong class=\"target-word\">숨어 있다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1584,
+    "origin": "bid",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">bid</strong> $50,000 for the house.",
+        "exam_ko": "그는 그 집에 50,000달러를 <strong class=\"target-word\">입찰했다</strong>."
+      },
+      {
+        "exam_en": "She placed a <strong class=\"target-word\">bid</strong> on the rare painting at the auction.",
+        "exam_ko": "그녀는 경매에서 희귀한 그림에 <strong class=\"target-word\">입찰가를 제시했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1585,
+    "origin": "melt",
+    "examples": [
+      {
+        "exam_en": "The snow <strong class=\"target-word\">melted</strong> quickly in the spring sun.",
+        "exam_ko": "눈이 봄 햇살에 빠르게 <strong class=\"target-word\">녹았다</strong>."
+      },
+      {
+        "exam_en": "Gold <strong class=\"target-word\">melts</strong> at a very high temperature.",
+        "exam_ko": "금은 매우 높은 온도에서 <strong class=\"target-word\">녹는다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1586,
+    "origin": "thrust",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">thrust</strong> his hands into his pockets.",
+        "exam_ko": "그는 손을 주머니에 <strong class=\"target-word\">쑤셔 넣었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">thrust</strong> the door open and walked in.",
+        "exam_ko": "그녀는 문을 <strong class=\"target-word\">밀어젖히고</strong> 안으로 들어왔다."
+      }
+    ]
+  },
+  {
+    "id": 1587,
+    "origin": "widen",
+    "examples": [
+      {
+        "exam_en": "The city plans to <strong class=\"target-word\">widen</strong> the main road.",
+        "exam_ko": "시는 주요 도로를 <strong class=\"target-word\">넓힐</strong> 계획이다."
+      },
+      {
+        "exam_en": "Foreign intervention threatened to <strong class=\"target-word\">widen</strong> the conflict.",
+        "exam_ko": "외국의 개입은 분쟁을 <strong class=\"target-word\">확대시킬</strong> 위험을 안고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 1588,
+    "origin": "summon",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">summoned</strong> a doctor immediately.",
+        "exam_ko": "그는 즉시 의사를 <strong class=\"target-word\">불렀다</strong>."
+      },
+      {
+        "exam_en": "She was <strong class=\"target-word\">summoned</strong> to the President's office.",
+        "exam_ko": "그녀는 대통령 집무실로 <strong class=\"target-word\">호출되었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1589,
+    "origin": "amend",
+    "examples": [
+      {
+        "exam_en": "Congress voted to <strong class=\"target-word\">amend</strong> the tax law.",
+        "exam_ko": "의회는 세법을 <strong class=\"target-word\">개정하기로</strong> 투표했다."
+      },
+      {
+        "exam_en": "They proposed to <strong class=\"target-word\">amend</strong> the Constitution.",
+        "exam_ko": "그들은 헌법을 <strong class=\"target-word\">개정하자고</strong> 제안했다."
+      }
+    ]
+  },
+  {
+    "id": 1590,
+    "origin": "desire",
+    "examples": [
+      {
+        "exam_en": "She had a strong <strong class=\"target-word\">desire</strong> to travel the world.",
+        "exam_ko": "그녀는 세계를 여행하고픈 강한 <strong class=\"target-word\">열망</strong>을 가지고 있었다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">desired</strong> to achieve good results.",
+        "exam_ko": "그는 좋은 결과를 얻기를 <strong class=\"target-word\">바랐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1591,
+    "origin": "compensate",
+    "examples": [
+      {
+        "exam_en": "The company <strong class=\"target-word\">compensated</strong> him for his trouble.",
+        "exam_ko": "회사는 그의 수고에 대해 <strong class=\"target-word\">보상했다</strong>."
+      },
+      {
+        "exam_en": "Nothing can <strong class=\"target-word\">compensate</strong> for the loss of a loved one.",
+        "exam_ko": "사랑하는 사람을 잃은 것은 무엇으로도 <strong class=\"target-word\">보상받을 수 없다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 1592,
+    "origin": "couple",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">couple</strong> of students stayed after class.",
+        "exam_ko": "학생 <strong class=\"target-word\">두 명</strong>이 수업 후에 남았다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">couple</strong> walked hand in hand in the park.",
+        "exam_ko": "그 <strong class=\"target-word\">커플</strong>은 공원에서 손을 잡고 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 1593,
+    "origin": "depart",
+    "examples": [
+      {
+        "exam_en": "The train <strong class=\"target-word\">departs</strong> from Seoul at noon.",
+        "exam_ko": "기차는 정오에 서울에서 <strong class=\"target-word\">출발한다</strong>."
+      },
+      {
+        "exam_en": "The plane <strong class=\"target-word\">departs</strong> at 10:25 for Chicago.",
+        "exam_ko": "비행기는 10시 25분에 시카고를 향해 <strong class=\"target-word\">출발한다</strong>."
+      }
+    ]
+  }
+]

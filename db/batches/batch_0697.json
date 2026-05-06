@@ -1,0 +1,218 @@
+[
+  {
+    "id": 29196,
+    "origin": "unsubstantiated",
+    "examples": [
+      {
+        "exam_en": "make an unsubstantiated assertion",
+        "exam_ko": "확증 없는 주장을 하다."
+      }
+    ]
+  },
+  {
+    "id": 29201,
+    "origin": "pendency",
+    "examples": [
+      {
+        "exam_en": "during the pendency of",
+        "exam_ko": "…이 미정인 동안."
+      }
+    ]
+  },
+  {
+    "id": 29215,
+    "origin": "evidential",
+    "examples": [
+      {
+        "exam_en": "documents evidential of a trespass",
+        "exam_ko": "불법 침입의 증거가 되는 문서."
+      }
+    ]
+  },
+  {
+    "id": 29216,
+    "origin": "docket",
+    "examples": [
+      {
+        "exam_en": "Committee Meeting Docket & Agendas 11-4-19. Submitted on October 31, 2019 - 3:50pm.",
+        "exam_ko": "11/4일자 위원회 회의 안건 및 공식 진행 스케줄 2019. 10. 31 3:50pm 까지 제출."
+      }
+    ]
+  },
+  {
+    "id": 29217,
+    "origin": "epigenetic",
+    "examples": [
+      {
+        "exam_en": "epigenetic deposits",
+        "exam_ko": "후생 광상."
+      }
+    ]
+  },
+  {
+    "id": 29219,
+    "origin": "coed",
+    "examples": [
+      {
+        "exam_en": "This university went coed last year.",
+        "exam_ko": "이 대학은 작년에 남녀 공학이 되었다."
+      },
+      {
+        "exam_en": "a coed dorm",
+        "exam_ko": "남녀 공동 기숙사."
+      }
+    ]
+  },
+  {
+    "id": 29231,
+    "origin": "tastefully",
+    "examples": [
+      {
+        "exam_en": "The room was tastefully decorated.",
+        "exam_ko": "방의 장식은 품위가 있었다."
+      }
+    ]
+  },
+  {
+    "id": 29239,
+    "origin": "walkover",
+    "examples": [
+      {
+        "exam_en": "The game was a walkover for our team.",
+        "exam_ko": "그 시합은 우리 팀의 낙승이었다."
+      }
+    ]
+  },
+  {
+    "id": 29243,
+    "origin": "warhead",
+    "examples": [
+      {
+        "exam_en": "a nuclear warhead",
+        "exam_ko": "핵탄두."
+      }
+    ]
+  },
+  {
+    "id": 29252,
+    "origin": "panties",
+    "examples": [
+      {
+        "exam_en": "a pair of panties",
+        "exam_ko": "팬티 한 벌."
+      }
+    ]
+  },
+  {
+    "id": 29255,
+    "origin": "bestride",
+    "examples": [
+      {
+        "exam_en": "bestride a horse",
+        "exam_ko": "말에 걸터앉다"
+      },
+      {
+        "exam_en": "bestride a ditch",
+        "exam_ko": "도랑을 뛰어넘다."
+      }
+    ]
+  },
+  {
+    "id": 29256,
+    "origin": "ante",
+    "examples": [
+      {
+        "exam_en": "anteversion",
+        "exam_ko": "(내장의) 전경(前傾)."
+      },
+      {
+        "exam_en": "antecede",
+        "exam_ko": "선행하다"
+      }
+    ]
+  },
+  {
+    "id": 29258,
+    "origin": "boozy",
+    "examples": [
+      {
+        "exam_en": "He's normally quite a boozy person, but isn't drinking so much these days.",
+        "exam_ko": "그는 꾀 술을 많이 마시는 사람이지만 요즘은 그렇게 많이 마시지는 않아요."
+      }
+    ]
+  },
+  {
+    "id": 29260,
+    "origin": "blotter",
+    "examples": [
+      {
+        "exam_en": "a police blotter",
+        "exam_ko": "(경찰의) 사건 기록부."
+      }
+    ]
+  },
+  {
+    "id": 29271,
+    "origin": "negatively",
+    "examples": [
+      {
+        "exam_en": "answer negatively",
+        "exam_ko": "노라고 대답하다"
+      },
+      {
+        "exam_en": "be negatively friendly",
+        "exam_ko": "사이가 (좋지도 않으나) 나쁘지도 않다."
+      }
+    ]
+  },
+  {
+    "id": 29279,
+    "origin": "homer",
+    "examples": [
+      {
+        "exam_en": "Homer  nods.",
+        "exam_ko": "원숭이도 나무에서 떨어진다."
+      }
+    ]
+  },
+  {
+    "id": 29282,
+    "origin": "bollard",
+    "examples": [
+      {
+        "exam_en": "Bollards shall be placed 1.5 feet from the back of the curb in areas where cars may be parked alongside the curb.",
+        "exam_ko": "볼라드는 연석과 나란히 주차 할 수있는 지역에 연석 뒤에서 1.5 피트 떨어져 있어야합니다."
+      }
+    ]
+  },
+  {
+    "id": 29295,
+    "origin": "longstanding",
+    "examples": [
+      {
+        "exam_en": "a longstanding trade agreement between two countries",
+        "exam_ko": "양국의 오랫동안 지속되온 무역 협정."
+      }
+    ]
+  },
+  {
+    "id": 29311,
+    "origin": "splutter",
+    "examples": [
+      {
+        "exam_en": "splutter out words of apology",
+        "exam_ko": "사과의 말을 이것저것 빨리 지껄이다."
+      }
+    ]
+  },
+  {
+    "id": 29313,
+    "origin": "dap",
+    "examples": [
+      {
+        "exam_en": "dap for trout",
+        "exam_ko": "송어를 잡으려고 물속에 쑥 잠기다."
+      }
+    ]
+  }
+]

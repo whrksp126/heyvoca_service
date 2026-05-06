@@ -1,0 +1,238 @@
+[
+  {
+    "id": 16849,
+    "origin": "membrane",
+    "examples": [
+      {
+        "exam_en": "the mucous membrane",
+        "exam_ko": "점막."
+      }
+    ]
+  },
+  {
+    "id": 16850,
+    "origin": "unerring",
+    "examples": [
+      {
+        "exam_en": "unerring accuracy",
+        "exam_ko": "조금도 틀리지 않는 정확성[판단]."
+      }
+    ]
+  },
+  {
+    "id": 16851,
+    "origin": "headfirst",
+    "examples": [
+      {
+        "exam_en": "fall headfirst",
+        "exam_ko": "곤두박질쳐 떨어지다."
+      }
+    ]
+  },
+  {
+    "id": 16852,
+    "origin": "constrict",
+    "examples": [
+      {
+        "exam_en": "be constricted in the middle",
+        "exam_ko": "중앙이 잘록하다"
+      },
+      {
+        "exam_en": "Cholesterol constricts his blood vessels.",
+        "exam_ko": "콜레스테롤이 그의 혈관을 수축시킨다."
+      }
+    ]
+  },
+  {
+    "id": 16853,
+    "origin": "destroyer",
+    "examples": [
+      {
+        "exam_en": "Disease is a destroyer of lives.",
+        "exam_ko": "질병은 생명의 파괴자다."
+      }
+    ]
+  },
+  {
+    "id": 16854,
+    "origin": "installation",
+    "examples": [
+      {
+        "exam_en": "a lighting installation",
+        "exam_ko": "조명 장치."
+      }
+    ]
+  },
+  {
+    "id": 16855,
+    "origin": "justification",
+    "examples": [
+      {
+        "exam_en": "strong justification for believing it",
+        "exam_ko": "그것을 믿을 만한 충분한 이유"
+      },
+      {
+        "exam_en": "in justification of",
+        "exam_ko": "…을 정당화[변명]하여."
+      }
+    ]
+  },
+  {
+    "id": 16856,
+    "origin": "enlarge",
+    "examples": [
+      {
+        "exam_en": "an enlarged edition",
+        "exam_ko": "증보판"
+      },
+      {
+        "exam_en": "an enlarged heart",
+        "exam_ko": "심장 비대"
+      }
+    ]
+  },
+  {
+    "id": 16857,
+    "origin": "healthful",
+    "examples": [
+      {
+        "exam_en": "a healthful diet",
+        "exam_ko": "건강에 좋은 음식."
+      }
+    ]
+  },
+  {
+    "id": 16858,
+    "origin": "machinery",
+    "examples": [
+      {
+        "exam_en": "a piece of machinery",
+        "exam_ko": "기계 한 대"
+      },
+      {
+        "exam_en": "A lot of up-to-date machinery is installed in this factory.",
+        "exam_ko": "이 공장에는 많은 최신식 기계가 설치되어 있다."
+      }
+    ]
+  },
+  {
+    "id": 16859,
+    "origin": "mathematics",
+    "examples": [
+      {
+        "exam_en": "a mathematics problem",
+        "exam_ko": "수학 문제"
+      },
+      {
+        "exam_en": "applied mathematics",
+        "exam_ko": "응용 수학."
+      }
+    ]
+  },
+  {
+    "id": 16860,
+    "origin": "cultivation",
+    "examples": [
+      {
+        "exam_en": "the cultivation of oysters",
+        "exam_ko": "굴 양식"
+      },
+      {
+        "exam_en": "put new land into cultivation",
+        "exam_ko": "새 토지를 경작하다."
+      }
+    ]
+  },
+  {
+    "id": 16862,
+    "origin": "limelight",
+    "examples": [
+      {
+        "exam_en": "in the limelight",
+        "exam_ko": "(무대에서) 집중 조명을 받아; 각광을 받고, 남의 이목을 끌어, 공공연히"
+      },
+      {
+        "exam_en": "hog the limelight",
+        "exam_ko": "남의 이목을 독점하다"
+      }
+    ]
+  },
+  {
+    "id": 16864,
+    "origin": "erotic",
+    "examples": [
+      {
+        "exam_en": "erotic literature",
+        "exam_ko": "호색 문학[춘화]."
+      }
+    ]
+  },
+  {
+    "id": 16865,
+    "origin": "underscore",
+    "examples": [
+      {
+        "exam_en": "Fill  following underscored spaces.",
+        "exam_ko": "다음 밑줄 그은 빈 곳을 채워라."
+      }
+    ]
+  },
+  {
+    "id": 16866,
+    "origin": "momentarily",
+    "examples": [
+      {
+        "exam_en": "pause momentarily",
+        "exam_ko": "잠시 멈추다."
+      },
+      {
+        "exam_en": "We will arrive momentarily in London.",
+        "exam_ko": "우리는 곧 런던에 도착할 것이다."
+      },
+      {
+        "exam_en": "We will arrive momentarily in London. ",
+        "exam_ko": "우리는 곧 런던에 도착할 것이다.\n"
+      }
+    ]
+  },
+  {
+    "id": 16868,
+    "origin": "misgiving",
+    "examples": [
+      {
+        "exam_en": "Many students have misgivings about whether they will be able to find jobs.",
+        "exam_ko": "많은 학생들이 취업을 할 수 있을지에 대해 불안을 느낀다."
+      }
+    ]
+  },
+  {
+    "id": 16879,
+    "origin": "flaxen",
+    "examples": [
+      {
+        "exam_en": "flaxen hair",
+        "exam_ko": "(문어) 아마색 머리털(금발의 일종)."
+      }
+    ]
+  },
+  {
+    "id": 16881,
+    "origin": "pun",
+    "examples": [
+      {
+        "exam_en": "We must all hang together or we shall hang separately.",
+        "exam_ko": "함께 단결하지 않으면 한 사람씩 교수형을 당할 것이다."
+      }
+    ]
+  },
+  {
+    "id": 16882,
+    "origin": "cardiopulmonary",
+    "examples": [
+      {
+        "exam_en": "Many victims were receiving CPR and had their costumes taken off to allow medics at the scene to resuscitate them.",
+        "exam_ko": "많은 희생자들이 심폐 소생술을 받고 있었고 현장에 있던 의료진이 심폐 소생술을 할 수 있도록 할로윈 복장을 벗겼다."
+      }
+    ]
+  }
+]

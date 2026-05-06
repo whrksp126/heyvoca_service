@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1996,
+    "origin": "entire",
+    "examples": [
+      {
+        "exam_en": "She read the <strong class=\"target-word\">entire</strong> book in one day.",
+        "exam_ko": "그녀는 하루 만에 책 <strong class=\"target-word\">전체</strong>를 읽었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">entire</strong> population attended the event.",
+        "exam_ko": "<strong class=\"target-word\">전체</strong> 시민이 행사에 참석했다."
+      }
+    ]
+  },
+  {
+    "id": 1998,
+    "origin": "constant",
+    "examples": [
+      {
+        "exam_en": "The room is kept at a <strong class=\"target-word\">constant</strong> temperature.",
+        "exam_ko": "방은 <strong class=\"target-word\">일정한</strong> 온도로 유지된다."
+      },
+      {
+        "exam_en": "His speed remained <strong class=\"target-word\">constant</strong> throughout the race.",
+        "exam_ko": "그의 속도는 경주 내내 <strong class=\"target-word\">일정하게</strong> 유지됐다."
+      },
+      {
+        "exam_en": "She faced <strong class=\"target-word\">constant</strong> pressure at work.",
+        "exam_ko": "그녀는 직장에서 <strong class=\"target-word\">끊임없는</strong> 압박을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 1999,
+    "origin": "vast",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">vast</strong> desert stretched before them.",
+        "exam_ko": "그들 앞에 <strong class=\"target-word\">광대한</strong> 사막이 펼쳐졌다."
+      },
+      {
+        "exam_en": "The ocean holds a <strong class=\"target-word\">vast</strong> amount of water.",
+        "exam_ko": "바다는 <strong class=\"target-word\">방대한</strong> 양의 물을 담고 있다."
+      },
+      {
+        "exam_en": "He has a <strong class=\"target-word\">vast</strong> knowledge of history.",
+        "exam_ko": "그는 역사에 대한 <strong class=\"target-word\">방대한</strong> 지식을 갖고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2000,
+    "origin": "ideal",
+    "examples": [
+      {
+        "exam_en": "She finally achieved her <strong class=\"target-word\">ideal</strong>.",
+        "exam_ko": "그녀는 마침내 자신의 <strong class=\"target-word\">이상</strong>을 이루었다."
+      },
+      {
+        "exam_en": "Socrates is the <strong class=\"target-word\">ideal</strong> of a wise man.",
+        "exam_ko": "소크라테스는 현자의 <strong class=\"target-word\">전형</strong>이다."
+      }
+    ]
+  },
+  {
+    "id": 2001,
+    "origin": "academic",
+    "examples": [
+      {
+        "exam_en": "She earned an <strong class=\"target-word\">academic</strong> degree last year.",
+        "exam_ko": "그녀는 작년에 <strong class=\"target-word\">학위</strong>를 받았다."
+      },
+      {
+        "exam_en": "His <strong class=\"target-word\">academic</strong> achievement impressed the teachers.",
+        "exam_ko": "그의 <strong class=\"target-word\">학업</strong> 성취는 선생님들을 감동시켰다."
+      }
+    ]
+  },
+  {
+    "id": 2002,
+    "origin": "funny",
+    "examples": [
+      {
+        "exam_en": "He told a <strong class=\"target-word\">funny</strong> story at the party.",
+        "exam_ko": "그는 파티에서 <strong class=\"target-word\">재미있는</strong> 이야기를 했다."
+      },
+      {
+        "exam_en": "We watched a <strong class=\"target-word\">funny</strong> movie last night.",
+        "exam_ko": "우리는 어젯밤 <strong class=\"target-word\">재미있는</strong> 영화를 봤다."
+      }
+    ]
+  },
+  {
+    "id": 2003,
+    "origin": "pleased",
+    "examples": [
+      {
+        "exam_en": "Tom is <strong class=\"target-word\">pleased</strong> with his new house.",
+        "exam_ko": "탐은 새 집에 <strong class=\"target-word\">만족한다</strong>."
+      },
+      {
+        "exam_en": "She was very <strong class=\"target-word\">pleased</strong> with the result.",
+        "exam_ko": "그녀는 결과에 매우 <strong class=\"target-word\">만족했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2004,
+    "origin": "severe",
+    "examples": [
+      {
+        "exam_en": "The government faced <strong class=\"target-word\">severe</strong> criticism.",
+        "exam_ko": "정부는 <strong class=\"target-word\">가혹한</strong> 비판에 직면했다."
+      },
+      {
+        "exam_en": "The teacher had a <strong class=\"target-word\">severe</strong> expression on her face.",
+        "exam_ko": "선생님은 <strong class=\"target-word\">엄한</strong> 표정을 짓고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2005,
+    "origin": "corporate",
+    "examples": [
+      {
+        "exam_en": "The contract was signed by the <strong class=\"target-word\">corporate</strong> body.",
+        "exam_ko": "<strong class=\"target-word\">법인</strong> 단체가 계약서에 서명했다."
+      },
+      {
+        "exam_en": "They challenged the power of a <strong class=\"target-word\">corporate</strong> giant.",
+        "exam_ko": "그들은 거대 <strong class=\"target-word\">기업</strong>의 권력에 맞섰다."
+      }
+    ]
+  },
+  {
+    "id": 2006,
+    "origin": "negative",
+    "examples": [
+      {
+        "exam_en": "He wrote the sentence in a <strong class=\"target-word\">negative</strong> form.",
+        "exam_ko": "그는 문장을 <strong class=\"target-word\">부정</strong> 형태로 썼다."
+      },
+      {
+        "exam_en": "She gave a <strong class=\"target-word\">negative</strong> response to the question.",
+        "exam_ko": "그녀는 질문에 <strong class=\"target-word\">부정</strong>의 대답을 했다."
+      }
+    ]
+  },
+  {
+    "id": 2007,
+    "origin": "brown",
+    "examples": [
+      {
+        "exam_en": "The leaves turned dark <strong class=\"target-word\">brown</strong> in autumn.",
+        "exam_ko": "나뭇잎이 가을에 짙은 <strong class=\"target-word\">갈색</strong>으로 변했다."
+      },
+      {
+        "exam_en": "She was dressed in <strong class=\"target-word\">brown</strong> from head to toe.",
+        "exam_ko": "그녀는 머리부터 발끝까지 <strong class=\"target-word\">갈색</strong> 옷을 입고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2008,
+    "origin": "fundamental",
+    "examples": [
+      {
+        "exam_en": "Students need <strong class=\"target-word\">fundamental</strong> knowledge to advance.",
+        "exam_ko": "학생들은 발전하기 위해 <strong class=\"target-word\">기초</strong> 지식이 필요하다."
+      },
+      {
+        "exam_en": "The report challenged the <strong class=\"target-word\">fundamental</strong> principles of the law.",
+        "exam_ko": "그 보고서는 법의 <strong class=\"target-word\">기본</strong> 원칙에 이의를 제기했다."
+      }
+    ]
+  },
+  {
+    "id": 2009,
+    "origin": "odd",
+    "examples": [
+      {
+        "exam_en": "It was an <strong class=\"target-word\">odd</strong> choice for a leader.",
+        "exam_ko": "지도자로서는 <strong class=\"target-word\">뜻밖의</strong> 선택이었다."
+      },
+      {
+        "exam_en": "He had an <strong class=\"target-word\">odd</strong> expression on his face.",
+        "exam_ko": "그는 <strong class=\"target-word\">이상한</strong> 표정을 짓고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 2012,
+    "origin": "crowded",
+    "examples": [
+      {
+        "exam_en": "The morning trains are always <strong class=\"target-word\">crowded</strong>.",
+        "exam_ko": "아침 열차는 항상 <strong class=\"target-word\">만원</strong>이다."
+      },
+      {
+        "exam_en": "The streets were <strong class=\"target-word\">crowded</strong> with tourists.",
+        "exam_ko": "거리는 관광객들로 <strong class=\"target-word\">붐볐다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2013,
+    "origin": "fault",
+    "examples": [
+      {
+        "exam_en": "They found a <strong class=\"target-word\">fault</strong> in the wiring.",
+        "exam_ko": "그들은 배선에서 <strong class=\"target-word\">결함</strong>을 발견했다."
+      },
+      {
+        "exam_en": "He is a man of many <strong class=\"target-word\">faults</strong>.",
+        "exam_ko": "그는 <strong class=\"target-word\">결점</strong>이 많은 사람이다."
+      },
+      {
+        "exam_en": "The earthquake was caused by a <strong class=\"target-word\">fault</strong> in the ground.",
+        "exam_ko": "지진은 지반의 <strong class=\"target-word\">단층</strong>으로 인해 발생했다."
+      }
+    ]
+  },
+  {
+    "id": 2014,
+    "origin": "proficiency",
+    "examples": [
+      {
+        "exam_en": "She has great <strong class=\"target-word\">proficiency</strong> in French.",
+        "exam_ko": "그녀는 프랑스어에 뛰어난 <strong class=\"target-word\">능숙함</strong>을 지니고 있다."
+      }
+    ]
+  },
+  {
+    "id": 2015,
+    "origin": "proud",
+    "examples": [
+      {
+        "exam_en": "I am <strong class=\"target-word\">proud</strong> of my country.",
+        "exam_ko": "나는 내 나라가 <strong class=\"target-word\">자랑스럽다</strong>."
+      },
+      {
+        "exam_en": "We are <strong class=\"target-word\">proud</strong> that we served in the army.",
+        "exam_ko": "우리는 육군에 복무했음을 <strong class=\"target-word\">자랑스럽게</strong> 생각한다."
+      }
+    ]
+  },
+  {
+    "id": 2016,
+    "origin": "nearby",
+    "examples": [
+      {
+        "exam_en": "They swam in a <strong class=\"target-word\">nearby</strong> lake.",
+        "exam_ko": "그들은 <strong class=\"target-word\">근처</strong> 호수에서 수영했다."
+      },
+      {
+        "exam_en": "The injured man was taken to a <strong class=\"target-word\">nearby</strong> hospital.",
+        "exam_ko": "부상당한 남자는 <strong class=\"target-word\">근처</strong> 병원으로 옮겨졌다."
+      }
+    ]
+  },
+  {
+    "id": 2017,
+    "origin": "starve",
+    "examples": [
+      {
+        "exam_en": "Many people <strong class=\"target-word\">starved</strong> to death during the famine.",
+        "exam_ko": "기근 동안 많은 사람들이 <strong class=\"target-word\">굶어</strong> 죽었다."
+      },
+      {
+        "exam_en": "I am <strong class=\"target-word\">starving</strong> after the long hike.",
+        "exam_ko": "긴 하이킹 후에 너무 <strong class=\"target-word\">배고프다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 2019,
+    "origin": "abalone",
+    "examples": [
+      {
+        "exam_en": "Please clean the <strong class=\"target-word\">abalones</strong> and mince them.",
+        "exam_ko": "<strong class=\"target-word\">전복</strong>을 씻은 후 잘게 자르세요."
+      }
+    ]
+  }
+]

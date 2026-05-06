@@ -1,0 +1,282 @@
+[
+  {
+    "id": 5781,
+    "origin": "lookout",
+    "examples": [
+      {
+        "exam_en": "Keep a <strong class=\"target-word\">lookout</strong> for bees in this area.",
+        "exam_ko": "이 근처에서 벌을 <strong class=\"target-word\">조심하세요</strong>."
+      },
+      {
+        "exam_en": "It is a bad <strong class=\"target-word\">lookout</strong> for him.",
+        "exam_ko": "그의 앞날이 <strong class=\"target-word\">걱정이다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5787,
+    "origin": "discipline",
+    "examples": [
+      {
+        "exam_en": "The teacher maintained strict <strong class=\"target-word\">discipline</strong> in class.",
+        "exam_ko": "선생님은 수업에서 엄격한 <strong class=\"target-word\">규율</strong>을 유지했다."
+      },
+      {
+        "exam_en": "Soldiers must follow military <strong class=\"target-word\">discipline</strong> at all times.",
+        "exam_ko": "군인은 항상 군사 <strong class=\"target-word\">기강</strong>을 따라야 한다."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Discipline</strong> is essential for achieving long-term goals.",
+        "exam_ko": "<strong class=\"target-word\">자기 절제</strong>는 장기 목표를 달성하는 데 필수적이다."
+      }
+    ]
+  },
+  {
+    "id": 5788,
+    "origin": "dement",
+    "examples": [
+      {
+        "exam_en": "The elderly man began to <strong class=\"target-word\">dement</strong> in his final years.",
+        "exam_ko": "그 노인은 말년에 <strong class=\"target-word\">치매 증상을 보이기</strong> 시작했다."
+      }
+    ]
+  },
+  {
+    "id": 5789,
+    "origin": "atrocity",
+    "examples": [
+      {
+        "exam_en": "Soldiers committed terrible <strong class=\"target-word\">atrocities</strong> during the war.",
+        "exam_ko": "군인들은 전쟁 중에 끔찍한 <strong class=\"target-word\">만행</strong>을 저질렀다."
+      }
+    ]
+  },
+  {
+    "id": 5790,
+    "origin": "fuzzy",
+    "examples": [
+      {
+        "exam_en": "The old photo looks <strong class=\"target-word\">fuzzy</strong> and unclear.",
+        "exam_ko": "오래된 사진이 <strong class=\"target-word\">흐릿하고</strong> 불분명하게 보인다."
+      },
+      {
+        "exam_en": "His explanation was too <strong class=\"target-word\">fuzzy</strong> to understand.",
+        "exam_ko": "그의 설명은 너무 <strong class=\"target-word\">애매해서</strong> 이해하기 어려웠다."
+      }
+    ]
+  },
+  {
+    "id": 5791,
+    "origin": "beware",
+    "examples": [
+      {
+        "exam_en": "<strong class=\"target-word\">Beware</strong> of the dog near the gate.",
+        "exam_ko": "문 근처의 개를 <strong class=\"target-word\">조심하세요</strong>."
+      },
+      {
+        "exam_en": "<strong class=\"target-word\">Beware</strong> how you speak to strangers.",
+        "exam_ko": "낯선 사람에게 말할 때 <strong class=\"target-word\">조심하세요</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5792,
+    "origin": "uncouth",
+    "examples": [
+      {
+        "exam_en": "His <strong class=\"target-word\">uncouth</strong> manners shocked the guests.",
+        "exam_ko": "그의 <strong class=\"target-word\">거친</strong> 행동이 손님들을 놀라게 했다."
+      }
+    ]
+  },
+  {
+    "id": 5794,
+    "origin": "thread",
+    "examples": [
+      {
+        "exam_en": "She used a needle and <strong class=\"target-word\">thread</strong> to sew the button.",
+        "exam_ko": "그녀는 바늘과 <strong class=\"target-word\">실</strong>로 단추를 꿰맸다."
+      },
+      {
+        "exam_en": "The shirt was made with fine cotton <strong class=\"target-word\">thread</strong>.",
+        "exam_ko": "그 셔츠는 고운 면 <strong class=\"target-word\">실</strong>로 만들어졌다."
+      }
+    ]
+  },
+  {
+    "id": 5795,
+    "origin": "rot",
+    "examples": [
+      {
+        "exam_en": "The fallen leaves began to <strong class=\"target-word\">rot</strong> on the ground.",
+        "exam_ko": "떨어진 나뭇잎들이 땅에서 <strong class=\"target-word\">썩기</strong> 시작했다."
+      },
+      {
+        "exam_en": "The fruit <strong class=\"target-word\">rotted</strong> on the ground.",
+        "exam_ko": "열매가 땅에 떨어져 <strong class=\"target-word\">썩었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5798,
+    "origin": "rascal",
+    "examples": [
+      {
+        "exam_en": "He is a cheerful <strong class=\"target-word\">rascal</strong> who always causes trouble.",
+        "exam_ko": "그는 항상 말썽을 일으키는 쾌활한 <strong class=\"target-word\">녀석</strong>이다."
+      },
+      {
+        "exam_en": "You young <strong class=\"target-word\">rascal</strong>, stop playing tricks!",
+        "exam_ko": "이 어린 <strong class=\"target-word\">장난꾸러기</strong>야, 그만 장난쳐!"
+      }
+    ]
+  },
+  {
+    "id": 5799,
+    "origin": "occult",
+    "examples": [
+      {
+        "exam_en": "She claimed to have <strong class=\"target-word\">occult</strong> powers to see the future.",
+        "exam_ko": "그녀는 미래를 보는 <strong class=\"target-word\">초자연적인</strong> 힘이 있다고 주장했다."
+      },
+      {
+        "exam_en": "He studied <strong class=\"target-word\">occult</strong> philosophy in secret.",
+        "exam_ko": "그는 비밀리에 <strong class=\"target-word\">밀교</strong> 철학을 공부했다."
+      }
+    ]
+  },
+  {
+    "id": 5800,
+    "origin": "plague",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">plague</strong> swept through the city in 1665.",
+        "exam_ko": "<strong class=\"target-word\">페스트</strong>가 1665년 도시를 휩쓸었다."
+      },
+      {
+        "exam_en": "People avoided him like the <strong class=\"target-word\">plague</strong>.",
+        "exam_ko": "사람들은 그를 <strong class=\"target-word\">전염병</strong>처럼 피했다."
+      },
+      {
+        "exam_en": "Two people were infected with the <strong class=\"target-word\">plague</strong> in China.",
+        "exam_ko": "중국에서 두 명이 <strong class=\"target-word\">흑사병</strong>에 감염되었다."
+      }
+    ]
+  },
+  {
+    "id": 5801,
+    "origin": "lingering",
+    "examples": [
+      {
+        "exam_en": "She suffered from a <strong class=\"target-word\">lingering</strong> illness for years.",
+        "exam_ko": "그녀는 수년간 <strong class=\"target-word\">오래 지속되는</strong> 병으로 고생했다."
+      },
+      {
+        "exam_en": "I had a <strong class=\"target-word\">lingering</strong> headache all day.",
+        "exam_ko": "하루 종일 <strong class=\"target-word\">가시지 않는</strong> 두통이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 5802,
+    "origin": "inconspicuous",
+    "examples": [
+      {
+        "exam_en": "She wore <strong class=\"target-word\">inconspicuous</strong> colors to blend in.",
+        "exam_ko": "그녀는 눈에 띄지 않으려고 <strong class=\"target-word\">눈에 안 띄는</strong> 색의 옷을 입었다."
+      },
+      {
+        "exam_en": "He lived an <strong class=\"target-word\">inconspicuous</strong> life in a small town.",
+        "exam_ko": "그는 작은 마을에서 <strong class=\"target-word\">평범하고 조용한</strong> 삶을 살았다."
+      }
+    ]
+  },
+  {
+    "id": 5804,
+    "origin": "impaired",
+    "examples": [
+      {
+        "exam_en": "The facility is accessible for visually <strong class=\"target-word\">impaired</strong> people.",
+        "exam_ko": "그 시설은 시각 <strong class=\"target-word\">장애가 있는</strong> 사람들이 이용할 수 있다."
+      },
+      {
+        "exam_en": "She uses sign language because she is hearing-<strong class=\"target-word\">impaired</strong>.",
+        "exam_ko": "그녀는 청각 <strong class=\"target-word\">장애가 있어</strong> 수화를 사용한다."
+      }
+    ]
+  },
+  {
+    "id": 5809,
+    "origin": "dread",
+    "examples": [
+      {
+        "exam_en": "She <strong class=\"target-word\">dreads</strong> dark places and avoids them.",
+        "exam_ko": "그녀는 어두운 곳을 <strong class=\"target-word\">두려워하며</strong> 피한다."
+      },
+      {
+        "exam_en": "He <strong class=\"target-word\">dreads</strong> traveling alone on long trips.",
+        "exam_ko": "그는 긴 여행을 혼자 하는 것을 <strong class=\"target-word\">꺼린다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5810,
+    "origin": "dabble",
+    "examples": [
+      {
+        "exam_en": "The children <strong class=\"target-word\">dabbled</strong> their toes in the river.",
+        "exam_ko": "아이들이 강물에 발을 <strong class=\"target-word\">첨벙거렸다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">dabbles</strong> in painting as a hobby.",
+        "exam_ko": "그녀는 취미로 그림을 <strong class=\"target-word\">조금씩 그려본다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 5812,
+    "origin": "corpse",
+    "examples": [
+      {
+        "exam_en": "The police discovered a <strong class=\"target-word\">corpse</strong> near the river.",
+        "exam_ko": "경찰은 강 근처에서 <strong class=\"target-word\">시신</strong>을 발견했다."
+      },
+      {
+        "exam_en": "The abandoned town looked like the <strong class=\"target-word\">corpse</strong> of a city.",
+        "exam_ko": "버려진 마을은 도시의 <strong class=\"target-word\">유적</strong>처럼 보였다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">corpse</strong> was carried to the mosque before burial.",
+        "exam_ko": "<strong class=\"target-word\">시신</strong>은 매장 전에 사원으로 옮겨졌다."
+      }
+    ]
+  },
+  {
+    "id": 5813,
+    "origin": "bait",
+    "examples": [
+      {
+        "exam_en": "He used a live fish as <strong class=\"target-word\">bait</strong> to catch the bigger fish.",
+        "exam_ko": "그는 더 큰 물고기를 잡으려고 살아 있는 물고기를 <strong class=\"target-word\">미끼</strong>로 사용했다."
+      },
+      {
+        "exam_en": "She put <strong class=\"target-word\">bait</strong> on the hook before casting.",
+        "exam_ko": "그녀는 낚싯줄을 던지기 전에 바늘에 <strong class=\"target-word\">미끼</strong>를 달았다."
+      }
+    ]
+  },
+  {
+    "id": 5814,
+    "origin": "barricade",
+    "examples": [
+      {
+        "exam_en": "Police erected a <strong class=\"target-word\">barricade</strong> to block the road.",
+        "exam_ko": "경찰이 도로를 막으려고 <strong class=\"target-word\">바리케이드</strong>를 세웠다."
+      },
+      {
+        "exam_en": "Protesters built a <strong class=\"target-word\">barricade</strong> from trash and wood.",
+        "exam_ko": "시위대는 쓰레기와 목재로 <strong class=\"target-word\">방책</strong>을 만들었다."
+      }
+    ]
+  }
+]

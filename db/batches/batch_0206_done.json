@@ -1,0 +1,274 @@
+[
+  {
+    "id": 4700,
+    "origin": "ski",
+    "examples": [
+      {
+        "exam_en": "She put on her <strong class=\"target-word\">skis</strong> and headed to the slope.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">스키</strong>를 신고 슬로프로 향했다."
+      },
+      {
+        "exam_en": "We <strong class=\"target-word\">skied</strong> down the mountain together.",
+        "exam_ko": "우리는 함께 산을 <strong class=\"target-word\">스키</strong>를 타고 내려왔다."
+      }
+    ]
+  },
+  {
+    "id": 4702,
+    "origin": "snail",
+    "examples": [
+      {
+        "exam_en": "The project moved at a <strong class=\"target-word\">snail</strong>'s pace.",
+        "exam_ko": "그 프로젝트는 <strong class=\"target-word\">달팽이</strong> 속도로 진행되었다."
+      }
+    ]
+  },
+  {
+    "id": 4705,
+    "origin": "spoon",
+    "examples": [
+      {
+        "exam_en": "He used a soup <strong class=\"target-word\">spoon</strong> to stir the broth.",
+        "exam_ko": "그는 수프 <strong class=\"target-word\">숟가락</strong>으로 국물을 저었다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">spooned</strong> the ice cream into a bowl.",
+        "exam_ko": "그녀는 아이스크림을 <strong class=\"target-word\">숟가락으로 떠서</strong> 그릇에 담았다."
+      }
+    ]
+  },
+  {
+    "id": 4706,
+    "origin": "whale",
+    "examples": [
+      {
+        "exam_en": "A sperm <strong class=\"target-word\">whale</strong> surfaced near the boat.",
+        "exam_ko": "향유 <strong class=\"target-word\">고래</strong> 한 마리가 배 근처에서 수면으로 올라왔다."
+      },
+      {
+        "exam_en": "The researchers tracked a blue <strong class=\"target-word\">whale</strong> across the ocean.",
+        "exam_ko": "연구원들은 흰수염 <strong class=\"target-word\">고래</strong>를 바다 전역에서 추적했다."
+      }
+    ]
+  },
+  {
+    "id": 4707,
+    "origin": "whistle",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">whistled</strong> to call his dog back.",
+        "exam_ko": "그는 개를 부르기 위해 <strong class=\"target-word\">휘파람을 불었다</strong>."
+      },
+      {
+        "exam_en": "Don't <strong class=\"target-word\">whistle</strong> while you work.",
+        "exam_ko": "일하는 중에는 <strong class=\"target-word\">휘파람을 불지</strong> 마라."
+      }
+    ]
+  },
+  {
+    "id": 4708,
+    "origin": "species",
+    "examples": [
+      {
+        "exam_en": "I felt a <strong class=\"target-word\">species</strong> of shame after the argument.",
+        "exam_ko": "논쟁 후 일종의 수치심 같은 것을 느꼈다."
+      },
+      {
+        "exam_en": "This <strong class=\"target-word\">species</strong> of bird is endangered.",
+        "exam_ko": "이 <strong class=\"target-word\">종</strong>의 새는 멸종 위기에 처해 있다."
+      }
+    ]
+  },
+  {
+    "id": 4710,
+    "origin": "clap",
+    "examples": [
+      {
+        "exam_en": "He <strong class=\"target-word\">clapped</strong> his hand down on the table.",
+        "exam_ko": "그는 탁자 위를 손바닥으로 <strong class=\"target-word\">쾅 쳤다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">clapped</strong> her hands to call the waiter.",
+        "exam_ko": "그녀는 웨이터를 부르기 위해 손뼉을 <strong class=\"target-word\">쳤다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4713,
+    "origin": "skeptical",
+    "examples": [
+      {
+        "exam_en": "Initially, he was <strong class=\"target-word\">skeptical</strong> about whether the stories were true.",
+        "exam_ko": "처음에 그는 그 이야기들이 사실인지에 대해 <strong class=\"target-word\">의심스러워했다</strong>."
+      },
+      {
+        "exam_en": "She remained <strong class=\"target-word\">skeptical</strong> of the new treatment's effectiveness.",
+        "exam_ko": "그녀는 새 치료법의 효과에 대해 계속 <strong class=\"target-word\">회의적이었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4714,
+    "origin": "aircraft",
+    "examples": [
+      {
+        "exam_en": "He arrived on a private <strong class=\"target-word\">aircraft</strong>.",
+        "exam_ko": "그는 전용 <strong class=\"target-word\">항공기</strong>를 타고 도착했다."
+      }
+    ]
+  },
+  {
+    "id": 4715,
+    "origin": "temperature",
+    "examples": [
+      {
+        "exam_en": "The nurse checked the patient's body <strong class=\"target-word\">temperature</strong>.",
+        "exam_ko": "간호사가 환자의 체 <strong class=\"target-word\">온도</strong>를 확인했다."
+      },
+      {
+        "exam_en": "Store the medicine at room <strong class=\"target-word\">temperature</strong>.",
+        "exam_ko": "약을 실 <strong class=\"target-word\">온도</strong>에 보관하세요."
+      }
+    ]
+  },
+  {
+    "id": 4716,
+    "origin": "formality",
+    "examples": [
+      {
+        "exam_en": "The interview was just a <strong class=\"target-word\">formality</strong>.",
+        "exam_ko": "그 면접은 그저 <strong class=\"target-word\">형식</strong>에 불과했다."
+      },
+      {
+        "exam_en": "They spoke without <strong class=\"target-word\">formality</strong> at the casual gathering.",
+        "exam_ko": "그들은 편안한 모임에서 <strong class=\"target-word\">격식</strong>을 차리지 않고 대화했다."
+      }
+    ]
+  },
+  {
+    "id": 4717,
+    "origin": "athlete",
+    "examples": [
+      {
+        "exam_en": "The <strong class=\"target-word\">athlete</strong> trained every day to prepare for the race.",
+        "exam_ko": "<strong class=\"target-word\">운동선수</strong>는 경기를 준비하기 위해 매일 훈련했다."
+      }
+    ]
+  },
+  {
+    "id": 4718,
+    "origin": "baseball",
+    "examples": [
+      {
+        "exam_en": "They watched a <strong class=\"target-word\">baseball</strong> game at the stadium.",
+        "exam_ko": "그들은 경기장에서 <strong class=\"target-word\">야구</strong> 경기를 관람했다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">baseball</strong> stadium was packed with fans.",
+        "exam_ko": "<strong class=\"target-word\">야구</strong>장은 팬들로 가득 찼다."
+      }
+    ]
+  },
+  {
+    "id": 4719,
+    "origin": "bat",
+    "examples": [
+      {
+        "exam_en": "He swung the <strong class=\"target-word\">bat</strong> and hit a home run.",
+        "exam_ko": "그는 <strong class=\"target-word\">배트</strong>를 휘둘러 홈런을 쳤다."
+      },
+      {
+        "exam_en": "The New York Yankees <strong class=\"target-word\">crossed bats</strong> with San Francisco Giants.",
+        "exam_ko": "뉴욕 양키스는 샌프란시스코 자이언츠와 <strong class=\"target-word\">배트를 맞대었다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 4720,
+    "origin": "battery",
+    "examples": [
+      {
+        "exam_en": "He replaced the dry <strong class=\"target-word\">battery</strong> in the remote.",
+        "exam_ko": "그는 리모컨의 건 <strong class=\"target-word\">전지</strong>를 교체했다."
+      },
+      {
+        "exam_en": "This toy is <strong class=\"target-word\">battery</strong>-operated.",
+        "exam_ko": "이 장난감은 <strong class=\"target-word\">배터리</strong> 식이다."
+      },
+      {
+        "exam_en": "My phone <strong class=\"target-word\">battery</strong> is flat.",
+        "exam_ko": "내 휴대폰 <strong class=\"target-word\">배터리</strong>가 나갔다."
+      }
+    ]
+  },
+  {
+    "id": 4724,
+    "origin": "hitter",
+    "examples": [
+      {
+        "exam_en": "He played as the designated <strong class=\"target-word\">hitter</strong> in today's game.",
+        "exam_ko": "그는 오늘 경기에서 지명 <strong class=\"target-word\">타자</strong>로 출전했다."
+      }
+    ]
+  },
+  {
+    "id": 4725,
+    "origin": "ability",
+    "examples": [
+      {
+        "exam_en": "The ostrich has lost the <strong class=\"target-word\">ability</strong> to fly.",
+        "exam_ko": "타조는 나는 <strong class=\"target-word\">능력</strong>을 잃었다."
+      },
+      {
+        "exam_en": "Machines increase our <strong class=\"target-word\">ability</strong> to do work.",
+        "exam_ko": "기계는 우리가 일할 수 있는 <strong class=\"target-word\">능력</strong>을 높인다."
+      },
+      {
+        "exam_en": "She has the <strong class=\"target-word\">ability</strong> to solve complex problems.",
+        "exam_ko": "그녀는 복잡한 문제를 해결하는 <strong class=\"target-word\">능력</strong>을 갖고 있다."
+      }
+    ]
+  },
+  {
+    "id": 4727,
+    "origin": "cattle",
+    "examples": [
+      {
+        "exam_en": "The farmer raised ten <strong class=\"target-word\">cattle</strong> on his ranch.",
+        "exam_ko": "농부는 목장에서 <strong class=\"target-word\">소</strong> 열 마리를 키웠다."
+      },
+      {
+        "exam_en": "Many <strong class=\"target-word\">cattle</strong> died in the storm.",
+        "exam_ko": "폭풍우로 많은 <strong class=\"target-word\">소</strong>가 죽었다."
+      }
+    ]
+  },
+  {
+    "id": 4730,
+    "origin": "painting",
+    "examples": [
+      {
+        "exam_en": "This is a <strong class=\"target-word\">painting</strong> of Mary that she created herself.",
+        "exam_ko": "이것은 메리가 직접 그린 <strong class=\"target-word\">그림</strong>이다."
+      },
+      {
+        "exam_en": "He displayed an oil <strong class=\"target-word\">painting</strong> in his living room.",
+        "exam_ko": "그는 거실에 유 <strong class=\"target-word\">화</strong>를 걸었다."
+      }
+    ]
+  },
+  {
+    "id": 4731,
+    "origin": "railroad",
+    "examples": [
+      {
+        "exam_en": "There was a serious <strong class=\"target-word\">railroad</strong> accident last night.",
+        "exam_ko": "어젯밤 심각한 <strong class=\"target-word\">철도</strong> 사고가 발생했다."
+      },
+      {
+        "exam_en": "The city built an elevated <strong class=\"target-word\">railroad</strong> to ease traffic.",
+        "exam_ko": "도시는 교통 혼잡 완화를 위해 고가 <strong class=\"target-word\">철도</strong>를 건설했다."
+      }
+    ]
+  }
+]

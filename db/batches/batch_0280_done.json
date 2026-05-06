@@ -1,0 +1,286 @@
+[
+  {
+    "id": 6914,
+    "origin": "scar",
+    "examples": [
+      {
+        "exam_en": "The surgery left a visible <strong class=\"target-word\">scar</strong> on his arm.",
+        "exam_ko": "수술로 그의 팔에 눈에 띄는 <strong class=\"target-word\">흉터</strong>가 남았다."
+      },
+      {
+        "exam_en": "It left <strong class=\"target-word\">scars</strong> on her psyche.",
+        "exam_ko": "그것으로 그녀의 마음에 <strong class=\"target-word\">상처</strong>가 남았다."
+      }
+    ]
+  },
+  {
+    "id": 6915,
+    "origin": "moody",
+    "examples": [
+      {
+        "exam_en": "He became <strong class=\"target-word\">moody</strong> after the argument.",
+        "exam_ko": "그는 말다툼 후 <strong class=\"target-word\">침울해</strong>졌다."
+      },
+      {
+        "exam_en": "She is a <strong class=\"target-word\">moody</strong> child who cries often.",
+        "exam_ko": "그녀는 자주 우는 <strong class=\"target-word\">변덕스러운</strong> 아이다."
+      }
+    ]
+  },
+  {
+    "id": 6918,
+    "origin": "applause",
+    "examples": [
+      {
+        "exam_en": "The audience burst into thunderous <strong class=\"target-word\">applause</strong>.",
+        "exam_ko": "관객들이 우레와 같은 <strong class=\"target-word\">박수</strong>를 쏟아냈다."
+      },
+      {
+        "exam_en": "She received warm <strong class=\"target-word\">applause</strong> after her speech.",
+        "exam_ko": "그녀는 연설 후 따뜻한 <strong class=\"target-word\">박수</strong>를 받았다."
+      }
+    ]
+  },
+  {
+    "id": 6920,
+    "origin": "deflect",
+    "examples": [
+      {
+        "exam_en": "He tried to <strong class=\"target-word\">deflect</strong> attention from the mistake.",
+        "exam_ko": "그는 실수에서 관심을 <strong class=\"target-word\">돌리려</strong> 했다."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">deflected</strong> every criticism with a smile.",
+        "exam_ko": "그녀는 모든 비판을 미소로 <strong class=\"target-word\">피했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6921,
+    "origin": "apparatus",
+    "examples": [
+      {
+        "exam_en": "The lab has modern chemical <strong class=\"target-word\">apparatus</strong>.",
+        "exam_ko": "실험실에는 최신 화학 <strong class=\"target-word\">기구</strong>가 있다."
+      },
+      {
+        "exam_en": "The heating <strong class=\"target-word\">apparatus</strong> broke down last night.",
+        "exam_ko": "난방 <strong class=\"target-word\">장치</strong>가 어젯밤에 고장났다."
+      }
+    ]
+  },
+  {
+    "id": 6922,
+    "origin": "deduce",
+    "examples": [
+      {
+        "exam_en": "What can be <strong class=\"target-word\">deduced</strong> from this hypothesis?",
+        "exam_ko": "이 가설에서 무엇을 <strong class=\"target-word\">추론</strong>할 수 있는가?"
+      },
+      {
+        "exam_en": "The police <strong class=\"target-word\">deduced</strong> the suspect's motive quickly.",
+        "exam_ko": "경찰은 용의자의 동기를 빠르게 <strong class=\"target-word\">추론했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6924,
+    "origin": "revolve",
+    "examples": [
+      {
+        "exam_en": "The moon <strong class=\"target-word\">revolves</strong> around the earth.",
+        "exam_ko": "달은 지구 주위를 <strong class=\"target-word\">공전한다</strong>."
+      },
+      {
+        "exam_en": "Their lives <strong class=\"target-word\">revolved</strong> around the new baby.",
+        "exam_ko": "그들의 생활은 신생아를 중심으로 <strong class=\"target-word\">돌아갔다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6925,
+    "origin": "frustrate",
+    "examples": [
+      {
+        "exam_en": "Why are our best efforts so often <strong class=\"target-word\">frustrated</strong>?",
+        "exam_ko": "우리의 최선의 노력이 왜 이렇게 자주 <strong class=\"target-word\">좌절되는</strong> 것일까?"
+      },
+      {
+        "exam_en": "The delay <strong class=\"target-word\">frustrated</strong> all the fans.",
+        "exam_ko": "지연은 모든 팬들을 <strong class=\"target-word\">실망시켰다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6926,
+    "origin": "swarm",
+    "examples": [
+      {
+        "exam_en": "A <strong class=\"target-word\">swarm</strong> of mosquitoes flew toward us.",
+        "exam_ko": "모기 <strong class=\"target-word\">떼</strong>가 우리를 향해 날아왔다."
+      },
+      {
+        "exam_en": "A <strong class=\"target-word\">swarm</strong> of tourists crowded the plaza.",
+        "exam_ko": "관광객 <strong class=\"target-word\">무리</strong>가 광장을 가득 메웠다."
+      }
+    ]
+  },
+  {
+    "id": 6927,
+    "origin": "garb",
+    "examples": [
+      {
+        "exam_en": "She was dressed in nun's <strong class=\"target-word\">garb</strong>.",
+        "exam_ko": "그녀는 수녀 <strong class=\"target-word\">복장</strong>을 입고 있었다."
+      },
+      {
+        "exam_en": "The spy wore the <strong class=\"target-word\">garb</strong> of a priest.",
+        "exam_ko": "그 스파이는 성직자 <strong class=\"target-word\">복장</strong>을 하고 있었다."
+      }
+    ]
+  },
+  {
+    "id": 6929,
+    "origin": "hypnosis",
+    "examples": [
+      {
+        "exam_en": "The therapist put the patient under <strong class=\"target-word\">hypnosis</strong>.",
+        "exam_ko": "치료사는 환자에게 <strong class=\"target-word\">최면</strong>을 걸었다."
+      },
+      {
+        "exam_en": "She recalled the memory through <strong class=\"target-word\">hypnosis</strong>.",
+        "exam_ko": "그녀는 <strong class=\"target-word\">최면</strong>을 통해 그 기억을 떠올렸다."
+      }
+    ]
+  },
+  {
+    "id": 6930,
+    "origin": "tendency",
+    "examples": [
+      {
+        "exam_en": "There is an upward <strong class=\"target-word\">tendency</strong> in the market.",
+        "exam_ko": "시장에 상승 <strong class=\"target-word\">추세</strong>가 있다."
+      },
+      {
+        "exam_en": "She has a <strong class=\"target-word\">tendency</strong> to procrastinate.",
+        "exam_ko": "그녀는 미루는 <strong class=\"target-word\">경향</strong>이 있다."
+      },
+      {
+        "exam_en": "Universities show a <strong class=\"target-word\">tendency</strong> to admit more students.",
+        "exam_ko": "대학들은 더 많은 학생을 입학시키는 <strong class=\"target-word\">경향</strong>을 보인다."
+      }
+    ]
+  },
+  {
+    "id": 6931,
+    "origin": "expectant",
+    "examples": [
+      {
+        "exam_en": "He became an <strong class=\"target-word\">expectant</strong> father last month.",
+        "exam_ko": "그는 지난달 <strong class=\"target-word\">아이를 기다리는</strong> 아버지가 되었다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">expectant</strong> mother visited the clinic weekly.",
+        "exam_ko": "<strong class=\"target-word\">임신한</strong> 어머니는 매주 병원을 방문했다."
+      }
+    ]
+  },
+  {
+    "id": 6932,
+    "origin": "unity",
+    "examples": [
+      {
+        "exam_en": "The crisis strengthened their sense of <strong class=\"target-word\">unity</strong>.",
+        "exam_ko": "위기는 그들의 <strong class=\"target-word\">단결</strong> 의식을 강화했다."
+      },
+      {
+        "exam_en": "They formed a national <strong class=\"target-word\">unity</strong> government together.",
+        "exam_ko": "그들은 함께 거국 <strong class=\"target-word\">일치</strong> 내각을 구성했다."
+      }
+    ]
+  },
+  {
+    "id": 6933,
+    "origin": "rotate",
+    "examples": [
+      {
+        "exam_en": "You can <strong class=\"target-word\">rotate</strong> the wheel with your hand.",
+        "exam_ko": "이 바퀴를 손으로 <strong class=\"target-word\">회전시킬</strong> 수 있다."
+      },
+      {
+        "exam_en": "The workers <strong class=\"target-word\">rotate</strong> shifts every two weeks.",
+        "exam_ko": "직원들은 2주마다 교대로 <strong class=\"target-word\">순환</strong> 근무한다."
+      },
+      {
+        "exam_en": "You should <strong class=\"target-word\">rotate</strong> your car tires regularly.",
+        "exam_ko": "자동차 타이어를 정기적으로 <strong class=\"target-word\">교체</strong>해야 한다."
+      }
+    ]
+  },
+  {
+    "id": 6934,
+    "origin": "fate",
+    "examples": [
+      {
+        "exam_en": "They met by an irony of <strong class=\"target-word\">fate</strong>.",
+        "exam_ko": "그들은 <strong class=\"target-word\">운명</strong>의 장난으로 만났다."
+      },
+      {
+        "exam_en": "He accepted his <strong class=\"target-word\">fate</strong> with calm.",
+        "exam_ko": "그는 자신의 <strong class=\"target-word\">운명</strong>을 차분하게 받아들였다."
+      }
+    ]
+  },
+  {
+    "id": 6935,
+    "origin": "partly",
+    "examples": [
+      {
+        "exam_en": "I <strong class=\"target-word\">partly</strong> agree with your opinion.",
+        "exam_ko": "당신의 의견에 <strong class=\"target-word\">일부</strong> 동의합니다."
+      }
+    ]
+  },
+  {
+    "id": 6936,
+    "origin": "surpass",
+    "examples": [
+      {
+        "exam_en": "The results <strong class=\"target-word\">surpassed</strong> all expectations.",
+        "exam_ko": "결과는 모든 기대를 <strong class=\"target-word\">뛰어넘었다</strong>."
+      },
+      {
+        "exam_en": "She <strong class=\"target-word\">surpassed</strong> all competitors in speed.",
+        "exam_ko": "그녀는 속도에서 모든 경쟁자를 <strong class=\"target-word\">능가했다</strong>."
+      }
+    ]
+  },
+  {
+    "id": 6937,
+    "origin": "steadily",
+    "examples": [
+      {
+        "exam_en": "Her English ability is <strong class=\"target-word\">steadily</strong> improving.",
+        "exam_ko": "그녀의 영어 실력은 <strong class=\"target-word\">꾸준히</strong> 향상되고 있다."
+      }
+    ]
+  },
+  {
+    "id": 6938,
+    "origin": "estate",
+    "examples": [
+      {
+        "exam_en": "They stayed at a beautiful <strong class=\"target-word\">estate</strong> in the countryside.",
+        "exam_ko": "그들은 시골의 아름다운 <strong class=\"target-word\">저택</strong>에 머물렀다."
+      },
+      {
+        "exam_en": "He owns a large <strong class=\"target-word\">estate</strong> near the river.",
+        "exam_ko": "그는 강 근처에 넓은 <strong class=\"target-word\">토지</strong>를 소유하고 있다."
+      },
+      {
+        "exam_en": "The <strong class=\"target-word\">estate</strong> was divided among his children.",
+        "exam_ko": "그 <strong class=\"target-word\">유산</strong>은 그의 자녀들에게 나눠졌다."
+      }
+    ]
+  }
+]

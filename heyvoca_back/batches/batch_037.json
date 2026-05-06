@@ -1,0 +1,602 @@
+[
+  {
+    "id": 3592,
+    "word": "quick",
+    "exam_en": "a <strong class=\"target-word\">quick</strong> dog",
+    "exam_ko": "<strong class=\"target-word\">빠른</strong> 개"
+  },
+  {
+    "id": 3593,
+    "word": "cultural",
+    "exam_en": "a <strong class=\"target-word\">cultural</strong> center",
+    "exam_ko": "<strong class=\"target-word\">문화의 중심지</strong>"
+  },
+  {
+    "id": 3594,
+    "word": "cultural",
+    "exam_en": "a <strong class=\"target-word\">cultural</strong> heritage",
+    "exam_ko": "<strong class=\"target-word\">문화 유산</strong>"
+  },
+  {
+    "id": 3595,
+    "word": "proper",
+    "exam_en": "something <strong class=\"target-word\">proper</strong> to sit on",
+    "exam_ko": "<strong class=\"target-word\">앉기에 알맞은</strong> 것"
+  },
+  {
+    "id": 3596,
+    "word": "proper",
+    "exam_en": "<strong class=\"target-word\">proper</strong> medical attention at a hospital",
+    "exam_ko": "병원의 <strong class=\"target-word\">적절한</strong> 의료 조치"
+  },
+  {
+    "id": 3597,
+    "word": "joint",
+    "exam_en": "a <strong class=\"target-word\">joint</strong> in a fishing rod",
+    "exam_ko": "낚싯대의 <strong class=\"target-word\">이음매</strong>"
+  },
+  {
+    "id": 3598,
+    "word": "joint",
+    "exam_en": "<strong class=\"target-word\">joint</strong> between two bricks",
+    "exam_ko": "벽돌과 벽돌 사이의 <strong class=\"target-word\">메지[이음매]</strong>."
+  },
+  {
+    "id": 3599,
+    "word": "formal",
+    "exam_en": "a <strong class=\"target-word\">formal</strong> greeting",
+    "exam_ko": "<strong class=\"target-word\">형식적인</strong> 인사."
+  },
+  {
+    "id": 3600,
+    "word": "formal",
+    "exam_en": "purely <strong class=\"target-word\">formal</strong>",
+    "exam_ko": "순전히 <strong class=\"target-word\">형식적인</strong>"
+  },
+  {
+    "id": 3601,
+    "word": "limited",
+    "exam_en": "a <strong class=\"target-word\">limited</strong> time",
+    "exam_ko": "<strong class=\"target-word\">일정 기간</strong>"
+  },
+  {
+    "id": 3602,
+    "word": "limited",
+    "exam_en": "<strong class=\"target-word\">limited</strong> ability",
+    "exam_ko": "<strong class=\"target-word\">한정된 능력</strong>(※small, scant 등의 완곡한 표현으로서 종종 쓰임)"
+  },
+  {
+    "id": 3603,
+    "word": "geometry",
+    "exam_en": "analytical <strong class=\"target-word\">geometry</strong>",
+    "exam_ko": "해석[유클리드] <strong class=\"target-word\">기하학</strong>."
+  },
+  {
+    "id": 3604,
+    "word": "devotee",
+    "exam_en": "He's a <strong class=\"target-word\">devotee</strong> of tennis.",
+    "exam_ko": "그는 테니스에 <strong class=\"target-word\">열중</strong>해 있다."
+  },
+  {
+    "id": 3605,
+    "word": "devotee",
+    "exam_en": "a <strong class=\"target-word\">devotee</strong> of Islam",
+    "exam_ko": "<strong class=\"target-word\">이슬람교 신자</strong>"
+  },
+  {
+    "id": 3606,
+    "word": "virtual",
+    "exam_en": "the <strong class=\"target-word\">virtual</strong> head of state in the President's absence",
+    "exam_ko": "대통령 부재시의 <strong class=\"target-word\">국가 원수</strong>"
+  },
+  {
+    "id": 3607,
+    "word": "virtual",
+    "exam_en": "He is nearly deaf; he has suffered the <strong class=\"target-word\">virtual</strong> loss of his hearing.",
+    "exam_ko": "그는 <strong class=\"target-word\">거의</strong> 청각을 상실한 상태다."
+  },
+  {
+    "id": 3608,
+    "word": "conservative",
+    "exam_en": "<strong class=\"target-word\">conservative</strong> policies",
+    "exam_ko": "<strong class=\"target-word\">보수적인</strong> 정책"
+  },
+  {
+    "id": 3609,
+    "word": "conservative",
+    "exam_en": "a <strong class=\"target-word\">conservative</strong> attitude toward marriage",
+    "exam_ko": "결혼에 대한 <strong class=\"target-word\">보수적인</strong> 태도."
+  },
+  {
+    "id": 3610,
+    "word": "usual",
+    "exam_en": "the <strong class=\"target-word\">usual</strong> time for dinner",
+    "exam_ko": "<strong class=\"target-word\">평소의</strong> 저녁 식사 시간"
+  },
+  {
+    "id": 3611,
+    "word": "usual",
+    "exam_en": "in the <strong class=\"target-word\">usual</strong> way",
+    "exam_ko": "<strong class=\"target-word\">평소대로</strong>"
+  },
+  {
+    "id": 3612,
+    "word": "unable",
+    "exam_en": "She is <strong class=\"target-word\">unable</strong> to play the piano.",
+    "exam_ko": "그녀는 피아노를 <strong class=\"target-word\">못 친다</strong>"
+  },
+  {
+    "id": 3613,
+    "word": "unable",
+    "exam_en": "She now find herself <strong class=\"target-word\">unable</strong> to do it again.",
+    "exam_ko": "그녀는 이제 <strong class=\"target-word\">다시 할 수 없음을</strong> 깨닫는다."
+  },
+  {
+    "id": 3614,
+    "word": "rural",
+    "exam_en": "<strong class=\"target-word\">rural</strong> life",
+    "exam_ko": "<strong class=\"target-word\">시골 생활</strong>"
+  },
+  {
+    "id": 3615,
+    "word": "rural",
+    "exam_en": "a <strong class=\"target-word\">rural</strong> accent",
+    "exam_ko": "<strong class=\"target-word\">시골 사투리</strong>"
+  },
+  {
+    "id": 3616,
+    "word": "substantial",
+    "exam_en": "Dreams, unfortunately, are not <strong class=\"target-word\">substantial</strong>.",
+    "exam_ko": "불행하게도 꿈에는 <strong class=\"target-word\">현실의 뒷받침</strong>이 없다."
+  },
+  {
+    "id": 3617,
+    "word": "substantial",
+    "exam_en": "a <strong class=\"target-word\">substantial</strong> house",
+    "exam_ko": "<strong class=\"target-word\">튼튼한</strong> 집"
+  },
+  {
+    "id": 3618,
+    "word": "christian",
+    "exam_en": "<strong class=\"target-word\">Christian</strong> art",
+    "exam_ko": "<strong class=\"target-word\">기독교</strong> 예술"
+  },
+  {
+    "id": 3619,
+    "word": "christian",
+    "exam_en": "the <strong class=\"target-word\">Christian</strong> religion",
+    "exam_ko": "<strong class=\"target-word\">크리스트교</strong>"
+  },
+  {
+    "id": 3620,
+    "word": "average",
+    "exam_en": "a high-<strong class=\"target-word\">average</strong> hitter",
+    "exam_ko": "타율 높은 <strong class=\"target-word\">타자</strong>"
+  },
+  {
+    "id": 3621,
+    "word": "average",
+    "exam_en": "take an <strong class=\"target-word\">average</strong>",
+    "exam_ko": "<strong class=\"target-word\">평균</strong>을 잡, 평균하다"
+  },
+  {
+    "id": 3622,
+    "word": "leading",
+    "exam_en": "a <strong class=\"target-word\">leading</strong> figure",
+    "exam_ko": "<strong class=\"target-word\">주요인물</strong>"
+  },
+  {
+    "id": 3623,
+    "word": "leading",
+    "exam_en": "a <strong class=\"target-word\">leading</strong> company",
+    "exam_ko": "<strong class=\"target-word\">일류</strong> 회사"
+  },
+  {
+    "id": 3624,
+    "word": "reasonable",
+    "exam_en": "beyond a <strong class=\"target-word\">reasonable</strong> doubt",
+    "exam_ko": "[법률] <strong class=\"target-word\">합리적인 혐의를 벗어날 정도로</strong>; 명백한 증거에 의해 (죄를 입증하다 등)"
+  },
+  {
+    "id": 3625,
+    "word": "reasonable",
+    "exam_en": "There is no <strong class=\"target-word\">reasonable</strong> relationship between deed and punishment.",
+    "exam_ko": "행위와 <strong class=\"target-word\">벌 사이에 합리적 관계</strong>가 없다"
+  },
+  {
+    "id": 3626,
+    "word": "immediate",
+    "exam_en": "an <strong class=\"target-word\">immediate</strong> answer",
+    "exam_ko": "<strong class=\"target-word\">즉답</strong>"
+  },
+  {
+    "id": 3627,
+    "word": "immediate",
+    "exam_en": "<strong class=\"target-word\">immediate</strong> payment",
+    "exam_ko": "<strong class=\"target-word\">맞돈</strong> (지불)"
+  },
+  {
+    "id": 3628,
+    "word": "suitable",
+    "exam_en": "The problem is <strong class=\"target-word\">suitable</strong> for class discussion.",
+    "exam_ko": "그 문제는 학급 토론에 <strong class=\"target-word\">알맞다</strong>"
+  },
+  {
+    "id": 3629,
+    "word": "suitable",
+    "exam_en": "These shoes are not <strong class=\"target-word\">suitable</strong> for walking.",
+    "exam_ko": "이 구두는 산책에 <strong class=\"target-word\">맞지 않는</strong>(※*suitable to walk라고는 하지 않음)"
+  },
+  {
+    "id": 3630,
+    "word": "detailed",
+    "exam_en": "a <strong class=\"target-word\">detailed</strong> analysis of the text",
+    "exam_ko": "원문의 <strong class=\"target-word\">상세한</strong> 분석"
+  },
+  {
+    "id": 3631,
+    "word": "detailed",
+    "exam_en": "give a <strong class=\"target-word\">detailed</strong> explanation of",
+    "exam_ko": "…을 <strong class=\"target-word\">상세히</strong> 설명하"
+  },
+  {
+    "id": 3632,
+    "word": "working",
+    "exam_en": "the <strong class=\"target-word\">workings</strong> of the brain",
+    "exam_ko": "두뇌의 <strong class=\"target-word\">작용</strong>."
+  },
+  {
+    "id": 3633,
+    "word": "working",
+    "exam_en": "the <strong class=\"target-word\">working</strong> population",
+    "exam_ko": "<strong class=\"target-word\">노동</strong> 인구"
+  },
+  {
+    "id": 3634,
+    "word": "overall",
+    "exam_en": "the <strong class=\"target-word\">overall</strong> length of a pole",
+    "exam_ko": "장대의 <strong class=\"target-word\">전장(全長)</strong>."
+  },
+  {
+    "id": 3635,
+    "word": "overall",
+    "exam_en": "an <strong class=\"target-word\">overall</strong> abolition",
+    "exam_ko": "<strong class=\"target-word\">전면적</strong> 폐지"
+  },
+  {
+    "id": 3636,
+    "word": "female",
+    "exam_en": "a <strong class=\"target-word\">female</strong> bamboo",
+    "exam_ko": "<strong class=\"target-word\">암대</strong>"
+  },
+  {
+    "id": 3637,
+    "word": "female",
+    "exam_en": "a <strong class=\"target-word\">female</strong> Prime Minister",
+    "exam_ko": "<strong class=\"target-word\">여자</strong> 수상"
+  },
+  {
+    "id": 3638,
+    "word": "democratic",
+    "exam_en": "truly[genuinely] <strong class=\"target-word\">democratic</strong>",
+    "exam_ko": "실제로 <strong class=\"target-word\">민주적인</strong>"
+  },
+  {
+    "id": 3639,
+    "word": "democratic",
+    "exam_en": "fully <strong class=\"target-word\">democratic</strong>",
+    "exam_ko": "완전히 <strong class=\"target-word\">민주적인</strong>"
+  },
+  {
+    "id": 3640,
+    "word": "growing",
+    "exam_en": "her <strong class=\"target-word\">growing</strong> reputation as a dancer",
+    "exam_ko": "무용가로서 <strong class=\"target-word\">높아지고 있는</strong> 그녀의 명성."
+  },
+  {
+    "id": 3641,
+    "word": "growing",
+    "exam_en": "a <strong class=\"target-word\">growing</strong> boy",
+    "exam_ko": "<strong class=\"target-word\">성장기의</strong> 소년"
+  },
+  {
+    "id": 3642,
+    "word": "sufficient",
+    "exam_en": "<strong class=\"target-word\">sufficient</strong> fuel",
+    "exam_ko": "<strong class=\"target-word\">충분한</strong> 연료"
+  },
+  {
+    "id": 3643,
+    "word": "sufficient",
+    "exam_en": "There is <strong class=\"target-word\">sufficient</strong> food for ten people.",
+    "exam_ko": "10명이 먹을 만큼의 <strong class=\"target-word\">충분한</strong> 음식은 있다"
+  },
+  {
+    "id": 3644,
+    "word": "scientific",
+    "exam_en": "a <strong class=\"target-word\">scientific</strong> theory",
+    "exam_ko": "<strong class=\"target-word\">과학</strong> 이론"
+  },
+  {
+    "id": 3645,
+    "word": "scientific",
+    "exam_en": "<strong class=\"target-word\">scientific</strong> progress",
+    "exam_ko": "과학의 <strong class=\"target-word\">진보</strong>"
+  },
+  {
+    "id": 3646,
+    "word": "eastern",
+    "exam_en": "the <strong class=\"target-word\">Eastern</strong> States",
+    "exam_ko": "미국 <strong class=\"target-word\">동부의</strong> 여러 주"
+  },
+  {
+    "id": 3647,
+    "word": "eastern",
+    "exam_en": "the <strong class=\"target-word\">eastern</strong> half of the country",
+    "exam_ko": "나라의 <strong class=\"target-word\">동쪽 절반</strong>"
+  },
+  {
+    "id": 3648,
+    "word": "irish",
+    "exam_en": "get one's <strong class=\"target-word\">Irish</strong> up",
+    "exam_ko": "<strong class=\"target-word\">분통</strong>을 터뜨리다."
+  },
+  {
+    "id": 3649,
+    "word": "expensive",
+    "exam_en": "an <strong class=\"target-word\">expensive</strong> mode of living",
+    "exam_ko": "<strong class=\"target-word\">사치스러운</strong> 생활 양식"
+  },
+  {
+    "id": 3650,
+    "word": "expensive",
+    "exam_en": "<strong class=\"target-word\">expensive</strong> equipment",
+    "exam_ko": "돈이 많이 드는 <strong class=\"target-word\">장치</strong>"
+  },
+  {
+    "id": 3651,
+    "word": "educational",
+    "exam_en": "<strong class=\"target-word\">educational</strong> institutions",
+    "exam_ko": "<strong class=\"target-word\">교육</strong> 기관[비]"
+  },
+  {
+    "id": 3652,
+    "word": "educational",
+    "exam_en": "an <strong class=\"target-word\">educational</strong> system",
+    "exam_ko": "<strong class=\"target-word\">교육</strong> 제도"
+  },
+  {
+    "id": 3653,
+    "word": "mental",
+    "exam_en": "<strong class=\"target-word\">mental</strong> powers",
+    "exam_ko": "<strong class=\"target-word\">지능</strong>"
+  },
+  {
+    "id": 3654,
+    "word": "mental",
+    "exam_en": "a <strong class=\"target-word\">mental</strong> weakness",
+    "exam_ko": "<strong class=\"target-word\">정신 허약</strong>"
+  },
+  {
+    "id": 3655,
+    "word": "unlikely",
+    "exam_en": "an <strong class=\"target-word\">unlikely</strong> story",
+    "exam_ko": "<strong class=\"target-word\">있을 법하지 않은</strong> 이야기"
+  },
+  {
+    "id": 3656,
+    "word": "unlikely",
+    "exam_en": "He is <strong class=\"target-word\">unlikely</strong> to come.",
+    "exam_ko": "그는 올 것 같지 <strong class=\"target-word\">않다</strong>."
+  },
+  {
+    "id": 3657,
+    "word": "tiny",
+    "exam_en": "a <strong class=\"target-word\">tiny</strong> doubt",
+    "exam_ko": "<strong class=\"target-word\">일말의 의혹</strong>"
+  },
+  {
+    "id": 3658,
+    "word": "tiny",
+    "exam_en": "Cells are too <strong class=\"target-word\">tiny</strong> to see with the bare eye; one needs a microscope to see them.",
+    "exam_ko": "세포는 <strong class=\"target-word\">너무 작아서</strong> 맨눈으로 볼 수 없다."
+  },
+  {
+    "id": 3659,
+    "word": "historical",
+    "exam_en": "<strong class=\"target-word\">historical</strong> background",
+    "exam_ko": "<strong class=\"target-word\">역사적 배경</strong>."
+  },
+  {
+    "id": 3660,
+    "word": "historical",
+    "exam_en": "a <strong class=\"target-word\">historical</strong> novel",
+    "exam_ko": "<strong class=\"target-word\">역사 소설[적 사실]</strong>(※a historic novel은 「획기적인 소설」)"
+  },
+  {
+    "id": 3661,
+    "word": "thin",
+    "exam_en": "<strong class=\"target-word\">thin</strong> ice",
+    "exam_ko": "<strong class=\"target-word\">얇은</strong> 얼음"
+  },
+  {
+    "id": 3662,
+    "word": "thin",
+    "exam_en": "a <strong class=\"target-word\">thin</strong> magazine",
+    "exam_ko": "<strong class=\"target-word\">얄팍한</strong> 잡지"
+  },
+  {
+    "id": 3663,
+    "word": "daily",
+    "exam_en": "<strong class=\"target-word\">daily</strong> life",
+    "exam_ko": "<strong class=\"target-word\">일상 생활</strong>"
+  },
+  {
+    "id": 3664,
+    "word": "daily",
+    "exam_en": "<strong class=\"target-word\">daily</strong> needs",
+    "exam_ko": "<strong class=\"target-word\">일용품</strong>"
+  },
+  {
+    "id": 3665,
+    "word": "alone",
+    "exam_en": "I made this confession when my mother and I were <strong class=\"target-word\">alone</strong> in the room.",
+    "exam_ko": "방에 어머니와 <strong class=\"target-word\">단 둘</strong>이 있을 때 이 말을 털어놓았다."
+  },
+  {
+    "id": 3666,
+    "word": "alone",
+    "exam_en": "Better be <strong class=\"target-word\">alone</strong> than in bad company.",
+    "exam_ko": "나쁜 친구와 함께 있는 것보다는 <strong class=\"target-word\">혼자</strong> 있는 것이 낫다."
+  },
+  {
+    "id": 3667,
+    "word": "urban",
+    "exam_en": "an <strong class=\"target-word\">urban</strong> area",
+    "exam_ko": "<strong class=\"target-word\">도시권</strong>"
+  },
+  {
+    "id": 3668,
+    "word": "urban",
+    "exam_en": "<strong class=\"target-word\">urban</strong> life",
+    "exam_ko": "<strong class=\"target-word\">도시 생활</strong>"
+  },
+  {
+    "id": 3669,
+    "word": "empty",
+    "exam_en": "an <strong class=\"target-word\">empty</strong> page",
+    "exam_ko": "<strong class=\"target-word\">아무 것도 쓰여 있지 않은</strong> 페이지"
+  },
+  {
+    "id": 3670,
+    "word": "empty",
+    "exam_en": "<strong class=\"target-word\">empty</strong> cupboards",
+    "exam_ko": "<strong class=\"target-word\">빈</strong> 찬장; 식량의 결핍"
+  },
+  {
+    "id": 3671,
+    "word": "married",
+    "exam_en": "a <strong class=\"target-word\">married</strong> couple",
+    "exam_ko": "<strong class=\"target-word\">(신혼) 부부</strong>"
+  },
+  {
+    "id": 3672,
+    "word": "married",
+    "exam_en": "get <strong class=\"target-word\">married</strong>",
+    "exam_ko": "<strong class=\"target-word\">결혼하다</strong>"
+  },
+  {
+    "id": 3673,
+    "word": "narrow",
+    "exam_en": "a <strong class=\"target-word\">narrow</strong> room",
+    "exam_ko": "폭이 <strong class=\"target-word\">좁은</strong> 방, 길쭉한 방(※면적이 「비좁은 방」은 a small room)"
+  },
+  {
+    "id": 3674,
+    "word": "narrow",
+    "exam_en": "a <strong class=\"target-word\">narrow</strong> skirt",
+    "exam_ko": "<strong class=\"target-word\">좁고</strong> 긴 스커트"
+  },
+  {
+    "id": 3675,
+    "word": "liberal",
+    "exam_en": "a <strong class=\"target-word\">liberal</strong> giver",
+    "exam_ko": "<strong class=\"target-word\">아낌없이</strong> 주는 사람"
+  },
+  {
+    "id": 3676,
+    "word": "liberal",
+    "exam_en": "be <strong class=\"target-word\">liberal</strong> of one's money",
+    "exam_ko": "돈을 <strong class=\"target-word\">아끼지 않다</strong>."
+  },
+  {
+    "id": 3677,
+    "word": "supposed",
+    "exam_en": "a <strong class=\"target-word\">supposed</strong> situation",
+    "exam_ko": "<strong class=\"target-word\">가정되는</strong> 경우"
+  },
+  {
+    "id": 3678,
+    "word": "supposed",
+    "exam_en": "the <strong class=\"target-word\">supposed</strong> site",
+    "exam_ko": "<strong class=\"target-word\">추정상의</strong> 위치"
+  },
+  {
+    "id": 3679,
+    "word": "upper",
+    "exam_en": "the <strong class=\"target-word\">upper</strong> body",
+    "exam_ko": "<strong class=\"target-word\">상반신</strong>"
+  },
+  {
+    "id": 3680,
+    "word": "upper",
+    "exam_en": "the <strong class=\"target-word\">upper</strong> jaw",
+    "exam_ko": "<strong class=\"target-word\">위턱</strong>(↔the lower jaw)"
+  },
+  {
+    "id": 3681,
+    "word": "apparent",
+    "exam_en": "an <strong class=\"target-word\">apparent</strong> error",
+    "exam_ko": "<strong class=\"target-word\">명백한</strong> 과오"
+  },
+  {
+    "id": 3682,
+    "word": "apparent",
+    "exam_en": "an immediately <strong class=\"target-word\">apparent</strong> mistake",
+    "exam_ko": "<strong class=\"target-word\">당장 알 수 있는</strong> 잘못(cf. 『형용사』 2)"
+  },
+  {
+    "id": 3683,
+    "word": "busy",
+    "exam_en": "be <strong class=\"target-word\">busy</strong> with one's work",
+    "exam_ko": "<strong class=\"target-word\">바쁘게</strong> 일하고 있다"
+  },
+  {
+    "id": 3684,
+    "word": "busy",
+    "exam_en": "be <strong class=\"target-word\">busy</strong> preparing for an examination",
+    "exam_ko": "시험 준비에 <strong class=\"target-word\">바쁘다</strong>(※(비격식)에서는 보통 in을 생략함)"
+  },
+  {
+    "id": 3685,
+    "word": "bloody",
+    "exam_en": "The bandage soon became <strong class=\"target-word\">bloody</strong>.",
+    "exam_ko": "붕대는 금방 <strong class=\"target-word\">피로 물들었다</strong>."
+  },
+  {
+    "id": 3686,
+    "word": "bloody",
+    "exam_en": "You <strong class=\"target-word\">bloody</strong> villain!",
+    "exam_ko": "<strong class=\"target-word\">개자식!, 이자식!</strong>"
+  },
+  {
+    "id": 3687,
+    "word": "prepared",
+    "exam_en": "be <strong class=\"target-word\">prepared</strong> for a hurricane",
+    "exam_ko": "허리케인에 <strong class=\"target-word\">대비가 되어 있다</strong>."
+  },
+  {
+    "id": 3688,
+    "word": "prepared",
+    "exam_en": "I am quite <strong class=\"target-word\">prepared</strong> to do it.",
+    "exam_ko": "언제든지 그것을 <strong class=\"target-word\">하겠습니다</strong>."
+  },
+  {
+    "id": 3689,
+    "word": "russian",
+    "exam_en": "<strong class=\"target-word\">Russian</strong> dancing",
+    "exam_ko": "<strong class=\"target-word\">러시아</strong> 무용"
+  },
+  {
+    "id": 3690,
+    "word": "russian",
+    "exam_en": "the <strong class=\"target-word\">Russian</strong> language",
+    "exam_ko": "<strong class=\"target-word\">러시아어</strong>."
+  },
+  {
+    "id": 3691,
+    "word": "moral",
+    "exam_en": "a <strong class=\"target-word\">moral</strong> dilemma",
+    "exam_ko": "<strong class=\"target-word\">도덕상의</strong> 문제"
+  }
+]

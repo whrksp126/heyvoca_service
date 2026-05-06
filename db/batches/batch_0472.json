@@ -1,0 +1,238 @@
+[
+  {
+    "id": 13918,
+    "origin": "regression",
+    "examples": [
+      {
+        "exam_en": "regression analysis",
+        "exam_ko": "회귀 분석."
+      }
+    ]
+  },
+  {
+    "id": 13919,
+    "origin": "enigma",
+    "examples": [
+      {
+        "exam_en": "The mysterious disappearance of the artifact remains an enigma.",
+        "exam_ko": "그 유물의 실종은 여전히 수수께끼로 남아있다."
+      }
+    ]
+  },
+  {
+    "id": 13921,
+    "origin": "maestro",
+    "examples": [
+      {
+        "exam_en": "Maestro Toscanini",
+        "exam_ko": "명지휘자 토스카니니."
+      }
+    ]
+  },
+  {
+    "id": 13923,
+    "origin": "projectile",
+    "examples": [
+      {
+        "exam_en": "projectile force",
+        "exam_ko": "추진력[운동]."
+      },
+      {
+        "exam_en": "Masonry walls are more resistant to projectiles such as debris from hurricane or tornadoes.",
+        "exam_ko": "벽돌 벽은 허리케인이나 토네이도의 파편과 같은 발사체에 더 강합니다."
+      }
+    ]
+  },
+  {
+    "id": 13928,
+    "origin": "spaz",
+    "examples": [
+      {
+        "exam_en": "have a SPAZ",
+        "exam_ko": "화를 내다."
+      }
+    ]
+  },
+  {
+    "id": 13936,
+    "origin": "zilch",
+    "examples": [
+      {
+        "exam_en": "\"How much money is left?\" \"Z.\"",
+        "exam_ko": "「돈이 얼마나 남았어?」 「한푼도 없어.」"
+      }
+    ]
+  },
+  {
+    "id": 13937,
+    "origin": "coy",
+    "examples": [
+      {
+        "exam_en": "be coy of speech",
+        "exam_ko": "수줍어 말을 제대로 못 하다."
+      },
+      {
+        "exam_en": "She is always coy about her age.",
+        "exam_ko": "그녀는 언제나 나이를 밝히지 않는다."
+      }
+    ]
+  },
+  {
+    "id": 13939,
+    "origin": "hemline",
+    "examples": [
+      {
+        "exam_en": "raise a hemline",
+        "exam_ko": "드레스[스커트]의 공그른 단(의 선)을 올리다[내리다]."
+      }
+    ]
+  },
+  {
+    "id": 13940,
+    "origin": "fondness",
+    "examples": [
+      {
+        "exam_en": "a fondness for ice cream",
+        "exam_ko": "아이스크림을 아주 좋아함."
+      }
+    ]
+  },
+  {
+    "id": 13941,
+    "origin": "halve",
+    "examples": [
+      {
+        "exam_en": "halve expenses with a person",
+        "exam_ko": "남과 비용을 분담하다."
+      },
+      {
+        "exam_en": "halve a hole with",
+        "exam_ko": "…과 하프로 홀을 끝내다."
+      }
+    ]
+  },
+  {
+    "id": 13943,
+    "origin": "mortuary",
+    "examples": [
+      {
+        "exam_en": "a mortuary monument",
+        "exam_ko": "묘비"
+      },
+      {
+        "exam_en": "a mortuary chapel",
+        "exam_ko": "묘지 부속 예배당."
+      }
+    ]
+  },
+  {
+    "id": 13945,
+    "origin": "vassal",
+    "examples": [
+      {
+        "exam_en": "become a vassal to one's fears",
+        "exam_ko": "공포에 사로잡히게 되다."
+      },
+      {
+        "exam_en": "a vassal relationship",
+        "exam_ko": "종속 관계."
+      }
+    ]
+  },
+  {
+    "id": 13947,
+    "origin": "wedge",
+    "examples": [
+      {
+        "exam_en": "The thin end of the wedge is dangerous.",
+        "exam_ko": "쐐기 끝은 위험한 것이다; 처음에는 작지만 이윽고 커다란[중대한] 일에 결부된다."
+      },
+      {
+        "exam_en": "The sand wedge is the heaviest club in my golf bags.",
+        "exam_ko": "샌드 웨지가 나의 골프 가방에서 제일 무거운 것이다."
+      }
+    ]
+  },
+  {
+    "id": 13948,
+    "origin": "gaggle",
+    "examples": [
+      {
+        "exam_en": "a gaggle of tourists",
+        "exam_ko": "시끌시끌한 한 무리의 여행자들."
+      }
+    ]
+  },
+  {
+    "id": 13951,
+    "origin": "homogeneous",
+    "examples": [
+      {
+        "exam_en": "a homogeneous nation",
+        "exam_ko": "단일 민족 국가."
+      },
+      {
+        "exam_en": "a homogeneous equation",
+        "exam_ko": "동차 방정식."
+      }
+    ]
+  },
+  {
+    "id": 13952,
+    "origin": "heterogeneous",
+    "examples": [
+      {
+        "exam_en": "students of heterogeneous talents",
+        "exam_ko": "제각기 이질적인 능력을 가진 학생들."
+      },
+      {
+        "exam_en": "a heterogeneous group of people",
+        "exam_ko": "잡다한 사람들로 이루어진 그룹."
+      }
+    ]
+  },
+  {
+    "id": 13954,
+    "origin": "flagship",
+    "examples": [
+      {
+        "exam_en": "a flagship product",
+        "exam_ko": "주력 제품."
+      }
+    ]
+  },
+  {
+    "id": 13956,
+    "origin": "antagonistic",
+    "examples": [
+      {
+        "exam_en": "an antagonistic view",
+        "exam_ko": "대립 의견."
+      }
+    ]
+  },
+  {
+    "id": 13958,
+    "origin": "buoy",
+    "examples": [
+      {
+        "exam_en": "be buoyed  by the water",
+        "exam_ko": "물에 띄우다."
+      },
+      {
+        "exam_en": "My spirits were buoyed up by hopes of success.",
+        "exam_ko": "성공에 대한 기대로 마음이 들떠 있었다."
+      }
+    ]
+  },
+  {
+    "id": 13959,
+    "origin": "testosterone",
+    "examples": [
+      {
+        "exam_en": "Testosterone plays a key role in the development of male reproductive tissues.",
+        "exam_ko": "테스토스테론은 남성 생식 조직의 발달에 중요한 역할을 합니다."
+      }
+    ]
+  }
+]

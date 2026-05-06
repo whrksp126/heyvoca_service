@@ -1,0 +1,266 @@
+[
+  {
+    "id": 19933,
+    "origin": "virtuoso",
+    "examples": [
+      {
+        "exam_en": "a piano virtuoso ",
+        "exam_ko": "피아노의 거장"
+      },
+      {
+        "exam_en": "a violin virtuoso ",
+        "exam_ko": "바이올린의 거장"
+      },
+      {
+        "exam_en": "a piano virtuoso",
+        "exam_ko": "피아노의 거장"
+      },
+      {
+        "exam_en": "a violin virtuoso",
+        "exam_ko": "바이올린의 거장"
+      }
+    ]
+  },
+  {
+    "id": 19935,
+    "origin": "hyperbolic",
+    "examples": [
+      {
+        "exam_en": "a hyperbolic function",
+        "exam_ko": "쌍곡선 함수"
+      },
+      {
+        "exam_en": "a hyperbolic paraboloid",
+        "exam_ko": "쌍곡 포물면."
+      }
+    ]
+  },
+  {
+    "id": 19937,
+    "origin": "waver",
+    "examples": [
+      {
+        "exam_en": "wavering shadows",
+        "exam_ko": "너울너울 흔들리고 있는 그림자"
+      },
+      {
+        "exam_en": "His voice wavered.",
+        "exam_ko": "그의 목소리가 떨렸다"
+      }
+    ]
+  },
+  {
+    "id": 19945,
+    "origin": "cognizant",
+    "examples": [
+      {
+        "exam_en": "He is cognizant of the fact that he must pay back the money he borrowed.",
+        "exam_ko": "그는 자기가 빌린 돈을 갚아야 한다는 사실을 알고 있다."
+      }
+    ]
+  },
+  {
+    "id": 19946,
+    "origin": "incognito",
+    "examples": [
+      {
+        "exam_en": "an incognito traveler",
+        "exam_ko": "신분을 숨긴 여행자."
+      }
+    ]
+  },
+  {
+    "id": 19947,
+    "origin": "ferocity",
+    "examples": [
+      {
+        "exam_en": "He was shocked by the ferocity of her anger.",
+        "exam_ko": "그는 그녀가 미친 듯이 화를 내는 것에 충격을 받았다."
+      }
+    ]
+  },
+  {
+    "id": 19948,
+    "origin": "reminiscence",
+    "examples": [
+      {
+        "exam_en": "in reminiscence",
+        "exam_ko": "회고하여."
+      },
+      {
+        "exam_en": "He recounted his vivid reminiscences of the war.",
+        "exam_ko": "그는 전쟁의 생생한 회고담을 이야기했다."
+      }
+    ]
+  },
+  {
+    "id": 19950,
+    "origin": "ensuing",
+    "examples": [
+      {
+        "exam_en": "the ensuing months",
+        "exam_ko": "그 후의 수개월"
+      },
+      {
+        "exam_en": "the war and the ensuing disorder",
+        "exam_ko": "전쟁과 그에 잇달은 혼란."
+      }
+    ]
+  },
+  {
+    "id": 19951,
+    "origin": "evanescent",
+    "examples": [
+      {
+        "exam_en": "evanescent mental images ",
+        "exam_ko": "홀연히 나타났다 사라지는 심상"
+      },
+      {
+        "exam_en": " All was unstable ; quivering as leaves, evanescent as lightning. ",
+        "exam_ko": "모든 것이 불안정했다 / 나뭇잎처럼 바들바들 떨고 번갯불처럼 번쩍 나타났다가는 사라졌다."
+      },
+      {
+        "exam_en": "evanescent mental images",
+        "exam_ko": "홀연히 나타났다 사라지는 심상"
+      },
+      {
+        "exam_en": "All was unstable ; quivering as leaves, evanescent as lightning.",
+        "exam_ko": "모든 것이 불안정했다 / 나뭇잎처럼 바들바들 떨고 번갯불처럼 번쩍 나타났다가는 사라졌다."
+      }
+    ]
+  },
+  {
+    "id": 19954,
+    "origin": "garrulous",
+    "examples": [
+      {
+        "exam_en": "The garrulous old man shared countless stories from his past.",
+        "exam_ko": "수다스러운 노인은 자신의 과거부터 있었던 무수한 이야기를 나눴다."
+      }
+    ]
+  },
+  {
+    "id": 19955,
+    "origin": "exculpate",
+    "examples": [
+      {
+        "exam_en": "She has been exculpated from the charge.",
+        "exam_ko": "그녀는 혐의가 풀렸다"
+      },
+      {
+        "exam_en": "The fact exculpated her from any responsibility for the accident.",
+        "exam_ko": "그 사실로 그녀가 그 사고에 대해서 아무런 책임도 없음이 밝혀졌다."
+      }
+    ]
+  },
+  {
+    "id": 19957,
+    "origin": "regenerate",
+    "examples": [
+      {
+        "exam_en": "regenerate oneself",
+        "exam_ko": "개심하다"
+      },
+      {
+        "exam_en": "regenerate society",
+        "exam_ko": "사회를 개혁하다."
+      }
+    ]
+  },
+  {
+    "id": 19958,
+    "origin": "progeny",
+    "examples": [
+      {
+        "exam_en": "Her numerous progeny was all asleep.",
+        "exam_ko": "그녀의 수많은 자손은 모두 죽었다."
+      }
+    ]
+  },
+  {
+    "id": 19959,
+    "origin": "nauseating",
+    "examples": [
+      {
+        "exam_en": "a nauseating story",
+        "exam_ko": "몹시 불쾌한 이야기."
+      }
+    ]
+  },
+  {
+    "id": 19960,
+    "origin": "ignominy",
+    "examples": [
+      {
+        "exam_en": "bring ignominy to one's family",
+        "exam_ko": "집안 망신을 시키다."
+      }
+    ]
+  },
+  {
+    "id": 19963,
+    "origin": "stanch",
+    "examples": [
+      {
+        "exam_en": "He stanched the bleeding with a cold compress. ",
+        "exam_ko": "그는 찬 압박붕대를 써서 출혈을 막았다."
+      },
+      {
+        "exam_en": "He stanched the bleeding with a cold compress.",
+        "exam_ko": "그는 찬 압박붕대를 써서 출혈을 막았다."
+      }
+    ]
+  },
+  {
+    "id": 19966,
+    "origin": "decrepit",
+    "examples": [
+      {
+        "exam_en": "be decrepit with old age",
+        "exam_ko": "노쇠해 있다."
+      },
+      {
+        "exam_en": "a decrepit old chair",
+        "exam_ko": "낡아빠진 구식 의자."
+      }
+    ]
+  },
+  {
+    "id": 19968,
+    "origin": "vertiginous",
+    "examples": [
+      {
+        "exam_en": "vertiginous winds",
+        "exam_ko": "선회하는 바람."
+      },
+      {
+        "exam_en": "a vertiginous cliff",
+        "exam_ko": "현기증이 나는 낭떠러지"
+      }
+    ]
+  },
+  {
+    "id": 19974,
+    "origin": "effusive",
+    "examples": [
+      {
+        "exam_en": "an effusive welcome",
+        "exam_ko": "지나친 환대"
+      },
+      {
+        "exam_en": "The critic was effusive in his praise of the movie.",
+        "exam_ko": "평론가는 그 영화를 지나치게 호평했다."
+      }
+    ]
+  },
+  {
+    "id": 19978,
+    "origin": "frailty",
+    "examples": [
+      {
+        "exam_en": "Frailty, thy name is woman!",
+        "exam_ko": "약한 자여, 그대 이름은 여자이니라! ＜셰익스피어의 「햄릿」Ⅰ. ⅱ. 146＞."
+      }
+    ]
+  }
+]

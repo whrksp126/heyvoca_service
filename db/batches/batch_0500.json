@@ -1,0 +1,246 @@
+[
+  {
+    "id": 15136,
+    "origin": "discourse",
+    "examples": [
+      {
+        "exam_en": "hold discourse with a person",
+        "exam_ko": "남과 대화를 하다."
+      },
+      {
+        "exam_en": "give a stirring discourse",
+        "exam_ko": "감동적인 강연을 하다"
+      }
+    ]
+  },
+  {
+    "id": 15137,
+    "origin": "moor",
+    "examples": [
+      {
+        "exam_en": "the stark moor",
+        "exam_ko": "황량한 황야."
+      },
+      {
+        "exam_en": "a schooner moored to the quay",
+        "exam_ko": "선창에 매어놓은 스쿠너선."
+      }
+    ]
+  },
+  {
+    "id": 15140,
+    "origin": "vaulted",
+    "examples": [
+      {
+        "exam_en": "a vaulted passage",
+        "exam_ko": "아케이드 길."
+      }
+    ]
+  },
+  {
+    "id": 15142,
+    "origin": "snuffer",
+    "examples": [
+      {
+        "exam_en": "These snuffers are very old.",
+        "exam_ko": "이 가위는 매우 오래 되었다."
+      },
+      {
+        "exam_en": "several pairs of snuffers",
+        "exam_ko": "몇 자루의 심지 가위"
+      }
+    ]
+  },
+  {
+    "id": 15145,
+    "origin": "maraud",
+    "examples": [
+      {
+        "exam_en": "maraud up and down",
+        "exam_ko": "여기저기서 마구 약탈하다."
+      },
+      {
+        "exam_en": "the marauding sands of the desert",
+        "exam_ko": "사막에서 밀려오는 모래."
+      }
+    ]
+  },
+  {
+    "id": 15146,
+    "origin": "flawless",
+    "examples": [
+      {
+        "exam_en": "a flawless gem",
+        "exam_ko": "흠이 없는 보석."
+      }
+    ]
+  },
+  {
+    "id": 15147,
+    "origin": "arbitrate",
+    "examples": [
+      {
+        "exam_en": "arbitrate boundaries between the countries",
+        "exam_ko": "양국의 국경선을 재정하다."
+      },
+      {
+        "exam_en": "arbitrate in a dispute",
+        "exam_ko": "쟁의의 중재에 나서다"
+      }
+    ]
+  },
+  {
+    "id": 15148,
+    "origin": "scathing",
+    "examples": [
+      {
+        "exam_en": "scathing criticism",
+        "exam_ko": "통렬한 비판"
+      },
+      {
+        "exam_en": "The newspapers were scathing about her.",
+        "exam_ko": "신문들이 그녀에 대해 통렬히 비난했다."
+      }
+    ]
+  },
+  {
+    "id": 15149,
+    "origin": "unrelenting",
+    "examples": [
+      {
+        "exam_en": "the unrelenting heat",
+        "exam_ko": "혹심한 더위."
+      }
+    ]
+  },
+  {
+    "id": 15150,
+    "origin": "wily",
+    "examples": [
+      {
+        "exam_en": "wily as a fox",
+        "exam_ko": "여우처럼 교활한."
+      }
+    ]
+  },
+  {
+    "id": 15152,
+    "origin": "liberality",
+    "examples": [
+      {
+        "exam_en": "He is well-known for his liberality in giving to charity.",
+        "exam_ko": "그는 자선 사업에 아낌없이 협력하는 것으로 널리 알려져 있다."
+      }
+    ]
+  },
+  {
+    "id": 15155,
+    "origin": "vestment",
+    "examples": [
+      {
+        "exam_en": "a valley with a rich vestment of flowers and trees",
+        "exam_ko": "꽃과 나무로 뒤덮인 골짜기."
+      }
+    ]
+  },
+  {
+    "id": 15156,
+    "origin": "responsive",
+    "examples": [
+      {
+        "exam_en": "a responsive class",
+        "exam_ko": "민감한 반응을 보이는 학급(의 학생들)"
+      },
+      {
+        "exam_en": "be responsive to affection",
+        "exam_ko": "애정에 민감하다."
+      }
+    ]
+  },
+  {
+    "id": 15160,
+    "origin": "delegation",
+    "examples": [
+      {
+        "exam_en": "The delegation has just arrived.",
+        "exam_ko": "대표단이 막 도착하였다. cf. DEPUTATION."
+      },
+      {
+        "exam_en": "Marco and his delegation immediately proceeded to San Francisco.",
+        "exam_ko": "마르코스 필리핀 대통령과 사절단은 즉시 샌프란시스코로 향했다."
+      }
+    ]
+  },
+  {
+    "id": 15162,
+    "origin": "chronicle",
+    "examples": [
+      {
+        "exam_en": "enter a name in a chronicle",
+        "exam_ko": "역사에 이름을 남기다."
+      }
+    ]
+  },
+  {
+    "id": 15163,
+    "origin": "plated",
+    "examples": [
+      {
+        "exam_en": "a gold-plated spoon",
+        "exam_ko": "금도금한 스푼."
+      }
+    ]
+  },
+  {
+    "id": 15166,
+    "origin": "excluding",
+    "examples": [
+      {
+        "exam_en": "There were thirty people in the hotel, excluding the hotel staff.",
+        "exam_ko": "그 호텔에는 호텔 직원을 제외하고 30명이 있었다."
+      }
+    ]
+  },
+  {
+    "id": 15167,
+    "origin": "located",
+    "examples": [
+      {
+        "exam_en": "centrally located",
+        "exam_ko": "중심에 위치한"
+      },
+      {
+        "exam_en": "conveniently located",
+        "exam_ko": "편리한 장소에 위치한"
+      }
+    ]
+  },
+  {
+    "id": 15169,
+    "origin": "warmth",
+    "examples": [
+      {
+        "exam_en": "body warmth",
+        "exam_ko": "체온"
+      },
+      {
+        "exam_en": "We moved close to each other for warmth.",
+        "exam_ko": "우리는 온기를 느끼기 위해 서로 몸을 가까이 했다"
+      }
+    ]
+  },
+  {
+    "id": 15173,
+    "origin": "vestige",
+    "examples": [
+      {
+        "exam_en": "a vestige of blood",
+        "exam_ko": "핏자국"
+      },
+      {
+        "exam_en": "vestiges of an ancient religion",
+        "exam_ko": "고대 종교의 자취."
+      }
+    ]
+  }
+]
