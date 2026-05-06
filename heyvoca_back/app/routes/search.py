@@ -166,10 +166,11 @@ def search_word_korean():
         return jsonify({'code': 400, 'message': '잘못된 요청입니다.'}), 400
     
     # 1. 매치된 meaning들을 유사도 순으로 가져와서 voca_id 순서 추출 (중복 제거, 최대 10개 voca)
+    # NOTE: heyvoca_dict.* schema prefix 명시 — db.session은 default bind(heyvoca_user)이라 사전 테이블 못 찾음.
     match_query = text("""
         SELECT voca_meaning.meaning, voca_meaning_map.voca_id
-        FROM voca_meaning
-        JOIN voca_meaning_map ON voca_meaning.id = voca_meaning_map.meaning_id
+        FROM heyvoca_dict.voca_meaning
+        JOIN heyvoca_dict.voca_meaning_map ON voca_meaning.id = voca_meaning_map.meaning_id
         WHERE REPLACE(voca_meaning.meaning, ' ', '') REGEXP :pattern
         ORDER BY
             CASE WHEN REPLACE(voca_meaning.meaning, ' ', '') = :exact THEN 0 ELSE 1 END,
@@ -285,6 +286,7 @@ def search_bookstore_word():
 
     search_pattern = f'{partial_word}%'
 
+    # NOTE: 모든 사전 테이블에 heyvoca_dict.* prefix — default bind는 heyvoca_user이라.
     query = text("""
         SELECT
             bs.id AS bookstore_id,
@@ -293,12 +295,12 @@ def search_bookstore_word():
             v.word,
             v.pronunciation,
             GROUP_CONCAT(DISTINCT vm.meaning ORDER BY vm.id SEPARATOR '|||') AS meanings
-        FROM bookstore bs
-        JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
-        JOIN admin_voca_book_map avbm ON avb.id = avbm.book_id
-        JOIN voca v ON avbm.voca_id = v.id
-        LEFT JOIN voca_meaning_map vmm ON v.id = vmm.voca_id
-        LEFT JOIN voca_meaning vm ON vmm.meaning_id = vm.id
+        FROM heyvoca_dict.bookstore bs
+        JOIN heyvoca_dict.admin_voca_book avb ON bs.admin_voca_book_id = avb.id
+        JOIN heyvoca_dict.admin_voca_book_map avbm ON avb.id = avbm.book_id
+        JOIN heyvoca_dict.voca v ON avbm.voca_id = v.id
+        LEFT JOIN heyvoca_dict.voca_meaning_map vmm ON v.id = vmm.voca_id
+        LEFT JOIN heyvoca_dict.voca_meaning vm ON vmm.meaning_id = vm.id
         WHERE v.word LIKE :pattern
           AND bs.hide = 0
         GROUP BY bs.id, v.id
@@ -326,6 +328,7 @@ def search_bookstore_word():
 @search_bp.route('/bookstore', methods=['GET'])
 def search_bookstore_all():
     # MySQL용 쿼리 (단어 목록 제외)
+    # NOTE: heyvoca_dict.* prefix 필수 (default bind = heyvoca_user)
     query = text("""
         SELECT
             bs.id AS bookstore_id,
@@ -336,8 +339,8 @@ def search_bookstore_all():
             bs.hide,
             bs.gem,
             COALESCE(avb.word_count, 0) AS word_count
-        FROM bookstore bs
-        JOIN admin_voca_book avb ON bs.admin_voca_book_id = avb.id
+        FROM heyvoca_dict.bookstore bs
+        JOIN heyvoca_dict.admin_voca_book avb ON bs.admin_voca_book_id = avb.id
         GROUP BY bs.id
     """)
 
@@ -375,7 +378,7 @@ def get_bookstore_detail(bookstoreId):
     if not bookstore:
         return jsonify({'code': 404, 'message': '해당하는 서점이 없습니다.'}), 404
 
-    # 단어 목록 조회
+    # 단어 목록 조회 — heyvoca_dict.* prefix 필수 (default bind = heyvoca_user)
     query = text("""
         SELECT
             v.id,
@@ -383,8 +386,8 @@ def get_bookstore_detail(bookstoreId):
             v.pronunciation,
             CAST(avbm.voca_meanings AS JSON) AS meanings,
             CAST(avbm.voca_examples AS JSON) AS examples
-        FROM admin_voca_book_map avbm
-        JOIN voca v ON avbm.voca_id = v.id
+        FROM heyvoca_dict.admin_voca_book_map avbm
+        JOIN heyvoca_dict.voca v ON avbm.voca_id = v.id
         WHERE avbm.book_id = :admin_voca_book_id
     """)
 
