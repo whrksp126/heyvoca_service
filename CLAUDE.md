@@ -281,13 +281,13 @@ git push
 
 ### 새 팀원 최초 세팅
 
+베이스라인이 head 시점(`d1a3f9b2c405`)이라 stamp 단계 불필요. 복원만 하면 끝.
+
 ```bash
-# DB 복원 후 stamp (이미 있는 테이블 재생성 방지)
-docker exec -i heyvoca_mysql_local bash -c "mysql -u root -pGhmateRootMySQL\!@34 heyvoca" < db/backups/full_20260311.sql
-docker exec -it heyvoca_back_local bash
-flask db stamp head
-exit
+docker exec -i heyvoca_mysql_local bash -c "mysql -u root -p\"\$MYSQL_ROOT_PASSWORD\" heyvoca" < db/backups/full_20260506.sql
 ```
+
+이후 컨테이너 재시작 시 `flask db upgrade`가 자동 실행되며, 이미 head라 no-op.
 
 ### 유용한 명령어
 

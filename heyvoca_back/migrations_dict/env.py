@@ -1,3 +1,12 @@
+"""사전 DB(heyvoca_dict) 전용 Alembic env.
+
+기본 migrations/env.py와 두 가지가 다름:
+1. target_metadata가 metadatas['dict'] (사전 모델만 추적)
+2. sqlalchemy.url이 SQLALCHEMY_BINDS['dict'] connection 사용
+
+flask db migrate --directory migrations_dict 와 같이 directory 옵션을
+명시해야 이 env.py가 동작.
+"""
 import logging
 from logging.config import fileConfig
 
@@ -5,23 +14,22 @@ from flask import current_app
 
 from alembic import context
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
 fileConfig(config.config_file_name)
 logger = logging.getLogger('alembic.env')
 
+DICT_BIND = 'dict'
+
 
 def get_engine():
+    """dict bind의 engine 반환 (default가 아닌 사전 DB connection)."""
+    db = current_app.extensions['migrate'].db
     try:
-        # this works with Flask-SQLAlchemy<3 and Alchemical
-        return current_app.extensions['migrate'].db.get_engine()
+        # Flask-SQLAlchemy < 3
+        return db.get_engine(bind=DICT_BIND)
     except (TypeError, AttributeError):
-        # this works with Flask-SQLAlchemy>=3
-        return current_app.extensions['migrate'].db.engine
+        # Flask-SQLAlchemy >= 3: bind를 통해 engine 가져옴
+        return db.engines[DICT_BIND]
 
 
 def get_engine_url():
@@ -32,49 +40,29 @@ def get_engine_url():
         return str(get_engine().url).replace('%', '%%')
 
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 config.set_main_option('sqlalchemy.url', get_engine_url())
 target_db = current_app.extensions['migrate'].db
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
 
 def get_metadata():
-    """이 디렉토리는 사용자 DB(default bind) 마이그레이션만 관리.
-    사전 DB(__bind_key__='dict')는 migrations_dict/env.py가 별도로 처리.
+    """사전 모델(__bind_key__='dict')의 metadata만 반환.
 
     Flask-SQLAlchemy 2.x는 모든 모델이 db.metadata 한곳에 등록되므로
-    bind_key가 None인 테이블만 골라야 한다.
+    bind_key로 직접 필터링해서 새 MetaData에 복사해야 한다.
+    Flask-SQLAlchemy 3.x에서는 db.metadatas가 자동 분리됨.
     """
     if hasattr(target_db, 'metadatas'):
-        return target_db.metadatas[None]
+        return target_db.metadatas[DICT_BIND]
 
     from sqlalchemy import MetaData
-    user_md = MetaData()
+    dict_md = MetaData()
     for table in target_db.metadata.tables.values():
-        if table.info.get('bind_key') is None:
-            table.tometadata(user_md)
-    return user_md
+        if table.info.get('bind_key') == DICT_BIND:
+            table.tometadata(dict_md)
+    return dict_md
 
 
 def run_migrations_offline():
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url, target_metadata=get_metadata(), literal_binds=True
@@ -85,16 +73,6 @@ def run_migrations_offline():
 
 
 def run_migrations_online():
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-
-    # this callback is used to prevent an auto-migration from being generated
-    # when there are no changes to the schema
-    # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
     def process_revision_directives(context, revision, directives):
         if getattr(config.cmd_opts, 'autogenerate', False):
             script = directives[0]

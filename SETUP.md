@@ -1,5 +1,9 @@
 # HeyVoca 로컬 개발 환경 가이드
 
+> **2026-05 업데이트**: DB 분리 작업으로 사전(`heyvoca_dict`)과 사용자(`heyvoca_user`) DB가 별도 schema로 분리되었습니다.
+> 사전 데이터는 MinIO 기반 자동 동기화 + dump 수동 import 불필요.
+> 기존 팀원이라면 [기존 환경 마이그레이션](#기존-환경-마이그레이션-기존-팀원-1회) 섹션 참조.
+
 ## 사전 준비
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) 설치 및 실행 중
@@ -24,30 +28,30 @@ cd heyvoca_service
 
 | 파일 경로 | 용도 |
 |-----------|------|
-| `heyvoca_back/.env.local` | 백엔드 환경변수 (DB URL, JWT 시크릿, API 키 등) |
+| `heyvoca_back/.env.local` | 백엔드 환경변수 (DB URL, JWT 시크릿, API 키, **MinIO RO 키** 등) |
 | `heyvoca_front/.env.local` | 프론트 환경변수 (`VITE_BACKEND_URL` 등) |
 | `heyvoca_back/app/routes/heyvoca-466916-e70bf3dad372.json` | Google Play 서비스 계정 키 |
 
----
-
-## 3. DB 덤프 파일 준비
-
-구글 공유 드라이브에서 최신 DB 덤프 파일을 받아 아래 경로에 넣습니다.
+`.env.local`에는 다음이 포함되어 있어야 합니다 (관리자가 채워서 전달):
 
 ```
-heyvoca_service/
-└── db/
-    └── backups/
-        └── full_20260416.sql   ← 여기
+DATABASE_URL=mysql+pymysql://voca:voca%21%4034@mysql:3306/heyvoca_user
+DATABASE_URL_DICT=mysql+pymysql://voca:voca%21%4034@mysql:3306/heyvoca_dict
+APP_ENV=local
+DICT_AUTO_RESET=true
+DICT_AUTO_RESET_ALLOW_PROD=false
+MINIO_ENDPOINT=https://objectstore.ghmate.com
+MINIO_BUCKET=heyvoca-dict
+MINIO_DICT_RO_KEY=...   # 모든 팀원 공통 (read-only)
+MINIO_DICT_RO_SECRET=...
+# 사전 큐레이션 권한 있는 팀원만 추가 (write):
+# MINIO_DICT_RW_KEY=...
+# MINIO_DICT_RW_SECRET=...
 ```
-
-> 반드시 **최신 덤프 파일**을 받아야 합니다. 날짜가 다르면 파일명을 맞게 수정하세요.
 
 ---
 
-## 4. 첫 실행
-
-### 4-1. Docker 전체 스택 빌드 & 실행
+## 3. 첫 실행
 
 `heyvoca_service/` 루트에서:
 
@@ -55,19 +59,31 @@ heyvoca_service/
 docker compose -f docker-compose.local.yml up --build -d
 ```
 
-### 4-2. DB 초기 데이터 복원 (최초 1회)
+기동 흐름 (전부 자동):
 
-MySQL이 준비될 때까지 약 10초 후 실행:
+1. mysql 컨테이너 첫 기동 → `db/init/01_create_schemas.sql`이 `heyvoca_user`, `heyvoca_dict` 두 schema 자동 생성.
+2. back 컨테이너 entrypoint:
+   - `dict_sync.py` 실행 → MinIO에서 최신 사전 dump 다운로드 → `heyvoca_dict`에 import.
+   - `flask db upgrade --directory migrations_dict` → 사전 schema 마이그레이션 적용 (이미 최신이면 no-op).
+   - `flask db upgrade` → 사용자 schema 빈 상태에서 모든 테이블 생성.
+   - gunicorn 기동.
+3. 끝. 단어 검색, 회원가입, 단어장 모두 동작.
+
+> **DB 덤프 파일 수동 import는 더 이상 필요 없습니다.** 기존 `db/backups/full_*.sql` 절차는 폐기되었어요.
+
+### (선택) 시드 사용자 데이터
+
+회원가입/학습 흐름을 빠르게 테스트하려면 익명화된 테스트 계정 시드:
 
 ```bash
-docker exec -i heyvoca_mysql_local mysql -u root -prootpassword heyvoca < db/backups/full_20260416.sql
+docker exec heyvoca_back_local flask seed test-users --count 10
 ```
 
-완료되면 끝입니다. 별도 마이그레이션 명령어는 필요 없습니다.
+→ `test1@example.com` 같은 더미 계정 N개 + 기본 단어장 1개씩 생성.
 
 ---
 
-## 5. 접속 확인
+## 4. 접속 확인
 
 내부 IP 확인:
 ```bash
@@ -81,6 +97,12 @@ ipconfig getifaddr en0
 | MySQL | `localhost:3310` (user: voca / pw: voca!@34) |
 | Redis | `localhost:6380` |
 
+DB 확인:
+```bash
+docker exec heyvoca_mysql_local mysql -u voca -p"voca!@34" -e "SHOW DATABASES;"
+# heyvoca_dict, heyvoca_user 두 개 보여야 정상
+```
+
 ---
 
 ## 일상 개발
@@ -91,13 +113,11 @@ ipconfig getifaddr en0
 bash /path/to/heyvoca/local-setup.sh
 ```
 
-스크립트가 IP 감지 → `.env.local` 업데이트 → Docker 재시작까지 자동 처리.
-
 ### 로그 확인
 
 ```bash
+docker logs -f heyvoca_back_local       # dict_sync 로그도 여기서 확인
 docker logs -f heyvoca_front_local
-docker logs -f heyvoca_back_local
 ```
 
 ### 종료
@@ -108,33 +128,129 @@ docker compose -f docker-compose.local.yml down
 
 ---
 
-## DB 스키마 변경이 생겼을 때 (git pull 후)
+## git pull 후의 흐름 (자동 동기화)
 
-팀원이 `models.py`를 수정하고 마이그레이션 파일을 push했다면:
+다른 팀원이 사전 데이터/스키마/사용자 DB 모델을 변경했어도, 한 줄로 끝:
 
 ```bash
 git pull
-docker restart heyvoca_back_local
+docker compose -f docker-compose.local.yml up -d --build back
 ```
 
-컨테이너 재시작 시 자동으로 `flask db upgrade`가 실행되어 스키마가 적용됩니다.  
-별도로 명령어를 실행할 필요 없습니다.
+back 컨테이너가 재기동되면서 자동으로:
+- 사전 데이터: `dict_pointer.json`의 sha256이 바뀌었으면 MinIO에서 새 dump 받아 import.
+- 사전 스키마: `migrations_dict/`에 신규 파일 있으면 자동 적용.
+- 사용자 스키마: `migrations/`에 신규 파일 있으면 자동 적용.
+
+별도 명령 없음.
 
 ---
 
-## 내가 DB 스키마를 변경할 때
+## 내가 사용자 DB 스키마를 변경할 때
 
 ```bash
-# 1. heyvoca_back/app/models/models.py 수정
+# 1. heyvoca_back/app/models/models.py에서 사용자 모델 수정 (User, Purchase 등)
 
-# 2. 마이그레이션 파일 생성 + 로컬 DB 적용
+# 2. 마이그레이션 파일 생성 + 로컬 적용
 docker exec heyvoca_back_local flask db migrate -m "변경 내용 한 줄 설명"
 docker exec heyvoca_back_local flask db upgrade
 
-# 3. git commit (migrations/ 폴더 반드시 포함)
+# 3. git commit
 git add heyvoca_back/migrations/
 git commit -m "db: 변경 내용 설명"
 git push
 ```
 
-> `migrations/` 폴더를 commit하지 않으면 팀원에게 변경사항이 전달되지 않습니다.
+---
+
+## 내가 사전 DB 스키마를 변경할 때 (Voca, VocaBook 등)
+
+`--directory migrations_dict` 플래그가 차이점:
+
+```bash
+# 1. heyvoca_back/app/models/models.py에서 사전 모델 수정 (__bind_key__='dict')
+
+# 2. 사전 전용 마이그레이션 파일 생성 + 로컬 적용
+docker exec heyvoca_back_local flask db migrate --directory migrations_dict -m "voca: 변경 설명"
+docker exec heyvoca_back_local flask db upgrade --directory migrations_dict
+
+# 3. (필요 시) 데이터 마이그레이션도 같이 → 사전 dump 발행
+python scripts/dict_publish.py -m "voca difficulty 컬럼 추가 + 데이터 채움"
+
+# 4. git commit (migrations_dict + db/dict 같이)
+git add heyvoca_back/migrations_dict/ db/dict/
+git commit -m "dict: 변경 내용"
+git push
+```
+
+---
+
+## 내가 사전 데이터만 갱신할 때 (단어 추가, 뜻 수정 등)
+
+스키마 변경 없이 데이터만 변경 시:
+
+```bash
+# 1. 로컬 heyvoca_dict에 직접 변경 (mysql 클라이언트, admin 도구 등)
+
+# 2. 사전 dump 발행 → MinIO 업로드 + dict_pointer.json 갱신
+python scripts/dict_publish.py -m "토익 800점 단어 100개 추가"
+
+# 3. git commit
+git add db/dict/
+git commit -m "dict: 토익 800점 단어 100개 추가"
+git push
+```
+
+> 다른 팀원/dev/stg/prod는 git pull + 컨테이너 재시작만으로 자동 동기화됩니다.
+
+> **MinIO RW 키가 필요합니다.** 사전 큐레이션 권한자만 실행 가능.
+
+---
+
+## 기존 환경 마이그레이션 (기존 팀원, 1회)
+
+이미 단일 `heyvoca` schema로 운영 중인 팀원은 1회 이행 필요:
+
+### 옵션 A: volume 초기화 (가장 깔끔, 로컬 사용자 데이터는 사라짐)
+
+```bash
+docker compose -f docker-compose.local.yml down
+docker volume rm heyvoca_service_mysql_local_data
+git pull
+docker compose -f docker-compose.local.yml up -d --build
+# → mysql 첫 기동: 두 schema 자동 생성
+# → back entrypoint: dict_sync로 사전 자동 import + 사용자 schema에 빈 테이블 생성
+```
+
+### 옵션 B: 데이터 보존 이행 (개인 테스트 데이터 유지)
+
+```bash
+git pull
+docker compose -f docker-compose.local.yml up -d --build
+bash scripts/migrate_to_split.sh local
+# → 기존 heyvoca의 사용자 13개 테이블 → heyvoca_user 복사
+# → 기존 heyvoca의 사전 11개 테이블 → heyvoca_dict 복사
+# → flask db stamp head (양 디렉토리)
+docker restart heyvoca_back_local
+```
+
+---
+
+## 트러블슈팅
+
+### `dict_sync` 로그에 "DATABASE_URL_DICT 환경변수 없음"
+
+`.env.local`에 `DATABASE_URL_DICT` 없음. 위 [환경 파일 준비](#2-환경-파일-준비) 참고.
+
+### `dict_sync` 로그에 "MinIO 환경변수 누락"
+
+`.env.local`에 `MINIO_DICT_RO_KEY`/`MINIO_DICT_RO_SECRET` 없음. 관리자에게 키 받기.
+
+### `dict_sync` 로그에 "pointer가 uninitialized 상태 → skip"
+
+`db/dict/dict_pointer.json`이 아직 첫 사전 dump 발행 전 상태. Phase 0이 끝나면 정상 동작.
+이 단계에서는 `heyvoca_dict`가 빈 상태로 시작 → 검색/단어장 기능이 동작하지 않음.
+
+### `python scripts/dict_publish.py` 실행 시 403
+
+MinIO RW 키 없음. 사전 큐레이션 권한자만 갖고 있음. 관리자에게 문의.

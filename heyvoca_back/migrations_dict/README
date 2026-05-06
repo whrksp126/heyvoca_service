@@ -1,0 +1,12 @@
+사전 DB(heyvoca_dict) 전용 마이그레이션 디렉토리.
+
+사용법:
+  flask db migrate --directory migrations_dict -m "변경 설명"
+  flask db upgrade --directory migrations_dict
+
+기본 migrations/는 사용자 DB(heyvoca_user)만 관리.
+이 디렉토리는 __bind_key__='dict'인 모델만 추적.
+
+첫 마이그레이션은 로컬에서 다음 명령으로 생성:
+  docker exec -it heyvoca_back_local flask db migrate \
+    --directory migrations_dict -m "initial dict schema"

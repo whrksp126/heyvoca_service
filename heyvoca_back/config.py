@@ -27,8 +27,27 @@ class Config:
     REFRESH_SECRET = os.getenv('REFRESH_SECRET')
     ACCESS_TTL_SECONDS = int(os.getenv('ACCESS_TTL_SECONDS', 3600))
 
-    # Database
+    # Database (사용자 데이터: heyvoca_user)
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///test.db')
+
+    # Database (사전 데이터: heyvoca_dict, 별도 schema)
+    # 모델에 __bind_key__ = 'dict'이 설정된 클래스가 이 connection 사용
+    SQLALCHEMY_BINDS = {
+        'dict': os.getenv('DATABASE_URL_DICT', SQLALCHEMY_DATABASE_URI),
+    }
+
+    # MinIO (사전 dump 저장소)
+    MINIO_ENDPOINT = os.getenv('MINIO_ENDPOINT', 'https://objectstore.ghmate.com')
+    MINIO_BUCKET = os.getenv('MINIO_BUCKET', 'heyvoca-dict')
+    MINIO_DICT_RO_KEY = os.getenv('MINIO_DICT_RO_KEY')
+    MINIO_DICT_RO_SECRET = os.getenv('MINIO_DICT_RO_SECRET')
+    MINIO_DICT_RW_KEY = os.getenv('MINIO_DICT_RW_KEY')
+    MINIO_DICT_RW_SECRET = os.getenv('MINIO_DICT_RW_SECRET')
+
+    # 사전 자동 갱신 토글
+    APP_ENV = os.getenv('APP_ENV', 'local')  # local/dev/stg/prod
+    DICT_AUTO_RESET = os.getenv('DICT_AUTO_RESET', 'true').lower() == 'true'
+    DICT_AUTO_RESET_ALLOW_PROD = os.getenv('DICT_AUTO_RESET_ALLOW_PROD', 'false').lower() == 'true'
 
     # Redis
     REDIS_HOST = os.getenv('REDIS_HOST', 'redis')
