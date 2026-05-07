@@ -538,7 +538,7 @@ const TakeTest = () => {
       </div>
     );
   } else {
-    if (recentStudy[state.testType].status === "end") {
+    if (recentStudy[state.testType]?.status === "end") {
       // 학습 종료 후 학습 결과 저장 중 ... 처리
       return (
         <div>

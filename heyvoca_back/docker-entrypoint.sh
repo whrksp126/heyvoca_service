@@ -32,5 +32,15 @@ else
     echo ">>> No migrations folder found, skipping flask db upgrade."
 fi
 
+# 4. Schema drift 검증 (모델 vs 실제 DB 일관성 확인)
+#    SCHEMA_CHECK_MODE=warn(기본)/strict/off 로 동작 제어
+if [ -f "/app/scripts/verify_schema.py" ]; then
+    echo ">>> verify_schema: 모델 ↔ DB 스키마 일관성 검증..."
+    python3 /app/scripts/verify_schema.py || {
+        echo ">>> Schema drift 발견 (strict 모드). 컨테이너 부팅 중단."
+        exit 1
+    }
+fi
+
 echo ">>> Starting gunicorn..."
 exec "$@"
