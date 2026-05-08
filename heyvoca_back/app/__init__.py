@@ -61,7 +61,7 @@ if _limiter_available:
     limiter = Limiter(
         key_func=_rate_limit_key,
         default_limits=['60 per minute'],
-        # storage_uri는 create_app()에서 app.config['RATELIMIT_STORAGE_URI']로 설정
+        # storage_uri는 create_app()에서 app.config['RATELIMIT_STORAGE_URL']로 설정
     )
 else:
     # Flask-Limiter 미설치 시 no-op 더미 객체
@@ -129,7 +129,8 @@ def create_app():
   app.config['CACHE_REDIS_DB'] = 0
 
   # Rate limiter — Redis DB 1 사용 (캐시 DB 0과 분리)
-  app.config['RATELIMIT_STORAGE_URI'] = f'redis://{_redis_host}:{_redis_port}/1'
+  # Flask-Limiter 3.x config key는 RATELIMIT_STORAGE_URL (URI 아님)
+  app.config['RATELIMIT_STORAGE_URL'] = f'redis://{_redis_host}:{_redis_port}/1'
 
   # 추가적인 초기화 코드 (블루프린트 등록 등)
   db.init_app(app)
