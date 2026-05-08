@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request, g
 from config import DevelopmentConfig, StagingConfig, ProductionConfig, LocalConfig, FRONT_END_URL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -9,11 +9,35 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, text
 from flask_cors import CORS
 from flask_caching import Cache
+try:
+    from flask_limiter import Limiter
+    from flask_limiter.util import get_remote_address
+    _limiter_available = True
+except ImportError:
+    _limiter_available = False
 import json
 import re
 
 from app.login_manager import load_user, unauthorized_callback
 from werkzeug.middleware.proxy_fix import ProxyFix
+
+# Sentry 초기화 (prod/stg 환경에서 SENTRY_DSN 환경변수가 있을 때만 활성화)
+# sentry-sdk가 아직 미설치인 환경에서도 앱 기동이 실패하지 않도록 try-except 처리
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.flask import FlaskIntegration as _FlaskIntegration
+    _sentry_dsn = os.getenv('SENTRY_DSN')
+    _flask_config_env = os.getenv('FLASK_CONFIG', '')
+    if _sentry_dsn and _flask_config_env in ('production', 'staging'):
+        sentry_sdk.init(
+            dsn=_sentry_dsn,
+            environment=_flask_config_env,
+            integrations=[_FlaskIntegration()],
+            traces_sample_rate=0.1,
+            send_default_pii=False,
+        )
+except ImportError:
+    pass
 
 # 로컬 테스트 전용
 env_file = os.environ.get('FLASK_ENV_FILE')
@@ -25,9 +49,38 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 cache = Cache()
 
+
+if _limiter_available:
+    def _rate_limit_key():
+        """인증된 사용자면 user_id, 아니면 IP 기반으로 rate limit 키 결정."""
+        user_id = getattr(g, 'user_id', None)
+        if user_id:
+            return f'user:{user_id}'
+        return get_remote_address()
+
+    limiter = Limiter(
+        key_func=_rate_limit_key,
+        default_limits=['60 per minute'],
+        # storage_uri는 create_app()에서 app.config['RATELIMIT_STORAGE_URI']로 설정
+    )
+else:
+    # Flask-Limiter 미설치 시 no-op 더미 객체
+    class _NoopLimiter:
+        def init_app(self, app):
+            pass
+        def limit(self, *args, **kwargs):
+            def decorator(f):
+                return f
+            return decorator
+        def exempt(self, f):
+            return f
+    limiter = _NoopLimiter()
+
 def create_app():
   app = Flask(__name__, static_folder='static', static_url_path='')
-  
+
+  flask_config = os.environ.get('FLASK_CONFIG', 'development')
+
   # CORS origins 리스트 구성
   cors_origins = [
       "https://heyvoca-front.ghmate.com",
@@ -35,12 +88,16 @@ def create_app():
       "https://dev-heyvoca-front.ghmate.com",
       "http://localhost:3000",
       "http://10.0.2.2:3000",
-      # 로컬 개발 (admin 페이지 등 직접 IP/localhost 접속 허용)
-      re.compile(r"^http://localhost:\d+$"),
-      re.compile(r"^http://127\.0\.0\.1:\d+$"),
-      re.compile(r"^http://192\.168\.\d+\.\d+:\d+$"),
-      re.compile(r"^http://10\.\d+\.\d+\.\d+:\d+$"),
   ]
+
+  # local / dev 환경에서만 내부망 IP 대역 허용
+  if flask_config in ('local', 'development'):
+      cors_origins += [
+          re.compile(r"^http://localhost:\d+$"),
+          re.compile(r"^http://127\.0\.0\.1:\d+$"),
+          re.compile(r"^http://192\.168\.\d+\.\d+:\d+$"),
+          re.compile(r"^http://10\.\d+\.\d+\.\d+:\d+$"),
+      ]
 
   # .env의 FRONT_END_URL이 있으면 추가
   if FRONT_END_URL:
@@ -64,10 +121,15 @@ def create_app():
   app.config['JSON_AS_ASCII'] = False
 
   # Redis 캐시 설정
+  _redis_host = os.getenv('REDIS_HOST', 'redis')
+  _redis_port = int(os.getenv('REDIS_PORT', 6379))
   app.config['CACHE_TYPE'] = 'redis'
-  app.config['CACHE_REDIS_HOST'] = os.getenv('REDIS_HOST', 'redis')
-  app.config['CACHE_REDIS_PORT'] = int(os.getenv('REDIS_PORT', 6379))
+  app.config['CACHE_REDIS_HOST'] = _redis_host
+  app.config['CACHE_REDIS_PORT'] = _redis_port
   app.config['CACHE_REDIS_DB'] = 0
+
+  # Rate limiter — Redis DB 1 사용 (캐시 DB 0과 분리)
+  app.config['RATELIMIT_STORAGE_URI'] = f'redis://{_redis_host}:{_redis_port}/1'
 
   # 추가적인 초기화 코드 (블루프린트 등록 등)
   db.init_app(app)
@@ -75,13 +137,15 @@ def create_app():
   _Migrate(app, db)
   login_manager.init_app(app)
   cache.init_app(app)
+  limiter.init_app(app)
   # login_manager.login_view = "main_login.html"
 
   login_manager.user_loader(load_user)
   login_manager.unauthorized_handler(unauthorized_callback)
 
   # # 모든 모델 클래스들을 한번에 import
-  from app.models import models  
+  from app.models import models
+  from app.routes.health import health_bp
   from app.routes.auth import auth_bp
   from app.routes.search import search_bp
   from app.routes.tts import tts_bp
@@ -97,6 +161,7 @@ def create_app():
   from app.routes.study import study_bp
   from app.routes.admin import admin_bp
 
+  app.register_blueprint(health_bp)
   app.register_blueprint(auth_bp)
   app.register_blueprint(search_bp)
   app.register_blueprint(tts_bp)

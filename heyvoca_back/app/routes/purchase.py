@@ -7,6 +7,7 @@ import os
 from uuid import UUID
 from app.routes import purchase_bp
 from app.utils.jwt_utils import jwt_required
+from app import limiter
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase, GemReason, GemLog
 from app import db
 from app.routes.common import register_gem_log
@@ -25,6 +26,7 @@ APPLE_APP_STORE_CONNECT_PRIVATE_KEY = os.getenv('APPLE_APP_STORE_CONNECT_PRIVATE
 
 @purchase_bp.route('/verify', methods=['POST'])
 @jwt_required
+@limiter.limit("5 per minute")
 def verify_purchase():
     """구매 영수증 검증 API - 각 스토어 검증만 수행"""
     try:

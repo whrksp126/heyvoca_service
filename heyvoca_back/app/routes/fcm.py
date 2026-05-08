@@ -36,6 +36,7 @@ def firebase_messaging_sw():
 
 
 @fcm_bp.route('/send_notification_test', methods=['POST'])
+@jwt_required
 def send_notification_test():
     data = request.json
     token = data.get('token')
@@ -60,9 +61,10 @@ def send_notification_test():
 
 import threading
 @fcm_bp.route('/get_token', methods=['POST'])
+@jwt_required
 def get_token():
     # 인증된 사용자라면 사용자 ID 기반으로 토큰 생성
-    user_id = request.json.get('user_id')
+    user_id = getattr(g, 'user_id', None) or request.json.get('user_id')
     registration_token = request.json.get('token')
 
     message = messaging.Message(

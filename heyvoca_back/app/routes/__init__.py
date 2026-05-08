@@ -1,5 +1,6 @@
 from flask import Blueprint
 
+health_bp = Blueprint('health', __name__)
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 search_bp = Blueprint('search', __name__, url_prefix='/search')
 tts_bp = Blueprint('tts', __name__, url_prefix='/tts')
@@ -13,6 +14,7 @@ ocr_bp = Blueprint('ocr', __name__, url_prefix='/ocr')
 voca_indexs_bp = Blueprint('voca_indexs', __name__, url_prefix='/vocaIndexs')
 voca_books_bp = Blueprint('voca_books', __name__, url_prefix='/vocaBooks')
 
+from app.routes import health
 from app.routes import auth
 from app.routes import search
 from app.routes import tts

@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, session, jsonify, g, make_response
 from functools import wraps
-from app import db
+from app import db, limiter
 from app.routes import auth_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap
 from app.routes.mainpage import update_user_goal
@@ -830,6 +830,7 @@ def level_voca_list():
 
 
 @auth_bp.route('/login', methods=['POST'])
+@limiter.limit("10 per minute", key_func=lambda: request.remote_addr)
 def login():
     data = request.json
     google_id = data.get('google_id')
@@ -879,6 +880,7 @@ def login():
 
 # 리프레시 토큰 재발급 엔드포인트
 @auth_bp.route('/refresh', methods=['POST'])
+@limiter.limit("10 per minute", key_func=lambda: request.remote_addr)
 def refresh():
     print("=== 토큰 갱신 요청 시작 ===")
     
@@ -955,6 +957,7 @@ def test_token_status():
 # -------------------
 @auth_bp.route('/withdraw', methods=['DELETE'])
 @jwt_required
+@limiter.limit("3 per hour")
 def withdraw():
     """회원 탈퇴 API - 사용자 관련 모든 데이터 삭제"""
     try:

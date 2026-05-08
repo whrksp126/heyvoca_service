@@ -14,6 +14,17 @@ import { setCookie } from '../../utils/common';
 import { launchGoogleWithdraw, getDevicePlatform, showToast } from '../../utils/osFunction';
 import { vibrate } from '../../utils/osFunction';
 
+const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
+const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
+
+function openExternalUrl(url) {
+  if (getDevicePlatform() !== 'web' && window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'openUrl', props: { url } }));
+  } else {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
 const AccountNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -224,8 +235,37 @@ const AccountNewFullSheet = () => {
 
       </div>
 
+      {/* 약관 및 정책 링크 */}
+      <div className="flex items-center justify-center gap-[16px] pt-[20px] px-[20px]">
+        <button
+          onClick={() => openExternalUrl(TERMS_URL)}
+          className="
+            text-[12px] font-[400]
+            text-[#999] dark:text-[#666]
+            underline
+            hover:text-[#666] dark:hover:text-[#999]
+            transition-colors
+          "
+        >
+          이용약관
+        </button>
+        <span className="text-[#ccc] dark:text-[#444] text-[12px]">|</span>
+        <button
+          onClick={() => openExternalUrl(PRIVACY_URL)}
+          className="
+            text-[12px] font-[400]
+            text-[#999] dark:text-[#666]
+            underline
+            hover:text-[#666] dark:hover:text-[#999]
+            transition-colors
+          "
+        >
+          개인정보처리방침
+        </button>
+      </div>
+
       {/* 회원 탈퇴 버튼 */}
-      <div className="flex justify-center py-[20px]">
+      <div className="flex justify-center py-[16px]">
         <button
           onClick={() => {
             vibrate({ duration: 5 });
