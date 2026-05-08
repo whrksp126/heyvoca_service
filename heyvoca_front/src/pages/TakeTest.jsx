@@ -197,16 +197,20 @@ const TakeTest = () => {
         return createMultipleChoiceQuestion(word, targetType);
       }
 
-      // fillInTheBlank: 단일 단어로 시도, 예문 없으면 폴백
+      // fillInTheBlank: 단일 단어로 시도, 예문 없으면 multipleChoice 폴백
+      // 주의: 폴백 시 questionType은 반드시 'multipleChoice'로 고정해야 한다.
+      //       fallbackType이 'fillInTheBlank'인 채로 createMultipleChoiceQuestion에
+      //       넘기면 options가 word 객체 배열인 fillInTheBlank 문제가 생성되어
+      //       FillInTheBlankQuestion 컴포넌트에서 렌더 오류가 발생한다.
       if (targetType === 'fillInTheBlank') {
         const generated = plugin.setupQuestions([word], allWords);
         if (generated.length > 0) return generated[0];
-        // 폴백: 원래 fallbackType 또는 multipleChoice
-        return createMultipleChoiceQuestion(word, fallbackType ?? 'multipleChoice');
+        // 폴백: 항상 multipleChoice (options가 word 객체 배열인 fillInTheBlank 생성 방지)
+        return createMultipleChoiceQuestion(word, 'multipleChoice');
       }
 
-      // cardMatch 계열은 단일 단어로 처리 불가 → 폴백
-      return createMultipleChoiceQuestion(word, fallbackType ?? 'multipleChoice');
+      // cardMatch 계열은 단일 단어로 처리 불가 → multipleChoice 폴백
+      return createMultipleChoiceQuestion(word, 'multipleChoice');
     };
 
     if (questionTypesArr.length === 1 && !isRecommendedMode) {
