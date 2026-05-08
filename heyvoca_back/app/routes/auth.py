@@ -830,7 +830,7 @@ def level_voca_list():
 
 
 @auth_bp.route('/login', methods=['POST'])
-@limiter.limit("10 per minute", key_func=lambda: request.remote_addr)
+@limiter.limit("10 per minute")
 def login():
     data = request.json
     google_id = data.get('google_id')
@@ -880,7 +880,7 @@ def login():
 
 # 리프레시 토큰 재발급 엔드포인트
 @auth_bp.route('/refresh', methods=['POST'])
-@limiter.limit("10 per minute", key_func=lambda: request.remote_addr)
+@limiter.limit("10 per minute")
 def refresh():
     print("=== 토큰 갱신 요청 시작 ===")
     

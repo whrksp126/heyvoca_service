@@ -52,10 +52,21 @@ cache = Cache()
 
 if _limiter_available:
     def _rate_limit_key():
-        """인증된 사용자면 user_id, 아니면 IP 기반으로 rate limit 키 결정."""
+        """인증된 사용자면 user_id, 아니면 IP 기반으로 rate limit 키 결정.
+
+        Cloudflare → nginx → backend 체인이라 request.remote_addr은 매번 다른
+        Cloudflare edge IP가 됨. CF-Connecting-IP/X-Forwarded-For 첫 항목이
+        진짜 클라이언트 IP.
+        """
         user_id = getattr(g, 'user_id', None)
         if user_id:
             return f'user:{user_id}'
+        cf_ip = request.headers.get('CF-Connecting-IP')
+        if cf_ip:
+            return cf_ip
+        xff = request.headers.get('X-Forwarded-For', '').strip()
+        if xff:
+            return xff.split(',')[0].strip()
         return get_remote_address()
 
     limiter = Limiter(
