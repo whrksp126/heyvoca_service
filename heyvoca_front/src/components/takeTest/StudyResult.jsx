@@ -10,7 +10,7 @@ import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
-import { getTextSound } from '../../utils/common';
+import { getTextSound, updateSM2 } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -88,6 +88,30 @@ const getAchievementTextStyle = (level) => {
   }
 };
 
+// Phase 2.2: priorityBucket → reason 칩 색상 매핑
+const REASON_CHIP_STYLES = {
+  overdue: 'bg-status-error-50 text-status-error-500',
+  today: 'bg-status-success-100 text-status-success-500',
+  new: 'bg-purple-50 text-purple-500',
+  long: 'bg-yellow-50 text-yellow-600',
+  short: 'bg-layout-gray-50 text-layout-gray-400',
+  medium: 'bg-layout-gray-50 text-layout-gray-400',
+  default: 'bg-layout-gray-50 text-layout-gray-400',
+};
+
+const getReasonChipStyle = (priorityBucket) => {
+  return REASON_CHIP_STYLES[priorityBucket] ?? REASON_CHIP_STYLES.default;
+};
+
+// Phase 2.2: compositionStrategy → 표시 배지 텍스트 결정
+const getStrategyBadge = (compositionStrategy) => {
+  if (!compositionStrategy) return null;
+  const adjustment = compositionStrategy.dynamic_adjustment;
+  if (adjustment === 'high_accuracy') return '새 단어 도전 모드';
+  if (adjustment === 'low_accuracy') return '복습 우선 모드';
+  return null;
+};
+
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -103,11 +127,17 @@ const StudyResult = () => {
         ...word,
         isCorrect: q.isCorrect,
         questionType: 'cardMatch',
+        // cardMatch 세트의 reason/priorityBucket을 개별 단어에 전파
+        reason: word.reason ?? q.reason ?? null,
+        priorityBucket: word.priorityBucket ?? q.priorityBucket ?? null,
       }));
     }
     return q;
   });
   const testType = state.testType;
+  // Phase 2.2: composition_strategy (TakeTest에서 전달, 없으면 null)
+  const compositionStrategy = state.compositionStrategy ?? null;
+  const strategyBadge = getStrategyBadge(compositionStrategy);
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   const [resultData, setResultData] = useState(null);
@@ -275,6 +305,19 @@ const StudyResult = () => {
           </div>
 
           <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[100px]'>
+            {/* Phase 2.2: compositionStrategy 배지 */}
+            {strategyBadge && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className='flex justify-center pt-[12px]'
+              >
+                <span className='inline-flex items-center gap-[4px] px-[12px] py-[5px] rounded-full bg-primary-main-50 text-primary-main-600 text-[12px] font-[600]'>
+                  {compositionStrategy?.dynamic_adjustment === 'high_accuracy' ? '🚀' : '🛡'} {strategyBadge}
+                </span>
+              </motion.div>
+            )}
             {/* 프로그레스 서클 영역 */}
             <div className='flex flex-col items-center justify-center py-[40px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
@@ -347,6 +390,15 @@ const StudyResult = () => {
                 });
                 return flat.map((item, index) => {
                   const meaningsArr = Array.isArray(item.meanings) ? item.meanings : [];
+                  const currentSM2 = {
+                    ef: item.ef ?? item.sm2?.ef ?? 2.5,
+                    repetition: item.repetition ?? item.sm2?.repetition ?? 0,
+                    interval: item.interval ?? item.sm2?.interval ?? 0,
+                    nextReview: item.nextReview ?? item.sm2?.nextReview ?? null,
+                    lastStudyDate: item.lastStudyDate ?? item.sm2?.lastStudyDate ?? null,
+                    beforeScheduleCount: item.beforeScheduleCount ?? item.sm2?.beforeScheduleCount ?? 0,
+                  };
+                  const updatedSM2 = updateSM2(currentSM2, item.isCorrect ? 4 : 0);
                   return (
                     <motion.div
                       key={`${item.id ?? 'q'}-${index}`}
@@ -377,10 +429,10 @@ const StudyResult = () => {
                               {item.origin}
                             </h3>
                             <MemorizationStatus
-                              repetition={item.repetition ?? item.sm2?.repetition ?? 0}
-                              interval={item.interval ?? item.sm2?.interval ?? 0}
-                              ef={item.ef ?? item.sm2?.ef ?? 2.5}
-                              nextReview={null}
+                              repetition={updatedSM2.repetition}
+                              interval={updatedSM2.interval}
+                              ef={updatedSM2.ef}
+                              nextReview={updatedSM2.nextReview}
                               wordId={item.id}
                               useRandomMessages={false}
                             />
@@ -391,6 +443,19 @@ const StudyResult = () => {
                           >
                             {meaningsArr.join(', ')}
                           </p>
+                          {/* Phase 2.2: reason 칩 */}
+                          {item.reason && (
+                            <span className={`
+                              self-start
+                              inline-flex items-center
+                              px-[8px] py-[2px]
+                              rounded-full
+                              text-[11px] font-[500]
+                              ${getReasonChipStyle(item.priorityBucket)}
+                            `}>
+                              {item.reason}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </motion.div>

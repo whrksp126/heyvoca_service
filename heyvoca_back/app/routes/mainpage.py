@@ -5,7 +5,8 @@ from app.utils.jwt_utils import jwt_required
 from uuid import UUID
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, VocaMeaning, VocaExample, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
 from app.routes.common import register_gem_log
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import calendar
 from sqlalchemy import func, and_
 from sqlalchemy.exc import IntegrityError
 
@@ -117,6 +118,78 @@ def api_user_dates():
         })
 
     return {'code' : 200, 'data' : data}
+
+
+@mainpage_bp.route('/user_dates_monthly', methods=['GET'])
+@jwt_required
+def api_user_dates_monthly():
+    user_id = UUID(g.user_id)
+
+    kst_now = datetime.utcnow() + timedelta(hours=9)
+    kst_today = kst_now.date()
+
+    # query params 파싱 — 잘못된 값이면 현재 KST 년/월 사용
+    try:
+        year = int(request.args['year'])
+        month = int(request.args['month'])
+        if not (1 <= month <= 12):
+            raise ValueError
+    except (KeyError, ValueError, TypeError):
+        year, month = kst_today.year, kst_today.month
+
+    # 미래 월 요청 시 빈 데이터 반환
+    if (year, month) > (kst_today.year, kst_today.month):
+        return {'code': 200, 'data': []}
+
+    _, last_day = calendar.monthrange(year, month)
+    first_date = date(year, month, 1)
+    last_date = date(year, month, last_day)
+
+    checkins = (
+        db.session.query(CheckIn)
+        .filter(
+            and_(
+                CheckIn.user_id == user_id,
+                CheckIn.attendence_date >= first_date,
+                CheckIn.attendence_date <= last_date,
+            )
+        )
+        .all()
+    )
+
+    by_date = {c.attendence_date: c for c in checkins}
+
+    data = []
+    for day_num in range(1, last_day + 1):
+        d = date(year, month, day_num)
+        ci = by_date.get(d)
+        data.append({
+            'date': d.isoformat(),
+            'attend': bool(ci),
+            'daily_mission': bool(ci.today_study_complete) if ci else False,
+        })
+
+    return {'code': 200, 'data': data}
+
+
+@mainpage_bp.route('/user_first_checkin', methods=['GET'])
+@jwt_required
+def api_user_first_checkin():
+    user_id = UUID(g.user_id)
+
+    first_checkin = (
+        db.session.query(CheckIn)
+        .filter(CheckIn.user_id == user_id)
+        .order_by(CheckIn.attendence_date.asc())
+        .first()
+    )
+
+    return {
+        'code': 200,
+        'data': {
+            'first_date': first_checkin.attendence_date.isoformat() if first_checkin else None,
+        },
+    }
 
 
 @mainpage_bp.route('/gem_cnt', methods=['GET'])

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,9 +7,12 @@ import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
-import { MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../utils/common';
+import { MEMORY_STATES, getWordMemoryState, isWordOverdue, deriveSm2FromFsrs } from '../utils/common';
+import { sortByForgettingPriority } from '../utils/forgettingPriority';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
+// Phase 1.3: 추천 API (정식). createStudySession은 폴백 모드용으로 유지
+import { getStudyRecommend, createStudySession } from '../api/study';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -25,6 +28,10 @@ const TakeTest = () => {
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
   // 업데이트해야 할 단어 아이디와 데이터를 저장할 Map (중복 방지, 마지막 상태 저장)
   const [pendingUpdateWords, setPendingUpdateWords] = useState(new Map());
+  // Phase 1.3: 백엔드 세션 ID (정식. 추천 응답에서 받거나 폴백 시 createStudySession으로 받음)
+  const studySessionRef = useRef(null);
+  // Phase 2.2: composition_strategy (결과 화면 전달용)
+  const compositionStrategyRef = useRef(null);
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -38,14 +45,10 @@ const TakeTest = () => {
 
 
 
-  // React Compiler가 자동으로 useCallback 처리
-  const setupTestQuestions = (targetMemoryState, vocabularySheetId, count, testType) => {
+  // ─── 기존 로컬 정렬 로직 (폴백용, Phase 1.4 삭제 예정) ───────────────────────
+  const legacyLocalSelection = (targetMemoryState, vocabularySheetId, count, testType) => {
     let allWords = [];
 
-    // 같은 word.id(= vocaIndexId)는 여러 단어장에 있어도 암기 상태를 공유하므로
-    // 한 번만 출제한다. 기본적으로 처음 만난 단어장 버전을 유지하되,
-    // 그 버전의 meanings가 비어있고 뒤에 등장한 버전엔 있으면 교체한다
-    // (단어장에 따라 의미가 비어있는 매핑이 존재할 수 있기 때문).
     const hasMeanings = (w) => Array.isArray(w?.meanings) && w.meanings.length > 0;
     const dedupeByWordId = (entries) => {
       const byId = new Map();
@@ -65,10 +68,7 @@ const TakeTest = () => {
     if (vocabularySheetId === "all") {
       allWords = dedupeByWordId(
         vocabularySheets.flatMap(sheet =>
-          sheet.words.map(word => ({
-            ...word,
-            vocabularySheetId: sheet.id
-          }))
+          sheet.words.map(word => ({ ...word, vocabularySheetId: sheet.id }))
         )
       );
     } else if (Array.isArray(vocabularySheetId)) {
@@ -77,10 +77,7 @@ const TakeTest = () => {
         vocabularySheets
           .filter(sheet => idSet.has(sheet.id))
           .flatMap(sheet =>
-            sheet.words.map(word => ({
-              ...word,
-              vocabularySheetId: sheet.id
-            }))
+            sheet.words.map(word => ({ ...word, vocabularySheetId: sheet.id }))
           )
       );
     } else {
@@ -90,11 +87,9 @@ const TakeTest = () => {
       }
     }
 
-    // 현재 날짜 (시간 제거, 날짜만 비교)
     const now = new Date();
     now.setHours(0, 0, 0, 0);
 
-    // 1. 미학습 단어들 (nextReview가 null이거나 없음, 또는 repetition === 0 && interval === 0)
     const unlearnedWords = allWords.filter(word => {
       const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
       const interval = word.sm2?.interval ?? word.interval ?? 0;
@@ -102,7 +97,6 @@ const TakeTest = () => {
       return (!nextReview || nextReview === null) && repetition === 0 && interval === 0;
     });
 
-    // 2. 복습 지연 단어들 (nextReview가 오늘 이전인 것들)
     const overdueWords = allWords.filter(word => {
       const nextReview = word.sm2?.nextReview ?? word.nextReview;
       if (!nextReview) return false;
@@ -111,7 +105,6 @@ const TakeTest = () => {
       return nextReviewDate < now;
     });
 
-    // 3. 오늘 학습 예정 단어들 (nextReview가 오늘인 것들)
     const todayScheduledWords = allWords.filter(word => {
       const nextReview = word.sm2?.nextReview ?? word.nextReview;
       if (!nextReview) return false;
@@ -120,170 +113,70 @@ const TakeTest = () => {
       return nextReviewDate.getTime() === now.getTime();
     });
 
-    // 4. 복습 지연 단어들을 nextReview 기준으로 정렬 (가장 오래된 것부터)
     const sortedOverdueWords = overdueWords.sort((a, b) => {
-      const dateA = new Date(a.nextReview);
-      const dateB = new Date(b.nextReview);
-      return dateA - dateB; // 오름차순 (가장 오래된 것부터)
+      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
+      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      return dateA - dateB;
     });
 
     let selectedWords = [];
 
-    // 오늘의 학습 (today): 망각 곡선 중심의 단어 추천
     if (testType === 'today') {
-      // 우선순위 1: 복습 지연 단어들 (가장 오래된 것부터)
       selectedWords.push(...sortedOverdueWords.slice(0, count));
-
-      // 우선순위 2: 오늘 학습 예정 단어들 (부족한 경우에만)
       if (selectedWords.length < count) {
         const remainingCount = count - selectedWords.length;
         const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        const availableTodayScheduled = todayScheduledWords.filter(w => !selectedWordIds.has(w.id));
-        selectedWords.push(...availableTodayScheduled.slice(0, remainingCount));
+        selectedWords.push(...todayScheduledWords.filter(w => !selectedWordIds.has(w.id)).slice(0, remainingCount));
       }
-
-      // 우선순위 3: 미학습 단어들 (부족한 경우에만)
       if (selectedWords.length < count) {
         const remainingCount = count - selectedWords.length;
         const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        const availableUnlearned = unlearnedWords.filter(w => !selectedWordIds.has(w.id));
-        selectedWords.push(...availableUnlearned.slice(0, remainingCount));
+        selectedWords.push(...unlearnedWords.filter(w => !selectedWordIds.has(w.id)).slice(0, remainingCount));
       }
-
-      // 랜덤하게 섞기
       selectedWords = shuffleArray(selectedWords).slice(0, count);
-    }
-    // 빠른 복습: 망각 곡선 우선순위로 전체 사전에서 자동 선별
-    else if (testType === 'quick') {
-      // 우선순위 1: 복습 지연 (가장 오래된 것부터)
-      selectedWords.push(...sortedOverdueWords.slice(0, count));
-
-      // 우선순위 2: 오늘 학습 예정
-      if (selectedWords.length < count) {
-        const ids = new Set(selectedWords.map(w => w.id));
-        selectedWords.push(
-          ...todayScheduledWords.filter(w => !ids.has(w.id)).slice(0, count - selectedWords.length)
-        );
-      }
-
-      // 우선순위 3: 단기 기억 (interval 1~10일, nextReview 임박한 것부터)
-      if (selectedWords.length < count) {
-        const ids = new Set(selectedWords.map(w => w.id));
-        const shortTerm = allWords
-          .filter(w => {
-            const interval = w.sm2?.interval ?? w.interval ?? 0;
-            return interval > 0 && interval < 10 && !ids.has(w.id);
-          })
-          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
-        selectedWords.push(...shortTerm.slice(0, count - selectedWords.length));
-      }
-
-      // 우선순위 4: 중기 기억 (interval 10~60일, nextReview 임박한 것부터)
-      if (selectedWords.length < count) {
-        const ids = new Set(selectedWords.map(w => w.id));
-        const mediumTerm = allWords
-          .filter(w => {
-            const interval = w.sm2?.interval ?? w.interval ?? 0;
-            return interval >= 10 && interval < 60 && !ids.has(w.id);
-          })
-          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
-        selectedWords.push(...mediumTerm.slice(0, count - selectedWords.length));
-      }
-
-      // 우선순위 5: 미학습 (한 번도 학습 안 한 단어 - 랜덤)
-      if (selectedWords.length < count) {
-        const ids = new Set(selectedWords.map(w => w.id));
-        selectedWords.push(
-          ...shuffleArray(unlearnedWords.filter(w => !ids.has(w.id))).slice(0, count - selectedWords.length)
-        );
-      }
-
-      // 우선순위 6: 장기 기억 (interval 60일↑, nextReview 임박한 것부터)
-      if (selectedWords.length < count) {
-        const ids = new Set(selectedWords.map(w => w.id));
-        const longTerm = allWords
-          .filter(w => {
-            const interval = w.sm2?.interval ?? w.interval ?? 0;
-            return interval >= 60 && !ids.has(w.id);
-          })
-          .sort((a, b) => new Date(a.sm2?.nextReview ?? a.nextReview) - new Date(b.sm2?.nextReview ?? b.nextReview));
-        selectedWords.push(...longTerm.slice(0, count - selectedWords.length));
-      }
-
-      selectedWords = shuffleArray(selectedWords).slice(0, count);
-    }
-    // 일반 학습 (test) 또는 테스트 (exam): 선택한 암기 상태의 단어 중 복습 우선 + 나머지 랜덤
-    else if (testType === 'test' || testType === 'exam') {
-      // 1. 먼저 사용자가 선택한 필터(상태)에 맞는 단어들을 거름
+    } else if (testType === 'quick') {
+      selectedWords = sortByForgettingPriority(allWords).slice(0, count);
+    } else if (testType === 'test' || testType === 'exam') {
       const targetStates = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
-      const filteredByState = targetStates.includes(MEMORY_STATES.ALL)
-        ? allWords
-        : allWords.filter(word =>
-            targetStates.some(state => {
-              if (state === MEMORY_STATES.OVERDUE) return isWordOverdue(word);
-              return !isWordOverdue(word) && getWordMemoryState(word) === state;
-            })
-          );
-
-      // 2. 필터링된 단어들 중에서 '복습 지연' 및 '오늘 예정' 단어 추출
-      const overdueInFilter = filteredByState.filter(word => {
-        if (!word.nextReview) return false;
-        const nextReviewDate = new Date(word.nextReview);
-        nextReviewDate.setHours(0, 0, 0, 0);
-        return nextReviewDate < now;
-      }).sort((a, b) => new Date(a.nextReview) - new Date(b.nextReview));
-
-      const todayScheduledInFilter = filteredByState.filter(word => {
-        if (!word.nextReview) return false;
-        const nextReviewDate = new Date(word.nextReview);
-        nextReviewDate.setHours(0, 0, 0, 0);
-        return nextReviewDate.getTime() === now.getTime();
+      const candidatePool = allWords.filter(word => {
+        if (targetStates.includes('all')) return true;
+        const wordState = getWordMemoryState(word);
+        return targetStates.includes(wordState);
       });
-
-      // 3. 우선순위 적용하여 단어 채우기
-      // 우선순위 1: 복습 지연
-      selectedWords.push(...overdueInFilter.slice(0, count));
-
-      // 우선순위 2: 오늘 학습 예정 (부족한 경우)
-      if (selectedWords.length < count) {
-        const remainingCount = count - selectedWords.length;
-        const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        const availableToday = todayScheduledInFilter.filter(w => !selectedWordIds.has(w.id));
-        selectedWords.push(...availableToday.slice(0, remainingCount));
+      const selectionType = state.data.selectionType ?? 'recommended';
+      if (selectionType === 'random') {
+        selectedWords = [...candidatePool].sort(() => Math.random() - 0.5).slice(0, count);
+      } else {
+        selectedWords = sortByForgettingPriority(candidatePool).slice(0, count);
       }
-
-      // 우선순위 3: 나머지 단어들 중 랜덤 (부족한 경우)
-      if (selectedWords.length < count) {
-        const remainingCount = count - selectedWords.length;
-        const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        const remainingAvailableWords = filteredByState.filter(w => !selectedWordIds.has(w.id));
-
-        // 나머지 단어들을 랜덤하게 섞어서 채움
-        const randomRemaining = shuffleArray(remainingAvailableWords).slice(0, remainingCount);
-        selectedWords.push(...randomRemaining);
-      }
-
-      // 4. 최종 결과 섞기
-      selectedWords = shuffleArray(selectedWords);
     }
 
-    // questionType은 배열 (다중 선택 가능)
+    return { selectedWords, allWords };
+  };
+
+  // ─── 문제 유형 분배 (백엔드/폴백 공통, 기존 183~253 라인 로직) ───────────────
+  const buildTestQuestions = (selectedWords, allWords, vocabularySheetId) => {
     const questionTypesArr = Array.isArray(state.data.questionType)
       ? state.data.questionType
       : [state.data.questionType];
 
-    // 단어에 vocabularySheetId 보장
+    // Phase 2.2: 사용자가 명시적으로 유형을 선택했는지 판단
+    // questionType이 'recommended' 이거나 배열에 포함되면 백엔드 추천 우선 사용
+    const isRecommendedMode =
+      !state.data.questionType ||
+      state.data.questionType === 'recommended' ||
+      (Array.isArray(state.data.questionType) && state.data.questionType.includes('recommended'));
+
     const wordsWithSheetId = selectedWords.map(word => ({
       ...word,
       vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
     }));
 
-    // multipleChoice 계열 단일 문제 생성 헬퍼
     const createMultipleChoiceQuestion = (word, questionType = 'multipleChoice') => {
-      const otherWords = allWords.filter(w => w.id !== word.id);
+      const otherWords = allWords.filter(w => (w.id ?? w.vocaIndexId) !== (word.id ?? word.vocaIndexId));
       const randomOptions = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
       const options = [word, ...randomOptions].sort(() => Math.random() - 0.5);
-      const resultIndex = options.findIndex(w => w.id === word.id);
+      const resultIndex = options.findIndex(w => (w.id ?? w.vocaIndexId) === (word.id ?? word.vocaIndexId));
       return {
         ...word,
         options,
@@ -293,8 +186,30 @@ const TakeTest = () => {
       };
     };
 
-    // 단일 타입
-    if (questionTypesArr.length === 1) {
+    // Phase 2.2: 단일 단어에 대해 suggestedQuestionType을 시도하고 실패 시 폴백
+    const buildSingleWordQuestion = (word, fallbackType) => {
+      const suggestedType = isRecommendedMode ? (word.suggestedQuestionType ?? null) : null;
+      const targetType = suggestedType ?? fallbackType ?? 'multipleChoice';
+      const plugin = getQuestionType(targetType);
+
+      // plugin이 없거나 setupQuestions가 없는 유형 (multipleChoice 계열)
+      if (!plugin || !plugin.setupQuestions) {
+        return createMultipleChoiceQuestion(word, targetType);
+      }
+
+      // fillInTheBlank: 단일 단어로 시도, 예문 없으면 폴백
+      if (targetType === 'fillInTheBlank') {
+        const generated = plugin.setupQuestions([word], allWords);
+        if (generated.length > 0) return generated[0];
+        // 폴백: 원래 fallbackType 또는 multipleChoice
+        return createMultipleChoiceQuestion(word, fallbackType ?? 'multipleChoice');
+      }
+
+      // cardMatch 계열은 단일 단어로 처리 불가 → 폴백
+      return createMultipleChoiceQuestion(word, fallbackType ?? 'multipleChoice');
+    };
+
+    if (questionTypesArr.length === 1 && !isRecommendedMode) {
       const plugin = getQuestionType(questionTypesArr[0]);
       if (plugin?.setupQuestions) {
         return plugin.setupQuestions(wordsWithSheetId, allWords);
@@ -302,42 +217,178 @@ const TakeTest = () => {
       return wordsWithSheetId.map(word => createMultipleChoiceQuestion(word, questionTypesArr[0]));
     }
 
-    // 다중 타입: 슬라이드마다 랜덤으로 타입을 배치
+    // 추천 모드이거나 복수 유형인 경우: 단어별 suggestedQuestionType 우선 처리
+    // cardMatch/cardMatchListening 계열은 세트 단위로 묶어야 하므로 별도 처리
     const shuffledWords = shuffleArray([...wordsWithSheetId]);
     const allQuestions = [];
     let wordIdx = 0;
 
     while (wordIdx < shuffledWords.length) {
-      // 슬라이드마다 랜덤 타입 선택
+      const currentWord = shuffledWords[wordIdx];
+
+      // Phase 2.2: 추천 모드일 때 suggestedQuestionType 우선
+      const suggestedType = isRecommendedMode ? (currentWord.suggestedQuestionType ?? null) : null;
       const randomType = questionTypesArr[Math.floor(Math.random() * questionTypesArr.length)];
-      const plugin = getQuestionType(randomType);
+      const chosenType = suggestedType ?? randomType;
+
+      const plugin = getQuestionType(chosenType);
 
       if (plugin?.setupQuestions) {
         const remaining = shuffledWords.length - wordIdx;
-        if (remaining >= 2) {
-          // 최대 4개, 최소 2개 — 나머지는 setupQuestions 내부에서 유동 분배
-          const chunkSize = Math.min(4, remaining);
-          const chunk = shuffledWords.slice(wordIdx, wordIdx + chunkSize);
-          const generated = plugin.setupQuestions(chunk, allWords);
-          if (generated.length > 0) {
-            allQuestions.push(...generated);
-            wordIdx += chunkSize;
+
+        // cardMatch 계열: 세트 단위 처리 (최소 2개 필요)
+        if (chosenType === 'cardMatch' || chosenType === 'cardMatchListening') {
+          if (remaining >= 2) {
+            const chunkSize = Math.min(4, remaining);
+            const chunk = shuffledWords.slice(wordIdx, wordIdx + chunkSize);
+            const generated = plugin.setupQuestions(chunk, allWords);
+            if (generated.length > 0) {
+              allQuestions.push(...generated);
+              wordIdx += chunkSize;
+            } else {
+              allQuestions.push(buildSingleWordQuestion(currentWord, randomType));
+              wordIdx++;
+            }
           } else {
-            // 플러그인이 0개 반환 (예: fillInTheBlank 예문 없음) → 1개씩 multipleChoice fallback
-            allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], 'multipleChoice'));
+            // 단어 1개만 남았으면 multipleChoice 폴백
+            allQuestions.push(buildSingleWordQuestion(currentWord, randomType));
             wordIdx++;
           }
         } else {
-          // 1개 남으면 항상 multipleChoice fallback (cardMatch/fillInTheBlank 등은 words가 없어 crash)
-          allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], 'multipleChoice'));
+          // fillInTheBlank 등 단일 단어 처리 가능한 유형
+          allQuestions.push(buildSingleWordQuestion(currentWord, randomType));
           wordIdx++;
         }
       } else {
-        allQuestions.push(createMultipleChoiceQuestion(shuffledWords[wordIdx], randomType));
+        // setupQuestions 없는 유형 (multipleChoice 계열)
+        allQuestions.push(buildSingleWordQuestion(currentWord, chosenType));
         wordIdx++;
       }
     }
     return allQuestions;
+  };
+
+  // ─── setupTestQuestions (Phase 1.3 정식) ─────────────────────────────────────
+  // 반환: { testQuestions, sessionId, composition, compositionStrategy }
+  const setupTestQuestions = async (targetMemoryState, vocabularySheetId, count, testType) => {
+    const useBackend = import.meta.env.VITE_RECOMMEND_BACKEND !== 'false';
+
+    let selectedWords, sessionId, composition, compositionStrategy, allWords;
+
+    if (useBackend) {
+      try {
+        // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
+        let bookIds = null;
+        if (vocabularySheetId && vocabularySheetId !== 'all') {
+          bookIds = Array.isArray(vocabularySheetId) ? vocabularySheetId : [vocabularySheetId];
+        }
+
+        // targetMemoryState → targetStates: MEMORY_STATES 값 → 백엔드 호환 값 변환
+        // 백엔드는 unlearned, short, medium, long, all 를 받음
+        const memoryStateToBackend = {
+          [MEMORY_STATES.UNLEARNED]: 'unlearned',
+          [MEMORY_STATES.SHORT_TERM]: 'short',
+          [MEMORY_STATES.MEDIUM_TERM]: 'medium',
+          [MEMORY_STATES.LONG_TERM]: 'long',
+          [MEMORY_STATES.ALL]: 'all',
+          all: 'all',
+        };
+        const targetStatesArr = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
+        const backendTargetStates = targetStatesArr.map(s => memoryStateToBackend[s] ?? s);
+
+        const selectionType = state.data?.selectionType ?? 'recommended';
+
+        const res = await getStudyRecommend({
+          type: testType,
+          count,
+          bookIds,
+          targetStates: backendTargetStates,
+          selection: selectionType,
+        });
+
+        if (res?.code === 200 && Array.isArray(res.data?.items)) {
+          sessionId = res.data.session_id;
+          composition = res.data.composition;
+          // Phase 2.2: composition_strategy 저장
+          compositionStrategy = res.data.composition_strategy ?? null;
+
+          // 백엔드 응답 item → 클라이언트 word 형식으로 매핑
+          // allWords(오답 선택지용)는 로컬 vocabularySheets에서 구성
+          const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
+          allWords = legacyResult.allWords;
+
+          selectedWords = res.data.items.map(item => {
+            const derivedSm2 = deriveSm2FromFsrs(item.fsrs);
+            return {
+              // 기존 컴포넌트가 기대하는 필드 (id 필드 우선)
+              id: item.user_voca_id,
+              vocaIndexId: item.user_voca_id,
+              vocabularySheetId: item.user_voca_book_id,
+              origin: item.word,
+              meanings: item.meanings ?? [],
+              examples: item.examples ?? [],
+              // FSRS 데이터
+              fsrs: item.fsrs,
+              // SM2 폴백 (다른 화면 호환, deriveSm2FromFsrs 변환값)
+              sm2: derivedSm2,
+              // 최상위 필드도 sm2에서 채움 (기존 컴포넌트 호환)
+              ef: derivedSm2?.ef ?? 2.5,
+              repetition: derivedSm2?.repetition ?? 0,
+              interval: derivedSm2?.interval ?? 0,
+              nextReview: derivedSm2?.nextReview ?? null,
+              lastStudyDate: derivedSm2?.lastStudyDate ?? null,
+              beforeScheduleCount: 0,
+              // 버킷 정보
+              priorityBucket: item.priority_bucket,
+              // Phase 2.2: 백엔드 추천 문제 유형 및 이유 멘트
+              suggestedQuestionType: item.suggested_question_type ?? null,
+              reason: item.reason ?? null,
+            };
+          });
+        } else {
+          throw new Error('추천 API 응답 형식 오류');
+        }
+      } catch (e) {
+        console.warn('[FSRS] /study/recommend 실패, 로컬 정렬로 폴백:', e);
+        const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
+        selectedWords = legacyResult.selectedWords;
+        allWords = legacyResult.allWords;
+        sessionId = null;
+        composition = null;
+        compositionStrategy = null;
+
+        // 폴백 모드에서 세션 생성 (선택사항, 실패해도 무시)
+        try {
+          const bookIds = Array.isArray(vocabularySheetId)
+            ? vocabularySheetId
+            : vocabularySheetId && vocabularySheetId !== 'all'
+              ? [vocabularySheetId]
+              : [];
+          const sessionRes = await createStudySession({ testType, bookIds });
+          sessionId = sessionRes?.data?.session_id ?? null;
+        } catch (sessionErr) {
+          console.warn('[FSRS] 폴백 세션 생성 실패 (무시):', sessionErr);
+        }
+      }
+    } else {
+      // VITE_RECOMMEND_BACKEND=false 명시적 폴백
+      const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
+      selectedWords = legacyResult.selectedWords;
+      allWords = legacyResult.allWords;
+      sessionId = null;
+      composition = null;
+      compositionStrategy = null;
+    }
+
+    // 오답 선택지용 allWords가 없는 경우 안전하게 selectedWords로 대체
+    if (!allWords || allWords.length === 0) {
+      allWords = selectedWords;
+    }
+
+    // 문제 유형 분배 (기존 로직 그대로)
+    const testQuestions = buildTestQuestions(selectedWords, allWords, vocabularySheetId);
+
+    return { testQuestions, sessionId, composition, compositionStrategy };
   };
 
   useEffect(() => {
@@ -365,13 +416,18 @@ const TakeTest = () => {
         // 학습 기록이 없거나 잘못된 캐시이면 새로운 학습 데이터 생성 후 학습 시작
         console.log("state", state.data.memoryState);
 
-        // SM-2 알고리즘 기준으로 학습 데이터 세팅
-        const tempTestQuestions = setupTestQuestions(
+        // Phase 1.3: 백엔드 추천 API 호출 (VITE_RECOMMEND_BACKEND !== 'false' 이면 기본 활성)
+        const { testQuestions: tempTestQuestions, sessionId, compositionStrategy } = await setupTestQuestions(
           state.data.memoryState,
           state.data.vocabularySheetId,
           state.data.count,
           state.testType
         );
+
+        // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
+        studySessionRef.current = sessionId ?? null;
+        // Phase 2.2: compositionStrategy를 ref에 저장 (결과 화면 전달용)
+        compositionStrategyRef.current = compositionStrategy ?? null;
 
         await updateRecentStudy(state.testType, {
           ...recentStudy[state.testType],
@@ -382,6 +438,7 @@ const TakeTest = () => {
           updated_at: new Date().toISOString(),
           created_at: new Date().toISOString(),
         });
+
         setTestQuestions(tempTestQuestions);
         setIsTestQuestionsSetting(false);
       }
@@ -485,7 +542,14 @@ const TakeTest = () => {
     const handleUpdateAndNavigate = async () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         await updateVocabularySheetAndRecentStudyData();
-        navigate("/take-test/result", { state: { testQuestions: testQuestions, testType: state.testType } });
+        navigate("/take-test/result", {
+          state: {
+            testQuestions: testQuestions,
+            testType: state.testType,
+            // Phase 2.2: composition_strategy 전달
+            compositionStrategy: compositionStrategyRef.current ?? null,
+          }
+        });
       }
     };
     handleUpdateAndNavigate();
@@ -543,7 +607,7 @@ const TakeTest = () => {
       return (
         <div>
           <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-          <SaveStudyData />
+          <SaveStudyData studySessionRef={studySessionRef} />
         </div>
       );
     }
@@ -563,6 +627,7 @@ const TakeTest = () => {
           setPendingUpdateSheetIds={setPendingUpdateSheetIds}
           setPendingUpdateWords={setPendingUpdateWords}
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
+          studySessionRef={studySessionRef}
         />
       </div>
     );

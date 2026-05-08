@@ -19,6 +19,7 @@ import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
+import { getHomeGreeting } from '../../utils/homeGreeting';
 
 
 // import StoreSheet from './StoreSheet';
@@ -27,7 +28,9 @@ import { useTheme } from '../../context/ThemeContext';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import StudyNewFullSheet from '../newfullsheet/StudyNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useOverlayActions } from '../../context/OverlayContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
+import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {
@@ -103,7 +106,8 @@ const Main = () => {
   const navigate = useNavigate();
   const { userMainPage, userProfile } = useUser();
   const { isDark } = useTheme();
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, memoryStats } = useVocabulary();
+  const greeting = getHomeGreeting(memoryStats);
 
   // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
@@ -124,26 +128,11 @@ const Main = () => {
 
   const todayStatus = getTodayStatus();
 
-  // React Compiler가 자동으로 메모이제이션 처리
-  // 학습 기록이 있는 단어만 카운팅 (repetition > 0 || interval > 0 || nextReview !== null)
-  const total = vocabularySheets.reduce((acc, sheet) => {
-    if (!sheet.words || !Array.isArray(sheet.words)) return acc;
-
-    const learningWordsCount = sheet.words.filter(word => {
-      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
-      const interval = word.sm2?.interval ?? word.interval ?? 0;
-      const nextReview = word.sm2?.nextReview ?? word.nextReview;
-
-      // 학습 기록이 있는 단어: repetition > 0 또는 interval > 0 또는 nextReview가 있음
-      return repetition > 0 || interval > 0 || (nextReview !== null && nextReview !== undefined);
-    }).length;
-
-    return acc + learningWordsCount;
-  }, 0);
   // const { pushFullSheet } = useFullSheet();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { showAwaitOverlay } = useOverlayActions();
 
   const { fetchUserCheckin } = useUser();
 
@@ -178,6 +167,14 @@ const Main = () => {
       }
     );
   }
+
+  const handleAttendanceClick = () => {
+    vibrate({ duration: 5 });
+    showAwaitOverlay(AttendanceCalendarOverlay, {
+      initialYear: new Date().getFullYear(),
+      initialMonth: new Date().getMonth() + 1,
+    });
+  };
 
   return (
     <div className="
@@ -217,9 +214,9 @@ const Main = () => {
           <h2 className="
             text-layout-white text-[24px]
           ">
-            <strong>{userProfile.username}</strong>님,<br />
-            <strong>{total}개</strong><br />
-            단어를 학습 중이에요!
+            <strong>{greeting.line1}</strong><br />
+            <strong>{greeting.line2}</strong><br />
+            {greeting.line3}
           </h2>
           <img src={HeyCharacter02} alt="" className="
             absolute top-[-9px] right-[25px]
@@ -303,12 +300,16 @@ const Main = () => {
             </div>
           </div>
 
-          <div className="
-            flex flex-col gap-[20px]
-            px-[15px] py-[12px]
-            rounded-[12px]
-            bg-primary-main-100 
-          ">
+          <div
+            className="
+              flex flex-col gap-[20px]
+              px-[15px] py-[12px]
+              rounded-[12px]
+              bg-primary-main-100
+              cursor-pointer
+            "
+            onClick={handleAttendanceClick}
+          >
             <h2 className="text-layout-black text-[16px] font-[700]">출석체크</h2>
             <div className="flex justify-between">
               {userMainPage?.dates?.map((item, index) => (

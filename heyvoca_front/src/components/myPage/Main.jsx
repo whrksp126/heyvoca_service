@@ -14,6 +14,7 @@ import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
 import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
 import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
+import WeaknessCard from './WeaknessCard';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -65,6 +66,9 @@ const Main = () => {
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
+      {/* Phase 2.1: 약점 시각화 카드 */}
+      <WeaknessCard />
+
       <ul className="w-full m-0 p-0 list-none">
         <li onClick={() => {
           vibrate({ duration: 5 });

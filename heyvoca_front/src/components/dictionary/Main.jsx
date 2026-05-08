@@ -52,6 +52,7 @@ const Main = () => {
   const scrollContainerRef = useRef(null);
   const isLoadingRef = useRef(false);
   const topBtnTimerRef = useRef(null);
+  const lastScrollTopRef = useRef(0);
 
   const sortLabels = {
     updatedAt: '최근 수정순',
@@ -85,6 +86,17 @@ const Main = () => {
     const { scrollTop, scrollHeight, clientHeight } = container;
     const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 
+    // 스크롤 방향 감지 → 헤더/바텀네비 자동 숨김 (YouTube 스타일)
+    const delta = scrollTop - lastScrollTopRef.current;
+    if (scrollTop <= 4) {
+      document.documentElement.dataset.scrollHidden = 'false';
+    } else if (delta > 8 && scrollTop > 56) {
+      document.documentElement.dataset.scrollHidden = 'true';
+    } else if (delta < -8) {
+      document.documentElement.dataset.scrollHidden = 'false';
+    }
+    lastScrollTopRef.current = scrollTop;
+
     if (scrollTop > 300) {
       setShowTopBtn(true);
       if (topBtnTimerRef.current) clearTimeout(topBtnTimerRef.current);
@@ -99,6 +111,13 @@ const Main = () => {
       setDisplayCount(prev => Math.min(prev + ITEMS_PER_PAGE, allWords.length));
     }
   }, [hasMore, allWords.length]);
+
+  // 사전 페이지 이탈 시 자동 숨김 상태 리셋 (다른 페이지에 영향 차단)
+  useEffect(() => {
+    return () => {
+      document.documentElement.dataset.scrollHidden = 'false';
+    };
+  }, []);
 
   useEffect(() => {
     if (!isLoadingMore) return;
@@ -297,6 +316,7 @@ const Main = () => {
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         bg-layout-white dark:bg-layout-black
         overflow-y-auto
+        transition-[height] duration-[250ms] ease
       "
       ref={scrollContainerRef}
       onScroll={handleScroll}
@@ -750,14 +770,12 @@ const Main = () => {
                           />
                         </div>
                       </div>
-                      <div
-                        className="mt-[8px] flex flex-col gap-[2px] cursor-pointer"
-                        onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(meaningTtsText, 'ko'); }}
-                      >
+                      <div className="mt-[8px] flex flex-col gap-[2px] items-start">
                         {meaningLines.map((line, i) => (
                           <p
                             key={i}
-                            className="text-[13px] text-[#666] dark:text-[#999] line-clamp-2 leading-[1.5]"
+                            className="text-[13px] text-[#666] dark:text-[#999] line-clamp-2 leading-[1.5] cursor-pointer w-fit max-w-full"
+                            onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(meaningTtsText, 'ko'); }}
                           >
                             {line}
                           </p>

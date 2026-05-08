@@ -20,8 +20,9 @@ const Header = () => {
       className='
       relative
       flex items-center justify-center
-      w-full h-[55px]
-      px-[16px] py-[14px]
+      w-full h-[var(--current-header-height)]
+      overflow-hidden
+      px-[16px]
       bg-layout-white
       dark:bg-layout-black
     '>

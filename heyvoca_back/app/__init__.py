@@ -10,6 +10,7 @@ from sqlalchemy import create_engine, text
 from flask_cors import CORS
 from flask_caching import Cache
 import json
+import re
 
 from app.login_manager import load_user, unauthorized_callback
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -34,13 +35,17 @@ def create_app():
       "https://dev-heyvoca-front.ghmate.com",
       "http://localhost:3000",
       "http://10.0.2.2:3000",
-
+      # 로컬 개발 (admin 페이지 등 직접 IP/localhost 접속 허용)
+      re.compile(r"^http://localhost:\d+$"),
+      re.compile(r"^http://127\.0\.0\.1:\d+$"),
+      re.compile(r"^http://192\.168\.\d+\.\d+:\d+$"),
+      re.compile(r"^http://10\.\d+\.\d+\.\d+:\d+$"),
   ]
-  
+
   # .env의 FRONT_END_URL이 있으면 추가
   if FRONT_END_URL:
       cors_origins.append(FRONT_END_URL)
-  
+
   CORS(app, origins=cors_origins, supports_credentials=True)
 
   
@@ -89,6 +94,8 @@ def create_app():
   from app.routes.ocr import ocr_bp
   from app.routes.voca_indexs import voca_indexs_bp
   from app.routes.voca_books import voca_books_bp
+  from app.routes.study import study_bp
+  from app.routes.admin import admin_bp
 
   app.register_blueprint(auth_bp)
   app.register_blueprint(search_bp)
@@ -102,6 +109,8 @@ def create_app():
   app.register_blueprint(ocr_bp)
   app.register_blueprint(voca_indexs_bp)
   app.register_blueprint(voca_books_bp)
+  app.register_blueprint(study_bp)
+  app.register_blueprint(admin_bp)
 
   # FCM 스케줄러 시작
   from app.routes.fcm import create_scheduler

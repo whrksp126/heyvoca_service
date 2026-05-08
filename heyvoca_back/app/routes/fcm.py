@@ -333,6 +333,18 @@ def create_scheduler(app):
     scheduler.add_job(lambda: send_study_reminder_1pm(app), CronTrigger(hour=13, minute=0))
     scheduler.add_job(lambda: send_study_reminder_9pm(app), CronTrigger(hour=21, minute=0))
 
+    # Phase 2.1 — 문제 유형별 정답률 30일 집계 (매일 04:00 KST)
+    def _refresh_qstat():
+        from jobs.refresh_question_type_stats import run as _run_refresh
+        with app.app_context():
+            _run_refresh()
+
+    scheduler.add_job(
+        _refresh_qstat,
+        CronTrigger(hour=4, minute=0, timezone='Asia/Seoul'),
+        id='refresh_qstat',
+    )
+
     scheduler.start()
 
     atexit.register(lambda: scheduler.shutdown())

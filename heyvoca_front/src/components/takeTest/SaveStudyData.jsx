@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import HeyCharacter from '../../assets/images/HeyCharacter.png';
+// Phase 1.3: finishStudySession 정식 (studySessionRef.current 있으면 항상 호출)
+import { finishStudySession } from '../../api/study';
 
-const SaveStudyData = ({ endInitialProfile }) => {
+const SaveStudyData = ({ endInitialProfile, studySessionRef }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // Phase 1.3: 학습 세션 종료 (정식. studySessionRef.current가 있으면 항상 호출)
+  useEffect(() => {
+    if (studySessionRef?.current) {
+      finishStudySession(studySessionRef.current)
+        .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
+    }
+  }, []);
   const buttonVariants = {
     hover: {
       scale: 1.02,

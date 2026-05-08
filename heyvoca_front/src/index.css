@@ -173,3 +173,27 @@ html[data-keyboard-visible="true"] [data-page-header],
 html[data-keyboard-visible="true"] [data-bottom-nav] {
   display: none;
 }
+
+/* 스크롤 다운 시 헤더/바텀네비 자동 숨김 (사전 페이지 등에서 활성화). 키보드가
+   표시되는 경우엔 위 display:none 규칙이 우선 적용된다. */
+[data-page-header],
+[data-bottom-nav] {
+  transition: transform 0.25s ease, opacity 0.25s ease, height 0.25s ease;
+  will-change: transform;
+}
+/* 변수도 함께 0으로 만들어 Main 컨테이너의 height calc()가 자연스럽게 늘어나도록 한다.
+   KeyboardContext가 inline style로 변수를 설정하므로 !important로 우선순위를 끌어올린다. */
+html[data-scroll-hidden="true"] {
+  --current-header-height: 0px !important;
+  --current-bottom-nav-height: 0px !important;
+}
+html[data-scroll-hidden="true"] [data-page-header] {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+html[data-scroll-hidden="true"] [data-bottom-nav] {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}

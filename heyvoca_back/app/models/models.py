@@ -2,7 +2,7 @@ from app import db
 
 from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyConstraint
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT
+from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT, Float
 
 from sqlalchemy.dialects.mysql import BINARY, LONGTEXT
 from sqlalchemy.types import TypeDecorator
@@ -578,6 +578,141 @@ class UserVoca(db.Model):
         self.updated_at = datetime.utcnow()
 
 ### 재편성된 단어장 ###
+
+
+### 학습 로그 (FSRS Phase 1.1 — 영구 학습 이력 저장) ###
+
+class UserStudySession(db.Model):
+    """학습 세션 단위 집계. 여러 UserStudyLog를 묶는 컨테이너."""
+    __tablename__ = 'user_study_session'
+
+    id            = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
+    user_id       = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
+    test_type     = Column(String(16), nullable=False, comment='test|exam|today|quick')
+    book_ids      = Column(TEXT, nullable=True, comment='JSON 배열: ["uuid",...]')
+    question_count = Column(Integer, nullable=False, default=0)
+    correct_count  = Column(Integer, nullable=False, default=0)
+    started_at    = Column(DateTime, nullable=False, default=datetime.utcnow)
+    finished_at   = Column(DateTime, nullable=True)
+
+    # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
+    logs = relationship(
+        'UserStudyLog',
+        back_populates='session',
+        cascade='all, delete-orphan',
+        primaryjoin='UserStudySession.id == foreign(UserStudyLog.session_id)',
+    )
+
+    def __init__(self, user_id, test_type, book_ids=None, question_count=0, correct_count=0, finished_at=None):
+        self.user_id        = user_id
+        self.test_type      = test_type
+        self.book_ids       = book_ids
+        self.question_count = question_count
+        self.correct_count  = correct_count
+        self.finished_at    = finished_at
+
+
+class UserStudyLog(db.Model):
+    """단어 1회 응답 로그. SM2 q_score + FSRS rating 병기 (Phase 1.2부터 rating 채움).
+
+    파티셔닝 (c3e8a10b4d22):
+      PARTITION BY RANGE (YEAR(created_at)) 적용.
+      MySQL 파티션 테이블에 FK 불가 → user_id/user_voca_id/user_voca_book_id 모두 FK 없음.
+      PK = (id, created_at) 복합키 — 파티션 컬럼이 PK에 포함돼야 하는 MySQL 제약.
+    """
+    __tablename__ = 'user_study_log'
+    __table_args__ = (
+        # 파티션 컬럼(created_at)이 PK에 포함돼야 MySQL PARTITION BY RANGE 사용 가능
+        PrimaryKeyConstraint('id', 'created_at'),
+        Index('ix_usl_user_created', 'user_id', 'created_at'),
+        Index('ix_usl_user_voca',    'user_id', 'user_voca_id'),
+        Index('ix_usl_session',      'session_id'),
+    )
+
+    # PrimaryKeyConstraint로 복합 PK 정의하므로 primary_key=True 제거,
+    # autoincrement는 BigInteger + AUTO_INCREMENT DDL로 MySQL이 유지함.
+    id               = Column(BigInteger, autoincrement=True, nullable=False)
+    # FK 제거 — 파티션 테이블에 FK 불가 (cross-schema 패턴과 동일하게 처리)
+    user_id          = Column(BinaryUUID, nullable=False,
+                              comment='user.id 참조 (파티션 테이블 FK 불가)')
+    user_voca_id     = Column(Integer, nullable=False,
+                              comment='user_voca.id 참조 (파티션 테이블 FK 불가)')
+    voca_id          = Column(Integer, nullable=True,  comment='사전 DB 단어 참조 (cross-schema, FK 없음)')
+    user_voca_book_id = Column(BinaryUUID, nullable=True,
+                               comment='user_voca_book.id 참조 (파티션 테이블 FK 불가)')
+    session_id       = Column(BinaryUUID, nullable=False, comment='user_study_session.id 참조 (FK 없음)')
+    test_type        = Column(String(16), nullable=False, comment='test|exam|today|quick')
+    question_type    = Column(String(32), nullable=False, comment='multipleChoice|multipleChoiceListening|fillInTheBlank|cardMatch|cardMatchListening')
+    was_correct      = Column(Boolean, nullable=False)
+    q_score          = Column(Integer,     nullable=False, comment='SM2 점수: 0/3/4/5')
+    rating           = Column(Integer,     nullable=True,  comment='FSRS: 1=Again,2=Hard,3=Good,4=Easy (Phase 1.2부터 채움)')
+    time_taken_ms    = Column(Integer, nullable=False)
+    word_length      = Column(Integer,     nullable=True)
+    state_before     = Column(TEXT, nullable=True, comment='FSRS state JSON (적용 전)')
+    state_after      = Column(TEXT, nullable=True, comment='FSRS state JSON (적용 후)')
+    created_at       = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
+    session = relationship(
+        'UserStudySession',
+        back_populates='logs',
+        primaryjoin='foreign(UserStudyLog.session_id) == UserStudySession.id',
+    )
+
+    def __init__(self, user_id, user_voca_id, session_id, test_type, question_type,
+                 was_correct, q_score, time_taken_ms,
+                 voca_id=None, user_voca_book_id=None,
+                 rating=None, word_length=None,
+                 state_before=None, state_after=None):
+        self.user_id           = user_id
+        self.user_voca_id      = user_voca_id
+        self.voca_id           = voca_id
+        self.user_voca_book_id = user_voca_book_id
+        self.session_id        = session_id
+        self.test_type         = test_type
+        self.question_type     = question_type
+        self.was_correct       = was_correct
+        self.q_score           = q_score
+        self.rating            = rating
+        self.time_taken_ms     = time_taken_ms
+        self.word_length       = word_length
+        self.state_before      = state_before
+        self.state_after       = state_after
+
+### 학습 로그 ###
+
+
+### 문제 유형별 사용자 정답률 집계 (Phase 2.1) ###
+
+class UserQuestionTypeStat(db.Model):
+    """문제 유형별 사용자 정답률 집계 (Phase 2.1)."""
+    __tablename__ = 'user_question_type_stat'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'question_type', name='uq_user_qtype'),
+    )
+
+    id               = Column(Integer, primary_key=True, autoincrement=True)
+    user_id          = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
+    question_type    = Column(String(32), nullable=False,
+                              comment='multipleChoice|multipleChoiceListening|fillInTheBlank|cardMatch|cardMatchListening')
+    total_count      = Column(Integer, nullable=False, default=0)
+    correct_count    = Column(Integer, nullable=False, default=0)
+    avg_time_taken_ms = Column(Integer, nullable=False, default=0,
+                               comment='EWMA: new_avg = 0.9*old + 0.1*new')
+    last_30d_correct_rate = Column(Float, nullable=True,
+                                   comment='배치(refresh_question_type_stats.py)로 갱신')
+    updated_at       = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __init__(self, user_id, question_type, total_count=0, correct_count=0,
+                 avg_time_taken_ms=0, last_30d_correct_rate=None):
+        self.user_id               = user_id
+        self.question_type         = question_type
+        self.total_count           = total_count
+        self.correct_count         = correct_count
+        self.avg_time_taken_ms     = avg_time_taken_ms
+        self.last_30d_correct_rate = last_30d_correct_rate
+
+### 문제 유형별 사용자 정답률 집계 ###
 
 
 ### 사전 메타 (dict_sync.py가 현재 적용된 dump의 sha256 저장) ###

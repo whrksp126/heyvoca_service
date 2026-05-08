@@ -19,6 +19,7 @@ import {
 } from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
 import { showToast } from '../utils/osFunction';
+import { toLocalDateString } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
 import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
@@ -92,6 +93,36 @@ export const VocabularyProvider = ({ children }) => {
       progress: totalWords > 0 ? (memorizedWords / totalWords) * 100 : 0
     };
   }, [userDictionary]);
+
+  // 암기 상태 통계 — 메인 화면 동기부여 멘트 분기에 사용
+  const memoryStats = useMemo(() => {
+    const todayStr = toLocalDateString(new Date());
+    let total = 0, unlearned = 0, shortTerm = 0, mediumTerm = 0, longTerm = 0;
+    let overdue = 0, dueToday = 0;
+
+    for (const sheet of vocabularySheets) {
+      for (const w of (sheet.words || [])) {
+        total++;
+        const rep = w.sm2?.repetition ?? w.repetition ?? 0;
+        const interval = w.sm2?.interval ?? w.interval ?? 0;
+        const nextReview = w.sm2?.nextReview ?? w.nextReview;
+
+        if (rep === 0 && interval === 0) {
+          unlearned++;
+          continue;
+        }
+        if (interval < 10) shortTerm++;
+        else if (interval < 60) mediumTerm++;
+        else longTerm++;
+
+        if (nextReview) {
+          if (nextReview < todayStr) overdue++;
+          else if (nextReview === todayStr) dueToday++;
+        }
+      }
+    }
+    return { total, unlearned, shortTerm, mediumTerm, longTerm, overdue, dueToday };
+  }, [vocabularySheets]);
 
   // [NEW] 사용자 사전 데이터 불러오기
   const fetchUserDictionary = useCallback(async () => {
@@ -773,6 +804,7 @@ export const VocabularyProvider = ({ children }) => {
     isVocabularySheetsLoading,
     errorVocabularySheets,
     statistics,
+    memoryStats,
     getVocabularySheets,
     getVocabularySheet,
     addVocabularySheet,

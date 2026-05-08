@@ -6,11 +6,14 @@ import { Circle, X, BookOpenText, WarningCircle, HandsClapping, Leaf, Plant, Car
 import { getTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
-import { updateSM2, analyzeLearningPattern } from '../../utils/common';
+import { updateSM2, analyzeLearningPattern, deriveSm2FromFsrs } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
+// Phase 1.3: logStudyQuestion 정식 (항상 호출, studySessionRef.current 있을 때만)
+// updateSM2 import는 폴백용으로 유지 (Phase 1.4에서 삭제)
+import { logStudyQuestion } from '../../api/study';
 
 
 const iconComponentMap = {
@@ -61,7 +64,7 @@ const getDisplayMeanings = (meanings) => {
   return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isCorrect, setIsCorrect] = useState(null);
@@ -189,34 +192,77 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       });
     }
 
-    const newState = updateSM2({
-      ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
-      repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
-      interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
-      nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
-      lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate
-    }, q, {
-      testType: testType,
-      today: new Date()
-    });
+    // Phase 1.3: 백엔드 모드(studySessionRef.current 있음) vs 폴백 모드(없음) 분기
+    const useBackend = studySessionRef?.current != null;
 
-    Object.assign(testQuestions[progressIndex], newState);
-    // [NEW] sm2 객체도 업데이트 (결과 페이지에서 최신 데이터 사용하도록)
-    testQuestions[progressIndex].sm2 = {
-      ...testQuestions[progressIndex].sm2,
-      ...newState
-    };
-    setUpdateType(newState.updateType); // 업데이트 타입 저장
-    // 암기 상태 변화 감지
-    const newStateKey = getMemoryStateKey(newState.interval, newState.repetition);
-    if (prevMemoryState && prevMemoryState !== newStateKey) {
-      const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
-      setMemoryStateChange({
-        from: stateNameMap[prevMemoryState],
-        to: stateNameMap[newStateKey],
-        stateKey: newStateKey
-      });
+    if (useBackend) {
+      // 백엔드 모드: logStudyQuestion 호출 (정식). updateSM2는 스킵.
+      const question = testQuestions[progressIndex];
+      logStudyQuestion({
+        session_id: studySessionRef.current,
+        user_voca_id: question.vocaIndexId ?? question.id,
+        user_voca_book_id: question.vocabularySheetId ?? null,
+        question_type: question.questionType,
+        was_correct: resultIndex === userSelected,
+        time_taken_ms: timeTakenSec * 1000,
+        client_now: new Date().toISOString(),
+      }).then(logRes => {
+        // 응답의 fsrs로 testQuestions 현재 문제 업데이트
+        if (logRes?.data?.fsrs) {
+          testQuestions[progressIndex].fsrs = logRes.data.fsrs;
+          const updatedSm2 = deriveSm2FromFsrs(logRes.data.fsrs);
+          testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...updatedSm2 };
+          Object.assign(testQuestions[progressIndex], updatedSm2);
+          // 암기 상태 변화 감지 (FSRS 기반)
+          const stability = logRes.data.fsrs.stability ?? 0;
+          const newStateKey = stability < 10 ? 'leaf' : stability < 60 ? 'plant' : 'carrot';
+          if (prevMemoryState && prevMemoryState !== newStateKey) {
+            const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+            setMemoryStateChange({
+              from: stateNameMap[prevMemoryState],
+              to: stateNameMap[newStateKey],
+              stateKey: newStateKey
+            });
+          }
+        }
+      }).catch(e => console.warn('[FSRS] logStudyQuestion 실패:', e));
+
+      // 백엔드 모드에서는 updateSM2 결과를 임시로 적용해 즉각적인 UI 반영
+      const newState = updateSM2({
+        ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+        repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+        interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+        nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+        lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate,
+      }, q, { testType, today: new Date() });
+      Object.assign(testQuestions[progressIndex], newState);
+      testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...newState };
+      setUpdateType(newState.updateType);
+      const newStateKey = getMemoryStateKey(newState.interval, newState.repetition);
+      if (prevMemoryState && prevMemoryState !== newStateKey) {
+        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+        setMemoryStateChange({ from: stateNameMap[prevMemoryState], to: stateNameMap[newStateKey], stateKey: newStateKey });
+      }
+    } else {
+      // 폴백 모드: 기존 updateSM2 흐름 그대로 (VITE_RECOMMEND_BACKEND=false 또는 추천 API 실패)
+      const newState = updateSM2({
+        ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+        repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+        interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+        nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+        lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate,
+      }, q, { testType, today: new Date() });
+
+      Object.assign(testQuestions[progressIndex], newState);
+      testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...newState };
+      setUpdateType(newState.updateType);
+      const newStateKey = getMemoryStateKey(newState.interval, newState.repetition);
+      if (prevMemoryState && prevMemoryState !== newStateKey) {
+        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+        setMemoryStateChange({ from: stateNameMap[prevMemoryState], to: stateNameMap[newStateKey], stateKey: newStateKey });
+      }
     }
+
     setProgressBarIndex(progressBarIndex + 1);
     setIsStay(true);
     setIsAnswered(true);
@@ -247,34 +293,65 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       q = 0;
     }
 
-    const newState = updateSM2({
-      ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
-      repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
-      interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
-      nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
-      lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate
-    }, q, {
-      testType: testType,
-      today: new Date()
-    });
+    // Phase 1.3: 백엔드 모드(studySessionRef.current 있음) vs 폴백 모드(없음) 분기
+    const useBackendExam = studySessionRef?.current != null;
 
-    Object.assign(testQuestions[progressIndex], newState);
-    // [NEW] sm2 객체도 업데이트 (결과 페이지에서 최신 데이터 사용하도록)
-    testQuestions[progressIndex].sm2 = {
-      ...testQuestions[progressIndex].sm2,
-      ...newState
-    };
-    setUpdateType(newState.updateType); // 업데이트 타입 저장
-    // 암기 상태 변화 감지
-    const newStateKeyExam = getMemoryStateKey(newState.interval, newState.repetition);
-    if (prevMemoryState && prevMemoryState !== newStateKeyExam) {
-      const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
-      setMemoryStateChange({
-        from: stateNameMap[prevMemoryState],
-        to: stateNameMap[newStateKeyExam],
-        stateKey: newStateKeyExam
-      });
+    if (useBackendExam) {
+      // 백엔드 모드: logStudyQuestion 정식 호출
+      const question = testQuestions[progressIndex];
+      const timeTakenMsExam = endTimeRef.current - startTimeRef.current;
+      logStudyQuestion({
+        session_id: studySessionRef.current,
+        user_voca_id: question.vocaIndexId ?? question.id,
+        user_voca_book_id: question.vocabularySheetId ?? null,
+        question_type: question.questionType,
+        was_correct: resultIndex === index,
+        time_taken_ms: timeTakenMsExam,
+        client_now: new Date().toISOString(),
+      }).then(logRes => {
+        if (logRes?.data?.fsrs) {
+          testQuestions[progressIndex].fsrs = logRes.data.fsrs;
+          const updatedSm2 = deriveSm2FromFsrs(logRes.data.fsrs);
+          testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...updatedSm2 };
+          Object.assign(testQuestions[progressIndex], updatedSm2);
+        }
+      }).catch(e => console.warn('[FSRS] logStudyQuestion 실패:', e));
+
+      // 즉각적인 UI 반영을 위한 임시 SM2 적용
+      const newState = updateSM2({
+        ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+        repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+        interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+        nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+        lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate,
+      }, q, { testType, today: new Date() });
+      Object.assign(testQuestions[progressIndex], newState);
+      testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...newState };
+      setUpdateType(newState.updateType);
+      const newStateKeyExam = getMemoryStateKey(newState.interval, newState.repetition);
+      if (prevMemoryState && prevMemoryState !== newStateKeyExam) {
+        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+        setMemoryStateChange({ from: stateNameMap[prevMemoryState], to: stateNameMap[newStateKeyExam], stateKey: newStateKeyExam });
+      }
+    } else {
+      // 폴백 모드: 기존 updateSM2 흐름 그대로
+      const newState = updateSM2({
+        ef: testQuestions[progressIndex].sm2?.ef ?? testQuestions[progressIndex].ef ?? 2.5,
+        repetition: testQuestions[progressIndex].sm2?.repetition ?? testQuestions[progressIndex].repetition ?? 0,
+        interval: testQuestions[progressIndex].sm2?.interval ?? testQuestions[progressIndex].interval ?? 0,
+        nextReview: testQuestions[progressIndex].sm2?.nextReview ?? testQuestions[progressIndex].nextReview,
+        lastStudyDate: testQuestions[progressIndex].sm2?.lastStudyDate ?? testQuestions[progressIndex].lastStudyDate,
+      }, q, { testType, today: new Date() });
+      Object.assign(testQuestions[progressIndex], newState);
+      testQuestions[progressIndex].sm2 = { ...testQuestions[progressIndex].sm2, ...newState };
+      setUpdateType(newState.updateType);
+      const newStateKeyExam = getMemoryStateKey(newState.interval, newState.repetition);
+      if (prevMemoryState && prevMemoryState !== newStateKeyExam) {
+        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+        setMemoryStateChange({ from: stateNameMap[prevMemoryState], to: stateNameMap[newStateKeyExam], stateKey: newStateKeyExam });
+      }
     }
+
     setProgressBarIndex(progressBarIndex + 1);
     setIsAnswered(true);
 

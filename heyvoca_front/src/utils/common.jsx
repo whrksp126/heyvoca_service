@@ -22,13 +22,14 @@ export const MEMORY_STATES = {
 
 /**
  * 단어가 복습 지연 상태인지 판별 (nextReview < 오늘)
+ * Phase 1.3: word.fsrs.next_review 우선, 없으면 word.sm2.nextReview 폴백
  * @param {Object} word
  * @returns {boolean}
  */
 export function isWordOverdue(word) {
-  const nextReview = word.sm2?.nextReview ?? word.nextReview;
-  if (!nextReview) return false;
-  const d = new Date(nextReview);
+  const next = word?.fsrs?.next_review ?? word?.sm2?.nextReview ?? word?.nextReview;
+  if (!next) return false;
+  const d = new Date(next);
   d.setHours(0, 0, 0, 0);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -36,40 +37,48 @@ export function isWordOverdue(word) {
 }
 
 /**
- * 단어의 암기 상태를 판단하는 함수 (암기율 계산 방식)
+ * 단어의 암기 상태를 판단하는 함수
+ * Phase 1.3: word.fsrs 우선 (stability 기준), 없으면 SM2 기반 폴백
  * @param {Object} word - 단어 객체
- * @param {number} word.repetition - 복습 성공 횟수
- * @param {number} word.interval - 복습 간격 (일 수)
- * @param {number} word.ef - 기억 용이도 (Ease Factor)
- * @param {Object} word.memoryState - 메모리 상태 객체 (있는 경우)
  * @returns {string} - 암기 상태 (unlearned, shortTerm, mediumTerm, longTerm)
  */
 export function getWordMemoryState(word) {
-  // sm2 객체 → memoryState 객체 → 직접 필드 순으로 참조
-  const repetition = word.sm2?.repetition ?? word.memoryState?.repetition ?? word.repetition ?? 0;
-  const interval = word.sm2?.interval ?? word.memoryState?.interval ?? word.interval ?? 0;
-  const ef = word.sm2?.ef ?? word.memoryState?.ef ?? word.ef ?? 2.5;
-
-  // 미학습: repetition === 0 && interval === 0 (한 번도 학습하지 않은 단어만)
-  if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-
-  // 암기율 계산 (사용자 요구사항 반영: 10일=30점, 50일=70점 기준 설계)
-  let score = 0;
-  score += repetition * 2;          // 횟수 영향도 축소
-  score += interval * 1.0;          // 날짜 기준 가중치 (10일 ≈ 10점, 50일 ≈ 50점)
-  score += (ef - 1.3) * 5;          // EF 영향도 축소
-  score += 10;                      // 기본 점수 (보정치)
-
-  const percent = Math.max(0, Math.min(100, Math.round(score)));
-
-  // 간격(Interval) 날짜를 우선 기준으로 분류하되, 점수 체계와 호환성 유지
-  if (interval < 10) {
-    return MEMORY_STATES.SHORT_TERM;  // 단기 암기 (10일 미만)
-  } else if (interval < 60) {
-    return MEMORY_STATES.MEDIUM_TERM; // 중기 암기 (10일~59일)
-  } else {
-    return MEMORY_STATES.LONG_TERM;   // 장기 암기 (60일 이상)
+  // FSRS 기반 (Phase 1.3 정식)
+  const fsrs = word?.fsrs;
+  if (fsrs) {
+    if (fsrs.state === 'new' || !fsrs.state) return MEMORY_STATES.UNLEARNED;
+    const stability = fsrs.stability ?? 0;
+    if (stability < 10) return MEMORY_STATES.SHORT_TERM;
+    if (stability < 60) return MEMORY_STATES.MEDIUM_TERM;
+    return MEMORY_STATES.LONG_TERM;
   }
+
+  // SM2 기반 폴백 (Phase 1.3 폴백 모드, Phase 1.4에서 제거 예정)
+  const repetition = word?.sm2?.repetition ?? word?.memoryState?.repetition ?? word?.repetition ?? 0;
+  const interval = word?.sm2?.interval ?? word?.memoryState?.interval ?? word?.interval ?? 0;
+
+  if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
+  if (interval < 10) return MEMORY_STATES.SHORT_TERM;
+  if (interval < 60) return MEMORY_STATES.MEDIUM_TERM;
+  return MEMORY_STATES.LONG_TERM;
+}
+
+/**
+ * FSRS state를 SM2 형식으로 역변환 (폴백 호환용)
+ * Phase 1.3: 추천 API 응답의 fsrs 필드를 기존 컴포넌트 호환 형식으로 변환
+ * @param {Object} fsrs - FSRS state 객체 { state, stability, difficulty, retrievability, next_review, last_review, reps, lapses }
+ * @returns {Object|null}
+ */
+export function deriveSm2FromFsrs(fsrs) {
+  if (!fsrs) return null;
+  return {
+    ef: 2.5 - ((fsrs.difficulty ?? 5) - 5) * 0.1,
+    repetition: fsrs.reps ?? 0,
+    interval: Math.round(fsrs.stability ?? 0),
+    nextReview: fsrs.next_review ?? null,
+    lastStudyDate: fsrs.last_review ?? null,
+    beforeScheduleCount: 0,
+  };
 }
 
 // 쿠키 조회

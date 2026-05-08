@@ -8,6 +8,7 @@ import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBot
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useVocabulary } from '../../context/VocabularyContext';
+import gem from '../../assets/images/gem.png';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -519,6 +520,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
             h-[45px]
             rounded-[8px]
             text-layout-white dark:text-layout-black text-[16px] font-[700]
+            flex items-center justify-center gap-[3px]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -530,7 +532,16 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
             stiffness: 500,
             damping: 15
           }}
-        >추가</motion.button>
+        >
+          {bookStoreVocabularySheet.gem > 0 ? (
+            <>
+              <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
+              {bookStoreVocabularySheet.gem}개로 구매
+            </>
+          ) : (
+            '추가'
+          )}
+        </motion.button>
       </div>
 
       {/* Top 버튼 */}

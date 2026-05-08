@@ -6,10 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { MIN_TEST_VOCABULARY_COUNT, MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../../utils/common';
+import { MIN_TEST_VOCABULARY_COUNT, MEMORY_STATES, getWordMemoryState } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
-
-// Hook 제거 - 직접 컴포넌트 사용
 
 
 
@@ -38,12 +36,8 @@ function getQuestionTypeLabel(type) {
 
 function getMemoryStateLabel(type) {
   switch (type) {
-    case 'all':
-      return '전체';
     case 'unlearned':
       return '미학습';
-    case 'overdue':
-      return '복습 지연';
     case 'shortTerm':
       return '단기 암기';
     case 'mediumTerm':
@@ -55,43 +49,14 @@ function getMemoryStateLabel(type) {
   }
 }
 
-function getInitialViewTypeLabel(type) {
-  switch (type) {
-    case 'origin':
-      return '단어';
-    case 'meanings':
-      return '의미';
-    case 'cross':
-      return '교차';
-    case 'random':
-      return '랜덤';
-    default:
-      return '';
-  }
-}
-
-function getOriginFilterTypeLabel(type) {
-  switch (type) {
-    case 'all':
-      return '전체';
-    case 'forget':
-      return '헷갈리는 단어';
-    default:
-      return '';
-  }
-}
-
 export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType }) => {
   const [questionTypes, setQuestionTypes] = useState(['multipleChoice']);
-  const [memoryState, setMemoryState] = useState(['all']);
+  const [selectionType, setSelectionType] = useState('recommended'); // 'recommended' | 'random'
+  const [memoryState, setMemoryState] = useState(['unlearned', 'shortTerm', 'mediumTerm', 'longTerm']);
   const [errorMessage, setErrorMessage] = useState('');
-  // const [initialViewType, setInitialViewType] = useState('origin');
-  // const [originFilterType, setOriginFilterType] = useState('all');
   const inputRefs = useRef({
     questionType: [],
     memoryState: [],
-    // initialViewType: [],
-    // originFilterType: [],
     count: []
   });
 
@@ -122,25 +87,18 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
     }
   }, [vocabularySheets, vocabularySheetId]);
 
-  // 암기 상태별 단어 개수 계산
+  // 암기 상태별 단어 개수 계산 (4개 키, overdue는 본래 상태로 분류)
   const memoryStateCounts = useMemo(() => {
     const counts = {
-      all: 0,
       unlearned: 0,
-      overdue: 0,
       shortTerm: 0,
       mediumTerm: 0,
       longTerm: 0
     };
 
     allWords.forEach(word => {
-      counts.all++;
-      if (isWordOverdue(word)) {
-        counts.overdue++;
-      } else {
-        const state = getWordMemoryState(word);
-        if (counts[state] !== undefined) counts[state]++;
-      }
+      const state = getWordMemoryState(word);
+      if (counts[state] !== undefined) counts[state]++;
     });
 
     return counts;
@@ -148,20 +106,15 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
 
   // 선택한 암기 상태(들)에 해당하는 단어 개수 (중복 제거)
   const currentMemoryStateCount = useMemo(() => {
-    if (memoryState.includes('all')) return memoryStateCounts.all;
-
     const matchingIds = new Set();
     allWords.forEach(word => {
-      for (const state of memoryState) {
-        if (state === 'overdue') {
-          if (isWordOverdue(word)) { matchingIds.add(word.id); break; }
-        } else {
-          if (!isWordOverdue(word) && getWordMemoryState(word) === state) { matchingIds.add(word.id); break; }
-        }
+      const state = getWordMemoryState(word);
+      if (memoryState.includes(state)) {
+        matchingIds.add(word.id);
       }
     });
     return matchingIds.size;
-  }, [allWords, memoryState, memoryStateCounts]);
+  }, [allWords, memoryState]);
 
   const [count, setCount] = useState(() => {
     // 초기 렌더링 시에는 기본값 사용
@@ -204,15 +157,9 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   const handleStartTest = async (data) => {
     const testTypeData = testType || data.testType;
 
-    console.log(testTypeData, "testType")
-
     if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
       setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
       return;
-    }
-
-    if (recentStudy.status === "learning") {
-
     }
 
     // MEMO : testType : test, exam, today
@@ -313,12 +260,21 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   const getTestSetupData = () => {
     return {
       questionType: questionTypes,
+      selectionType,
       memoryState: memoryState,
-      // initialViewType: initialViewType,
-      // originFilterType: originFilterType,
       count: count
     }
   };
+
+  const toggleMemoryState = (state) => {
+    setMemoryState(prev =>
+      prev.includes(state)
+        ? prev.filter(s => s !== state)
+        : [...prev, state]
+    );
+  };
+
+  const isStartDisabled = memoryState.length === 0 || currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT;
 
   return (
     <div className="relative">
@@ -338,6 +294,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         p-[20px] pb-[115px]
         overflow-y-auto
       ">
+        {/* 1. 문제 유형 */}
         <div
           className="
             flex justify-between flex-col gap-[8px]
@@ -386,6 +343,45 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             })}
           </div>
         </div>
+
+        {/* 2. 출제 유형 */}
+        <div className="flex flex-col gap-[8px]">
+          <h3 className="text-[14px] font-[700] text-layout-black text-center dark:text-layout-white">
+            출제 유형
+          </h3>
+          <div className="flex gap-[8px]">
+            {[
+              { value: 'recommended', label: '추천' },
+              { value: 'random', label: '랜덤' },
+            ].map(({ value, label }) => {
+              const isSelected = selectionType === value;
+              return (
+                <div
+                  key={value}
+                  className={`
+                    flex-1 flex items-center justify-center gap-[5px]
+                    h-[45px] px-[15px]
+                    border-[1px] rounded-[8px]
+                    cursor-pointer
+                    ${isSelected ? 'border-primary-main-600' : 'border-layout-gray-200'}
+                  `}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    setSelectionType(value);
+                  }}
+                >
+                  {isSelected && <Check size={18} weight="bold" className="text-primary-main-600" />}
+                  <span className={`text-[16px] font-[700] ${isSelected ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
+                    {label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 3. 암기 상태 */}
         <div
           className="
             flex justify-between flex-col gap-[8px]
@@ -401,7 +397,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             암기 상태
           </h3>
           <div className="grid grid-cols-2 gap-[10px]">
-            {['all', 'unlearned', 'overdue', 'shortTerm', 'mediumTerm', 'longTerm'].map((type) => {
+            {['unlearned', 'shortTerm', 'mediumTerm', 'longTerm'].map((type) => {
               const stateCount = memoryStateCounts[type] || 0;
               const isSelected = memoryState.includes(type);
               return (
@@ -418,19 +414,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => {
                     vibrate({ duration: 5 });
-                    if (type === 'all') {
-                      setMemoryState(['all']);
-                    } else {
-                      setMemoryState(prev => {
-                        const withoutAll = prev.filter(s => s !== 'all');
-                        if (withoutAll.includes(type)) {
-                          const next = withoutAll.filter(s => s !== type);
-                          return next.length === 0 ? ['all'] : next;
-                        } else {
-                          return [...withoutAll, type];
-                        }
-                      });
-                    }
+                    toggleMemoryState(type);
                   }}
                 >
                   {isSelected && <Check size={18} weight="bold" className="text-primary-main-600" />}
@@ -459,7 +443,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           </AnimatePresence>
         </div>
 
-
+        {/* 4. 문제 개수 */}
         <div
           className="
             flex justify-between flex-col gap-[8px]
@@ -480,11 +464,11 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT || count <= MIN_TEST_VOCABULARY_COUNT ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
+                ${isStartDisabled || count <= MIN_TEST_VOCABULARY_COUNT ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation();
-                if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
+                if (isStartDisabled) {
                   setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
                   return;
                 }
@@ -516,11 +500,11 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 w-[40px] h-[40px]
                 border-[1px] rounded-[8px]
                 select-none touch-none
-                ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT || count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
+                ${isStartDisabled || count >= Math.min(currentMemoryStateCount, maxVocabularyCount) ? 'border-layout-gray-200 text-layout-gray-200' : 'border-primary-main-600 text-primary-main-600'}
               `}
               onPointerDown={(e) => {
                 e.stopPropagation();
-                if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
+                if (isStartDisabled) {
                   setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
                   return;
                 }
@@ -568,10 +552,10 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             h-[45px]
             rounded-[8px]
             text-layout-white dark:text-layout-black text-[16px] font-[700]
-            ${currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT ? 'bg-layout-gray-200 cursor-not-allowed' : 'bg-primary-main-600'}
+            ${isStartDisabled ? 'bg-layout-gray-200 cursor-not-allowed' : 'bg-primary-main-600'}
           `}
           onClick={() => {
-            if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
+            if (isStartDisabled) {
               setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
               return;
             }
@@ -594,4 +578,4 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       </div>
     </div>
   );
-}; 
+};
