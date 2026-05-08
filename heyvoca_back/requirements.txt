@@ -27,3 +27,4 @@ minio==7.2.7
 pytest==8.3.5
 Flask-Limiter==3.5.0
 sentry-sdk[flask]==2.3.1
+packaging>=21,<25
