@@ -1,33 +1,24 @@
 """
-UserVoca.data 컬럼 스키마 v2 직렬화/역직렬화.
+UserVoca.data 컬럼 스키마 직렬화/역직렬화.
 
-스키마 v1 (기존 SM2-only):
-  {ef, repetition, interval, nextReview, lastStudyDate, beforeScheduleCount}
-
-스키마 v2 (SM2 + FSRS 공존, Phase 1.2~1.4):
+현재 schema (v3): FSRS 전용
   {
-    "schema_version": 2,
-    "sm2":  { ef, repetition, interval, nextReview, lastStudyDate, beforeScheduleCount },
+    "schema_version": 3,
     "fsrs": { state, difficulty, stability, retrievability,
               elapsed_days, scheduled_days, reps, lapses,
               last_review, next_review, params_version }
   }
 
-Phase 1.4에서 SM2 블록 제거, schema_version=3 예정.
+레거시 호환 (read-time fallback only):
+  v1: SM2-only flat dict — `parse_user_voca_data` + `migrate_v1_to_v2` 가 v3 로 변환
+  v2: {schema_version:2, sm2:{...}, fsrs:{...}} — `set_fsrs_state` 호출 시 sm2 블록 제거 + v3 로 승격
+
+DB 정규화는 `jobs/migrate_user_voca_to_v3.py` 가 담당 (entrypoint 에서 idempotent 실행).
+새 row 는 모두 v3 로만 작성됨 (`set_fsrs_state` 거치므로 자동 보장).
 """
 
 import json
-from datetime import datetime
 from typing import Optional
-
-DEFAULT_SM2 = {
-    "ef": 2.5,
-    "repetition": 0,
-    "interval": 0,
-    "nextReview": None,
-    "lastStudyDate": None,
-    "beforeScheduleCount": 0,
-}
 
 DEFAULT_FSRS_NEW = {
     "state": "new",
@@ -47,19 +38,19 @@ DEFAULT_FSRS_NEW = {
 def parse_user_voca_data(raw: Optional[str]) -> dict:
     """
     UserVoca.data JSON 문자열 파싱.
-    - raw가 None / 빈 문자열이면 v1 기본값 반환
-    - 깨진 JSON이면 v1 기본값 반환
-    - 정상 파싱이면 그대로 반환 (v1 또는 v2)
+    - raw가 None / 빈 문자열이면 v1 기본값(빈 dict) 반환
+    - 깨진 JSON이면 빈 dict 반환
+    - 정상 파싱이면 그대로 반환 (v1, v2, v3 모두 수용)
     """
     if not raw:
-        return dict(DEFAULT_SM2)
+        return {}
     try:
         parsed = json.loads(raw)
         if not isinstance(parsed, dict):
-            return dict(DEFAULT_SM2)
+            return {}
         return parsed
     except (json.JSONDecodeError, ValueError):
-        return dict(DEFAULT_SM2)
+        return {}
 
 
 def serialize_user_voca_data(payload: dict) -> str:
@@ -77,51 +68,23 @@ def get_fsrs_state(payload: dict) -> Optional[dict]:
     return payload.get("fsrs", None)
 
 
-def get_sm2_state(payload: dict) -> Optional[dict]:
-    """
-    payload에서 sm2 블록 꺼내기.
-    v1이면 payload 자체가 sm2 데이터이므로 그대로 반환.
-    v2이면 payload["sm2"] 반환. 없으면 None.
-    """
-    if is_v1(payload):
-        return dict(payload)
-    return payload.get("sm2", None)
-
-
 def set_fsrs_state(payload: dict, fsrs_state: dict) -> dict:
-    """payload에 fsrs 블록 머지 + schema_version=2 설정."""
+    """payload에 fsrs 블록 머지 + schema_version=3 설정."""
     result = dict(payload)
     result["fsrs"] = dict(fsrs_state)
-    result["schema_version"] = 2
+    result["schema_version"] = 3
+    # v2에서 올라온 경우 sm2 블록 제거
+    result.pop("sm2", None)
     return result
-
-
-def set_sm2_state(payload: dict, sm2_state: dict) -> dict:
-    """
-    payload에 sm2 블록 머지.
-    v1이면 payload를 v2 구조로 전환하며 sm2 블록에 넣는다.
-    """
-    if is_v1(payload):
-        # v1 payload를 v2로 올리면서 sm2 블록 덮어쓰기
-        result = {
-            "schema_version": 2,
-            "sm2": dict(sm2_state),
-        }
-        # 기존 fsrs 블록 보존
-        if "fsrs" in payload:
-            result["fsrs"] = payload["fsrs"]
-        return result
-    else:
-        result = dict(payload)
-        result["sm2"] = dict(sm2_state)
-        return result
 
 
 def migrate_v1_to_v2(payload: dict) -> dict:
     """
-    v1(SM2-only) payload를 받아 fsrs 블록을 채워 v2로 반환.
+    v1(SM2-only) payload를 받아 fsrs 블록을 채워 v3로 반환.
     내부적으로 converter.sm2_to_fsrs() 호출.
-    이미 v2면 그대로 반환.
+    이미 v2/v3이면 그대로 반환.
+
+    함수명은 하위호환을 위해 유지하지만 실제로는 v3 payload를 반환한다.
     """
     if not is_v1(payload):
         return payload
@@ -132,8 +95,7 @@ def migrate_v1_to_v2(payload: dict) -> dict:
     fsrs_state = sm2_to_fsrs(sm2_data)
 
     result = {
-        "schema_version": 2,
-        "sm2": sm2_data,
+        "schema_version": 3,
         "fsrs": fsrs_state,
     }
     return result

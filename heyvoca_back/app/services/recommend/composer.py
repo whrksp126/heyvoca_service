@@ -1,87 +1,71 @@
 """
-recommend/composer.py — SessionComposer (Phase 2.2 고도화).
+recommend/composer.py — 추천 세션 구성 (단일 알고리즘).
 
-compose(pool, count, type_, *, user_stats=None) → dict
+compose(pool, count, *, selection='recommended', user_stats=None) → dict
+
+빠른 복습과 테스트(추천 모드)는 동일한 추천 알고리즘을 사용한다.
+차이는 입력 필터(단어장/암기상태) 뿐이며, 그 필터는 pool 단계에서 처리된다.
+
+알고리즘은 사용자 풀 분포 + 학습 기록을 바탕으로 매번 동적으로 구성한다.
+고정 비율은 사용하지 않는다.
+
+selection='random' 인 경우는 추천 알고리즘을 거치지 않고 단순 랜덤 추출.
 
 user_stats 구조:
   {
-    "recent_7d_correct_rate": 0.85,   # 최근 7일 평균 정답률 (None이면 default)
-    "recent_7d_total": 150,           # 7일 총 시도 수 (20 미만이면 default)
-    "weakness_types": [               # 약점 question_type 리스트 (correct_rate < 0.6, samples >= 10)
-        {"question_type": "multipleChoiceListening", "correct_rate": 0.42, "samples": 87},
-    ],
-    "today_seen": {                   # {user_voca_id: set(question_type 문자열)} — 오늘 본 단어/유형
-        12345: {"multipleChoice"},
-    },
+    "recent_7d_correct_rate": 0.85,            # 최근 7일 평균 정답률 (None이면 default)
+    "recent_7d_total":        150,             # 7일 총 시도 수
+    "weakness_types":         [...],           # 약점 question_type 리스트
+    "today_seen":             {voca_id: [...]},# 오늘 본 단어/유형
+    "recent_lapse_voca_ids":  {1, 2, 3},       # 최근 48시간 내 틀린 적 있는 user_voca_id
   }
-
-type_별 동작:
-  'daily' / 'today':
-    동적 비율(dynamic_ratio) 적용.
-    long 버킷은 최소 5%(floor) 보장.
-    약점 유형 우선 suggested_question_type 부여.
-    하루 내 반복 시 avoid_question_types 기반 다른 유형 강제.
-    최종 단계 인터리빙(음성/형태소 유사 단어 인접 회피).
-
-  'test' / 'exam':
-    단순 우선순위 정렬: overdue → today → short → medium → long → new.
-    target_states 사전 필터(pool에서 이미 필터링 가정)로 top-N 선택.
-
-  'quick':
-    망각곡선 기반 단순 정렬: retrievability 오름차순 top-N.
 """
 
-import math
-import datetime as dt
 import random
-from dataclasses import dataclass, field
-from typing import List, Optional, Dict, Any
+import datetime as dt
+from typing import List, Optional, Dict, Any, Set, Tuple
 
 from app.services.recommend.pool import CandidateItem
 from app.services.recommend.ranking import (
     rank_overdue, rank_today, rank_long_interleave,
     rank_new, rank_short_medium,
 )
-from app.utils.interleave import interleave_avoid_adjacent, get_group_key
+from app.utils.interleave import interleave_avoid_adjacent
 
 # ──────────────────────────────────────────────
 # 상수
 # ──────────────────────────────────────────────
 
-# 기본 daily 비율 (소수)
-COMPOSITION_DAILY: Dict[str, float] = {
-    'overdue': 0.50,
-    'today':   0.25,
-    'new':     0.20,
-    'long':    0.05,
-}
+# bucket 우선순위 (망각 위험도 + 학습 가치 종합)
+_BUCKET_PRIORITY: Tuple[str, ...] = (
+    'lapse',    # 최근 틀림 — 즉시 재학습 (가상 bucket, runtime 분류)
+    'overdue',  # 복습 시점 지남
+    'today',    # 오늘 복습 예정
+    'short',    # 단기 기억 강화
+    'medium',   # 중기 기억 강화
+    'new',      # 신규 도전
+    'long',     # 장기 점검
+)
 
-# long 버킷 최소 비율 (최소 보장 하한선)
-_LONG_FLOOR_RATIO = 0.05
+# 사용자 능력 평가 임계값 (recent_7d_total >= MIN_SAMPLES 일 때만 의미 있음)
+_LEVEL_MIN_SAMPLES   = 20
+_LEVEL_HIGH_RATE     = 0.85
+_LEVEL_LOW_RATE      = 0.60
 
-# quick/test 등에서 사용할 bucket 우선순위 순서
-_BUCKET_PRIORITY = ('overdue', 'today', 'short', 'medium', 'long', 'new')
+# 다양성: 같은 bucket이 연속해서 나오지 않게 인터리빙 적용
 
-# 약점 판정 임계값
-_WEAKNESS_CORRECT_RATE_THRESHOLD = 0.60
-_WEAKNESS_MIN_SAMPLES = 10
-
-# 7일 정답률 동적 조정 최소 샘플
-_DYNAMIC_MIN_TOTAL = 20
-_DYNAMIC_HIGH_THRESHOLD = 0.90
-_DYNAMIC_LOW_THRESHOLD  = 0.60
-
-# bucket별 이유 문구 (사용자 표시용)
+# bucket별 사용자 표시용 reason 문구
 _BUCKET_REASON: Dict[str, str] = {
+    'lapse':   '방금 틀린 단어예요',
     'overdue': '복습 시점이 지났어요',
     'today':   '오늘 복습 예정이에요',
-    'new':     '새 단어 도전!',
-    'long':    '장기 기억 점검',
     'short':   '단기 기억 강화',
     'medium':  '중기 기억 강화',
+    'new':     '',          # 'new'는 프론트가 NEW 칩으로 별도 표시
+    'long':    '장기 기억 점검',
 }
 
-# 지원 question_type 목록 (meanings/examples 유무 기준)
+# 지원 question_type 목록
 _ALL_QUESTION_TYPES = [
     'multipleChoice',
     'multipleChoiceListening',
@@ -92,67 +76,310 @@ _ALL_QUESTION_TYPES = [
 
 
 # ──────────────────────────────────────────────
-# 내부 헬퍼
+# 사용자 능력 평가
 # ──────────────────────────────────────────────
 
-def _split_by_bucket(pool: List[CandidateItem]) -> Dict[str, List[CandidateItem]]:
-    """pool을 bucket별로 분류."""
+def _evaluate_user_level(user_stats: Optional[Dict]) -> str:
+    """
+    'high' | 'mid' | 'low' — 최근 7일 정답률 기반.
+    샘플이 부족하면 'mid'로 간주(기본 균형 정책).
+    """
+    if not user_stats:
+        return 'mid'
+    rate  = user_stats.get('recent_7d_correct_rate')
+    total = user_stats.get('recent_7d_total', 0) or 0
+    if rate is None or total < _LEVEL_MIN_SAMPLES:
+        return 'mid'
+    if rate >= _LEVEL_HIGH_RATE:
+        return 'high'
+    if rate <= _LEVEL_LOW_RATE:
+        return 'low'
+    return 'mid'
+
+
+# ──────────────────────────────────────────────
+# bucket 분류 + lapse 식별
+# ──────────────────────────────────────────────
+
+def _split_pool(
+    pool: List[CandidateItem],
+    lapse_ids: Set[int],
+) -> Dict[str, List[CandidateItem]]:
+    """
+    pool을 bucket별로 분류.
+    lapse_ids에 포함된 단어는 원래 bucket과 무관하게 'lapse'로 재분류
+    (단, new는 학습 이력이 없으므로 lapse가 될 수 없음).
+    """
     buckets: Dict[str, List[CandidateItem]] = {b: [] for b in _BUCKET_PRIORITY}
     for item in pool:
+        # new 단어는 학습 이력이 없으므로 lapse 대상이 아님
+        if item.bucket != 'new' and item.user_voca_id in lapse_ids:
+            buckets['lapse'].append(item)
+            continue
         key = item.bucket if item.bucket in buckets else 'new'
         buckets[key].append(item)
     return buckets
 
 
-def _compute_dynamic_ratio(user_stats: Optional[Dict]) -> tuple:
+def _rank_bucket(name: str, items: List[CandidateItem], now: dt.datetime) -> List[CandidateItem]:
+    """bucket별 정렬 함수 디스패치."""
+    if name == 'lapse':
+        # 최근 틀린 단어는 retrievability 낮은 순(망각 임박) 우선
+        return rank_short_medium(items)
+    if name == 'overdue':
+        return rank_overdue(items, now)
+    if name == 'today':
+        return rank_today(items, now)
+    if name == 'short' or name == 'medium':
+        return rank_short_medium(items)
+    if name == 'long':
+        return rank_long_interleave(items)
+    if name == 'new':
+        return rank_new(items)
+    return list(items)
+
+
+# ──────────────────────────────────────────────
+# 슬롯 분배 — 사용자 상태 기반 동적
+# ──────────────────────────────────────────────
+
+def _decide_slot_quotas(
+    available: Dict[str, int],
+    count: int,
+    user_level: str,
+) -> Dict[str, int]:
     """
-    7일 정답률 기반 동적 비율 계산.
+    풀 분포(available)와 사용자 능력(user_level)을 보고
+    각 bucket에서 뽑을 단어 수를 결정한다.
 
-    Returns:
-        (ratio_dict, adjustment_label)
-        ratio_dict: {'overdue':float, 'today':float, 'new':float, 'long':float}
-        adjustment_label: 'default' | 'high_accuracy' | 'low_accuracy'
+    원칙:
+      1. 위급 망각 위험 단어(lapse + overdue + today)는 가용한 만큼 우선 채운다.
+         단, count의 100%까지 채울 수 있음.
+      2. 위급분으로 count가 다 차면 거기서 끝 (새 단어 추가 안 함).
+      3. 부족분이 있으면 사용자 능력에 따라 분배:
+         - high: 새 단어 적극 + 단기/중기 균형
+         - low : 단기/중기 강화 + 새 단어 자제
+         - mid : 균형
+      4. 그래도 부족하면 long 등에서 보충.
     """
-    if not user_stats:
-        return dict(COMPOSITION_DAILY), 'default'
+    quotas: Dict[str, int] = {b: 0 for b in _BUCKET_PRIORITY}
+    remaining = count
 
-    rate  = user_stats.get('recent_7d_correct_rate')
-    total = user_stats.get('recent_7d_total', 0) or 0
+    # ── 1. 위급 망각 위험 ──
+    for b in ('lapse', 'overdue', 'today'):
+        take = min(available.get(b, 0), remaining)
+        quotas[b] = take
+        remaining -= take
+        if remaining == 0:
+            return quotas
 
-    if rate is None or total < _DYNAMIC_MIN_TOTAL:
-        return dict(COMPOSITION_DAILY), 'default'
+    # ── 2. 사용자 능력 기반 분배 ──
+    # 부족분을 (new, short, medium) 중심으로 능력별 가중치로 나눔
+    if user_level == 'high':
+        weights = {'new': 0.55, 'short': 0.25, 'medium': 0.20}
+    elif user_level == 'low':
+        weights = {'new': 0.10, 'short': 0.55, 'medium': 0.35}
+    else:  # mid
+        weights = {'new': 0.30, 'short': 0.40, 'medium': 0.30}
 
-    ratio = dict(COMPOSITION_DAILY)
+    # 각 카테고리 가용분만큼 가중치대로 할당
+    # 풀에 없는 카테고리는 자동으로 0이 되고 부족분은 다른 곳에서 보충됨
+    raw_alloc: Dict[str, int] = {}
+    for b, w in weights.items():
+        target = round(remaining * w)
+        raw_alloc[b] = min(available.get(b, 0), target)
 
-    if rate >= _DYNAMIC_HIGH_THRESHOLD:
-        # 잘 하고 있음 → 새 단어 더 보여주기
-        ratio['new']     = min(ratio['new']     + 0.10, 1.0)
-        ratio['overdue'] = max(ratio['overdue'] - 0.05, 0.0)
-        ratio['today']   = max(ratio['today']   - 0.05, 0.0)
-        label = 'high_accuracy'
-    elif rate <= _DYNAMIC_LOW_THRESHOLD:
-        # 어려워함 → 복습 강화
-        ratio['new']     = max(ratio['new']     - 0.10, 0.0)
-        ratio['overdue'] = min(ratio['overdue'] + 0.05, 1.0)
-        ratio['today']   = min(ratio['today']   + 0.05, 1.0)
-        label = 'low_accuracy'
-    else:
-        label = 'default'
+    # 반올림 오차 보정 — 합이 remaining과 다를 수 있으므로 우선순위 순 재분배
+    allocated = sum(raw_alloc.values())
+    delta = remaining - allocated
+    if delta != 0:
+        # delta가 양수면 부족 → 추가, 음수면 초과 → 차감
+        # 풀에 여유가 있는 bucket부터 weight 큰 순으로 처리
+        order = sorted(weights.items(), key=lambda x: -x[1])
+        for b, _ in order:
+            if delta == 0:
+                break
+            slack = available.get(b, 0) - raw_alloc[b] if delta > 0 else raw_alloc[b]
+            if slack <= 0:
+                continue
+            change = min(abs(delta), slack)
+            raw_alloc[b] += change if delta > 0 else -change
+            delta -= change if delta > 0 else -change
 
-    return ratio, label
+    for b, n in raw_alloc.items():
+        quotas[b] = n
+        remaining -= n
+    if remaining < 0:
+        remaining = 0
+
+    # ── 3. 그래도 부족하면 long, 그다음 medium/short/new 순으로 보충 ──
+    if remaining > 0:
+        for b in ('long', 'medium', 'short', 'new', 'today', 'overdue'):
+            slack = available.get(b, 0) - quotas[b]
+            if slack <= 0:
+                continue
+            take = min(slack, remaining)
+            quotas[b] += take
+            remaining -= take
+            if remaining == 0:
+                break
+
+    return quotas
 
 
-def _build_today_seen(user_stats: Optional[Dict]) -> Dict[int, set]:
+# ──────────────────────────────────────────────
+# question_type 부여
+# ──────────────────────────────────────────────
+
+def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
+    has_meanings = bool(item.meanings)
+    has_examples = bool(item.examples)
+    if qtype in ('multipleChoiceListening', 'cardMatchListening'):
+        return has_meanings or has_examples
+    if qtype == 'fillInTheBlank':
+        return has_meanings
+    return has_meanings or has_examples
+
+
+def _assign_suggested_question_type(
+    item: CandidateItem,
+    weakness_types: List[str],
+    avoid_types: Optional[set],
+) -> Optional[str]:
     """
-    user_stats['today_seen']을 {user_voca_id: set(question_type)} 형태로 정규화.
-    없거나 파싱 실패하면 빈 dict 반환.
+    1. 약점 유형 우선 (이 단어가 지원하고 avoid에 없는 것)
+    2. avoid에 없는 일반 유형
+    3. 모든 유형이 회피 대상이면 avoid 무시하고 지원 가능한 첫 번째
     """
+    avoid = avoid_types or set()
+    for wt in weakness_types:
+        if wt not in avoid and _item_can_use_question_type(item, wt):
+            return wt
+    for qt in _ALL_QUESTION_TYPES:
+        if qt not in avoid and _item_can_use_question_type(item, qt):
+            return qt
+    for qt in _ALL_QUESTION_TYPES:
+        if _item_can_use_question_type(item, qt):
+            return qt
+    return None
+
+
+def _enrich_items(
+    items_with_bucket: List[Tuple[CandidateItem, str]],
+    today_seen: Dict[int, set],
+    weakness_types: List[str],
+) -> List[Dict[str, Any]]:
+    """
+    각 아이템에 suggested_question_type, reason을 부여한다.
+    items_with_bucket: [(item, original_bucket), ...] — original_bucket은 reason 결정용
+    """
+    result = []
+    for item, src_bucket in items_with_bucket:
+        avoid = today_seen.get(item.user_voca_id, set())
+        suggested = _assign_suggested_question_type(item, weakness_types, avoid)
+        reason = _BUCKET_REASON.get(src_bucket, '')
+        result.append({
+            '_item': item,
+            'src_bucket': src_bucket,                # lapse 재분류 반영
+            'suggested_question_type': suggested,
+            'reason': reason,
+        })
+    return result
+
+
+# ──────────────────────────────────────────────
+# 추천 / 랜덤 본체
+# ──────────────────────────────────────────────
+
+def _compose_recommend(
+    pool: List[CandidateItem],
+    count: int,
+    user_stats: Optional[Dict],
+) -> Dict[str, Any]:
+    """
+    사용자 상태 기반 동적 추천.
+    """
+    now = dt.datetime.utcnow()
+    lapse_ids: Set[int] = set(user_stats.get('recent_lapse_voca_ids') or set()) if user_stats else set()
+    today_seen: Dict[int, set] = _normalize_today_seen(user_stats)
+    weakness_types = _extract_weakness_types(user_stats)
+
+    # 1. bucket 분류 (lapse 재분류 포함)
+    buckets = _split_pool(pool, lapse_ids)
+
+    # 2. bucket별 정렬
+    ranked = {b: _rank_bucket(b, items, now) for b, items in buckets.items()}
+
+    # 3. 가용 개수
+    available = {b: len(ranked[b]) for b in _BUCKET_PRIORITY}
+
+    # 4. 사용자 능력 평가
+    user_level = _evaluate_user_level(user_stats)
+
+    # 5. 슬롯 분배 결정
+    quotas = _decide_slot_quotas(available, count, user_level)
+
+    # 6. 선택 (각 bucket에서 quota만큼)
+    selected_with_bucket: List[Tuple[CandidateItem, str]] = []
+    for b in _BUCKET_PRIORITY:
+        n = quotas.get(b, 0)
+        if n > 0:
+            for it in ranked[b][:n]:
+                selected_with_bucket.append((it, b))
+
+    # 7. 인터리빙 (음성/형태소 유사 단어 인접 회피)
+    items_only = [it for it, _ in selected_with_bucket]
+    interleaved = interleave_avoid_adjacent(items_only, lambda it: it.word)
+    # 인터리빙 후 src_bucket 매핑 복원
+    bucket_by_id = {it.user_voca_id: src for it, src in selected_with_bucket}
+    final_with_bucket = [(it, bucket_by_id[it.user_voca_id]) for it in interleaved]
+
+    # 8. enrich (suggested_question_type, reason)
+    enriched = _enrich_items(final_with_bucket, today_seen, weakness_types)
+
+    composition = {b: q for b, q in quotas.items() if q > 0}
+
+    return {
+        'composition': composition,
+        'items': interleaved,
+        'enriched_items': enriched,
+        'user_level': user_level,
+    }
+
+
+def _compose_random(pool: List[CandidateItem], count: int) -> Dict[str, Any]:
+    """
+    추천 알고리즘을 거치지 않는 단순 랜덤 추출.
+    """
+    shuffled = list(pool)
+    random.shuffle(shuffled)
+    selected = shuffled[:count]
+    enriched = [
+        {'_item': it, 'src_bucket': it.bucket, 'suggested_question_type': None, 'reason': ''}
+        for it in selected
+    ]
+    composition: Dict[str, int] = {}
+    for it in selected:
+        composition[it.bucket] = composition.get(it.bucket, 0) + 1
+    return {
+        'composition': composition,
+        'items': selected,
+        'enriched_items': enriched,
+        'user_level': 'mid',
+    }
+
+
+# ──────────────────────────────────────────────
+# user_stats 헬퍼
+# ──────────────────────────────────────────────
+
+def _normalize_today_seen(user_stats: Optional[Dict]) -> Dict[int, set]:
     if not user_stats:
         return {}
-    seen_raw = user_stats.get('today_seen') or {}
+    raw = user_stats.get('today_seen') or {}
     result: Dict[int, set] = {}
     try:
-        for k, v in seen_raw.items():
+        for k, v in raw.items():
             try:
                 uid = int(k)
             except (TypeError, ValueError):
@@ -163,260 +390,11 @@ def _build_today_seen(user_stats: Optional[Dict]) -> Dict[int, set]:
     return result
 
 
-def _get_weakness_types(user_stats: Optional[Dict]) -> List[str]:
-    """약점 question_type 목록 반환 (correct_rate < 0.6 and samples >= 10)."""
+def _extract_weakness_types(user_stats: Optional[Dict]) -> List[str]:
     if not user_stats:
         return []
     weakness = user_stats.get('weakness_types') or []
-    result = []
-    for w in weakness:
-        try:
-            if (w.get('correct_rate', 1.0) < _WEAKNESS_CORRECT_RATE_THRESHOLD
-                    and w.get('samples', 0) >= _WEAKNESS_MIN_SAMPLES):
-                result.append(w['question_type'])
-        except (AttributeError, KeyError, TypeError):
-            continue
-    return result
-
-
-def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
-    """
-    단어가 해당 question_type을 지원할 수 있는지 최소 검사.
-    - Listening 유형: examples 필요 (발음 생성에 사용)
-    - fillInTheBlank: meanings 필요
-    - 그 외: meanings 또는 examples 중 하나만 있어도 OK
-    """
-    has_meanings = bool(item.meanings)
-    has_examples = bool(item.examples)
-
-    if qtype in ('multipleChoiceListening', 'cardMatchListening'):
-        return has_meanings or has_examples  # TTS는 단어 자체로 생성 가능
-    if qtype == 'fillInTheBlank':
-        return has_meanings
-    # multipleChoice, cardMatch: meanings 또는 examples
-    return has_meanings or has_examples
-
-
-def _assign_suggested_question_type(
-    item: CandidateItem,
-    weakness_types: List[str],
-    avoid_types: Optional[set],
-) -> Optional[str]:
-    """
-    단어에 suggested_question_type 결정.
-
-    우선순위:
-    1. 약점 유형 중 이 단어가 지원하고 avoid_types에 없는 첫 번째 유형
-    2. avoid_types에 없는 아무 유형
-    3. None (모든 유형이 회피 대상이거나 지원 불가)
-    """
-    avoid = avoid_types or set()
-
-    # 1. 약점 유형 우선
-    for wt in weakness_types:
-        if wt not in avoid and _item_can_use_question_type(item, wt):
-            return wt
-
-    # 2. avoid 아닌 유형 중 지원 가능한 첫 번째
-    for qt in _ALL_QUESTION_TYPES:
-        if qt not in avoid and _item_can_use_question_type(item, qt):
-            return qt
-
-    # 3. 모든 유형 회피 대상 → avoid 무시하고 지원 가능한 첫 번째
-    for qt in _ALL_QUESTION_TYPES:
-        if _item_can_use_question_type(item, qt):
-            return qt
-
-    return None
-
-
-def _apply_intra_day_and_weakness(
-    items: List[CandidateItem],
-    today_seen: Dict[int, set],
-    weakness_types: List[str],
-) -> List[Dict[str, Any]]:
-    """
-    선택된 아이템 리스트에 대해:
-      1. today_seen 기반 avoid_question_types 결정
-      2. 약점 유형 우선 + avoid 회피하여 suggested_question_type 부여
-      3. reason 문구 부여
-
-    Returns:
-        List of enriched dict (CandidateItem 속성 + suggested_question_type + reason)
-    """
-    result = []
-    for item in items:
-        avoid = today_seen.get(item.user_voca_id, set())
-        suggested = _assign_suggested_question_type(item, weakness_types, avoid)
-        reason = _BUCKET_REASON.get(item.bucket, '')
-        result.append({
-            '_item': item,
-            'suggested_question_type': suggested,
-            'reason': reason,
-        })
-    return result
-
-
-# ──────────────────────────────────────────────
-# 구성 함수
-# ──────────────────────────────────────────────
-
-def _compose_daily(
-    pool: List[CandidateItem],
-    count: int,
-    ratio: Dict[str, float],
-) -> dict:
-    """
-    daily/today 타입: 동적 비율로 구성.
-
-    단계:
-      1. 각 bucket 목표 개수 계산.
-         long은 최소 floor=ceil(count*LONG_FLOOR_RATIO)개 보장.
-      2. 가용 개수가 목표보다 적으면 실제 가용 개수로 조정.
-      3. 부족분(남은 슬롯)은 인접 카테고리 순으로 채움.
-      4. 최종 리스트 조합 후 반환 (인터리빙은 compose()에서).
-    """
-    now = dt.datetime.utcnow()
-    buckets = _split_by_bucket(pool)
-
-    # 각 bucket 정렬
-    ranked = {
-        'overdue': rank_overdue(buckets['overdue'], now),
-        'today':   rank_today(buckets['today'], now),
-        'new':     rank_new(buckets['new']),
-        'long':    rank_long_interleave(buckets['long']),
-        'short':   rank_short_medium(buckets['short']),
-        'medium':  rank_short_medium(buckets['medium']),
-    }
-
-    # long 최소 보장 개수
-    long_floor = max(1, math.ceil(count * _LONG_FLOOR_RATIO))
-
-    # 목표 개수 계산
-    targets = {
-        'overdue': int(count * ratio['overdue']),
-        'today':   int(count * ratio['today']),
-        'new':     int(count * ratio['new']),
-        'long':    max(long_floor, int(count * ratio['long'])),
-    }
-
-    # 실제 가용 개수로 클램프
-    actual = {k: min(len(ranked[k]), targets[k]) for k in targets}
-
-    # long 부족분 보충 (stability 30~60 사이 medium 상위에서)
-    long_shortage = long_floor - actual['long']
-    if long_shortage > 0:
-        # medium에서 안정성 높은 순으로 보충
-        medium_ranked = ranked['medium']
-        available_medium = len(medium_ranked) - actual.get('medium', 0)
-        if available_medium > 0:
-            fill = min(long_shortage, available_medium)
-            # medium의 뒷부분(stability 높은 것)을 long 대용으로 쓰는 게 자연스러움
-            # rank_short_medium는 retrievability 오름차순이므로
-            # stability 높은 순으로 뒤집어서 앞에서 fill개 선택
-            medium_by_stability = sorted(
-                medium_ranked, key=lambda it: float(it.fsrs_state.get('stability') or 0.0), reverse=True
-            )
-            # 이미 actual에 들어간 medium 제외 후 상위 fill개
-            already_selected_medium = actual.get('medium', 0)
-            extra_medium = medium_by_stability[:fill]
-            # long 슬롯에 편입 — 실제로는 ranked['long']에 추가하는 대신
-            # actual['long']을 늘리고 ranked['long']에 append
-            ranked['long'] = ranked['long'] + extra_medium
-            actual['long'] = min(len(ranked['long']), long_floor + fill)
-
-    # 부족분 계산 (long 제외 — 이미 floor 적용)
-    shortage = {k: targets[k] - actual[k] for k in ('overdue', 'today', 'new')}
-
-    # overdue 부족 → today 잉여에서
-    today_surplus = len(ranked['today']) - actual['today']
-    if shortage['overdue'] > 0 and today_surplus > 0:
-        fill = min(shortage['overdue'], today_surplus)
-        actual['today'] += fill
-        shortage['overdue'] -= fill
-
-    # new 부족 → short 잉여에서
-    short_surplus = len(ranked['short'])  # short는 daily 할당 없음, 전체가 잉여
-    if shortage['new'] > 0 and short_surplus > 0:
-        fill = min(shortage['new'], short_surplus)
-        actual.setdefault('short', 0)
-        actual['short'] = fill
-        shortage['new'] -= fill
-    else:
-        actual.setdefault('short', 0)
-
-    # 남은 슬롯 계산
-    used = sum(actual.values())
-    remaining = count - used
-
-    # 남은 슬롯을 medium → short → today 잉여 순으로 채움
-    if remaining > 0:
-        for bucket_key in ('medium', 'short', 'today', 'long', 'overdue', 'new'):
-            avail = len(ranked.get(bucket_key, [])) - actual.get(bucket_key, 0)
-            if avail > 0 and remaining > 0:
-                fill = min(avail, remaining)
-                actual[bucket_key] = actual.get(bucket_key, 0) + fill
-                remaining -= fill
-            if remaining == 0:
-                break
-
-    # 선택
-    selected_by_bucket: Dict[str, List[CandidateItem]] = {}
-    for bucket_key, n in actual.items():
-        if n > 0:
-            selected_by_bucket[bucket_key] = ranked.get(bucket_key, [])[:n]
-
-    # 최종 아이템 리스트 (bucket 순서로 flatten, 이후 인터리빙 적용)
-    items: List[CandidateItem] = []
-    for bucket_key in _BUCKET_PRIORITY:
-        items.extend(selected_by_bucket.get(bucket_key, []))
-
-    composition = {k: len(v) for k, v in selected_by_bucket.items() if v}
-
-    return {'composition': composition, 'items': items}
-
-
-def _compose_quick(pool: List[CandidateItem], count: int) -> dict:
-    """
-    quick 타입: retrievability 오름차순 (망각 위험 순) top-N.
-    new 단어는 가장 낮은 retrievability(0)이므로 자연스럽게 섞임.
-    """
-    sorted_pool = sorted(
-        pool,
-        key=lambda it: float(it.fsrs_state.get("retrievability") or 0.0)
-    )
-    selected = sorted_pool[:count]
-    composition: Dict[str, int] = {}
-    for item in selected:
-        composition[item.bucket] = composition.get(item.bucket, 0) + 1
-    return {'composition': composition, 'items': selected}
-
-
-def _compose_test_exam(pool: List[CandidateItem], count: int) -> dict:
-    """
-    test/exam 타입: bucket 우선순위 순 정렬 후 top-N.
-    overdue → today → short → medium → long → new
-    """
-    now = dt.datetime.utcnow()
-    buckets = _split_by_bucket(pool)
-    ranked = {
-        'overdue': rank_overdue(buckets['overdue'], now),
-        'today':   rank_today(buckets['today'], now),
-        'short':   rank_short_medium(buckets['short']),
-        'medium':  rank_short_medium(buckets['medium']),
-        'long':    rank_long_interleave(buckets['long']),
-        'new':     rank_new(buckets['new']),
-    }
-
-    ordered: List[CandidateItem] = []
-    for bucket_key in _BUCKET_PRIORITY:
-        ordered.extend(ranked.get(bucket_key, []))
-
-    selected = ordered[:count]
-    composition: Dict[str, int] = {}
-    for item in selected:
-        composition[item.bucket] = composition.get(item.bucket, 0) + 1
-    return {'composition': composition, 'items': selected}
+    return [w['question_type'] for w in weakness if 'question_type' in w]
 
 
 # ──────────────────────────────────────────────
@@ -426,111 +404,43 @@ def _compose_test_exam(pool: List[CandidateItem], count: int) -> dict:
 def compose(
     pool: List[CandidateItem],
     count: int,
-    type_: str = 'daily',
     *,
+    selection: str = 'recommended',
     user_stats: Optional[Dict] = None,
-) -> dict:
+) -> Dict[str, Any]:
     """
-    pool에서 count개를 골라 세션 구성 반환.
+    pool에서 count개를 골라 세션을 구성해 반환한다.
 
     Args:
         pool:       CandidateItem 리스트 (build_candidate_pool 반환값)
         count:      선택할 단어 수 (1~50)
-        type_:      'daily'|'today'|'test'|'exam'|'quick'
-        user_stats: 사용자 통계 dict (Phase 2.2 신규, None이면 기본 동작)
-          {
-            "recent_7d_correct_rate": float | None,
-            "recent_7d_total": int,
-            "weakness_types": [{"question_type": str, "correct_rate": float, "samples": int}],
-            "today_seen": {user_voca_id: [question_type, ...]},
-          }
+        selection:  'recommended' | 'random'
+        user_stats: 사용자 통계 dict (recent_7d_correct_rate, weakness_types,
+                    today_seen, recent_lapse_voca_ids 등)
 
     Returns:
         {
-          'composition': {'overdue': 8, 'today': 5, 'new': 4, 'long': 3},
-          'composition_strategy': {
-            'base': 'daily',
-            'dynamic_adjustment': 'default' | 'high_accuracy' | 'low_accuracy',
-            'weakness_types': ['multipleChoiceListening'],
-          },
-          'items': [CandidateItem, ...],         # 기존 호환
-          'enriched_items': [                    # Phase 2.2 신규
-            {
-              '_item': CandidateItem,
-              'suggested_question_type': str | None,
-              'reason': str,
-            }, ...
+          'composition':    {bucket: count, ...},   # 선택된 단어의 bucket별 개수
+          'items':          [CandidateItem, ...],   # 인터리빙된 최종 단어 리스트
+          'enriched_items': [
+            {'_item': CandidateItem,
+             'suggested_question_type': str | None,
+             'reason': str},
+            ...
           ],
+          'user_level':     'high' | 'mid' | 'low', # 동적 분배 결정에 쓰인 평가
         }
-
-    동작 예시 (daily, count=20, pool에 overdue=5, today=8, new=10, long=2, short=5):
-      목표: overdue=10, today=5, new=4, long=1
-      실제 가용: overdue=5(부족5), today=8, new=10(초과), long=2
-      overdue 부족(5) → today 잉여(3)에서 3 보충 → overdue_from_today=3
-      → 최종: overdue=5, today=8, new=4, long=2, 남은=1 → medium에서
-      총합: 20개
     """
     count = max(1, count)
 
     if not pool:
         return {
-            'composition': {},
-            'composition_strategy': {
-                'base': type_,
-                'dynamic_adjustment': 'default',
-                'weakness_types': [],
-            },
-            'items': [],
+            'composition':    {},
+            'items':          [],
             'enriched_items': [],
+            'user_level':     'mid',
         }
 
-    # ── 1. 동적 비율 계산 ──
-    if type_ in ('daily', 'today'):
-        ratio, dynamic_adjustment = _compute_dynamic_ratio(user_stats)
-    else:
-        ratio, dynamic_adjustment = dict(COMPOSITION_DAILY), 'default'
-
-    # ── 2. 약점 유형 목록 ──
-    weakness_types = _get_weakness_types(user_stats)
-
-    # ── 3. 오늘 본 단어/유형 ──
-    today_seen = _build_today_seen(user_stats)
-
-    # ── 4. 세션 구성 ──
-    if type_ in ('daily', 'today'):
-        raw = _compose_daily(pool, count, ratio)
-    elif type_ in ('test', 'exam'):
-        raw = _compose_test_exam(pool, count)
-    elif type_ == 'quick':
-        raw = _compose_quick(pool, count)
-    else:
-        # 알 수 없는 타입은 daily로 폴백
-        raw = _compose_daily(pool, count, ratio)
-
-    selected_items: List[CandidateItem] = raw['items']
-    composition: Dict[str, int] = raw['composition']
-
-    # ── 5. 인터리빙 (음성/형태소 유사 단어 인접 회피) ──
-    #    daily/today만 적용 (test/exam/quick은 우선순위 정렬을 해치지 않기 위해 스킵)
-    if type_ in ('daily', 'today', 'quick') or type_ not in ('test', 'exam'):
-        selected_items = interleave_avoid_adjacent(
-            selected_items, lambda it: it.word
-        )
-
-    # ── 6. 하루 내 반복 강화 + 약점 유형 우선 suggested_question_type 부여 ──
-    enriched = _apply_intra_day_and_weakness(
-        selected_items, today_seen, weakness_types
-    )
-
-    composition_strategy = {
-        'base': 'daily' if type_ in ('daily', 'today') else type_,
-        'dynamic_adjustment': dynamic_adjustment,
-        'weakness_types': weakness_types,
-    }
-
-    return {
-        'composition': composition,
-        'composition_strategy': composition_strategy,
-        'items': selected_items,          # 기존 호환 유지 (CandidateItem 리스트)
-        'enriched_items': enriched,       # Phase 2.2 신규
-    }
+    if selection == 'random':
+        return _compose_random(pool, count)
+    return _compose_recommend(pool, count, user_stats)

@@ -184,7 +184,7 @@ def fsrs_review(
         "scheduled_days": scheduled_days,
         "reps":           new_reps,
         "lapses":         new_lapses,
-        "last_review":    now.isoformat(),
-        "next_review":    next_review.isoformat(),
+        "last_review":    now.isoformat() + "Z",
+        "next_review":    next_review.isoformat() + "Z",
         "params_version": "default-v1",
     }

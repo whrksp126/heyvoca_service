@@ -18,22 +18,14 @@ from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Books
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
 from app.routes.user_voca_book import parse_quizlet_pdf
+from app.services.fsrs.state import (
+    parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
+)
 
 
 # 단어(word) 길이 정책: 영단어가 50자를 넘는 경우는 사실상 없으므로,
 # 50자 초과는 "문장이 word로 매핑됐다"고 간주하고 즉시 거부한다.
 WORD_MAX_LEN = 50
-
-# SM2 학습 알고리즘 초기값
-DEFAULT_SM2 = {
-    "ef": 2.5,
-    "repetition": 0,
-    "interval": 0,
-    "nextReview": None,
-    "lastStudyDate": None,
-    "beforeScheduleCount": 0,
-}
-
 
 def is_purchased_book(voca_book):
     """구매한 단어장(bookstore_id가 NULL이 아닌 단어장)인지 여부."""
@@ -205,7 +197,7 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
                 word=origin,
                 voca_meanings=json.dumps(meanings, ensure_ascii=False),
                 voca_examples=json.dumps(examples, ensure_ascii=False),
-                data=json.dumps(DEFAULT_SM2, ensure_ascii=False),
+                data=None,
             )
             new_user_vocas.append(uv)
             user_voca_dict[origin] = uv
@@ -249,12 +241,15 @@ def build_vocas_for_book(voca_book_id):
 
         meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
         examples = json.loads(m.voca_examples) if m.voca_examples else []
-        sm2 = json.loads(user_voca.data) if user_voca.data else None
+        payload = parse_user_voca_data(user_voca.data)
+        if is_v1(payload):
+            payload = migrate_v1_to_v2(payload)
+        fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
 
         vocas.append({
             'vocaIndexId': user_voca.id,
             'origin': user_voca.word,
-            'sm2': sm2,
+            'fsrs': fsrs,
             'meanings': meanings,
             'examples': examples,
             'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
@@ -303,12 +298,15 @@ def get_voca_books():
             
             meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
             examples = json.loads(m.voca_examples) if m.voca_examples else []
-            sm2 = json.loads(user_voca.data) if user_voca.data else None
+            payload = parse_user_voca_data(user_voca.data)
+            if is_v1(payload):
+                payload = migrate_v1_to_v2(payload)
+            fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
 
             vocas.append({
                 'vocaIndexId': user_voca.id,
                 'origin': user_voca.word,
-                'sm2': sm2,
+                'fsrs': fsrs,
                 'meanings': meanings,
                 'examples': examples,
                 'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
@@ -402,10 +400,9 @@ def create_voca_book():
             for item in voca_list:
                 origin = item.get('origin')
                 if not origin: continue
-                
+
                 meanings = item.get('meanings', [])
                 examples = item.get('examples', [])
-                sm2 = item.get('sm2')
                 voca_id = item.get('vocaId')
 
                 if origin in user_voca_dict:
@@ -415,8 +412,6 @@ def create_voca_book():
                     if not uv.voca_id and voca_id:
                         uv.voca_id = voca_id
                     uv.updated_at = datetime.datetime.utcnow()
-                    if sm2:
-                        uv.data = json.dumps(sm2, ensure_ascii=False)
                     user_vocas_to_update.append(uv)
                 else:
                     new_uv = UserVoca(
@@ -425,7 +420,7 @@ def create_voca_book():
                         word=origin,
                         voca_meanings=json.dumps(meanings, ensure_ascii=False),
                         voca_examples=json.dumps(examples, ensure_ascii=False),
-                        data=json.dumps(sm2, ensure_ascii=False) if sm2 else None
+                        data=None,
                     )
                     user_vocas_to_add.append(new_uv)
 

@@ -39,75 +39,6 @@ def _classify_memory_state(fsrs_state: dict) -> str:
     return "long"
 
 
-def _sync_sm2_from_fsrs(sm2: dict, fsrs_state: dict, rating: int, now: dt.datetime) -> dict:
-    """
-    FSRS 결과를 SM2 블록에 동기화 (호환 기간 임시 방편).
-
-    규칙:
-      rating 1 (Again/오답):
-        repetition=0, interval=1, ef=max(ef-0.15, 1.3),
-        nextReview=today+1, lastStudyDate=now
-      rating >= 2 (정답):
-        repetition+=1, interval=round(stability),
-        ef = clip(ef + 0.05*(rating==3) + 0.10*(rating==4), 1.3, 2.6)
-        nextReview=fsrs.next_review, lastStudyDate=now
-
-    SM2 블록이 없으면 기본값으로 초기화하고 갱신.
-    """
-    from app.services.fsrs.core import AGAIN, EASY
-
-    today_str = now.date().isoformat()
-    now_str = now.isoformat()
-
-    ef = float(sm2.get("ef") or 2.5)
-    repetition = int(sm2.get("repetition") or 0)
-
-    if rating == AGAIN:
-        new_ef = max(ef - 0.15, 1.3)
-        next_review = (now + dt.timedelta(days=1)).date().isoformat()
-        return {
-            "ef": round(new_ef, 4),
-            "repetition": 0,
-            "interval": 1,
-            "nextReview": next_review,
-            "lastStudyDate": today_str,
-            "beforeScheduleCount": int(sm2.get("beforeScheduleCount") or 0),
-        }
-    else:
-        # 정답
-        if rating == EASY:
-            ef_delta = 0.10
-        elif rating == 3:
-            ef_delta = 0.05
-        else:
-            # HARD
-            ef_delta = 0.0
-
-        new_ef = max(1.3, min(2.6, ef + ef_delta))
-        new_interval = max(1, round(float(fsrs_state.get("stability") or 1.0)))
-        new_rep = repetition + 1
-
-        # next_review: FSRS 결과 사용
-        next_review_iso = fsrs_state.get("next_review")
-        if next_review_iso:
-            try:
-                nr = dt.datetime.fromisoformat(str(next_review_iso).replace("Z", "+00:00"))
-                next_review = nr.date().isoformat()
-            except (ValueError, AttributeError):
-                next_review = (now + dt.timedelta(days=new_interval)).date().isoformat()
-        else:
-            next_review = (now + dt.timedelta(days=new_interval)).date().isoformat()
-
-        return {
-            "ef": round(new_ef, 4),
-            "repetition": new_rep,
-            "interval": new_interval,
-            "nextReview": next_review,
-            "lastStudyDate": today_str,
-            "beforeScheduleCount": int(sm2.get("beforeScheduleCount") or 0),
-        }
-
-
 # ──────────────────────────────────────────────
 # 디버그용 엔드포인트 (Phase 1.1에서 신설, 유지)
 # ──────────────────────────────────────────────
@@ -250,9 +181,8 @@ def post_study_log():
     """
     from app.services.fsrs.state import (
         parse_user_voca_data, serialize_user_voca_data,
-        get_fsrs_state, get_sm2_state,
-        set_fsrs_state, set_sm2_state,
-        migrate_v1_to_v2, is_v1, DEFAULT_SM2,
+        get_fsrs_state, set_fsrs_state,
+        migrate_v1_to_v2, is_v1,
     )
     from app.services.fsrs.scheduler import review as fsrs_review
     from app.services.fsrs.ratings import derive_rating, rating_to_q_score
@@ -320,7 +250,6 @@ def post_study_log():
         payload = migrate_v1_to_v2(payload)
 
     fsrs_state_before = get_fsrs_state(payload) or {}
-    sm2_state         = get_sm2_state(payload) or dict(DEFAULT_SM2)
 
     memory_state_before = _classify_memory_state(fsrs_state_before)
 
@@ -364,12 +293,8 @@ def post_study_log():
 
     memory_state_after = _classify_memory_state(fsrs_state_after)
 
-    # ── SM2 동기화 (호환 기간) ──
-    sm2_state_after = _sync_sm2_from_fsrs(sm2_state, fsrs_state_after, rating, now)
-
     # ── payload 업데이트 ──
     payload = set_fsrs_state(payload, fsrs_state_after)
-    payload = set_sm2_state(payload, sm2_state_after)
 
     user_voca.data       = serialize_user_voca_data(payload)
     user_voca.updated_at = dt.datetime.utcnow()
@@ -450,81 +375,19 @@ def post_study_log():
     }), 200
 
 
-@study_bp.route('/me/weakness', methods=['GET'])
-@jwt_required
-def get_weakness():
-    """
-    GET /study/me/weakness — 문제 유형별 약점 조회 (Phase 2.1).
-
-    쿼리 파라미터:
-      limit : 약점 상위 N개 (기본 5, max 10)
-
-    응답:
-      {
-        "code": 200,
-        "data": {
-          "weakness": [
-            { "question_type": "multipleChoiceListening", "correct_rate": 0.42, "samples": 87 }
-          ],
-          "all": [
-            { "question_type": "multipleChoice", "correct_rate": 0.81, "samples": 200,
-              "avg_time_taken_ms": 6420, "last_30d_correct_rate": 0.78 }
-          ]
-        }
-      }
-    """
-    user_id = UUID(g.user_id)
-
-    try:
-        limit = int(request.args.get('limit', 5))
-    except (TypeError, ValueError):
-        limit = 5
-    limit = max(1, min(limit, 10))
-
-    _MIN_SAMPLES = 10  # 샘플 부족 row 제외 임계값
-
-    stats = (
-        UserQuestionTypeStat.query
-        .filter_by(user_id=user_id)
-        .all()
-    )
-
-    all_list = []
-    for s in stats:
-        correct_rate = (s.correct_count / s.total_count) if s.total_count > 0 else 0.0
-        all_list.append({
-            'question_type':        s.question_type,
-            'correct_rate':         round(correct_rate, 4),
-            'samples':              s.total_count,
-            'avg_time_taken_ms':    s.avg_time_taken_ms,
-            'last_30d_correct_rate': s.last_30d_correct_rate,
-        })
-
-    # 약점: 샘플 충분한 것만, 정답률 오름차순
-    weakness_candidates = [
-        {'question_type': x['question_type'], 'correct_rate': x['correct_rate'], 'samples': x['samples']}
-        for x in all_list
-        if x['samples'] >= _MIN_SAMPLES
-    ]
-    weakness_candidates.sort(key=lambda x: x['correct_rate'])
-    weakness = weakness_candidates[:limit]
-
-    return jsonify({'code': 200, 'data': {'weakness': weakness, 'all': all_list}}), 200
-
-
 def _fetch_user_stats(user_id: UUID) -> dict:
     """
-    Phase 2.2: 추천에 필요한 사용자 통계를 1쿼리로 묶어 조회.
+    추천 알고리즘에 필요한 사용자 통계를 1쿼리로 묶어 조회.
 
     Returns:
         {
           "recent_7d_correct_rate": float | None,
-          "recent_7d_total": int,
-          "weakness_types": [...],
-          "today_seen": {user_voca_id(int): [question_type, ...]},
+          "recent_7d_total":        int,
+          "weakness_types":         [...],
+          "today_seen":             {user_voca_id(int): [question_type, ...]},
+          "recent_lapse_voca_ids":  set(int),  # 최근 48시간 내 한 번이라도 틀린 단어
         }
     """
-    # 오늘 00:00 KST = UTC 기준 전날 15:00 (KST = UTC+9)
     utc_now = dt.datetime.utcnow()
     # KST 오늘 자정 = UTC 어제 15:00
     kst_today_midnight_utc = dt.datetime(
@@ -532,10 +395,10 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         0, 0, 0
     ) - dt.timedelta(hours=9)
 
-    seven_days_ago = utc_now - dt.timedelta(days=7)
+    seven_days_ago    = utc_now - dt.timedelta(days=7)
+    lapse_window_from = utc_now - dt.timedelta(hours=48)
 
-    # 7일 로그 + 오늘 로그를 한 번에 가져옴 (N+1 없음)
-    # 오늘 로그는 7일 로그의 부분집합이므로 1회 쿼리로 커버
+    # 7일 로그 (오늘 로그 + lapse 윈도우 모두 포함)
     recent_logs = (
         db.session.query(
             UserStudyLog.user_voca_id,
@@ -550,13 +413,14 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         .all()
     )
 
-    # 7일 정답률 계산
+    # 7일 정답률
     total_7d = len(recent_logs)
     correct_7d = sum(1 for r in recent_logs if r.was_correct)
     recent_7d_correct_rate = (correct_7d / total_7d) if total_7d > 0 else None
 
-    # 오늘 본 단어/유형 집계
+    # 오늘 본 단어/유형 + 단어별 가장 최근 로그 추적 (lapse 판정용)
     today_seen: dict = {}
+    latest_log_by_voca: dict = {}  # {user_voca_id: log} — 단어별 최신 로그
     for r in recent_logs:
         if r.created_at >= kst_today_midnight_utc:
             vid = r.user_voca_id
@@ -564,6 +428,18 @@ def _fetch_user_stats(user_id: UUID) -> dict:
                 today_seen[vid] = []
             if r.question_type and r.question_type not in today_seen[vid]:
                 today_seen[vid].append(r.question_type)
+
+        # 단어별 가장 최근 로그 추적
+        prev = latest_log_by_voca.get(r.user_voca_id)
+        if prev is None or r.created_at > prev.created_at:
+            latest_log_by_voca[r.user_voca_id] = r
+
+    # lapse_ids: "단어별 가장 최근 로그가 was_correct=False" 인 단어만
+    # — 한 번 틀려도 그 후 정답이면 lapse 에서 빠진다 (반복 picking 방지)
+    recent_lapse_voca_ids: set = {
+        vid for vid, r in latest_log_by_voca.items()
+        if r.created_at >= lapse_window_from and not r.was_correct
+    }
 
     # 약점 유형 조회 (UserQuestionTypeStat)
     stats = (
@@ -578,17 +454,17 @@ def _fetch_user_stats(user_id: UUID) -> dict:
             if rate < 0.6:
                 weakness_types.append({
                     'question_type': s.question_type,
-                    'correct_rate': round(rate, 4),
-                    'samples': s.total_count,
+                    'correct_rate':  round(rate, 4),
+                    'samples':       s.total_count,
                 })
-    # 정답률 오름차순 정렬
     weakness_types.sort(key=lambda x: x['correct_rate'])
 
     return {
         'recent_7d_correct_rate': recent_7d_correct_rate,
-        'recent_7d_total': total_7d,
-        'weakness_types': weakness_types,
-        'today_seen': today_seen,
+        'recent_7d_total':        total_7d,
+        'weakness_types':         weakness_types,
+        'today_seen':             today_seen,
+        'recent_lapse_voca_ids':  recent_lapse_voca_ids,
     }
 
 
@@ -596,38 +472,38 @@ def _fetch_user_stats(user_id: UUID) -> dict:
 @jwt_required
 def get_recommend():
     """
-    GET /study/recommend — 단어 추천 (세션 구성, Phase 2.2).
+    GET /study/recommend — 단어 추천 (세션 구성).
+
+    빠른 복습과 테스트(추천 모드)는 동일한 추천 알고리즘을 사용한다.
+    차이는 입력 필터(book_ids / target_states) 뿐.
 
     쿼리 파라미터:
-      type        : daily|test|exam|quick  (default: daily)
-      count       : 1~50                  (default: 20)
-      book_ids    : 콤마 구분 UUID or 'all' (default: all)
-      target_states: 콤마 구분 (unlearned,short,medium,long,all) — test/exam에서 pool 필터
-      selection   : recommended|random     (default: recommended, 호환용)
+      count         : 1~50                                (default: 20)
+      book_ids      : 콤마 구분 UUID 또는 'all'             (default: all)
+      target_states : 콤마 구분 (unlearned,short,medium,long,all)
+                      pool에서 해당 상태 단어만 추출 (default: all)
+      selection     : recommended | random                (default: recommended)
+      type          : (선택) 통계 라벨용. 알고리즘은 무시  (default: recommend)
 
     응답:
       {
         "code": 200,
         "data": {
           "session_id": "<uuid>",
-          "composition": {"overdue": 8, "today": 5, "new": 4, "long": 3},
-          "composition_strategy": {
-            "base": "daily",
-            "dynamic_adjustment": "high_accuracy",
-            "weakness_types": ["multipleChoiceListening"]
-          },
+          "composition": {"overdue": 8, "today": 5, "new": 4, ...},
           "items": [
             {
-              "user_voca_id": 12345,
-              "user_voca_book_id": "<uuid>",
-              "word": "elaborate",
+              "user_voca_id": ...,
+              "user_voca_book_id": ...,
+              "word": ...,
               "meanings": [...],
               "examples": [...],
-              "fsrs": { "state":"review", ... },
-              "priority_bucket": "overdue",
-              "suggested_question_type": "multipleChoiceListening",
-              "reason": "복습 시점이 지났어요"
-            }
+              "fsrs": {...},
+              "priority_bucket": "overdue" | "lapse" | ...,
+              "suggested_question_type": ...,
+              "reason": "..."
+            },
+            ...
           ]
         }
       }
@@ -638,10 +514,6 @@ def get_recommend():
     user_id = UUID(g.user_id)
 
     # ── 쿼리 파라미터 파싱 ──
-    type_ = request.args.get('type', 'daily').lower()
-    if type_ not in ('daily', 'today', 'test', 'exam', 'quick'):
-        type_ = 'daily'
-
     try:
         count = int(request.args.get('count', 20))
     except (TypeError, ValueError):
@@ -662,12 +534,16 @@ def get_recommend():
         target_states = None
 
     selection = request.args.get('selection', 'recommended').lower()
+    if selection not in ('recommended', 'random'):
+        selection = 'recommended'
 
-    # ── Phase 2.2: 사용자 통계 조회 (1쿼리로 묶음) ──
+    # type은 통계 라벨로만 사용 (알고리즘 분기 없음)
+    type_label = request.args.get('type', 'recommend').lower()
+
+    # ── 사용자 통계 조회 (1쿼리로 묶음) ──
     try:
         user_stats = _fetch_user_stats(user_id)
     except Exception:
-        # 통계 조회 실패해도 추천은 계속 (기본 동작으로 폴백)
         user_stats = None
 
     # ── 후보 풀 빌드 ──
@@ -676,39 +552,30 @@ def get_recommend():
     except Exception as e:
         return jsonify({'code': 500, 'message': f'후보 풀 빌드 실패: {str(e)}'}), 500
 
-    # ── target_states 필터 (test/exam에서 사용) ──
-    if target_states and type_ in ('test', 'exam'):
+    # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
+    if target_states:
         _state_bucket_map = {
             'unlearned': {'new'},
             'short':     {'short'},
             'medium':    {'medium'},
             'long':      {'long'},
         }
-        allowed_buckets = set()
+        allowed_buckets: set = set()
         for state in target_states:
             allowed_buckets.update(_state_bucket_map.get(state, set()))
         if allowed_buckets:
             pool = [it for it in pool if it.bucket in allowed_buckets]
 
-    # ── selection=random: 풀 자체를 랜덤 셔플 후 composer로 전달 ──
-    if selection == 'random':
-        import random as _random
-        pool = list(pool)
-        _random.shuffle(pool)
-
-    # ── 세션 구성 (Phase 2.2: user_stats 전달) ──
-    result = compose(pool, count, type_, user_stats=user_stats)
-    composition: dict = result['composition']
-    composition_strategy: dict = result['composition_strategy']
+    # ── 세션 구성 ──
+    result = compose(pool, count, selection=selection, user_stats=user_stats)
+    composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 
     # ── UserStudySession INSERT ──
-    book_ids_for_session = (
-        [str(b) for b in book_ids] if book_ids else ['all']
-    )
+    book_ids_for_session = [str(b) for b in book_ids] if book_ids else ['all']
     session_obj = UserStudySession(
         user_id=user_id,
-        test_type=type_,
+        test_type=type_label,
         book_ids=json.dumps(book_ids_for_session, ensure_ascii=False),
         question_count=0,
         correct_count=0,
@@ -725,6 +592,7 @@ def get_recommend():
     for enriched in enriched_items:
         item = enriched['_item']
         fsrs = item.fsrs_state or {}
+        # priority_bucket은 composer가 lapse로 재분류한 결과(src_bucket)를 사용한다.
         items_response.append({
             'user_voca_id':            item.user_voca_id,
             'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
@@ -738,7 +606,7 @@ def get_recommend():
                 'retrievability': fsrs.get('retrievability', 0.0),
                 'next_review':    fsrs.get('next_review'),
             },
-            'priority_bucket':         item.bucket,
+            'priority_bucket':         enriched.get('src_bucket', item.bucket),
             'suggested_question_type': enriched['suggested_question_type'],
             'reason':                  enriched['reason'],
         })
@@ -746,10 +614,9 @@ def get_recommend():
     return jsonify({
         'code': 200,
         'data': {
-            'session_id':           str(session_obj.id),
-            'composition':          composition,
-            'composition_strategy': composition_strategy,
-            'items':                items_response,
+            'session_id':  str(session_obj.id),
+            'composition': composition,
+            'items':       items_response,
         },
     }), 200
 

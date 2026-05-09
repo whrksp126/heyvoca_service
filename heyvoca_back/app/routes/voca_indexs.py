@@ -6,6 +6,9 @@ from uuid import UUID
 from app.routes import voca_indexs_bp
 from app.models.models import db, UserVoca, UserVocaBookMap, UserVocaBook
 from app.utils.jwt_utils import jwt_required
+from app.services.fsrs.state import (
+    parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
+)
 
 
 def _is_purchased_book_id(user_id, voca_book_id):
@@ -44,8 +47,10 @@ def merge_examples(existing_json, new_list):
 
 def build_voca_index_response(user_voca):
     """UserVoca 객체를 API 응답 형식으로 변환"""
-    # SM2 데이터
-    sm2 = json.loads(user_voca.data) if user_voca.data else None
+    payload = parse_user_voca_data(user_voca.data)
+    if is_v1(payload):
+        payload = migrate_v1_to_v2(payload)
+    fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
 
     # 해당 단어의 모든 단어장 매핑 조회
     maps = db.session.query(UserVocaBookMap).filter(
@@ -65,7 +70,7 @@ def build_voca_index_response(user_voca):
     return {
         'origin': user_voca.word,
         'vocaIndexId': user_voca.id,
-        'sm2': sm2,
+        'fsrs': fsrs,
         'vocaBooks': voca_books,
         'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
         'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
@@ -88,15 +93,16 @@ def get_voca_indexs():
 
     data = []
     for uv in user_vocas:
-        sm2 = json.loads(uv.data) if uv.data else None
-        
+        payload = parse_user_voca_data(uv.data)
+        if is_v1(payload):
+            payload = migrate_v1_to_v2(payload)
+        fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
+
         voca_books = []
         for m in uv.book_maps:
-            # m.user_voca_book은 이미 joinedload로 가져온 상태
-            book = m.user_voca_book
             meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
             examples = json.loads(m.voca_examples) if m.voca_examples else []
-            
+
             voca_books.append({
                 'vocaBookId': str(m.user_voca_book_id),
                 'meanings': meanings,
@@ -106,7 +112,7 @@ def get_voca_indexs():
         data.append({
             'origin': uv.word,
             'vocaIndexId': uv.id,
-            'sm2': sm2,
+            'fsrs': fsrs,
             'vocaBooks': voca_books,
             'createdAt': (uv.created_at).isoformat() + 'Z' if uv.created_at else None,
             'updatedAt': (uv.updated_at).isoformat() + 'Z' if uv.updated_at else None,
@@ -124,7 +130,6 @@ def create_voca_index():
 
     origin = req.get('origin')
     voca_book_id = req.get('vocaBookId')
-    sm2 = req.get('sm2')
     meanings = req.get('meanings', [])
     examples = req.get('examples', [])
 
@@ -132,8 +137,6 @@ def create_voca_index():
         return jsonify({'code': 400, 'message': '단어(origin)는 필수입니다.'}), 400
     if not voca_book_id:
         return jsonify({'code': 400, 'message': '단어장 ID(vocaBookId)는 필수입니다.'}), 400
-    if not sm2:
-        return jsonify({'code': 400, 'message': 'SM2 데이터(sm2)는 필수입니다.'}), 400
 
     try:
         # 단어장 존재 확인
@@ -157,18 +160,15 @@ def create_voca_index():
             # 기존 단어에 meanings/examples 누적 merge
             user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
             user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
-            if sm2:
-                user_voca.data = json.dumps(sm2, ensure_ascii=False)
-            
             user_voca.updated_at = datetime.datetime.utcnow()
         else:
-            # 새 UserVoca 생성
+            # 새 UserVoca 생성 (data=None: 첫 학습 시 /study/log 가 v3 payload로 초기화)
             user_voca = UserVoca()
             user_voca.user_id = user_id
             user_voca.word = origin
             user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
             user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
-            user_voca.data = json.dumps(sm2, ensure_ascii=False)
+            user_voca.data = None
             db.session.add(user_voca)
             db.session.flush()  # ID 할당
 
@@ -189,12 +189,11 @@ def create_voca_index():
         return jsonify({'code': 500, 'message': f'단어 생성 중 오류가 발생했습니다: {str(e)}'}), 500
 
 
-# 사용자 사전 단어 수정 (SM2)
+# 사용자 사전 단어 메타 갱신 (학습 상태는 /study/log 만이 손댐)
 @voca_indexs_bp.route('/<int:vocaIndexId>', methods=['PATCH'])
 @jwt_required
 def update_voca_index(vocaIndexId):
     user_id = UUID(g.user_id)
-    req = request.get_json()
 
     user_voca = db.session.query(UserVoca).filter(
         UserVoca.id == vocaIndexId,
@@ -205,10 +204,6 @@ def update_voca_index(vocaIndexId):
         return jsonify({'code': 404, 'message': '해당 단어를 찾을 수 없습니다.'}), 404
 
     try:
-        sm2 = req.get('sm2')
-        if sm2:
-            user_voca.data = json.dumps(sm2, ensure_ascii=False)
-
         user_voca.updated_at = datetime.datetime.utcnow()
         db.session.commit()
 
