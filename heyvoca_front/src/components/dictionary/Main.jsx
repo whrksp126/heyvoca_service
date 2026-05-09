@@ -570,10 +570,10 @@ const Main = () => {
                               )}
                               <MemorizationStatus
                                 hideOverdue
-                                repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                                interval={word.sm2?.interval ?? word.interval ?? 0}
-                                ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                                nextReview={word.sm2?.nextReview ?? word.nextReview}
+                                repetition={word.fsrs?.reps ?? 0}
+                                interval={Math.round(word.fsrs?.stability ?? 0)}
+                                ef={2.5}
+                                nextReview={word.fsrs?.next_review ?? null}
                                 wordId={String(word.vocaIndexId)}
                               />
                             </div>
@@ -762,10 +762,10 @@ const Main = () => {
                           )}
                           <MemorizationStatus
                             hideOverdue
-                            repetition={word.sm2?.repetition ?? word.repetition ?? 0}
-                            interval={word.sm2?.interval ?? word.interval ?? 0}
-                            ef={word.sm2?.ef ?? word.ef ?? 2.5}
-                            nextReview={word.sm2?.nextReview ?? word.nextReview}
+                            repetition={word.fsrs?.reps ?? 0}
+                            interval={Math.round(word.fsrs?.stability ?? 0)}
+                            ef={2.5}
+                            nextReview={word.fsrs?.next_review ?? null}
                             wordId={String(word.vocaIndexId)}
                           />
                         </div>

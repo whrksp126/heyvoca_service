@@ -45,20 +45,20 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
     };
 
     words.forEach(word => {
-      // sm2 필드 또는 기본 필드에서 데이터 추출
-      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
-      const interval = word.sm2?.interval ?? word.interval ?? 0;
+      // FSRS 기반 암기 상태 판단
+      const fsrs = word.fsrs;
+      const stability = fsrs?.stability ?? 0;
 
       // 미학습 상태 체크 (한 번도 학습하지 않은 단어)
-      if (repetition === 0 && interval === 0) {
+      if (!fsrs || fsrs.state === 'new' || !fsrs.state) {
         stats.unlearned++;
         return;
       }
 
-      // 암기 상태 판단 (MemorizationStatus.jsx 기준)
-      if (interval < 10) {
+      // 암기 상태 판단
+      if (stability < 10) {
         stats.shortTerm++;
-      } else if (interval < 60) {
+      } else if (stability < 60) {
         stats.mediumTerm++;
       } else {
         stats.longTerm++;

@@ -19,6 +19,17 @@ export function getDevicePlatform() {
   }
 }
 
+// 외부 브라우저로 URL 열기
+// - 앱(WebView): 네이티브에 메시지 전달 → Linking.openURL
+// - 웹: 새 탭으로 열기
+export function openExternalUrl(url) {
+  if (getDevicePlatform() !== 'web' && window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'openUrl', props: { url } }));
+  } else {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
 // 토큰 갱신 함수 (앱에서 직접 호출)
 export async function refreshUserToken() {
   console.log('🔄 토큰 갱신 시작 (앱에서 호출됨)');

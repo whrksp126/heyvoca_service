@@ -159,22 +159,6 @@ export const finishStudySession = async (sessionId) => {
   return result;
 };
 
-// ─── Phase 2.1 약점 분석 API ──────────────────────────────────────────────────
-// GET /study/me/weakness?limit={limit}
-// 응답: { code: 200, data: { weakness: [...], all: [...] } }
-export const getMyWeakness = async (limit = 5) => {
-  const url = `${backendUrl}/study/me/weakness`;
-  const method = 'GET';
-  const fetchData = { limit };
-  try {
-    const result = await fetchDataAsync(url, method, fetchData);
-    return result;
-  } catch (error) {
-    console.warn('getMyWeakness 오류:', error);
-    return null;
-  }
-};
-
 // ─── Phase 1.3 추천 API ───────────────────────────────────────────────────────
 // GET /study/recommend — 단어 추천 (세션 구성 + session_id 동시 반환)
 // 응답: { code: 200, data: { session_id, composition, items } }

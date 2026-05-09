@@ -48,6 +48,11 @@ export const VocabularyProvider = ({ children }) => {
   const [errorRecentStudy, setErrorRecentStudy] = useState(null);
 
   const [delayedWords, setDelayedWords] = useState([]);
+
+  // 방금 끝난 학습 세션 결과 — 메인 화면 동기부여 멘트 분기에 사용.
+  // { totalCnt, correctCnt, incorrectCnt, improvedCount, decreasedCount, newLearnedCount, completedAt }
+  // completedAt(ms epoch) 기준 5분 이내일 때만 활용.
+  const [lastSessionResult, setLastSessionResult] = useState(null);
   // [REF] vocabularySheets is now derived from vocaBooks and userDictionary
   const vocabularySheets = useMemo(() => {
     if (!vocaBooks.length) return [];
@@ -94,34 +99,41 @@ export const VocabularyProvider = ({ children }) => {
     };
   }, [userDictionary]);
 
-  // 암기 상태 통계 — 메인 화면 동기부여 멘트 분기에 사용
+  // 암기 상태 통계 — 메인 화면 동기부여 멘트 분기에 사용 (FSRS 기반)
   const memoryStats = useMemo(() => {
-    const todayStr = toLocalDateString(new Date());
     let total = 0, unlearned = 0, shortTerm = 0, mediumTerm = 0, longTerm = 0;
     let overdue = 0, dueToday = 0;
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
 
     for (const sheet of vocabularySheets) {
       for (const w of (sheet.words || [])) {
         total++;
-        const rep = w.sm2?.repetition ?? w.repetition ?? 0;
-        const interval = w.sm2?.interval ?? w.interval ?? 0;
-        const nextReview = w.sm2?.nextReview ?? w.nextReview;
+        const fsrs = w.fsrs;
+        const reps = fsrs?.reps ?? 0;
+        const stability = fsrs?.stability ?? 0;
+        const nextReview = fsrs?.next_review;
 
-        if (rep === 0 && interval === 0) {
+        if (!fsrs || fsrs.state === 'new' || !fsrs.state) {
           unlearned++;
           continue;
         }
-        if (interval < 10) shortTerm++;
-        else if (interval < 60) mediumTerm++;
+        if (stability < 10) shortTerm++;
+        else if (stability < 60) mediumTerm++;
         else longTerm++;
 
         if (nextReview) {
-          if (nextReview < todayStr) overdue++;
-          else if (nextReview === todayStr) dueToday++;
+          const nrDate = new Date(nextReview);
+          nrDate.setHours(0, 0, 0, 0);
+          if (nrDate < todayDate) overdue++;
+          else if (nrDate.getTime() === todayDate.getTime()) dueToday++;
         }
       }
     }
-    return { total, unlearned, shortTerm, mediumTerm, longTerm, overdue, dueToday };
+    // reviewDue: 오늘 안에 학습해야 할 단어 (= 복습 지연 + 오늘 예정)
+    // 메인 화면 "오늘 복습 N개" 멘트의 카운트 기준
+    return { total, unlearned, shortTerm, mediumTerm, longTerm, overdue, dueToday, reviewDue: overdue + dueToday };
   }, [vocabularySheets]);
 
   // [NEW] 사용자 사전 데이터 불러오기
@@ -197,14 +209,6 @@ export const VocabularyProvider = ({ children }) => {
         const payload = {
           ...wordData,
           vocaBookId,
-          sm2: wordData.sm2 || {
-            repetition: 0,
-            interval: 0,
-            ef: 2.5,
-            nextReview: null,
-            lastStudyDate: null,
-            beforeScheduleCount: 0
-          }
         };
         const result = await createUserDictionaryWordApi(payload);
 
@@ -733,12 +737,12 @@ export const VocabularyProvider = ({ children }) => {
     return delayedWords
   }, [delayedWords]);
 
-  // 복습 지연 단어 목록 업데이트
+  // 복습 지연 단어 목록 업데이트 (FSRS 기반)
   const updateDelayedWords = useCallback(() => {
     let words = [];
     vocabularySheets.forEach(sheet => {
       sheet.words.forEach(word => {
-        const nextReview = word.sm2?.nextReview ?? word.nextReview;
+        const nextReview = word.fsrs?.next_review;
         if (nextReview !== null && nextReview !== undefined && new Date(nextReview) < new Date()) {
           words.push(word);
         }
@@ -845,6 +849,9 @@ export const VocabularyProvider = ({ children }) => {
     setDelayedWords,
     getDelayedWords,
     updateDelayedWords,
+
+    lastSessionResult,
+    setLastSessionResult,
 
     // [NEW] Exports
     userDictionary,

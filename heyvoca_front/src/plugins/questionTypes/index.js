@@ -11,6 +11,47 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
+// 두 단어의 의미가 하나라도 겹치는지 (동의어 충돌 검사용)
+const meaningsOverlap = (a, b) => {
+  const setA = new Set((a.meanings ?? []).map(m => String(m).trim()));
+  return (b.meanings ?? []).some(m => setA.has(String(m).trim()));
+};
+
+// cardMatch 세트 빌드 — 같은 세트 안에 의미가 겹치는 단어가 들어가지 않게 분배.
+// 예: [town:마을, village:마을, home:집, park:공원]
+//     → [[town, home, park], [village]] → 후처리로 village를 다른 청크에 시도
+//     → 결국 [[town, home, park, village]]가 되면 충돌이 풀린 형태로 합쳐짐
+// 모두 동의어인 극단 케이스는 2개 미만 청크가 되어 자연스럽게 폐기.
+const buildChunksAvoidingMeaningClash = (words, maxSize = 4) => {
+  const chunks = [];
+  for (const w of words) {
+    let placed = false;
+    for (const chunk of chunks) {
+      if (chunk.length >= maxSize) continue;
+      if (chunk.some(c => meaningsOverlap(c, w))) continue;
+      chunk.push(w);
+      placed = true;
+      break;
+    }
+    if (!placed) chunks.push([w]);
+  }
+  // 1짜리 청크는 다른 청크 중 충돌 없고 자리 있는 곳으로 이동 시도
+  for (let i = chunks.length - 1; i >= 0; i--) {
+    if (chunks[i].length !== 1) continue;
+    const single = chunks[i][0];
+    for (let j = 0; j < chunks.length; j++) {
+      if (j === i) continue;
+      if (chunks[j].length >= maxSize) continue;
+      if (chunks[j].some(c => meaningsOverlap(c, single))) continue;
+      chunks[j].push(single);
+      chunks.splice(i, 1);
+      break;
+    }
+  }
+  // 카드매치는 최소 2개 필요. 이동 못 한 1짜리는 폐기.
+  return chunks.filter(c => c.length >= 2);
+};
+
 export const QUESTION_TYPE_PLUGINS = [
   {
     id: 'multipleChoice',
@@ -75,41 +116,14 @@ export const QUESTION_TYPE_PLUGINS = [
     minWords: 4,
     component: CardMatchQuestion,
     setupQuestions: (selectedWords) => {
-      // 유동적 세트 크기 계산 (최대 4, 최소 2 보장)
-      // 예: 5→[3,2], 6→[4,2], 7→[4,3], 9→[4,3,2], 10→[4,4,2]
-      const calcSizes = (total) => {
-        const sizes = [];
-        let rem = total;
-        while (rem > 0) {
-          if (rem <= 4) {
-            sizes.push(rem);
-            rem = 0;
-          } else if (rem === 5) {
-            sizes.push(3, 2);
-            rem = 0;
-          } else {
-            sizes.push(4);
-            rem -= 4;
-          }
-        }
-        return sizes;
-      };
-
-      const sizes = calcSizes(selectedWords.length);
-      const sets = [];
-      let idx = 0;
-      sizes.forEach((size) => {
-        const chunk = selectedWords.slice(idx, idx + size);
-        sets.push({
-          questionType: 'cardMatch',
-          id: `cardMatch-set-${idx}`,
-          words: shuffleArray(chunk),
-          vocabularySheetId: chunk[0].vocabularySheetId,
-          isCorrect: null,
-        });
-        idx += size;
-      });
-      return sets;
+      const chunks = buildChunksAvoidingMeaningClash(selectedWords, 4);
+      return chunks.map((chunk, i) => ({
+        questionType: 'cardMatch',
+        id: `cardMatch-set-${i}`,
+        words: shuffleArray(chunk),
+        vocabularySheetId: chunk[0].vocabularySheetId,
+        isCorrect: null,
+      }));
     },
   },
   {
@@ -119,39 +133,14 @@ export const QUESTION_TYPE_PLUGINS = [
     minWords: 4,
     component: CardMatchListeningQuestion,
     setupQuestions: (selectedWords) => {
-      const calcSizes = (total) => {
-        const sizes = [];
-        let rem = total;
-        while (rem > 0) {
-          if (rem <= 4) {
-            sizes.push(rem);
-            rem = 0;
-          } else if (rem === 5) {
-            sizes.push(3, 2);
-            rem = 0;
-          } else {
-            sizes.push(4);
-            rem -= 4;
-          }
-        }
-        return sizes;
-      };
-
-      const sizes = calcSizes(selectedWords.length);
-      const sets = [];
-      let idx = 0;
-      sizes.forEach((size) => {
-        const chunk = selectedWords.slice(idx, idx + size);
-        sets.push({
-          questionType: 'cardMatchListening',
-          id: `cardMatchListening-set-${idx}`,
-          words: shuffleArray(chunk),
-          vocabularySheetId: chunk[0].vocabularySheetId,
-          isCorrect: null,
-        });
-        idx += size;
-      });
-      return sets;
+      const chunks = buildChunksAvoidingMeaningClash(selectedWords, 4);
+      return chunks.map((chunk, i) => ({
+        questionType: 'cardMatchListening',
+        id: `cardMatchListening-set-${i}`,
+        words: shuffleArray(chunk),
+        vocabularySheetId: chunk[0].vocabularySheetId,
+        isCorrect: null,
+      }));
     },
   },
 ];

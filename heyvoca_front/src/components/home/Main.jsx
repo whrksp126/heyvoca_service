@@ -106,8 +106,8 @@ const Main = () => {
   const navigate = useNavigate();
   const { userMainPage, userProfile } = useUser();
   const { isDark } = useTheme();
-  const { vocabularySheets, memoryStats } = useVocabulary();
-  const greeting = getHomeGreeting(memoryStats);
+  const { vocabularySheets, memoryStats, lastSessionResult } = useVocabulary();
+  const greeting = getHomeGreeting(memoryStats, lastSessionResult);
 
   // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
@@ -192,10 +192,7 @@ const Main = () => {
       ">
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[8px] items-center">
-          <div className="flex gap-[5px] items-center" onClick={() => {
-            vibrate({ duration: 5 });
-            handleStoreButtonClick();
-          }}>
+          <div className="flex gap-[5px] items-center">
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
             <span className="text-layout-white text-[14px] font-bold">{userProfile.gem_cnt}</span>
           </div>
@@ -212,10 +209,10 @@ const Main = () => {
           px-[16px] py-[10px]
         ">
           <h2 className="
-            text-layout-white text-[24px]
+            text-layout-white text-[24px] font-normal leading-[1.35]
           ">
-            <strong>{greeting.line1}</strong><br />
-            <strong>{greeting.line2}</strong><br />
+            {greeting.line1}<br />
+            {greeting.line2}<br />
             {greeting.line3}
           </h2>
           <img src={HeyCharacter02} alt="" className="

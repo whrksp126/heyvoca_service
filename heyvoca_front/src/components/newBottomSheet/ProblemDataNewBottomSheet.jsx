@@ -149,10 +149,10 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
             </div>
             <div>
               <MemorizationStatus
-                repetition={correctOption.sm2?.repetition ?? correctOption.repetition ?? 0}
-                interval={correctOption.sm2?.interval ?? correctOption.interval ?? 0}
-                ef={correctOption.sm2?.ef ?? correctOption.ef ?? 2.5}
-                nextReview={correctOption.sm2?.nextReview ?? correctOption.nextReview}
+                repetition={correctOption.fsrs?.reps ?? 0}
+                interval={Math.round(correctOption.fsrs?.stability ?? 0)}
+                ef={2.5}
+                nextReview={correctOption.fsrs?.next_review ?? null}
                 wordId={correctOption.id}
                 useRandomMessages={false}
               />
@@ -271,10 +271,10 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                 </div>
                 <div>
                   <MemorizationStatus
-                    repetition={option.sm2?.repetition ?? option.repetition ?? 0}
-                    interval={option.sm2?.interval ?? option.interval ?? 0}
-                    ef={option.sm2?.ef ?? option.ef ?? 2.5}
-                    nextReview={option.sm2?.nextReview ?? option.nextReview}
+                    repetition={option.fsrs?.reps ?? 0}
+                    interval={Math.round(option.fsrs?.stability ?? 0)}
+                    ef={2.5}
+                    nextReview={option.fsrs?.next_review ?? null}
                     wordId={option.id}
                     useRandomMessages={false}
                   />

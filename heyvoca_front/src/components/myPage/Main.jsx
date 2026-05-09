@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight } from "@phosphor-icons/react";
+import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight, FileText, ShieldCheck } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useTheme } from '../../context/ThemeContext';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, openExternalUrl } from '../../utils/osFunction';
+
+const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
+const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
 // import Account from './Account';
 // import Theme from './Theme';
 // import ExampleSettings from './ExampleSettings';
@@ -14,7 +17,6 @@ import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
 import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
 import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
-import WeaknessCard from './WeaknessCard';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -66,9 +68,6 @@ const Main = () => {
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
-      {/* Phase 2.1: 약점 시각화 카드 */}
-      <WeaknessCard />
-
       <ul className="w-full m-0 p-0 list-none">
         <li onClick={() => {
           vibrate({ duration: 5 });
@@ -146,6 +145,34 @@ const Main = () => {
           </div>
           <div className="flex items-center gap-1.5">
             <span className="text-[12px] font-normal text-[#999] dark:text-gray-400">설정</span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
+
+        <li onClick={() => {
+          vibrate({ duration: 5 });
+          openExternalUrl(TERMS_URL);
+        }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <FileText weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">이용약관</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
+
+        <li onClick={() => {
+          vibrate({ duration: 5 });
+          openExternalUrl(PRIVACY_URL);
+        }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <ShieldCheck weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">개인정보처리방침</span>
+          </div>
+          <div className="flex items-center gap-1.5">
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
         </li>

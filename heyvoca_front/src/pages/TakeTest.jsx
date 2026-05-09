@@ -7,7 +7,7 @@ import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
 import SaveStudyData from '../components/takeTest/SaveStudyData';
-import { MEMORY_STATES, getWordMemoryState, isWordOverdue, deriveSm2FromFsrs } from '../utils/common';
+import { MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../utils/common';
 import { sortByForgettingPriority } from '../utils/forgettingPriority';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
@@ -18,7 +18,7 @@ const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { state } = useLocation();
-  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets, updateWord } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
@@ -30,8 +30,8 @@ const TakeTest = () => {
   const [pendingUpdateWords, setPendingUpdateWords] = useState(new Map());
   // Phase 1.3: 백엔드 세션 ID (정식. 추천 응답에서 받거나 폴백 시 createStudySession으로 받음)
   const studySessionRef = useRef(null);
-  // Phase 2.2: composition_strategy (결과 화면 전달용)
-  const compositionStrategyRef = useRef(null);
+  // 진행 중인 /study/log Promise 큐 — 결과 화면/홈 카운터 갱신 전에 모두 await
+  const pendingLogPromisesRef = useRef([]);
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -91,14 +91,11 @@ const TakeTest = () => {
     now.setHours(0, 0, 0, 0);
 
     const unlearnedWords = allWords.filter(word => {
-      const repetition = word.sm2?.repetition ?? word.repetition ?? 0;
-      const interval = word.sm2?.interval ?? word.interval ?? 0;
-      const nextReview = word.sm2?.nextReview ?? word.nextReview;
-      return (!nextReview || nextReview === null) && repetition === 0 && interval === 0;
+      return !word.fsrs || word.fsrs.state === 'new' || !word.fsrs.state;
     });
 
     const overdueWords = allWords.filter(word => {
-      const nextReview = word.sm2?.nextReview ?? word.nextReview;
+      const nextReview = word.fsrs?.next_review;
       if (!nextReview) return false;
       const nextReviewDate = new Date(nextReview);
       nextReviewDate.setHours(0, 0, 0, 0);
@@ -106,7 +103,7 @@ const TakeTest = () => {
     });
 
     const todayScheduledWords = allWords.filter(word => {
-      const nextReview = word.sm2?.nextReview ?? word.nextReview;
+      const nextReview = word.fsrs?.next_review;
       if (!nextReview) return false;
       const nextReviewDate = new Date(nextReview);
       nextReviewDate.setHours(0, 0, 0, 0);
@@ -114,8 +111,8 @@ const TakeTest = () => {
     });
 
     const sortedOverdueWords = overdueWords.sort((a, b) => {
-      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
-      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      const dateA = new Date(a.fsrs?.next_review ?? 0);
+      const dateB = new Date(b.fsrs?.next_review ?? 0);
       return dateA - dateB;
     });
 
@@ -322,29 +319,18 @@ const TakeTest = () => {
           allWords = legacyResult.allWords;
 
           selectedWords = res.data.items.map(item => {
-            const derivedSm2 = deriveSm2FromFsrs(item.fsrs);
             return {
-              // 기존 컴포넌트가 기대하는 필드 (id 필드 우선)
               id: item.user_voca_id,
               vocaIndexId: item.user_voca_id,
               vocabularySheetId: item.user_voca_book_id,
               origin: item.word,
               meanings: item.meanings ?? [],
               examples: item.examples ?? [],
-              // FSRS 데이터
+              // FSRS 데이터 (단일 소스)
               fsrs: item.fsrs,
-              // SM2 폴백 (다른 화면 호환, deriveSm2FromFsrs 변환값)
-              sm2: derivedSm2,
-              // 최상위 필드도 sm2에서 채움 (기존 컴포넌트 호환)
-              ef: derivedSm2?.ef ?? 2.5,
-              repetition: derivedSm2?.repetition ?? 0,
-              interval: derivedSm2?.interval ?? 0,
-              nextReview: derivedSm2?.nextReview ?? null,
-              lastStudyDate: derivedSm2?.lastStudyDate ?? null,
-              beforeScheduleCount: 0,
               // 버킷 정보
               priorityBucket: item.priority_bucket,
-              // Phase 2.2: 백엔드 추천 문제 유형 및 이유 멘트
+              // 백엔드 추천 문제 유형 및 이유 멘트
               suggestedQuestionType: item.suggested_question_type ?? null,
               reason: item.reason ?? null,
             };
@@ -421,7 +407,7 @@ const TakeTest = () => {
         console.log("state", state.data.memoryState);
 
         // Phase 1.3: 백엔드 추천 API 호출 (VITE_RECOMMEND_BACKEND !== 'false' 이면 기본 활성)
-        const { testQuestions: tempTestQuestions, sessionId, compositionStrategy } = await setupTestQuestions(
+        const { testQuestions: tempTestQuestions, sessionId } = await setupTestQuestions(
           state.data.memoryState,
           state.data.vocabularySheetId,
           state.data.count,
@@ -430,8 +416,6 @@ const TakeTest = () => {
 
         // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
         studySessionRef.current = sessionId ?? null;
-        // Phase 2.2: compositionStrategy를 ref에 저장 (결과 화면 전달용)
-        compositionStrategyRef.current = compositionStrategy ?? null;
 
         await updateRecentStudy(state.testType, {
           ...recentStudy[state.testType],
@@ -550,8 +534,6 @@ const TakeTest = () => {
           state: {
             testQuestions: testQuestions,
             testType: state.testType,
-            // Phase 2.2: composition_strategy 전달
-            compositionStrategy: compositionStrategyRef.current ?? null,
           }
         });
       }
@@ -563,34 +545,25 @@ const TakeTest = () => {
   // React Compiler가 자동으로 useCallback 처리
   const updateVocabularySheetAndRecentStudyData = async () => {
     try {
-      // 1. 단어장 메타데이터 업데이트 (기존 로직)
+      // 0. 진행 중인 /study/log 응답을 모두 기다림 — 서버 fsrs 가 반영되어야 다음 fetch 가 의미 있음
+      if (pendingLogPromisesRef.current.length > 0) {
+        await Promise.allSettled(pendingLogPromisesRef.current);
+        pendingLogPromisesRef.current = [];
+      }
+
+      // 1. 단어장 메타데이터 업데이트
       if (pendingUpdateSheetIds.size > 0) {
         const sheetIds = Array.from(pendingUpdateSheetIds);
-        pendingUpdateSheetIds.clear(); // Clear immediately to prevent double updates
+        pendingUpdateSheetIds.clear();
         await Promise.all(sheetIds.map(async sheetId => {
           await updateVocabularySheetServer(sheetId);
         }));
       }
 
-      // 2. [NEW] 개별 단어 업데이트 (암기 상태 저장)
-      if (pendingUpdateWords.size > 0) {
-        console.log(`Sending updates for ${pendingUpdateWords.size} words...`);
-        const wordsToUpdate = Array.from(pendingUpdateWords.values());
-        pendingUpdateWords.clear(); // Clear immediately
-
-        await Promise.all(wordsToUpdate.map(async ({ sheetId, wordId, updateData }) => {
-          try {
-            await updateWord(sheetId, wordId, { sm2: updateData.sm2 });
-          } catch (error) {
-            console.error(`Failed to update word ${wordId}:`, error);
-          }
-        }));
-      }
-
-      // 3. 학습 기록(RecentStudy) 업데이트
+      // 2. 학습 기록(RecentStudy) 업데이트
       await updateRecentStudyServer(state.testType);
 
-      // 4. 최신 단어장 데이터 다시 가져오기
+      // 3. 최신 단어장 데이터 다시 가져오기
       await fetchVocabularySheets();
 
     } catch (error) {
@@ -632,6 +605,7 @@ const TakeTest = () => {
           setPendingUpdateWords={setPendingUpdateWords}
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
           studySessionRef={studySessionRef}
+          pendingLogPromisesRef={pendingLogPromisesRef}
         />
       </div>
     );

@@ -11,19 +11,10 @@ import { WithdrawNewBottomSheet } from '../newBottomSheet/WithdrawNewBottomSheet
 import { useUser } from '../../context/UserContext';
 import { withdrawApi } from '../../api/auth';
 import { setCookie } from '../../utils/common';
-import { launchGoogleWithdraw, getDevicePlatform, showToast } from '../../utils/osFunction';
-import { vibrate } from '../../utils/osFunction';
+import { launchGoogleWithdraw, showToast, vibrate, openExternalUrl } from '../../utils/osFunction';
 
 const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
 const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
-
-function openExternalUrl(url) {
-  if (getDevicePlatform() !== 'web' && window.ReactNativeWebView) {
-    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'openUrl', props: { url } }));
-  } else {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
-}
 
 const AccountNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화

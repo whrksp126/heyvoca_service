@@ -7,7 +7,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
 // import TestSetup from './TestSetup';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
-import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT, updateSM2 } from '../../utils/common';
+import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
@@ -17,26 +17,6 @@ const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
-  // const word = {
-  //   id: '1', // 사용자 단어장 데이터 기준 단어 ID,
-  //   dictionaryId : 1, // 헤이보카 사전의 단어 ID, 없으면 null
-  //   origin: 'apple', // 학습할 단어
-  //   meanings: ['사과', '빨간 사과', '빨간 비닐봉지 안에 있는 사과'], // 학습할 단어의 뜻
-  //   examples: [{ // 학습할 단어의 예시 리스트
-  //     origin: 'I eat an apple every day.', // 학습할 단어의 예시
-  //     meaning: '나는 매일 사과를 먹는다.' // 학습할 단어의 예시의 뜻
-  //   }],
-  //   ef: 2.5,
-  //   repetition: 0,
-  //   interval: 0,
-  //   nextReview: null,
-  //   createdAt: new Date('2024-01-01').toISOString(), // 단어 등록 일자
-  //   updatedAt: new Date('2024-01-01').toISOString(), // 단어 수정 일자
-  // };
-  // const q = 5; // 사용자 선택: easy
-  // const today = new Date("2025-05-01");
-  // const updated = updateSM2(word, q, today);
-
   // const { pushFullSheet } = useFullSheet();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();

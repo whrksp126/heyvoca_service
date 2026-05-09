@@ -1,23 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SpeakerHigh, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
-import { updateSM2, getTextSound } from '../../../utils/common';
+import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
-
-const getMemoryStateKey = (interval, repetition) => {
-  if (repetition === 0 && interval === 0) return 'unlearned';
-  if (interval < 10) return 'leaf';
-  if (interval < 60) return 'plant';
-  return 'carrot';
-};
-
-const getMemoryStateName = (interval, repetition) => {
-  if (repetition === 0 && interval === 0) return '미학습';
-  if (interval < 10) return '단기 암기';
-  if (interval < 60) return '중기 암기';
-  return '장기 암기';
-};
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -90,52 +76,58 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   const [wordResolvedStates, setWordResolvedStates] = useState({});
   const wordResultsRef = useRef({});
   const resolvedCountRef = useRef(0);
+  const questionStartRef = useRef(Date.now());
+  const wordStartRef = useRef({});
 
   const buildResults = (wordResults) => {
     return question.words.map(word => {
-      const result = wordResults[word.id] ?? { attempts: 1, isCorrect: false };
-      const q = result.isCorrect
-        ? (result.attempts === 1 ? 5 : result.attempts === 2 ? 3 : 2)
-        : 0;
-      const sm2Input = {
-        ef: word.sm2?.ef ?? word.ef ?? 2.5,
-        repetition: word.sm2?.repetition ?? word.repetition ?? 0,
-        interval: word.sm2?.interval ?? word.interval ?? 0,
-        nextReview: word.sm2?.nextReview ?? word.nextReview,
-        lastStudyDate: word.sm2?.lastStudyDate ?? word.lastStudyDate,
-      };
-      const newState = updateSM2(sm2Input, q, { testType, today: new Date() });
+      const result = wordResults[word.id] ?? { attempts: 1, isCorrect: false, timeTakenMs: 5000 };
       return {
         wordId: word.id,
         sheetId: word.vocabularySheetId ?? question.vocabularySheetId,
         isCorrect: result.isCorrect,
-        updateData: { ...newState, sm2: { ...newState }, updatedAt: new Date().toISOString() },
+        timeTakenMs: result.timeTakenMs ?? 5000,
+        updateData: { fsrs: word.fsrs, isCorrect: result.isCorrect, updatedAt: new Date().toISOString() },
       };
     });
   };
 
+  // stability 기반 암기 상태 키
+  const getMemoryStateKeyByStability = (stability, state) => {
+    if (!state || state === 'new') return 'unlearned';
+    if (stability < 10) return 'leaf';
+    if (stability < 60) return 'plant';
+    return 'carrot';
+  };
+
   const resolveWordState = (word, isMatch, attempts) => {
-    const q = isMatch
-      ? (attempts === 1 ? 5 : attempts === 2 ? 3 : 2)
-      : 0;
-    const sm2Input = {
-      ef: word.sm2?.ef ?? word.ef ?? 2.5,
-      repetition: word.sm2?.repetition ?? word.repetition ?? 0,
-      interval: word.sm2?.interval ?? word.interval ?? 0,
-      nextReview: word.sm2?.nextReview ?? word.nextReview,
-      lastStudyDate: word.sm2?.lastStudyDate ?? word.lastStudyDate,
-    };
-    const newState = updateSM2(sm2Input, q, { testType, today: new Date() });
-    const prevKey = getMemoryStateKey(sm2Input.interval, sm2Input.repetition);
-    const newKey = getMemoryStateKey(newState.interval, newState.repetition);
+    // 시각적 피드백용 — 실제 FSRS 업데이트는 백엔드 /study/log에서 처리
+    const prevStability = word.fsrs?.stability ?? 0;
+    const prevState = word.fsrs?.state ?? null;
+    const prevKey = getMemoryStateKeyByStability(prevStability, prevState);
+
+    // 낙관적 추정
+    const optimisticStability = isMatch ? Math.max(prevStability, 3.13) : Math.max(prevStability * 0.3, 0.5);
+    const optimisticState = prevState && prevState !== 'new' ? (isMatch ? 'review' : 'relearning') : 'learning';
+    const newKey = getMemoryStateKeyByStability(optimisticStability, optimisticState);
+    const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+
+    let optimisticNextReview = word.fsrs?.next_review ?? null;
+    if (!optimisticNextReview) {
+      const next = new Date();
+      next.setDate(next.getDate() + (isMatch ? 3 : 1));
+      optimisticNextReview = next.toISOString();
+    }
+
     setWordResolvedStates(prev => ({
       ...prev,
       [word.id]: {
         prevKey,
         newKey,
-        to: getMemoryStateName(newState.interval, newState.repetition),
-        nextReview: newState.nextReview,
+        to: stateNameMap[newKey] ?? newKey,
+        nextReview: optimisticNextReview,
         changed: prevKey !== newKey,
+        isCorrect: isMatch,
       },
     }));
   };
@@ -147,7 +139,9 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
     const prev = wordResultsRef.current[leftWord.id] ?? { attempts: 0, isCorrect: false };
     const newAttempts = prev.attempts + 1;
-    wordResultsRef.current[leftWord.id] = { attempts: newAttempts, isCorrect: isMatch };
+    if (!wordStartRef.current[leftWord.id]) wordStartRef.current[leftWord.id] = questionStartRef.current;
+    const timeTakenMs = Date.now() - wordStartRef.current[leftWord.id];
+    wordResultsRef.current[leftWord.id] = { attempts: newAttempts, isCorrect: isMatch, timeTakenMs };
 
     setSelectedLeft(null);
     setSelectedRight(null);
@@ -374,7 +368,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
               {/* 하단 중앙 - 복습 예정일 (채점 후) */}
               {!!wordResolvedStates[word.id] && (() => {
-                const nextReview = wordResolvedStates[word.id].nextReview;
+                const nextReview = word.fsrs?.next_review ?? wordResolvedStates[word.id].nextReview;
                 if (!nextReview) return null;
                 const parts = nextReview.includes('T') ? null : nextReview.split('-');
                 const date = parts

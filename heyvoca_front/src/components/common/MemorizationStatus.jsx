@@ -2,7 +2,7 @@ import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false, hideOverdue = false }) => {
+const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false, hideOverdue = false, forceText = null }) => {
   // 암기 상태 판단 함수
   const getMemoryState = () => {
     // 진짜 미학습 상태 체크 (한 번도 학습하지 않은 단어)
@@ -313,10 +313,11 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
 
   // 멘트를 useMemo로 고정 (상황이 동일하면 같은 멘트 유지)
   const statusText = useMemo(() => {
+    if (forceText != null) return forceText;
     return isCorrect === null
       ? getStatusText(memoryState, repetition, interval, ef, messageKey, useRandomMessages, nextReview)
       : getResultMessage(memoryState, isCorrect, interval, nextReview, repetition, messageKey, useRandomMessages, updateType);
-  }, [messageKey, memoryState, repetition, interval, ef, isCorrect, nextReview, useRandomMessages, updateType]);
+  }, [messageKey, memoryState, repetition, interval, ef, isCorrect, nextReview, useRandomMessages, updateType, forceText]);
 
   // 상태별 스타일 설정
   const getStateStyles = (state, isCorrect, nextReviewDate) => {
@@ -344,8 +345,18 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         text: 'text-[#F68300]',
         bg: 'bg-[#FFF8E8]',
         icon: <Carrot size={10} weight="fill" />
+      },
+      new: {
+        border: 'border-secondary-yellow-500',
+        text: 'text-secondary-yellow-500',
+        bg: 'bg-secondary-yellow-100',
+        icon: null
       }
     };
+
+    if (forceText === 'NEW') {
+      return baseStyles.new;
+    }
 
     const styles = baseStyles[state];
 

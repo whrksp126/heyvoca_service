@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Check, Star } from '@phosphor-icons/react';
+import { Circle, X, Check, Star, Leaf, Plant, Carrot } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -10,7 +10,7 @@ import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
-import { getTextSound, updateSM2 } from '../../utils/common';
+import { getTextSound } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -88,56 +88,31 @@ const getAchievementTextStyle = (level) => {
   }
 };
 
-// Phase 2.2: priorityBucket → reason 칩 색상 매핑
-const REASON_CHIP_STYLES = {
-  overdue: 'bg-status-error-50 text-status-error-500',
-  today: 'bg-status-success-100 text-status-success-500',
-  new: 'bg-purple-50 text-purple-500',
-  long: 'bg-yellow-50 text-yellow-600',
-  short: 'bg-layout-gray-50 text-layout-gray-400',
-  medium: 'bg-layout-gray-50 text-layout-gray-400',
-  default: 'bg-layout-gray-50 text-layout-gray-400',
-};
-
-const getReasonChipStyle = (priorityBucket) => {
-  return REASON_CHIP_STYLES[priorityBucket] ?? REASON_CHIP_STYLES.default;
-};
-
-// Phase 2.2: compositionStrategy → 표시 배지 텍스트 결정
-const getStrategyBadge = (compositionStrategy) => {
-  if (!compositionStrategy) return null;
-  const adjustment = compositionStrategy.dynamic_adjustment;
-  if (adjustment === 'high_accuracy') return '새 단어 도전 모드';
-  if (adjustment === 'low_accuracy') return '복습 우선 모드';
-  return null;
-};
-
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { isDark } = useTheme();
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult } = useVocabulary();
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();
   const { state } = useLocation();
-  // cardMatch 세트는 words 배열을 개별 단어로 flatten
+  // cardMatch/cardMatchListening 세트는 words 배열을 개별 단어로 flatten
   const testQuestions = state.testQuestions.flatMap(q => {
-    if (q.questionType === 'cardMatch') {
-      return q.words.map(word => ({
+    if (q.questionType === 'cardMatch' || q.questionType === 'cardMatchListening') {
+      return (q.words ?? []).map(word => ({
         ...word,
-        isCorrect: q.isCorrect,
-        questionType: 'cardMatch',
+        isCorrect: word.isCorrect ?? q.isCorrect,
+        questionType: q.questionType,
         // cardMatch 세트의 reason/priorityBucket을 개별 단어에 전파
         reason: word.reason ?? q.reason ?? null,
         priorityBucket: word.priorityBucket ?? q.priorityBucket ?? null,
+        prevMemoryStateKey: word.prevMemoryStateKey ?? q.prevMemoryStateKey ?? null,
+        nextMemoryStateKey: word.nextMemoryStateKey ?? q.nextMemoryStateKey ?? null,
       }));
     }
     return q;
   });
   const testType = state.testType;
-  // Phase 2.2: composition_strategy (TakeTest에서 전달, 없으면 null)
-  const compositionStrategy = state.compositionStrategy ?? null;
-  const strategyBadge = getStrategyBadge(compositionStrategy);
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   const [resultData, setResultData] = useState(null);
@@ -161,16 +136,58 @@ const StudyResult = () => {
 
       if (!result) return;
 
+      // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
+      fetchVocabularySheets();
+
       setResultData(result);
 
       // 표시할 화면 리스트 생성
       const screens = [];
 
-      // 1. 단어 학습 갯수와 정답 수를 이용해서 멘트 표현 (항상 표시)
-      screens.push({
-        type: 'words',
-        data: { totalCnt: testQuestions.length }
+      // 1. 새 단어(처음 학습) 개수 슬라이드 — 0개면 건너뜀
+      const newWordCount = testQuestions.filter(q => q.priorityBucket === 'new').length;
+      if (newWordCount > 0) {
+        screens.push({
+          type: 'newWords',
+          data: { totalCnt: newWordCount }
+        });
+      }
+
+      // 2. 암기 상태가 좋아진 단어 개수 슬라이드 — 0개면 건너뜀
+      const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
+      const improvedWords = testQuestions.filter(q => {
+        const before = STATE_RANK[q.prevMemoryStateKey];
+        const after = STATE_RANK[q.nextMemoryStateKey];
+        return before != null && after != null && after > before;
       });
+      const decreasedWords = testQuestions.filter(q => {
+        const before = STATE_RANK[q.prevMemoryStateKey];
+        const after = STATE_RANK[q.nextMemoryStateKey];
+        return before != null && after != null && after < before;
+      });
+      const byState = improvedWords.reduce((acc, q) => {
+        acc[q.nextMemoryStateKey] = (acc[q.nextMemoryStateKey] || 0) + 1;
+        return acc;
+      }, {});
+      if (improvedWords.length > 0) {
+        screens.push({
+          type: 'memoryImproved',
+          data: { totalCnt: improvedWords.length, byState }
+        });
+      }
+
+      // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시
+      if (typeof setLastSessionResult === 'function') {
+        setLastSessionResult({
+          totalCnt:        testQuestions.length,
+          correctCnt,
+          incorrectCnt,
+          improvedCount:   improvedWords.length,
+          decreasedCount:  decreasedWords.length,
+          newLearnedCount: newWordCount,
+          completedAt:     Date.now(),
+        });
+      }
 
       // 2. 데일리 미션 달성 표현 페이지
       if (result.today_study_complete) {
@@ -305,19 +322,6 @@ const StudyResult = () => {
           </div>
 
           <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[100px]'>
-            {/* Phase 2.2: compositionStrategy 배지 */}
-            {strategyBadge && (
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className='flex justify-center pt-[12px]'
-              >
-                <span className='inline-flex items-center gap-[4px] px-[12px] py-[5px] rounded-full bg-primary-main-50 text-primary-main-600 text-[12px] font-[600]'>
-                  {compositionStrategy?.dynamic_adjustment === 'high_accuracy' ? '🚀' : '🛡'} {strategyBadge}
-                </span>
-              </motion.div>
-            )}
             {/* 프로그레스 서클 영역 */}
             <div className='flex flex-col items-center justify-center py-[40px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
@@ -390,15 +394,10 @@ const StudyResult = () => {
                 });
                 return flat.map((item, index) => {
                   const meaningsArr = Array.isArray(item.meanings) ? item.meanings : [];
-                  const currentSM2 = {
-                    ef: item.ef ?? item.sm2?.ef ?? 2.5,
-                    repetition: item.repetition ?? item.sm2?.repetition ?? 0,
-                    interval: item.interval ?? item.sm2?.interval ?? 0,
-                    nextReview: item.nextReview ?? item.sm2?.nextReview ?? null,
-                    lastStudyDate: item.lastStudyDate ?? item.sm2?.lastStudyDate ?? null,
-                    beforeScheduleCount: item.beforeScheduleCount ?? item.sm2?.beforeScheduleCount ?? 0,
-                  };
-                  const updatedSM2 = updateSM2(currentSM2, item.isCorrect ? 4 : 0);
+                  // FSRS 기반 현재 암기 상태
+                  const fsrsReps = item.fsrs?.reps ?? 0;
+                  const fsrsStability = Math.round(item.fsrs?.stability ?? 0);
+                  const fsrsNextReview = item.fsrs?.next_review ?? null;
                   return (
                     <motion.div
                       key={`${item.id ?? 'q'}-${index}`}
@@ -429,12 +428,13 @@ const StudyResult = () => {
                               {item.origin}
                             </h3>
                             <MemorizationStatus
-                              repetition={updatedSM2.repetition}
-                              interval={updatedSM2.interval}
-                              ef={updatedSM2.ef}
-                              nextReview={updatedSM2.nextReview}
+                              repetition={fsrsReps}
+                              interval={fsrsStability}
+                              ef={2.5}
+                              nextReview={fsrsNextReview}
                               wordId={item.id}
                               useRandomMessages={false}
+                              forceText={item.priorityBucket === 'new' ? 'NEW' : null}
                             />
                           </div>
                           <p
@@ -443,19 +443,6 @@ const StudyResult = () => {
                           >
                             {meaningsArr.join(', ')}
                           </p>
-                          {/* Phase 2.2: reason 칩 */}
-                          {item.reason && (
-                            <span className={`
-                              self-start
-                              inline-flex items-center
-                              px-[8px] py-[2px]
-                              rounded-full
-                              text-[11px] font-[500]
-                              ${getReasonChipStyle(item.priorityBucket)}
-                            `}>
-                              {item.reason}
-                            </span>
-                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -519,16 +506,16 @@ const StudyResult = () => {
       );
     }
 
-    // 나머지 화면들 (words, dailyMission, achievement, gem)
+    // 나머지 화면들 (newWords, memoryImproved, dailyMission, achievement, gem)
     let content = null;
 
-    if (currentScreen.type === 'words') {
-      // 단어 학습 갯수와 정답 수를 이용한 멘트
+    if (currentScreen.type === 'newWords') {
+      // 이번 학습으로 처음 학습한 단어 개수
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
           <motion.img
             src={WordsStudied}
-            alt="단어 학습"
+            alt="새 단어 학습"
             className='w-[100px] h-[100px] object-contain'
             initial={{ scale: 0, opacity: 0, rotate: -180 }}
             animate={{
@@ -571,7 +558,57 @@ const StudyResult = () => {
               duration: 0.5
             }}
           >
-            <strong className='text-primary-main-600'>단어 {currentScreen.data.totalCnt}개</strong>를 학습했어요!
+            <strong className='text-primary-main-600'>새 단어 {currentScreen.data.totalCnt}개</strong>를 학습했어요!
+          </motion.p>
+        </div>
+      );
+    } else if (currentScreen.type === 'memoryImproved') {
+      // 이번 학습으로 암기 상태가 좋아진 단어 — 가장 높이 도달한 상태 1개 아이콘으로 표시
+      const STATE_INFO = {
+        leaf:   { Icon: Leaf,   bg: 'bg-[#F2FFEB]', border: 'border-[#77CE4F]', color: '#77CE4F' },
+        plant:  { Icon: Plant,  bg: 'bg-[#EBFFEE]', border: 'border-[#38CE38]', color: '#38CE38' },
+        carrot: { Icon: Carrot, bg: 'bg-[#FFF8E8]', border: 'border-[#F68300]', color: '#F68300' },
+      };
+      const topState = ['carrot', 'plant', 'leaf']
+        .find(k => (currentScreen.data.byState?.[k] || 0) > 0) || 'leaf';
+      const { Icon: TopIcon, bg: topBg, border: topBorder, color: topColor } = STATE_INFO[topState];
+
+      content = (
+        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+          <motion.div
+            className={`flex items-center justify-center w-[100px] h-[100px] rounded-full border-[3px] ${topBg} ${topBorder}`}
+            initial={{ scale: 0, opacity: 0, rotate: -180 }}
+            animate={{
+              scale: 1,
+              opacity: 1,
+              rotate: 0,
+              y: [0, -10, 0]
+            }}
+            transition={{
+              scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+              rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+              opacity: { duration: 0.6 },
+              y: {
+                delay: 0.8,
+                duration: 2,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut'
+              }
+            }}
+          >
+            <TopIcon size={56} weight="fill" color={topColor} />
+          </motion.div>
+          <motion.p
+            className='text-[16px] font-[700]'
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.5
+            }}
+          >
+            <strong className='text-primary-main-600'>{currentScreen.data.totalCnt}개</strong>의 단어 암기 상태가 상승했어요!
           </motion.p>
         </div>
       );

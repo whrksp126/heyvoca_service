@@ -670,10 +670,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                       )}
                       <MemorizationStatus
                         hideOverdue
-                        repetition={item.sm2?.repetition ?? item.repetition ?? 0}
-                        interval={item.sm2?.interval ?? item.interval ?? 0}
-                        ef={item.sm2?.ef ?? item.ef ?? 2.5}
-                        nextReview={item.sm2?.nextReview ?? item.nextReview}
+                        repetition={item.fsrs?.reps ?? 0}
+                        interval={Math.round(item.fsrs?.stability ?? 0)}
+                        ef={2.5}
+                        nextReview={item.fsrs?.next_review ?? null}
                         wordId={item.id}
                         useRandomMessages={false}
                       />

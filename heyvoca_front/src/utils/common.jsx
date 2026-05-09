@@ -10,7 +10,7 @@ export const stripHtmlTags = (html) => {
   return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
 };
 
-// SM-2 알고리즘 기준 학습 상태 정의
+// FSRS 기반 학습 상태 정의 (stability 임계값 기준)
 export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
@@ -21,13 +21,12 @@ export const MEMORY_STATES = {
 };
 
 /**
- * 단어가 복습 지연 상태인지 판별 (nextReview < 오늘)
- * Phase 1.3: word.fsrs.next_review 우선, 없으면 word.sm2.nextReview 폴백
+ * 단어가 복습 지연 상태인지 판별 (next_review < 오늘)
  * @param {Object} word
  * @returns {boolean}
  */
 export function isWordOverdue(word) {
-  const next = word?.fsrs?.next_review ?? word?.sm2?.nextReview ?? word?.nextReview;
+  const next = word?.fsrs?.next_review;
   if (!next) return false;
   const d = new Date(next);
   d.setHours(0, 0, 0, 0);
@@ -37,48 +36,17 @@ export function isWordOverdue(word) {
 }
 
 /**
- * 단어의 암기 상태를 판단하는 함수
- * Phase 1.3: word.fsrs 우선 (stability 기준), 없으면 SM2 기반 폴백
+ * 단어의 암기 상태를 판단하는 함수 (FSRS 기반)
  * @param {Object} word - 단어 객체
  * @returns {string} - 암기 상태 (unlearned, shortTerm, mediumTerm, longTerm)
  */
 export function getWordMemoryState(word) {
-  // FSRS 기반 (Phase 1.3 정식)
   const fsrs = word?.fsrs;
-  if (fsrs) {
-    if (fsrs.state === 'new' || !fsrs.state) return MEMORY_STATES.UNLEARNED;
-    const stability = fsrs.stability ?? 0;
-    if (stability < 10) return MEMORY_STATES.SHORT_TERM;
-    if (stability < 60) return MEMORY_STATES.MEDIUM_TERM;
-    return MEMORY_STATES.LONG_TERM;
-  }
-
-  // SM2 기반 폴백 (Phase 1.3 폴백 모드, Phase 1.4에서 제거 예정)
-  const repetition = word?.sm2?.repetition ?? word?.memoryState?.repetition ?? word?.repetition ?? 0;
-  const interval = word?.sm2?.interval ?? word?.memoryState?.interval ?? word?.interval ?? 0;
-
-  if (repetition === 0 && interval === 0) return MEMORY_STATES.UNLEARNED;
-  if (interval < 10) return MEMORY_STATES.SHORT_TERM;
-  if (interval < 60) return MEMORY_STATES.MEDIUM_TERM;
+  if (!fsrs || fsrs.state === 'new' || !fsrs.state) return MEMORY_STATES.UNLEARNED;
+  const stability = fsrs.stability ?? 0;
+  if (stability < 10) return MEMORY_STATES.SHORT_TERM;
+  if (stability < 60) return MEMORY_STATES.MEDIUM_TERM;
   return MEMORY_STATES.LONG_TERM;
-}
-
-/**
- * FSRS state를 SM2 형식으로 역변환 (폴백 호환용)
- * Phase 1.3: 추천 API 응답의 fsrs 필드를 기존 컴포넌트 호환 형식으로 변환
- * @param {Object} fsrs - FSRS state 객체 { state, stability, difficulty, retrievability, next_review, last_review, reps, lapses }
- * @returns {Object|null}
- */
-export function deriveSm2FromFsrs(fsrs) {
-  if (!fsrs) return null;
-  return {
-    ef: 2.5 - ((fsrs.difficulty ?? 5) - 5) * 0.1,
-    repetition: fsrs.reps ?? 0,
-    interval: Math.round(fsrs.stability ?? 0),
-    nextReview: fsrs.next_review ?? null,
-    lastStudyDate: fsrs.last_review ?? null,
-    beforeScheduleCount: 0,
-  };
 }
 
 // 쿠키 조회
@@ -320,209 +288,22 @@ export const stopCurrentSound = () => {
 };
 
 /**
- * 예정일 전 학습 횟수에 따른 ef 보너스 계산
- * @param {number} beforeScheduleCount - 예정일 전 학습 횟수
- * @returns {number} - ef 보너스 값
- */
-const getBeforeScheduleEfBonus = (beforeScheduleCount) => {
-  if (beforeScheduleCount === 0) return 0.1;   // 1회차: +0.1 (의미 있는 복습)
-  if (beforeScheduleCount === 1) return 0.05;  // 2회차: +0.05 (여전히 도움)
-  if (beforeScheduleCount === 2) return 0.02;  // 3회차: +0.02 (소폭 도움)
-  return 0;  // 4회 이상: 0 (더 이상 효과 없음, 과도한 반복)
-};
-
-/**
- * SM-2 망각곡선 알고리즘
- * @param {Object} state - 단어의 기존 복습 상태
- * @param {number} state.ef - 기억 용이도 (Ease Factor), 기본 2.5
- * @param {number} state.repetition - 복습 성공 횟수
- * @param {number} state.interval - 이전 복습 간격 (일 수)
- * @param {string} state.nextReview - 다음 복습 예정일 (YYYY-MM-DD)
- * @param {string} state.lastStudyDate - 마지막 학습 날짜 (YYYY-MM-DD)
- * @param {number} state.beforeScheduleCount - 현재 주기 내 예정일 전 학습 횟수
- * @param {string} state.beforeScheduleLastDate - 마지막 예정일 전 학습 날짜
- * @param {number} q - 복습 평가 점수 (again: 0, hard: 3, good: 4, easy: 5)
- * @param {Object} options - 추가 옵션
- * @param {string} options.testType - 학습 모드 (test, exam, today)
- * @param {Date} options.today - 기준 날짜 (보통 new Date())
- * @returns {Object} - 갱신된 복습 상태
- */
-export const updateSM2 = (state, q, options = {}) => {
-  const MIN_EF = 1.3;
-  const MAX_EF = 2.5;
-
-  const { testType = 'test', today = new Date() } = options;
-
-  let ef = state.ef ?? 2.5;
-  let repetition = state.repetition ?? 0;
-  let interval = state.interval ?? 0;
-  const nextReview = state.nextReview;
-  const lastStudyDate = state.lastStudyDate;
-  let beforeScheduleCount = state.beforeScheduleCount ?? 0;
-
-  // 오늘 날짜 (로컬 시간 기준)
-  const todayStr = toLocalDateString(today);
-
-  // 같은 날 중복 학습 체크
-  // 단, repetition이 0인 경우(오답으로 인한 리셋 상태 등)는 진행을 허용함
-  if (lastStudyDate === todayStr && repetition > 0) {
-    if (q >= 3) {
-      // 정답: ef만 소폭 상승 (+0.05), 나머지 유지
-      console.log('[SM-2] 같은 날 중복 학습 - 정답: ef만 소폭 상승 (+0.05)');
-      ef = Math.min(ef + 0.05, MAX_EF);
-
-      return {
-        ef: Number(ef.toFixed(2)),
-        repetition,
-        interval,
-        nextReview: nextReview || todayStr, // 기존 nextReview 유지 (없으면 오늘)
-        lastStudyDate: todayStr,
-        beforeScheduleCount,
-        updateType: 'duplicate' // 같은 날 중복 학습
-      };
-    } else {
-      // 오답: 정상 망각곡선 오답 처리 (repetition, interval 리셋)
-      console.log('[SM-2] 같은 날 중복 학습 - 오답: 정상 망각곡선 오답 처리 적용');
-      repetition = 0;
-      interval = 1;
-      ef = Math.max(ef - 0.1, MIN_EF);
-
-      return {
-        ef: Number(ef.toFixed(2)),
-        repetition,
-        interval,
-        nextReview: todayStr, // 틀렸을 때는 오늘로 설정 (바로 복습 가능)
-        lastStudyDate: todayStr,
-        beforeScheduleCount,
-        updateType: 'duplicate' // 같은 날 중복 학습
-      };
-    }
-  }
-
-  // 예정일 전 학습인지 체크 (문자열 비교로 타임존 문제 방지)
-  const isBeforeSchedule = nextReview && nextReview > todayStr;
-
-  // 예정일 전 학습인 경우 (모든 학습 모드에 적용)
-  if (isBeforeSchedule) {
-    if (q < 3) {
-      // 틀렸을 때: 암기 상태 리셋하고 오늘 바로 복습할 수 있도록 설정
-      console.log('[SM-2] 예정일 전 학습 - 오답: 암기 상태 리셋, 오늘 복습');
-      repetition = 0;
-      interval = 1;
-      ef = Math.max(ef - 0.15, MIN_EF);
-
-      return {
-        ef: Number(ef.toFixed(2)),
-        repetition,
-        interval,
-        nextReview: todayStr, // 틀렸을 때는 오늘로 설정 (바로 복습 가능)
-        lastStudyDate: todayStr,
-        beforeScheduleCount: 0, // 리셋
-        updateType: 'normal' // 정상 업데이트 (틀렸으므로 리셋)
-      };
-    }
-
-    // 정답인 경우: 예정일 전 학습 횟수에 따라 ef 조정
-    const efBonus = getBeforeScheduleEfBonus(beforeScheduleCount);
-    ef = Math.min(ef + efBonus, MAX_EF);
-    beforeScheduleCount += 1;
-
-    console.log(`[SM-2] 예정일 전 학습 ${beforeScheduleCount}회차 - 정답: ef +${efBonus} (repetition, interval, nextReview 유지)`);
-
-    return {
-      ef: Number(ef.toFixed(2)),
-      repetition,
-      interval,
-      nextReview,
-      lastStudyDate: todayStr,
-      beforeScheduleCount,
-      updateType: 'before_schedule' // 예정일 전 학습
-    };
-  }
-
-  // 정상 SM-2 알고리즘 적용 (예정일 도래)
-  console.log('[SM-2] 정상 SM-2 알고리즘 적용 (예정일 도래)');
-
-  let nextReviewDate;
-
-  if (q < 3) {
-    // 복습 실패: 틀렸을 때는 오늘 바로 복습할 수 있도록 nextReview를 오늘로 설정
-    console.log('[SM-2] 정상 SM-2 알고리즘 - 오답: ef 감소 (-0.15), repetition/interval 리셋');
-    repetition = 0;
-    interval = 1;
-    ef = Math.max(ef - 0.15, MIN_EF);
-    // 틀렸을 때는 오늘로 설정 (바로 복습 가능하도록)
-    nextReviewDate = new Date(today);
-  } else {
-    // 복습 성공
-    ef = ef + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
-    ef = Math.max(ef, MIN_EF);
-
-    repetition += 1;
-
-    if (repetition === 1) interval = 1;
-    else if (repetition === 2) interval = 3;  // 1 -> 3 (세분화)
-    else if (repetition === 3) interval = 7;  // 3 -> 7 (단계 추가)
-    else {
-      // 증가폭을 기존의 약 절반 수준으로 하향 조정 (EF 가중치 조절)
-      // ef가 2.5일 때, 기존 2.5배 -> 수정 후 약 1.6배 (1.0 + 1.2 * 0.5)
-      const adjustedEf = 1.0 + (ef - 1.3) * 0.5;
-      interval = Math.round(interval * adjustedEf);
-    }
-
-    // 정답일 때는 interval만큼 더한 날짜로 설정
-    nextReviewDate = new Date(today);
-    nextReviewDate.setDate(today.getDate() + interval);
-  }
-
-  return {
-    ef: Number(ef.toFixed(2)),
-    repetition,
-    interval,
-    nextReview: toLocalDateString(nextReviewDate),
-    lastStudyDate: todayStr,
-    beforeScheduleCount: 0, // 새로운 주기 시작으로 리셋
-    updateType: 'normal' // 정상 업데이트
-  };
-}
-// // 사용법
-// // 단어 초기 상태
-// const wordState = {
-//   ef: 2.5,
-//   repetition: 0,
-//   interval: 0,
-//   lastReview: new Date() // 오늘
-// };
-
-// // 사용자 평가: Easy → q = 5
-// const updated = updateSM2(wordState, 5);
-
-// console.log(updated);
-// // {
-// //   ef: 2.6,
-// //   repetition: 1,
-// //   interval: 1,
-// //   next_review: '2025-03-28'
-// // }
-
-/**
- * 학습 패턴 분석 - 의심스러운 상황 감지
- * @param {Object} wordState - 단어의 현재 상태
- * @param {number} wordState.ef - 기억 용이도
- * @param {number} wordState.repetition - 연속 정답 횟수
- * @param {number} q - 사용자 평가 점수 (0-5)
+ * 학습 패턴 분석 - 의심스러운 상황 감지 (FSRS 기반)
+ * @param {Object} wordState - 단어의 현재 상태 (fsrs 필드 포함)
+ * @param {number} q - 사용자 평가 점수 (0-5, UX 분기용)
  * @returns {Object} - 분석 결과
  */
 export const analyzeLearningPattern = (wordState, q) => {
-  const { ef, repetition } = wordState;
-  console.log("ef", ef, "repetition", repetition, "q", q);
+  const difficulty = wordState?.fsrs?.difficulty ?? 5;
+  const reps = wordState?.fsrs?.reps ?? 0;
+  console.log("difficulty", difficulty, "reps", reps, "q", q);
 
   // 의심스러운 패턴들
   const suspiciousPatterns = {
 
-    // 실수로 틀렸을 가능성  
+    // 실수로 틀렸을 가능성
     suspiciousMistake: {
-      condition: repetition >= 5 && q === 0,
+      condition: reps >= 5 && q === 0,
       message: "정말 이 단어가 기억나지 않나요?",
       icon: "WarningCircle",
       reason: "연속 5번 이상 정답인데 갑자기 완전히 잊어버렸다고 함",
@@ -545,7 +326,7 @@ export const analyzeLearningPattern = (wordState, q) => {
 
     // 찍어서 맞췄을 가능성
     suspiciousGuess: {
-      condition: ef <= 1.5 && q === 5,
+      condition: difficulty >= 8 && q === 5,
       message: "정말 이 단어를 기억하나요?",
       icon: "HandsClapping",
       reason: "매우 어려운 단어(ef ≤ 1.5)인데 갑자기 완벽하게 기억한다고 함",

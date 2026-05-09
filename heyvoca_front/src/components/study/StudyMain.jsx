@@ -311,10 +311,10 @@ const StudyMain = ({ words }) => {
                 <div>
                   <div className="mb-[5px]">
                     <MemorizationStatus
-                      repetition={word.repetition ?? word.sm2?.repetition ?? 0}
-                      interval={word.interval ?? word.sm2?.interval ?? 0}
-                      ef={word.ef ?? word.sm2?.ef ?? 2.5}
-                      nextReview={word.nextReview ?? word.sm2?.nextReview}
+                      repetition={word.fsrs?.reps ?? 0}
+                      interval={Math.round(word.fsrs?.stability ?? 0)}
+                      ef={2.5}
+                      nextReview={word.fsrs?.next_review ?? null}
                       wordId={word.id}
                       useRandomMessages={false}
                     />

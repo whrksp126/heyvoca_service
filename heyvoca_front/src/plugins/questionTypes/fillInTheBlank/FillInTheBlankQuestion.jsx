@@ -1,16 +1,8 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, X, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
-import { updateSM2 } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
-
-const getMemoryStateKey = (interval, repetition) => {
-  if (repetition === 0 && interval === 0) return 'unlearned';
-  if (interval < 10) return 'leaf';
-  if (interval < 60) return 'plant';
-  return 'carrot';
-};
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -68,12 +60,15 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
   const [nextReviewDate, setNextReviewDate] = useState(null);
   const startTimeRef = useRef(Date.now());
 
-  // 채점 전 현재 암기 상태 캡처
+  // 채점 전 현재 암기 상태 캡처 (FSRS 기반)
+  const getMemoryStateKeyByStability = (stability, state) => {
+    if (!state || state === 'new') return 'unlearned';
+    if (stability < 10) return 'leaf';
+    if (stability < 60) return 'plant';
+    return 'carrot';
+  };
   const prevStateKeyRef = useRef(
-    getMemoryStateKey(
-      question.sm2?.interval ?? question.interval ?? 0,
-      question.sm2?.repetition ?? question.repetition ?? 0
-    )
+    getMemoryStateKeyByStability(question.fsrs?.stability ?? 0, question.fsrs?.state ?? null)
   );
 
   const { exampleText, exampleTranslation, targetWord, options, resultIndex } = question;
@@ -84,7 +79,8 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
     setSelectedIndex(index);
 
     const correct = index === resultIndex;
-    const timeTakenSec = Math.round((Date.now() - startTimeRef.current) / 1000);
+    const timeTakenMs = Date.now() - startTimeRef.current;
+    const timeTakenSec = Math.round(timeTakenMs / 1000);
     const q = correct ? (timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : 3) : 0;
 
     if (correct) {
@@ -95,26 +91,33 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
       playErrorSound();
     }
 
-    const newState = updateSM2({
-      ef: question.sm2?.ef ?? question.ef ?? 2.5,
-      repetition: question.sm2?.repetition ?? question.repetition ?? 0,
-      interval: question.sm2?.interval ?? question.interval ?? 0,
-      nextReview: question.sm2?.nextReview ?? question.nextReview,
-      lastStudyDate: question.sm2?.lastStudyDate ?? question.lastStudyDate,
-    }, q, { testType, today: new Date() });
-
-    Object.assign(question, newState);
-    question.sm2 = { ...question.sm2, ...newState };
+    // FSRS 업데이트는 백엔드 /study/log에서 처리
+    // 복습 예정일은 현재 fsrs.next_review 사용 (UI 표시용)
     question.isCorrect = correct;
-
-    // 암기 상태 변화 감지
-    const newStateKey = getMemoryStateKey(newState.interval, newState.repetition);
-    if (prevStateKeyRef.current !== newStateKey) {
-      setMemoryStateChange({ from: stateNameMap[prevStateKeyRef.current], to: stateNameMap[newStateKey], stateKey: newStateKey });
+    // 낙관적 next_review: 미학습 단어는 백엔드 응답 도달 전이라도 즉시 표시
+    let optimisticNextReview = question.fsrs?.next_review ?? null;
+    if (!optimisticNextReview) {
+      const next = new Date();
+      next.setDate(next.getDate() + (correct ? 3 : 1));
+      optimisticNextReview = next.toISOString();
     }
+    setNextReviewDate(optimisticNextReview);
 
-    // 복습 예정일 계산
-    setNextReviewDate(newState.nextReview ?? null);
+    // 낙관적 암기상태 변경 알림 — 미학습이었으면 즉시 "단기 암기로 변경되었어요!" 표시
+    {
+      const prevKey = prevStateKeyRef.current;
+      const optimisticStability = correct ? 3.13 : 0.5;
+      const optimisticState = 'learning';
+      const newKey = getMemoryStateKeyByStability(optimisticStability, optimisticState);
+      if (prevKey && prevKey !== newKey) {
+        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+        setMemoryStateChange({
+          from: stateNameMap[prevKey] ?? prevKey,
+          to: stateNameMap[newKey] ?? newKey,
+          stateKey: newKey,
+        });
+      }
+    }
 
     setIsCorrect(correct);
     setIsAnswered(true);
@@ -125,7 +128,8 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
         sheetId: question.vocabularySheetId,
         wordId: question.id,
         isCorrect: correct,
-        updateData: { ...newState, sm2: newState },
+        timeTakenMs,
+        updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
       }]);
     }, 1000);
   };
@@ -136,13 +140,14 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
       : 'border-status-error-500 text-status-error-600 bg-status-error-100'
     : 'border-layout-gray-300 bg-layout-white dark:bg-layout-black';
 
-  // 복습 예정일 텍스트
+  // 복습 예정일 텍스트 (백엔드 응답 도착 시 question.fsrs.next_review 가 갱신되므로 우선 사용)
+  const liveNextReview = question.fsrs?.next_review ?? nextReviewDate;
   const reviewText = (() => {
-    if (!isAnswered || !nextReviewDate) return null;
-    const parts = nextReviewDate.includes('T') ? null : nextReviewDate.split('-');
+    if (!isAnswered || !liveNextReview) return null;
+    const parts = liveNextReview.includes('T') ? null : liveNextReview.split('-');
     const date = parts
       ? new Date(parts[0], parts[1] - 1, parts[2])
-      : new Date(nextReviewDate);
+      : new Date(liveNextReview);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     date.setHours(0, 0, 0, 0);
@@ -201,9 +206,9 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
               </motion.div>
             ) : (
               (() => {
-                const stateKey = getMemoryStateKey(
-                  question.sm2?.interval ?? question.interval ?? 0,
-                  question.sm2?.repetition ?? question.repetition ?? 0
+                const stateKey = getMemoryStateKeyByStability(
+                  question.fsrs?.stability ?? 0,
+                  question.fsrs?.state ?? null
                 );
                 const colors = stateColorMap[stateKey];
                 return (

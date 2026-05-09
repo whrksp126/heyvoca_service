@@ -1,20 +1,20 @@
 /**
  * @deprecated Phase 1.3부터 백엔드 GET /study/recommend가 정렬을 처리합니다.
- * 이 파일은 VITE_RECOMMEND_BACKEND=false 폴백 모드에서만 사용되며, Phase 1.4에서 삭제 예정.
+ * 이 파일은 VITE_RECOMMEND_BACKEND=false 폴백 모드에서만 사용됩니다.
  */
 import { isWordOverdue, getWordMemoryState, MEMORY_STATES } from './common';
 
 /**
- * 망각곡선 기반 우선순위로 단어 배열 정렬.
+ * 망각곡선 기반 우선순위로 단어 배열 정렬 (FSRS 기반).
  * 단어 풀은 호출자가 미리 필터링한 상태로 전달.
  *
  * 우선순위:
- * 1순위: overdue (nextReview 가장 오래된 것부터)
- * 2순위: 오늘 예정 (nextReview === today)
- * 3순위: 단기(interval 1~10), nextReview 임박 순
- * 4순위: 중기(interval 10~60), nextReview 임박 순
- * 5순위: 장기(interval ≥ 60), nextReview 임박 순
- * 6순위: 미학습(repetition===0 && interval===0), 랜덤
+ * 1순위: overdue (next_review 가장 오래된 것부터)
+ * 2순위: 오늘 예정 (next_review === today)
+ * 3순위: 단기(stability 0~10), next_review 임박 순
+ * 4순위: 중기(stability 10~60), next_review 임박 순
+ * 5순위: 장기(stability >= 60), next_review 임박 순
+ * 6순위: 미학습(fsrs.state === 'new' 또는 fsrs 없음), 랜덤
  *
  * @param {Array} words - 필터링된 단어 풀
  * @returns {Array} - 우선순위 순서대로 concat한 단일 배열
@@ -33,23 +33,27 @@ export function sortByForgettingPriority(words) {
     return shuffled;
   };
 
-  // 1순위: overdue (nextReview < today), 가장 오래된 것부터
+  const getNextReviewDate = (w) => {
+    const nr = w.fsrs?.next_review;
+    return nr ? new Date(nr) : null;
+  };
+
+  // 1순위: overdue (next_review < today), 가장 오래된 것부터
   const overdue = words
     .filter(w => isWordOverdue(w))
     .sort((a, b) => {
-      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
-      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      const dateA = getNextReviewDate(a) ?? new Date(0);
+      const dateB = getNextReviewDate(b) ?? new Date(0);
       return dateA - dateB;
     });
 
   const overdueIds = new Set(overdue.map(w => w.id));
 
-  // 2순위: 오늘 예정 (nextReview === today)
+  // 2순위: 오늘 예정 (next_review === today)
   const todayScheduled = words.filter(w => {
     if (overdueIds.has(w.id)) return false;
-    const nextReview = w.sm2?.nextReview ?? w.nextReview;
-    if (!nextReview) return false;
-    const d = new Date(nextReview);
+    const d = getNextReviewDate(w);
+    if (!d) return false;
     d.setHours(0, 0, 0, 0);
     return d.getTime() === now.getTime();
   });
@@ -67,41 +71,41 @@ export function sortByForgettingPriority(words) {
     !overdueIds.has(w.id) && !todayIds.has(w.id) && !unlearnedIds.has(w.id)
   );
 
-  // 3순위: 단기 (interval 1~10), nextReview 임박 순
+  // 3순위: 단기 (stability 0~10), next_review 임박 순
   const shortTerm = rest
     .filter(w => {
-      const interval = w.sm2?.interval ?? w.interval ?? 0;
-      return interval > 0 && interval < 10;
+      const stability = w.fsrs?.stability ?? 0;
+      return stability >= 0 && stability < 10;
     })
     .sort((a, b) => {
-      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
-      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      const dateA = getNextReviewDate(a) ?? new Date(8640000000000000);
+      const dateB = getNextReviewDate(b) ?? new Date(8640000000000000);
       return dateA - dateB;
     });
   const shortTermIds = new Set(shortTerm.map(w => w.id));
 
-  // 4순위: 중기 (interval 10~60), nextReview 임박 순
+  // 4순위: 중기 (stability 10~60), next_review 임박 순
   const mediumTerm = rest
     .filter(w => {
-      const interval = w.sm2?.interval ?? w.interval ?? 0;
-      return interval >= 10 && interval < 60 && !shortTermIds.has(w.id);
+      const stability = w.fsrs?.stability ?? 0;
+      return stability >= 10 && stability < 60 && !shortTermIds.has(w.id);
     })
     .sort((a, b) => {
-      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
-      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      const dateA = getNextReviewDate(a) ?? new Date(8640000000000000);
+      const dateB = getNextReviewDate(b) ?? new Date(8640000000000000);
       return dateA - dateB;
     });
   const mediumTermIds = new Set(mediumTerm.map(w => w.id));
 
-  // 5순위: 장기 (interval ≥ 60), nextReview 임박 순
+  // 5순위: 장기 (stability >= 60), next_review 임박 순
   const longTerm = rest
     .filter(w => {
-      const interval = w.sm2?.interval ?? w.interval ?? 0;
-      return interval >= 60 && !shortTermIds.has(w.id) && !mediumTermIds.has(w.id);
+      const stability = w.fsrs?.stability ?? 0;
+      return stability >= 60 && !shortTermIds.has(w.id) && !mediumTermIds.has(w.id);
     })
     .sort((a, b) => {
-      const dateA = new Date(a.sm2?.nextReview ?? a.nextReview);
-      const dateB = new Date(b.sm2?.nextReview ?? b.nextReview);
+      const dateA = getNextReviewDate(a) ?? new Date(8640000000000000);
+      const dateB = getNextReviewDate(b) ?? new Date(8640000000000000);
       return dateA - dateB;
     });
 
