@@ -42,5 +42,16 @@ if [ -f "/app/scripts/verify_schema.py" ]; then
     }
 fi
 
+# 5. UserVoca.data 정규화 (V1/V2 → V3) — idempotent
+#    이미 모두 V3 면 'OK — all V3' 한 줄만 출력하고 종료.
+#    어떤 이유로든 V1/V2 가 끼어들면 즉시 변환.
+if [ -f "/app/jobs/migrate_user_voca_to_v3.py" ]; then
+    echo ">>> migrate_user_voca_to_v3: V1/V2 → V3 정규화..."
+    python3 /app/jobs/migrate_user_voca_to_v3.py --quiet || {
+        echo ">>> UserVoca v3 정규화 실패. 컨테이너 부팅 중단."
+        exit 1
+    }
+fi
+
 echo ">>> Starting gunicorn..."
 exec "$@"
