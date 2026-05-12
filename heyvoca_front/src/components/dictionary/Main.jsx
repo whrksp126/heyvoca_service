@@ -83,6 +83,12 @@ const Main = () => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
+    // 검색 결과(단어 상세) 화면에서는 스크롤이 짧아서 숨김 동작이 어색함 → 비활성화
+    if (selectedWord) {
+      document.documentElement.dataset.scrollHidden = 'false';
+      return;
+    }
+
     const { scrollTop, scrollHeight, clientHeight } = container;
     const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 
@@ -110,7 +116,7 @@ const Main = () => {
       setIsLoadingMore(true);
       setDisplayCount(prev => Math.min(prev + ITEMS_PER_PAGE, allWords.length));
     }
-  }, [hasMore, allWords.length]);
+  }, [hasMore, allWords.length, selectedWord]);
 
   // 사전 페이지 이탈 시 자동 숨김 상태 리셋 (다른 페이지에 영향 차단)
   useEffect(() => {
@@ -118,6 +124,13 @@ const Main = () => {
       document.documentElement.dataset.scrollHidden = 'false';
     };
   }, []);
+
+  // 검색 결과 화면 진입 시 숨김 상태 즉시 해제 (이전에 숨김 상태로 진입해도 헤더 노출)
+  useEffect(() => {
+    if (selectedWord) {
+      document.documentElement.dataset.scrollHidden = 'false';
+    }
+  }, [selectedWord]);
 
   useEffect(() => {
     if (!isLoadingMore) return;
@@ -409,7 +422,7 @@ const Main = () => {
                           const startIndex = wordLower.indexOf(query);
                           const isHighlighted = startIndex !== -1 && i >= startIndex && i < startIndex + query.length;
                           return (
-                            <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black)' }}>{char}</span>
+                            <span key={i} style={{ color: isHighlighted ? '#FF70D4' : 'var(--layout-black) dark:var(--layout-white)' }}>{char}</span>
                           );
                         })
                       ) : (
@@ -514,9 +527,8 @@ const Main = () => {
                           vibrate({ duration: 5 });
                           getTextSound(stripHtmlTags(ex.meaning), 'ko');
                         }}
-                      >
-                        {ex.meaning}
-                      </p>
+                        dangerouslySetInnerHTML={{ __html: ex.meaning }}
+                      />
                     )}
                   </div>
                 ))}
@@ -559,7 +571,7 @@ const Main = () => {
                       >
                         <div className="p-[15px]">
                           <div className="flex items-center justify-between w-full">
-                            <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+                            <span className="text-[14px] font-[700] text-layout-black">
                               {word.origin}
                             </span>
                             <div className="flex items-center gap-[5px] shrink-0">
@@ -615,7 +627,7 @@ const Main = () => {
                       className="p-[15px] rounded-[12px] overflow-hidden"
                       style={{ backgroundColor: bgColor }}
                     >
-                      <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+                      <span className="text-[14px] font-[700] text-layout-black">
                         {item.word}
                       </span>
                       <p className="mt-[8px] text-[11px] text-layout-gray-400">
@@ -736,10 +748,10 @@ const Main = () => {
                   const books = Array.isArray(word.vocaBooks) ? word.vocaBooks : [];
                   const meaningLines = books.length > 0
                     ? books
-                        .map(vb => Array.isArray(vb.meanings) ? vb.meanings.join(', ') : '')
-                        .filter(line => line.length > 0)
+                      .map(vb => Array.isArray(vb.meanings) ? vb.meanings.join(', ') : '')
+                      .filter(line => line.length > 0)
                     : [Array.isArray(word.meanings) ? word.meanings.join(', ') : (word.meanings || '')]
-                        .filter(line => line.length > 0);
+                      .filter(line => line.length > 0);
                   const meaningTtsText = meaningLines.join(', ');
                   return (
                     <div

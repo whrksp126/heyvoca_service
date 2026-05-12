@@ -2,6 +2,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { readFileSync } from 'fs'
+
+const pkg = JSON.parse(readFileSync(path.resolve(__dirname, './package.json'), 'utf-8'))
 
 // VITE_ENV: local | development | staging | production
 // NODE_ENV는 Vite가 dev 실행 시 'development'로 덮어쓰므로 VITE_ENV 사용
@@ -56,6 +59,9 @@ export default defineConfig({
   ],
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
   },
   base: '/',
   server: {

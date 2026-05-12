@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { Heart, CheckCircle, CircleDashed, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { useOverlayActions } from '../../context/OverlayContext';
-import { getUserDatesMonthlyApi, getUserFirstCheckinApi } from '../../api/study';
+import { useAttendanceCalendar } from '../../context/AttendanceCalendarContext';
 import { vibrate } from '../../utils/osFunction';
 
 const DAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -86,13 +86,11 @@ const AttendanceCalendarOverlay = ({ initialYear, initialMonth }) => {
   "use memo";
 
   const { resolveOverlay } = useOverlayActions();
+  const { daysMap, firstCheckin, prefetchMonth } = useAttendanceCalendar();
 
   const todayRef = new Date();
   const [year, setYear] = useState(initialYear ?? todayRef.getFullYear());
   const [month, setMonth] = useState(initialMonth ?? todayRef.getMonth() + 1);
-  // 'YYYY-MM' 키로 days 배열 캐싱 (prev/current/next prefetch 용)
-  const [daysMap, setDaysMap] = useState({});
-  const [firstCheckin, setFirstCheckin] = useState(null);
 
   const today = new Date();
   const isCurrentMonth = year === today.getFullYear() && month === today.getMonth() + 1;
@@ -105,31 +103,13 @@ const AttendanceCalendarOverlay = ({ initialYear, initialMonth }) => {
   const prevYM = shiftYM(year, month, -1);
   const nextYM = shiftYM(year, month, 1);
 
-  // prev/current/next 3개월 데이터 prefetch (캐시되어 있으면 skip)
+  // prev/current/next 3개월 prefetch (Provider가 캐시 보유 → 미스만 fetch)
   useEffect(() => {
-    const targets = [prevYM, { year, month }, nextYM];
-    targets.forEach(({ year: y, month: m }) => {
-      const key = `${y}-${m}`;
-      if (daysMap[key]) return;
-      getUserDatesMonthlyApi(y, m).then(res => {
-        if (res?.code === 200) {
-          setDaysMap(prev => ({ ...prev, [key]: res.data }));
-        }
-      }).catch(() => {});
+    [prevYM, { year, month }, nextYM].forEach(({ year: y, month: m }) => {
+      prefetchMonth(y, m);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year, month]);
-
-  useEffect(() => {
-    getUserFirstCheckinApi().then(res => {
-      if (res?.code === 200 && res.data?.first_date) {
-        const [y, m] = res.data.first_date.split('-').map(Number);
-        setFirstCheckin({ year: y, month: m });
-      } else {
-        setFirstCheckin(null);
-      }
-    }).catch(() => setFirstCheckin(null));
-  }, []);
 
   const cellsCurr = buildCells(year, month, daysMap[`${year}-${month}`]);
   const cellsPrev = buildCells(prevYM.year, prevYM.month, daysMap[`${prevYM.year}-${prevYM.month}`]);

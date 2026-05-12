@@ -110,8 +110,8 @@ const StudyNewFullSheet = () => {
           <RewindCircle size={21} weight="fill" color="white" />
         </div>
       ),
-      title: '빠른 복습',
-      desc: '최근 학습을 기반으로 복습 예정 단어만 모았어요',
+      title: 'AI 추천 테스트',
+      desc: '시스템이 알아서 척척!\n지금 내게 꼭 필요한 단어들로 바로 시작해요.',
       borderStyle: {
         border: '1.5px solid transparent',
         backgroundImage:
@@ -167,8 +167,8 @@ const StudyNewFullSheet = () => {
           <Brain size={21} weight="fill" color="white" />
         </div>
       ),
-      title: '학습',
-      desc: '학습을 통해 단어들을 공부해요',
+      title: '집중 반복 학습',
+      desc: '보고 듣고 따라 읽으며!\n단어의 뜻과 예문까지 깊이 있게 외워요.',
       borderStyle: null,
       chevronColor: 'var(--primary-main-600)',
       className: 'border-[1px] border-primary-main-600 bg-primary-main-100',
@@ -187,8 +187,8 @@ const StudyNewFullSheet = () => {
           <Lightbulb size={21} weight="fill" color="white" />
         </div>
       ),
-      title: '테스트',
-      desc: '나의 단어 암기 상태를 테스트 해보세요',
+      title: '자유 설정 테스트',
+      desc: '옵션을 내 마음대로!\n원하는 조건만 쏙쏙 골라 집중해서 점검해요.',
       borderStyle: null,
       chevronColor: 'var(--secondary-purple-600)',
       className: 'border-[1px] border-secondary-purple-600 bg-secondary-purple-100',
@@ -247,7 +247,7 @@ const StudyNewFullSheet = () => {
               <span className="text-[18px] font-[700] text-layout-black">
                 {card.title}
               </span>
-              <span className="text-[11px] font-[400] text-layout-gray-500">
+              <span className="text-[11px] font-[400] text-layout-gray-500 whitespace-pre-line text-left">
                 {card.desc}
               </span>
             </div>

@@ -885,7 +885,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     today.setHours(0, 0, 0, 0);
                     date.setHours(0, 0, 0, 0);
                     const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-                    const text = daysDiff <= 0 ? '오늘 복습 예정' : `${daysDiff}일 후 복습 예정`;
+                    if (daysDiff < 1) return null;
+                    const text = `${daysDiff}일 후 복습 예정`;
                     return (
                       <div className="absolute bottom-[15px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2]">
                         <motion.div

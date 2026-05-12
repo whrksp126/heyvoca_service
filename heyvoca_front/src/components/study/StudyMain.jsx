@@ -85,9 +85,10 @@ const StudyMain = ({ words }) => {
     setPlayingItemId(null);
   }, []);
 
-  // 카드 이동
+  // 카드 이동 — 자동 재생 중이었다면 중지하고 버튼 표기도 동기화
   const goToNext = useCallback(() => {
     stopPlayback();
+    setIsPlaying(false);
     vibrate({ duration: 5 });
     setDirection('next');
     setCurrentIndex(prev => prev + 1);
@@ -95,6 +96,7 @@ const StudyMain = ({ words }) => {
 
   const goToPrev = useCallback(() => {
     stopPlayback();
+    setIsPlaying(false);
     vibrate({ duration: 5 });
     setDirection('prev');
     setCurrentIndex(prev => prev - 1);
@@ -263,8 +265,23 @@ const StudyMain = ({ words }) => {
     exit: (dir) => ({ x: dir === 'next' ? '-100%' : '100%', opacity: 0 }),
   };
 
+  // 좌우 스와이프 → 다음/이전 카드
+  const SWIPE_OFFSET_THRESHOLD = 80;
+  const SWIPE_VELOCITY_THRESHOLD = 500;
+  const handleDragEnd = (_, info) => {
+    const { offset, velocity } = info;
+    const swipedFar = Math.abs(offset.x) > SWIPE_OFFSET_THRESHOLD;
+    const swipedFast = Math.abs(velocity.x) > SWIPE_VELOCITY_THRESHOLD;
+    if (!swipedFar && !swipedFast) return;
+    if (offset.x < 0 && currentIndex < totalCards - 1) {
+      goToNext();
+    } else if (offset.x > 0 && currentIndex > 0) {
+      goToPrev();
+    }
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-layout-white dark:bg-layout-black overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-var(--status-bar-height))] bg-layout-white dark:bg-layout-black overflow-hidden">
       <StudyHeader onSettingsClick={handleSettingsClick} />
 
       {/* 프로그레스 바 */}
@@ -303,7 +320,11 @@ const StudyMain = ({ words }) => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute inset-x-[20px] top-[15px] bottom-0 bg-layout-gray-50 dark:bg-layout-gray-900 rounded-[12px] overflow-y-auto"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            className="absolute inset-x-[20px] top-[15px] bottom-0 bg-layout-gray-50 dark:bg-layout-gray-900 rounded-[12px] overflow-y-auto touch-pan-y"
           >
             <div className="p-[20px] flex flex-col gap-[25px]">
               {/* 암기 상태 아이콘 */}
@@ -322,7 +343,7 @@ const StudyMain = ({ words }) => {
                   {/* 단어 */}
                   {isVisible('word') ? (
                     <div className={`flex items-start justify-between gap-[5px] ${playingItemId === 'word' ? 'text-primary-main-600' : ''}`}>
-                      <span className={`text-[24px] font-[700] line-height-[29px] flex-1 ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
+                      <span className={`text-[24px] font-[700] line-height-[29px] flex-1 ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black'}`}>
                         {word.origin}
                       </span>
                       <motion.button
@@ -342,7 +363,7 @@ const StudyMain = ({ words }) => {
                   <div className="flex flex-col gap-[4px]">
                     {meanings.map((meaning, idx) => (
                       <div key={idx} className="flex items-center justify-between gap-[8px]">
-                        <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${playingItemId === 'meanings' ? 'text-primary-main-600' : 'text-layout-gray-600 dark:text-layout-gray-300'}`}>
+                        <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${playingItemId === 'meanings' ? 'text-primary-main-600' : 'text-layout-gray-600 dark:text-layout-black'}`}>
                           {meaning}
                         </span>
                         <motion.button
@@ -361,7 +382,7 @@ const StudyMain = ({ words }) => {
               {/* 예문 */}
               {examples.length > 0 && (
                 <div className="flex flex-col gap-[8px]">
-                  <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+                  <p className="text-[14px] font-[700] text-layout-black">
                     예문
                   </p>
                   {examples.map((example, idx) => {
@@ -372,7 +393,7 @@ const StudyMain = ({ words }) => {
                         {/* 예문 원문 */}
                         {isVisible('exampleSentences') ? (
                           <div className="flex items-start justify-between gap-[5px]">
-                            <span className={`text-[14px] font-[400] flex-1 ${playingItemId === 'exampleSentences' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
+                            <span className={`text-[14px] font-[400] flex-1 ${playingItemId === 'exampleSentences' ? 'text-primary-main-600' : 'text-layout-black'}`}>
                               {exOrigin}
                             </span>
                             <motion.button
@@ -435,7 +456,7 @@ const StudyMain = ({ words }) => {
         {/* 재생/정지 */}
         <motion.button
           onClick={handlePlayToggle}
-          className="flex-1 h-[45px] rounded-[8px] text-[16px] font-[700] bg-layout-gray-200 text-layout-white dark:text-layout-white"
+          className="flex-1 h-[45px] rounded-[8px] text-[16px] font-[700] bg-layout-gray-200 text-layout-white dark:text-layout-black"
           whileTap={{ scale: 0.95 }}
         >
           {isPlaying ? '정지' : '재생'}
@@ -445,7 +466,7 @@ const StudyMain = ({ words }) => {
         {currentIndex < totalCards - 1 ? (
           <motion.button
             onClick={goToNext}
-            className="flex-1 h-[45px] rounded-[8px] text-[16px] font-[700] bg-layout-gray-200 text-layout-white dark:text-layout-white"
+            className="flex-1 h-[45px] rounded-[8px] text-[16px] font-[700] bg-layout-gray-200 text-layout-white dark:text-layout-black"
             whileTap={{ scale: 0.95 }}
           >
             다음

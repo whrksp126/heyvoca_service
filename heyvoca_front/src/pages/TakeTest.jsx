@@ -6,13 +6,12 @@ import { useVocabulary } from '../context/VocabularyContext';
 import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
-import SaveStudyData from '../components/takeTest/SaveStudyData';
 import { MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../utils/common';
 import { sortByForgettingPriority } from '../utils/forgettingPriority';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 // Phase 1.3: 추천 API (정식). createStudySession은 폴백 모드용으로 유지
-import { getStudyRecommend, createStudySession } from '../api/study';
+import { getStudyRecommend, createStudySession, finishStudySession } from '../api/study';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -525,16 +524,22 @@ const TakeTest = () => {
     };
   }, []);
 
-  // 
+  //
   useEffect(() => {
     const handleUpdateAndNavigate = async () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
+        // 학습 세션 종료 (fire-and-forget)
+        if (studySessionRef?.current) {
+          finishStudySession(studySessionRef.current)
+            .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
+        }
         await updateVocabularySheetAndRecentStudyData();
         navigate("/take-test/result", {
           state: {
             testQuestions: testQuestions,
             testType: state.testType,
-          }
+          },
+          replace: true,
         });
       }
     };
@@ -580,13 +585,8 @@ const TakeTest = () => {
     );
   } else {
     if (recentStudy[state.testType]?.status === "end") {
-      // 학습 종료 후 학습 결과 저장 중 ... 처리
-      return (
-        <div>
-          <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-          <SaveStudyData studySessionRef={studySessionRef} />
-        </div>
-      );
+      // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.
+      return null;
     }
 
     return (

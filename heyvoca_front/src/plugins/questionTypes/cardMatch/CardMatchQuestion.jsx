@@ -331,7 +331,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
                 today.setHours(0, 0, 0, 0);
                 date.setHours(0, 0, 0, 0);
                 const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-                const text = daysDiff <= 0 ? '오늘 복습 예정' : `${daysDiff}일 후 복습 예정`;
+                // 백엔드 응답 도착 전 잔여 fsrs(이미 지난 next_review)일 가능성 → 미래일 때만 표시
+                if (daysDiff < 1) return null;
+                const text = `${daysDiff}일 후 복습 예정`;
                 return (
                   <div className="absolute bottom-[8px] left-0 right-0 flex justify-center z-[2]">
                     <motion.div

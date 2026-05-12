@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { setDefaultStatusBarStyle } from '../utils/statusBarManager';
 
 const ThemeContext = createContext();
 
@@ -33,12 +34,7 @@ export const ThemeProvider = ({ children }) => {
         setIsDark(false);
       }
 
-      if (window.ReactNativeWebView) {
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          type: 'setStatusBarStyle',
-          style: effectiveTheme === 'dark' ? 'light-content' : 'dark-content',
-        }));
-      }
+      setDefaultStatusBarStyle(effectiveTheme === 'dark' ? 'light-content' : 'dark-content');
     };
 
     applyTheme();

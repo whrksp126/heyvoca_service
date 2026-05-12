@@ -7,6 +7,7 @@ import AchievementRewardOverlay from '../components/overlay/AchievementRewardOve
 import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
+import { invalidateCurrentAttendance } from './AttendanceCalendarContext';
 
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
@@ -180,6 +181,9 @@ export const UserProvider = ({ children }) => {
         });
       }
 
+      // 학습 완료 → 달력 캐시 무효화 (이번 달의 daily_mission 갱신 반영)
+      invalidateCurrentAttendance();
+
       if (result.code == 200) {
         return result.data;
       } else {
@@ -252,6 +256,9 @@ export const UserProvider = ({ children }) => {
       ...prevProfile,
       gem_cnt: result.data.gem.after,
     }))
+
+    // 출석 체크 → 달력 캐시 무효화 (이번 달의 attend 갱신 반영)
+    invalidateCurrentAttendance();
   }, []);
 
   // 상품 조회 함수

@@ -32,6 +32,7 @@ import { OverlayProvider } from './components/overlay/OverlayProvider';
 import { GemAnimationProvider } from './context/GemAnimationContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { KeyboardProvider } from './context/KeyboardContext';
+import { AttendanceCalendarProvider } from './context/AttendanceCalendarContext';
 
 const AppLayout = () => {
   return (
@@ -112,21 +113,23 @@ function AppRouter() {
 
   return (
     <UserProvider>
-      <VocabularyProvider>
-        <NewFullSheetContextProvider>
-          <NewBottomSheetContextProvider>
-            <OverlayContextProvider>
-              <GemAnimationProvider>
-                <ThemeProvider>
-                  <KeyboardProvider>
-                    <AppWithContexts />
-                  </KeyboardProvider>
-                </ThemeProvider>
-              </GemAnimationProvider>
-            </OverlayContextProvider>
-          </NewBottomSheetContextProvider>
-        </NewFullSheetContextProvider>
-      </VocabularyProvider>
+      <AttendanceCalendarProvider>
+        <VocabularyProvider>
+          <NewFullSheetContextProvider>
+            <NewBottomSheetContextProvider>
+              <OverlayContextProvider>
+                <GemAnimationProvider>
+                  <ThemeProvider>
+                    <KeyboardProvider>
+                      <AppWithContexts />
+                    </KeyboardProvider>
+                  </ThemeProvider>
+                </GemAnimationProvider>
+              </OverlayContextProvider>
+            </NewBottomSheetContextProvider>
+          </NewFullSheetContextProvider>
+        </VocabularyProvider>
+      </AttendanceCalendarProvider>
     </UserProvider>
   );
 }

@@ -11,10 +11,7 @@ import { WithdrawNewBottomSheet } from '../newBottomSheet/WithdrawNewBottomSheet
 import { useUser } from '../../context/UserContext';
 import { withdrawApi } from '../../api/auth';
 import { setCookie } from '../../utils/common';
-import { launchGoogleWithdraw, showToast, vibrate, openExternalUrl } from '../../utils/osFunction';
-
-const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
-const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
+import { launchGoogleWithdraw, showToast, vibrate } from '../../utils/osFunction';
 
 const AccountNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -224,35 +221,6 @@ const AccountNewFullSheet = () => {
           <SignOut size={20} className="text-layout-gray-200 dark:text-layout-gray-200" />
         </li>
 
-      </div>
-
-      {/* 약관 및 정책 링크 */}
-      <div className="flex items-center justify-center gap-[16px] pt-[20px] px-[20px]">
-        <button
-          onClick={() => openExternalUrl(TERMS_URL)}
-          className="
-            text-[12px] font-[400]
-            text-[#999] dark:text-[#666]
-            underline
-            hover:text-[#666] dark:hover:text-[#999]
-            transition-colors
-          "
-        >
-          이용약관
-        </button>
-        <span className="text-[#ccc] dark:text-[#444] text-[12px]">|</span>
-        <button
-          onClick={() => openExternalUrl(PRIVACY_URL)}
-          className="
-            text-[12px] font-[400]
-            text-[#999] dark:text-[#666]
-            underline
-            hover:text-[#666] dark:hover:text-[#999]
-            transition-colors
-          "
-        >
-          개인정보처리방침
-        </button>
       </div>
 
       {/* 회원 탈퇴 버튼 */}

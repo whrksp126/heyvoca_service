@@ -324,7 +324,7 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                       );
                     })}
                   </span>
-                  <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white self-center">{meanings.join(', ')}</p>
+                  <p className="text-[11px] font-[400] text-layout-black self-center">{meanings.join(', ')}</p>
                 </li>
               ))}
             </ul>
@@ -499,9 +499,8 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                     <span
                       className="cursor-pointer"
                       onClick={() => getTextSound(stripHtmlTags(meaning), "ko")}
-                    >
-                      {meaning}
-                    </span>
+                      dangerouslySetInnerHTML={{ __html: meaning }}
+                    />
                   </p>
                 </div>
               </li>

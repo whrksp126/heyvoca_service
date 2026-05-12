@@ -13,6 +13,7 @@ import { vibrate } from '../../utils/osFunction';
 import { getTextSound } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
+import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -90,6 +91,9 @@ const getAchievementTextStyle = (level) => {
 
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // 결과 화면 배경이 프라이머리 계열이라 statusbar 텍스트는 흰색 강제 (페이지 떠나면 자동 복귀)
+  useStatusBarStyle('light-content');
 
   const { isDark } = useTheme();
   const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult } = useVocabulary();
@@ -903,11 +907,8 @@ const StudyResult = () => {
   }
 
   if (screenList.length === 0) {
-    return (
-      <div className='relative flex flex-col h-[100dvh] items-center justify-center'>
-        <div>로딩 중...</div>
-      </div>
-    );
+    // 학습 결과 API 응답 대기 중 — 깜빡임 방지를 위해 빈 화면 (배경은 다음 화면과 동일하게 프라이머리 톤 유지)
+    return <div className='h-[100dvh] bg-primary-main-100' />;
   }
 
   return (

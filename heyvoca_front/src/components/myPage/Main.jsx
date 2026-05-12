@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight, FileText, ShieldCheck } from "@phosphor-icons/react";
+import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, CaretRight, FileText, ShieldCheck, Info } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
@@ -175,6 +175,14 @@ const Main = () => {
           <div className="flex items-center gap-1.5">
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
+        </li>
+
+        <li className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <Info weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">버전 정보</span>
+          </div>
+          <span className="text-[12px] font-normal text-[#999]">v{__APP_VERSION__}</span>
         </li>
       </ul>
     </motion.main>
