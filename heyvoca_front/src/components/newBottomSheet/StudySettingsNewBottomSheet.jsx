@@ -30,7 +30,7 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
         <CaretUpDown size={14} weight="fill" className="text-layout-gray-200" />
       </div>
 
-      <span className="flex-1 text-[16px] font-[700] text-layout-black dark:text-layout-white">
+      <span className="flex-1 text-[16px] font-[700] text-layout-black dark:text-layout-black">
         {item.label}
       </span>
 
@@ -217,14 +217,14 @@ export const StudySettingsNewBottomSheet = ({ onCancel, onSet, initialSettings }
         <div className="flex gap-[10px] w-full pointer-events-auto">
           <motion.button
             onClick={handleCancel}
-            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white text-[16px] font-[700]"
+            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white text-[16px] font-[700] dark:text-layout-black"
             whileTap={{ scale: 0.95 }}
           >
             취소
           </motion.button>
           <motion.button
             onClick={handleSave}
-            className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white text-[16px] font-[700]"
+            className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white text-[16px] font-[700] dark:text-layout-black"
             whileTap={{ scale: 0.95 }}
           >
             저장

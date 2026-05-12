@@ -238,7 +238,7 @@ const Main = () => {
               absolute top-[3px] left-[3px] right-[3px] bottom-[3px] z-[1]
               flex items-center justify-center
               rounded-[7px]
-              bg-layout-white dark:bg-layout-black
+              bg-layout-white
             ">
               <span className="
                 text-transparent bg-clip-text

@@ -349,7 +349,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
           disabled={!isConfirmActive}
           onClick={handleConfirm}
           className={`
-            w-full h-[52px] rounded-[12px] text-[16px] font-[700] text-layout-white
+            w-full h-[52px] rounded-[12px] text-[16px] font-[700] text-layout-white dark:text-layout-black
             transition-colors
             ${isConfirmActive ? 'bg-primary-main-600' : 'bg-layout-gray-200'}
           `}

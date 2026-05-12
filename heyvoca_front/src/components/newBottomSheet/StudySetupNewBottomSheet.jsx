@@ -300,7 +300,7 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
         <div className="flex gap-[10px] pointer-events-auto">
           <motion.button
             onClick={() => { vibrate({ duration: 5 }); onCancel?.(); popNewBottomSheet(); }}
-            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white text-[16px] font-[700]"
+            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
             whileTap={{ scale: 0.95 }}
           >
             취소
@@ -308,7 +308,7 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
           <motion.button
             onClick={() => { vibrate({ duration: 5 }); handleStart(); }}
             className={`
-              flex-1 h-[45px] rounded-[8px] text-layout-white text-[16px] font-[700]
+              flex-1 h-[45px] rounded-[8px] text-layout-white dark:text-layout-black text-[16px] font-[700]
               ${isStartDisabled ? 'bg-layout-gray-200 cursor-not-allowed' : 'bg-primary-main-600'}
             `}
             whileTap={!isStartDisabled ? { scale: 0.95 } : {}}
