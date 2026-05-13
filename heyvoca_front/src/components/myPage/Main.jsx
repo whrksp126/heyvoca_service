@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useTheme } from '../../context/ThemeContext';
-import { vibrate, openExternalUrl } from '../../utils/osFunction';
+import { vibrate, openExternalUrl, parseAppVersion } from '../../utils/osFunction';
+
+const APP_VERSION_INFO = parseAppVersion();
 
 const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
 const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
@@ -177,13 +179,17 @@ const Main = () => {
           </div>
         </li>
 
-        <li className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
-          <div className="flex items-center gap-2">
-            <Info weight="fill" className="text-[20px] text-primary-main-600" />
-            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">버전 정보</span>
-          </div>
-          <span className="text-[12px] font-normal text-[#999]">v{__APP_VERSION__}</span>
-        </li>
+        {APP_VERSION_INFO && (
+          <li className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+            <div className="flex items-center gap-2">
+              <Info weight="fill" className="text-[20px] text-primary-main-600" />
+              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">버전 정보</span>
+            </div>
+            <span className="text-[12px] font-normal text-[#999]">
+              v{APP_VERSION_INFO.version}{APP_VERSION_INFO.build ? ` (${APP_VERSION_INFO.build})` : ''}
+            </span>
+          </li>
+        )}
       </ul>
     </motion.main>
   );

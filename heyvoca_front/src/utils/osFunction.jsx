@@ -19,6 +19,16 @@ export function getDevicePlatform() {
   }
 }
 
+// 앱 WebView의 userAgent에서 버전/빌드 번호 파싱
+// - 앱: { platform: 'iOS'|'Android', version: '1.0.1', build: '14' }
+// - 웹 브라우저: null
+export function parseAppVersion() {
+  const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+  const m = ua.match(/HeyVoca (iOS|Android)\/([\d.]+)(?:\s*\(build\s*([^)]+)\))?/);
+  if (!m) return null;
+  return { platform: m[1], version: m[2], build: m[3] || null };
+}
+
 // 외부 브라우저로 URL 열기
 // - 앱(WebView): 네이티브에 메시지 전달 → Linking.openURL
 // - 웹: 새 탭으로 열기
