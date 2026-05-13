@@ -1,8 +1,7 @@
 from flask import render_template, redirect, url_for, request, session, jsonify, send_file, send_from_directory
 from app import db
 from app.routes import fcm_bp
-from app.models.models import db, User, UserHasToken, UserVoca, DailySentence
-from sqlalchemy import func
+from app.models.models import db, UserHasToken
 #from config import FCM_API_KEY
 
 # from flask_login import current_user, login_required, login_user, logout_user
@@ -17,13 +16,15 @@ from uuid import UUID
 
 import firebase_admin
 from firebase_admin import credentials, messaging
+from firebase_admin import exceptions as fb_exceptions
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import atexit
-import random
 
 from flask import g
 from app.utils.jwt_utils import jwt_required
+from app.services.fcm_context import query_message_allowed_users, build_push_contexts
+from app.services.fcm_messages import classify_user, select_message, URGENT_CATEGORIES
 
 @fcm_bp.route('/fcm_html')
 def fcm_html():
@@ -194,126 +195,63 @@ def send_push_notification(title, message, token):
         raise e
 
 
-def get_review_count(user_id):
-    """사용자별 오늘 복습해야 할 단어 수를 반환합니다."""
-    today_kst = (datetime.utcnow() + timedelta(hours=9)).date()
-    today_str = today_kst.strftime('%Y-%m-%d')
-    
-    # UserVoca.data (TEXT) 내의 nextReview 필드를 추출하여 오늘 날짜와 비교
-    count = db.session.query(UserVoca.id).filter(
-        UserVoca.user_id == user_id,
-        func.json_extract(UserVoca.data, '$.nextReview').isnot(None),
-        func.json_unquote(func.json_extract(UserVoca.data, '$.nextReview')) <= today_str
-    ).count()
-    
-    return count
+def _send_with_token_cleanup(title, body, token):
+    """발송 + 무효 토큰이면 UserHasToken에서 삭제."""
+    try:
+        send_push_notification(title, body, token)
+    except messaging.UnregisteredError:
+        _delete_token(token)
+    except fb_exceptions.InvalidArgumentError:
+        _delete_token(token)
+    except Exception:
+        pass  # 일시 오류는 다음 cron에서 재시도
 
 
-def send_study_reminder_1pm(app):
-    with app.app_context():
-        today_kst = (datetime.utcnow() + timedelta(hours=9)).date()
-        daily_sentence = db.session.query(DailySentence)\
-                                    .filter(DailySentence.date == today_kst)\
-                                    .first()
-
-        try:
-            # 알림 허용된 유저와 그들의 정보(이름 포함)를 가져오기 (사용자별 그룹화)
-            tokens_query = db.session.query(UserHasToken, User.name)\
-                                .join(User, UserHasToken.user_id == User.id)\
-                                .filter(UserHasToken.is_message_allowed == True)\
-                                .all()
-            
-            # 사용자별로 데이터 그룹화 {user_id: {'name': name, 'tokens': [tokens]}}
-            user_data = {}
-            for t, name in tokens_query:
-                if t.user_id not in user_data:
-                    user_data[t.user_id] = {'name': name, 'tokens': []}
-                user_data[t.user_id]['tokens'].append(t.token)
-
-            for user_id, info in user_data.items():
-                review_count = get_review_count(user_id)
-                user_name = info['name']
-                tokens = info['tokens']
-                
-                # 다이나믹 타이틀 후보군
-                titles = [
-                    f"{user_name}님, 가볍게 머리 식힐 시간이에요! 🍰",
-                    "단어 배달 왔습니다! 점심은 맛있게 드셨나요? �",
-                    "헤이보카랑 잠깐 대화하실래요? 😊"
-                ]
-                if review_count > 0:
-                    titles.append(f"지금 복습하면 딱 좋은 {review_count}개의 단어! 📚")
-                    title = random.choice(titles)
-                else:
-                    title = random.choice(titles[:3]) # 복습 단어 없을 때
-
-                if review_count > 0:
-                    message = f"오늘 복습할 단어가 {review_count}개 있어요! 지금 가볍게 3분만 살펴볼까요? ✨"
-                elif daily_sentence:
-                    message = f"오늘의 문장: {daily_sentence.sentence}\n{daily_sentence.meaning}\n잠깐 짬을 내어 읽어보세요!"
-                else:
-                    message = "조금씩 꾸준히! 오늘 단어 학습을 시작해주세요~"
-
-                for token in tokens:
-                    try:
-                        send_push_notification(title, message, token)
-                    except Exception:
-                        pass
-            
-            # print(f"1 PM fcm success for {len(user_data)} users!")
-            pass
-        except Exception as e:
-            print("1 PM fcm failed : ", e)
+def _delete_token(token):
+    try:
+        UserHasToken.query.filter_by(token=token).delete()
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
 
 
-def send_study_reminder_9pm(app):
+def run_reminder(app, time_slot: str, urgent_only: bool = False):
+    """학습 리마인더 푸시 발송.
+
+    time_slot in {'1pm','4pm','9pm','11pm'}.
+    urgent_only=True 면 streak_emergency / danger 카테고리만 발송 (스팸 방지).
+    """
     with app.app_context():
         try:
-            # 알림 허용된 유저와 그들의 정보(이름 포함)를 가져오기 (사용자별 그룹화)
-            tokens_query = db.session.query(UserHasToken, User.name)\
-                                .join(User, UserHasToken.user_id == User.id)\
-                                .filter(UserHasToken.is_message_allowed == True)\
-                                .all()
-            
-            user_data = {}
-            for t, name in tokens_query:
-                if t.user_id not in user_data:
-                    user_data[t.user_id] = {'name': name, 'tokens': []}
-                user_data[t.user_id]['tokens'].append(t.token)
-
-            for user_id, info in user_data.items():
-                review_count = get_review_count(user_id)
-                user_name = info['name']
-                tokens = info['tokens']
-                
-                # 다이나믹 타이틀 후보군
-                titles = [
-                    f"오늘 하루도 수고 많으셨어요, {user_name}님! 🌙",
-                    "내일의 나를 위한 1분, 복습 시작할까요? 🔥",
-                    "헤이보카에서 공부의 마무리를 지어보세요! 👏"
-                ]
-                if review_count > 0:
-                    titles.append(f"단어 {review_count}개만 더 외우고 푹 쉬어요! 🛏️")
-                    title = random.choice(titles)
-                else:
-                    title = random.choice(titles[:3])
-
-                if review_count > 0:
-                    message = f"앗, 아직 오늘 복습할 단어가 {review_count}개 남았어요! 잊기 전에 쓱 훑어보고 주무세요! 🔥"
-                else:
-                    message = "오늘 학습을 모두 마치셨군요! 수고하셨습니다. 내일도 함께해요! 👏"
-
-                for token in tokens:
-                    try:
-                        send_push_notification(title, message, token)
-                    except Exception:
-                        pass
-            
-            # print(f"9 PM fcm success for {len(user_data)} users!")
-            pass
+            user_data = query_message_allowed_users()
+            ctxs = build_push_contexts(user_data)
         except Exception as e:
-            print("9 PM fcm failed : ", e)
+            print(f"[FCM {time_slot}] context build failed:", e)
+            return
 
+        sent, skipped = 0, 0
+        for user_id, ctx in ctxs.items():
+            try:
+                category = classify_user(ctx, time_slot)
+            except Exception as e:
+                print(f"[FCM {time_slot}] classify failed for {user_id}:", e)
+                continue
+
+            if urgent_only and category not in URGENT_CATEGORIES:
+                skipped += 1
+                continue
+
+            try:
+                title, body = select_message(category, time_slot, ctx)
+            except Exception as e:
+                print(f"[FCM {time_slot}] select failed for {user_id}:", e)
+                continue
+
+            for token in ctx.get('tokens') or []:
+                _send_with_token_cleanup(title, body, token)
+            sent += 1
+
+        print(f"[FCM {time_slot}] sent={sent} skipped={skipped} urgent_only={urgent_only}")
 
 
 def create_scheduler(app):
@@ -331,9 +269,17 @@ def create_scheduler(app):
         return None
 
     scheduler = BackgroundScheduler()
-    # 사용자 요청 반영: 오후 1시(13:00)와 저녁 9시(21:00) 발송
-    scheduler.add_job(lambda: send_study_reminder_1pm(app), CronTrigger(hour=13, minute=0))
-    scheduler.add_job(lambda: send_study_reminder_9pm(app), CronTrigger(hour=21, minute=0))
+    KST = 'Asia/Seoul'
+    # 고정 발송: 오후 1시 / 저녁 9시 — 사용자 상태에 맞춰 카테고리 분기
+    scheduler.add_job(lambda: run_reminder(app, '1pm'),
+                      CronTrigger(hour=13, minute=0, timezone=KST))
+    scheduler.add_job(lambda: run_reminder(app, '9pm'),
+                      CronTrigger(hour=21, minute=0, timezone=KST))
+    # 긴급 추가 발송: 16시(복습 20개↑) / 23시(streak 끊김 임박) — 해당 사용자에게만
+    scheduler.add_job(lambda: run_reminder(app, '4pm', urgent_only=True),
+                      CronTrigger(hour=16, minute=0, timezone=KST))
+    scheduler.add_job(lambda: run_reminder(app, '11pm', urgent_only=True),
+                      CronTrigger(hour=23, minute=0, timezone=KST))
 
     # Phase 2.1 — 문제 유형별 정답률 30일 집계 (매일 04:00 KST)
     def _refresh_qstat():
