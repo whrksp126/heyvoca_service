@@ -97,8 +97,10 @@ def create_app():
       "https://heyvoca-front.ghmate.com",
       "https://stg-heyvoca-front.ghmate.com",
       "https://dev-heyvoca-front.ghmate.com",
+      "https://heyvoca.ghmate.com",
       "http://localhost:3000",
       "http://10.0.2.2:3000",
+      "http://localhost:4321",
   ]
 
   # local / dev 환경에서만 내부망 IP 대역 허용
@@ -172,6 +174,7 @@ def create_app():
   from app.routes.voca_books import voca_books_bp
   from app.routes.study import study_bp
   from app.routes.admin import admin_bp
+  from app.routes.admin_voca_books import admin_voca_books_bp
 
   app.register_blueprint(health_bp)
   app.register_blueprint(auth_bp)
@@ -188,6 +191,7 @@ def create_app():
   app.register_blueprint(voca_books_bp)
   app.register_blueprint(study_bp)
   app.register_blueprint(admin_bp)
+  app.register_blueprint(admin_voca_books_bp)
 
   # FCM 스케줄러 시작
   from app.routes.fcm import create_scheduler
