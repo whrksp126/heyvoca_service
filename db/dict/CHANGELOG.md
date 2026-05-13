@@ -8,3 +8,4 @@
 | 20260506-1 | 2026-05-06 | unknown | - | - | - | 초기 사전 dump (DB 분리 후 첫 발행) (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260507-1 | 2026-05-07 | unknown | - | - | - | 기초부터 차근차근 영어단어 7탄 카테고리(수능) 적용 (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260509-1 | 2026-05-09 | unknown | - | - | - | voca: 예문에 target-word 강조 태그 적용 (15,518 vocas, 26,590 examples) (voca=51259, voca_meaning=133458, voca_book=12773) |
+| 20260513-1 | 2026-05-13 | unknown | - | - | - | voca: batch 0777-0860 예문 강조 적용 (1675 vocas / 1886 examples) (voca=51259, voca_meaning=133458, voca_book=12773) |
