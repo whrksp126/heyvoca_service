@@ -9,6 +9,9 @@ __pycache__/
 # DB 백업 파일 (git에 올리지 않음 - 개인정보 포함)
 db/backups/
 
+# 임시 작업 디렉토리 (admin 단어장 예문 강조 처리)
+db/admin_emphasis/
+
 # 툴 내부 디렉토리
 .agent/
 .claude/

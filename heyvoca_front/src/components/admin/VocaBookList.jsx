@@ -35,9 +35,9 @@ const VocaBookList = ({ items, onEdit, onToggleBookstore }) => {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-800">
+    <div className="overflow-auto rounded-xl border border-gray-800 max-h-[calc(100vh-340px)]">
       <table className="w-full text-sm">
-        <thead className="bg-gray-900 text-gray-400 text-xs uppercase tracking-wide">
+        <thead className="bg-gray-900 text-gray-400 text-xs uppercase tracking-wide sticky top-0 z-10">
           <tr>
             <th className="px-3 py-2 text-left font-medium">ID</th>
             <th className="px-3 py-2 text-left font-medium">단어장명</th>
