@@ -1,7 +1,7 @@
 {
-  "url": "https://objectstore.ghmate.com/heyvoca-dict/full_dict_v20260518-1.sql",
-  "sha256": "898d64813e222b8af1671e8ba4da1a08a77c7ad1af655cb0d6211f2dd3981db1",
-  "version": "20260518-1",
+  "url": "https://objectstore.ghmate.com/heyvoca-dict/full_dict_v20260518-2.sql",
+  "sha256": "62492591e18057250928c6929d7b0c0febe35a225711970854da18d66244a10c",
+  "version": "20260518-2",
   "table_counts_min": {
     "voca": 41007,
     "voca_meaning": 106766,
