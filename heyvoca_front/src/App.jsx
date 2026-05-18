@@ -33,6 +33,7 @@ import { GemAnimationProvider } from './context/GemAnimationContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { KeyboardProvider } from './context/KeyboardContext';
 import { AttendanceCalendarProvider } from './context/AttendanceCalendarContext';
+import WebStorageMigration from './context/WebStorageMigration';
 
 const AppLayout = () => {
   return (
@@ -85,6 +86,7 @@ function AppWithContexts() {
     <Layout>
       {/* <BottomSheetProvider> */}
       {/* <FullSheetProvider> */}
+      <WebStorageMigration />
       <AppLayout />
       <NewFullSheetProvider />
       <NewBottomSheetProvider />

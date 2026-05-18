@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { backendUrl, fetchDataAsync } from '../utils/common';
-import { getDevicePlatform } from '../utils/osFunction';
-import UpdateModal from '../components/common/UpdateModal';
+import { useNewBottomSheetActions } from './NewBottomSheetContext';
+import { UpdateNewBottomSheet } from '../components/newBottomSheet/UpdateNewBottomSheet';
 
 // 백엔드 version 조회 API 주소
 const CHECK_VERSION_URL = `${backendUrl}/version/get_version`;
@@ -103,11 +103,13 @@ function checkAndMigrateIndexedDB(latestVersion) {
 }
 
 export default function WebStorageMigration() {
-  const [updateModal, setUpdateModal] = useState(null); // { mode, platform, storeUrl }
   const checkingRef = useRef(false);
+  const { openAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   useEffect(() => {
     const check = async () => {
+      // 이미 체크/모달 진행 중이면 중복 호출 방지
+      // (await 중인 경우 finally까지 안 가므로 visibilitychange 재진입에도 안전)
       if (checkingRef.current) return;
       checkingRef.current = true;
       try {
@@ -135,15 +137,32 @@ export default function WebStorageMigration() {
             : data?.store_url?.android;
 
           if (min && compareVersions(appUa.version, min) < 0) {
-            setUpdateModal({ mode: 'force', platform: appUa.platform, storeUrl });
+            // 강제 업데이트: 닫기 불가
+            await openAwaitNewBottomSheet(
+              UpdateNewBottomSheet,
+              { mode: 'force', platform: appUa.platform, storeUrl },
+              {
+                isBackdropClickClosable: false,
+                isDragToCloseEnabled: false,
+              }
+            );
           } else if (required && compareVersions(appUa.version, required) < 0) {
-            // 권장 업데이트는 같은 버전 세션에서 한 번만 노출
+            // 권장 업데이트: 같은 required 버전에 대해 dismiss 기록이 있으면 다시 노출하지 않음
             const dismissedFor = localStorage.getItem("update_dismissed_for");
             if (dismissedFor !== required) {
-              setUpdateModal({ mode: 'recommended', platform: appUa.platform, storeUrl, required });
+              await openAwaitNewBottomSheet(
+                UpdateNewBottomSheet,
+                { mode: 'recommended', platform: appUa.platform, storeUrl },
+                {
+                  isBackdropClickClosable: true,
+                  backdropClickValue: false,
+                  isDragToCloseEnabled: false,
+                }
+              );
+              // 어떤 선택을 했든(업데이트 클릭/나중에/backdrop) 같은 버전엔 다시 띄우지 않음
+              // → "지금 업데이트" 후 스토어 다녀와도 모달 재노출 방지
+              localStorage.setItem("update_dismissed_for", required);
             }
-          } else {
-            setUpdateModal(null);
           }
         }
 
@@ -165,21 +184,7 @@ export default function WebStorageMigration() {
     };
     document.addEventListener("visibilitychange", onVisible);
     return () => document.removeEventListener("visibilitychange", onVisible);
-  }, []);
+  }, [openAwaitNewBottomSheet]);
 
-  if (!updateModal) return null;
-
-  return (
-    <UpdateModal
-      mode={updateModal.mode}
-      platform={updateModal.platform}
-      storeUrl={updateModal.storeUrl}
-      onLater={() => {
-        if (updateModal.required) {
-          localStorage.setItem("update_dismissed_for", updateModal.required);
-        }
-        setUpdateModal(null);
-      }}
-    />
-  );
+  return null;
 }

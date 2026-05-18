@@ -7,12 +7,15 @@ from app.routes import version_bp
 def get_version():
   """현재 앱 및 웹의 버전 정보를 반환합니다."""
   version_info = {
-      "app_android_version": "1.1.14",  # 앱 안드로이드 버전
-      "app_ios_version": "1.0.0",  # 앱 아이폰 버전
+      # ⚠️ 아래 두 값은 "실제 스토어에 출시된 최신 버전"과 항상 일치해야 함.
+      # 클라이언트는 자신의 버전 < 이 값이면 "권장 업데이트" 모달을 띄움.
+      # 스토어에 새 버전을 실제로 출시한 직후에만 올릴 것 (아직 심사/롤아웃 중이면 절대 올리지 말 것 — 무한 업데이트 모달 발생).
+      "app_android_version": "1.0.1",  # Play Store 출시 버전 (versionName)
+      "app_ios_version": "1.0.1",  # App Store 출시 버전 (MARKETING_VERSION)
       "web_version": "1.0.1",  # 웹 버전 (캐시 정책 정상화 + 업데이트 모달 도입 — 기존 사용자 reload 트리거)
       "release_date": datetime.now().isoformat(),
       "api_status": "stable",
-      "min_app_version": "1.0.0",  # 앱의 최소 요구 버전
+      "min_app_version": "1.0.0",  # 앱의 최소 요구 버전 (이 값 미만이면 강제 업데이트)
       "min_web_version": "1.0.0",  # 웹의 최소 요구 버전
 
       # 스토어 URL (앱 업데이트 안내 모달에서 사용)
