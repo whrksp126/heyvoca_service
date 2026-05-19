@@ -181,25 +181,29 @@ export const getValueFromURL = (param) => {
   return urlParams.get(param);
 };
 
-let currentTTSAudio = null;
+// 브라우저 autoplay 정책: 첫 user gesture로 unlock된 같은 Audio element만 후속 재생이 허용된다.
+// 매번 new Audio()를 만들면 setTimeout/await 체인을 거친 후속 호출에서 NotAllowedError가 발생하므로,
+// 모듈 레벨에서 하나의 인스턴스를 재사용한다.
+let sharedAudio = null;
 let currentAudioUrl = null;
 let currentRequestId = 0;
 let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
+let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸들
 
 export const getTextSound = async (text, lang) => {
-  // 즉시 기존 오디오 중단 + 이전 Promise resolve (대기 중인 호출 해제)
-  if (currentTTSAudio) {
-    currentTTSAudio.pause();
-    currentTTSAudio.currentTime = 0;
-    currentTTSAudio.src = '';
-    currentTTSAudio = null;
+  // 이전 재생의 cleanup을 먼저 호출하여 리스너 제거 + resolve.
+  if (currentCleanup) {
+    currentCleanup();
+    currentCleanup = null;
+  }
+  if (sharedAudio && !sharedAudio.paused) {
+    sharedAudio.pause();
+    sharedAudio.currentTime = 0;
   }
   if (currentAudioResolve) {
     currentAudioResolve();
     currentAudioResolve = null;
   }
-
-  // 이전 blob URL 정리
   if (currentAudioUrl) {
     URL.revokeObjectURL(currentAudioUrl);
     currentAudioUrl = null;
@@ -226,36 +230,39 @@ export const getTextSound = async (text, lang) => {
     const audioUrl = URL.createObjectURL(audioBlob);
     currentAudioUrl = audioUrl;
 
-    const audio = new Audio(audioUrl);
-
     // 재생 전에 다시 한 번 확인 (새로운 요청이 왔는지)
     if (requestId !== currentRequestId) {
       URL.revokeObjectURL(audioUrl);
+      currentAudioUrl = null;
       return;
     }
 
-    currentTTSAudio = audio;
+    if (!sharedAudio) sharedAudio = new Audio();
+    sharedAudio.src = audioUrl;
 
     // 오디오 재생 완료까지 기다리는 Promise 반환
     return new Promise((resolve) => {
       currentAudioResolve = resolve;
 
       const cleanup = () => {
-        if (currentTTSAudio === audio) {
+        sharedAudio.removeEventListener('ended', cleanup);
+        sharedAudio.removeEventListener('error', cleanup);
+        if (currentCleanup === cleanup) currentCleanup = null;
+        if (currentAudioUrl === audioUrl) {
           URL.revokeObjectURL(audioUrl);
           currentAudioUrl = null;
-          currentTTSAudio = null;
         }
         if (currentAudioResolve === resolve) {
           currentAudioResolve = null;
         }
         resolve();
       };
+      currentCleanup = cleanup;
 
-      audio.addEventListener('ended', cleanup);
-      audio.addEventListener('error', cleanup);
+      sharedAudio.addEventListener('ended', cleanup);
+      sharedAudio.addEventListener('error', cleanup);
 
-      audio.play().catch(err => {
+      sharedAudio.play().catch(err => {
         console.error('오디오 재생 실패:', err);
         cleanup();
       });
@@ -263,18 +270,19 @@ export const getTextSound = async (text, lang) => {
   } catch (error) {
     console.error('TTS 요청 실패:', error);
     if (requestId === currentRequestId) {
-      currentTTSAudio = null;
       currentAudioUrl = null;
     }
   }
 }
 
 export const stopCurrentSound = () => {
-  if (currentTTSAudio) {
-    currentTTSAudio.pause();
-    currentTTSAudio.currentTime = 0;
-    currentTTSAudio.src = '';
-    currentTTSAudio = null;
+  if (currentCleanup) {
+    currentCleanup();
+    currentCleanup = null;
+  }
+  if (sharedAudio && !sharedAudio.paused) {
+    sharedAudio.pause();
+    sharedAudio.currentTime = 0;
   }
   if (currentAudioResolve) {
     currentAudioResolve();

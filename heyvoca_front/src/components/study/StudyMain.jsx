@@ -35,6 +35,9 @@ const StudyMain = ({ words }) => {
   const [direction, setDirection] = useState('next');
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingItemId, setPlayingItemId] = useState(null);
+  // 의미·예문처럼 한 항목에 여러 라인이 있을 때 현재 재생 중인 라인의 인덱스.
+  // word처럼 단일 라인 항목은 null.
+  const [playingItemIndex, setPlayingItemIndex] = useState(null);
   const [revealedMap, setRevealedMap] = useState({}); // { [cardIdx]: Set<itemId> }
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
@@ -83,6 +86,7 @@ const StudyMain = ({ words }) => {
       playbackResolveRef.current = null;
     }
     setPlayingItemId(null);
+    setPlayingItemIndex(null);
   }, []);
 
   // 카드 이동 — 자동 재생 중이었다면 중지하고 버튼 표기도 동기화
@@ -106,69 +110,83 @@ const StudyMain = ({ words }) => {
   const startPlayback = useCallback(async (startCardIndex) => {
     playbackCancelRef.current = false;
 
-    const runPlay = async () => {
-      const cardIdx = currentIndexRef.current;
+    // 한 라인 재생. 인덱스가 null이면 단일 라인 항목.
+    // getTextSound가 reject/throw해도 settle은 한 번만 resolve되어 await 정지 방지.
+    const playOne = async (itemId, index, text, lang) => {
+      if (!text) return;
+      setPlayingItemId(itemId);
+      setPlayingItemIndex(index);
+      await new Promise(resolve => {
+        let settled = false;
+        const settle = () => {
+          if (settled) return;
+          settled = true;
+          if (playbackResolveRef.current === settle) {
+            playbackResolveRef.current = null;
+          }
+          resolve();
+        };
+        playbackResolveRef.current = settle;
+        Promise.resolve(getTextSound(text, lang)).then(settle, settle);
+      });
+    };
+
+    // cardIdx를 인자로 명시 전달 — currentIndexRef 동기화 타이밍에 의존하지 않음.
+    const runPlay = async (cardIdx) => {
       const currentWord = wordsRef.current[cardIdx];
       if (!currentWord) return;
 
       const { playbackOrder } = settingsRef.current;
+      const meaningsList = currentWord.meanings || [];
+      const examplesList = currentWord.examples || [];
 
       for (const item of playbackOrder) {
         if (playbackCancelRef.current) return;
         if (item.count === 0) continue;
 
-        let text = '';
-        let lang = 'en';
-
-        if (item.id === 'word') {
-          text = currentWord.origin || '';
-          lang = 'en';
-        } else if (item.id === 'meanings') {
-          const meaningsList = currentWord.meanings || [];
-          text = meaningsList.join(', ');
-          lang = 'ko';
-        } else if (item.id === 'exampleSentences') {
-          const exList = currentWord.examples || [];
-          text = exList.map(e => e.origin || e.sentence || '').filter(Boolean).join('. ');
-          lang = 'en';
-        } else if (item.id === 'exampleMeanings') {
-          const exList = currentWord.examples || [];
-          text = exList.map(e => e.meaning || e.translation || '').filter(Boolean).join('. ');
-          lang = 'ko';
-        }
-
-        if (!text) continue;
-
-        for (let i = 0; i < item.count; i++) {
+        // count = 한 항목을 몇 사이클 반복할지. 한 사이클은 해당 항목의 모든 라인 1회 순회.
+        for (let cycle = 0; cycle < item.count; cycle++) {
           if (playbackCancelRef.current) return;
 
-          setPlayingItemId(item.id);
-
-          // 오디오가 실제로 끝날 때까지 대기 (취소 시 즉시 해제)
-          await new Promise(resolve => {
-            playbackResolveRef.current = resolve;
-            getTextSound(text, lang).then(() => {
-              if (playbackResolveRef.current === resolve) {
-                playbackResolveRef.current = null;
-              }
-              resolve();
-            });
-          });
+          if (item.id === 'word') {
+            await playOne('word', null, currentWord.origin || '', 'en');
+          } else if (item.id === 'meanings') {
+            for (let i = 0; i < meaningsList.length; i++) {
+              if (playbackCancelRef.current) return;
+              await playOne('meanings', i, meaningsList[i] || '', 'ko');
+            }
+          } else if (item.id === 'exampleSentences') {
+            for (let i = 0; i < examplesList.length; i++) {
+              if (playbackCancelRef.current) return;
+              const ex = examplesList[i] || {};
+              const text = ex.origin || ex.sentence || '';
+              await playOne('exampleSentences', i, text, 'en');
+            }
+          } else if (item.id === 'exampleMeanings') {
+            for (let i = 0; i < examplesList.length; i++) {
+              if (playbackCancelRef.current) return;
+              const ex = examplesList[i] || {};
+              const text = ex.meaning || ex.translation || '';
+              await playOne('exampleMeanings', i, text, 'ko');
+            }
+          }
         }
       }
 
       if (playbackCancelRef.current) return;
 
       setPlayingItemId(null);
+      setPlayingItemIndex(null);
 
       // 다음 카드로 자동 이동
-      const nextIdx = currentIndexRef.current + 1;
+      const nextIdx = cardIdx + 1;
       if (nextIdx < wordsRef.current.length) {
         setDirection('next');
+        currentIndexRef.current = nextIdx; // ref 즉시 동기화
         setCurrentIndex(nextIdx);
         // 카드 전환 애니메이션 후 다음 카드 재생
         playTimeoutRef.current = setTimeout(() => {
-          if (!playbackCancelRef.current) runPlay();
+          if (!playbackCancelRef.current) runPlay(nextIdx);
         }, 350);
       } else {
         // 마지막 카드 재생 완료 → 정지
@@ -176,27 +194,30 @@ const StudyMain = ({ words }) => {
       }
     };
 
-    runPlay();
+    runPlay(typeof startCardIndex === 'number' ? startCardIndex : currentIndexRef.current);
   }, []);
 
-  const handleSpeakerClick = useCallback((itemId, text, lang) => {
+  const handleSpeakerClick = useCallback((itemId, index, text, lang) => {
     vibrate({ duration: 5 });
-    if (playingItemId === itemId) {
+    const isSameLine = playingItemId === itemId && playingItemIndex === index;
+    if (isSameLine) {
       // 재생 중 클릭 → 정지
       setIsPlaying(false);
       stopPlayback();
       stopCurrentSound();
     } else {
-      // 정지 중 클릭 → 자동재생 중단 + 해당 콘텐츠만 재생
+      // 정지 중 클릭 → 자동재생 중단 + 해당 라인만 재생
       setIsPlaying(false);
       stopPlayback();
       stopCurrentSound();
       setPlayingItemId(itemId);
+      setPlayingItemIndex(index);
       getTextSound(text, lang).then(() => {
         setPlayingItemId(prev => prev === itemId ? null : prev);
+        setPlayingItemIndex(prev => prev === index ? null : prev);
       });
     }
-  }, [playingItemId, stopPlayback]);
+  }, [playingItemId, playingItemIndex, stopPlayback]);
 
   const handlePlayToggle = () => {
     vibrate({ duration: 5 });
@@ -214,10 +235,14 @@ const StudyMain = ({ words }) => {
     if (!isPlaying) stopPlayback();
   }, [isPlaying, stopPlayback]);
 
-  // 마운트 시 자동 재생 시작
+  // 마운트 시 자동 재생 시작. 언마운트 시 모든 비동기 체인(setTimeout/audio) 정리.
   useEffect(() => {
     setIsPlaying(true);
     startPlayback(0);
+    return () => {
+      stopPlayback();
+      stopCurrentSound();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -347,7 +372,7 @@ const StudyMain = ({ words }) => {
                         {word.origin}
                       </span>
                       <motion.button
-                        onClick={() => handleSpeakerClick('word', word.origin, 'en')}
+                        onClick={() => handleSpeakerClick('word', null, word.origin, 'en')}
                         className="py-[3px]"
                         whileTap={{ scale: 0.85 }}
                       >
@@ -361,19 +386,22 @@ const StudyMain = ({ words }) => {
                 {/* 의미 */}
                 {isVisible('meanings') ? (
                   <div className="flex flex-col gap-[4px]">
-                    {meanings.map((meaning, idx) => (
-                      <div key={idx} className="flex items-center justify-between gap-[8px]">
-                        <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${playingItemId === 'meanings' ? 'text-primary-main-600' : 'text-layout-gray-600 dark:text-layout-black'}`}>
-                          {meaning}
-                        </span>
-                        <motion.button
-                          onClick={() => handleSpeakerClick('meanings', meaning, 'ko')}
-                          whileTap={{ scale: 0.85 }}
-                        >
-                          <SpeakerHigh weight="fill" color={playingItemId === 'meanings' ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
-                        </motion.button>
-                      </div>
-                    ))}
+                    {meanings.map((meaning, idx) => {
+                      const isActive = playingItemId === 'meanings' && playingItemIndex === idx;
+                      return (
+                        <div key={idx} className="flex items-center justify-between gap-[8px]">
+                          <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${isActive ? 'text-primary-main-600' : 'text-layout-gray-600 dark:text-layout-black'}`}>
+                            {meaning}
+                          </span>
+                          <motion.button
+                            onClick={() => handleSpeakerClick('meanings', idx, meaning, 'ko')}
+                            whileTap={{ scale: 0.85 }}
+                          >
+                            <SpeakerHigh weight="fill" color={isActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
+                          </motion.button>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : (
                   <HiddenPlaceholder onReveal={() => handleReveal('meanings')} label="의미" />
@@ -388,20 +416,22 @@ const StudyMain = ({ words }) => {
                   {examples.map((example, idx) => {
                     const exOrigin = example.origin || example.sentence || '';
                     const exMeaning = example.meaning || example.translation || '';
+                    const isOriginActive = playingItemId === 'exampleSentences' && playingItemIndex === idx;
+                    const isMeaningActive = playingItemId === 'exampleMeanings' && playingItemIndex === idx;
                     return (
                       <div key={idx} className="flex flex-col gap-[10px]">
                         {/* 예문 원문 */}
                         {isVisible('exampleSentences') ? (
                           <div className="flex items-start justify-between gap-[5px]">
-                            <span className={`text-[14px] font-[400] flex-1 ${playingItemId === 'exampleSentences' ? 'text-primary-main-600' : 'text-layout-black'}`}>
+                            <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black'}`}>
                               {exOrigin}
                             </span>
                             <motion.button
-                              onClick={() => handleSpeakerClick('exampleSentences', exOrigin, 'en')}
+                              onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, 'en')}
                               className="flex-shrink-0 mt-[2px] text-layout-gray-300"
                               whileTap={{ scale: 0.85 }}
                             >
-                              <SpeakerHigh weight="fill" color={playingItemId === 'exampleSentences' ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
+                              <SpeakerHigh weight="fill" color={isOriginActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
                             </motion.button>
                           </div>
                         ) : (
@@ -411,15 +441,15 @@ const StudyMain = ({ words }) => {
                         {/* 예문 의미 */}
                         {isVisible('exampleMeanings') ? (
                           <div className="flex items-start justify-between gap-[8px]">
-                            <span className={`text-[13px] font-[400] flex-1 ${playingItemId === 'exampleMeanings' ? 'text-primary-main-600' : 'text-layout-gray-500'}`}>
+                            <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500'}`}>
                               {exMeaning}
                             </span>
                             <motion.button
-                              onClick={() => handleSpeakerClick('exampleMeanings', exMeaning, 'ko')}
+                              onClick={() => handleSpeakerClick('exampleMeanings', idx, exMeaning, 'ko')}
                               className="flex-shrink-0 mt-[2px] text-layout-gray-300"
                               whileTap={{ scale: 0.85 }}
                             >
-                              <SpeakerHigh weight="fill" color={playingItemId === 'exampleMeanings' ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
+                              <SpeakerHigh weight="fill" color={isMeaningActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
                             </motion.button>
                           </div>
                         ) : (
@@ -445,7 +475,7 @@ const StudyMain = ({ words }) => {
             flex-1 h-[45px] rounded-[8px] text-[16px] font-[700]
             ${currentIndex === 0
               ? 'bg-layout-gray-100 text-layout-gray-300'
-              : 'bg-layout-gray-200 text-layout-white dark:text-layout-white'
+              : 'bg-layout-gray-200 text-layout-white dark:text-layout-black'
             }
           `}
           whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
