@@ -8,16 +8,16 @@ const TARGET_WORD_RE = /<strong[^>]*class=["'][^"']*\btarget-word\b[^"']*["'][^>
 const hasEmphasis = (s) => TARGET_WORD_RE.test(s || '');
 
 /** 예문 한 쌍의 강조 상태 → 'green' | 'yellow' | 'red' */
-const emphasisLevel = (en, ko) => {
-  const a = hasEmphasis(en);
-  const b = hasEmphasis(ko);
+const emphasisLevel = (origin, meaning) => {
+  const a = hasEmphasis(origin);
+  const b = hasEmphasis(meaning);
   if (a && b) return 'green';
   if (a || b) return 'yellow';
   return 'red';
 };
 
 const DOT_STYLE = {
-  green: { cls: 'bg-emerald-500', title: 'EN·KO 모두 강조 처리됨' },
+  green: { cls: 'bg-emerald-500', title: '원어·의미 모두 강조 처리됨' },
   yellow: { cls: 'bg-yellow-400', title: '한쪽만 강조 처리됨' },
   red: { cls: 'bg-red-500', title: '강조 처리 없음' },
 };
@@ -71,12 +71,12 @@ const VocaWordRow = ({ token, bookId, word, onUpdated, onDeleted }) => {
     markDirty();
   };
 
-  const importExample = (en, ko) => {
-    if (!en && !ko) return;
-    // 동일한 EN/KO 한 쌍이 이미 있는지 검사
-    const dup = examples.some((ex) => (ex.en || '') === (en || '') && (ex.ko || '') === (ko || ''));
+  const importExample = (origin, meaning) => {
+    if (!origin && !meaning) return;
+    // 동일한 origin/meaning 한 쌍이 이미 있는지 검사
+    const dup = examples.some((ex) => (ex.origin || '') === (origin || '') && (ex.meaning || '') === (meaning || ''));
     if (dup) return;
-    setExamples((prev) => [...prev, { en: en || '', ko: ko || '' }]);
+    setExamples((prev) => [...prev, { origin: origin || '', meaning: meaning || '' }]);
     markDirty();
   };
 
@@ -91,7 +91,7 @@ const VocaWordRow = ({ token, bookId, word, onUpdated, onDeleted }) => {
   };
 
   const addExample = () => {
-    setExamples((prev) => [...prev, { en: '', ko: '' }]);
+    setExamples((prev) => [...prev, { origin: '', meaning: '' }]);
     markDirty();
   };
 
@@ -272,7 +272,7 @@ const VocaWordRow = ({ token, bookId, word, onUpdated, onDeleted }) => {
             <div className="text-[11px] text-gray-600">예문이 없습니다.</div>
           )}
           {examples.map((ex, i) => {
-            const level = emphasisLevel(ex.en, ex.ko);
+            const level = emphasisLevel(ex.origin, ex.meaning);
             const dot = DOT_STYLE[level];
             return (
               <div key={i} className="flex items-center gap-1.5">
@@ -283,16 +283,16 @@ const VocaWordRow = ({ token, bookId, word, onUpdated, onDeleted }) => {
                 />
                 <input
                   type="text"
-                  placeholder="EN"
-                  value={ex.en || ''}
-                  onChange={(e) => updateExample(i, 'en', e.target.value)}
+                  placeholder="원어"
+                  value={ex.origin || ''}
+                  onChange={(e) => updateExample(i, 'origin', e.target.value)}
                   className="flex-1 bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded px-2 py-1 focus:outline-none focus:border-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="KO"
-                  value={ex.ko || ''}
-                  onChange={(e) => updateExample(i, 'ko', e.target.value)}
+                  placeholder="의미"
+                  value={ex.meaning || ''}
+                  onChange={(e) => updateExample(i, 'meaning', e.target.value)}
                   className="flex-1 bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded px-2 py-1 focus:outline-none focus:border-blue-500"
                 />
                 <button
@@ -341,8 +341,8 @@ const DictionaryPanel = ({
   const examples = dict.examples || [];
 
   const isMeaningImported = (text) => existingMeanings.includes(text);
-  const isExampleImported = (en, ko) => existingExamples.some(
-    (ex) => (ex.en || '') === (en || '') && (ex.ko || '') === (ko || '')
+  const isExampleImported = (origin, meaning) => existingExamples.some(
+    (ex) => (ex.origin || '') === (origin || '') && (ex.meaning || '') === (meaning || '')
   );
 
   return (
@@ -387,7 +387,7 @@ const DictionaryPanel = ({
         ) : (
           <div className="space-y-1.5">
             {examples.map((ex) => {
-              const taken = isExampleImported(ex.en, ex.ko);
+              const taken = isExampleImported(ex.origin, ex.meaning);
               return (
                 <div
                   key={ex.id}
@@ -396,15 +396,15 @@ const DictionaryPanel = ({
                   <div className="min-w-0 flex-1 text-[11px] leading-relaxed">
                     <div
                       className="text-gray-200"
-                      dangerouslySetInnerHTML={{ __html: ex.en || '' }}
+                      dangerouslySetInnerHTML={{ __html: ex.origin || '' }}
                     />
                     <div
                       className="text-gray-400"
-                      dangerouslySetInnerHTML={{ __html: ex.ko || '' }}
+                      dangerouslySetInnerHTML={{ __html: ex.meaning || '' }}
                     />
                   </div>
                   <button
-                    onClick={() => onImportExample(ex.en, ex.ko)}
+                    onClick={() => onImportExample(ex.origin, ex.meaning)}
                     disabled={taken}
                     className={
                       'shrink-0 px-2 py-0.5 text-[11px] rounded border transition-colors ' +

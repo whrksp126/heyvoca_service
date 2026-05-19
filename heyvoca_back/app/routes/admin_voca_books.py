@@ -305,18 +305,21 @@ def _normalize_meanings(value):
 
 
 def _normalize_examples(value):
-    """list[{en,ko}] 형태로 정규화. 빈 항목 제거."""
+    """list[{origin,meaning}] 형태로 정규화. 빈 항목 제거.
+
+    하위 호환: 과거 키 `en`/`ko`도 받아 새 키로 변환.
+    """
     if not isinstance(value, list):
         return []
     out = []
     for it in value:
         if not isinstance(it, dict):
             continue
-        en = str(it.get('en', '') or '').strip()
-        ko = str(it.get('ko', '') or '').strip()
-        if not en and not ko:
+        origin = str(it.get('origin', it.get('en', '')) or '').strip()
+        meaning = str(it.get('meaning', it.get('ko', '')) or '').strip()
+        if not origin and not meaning:
             continue
-        out.append({'en': en, 'ko': ko})
+        out.append({'origin': origin, 'meaning': meaning})
     return out
 
 
@@ -329,7 +332,7 @@ def _normalize_examples(value):
 def patch_word(book_id, map_id):
     """admin_voca_book_map row의 voca_meanings/voca_examples/level 수정.
 
-    body: { meanings: [...] | "csv", examples: [{en, ko}, ...], level: int|null }
+    body: { meanings: [...] | "csv", examples: [{origin, meaning}, ...], level: int|null }
     """
     m = AdminVocaBookMap.query.filter_by(id=map_id).first()
     if m is None:
@@ -698,7 +701,7 @@ def get_voca_dictionary(voca_id):
                 'level': voca.level,
             },
             'meanings': [{'id': m.id, 'meaning': m.meaning} for m in meanings],
-            'examples': [{'id': e.id, 'en': e.exam_en, 'ko': e.exam_ko} for e in examples],
+            'examples': [{'id': e.id, 'origin': e.exam_en, 'meaning': e.exam_ko} for e in examples],
         },
     }), 200
 
