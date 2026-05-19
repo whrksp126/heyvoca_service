@@ -8,19 +8,29 @@ import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
 
-const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = null }) => {
+const AddWordNewBottomSheet = ({
+  vocabularyId = null,
+  dictionaryId = null,
+  id = null,
+  origin: initOriginProp = '',
+  meanings: initMeaningsProp = [],
+  examples: initExamplesProp = [],
+}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { addWord, updateWord, getWord, deleteWord, vocabularySheets, userDictionary } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, pushAwaitNewBottomSheet, clearStack } = useNewBottomSheetActions();
 
+  // 편집 가능한 단어장만 노출(구매 단어장은 백엔드가 단어 추가 403). vocaBookStoreId가 없는 것만.
+  const editableSheets = vocabularySheets.filter(s => !s.vocaBookStoreId);
+
   // 모든 상태를 추적하기 위한 ref (한 번에 초기화)
   const initialCurrentState = (() => {
     let mode = 'add';
-    let initOrigin = "";
-    let initMeanings = [];
-    let initExamples = [];
+    let initOrigin = initOriginProp || '';
+    let initMeanings = initMeaningsProp || [];
+    let initExamples = initExamplesProp || [];
     let initVocabularyId = vocabularyId ?? null;
     let initDictionaryId = dictionaryId ?? null;
     if (id && vocabularyId) {
@@ -31,6 +41,14 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
         initMeanings = word.meanings || [];
         initExamples = word.examples || [];
         initDictionaryId = word.dictionaryId ?? initDictionaryId;
+      }
+    }
+    // 추가 모드에서 vocabularyId가 비었거나 구매 단어장이면, 첫 편집 가능 단어장으로 자동 선택
+    if (mode === 'add') {
+      const isInvalid = !initVocabularyId
+        || !editableSheets.some(s => String(s.id) === String(initVocabularyId));
+      if (isInvalid && editableSheets.length > 0) {
+        initVocabularyId = editableSheets[0].id;
       }
     }
     return {
@@ -45,6 +63,9 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   })();
   const currentStateRef = useRef(initialCurrentState);
   const originWordRef = useRef(id && vocabularyId ? (getWord(vocabularyId, id) || null) : null);
+
+  // select 표시값 동기화 — currentStateRef는 리렌더 트리거 안 되므로 별도 state로 관리
+  const [selectedVocaBookId, setSelectedVocaBookId] = useState(initialCurrentState.vocabularyId || '');
 
 
   // bottom sheet 닫기 함수
@@ -64,6 +85,14 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
   const handleAdd = useCallback(async () => {
     try {
       const { vocabularyId: currentVocaId, origin, meanings, examples, dictionaryId } = currentStateRef.current;
+      if (!currentVocaId) {
+        showToast('단어장을 선택해주세요.');
+        return;
+      }
+      if (!origin || !origin.trim()) {
+        showToast('단어를 입력해주세요.');
+        return;
+      }
       const newWord = { dictionaryId, origin, meanings, examples };
 
       const existingWord = Object.values(userDictionary).find(w => w.origin === origin);
@@ -215,18 +244,15 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
           <div>
             <div className="relative">
               <select
-                disabled={id ? false : true}
-                value={currentStateRef.current.vocabularyId || ''}
+                disabled={editableSheets.length === 0}
+                value={selectedVocaBookId || ''}
                 onChange={(e) => {
-                  console.log("e.target.value: ", e.target.value);
+                  const newId = e.target.value;
+                  setSelectedVocaBookId(newId);
                   currentStateRef.current = {
                     ...currentStateRef.current,
-                    vocabularyId: e.target.value
+                    vocabularyId: newId
                   };
-                  // setWordData({
-                  //   ...wordData,
-                  //   vocabularyId: e.target.value
-                  // });
                 }}
                 className={`
                   w-full h-[45px]
@@ -236,20 +262,20 @@ const AddWordNewBottomSheet = ({ vocabularyId = null, dictionaryId = null, id = 
                   outline-none
                   transition-colors
                   appearance-none
-                  ${id ? false : true ?
-                    'border-layout-gray-200 bg-layout-gray-50 text-[#999999]' :
-                    'border-layout-gray-200 text-layout-black focus:border--primary-main-600'
-                  }
+                  ${editableSheets.length === 0
+                    ? 'border-layout-gray-200 bg-layout-gray-50 text-[#999999]'
+                    : 'border-layout-gray-200 text-layout-black focus:border--primary-main-600'}
                 `}
               >
-                {vocabularySheets.map((vocabulary) => (
-                  <option
-                    value={vocabulary.id}
-                    key={vocabulary.id}
-                  >
-                    {vocabulary.title}
-                  </option>
-                ))}
+                {editableSheets.length === 0 ? (
+                  <option value="">내 단어장을 먼저 만들어주세요</option>
+                ) : (
+                  editableSheets.map((vocabulary) => (
+                    <option value={vocabulary.id} key={vocabulary.id}>
+                      {vocabulary.title}
+                    </option>
+                  ))
+                )}
               </select>
               <div className="absolute right-[15px] top-1/2 -translate-y-1/2 pointer-events-none text-layout-gray-200 text-[18px]">
                 <CaretDown />

@@ -296,10 +296,14 @@ const Main = () => {
     pushNewFullSheet(VocabularyWordsNewFullSheet, { id: vocaBookId });
   };
 
-  // 단어 추가 바텀시트 열기
+  // 단어 추가 바텀시트 열기 — 검색 결과 단어 데이터를 인풋 초기값으로 전달
   const handleAddWord = () => {
     vibrate({ duration: 5 });
-    pushNewBottomSheet(AddWordNewBottomSheet, {});
+    pushNewBottomSheet(AddWordNewBottomSheet, {
+      origin: selectedWord?.word ?? '',
+      meanings: selectedWord?.meanings ?? [],
+      examples: selectedWord?.examples ?? [],
+    });
   };
 
   // 내 단어 목록 아이템 클릭 → 단어 상세 바텀시트 열기
