@@ -4,10 +4,12 @@ import { SpeakerHigh } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import StudyHeader from './StudyHeader';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
+import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { getTextSound, stopCurrentSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
+import { AppHistory } from '../../utils/appHistory';
 
 const DEFAULT_SETTINGS = {
   visibility: {
@@ -29,7 +31,7 @@ const StudyMain = ({ words }) => {
   "use memo";
 
   const navigate = useNavigate();
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('next');
@@ -272,6 +274,55 @@ const StudyMain = ({ words }) => {
     navigate(-1);
   };
 
+  // 학습 종료 확인 (네이티브 물리 뒤로가기 / 헤더 뒤로가기 공통)
+  const handleStopLearning = async () => {
+    if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
+      window.newBottomSheetContext.popNewBottomSheet();
+      return;
+    }
+
+    const ConfirmResult = await pushAwaitNewBottomSheet(
+      ConfirmNewBottomSheet,
+      {
+        title: (
+          <>
+            학습할 단어가 남아있어요.<br />
+            학습을 종료하시겠습니까?😢
+          </>
+        ),
+        btns: {
+          confirm: "종료",
+          cancel: "취소",
+        }
+      },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      }
+    );
+
+    if (ConfirmResult) {
+      stopPlayback();
+      stopCurrentSound();
+      if (AppHistory.canGoBack()) {
+        navigate(-1);
+      } else {
+        navigate('/home');
+      }
+    }
+  };
+
+  // 네이티브 물리 뒤로가기 핸들러 재정의 (학습 중에만)
+  useEffect(() => {
+    const originalOnBackPressed = window.onBackPressed;
+    window.onBackPressed = handleStopLearning;
+
+    return () => {
+      window.onBackPressed = originalOnBackPressed;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!word) {
     return (
       <div className="flex flex-col h-screen bg-layout-white dark:bg-layout-black">
@@ -307,7 +358,7 @@ const StudyMain = ({ words }) => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-var(--status-bar-height))] bg-layout-white dark:bg-layout-black overflow-hidden">
-      <StudyHeader onSettingsClick={handleSettingsClick} />
+      <StudyHeader onBackClick={handleStopLearning} onSettingsClick={handleSettingsClick} />
 
       {/* 프로그레스 바 */}
       <div className="px-[20px] pt-[5px]">
