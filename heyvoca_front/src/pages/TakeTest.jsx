@@ -6,12 +6,10 @@ import { useVocabulary } from '../context/VocabularyContext';
 import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import MakeStudyData from '../components/takeTest/MakeStudyData';
-import { MEMORY_STATES, getWordMemoryState, isWordOverdue } from '../utils/common';
-import { sortByForgettingPriority } from '../utils/forgettingPriority';
+import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
-// Phase 1.3: 추천 API (정식). createStudySession은 폴백 모드용으로 유지
-import { getStudyRecommend, createStudySession, finishStudySession } from '../api/study';
+import { getStudyRecommend, finishStudySession } from '../api/study';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -27,7 +25,7 @@ const TakeTest = () => {
   const [pendingUpdateSheetIds, setPendingUpdateSheetIds] = useState(new Set());
   // 업데이트해야 할 단어 아이디와 데이터를 저장할 Map (중복 방지, 마지막 상태 저장)
   const [pendingUpdateWords, setPendingUpdateWords] = useState(new Map());
-  // Phase 1.3: 백엔드 세션 ID (정식. 추천 응답에서 받거나 폴백 시 createStudySession으로 받음)
+  // 백엔드 세션 ID (추천 응답에서 받음)
   const studySessionRef = useRef(null);
   // 진행 중인 /study/log Promise 큐 — 결과 화면/홈 카운터 갱신 전에 모두 await
   const pendingLogPromisesRef = useRef([]);
@@ -44,10 +42,8 @@ const TakeTest = () => {
 
 
 
-  // ─── 기존 로컬 정렬 로직 (폴백용, Phase 1.4 삭제 예정) ───────────────────────
-  const legacyLocalSelection = (targetMemoryState, vocabularySheetId, count, testType) => {
-    let allWords = [];
-
+  // 오답 선택지 풀 구성용 (백엔드 추천 응답에는 단어 본문만 오므로 vocabularySheets에서 풀을 구성)
+  const buildAllWordsPool = (vocabularySheetId) => {
     const hasMeanings = (w) => Array.isArray(w?.meanings) && w.meanings.length > 0;
     const dedupeByWordId = (entries) => {
       const byId = new Map();
@@ -65,92 +61,27 @@ const TakeTest = () => {
     };
 
     if (vocabularySheetId === "all") {
-      allWords = dedupeByWordId(
+      return dedupeByWordId(
         vocabularySheets.flatMap(sheet =>
           sheet.words.map(word => ({ ...word, vocabularySheetId: sheet.id }))
         )
       );
-    } else if (Array.isArray(vocabularySheetId)) {
+    }
+    if (Array.isArray(vocabularySheetId)) {
       const idSet = new Set(vocabularySheetId);
-      allWords = dedupeByWordId(
+      return dedupeByWordId(
         vocabularySheets
           .filter(sheet => idSet.has(sheet.id))
           .flatMap(sheet =>
             sheet.words.map(word => ({ ...word, vocabularySheetId: sheet.id }))
           )
       );
-    } else {
-      const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
-      if (vocabularySheet) {
-        allWords = vocabularySheet.words;
-      }
     }
-
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-
-    const unlearnedWords = allWords.filter(word => {
-      return !word.fsrs || word.fsrs.state === 'new' || !word.fsrs.state;
-    });
-
-    const overdueWords = allWords.filter(word => {
-      const nextReview = word.fsrs?.next_review;
-      if (!nextReview) return false;
-      const nextReviewDate = new Date(nextReview);
-      nextReviewDate.setHours(0, 0, 0, 0);
-      return nextReviewDate < now;
-    });
-
-    const todayScheduledWords = allWords.filter(word => {
-      const nextReview = word.fsrs?.next_review;
-      if (!nextReview) return false;
-      const nextReviewDate = new Date(nextReview);
-      nextReviewDate.setHours(0, 0, 0, 0);
-      return nextReviewDate.getTime() === now.getTime();
-    });
-
-    const sortedOverdueWords = overdueWords.sort((a, b) => {
-      const dateA = new Date(a.fsrs?.next_review ?? 0);
-      const dateB = new Date(b.fsrs?.next_review ?? 0);
-      return dateA - dateB;
-    });
-
-    let selectedWords = [];
-
-    if (testType === 'today') {
-      selectedWords.push(...sortedOverdueWords.slice(0, count));
-      if (selectedWords.length < count) {
-        const remainingCount = count - selectedWords.length;
-        const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        selectedWords.push(...todayScheduledWords.filter(w => !selectedWordIds.has(w.id)).slice(0, remainingCount));
-      }
-      if (selectedWords.length < count) {
-        const remainingCount = count - selectedWords.length;
-        const selectedWordIds = new Set(selectedWords.map(w => w.id));
-        selectedWords.push(...unlearnedWords.filter(w => !selectedWordIds.has(w.id)).slice(0, remainingCount));
-      }
-      selectedWords = shuffleArray(selectedWords).slice(0, count);
-    } else if (testType === 'quick') {
-      selectedWords = sortByForgettingPriority(allWords).slice(0, count);
-    } else if (testType === 'test' || testType === 'exam') {
-      const targetStates = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
-      const candidatePool = allWords.filter(word => {
-        if (targetStates.includes('all')) return true;
-        const wordState = getWordMemoryState(word);
-        return targetStates.includes(wordState);
-      });
-      const selectionType = state.data.selectionType ?? 'recommended';
-      if (selectionType === 'random') {
-        selectedWords = [...candidatePool].sort(() => Math.random() - 0.5).slice(0, count);
-      } else {
-        selectedWords = sortByForgettingPriority(candidatePool).slice(0, count);
-      }
-    }
-
-    return { selectedWords, allWords };
+    const vocabularySheet = vocabularySheets.find(sheet => sheet.id === vocabularySheetId);
+    return vocabularySheet ? vocabularySheet.words : [];
   };
 
-  // ─── 문제 유형 분배 (백엔드/폴백 공통, 기존 183~253 라인 로직) ───────────────
+  // ─── 문제 유형 분배 ───────────────────────────────────────────────────────
   const buildTestQuestions = (selectedWords, allWords, vocabularySheetId) => {
     const questionTypesArr = Array.isArray(state.data.questionType)
       ? state.data.questionType
@@ -268,113 +199,67 @@ const TakeTest = () => {
     return allQuestions;
   };
 
-  // ─── setupTestQuestions (Phase 1.3 정식) ─────────────────────────────────────
+  // ─── setupTestQuestions ─────────────────────────────────────────────────────
+  // 백엔드 /study/recommend로 단어 + 세션을 받아 문제 구성. 응답 형식 오류 시 예외 throw.
   // 반환: { testQuestions, sessionId, composition, compositionStrategy }
   const setupTestQuestions = async (targetMemoryState, vocabularySheetId, count, testType) => {
-    const useBackend = import.meta.env.VITE_RECOMMEND_BACKEND !== 'false';
-
-    let selectedWords, sessionId, composition, compositionStrategy, allWords;
-
-    if (useBackend) {
-      try {
-        // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
-        let bookIds = null;
-        if (vocabularySheetId && vocabularySheetId !== 'all') {
-          bookIds = Array.isArray(vocabularySheetId) ? vocabularySheetId : [vocabularySheetId];
-        }
-
-        // targetMemoryState → targetStates: MEMORY_STATES 값 → 백엔드 호환 값 변환
-        // 백엔드는 unlearned, short, medium, long, all 를 받음
-        const memoryStateToBackend = {
-          [MEMORY_STATES.UNLEARNED]: 'unlearned',
-          [MEMORY_STATES.SHORT_TERM]: 'short',
-          [MEMORY_STATES.MEDIUM_TERM]: 'medium',
-          [MEMORY_STATES.LONG_TERM]: 'long',
-          [MEMORY_STATES.ALL]: 'all',
-          all: 'all',
-        };
-        const targetStatesArr = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
-        const backendTargetStates = targetStatesArr.map(s => memoryStateToBackend[s] ?? s);
-
-        const selectionType = state.data?.selectionType ?? 'recommended';
-
-        const res = await getStudyRecommend({
-          type: testType,
-          count,
-          bookIds,
-          targetStates: backendTargetStates,
-          selection: selectionType,
-        });
-
-        if (res?.code === 200 && Array.isArray(res.data?.items)) {
-          sessionId = res.data.session_id;
-          composition = res.data.composition;
-          // Phase 2.2: composition_strategy 저장
-          compositionStrategy = res.data.composition_strategy ?? null;
-
-          // 백엔드 응답 item → 클라이언트 word 형식으로 매핑
-          // allWords(오답 선택지용)는 로컬 vocabularySheets에서 구성
-          const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
-          allWords = legacyResult.allWords;
-
-          selectedWords = res.data.items.map(item => {
-            return {
-              id: item.user_voca_id,
-              vocaIndexId: item.user_voca_id,
-              vocabularySheetId: item.user_voca_book_id,
-              origin: item.word,
-              meanings: item.meanings ?? [],
-              examples: item.examples ?? [],
-              // FSRS 데이터 (단일 소스)
-              fsrs: item.fsrs,
-              // 버킷 정보
-              priorityBucket: item.priority_bucket,
-              // 백엔드 추천 문제 유형 및 이유 멘트
-              suggestedQuestionType: item.suggested_question_type ?? null,
-              reason: item.reason ?? null,
-            };
-          });
-        } else {
-          throw new Error('추천 API 응답 형식 오류');
-        }
-      } catch (e) {
-        console.warn('[FSRS] /study/recommend 실패, 로컬 정렬로 폴백:', e);
-        const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
-        selectedWords = legacyResult.selectedWords;
-        allWords = legacyResult.allWords;
-        sessionId = null;
-        composition = null;
-        compositionStrategy = null;
-
-        // 폴백 모드에서 세션 생성 (선택사항, 실패해도 무시)
-        try {
-          const bookIds = Array.isArray(vocabularySheetId)
-            ? vocabularySheetId
-            : vocabularySheetId && vocabularySheetId !== 'all'
-              ? [vocabularySheetId]
-              : [];
-          const sessionRes = await createStudySession({ testType, bookIds });
-          sessionId = sessionRes?.data?.session_id ?? null;
-        } catch (sessionErr) {
-          console.warn('[FSRS] 폴백 세션 생성 실패 (무시):', sessionErr);
-        }
-      }
-    } else {
-      // VITE_RECOMMEND_BACKEND=false 명시적 폴백
-      const legacyResult = legacyLocalSelection(targetMemoryState, vocabularySheetId, count, testType);
-      selectedWords = legacyResult.selectedWords;
-      allWords = legacyResult.allWords;
-      sessionId = null;
-      composition = null;
-      compositionStrategy = null;
+    // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
+    let bookIds = null;
+    if (vocabularySheetId && vocabularySheetId !== 'all') {
+      bookIds = Array.isArray(vocabularySheetId) ? vocabularySheetId : [vocabularySheetId];
     }
 
-    // 오답 선택지용 allWords가 없는 경우 안전하게 selectedWords로 대체
-    if (!allWords || allWords.length === 0) {
+    // targetMemoryState → targetStates: MEMORY_STATES 값 → 백엔드 호환 값 변환
+    // 백엔드는 unlearned, short, medium, long, all 를 받음
+    const memoryStateToBackend = {
+      [MEMORY_STATES.UNLEARNED]: 'unlearned',
+      [MEMORY_STATES.SHORT_TERM]: 'short',
+      [MEMORY_STATES.MEDIUM_TERM]: 'medium',
+      [MEMORY_STATES.LONG_TERM]: 'long',
+      [MEMORY_STATES.ALL]: 'all',
+      all: 'all',
+    };
+    const targetStatesArr = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
+    const backendTargetStates = targetStatesArr.map(s => memoryStateToBackend[s] ?? s);
+
+    const selectionType = state.data?.selectionType ?? 'recommended';
+
+    const res = await getStudyRecommend({
+      type: testType,
+      count,
+      bookIds,
+      targetStates: backendTargetStates,
+      selection: selectionType,
+    });
+
+    if (res?.code !== 200 || !Array.isArray(res.data?.items)) {
+      throw new Error('추천 API 응답 형식 오류');
+    }
+
+    const sessionId = res.data.session_id;
+    const composition = res.data.composition;
+    const compositionStrategy = res.data.composition_strategy ?? null;
+
+    // allWords(오답 선택지용)는 로컬 vocabularySheets에서 구성
+    let allWords = buildAllWordsPool(vocabularySheetId);
+
+    const selectedWords = res.data.items.map(item => ({
+      id: item.user_voca_id,
+      vocaIndexId: item.user_voca_id,
+      vocabularySheetId: item.user_voca_book_id,
+      origin: item.word,
+      meanings: item.meanings ?? [],
+      examples: item.examples ?? [],
+      fsrs: item.fsrs,
+      priorityBucket: item.priority_bucket,
+      suggestedQuestionType: item.suggested_question_type ?? null,
+      reason: item.reason ?? null,
+    }));
+
+    if (allWords.length === 0) {
       allWords = selectedWords;
     }
 
-    // 문제 유형 분배 (기존 로직 그대로)
     const testQuestions = buildTestQuestions(selectedWords, allWords, vocabularySheetId);
 
     return { testQuestions, sessionId, composition, compositionStrategy };
@@ -405,7 +290,6 @@ const TakeTest = () => {
         // 학습 기록이 없거나 잘못된 캐시이면 새로운 학습 데이터 생성 후 학습 시작
         console.log("state", state.data.memoryState);
 
-        // Phase 1.3: 백엔드 추천 API 호출 (VITE_RECOMMEND_BACKEND !== 'false' 이면 기본 활성)
         const { testQuestions: tempTestQuestions, sessionId } = await setupTestQuestions(
           state.data.memoryState,
           state.data.vocabularySheetId,

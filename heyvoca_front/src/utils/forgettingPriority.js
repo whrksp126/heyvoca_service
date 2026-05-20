@@ -1,7 +1,5 @@
-/**
- * @deprecated Phase 1.3부터 백엔드 GET /study/recommend가 정렬을 처리합니다.
- * 이 파일은 VITE_RECOMMEND_BACKEND=false 폴백 모드에서만 사용됩니다.
- */
+// 클라이언트-사이드 FSRS 정렬 (StudySetupNewBottomSheet의 "선택한 단어 학습" 흐름 전용).
+// 백엔드 /study/recommend를 거치지 않는 사용자 선택 풀에 한해 사용.
 import { isWordOverdue, getWordMemoryState, MEMORY_STATES } from './common';
 
 /**

@@ -287,7 +287,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       }).catch(e => console.warn('[FSRS] logStudyQuestion 실패:', e));
       if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
     } else {
-      // 폴백 모드: isCorrect만 업데이트 (백엔드 다운 시 degraded 동작)
+      // 방어 가드: 세션이 없는 비정상 경로 (학습 시작 실패에도 도달 시 isCorrect만 갱신)
       testQuestions[progressIndex].isCorrect = resultIndex === userSelected;
     }
 
@@ -359,7 +359,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       }).catch(e => console.warn('[FSRS] logStudyQuestion 실패:', e));
       if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
     } else {
-      // 폴백 모드: isCorrect만 업데이트
+      // 방어 가드: 세션이 없는 비정상 경로
       testQuestions[progressIndex].isCorrect = resultIndex === index;
     }
 

@@ -189,31 +189,6 @@ def create_voca_index():
         return jsonify({'code': 500, 'message': f'단어 생성 중 오류가 발생했습니다: {str(e)}'}), 500
 
 
-# 사용자 사전 단어 메타 갱신 (학습 상태는 /study/log 만이 손댐)
-@voca_indexs_bp.route('/<int:vocaIndexId>', methods=['PATCH'])
-@jwt_required
-def update_voca_index(vocaIndexId):
-    user_id = UUID(g.user_id)
-
-    user_voca = db.session.query(UserVoca).filter(
-        UserVoca.id == vocaIndexId,
-        UserVoca.user_id == user_id
-    ).first()
-
-    if not user_voca:
-        return jsonify({'code': 404, 'message': '해당 단어를 찾을 수 없습니다.'}), 404
-
-    try:
-        user_voca.updated_at = datetime.datetime.utcnow()
-        db.session.commit()
-
-        return jsonify({'code': 200, 'data': build_voca_index_response(user_voca)}), 200
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어 수정 중 오류가 발생했습니다: {str(e)}'}), 500
-
-
 # 사용자 단어장 단어 수정 (meanings/examples)
 @voca_indexs_bp.route('/<int:vocaIndexId>/vocaBooks/<vocaBookId>', methods=['PUT'])
 @jwt_required

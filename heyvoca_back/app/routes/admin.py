@@ -535,11 +535,6 @@ def admin_progress():
     ''')).fetchone()
     users_with_500_plus = int(review_500_row.cnt or 0)
 
-    # ── Phase 1.4 전용 카운터 (별도 인프라 필요, 현재 0 고정) ──
-    # PATCH /vocaIndexs의 SM2 처리 경로 호출 수 — 추후 카운터 추가 예정
-    patch_voca_indexs_sm2_calls_7d = 0
-    fallback_users_7d = 0
-
     # ── summary ──────────────────────────────────────────
     summary = {
         'total_logs': total_logs,
@@ -547,8 +542,6 @@ def admin_progress():
         'active_users_30d': active_users_30d,
         'users_with_200_plus_reviews': users_with_200_plus,
         'days_since_launch': days_since_launch,
-        'patch_voca_indexs_sm2_calls_7d': patch_voca_indexs_sm2_calls_7d,
-        'fallback_users_7d': fallback_users_7d,
     }
 
     # ── 헬퍼: 시간 기반 progress (LAUNCH_DATE 없으면 0) ──
@@ -561,67 +554,6 @@ def admin_progress():
         if days_since_launch is None:
             return False
         return days_since_launch >= target_days
-
-    # ── Phase 1.4 임계치 ─────────────────────────────────
-    p14_min_days_prog = _days_progress(28)
-    p14_min_sm2_prog  = _calc_progress(patch_voca_indexs_sm2_calls_7d, 0)
-    p14_min_progress  = min(p14_min_days_prog, p14_min_sm2_prog)
-    p14_min_met       = p14_min_progress >= 1.0
-
-    p14_rec_days_prog = _days_progress(56)
-    p14_rec_fb_prog   = _calc_progress(fallback_users_7d, 0)
-    p14_rec_progress  = min(p14_rec_days_prog, p14_rec_fb_prog)
-    p14_rec_met       = p14_rec_progress >= 1.0
-
-    p14_best_progress = _days_progress(84)
-    p14_best_met      = _days_met(84)
-
-    phase_14_status = 'available' if p14_min_met else 'blocked'
-
-    phase_14 = {
-        'id': '1.4',
-        'title': '레거시 정리',
-        'description': '폴백 코드(updateSM2/forgettingPriority.js) 삭제, PATCH /vocaIndexs sm2 처리 제거',
-        'status': phase_14_status,
-        'thresholds': [
-            {
-                'name': '최소',
-                'criteria': '정식 오픈 4주 경과 + sm2 호출 7일 0건',
-                'current': {
-                    'days_since_launch': days_since_launch,
-                    'patch_calls_7d': patch_voca_indexs_sm2_calls_7d,
-                },
-                'target': {'days_since_launch': 28, 'patch_calls_7d': 0},
-                'progress_percent': round(p14_min_progress * 100, 1),
-                'met': p14_min_met,
-            },
-            {
-                'name': '권장',
-                'criteria': '정식 오픈 8주 + DAU 폴백 사용자 0%',
-                'current': {
-                    'days_since_launch': days_since_launch,
-                    'fallback_users_7d': fallback_users_7d,
-                },
-                'target': {'days_since_launch': 56, 'fallback_users_7d': 0},
-                'progress_percent': round(p14_rec_progress * 100, 1),
-                'met': p14_rec_met,
-            },
-            {
-                'name': '최상',
-                'criteria': '정식 오픈 12주 무탈 + 회귀 점검 완료',
-                'current': {'days_since_launch': days_since_launch},
-                'target': {'days_since_launch': 84},
-                'progress_percent': round(p14_best_progress * 100, 1),
-                'met': p14_best_met,
-            },
-        ],
-        'next_action': {
-            'trigger_label': '최소 기준 달성 시 진행 가능',
-            'command_short': 'Phase 1.4 진행해줘 (레거시 정리)',
-            'command_for_claude': PHASE_PROMPTS['1.4'],
-            'doc_link': 'heyvoca_service/docs/POST_LAUNCH_TODO.md',
-        },
-    }
 
     # ── Phase 3.1 임계치 ─────────────────────────────────
     p31_min_prog = _calc_progress(total_logs, 10000)
@@ -747,6 +679,6 @@ def admin_progress():
         'data': {
             'now': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
             'summary': summary,
-            'phases': [phase_14, phase_31, phase_32, phase_33],
+            'phases': [phase_31, phase_32, phase_33],
         },
     }), 200

@@ -94,6 +94,7 @@ def _mock_db_for_progress(
 
 def _get_progress(client, monkeypatch, launch_date=None, **db_kwargs):
     """LAUNCH_DATE 환경변수와 DB mock을 설정하고 /admin/progress GET."""
+    monkeypatch.setenv('ADMIN_PASSWORD', VALID_TOKEN)
     monkeypatch.setenv('ADMIN_TOKEN', VALID_TOKEN)
     if launch_date:
         monkeypatch.setenv('LAUNCH_DATE', launch_date)
@@ -162,19 +163,18 @@ class TestProgressResponseStructure:
     def test_data_has_phases(self):
         assert 'phases' in self._data['data']
 
-    def test_phases_count_is_4(self):
-        assert len(self._data['data']['phases']) == 4
+    def test_phases_count_is_3(self):
+        assert len(self._data['data']['phases']) == 3
 
     def test_phase_ids(self):
         ids = [p['id'] for p in self._data['data']['phases']]
-        assert ids == ['1.4', '3.1', '3.2', '3.3']
+        assert ids == ['3.1', '3.2', '3.3']
 
     def test_summary_fields(self):
         summary = self._data['data']['summary']
         required = {
             'total_logs', 'total_sessions', 'active_users_30d',
             'users_with_200_plus_reviews', 'days_since_launch',
-            'patch_voca_indexs_sm2_calls_7d', 'fallback_users_7d',
         }
         assert required.issubset(summary.keys())
 
@@ -231,31 +231,6 @@ class TestLaunchDate:
         summary = resp.get_json()['data']['summary']
         assert summary['days_since_launch'] == 7
 
-    def test_no_launch_date_time_thresholds_progress_zero(self, client, monkeypatch):
-        """LAUNCH_DATE 미설정 → Phase 1.4 최소 임계치 progress=0."""
-        resp = _get_progress(client, monkeypatch, launch_date=None)
-        phase_14 = resp.get_json()['data']['phases'][0]
-        min_threshold = phase_14['thresholds'][0]
-        assert min_threshold['progress_percent'] == 0
-        assert min_threshold['met'] is False
-
-    def test_no_launch_date_phase_14_status_blocked(self, client, monkeypatch):
-        """LAUNCH_DATE 미설정 → Phase 1.4 status=blocked."""
-        resp = _get_progress(client, monkeypatch, launch_date=None)
-        phase_14 = resp.get_json()['data']['phases'][0]
-        assert phase_14['status'] == 'blocked'
-
-    def test_launch_date_past_28_days_phase14_min_sm2_zero(self, client, monkeypatch):
-        """
-        LAUNCH_DATE 28일 초과 + sm2 호출 0 → Phase 1.4 최소 기준 met.
-        (patch_voca_indexs_sm2_calls_7d는 현재 0 고정이므로 자동 충족)
-        """
-        launch = (datetime.utcnow() - timedelta(days=29)).strftime('%Y-%m-%d')
-        resp = _get_progress(client, monkeypatch, launch_date=launch)
-        phase_14 = resp.get_json()['data']['phases'][0]
-        min_threshold = phase_14['thresholds'][0]
-        assert min_threshold['met'] is True
-
 
 # ──────────────────────────────────────────────────────────
 # 4. Phase 3.1 진행률 시나리오
@@ -265,7 +240,7 @@ class TestPhase31Progress:
     def test_total_logs_zero_all_progress_zero(self, client, monkeypatch):
         """total_logs=0 → Phase 3.1 모든 임계치 progress=0."""
         resp = _get_progress(client, monkeypatch, total_logs=0)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         for t in phase_31['thresholds']:
             assert t['progress_percent'] == 0.0
             assert t['met'] is False
@@ -273,13 +248,13 @@ class TestPhase31Progress:
     def test_total_logs_zero_status_blocked(self, client, monkeypatch):
         """total_logs=0 → Phase 3.1 status=blocked."""
         resp = _get_progress(client, monkeypatch, total_logs=0)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         assert phase_31['status'] == 'blocked'
 
     def test_total_logs_15000_min_met_rec_50pct(self, client, monkeypatch):
         """total_logs=15,000 → 최소(10K) met=True, 권장(30K) ~50%."""
         resp = _get_progress(client, monkeypatch, total_logs=15000)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         thresholds = phase_31['thresholds']
 
         min_t = thresholds[0]
@@ -295,13 +270,13 @@ class TestPhase31Progress:
     def test_total_logs_15000_status_available(self, client, monkeypatch):
         """total_logs=15,000 → Phase 3.1 status=available."""
         resp = _get_progress(client, monkeypatch, total_logs=15000)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         assert phase_31['status'] == 'available'
 
     def test_total_logs_100000_all_met(self, client, monkeypatch):
         """total_logs=100,000 → 모든 임계치 met."""
         resp = _get_progress(client, monkeypatch, total_logs=100000)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         for t in phase_31['thresholds']:
             assert t['met'] is True
             assert t['progress_percent'] == 100.0
@@ -309,7 +284,7 @@ class TestPhase31Progress:
     def test_total_logs_5000_progress_50pct_of_min(self, client, monkeypatch):
         """total_logs=5,000 → 최소(10K) 기준 50%."""
         resp = _get_progress(client, monkeypatch, total_logs=5000)
-        phase_31 = resp.get_json()['data']['phases'][1]
+        phase_31 = resp.get_json()['data']['phases'][0]
         assert phase_31['thresholds'][0]['progress_percent'] == 50.0
 
 
@@ -321,7 +296,7 @@ class TestPhase32Progress:
     def test_50_users_200plus_min_50pct(self, client, monkeypatch):
         """200+ reviews 사용자 50명 → 최소(100명) 기준 50%."""
         resp = _get_progress(client, monkeypatch, users_with_200_plus=50)
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         min_t = phase_32['thresholds'][0]
         assert min_t['progress_percent'] == 50.0
         assert min_t['met'] is False
@@ -329,13 +304,13 @@ class TestPhase32Progress:
     def test_50_users_200plus_status_blocked(self, client, monkeypatch):
         """200+ reviews 사용자 50명 → status=blocked."""
         resp = _get_progress(client, monkeypatch, users_with_200_plus=50)
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         assert phase_32['status'] == 'blocked'
 
     def test_100_users_200plus_min_met(self, client, monkeypatch):
         """200+ reviews 사용자 100명 → 최소 기준 met."""
         resp = _get_progress(client, monkeypatch, users_with_200_plus=100)
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         min_t = phase_32['thresholds'][0]
         assert min_t['met'] is True
         assert min_t['progress_percent'] == 100.0
@@ -343,13 +318,13 @@ class TestPhase32Progress:
     def test_100_users_200plus_status_available(self, client, monkeypatch):
         """200+ reviews 사용자 100명 → status=available."""
         resp = _get_progress(client, monkeypatch, users_with_200_plus=100)
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         assert phase_32['status'] == 'available'
 
     def test_zero_users_all_progress_zero(self, client, monkeypatch):
         """users_with_200_plus=0 → 모든 임계치 progress=0."""
         resp = _get_progress(client, monkeypatch)
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         for t in phase_32['thresholds']:
             assert t['progress_percent'] == 0.0
 
@@ -360,7 +335,7 @@ class TestPhase32Progress:
             users_with_200_plus=600,
             users_with_500_plus=500,
         )
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         best_t = phase_32['thresholds'][2]
         # 500/1000 = 50%
         assert best_t['progress_percent'] == 50.0
@@ -372,7 +347,7 @@ class TestPhase32Progress:
             users_with_200_plus=1000,
             users_with_500_plus=1000,
         )
-        phase_32 = resp.get_json()['data']['phases'][2]
+        phase_32 = resp.get_json()['data']['phases'][1]
         best_t = phase_32['thresholds'][2]
         assert best_t['met'] is True
 
@@ -385,13 +360,13 @@ class TestPhase33:
     def test_status_always_deferred(self, client, monkeypatch):
         """Phase 3.3 status는 항상 deferred."""
         resp = _get_progress(client, monkeypatch)
-        phase_33 = resp.get_json()['data']['phases'][3]
+        phase_33 = resp.get_json()['data']['phases'][2]
         assert phase_33['status'] == 'deferred'
 
     def test_no_launch_date_progress_zero(self, client, monkeypatch):
         """LAUNCH_DATE 미설정 → Phase 3.3 권장 임계치 progress=0."""
         resp = _get_progress(client, monkeypatch, launch_date=None)
-        phase_33 = resp.get_json()['data']['phases'][3]
+        phase_33 = resp.get_json()['data']['phases'][2]
         t = phase_33['thresholds'][0]
         assert t['progress_percent'] == 0
         assert t['met'] is False
@@ -400,7 +375,7 @@ class TestPhase33:
         """90일 경과 → 180일 기준 50%."""
         launch = (datetime.utcnow() - timedelta(days=90)).strftime('%Y-%m-%d')
         resp = _get_progress(client, monkeypatch, launch_date=launch)
-        phase_33 = resp.get_json()['data']['phases'][3]
+        phase_33 = resp.get_json()['data']['phases'][2]
         t = phase_33['thresholds'][0]
         assert t['progress_percent'] == 50.0
         assert t['met'] is False
@@ -409,7 +384,7 @@ class TestPhase33:
         """180일 경과 → met=True."""
         launch = (datetime.utcnow() - timedelta(days=180)).strftime('%Y-%m-%d')
         resp = _get_progress(client, monkeypatch, launch_date=launch)
-        phase_33 = resp.get_json()['data']['phases'][3]
+        phase_33 = resp.get_json()['data']['phases'][2]
         t = phase_33['thresholds'][0]
         assert t['met'] is True
 
@@ -427,20 +402,6 @@ class TestProgressSummaryValues:
         assert summary['total_sessions'] == 0
         assert summary['active_users_30d'] == 0
         assert summary['users_with_200_plus_reviews'] == 0
-        assert summary['patch_voca_indexs_sm2_calls_7d'] == 0
-        assert summary['fallback_users_7d'] == 0
-
-    def test_patch_voca_indexs_sm2_calls_always_zero(self, client, monkeypatch):
-        """patch_voca_indexs_sm2_calls_7d는 현재 0 고정 (인프라 미구현)."""
-        resp = _get_progress(client, monkeypatch)
-        summary = resp.get_json()['data']['summary']
-        assert summary['patch_voca_indexs_sm2_calls_7d'] == 0
-
-    def test_fallback_users_7d_always_zero(self, client, monkeypatch):
-        """fallback_users_7d는 현재 0 고정."""
-        resp = _get_progress(client, monkeypatch)
-        summary = resp.get_json()['data']['summary']
-        assert summary['fallback_users_7d'] == 0
 
 
 # ──────────────────────────────────────────────────────────

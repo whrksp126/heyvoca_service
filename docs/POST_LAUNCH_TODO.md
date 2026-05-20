@@ -82,30 +82,25 @@ docker exec heyvoca_mysql_dev bash -c 'mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e
 
 ## 데이터/시간 누적 후 진행할 작업
 
-### Phase 1.4 — 레거시 정리
+### Phase 1.4 — 레거시 정리 ✅ 완료 (2026-05-20)
 
-**트리거 조건:**
-- `PATCH /vocaIndexs/<id>` sm2 페이로드 수신이 7일간 0건
-- 폴백 모드(`VITE_RECOMMEND_BACKEND=false`) 사용자 0명
-- 또는 정식 오픈 후 4주 무탈 운영
+prod nginx access log 7일치(May 13 ~ 20)에서 `PATCH /vocaIndexs/<id>` 호출 0건 확인 후 정리.
 
-**작업:**
-1. 클라이언트 폴백 코드 제거
-   - `heyvoca_front/src/utils/common.jsx:341-591` — `updateSM2`, `analyzeLearningPattern` 함수 삭제
-   - `heyvoca_front/src/utils/forgettingPriority.js` — 파일 삭제
-   - `heyvoca_front/src/components/takeTest/Main.jsx` 폴백 분기 제거
-   - `heyvoca_front/src/components/takeTest/SaveStudyData.jsx` 폴백 분기 제거
-   - `heyvoca_front/src/pages/TakeTest.jsx`의 `legacyLocalSelection` 함수 제거
+**완료 작업:**
+- 클라이언트
+  - `heyvoca_front/src/pages/TakeTest.jsx` `legacyLocalSelection` 함수 + 3곳 호출처 제거, `VITE_RECOMMEND_BACKEND` 분기 제거
+  - `heyvoca_front/src/api/study.jsx` `createStudySession` (폴백 세션 생성) 함수 + `VITE_FSRS_SHADOW` 코멘트 제거
+- 백엔드
+  - `heyvoca_back/app/routes/voca_indexs.py` `PATCH /vocaIndexs/<id>` 엔드포인트 제거 (이미 no-op 상태였음)
+- admin
+  - `heyvoca_back/app/routes/admin.py` Phase 1.4 카드 + `patch_voca_indexs_sm2_calls_7d` / `fallback_users_7d` summary 카운터 제거
+  - `heyvoca_back/app/routes/admin_phase_prompts.py` `PHASE_1_4` 프롬프트 제거
+  - `heyvoca_back/tests/test_admin_progress.py` 관련 테스트 제거 + phases 인덱스 갱신
 
-2. 백엔드 SM2 호환성 제거
-   - `heyvoca_back/app/routes/voca_indexs.py:193-219` — `PATCH /vocaIndexs/<id>`의 sm2 처리 제거
-   - `Sunset` / `Deprecation` 응답 헤더 추가 후 4주 모니터링 → 호출 0건이면 200 OK 응답만 남기고 처리는 no-op
-
-3. UserVoca.data 정리 (선택)
-   - `heyvoca_back/jobs/finalize_fsrs_migration.py` 신설 — `schema_version=3` 으로 올리고 `sm2`/`schema_version`/`params_version` 외 모든 키 제거
-   - `data` JSON 크기 감소 (단어당 ~200B 절감)
-
-**롤백:** 위 변경 모두 git revert로 가능. 단, `finalize_fsrs_migration.py` 실행 후엔 sm2 데이터 복원 불가 — 실행 전 백업 필수.
+**보존한 부분 (POST_LAUNCH_TODO.md 원안과 다름):**
+- `common.jsx::analyzeLearningPattern` — FSRS의 difficulty/reps 기반 의심패턴 감지 UX. SM2 폴백이 아닌 정상 기능.
+- `forgettingPriority.js::sortByForgettingPriority` — FSRS 기반 정렬. `StudySetupNewBottomSheet`의 "선택한 단어 학습" 흐름에서 정식 사용 중.
+- UserVoca.data 정리 스크립트 (`finalize_fsrs_migration.py`) — 별도 의사결정 필요. 실행 후 SM2 복원 불가.
 
 ---
 
@@ -204,7 +199,7 @@ POC만 진행. 정식 배포는 별도 의사결정.
 ### 대시보드 구성
 
 - **상단 요약 카드**: 총 학습 로그 / 세션 / 활성 사용자 (30일) / 정식 오픈 후 경과일
-- **Phase 카드 4개** (1.4, 3.1, 3.2, 3.3): 각 카드에 임계치 3개(최소/권장/최상) 진행률 게이지
+- **Phase 카드 3개** (3.1, 3.2, 3.3): 각 카드에 임계치 3개(최소/권장/최상) 진행률 게이지
 - **next_action 박스**: 임계치 달성 시 Claude Code에 입력할 명령어 (복사 버튼)
 - **MetricsPanel / HealthPanel**: 분포 + lapse rate + 파티션별 row 수
 - 30초 자동 새로고침 + 수동 새로고침 버튼

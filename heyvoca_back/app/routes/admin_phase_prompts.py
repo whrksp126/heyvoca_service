@@ -5,49 +5,6 @@ admin /progress 엔드포인트의 next_action.command_for_claude 풀 프롬프�
 새 세션에서 그대로 붙여넣으면 컨텍스트 없이도 즉시 실행 가능하도록 작성.
 """
 
-PHASE_1_4 = """\
-heyvoca 단어 학습 알고리즘 고도화 작업의 Phase 1.4 (레거시 정리)를 진행해줘.
-
-## 컨텍스트
-heyvoca의 단어 학습 알고리즘은 SM2 → FSRS-5로 베타 단계에서 전환 완료(Phase 1.1~2.3). 정식 오픈 후 충분한 기간 무탈 운영되어 폴백 코드를 제거하는 단계.
-
-가이드 문서: heyvoca_service/docs/POST_LAUNCH_TODO.md (Phase 1.4 섹션)
-원본 플랜: ~/.claude/plans/vivid-beaming-pillow.md
-프로젝트 메모리: ~/.claude/projects/-Users-whrksp126-other-project-heyvoca/memory/project_fsrs_migration.md
-
-## 작업 목록
-
-### 1. 클라이언트 폴백 코드 제거
-- heyvoca_front/src/utils/common.jsx:341-591 — updateSM2, analyzeLearningPattern 함수 삭제
-- heyvoca_front/src/utils/forgettingPriority.js — 파일 삭제
-- heyvoca_front/src/components/takeTest/Main.jsx — 폴백 분기(`studySessionRef.current === null` 케이스) 제거
-- heyvoca_front/src/components/takeTest/SaveStudyData.jsx — 폴백 분기 제거
-- heyvoca_front/src/pages/TakeTest.jsx — legacyLocalSelection 함수 제거, 추천 API 실패 시 에러 안내로 변경
-- heyvoca_front/src/utils/common.jsx의 deriveSm2FromFsrs는 유지 (다른 화면에서 폴백 가능)
-
-### 2. 백엔드 SM2 호환성 제거
-- heyvoca_back/app/routes/voca_indexs.py:193-219 — PATCH /vocaIndexs/<id>의 sm2 처리 제거
-- 응답에 Sunset / Deprecation 헤더 추가 후 4주 모니터링 → 호출 0건이면 200 OK + no-op으로 변경
-- heyvoca_back/app/services/fsrs/state.py — v1 호환 코드(parse_user_voca_data의 v1 분기, migrate_v1_to_v2) 제거 가능 여부 검토
-
-### 3. UserVoca.data 정리 스크립트
-- heyvoca_back/jobs/finalize_fsrs_migration.py 신설 — schema_version=3으로 올리고 sm2/schema_version/params_version 외 모든 키 제거
-- 단어당 ~200B 절감
-- argparse: --dry-run, --batch-size, idempotent
-- 결과 리포트 JSON 저장
-- 기존 jobs/migrate_sm2_to_fsrs.py, rollback_fsrs_to_sm2.py 패턴 따름
-
-### 4. 검증
-- 백엔드 pytest 전부 통과 (현재 336/336)
-- 프론트 npm run build 성공
-- finalize_fsrs_migration.py --dry-run으로 변환 대상 확인
-
-## 주의사항
-- .env*, db/backups/, db/batches/ 절대 건드리지 말 것
-- finalize 스크립트 실행 전 백업(MinIO archive) 권장
-- 폴백 코드 제거 후 1주 모니터링 — admin /admin/progress에서 patch_voca_indexs_sm2_calls_7d=0 유지 확인
-"""
-
 PHASE_3_1 = """\
 heyvoca 단어 학습 알고리즘 고도화 작업의 Phase 3.1 (FSRS 글로벌 파라미터 ML 최적화)를 진행해줘.
 
@@ -227,7 +184,6 @@ Phase 1~3.2 완료. 임베딩 기반 추천 고도화는 정식 오픈 6개월 �
 """
 
 PHASE_PROMPTS = {
-    '1.4': PHASE_1_4,
     '3.1': PHASE_3_1,
     '3.2': PHASE_3_2,
     '3.3': PHASE_3_3,

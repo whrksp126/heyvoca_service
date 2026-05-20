@@ -124,24 +124,9 @@ export const getAchievementCriteriaApi = async () => {
   }
 };
 
-// ─── Phase 1.2 섀도잉 API ──────────────────────────────────────────────────
-// 활성화: .env.local 에 VITE_FSRS_SHADOW=true 추가
-// 비활성화(기본): VITE_FSRS_SHADOW 없거나 false
+// ─── 학습 세션 / 로그 API ───────────────────────────────────────────────────
 
-// 학습 세션 시작 (Phase 1.2 섀도잉)
-// POST /study/sessions → { session_id }
-export const createStudySession = async ({ testType, bookIds }) => {
-  const url = `${backendUrl}/study/sessions`;
-  const method = 'POST';
-  const fetchData = {
-    test_type: testType,
-    book_ids: bookIds,
-  };
-  const result = await fetchDataAsync(url, method, fetchData);
-  return result;
-};
-
-// 한 문제 결과 기록 (Phase 1.2 섀도잉)
+// 한 문제 결과 기록
 // POST /study/log
 export const logStudyQuestion = async (payload) => {
   const url = `${backendUrl}/study/log`;
@@ -150,7 +135,7 @@ export const logStudyQuestion = async (payload) => {
   return result;
 };
 
-// 학습 세션 종료 (Phase 1.2 섀도잉)
+// 학습 세션 종료
 // POST /study/sessions/<session_id>/finish
 export const finishStudySession = async (sessionId) => {
   const url = `${backendUrl}/study/sessions/${sessionId}/finish`;
@@ -159,7 +144,7 @@ export const finishStudySession = async (sessionId) => {
   return result;
 };
 
-// ─── Phase 1.3 추천 API ───────────────────────────────────────────────────────
+// ─── 추천 API ───────────────────────────────────────────────────────────────
 // GET /study/recommend — 단어 추천 (세션 구성 + session_id 동시 반환)
 // 응답: { code: 200, data: { session_id, composition, items } }
 export const getStudyRecommend = async ({
