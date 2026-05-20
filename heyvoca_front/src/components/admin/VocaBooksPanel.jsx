@@ -1,5 +1,5 @@
 // src/components/admin/VocaBooksPanel.jsx
-// 단어장 관리 탭 컨테이너. 필터/검색/정렬 + 목록 + (Step 4) 편집 Drawer.
+// 단어장 관리 탭 컨테이너. 필터/검색/정렬 + 목록(무한 스크롤) + 편집 Drawer.
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { listVocaBooks, toggleBookstore } from '@/api/adminVocaBooks';
 import VocaBookFilters from './VocaBookFilters';
@@ -17,7 +17,10 @@ const VocaBooksPanel = ({ token, onLogout }) => {
   const [total, setTotal] = useState(0);
   const [sourceCounts, setSourceCounts] = useState({});
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState({ source: 'all', q: '', sort: 'updated_at' });
+  const [hasMore, setHasMore] = useState(true);
+  const [filters, setFilters] = useState({ source: 'all', q: '' });
+  const [sortBy, setSortBy] = useState('updated_at');
+  const [sortDir, setSortDir] = useState('desc');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,21 +35,29 @@ const VocaBooksPanel = ({ token, onLogout }) => {
   const [registerForBook, setRegisterForBook] = useState(null);
   const [togglingId, setTogglingId] = useState(null);
 
-  const load = useCallback(async (overridePage) => {
+  // 무한 스크롤 sentinel
+  const sentinelRef = useRef(null);
+
+  // 페이지 단위로 목록 fetch.
+  // mode='reset' → items 교체 + page=1, mode='append' → items 누적 + 다음 page.
+  const load = useCallback(async (pageToLoad, mode) => {
     setLoading(true);
     setError('');
     try {
       const json = await listVocaBooks(token, {
-        page: overridePage ?? page,
+        page: pageToLoad,
         pageSize: PAGE_SIZE,
         source: filters.source,
         q: filters.q,
-        sort: filters.sort,
+        sortBy,
+        sortDir,
       });
       const data = json?.data ?? {};
-      setItems(data.items || []);
+      const newItems = data.items || [];
+      setItems((prev) => (mode === 'append' ? [...prev, ...newItems] : newItems));
       setTotal(data.total || 0);
       setSourceCounts(data.source_counts || {});
+      setHasMore(newItems.length === PAGE_SIZE);
     } catch (err) {
       if (err.status === 401) {
         localStorage.removeItem(STORAGE_KEY);
@@ -54,24 +65,52 @@ const VocaBooksPanel = ({ token, onLogout }) => {
         return;
       }
       setError(err.message || '단어장 목록을 불러오지 못했습니다.');
+      setHasMore(false);
     } finally {
       setLoading(false);
     }
-  }, [token, onLogout, page, filters]);
+  }, [token, onLogout, filters, sortBy, sortDir]);
 
+  // 필터/정렬 변경 시 1페이지부터 새로 로드 (items 교체)
   useEffect(() => {
-    load();
+    setPage(1);
+    setHasMore(true);
+    load(1, 'reset');
+    // load는 deps에 filters/sortBy/sortDir 포함되므로 변경 시 재생성됨
   }, [load]);
+
+  // 페이지 증가 시 누적 로드
+  useEffect(() => {
+    if (page === 1) return;
+    load(page, 'append');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   // 검색어 debounce 적용
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       setFilters((prev) => ({ ...prev, q: qInput }));
-      setPage(1);
     }, 300);
     return () => clearTimeout(debounceRef.current);
   }, [qInput]);
+
+  // IntersectionObserver — sentinel이 보이면 다음 페이지 로드
+  useEffect(() => {
+    const node = sentinelRef.current;
+    if (!node) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && hasMore && !loading) {
+          setPage((p) => p + 1);
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, [hasMore, loading]);
 
   const handleFilterChange = (patch) => {
     if ('q' in patch) {
@@ -79,7 +118,11 @@ const VocaBooksPanel = ({ token, onLogout }) => {
       return;
     }
     setFilters((prev) => ({ ...prev, ...patch }));
-    setPage(1);
+  };
+
+  const handleSortChange = (nextSortBy, nextSortDir) => {
+    setSortBy(nextSortBy);
+    setSortDir(nextSortDir);
   };
 
   const handleEdit = (book) => {
@@ -126,8 +169,6 @@ const VocaBooksPanel = ({ token, onLogout }) => {
     setRegisterForBook(null);
   };
 
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
@@ -140,7 +181,6 @@ const VocaBooksPanel = ({ token, onLogout }) => {
       <VocaBookFilters
         source={filters.source}
         q={qInput}
-        sort={filters.sort}
         sourceCounts={sourceCounts}
         onChange={handleFilterChange}
       />
@@ -153,9 +193,23 @@ const VocaBooksPanel = ({ token, onLogout }) => {
 
       <VocaBookList
         items={items}
+        sortBy={sortBy}
+        sortDir={sortDir}
+        onSortChange={handleSortChange}
         onEdit={handleEdit}
         onToggleBookstore={handleToggleBookstore}
       />
+
+      {/* 무한 스크롤 sentinel + 상태 표시 */}
+      {items.length > 0 && (
+        <div ref={sentinelRef} className="py-6 text-center text-xs text-gray-600">
+          {loading
+            ? '불러오는 중...'
+            : hasMore
+              ? '아래로 스크롤하면 더 불러옵니다'
+              : `모두 불러왔습니다 (${items.length} / ${total})`}
+        </div>
+      )}
 
       {editingBookId && (
         <VocaBookDetailDrawer
@@ -174,28 +228,6 @@ const VocaBooksPanel = ({ token, onLogout }) => {
           onClose={() => setRegisterForBook(null)}
           onRegistered={handleRegistered}
         />
-      )}
-
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 pt-2">
-          <button
-            disabled={page <= 1 || loading}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            className="px-3 py-1.5 text-xs rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-40 text-gray-200"
-          >
-            이전
-          </button>
-          <span className="text-xs text-gray-500">
-            {page} / {totalPages}
-          </span>
-          <button
-            disabled={page >= totalPages || loading}
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            className="px-3 py-1.5 text-xs rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-40 text-gray-200"
-          >
-            다음
-          </button>
-        </div>
       )}
     </section>
   );

@@ -1,5 +1,5 @@
 // src/components/admin/VocaBookFilters.jsx
-// 단어장 목록 상단 필터/검색/정렬 바.
+// 단어장 목록 상단 필터/검색 바. 정렬은 테이블 헤더 클릭으로 처리.
 import React from 'react';
 
 const SOURCE_OPTIONS = [
@@ -8,12 +8,7 @@ const SOURCE_OPTIONS = [
   { value: '직접 제작', label: '직접 제작' },
 ];
 
-const SORT_OPTIONS = [
-  { value: 'updated_at', label: '최신순 (갱신일)' },
-  { value: 'id', label: 'ID 내림차순' },
-];
-
-const VocaBookFilters = ({ source, q, sort, sourceCounts, onChange }) => {
+const VocaBookFilters = ({ source, q, sourceCounts, onChange }) => {
   "use memo";
   const labelFor = (opt) => {
     if (opt.value === 'all') {
@@ -43,16 +38,6 @@ const VocaBookFilters = ({ source, q, sort, sourceCounts, onChange }) => {
         onChange={(e) => onChange({ q: e.target.value })}
         className="bg-gray-900 border border-gray-700 text-sm text-gray-200 placeholder-gray-600 rounded-lg px-3 py-1.5 w-64 focus:outline-none focus:border-blue-500"
       />
-
-      <select
-        value={sort}
-        onChange={(e) => onChange({ sort: e.target.value })}
-        className="bg-gray-900 border border-gray-700 text-sm text-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500"
-      >
-        {SORT_OPTIONS.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
-        ))}
-      </select>
     </div>
   );
 };

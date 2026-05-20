@@ -1,5 +1,5 @@
 // src/components/admin/VocaBookList.jsx
-// 단어장 목록 테이블. 편집/토글은 상위 패널 콜백으로 위임.
+// 단어장 목록 테이블. 편집/토글은 상위 패널 콜백으로 위임. 정렬은 th 클릭으로 처리.
 import React from 'react';
 
 const formatDate = (iso) => {
@@ -24,7 +24,26 @@ const BookstoreStatus = ({ bookstore }) => {
   return <span className="text-gray-500 text-xs">숨김 · gem {bookstore.gem}</span>;
 };
 
-const VocaBookList = ({ items, onEdit, onToggleBookstore }) => {
+const COLUMNS = [
+  { key: 'id',         label: 'ID',         align: 'left',  sortable: true },
+  { key: 'book_nm',    label: '단어장명',    align: 'left',  sortable: true },
+  { key: 'language',   label: '언어',        align: 'left',  sortable: true },
+  { key: 'source',     label: 'Source',     align: 'left',  sortable: true },
+  { key: 'category',   label: '카테고리',    align: 'left',  sortable: true },
+  { key: 'word_count', label: '단어수',      align: 'right', sortable: true },
+  { key: 'bookstore',  label: '서점 등록',   align: 'left',  sortable: true },
+  { key: 'updated_at', label: '갱신일',      align: 'left',  sortable: true },
+  { key: '_actions',   label: '동작',        align: 'right', sortable: false },
+];
+
+const SortIndicator = ({ active, dir }) => {
+  if (!active) {
+    return <span className="ml-1 text-gray-700">↕</span>;
+  }
+  return <span className="ml-1 text-blue-400">{dir === 'asc' ? '▲' : '▼'}</span>;
+};
+
+const VocaBookList = ({ items, sortBy, sortDir, onSortChange, onEdit, onToggleBookstore }) => {
   "use memo";
   if (!items.length) {
     return (
@@ -34,20 +53,40 @@ const VocaBookList = ({ items, onEdit, onToggleBookstore }) => {
     );
   }
 
+  const handleHeaderClick = (col) => {
+    if (!col.sortable || !onSortChange) return;
+    if (col.key === sortBy) {
+      // 같은 컬럼이면 방향 토글
+      onSortChange(col.key, sortDir === 'asc' ? 'desc' : 'asc');
+    } else {
+      // 새 컬럼이면 기본 desc (숫자/날짜는 desc가 자연스럽고, 문자열도 desc 시작이 일관성 있음)
+      onSortChange(col.key, 'desc');
+    }
+  };
+
   return (
-    <div className="overflow-auto rounded-xl border border-gray-800 max-h-[calc(100vh-340px)]">
+    <div className="rounded-xl border border-gray-800 overflow-hidden">
       <table className="w-full text-sm">
-        <thead className="bg-gray-900 text-gray-400 text-xs uppercase tracking-wide sticky top-0 z-10">
+        <thead className="bg-gray-900 text-gray-400 text-xs uppercase tracking-wide">
           <tr>
-            <th className="px-3 py-2 text-left font-medium">ID</th>
-            <th className="px-3 py-2 text-left font-medium">단어장명</th>
-            <th className="px-3 py-2 text-left font-medium">언어</th>
-            <th className="px-3 py-2 text-left font-medium">Source</th>
-            <th className="px-3 py-2 text-left font-medium">카테고리</th>
-            <th className="px-3 py-2 text-right font-medium">단어수</th>
-            <th className="px-3 py-2 text-left font-medium">서점 등록</th>
-            <th className="px-3 py-2 text-left font-medium">갱신일</th>
-            <th className="px-3 py-2 text-right font-medium">동작</th>
+            {COLUMNS.map((col) => {
+              const active = col.sortable && col.key === sortBy;
+              return (
+                <th
+                  key={col.key}
+                  className={
+                    'px-3 py-2 font-medium ' +
+                    (col.align === 'right' ? 'text-right ' : 'text-left ') +
+                    (col.sortable ? 'cursor-pointer select-none hover:text-white transition-colors ' : '')
+                  }
+                  onClick={() => handleHeaderClick(col)}
+                  title={col.sortable ? '클릭하여 정렬' : ''}
+                >
+                  <span className={active ? 'text-white' : ''}>{col.label}</span>
+                  {col.sortable && <SortIndicator active={active} dir={sortDir} />}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>

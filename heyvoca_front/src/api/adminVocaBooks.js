@@ -32,8 +32,14 @@ function buildQuery(params) {
   return qs ? `?${qs}` : '';
 }
 
-export const listVocaBooks = (token, { page = 1, pageSize = 20, source = 'all', q = '', sort = 'updated_at' } = {}) =>
-  adminFetch(`/admin/voca-books${buildQuery({ page, page_size: pageSize, source, q, sort })}`, token);
+export const listVocaBooks = (
+  token,
+  { page = 1, pageSize = 20, source = 'all', q = '', sortBy = 'updated_at', sortDir = 'desc' } = {},
+) =>
+  adminFetch(
+    `/admin/voca-books${buildQuery({ page, page_size: pageSize, source, q, sort_by: sortBy, sort_dir: sortDir })}`,
+    token,
+  );
 
 export const getVocaBook = (token, id) =>
   adminFetch(`/admin/voca-books/${id}`, token);

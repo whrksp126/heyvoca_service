@@ -113,7 +113,10 @@ def list_voca_books():
         page_size (int, 기본 20, 최대 100)
         source (str): 'all' | 'AI 생성' | '직접 제작' (URL 인코딩된 한글 그대로)
         q (str): book_nm LIKE 검색
-        sort (str): 'updated_at' | 'id' (기본 updated_at, NULL은 뒤로)
+        sort_by (str): id | book_nm | language | source | category | word_count |
+                       bookstore | updated_at (기본 updated_at)
+        sort_dir (str): asc | desc (기본 desc)
+        sort (str, deprecated): 'updated_at' | 'id' 하위호환 — sort_by 미지정 시만 적용
 
     Response data:
         {
@@ -128,7 +131,16 @@ def list_voca_books():
     page_size = _clamp_int(request.args.get('page_size'), 20, min_val=1, max_val=100)
     source = (request.args.get('source') or 'all').strip()
     q = (request.args.get('q') or '').strip()
-    sort = (request.args.get('sort') or 'updated_at').strip()
+
+    # sort_by / sort_dir (신규) — sort (deprecated) 하위호환
+    sort_by = (request.args.get('sort_by') or '').strip()
+    sort_dir = (request.args.get('sort_dir') or 'desc').strip().lower()
+    if not sort_by:
+        legacy_sort = (request.args.get('sort') or 'updated_at').strip()
+        sort_by = legacy_sort if legacy_sort in ('id', 'updated_at') else 'updated_at'
+
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'desc'
 
     query = AdminVocaBook.query
 
@@ -137,14 +149,35 @@ def list_voca_books():
     if q:
         query = query.filter(AdminVocaBook.book_nm.ilike(f'%{q}%'))
 
-    if sort == 'id':
-        query = query.order_by(AdminVocaBook.id.desc())
-    else:
-        # MySQL은 DESC 정렬 시 NULL을 자동으로 뒤로 배치하므로 별도 처리 불필요
-        query = query.order_by(
-            AdminVocaBook.updated_at.desc(),
-            AdminVocaBook.id.desc(),
+    # bookstore 정렬은 LEFT JOIN 필요 (등록된 항목이 먼저 / 나중)
+    SORTABLE_COLUMNS = {
+        'id': AdminVocaBook.id,
+        'book_nm': AdminVocaBook.book_nm,
+        'language': AdminVocaBook.language,
+        'source': AdminVocaBook.source,
+        'category': AdminVocaBook.category,
+        'word_count': AdminVocaBook.word_count,
+        'updated_at': AdminVocaBook.updated_at,
+    }
+
+    if sort_by == 'bookstore':
+        # bookstore 등록 여부 + 노출 여부 기준. 등록(가시) > 등록(숨김) > 미등록 순(desc 기본).
+        from sqlalchemy import case, literal
+        bookstore_score = case(
+            (Bookstore.id.is_(None), literal(0)),
+            (Bookstore.hide == 'N', literal(2)),
+            else_=literal(1),
         )
+        query = query.outerjoin(Bookstore, Bookstore.admin_voca_book_id == AdminVocaBook.id)
+        primary = bookstore_score.asc() if sort_dir == 'asc' else bookstore_score.desc()
+        query = query.order_by(primary, AdminVocaBook.id.desc())
+    elif sort_by in SORTABLE_COLUMNS:
+        col = SORTABLE_COLUMNS[sort_by]
+        primary = col.asc() if sort_dir == 'asc' else col.desc()
+        query = query.order_by(primary, AdminVocaBook.id.desc())
+    else:
+        # 안전망: 알 수 없는 sort_by → updated_at desc
+        query = query.order_by(AdminVocaBook.updated_at.desc(), AdminVocaBook.id.desc())
 
     total = query.count()
     books = query.limit(page_size).offset((page - 1) * page_size).all()
