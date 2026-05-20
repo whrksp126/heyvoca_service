@@ -10,7 +10,7 @@ const TABS = [
 const AdminTabs = ({ activeTab, onChange }) => {
   "use memo";
   return (
-    <nav className="border-b border-gray-800 bg-gray-950/90 backdrop-blur sticky top-[57px] z-10">
+    <nav className="flex-shrink-0 border-b border-gray-800 bg-gray-950/90 backdrop-blur">
       <div className="max-w-6xl mx-auto px-6 flex gap-1">
         {TABS.map((t) => {
           const active = t.id === activeTab;

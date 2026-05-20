@@ -107,9 +107,10 @@ const Dashboard = ({ token, onLogout }) => {
   const summary = progress?.summary ?? {};
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-20 bg-gray-950/90 backdrop-blur border-b border-gray-800 px-6 py-4">
+    // index.css가 html/body/#root에 overflow:hidden을 걸어둔 환경이라 admin은 자체 스크롤 컨테이너로 동작해야 함.
+    <div className="fixed inset-0 bg-gray-950 text-white flex flex-col">
+      {/* 헤더 (고정) */}
+      <header className="flex-shrink-0 bg-gray-950/90 backdrop-blur border-b border-gray-800 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold text-white">heyvoca Admin</h1>
@@ -144,8 +145,9 @@ const Dashboard = ({ token, onLogout }) => {
 
       <AdminTabs activeTab={activeTab} onChange={handleTabChange} />
 
-      {/* 본문 */}
-      <main className="max-w-6xl mx-auto px-6 py-8 space-y-8">
+      {/* 본문 (스크롤 영역) */}
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
         {activeTab === 'overview' ? (
           <>
             {error && (
@@ -190,6 +192,7 @@ const Dashboard = ({ token, onLogout }) => {
         ) : (
           <VocaBooksPanel token={token} onLogout={onLogout} />
         )}
+        </div>
       </main>
     </div>
   );

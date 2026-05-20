@@ -10,7 +10,7 @@ const Card = ({ title, value, sub }) => (
 );
 
 /**
- * 상단 요약 카드 4개
+ * 상단 요약 카드 3개
  * @param {{ summary: object }} props
  */
 const SummaryCards = ({ summary = {} }) => {
@@ -20,19 +20,13 @@ const SummaryCards = ({ summary = {} }) => {
     total_logs = 0,
     total_sessions = 0,
     active_users_30d = 0,
-    days_since_launch = null,
   } = summary;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <Card title="전체 학습 로그" value={total_logs.toLocaleString()} sub="누적 복습 기록 수" />
       <Card title="전체 세션" value={total_sessions.toLocaleString()} sub="누적 학습 세션 수" />
       <Card title="활성 유저 (30일)" value={active_users_30d.toLocaleString()} sub="최근 30일 내 학습한 유저" />
-      <Card
-        title="정식 오픈 경과일"
-        value={days_since_launch !== null ? `${days_since_launch}일` : '미설정'}
-        sub={days_since_launch !== null ? '서버 LAUNCH_DATE 기준' : 'LAUNCH_DATE 환경변수를 설정하세요'}
-      />
     </div>
   );
 };
