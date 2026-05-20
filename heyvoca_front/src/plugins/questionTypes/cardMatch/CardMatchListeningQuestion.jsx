@@ -112,12 +112,11 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     const newKey = getMemoryStateKeyByStability(optimisticStability, optimisticState);
     const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
 
-    let optimisticNextReview = word.fsrs?.next_review ?? null;
-    if (!optimisticNextReview) {
-      const next = new Date();
-      next.setDate(next.getDate() + (isMatch ? 3 : 1));
-      optimisticNextReview = next.toISOString();
-    }
+    // 항상 미래 next_review로 새로 계산. 학습 직전 fsrs.next_review는 오늘/과거라 그대로 두면 표시 안 됨.
+    const daysAhead = Math.max(1, Math.round(optimisticStability));
+    const next = new Date();
+    next.setDate(next.getDate() + daysAhead);
+    const optimisticNextReview = next.toISOString();
 
     setWordResolvedStates(prev => ({
       ...prev,
@@ -368,7 +367,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
               {/* 하단 중앙 - 복습 예정일 (채점 후) */}
               {!!wordResolvedStates[word.id] && (() => {
-                const nextReview = word.fsrs?.next_review ?? wordResolvedStates[word.id].nextReview;
+                // 낙관 추정값 우선 — word.fsrs.next_review는 학습 직전 값이라 과거.
+                const nextReview = wordResolvedStates[word.id].nextReview ?? word.fsrs?.next_review;
                 if (!nextReview) return null;
                 const parts = nextReview.includes('T') ? null : nextReview.split('-');
                 const date = parts

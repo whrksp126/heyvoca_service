@@ -111,12 +111,12 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
     const newKey = getMemoryStateKeyByStability(optimisticStability, optimisticState);
     const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
 
-    let optimisticNextReview = word.fsrs?.next_review ?? null;
-    if (!optimisticNextReview) {
-      const next = new Date();
-      next.setDate(next.getDate() + (isMatch ? 3 : 1));
-      optimisticNextReview = next.toISOString();
-    }
+    // 항상 미래 next_review로 새로 계산. 학습 직전 fsrs.next_review는 오늘/과거라 그대로 두면 표시 안 됨.
+    // FSRS stability(retention 90% interval ≈ days) 기반으로 낙관적 추정.
+    const daysAhead = Math.max(1, Math.round(optimisticStability));
+    const next = new Date();
+    next.setDate(next.getDate() + daysAhead);
+    const optimisticNextReview = next.toISOString();
 
     setWordResolvedStates(prev => ({
       ...prev,
@@ -321,7 +321,8 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
 
               {/* 하단 중앙 - 복습 예정일 (채점 후) */}
               {!!wordResolvedStates[word.id] && (() => {
-                const nextReview = word.fsrs?.next_review ?? wordResolvedStates[word.id].nextReview;
+                // 낙관 추정값(wordResolvedStates) 우선 — word.fsrs.next_review는 학습 직전 값이라 과거.
+                const nextReview = wordResolvedStates[word.id].nextReview ?? word.fsrs?.next_review;
                 if (!nextReview) return null;
                 const parts = nextReview.includes('T') ? null : nextReview.split('-');
                 const date = parts
@@ -331,7 +332,6 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
                 today.setHours(0, 0, 0, 0);
                 date.setHours(0, 0, 0, 0);
                 const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-                // 백엔드 응답 도착 전 잔여 fsrs(이미 지난 next_review)일 가능성 → 미래일 때만 표시
                 if (daysDiff < 1) return null;
                 const text = `${daysDiff}일 후 복습 예정`;
                 return (

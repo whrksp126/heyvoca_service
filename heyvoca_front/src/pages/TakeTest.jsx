@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import { getQuestionType } from '../plugins/questionTypes';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
-import MakeStudyData from '../components/takeTest/MakeStudyData';
 import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
@@ -461,12 +460,8 @@ const TakeTest = () => {
   };
 
   if (isTestQuestionsSetting) {
-    return (
-      <div>
-        <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-        <MakeStudyData />
-      </div>
-    );
+    // 학습 데이터 fetch 동안 빈 화면 유지. 정적 로딩 이미지 대신 짧은 깜빡임으로 처리.
+    return null;
   } else {
     if (recentStudy[state.testType]?.status === "end") {
       // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.
