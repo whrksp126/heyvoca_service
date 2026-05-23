@@ -313,17 +313,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       bg-layout-white dark:bg-layout-black
     ">
       <div style={{ paddingTop: 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))' }}></div>
-      {/* Header - h-58.5px matches Figma */}
+      {/* Header — 다른 fullsheet와 동일한 구조 (h-[55px] + Tailwind 패딩) */}
       <div
         data-page-header
-        style={{
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '58.5px',
-          padding: '20px 16px 14px 16px'
-        }}
+        className="relative flex items-center justify-between h-[55px] pt-[20px] px-[16px] pb-[14px]"
       >
         <div className="flex items-center gap-[10px]">
           <motion.button
@@ -426,7 +419,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
       {/* Filter & Study Section */}
       {vocabularySheet?.words?.length > 0 && (
-        <div className="flex items-center justify-between px-[16px] pt-[20px] pb-[10px]">
+        <div className="flex items-center justify-between px-[16px] pt-[5px] pb-[10px]">
           {/* Sort Dropdown */}
           <div className="relative">
             <button
