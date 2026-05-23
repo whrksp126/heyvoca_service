@@ -12,3 +12,4 @@
 | 20260518-1 | 2026-05-18 | unknown | - | - | - | AI 생성 admin 단어장 예문 강조 적용 (4187 rows) (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260518-2 | 2026-05-18 | unknown | - | - | - | bookstore: AI 52개 + 직접제작 6개 일괄 등록 (총 60개 노출) (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260519-1 | 2026-05-19 | unknown | - | - | - | 온보딩 단어장 재구성: 중/고/대학 100개씩 교체 + 강조 처리 + 사전 예문 18개 추가 (voca=51259, voca_meaning=133458, voca_book=12773) |
+| 20260523-1 | 2026-05-23 | unknown | - | - | - | bookstore: id=36 가격 1→10, bookstore_category 테이블 추가 (카테고리 정렬) (voca=51259, voca_meaning=133458, voca_book=12773) |

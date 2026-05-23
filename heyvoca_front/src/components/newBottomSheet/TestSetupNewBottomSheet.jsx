@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
-import { QUESTION_TYPE_PLUGINS } from '../../plugins/questionTypes';
+import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates } from '../../plugins/questionTypes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -160,6 +160,14 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
     if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
       setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
       return;
+    }
+
+    // 빈칸 채우기 단독 선택 시 강조 처리된 예문이 있는 단어가 충분한지 검사
+    if (data.questionType?.length === 1 && data.questionType[0] === 'fillInTheBlank') {
+      if (countFillInTheBlankCandidates(allWords) < MIN_TEST_VOCABULARY_COUNT) {
+        setErrorMessage('빈칸 채우기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
+        return;
+      }
     }
 
     // MEMO : testType : test, exam, today

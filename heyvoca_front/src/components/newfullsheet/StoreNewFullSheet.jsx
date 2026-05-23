@@ -92,7 +92,7 @@ const StoreNewFullSheet = () => {
               )}
               <div className="flex flex-col gap-[3px]">
                 <h1 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">{gem.name}</h1>
-                <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price}</span>
+                <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price.toLocaleString('ko-KR')}</span>
               </div>
             </div>
           ))}

@@ -287,30 +287,51 @@ const TakeTest = () => {
       }
       {
         // 학습 기록이 없거나 잘못된 캐시이면 새로운 학습 데이터 생성 후 학습 시작
-        console.log("state", state.data.memoryState);
+        try {
+          const { testQuestions: tempTestQuestions, sessionId } = await setupTestQuestions(
+            state.data.memoryState,
+            state.data.vocabularySheetId,
+            state.data.count,
+            state.testType
+          );
 
-        const { testQuestions: tempTestQuestions, sessionId } = await setupTestQuestions(
-          state.data.memoryState,
-          state.data.vocabularySheetId,
-          state.data.count,
-          state.testType
-        );
+          // 출제 가능한 문제가 0개이면 (예: 빈칸 채우기 단독 선택인데 강조 예문이 없는 경우) 알림 후 복귀
+          if (!tempTestQuestions || tempTestQuestions.length === 0) {
+            window.alert('출제 가능한 문제가 없어요. 다른 유형을 함께 선택해주세요');
+            setIsTestQuestionsSetting(false);
+            if (AppHistory.canGoBack()) {
+              navigate(-1);
+            } else {
+              navigate('/home');
+            }
+            return;
+          }
 
-        // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
-        studySessionRef.current = sessionId ?? null;
+          // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
+          studySessionRef.current = sessionId ?? null;
 
-        await updateRecentStudy(state.testType, {
-          ...recentStudy[state.testType],
-          progress_index: 0,
-          status: "learning",
-          type: state.testType,
-          study_data: tempTestQuestions,
-          updated_at: new Date().toISOString(),
-          created_at: new Date().toISOString(),
-        });
+          await updateRecentStudy(state.testType, {
+            ...recentStudy[state.testType],
+            progress_index: 0,
+            status: "learning",
+            type: state.testType,
+            study_data: tempTestQuestions,
+            updated_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+          });
 
-        setTestQuestions(tempTestQuestions);
-        setIsTestQuestionsSetting(false);
+          setTestQuestions(tempTestQuestions);
+          setIsTestQuestionsSetting(false);
+        } catch (e) {
+          console.error('[TakeTest] 학습 데이터 초기화 실패:', e);
+          window.alert('학습을 시작할 수 없어요. 잠시 후 다시 시도해주세요');
+          setIsTestQuestionsSetting(false);
+          if (AppHistory.canGoBack()) {
+            navigate(-1);
+          } else {
+            navigate('/home');
+          }
+        }
       }
     };
 

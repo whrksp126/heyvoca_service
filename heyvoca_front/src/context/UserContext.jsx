@@ -199,6 +199,18 @@ export const UserProvider = ({ children }) => {
     const result = await setUserCheckinApi();
     if (result.code != 200) return;
 
+    // 오늘 출석을 클라이언트 상태에 즉시 반영
+    // (백엔드는 CheckIn 레코드 기준으로만 attend를 판정하므로, 이 호출 결과를
+    //  user_dates 응답에 반영하지 않으면 홈 화면에 잠시 미출석으로 보일 수 있음)
+    const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const todayName = dayNames[new Date().getDay()];
+    setUserMainPage(prevMainPage => {
+      const updatedDates = prevMainPage.dates?.map(date =>
+        date.date === todayName ? { ...date, attend: true } : date
+      );
+      return updatedDates ? { ...prevMainPage, dates: updatedDates } : prevMainPage;
+    });
+
     // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
     if (result.data.goals && result.data.goals.length > 0) {
       // 업적 오버레이 표시

@@ -329,6 +329,7 @@ def search_bookstore_word():
 def search_bookstore_all():
     # MySQL용 쿼리 (단어 목록 제외)
     # NOTE: heyvoca_dict.* prefix 필수 (default bind = heyvoca_user)
+    # 카테고리는 bookstore_category.sort_order 기준 정렬 (없으면 999)
     query = text("""
         SELECT
             bs.id AS bookstore_id,
@@ -338,10 +339,13 @@ def search_bookstore_all():
             bs.color,
             bs.hide,
             bs.gem,
-            COALESCE(avb.word_count, 0) AS word_count
+            COALESCE(avb.word_count, 0) AS word_count,
+            COALESCE(bc.sort_order, 999) AS category_sort_order
         FROM heyvoca_dict.bookstore bs
         JOIN heyvoca_dict.admin_voca_book avb ON bs.admin_voca_book_id = avb.id
+        LEFT JOIN heyvoca_dict.bookstore_category bc ON bc.name = bs.category
         GROUP BY bs.id
+        ORDER BY category_sort_order ASC, bs.id ASC
     """)
 
     # 데이터 조회

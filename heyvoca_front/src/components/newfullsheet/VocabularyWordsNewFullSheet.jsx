@@ -312,7 +312,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       flex flex-col h-full w-full
       bg-layout-white dark:bg-layout-black
     ">
-      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
+      <div style={{ paddingTop: 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))' }}></div>
       {/* Header - h-58.5px matches Figma */}
       <div
         data-page-header
@@ -426,7 +426,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
       {/* Filter & Study Section */}
       {vocabularySheet?.words?.length > 0 && (
-        <div className="flex items-center justify-between px-[16px] py-[10px]">
+        <div className="flex items-center justify-between px-[16px] pt-[20px] pb-[10px]">
           {/* Sort Dropdown */}
           <div className="relative">
             <button

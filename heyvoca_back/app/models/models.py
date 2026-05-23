@@ -233,6 +233,14 @@ class Bookstore(db.Model):
     admin_voca_book = relationship("AdminVocaBook")
 
 
+# 서점 카테고리 — 카테고리별 정렬 순서 관리 (admin이 DB에서 sort_order 변경)
+class BookstoreCategory(db.Model):
+    __tablename__ = 'bookstore_category'
+    __bind_key__ = 'dict'
+    name = Column(String(50), primary_key=True)
+    sort_order = Column(Integer, nullable=False, default=999)
+
+
 ##############
 # 관계 테이블 #
 ##############

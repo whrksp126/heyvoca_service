@@ -2,6 +2,16 @@ import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
 import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 
+const TARGET_WORD_RE = /<strong[^>]*class="target-word"[^>]*>(.*?)<\/strong>/;
+
+// 빈칸 채우기 출제 가능 여부: 단어의 examples 중 강조 마커가 포함된 예문이 있는지
+export const hasFillInTheBlankExample = (word) =>
+  Array.isArray(word?.examples) && word.examples.some(ex => TARGET_WORD_RE.test(ex?.origin ?? ''));
+
+// 주어진 단어 배열에서 빈칸 채우기 출제 가능한 단어 개수
+export const countFillInTheBlankCandidates = (words) =>
+  Array.isArray(words) ? words.filter(hasFillInTheBlankExample).length : 0;
+
 const shuffleArray = (array) => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {

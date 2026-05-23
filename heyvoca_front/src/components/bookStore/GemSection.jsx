@@ -54,7 +54,7 @@ const GemSection = () => {
                 {gem.name}
               </h4>
               <span className="px-[12px] py-[4px] rounded-[6px] bg-primary-main-600 text-[14px] font-[700] text-layout-white">
-                ₩ {gem.price}
+                ₩ {gem.price.toLocaleString('ko-KR')}
               </span>
             </div>
           </button>
