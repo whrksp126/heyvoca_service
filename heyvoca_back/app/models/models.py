@@ -211,25 +211,20 @@ class Bookstore(db.Model):
     name = Column(String(100), nullable=False)
     downloads = Column(Integer, nullable=False)
     category = Column(String(50), nullable=False)
-    # 운영 DB에 존재하던 컬럼 — 단어장 카테고리 ID 참조 (현재 코드 미사용)
-    category_id = Column(Integer, nullable=True)
+    category_id = Column(Integer, ForeignKey('bookstore_category.id'), nullable=True)
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
-    # 운영 DB는 char(1). String(1)에 mysql_charset 사용으로 호환 가능하지만,
-    # 정확히 일치시키기 위해 CHAR로 변경.
     hide = Column(String(1), nullable=False)
     level = Column(String(50), nullable=True)
-    # cross-schema FK 제거 (level은 heyvoca_user에 있음). 컬럼은 유지, 일관성은 애플리케이션 레벨.
     level_id = Column(Integer, nullable=False)
-    # 운영 DB 실제 nullable=True (일부 row에 NULL 존재)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
     admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=True)
-    # 운영 DB에 존재하던 컬럼 — 단어장 생성/수정 시각
-    created_at = Column(DateTime, nullable=True)
-    updated_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=True, default=None, onupdate=datetime.utcnow)
 
     # 관계 정의
     voca_book = relationship("VocaBook")
+    bookstore_category = relationship("BookstoreCategory")
     admin_voca_book = relationship("AdminVocaBook")
 
 
@@ -237,8 +232,14 @@ class Bookstore(db.Model):
 class BookstoreCategory(db.Model):
     __tablename__ = 'bookstore_category'
     __bind_key__ = 'dict'
-    name = Column(String(50), primary_key=True)
-    sort_order = Column(Integer, nullable=False, default=999)
+    id = Column(Integer, primary_key=True, nullable=False)
+    category = Column(String(100), nullable=False)
+    sort_order = Column(Integer, nullable=True, default=0)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, category, sort_order=0):
+        self.category = category
+        self.sort_order = sort_order
 
 
 ##############

@@ -1,684 +1,1085 @@
-"""
-admin 모니터링 엔드포인트.
-
-인증 방식:
-  1) POST /admin/login — body: {username, password}. 검증 통과 시 토큰 반환.
-  2) X-Admin-Token 헤더 — 위 응답 토큰(=ADMIN_PASSWORD)을 모든 admin 호출 헤더에 포함.
-
-환경변수:
-  ADMIN_USER     — 운영자 ID (기본 'ghmate')
-  ADMIN_PASSWORD — 운영자 PW (필수, 토큰 역할도 겸함)
-  ADMIN_TOKEN    — (deprecated) ADMIN_PASSWORD 미설정 시 fallback
-
-Blueprint prefix: /admin
-"""
 import os
+import re
+import json
 from functools import wraps
-from datetime import datetime, timedelta
+from datetime import datetime
+from io import BytesIO
 
-from flask import Blueprint, request, jsonify
-from sqlalchemy import text
+import pandas as pd
+from flask import request, jsonify
 
-from app import db
-from app.routes.admin_phase_prompts import PHASE_PROMPTS
-
-admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
-
-# ──────────────────────────────────────────────────────────
-# 인증 데코레이터
-# ──────────────────────────────────────────────────────────
-
-def _get_admin_token():
-    """런타임에 매번 읽어 컨테이너 재시작 없이 교체 가능하게 함.
-    우선순위: ADMIN_PASSWORD > ADMIN_TOKEN (deprecated)."""
-    return os.environ.get('ADMIN_PASSWORD') or os.environ.get('ADMIN_TOKEN')
+from app.routes import admin_bp
+from app.models.models import (
+    db,
+    Bookstore, BookstoreCategory, Level,
+    VocaBook, AdminVocaBook,
+    Voca, VocaMeaning, VocaExample,
+    VocaBookMap, AdminVocaBookMap,
+    VocaMeaningMap, VocaExampleMap,
+    UserVocaBook,
+)
 
 
-def _get_admin_user():
-    """운영자 ID. 기본 'ghmate'."""
-    return os.environ.get('ADMIN_USER', 'ghmate')
+# ──────────────────────────────────────────
+# Strong 태그 삽입 헬퍼
+# ──────────────────────────────────────────
+
+_spacy_nlp = None
+_kiwi_instance = None
 
 
-def admin_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        admin_token = _get_admin_token()
-        if not admin_token:
-            return jsonify({'code': 503, 'message': 'ADMIN_PASSWORD 환경변수가 설정되지 않았습니다.'}), 503
-        request_token = request.headers.get('X-Admin-Token', '')
-        if request_token != admin_token:
-            return jsonify({'code': 401, 'message': '인증 실패'}), 401
-        return fn(*args, **kwargs)
-    return wrapper
+def _get_spacy():
+    global _spacy_nlp
+    if _spacy_nlp is None:
+        try:
+            import spacy
+            _spacy_nlp = spacy.load('en_core_web_sm')
+        except Exception:
+            _spacy_nlp = False
+    return _spacy_nlp if _spacy_nlp is not False else None
 
 
-@admin_bp.route('/login', methods=['POST'])
-def admin_login():
-    """ID/PW 검증 후 admin 토큰 반환.
+def _get_kiwi():
+    global _kiwi_instance
+    if _kiwi_instance is None:
+        try:
+            from kiwipiepy import Kiwi
+            _kiwi_instance = Kiwi()
+        except Exception:
+            _kiwi_instance = False
+    return _kiwi_instance if _kiwi_instance is not False else None
 
-    body: {"username": "ghmate", "password": "..."}
-    응답: {"code": 200, "data": {"token": "..."}}
+
+def _tag_en(word, sentence):
+    """영어 예문에서 단어(활용형 포함)에 strong 태그 삽입. 실패 시 None 반환."""
+    if not word or not sentence:
+        return sentence or ''
+    nlp = _get_spacy()
+    if nlp:
+        try:
+            doc = nlp(sentence)
+            word_lower = word.lower()
+            for token in doc:
+                if token.lemma_.lower() == word_lower or token.text.lower() == word_lower:
+                    s, e = token.idx, token.idx + len(token.text)
+                    return sentence[:s] + f'<strong class="target-word">{sentence[s:e]}</strong>' + sentence[e:]
+        except Exception:
+            pass
+    # regex fallback: word + common suffixes
+    m = re.search(r'\b(' + re.escape(word) + r'\w*)\b', sentence, re.IGNORECASE)
+    if m:
+        return sentence[:m.start()] + f'<strong class="target-word">{m.group()}</strong>' + sentence[m.end():]
+    return None
+
+
+def _ko_roots(meaning):
+    """한국어 뜻에서 검색할 어근 후보 목록 반환"""
+    roots = [meaning]
+    stripped = re.sub(r'(하다|이다|되다|지다|다)$', '', meaning).strip()
+    if stripped and stripped != meaning:
+        roots.insert(0, stripped)
+    return roots
+
+
+def _tag_ko(meanings, sentence):
+    """한국어 예문에서 뜻 단어(활용형 포함)에 strong 태그 삽입. 실패 시 None 반환."""
+    if not sentence or not meanings:
+        return None
+    kiwi = _get_kiwi()
+    if kiwi:
+        try:
+            tokens = kiwi.tokenize(sentence)
+            for meaning in meanings:
+                root = re.sub(r'(하다|이다|되다|지다|다)$', '', meaning).strip()
+                if not root or len(root) < 2:
+                    continue
+                for token in tokens:
+                    if token.form == root:
+                        start = token.start
+                        end = start + token.len
+                        while end < len(sentence) and sentence[end] not in ' .,!?;:\n':
+                            end += 1
+                        return sentence[:start] + f'<strong class="target-word">{sentence[start:end]}</strong>' + sentence[end:]
+        except Exception:
+            pass
+    # 단순 문자열 검색 (GPT 호출 전 마지막 시도)
+    for meaning in meanings:
+        for root in _ko_roots(meaning):
+            if len(root) >= 2 and root in sentence:
+                idx = sentence.index(root)
+                end = idx + len(root)
+                while end < len(sentence) and sentence[end] not in ' .,!?;:\n':
+                    end += 1
+                return sentence[:idx] + f'<strong class="target-word">{sentence[idx:end]}</strong>' + sentence[end:]
+    return None
+
+
+def _tag_batch_gpt(items):
     """
-    admin_token = _get_admin_token()
-    if not admin_token:
-        return jsonify({'code': 503, 'message': 'ADMIN_PASSWORD 환경변수가 설정되지 않았습니다.'}), 503
-
-    body = request.get_json(silent=True) or {}
-    username = (body.get('username') or '').strip()
-    password = body.get('password') or ''
-
-    if username != _get_admin_user() or password != admin_token:
-        return jsonify({'code': 401, 'message': '아이디 또는 비밀번호가 올바르지 않습니다.'}), 401
-
-    return jsonify({'code': 200, 'data': {'token': admin_token}}), 200
-
-
-# ──────────────────────────────────────────────────────────
-# 헬퍼
-# ──────────────────────────────────────────────────────────
-
-def _clamp_days(raw, default=7, min_val=1, max_val=90):
+    items: [{'word', 'meanings', 'en', 'ko'}, ...]
+    Returns: [{'en', 'ko'}, ...] 같은 순서
+    """
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key or not items:
+        return [{'en': it['en'], 'ko': it['ko']} for it in items]
     try:
-        val = int(raw)
-    except (TypeError, ValueError):
-        val = default
-    return max(min_val, min(val, max_val))
-
-
-def _clamp_limit(raw, default=20, max_val=100):
-    try:
-        val = int(raw)
-    except (TypeError, ValueError):
-        val = default
-    return max(1, min(val, max_val))
-
-
-# ──────────────────────────────────────────────────────────
-# 1. GET /admin/study/metrics — 전체 학습 지표 요약
-# ──────────────────────────────────────────────────────────
-
-@admin_bp.route('/study/metrics', methods=['GET'])
-@admin_required
-def study_metrics():
-    """
-    전체 학습 지표 요약.
-
-    Query params:
-        days (int, 기본값 7): 집계 기간 (최근 N일)
-
-    Response:
-        {
-          "code": 200,
-          "data": {
-            "period_days": 7,
-            "since": "2026-04-30T00:00:00",
-            "total_logs": 12345,
-            "total_sessions": 432,
-            "active_users": 89,
-            "avg_correct_rate": 0.78,
-            "schema_version_distribution": {"v1": 0, "v2": 715, "v3": 0},
-            "question_type_distribution": {"multipleChoice": 5400, ...},
-            "test_type_distribution": {"daily": 8000, ...},
-            "avg_time_taken_ms": 7200,
-            "fsrs_state_distribution": {"new": 100, "review": 600, "relearning": 15}
-          }
-        }
-    """
-    days = _clamp_days(request.args.get('days'), default=7)
-    since = datetime.utcnow() - timedelta(days=days)
-
-    # ── 기본 집계 ────────────────────────────────────────────
-    log_row = db.session.execute(text('''
-        SELECT
-            COUNT(*)                                         AS total_logs,
-            SUM(CASE WHEN was_correct THEN 1 ELSE 0 END)   AS correct_logs,
-            COUNT(DISTINCT user_id)                          AS active_users,
-            AVG(time_taken_ms)                               AS avg_time_taken_ms
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-    '''), {'since': since}).fetchone()
-
-    total_logs     = int(log_row.total_logs or 0)
-    correct_logs   = int(log_row.correct_logs or 0)
-    active_users   = int(log_row.active_users or 0)
-    avg_time_ms    = round(float(log_row.avg_time_taken_ms or 0))
-    avg_correct    = round(correct_logs / total_logs, 4) if total_logs > 0 else None
-
-    session_row = db.session.execute(text('''
-        SELECT COUNT(*) AS total_sessions
-        FROM heyvoca_user.user_study_session
-        WHERE started_at >= :since
-    '''), {'since': since}).fetchone()
-    total_sessions = int(session_row.total_sessions or 0)
-
-    # ── schema_version 분포 (UserVoca.data JSON) ─────────────
-    # 현재 학습 로그가 있는 user_voca_id 기준으로 data의 schema_version 집계.
-    # 로그 수가 적을 때는 DISTINCT user_voca_id로 조회해 성능 보장.
-    sv_rows = db.session.execute(text('''
-        SELECT
-            COALESCE(JSON_UNQUOTE(JSON_EXTRACT(uv.data, "$.schema_version")), "1") AS sv,
-            COUNT(*) AS cnt
-        FROM heyvoca_user.user_voca uv
-        WHERE uv.id IN (
-            SELECT DISTINCT user_voca_id
-            FROM heyvoca_user.user_study_log
-            WHERE created_at >= :since
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        input_data = [
+            {'i': i, 'word': it['word'], 'meanings': it['meanings'],
+             'en': it['en'], 'ko': it['ko']}
+            for i, it in enumerate(items)
+        ]
+        prompt = (
+            '다음 영어 단어와 예문 목록에서, 영어 예문에는 해당 단어(활용형 포함)에, '
+            '한국어 예문에는 해당 단어의 한국어 뜻(활용형 포함)에 '
+            '<strong class="target-word"> 태그를 정확히 1개 삽입해주세요.\n\n'
+            + json.dumps(input_data, ensure_ascii=False, indent=2)
+            + '\n\n출력: 인덱스 i 순서대로 JSON 배열만. 형식: [{"i":0,"en":"...","ko":"..."},...]\n다른 텍스트 없이 JSON만 출력.'
         )
-        GROUP BY sv
-    '''), {'since': since}).fetchall()
-
-    schema_dist = {'v1': 0, 'v2': 0, 'v3': 0}
-    for row in sv_rows:
-        key = f'v{row.sv}'
-        schema_dist[key] = schema_dist.get(key, 0) + int(row.cnt)
-
-    # ── question_type 분포 ────────────────────────────────────
-    qt_rows = db.session.execute(text('''
-        SELECT question_type, COUNT(*) AS cnt
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-        GROUP BY question_type
-    '''), {'since': since}).fetchall()
-    question_type_dist = {r.question_type: int(r.cnt) for r in qt_rows}
-
-    # ── test_type 분포 ────────────────────────────────────────
-    tt_rows = db.session.execute(text('''
-        SELECT test_type, COUNT(*) AS cnt
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-        GROUP BY test_type
-    '''), {'since': since}).fetchall()
-    test_type_dist = {r.test_type: int(r.cnt) for r in tt_rows}
-
-    # ── FSRS state 분포 ───────────────────────────────────────
-    # state_after JSON에서 추출. NULL이면 'unset'으로 분류.
-    fsrs_rows = db.session.execute(text('''
-        SELECT
-            COALESCE(
-                JSON_UNQUOTE(JSON_EXTRACT(state_after, "$.state")),
-                "unset"
-            ) AS fsrs_state,
-            COUNT(*) AS cnt
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-        GROUP BY fsrs_state
-    '''), {'since': since}).fetchall()
-    fsrs_state_dist = {r.fsrs_state: int(r.cnt) for r in fsrs_rows}
-
-    return jsonify({
-        'code': 200,
-        'data': {
-            'period_days':                  days,
-            'since':                        since.isoformat(),
-            'total_logs':                   total_logs,
-            'total_sessions':               total_sessions,
-            'active_users':                 active_users,
-            'avg_correct_rate':             avg_correct,
-            'schema_version_distribution':  schema_dist,
-            'question_type_distribution':   question_type_dist,
-            'test_type_distribution':       test_type_dist,
-            'avg_time_taken_ms':            avg_time_ms,
-            'fsrs_state_distribution':      fsrs_state_dist,
-        },
-    }), 200
+        response = client.chat.completions.create(
+            model='gpt-4o-mini',
+            messages=[{'role': 'user', 'content': prompt}],
+            temperature=0,
+            max_tokens=8192,
+        )
+        text = response.choices[0].message.content.strip()
+        m = re.search(r'\[.*\]', text, re.DOTALL)
+        if m:
+            text = m.group(0)
+        raw = json.loads(text)
+        indexed = {r['i']: r for r in raw}
+        return [
+            {'en': indexed[i]['en'], 'ko': indexed[i]['ko']}
+            if i in indexed else {'en': items[i]['en'], 'ko': items[i]['ko']}
+            for i in range(len(items))
+        ]
+    except Exception as e:
+        print(f'[GPT tag error] {e}')
+        return [{'en': it['en'], 'ko': it['ko']} for it in items]
 
 
-# ──────────────────────────────────────────────────────────
-# 2. GET /admin/study/recent-sessions — 최근 세션 목록
-# ──────────────────────────────────────────────────────────
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        api_key = request.headers.get('X-Admin-API-Key')
+        if not api_key or api_key != os.getenv('ADMIN_API_KEY'):
+            return jsonify({'code': 401, 'message': 'Unauthorized'}), 401
+        return f(*args, **kwargs)
+    return decorated
 
-@admin_bp.route('/study/recent-sessions', methods=['GET'])
+
+# ──────────────────────────────────────────
+# Level / Category
+# ──────────────────────────────────────────
+
+@admin_bp.route('/level', methods=['GET'])
 @admin_required
-def recent_sessions():
-    """
-    최근 세션 목록 (사용자 무관, 디버그용).
+def get_levels():
+    levels = Level.query.order_by(Level.level).all()
+    data = [{'id': l.id, 'level': l.level, 'level_name': l.level_name, 'level_description': l.level_description} for l in levels]
+    return jsonify({'code': 200, 'data': data})
 
-    Query params:
-        limit (int, 기본값 20, 최대 100)
 
-    Response:
-        {
-          "code": 200,
-          "data": {
-            "sessions": [
-              {
-                "session_id": "...",
-                "user_id": "...",
-                "test_type": "test",
-                "question_count": 20,
-                "correct_count": 17,
-                "correct_rate": 0.85,
-                "duration_seconds": 142,
-                "started_at": "...",
-                "finished_at": "..."
-              },
-              ...
-            ],
-            "count": 20
-          }
+@admin_bp.route('/category', methods=['GET'])
+@admin_required
+def get_categories():
+    categories = BookstoreCategory.query.order_by(BookstoreCategory.sort_order, BookstoreCategory.category).all()
+    data = [{'id': c.id, 'category': c.category, 'sort_order': c.sort_order} for c in categories]
+    return jsonify({'code': 200, 'data': data})
+
+
+# ──────────────────────────────────────────
+# Bookstore
+# ──────────────────────────────────────────
+
+@admin_bp.route('/bookstore', methods=['GET'])
+@admin_required
+def get_bookstores():
+    bookstores = Bookstore.query.order_by(Bookstore.created_at.desc()).all()
+    data = []
+    for b in bookstores:
+        category_name = '-'
+        if b.category_id and b.bookstore_category:
+            category_name = b.bookstore_category.category
+        data.append({
+            'id': b.id,
+            'name': b.name,
+            'downloads': b.downloads,
+            'category': b.category,
+            'category_id': b.category_id,
+            'category_name': category_name,
+            'color': b.color,
+            'gem': b.gem,
+            'hide': b.hide,
+            'level': b.level,
+            'level_id': b.level_id,
+            'book_id': b.book_id,
+            'admin_voca_book_id': b.admin_voca_book_id,
+            'created_at': b.created_at.isoformat() if b.created_at else None,
+            'updated_at': b.updated_at.isoformat() if b.updated_at else None,
+        })
+    return jsonify({'code': 200, 'data': data})
+
+
+@admin_bp.route('/bookstore', methods=['POST'])
+@admin_required
+def create_bookstore():
+    data = request.json
+    color = data.get('color', '')
+    if isinstance(color, dict):
+        color = json.dumps(color)
+
+    bookstore = Bookstore(
+        name=data['name'],
+        downloads=data.get('order', 0),
+        category=data.get('category', ''),
+        color=color,
+        hide='N' if data.get('is_visible', True) else 'Y',
+        gem=data.get('gem', 0),
+        level=data.get('level_name'),
+        level_id=data['level_id'],
+        book_id=data.get('book_id'),
+        admin_voca_book_id=data.get('admin_voca_book_id'),
+        category_id=data.get('category_id'),
+    )
+    db.session.add(bookstore)
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'id': bookstore.id}})
+
+
+@admin_bp.route('/bookstore/<int:bookstore_id>', methods=['PATCH'])
+@admin_required
+def update_bookstore(bookstore_id):
+    bookstore = Bookstore.query.get_or_404(bookstore_id)
+    data = request.json
+
+    bookstore.name = data.get('name', bookstore.name)
+
+    if 'color' in data:
+        color = data['color']
+        if isinstance(color, dict):
+            color = json.dumps(color)
+        bookstore.color = color
+
+    bookstore.hide = 'N' if data.get('is_visible', True) else 'Y'
+    bookstore.gem = data.get('gem', bookstore.gem)
+    bookstore.updated_at = datetime.utcnow()
+
+    if 'category_id' in data:
+        bookstore.category_id = data['category_id'] if data['category_id'] else None
+
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'success': True}})
+
+
+@admin_bp.route('/bookstore/<int:bookstore_id>', methods=['DELETE'])
+@admin_required
+def delete_bookstore(bookstore_id):
+    bookstore = Bookstore.query.get_or_404(bookstore_id)
+
+    user_voca_book = UserVocaBook.query.filter_by(bookstore_id=bookstore_id).first()
+    if user_voca_book:
+        bookstore.hide = 'Y'
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '유저가 사용 중인 북스토어이므로 숨김 처리되었습니다.'}})
+    else:
+        db.session.delete(bookstore)
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '북스토어가 삭제되었습니다.'}})
+
+
+# ──────────────────────────────────────────
+# VocaBook 목록
+# ──────────────────────────────────────────
+
+@admin_bp.route('/voca_books', methods=['GET'])
+@admin_required
+def get_voca_books_list():
+    search = request.args.get('search', '')
+    category = request.args.get('category', '')
+
+    registered_bookstores = Bookstore.query.with_entities(
+        Bookstore.book_id, Bookstore.admin_voca_book_id, Bookstore.id, Bookstore.name
+    ).all()
+    registered_legacy = {b.book_id: {'id': b.id, 'name': b.name} for b in registered_bookstores if b.book_id}
+    registered_admin = {b.admin_voca_book_id: {'id': b.id, 'name': b.name} for b in registered_bookstores if b.admin_voca_book_id}
+
+    voca_query = VocaBook.query
+    if search:
+        voca_query = voca_query.filter(VocaBook.book_nm.ilike(f'%{search}%'))
+    if category:
+        voca_query = voca_query.filter(VocaBook.category == category)
+    legacy_books = voca_query.all()
+
+    admin_query = AdminVocaBook.query
+    if search:
+        admin_query = admin_query.filter(AdminVocaBook.book_nm.ilike(f'%{search}%'))
+    if category:
+        admin_query = admin_query.filter(AdminVocaBook.category == category)
+    admin_books = admin_query.all()
+
+    def book_to_dict(book, book_type, registered_map):
+        reg_info = registered_map.get(book.id)
+        return {
+            'id': book.id,
+            'book_nm': book.book_nm,
+            'language': book.language,
+            'source': book.source,
+            'category': book.category,
+            'username': book.username,
+            'word_count': book.word_count,
+            'updated_at': book.updated_at.isoformat() if book.updated_at else None,
+            'book_type': book_type,
+            'is_registered': bool(reg_info),
+            'bookstore_id': reg_info['id'] if reg_info else None,
+            'bookstore_name': reg_info['name'] if reg_info else None,
         }
-    """
-    limit = _clamp_limit(request.args.get('limit'), default=20, max_val=100)
 
-    rows = db.session.execute(text('''
-        SELECT
-            HEX(id)                                         AS session_id_hex,
-            HEX(user_id)                                    AS user_id_hex,
-            test_type,
-            question_count,
-            correct_count,
-            started_at,
-            finished_at,
-            TIMESTAMPDIFF(SECOND, started_at, finished_at)  AS duration_seconds
-        FROM heyvoca_user.user_study_session
-        ORDER BY started_at DESC
-        LIMIT :limit
-    '''), {'limit': limit}).fetchall()
+    legacy_data = [book_to_dict(b, 'legacy', registered_legacy) for b in legacy_books]
+    admin_data = [book_to_dict(b, 'admin', registered_admin) for b in admin_books]
 
-    sessions = []
-    for r in rows:
-        qc = int(r.question_count or 0)
-        cc = int(r.correct_count or 0)
-        sessions.append({
-            'session_id':       _fmt_uuid_hex(r.session_id_hex),
-            'user_id':          _fmt_uuid_hex(r.user_id_hex),
-            'test_type':        r.test_type,
-            'question_count':   qc,
-            'correct_count':    cc,
-            'correct_rate':     round(cc / qc, 4) if qc > 0 else None,
-            'duration_seconds': r.duration_seconds,
-            'started_at':       r.started_at.isoformat() if r.started_at else None,
-            'finished_at':      r.finished_at.isoformat() if r.finished_at else None,
+    return jsonify({'code': 200, 'data': {'legacy': legacy_data, 'admin': admin_data}})
+
+
+# ──────────────────────────────────────────
+# VocaBook CRUD
+# ──────────────────────────────────────────
+
+@admin_bp.route('/voca_book', methods=['POST'])
+@admin_required
+def create_voca_book():
+    try:
+        book_nm = request.form.get('book_nm', '').strip()
+        language = request.form.get('language', '').strip()
+        source = request.form.get('source', '').strip()
+        category = request.form.get('category', '').strip()
+        username = request.form.get('username', '').strip()
+
+        if not book_nm or not language or not source:
+            return jsonify({'code': 400, 'message': '필수 항목(이름, 언어, 소스)을 입력해주세요.'}), 400
+
+        if 'excel_file' not in request.files or request.files['excel_file'].filename == '':
+            return jsonify({'code': 400, 'message': '엑셀 파일을 업로드해주세요.'}), 400
+
+        voca_book = VocaBook(
+            book_nm=book_nm, language=language, source=source,
+            category=category if category else None,
+            username=username if username else None,
+            word_count=0, updated_at=datetime.utcnow(),
+        )
+        db.session.add(voca_book)
+        db.session.flush()
+
+        df = pd.read_excel(BytesIO(request.files['excel_file'].read()), header=None)
+        word_count = 0
+
+        for _, row in df.iterrows():
+            if pd.isna(row[0]):
+                continue
+            word = str(row[0]).strip()
+            if not word:
+                continue
+
+            voca = Voca(word=word)
+            db.session.add(voca)
+            db.session.flush()
+            db.session.add(VocaBookMap(voca_id=voca.id, book_id=voca_book.id))
+
+            if len(row) > 1 and pd.notna(row[1]):
+                for mt in [m.strip() for m in str(row[1]).split(',') if m.strip()]:
+                    vm = VocaMeaning(meaning=mt)
+                    db.session.add(vm)
+                    db.session.flush()
+                    db.session.add(VocaMeaningMap(voca_id=voca.id, meaning_id=vm.id))
+
+            col_idx = 2
+            while col_idx < len(row):
+                if pd.isna(row[col_idx]):
+                    col_idx += 2
+                    continue
+                exam_en = str(row[col_idx]).strip()
+                if not exam_en:
+                    col_idx += 2
+                    continue
+                exam_ko = str(row[col_idx + 1]).strip() if col_idx + 1 < len(row) and pd.notna(row[col_idx + 1]) else ''
+                ve = VocaExample(exam_en=exam_en, exam_ko=exam_ko)
+                db.session.add(ve)
+                db.session.flush()
+                db.session.add(VocaExampleMap(voca_id=voca.id, example_id=ve.id))
+                col_idx += 2
+
+            word_count += 1
+
+        voca_book.word_count = word_count
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'id': voca_book.id, 'word_count': word_count}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/voca_book/<int:voca_book_id>', methods=['PATCH'])
+@admin_required
+def update_voca_book(voca_book_id):
+    try:
+        data = request.json
+        voca_book = VocaBook.query.get_or_404(voca_book_id)
+
+        for field in ('book_nm', 'language', 'source'):
+            if field in data:
+                setattr(voca_book, field, data[field])
+        if 'category' in data:
+            voca_book.category = data['category'] if data['category'] else None
+        if 'username' in data:
+            voca_book.username = data['username'] if data['username'] else None
+
+        voca_book.updated_at = datetime.utcnow()
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'success': True}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/voca_book/<int:voca_book_id>/words', methods=['GET'])
+@admin_required
+def get_voca_book_words(voca_book_id):
+    voca_book = VocaBook.query.get_or_404(voca_book_id)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 50, type=int)
+
+    total_count = VocaBookMap.query.filter_by(book_id=voca_book_id).count()
+
+    word_maps = db.session.query(VocaBookMap, Voca).join(
+        Voca, VocaBookMap.voca_id == Voca.id
+    ).filter(VocaBookMap.book_id == voca_book_id).order_by(VocaBookMap.voca_id).offset(
+        (page - 1) * per_page
+    ).limit(per_page).all()
+
+    voca_ids = [v.id for _, v in word_maps]
+    meanings_dict = {}
+    examples_dict = {}
+    if voca_ids:
+        for mm, m in db.session.query(VocaMeaningMap, VocaMeaning).join(
+            VocaMeaning, VocaMeaningMap.meaning_id == VocaMeaning.id
+        ).filter(VocaMeaningMap.voca_id.in_(voca_ids)).all():
+            meanings_dict.setdefault(mm.voca_id, []).append(m.meaning)
+
+        for em, e in db.session.query(VocaExampleMap, VocaExample).join(
+            VocaExample, VocaExampleMap.example_id == VocaExample.id
+        ).filter(VocaExampleMap.voca_id.in_(voca_ids)).all():
+            examples_dict.setdefault(em.voca_id, []).append({'exam_en': e.exam_en, 'exam_ko': e.exam_ko})
+
+    words = [{'voca_id': v.id, 'word': v.word, 'pronunciation': v.pronunciation,
+               'meanings': meanings_dict.get(v.id, []), 'examples': examples_dict.get(v.id, [])}
+             for _, v in word_maps]
+
+    return jsonify({'code': 200, 'data': {
+        'voca_book': {'id': voca_book.id, 'book_nm': voca_book.book_nm, 'language': voca_book.language, 'word_count': total_count},
+        'words': words,
+        'pagination': {'page': page, 'per_page': per_page, 'total': total_count,
+                       'pages': (total_count + per_page - 1) // per_page,
+                       'has_next': page * per_page < total_count, 'has_prev': page > 1},
+    }})
+
+
+@admin_bp.route('/voca_book/<int:voca_book_id>/word', methods=['POST'])
+@admin_required
+def add_word_to_voca_book(voca_book_id):
+    try:
+        data = request.json
+        word_text = data.get('word', '').strip()
+        if not word_text:
+            return jsonify({'code': 400, 'message': '단어를 입력해주세요.'}), 400
+
+        existing_voca = Voca.query.filter_by(word=word_text).first()
+        if existing_voca:
+            voca_id = existing_voca.id
+        else:
+            new_voca = Voca(word=word_text, pronunciation=data.get('pronunciation'))
+            db.session.add(new_voca)
+            db.session.flush()
+            voca_id = new_voca.id
+
+        if VocaBookMap.query.filter_by(book_id=voca_book_id, voca_id=voca_id).first():
+            return jsonify({'code': 400, 'message': '이미 단어장에 포함된 단어입니다.'}), 400
+
+        db.session.add(VocaBookMap(book_id=voca_book_id, voca_id=voca_id))
+
+        voca_book = VocaBook.query.get(voca_book_id)
+        if voca_book:
+            voca_book.word_count = VocaBookMap.query.filter_by(book_id=voca_book_id).count()
+            voca_book.updated_at = datetime.utcnow()
+
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '단어가 추가되었습니다.'}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/voca_book/<int:voca_book_id>/word/<int:voca_id>', methods=['DELETE'])
+@admin_required
+def remove_word_from_voca_book(voca_book_id, voca_id):
+    try:
+        word_map = VocaBookMap.query.filter_by(book_id=voca_book_id, voca_id=voca_id).first()
+        if not word_map:
+            return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
+
+        db.session.delete(word_map)
+
+        voca_book = VocaBook.query.get(voca_book_id)
+        if voca_book:
+            voca_book.word_count = VocaBookMap.query.filter_by(book_id=voca_book_id).count()
+            voca_book.updated_at = datetime.utcnow()
+
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '단어가 제거되었습니다.'}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+# ──────────────────────────────────────────
+# AdminVocaBook CRUD
+# ──────────────────────────────────────────
+
+@admin_bp.route('/admin_voca_book', methods=['POST'])
+@admin_required
+def create_admin_voca_book():
+    try:
+        book_nm = request.form.get('book_nm', '').strip()
+        language = request.form.get('language', '').strip()
+        source = request.form.get('source', '').strip()
+        category = request.form.get('category', '').strip()
+        username = request.form.get('username', '').strip()
+
+        if not book_nm or not language or not source:
+            return jsonify({'code': 400, 'message': '필수 항목(이름, 언어, 소스)을 입력해주세요.'}), 400
+
+        if 'excel_file' not in request.files or request.files['excel_file'].filename == '':
+            return jsonify({'code': 400, 'message': '엑셀 파일을 업로드해주세요.'}), 400
+
+        avb = AdminVocaBook(
+            book_nm=book_nm, language=language, source=source,
+            category=category if category else None,
+            username=username if username else None,
+            word_count=0, updated_at=datetime.utcnow(),
+        )
+        db.session.add(avb)
+        db.session.flush()
+
+        df = pd.read_excel(BytesIO(request.files['excel_file'].read()), header=None)
+        word_count = 0
+
+        for _, row in df.iterrows():
+            if pd.isna(row[0]):
+                continue
+            word = str(row[0]).strip()
+            if not word:
+                continue
+
+            meanings_list = []
+            if len(row) > 1 and pd.notna(row[1]):
+                meanings_list = [m.strip() for m in str(row[1]).split(',') if m.strip()]
+
+            examples_list = []
+            col_idx = 2
+            while col_idx < len(row):
+                if pd.isna(row[col_idx]):
+                    col_idx += 2
+                    continue
+                exam_en = str(row[col_idx]).strip()
+                if not exam_en:
+                    col_idx += 2
+                    continue
+                exam_ko = str(row[col_idx + 1]).strip() if col_idx + 1 < len(row) and pd.notna(row[col_idx + 1]) else ''
+                examples_list.append({'en': exam_en, 'ko': exam_ko})
+                col_idx += 2
+
+            if _process_word_into_book(word, meanings_list, examples_list, avb.id):
+                word_count += 1
+
+        avb.word_count = word_count
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'id': avb.id, 'word_count': word_count}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>', methods=['PATCH'])
+@admin_required
+def update_admin_voca_book(admin_voca_book_id):
+    try:
+        data = request.json
+        avb = AdminVocaBook.query.get_or_404(admin_voca_book_id)
+
+        for field in ('book_nm', 'language', 'source'):
+            if field in data:
+                setattr(avb, field, data[field])
+        if 'category' in data:
+            avb.category = data['category'] if data['category'] else None
+        if 'username' in data:
+            avb.username = data['username'] if data['username'] else None
+
+        avb.updated_at = datetime.utcnow()
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'success': True}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/words', methods=['GET'])
+@admin_required
+def get_admin_voca_book_words(admin_voca_book_id):
+    avb = AdminVocaBook.query.get_or_404(admin_voca_book_id)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 50, type=int)
+
+    total_count = AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id).count()
+
+    word_maps = db.session.query(AdminVocaBookMap, Voca).join(
+        Voca, AdminVocaBookMap.voca_id == Voca.id
+    ).filter(AdminVocaBookMap.book_id == admin_voca_book_id).order_by(AdminVocaBookMap.id).offset(
+        (page - 1) * per_page
+    ).limit(per_page).all()
+
+    words = []
+    for bm, v in word_maps:
+        words.append({
+            'voca_id': v.id, 'map_id': bm.id, 'word': v.word, 'pronunciation': v.pronunciation,
+            'meanings': json.loads(bm.voca_meanings) if bm.voca_meanings else [],
+            'examples': json.loads(bm.voca_examples) if bm.voca_examples else [],
         })
 
-    return jsonify({
-        'code': 200,
-        'data': {
-            'sessions': sessions,
-            'count':    len(sessions),
-        },
-    }), 200
+    return jsonify({'code': 200, 'data': {
+        'voca_book': {'id': avb.id, 'book_nm': avb.book_nm, 'language': avb.language, 'word_count': total_count},
+        'words': words,
+        'pagination': {'page': page, 'per_page': per_page, 'total': total_count,
+                       'pages': (total_count + per_page - 1) // per_page,
+                       'has_next': page * per_page < total_count, 'has_prev': page > 1},
+    }})
 
 
-def _fmt_uuid_hex(hex_str):
-    """32자 HEX → 하이픈 포함 UUID 형식."""
-    if not hex_str:
-        return None
-    h = hex_str.lower().replace('-', '')
-    if len(h) != 32:
-        return hex_str
-    return f'{h[0:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}'
+def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
+    """단어를 Voca/관리자사전 체크 후 AdminVocaBookMap에 추가. 이미 있으면 skip."""
+    existing_voca = Voca.query.filter_by(word=word_text).first()
+    if existing_voca:
+        voca_id = existing_voca.id
+        existing_meanings = {
+            VocaMeaning.query.get(mm.meaning_id).meaning
+            for mm in VocaMeaningMap.query.filter_by(voca_id=voca_id).all()
+            if VocaMeaning.query.get(mm.meaning_id)
+        }
+        for mt in meanings_list:
+            if mt not in existing_meanings:
+                vm = VocaMeaning(meaning=mt)
+                db.session.add(vm)
+                db.session.flush()
+                db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
+
+        existing_examples = {
+            (VocaExample.query.get(em.example_id).exam_en, VocaExample.query.get(em.example_id).exam_ko)
+            for em in VocaExampleMap.query.filter_by(voca_id=voca_id).all()
+            if VocaExample.query.get(em.example_id)
+        }
+        for ex in examples_list:
+            if (ex['en'], ex['ko']) not in existing_examples:
+                ve = VocaExample(exam_en=ex['en'], exam_ko=ex['ko'])
+                db.session.add(ve)
+                db.session.flush()
+                db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
+    else:
+        voca = Voca(word=word_text)
+        db.session.add(voca)
+        db.session.flush()
+        voca_id = voca.id
+        for mt in meanings_list:
+            vm = VocaMeaning(meaning=mt)
+            db.session.add(vm)
+            db.session.flush()
+            db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
+        for ex in examples_list:
+            ve = VocaExample(exam_en=ex['en'], exam_ko=ex['ko'])
+            db.session.add(ve)
+            db.session.flush()
+            db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
+
+    if AdminVocaBookMap.query.filter_by(book_id=book_id, voca_id=voca_id).first():
+        return False  # 이미 존재
+
+    db.session.add(AdminVocaBookMap(
+        voca_id=voca_id, book_id=book_id,
+        voca_meanings=json.dumps(meanings_list, ensure_ascii=False) if meanings_list else None,
+        voca_examples=json.dumps(examples_list, ensure_ascii=False) if examples_list else None,
+    ))
+    return True
 
 
-# ──────────────────────────────────────────────────────────
-# 3. GET /admin/fsrs/health — FSRS 알고리즘 건강도 점검
-# ──────────────────────────────────────────────────────────
-
-@admin_bp.route('/fsrs/health', methods=['GET'])
+@admin_bp.route('/admin_voca_book/from_ai', methods=['POST'])
 @admin_required
-def fsrs_health():
-    """
-    FSRS 알고리즘 건강도 점검.
-
-    Response:
-        {
-          "code": 200,
-          "data": {
-            "users_with_stats": 89,
-            "avg_stability_distribution": {"<10": 320, "10-60": 215, ">=60": 45},
-            "lapse_rate_last_7d": 0.18,
-            "weakness_users_top": [
-              {"user_id": "...", "weakness_count": 3, "avg_correct_rate": 0.41}
-            ],
-            "fsrs_param_active_version": "default-v1",
-            "logs_per_partition": {"p2026": 4, "p2027": 0, ...}
-          }
-        }
-    """
-    # ── 유효 FSRS 데이터 보유 사용자 수 ──────────────────────
-    users_row = db.session.execute(text('''
-        SELECT COUNT(DISTINCT user_id) AS cnt
-        FROM heyvoca_user.user_voca
-        WHERE JSON_UNQUOTE(JSON_EXTRACT(data, "$.schema_version")) IN ("2", "3")
-    ''')).fetchone()
-    users_with_stats = int(users_row.cnt or 0)
-
-    # ── stability 분포 (<10 / 10-60 / >=60) ──────────────────
-    stab_rows = db.session.execute(text('''
-        SELECT
-            SUM(CASE WHEN CAST(JSON_UNQUOTE(JSON_EXTRACT(data, "$.fsrs.stability")) AS DECIMAL(10,2)) < 10  THEN 1 ELSE 0 END) AS lt10,
-            SUM(CASE WHEN CAST(JSON_UNQUOTE(JSON_EXTRACT(data, "$.fsrs.stability")) AS DECIMAL(10,2)) BETWEEN 10 AND 59.99 THEN 1 ELSE 0 END) AS mid,
-            SUM(CASE WHEN CAST(JSON_UNQUOTE(JSON_EXTRACT(data, "$.fsrs.stability")) AS DECIMAL(10,2)) >= 60 THEN 1 ELSE 0 END) AS gte60
-        FROM heyvoca_user.user_voca
-        WHERE JSON_EXTRACT(data, "$.fsrs.stability") IS NOT NULL
-          AND JSON_UNQUOTE(JSON_EXTRACT(data, "$.fsrs.stability")) != "null"
-    ''')).fetchone()
-    avg_stability_dist = {
-        '<10':   int(stab_rows.lt10  or 0),
-        '10-60': int(stab_rows.mid   or 0),
-        '>=60':  int(stab_rows.gte60 or 0),
-    }
-
-    # ── lapse rate (최근 7일) ─────────────────────────────────
-    # rating=1 (Again) 비율 = lapse
-    since_7d = datetime.utcnow() - timedelta(days=7)
-    lapse_row = db.session.execute(text('''
-        SELECT
-            COUNT(*)                                            AS total,
-            SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END)       AS lapses
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-          AND rating IS NOT NULL
-    '''), {'since': since_7d}).fetchone()
-    total_rated = int(lapse_row.total or 0)
-    lapses      = int(lapse_row.lapses or 0)
-    lapse_rate  = round(lapses / total_rated, 4) if total_rated > 0 else None
-
-    # ── 약점 사용자 상위 10명 ─────────────────────────────────
-    # user_question_type_stat 기준: total_count >= 10인 유형 중
-    # correct_rate < 0.6 인 유형이 많은 사용자 순
-    weakness_rows = db.session.execute(text('''
-        SELECT
-            HEX(user_id)                                    AS user_id_hex,
-            COUNT(*)                                        AS weakness_count,
-            AVG(correct_count / total_count)                AS avg_correct_rate
-        FROM heyvoca_user.user_question_type_stat
-        WHERE total_count >= 10
-          AND (correct_count / total_count) < 0.6
-        GROUP BY user_id
-        ORDER BY weakness_count DESC, avg_correct_rate ASC
-        LIMIT 10
-    ''')).fetchall()
-    weakness_top = [
-        {
-            'user_id':          _fmt_uuid_hex(r.user_id_hex),
-            'weakness_count':   int(r.weakness_count),
-            'avg_correct_rate': round(float(r.avg_correct_rate or 0), 4),
-        }
-        for r in weakness_rows
-    ]
-
-    # ── FSRS 파라미터 활성 버전 ──────────────────────────────
-    # Phase 3.1 전에는 기본 파라미터만 사용. FSRSParamSet 모델 없으면 "default-v1" 고정.
-    fsrs_param_version = 'default-v1'
-
-    # ── 파티션별 로그 수 ─────────────────────────────────────
-    partition_rows = db.session.execute(text('''
-        SELECT PARTITION_NAME, TABLE_ROWS
-        FROM information_schema.PARTITIONS
-        WHERE TABLE_SCHEMA = "heyvoca_user"
-          AND TABLE_NAME   = "user_study_log"
-        ORDER BY PARTITION_ORDINAL_POSITION
-    ''')).fetchall()
-    logs_per_partition = {r.PARTITION_NAME: int(r.TABLE_ROWS or 0) for r in partition_rows}
-
-    return jsonify({
-        'code': 200,
-        'data': {
-            'users_with_stats':          users_with_stats,
-            'avg_stability_distribution': avg_stability_dist,
-            'lapse_rate_last_7d':         lapse_rate,
-            'weakness_users_top':         weakness_top,
-            'fsrs_param_active_version':  fsrs_param_version,
-            'logs_per_partition':         logs_per_partition,
-        },
-    }), 200
-
-
-# ──────────────────────────────────────────────────────────
-# 4. GET /admin/progress — FSRS 로드맵 진행률
-# ──────────────────────────────────────────────────────────
-
-def _parse_launch_date():
-    """LAUNCH_DATE 환경변수(ISO 8601)를 읽어 datetime 반환. 미설정이면 None."""
-    raw = os.environ.get('LAUNCH_DATE')
-    if not raw:
-        return None
+def create_admin_voca_book_from_ai():
     try:
-        # 날짜만 있는 경우(YYYY-MM-DD)와 datetime 형식 모두 처리
-        if 'T' in raw or ' ' in raw:
-            return datetime.fromisoformat(raw.replace('Z', '+00:00').rstrip('+00:00'))
-        else:
-            return datetime.strptime(raw, '%Y-%m-%d')
-    except (ValueError, AttributeError):
-        return None
+        data = request.json or {}
+        book_nm = (data.get('book_nm') or '').strip()
+        language = (data.get('language') or '').strip()
+        source = (data.get('source') or '').strip()
+        category = (data.get('category') or '').strip()
+        username = (data.get('username') or '').strip()
+        words = data.get('words', [])
+
+        if not book_nm or not language or not source:
+            return jsonify({'code': 400, 'message': '필수 항목(이름, 언어, 소스)을 입력해주세요.'}), 400
+
+        avb = AdminVocaBook(
+            book_nm=book_nm, language=language, source=source,
+            category=category if category else None,
+            username=username if username else None,
+            word_count=0, updated_at=datetime.utcnow(),
+        )
+        db.session.add(avb)
+        db.session.flush()
+
+        word_count = 0
+        for w in words:
+            word_text = str(w.get('word', '')).strip()
+            if not word_text:
+                continue
+            meanings_list = [m.strip() for m in w.get('meanings', []) if str(m).strip()]
+            examples_list = [
+                {'en': str(ex.get('en', '')).strip(), 'ko': str(ex.get('ko', '')).strip()}
+                for ex in w.get('examples', [])
+                if ex.get('en') or ex.get('ko')
+            ]
+            if _process_word_into_book(word_text, meanings_list, examples_list, avb.id):
+                word_count += 1
+
+        avb.word_count = word_count
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'id': avb.id, 'word_count': word_count}})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
 
 
-def _calc_progress(current_value, target_value):
-    """
-    0.0 ~ 1.0 사이 진행률 반환.
-
-    target=0 이면 "0이어야 한다"는 조건 → current=0이면 1.0, 그 외 0.0.
-    """
-    if target_value == 0:
-        return 1.0 if current_value == 0 else 0.0
-    return min(current_value / target_value, 1.0)
-
-
-def _build_threshold(name, criteria, items, target):
-    """
-    임계치 딕셔너리를 빌드한다.
-
-    items: list of (current_value, target_value) tuples
-    target: dict (응답의 target 필드)
-    """
-    progresses = [_calc_progress(c, t) for c, t in items]
-    threshold_progress = min(progresses) if progresses else 0.0
-    met = threshold_progress >= 1.0
-    return {
-        'name': name,
-        'criteria': criteria,
-        'target': target,
-        'progress_percent': round(threshold_progress * 100, 1),
-        'met': met,
-    }
-
-
-@admin_bp.route('/progress', methods=['GET'])
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/word', methods=['POST'])
 @admin_required
-def admin_progress():
-    """
-    FSRS 로드맵 각 단계의 임계치 대비 현재 달성률.
+def add_word_to_admin_voca_book(admin_voca_book_id):
+    try:
+        data = request.json
+        word_text = data.get('word', '').strip()
+        if not word_text:
+            return jsonify({'code': 400, 'message': '단어를 입력해주세요.'}), 400
 
-    환경변수:
-        LAUNCH_DATE (ISO 8601, 예: 2026-06-01) — 미설정 시 시간 기반 임계치 progress=0
+        existing_voca = Voca.query.filter_by(word=word_text).first()
+        meanings_list = []
+        examples_list = []
 
-    Response: 스펙 참고 (docs/POST_LAUNCH_TODO.md)
-    """
-    now = datetime.utcnow()
+        if existing_voca:
+            voca_id = existing_voca.id
+            for mm in VocaMeaningMap.query.filter_by(voca_id=voca_id).all():
+                mo = VocaMeaning.query.get(mm.meaning_id)
+                if mo:
+                    meanings_list.append(mo.meaning)
+            for em in VocaExampleMap.query.filter_by(voca_id=voca_id).all():
+                eo = VocaExample.query.get(em.example_id)
+                if eo:
+                    examples_list.append({'en': eo.exam_en, 'ko': eo.exam_ko})
+        else:
+            new_voca = Voca(word=word_text, pronunciation=data.get('pronunciation'))
+            db.session.add(new_voca)
+            db.session.flush()
+            voca_id = new_voca.id
 
-    # ── LAUNCH_DATE 기반 경과일 ────────────────────────────
-    launch_dt = _parse_launch_date()
-    days_since_launch = (now - launch_dt).days if launch_dt else None
+        if AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id, voca_id=voca_id).first():
+            return jsonify({'code': 400, 'message': '이미 단어장에 포함된 단어입니다.'}), 400
 
-    # ── 전체 학습 로그 수 ─────────────────────────────────
-    log_count_row = db.session.execute(text(
-        'SELECT COUNT(*) AS cnt FROM heyvoca_user.user_study_log'
-    )).fetchone()
-    total_logs = int(log_count_row.cnt or 0)
+        db.session.add(AdminVocaBookMap(
+            voca_id=voca_id, book_id=admin_voca_book_id,
+            voca_meanings=json.dumps(meanings_list, ensure_ascii=False) if meanings_list else None,
+            voca_examples=json.dumps(examples_list, ensure_ascii=False) if examples_list else None,
+        ))
 
-    # ── 전체 세션 수 ──────────────────────────────────────
-    total_sessions_row = db.session.execute(text(
-        'SELECT COUNT(*) AS cnt FROM heyvoca_user.user_study_session'
-    )).fetchone()
-    total_sessions = int(total_sessions_row.cnt or 0)
+        avb = AdminVocaBook.query.get(admin_voca_book_id)
+        if avb:
+            avb.word_count = AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id).count()
+            avb.updated_at = datetime.utcnow()
 
-    # ── 최근 30일 활성 사용자 ─────────────────────────────
-    since_30d = now - timedelta(days=30)
-    active_row = db.session.execute(text('''
-        SELECT COUNT(DISTINCT user_id) AS cnt
-        FROM heyvoca_user.user_study_log
-        WHERE created_at >= :since
-    '''), {'since': since_30d}).fetchone()
-    active_users_30d = int(active_row.cnt or 0)
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '단어가 추가되었습니다.'}})
 
-    # ── 사용자별 누적 리뷰 수 (200+, 500+) ──────────────
-    review_200_row = db.session.execute(text('''
-        SELECT COUNT(*) AS cnt
-        FROM (
-            SELECT user_id, COUNT(*) AS review_cnt
-            FROM heyvoca_user.user_study_log
-            GROUP BY user_id
-            HAVING review_cnt >= 200
-        ) t
-    ''')).fetchone()
-    users_with_200_plus = int(review_200_row.cnt or 0)
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
 
-    review_500_row = db.session.execute(text('''
-        SELECT COUNT(*) AS cnt
-        FROM (
-            SELECT user_id, COUNT(*) AS review_cnt
-            FROM heyvoca_user.user_study_log
-            GROUP BY user_id
-            HAVING review_cnt >= 500
-        ) t
-    ''')).fetchone()
-    users_with_500_plus = int(review_500_row.cnt or 0)
 
-    # ── summary ──────────────────────────────────────────
-    summary = {
-        'total_logs': total_logs,
-        'total_sessions': total_sessions,
-        'active_users_30d': active_users_30d,
-        'users_with_200_plus_reviews': users_with_200_plus,
-        'days_since_launch': days_since_launch,
-    }
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/word/<int:voca_id>', methods=['DELETE'])
+@admin_required
+def remove_word_from_admin_voca_book(admin_voca_book_id, voca_id):
+    try:
+        word_map = AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id, voca_id=voca_id).first()
+        if not word_map:
+            return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
 
-    # ── 헬퍼: 시간 기반 progress (LAUNCH_DATE 없으면 0) ──
-    def _days_progress(target_days):
-        if days_since_launch is None:
-            return 0.0
-        return _calc_progress(days_since_launch, target_days)
+        db.session.delete(word_map)
 
-    def _days_met(target_days):
-        if days_since_launch is None:
-            return False
-        return days_since_launch >= target_days
+        avb = AdminVocaBook.query.get(admin_voca_book_id)
+        if avb:
+            avb.word_count = AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id).count()
+            avb.updated_at = datetime.utcnow()
 
-    # ── Phase 3.1 임계치 ─────────────────────────────────
-    p31_min_prog = _calc_progress(total_logs, 10000)
-    p31_rec_prog = _calc_progress(total_logs, 30000)
-    p31_best_prog = _calc_progress(total_logs, 100000)
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'message': '단어가 제거되었습니다.'}})
 
-    phase_31_status = 'available' if p31_min_prog >= 1.0 else 'blocked'
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500
 
-    phase_31 = {
-        'id': '3.1',
-        'title': '글로벌 FSRS 파라미터 ML 최적화',
-        'description': '전체 사용자 학습 로그로 17개 파라미터 fitting (scipy.optimize)',
-        'status': phase_31_status,
-        'thresholds': [
-            {
-                'name': '최소',
-                'criteria': '총 학습 로그 10,000 reviews',
-                'current': {'total_logs': total_logs},
-                'target': {'total_logs': 10000},
-                'progress_percent': round(p31_min_prog * 100, 1),
-                'met': p31_min_prog >= 1.0,
-            },
-            {
-                'name': '권장',
-                'criteria': '총 학습 로그 30,000 reviews',
-                'current': {'total_logs': total_logs},
-                'target': {'total_logs': 30000},
-                'progress_percent': round(p31_rec_prog * 100, 1),
-                'met': p31_rec_prog >= 1.0,
-            },
-            {
-                'name': '최상',
-                'criteria': '총 학습 로그 100,000 reviews',
-                'current': {'total_logs': total_logs},
-                'target': {'total_logs': 100000},
-                'progress_percent': round(p31_best_prog * 100, 1),
-                'met': p31_best_prog >= 1.0,
-            },
-        ],
-        'next_action': {
-            'trigger_label': '최소 기준 달성 시 진행 가능',
-            'command_short': 'Phase 3.1 진행해줘 (FSRS 글로벌 파라미터 ML 최적화)',
-            'command_for_claude': PHASE_PROMPTS['3.1'],
-            'doc_link': 'heyvoca_service/docs/POST_LAUNCH_TODO.md',
-        },
-    }
 
-    # ── Phase 3.2 임계치 ─────────────────────────────────
-    p32_min_prog  = _calc_progress(users_with_200_plus, 100)
-    p32_rec_prog  = _calc_progress(users_with_200_plus, 500)
-    p32_best_prog = _calc_progress(users_with_500_plus, 1000)
+# ──────────────────────────────────────────
+# Voca
+# ──────────────────────────────────────────
 
-    phase_32_status = 'available' if p32_min_prog >= 1.0 else 'blocked'
+@admin_bp.route('/voca', methods=['GET'])
+@admin_required
+def get_voca_list():
+    page = request.args.get('page', 1, type=int)
+    per_page = 50
+    q = request.args.get('q', '')
 
-    phase_32 = {
-        'id': '3.2',
-        'title': '사용자별 FSRS 파라미터',
-        'description': '200+ reviews 사용자에게 user-specific 파라미터 적용',
-        'status': phase_32_status,
-        'thresholds': [
-            {
-                'name': '최소',
-                'criteria': '200+ reviews 사용자 100명 이상',
-                'current': {'users_with_200_plus_reviews': users_with_200_plus},
-                'target': {'users_with_200_plus_reviews': 100},
-                'progress_percent': round(p32_min_prog * 100, 1),
-                'met': p32_min_prog >= 1.0,
-            },
-            {
-                'name': '권장',
-                'criteria': '200+ reviews 사용자 500명',
-                'current': {'users_with_200_plus_reviews': users_with_200_plus},
-                'target': {'users_with_200_plus_reviews': 500},
-                'progress_percent': round(p32_rec_prog * 100, 1),
-                'met': p32_rec_prog >= 1.0,
-            },
-            {
-                'name': '최상',
-                'criteria': '500+ reviews 사용자 1000명',
-                'current': {'users_with_500_plus_reviews': users_with_500_plus},
-                'target': {'users_with_500_plus_reviews': 1000},
-                'progress_percent': round(p32_best_prog * 100, 1),
-                'met': p32_best_prog >= 1.0,
-            },
-        ],
-        'next_action': {
-            'trigger_label': '최소 기준 달성 시 진행 가능',
-            'command_short': 'Phase 3.2 진행해줘 (사용자별 FSRS 파라미터)',
-            'command_for_claude': PHASE_PROMPTS['3.2'],
-            'doc_link': 'heyvoca_service/docs/POST_LAUNCH_TODO.md',
-        },
-    }
+    query = Voca.query
+    if q:
+        query = query.filter(Voca.word.ilike(f'%{q}%'))
 
-    # ── Phase 3.3 임계치 ─────────────────────────────────
-    p33_rec_prog = _days_progress(180)
-    p33_rec_met  = _days_met(180)
+    pagination = query.order_by(Voca.word).paginate(page=page, per_page=per_page, error_out=False)
+    vocas = []
+    for v in pagination.items:
+        meanings = []
+        for mm in VocaMeaningMap.query.filter_by(voca_id=v.id).all():
+            mo = VocaMeaning.query.get(mm.meaning_id)
+            if mo:
+                meanings.append(mo.meaning)
+        vocas.append({
+            'id': v.id,
+            'word': v.word,
+            'pronunciation': v.pronunciation,
+            'verb_forms': v.verb_forms,
+            'meanings': meanings,
+        })
 
-    phase_33 = {
-        'id': '3.3',
-        'title': '임베딩 R&D POC',
-        'description': '단어/사용자 임베딩 기반 추천 고도화 (POC)',
-        'status': 'deferred',
-        'thresholds': [
-            {
-                'name': '권장',
-                'criteria': '정식 오픈 6개월 경과 + 별도 의사결정',
-                'current': {'days_since_launch': days_since_launch},
-                'target': {'days_since_launch': 180},
-                'progress_percent': round(p33_rec_prog * 100, 1),
-                'met': p33_rec_met,
-            },
-        ],
-        'next_action': {
-            'trigger_label': '별도 의사결정 후 진행',
-            'command_short': 'Phase 3.3 진행해줘 (임베딩 R&D POC)',
-            'command_for_claude': PHASE_PROMPTS['3.3'],
-            'doc_link': 'heyvoca_service/docs/POST_LAUNCH_TODO.md',
-        },
-    }
+    return jsonify({'code': 200, 'data': {
+        'vocas': vocas,
+        'pagination': {'page': page, 'per_page': per_page, 'total': pagination.total,
+                       'pages': pagination.pages, 'has_next': pagination.has_next, 'has_prev': pagination.has_prev},
+    }})
 
-    return jsonify({
-        'code': 200,
-        'data': {
-            'now': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'summary': summary,
-            'phases': [phase_31, phase_32, phase_33],
-        },
-    }), 200
+
+@admin_bp.route('/voca/autocomplete', methods=['GET'])
+@admin_required
+def voca_autocomplete():
+    q = request.args.get('q', '').strip()
+    if not q or len(q) < 2:
+        return jsonify({'code': 200, 'data': []})
+
+    vocas = Voca.query.filter(Voca.word.ilike(f'%{q}%')).limit(10).all()
+    words = []
+    for v in vocas:
+        first_meaning = None
+        mm = VocaMeaningMap.query.filter_by(voca_id=v.id).first()
+        if mm:
+            mo = VocaMeaning.query.get(mm.meaning_id)
+            if mo:
+                first_meaning = mo.meaning
+        words.append({'id': v.id, 'word': v.word, 'pronunciation': v.pronunciation, 'meaning': first_meaning})
+
+    return jsonify({'code': 200, 'data': words})
+
+
+@admin_bp.route('/voca/<int:voca_id>', methods=['GET'])
+@admin_required
+def get_voca(voca_id):
+    voca = Voca.query.get_or_404(voca_id)
+
+    meanings = [{'id': mm.meaning.id, 'meaning': mm.meaning.meaning} for mm in voca.voca_meanings]
+    examples = [{'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
+                for em in voca.voca_examples]
+
+    return jsonify({'code': 200, 'data': {
+        'id': voca.id, 'word': voca.word,
+        'pronunciation': voca.pronunciation or '',
+        'verb_forms': voca.verb_forms or '',
+        'meanings': meanings, 'examples': examples,
+    }})
+
+
+@admin_bp.route('/voca/<int:voca_id>', methods=['PATCH'])
+@admin_required
+def update_voca(voca_id):
+    data = request.json
+    voca = Voca.query.get_or_404(voca_id)
+
+    voca.word = data.get('word', voca.word)
+    voca.pronunciation = data.get('pronunciation', voca.pronunciation)
+    voca.verb_forms = data.get('verb_forms', voca.verb_forms)
+    if 'level' in data:
+        voca.level = data.get('level') if data.get('level') else None
+
+    if 'meanings' in data:
+        VocaMeaningMap.query.filter_by(voca_id=voca_id).delete()
+        for md in data['meanings']:
+            mt = md.get('meaning', '').strip()
+            if not mt:
+                continue
+            vm = VocaMeaning(meaning=mt)
+            db.session.add(vm)
+            db.session.flush()
+            db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
+
+    if 'examples' in data:
+        VocaExampleMap.query.filter_by(voca_id=voca_id).delete()
+        for ed in data['examples']:
+            exam_en = ed.get('exam_en', '').strip()
+            exam_ko = ed.get('exam_ko', '').strip()
+            if not exam_en and not exam_ko:
+                continue
+            ve = VocaExample(exam_en=exam_en or None, exam_ko=exam_ko or None)
+            db.session.add(ve)
+            db.session.flush()
+            db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
+
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'success': True}})
+
+
+@admin_bp.route('/voca/<int:voca_id>/hide', methods=['PATCH'])
+@admin_required
+def hide_voca(voca_id):
+    voca = Voca.query.get_or_404(voca_id)
+    voca.is_active = False
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'success': True}})
+
+
+@admin_bp.route('/voca/<int:voca_id>/show', methods=['PATCH'])
+@admin_required
+def show_voca(voca_id):
+    voca = Voca.query.get_or_404(voca_id)
+    voca.is_active = True
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'success': True}})
+
+
+# ──────────────────────────────────────────
+# Strong 태그 삽입 (AdminVocaBook)
+# ──────────────────────────────────────────
+
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/tag_examples', methods=['POST'])
+@admin_required
+def tag_admin_voca_book_examples(admin_voca_book_id):
+    """예문에 <strong class="target-word"> 태그 자동 삽입 (spacy/kiwipiepy + GPT fallback)"""
+    try:
+        AdminVocaBook.query.get_or_404(admin_voca_book_id)
+
+        word_maps = db.session.query(AdminVocaBookMap, Voca).join(
+            Voca, AdminVocaBookMap.voca_id == Voca.id
+        ).filter(AdminVocaBookMap.book_id == admin_voca_book_id).order_by(AdminVocaBookMap.id).all()
+
+        results = []
+        gpt_batch = []
+        gpt_refs = []   # (result_idx, ex_idx, mode) mode: 'en'|'ko'|'both'
+
+        for bm, v in word_maps:
+            examples = json.loads(bm.voca_examples) if bm.voca_examples else []
+            meanings = json.loads(bm.voca_meanings) if bm.voca_meanings else []
+            word = v.word
+            tagged_exs = []
+
+            for ex in examples:
+                en_orig = ex.get('en', '')
+                ko_orig = ex.get('ko', '')
+                STRONG = '<strong class="target-word">'
+
+                # 이미 태그된 예문은 재처리 스킵
+                if STRONG in en_orig:
+                    tagged_en = en_orig
+                else:
+                    tagged_en = _tag_en(word, en_orig) if en_orig else en_orig
+
+                if STRONG in ko_orig:
+                    tagged_ko = ko_orig
+                else:
+                    tagged_ko = _tag_ko(meanings, ko_orig) if ko_orig else ko_orig
+
+                need_gpt_en = tagged_en is None and bool(en_orig)
+                need_gpt_ko = tagged_ko is None and bool(ko_orig)
+
+                ri = len(results)
+                ei = len(tagged_exs)
+
+                if need_gpt_en or need_gpt_ko:
+                    gpt_batch.append({'word': word, 'meanings': meanings, 'en': en_orig, 'ko': ko_orig})
+                    if need_gpt_en and need_gpt_ko:
+                        mode = 'both'
+                    elif need_gpt_en:
+                        mode = 'en'
+                    else:
+                        mode = 'ko'
+                    gpt_refs.append((ri, ei, mode))
+
+                tagged_exs.append({
+                    'en': tagged_en if tagged_en is not None else en_orig,
+                    'ko': tagged_ko if tagged_ko is not None else ko_orig,
+                })
+
+            results.append({'map_id': bm.id, 'word': word, 'meanings': meanings, 'examples': tagged_exs})
+
+        # GPT fallback: 30개씩 배치 처리
+        BATCH = 30
+        for start in range(0, len(gpt_batch), BATCH):
+            chunk = gpt_batch[start:start + BATCH]
+            refs = gpt_refs[start:start + BATCH]
+            tagged_chunk = _tag_batch_gpt(chunk)
+            for j, (ri, ei, mode) in enumerate(refs):
+                if mode in ('both', 'en'):
+                    results[ri]['examples'][ei]['en'] = tagged_chunk[j]['en']
+                if mode in ('both', 'ko'):
+                    results[ri]['examples'][ei]['ko'] = tagged_chunk[j]['ko']
+
+        return jsonify({'code': 200, 'data': {'results': results}})
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/save_tagged_examples', methods=['PATCH'])
+@admin_required
+def save_tagged_examples(admin_voca_book_id):
+    """태그된 예문을 DB에 저장"""
+    try:
+        items = (request.json or {}).get('items', [])
+        for item in items:
+            map_id = item.get('map_id')
+            bm = AdminVocaBookMap.query.filter_by(id=map_id, book_id=admin_voca_book_id).first()
+            if not bm:
+                continue
+            bm.voca_examples = json.dumps(
+                [{'en': ex.get('en', ''), 'ko': ex.get('ko', '')} for ex in item.get('examples', [])],
+                ensure_ascii=False
+            )
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {'success': True}})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'code': 500, 'message': str(e)}), 500

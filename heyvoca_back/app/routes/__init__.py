@@ -13,6 +13,7 @@ purchase_bp = Blueprint('purchase', __name__, url_prefix='/purchase')
 ocr_bp = Blueprint('ocr', __name__, url_prefix='/ocr')
 voca_indexs_bp = Blueprint('voca_indexs', __name__, url_prefix='/vocaIndexs')
 voca_books_bp = Blueprint('voca_books', __name__, url_prefix='/vocaBooks')
+admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 from app.routes import health
 from app.routes import auth
@@ -27,3 +28,4 @@ from app.routes import purchase
 from app.routes import ocr
 from app.routes import voca_indexs
 from app.routes import voca_books
+from app.routes import admin
