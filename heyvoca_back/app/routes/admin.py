@@ -1063,6 +1063,69 @@ def tag_admin_voca_book_examples(admin_voca_book_id):
         return jsonify({'code': 500, 'message': str(e)}), 500
 
 
+@admin_bp.route('/admin_voca_book/tag_examples_from_excel', methods=['POST'])
+def tag_examples_from_excel():
+    """[임시] /app/heyvoca_skincare_vocab.xlsx 데이터로 strong 태그 삽입 후 결과를 엑셀에 저장"""
+    try:
+        xlsx_path = '/app/heyvoca_skincare_vocab.xlsx'
+        df = pd.read_excel(xlsx_path)
+        # 컬럼 순서: 단어, 뜻, 영어 예문, 한국어 예문
+
+        results = []
+        gpt_batch = []
+        gpt_refs = []  # (result_idx, mode)
+        STRONG = '<strong class="target-word">'
+
+        for i, row in df.iterrows():
+            word = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ''
+            meaning_raw = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ''
+            en_orig = str(row.iloc[2]).strip() if pd.notna(row.iloc[2]) else ''
+            ko_orig = str(row.iloc[3]).strip() if pd.notna(row.iloc[3]) else ''
+            meanings = [m.strip() for m in re.split(r'[,，]', meaning_raw) if m.strip()]
+
+            tagged_en = _tag_en(word, en_orig) if en_orig and STRONG not in en_orig else en_orig
+            tagged_ko = _tag_ko(meanings, ko_orig) if ko_orig and STRONG not in ko_orig else ko_orig
+
+            need_gpt_en = tagged_en is None and bool(en_orig)
+            need_gpt_ko = tagged_ko is None and bool(ko_orig)
+
+            ri = len(results)
+            if need_gpt_en or need_gpt_ko:
+                gpt_batch.append({'word': word, 'meanings': meanings, 'en': en_orig, 'ko': ko_orig})
+                mode = 'both' if (need_gpt_en and need_gpt_ko) else ('en' if need_gpt_en else 'ko')
+                gpt_refs.append((ri, mode))
+
+            results.append({
+                'word': word,
+                'en': tagged_en if tagged_en is not None else en_orig,
+                'ko': tagged_ko if tagged_ko is not None else ko_orig,
+                'gpt_used': False,
+            })
+
+        BATCH = 30
+        for start in range(0, len(gpt_batch), BATCH):
+            chunk = gpt_batch[start:start + BATCH]
+            refs = gpt_refs[start:start + BATCH]
+            tagged_chunk = _tag_batch_gpt(chunk)
+            for j, (ri, mode) in enumerate(refs):
+                if mode in ('both', 'en'):
+                    results[ri]['en'] = tagged_chunk[j]['en']
+                if mode in ('both', 'ko'):
+                    results[ri]['ko'] = tagged_chunk[j]['ko']
+                results[ri]['gpt_used'] = True
+
+        df['태그된 영어 예문'] = [r['en'] for r in results]
+        df['태그된 한국어 예문'] = [r['ko'] for r in results]
+        df['gpt_used'] = [r['gpt_used'] for r in results]
+        df.to_excel(xlsx_path, index=False)
+
+        return jsonify({'code': 200, 'data': {'total': len(results), 'results': results}})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/save_tagged_examples', methods=['PATCH'])
 @admin_required
 def save_tagged_examples(admin_voca_book_id):
