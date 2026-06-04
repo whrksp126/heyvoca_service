@@ -735,12 +735,18 @@ def get_voca_list():
             mo = VocaMeaning.query.get(mm.meaning_id)
             if mo:
                 meanings.append(mo.meaning)
+        examples = []
+        for em in VocaExampleMap.query.filter_by(voca_id=v.id).all():
+            eo = VocaExample.query.get(em.example_id)
+            if eo:
+                examples.append({'exam_en': eo.exam_en or '', 'exam_ko': eo.exam_ko or ''})
         vocas.append({
             'id': v.id,
             'word': v.word,
             'pronunciation': v.pronunciation,
             'verb_forms': v.verb_forms,
             'meanings': meanings,
+            'examples': examples,
         })
 
     return jsonify({'code': 200, 'data': {
