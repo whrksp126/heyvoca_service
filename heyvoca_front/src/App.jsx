@@ -1,9 +1,8 @@
 // src/App.jsx
 
 import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
-import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import InitialProfile from './pages/InitialProfile';
@@ -98,21 +97,9 @@ function AppWithContexts() {
 }
 
 /**
- * /admin 라우트는 기존 Layout/Context 체계와 완전히 분리하여 독립 렌더.
- * 일반 사용자 라우트는 기존 AppWithContexts 가 처리.
+ * 일반 사용자 라우트. (어드민은 별도 heyvoca_admin 서비스로 분리됨)
  */
 function AppRouter() {
-  const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
-
-  if (isAdmin) {
-    return (
-      <Routes>
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
-    );
-  }
-
   return (
     <UserProvider>
       <AttendanceCalendarProvider>

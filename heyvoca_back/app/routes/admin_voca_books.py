@@ -11,7 +11,7 @@ import json
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify
-from sqlalchemy import func, or_
+from sqlalchemy import func, or_, literal, case, select, union_all, text, Integer as SAInteger
 from sqlalchemy.orm import joinedload
 
 from app import db
@@ -20,6 +20,7 @@ from app.models.models import (
     AdminVocaBookMap,
     Bookstore,
     Voca,
+    VocaBook,
     VocaMeaning,
     VocaMeaningMap,
     VocaExample,
@@ -735,6 +736,372 @@ def get_voca_dictionary(voca_id):
             },
             'meanings': [{'id': m.id, 'meaning': m.meaning} for m in meanings],
             'examples': [{'id': e.id, 'origin': e.exam_en, 'meaning': e.exam_ko} for e in examples],
+        },
+    }), 200
+
+
+# ──────────────────────────────────────────────────────────
+# 11. GET /admin/voca-books/unified — 통합 단어장 목록 (페이지네이션)
+# ──────────────────────────────────────────────────────────
+
+_UNIFIED_SORT_COLS = {
+    'book_type', 'book_nm', 'language', 'source', 'category',
+    'word_count', 'is_registered', 'username', 'updated_at',
+}
+
+
+def _build_admin_select(q_filter):
+    """AdminVocaBook → 공통 컬럼 select (Core expression).
+
+    is_registered 컬럼: Bookstore.admin_voca_book_id 로 EXISTS 체크.
+    """
+    avb = AdminVocaBook.__table__
+    bs = Bookstore.__table__
+
+    is_reg = (
+        select(literal(1))
+        .select_from(bs)
+        .where(bs.c.admin_voca_book_id == avb.c.id)
+        .correlate(avb)
+        .exists()
+        .label('is_registered')
+    )
+
+    stmt = select(
+        avb.c.id,
+        avb.c.book_nm,
+        avb.c.language,
+        avb.c.source,
+        avb.c.category,
+        avb.c.username,
+        avb.c.word_count,
+        avb.c.updated_at,
+        literal('admin').label('book_type'),
+        is_reg,
+    ).select_from(avb)
+
+    if q_filter:
+        stmt = stmt.where(avb.c.book_nm.ilike(f'%{q_filter}%'))
+
+    return stmt
+
+
+def _build_legacy_select(q_filter):
+    """VocaBook → 공통 컬럼 select (Core expression).
+
+    is_registered 컬럼: Bookstore.book_id 로 EXISTS 체크.
+    """
+    vb = VocaBook.__table__
+    bs = Bookstore.__table__
+
+    is_reg = (
+        select(literal(1))
+        .select_from(bs)
+        .where(bs.c.book_id == vb.c.id)
+        .correlate(vb)
+        .exists()
+        .label('is_registered')
+    )
+
+    stmt = select(
+        vb.c.id,
+        vb.c.book_nm,
+        vb.c.language,
+        vb.c.source,
+        vb.c.category,
+        vb.c.username,
+        vb.c.word_count,
+        vb.c.updated_at,
+        literal('legacy').label('book_type'),
+        is_reg,
+    ).select_from(vb)
+
+    if q_filter:
+        stmt = stmt.where(vb.c.book_nm.ilike(f'%{q_filter}%'))
+
+    return stmt
+
+
+def _col_expr(subq, sort_by, sort_dir):
+    """서브쿼리 컬럼 + 방향 → SQLAlchemy order_by expression."""
+    col = subq.c[sort_by]
+    if sort_dir == 'asc':
+        expr = col.asc()
+    else:
+        expr = col.desc()
+    return expr
+
+
+@admin_voca_books_bp.route('/unified', methods=['GET'])
+@admin_required
+def unified_voca_books():
+    """legacy VocaBook + admin AdminVocaBook 통합 페이지네이션 목록.
+
+    Query params:
+        page (int, 기본 1, min 1)
+        page_size (int, 기본 50, min 1, max 100)
+        type: all | admin | legacy (기본 all)
+        q: book_nm ILIKE 검색
+        sort_by: book_type | book_nm | language | source | category |
+                 word_count | is_registered | username | updated_at (기본 updated_at)
+        sort_dir: asc | desc (기본 desc)
+
+    Response:
+        { code:200, data: {
+            items: [{id, book_nm, language, source, category, username,
+                     word_count, updated_at, book_type, is_registered,
+                     bookstore_id, bookstore_name}],
+            total: int,
+            page: int, page_size: int,
+            type_counts: { all, admin, legacy }
+        }}
+    """
+    page = _clamp_int(request.args.get('page'), 1, min_val=1)
+    page_size = _clamp_int(request.args.get('page_size'), 50, min_val=1, max_val=100)
+    book_type = (request.args.get('type') or 'all').strip().lower()
+    if book_type not in ('all', 'admin', 'legacy'):
+        book_type = 'all'
+    q = (request.args.get('q') or '').strip()
+    sort_by = (request.args.get('sort_by') or 'updated_at').strip()
+    if sort_by not in _UNIFIED_SORT_COLS:
+        sort_by = 'updated_at'
+    sort_dir = (request.args.get('sort_dir') or 'desc').strip().lower()
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'desc'
+
+    offset = (page - 1) * page_size
+
+    # ── type=admin 또는 type=legacy 단순 경로 ─────────────────────────
+    if book_type == 'admin':
+        model = AdminVocaBook
+        q_obj = model.query
+        if q:
+            q_obj = q_obj.filter(model.book_nm.ilike(f'%{q}%'))
+
+        # 정렬 (is_registered 제외 단순 컬럼 정렬)
+        if sort_by == 'is_registered':
+            # LEFT JOIN + CASE
+            is_reg_expr = case(
+                (Bookstore.admin_voca_book_id.isnot(None), literal(1)),
+                else_=literal(0),
+            )
+            q_obj = q_obj.outerjoin(
+                Bookstore, Bookstore.admin_voca_book_id == model.id
+            )
+            order_col = is_reg_expr.asc() if sort_dir == 'asc' else is_reg_expr.desc()
+        elif sort_by == 'book_type':
+            # admin만 조회 중이므로 모두 동일 — 보조 정렬만 적용
+            order_col = model.id.desc()
+        else:
+            raw_col = getattr(model, sort_by, model.updated_at)
+            order_col = raw_col.asc() if sort_dir == 'asc' else raw_col.desc()
+
+        total = q_obj.count()
+        books = q_obj.order_by(order_col, model.id.desc()).limit(page_size).offset(offset).all()
+
+        book_ids = [b.id for b in books]
+        bs_map = {}
+        if book_ids:
+            for bs in Bookstore.query.filter(Bookstore.admin_voca_book_id.in_(book_ids)).all():
+                bs_map[bs.admin_voca_book_id] = bs
+
+        items = []
+        for b in books:
+            bs = bs_map.get(b.id)
+            items.append({
+                'id': b.id,
+                'book_nm': b.book_nm,
+                'language': b.language,
+                'source': b.source,
+                'category': b.category,
+                'username': b.username,
+                'word_count': b.word_count,
+                'updated_at': b.updated_at.isoformat() if b.updated_at else None,
+                'book_type': 'admin',
+                'is_registered': bs is not None,
+                'bookstore_id': bs.id if bs else None,
+                'bookstore_name': bs.name if bs else None,
+            })
+
+        # type_counts: q 적용, type 무관 전체 기준
+        admin_cnt = AdminVocaBook.query.filter(
+            AdminVocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+        ).count()
+        legacy_cnt = VocaBook.query.filter(
+            VocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+        ).count()
+
+        return jsonify({
+            'code': 200,
+            'data': {
+                'items': items,
+                'total': total,
+                'page': page,
+                'page_size': page_size,
+                'type_counts': {
+                    'all': admin_cnt + legacy_cnt,
+                    'admin': admin_cnt,
+                    'legacy': legacy_cnt,
+                },
+            },
+        }), 200
+
+    if book_type == 'legacy':
+        model = VocaBook
+        q_obj = model.query
+        if q:
+            q_obj = q_obj.filter(model.book_nm.ilike(f'%{q}%'))
+
+        if sort_by == 'is_registered':
+            is_reg_expr = case(
+                (Bookstore.book_id.isnot(None), literal(1)),
+                else_=literal(0),
+            )
+            q_obj = q_obj.outerjoin(Bookstore, Bookstore.book_id == model.id)
+            order_col = is_reg_expr.asc() if sort_dir == 'asc' else is_reg_expr.desc()
+        elif sort_by == 'book_type':
+            order_col = model.id.desc()
+        else:
+            raw_col = getattr(model, sort_by, model.updated_at)
+            order_col = raw_col.asc() if sort_dir == 'asc' else raw_col.desc()
+
+        total = q_obj.count()
+        books = q_obj.order_by(order_col, model.id.desc()).limit(page_size).offset(offset).all()
+
+        book_ids = [b.id for b in books]
+        bs_map = {}
+        if book_ids:
+            for bs in Bookstore.query.filter(Bookstore.book_id.in_(book_ids)).all():
+                bs_map[bs.book_id] = bs
+
+        items = []
+        for b in books:
+            bs = bs_map.get(b.id)
+            items.append({
+                'id': b.id,
+                'book_nm': b.book_nm,
+                'language': b.language,
+                'source': b.source,
+                'category': b.category,
+                'username': b.username,
+                'word_count': b.word_count,
+                'updated_at': b.updated_at.isoformat() if b.updated_at else None,
+                'book_type': 'legacy',
+                'is_registered': bs is not None,
+                'bookstore_id': bs.id if bs else None,
+                'bookstore_name': bs.name if bs else None,
+            })
+
+        admin_cnt = AdminVocaBook.query.filter(
+            AdminVocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+        ).count()
+        legacy_cnt = VocaBook.query.filter(
+            VocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+        ).count()
+
+        return jsonify({
+            'code': 200,
+            'data': {
+                'items': items,
+                'total': total,
+                'page': page,
+                'page_size': page_size,
+                'type_counts': {
+                    'all': admin_cnt + legacy_cnt,
+                    'admin': admin_cnt,
+                    'legacy': legacy_cnt,
+                },
+            },
+        }), 200
+
+    # ── type=all : union_all 서브쿼리 + DB 레벨 limit/offset ──────────
+    admin_stmt = _build_admin_select(q)
+    legacy_stmt = _build_legacy_select(q)
+
+    union_stmt = union_all(admin_stmt, legacy_stmt).subquery('unified')
+
+    # 정렬 컬럼 결정
+    if sort_by == 'updated_at':
+        # NULL last: desc → NULL을 뒤로(is null asc), asc → NULL을 뒤로(is null asc)
+        null_order = union_stmt.c.updated_at.is_(None).asc()
+        primary = (
+            union_stmt.c.updated_at.asc() if sort_dir == 'asc'
+            else union_stmt.c.updated_at.desc()
+        )
+        order_exprs = [null_order, primary, union_stmt.c.id.desc()]
+    else:
+        col = union_stmt.c[sort_by]
+        primary = col.asc() if sort_dir == 'asc' else col.desc()
+        order_exprs = [primary, union_stmt.c.updated_at.desc(), union_stmt.c.id.desc()]
+
+    base_q = select(union_stmt).order_by(*order_exprs)
+
+    # 전체 count (서브쿼리 감싸기)
+    count_subq = base_q.subquery('cnt_wrap')
+    total = db.session.execute(
+        select(func.count()).select_from(count_subq)
+    ).scalar()
+
+    # 페이지 슬라이스
+    rows = db.session.execute(
+        base_q.limit(page_size).offset(offset)
+    ).fetchall()
+
+    # Bookstore 조회 (슬라이스 결과에 대해서만)
+    admin_ids = [r.id for r in rows if r.book_type == 'admin']
+    legacy_ids = [r.id for r in rows if r.book_type == 'legacy']
+
+    admin_bs_map = {}
+    if admin_ids:
+        for bs in Bookstore.query.filter(Bookstore.admin_voca_book_id.in_(admin_ids)).all():
+            admin_bs_map[bs.admin_voca_book_id] = bs
+
+    legacy_bs_map = {}
+    if legacy_ids:
+        for bs in Bookstore.query.filter(Bookstore.book_id.in_(legacy_ids)).all():
+            legacy_bs_map[bs.book_id] = bs
+
+    items = []
+    for r in rows:
+        if r.book_type == 'admin':
+            bs = admin_bs_map.get(r.id)
+        else:
+            bs = legacy_bs_map.get(r.id)
+        items.append({
+            'id': r.id,
+            'book_nm': r.book_nm,
+            'language': r.language,
+            'source': r.source,
+            'category': r.category,
+            'username': r.username,
+            'word_count': r.word_count,
+            'updated_at': r.updated_at.isoformat() if r.updated_at else None,
+            'book_type': r.book_type,
+            'is_registered': bool(r.is_registered),
+            'bookstore_id': bs.id if bs else None,
+            'bookstore_name': bs.name if bs else None,
+        })
+
+    # type_counts (q 적용, type 무관)
+    admin_cnt = AdminVocaBook.query.filter(
+        AdminVocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+    ).count()
+    legacy_cnt = VocaBook.query.filter(
+        VocaBook.book_nm.ilike(f'%{q}%') if q else literal(True)
+    ).count()
+
+    return jsonify({
+        'code': 200,
+        'data': {
+            'items': items,
+            'total': total,
+            'page': page,
+            'page_size': page_size,
+            'type_counts': {
+                'all': admin_cnt + legacy_cnt,
+                'admin': admin_cnt,
+                'legacy': legacy_cnt,
+            },
         },
     }), 200
 
