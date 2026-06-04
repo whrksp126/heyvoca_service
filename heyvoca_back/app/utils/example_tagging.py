@@ -152,6 +152,42 @@ def _tag_batch_gpt(items):
         return [{'en': it['en'], 'ko': it['ko']} for it in items]
 
 
+def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko'):
+    """examples(list[dict]) 의 en_key/ko_key 예문에 강조를 in-place 적용한다.
+
+    이미 강조된 예문 skip → spaCy/Kiwi 1차 처리 → 실패 잔여분만 GPT 배치(30개).
+    키 파라미터로 사용처별 키 차이(en/ko, origin/meaning, exam_en/exam_ko)를 흡수한다.
+    단일 단어(같은 word/meanings)의 예문들을 한 번에 처리하는 용도.
+    """
+    ms = [m for m in (meanings or []) if isinstance(m, str)]
+    gpt_batch = []
+    gpt_refs = []  # (ex_dict, mode)
+    for ex in examples:
+        en = (ex.get(en_key) or '')
+        ko = (ex.get(ko_key) or '')
+        if not en and not ko:
+            continue
+        te, tk, ge, gk = tag_example_pair(word, ms, en, ko)
+        ex[en_key] = te
+        ex[ko_key] = tk
+        if ge or gk:
+            mode = 'both' if (ge and gk) else ('en' if ge else 'ko')
+            gpt_batch.append({'word': word, 'meanings': ms, 'en': en, 'ko': ko})
+            gpt_refs.append((ex, mode))
+
+    BATCH = 30
+    for start in range(0, len(gpt_batch), BATCH):
+        chunk = gpt_batch[start:start + BATCH]
+        refs = gpt_refs[start:start + BATCH]
+        tagged = _tag_batch_gpt(chunk)
+        for j, (ex, mode) in enumerate(refs):
+            if mode in ('both', 'en'):
+                ex[en_key] = tagged[j]['en']
+            if mode in ('both', 'ko'):
+                ex[ko_key] = tagged[j]['ko']
+    return examples
+
+
 def tag_example_pair(word, meanings, en, ko):
     """
     예문 한 쌍(en/ko)을 spaCy/Kiwi 1차 처리한다. GPT는 호출하지 않는다.

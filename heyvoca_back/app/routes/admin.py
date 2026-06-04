@@ -21,7 +21,7 @@ from app.models.models import (
 
 # Strong 태그 삽입 헬퍼는 app/utils/example_tagging.py 로 이동 (voca_books 와 공용)
 from app.utils.example_tagging import (
-    _tag_en, _tag_ko, _tag_batch_gpt, tag_example_pair, STRONG,
+    _tag_en, _tag_ko, _tag_batch_gpt, tag_example_pair, apply_emphasis, STRONG,
 )
 
 
@@ -812,10 +812,18 @@ def update_voca(voca_id):
             db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
 
     if 'examples' in data:
+        # 저장 시 강조 안 된 예문 자동 태깅 (spacy/kiwi 1차 → 잔여분 GPT)
+        if 'meanings' in data:
+            ex_meanings = [m.get('meaning', '').strip() for m in data.get('meanings', [])
+                           if isinstance(m, dict) and m.get('meaning', '').strip()]
+        else:
+            ex_meanings = [mm.meaning.meaning for mm in voca.voca_meanings]
+        apply_emphasis(voca.word, ex_meanings, data['examples'], 'exam_en', 'exam_ko')
+
         VocaExampleMap.query.filter_by(voca_id=voca_id).delete()
         for ed in data['examples']:
-            exam_en = ed.get('exam_en', '').strip()
-            exam_ko = ed.get('exam_ko', '').strip()
+            exam_en = (ed.get('exam_en') or '').strip()
+            exam_ko = (ed.get('exam_ko') or '').strip()
             if not exam_en and not exam_ko:
                 continue
             ve = VocaExample(exam_en=exam_en or None, exam_ko=exam_ko or None)
@@ -824,7 +832,13 @@ def update_voca(voca_id):
             db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
 
     db.session.commit()
-    return jsonify({'code': 200, 'data': {'success': True}})
+
+    # 저장된(태깅 반영된) 예문을 응답으로 반환 → 프론트가 즉시 강조 결과 표시
+    saved_examples = [
+        {'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
+        for em in voca.voca_examples
+    ]
+    return jsonify({'code': 200, 'data': {'success': True, 'examples': saved_examples}})
 
 
 @admin_bp.route('/voca/<int:voca_id>/hide', methods=['PATCH'])

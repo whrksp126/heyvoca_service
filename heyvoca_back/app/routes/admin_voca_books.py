@@ -14,6 +14,8 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy import func, or_, literal, case, select, union_all, text, Integer as SAInteger
 from sqlalchemy.orm import joinedload
 
+from app.utils.example_tagging import apply_emphasis
+
 from app import db
 from app.models.models import (
     AdminVocaBook,
@@ -381,6 +383,10 @@ def patch_word(book_id, map_id):
         m.voca_meanings = json.dumps(meanings, ensure_ascii=False)
     if 'examples' in payload:
         examples = _normalize_examples(payload.get('examples'))
+        # 저장 시 강조 안 된 예문 자동 태깅 (이미 강조 skip → 1차 → 잔여분 GPT)
+        ms = _normalize_meanings(payload.get('meanings')) if 'meanings' in payload \
+            else json.loads(m.voca_meanings or '[]')
+        apply_emphasis(m.voca.word if m.voca else '', ms, examples, 'origin', 'meaning')
         m.voca_examples = json.dumps(examples, ensure_ascii=False)
     if 'level' in payload:
         lv = payload.get('level')
@@ -500,6 +506,8 @@ def add_word(book_id):
 
     meanings = _normalize_meanings(payload.get('meanings'))
     examples = _normalize_examples(payload.get('examples'))
+    # 단어 추가 시 강조 안 된 예문 자동 태깅
+    apply_emphasis(voca.word, meanings, examples, 'origin', 'meaning')
     level = payload.get('level')
     try:
         level_int = int(level) if level not in (None, '') else None
