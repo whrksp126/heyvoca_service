@@ -41,7 +41,7 @@ APP_ENV=local
 DICT_AUTO_RESET=true
 DICT_AUTO_RESET_ALLOW_PROD=false
 MINIO_ENDPOINT=https://objectstore.ghmate.com
-MINIO_BUCKET=heyvoca-dict
+MINIO_BUCKET=heyvoca          # heyvoca 통합 버킷 (dict/ dump, tts/ 음성 폴더로 구분)
 MINIO_DICT_RO_KEY=...   # 모든 팀원 공통 (read-only)
 MINIO_DICT_RO_SECRET=...
 # 사전 큐레이션 권한 있는 팀원만 추가 (write):

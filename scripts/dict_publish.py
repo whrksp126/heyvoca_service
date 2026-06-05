@@ -179,7 +179,7 @@ def main():
 
     # MinIO RW 키 확인
     endpoint = os.getenv('MINIO_ENDPOINT', 'https://objectstore.ghmate.com')
-    bucket = os.getenv('MINIO_BUCKET', 'heyvoca-dict')
+    bucket = os.getenv('MINIO_BUCKET', 'heyvoca')
     rw_key = os.getenv('MINIO_DICT_RW_KEY')
     rw_secret = os.getenv('MINIO_DICT_RW_SECRET')
     if not (rw_key and rw_secret):
@@ -215,7 +215,7 @@ def main():
                             for t in KEY_TABLES_FOR_MIN if counts.get(t, 0) > 0}
 
         version = next_version()
-        object_name = f"full_dict_v{version}.sql"
+        object_name = f"dict/full_dict_v{version}.sql"
 
         log(f"== MinIO 업로드: {bucket}/{object_name} ==")
         upload_to_minio(endpoint, bucket, rw_key, rw_secret, object_name, dump_path)

@@ -267,8 +267,12 @@ def main():
             return 1
 
     # 7. MinIO에서 dump 다운로드
+    #    object_name은 버킷명 이후의 전체 key (예: 'dict/full_dict_v....sql').
+    #    rsplit('/',1)는 폴더 prefix를 잃으므로 URL path에서 버킷 세그먼트만 제거한다.
     pointer_url = pointer['url']
-    object_name = pointer_url.rsplit('/', 1)[-1]
+    url_path = unquote(urlparse(pointer_url).path).lstrip('/')  # 예: 'heyvoca/dict/full_dict_v....sql'
+    sep = f"{bucket}/"
+    object_name = url_path.split(sep, 1)[1] if sep in url_path else url_path.split('/', 1)[-1]
     with tempfile.NamedTemporaryFile(suffix='.sql', delete=False) as tmp:
         dump_path = tmp.name
     try:
