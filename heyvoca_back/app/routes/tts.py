@@ -12,7 +12,7 @@ from sqlalchemy import func
 from app.models.models import Voca, VocaMeaning
 from app.utils.jwt_utils import SECRET_KEY  # = ACCESS_SECRET
 from app.services.tts import service
-from app.services.tts.registry import get_provider
+from app.services.tts.registry import get_provider_for_language
 from app.services.tts.normalize import normalize_text
 from app.services.tts.base import (
     TTSError,
@@ -71,7 +71,7 @@ def _resolve_object_key():
     if not text or language not in _SUPPORTED_LANGS:
         return None
     try:
-        provider = get_provider()
+        provider = get_provider_for_language(language)
         norm = normalize_text(text)
         if not norm:
             return None
@@ -157,7 +157,7 @@ def tts_resolve():
         return jsonify({"error": "빈 텍스트입니다."}), 400
 
     try:
-        provider = get_provider()
+        provider = get_provider_for_language(language)
         object_key = service.object_key_for(provider, language, norm)
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400

@@ -5,7 +5,7 @@ prewarm 스크립트는 ensure_cached()만 직접 호출한다.
 """
 import os
 
-from .registry import get_provider
+from .registry import get_provider, get_provider_for_language
 from .storage import TTSStorage
 from .normalize import normalize_text, build_object_key
 from .base import TTSError
@@ -44,7 +44,7 @@ def ensure_cached(text: str, language: str, provider=None, storage=None):
 
     text는 원문(미정규화) — 내부에서 normalize 후 키 계산.
     """
-    provider = provider or get_provider()
+    provider = provider or get_provider_for_language(language)
     storage = storage or get_storage('rw')
     norm = normalize_text(text)
     if not norm:

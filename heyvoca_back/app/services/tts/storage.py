@@ -50,17 +50,17 @@ class TTSStorage:
         )
 
     def exists(self, key: str) -> bool:
+        # stat_object(HeadObject)는 이 objectstore/Cloudflare 경로에서 간헐적 stale 403을
+        # 반환해 멱등성이 깨진다(캐시된 객체가 '없음'으로 오판 → 불필요한 재생성/404).
+        # ListObjects(강한 일관성, HEAD 캐싱 영향 없음)로 정확히 존재를 판정한다.
         try:
-            self._client.stat_object(self.bucket, key)
-            return True
-        except S3Error as e:
-            code = getattr(e, 'code', None)
-            # 키 정책에 s3:ListBucket이 없으면 '없는 객체'에 대한 HeadObject가
-            # 404가 아니라 403(AccessDenied)로 온다(존재여부 누설 방지). 우리 키는
-            # GetObject 권한이 있어 '있는 객체'는 200을 받으므로, 403은 '없음'으로 간주.
-            if code in _NOT_FOUND_CODES or code == 'AccessDenied':
-                return False
-            raise
+            for obj in self._client.list_objects(self.bucket, prefix=key, recursive=True):
+                if obj.object_name == key:
+                    return True
+            return False
+        except S3Error:
+            # 조회 자체 실패 시 보수적으로 '없음'(생성 경로의 put이 멱등하게 덮어씀)
+            return False
 
     def put_audio(self, key: str, data: bytes, content_type: str = 'audio/mpeg') -> None:
         self._client.put_object(
