@@ -62,13 +62,18 @@ class TTSStorage:
             # 조회 자체 실패 시 보수적으로 '없음'(생성 경로의 put이 멱등하게 덮어씀)
             return False
 
-    def put_audio(self, key: str, data: bytes, content_type: str = 'audio/mpeg') -> None:
+    def put_audio(self, key: str, data: bytes, content_type: str = 'audio/mpeg',
+                  metadata: dict = None) -> None:
+        # metadata는 x-amz-meta-* 사용자 메타데이터로 저장됨(값은 ASCII만 허용 →
+        # 한글 등은 호출측에서 URL-encode해 전달). 키 자체는 해시라 어떤 파일인지
+        # 콘솔/프로그램에서 확인하려면 이 메타데이터(text/lang/provider/voice)를 본다.
         self._client.put_object(
             self.bucket,
             key,
             io.BytesIO(data),
             length=len(data),
             content_type=content_type,
+            metadata=metadata or None,
         )
 
     def presigned_get(self, key: str, ttl_seconds: int = 3600) -> str:

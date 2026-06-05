@@ -4,6 +4,7 @@
 prewarm 스크립트는 ensure_cached()만 직접 호출한다.
 """
 import os
+from urllib.parse import quote
 
 from .registry import get_provider, get_provider_for_language
 from .storage import TTSStorage
@@ -53,5 +54,13 @@ def ensure_cached(text: str, language: str, provider=None, storage=None):
     if storage.exists(key):
         return key, False
     result = provider.synthesize(norm, language)
-    storage.put_audio(key, result.audio, result.content_type)
+    # 해시 키만으로는 무슨 텍스트인지 알 수 없으므로 원문/언어/엔진을 메타데이터로 남긴다.
+    # 헤더는 ASCII만 허용 → 한글 등은 URL-encode(복원: urllib.parse.unquote).
+    metadata = {
+        'text': quote(norm),
+        'lang': language,
+        'provider': provider.name,
+        'voice': provider.voice_for(language),
+    }
+    storage.put_audio(key, result.audio, result.content_type, metadata=metadata)
     return key, True
