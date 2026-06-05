@@ -34,7 +34,7 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 ### Route Blueprints (`app/routes/`)
 - `auth.py` – 소셜 로그인(Google/Apple), JWT 세션 관리
 - `search.py` – 단어 검색
-- `tts.py` – Google Text-to-Speech
+- `tts.py` – TTS. `GET /tts/resolve`(외부 AI 음성 생성 + objectstore 캐싱 → presigned URL), `GET /tts/output`(레거시 gTTS 스트림)
 - `fcm.py` – Firebase Cloud Messaging 푸시 알림
 - `purchase.py` – 인앱결제 영수증 검증 (App Store / Google Play)
 - `drive.py` – Google Drive 연동
@@ -46,6 +46,8 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 - **Cache**: Redis (`REDIS_HOST`, `REDIS_PORT`)
 - **Scheduler**: APScheduler (백그라운드 작업)
 - **Config**: `config.py` – `FLASK_CONFIG` 환경변수로 local/development/staging/production 전환
+- **TTS**: `app/services/tts/` — provider 추상화(영어=ElevenLabs, 한국어=Edge TTS, 레거시=gTTS) + objectstore(MinIO) 캐싱. 흐름: `/tts/resolve` → 정규화 → object key=`tts/{provider}/{model}/{voice}/{lang}/sha256(text)` → Redis 존재플래그/MinIO list 조회 → 있으면 presigned URL, 없으면 로그인+rate limit+사전검증 후 생성·업로드. 캐시 객체에 원문/언어/엔진 메타데이터(`x-amz-meta`) 저장. 언어별 엔진은 `get_provider_for_language()`(`TTS_PROVIDER_{LANG}`>`TTS_PROVIDER`>기본 en=elevenlabs/ko=edge).
+- **ObjectStore**: MinIO `heyvoca` 버킷, 폴더로 구분(`dict/` 사전 dump, `tts/` 음성). 기존 `MINIO_DICT_RW_KEY`로 put/presigned, 조회는 list 기반(HEAD가 간헐 stale 403이라 stat 미사용).
 
 ### In-App Purchase Flow
 1. 앱 → 결제 완료 후 영수증 → `/purchase/verify`
@@ -69,3 +71,5 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 - `APPLE_SHARED_SECRET`, `APPLE_APP_STORE_CONNECT_KEY_ID`, `APPLE_APP_STORE_CONNECT_ISSUER_ID`, `APPLE_APP_STORE_CONNECT_PRIVATE_KEY`
 - `GOOGLE_PLAY_SERVICE_ACCOUNT_KEY`
 - Firebase 서비스 계정 키
+- ObjectStore(MinIO): `MINIO_ENDPOINT`, `MINIO_BUCKET`(=`heyvoca`), `MINIO_DICT_RO_KEY/SECRET`(사전 dump 읽기), `MINIO_DICT_RW_KEY/SECRET`(TTS put/presigned·사전 publish — **모든 환경 필요**)
+- TTS: `ELEVENLABS_API_KEY`, `TTS_VOICE_EN`(ElevenLabs voice_id), `TTS_VOICE_KO`(미사용 시 edge 기본 ko-KR-SunHiNeural), 선택 `TTS_PROVIDER_EN/KO`, `TTS_MODEL`, `TTS_GENERATE_REQUIRE_DICT`, `TTS_RATE_LIMIT`, `TTS_PRESIGN_TTL`

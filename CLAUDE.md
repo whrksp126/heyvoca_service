@@ -106,7 +106,8 @@ VITE_FIREBASE_*                      # Firebase 설정
 | 소셜 로그인 | Google OAuth, Apple Sign In |
 | 푸시 알림 | Firebase Admin SDK + pyfcm (APScheduler) |
 | 인앱결제 | App Store Connect API, Google Play (서비스 계정) |
-| 기타 | gTTS (발음), Google Drive API, pandas/openpyxl |
+| TTS(발음) | ElevenLabs(영어) + Edge TTS(한국어) + objectstore 캐싱 (`app/services/tts/`), gTTS는 레거시 폴백 |
+| 기타 | Google Drive API, pandas/openpyxl |
 | 베이스 이미지 | ubuntu:20.04 (Python 3, TZ=Asia/Seoul) |
 
 ### 디렉토리 구조
@@ -121,7 +122,7 @@ heyvoca_back/
 │   ├── routes/               # Blueprint 라우트
 │   │   ├── auth.py           # 소셜 로그인, JWT (38KB)
 │   │   ├── search.py         # 단어 검색 영/한 (12KB)
-│   │   ├── tts.py            # Google TTS
+│   │   ├── tts.py            # TTS: /tts/resolve (ElevenLabs+Edge+캐싱), /tts/output (레거시 gTTS)
 │   │   ├── fcm.py            # FCM 푸시 알림 (15KB)
 │   │   ├── purchase.py       # 인앱결제 영수증 검증 (19KB)
 │   │   ├── drive.py          # Google Drive 업/다운로드 (25KB)
@@ -133,6 +134,16 @@ heyvoca_back/
 │   │   ├── version.py        # 앱 버전 정보
 │   │   ├── common.py         # 공용 함수
 │   │   └── dummy_dict.json   # 더미 단어 데이터 (533KB)
+│   ├── services/             # 도메인 서비스
+│   │   ├── tts/              # TTS provider 추상화(elevenlabs/edge/gtts)+캐싱+presigned
+│   │   │   ├── base.py       #   TTSProvider ABC, 예외/결과 타입
+│   │   │   ├── normalize.py  #   텍스트 정규화 + object key 생성
+│   │   │   ├── storage.py    #   MinIO 래퍼(exists=list기반, put, presigned)
+│   │   │   ├── registry.py   #   언어별 provider 선택(get_provider_for_language)
+│   │   │   ├── service.py    #   조회/생성 오케스트레이션(ensure_cached 등)
+│   │   │   └── providers/    #   elevenlabs.py / edge.py / gtts.py
+│   │   ├── fsrs/             # FSRS 학습 알고리즘
+│   │   └── recommend/        # 추천 로직
 │   └── utils/
 │       └── jwt_utils.py      # JWT 생성/검증
 ├── run.py                    # 진입점 (create_app, FLASK_RUN_PORT)
@@ -148,7 +159,7 @@ heyvoca_back/
 |------------|----------------|
 | auth.py | `POST /google/oauth/app`, `POST /apple/oauth`, `POST /auth/refresh`, `POST /auth/logout` |
 | search.py | `GET /en?word=`, `GET /ko?word=` |
-| tts.py | `GET /tts?text=` |
+| tts.py | `GET /tts/resolve?text=&language=` (캐시 조회/생성→presigned URL JSON), `GET /tts/output` (레거시 gTTS 스트림) |
 | fcm.py | `POST /fcm/token`, `GET /fcm/scheduler` |
 | purchase.py | `POST /purchase/verify` (iOS/Android 영수증 → 보석 지급) |
 | drive.py | `POST /drive/upload`, `GET /drive/download` |
@@ -204,6 +215,18 @@ FCM_API_KEY=...
 GOOGLE_PLAY_SERVICE_ACCOUNT_KEY=./app/routes/heyvoca-466916-e70bf3dad372.json
 REDIS_HOST=redis
 REDIS_PORT=6379
+# ObjectStore(MinIO) — heyvoca 통합 버킷(dict/ dump, tts/ 음성)
+MINIO_ENDPOINT=https://objectstore.ghmate.com
+MINIO_BUCKET=heyvoca
+MINIO_DICT_RO_KEY=...        # 사전 dump 읽기
+MINIO_DICT_RO_SECRET=...
+MINIO_DICT_RW_KEY=...        # TTS put/presigned + 사전 publish (모든 환경 필요)
+MINIO_DICT_RW_SECRET=...
+# TTS — 영어=ElevenLabs, 한국어=Edge TTS(무료)
+ELEVENLABS_API_KEY=...
+TTS_VOICE_EN=Xb7hH8MSUJpSbSDYk0k2   # ElevenLabs voice_id (Alice)
+TTS_VOICE_KO=...                    # ElevenLabs용(현재 한국어는 edge 기본 ko-KR-SunHiNeural 사용)
+# 선택: TTS_PROVIDER_EN/KO, TTS_MODEL(eleven_flash_v2_5), TTS_GENERATE_REQUIRE_DICT, TTS_RATE_LIMIT
 ```
 
 ---
@@ -301,36 +324,26 @@ docker exec -it heyvoca_back_local bash -c "flask db downgrade" # 롤백
 
 ## 서버 배포
 
-### 배포 방식 (환경별 차이)
+### 배포 방식 (dev/stg/prod 동일)
 
-#### dev — 서버에서 git pull 후 빌드
-
-서버에 직접 SSH 접속 → git pull → 서버에서 이미지 빌드 후 실행.
+3환경 모두 **서버에서 git pull → 서버에서 빌드** 방식이다 (Docker Hub 미사용). 환경별 차이는 compose 파일/Dockerfile에만 있음(dev=Vite dev server, stg/prod=멀티스테이지 빌드→nginx 정적 서빙).
 
 ```bash
-./deploy.sh dev
+./deploy.sh dev    # docker-compose.dev.yml  / heyvoca_dev
+./deploy.sh stg    # docker-compose.stg.yml  / heyvoca_stg
+./deploy.sh prod   # docker-compose.yml      / heyvoca_prod
 ```
 
-내부 동작:
+내부 동작(공통, `deploy.sh`):
 ```bash
 ssh 서버 "cd /srv/projects/heyvoca && git pull && \
-  docker compose -p heyvoca_dev -f docker-compose.dev.yml up --build -d front back"
+  docker compose -p heyvoca_<env> -f <compose-file> up --build -d front back" \
+  && docker exec nginx_proxy nginx -s reload
+# 이후 컨테이너 부팅/스키마 검증([SCHEMA OK/DRIFT]) 헬스체크
 ```
 
-#### stg / prod — 로컬 이미지 빌드 후 Docker Hub 경유
-
-로컬에서 이미지 빌드 → Docker Hub push → 서버에서 pull 후 실행.
-
-```bash
-./deploy.sh stg
-./deploy.sh prod
-```
-
-내부 동작:
-1. 로컬에서 이미지 빌드 (`docker compose build --no-cache`)
-2. Docker Hub 푸시 (`docker compose push`)
-3. SSH로 compose 파일 서버 전송 (`ssh "cat > file" < local_file`)
-4. 서버에서 `docker compose pull front back && up -d --no-build`
+- 서버는 `main` 브랜치 추적 → 배포 전 `git push origin local:main` 필수.
+- `.env*`는 git 제외라 deploy.sh가 전송하지 않음 → 서버 `.env`(.env.dev/.env.stg/.env) 변경은 **수동 scp + `--force-recreate`** 필요.
 
 ---
 
