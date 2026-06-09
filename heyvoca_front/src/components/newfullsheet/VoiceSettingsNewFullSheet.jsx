@@ -69,14 +69,13 @@ const VoiceSettingsNewFullSheet = () => {
     } catch (e) { setPlayingVoice(null); }
   };
 
-  // 선택 즉시 반영(저장 버튼 없음 — 테마/알림 설정과 동일 패턴) + 미리듣기.
+  // 선택 즉시 반영(저장 버튼 없음 — 테마/알림 설정과 동일 패턴). 미리듣기는 우측 스피커 버튼으로 분리.
   const handleSelect = (lang, voice) => {
     vibrate({ duration: 5 });
     const next = { ...selected, [lang]: voice };
     setSelected(next);
     try { localStorage.setItem('ttsVoices', JSON.stringify(next)); } catch (e) { /* noop */ }
     if (isLogin) fetchDataAsync(`${backendUrl}/tts/my-voices`, 'PUT', next).catch(() => { /* noop */ });
-    playSample(lang, voice);
   };
 
   return (
@@ -121,22 +120,25 @@ const VoiceSettingsNewFullSheet = () => {
                 <div
                   key={v.voice}
                   onClick={() => handleSelect(lang, v.voice)}
-                  className="flex items-center justify-between px-5 py-[22px] border-b border-border dark:border-border-dark cursor-pointer"
+                  className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-border-dark cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
-                    <SpeakerHigh
-                      weight={isSel || isPlaying ? 'fill' : 'regular'}
-                      className={`text-[20px] ${isPlaying ? 'text-primary-main-500 animate-pulse' : isSel ? 'text-primary-main-600' : 'text-layout-gray-200 dark:text-layout-white/40'}`}
-                    />
+                    {/* 좌측: 선택 여부(체크). 고정폭으로 라벨 정렬 유지 */}
+                    <span className="w-5 shrink-0 flex justify-center">
+                      {isSel && <Check weight="bold" size={20} className="text-primary-main-600" />}
+                    </span>
                     <span className={`text-[16px] font-bold ${isSel ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                       {v.label}
                     </span>
                   </div>
-                  {isPlaying ? (
-                    <span className="text-[12px] font-medium text-primary-main-500 animate-pulse">재생 중…</span>
-                  ) : isSel ? (
-                    <Check weight="bold" size={20} className="text-primary-main-600" />
-                  ) : null}
+                  {/* 우측: 샘플 듣기 버튼(선택과 분리) */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); playSample(lang, v.voice); }}
+                    className={`shrink-0 p-2 rounded-full transition-colors ${isPlaying ? 'text-primary-main-500' : 'text-layout-gray-200 dark:text-layout-white/50 hover:bg-layout-gray-50 dark:hover:bg-layout-white/5'}`}
+                    aria-label="샘플 듣기"
+                  >
+                    <SpeakerHigh weight={isPlaying ? 'fill' : 'regular'} className={`text-[22px] ${isPlaying ? 'animate-pulse' : ''}`} />
+                  </button>
                 </div>
               );
             })}
