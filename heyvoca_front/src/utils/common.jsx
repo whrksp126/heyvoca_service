@@ -185,11 +185,13 @@ export const getValueFromURL = (param) => {
 // 매번 new Audio()를 만들면 setTimeout/await 체인을 거친 후속 호출에서 NotAllowedError가 발생하므로,
 // 모듈 레벨에서 하나의 인스턴스를 재사용한다.
 let sharedAudio = null;
-let currentAudioUrl = null;
 let currentRequestId = 0;
 let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
 let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸들
 
+// 백엔드 /tts/resolve가 objectstore presigned URL을 JSON으로 반환 → 직접 재생.
+// (gTTS blob 즉석 생성에서 ElevenLabs + 캐싱으로 전환. 캐시 히트는 objectstore에서 바로 받아 지연 없음.)
+// 캐시 미스(비로그인 등)면 url이 없으므로 조용히 종료한다.
 export const getTextSound = async (text, lang) => {
   // 이전 재생의 cleanup을 먼저 호출하여 리스너 제거 + resolve.
   if (currentCleanup) {
@@ -204,15 +206,11 @@ export const getTextSound = async (text, lang) => {
     currentAudioResolve();
     currentAudioResolve = null;
   }
-  if (currentAudioUrl) {
-    URL.revokeObjectURL(currentAudioUrl);
-    currentAudioUrl = null;
-  }
 
   // 새로운 요청 ID 생성 (이전 요청과 구분하기 위해)
   const requestId = ++currentRequestId;
 
-  const url = `${backendUrl}/tts/output`;
+  const url = `${backendUrl}/tts/resolve`;
   const method = 'GET';
   const fetchData = {
     text: text,
@@ -220,20 +218,16 @@ export const getTextSound = async (text, lang) => {
   }
 
   try {
-    const audioBlob = await fetchDataAsync(url, method, fetchData, false, null);
+    const data = await fetchDataAsync(url, method, fetchData);
 
     // 요청이 완료되었지만, 이미 새로운 요청이 와서 이 요청이 무효화된 경우
     if (requestId !== currentRequestId) {
       return;
     }
 
-    const audioUrl = URL.createObjectURL(audioBlob);
-    currentAudioUrl = audioUrl;
-
-    // 재생 전에 다시 한 번 확인 (새로운 요청이 왔는지)
-    if (requestId !== currentRequestId) {
-      URL.revokeObjectURL(audioUrl);
-      currentAudioUrl = null;
+    const audioUrl = data && data.url;
+    if (!audioUrl) {
+      // 캐시 미스(비로그인) 또는 응답 형식 불일치 — 음성 없이 조용히 종료
       return;
     }
 
@@ -248,10 +242,6 @@ export const getTextSound = async (text, lang) => {
         sharedAudio.removeEventListener('ended', cleanup);
         sharedAudio.removeEventListener('error', cleanup);
         if (currentCleanup === cleanup) currentCleanup = null;
-        if (currentAudioUrl === audioUrl) {
-          URL.revokeObjectURL(audioUrl);
-          currentAudioUrl = null;
-        }
         if (currentAudioResolve === resolve) {
           currentAudioResolve = null;
         }
@@ -269,9 +259,6 @@ export const getTextSound = async (text, lang) => {
     });
   } catch (error) {
     console.error('TTS 요청 실패:', error);
-    if (requestId === currentRequestId) {
-      currentAudioUrl = null;
-    }
   }
 }
 
@@ -287,10 +274,6 @@ export const stopCurrentSound = () => {
   if (currentAudioResolve) {
     currentAudioResolve();
     currentAudioResolve = null;
-  }
-  if (currentAudioUrl) {
-    URL.revokeObjectURL(currentAudioUrl);
-    currentAudioUrl = null;
   }
   currentRequestId++;
 };

@@ -1,6 +1,9 @@
 Flask==2.0.3
-openai>=1.0.0
+openai>=1.0.0,<1.55
+httpx<0.28  # openai 1.54.x 가 httpx 0.28 의 제거된 proxies 인자를 호출 → 버전 충돌 방지
 spacy>=3.5.0,<3.8.0
+kiwipiepy==0.15.2
+kiwipiepy-model==0.15.0
 Flask-Migrate==4.0.7
 gunicorn==20.1.0
 werkzeug==2.0.3 
@@ -16,6 +19,7 @@ google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.1
 google-api-python-client==2.129.0
 gTTS==2.5.3
+edge-tts==7.2.8
 firebase-admin==6.5.0
 APScheduler==3.10.4
 pandas==1.5.3

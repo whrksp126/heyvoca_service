@@ -19,144 +19,10 @@ from app.models.models import (
     UserVocaBook,
 )
 
-
-# ──────────────────────────────────────────
-# Strong 태그 삽입 헬퍼
-# ──────────────────────────────────────────
-
-_spacy_nlp = None
-_kiwi_instance = None
-
-
-def _get_spacy():
-    global _spacy_nlp
-    if _spacy_nlp is None:
-        try:
-            import spacy
-            _spacy_nlp = spacy.load('en_core_web_sm')
-        except Exception:
-            _spacy_nlp = False
-    return _spacy_nlp if _spacy_nlp is not False else None
-
-
-def _get_kiwi():
-    global _kiwi_instance
-    if _kiwi_instance is None:
-        try:
-            from kiwipiepy import Kiwi
-            _kiwi_instance = Kiwi()
-        except Exception:
-            _kiwi_instance = False
-    return _kiwi_instance if _kiwi_instance is not False else None
-
-
-def _tag_en(word, sentence):
-    """영어 예문에서 단어(활용형 포함)에 strong 태그 삽입. 실패 시 None 반환."""
-    if not word or not sentence:
-        return sentence or ''
-    nlp = _get_spacy()
-    if nlp:
-        try:
-            doc = nlp(sentence)
-            word_lower = word.lower()
-            for token in doc:
-                if token.lemma_.lower() == word_lower or token.text.lower() == word_lower:
-                    s, e = token.idx, token.idx + len(token.text)
-                    return sentence[:s] + f'<strong class="target-word">{sentence[s:e]}</strong>' + sentence[e:]
-        except Exception:
-            pass
-    # regex fallback: word + common suffixes
-    m = re.search(r'\b(' + re.escape(word) + r'\w*)\b', sentence, re.IGNORECASE)
-    if m:
-        return sentence[:m.start()] + f'<strong class="target-word">{m.group()}</strong>' + sentence[m.end():]
-    return None
-
-
-def _ko_roots(meaning):
-    """한국어 뜻에서 검색할 어근 후보 목록 반환"""
-    roots = [meaning]
-    stripped = re.sub(r'(하다|이다|되다|지다|다)$', '', meaning).strip()
-    if stripped and stripped != meaning:
-        roots.insert(0, stripped)
-    return roots
-
-
-def _tag_ko(meanings, sentence):
-    """한국어 예문에서 뜻 단어(활용형 포함)에 strong 태그 삽입. 실패 시 None 반환."""
-    if not sentence or not meanings:
-        return None
-    kiwi = _get_kiwi()
-    if kiwi:
-        try:
-            tokens = kiwi.tokenize(sentence)
-            for meaning in meanings:
-                root = re.sub(r'(하다|이다|되다|지다|다)$', '', meaning).strip()
-                if not root or len(root) < 2:
-                    continue
-                for token in tokens:
-                    if token.form == root:
-                        start = token.start
-                        end = start + token.len
-                        while end < len(sentence) and sentence[end] not in ' .,!?;:\n':
-                            end += 1
-                        return sentence[:start] + f'<strong class="target-word">{sentence[start:end]}</strong>' + sentence[end:]
-        except Exception:
-            pass
-    # 단순 문자열 검색 (GPT 호출 전 마지막 시도)
-    for meaning in meanings:
-        for root in _ko_roots(meaning):
-            if len(root) >= 2 and root in sentence:
-                idx = sentence.index(root)
-                end = idx + len(root)
-                while end < len(sentence) and sentence[end] not in ' .,!?;:\n':
-                    end += 1
-                return sentence[:idx] + f'<strong class="target-word">{sentence[idx:end]}</strong>' + sentence[end:]
-    return None
-
-
-def _tag_batch_gpt(items):
-    """
-    items: [{'word', 'meanings', 'en', 'ko'}, ...]
-    Returns: [{'en', 'ko'}, ...] 같은 순서
-    """
-    api_key = os.getenv('OPENAI_API_KEY')
-    if not api_key or not items:
-        return [{'en': it['en'], 'ko': it['ko']} for it in items]
-    try:
-        from openai import OpenAI
-        client = OpenAI(api_key=api_key)
-        input_data = [
-            {'i': i, 'word': it['word'], 'meanings': it['meanings'],
-             'en': it['en'], 'ko': it['ko']}
-            for i, it in enumerate(items)
-        ]
-        prompt = (
-            '다음 영어 단어와 예문 목록에서, 영어 예문에는 해당 단어(활용형 포함)에, '
-            '한국어 예문에는 해당 단어의 한국어 뜻(활용형 포함)에 '
-            '<strong class="target-word"> 태그를 정확히 1개 삽입해주세요.\n\n'
-            + json.dumps(input_data, ensure_ascii=False, indent=2)
-            + '\n\n출력: 인덱스 i 순서대로 JSON 배열만. 형식: [{"i":0,"en":"...","ko":"..."},...]\n다른 텍스트 없이 JSON만 출력.'
-        )
-        response = client.chat.completions.create(
-            model='gpt-4o-mini',
-            messages=[{'role': 'user', 'content': prompt}],
-            temperature=0,
-            max_tokens=8192,
-        )
-        text = response.choices[0].message.content.strip()
-        m = re.search(r'\[.*\]', text, re.DOTALL)
-        if m:
-            text = m.group(0)
-        raw = json.loads(text)
-        indexed = {r['i']: r for r in raw}
-        return [
-            {'en': indexed[i]['en'], 'ko': indexed[i]['ko']}
-            if i in indexed else {'en': items[i]['en'], 'ko': items[i]['ko']}
-            for i in range(len(items))
-        ]
-    except Exception as e:
-        print(f'[GPT tag error] {e}')
-        return [{'en': it['en'], 'ko': it['ko']} for it in items]
+# Strong 태그 삽입 헬퍼는 app/utils/example_tagging.py 로 이동 (voca_books 와 공용)
+from app.utils.example_tagging import (
+    _tag_en, _tag_ko, _tag_batch_gpt, tag_example_pair, apply_emphasis, STRONG,
+)
 
 
 def admin_required(f):
@@ -869,12 +735,18 @@ def get_voca_list():
             mo = VocaMeaning.query.get(mm.meaning_id)
             if mo:
                 meanings.append(mo.meaning)
+        examples = []
+        for em in VocaExampleMap.query.filter_by(voca_id=v.id).all():
+            eo = VocaExample.query.get(em.example_id)
+            if eo:
+                examples.append({'exam_en': eo.exam_en or '', 'exam_ko': eo.exam_ko or ''})
         vocas.append({
             'id': v.id,
             'word': v.word,
             'pronunciation': v.pronunciation,
             'verb_forms': v.verb_forms,
             'meanings': meanings,
+            'examples': examples,
         })
 
     return jsonify({'code': 200, 'data': {
@@ -946,10 +818,18 @@ def update_voca(voca_id):
             db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
 
     if 'examples' in data:
+        # 저장 시 강조 안 된 예문 자동 태깅 (spacy/kiwi 1차 → 잔여분 GPT)
+        if 'meanings' in data:
+            ex_meanings = [m.get('meaning', '').strip() for m in data.get('meanings', [])
+                           if isinstance(m, dict) and m.get('meaning', '').strip()]
+        else:
+            ex_meanings = [mm.meaning.meaning for mm in voca.voca_meanings]
+        apply_emphasis(voca.word, ex_meanings, data['examples'], 'exam_en', 'exam_ko')
+
         VocaExampleMap.query.filter_by(voca_id=voca_id).delete()
         for ed in data['examples']:
-            exam_en = ed.get('exam_en', '').strip()
-            exam_ko = ed.get('exam_ko', '').strip()
+            exam_en = (ed.get('exam_en') or '').strip()
+            exam_ko = (ed.get('exam_ko') or '').strip()
             if not exam_en and not exam_ko:
                 continue
             ve = VocaExample(exam_en=exam_en or None, exam_ko=exam_ko or None)
@@ -958,7 +838,13 @@ def update_voca(voca_id):
             db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
 
     db.session.commit()
-    return jsonify({'code': 200, 'data': {'success': True}})
+
+    # 저장된(태깅 반영된) 예문을 응답으로 반환 → 프론트가 즉시 강조 결과 표시
+    saved_examples = [
+        {'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
+        for em in voca.voca_examples
+    ]
+    return jsonify({'code': 200, 'data': {'success': True, 'examples': saved_examples}})
 
 
 @admin_bp.route('/voca/<int:voca_id>/hide', methods=['PATCH'])
@@ -977,6 +863,56 @@ def show_voca(voca_id):
     voca.is_active = True
     db.session.commit()
     return jsonify({'code': 200, 'data': {'success': True}})
+
+
+@admin_bp.route('/voca/<int:voca_id>/tag_examples', methods=['POST'])
+@admin_required
+def tag_voca_examples(voca_id):
+    """사전 단어(Voca) 예문에 <strong class="target-word"> 자동 삽입 후 미리보기 반환.
+    저장은 별도 엔드포인트 없이 기존 PATCH /voca/<id> 로 처리한다.
+    spacy/kiwipiepy 1차 처리 → 실패 잔여분만 GPT 배치."""
+    try:
+        voca = Voca.query.get_or_404(voca_id)
+        word = voca.word
+        meanings = [mm.meaning.meaning for mm in voca.voca_meanings]
+
+        results = []
+        gpt_batch = []
+        gpt_refs = []  # (result_idx, mode) mode: 'en'|'ko'|'both'
+
+        for em in voca.voca_examples:
+            ex = em.example
+            en_orig = ex.exam_en or ''
+            ko_orig = ex.exam_ko or ''
+            tagged_en, tagged_ko, need_gpt_en, need_gpt_ko = tag_example_pair(
+                word, meanings, en_orig, ko_orig)
+
+            ri = len(results)
+            if need_gpt_en or need_gpt_ko:
+                gpt_batch.append({'word': word, 'meanings': meanings, 'en': en_orig, 'ko': ko_orig})
+                mode = 'both' if (need_gpt_en and need_gpt_ko) else ('en' if need_gpt_en else 'ko')
+                gpt_refs.append((ri, mode))
+
+            results.append({'id': ex.id, 'exam_en': tagged_en, 'exam_ko': tagged_ko})
+
+        # GPT fallback: 30개씩 배치 처리
+        BATCH = 30
+        for start in range(0, len(gpt_batch), BATCH):
+            chunk = gpt_batch[start:start + BATCH]
+            refs = gpt_refs[start:start + BATCH]
+            tagged_chunk = _tag_batch_gpt(chunk)
+            for j, (ri, mode) in enumerate(refs):
+                if mode in ('both', 'en'):
+                    results[ri]['exam_en'] = tagged_chunk[j]['en']
+                if mode in ('both', 'ko'):
+                    results[ri]['exam_ko'] = tagged_chunk[j]['ko']
+
+        return jsonify({'code': 200, 'data': {'examples': results}})
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': str(e)}), 500
 
 
 # ──────────────────────────────────────────
@@ -1057,6 +993,69 @@ def tag_admin_voca_book_examples(admin_voca_book_id):
 
         return jsonify({'code': 200, 'data': {'results': results}})
 
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+@admin_bp.route('/admin_voca_book/tag_examples_from_excel', methods=['POST'])
+def tag_examples_from_excel():
+    """[임시] /app/heyvoca_skincare_vocab.xlsx 데이터로 strong 태그 삽입 후 결과를 엑셀에 저장"""
+    try:
+        xlsx_path = '/app/heyvoca_skincare_vocab.xlsx'
+        df = pd.read_excel(xlsx_path)
+        # 컬럼 순서: 단어, 뜻, 영어 예문, 한국어 예문
+
+        results = []
+        gpt_batch = []
+        gpt_refs = []  # (result_idx, mode)
+        STRONG = '<strong class="target-word">'
+
+        for i, row in df.iterrows():
+            word = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ''
+            meaning_raw = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ''
+            en_orig = str(row.iloc[2]).strip() if pd.notna(row.iloc[2]) else ''
+            ko_orig = str(row.iloc[3]).strip() if pd.notna(row.iloc[3]) else ''
+            meanings = [m.strip() for m in re.split(r'[,，]', meaning_raw) if m.strip()]
+
+            tagged_en = _tag_en(word, en_orig) if en_orig and STRONG not in en_orig else en_orig
+            tagged_ko = _tag_ko(meanings, ko_orig) if ko_orig and STRONG not in ko_orig else ko_orig
+
+            need_gpt_en = tagged_en is None and bool(en_orig)
+            need_gpt_ko = tagged_ko is None and bool(ko_orig)
+
+            ri = len(results)
+            if need_gpt_en or need_gpt_ko:
+                gpt_batch.append({'word': word, 'meanings': meanings, 'en': en_orig, 'ko': ko_orig})
+                mode = 'both' if (need_gpt_en and need_gpt_ko) else ('en' if need_gpt_en else 'ko')
+                gpt_refs.append((ri, mode))
+
+            results.append({
+                'word': word,
+                'en': tagged_en if tagged_en is not None else en_orig,
+                'ko': tagged_ko if tagged_ko is not None else ko_orig,
+                'gpt_used': False,
+            })
+
+        BATCH = 30
+        for start in range(0, len(gpt_batch), BATCH):
+            chunk = gpt_batch[start:start + BATCH]
+            refs = gpt_refs[start:start + BATCH]
+            tagged_chunk = _tag_batch_gpt(chunk)
+            for j, (ri, mode) in enumerate(refs):
+                if mode in ('both', 'en'):
+                    results[ri]['en'] = tagged_chunk[j]['en']
+                if mode in ('both', 'ko'):
+                    results[ri]['ko'] = tagged_chunk[j]['ko']
+                results[ri]['gpt_used'] = True
+
+        df['태그된 영어 예문'] = [r['en'] for r in results]
+        df['태그된 한국어 예문'] = [r['ko'] for r in results]
+        df['gpt_used'] = [r['gpt_used'] for r in results]
+        df.to_excel(xlsx_path, index=False)
+
+        return jsonify({'code': 200, 'data': {'total': len(results), 'results': results}})
     except Exception as e:
         import traceback
         traceback.print_exc()

@@ -18,6 +18,7 @@ from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Books
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
 from app.routes.user_voca_book import parse_quizlet_pdf
+from app.utils.example_tagging import tag_example_pair, _tag_batch_gpt, STRONG
 from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
@@ -161,6 +162,49 @@ def read_csv_with_encoding_fallback(file_bytes):
     raise last_error
 
 
+def _apply_emphasis_to_items(parsed_items):
+    """단어장 추가분(parsed_items) 전체의 예문에 강조(<strong class="target-word">)를 일괄 적용한다.
+
+    예문 키는 사용자단 규칙 {origin: 영어, meaning: 한국어}.
+    1) 이미 강조된(STRONG 포함) 예문은 skip
+    2) spacy/kiwi 로 1차 처리 (무료)
+    3) 1차 실패 잔여분만 모아 GPT 배치(30개)로 보정 — GPT 호출 최소화
+
+    parsed_items 의 examples 딕셔너리를 in-place 로 수정한다.
+    """
+    gpt_batch = []
+    gpt_refs = []  # (ex_dict, mode) mode: 'en'|'ko'|'both'
+
+    for item in parsed_items:
+        word = item.get('origin', '') or ''
+        # _tag_ko 는 문자열 리스트를 기대 → 문자열만 추림 (객체형 meanings 방어)
+        meanings = [m for m in (item.get('meanings') or []) if isinstance(m, str)]
+        for ex in item.get('examples') or []:
+            en_orig = ex.get('origin', '') or ''
+            ko_orig = ex.get('meaning', '') or ''
+            if not en_orig and not ko_orig:
+                continue
+            tagged_en, tagged_ko, need_gpt_en, need_gpt_ko = tag_example_pair(
+                word, meanings, en_orig, ko_orig)
+            ex['origin'] = tagged_en
+            ex['meaning'] = tagged_ko
+            if need_gpt_en or need_gpt_ko:
+                mode = 'both' if (need_gpt_en and need_gpt_ko) else ('en' if need_gpt_en else 'ko')
+                gpt_batch.append({'word': word, 'meanings': meanings, 'en': en_orig, 'ko': ko_orig})
+                gpt_refs.append((ex, mode))
+
+    BATCH = 30
+    for start in range(0, len(gpt_batch), BATCH):
+        chunk = gpt_batch[start:start + BATCH]
+        refs = gpt_refs[start:start + BATCH]
+        tagged_chunk = _tag_batch_gpt(chunk)
+        for j, (ex, mode) in enumerate(refs):
+            if mode in ('both', 'en'):
+                ex['origin'] = tagged_chunk[j]['en']
+            if mode in ('both', 'ko'):
+                ex['meaning'] = tagged_chunk[j]['ko']
+
+
 def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     """
     파싱된 단어 리스트를 UserVoca / UserVocaBookMap에 벌크로 저장한다.
@@ -169,6 +213,9 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     """
     if not parsed_items:
         return 0
+
+    # 예문 강조 자동 생성 (merge 이전 시점에 처리해야 origin/meaning 키 기준 중복제거가 정확)
+    _apply_emphasis_to_items(parsed_items)
 
     origins = [item['origin'] for item in parsed_items if item.get('origin')]
     existing_vocas = db.session.query(UserVoca).filter(

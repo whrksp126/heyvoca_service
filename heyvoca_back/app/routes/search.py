@@ -346,8 +346,8 @@ def search_bookstore_all():
             COALESCE(bc.sort_order, 999) AS category_sort_order
         FROM heyvoca_dict.bookstore bs
         JOIN heyvoca_dict.admin_voca_book avb ON bs.admin_voca_book_id = avb.id
-        LEFT JOIN heyvoca_dict.bookstore_category bc ON bc.name = bs.category
-        GROUP BY bs.id
+        LEFT JOIN heyvoca_dict.bookstore_category bc ON bc.category = bs.category
+        GROUP BY bs.id, bc.sort_order
         ORDER BY category_sort_order ASC, bs.id ASC
     """)
 

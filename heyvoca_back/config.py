@@ -36,13 +36,29 @@ class Config:
         'dict': os.getenv('DATABASE_URL_DICT', SQLALCHEMY_DATABASE_URI),
     }
 
-    # MinIO (사전 dump 저장소)
+    # MinIO (heyvoca 통합 버킷 — dict/ dump, tts/ 음성 등 폴더로 구분)
     MINIO_ENDPOINT = os.getenv('MINIO_ENDPOINT', 'https://objectstore.ghmate.com')
-    MINIO_BUCKET = os.getenv('MINIO_BUCKET', 'heyvoca-dict')
+    MINIO_BUCKET = os.getenv('MINIO_BUCKET', 'heyvoca')
     MINIO_DICT_RO_KEY = os.getenv('MINIO_DICT_RO_KEY')
     MINIO_DICT_RO_SECRET = os.getenv('MINIO_DICT_RO_SECRET')
     MINIO_DICT_RW_KEY = os.getenv('MINIO_DICT_RW_KEY')
     MINIO_DICT_RW_SECRET = os.getenv('MINIO_DICT_RW_SECRET')
+
+    # TTS (외부 AI 음성 + objectstore 캐싱)
+    #   provider/model/voice는 캐시 object key에 인코딩되어 교체 시 충돌 없음(다국어/다모델 확장).
+    #   음성 저장은 위 MINIO_BUCKET(heyvoca)의 tts/ prefix, 기존 dict RW 키 재사용.
+    TTS_PROVIDER = os.getenv('TTS_PROVIDER', 'elevenlabs')      # elevenlabs | gtts
+    TTS_MODEL = os.getenv('TTS_MODEL', 'eleven_flash_v2_5')
+    TTS_VOICE_EN = os.getenv('TTS_VOICE_EN')                    # ElevenLabs voice_id (영어)
+    TTS_VOICE_KO = os.getenv('TTS_VOICE_KO')                    # ElevenLabs voice_id (한국어)
+    ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
+    ELEVENLABS_BASE_URL = os.getenv('ELEVENLABS_BASE_URL', 'https://api.elevenlabs.io')
+    TTS_PREFIX = os.getenv('TTS_PREFIX', 'tts')                 # object key 최상위 폴더
+    TTS_PRESIGN_TTL = int(os.getenv('TTS_PRESIGN_TTL', 3600))   # presigned GET URL 만료(초)
+    TTS_MAX_CHARS = int(os.getenv('TTS_MAX_CHARS', 500))        # 생성 허용 텍스트 길이 상한
+    TTS_GENERATE_REQUIRE_DICT = os.getenv('TTS_GENERATE_REQUIRE_DICT', 'true').lower() == 'true'
+    TTS_RATE_LIMIT = os.getenv('TTS_RATE_LIMIT', '30 per minute')  # 생성(miss) 경로 rate limit
+    TTS_DAILY_GEN_CAP = int(os.getenv('TTS_DAILY_GEN_CAP', 1000))  # user별 일일 생성 상한(0=무제한)
 
     # 사전 자동 갱신 토글
     APP_ENV = os.getenv('APP_ENV', 'local')  # local/dev/stg/prod
