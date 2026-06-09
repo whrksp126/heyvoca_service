@@ -8,6 +8,7 @@
 Blueprint prefix: /admin/voca-books
 """
 import json
+import logging
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify
@@ -306,7 +307,8 @@ def patch_voca_book(book_id):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+            logging.getLogger(__name__).error('book 수정 DB 오류', exc_info=True)
+            return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     bookstore = Bookstore.query.filter_by(admin_voca_book_id=book_id).first()
     return jsonify({'code': 200, 'data': _book_to_dict(book, bookstore)}), 200
@@ -406,7 +408,8 @@ def patch_word(book_id, map_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+        logging.getLogger(__name__).error('word 수정 DB 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     voca = m.voca
     return jsonify({
@@ -528,7 +531,8 @@ def add_word(book_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+        logging.getLogger(__name__).error('word 추가 DB 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     return jsonify({
         'code': 200,
@@ -567,7 +571,8 @@ def delete_word(book_id, map_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+        logging.getLogger(__name__).error('word 삭제 DB 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     return jsonify({'code': 200, 'data': {'deleted_map_id': map_id}}), 200
 
@@ -639,7 +644,8 @@ def toggle_bookstore(book_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+        logging.getLogger(__name__).error('bookstore 토글 DB 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     return jsonify({
         'code': 200,
@@ -696,7 +702,8 @@ def patch_bookstore(book_id):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            return jsonify({'code': 500, 'message': f'DB 오류: {e}'}), 500
+            logging.getLogger(__name__).error('bookstore 수정 DB 오류', exc_info=True)
+            return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
 
     return jsonify({'code': 200, 'data': _bookstore_to_dict(bs)}), 200
 

@@ -21,8 +21,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JSON_AS_ASCII = False
 
-    # JWT
-    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key')
+    # JWT — 시크릿은 환경변수 필수. 하드코딩 디폴트('dev-key') 제거.
+    # prod/staging은 create_app()에서 미설정 시 기동 중단(fail-fast). local/dev는 제외.
+    SECRET_KEY = os.getenv('SECRET_KEY')
     ACCESS_SECRET = os.getenv('ACCESS_SECRET')
     REFRESH_SECRET = os.getenv('REFRESH_SECRET')
     ACCESS_TTL_SECONDS = int(os.getenv('ACCESS_TTL_SECONDS', 3600))
@@ -34,6 +35,16 @@ class Config:
     # 모델에 __bind_key__ = 'dict'이 설정된 클래스가 이 connection 사용
     SQLALCHEMY_BINDS = {
         'dict': os.getenv('DATABASE_URL_DICT', SQLALCHEMY_DATABASE_URI),
+    }
+
+    # 커넥션 풀 — 유휴 연결 stale 방지(pre_ping)로 'MySQL server has gone away' 제거,
+    # 주기적 재활용(recycle). MySQL 기본 max_connections(151) 대비
+    # 워커4 × (pool_size10 + overflow5)=60 으로 여유.
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_size': 10,
+        'max_overflow': 5,
+        'pool_recycle': 1800,
+        'pool_pre_ping': True,
     }
 
     # MinIO (heyvoca 통합 버킷 — dict/ dump, tts/ 음성 등 폴더로 구분)

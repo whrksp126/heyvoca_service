@@ -1,3 +1,5 @@
+import logging
+
 from flask import render_template, redirect, url_for, request, session, jsonify, g
 from app import db
 from app.routes import mainpage_bp
@@ -656,9 +658,10 @@ def api_get_active_products():
         }), 200
         
     except Exception as e:
+        logging.getLogger(__name__).error('get_products 오류', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         }), 500
 
 

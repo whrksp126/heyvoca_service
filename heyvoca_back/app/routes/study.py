@@ -1,4 +1,5 @@
 import json
+import logging
 import datetime as dt
 from uuid import UUID, uuid4
 
@@ -147,7 +148,8 @@ def create_session():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'세션 생성 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('세션 생성 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '세션 생성에 실패했습니다.'}), 500
 
     return jsonify({'code': 201, 'data': {'session_id': str(session.id)}}), 201
 
@@ -353,7 +355,8 @@ def post_study_log():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'학습 로그 저장 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('학습 로그 저장 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '학습 로그 저장에 실패했습니다.'}), 500
 
     # 학습 완료 후 recommend pool 캐시 무효화 (stale 방지)
     try:
@@ -552,7 +555,8 @@ def get_recommend():
     try:
         pool = build_candidate_pool(user_id, book_ids)
     except Exception as e:
-        return jsonify({'code': 500, 'message': f'후보 풀 빌드 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('후보 풀 빌드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
     # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
     if target_states:
@@ -587,7 +591,8 @@ def get_recommend():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'세션 생성 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('세션 생성 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '세션 생성에 실패했습니다.'}), 500
 
     # ── 응답 구성 ──
     items_response = []
@@ -679,7 +684,8 @@ def finish_session(session_id):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'세션 종료 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('세션 종료 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '세션 종료에 실패했습니다.'}), 500
 
     return jsonify({
         'code': 200,

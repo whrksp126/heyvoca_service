@@ -1,3 +1,5 @@
+import logging
+
 from flask import request, jsonify
 from app.routes import ocr_bp
 from app import db
@@ -17,15 +19,28 @@ def receive_words():
                 'code': 400,
                 'message': 'words 필드가 없습니다.'
             })
-        
-        # 전처리: words[].text를 전부 소문자로 변경
+
+        # DoS 방지 — 배열 타입/개수 상한(OCR 한 화면 단어 수는 실사용상 수십 개라 300은 충분한 여유)
+        # + 단어 길이 상한(Voca.word 컬럼과 정합). 초과 시 거부.
+        MAX_OCR_WORDS = 300
+        MAX_WORD_LEN = 255
+        if not isinstance(words, list):
+            return jsonify({'code': 400, 'message': 'words는 배열이어야 합니다.'})
+        if len(words) > MAX_OCR_WORDS:
+            return jsonify({
+                'code': 400,
+                'message': f'단어는 최대 {MAX_OCR_WORDS}개까지 처리할 수 있습니다.'
+            })
+
+        # 전처리: text 소문자화(문자열만) + 추출. 과도하게 긴 값은 제외.
+        word_texts = []
         for word in words:
-            if isinstance(word, dict) and 'text' in word:
-                word['text'] = word['text'].lower()
-        
-        # words[].text 추출
-        word_texts = [word.get('text') for word in words if isinstance(word, dict) and word.get('text')]
-        
+            if isinstance(word, dict) and isinstance(word.get('text'), str):
+                t = word['text'].lower()
+                word['text'] = t
+                if t and len(t) <= MAX_WORD_LEN:
+                    word_texts.append(t)
+
         if not word_texts:
             return jsonify({
                 'code': 400,
@@ -84,8 +99,9 @@ def receive_words():
         })
         
     except Exception as e:
+        logging.getLogger(__name__).error('receive_words 오류', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         })
 

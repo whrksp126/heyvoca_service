@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, jsonify, request, g
 from datetime import datetime
 import requests
@@ -146,15 +148,17 @@ def verify_purchase():
             
         except Exception as e:
             db.session.rollback()
+            logging.getLogger(__name__).error('구매 처리 오류 (verify)', exc_info=True)
             return jsonify({
                 'code': 500,
-                'message': f'구매 처리 중 오류가 발생했습니다: {str(e)}'
+                'message': '구매 처리 중 오류가 발생했습니다.'
             }), 500
 
     except Exception as e:
+        logging.getLogger(__name__).error('서버 오류 (verify)', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         }), 500
 
 
@@ -209,9 +213,10 @@ def get_purchase_history():
         }), 200
         
     except Exception as e:
+        logging.getLogger(__name__).error('구매 내역 조회 오류', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         }), 500
 
 
@@ -250,9 +255,10 @@ def get_products():
         }), 200
         
     except Exception as e:
+        logging.getLogger(__name__).error('상품 목록 조회 오류', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         }), 500
 
 
@@ -319,15 +325,17 @@ def purchase_book():
 
         except Exception as e:
             db.session.rollback()
+            logging.getLogger(__name__).error('구매 처리 오류 (purchase_book)', exc_info=True)
             return jsonify({
                 'code': 500,
-                'message': f'구매 처리 중 오류가 발생했습니다: {str(e)}'
+                'message': '구매 처리 중 오류가 발생했습니다.'
             }), 500
 
     except Exception as e:
+        logging.getLogger(__name__).error('서버 오류 (purchase_book)', exc_info=True)
         return jsonify({
             'code': 500,
-            'message': f'서버 오류가 발생했습니다: {str(e)}'
+            'message': '서버 오류가 발생했습니다.'
         }), 500
 
 

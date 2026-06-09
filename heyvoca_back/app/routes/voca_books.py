@@ -28,6 +28,10 @@ from app.services.fsrs.state import (
 # 50자 초과는 "문장이 word로 매핑됐다"고 간주하고 즉시 거부한다.
 WORD_MAX_LEN = 50
 
+# 업로드 DoS 방지 — 단어장 파일/행 수 상한. 실사용(수백~수천 단어, 1~2MB) 대비 큰 여유.
+UPLOAD_MAX_BYTES = 5 * 1024 * 1024   # 5MB
+UPLOAD_MAX_ROWS = 20000              # 파싱 행 수 상한
+
 def is_purchased_book(voca_book):
     """구매한 단어장(bookstore_id가 NULL이 아닌 단어장)인지 여부."""
     return voca_book is not None and voca_book.bookstore_id is not None
@@ -614,10 +618,14 @@ def upload_excel_voca_book():
     try:
         # Excel 파일 파싱
         file_bytes = file.read()
+        if len(file_bytes) > UPLOAD_MAX_BYTES:
+            return jsonify({'code': 400, 'message': '파일 크기는 5MB 이하만 가능합니다.'}), 400
         df = pd.read_excel(io.BytesIO(file_bytes), header=None)
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
+        if len(df) > UPLOAD_MAX_ROWS:
+            return jsonify({'code': 400, 'message': f'행은 최대 {UPLOAD_MAX_ROWS}개까지 처리할 수 있습니다.'}), 400
 
         # 1행은 반드시 헤더(W, M 필수 / EE, EK 선택)
         first_row_raw = df.iloc[0].tolist()
@@ -750,6 +758,8 @@ def upload_csv_voca_book():
     try:
         # CSV 파일 파싱 (UTF-8 → CP949 순서로 인코딩 fallback)
         file_bytes = file.read()
+        if len(file_bytes) > UPLOAD_MAX_BYTES:
+            return jsonify({'code': 400, 'message': '파일 크기는 5MB 이하만 가능합니다.'}), 400
         try:
             df = read_csv_with_encoding_fallback(file_bytes)
         except (UnicodeDecodeError, UnicodeError):
@@ -760,6 +770,8 @@ def upload_csv_voca_book():
 
         if df.empty:
             return jsonify({'code': 400, 'message': '파일에 데이터가 없습니다.'}), 400
+        if len(df) > UPLOAD_MAX_ROWS:
+            return jsonify({'code': 400, 'message': f'행은 최대 {UPLOAD_MAX_ROWS}개까지 처리할 수 있습니다.'}), 400
 
         # 1행은 반드시 헤더(W, M 필수 / EE, EK 선택)
         first_row_raw = df.iloc[0].tolist()

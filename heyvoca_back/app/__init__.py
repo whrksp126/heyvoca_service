@@ -103,13 +103,12 @@ def create_app():
       "http://localhost:4321",
   ]
 
-  # local / dev 환경에서만 내부망 IP 대역 허용
+  # local / dev 환경에서만 localhost 임의 포트 허용. 광역 사설망 대역(192.168/8, 10/8)은
+  # 제거 — 특정 LAN IP는 아래 FRONT_END_URL(local-setup이 현재 IP로 설정)로 정확히 커버됨.
   if flask_config in ('local', 'development'):
       cors_origins += [
           re.compile(r"^http://localhost:\d+$"),
           re.compile(r"^http://127\.0\.0\.1:\d+$"),
-          re.compile(r"^http://192\.168\.\d+\.\d+:\d+$"),
-          re.compile(r"^http://10\.\d+\.\d+\.\d+:\d+$"),
       ]
 
   # .env의 FRONT_END_URL이 있으면 추가
@@ -127,11 +126,27 @@ def create_app():
   elif config_class == 'local':
     app.config.from_object(LocalConfig)
   else:
-    app.config.from_object(DevelopmentConfig) 
+    app.config.from_object(DevelopmentConfig)
+
+  # 시크릿 fail-fast — prod/staging에서 JWT 시크릿이 비어 있으면 위조 가능한 약한 키로
+  # 기동되는 것을 막기 위해 즉시 중단. 전 환경 .env에 키 존재 확인됨(정상 배포엔 무영향).
+  # local/dev는 개발 편의상 검사 제외.
+  if config_class in ('production', 'staging'):
+    _missing_secrets = [k for k in ('SECRET_KEY', 'ACCESS_SECRET', 'REFRESH_SECRET')
+                        if not app.config.get(k)]
+    if _missing_secrets:
+      raise RuntimeError(
+          f"필수 시크릿 환경변수 누락: {_missing_secrets} — '{config_class}' 기동 중단. "
+          f".env에 해당 키를 설정하세요."
+      )
 
   app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
   app.config['JSON_AS_ASCII'] = False
+
+  # 요청 본문 크기 백스톱 — 거대 페이로드를 프레임워크 레벨에서 차단(413).
+  # 단어장 업로드(≤5MB)·OCR JSON 등 실사용보다 충분히 큰 32MB. nginx(300m)보다 타이트.
+  app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024
 
   # Redis 캐시 설정
   _redis_host = os.getenv('REDIS_HOST', 'redis')

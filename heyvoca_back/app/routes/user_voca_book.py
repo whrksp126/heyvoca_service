@@ -124,7 +124,7 @@ def create_user_voca_book():
     except Exception as e:
         print("###error : ",e)
         db.session.rollback()
-        return jsonify({'code': 400, 'message': f'단어장 생성 중 오류가 발생했습니다: {str(e)}'})
+        return jsonify({'code': 400, 'message': '단어장 생성 중 오류가 발생했습니다.'})
 
 
 # 단어장 수정
@@ -341,7 +341,7 @@ def upload_user_voca_book():
         print(f"###user_id 변환 실패: {e}")
         return jsonify({
             'code': 400, 
-            'message': f'사용자 ID 변환 실패: {str(e)}'
+            'message': '사용자 ID 변환에 실패했습니다.'
         }), 400
 
     try:
@@ -433,7 +433,7 @@ def upload_user_voca_book():
     except Exception as e:
         print("###error : ",e)
         db.session.rollback()
-        return jsonify({'code': 400, 'message': f'단어장 업로드 중 오류가 발생했습니다: {str(e)}'})
+        return jsonify({'code': 400, 'message': '단어장 업로드 중 오류가 발생했습니다.'})
 
 
 # ===== 퀴즐렛 PDF 업로드 =====

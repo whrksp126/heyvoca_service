@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 import json
@@ -283,7 +284,8 @@ def create_voca_book():
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('voca_book 업로드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/voca_book/<int:voca_book_id>', methods=['PATCH'])
@@ -307,7 +309,8 @@ def update_voca_book(voca_book_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('voca_book 수정 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/voca_book/<int:voca_book_id>/words', methods=['GET'])
@@ -385,7 +388,8 @@ def add_word_to_voca_book(voca_book_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('voca_book 단어 추가 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/voca_book/<int:voca_book_id>/word/<int:voca_id>', methods=['DELETE'])
@@ -408,7 +412,8 @@ def remove_word_from_voca_book(voca_book_id, voca_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('voca_book 단어 제거 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 # ──────────────────────────────────────────
@@ -477,7 +482,8 @@ def create_admin_voca_book():
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('admin_voca_book 업로드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>', methods=['PATCH'])
@@ -501,7 +507,8 @@ def update_admin_voca_book(admin_voca_book_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('admin_voca_book 수정 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/words', methods=['GET'])
@@ -635,7 +642,8 @@ def create_admin_voca_book_from_ai():
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('admin_voca_book JSON 업로드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/word', methods=['POST'])
@@ -686,7 +694,8 @@ def add_word_to_admin_voca_book(admin_voca_book_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('admin_voca_book 단어 추가 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/word/<int:voca_id>', methods=['DELETE'])
@@ -709,7 +718,8 @@ def remove_word_from_admin_voca_book(admin_voca_book_id, voca_id):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('admin_voca_book 단어 제거 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 # ──────────────────────────────────────────
@@ -912,7 +922,7 @@ def tag_voca_examples(voca_id):
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 # ──────────────────────────────────────────
@@ -996,7 +1006,7 @@ def tag_admin_voca_book_examples(admin_voca_book_id):
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/tag_examples_from_excel', methods=['POST'])
@@ -1059,7 +1069,7 @@ def tag_examples_from_excel():
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/save_tagged_examples', methods=['PATCH'])
@@ -1081,7 +1091,8 @@ def save_tagged_examples(admin_voca_book_id):
         return jsonify({'code': 200, 'data': {'success': True}})
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': str(e)}), 500
+        logging.getLogger(__name__).error('save_tagged_examples 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
 
 # ──────────────────────────────────────────

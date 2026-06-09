@@ -1,4 +1,5 @@
 import json
+import logging
 import re
 import os
 from flask import render_template, redirect, url_for, request, session, jsonify, g
@@ -148,17 +149,27 @@ def search_word_en():
 @search_bp.route('/partial/ko', methods=['GET'])
 def search_word_korean():
     partial_word = request.args.get('word')
-    word_split = list(partial_word) if partial_word else [] # 한 글자씩 담기
 
     if not partial_word:
         return jsonify({'code': 400, 'message': '잘못된 요청입니다.'}), 400
 
+    # 입력 검증 — 한글 음절/초성/공백만 허용(검색 의미상 충분). 정규식 메타문자 등은
+    # REGEXP 패턴을 깨뜨려 DB 오류를 유발할 수 있으므로 사전 차단하고, 길이도 상한.
+    if len(partial_word) > 20 or not all(
+        is_hangul(c) or is_initial(c) or c.isspace() for c in partial_word
+    ):
+        return jsonify({'code': 400, 'message': '잘못된 요청입니다.'}), 400
+
+    word_split = list(partial_word) # 한 글자씩 담기
     first_char = word_split[0]
     last_char = word_split[-1]
 
     if identify_character(first_char) == '초성':
-        # 전체 초성인 경우
-        regex_pattern = '^' + ''.join(get_unicode_range_for_initial(w) for w in word_split)
+        # 전체 초성인 경우 (초성이 아닌 글자가 섞이면 해당 글자는 그대로 escape — ValueError 방지)
+        regex_pattern = '^' + ''.join(
+            get_unicode_range_for_initial(w) if is_initial(w) else re.escape(w)
+            for w in word_split
+        )
     elif identify_character(first_char) == '한글' and identify_character(last_char) == '초성':
         # 마지막 글자만 초성일 경우
         regex_pattern = '^' + re.escape(''.join(partial_word[:-1])) + get_unicode_range_for_initial(last_char)
@@ -399,7 +410,8 @@ def search_bookstore_recommend():
             limit=limit,
         )
     except Exception as e:
-        return jsonify({'code': 500, 'message': f'서점 추천 생성 실패: {str(e)}'}), 500
+        logging.getLogger(__name__).error('서점 추천 생성 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
     return jsonify({'code': 200, 'data': result}), 200
 

@@ -1,3 +1,5 @@
+import logging
+
 from flask import render_template, redirect, url_for, request, session, jsonify, send_file, send_from_directory
 from app import db
 from app.routes import fcm_bp
@@ -57,15 +59,17 @@ def send_notification_test():
         response = messaging.send(message)
         return jsonify({'success': True, 'message_id': response}), 200
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logging.getLogger(__name__).error('FCM 메시지 전송 오류', exc_info=True)
+        return jsonify({'success': False, 'error': '서버 오류가 발생했습니다.'}), 500
     
 
 import threading
 @fcm_bp.route('/get_token', methods=['POST'])
 @jwt_required
 def get_token():
-    # 인증된 사용자라면 사용자 ID 기반으로 토큰 생성
-    user_id = getattr(g, 'user_id', None) or request.json.get('user_id')
+    # 인증된 사용자의 ID만 사용 (@jwt_required가 g.user_id 보장).
+    # 클라이언트 body의 user_id 폴백은 IDOR 위험이라 제거.
+    user_id = g.user_id
     registration_token = request.json.get('token')
 
     message = messaging.Message(

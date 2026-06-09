@@ -1,5 +1,6 @@
 import json
 import datetime
+import logging
 from flask import request, jsonify, g
 from uuid import UUID
 
@@ -186,7 +187,8 @@ def create_voca_index():
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어 생성 중 오류가 발생했습니다: {str(e)}'}), 500
+        logging.getLogger(__name__).error('단어 생성 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '단어 생성 중 오류가 발생했습니다.'}), 500
 
 
 # 사용자 단어장 단어 수정 (meanings/examples)
@@ -246,7 +248,8 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어 수정 중 오류가 발생했습니다: {str(e)}'}), 500
+        logging.getLogger(__name__).error('단어 수정 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '단어 수정 중 오류가 발생했습니다.'}), 500
 
 
 # 사용자 사전 단어 전체 삭제
@@ -288,7 +291,8 @@ def delete_voca_index(vocaIndexId):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어 삭제 중 오류가 발생했습니다: {str(e)}'}), 500
+        logging.getLogger(__name__).error('단어 삭제 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '단어 삭제 중 오류가 발생했습니다.'}), 500
 
 
 # 사용자 단어장 단어 연결 (이미 존재하는 단어를 단어장에 추가)
@@ -355,7 +359,8 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'단어 연결 중 오류가 발생했습니다: {str(e)}'}), 500
+        logging.getLogger(__name__).error('단어 연결 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '단어 연결 중 오류가 발생했습니다.'}), 500
 
 
 
@@ -404,4 +409,5 @@ def delete_voca_index_book(vocaIndexId, vocaBookId):
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({'code': 500, 'message': f'삭제 중 오류가 발생했습니다: {str(e)}'}), 500
+        logging.getLogger(__name__).error('삭제 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '삭제 중 오류가 발생했습니다.'}), 500

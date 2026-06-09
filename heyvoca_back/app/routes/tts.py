@@ -1,3 +1,5 @@
+import logging
+
 from flask import render_template, request, jsonify, send_file, current_app, g
 from app import db, cache, limiter
 from app.routes import tts_bp
@@ -193,7 +195,8 @@ def tts_resolve():
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400
     except TTSConfigError as e:
-        return jsonify({"error": f"TTS 설정 오류: {e}"}), 500
+        logging.getLogger(__name__).error('TTS 설정 오류 (object_key_for)', exc_info=True)
+        return jsonify({"error": "TTS 설정 오류가 발생했습니다."}), 500
 
     flag_key = _flag_key(object_key)
 
@@ -203,7 +206,8 @@ def tts_resolve():
         try:
             obj_exists = service.exists(object_key)
         except TTSConfigError as e:
-            return jsonify({"error": f"TTS 설정 오류: {e}"}), 500
+            logging.getLogger(__name__).error('TTS 설정 오류 (exists)', exc_info=True)
+            return jsonify({"error": "TTS 설정 오류가 발생했습니다."}), 500
         if obj_exists:
             cache.set(flag_key, '1', timeout=_EXIST_FLAG_TTL)
 
@@ -235,9 +239,11 @@ def tts_resolve():
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400
     except TTSConfigError as e:
-        return jsonify({"error": f"TTS 설정 오류: {e}"}), 500
+        logging.getLogger(__name__).error('TTS 설정 오류 (ensure_cached)', exc_info=True)
+        return jsonify({"error": "TTS 설정 오류가 발생했습니다."}), 500
     except TTSError as e:
-        return jsonify({"error": f"TTS 생성 실패: {e}"}), 502
+        logging.getLogger(__name__).error('TTS 생성 오류 (ensure_cached)', exc_info=True)
+        return jsonify({"error": "TTS 생성에 실패했습니다."}), 502
 
     # 반환 key가 요청 key와 다르면 fallback(gTTS)으로 생성된 것.
     fallback = object_key != requested_key

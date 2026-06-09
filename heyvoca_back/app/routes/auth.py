@@ -422,7 +422,7 @@ def google_oauth_web_callback():
         userinfo = oauth.get('https://www.googleapis.com/oauth2/v1/userinfo').json()
     except Exception as e:
         print(f"Error during token fetch or userinfo fetch: {str(e)}")
-        return f"An error occurred: {str(e)}", 500
+        return "서버 오류가 발생했습니다.", 500
 
     print('token:', token)
     print('userinfo:', userinfo)
