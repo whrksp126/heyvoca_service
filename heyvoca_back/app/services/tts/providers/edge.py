@@ -39,8 +39,8 @@ class EdgeTTSProvider(TTSProvider):
             or self._DEFAULT_VOICES.get(language)
         )
 
-    def synthesize(self, text: str, language: str) -> TTSResult:
-        voice = self.voice_for(language)
+    def synthesize(self, text: str, language: str, voice: str = None) -> TTSResult:
+        voice = voice or self.voice_for(language)
 
         async def _run():
             comm = edge_tts.Communicate(text, voice)

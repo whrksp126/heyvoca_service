@@ -25,11 +25,13 @@ def get_storage(role: str = 'ro'):
     return _storages[role]
 
 
-def object_key_for(provider, language: str, norm_text: str, prefix: str = None) -> str:
+def object_key_for(provider, language: str, norm_text: str, prefix: str = None,
+                   user_voice: str = None) -> str:
     prefix = prefix or os.getenv('TTS_PREFIX', 'tts')
+    voice = user_voice or provider.voice_for(language)
     return build_object_key(
         prefix, provider.name, provider.model,
-        provider.voice_for(language), language, norm_text,
+        voice, language, norm_text,
     )
 
 
@@ -45,7 +47,7 @@ def presigned_url(key: str, storage=None, ttl_seconds: int = None) -> str:
 
 
 def ensure_cached(text: str, language: str, provider=None, storage=None,
-                  allow_fallback: bool = True):
+                  allow_fallback: bool = True, user_voice: str = None):
     """객체가 없으면 생성·업로드(RW 키). (object_key, created: bool) 반환.
 
     text는 원문(미정규화) — 내부에서 normalize 후 키 계산.
@@ -63,13 +65,14 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
     norm = normalize_text(text)
     if not norm:
         raise TTSError('빈 텍스트')
-    key = object_key_for(provider, language, norm)
+    key = object_key_for(provider, language, norm, user_voice=user_voice)
     if storage.exists(key):
         return key, False
 
     used = provider
+    voice_used = user_voice or provider.voice_for(language)
     try:
-        result = provider.synthesize(norm, language)
+        result = provider.synthesize(norm, language, voice=user_voice)
     except TTSGenerationError:
         # 1차 provider 생성 실패 → 무료 fallback(gTTS)으로 전환.
         # fallback 자체가 불가하거나 이미 fallback provider면 원오류를 그대로 전파.
@@ -78,11 +81,13 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
         fb = get_provider(FALLBACK_PROVIDER)
         if not fb.supports_language(language):
             raise
+        # fallback(gTTS)은 voice 선택 개념이 없어 user_voice 미적용 → 기본 키로 저장
         fb_key = object_key_for(fb, language, norm)
         if storage.exists(fb_key):
             return fb_key, False
         result = fb.synthesize(norm, language)  # 이마저 실패하면 그대로 전파
         used = fb
+        voice_used = fb.voice_for(language)
         key = fb_key
 
     # 해시 키만으로는 무슨 텍스트인지 알 수 없으므로 원문/언어/엔진을 메타데이터로 남긴다.
@@ -91,7 +96,7 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
         'text': quote(norm),
         'lang': language,
         'provider': used.name,
-        'voice': used.voice_for(language),
+        'voice': voice_used,
     }
     storage.put_audio(key, result.audio, result.content_type, metadata=metadata)
     return key, True

@@ -1,17 +1,19 @@
-from flask import render_template, request, jsonify, send_file, current_app
+from flask import render_template, request, jsonify, send_file, current_app, g
 from app import db, cache, limiter
 from app.routes import tts_bp
 
 import jwt
+import json
+from uuid import UUID
 from gtts import gTTS
 from datetime import datetime
 import io
 
 from sqlalchemy import func
 
-from app.models.models import Voca, VocaMeaning
-from app.utils.jwt_utils import SECRET_KEY  # = ACCESS_SECRET
-from app.services.tts import service
+from app.models.models import Voca, VocaMeaning, User
+from app.utils.jwt_utils import SECRET_KEY, jwt_required  # SECRET_KEY = ACCESS_SECRET
+from app.services.tts import service, voice_catalog
 from app.services.tts.registry import get_provider_for_language
 from app.services.tts.normalize import normalize_text
 from app.services.tts.base import (
@@ -65,7 +67,7 @@ def _flag_key(object_key):
 
 
 def _resolve_object_key():
-    """현재 요청(text/language)으로 캐시 object key를 계산. 실패 시 None."""
+    """현재 요청(text/language/voice)으로 캐시 object key를 계산. 실패 시 None."""
     text = request.args.get('text')
     language = request.args.get('language')
     if not text or language not in _SUPPORTED_LANGS:
@@ -75,7 +77,8 @@ def _resolve_object_key():
         norm = normalize_text(text)
         if not norm:
             return None
-        return service.object_key_for(provider, language, norm)
+        voice = voice_catalog.resolve_voice(language, request.args.get('voice'))
+        return service.object_key_for(provider, language, norm, user_voice=voice)
     except TTSError:
         return None
 
@@ -181,9 +184,12 @@ def tts_resolve():
     if not norm:
         return jsonify({"error": "빈 텍스트입니다."}), 400
 
+    # 사용자 지정 voice(쿼리) — 엄선 화이트리스트만 허용, 그 외/미지정은 언어 기본 voice.
+    voice = voice_catalog.resolve_voice(language, request.args.get('voice'))
+
     try:
         provider = get_provider_for_language(language)
-        object_key = service.object_key_for(provider, language, norm)
+        object_key = service.object_key_for(provider, language, norm, user_voice=voice)
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400
     except TTSConfigError as e:
@@ -225,7 +231,7 @@ def tts_resolve():
     # 생성 + 업로드. 1차 provider(영어=ElevenLabs) 실패 시 service가 gTTS로 fallback.
     requested_key = object_key
     try:
-        object_key, _created = service.ensure_cached(text, language, provider=provider)
+        object_key, _created = service.ensure_cached(text, language, provider=provider, user_voice=voice)
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400
     except TTSConfigError as e:
@@ -239,3 +245,72 @@ def tts_resolve():
 
     cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
     return jsonify({"url": service.presigned_url(object_key), "cached": False, "fallback": fallback}), 200
+
+
+# ── 음성 설정: 엄선 voice 목록 + 사용자별 선택 ──────────────────────────
+@tts_bp.route('/voice-options', methods=['GET'])
+def tts_voice_options():
+    """음성 설정 화면용 엄선 voice 목록 + 언어 기본값 + 각 voice 샘플 presigned URL.
+
+    샘플은 고정 문구를 voice별로 한 번 생성·캐싱 → 이후 캐시 히트(무료 Edge).
+    """
+    out = {}
+    for lang, vlist in voice_catalog.CURATED_VOICES.items():
+        sample_text = voice_catalog.SAMPLE_TEXT.get(lang, '')
+        items = []
+        for v in vlist:
+            sample_url = None
+            if sample_text:
+                try:
+                    key, _ = service.ensure_cached(sample_text, lang, user_voice=v['voice'])
+                    sample_url = service.presigned_url(key)
+                except Exception:
+                    sample_url = None
+            items.append({**v, 'sample_url': sample_url})
+        out[lang] = items
+    return jsonify({'code': 200, 'data': {'voices': out, 'default': voice_catalog.DEFAULT_VOICE}})
+
+
+def _load_user_voices(user):
+    saved = {}
+    if user and user.tts_voices:
+        try:
+            saved = json.loads(user.tts_voices) or {}
+        except Exception:
+            saved = {}
+    merged = dict(voice_catalog.DEFAULT_VOICE)
+    merged.update({k: v for k, v in saved.items() if k in voice_catalog.DEFAULT_VOICE})
+    return merged
+
+
+@tts_bp.route('/my-voices', methods=['GET'])
+@jwt_required
+def get_my_voices():
+    """사용자 voice 설정 조회(미설정 언어는 기본값으로 채워 반환)."""
+    user = User.query.filter_by(id=UUID(g.user_id)).first()
+    if not user:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+    return jsonify({'code': 200, 'data': _load_user_voices(user)})
+
+
+@tts_bp.route('/my-voices', methods=['PUT'])
+@jwt_required
+def put_my_voices():
+    """사용자 voice 설정 저장. 엄선 화이트리스트 외 voice는 무시."""
+    user = User.query.filter_by(id=UUID(g.user_id)).first()
+    if not user:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+    body = request.json or {}
+    saved = {}
+    if user.tts_voices:
+        try:
+            saved = json.loads(user.tts_voices) or {}
+        except Exception:
+            saved = {}
+    for lang in voice_catalog.DEFAULT_VOICE:
+        if lang in body and voice_catalog.is_valid_voice(lang, body[lang]):
+            saved[lang] = body[lang]
+    user.tts_voices = json.dumps(saved, ensure_ascii=False)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({'code': 200, 'data': _load_user_voices(user)})

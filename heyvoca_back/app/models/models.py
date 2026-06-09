@@ -77,6 +77,9 @@ class User(db.Model):
     invited_by = Column(BinaryUUID, ForeignKey('user.id'), nullable=True, default=None)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     last_logged_at = Column(DateTime, nullable=True, default=None)
+    # 사용자 TTS voice 설정. JSON 문자열 {언어: voice_short_name} 예: {"en":"en-GB-RyanNeural","ko":"ko-KR-InJoonNeural"}
+    # 미설정(None)이면 언어별 기본 voice 사용. 빈 언어 키도 기본 fallback.
+    tts_voices = Column(Text, nullable=True, default=None)
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,

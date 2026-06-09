@@ -16,9 +16,11 @@ _BUILDERS = {
     'edge': EdgeTTSProvider,
 }
 
-# 언어별 기본 provider (env 미지정 시). 영어=ElevenLabs(고품질), 한국어=Edge(무료 신경망).
+# 언어별 기본 provider (env 미지정 시). 영어·한국어 모두 Edge(무료 신경망).
+# (ElevenLabs는 비용/품질 이슈로 2026-06 호출 중단. elevenlabs.py·빌더는 롤백 대비 잔존하나
+#  기본/실서비스에서는 사용하지 않음. 비상 fallback은 service.FALLBACK_PROVIDER=gtts.)
 _LANG_DEFAULT_PROVIDER = {
-    'en': 'elevenlabs',
+    'en': 'edge',
     'ko': 'edge',
 }
 

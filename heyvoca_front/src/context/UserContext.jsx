@@ -78,6 +78,10 @@ export const UserProvider = ({ children }) => {
         }
       }
       setUserProfile(result.data);
+      // 음성 설정(voice)을 localStorage에 동기화 → getTextSound가 참조(다기기 대응, best-effort)
+      fetchDataAsync(`${backendUrl}/tts/my-voices`, 'GET', {})
+        .then((mv) => { if (mv?.code === 200 && mv.data) localStorage.setItem('ttsVoices', JSON.stringify(mv.data)); })
+        .catch(() => { /* noop */ });
       return {
         success: true,
         userProfile: result.data,

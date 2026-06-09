@@ -20,8 +20,8 @@ class GTTSProvider(TTSProvider):
             raise UnsupportedLanguageError(f"gTTS 미지원 언어: {language}")
         return language  # gTTS는 voice == language
 
-    def synthesize(self, text: str, language: str) -> TTSResult:
-        self.voice_for(language)  # 언어 검증
+    def synthesize(self, text: str, language: str, voice: str = None) -> TTSResult:
+        self.voice_for(language)  # 언어 검증 (gTTS는 voice 선택 개념이 없어 voice 인자 무시)
         try:
             fp = io.BytesIO()
             gTTS(text=text, lang=language).write_to_fp(fp)

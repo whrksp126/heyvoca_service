@@ -52,5 +52,5 @@ class TTSProvider(ABC):
         """언어에 매핑된 voice 식별자. 미지원 시 UnsupportedLanguageError."""
 
     @abstractmethod
-    def synthesize(self, text: str, language: str) -> TTSResult:
-        """정규화된 텍스트를 음성 바이트로 합성."""
+    def synthesize(self, text: str, language: str, voice: str = None) -> TTSResult:
+        """정규화된 텍스트를 음성 바이트로 합성. voice 지정 시 기본 voice 대신 사용."""

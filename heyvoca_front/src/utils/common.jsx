@@ -216,6 +216,11 @@ export const getTextSound = async (text, lang) => {
     text: text,
     language: lang
   }
+  // 사용자가 선택한 voice(음성 설정) 반영. 미설정이면 서버 기본 voice 사용.
+  try {
+    const tv = JSON.parse(localStorage.getItem('ttsVoices') || '{}');
+    if (tv && tv[lang]) fetchData.voice = tv[lang];
+  } catch (e) { /* 무시: 기본 voice로 진행 */ }
 
   try {
     const data = await fetchDataAsync(url, method, fetchData);

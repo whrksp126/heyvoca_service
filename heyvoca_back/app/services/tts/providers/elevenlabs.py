@@ -50,10 +50,10 @@ class ElevenLabsProvider(TTSProvider):
             )
         return voice
 
-    def synthesize(self, text: str, language: str) -> TTSResult:
+    def synthesize(self, text: str, language: str, voice: str = None) -> TTSResult:
         if not self.api_key:
             raise TTSConfigError('ELEVENLABS_API_KEY 미설정.')
-        voice = self.voice_for(language)
+        voice = voice or self.voice_for(language)
         url = f"{self.base_url}/v1/text-to-speech/{voice}"
         headers = {
             'xi-api-key': self.api_key,
