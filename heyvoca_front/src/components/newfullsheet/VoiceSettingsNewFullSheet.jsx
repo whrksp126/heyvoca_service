@@ -24,6 +24,7 @@ const VoiceSettingsNewFullSheet = () => {
   const cached = readJSON('ttsVoiceOptions', null);
   const [options, setOptions] = useState(cached?.voices || {});
   const [selected, setSelected] = useState(() => ({ ...(cached?.default || {}), ...readJSON('ttsVoices', {}) }));
+  const [playingVoice, setPlayingVoice] = useState(null); // 미리듣기 재생 중인 voice
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -58,9 +59,14 @@ const VoiceSettingsNewFullSheet = () => {
       const url = res?.data?.url;
       if (!url) return;
       if (audioRef.current) audioRef.current.pause();
-      audioRef.current = new Audio(url);
-      audioRef.current.play().catch(() => { /* 자동재생 차단 무시 */ });
-    } catch (e) { /* noop */ }
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      setPlayingVoice(voice);
+      const clear = () => { if (audioRef.current === audio) setPlayingVoice(null); };
+      audio.addEventListener('ended', clear);
+      audio.addEventListener('error', clear);
+      audio.play().catch(() => clear());
+    } catch (e) { setPlayingVoice(null); }
   };
 
   // 선택 즉시 반영(저장 버튼 없음 — 테마/알림 설정과 동일 패턴) + 미리듣기.
@@ -110,22 +116,27 @@ const VoiceSettingsNewFullSheet = () => {
             </div>
             {(options[lang] || []).map((v) => {
               const isSel = selected[lang] === v.voice;
+              const isPlaying = playingVoice === v.voice;
               return (
                 <div
                   key={v.voice}
                   onClick={() => handleSelect(lang, v.voice)}
-                  className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark cursor-pointer"
+                  className="flex items-center justify-between px-5 py-[22px] border-b border-border dark:border-border-dark cursor-pointer"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <SpeakerHigh
-                      weight={isSel ? 'fill' : 'regular'}
-                      className={`text-[20px] ${isSel ? 'text-primary-main-600' : 'text-layout-gray-200 dark:text-layout-white/40'}`}
+                      weight={isSel || isPlaying ? 'fill' : 'regular'}
+                      className={`text-[20px] ${isPlaying ? 'text-primary-main-500 animate-pulse' : isSel ? 'text-primary-main-600' : 'text-layout-gray-200 dark:text-layout-white/40'}`}
                     />
                     <span className={`text-[16px] font-bold ${isSel ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                       {v.label}
                     </span>
                   </div>
-                  {isSel && <Check weight="bold" size={20} className="text-primary-main-600" />}
+                  {isPlaying ? (
+                    <span className="text-[12px] font-medium text-primary-main-500 animate-pulse">재생 중…</span>
+                  ) : isSel ? (
+                    <Check weight="bold" size={20} className="text-primary-main-600" />
+                  ) : null}
                 </div>
               );
             })}
