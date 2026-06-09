@@ -5,10 +5,11 @@
 
 ## 구현 현황 (2026-06-10)
 
-- **Wave A 완료(로컬 적용·검증, 미배포)**: C1 워커(gthread), C2 DB풀, S1 시크릿 fail-fast, S3 입력 크기 제한, S4 에러 마스킹. → 컨테이너 create_app 정상(141 라우트), health 200.
-- **Wave B 완료(코드, 미배포)**: S7 CORS 축소, S6 search 입력 검증, S9 fcm 폴백 제거 / S2 nginx 보안헤더+TLS·C3 엣지 rate limit(`nginx-proxy/conf.d/heyvoca.conf` — **서버 `nginx -t` 후 reload 필요**, CSP는 Report-Only).
-- **미배포**: 전부 로컬 코드만. 배포 순서 = `git push origin local:main` → `./deploy.sh stg` 검증 → prod. nginx는 서버 글로벌 `nginx_proxy` 대상이라 별도 반영.
-- **Wave C 미착수(운영/중기)**: C4 TTS 워밍업(선택), Docker 리소스 limit, S8 admin 키 로테이션, S5/S10 토큰 저장 전환(점진).
+- **Wave A — stg+prod 배포 완료·검증**: C1 워커(gthread×4), C2 DB풀, S1 시크릿 fail-fast, S3 입력 크기 제한, S4 에러 마스킹. → prod health 200, `Using worker: gthread` 확인, [SCHEMA OK].
+- **Wave B 백엔드 — stg+prod 배포 완료·검증**: S7 CORS 축소, S6 search 입력 검증(메타문자/영문 400 확인), S9 fcm 폴백 제거.
+- **Wave B nginx(S2/C3) — 라이브 적용 완료**: 글로벌 `nginx_proxy`(`/srv/nginx-proxy/conf.d/heyvoca.conf`)에 백업→`nginx -t`→reload로 적용. prod front에 HSTS/nosniff/X-Frame/CSP-Report-Only 노출 확인, 전 사이트(admin 3개 포함) 생존 확인. **주의**: 라이브 파일은 repo와 별개였고(admin 블록 3개가 라이브에만 존재) repo를 라이브 기준으로 동기화함. `deploy.sh`는 이 글로벌 nginx를 반영하지 않으므로 향후 nginx 변경은 동일 절차로 수동 적용.
+- **검증 요약**: stg/prod health 200, gthread×4, 검색 정상(200)·S6 차단(400), prod 보안헤더 노출, 모든 도메인(front/back/landing/admin) 응답 정상.
+- **Wave C 미착수(운영/중기)**: C4 TTS 워밍업(선택), Docker 리소스 limit, S8 admin 키 로테이션, S5/S10 토큰 저장 전환(점진). + CSP를 Report-Only→enforce 승격(콘솔 위반 로그 확인 후).
 - **부수 발견**: `heyvoca_back_local` healthcheck가 `python`(컨테이너엔 `python3`만) 호출로 항상 실패 → 컨테이너 `unhealthy` 표시(앱은 정상). 별도 수정 대상.
 
 ---
