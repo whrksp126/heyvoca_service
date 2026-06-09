@@ -1168,3 +1168,115 @@ def get_tts_stats():
         'total_fallback': total_fb,
         'daily': daily,  # 최신일 우선(index 0 = 오늘)
     }})
+
+
+# ──────────────────────────────────────────
+# TTS 테스트(미리듣기) — 무료 엔진 voice/옵션 비교 (admin 전용)
+# ──────────────────────────────────────────
+
+# gTTS 영어 악센트(tld). gTTS는 목소리 1종이고 악센트/속도만 조절 가능.
+_GTTS_ACCENTS = [
+    {'tld': 'com', 'label': '미국 (US)'},
+    {'tld': 'co.uk', 'label': '영국 (UK)'},
+    {'tld': 'com.au', 'label': '호주 (AU)'},
+    {'tld': 'ca', 'label': '캐나다 (CA)'},
+    {'tld': 'co.in', 'label': '인도 (IN)'},
+    {'tld': 'ie', 'label': '아일랜드 (IE)'},
+    {'tld': 'co.za', 'label': '남아공 (ZA)'},
+]
+
+
+@admin_bp.route('/tts/voices', methods=['GET'])
+@admin_required
+def get_tts_voices():
+    """미리듣기 옵션 목록. engine=edge → 신경망 voice 목록, gtts → 악센트 목록."""
+    engine = request.args.get('engine', 'edge')
+    language = request.args.get('language', 'en')
+
+    if engine == 'gtts':
+        accents = _GTTS_ACCENTS if language == 'en' else [{'tld': 'com', 'label': '기본'}]
+        return jsonify({'code': 200, 'data': {'engine': 'gtts', 'accents': accents}})
+
+    # edge: list_voices (Redis 6시간 캐시)
+    from app import cache
+    ck = f'tts:edge_voices:{language}'
+    try:
+        cached = cache.get(ck)
+    except Exception:
+        cached = None
+    if cached:
+        return jsonify({'code': 200, 'data': {'engine': 'edge', 'voices': json.loads(cached)}})
+
+    try:
+        import asyncio
+        import edge_tts
+        all_voices = asyncio.run(edge_tts.list_voices())
+    except Exception as e:
+        return jsonify({'code': 200, 'data': {'engine': 'edge', 'voices': [], 'error': str(e)}})
+
+    voices = [
+        {
+            'short_name': v['ShortName'],
+            'gender': v['Gender'],
+            'locale': v['Locale'],
+            'label': f"{v['ShortName'].split('-', 2)[-1].replace('Neural', '')} · {v['Locale']} · {v['Gender']}",
+        }
+        for v in all_voices if v['Locale'].startswith(language)
+    ]
+    voices.sort(key=lambda x: (x['locale'], x['short_name']))
+    try:
+        cache.set(ck, json.dumps(voices, ensure_ascii=False), timeout=6 * 3600)
+    except Exception:
+        pass
+    return jsonify({'code': 200, 'data': {'engine': 'edge', 'voices': voices}})
+
+
+@admin_bp.route('/tts/preview', methods=['POST'])
+@admin_required
+def tts_preview():
+    """입력 텍스트를 지정 엔진/옵션으로 즉석 합성해 audio/mpeg 반환(캐싱 없음).
+
+    실패는 4xx+message로 반환(5xx는 Cloudflare가 가로채 메시지가 가려짐).
+    """
+    from flask import Response as FlaskResponse
+    data = request.json or {}
+    text = (data.get('text') or '').strip()
+    engine = data.get('engine', 'edge')
+    language = data.get('language', 'en')
+
+    if not text:
+        return jsonify({'code': 400, 'message': '텍스트를 입력하세요.'}), 400
+    if len(text) > 500:
+        return jsonify({'code': 400, 'message': '텍스트가 너무 깁니다(최대 500자).'}), 400
+
+    try:
+        if engine == 'gtts':
+            from gtts import gTTS
+            tld = data.get('tld') or 'com'
+            slow = bool(data.get('slow'))
+            buf = BytesIO()
+            gTTS(text=text, lang=language, tld=tld, slow=slow).write_to_fp(buf)
+            audio = buf.getvalue()
+        elif engine == 'edge':
+            import asyncio
+            import edge_tts
+            voice = data.get('voice') or 'en-US-AriaNeural'
+            rate = data.get('rate') or '+0%'
+            pitch = data.get('pitch') or '+0Hz'
+
+            async def _run():
+                comm = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+                b = bytearray()
+                async for chunk in comm.stream():
+                    if chunk.get('type') == 'audio':
+                        b += chunk['data']
+                return bytes(b)
+            audio = asyncio.run(_run())
+        else:
+            return jsonify({'code': 400, 'message': f'알 수 없는 엔진: {engine}'}), 400
+    except Exception as e:
+        return jsonify({'code': 400, 'message': f'생성 실패: {e}'}), 400
+
+    if not audio:
+        return jsonify({'code': 400, 'message': '빈 음성이 생성되었습니다.'}), 400
+    return FlaskResponse(audio, mimetype='audio/mpeg')
