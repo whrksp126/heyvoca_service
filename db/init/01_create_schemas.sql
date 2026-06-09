@@ -16,4 +16,9 @@ CREATE DATABASE IF NOT EXISTS heyvoca_dict
 
 GRANT ALL PRIVILEGES ON heyvoca_user.* TO 'voca'@'%';
 GRANT ALL PRIVILEGES ON heyvoca_dict.* TO 'voca'@'%';
+-- dict_sync.py는 사전 갱신 시 임시 schema heyvoca_dict_new 를 CREATE/import 후
+-- heyvoca_dict 로 swap 한다. voca 유저가 그 임시 schema에도 권한이 있어야
+-- swap 단계에서 ERROR 1044 (Access denied to 'heyvoca_dict_new') 가 안 난다.
+-- heyvoca_ 로 시작하는 모든 schema(heyvoca_user/heyvoca_dict/heyvoca_dict_new 등) 커버.
+GRANT ALL PRIVILEGES ON `heyvoca\_%`.* TO 'voca'@'%';
 FLUSH PRIVILEGES;
