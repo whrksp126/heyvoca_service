@@ -125,6 +125,31 @@ def _exists_in_dict(norm_text, language):
     return found
 
 
+_STATS_TTL = 14 * 24 * 3600  # TTS 생성/fallback 통계 보관 14일
+
+
+def _bump(key, ttl=_STATS_TTL):
+    """Redis 카운터 best-effort 증가."""
+    try:
+        cur = int(cache.get(key) or 0) + 1
+        cache.set(key, str(cur), timeout=ttl)
+    except Exception:
+        pass
+
+
+def _record_gen_stats(language, fallback):
+    """모니터링용 일일 TTS 생성/fallback 카운터(best-effort).
+
+    admin TTS 모니터링 페이지가 tts:gen:* / tts:fallback:* 키를 읽는다.
+    """
+    day = datetime.utcnow().strftime('%Y%m%d')
+    _bump(f'tts:gen:{day}')
+    _bump(f'tts:gen:{language}:{day}')
+    if fallback:
+        _bump(f'tts:fallback:{day}')
+        _bump(f'tts:fallback:{language}:{day}')
+
+
 def _daily_gen_count(user_id):
     """user별 일일 생성 카운터 증가 후 현재값 반환(best-effort, Redis)."""
     day = datetime.utcnow().strftime('%Y%m%d')
@@ -197,7 +222,8 @@ def tts_resolve():
     if daily_cap and _daily_gen_count(user_id) > daily_cap:
         return jsonify({"error": "오늘 음성 생성 한도를 초과했습니다."}), 429
 
-    # 생성 + 업로드
+    # 생성 + 업로드. 1차 provider(영어=ElevenLabs) 실패 시 service가 gTTS로 fallback.
+    requested_key = object_key
     try:
         object_key, _created = service.ensure_cached(text, language, provider=provider)
     except UnsupportedLanguageError as e:
@@ -207,5 +233,9 @@ def tts_resolve():
     except TTSError as e:
         return jsonify({"error": f"TTS 생성 실패: {e}"}), 502
 
+    # 반환 key가 요청 key와 다르면 fallback(gTTS)으로 생성된 것.
+    fallback = object_key != requested_key
+    _record_gen_stats(language, fallback)
+
     cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
-    return jsonify({"url": service.presigned_url(object_key), "cached": False}), 200
+    return jsonify({"url": service.presigned_url(object_key), "cached": False, "fallback": fallback}), 200

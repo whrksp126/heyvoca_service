@@ -73,8 +73,36 @@ class ElevenLabsProvider(TTSProvider):
             raise TTSGenerationError(f'ElevenLabs 요청 실패: {e}')
         if resp.status_code != 200:
             raise TTSGenerationError(
-                f'ElevenLabs {resp.status_code}: {resp.text[:300]}'
+                f'ElevenLabs {resp.status_code}: {resp.text[:300]}',
+                status_code=resp.status_code,
             )
         if not resp.content:
             raise TTSGenerationError('ElevenLabs 빈 응답.')
         return TTSResult(audio=resp.content, content_type='audio/mpeg', ext='mp3')
+
+    def get_subscription(self) -> dict:
+        """구독/사용량 정보 조회 (character_count, character_limit 등).
+
+        토큰(문자) 잔량 모니터링용. ElevenLabs `/v1/user/subscription` 호출.
+        Raises: TTSConfigError(키 미설정), TTSGenerationError(API 오류).
+        """
+        if not self.api_key:
+            raise TTSConfigError('ELEVENLABS_API_KEY 미설정.')
+        url = f"{self.base_url}/v1/user/subscription"
+        try:
+            resp = requests.get(
+                url,
+                headers={'xi-api-key': self.api_key, 'accept': 'application/json'},
+                timeout=self.timeout,
+            )
+        except requests.RequestException as e:
+            raise TTSGenerationError(f'ElevenLabs 구독 조회 실패: {e}')
+        if resp.status_code != 200:
+            raise TTSGenerationError(
+                f'ElevenLabs {resp.status_code}: {resp.text[:300]}',
+                status_code=resp.status_code,
+            )
+        try:
+            return resp.json()
+        except ValueError as e:
+            raise TTSGenerationError(f'ElevenLabs 응답 파싱 실패: {e}')

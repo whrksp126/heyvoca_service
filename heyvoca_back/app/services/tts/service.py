@@ -9,9 +9,13 @@ from urllib.parse import quote
 from .registry import get_provider, get_provider_for_language
 from .storage import TTSStorage
 from .normalize import normalize_text, build_object_key
-from .base import TTSError
+from .base import TTSError, TTSGenerationError
 
 _storages = {}
+
+# 1차 provider(예: ElevenLabs) 생성 실패 시 전환할 무료 fallback provider.
+# gTTS는 en/ko 모두 지원하고 외부 quota가 없어 토큰 소진/장애 시 안전망 역할.
+FALLBACK_PROVIDER = 'gtts'
 
 
 def get_storage(role: str = 'ro'):
@@ -40,10 +44,19 @@ def presigned_url(key: str, storage=None, ttl_seconds: int = None) -> str:
     return (storage or get_storage('rw')).presigned_get(key, ttl)
 
 
-def ensure_cached(text: str, language: str, provider=None, storage=None):
+def ensure_cached(text: str, language: str, provider=None, storage=None,
+                  allow_fallback: bool = True):
     """객체가 없으면 생성·업로드(RW 키). (object_key, created: bool) 반환.
 
     text는 원문(미정규화) — 내부에서 normalize 후 키 계산.
+
+    1차 provider의 synthesize가 실패(TTSGenerationError; quota 소진·장애 등)하면
+    allow_fallback일 때 무료 FALLBACK_PROVIDER(gTTS)로 자동 전환해 재시도한다.
+    fallback 음성은 provider명이 다른 별도 object key에 저장되므로, 1차 provider가
+    복구되면 다음 요청부터 자동으로 원래(고품질) 키로 생성·서빙된다(gTTS 캐시는 잔존하나 무시됨).
+
+    호출처는 반환된 object_key의 provider 세그먼트가 요청 provider와 다른지로
+    fallback 발생 여부를 판별할 수 있다.
     """
     provider = provider or get_provider_for_language(language)
     storage = storage or get_storage('rw')
@@ -53,14 +66,32 @@ def ensure_cached(text: str, language: str, provider=None, storage=None):
     key = object_key_for(provider, language, norm)
     if storage.exists(key):
         return key, False
-    result = provider.synthesize(norm, language)
+
+    used = provider
+    try:
+        result = provider.synthesize(norm, language)
+    except TTSGenerationError:
+        # 1차 provider 생성 실패 → 무료 fallback(gTTS)으로 전환.
+        # fallback 자체가 불가하거나 이미 fallback provider면 원오류를 그대로 전파.
+        if not allow_fallback or provider.name == FALLBACK_PROVIDER:
+            raise
+        fb = get_provider(FALLBACK_PROVIDER)
+        if not fb.supports_language(language):
+            raise
+        fb_key = object_key_for(fb, language, norm)
+        if storage.exists(fb_key):
+            return fb_key, False
+        result = fb.synthesize(norm, language)  # 이마저 실패하면 그대로 전파
+        used = fb
+        key = fb_key
+
     # 해시 키만으로는 무슨 텍스트인지 알 수 없으므로 원문/언어/엔진을 메타데이터로 남긴다.
     # 헤더는 ASCII만 허용 → 한글 등은 URL-encode(복원: urllib.parse.unquote).
     metadata = {
         'text': quote(norm),
         'lang': language,
-        'provider': provider.name,
-        'voice': provider.voice_for(language),
+        'provider': used.name,
+        'voice': used.voice_for(language),
     }
     storage.put_audio(key, result.audio, result.content_type, metadata=metadata)
     return key, True

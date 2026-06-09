@@ -1082,3 +1082,81 @@ def save_tagged_examples(admin_voca_book_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': str(e)}), 500
+
+
+# ──────────────────────────────────────────
+# TTS 모니터링 (ElevenLabs quota + fallback 통계)
+# ──────────────────────────────────────────
+
+@admin_bp.route('/tts/quota', methods=['GET'])
+@admin_required
+def get_tts_quota():
+    """ElevenLabs 문자(토큰) 잔량/사용량 조회."""
+    from app.services.tts.registry import get_provider
+    from app.services.tts.base import TTSConfigError, TTSGenerationError
+    try:
+        provider = get_provider('elevenlabs')
+        sub = provider.get_subscription()
+    except TTSConfigError as e:
+        return jsonify({'code': 500, 'message': f'TTS 설정 오류: {e}'}), 500
+    except TTSGenerationError as e:
+        return jsonify({
+            'code': 502,
+            'message': f'ElevenLabs 조회 실패: {e}',
+            'status_code': getattr(e, 'status_code', None),
+        }), 502
+
+    limit = sub.get('character_limit') or 0
+    used = sub.get('character_count') or 0
+    remaining = max(limit - used, 0)
+    return jsonify({'code': 200, 'data': {
+        'character_limit': limit,
+        'character_count': used,
+        'character_remaining': remaining,
+        'usage_ratio': round(used / limit, 4) if limit else None,
+        'tier': sub.get('tier'),
+        'status': sub.get('status'),
+        'next_reset_unix': sub.get('next_character_count_reset_unix'),
+    }})
+
+
+@admin_bp.route('/tts/stats', methods=['GET'])
+@admin_required
+def get_tts_stats():
+    """최근 N일 TTS 생성/fallback 일별 통계(Redis 카운터)."""
+    from datetime import timedelta
+    from app import cache
+    try:
+        days = min(max(int(request.args.get('days', 7)), 1), 14)
+    except (TypeError, ValueError):
+        days = 7
+
+    def _get(key):
+        try:
+            return int(cache.get(key) or 0)
+        except Exception:
+            return 0
+
+    daily = []
+    total_gen = total_fb = 0
+    for i in range(days):
+        d = (datetime.utcnow() - timedelta(days=i)).strftime('%Y%m%d')
+        gen = _get(f'tts:gen:{d}')
+        fb = _get(f'tts:fallback:{d}')
+        total_gen += gen
+        total_fb += fb
+        daily.append({
+            'date': d,
+            'gen': gen,
+            'fallback': fb,
+            'gen_en': _get(f'tts:gen:en:{d}'),
+            'gen_ko': _get(f'tts:gen:ko:{d}'),
+            'fallback_en': _get(f'tts:fallback:en:{d}'),
+            'fallback_ko': _get(f'tts:fallback:ko:{d}'),
+        })
+    return jsonify({'code': 200, 'data': {
+        'days': days,
+        'total_gen': total_gen,
+        'total_fallback': total_fb,
+        'daily': daily,  # 최신일 우선(index 0 = 오늘)
+    }})

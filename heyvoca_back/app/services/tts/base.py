@@ -12,7 +12,15 @@ class TTSConfigError(TTSError):
 
 
 class TTSGenerationError(TTSError):
-    """외부 TTS 생성 실패(API 오류 등)."""
+    """외부 TTS 생성 실패(API 오류 등).
+
+    status_code: 외부 API의 HTTP 상태코드(있으면). quota 소진(402/429) 등
+    원인 구분/로깅에 사용. 네트워크 오류 등 HTTP 응답이 없으면 None.
+    """
+
+    def __init__(self, message, status_code=None):
+        super().__init__(message)
+        self.status_code = status_code
 
 
 class UnsupportedLanguageError(TTSError):
