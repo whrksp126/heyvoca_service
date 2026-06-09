@@ -131,13 +131,22 @@ const VoiceSettingsNewFullSheet = () => {
                       {v.label}
                     </span>
                   </div>
-                  {/* 우측: 샘플 듣기 버튼(선택과 분리) */}
+                  {/* 우측: 샘플 듣기 버튼(선택과 분리). 재생 중엔 음파(ping) 효과 */}
                   <button
                     onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); playSample(lang, v.voice); }}
-                    className={`shrink-0 p-2 rounded-full transition-colors ${isPlaying ? 'text-primary-main-500' : 'text-layout-gray-200 dark:text-layout-white/50 hover:bg-layout-gray-50 dark:hover:bg-layout-white/5'}`}
+                    className="relative shrink-0 grid place-items-center w-9 h-9 rounded-full active:scale-90 transition-transform"
                     aria-label="샘플 듣기"
                   >
-                    <SpeakerHigh weight={isPlaying ? 'fill' : 'regular'} className={`text-[22px] ${isPlaying ? 'animate-pulse' : ''}`} />
+                    {isPlaying && (
+                      <>
+                        <span className="absolute inset-0 rounded-full bg-primary-main-500/20 animate-ping" />
+                        <span className="absolute inset-0 rounded-full bg-primary-main-500/15" />
+                      </>
+                    )}
+                    <SpeakerHigh
+                      weight={isPlaying ? 'fill' : 'regular'}
+                      className={`relative text-[22px] ${isPlaying ? 'text-primary-main-500' : 'text-layout-gray-200 dark:text-layout-white/50'}`}
+                    />
                   </button>
                 </div>
               );
