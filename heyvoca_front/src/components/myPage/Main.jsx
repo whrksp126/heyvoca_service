@@ -155,7 +155,6 @@ const Main = () => {
             <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">푸시 알림</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[12px] font-normal text-[#999] dark:text-gray-400">설정</span>
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
         </li>
@@ -164,10 +163,9 @@ const Main = () => {
           className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
           <div className="flex items-center gap-2">
             <SpeakerHigh weight="fill" className="text-[20px] text-primary-main-600" />
-            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">음성 설정</span>
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">음성</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[12px] font-normal text-[#999] dark:text-gray-400">발음 목소리</span>
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
         </li>
