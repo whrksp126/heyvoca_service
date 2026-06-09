@@ -1091,25 +1091,33 @@ def save_tagged_examples(admin_voca_book_id):
 @admin_bp.route('/tts/quota', methods=['GET'])
 @admin_required
 def get_tts_quota():
-    """ElevenLabs 문자(토큰) 잔량/사용량 조회."""
+    """ElevenLabs 문자(토큰) 잔량/사용량 조회.
+
+    조회 실패도 HTTP 200 + data.ok=False 로 반환한다. 5xx로 주면 Cloudflare가
+    자체 Bad Gateway 페이지로 덮어써 원인 메시지(message)가 화면에 전달되지 않는다.
+    """
     from app.services.tts.registry import get_provider
     from app.services.tts.base import TTSConfigError, TTSGenerationError
     try:
         provider = get_provider('elevenlabs')
         sub = provider.get_subscription()
     except TTSConfigError as e:
-        return jsonify({'code': 500, 'message': f'TTS 설정 오류: {e}'}), 500
+        return jsonify({'code': 200, 'data': {
+            'ok': False, 'reason': 'config', 'message': str(e),
+        }})
     except TTSGenerationError as e:
-        return jsonify({
-            'code': 502,
-            'message': f'ElevenLabs 조회 실패: {e}',
-            'status_code': getattr(e, 'status_code', None),
-        }), 502
+        sc = getattr(e, 'status_code', None)
+        reason = {401: 'permission', 403: 'permission',
+                  402: 'quota', 429: 'rate_limit'}.get(sc, 'api_error')
+        return jsonify({'code': 200, 'data': {
+            'ok': False, 'reason': reason, 'status_code': sc, 'message': str(e),
+        }})
 
     limit = sub.get('character_limit') or 0
     used = sub.get('character_count') or 0
     remaining = max(limit - used, 0)
     return jsonify({'code': 200, 'data': {
+        'ok': True,
         'character_limit': limit,
         'character_count': used,
         'character_remaining': remaining,
