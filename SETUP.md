@@ -61,15 +61,43 @@ docker compose -f docker-compose.local.yml up --build -d
 
 기동 흐름 (전부 자동):
 
-1. mysql 컨테이너 첫 기동 → `db/init/01_create_schemas.sql`이 `heyvoca_user`, `heyvoca_dict` 두 schema 자동 생성.
+1. mysql 컨테이너 첫 기동 (fresh volume) → `db/init/`의 SQL이 알파벳 순으로 1회 자동 실행:
+   - `01_create_schemas.sql` → `heyvoca_user`, `heyvoca_dict` 두 schema 생성.
+   - `02_heyvoca_user_baseline.sql` → `heyvoca_user`를 현재 head 상태(테이블 19개 + 참조 데이터 + `alembic_version` 스탬프)로 부트스트랩.
 2. back 컨테이너 entrypoint:
    - `dict_sync.py` 실행 → MinIO에서 최신 사전 dump 다운로드 → `heyvoca_dict`에 import.
    - `flask db upgrade --directory migrations_dict` → 사전 schema 마이그레이션 적용 (이미 최신이면 no-op).
-   - `flask db upgrade` → 사용자 schema 빈 상태에서 모든 테이블 생성.
+   - `flask db upgrade` → 사용자 schema 마이그레이션 적용. baseline이 이미 head라 신규 마이그레이션이 없으면 no-op.
    - gunicorn 기동.
 3. 끝. 단어 검색, 회원가입, 단어장 모두 동작.
 
-> **DB 덤프 파일 수동 import는 더 이상 필요 없습니다.** 기존 `db/backups/full_*.sql` 절차는 폐기되었어요.
+> **사전(dict) dump 수동 import는 필요 없습니다.** 기존 `db/backups/full_*.sql` 절차는 폐기되었어요.
+>
+> ⚠️ **중요**: 사용자 DB의 첫 마이그레이션(`6c8175362eee`)은 구 단일 `heyvoca` schema를 전제로 한 drop/alter 마이그레이션이라 **빈 `heyvoca_user`에서는 동작하지 않습니다.** 그래서 빈 schema가 아니라 `02_heyvoca_user_baseline.sql`로 head 상태를 미리 깔아둡니다. baseline 없이 빈 DB로 `flask db upgrade`를 돌리면 `Table 'heyvoca_user.admin_voca_book_map' doesn't exist` 같은 에러로 부팅이 실패합니다.
+
+### 트러블슈팅 — `flask db upgrade` 가 실패하며 컨테이너가 재시작 반복할 때
+
+증상: back 로그에 `Running upgrade -> 6c8175362eee, initial schema` 이후
+`Table 'heyvoca_user.xxx' doesn't exist` → `exited with code 1 (restarting)`.
+
+원인: `heyvoca_user`가 baseline 없이 빈 상태/레거시 일부만 있는 dirty 상태. (예전 `full_*.sql`을 수동 import했거나, baseline 도입 전 볼륨)
+
+해결 — volume을 리셋해 db/init이 다시 돌게 한다 (heyvoca_dict는 MinIO에서 자동 재동기화):
+
+```bash
+docker compose -f docker-compose.local.yml down -v   # 볼륨까지 삭제
+docker compose -f docker-compose.local.yml up --build -d
+```
+
+볼륨 전체를 날리기 싫다면 `heyvoca_user`만 baseline으로 재구성:
+
+```bash
+docker exec heyvoca_mysql_local bash -c \
+  'mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "DROP DATABASE IF EXISTS heyvoca_user; CREATE DATABASE heyvoca_user CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL ON heyvoca_user.* TO \"voca\"@\"%\"; FLUSH PRIVILEGES;"'
+docker exec -i heyvoca_mysql_local bash -c \
+  'mysql -u root -p"$MYSQL_ROOT_PASSWORD"' < db/init/02_heyvoca_user_baseline.sql
+docker compose -f docker-compose.local.yml restart back
+```
 
 ### (선택) 시드 사용자 데이터
 
@@ -218,8 +246,8 @@ docker compose -f docker-compose.local.yml down
 docker volume rm heyvoca_service_mysql_local_data
 git pull
 docker compose -f docker-compose.local.yml up -d --build
-# → mysql 첫 기동: 두 schema 자동 생성
-# → back entrypoint: dict_sync로 사전 자동 import + 사용자 schema에 빈 테이블 생성
+# → mysql 첫 기동: 두 schema 자동 생성 + heyvoca_user baseline(02_*.sql) 부트스트랩
+# → back entrypoint: dict_sync로 사전 자동 import + flask db upgrade (baseline이 head라 no-op)
 ```
 
 ### 옵션 B: 데이터 보존 이행 (개인 테스트 데이터 유지)
