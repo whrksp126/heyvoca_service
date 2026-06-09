@@ -78,7 +78,11 @@ export const UserProvider = ({ children }) => {
         }
       }
       setUserProfile(result.data);
-      // 음성 설정(voice)을 localStorage에 동기화 → getTextSound가 참조(다기기 대응, best-effort)
+      // 음성 설정(목록+내 선택)을 미리 받아 localStorage에 캐시 → 설정 화면 즉시 렌더(매번 로딩 X).
+      // my-voices는 getTextSound가 참조(다기기 동기화). 모두 best-effort.
+      fetchDataAsync(`${backendUrl}/tts/voice-options`, 'GET', {})
+        .then((vo) => { if (vo?.code === 200 && vo.data) localStorage.setItem('ttsVoiceOptions', JSON.stringify(vo.data)); })
+        .catch(() => { /* noop */ });
       fetchDataAsync(`${backendUrl}/tts/my-voices`, 'GET', {})
         .then((mv) => { if (mv?.code === 200 && mv.data) localStorage.setItem('ttsVoices', JSON.stringify(mv.data)); })
         .catch(() => { /* noop */ });

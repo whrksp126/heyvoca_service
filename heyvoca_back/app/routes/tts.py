@@ -250,25 +250,32 @@ def tts_resolve():
 # ── 음성 설정: 엄선 voice 목록 + 사용자별 선택 ──────────────────────────
 @tts_bp.route('/voice-options', methods=['GET'])
 def tts_voice_options():
-    """음성 설정 화면용 엄선 voice 목록 + 언어 기본값 + 각 voice 샘플 presigned URL.
+    """음성 설정 화면용 엄선 voice 목록 + 언어 기본값(정적, 즉시 응답).
 
-    샘플은 고정 문구를 voice별로 한 번 생성·캐싱 → 이후 캐시 히트(무료 Edge).
+    샘플 미리듣기는 무겁지 않게 분리: /tts/voice-sample 에서 선택 voice 1개만 생성.
     """
-    out = {}
-    for lang, vlist in voice_catalog.CURATED_VOICES.items():
-        sample_text = voice_catalog.SAMPLE_TEXT.get(lang, '')
-        items = []
-        for v in vlist:
-            sample_url = None
-            if sample_text:
-                try:
-                    key, _ = service.ensure_cached(sample_text, lang, user_voice=v['voice'])
-                    sample_url = service.presigned_url(key)
-                except Exception:
-                    sample_url = None
-            items.append({**v, 'sample_url': sample_url})
-        out[lang] = items
-    return jsonify({'code': 200, 'data': {'voices': out, 'default': voice_catalog.DEFAULT_VOICE}})
+    return jsonify({'code': 200, 'data': {
+        'voices': voice_catalog.CURATED_VOICES,
+        'default': voice_catalog.DEFAULT_VOICE,
+    }})
+
+
+@tts_bp.route('/voice-sample', methods=['GET'])
+def tts_voice_sample():
+    """선택 voice의 고정 샘플 문구를 생성·캐싱해 presigned URL 반환(미리듣기용, 온디맨드)."""
+    language = request.args.get('language')
+    voice = request.args.get('voice')
+    if language not in _SUPPORTED_LANGS or not voice_catalog.is_valid_voice(language, voice):
+        return jsonify({'code': 400, 'message': '잘못된 언어/voice'}), 400
+    sample = voice_catalog.SAMPLE_TEXT.get(language, '')
+    if not sample:
+        return jsonify({'code': 400, 'message': '샘플 문구 없음'}), 400
+    try:
+        key, _ = service.ensure_cached(sample, language, user_voice=voice)
+        return jsonify({'code': 200, 'data': {'url': service.presigned_url(key)}})
+    except Exception:
+        # 미리듣기 실패는 치명적이지 않음 → 200+url:None (5xx면 Cloudflare가 가로챔)
+        return jsonify({'code': 200, 'data': {'url': None}})
 
 
 def _load_user_voices(user):

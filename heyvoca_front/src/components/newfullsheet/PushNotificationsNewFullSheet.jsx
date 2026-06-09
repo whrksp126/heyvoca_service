@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CaretLeft, CircleNotch } from '@phosphor-icons/react';
+import { CaretLeft } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
@@ -48,28 +48,29 @@ const PushNotificationsNewFullSheet = () => {
   const { popNewFullSheet } = useNewFullSheetActions();
   const { fcmToken, isLogin } = useUser();
 
-  // 알림 토글 상태
-  const [isStudyAllowed, setIsStudyAllowed] = useState(true);
-  const [isMarketingAllowed, setIsMarketingAllowed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // localStorage 캐시 우선 → 매번 로딩 없이 즉시 렌더. 마운트 후 백그라운드로 최신화.
+  const cachedPush = (() => {
+    try { return JSON.parse(localStorage.getItem('pushSettings')) || null; } catch (e) { return null; }
+  })();
+  const [isStudyAllowed, setIsStudyAllowed] = useState(cachedPush?.study ?? true);
+  const [isMarketingAllowed, setIsMarketingAllowed] = useState(cachedPush?.marketing ?? false);
 
-  // 백엔드에서 초기 상태 가져오기 로직
+  // 백엔드에서 최신 상태 동기화(백그라운드)
   useEffect(() => {
     const loadSettings = async () => {
       if (!isLogin || !fcmToken) return;
-
-      setIsLoading(true);
       try {
         const url = `${backendUrl}/fcm/get_notification_settings`;
         const result = await fetchDataAsync(url, 'POST', { fcm_token: fcmToken });
         if (result.code === 200) {
           setIsStudyAllowed(result.is_study_allowed);
           setIsMarketingAllowed(result.is_marketing_allowed);
+          try {
+            localStorage.setItem('pushSettings', JSON.stringify({ study: result.is_study_allowed, marketing: result.is_marketing_allowed }));
+          } catch (e) { /* noop */ }
         }
       } catch (error) {
         console.error('알림 설정 로드 실패:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -80,6 +81,7 @@ const PushNotificationsNewFullSheet = () => {
     vibrate({ duration: 5 });
     const newVal = !isStudyAllowed;
     setIsStudyAllowed(newVal);
+    try { localStorage.setItem('pushSettings', JSON.stringify({ study: newVal, marketing: isMarketingAllowed })); } catch (e) { /* noop */ }
 
     if (fcmToken) {
       try {
@@ -99,6 +101,7 @@ const PushNotificationsNewFullSheet = () => {
     vibrate({ duration: 5 });
     const newVal = !isMarketingAllowed;
     setIsMarketingAllowed(newVal);
+    try { localStorage.setItem('pushSettings', JSON.stringify({ study: isStudyAllowed, marketing: newVal })); } catch (e) { /* noop */ }
 
     if (fcmToken) {
       try {
@@ -168,26 +171,20 @@ const PushNotificationsNewFullSheet = () => {
 
       {/* Content */}
       <div className="flex flex-col gap-[10px] bg-layout-gray-50 dark:bg-layout-black">
-        {isLoading ? (
-          <div className="flex justify-center items-center py-10 bg-layout-white dark:bg-layout-black">
-            <CircleNotch className="animate-spin text-primary-main-500" size={32} />
-          </div>
-        ) : (
-          <ul className="flex flex-col">
-            <ToggleSwitch
-              label="학습 유도 알림"
-              description="오후 1시와 저녁 9시에 오늘의 남은 학습량을 알려드립니다."
-              checked={isStudyAllowed}
-              onChange={handleToggleStudy}
-            />
-            <ToggleSwitch
-              label="마케팅 혜택 알림"
-              description="이벤트, 할인 혜택, 업데이트 등 유용한 소식을 보내드립니다."
-              checked={isMarketingAllowed}
-              onChange={handleToggleMarketing}
-            />
-          </ul>
-        )}
+        <ul className="flex flex-col">
+          <ToggleSwitch
+            label="학습 유도 알림"
+            description="오후 1시와 저녁 9시에 오늘의 남은 학습량을 알려드립니다."
+            checked={isStudyAllowed}
+            onChange={handleToggleStudy}
+          />
+          <ToggleSwitch
+            label="마케팅 혜택 알림"
+            description="이벤트, 할인 혜택, 업데이트 등 유용한 소식을 보내드립니다."
+            checked={isMarketingAllowed}
+            onChange={handleToggleMarketing}
+          />
+        </ul>
       </div>
     </div>
   );
