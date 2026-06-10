@@ -27,6 +27,34 @@ from app.services.tts.base import (
 _SUPPORTED_LANGS = ('en', 'ko')
 _EXIST_FLAG_TTL = 7 * 24 * 3600   # 객체 존재 플래그 캐시 7일
 _DICTOK_TTL = 24 * 3600           # dict 검증 결과 캐시 24시간
+_URL_CACHE_MARGIN = 300           # presigned URL 캐시 TTL = presign TTL - margin(만료 직전 회피)
+
+
+def _url_key(object_key):
+    return f'tts:url:{object_key}'
+
+
+def _cached_presigned_url(object_key):
+    """presigned URL을 Redis에 캐싱해 동일 URL을 재사용한다.
+
+    매 요청마다 새 서명(X-Amz-Date 변동)을 반환하면 URL이 달라져 브라우저 HTTP
+    캐시가 mp3를 재사용하지 못한다. 동일 URL을 돌려주면 브라우저가 디스크 캐시로
+    재다운로드를 생략한다(presign 서명은 로컬 연산이라 캐싱 자체 비용은 작음).
+    """
+    uk = _url_key(object_key)
+    try:
+        cached = cache.get(uk)
+        if cached:
+            return cached
+    except Exception:
+        pass
+    url = service.presigned_url(object_key)
+    try:
+        ttl = int(current_app.config.get('TTS_PRESIGN_TTL', 3600))
+        cache.set(uk, url, timeout=max(60, ttl - _URL_CACHE_MARGIN))
+    except Exception:
+        pass
+    return url
 
 
 @tts_bp.route('/')
@@ -212,7 +240,7 @@ def tts_resolve():
             cache.set(flag_key, '1', timeout=_EXIST_FLAG_TTL)
 
     if obj_exists:
-        return jsonify({"url": service.presigned_url(object_key), "cached": True}), 200
+        return jsonify({"url": _cached_presigned_url(object_key), "cached": True}), 200
 
     # 2) miss → 생성(과금) 경로: 로그인 필수
     user_id = _optional_user_id()
@@ -250,7 +278,7 @@ def tts_resolve():
     _record_gen_stats(language, fallback)
 
     cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
-    return jsonify({"url": service.presigned_url(object_key), "cached": False, "fallback": fallback}), 200
+    return jsonify({"url": _cached_presigned_url(object_key), "cached": False, "fallback": fallback}), 200
 
 
 # ── 사전 캐싱(워밍): 학습/테스트 시작 전 캐시에 없는 음성만 미리 생성 ──────

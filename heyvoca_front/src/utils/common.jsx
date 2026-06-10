@@ -189,8 +189,102 @@ let currentRequestId = 0;
 let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
 let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸들
 
+// ── 클라이언트 TTS 오디오 prefetch 캐시 ─────────────────────────────────
+// presigned URL이 가리키는 mp3를 미리 받아 objectURL로 들고 있다가, 클릭 시
+// 네트워크 왕복 없이 즉시 재생한다(클릭=즉시). objectstore가 CORS를 허용하므로
+// fetch→blob 가능. 실패 시 prefetch는 null을 반환하고 getTextSound가 직접 재생으로 폴백.
+const ttsBlobCache = new Map();   // key -> objectURL
+const ttsInflight = new Map();    // key -> Promise<string|null>
+const TTS_BLOB_CACHE_MAX = 500;
+
+const ttsVoiceFor = (lang) => {
+  try {
+    const tv = JSON.parse(localStorage.getItem('ttsVoices') || '{}');
+    return tv && tv[lang] ? tv[lang] : '';
+  } catch (e) { return ''; }
+};
+
+const ttsCacheKey = (text, lang) => `${lang}::${ttsVoiceFor(lang)}::${text}`;
+
+// 백엔드 /tts/resolve만 호출해 presigned mp3 URL을 받는다(다운로드/blob 없음 → 빠름).
+// 캐시 miss(비로그인 등)나 실패 시 null. <audio>에 직접 물려 progressive 재생하는 용도.
+export const resolveTtsUrl = async (text, lang) => {
+  const t = (text ?? '').trim();
+  if (!t || (lang !== 'en' && lang !== 'ko')) return null;
+  try {
+    const fetchData = { text: t, language: lang };
+    const v = ttsVoiceFor(lang);
+    if (v) fetchData.voice = v;
+    const data = await fetchDataAsync(`${backendUrl}/tts/resolve`, 'GET', fetchData);
+    return (data && data.url) || null;
+  } catch (e) {
+    return null;
+  }
+};
+
+// 단일 텍스트의 mp3를 미리 받아 objectURL 캐시에 저장. 반환: objectURL | null
+export const prefetchTextSound = (text, lang) => {
+  const t = (text ?? '').trim();
+  if (!t || (lang !== 'en' && lang !== 'ko')) return Promise.resolve(null);
+  const key = ttsCacheKey(t, lang);
+  if (ttsBlobCache.has(key)) return Promise.resolve(ttsBlobCache.get(key));
+  if (ttsInflight.has(key)) return ttsInflight.get(key);
+
+  const p = (async () => {
+    try {
+      const url = await resolveTtsUrl(t, lang);
+      if (!url) return null;
+      const resp = await fetch(url);
+      if (!resp.ok) return null;
+      const blob = await resp.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      // 간단 FIFO 상한 관리
+      if (ttsBlobCache.size >= TTS_BLOB_CACHE_MAX) {
+        const firstKey = ttsBlobCache.keys().next().value;
+        const oldUrl = ttsBlobCache.get(firstKey);
+        ttsBlobCache.delete(firstKey);
+        try { URL.revokeObjectURL(oldUrl); } catch (e) { /* noop */ }
+      }
+      ttsBlobCache.set(key, objectUrl);
+      return objectUrl;
+    } catch (e) {
+      return null; // 실패 시 폴백(직접 재생)에 맡김
+    } finally {
+      ttsInflight.delete(key);
+    }
+  })();
+  ttsInflight.set(key, p);
+  return p;
+};
+
+// 목록을 동시성 제한으로 prefetch. 학습/테스트/결과 진입 시 백그라운드 호출.
+export const prefetchTtsList = async (items, concurrency = 4) => {
+  if (!Array.isArray(items) || items.length === 0) return;
+  const seen = new Set();
+  const queue = [];
+  for (const it of items) {
+    const t = (it?.text ?? '').trim();
+    const lang = it?.language;
+    if (!t || (lang !== 'en' && lang !== 'ko')) continue;
+    const k = `${lang}::${t}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    queue.push({ text: t, lang });
+  }
+  let idx = 0;
+  const worker = async () => {
+    while (idx < queue.length) {
+      const cur = queue[idx++];
+      await prefetchTextSound(cur.text, cur.lang);
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, queue.length) }, worker)
+  );
+};
+
 // 백엔드 /tts/resolve가 objectstore presigned URL을 JSON으로 반환 → 직접 재생.
-// (gTTS blob 즉석 생성에서 ElevenLabs + 캐싱으로 전환. 캐시 히트는 objectstore에서 바로 받아 지연 없음.)
+// 클라이언트 blob 캐시에 있으면 네트워크 없이 즉시 재생, 없으면 받아서(생성 포함) 재생.
 // 캐시 미스(비로그인 등)면 url이 없으므로 조용히 종료한다.
 export const getTextSound = async (text, lang) => {
   // 이전 재생의 cleanup을 먼저 호출하여 리스너 제거 + resolve.
@@ -210,29 +304,25 @@ export const getTextSound = async (text, lang) => {
   // 새로운 요청 ID 생성 (이전 요청과 구분하기 위해)
   const requestId = ++currentRequestId;
 
-  const url = `${backendUrl}/tts/resolve`;
-  const method = 'GET';
-  const fetchData = {
-    text: text,
-    language: lang
-  }
-  // 사용자가 선택한 voice(음성 설정) 반영. 미설정이면 서버 기본 voice 사용.
   try {
-    const tv = JSON.parse(localStorage.getItem('ttsVoices') || '{}');
-    if (tv && tv[lang]) fetchData.voice = tv[lang];
-  } catch (e) { /* 무시: 기본 voice로 진행 */ }
+    // 1) 클라이언트 blob 캐시 동기 조회 → 있으면 네트워크 없이 즉시 재생
+    const key = ttsCacheKey(text, lang);
+    let audioUrl = ttsBlobCache.get(key) || null;
 
-  try {
-    const data = await fetchDataAsync(url, method, fetchData);
-
-    // 요청이 완료되었지만, 이미 새로운 요청이 와서 이 요청이 무효화된 경우
-    if (requestId !== currentRequestId) {
-      return;
+    // 2) blob 캐시 miss → mp3 전체 다운로드를 기다리지 않고 presigned URL을 <audio>에
+    //    직접 물려 progressive 재생(받으면서 즉시 시작). 동시에 백그라운드로 blob을 받아
+    //    캐시를 채워 다음/반복 재생을 즉시화한다(prefetch는 inflight를 재사용).
+    if (!audioUrl) {
+      audioUrl = await resolveTtsUrl(text, lang);
+      // 받아오는 사이 더 새 요청이 왔으면 무효화
+      if (requestId !== currentRequestId) {
+        return;
+      }
+      if (audioUrl) prefetchTextSound(text, lang);
     }
 
-    const audioUrl = data && data.url;
     if (!audioUrl) {
-      // 캐시 미스(비로그인) 또는 응답 형식 불일치 — 음성 없이 조용히 종료
+      // 캐시 미스(비로그인) 또는 resolve 실패 — 음성 없이 조용히 종료
       return;
     }
 

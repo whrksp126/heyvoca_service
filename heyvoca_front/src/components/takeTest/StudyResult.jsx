@@ -11,7 +11,7 @@ import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.s
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
 import { getTextSound } from '../../utils/common';
-import { prewarmTts } from '../../api/tts';
+import { warmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
@@ -140,7 +140,7 @@ const StudyResult = () => {
       const m = Array.isArray(item?.meanings) ? item.meanings : [];
       if (m.length) items.push({ text: m.join(', '), language: 'ko' });
     });
-    prewarmTts(items);
+    warmTts(items);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

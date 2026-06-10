@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, BookOpenText, WarningCircle, HandsClapping, Leaf, Plant, Carrot, EggCrack, SpeakerHigh } from "@phosphor-icons/react";
-import { getTextSound } from '../../utils/common';
+import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import { analyzeLearningPattern } from '../../utils/common';
@@ -163,6 +163,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             setIsSpeaking(false);
           }
         })();
+      }
+
+      // 다음 1~2문제의 음성을 미리 받아 blob 캐시에 채워둔다 → 전환 시 즉시 재생.
+      for (let d = 1; d <= 2; d++) {
+        const nq = testQuestions[progressIndex + d];
+        if (!nq) break;
+        if (nq.origin) prefetchTextSound(nq.origin, 'en');
+        if (Array.isArray(nq.words)) {
+          nq.words.forEach(w => { if (w?.origin) prefetchTextSound(w.origin, 'en'); });
+        }
       }
       const stability = question.fsrs?.stability ?? 0;
       const fsrsState = question.fsrs?.state ?? null;

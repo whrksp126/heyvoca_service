@@ -9,7 +9,7 @@ import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
-import { prewarmTts, collectTestTexts } from '../api/tts';
+import { warmTts, collectTestTexts } from '../api/tts';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -270,8 +270,8 @@ const TakeTest = () => {
   const warmSession = (questions) => {
     if (!Array.isArray(questions) || questions.length === 0) return;
 
-    // ① TTS 사전 캐싱
-    prewarmTts(collectTestTexts(questions));
+    // ① TTS 사전 캐싱 + 클라이언트 blob prefetch (클릭/자동재생 즉시화)
+    warmTts(collectTestTexts(questions));
 
     // ② 복습 예정일 예측 — 각 문제(및 cardMatch 내부 단어)에 predictedReview 부착
     const ids = [];

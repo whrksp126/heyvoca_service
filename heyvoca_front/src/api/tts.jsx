@@ -1,4 +1,4 @@
-import { backendUrl, fetchDataAsync } from '../utils/common';
+import { backendUrl, fetchDataAsync, prefetchTtsList } from '../utils/common';
 
 // localStorage의 사용자 voice 설정 (getTextSound/resolve와 동일 키 사용)
 const getUserVoices = () => {
@@ -34,6 +34,18 @@ export const prewarmTts = async (items) => {
   } catch (e) {
     console.warn('[TTS] prewarm 실패:', e);
   }
+};
+
+// 세션 시작 시 워밍 2단계:
+//  ① 서버 prewarm — 캐시에 없는 음성만 생성(객체 존재 보장). 1요청으로 배치 생성해 resolve 레이트리밋 회피.
+//  ② 클라이언트 prefetch — mp3 blob을 미리 받아둠 → 클릭/자동재생 시 네트워크 없이 즉시 재생.
+// fire-and-forget으로 호출(학습 진입을 막지 않음). ②는 ①이 객체를 만들어둔 뒤 실행해 대부분 캐시 히트.
+export const warmTts = async (items) => {
+  if (!Array.isArray(items) || items.length === 0) return;
+  try {
+    await prewarmTts(items);
+  } catch (e) { /* 서버 prewarm 실패해도 prefetch가 개별 생성으로 폴백 */ }
+  prefetchTtsList(items);
 };
 
 // 테스트 문제 목록에서 자동 재생되는 텍스트(영어 단어) 수집.

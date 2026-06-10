@@ -3,7 +3,7 @@ import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh, Timer }
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { backendUrl, fetchDataAsync, getTextSound, stripHtmlTags, isWordOverdue } from '../../utils/common';
+import { backendUrl, fetchDataAsync, getTextSound, prefetchTtsList, stripHtmlTags, isWordOverdue } from '../../utils/common';
 import MemorizationStatus from '../common/MemorizationStatus';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
@@ -129,6 +129,17 @@ const Main = () => {
   useEffect(() => {
     if (selectedWord) {
       document.documentElement.dataset.scrollHidden = 'false';
+      // 선택 단어의 단어/뜻/예문 음성을 미리 받아둠 → 클릭 시 즉시 재생
+      const items = [];
+      if (selectedWord.word) items.push({ text: selectedWord.word, language: 'en' });
+      (selectedWord.meanings || []).forEach(m => {
+        const t = stripHtmlTags(m); if (t) items.push({ text: t, language: 'ko' });
+      });
+      (selectedWord.examples || []).forEach(ex => {
+        const en = stripHtmlTags(ex?.origin || ''); if (en) items.push({ text: en, language: 'en' });
+        const ko = stripHtmlTags(ex?.meaning || ''); if (ko) items.push({ text: ko, language: 'ko' });
+      });
+      prefetchTtsList(items);
     }
   }, [selectedWord]);
 

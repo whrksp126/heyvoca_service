@@ -65,7 +65,7 @@ class Config:
     ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
     ELEVENLABS_BASE_URL = os.getenv('ELEVENLABS_BASE_URL', 'https://api.elevenlabs.io')
     TTS_PREFIX = os.getenv('TTS_PREFIX', 'tts')                 # object key 최상위 폴더
-    TTS_PRESIGN_TTL = int(os.getenv('TTS_PRESIGN_TTL', 3600))   # presigned GET URL 만료(초)
+    TTS_PRESIGN_TTL = int(os.getenv('TTS_PRESIGN_TTL', 21600))  # presigned GET URL 만료(초, 6h) — URL 캐싱으로 브라우저 재사용
     TTS_MAX_CHARS = int(os.getenv('TTS_MAX_CHARS', 500))        # 생성 허용 텍스트 길이 상한
     TTS_GENERATE_REQUIRE_DICT = os.getenv('TTS_GENERATE_REQUIRE_DICT', 'true').lower() == 'true'
     TTS_RATE_LIMIT = os.getenv('TTS_RATE_LIMIT', '30 per minute')  # 생성(miss) 경로 rate limit

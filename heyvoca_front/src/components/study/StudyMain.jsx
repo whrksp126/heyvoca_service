@@ -6,8 +6,8 @@ import StudyHeader from './StudyHeader';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import MemorizationStatus from '../common/MemorizationStatus';
-import { getTextSound, stopCurrentSound } from '../../utils/common';
-import { prewarmTts, collectStudyTexts } from '../../api/tts';
+import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
+import { warmTts, collectStudyTexts } from '../../api/tts';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import { AppHistory } from '../../utils/appHistory';
@@ -139,6 +139,10 @@ const StudyMain = ({ words }) => {
       const currentWord = wordsRef.current[cardIdx];
       if (!currentWord) return;
 
+      // 현재 카드 재생 동안 다음 카드 음성을 미리 받아 둔다 → 카드 전환 시 즉시 재생.
+      const nextWord = wordsRef.current[cardIdx + 1];
+      if (nextWord) prefetchTtsList(collectStudyTexts([nextWord]));
+
       const { playbackOrder } = settingsRef.current;
       const meaningsList = currentWord.meanings || [];
       const examplesList = currentWord.examples || [];
@@ -240,8 +244,8 @@ const StudyMain = ({ words }) => {
 
   // 마운트 시 자동 재생 시작. 언마운트 시 모든 비동기 체인(setTimeout/audio) 정리.
   useEffect(() => {
-    // 캐시에 없는 음성만 미리 생성(워밍) — 학습 중 첫 재생 지연 제거. fire-and-forget.
-    prewarmTts(collectStudyTexts(words));
+    // 서버 캐싱 + 클라이언트 blob prefetch — 학습 중 재생 지연 제거. fire-and-forget.
+    warmTts(collectStudyTexts(words));
     setIsPlaying(true);
     startPlayback(0);
     return () => {
