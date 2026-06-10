@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -6,12 +6,56 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { PreviewBookStoreNewFullSheet } from '../newfullsheet/PreviewBookStoreNewFullSheet';
 import { BuyEmptyBookNewBottomSheet } from '../newBottomSheet/BuyEmptyBookNewBottomSheet';
-import { getBookStoreDetailApi } from '../../api/bookStore';
+import { getBookStoreDetailApi, getRecommendedBookStoreApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
 import gem from '../../assets/images/gem.png';
 
 const ALL_CATEGORY = '전체';
 const EMPTY_BOOK_PRICE = 10;
+const RECOMMEND_LIMIT = 3;
+
+const BookCard = ({ item, onClick, className = '' }) => (
+  <motion.li
+    key={item.id}
+    style={{ backgroundColor: item.color.background }}
+    className={`
+      flex flex-col gap-[15px] justify-between
+      p-[20px]
+      rounded-[12px]
+      cursor-pointer
+      shadow-sm
+      aspect-square
+      ${className}
+    `}
+    whileTap={{ scale: 0.96 }}
+    whileHover={{ scale: 1.04 }}
+    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+    onClick={onClick}
+  >
+    <div className="flex flex-col gap-[5px]">
+      {item.category && (
+        <div
+          style={{ backgroundColor: item.color.main }}
+          className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] text-[8px] font-[700] text-layout-white"
+        >
+          {item.category}
+        </div>
+      )}
+      <h2 className="font-[700] text-[16px] text-layout-black">{item.name}</h2>
+    </div>
+    <div className="flex items-end justify-between">
+      <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black">
+        <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
+      </span>
+      <div
+        style={{ color: item.color.main, backgroundColor: item.color.sub }}
+        className="flex items-center justify-center w-[30px] h-[30px] rounded-[50px] text-[16px]"
+      >
+        <Plus />
+      </div>
+    </div>
+  </motion.li>
+);
 
 const BookSection = () => {
   "use memo";
@@ -22,6 +66,8 @@ const BookSection = () => {
 
   const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+  const [recommendedBooks, setRecommendedBooks] = useState([]);
+  const [isRecommendedLoading, setIsRecommendedLoading] = useState(false);
 
   const categories = useMemo(() => {
     const set = new Set();
@@ -35,6 +81,44 @@ const BookSection = () => {
     if (selectedCategory === ALL_CATEGORY) return bookStore;
     return bookStore.filter((b) => b.category === selectedCategory);
   }, [bookStore, selectedCategory]);
+
+  const usesScrollableRecommendations = recommendedBooks.length >= 3;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchRecommendedBooks = async () => {
+      try {
+        setIsRecommendedLoading(true);
+        const result = await getRecommendedBookStoreApi(RECOMMEND_LIMIT);
+        if (!isMounted || result?.code !== 200) {
+          if (isMounted) setRecommendedBooks([]);
+          return;
+        }
+
+        const recommendations = Array.isArray(result?.data?.recommendations)
+          ? result.data.recommendations
+          : [];
+        const visibleRecommendations = recommendations
+          .filter((item) => !item.owned)
+          .slice(0, RECOMMEND_LIMIT);
+        setRecommendedBooks(visibleRecommendations);
+      } catch (error) {
+        if (isMounted) {
+          console.error('추천 단어장 조회 오류:', error);
+          setRecommendedBooks([]);
+        }
+      } finally {
+        if (isMounted) setIsRecommendedLoading(false);
+      }
+    };
+
+    fetchRecommendedBooks();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleBookStoreClick = async (id) => {
     try {
@@ -79,6 +163,35 @@ const BookSection = () => {
       <h3 className="text-center text-[16px] font-[700] text-layout-black dark:text-layout-white">
         단어장
       </h3>
+
+      {!isRecommendedLoading && recommendedBooks.length > 0 && (
+        <div className="flex flex-col gap-[10px] px-[16px]">
+          <div className="flex flex-col gap-[2px]">
+            <h4 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
+              추천 단어장
+            </h4>
+            <p className="text-[12px] font-[500] text-layout-gray-300">
+              현재 레벨에 맞춰 골랐어요
+            </p>
+          </div>
+          <ul
+            className={
+              usesScrollableRecommendations
+                ? 'flex gap-[15px] overflow-x-auto scrollbar-hide pb-[4px] -mx-[16px] px-[16px]'
+                : 'grid grid-cols-2 gap-[15px]'
+            }
+          >
+            {recommendedBooks.map((item) => (
+              <BookCard
+                key={`recommended-${item.id}`}
+                item={item}
+                onClick={() => handleBookStoreClick(item.id)}
+                className={usesScrollableRecommendations ? 'w-[160px] min-w-[160px] flex-shrink-0' : ''}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* 카테고리 필터 칩 */}
       <div className="px-[16px]">
@@ -150,45 +263,11 @@ const BookSection = () => {
         )}
 
         {filteredBooks.map((item) => (
-          <motion.li
+          <BookCard
             key={item.id}
-            style={{ backgroundColor: item.color.background }}
-            className="
-              flex flex-col gap-[15px] justify-between
-              p-[20px]
-              rounded-[12px]
-              cursor-pointer
-              shadow-sm
-              aspect-square
-            "
-            whileTap={{ scale: 0.96 }}
-            whileHover={{ scale: 1.04 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            item={item}
             onClick={() => handleBookStoreClick(item.id)}
-          >
-            <div className="flex flex-col gap-[5px]">
-              {item.category && (
-                <div
-                  style={{ backgroundColor: item.color.main }}
-                  className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] text-[8px] font-[700] text-layout-white"
-                >
-                  {item.category}
-                </div>
-              )}
-              <h2 className="font-[700] text-[16px] text-layout-black">{item.name}</h2>
-            </div>
-            <div className="flex items-end justify-between">
-              <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black">
-                <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
-              </span>
-              <div
-                style={{ color: item.color.main, backgroundColor: item.color.sub }}
-                className="flex items-center justify-center w-[30px] h-[30px] rounded-[50px] text-[16px]"
-              >
-                <Plus />
-              </div>
-            </div>
-          </motion.li>
+          />
         ))}
       </ul>
 
