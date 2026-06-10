@@ -178,8 +178,9 @@ const Main = () => {
       ]);
 
       const lowerQuery = query.toLowerCase();
+      // 선택한 단어와 완전 일치하는 내 단어만 노출 (부분 일치 시 tea→teach 등 섞임)
       const myMatches = Object.values(userDictionary).filter(
-        word => word.origin?.toLowerCase().startsWith(lowerQuery)
+        word => word.origin?.toLowerCase() === lowerQuery
       );
       setMyWordResults(myMatches);
 

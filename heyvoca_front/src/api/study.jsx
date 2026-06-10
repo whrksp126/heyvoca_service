@@ -135,6 +135,27 @@ export const logStudyQuestion = async (payload) => {
   return result;
 };
 
+// 오늘(KST) 처음 학습한 새 단어 수(누적) 조회
+// GET /study/today-summary → { code:200, data:{ new_words } }
+export const getTodaySummary = async () => {
+  const url = `${backendUrl}/study/today-summary`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getTodaySummary 오류:', error);
+  }
+};
+
+// 정답/오답별 복습 예정일 미리 계산 (채점 시 즉시·고정 표시용)
+// POST /study/predict-reviews
+// 응답: { code:200, data: { "<user_voca_id>": { correct:{...}, wrong:{...} } } }
+export const predictReviews = async (userVocaIds) => {
+  if (!Array.isArray(userVocaIds) || userVocaIds.length === 0) return null;
+  const url = `${backendUrl}/study/predict-reviews`;
+  const items = userVocaIds.map(id => ({ user_voca_id: id }));
+  return await fetchDataAsync(url, 'POST', { items });
+};
+
 // 학습 세션 종료
 // POST /study/sessions/<session_id>/finish
 export const finishStudySession = async (sessionId) => {

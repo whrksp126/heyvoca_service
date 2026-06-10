@@ -298,7 +298,10 @@ def search_bookstore_word():
     if not partial_word or len(partial_word) < 2:
         return jsonify({'code': 400, 'message': '잘못된 요청'}), 400
 
-    search_pattern = f'{partial_word}%'
+    # 사전 페이지에서 사용자가 선택한 단어 기준 — 완전 일치만 노출
+    # (부분 일치 시 "tea"에 teamwork 등이 섞여 나옴). MySQL 기본 collation이
+    # 대소문자 무시라 "tea" = "Tea" 로 매칭됨.
+    exact_word = partial_word
 
     # NOTE: 모든 사전 테이블에 heyvoca_dict.* prefix — default bind는 heyvoca_user이라.
     query = text("""
@@ -315,12 +318,12 @@ def search_bookstore_word():
         JOIN heyvoca_dict.voca v ON avbm.voca_id = v.id
         LEFT JOIN heyvoca_dict.voca_meaning_map vmm ON v.id = vmm.voca_id
         LEFT JOIN heyvoca_dict.voca_meaning vm ON vmm.meaning_id = vm.id
-        WHERE v.word LIKE :pattern
+        WHERE v.word = :word
           AND bs.hide = 0
         GROUP BY bs.id, v.id
         LIMIT 10
     """)
-    results = db.session.execute(query, {'pattern': search_pattern}).fetchall()
+    results = db.session.execute(query, {'word': exact_word}).fetchall()
 
     data = []
     for row in results:

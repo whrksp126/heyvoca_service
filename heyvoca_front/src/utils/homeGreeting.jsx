@@ -5,7 +5,7 @@
 
 const SESSION_FRESH_MS = 5 * 60 * 1000; // 학습 직후 5분 이내면 세션 멘트 사용
 
-export function getHomeGreeting(stats, sessionResult = null) {
+export function getHomeGreeting(stats, sessionResult = null, todayNewWords = 0) {
   const {
     total      = 0,
     unlearned  = 0,
@@ -50,11 +50,13 @@ export function getHomeGreeting(stats, sessionResult = null) {
       };
     }
 
-    // A3. 새 단어를 처음 학습했음
+    // A3. 새 단어를 처음 학습했음 — 표시는 오늘 누적(todayNewWords) 기준.
+    // (직전 세션만이 아니라 오늘 여러 번 학습한 새 단어 합계로 동기부여)
     if (newLearnedCount >= 1) {
+      const shownNew = todayNewWords >= newLearnedCount ? todayNewWords : newLearnedCount;
       return {
         line1: '잘했어요!',
-        line2: <><strong>새 단어 {newLearnedCount}개</strong>가</>,
+        line2: <><strong>새 단어 {shownNew}개</strong>가</>,
         line3: '자라기 시작했어요',
       };
     }

@@ -11,6 +11,7 @@ import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.s
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
 import { getTextSound } from '../../utils/common';
+import { prewarmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
@@ -127,6 +128,20 @@ const StudyResult = () => {
     if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "end") {
       updateUserHistoryAndNavigate()
     }
+  }, [])
+
+  // 결과 페이지 TTS 사전 캐싱 — 단어 클릭/뜻 클릭이 보내는 텍스트를 그대로 워밍.
+  // (뜻은 meanings.join(", ") 형태라 학습 중 개별 뜻 워밍과 다름 → 여기서 별도 워밍)
+  // 캐시 미스면 클릭 후 생성에 시간이 걸려 autoplay 제스처가 만료되어 소리가 안 나므로 미리 캐싱.
+  useEffect(() => {
+    const items = [];
+    (testQuestions || []).forEach((item) => {
+      if (item?.origin) items.push({ text: item.origin, language: 'en' });
+      const m = Array.isArray(item?.meanings) ? item.meanings : [];
+      if (m.length) items.push({ text: m.join(', '), language: 'ko' });
+    });
+    prewarmTts(items);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const updateUserHistoryAndNavigate = async () => {

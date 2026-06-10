@@ -253,6 +253,96 @@ def tts_resolve():
     return jsonify({"url": service.presigned_url(object_key), "cached": False, "fallback": fallback}), 200
 
 
+# ── 사전 캐싱(워밍): 학습/테스트 시작 전 캐시에 없는 음성만 미리 생성 ──────
+@tts_bp.route('/prewarm', methods=['POST'])
+@jwt_required
+def tts_prewarm():
+    """학습/테스트 시작 전 호출. 선택된 단어 목록의 음성을 미리 생성·업로드해
+    실제 학습 중 첫 재생 지연을 없앤다. **캐시에 없는 것만** 생성(컴퓨팅 낭비 방지).
+
+    클라이언트가 /tts/resolve 와 동일한 voice(localStorage ttsVoices)를 보내야
+    object key가 일치해 재생 시 캐시 히트한다.
+
+    요청: { "items": [ {"text", "language", "voice"?}, ... ] }
+    응답: { "code":200, "data": {"requested","cached","generated","failed"} }
+    """
+    user_id = g.user_id
+    body = request.get_json(silent=True) or {}
+    items = body.get('items')
+    if not isinstance(items, list) or not items:
+        return jsonify({"code": 400, "message": "items는 필수입니다."}), 400
+
+    max_chars    = current_app.config.get('TTS_MAX_CHARS', 500)
+    require_dict = current_app.config.get('TTS_GENERATE_REQUIRE_DICT', True)
+    daily_cap    = int(current_app.config.get('TTS_DAILY_GEN_CAP', 1000))
+    # 요청당 생성 상한 — sync worker 장시간 점유 방지. 초과분은 온디맨드(/resolve)로 처리.
+    gen_budget   = int(current_app.config.get('TTS_PREWARM_MAX_GEN', 80))
+
+    requested = cached = generated = failed = 0
+    seen_keys = set()
+
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        text = it.get('text')
+        language = it.get('language')
+        if not text or language not in _SUPPORTED_LANGS:
+            continue
+        norm = normalize_text(text)
+        if not norm or len(norm) > max_chars:
+            continue
+        try:
+            provider = get_provider_for_language(language)
+            voice = voice_catalog.resolve_voice(language, it.get('voice'))
+            object_key = service.object_key_for(provider, language, norm, user_voice=voice)
+        except TTSError:
+            continue
+        if object_key in seen_keys:
+            continue
+        seen_keys.add(object_key)
+        requested += 1
+
+        # 존재 확인: Redis 플래그 → MinIO list
+        flag_key = _flag_key(object_key)
+        obj_exists = bool(cache.get(flag_key))
+        if not obj_exists:
+            try:
+                obj_exists = service.exists(object_key)
+            except TTSError:
+                obj_exists = False
+            if obj_exists:
+                cache.set(flag_key, '1', timeout=_EXIST_FLAG_TTL)
+        if obj_exists:
+            cached += 1
+            continue
+
+        # 캐시 없음 → 생성. 요청당/일일 상한, 사전 실재 검증은 resolve와 동일 정책.
+        if generated >= gen_budget:
+            continue
+        if require_dict and not _exists_in_dict(norm, language):
+            continue
+        if daily_cap and _daily_gen_count(user_id) > daily_cap:
+            break  # 일일 한도 초과 → 중단
+
+        requested_key = object_key
+        try:
+            object_key, _created = service.ensure_cached(text, language, provider=provider, user_voice=voice)
+        except TTSError:
+            logging.getLogger(__name__).warning('TTS prewarm 생성 실패', exc_info=True)
+            failed += 1
+            continue
+        _record_gen_stats(language, object_key != requested_key)
+        cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
+        generated += 1
+
+    return jsonify({"code": 200, "data": {
+        "requested": requested,
+        "cached":    cached,
+        "generated": generated,
+        "failed":    failed,
+    }}), 200
+
+
 # ── 음성 설정: 엄선 voice 목록 + 사용자별 선택 ──────────────────────────
 @tts_bp.route('/voice-options', methods=['GET'])
 def tts_voice_options():

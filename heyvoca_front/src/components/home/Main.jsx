@@ -1,5 +1,5 @@
 // src/components/home/main
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import logo_h from '../../assets/images/logo_h.png';
@@ -20,6 +20,7 @@ import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
+import { getTodaySummary } from '../../api/study';
 
 
 // import StoreSheet from './StoreSheet';
@@ -107,7 +108,8 @@ const Main = () => {
   const { userMainPage, userProfile } = useUser();
   const { isDark } = useTheme();
   const { vocabularySheets, memoryStats, lastSessionResult } = useVocabulary();
-  const greeting = getHomeGreeting(memoryStats, lastSessionResult);
+  const [todayNewWords, setTodayNewWords] = useState(0);
+  const greeting = getHomeGreeting(memoryStats, lastSessionResult, todayNewWords);
 
   // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
@@ -140,6 +142,17 @@ const Main = () => {
   useEffect(() => {
     fetchUserCheckin();
   }, []);
+
+  // 오늘 누적 새 단어 수 조회 (학습 직후 lastSessionResult 변경 시 갱신)
+  useEffect(() => {
+    let alive = true;
+    getTodaySummary().then(res => {
+      if (alive && res?.code === 200) {
+        setTodayNewWords(res.data?.new_words ?? 0);
+      }
+    });
+    return () => { alive = false; };
+  }, [lastSessionResult?.completedAt]);
 
   // React Compiler가 자동으로 useCallback 처리
   const handleStoreButtonClick = () => {

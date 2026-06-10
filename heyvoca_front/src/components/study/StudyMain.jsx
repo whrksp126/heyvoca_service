@@ -7,6 +7,7 @@ import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewB
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { getTextSound, stopCurrentSound } from '../../utils/common';
+import { prewarmTts, collectStudyTexts } from '../../api/tts';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import { AppHistory } from '../../utils/appHistory';
@@ -239,6 +240,8 @@ const StudyMain = ({ words }) => {
 
   // 마운트 시 자동 재생 시작. 언마운트 시 모든 비동기 체인(setTimeout/audio) 정리.
   useEffect(() => {
+    // 캐시에 없는 음성만 미리 생성(워밍) — 학습 중 첫 재생 지연 제거. fire-and-forget.
+    prewarmTts(collectStudyTexts(words));
     setIsPlaying(true);
     startPlayback(0);
     return () => {

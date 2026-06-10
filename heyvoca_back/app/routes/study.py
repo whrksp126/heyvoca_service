@@ -380,6 +380,122 @@ def post_study_log():
     }), 200
 
 
+@study_bp.route('/today-summary', methods=['GET'])
+@jwt_required
+def today_summary():
+    """오늘(KST) 처음 학습한 새 단어 수(누적).
+
+    state_before가 new/없음인 로그의 distinct user_voca_id 수 → 한 단어를
+    여러 세션에서 학습해도 1회만 계산. 메인 동기부여 멘트("새 단어 N개")용.
+    """
+    user_id = UUID(g.user_id)
+    utc_now = dt.datetime.utcnow()
+    # KST 오늘 자정 = UTC 어제 15:00 (_fetch_user_stats와 동일 계산)
+    kst_today_midnight_utc = dt.datetime(
+        utc_now.year, utc_now.month, utc_now.day, 0, 0, 0
+    ) - dt.timedelta(hours=9)
+
+    rows = (
+        db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
+        .filter(
+            UserStudyLog.user_id == user_id,
+            UserStudyLog.created_at >= kst_today_midnight_utc,
+        )
+        .all()
+    )
+
+    new_ids = set()
+    for vid, state_before in rows:
+        is_new = False
+        if not state_before:
+            is_new = True
+        else:
+            try:
+                st = json.loads(state_before)
+                if not st or st.get('state') in ('new', None):
+                    is_new = True
+            except Exception:
+                is_new = False
+        if is_new:
+            new_ids.add(vid)
+
+    return jsonify({'code': 200, 'data': {'new_words': len(new_ids)}}), 200
+
+
+@study_bp.route('/predict-reviews', methods=['POST'])
+@jwt_required
+def predict_reviews():
+    """정답/오답 각각의 복습 예정일을 미리 계산(미저장).
+
+    학습/테스트 시작 시 호출 → 채점 순간 즉시·고정 표시로 깜빡임 제거.
+    실제 /study/log 채점은 속도 기반 rating(GOOD/EASY 등)이라 값이 미세하게
+    다를 수 있으나, 표시값은 안정적 추정(정답=GOOD, 오답=AGAIN)으로 고정한다.
+
+    요청: { "items": [ {"user_voca_id": 123}, ... ] }
+    응답: { "code":200, "data": {
+             "<user_voca_id>": {
+               "correct": {"next_review","stability","state"},
+               "wrong":   {"next_review","stability","state"}
+             }, ... } }
+    """
+    from app.services.fsrs.state import (
+        parse_user_voca_data, get_fsrs_state, migrate_v1_to_v2, is_v1,
+    )
+    from app.services.fsrs.scheduler import review as fsrs_review
+    from app.services.fsrs.core import GOOD, AGAIN
+
+    user_id = UUID(g.user_id)
+    req = request.get_json(silent=True) or {}
+    items = req.get('items')
+    if not isinstance(items, list) or not items:
+        return jsonify({'code': 400, 'message': 'items는 필수입니다.'}), 400
+
+    ids = []
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        vid = it.get('user_voca_id')
+        if vid is None:
+            continue
+        try:
+            ids.append(int(vid))
+        except (TypeError, ValueError):
+            continue
+    ids = list(set(ids))
+    if not ids:
+        return jsonify({'code': 200, 'data': {}}), 200
+
+    now = dt.datetime.utcnow()
+
+    rows = (
+        db.session.query(UserVoca)
+        .filter(UserVoca.user_id == user_id, UserVoca.id.in_(ids))
+        .all()
+    )
+
+    def _slim(state: dict) -> dict:
+        return {
+            'next_review': state.get('next_review'),
+            'stability':   state.get('stability'),
+            'state':       state.get('state'),
+        }
+
+    data = {}
+    for uv in rows:
+        try:
+            payload = parse_user_voca_data(uv.data)
+            if is_v1(payload):
+                payload = migrate_v1_to_v2(payload)
+            fsrs_before = get_fsrs_state(payload) or {}
+            correct = fsrs_review(fsrs_before, GOOD, now)
+            wrong   = fsrs_review(fsrs_before, AGAIN, now)
+            data[str(uv.id)] = {'correct': _slim(correct), 'wrong': _slim(wrong)}
+        except Exception:
+            continue  # 단어 단위 실패는 건너뜀 → 클라이언트가 낙관적 추정으로 폴백
+
+    return jsonify({'code': 200, 'data': data}), 200
+
+
 def _fetch_user_stats(user_id: UUID) -> dict:
     """
     추천 알고리즘에 필요한 사용자 통계를 1쿼리로 묶어 조회.

@@ -8,7 +8,8 @@ import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
-import { getStudyRecommend, finishStudySession } from '../api/study';
+import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
+import { prewarmTts, collectTestTexts } from '../api/tts';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -264,6 +265,38 @@ const TakeTest = () => {
     return { testQuestions, sessionId, composition, compositionStrategy };
   };
 
+  // 세션 시작 시 워밍: ① 캐시에 없는 TTS 미리 생성, ② 정답/오답 복습 예정일 미리 계산.
+  // 둘 다 백그라운드(fire-and-forget) — 학습 진입을 막지 않는다.
+  const warmSession = (questions) => {
+    if (!Array.isArray(questions) || questions.length === 0) return;
+
+    // ① TTS 사전 캐싱
+    prewarmTts(collectTestTexts(questions));
+
+    // ② 복습 예정일 예측 — 각 문제(및 cardMatch 내부 단어)에 predictedReview 부착
+    const ids = [];
+    const pushId = (id) => { if (id != null) ids.push(id); };
+    for (const q of questions) {
+      pushId(q.vocaIndexId ?? q.id);
+      if (Array.isArray(q.words)) q.words.forEach(w => pushId(w.id));
+    }
+    const uniqueIds = [...new Set(ids)];
+    if (uniqueIds.length === 0) return;
+    predictReviews(uniqueIds).then(res => {
+      const map = res?.data;
+      if (!map) return;
+      const attach = (obj, id) => {
+        const p = map[id] ?? map[String(id)];
+        if (p) obj.predictedReview = p;
+      };
+      for (const q of questions) {
+        attach(q, q.vocaIndexId ?? q.id);
+        if (Array.isArray(q.words)) q.words.forEach(w => attach(w, w.id));
+      }
+      setTestQuestions(prev => [...prev]);
+    }).catch(() => { /* 예측 실패 시 기존 낙관적 추정으로 폴백 */ });
+  };
+
   useEffect(() => {
     const initializeTest = async () => {
       if (isRecentStudyLoading || isVocabularySheetsLoading) return;
@@ -281,6 +314,7 @@ const TakeTest = () => {
           setTestQuestions(studyData);
           setProgressIndex(recentStudy[state.testType].progress_index);
           setIsTestQuestionsSetting(false);
+          warmSession(studyData);
           return;
         }
         // 잘못된 캐시 → else 블록으로 fall-through해서 재생성
@@ -322,6 +356,7 @@ const TakeTest = () => {
 
           setTestQuestions(tempTestQuestions);
           setIsTestQuestionsSetting(false);
+          warmSession(tempTestQuestions);
         } catch (e) {
           console.error('[TakeTest] 학습 데이터 초기화 실패:', e);
           window.alert('학습을 시작할 수 없어요. 잠시 후 다시 시도해주세요');

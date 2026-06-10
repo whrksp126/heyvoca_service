@@ -12,6 +12,7 @@ import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
 import { logStudyQuestion } from '../../api/study';
+import { getAdvanceDelay } from '../../utils/studyTiming';
 
 
 const iconComponentMap = {
@@ -194,6 +195,28 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     handleClickExamOption(index, option);
   }
 
+  // 채점 직후 즉시 표시할 낙관적 fsrs + 복습 예정일 고정 + 암기상태 변경 알림.
+  // predictedReview(백엔드 사전 계산)가 있으면 정확값으로 displayNextReview를 고정해
+  // 이후 /study/log 응답에도 흔들리지 않게 한다(깜빡임 제거). 없으면 낙관적 추정으로 폴백.
+  const applyOptimisticGrade = (idx, isCorrectAnswer) => {
+    const q = testQuestions[idx];
+    const predicted = q.predictedReview?.[isCorrectAnswer ? 'correct' : 'wrong'];
+    const optimistic = computeOptimisticFsrs(q.fsrs, isCorrectAnswer);
+    q.displayNextReview = predicted?.next_review ?? optimistic.next_review;
+    q.fsrs = optimistic; // 추정 fsrs — 백엔드 응답 도착 시 갱신(배지/홈 카운터용)
+    setTestQuestions([...testQuestions]);
+    const dispStability = predicted?.stability ?? optimistic.stability;
+    const dispState = predicted?.state ?? optimistic.state;
+    const newStateKey = getMemoryStateKeyByStability(dispStability, dispState);
+    if (prevMemoryState && prevMemoryState !== newStateKey) {
+      setMemoryStateChange({
+        from: stateNameMap[prevMemoryState] ?? prevMemoryState,
+        to: stateNameMap[newStateKey] ?? newStateKey,
+        stateKey: newStateKey,
+      });
+    }
+  }
+
   // React Compiler가 자동으로 useCallback 처리
   // 아래 버튼 클릭 시
   const handleClickNext = async () => {
@@ -237,18 +260,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 낙관적 UI: 답변 직후 즉시 임시 fsrs + 암기상태 변경 알림
     {
       const isCorrectAnswer = resultIndex === userSelected;
-      const prevFsrs = testQuestions[progressIndex].fsrs;
-      const optimistic = computeOptimisticFsrs(prevFsrs, isCorrectAnswer);
-      testQuestions[progressIndex].fsrs = optimistic;
-      setTestQuestions([...testQuestions]);
-      const newStateKey = getMemoryStateKeyByStability(optimistic.stability, optimistic.state);
-      if (prevMemoryState && prevMemoryState !== newStateKey) {
-        setMemoryStateChange({
-          from: stateNameMap[prevMemoryState] ?? prevMemoryState,
-          to: stateNameMap[newStateKey] ?? newStateKey,
-          stateKey: newStateKey,
-        });
-      }
+      applyOptimisticGrade(progressIndex, isCorrectAnswer);
     }
 
     if (studySessionRef?.current != null) {
@@ -324,18 +336,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 낙관적 UI: 답변 직후 즉시 임시 fsrs + 암기상태 변경 알림
     {
       const isCorrectAnswer = resultIndex === index;
-      const prevFsrs = testQuestions[progressIndex].fsrs;
-      const optimistic = computeOptimisticFsrs(prevFsrs, isCorrectAnswer);
-      testQuestions[progressIndex].fsrs = optimistic;
-      setTestQuestions([...testQuestions]);
-      const newStateKey = getMemoryStateKeyByStability(optimistic.stability, optimistic.state);
-      if (prevMemoryState && prevMemoryState !== newStateKey) {
-        setMemoryStateChange({
-          from: stateNameMap[prevMemoryState] ?? prevMemoryState,
-          to: stateNameMap[newStateKey] ?? newStateKey,
-          stateKey: newStateKey,
-        });
-      }
+      applyOptimisticGrade(progressIndex, isCorrectAnswer);
     }
 
     if (studySessionRef?.current != null) {
@@ -366,9 +367,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setProgressBarIndex(progressBarIndex + 1);
     setIsAnswered(true);
 
+    // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초)
     setTimeout(() => {
       setUpdateRecentStudyStateAndStatus();
-    }, 1000);
+    }, getAdvanceDelay(resultIndex === index));
   }
 
 
@@ -877,8 +879,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     </h2>
                   )}
                   {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
+                  {/* displayNextReview는 채점 시 고정 — 백엔드 응답으로 덮지 않아 깜빡임 없음 */}
                   {isCorrect !== null && (() => {
-                    const nextReviewDate = testQuestions[progressIndex].fsrs?.next_review;
+                    const nextReviewDate = testQuestions[progressIndex].displayNextReview;
                     if (!nextReviewDate) return null;
                     const date = new Date(nextReviewDate);
                     const today = new Date();

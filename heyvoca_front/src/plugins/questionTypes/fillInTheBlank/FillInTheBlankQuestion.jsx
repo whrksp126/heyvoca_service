@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, X, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import { getAdvanceDelay } from '../../../utils/studyTiming';
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -94,14 +95,17 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
     // FSRS 업데이트는 백엔드 /study/log에서 처리
     // 복습 예정일은 현재 fsrs.next_review 사용 (UI 표시용)
     question.isCorrect = correct;
-    // 낙관적 next_review: 미학습 단어는 백엔드 응답 도달 전이라도 즉시 표시
-    let optimisticNextReview = question.fsrs?.next_review ?? null;
-    if (!optimisticNextReview) {
+    // 복습 예정일: 예측값(백엔드 사전 계산) 우선 → 채점 시 고정해 깜빡임 제거.
+    // 없으면 기존 fsrs/단순 추정으로 폴백.
+    const predicted = question.predictedReview?.[correct ? 'correct' : 'wrong'];
+    let displayReview = predicted?.next_review ?? question.fsrs?.next_review ?? null;
+    if (!displayReview) {
       const next = new Date();
       next.setDate(next.getDate() + (correct ? 3 : 1));
-      optimisticNextReview = next.toISOString();
+      displayReview = next.toISOString();
     }
-    setNextReviewDate(optimisticNextReview);
+    question.displayNextReview = displayReview;
+    setNextReviewDate(displayReview);
 
     // 낙관적 암기상태 변경 알림 — 미학습이었으면 즉시 "단기 암기로 변경되었어요!" 표시
     {
@@ -123,6 +127,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
     setIsAnswered(true);
     onCardMatched?.();
 
+    // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초)
     setTimeout(() => {
       onComplete([{
         sheetId: question.vocabularySheetId,
@@ -131,7 +136,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
         timeTakenMs,
         updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
       }]);
-    }, 1000);
+    }, getAdvanceDelay(correct));
   };
 
   const blankClass = isAnswered
@@ -140,8 +145,8 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
       : 'border-status-error-500 text-status-error-600 bg-status-error-100'
     : 'border-layout-gray-300 bg-layout-white dark:bg-layout-black';
 
-  // 복습 예정일 텍스트 (백엔드 응답 도착 시 question.fsrs.next_review 가 갱신되므로 우선 사용)
-  const liveNextReview = question.fsrs?.next_review ?? nextReviewDate;
+  // 복습 예정일 텍스트 — 채점 시 고정된 displayNextReview 사용(백엔드 응답으로 덮지 않음)
+  const liveNextReview = question.displayNextReview ?? nextReviewDate;
   const reviewText = (() => {
     if (!isAnswered || !liveNextReview) return null;
     const parts = liveNextReview.includes('T') ? null : liveNextReview.split('-');
