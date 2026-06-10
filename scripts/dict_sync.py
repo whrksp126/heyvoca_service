@@ -198,16 +198,51 @@ def swap_schemas(conn):
     run_mysql(conn, f"DROP DATABASE IF EXISTS {TEMP_SCHEMA};")
 
 
+def read_hub_latest():
+    """objectstore의 dict/dict_index.json(허브)에서 최신 버전 포인터를 읽는다.
+    admin '올리기' 버튼이 갱신하는 단일 소스. 실패하면 None(→ git pointer로 폴백).
+    """
+    endpoint = os.getenv('MINIO_ENDPOINT')
+    bucket = os.getenv('MINIO_BUCKET')
+    ak = os.getenv('MINIO_DICT_RO_KEY') or os.getenv('MINIO_DICT_RW_KEY')
+    sk = os.getenv('MINIO_DICT_RO_SECRET') or os.getenv('MINIO_DICT_RW_SECRET')
+    if not all([endpoint, bucket, ak, sk]):
+        return None
+    try:
+        from minio import Minio
+        p = urlparse(endpoint)
+        cli = Minio(p.netloc, access_key=ak, secret_key=sk,
+                    secure=(p.scheme == 'https'),
+                    region=os.getenv('MINIO_REGION', 'us-east-1'))
+        resp = cli.get_object(bucket, 'dict/dict_index.json')
+        idx = json.loads(resp.read().decode('utf-8'))
+        resp.close()
+        resp.release_conn()
+        versions = idx.get('versions') or []
+        if not versions:
+            return None
+        e = versions[0]
+        return {'url': e['url'], 'sha256': e['sha256'], 'version': e['version'],
+                'table_counts_min': e.get('counts', {})}
+    except Exception as ex:
+        log('WARN', f"objectstore 인덱스 조회 실패({ex}) → git pointer 폴백")
+        return None
+
+
 def main():
-    # 1. dict_pointer.json 읽기
-    if not POINTER_PATH.exists():
-        log('WARN', f"pointer 없음: {POINTER_PATH} → skip")
-        return 0
-    with open(POINTER_PATH) as f:
-        pointer = json.load(f)
-    if not pointer.get('url') or pointer.get('version') == 'uninitialized':
-        log('INFO', "pointer가 uninitialized 상태 → skip (Phase 0 사전 dump 업로드 대기 중)")
-        return 0
+    # 1. 포인터 결정: objectstore 인덱스(허브, 런타임 발행 반영) 우선, 없으면 git pointer(부트스트랩).
+    pointer = read_hub_latest()
+    if pointer:
+        log('INFO', f"objectstore 인덱스 사용: latest={pointer['version']}")
+    else:
+        if not POINTER_PATH.exists():
+            log('WARN', f"pointer 없음: {POINTER_PATH} → skip")
+            return 0
+        with open(POINTER_PATH) as f:
+            pointer = json.load(f)
+        if not pointer.get('url') or pointer.get('version') == 'uninitialized':
+            log('INFO', "pointer가 uninitialized 상태 → skip (Phase 0 사전 dump 업로드 대기 중)")
+            return 0
 
     expected_sha = pointer['sha256']
     version = pointer.get('version', 'unknown')

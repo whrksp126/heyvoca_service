@@ -191,6 +191,7 @@ def create_app():
   from app.routes.admin import admin_bp
   from app.routes.admin_voca_books import admin_voca_books_bp
   from app.routes import admin_dashboard  # noqa: F401  (admin_bp에 라우트 등록 — Blueprint 별도 없음. `import app.routes...`는 함수 내 지역변수 app(Flask)을 모듈로 가려 register_blueprint 깨짐)
+  from app.routes import dict_admin  # noqa: F401  (사전 동기화 — admin_bp에 /dict/* 라우트 등록)
 
   app.register_blueprint(health_bp)
   app.register_blueprint(auth_bp)
