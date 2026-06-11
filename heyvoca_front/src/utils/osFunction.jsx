@@ -206,11 +206,21 @@ export async function getDeviceOs() {
 let appExitPressed = false;
 let appExitTimeout = null;
 
-// 안드로이드 onBackPressed에서 호출되는 함수
-export function onBackPressed() {
+// 안드로이드 하드웨어 백 / iOS 스와이프 백에서 호출되는 함수
+// options.direction === 'horizontal' 이면 등장 방향이 가로인 요소(풀시트/페이지)만 처리하고
+// 하단에서 등장하는 바텀시트는 건너뛴다(바텀시트는 아래로 드래그로 닫음).
+export function onBackPressed(options = {}) {
+  const horizontal = options.direction === 'horizontal';
   const currentPath = AppHistory.getCurrentPath();
 
-  if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
+  const hasBottomSheet =
+    window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0;
+
+  if (hasBottomSheet) {
+    if (horizontal) {
+      // 가로 스와이프는 바텀시트를 닫지 않음 (아래로 드래그 제스처 영역)
+      return;
+    }
     window.newBottomSheetContext.popNewBottomSheet();
     return;
   }
@@ -222,7 +232,7 @@ export function onBackPressed() {
   }
 
   // 5. 앱 종료가 필요한 상황인지 확인 (정규식 사용)
-  const shouldExitApp = /^\/(home|vocabulary-sheets|book-store|class|mypage)\/?$/.test(currentPath);
+  const shouldExitApp = /^\/(home|vocabulary-sheets|book-store|class|mypage|dictionary)\/?$/.test(currentPath);
 
   if (shouldExitApp) {
     // 앱 종료가 필요한 상황에서는 더블탭 방식

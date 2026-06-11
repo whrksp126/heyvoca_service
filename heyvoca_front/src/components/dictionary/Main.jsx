@@ -835,7 +835,8 @@ const Main = () => {
               scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="
-              fixed bottom-[90px] right-[16px] z-10
+              fixed bottom-[calc(var(--current-bottom-nav-height)+20px)] right-[16px] z-10
+              transition-[bottom] duration-200
               w-[40px] h-[40px]
               flex items-center justify-center
               bg-primary-main-600 text-white
