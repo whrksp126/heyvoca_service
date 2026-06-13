@@ -30,6 +30,7 @@ import { OverlayContextProvider, OverlayStateContext, OverlayActionsContext } fr
 import { OverlayProvider } from './components/overlay/OverlayProvider';
 import { GemAnimationProvider } from './context/GemAnimationContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { ExampleSettingsProvider } from './context/ExampleSettingsContext';
 import { KeyboardProvider } from './context/KeyboardContext';
 import { AttendanceCalendarProvider } from './context/AttendanceCalendarContext';
 import WebStorageMigration from './context/WebStorageMigration';
@@ -109,9 +110,11 @@ function AppRouter() {
               <OverlayContextProvider>
                 <GemAnimationProvider>
                   <ThemeProvider>
-                    <KeyboardProvider>
-                      <AppWithContexts />
-                    </KeyboardProvider>
+                    <ExampleSettingsProvider>
+                      <KeyboardProvider>
+                        <AppWithContexts />
+                      </KeyboardProvider>
+                    </ExampleSettingsProvider>
                   </ThemeProvider>
                 </GemAnimationProvider>
               </OverlayContextProvider>

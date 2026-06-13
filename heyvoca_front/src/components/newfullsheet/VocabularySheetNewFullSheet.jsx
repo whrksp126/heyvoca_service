@@ -343,8 +343,11 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         })}
       </ul>
 
-      {/* 하단 고정 확인 버튼 */}
-      <div className="px-[16px] pt-[8px] pb-[16px] shrink-0">
+      {/* 하단 고정 확인 버튼 (iOS 홈 인디케이터 세이프에어리어 반영) */}
+      <div
+        className="px-[16px] pt-[8px] shrink-0"
+        style={{ paddingBottom: 'max(16px, var(--safe-area-bottom, 0px))' }}
+      >
         <motion.button
           disabled={!isConfirmActive}
           onClick={handleConfirm}

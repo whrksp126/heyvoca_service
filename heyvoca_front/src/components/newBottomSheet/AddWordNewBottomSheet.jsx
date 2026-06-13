@@ -264,8 +264,9 @@ const AddWordNewBottomSheet = ({
                   appearance-none
                   ${editableSheets.length === 0
                     ? 'border-layout-gray-200 bg-layout-gray-50 text-[#999999]'
-                    : 'border-layout-gray-200 text-layout-black focus:border--primary-main-600'}
+                    : 'border-layout-gray-200 bg-layout-white dark:bg-layout-black text-layout-black dark:text-layout-white focus:border--primary-main-600'}
                 `}
+                style={{ WebkitAppearance: 'none', appearance: 'none' }}
               >
                 {editableSheets.length === 0 ? (
                   <option value="">내 단어장을 먼저 만들어주세요</option>

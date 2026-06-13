@@ -14,6 +14,8 @@ import { getTextSound } from '../../utils/common';
 import { warmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { useTheme } from '../../context/ThemeContext';
+import { useExampleSettings } from '../../context/ExampleSettingsContext';
+import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 
 // 업적 이미지 import
@@ -97,6 +99,7 @@ const StudyResult = () => {
   useStatusBarStyle('light-content');
 
   const { isDark } = useTheme();
+  const { showExamples } = useExampleSettings();
   const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult } = useVocabulary();
   const { updateUserHistory } = useUser();
   const navigate = useNavigate();
@@ -462,6 +465,7 @@ const StudyResult = () => {
                           >
                             {meaningsArr.join(', ')}
                           </p>
+                          {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}
                         </div>
                       </div>
                     </motion.div>

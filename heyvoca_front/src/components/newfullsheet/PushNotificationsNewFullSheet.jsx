@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { motion } from 'framer-motion';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast, isAppVersionAtLeast } from '../../utils/osFunction';
 import { useUser } from '../../context/UserContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
+import postMessageManager from '../../utils/postMessageManager';
+
+// 앱(WebView) 환경 여부 — 순수 웹에서는 OS 알림 권한 개념이 없어 게이팅을 건너뛴다.
+const isRNWebView = typeof window !== 'undefined' && !!window.ReactNativeWebView;
+
+// OS 알림 권한 네이티브 핸들러(requestNotificationPermission/checkNotificationPermission/openAppSettings)가
+// 포함된 앱 최소 버전. 이 버전 미만 앱(또는 순수 웹)에서는 네이티브 권한 게이팅을 건너뛰고
+// 기존 동작(토글 즉시 반영)으로 폴백한다 — 구버전 앱에서 응답을 못 받아 멈추는 것을 방지.
+const NOTIF_PERMISSION_MIN_APP_VERSION = '1.0.3';
+const supportsNativePermission = isRNWebView && isAppVersionAtLeast(NOTIF_PERMISSION_MIN_APP_VERSION);
 
 const ToggleSwitch = ({ checked, onChange, label, description }) => (
   <li
@@ -23,7 +33,9 @@ const ToggleSwitch = ({ checked, onChange, label, description }) => (
       )}
     </div>
     <button
-      onClick={(e) => e.stopPropagation()}
+      type="button"
+      role="switch"
+      aria-checked={checked}
       className={`
         relative inline-flex h-[28px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent
         transition-colors duration-200 ease-in-out focus:outline-none
@@ -55,18 +67,30 @@ const PushNotificationsNewFullSheet = () => {
   const [isStudyAllowed, setIsStudyAllowed] = useState(cachedPush?.study ?? true);
   const [isMarketingAllowed, setIsMarketingAllowed] = useState(cachedPush?.marketing ?? false);
 
-  // 백엔드에서 최신 상태 동기화(백그라운드)
+  // 권한 요청 결과로 갱신될 수 있는 실제 사용 토큰 (context fcmToken 우선)
+  const [effectiveToken, setEffectiveToken] = useState(fcmToken);
+  // OS 알림 권한 여부 (기본 true=관대; 앱에서 확인되면 갱신). loadSettings가 ON으로 덮어쓰는 것을 막는 데 사용.
+  const permissionGrantedRef = useRef(true);
+  const permRequestInFlight = useRef(false);
+
+  useEffect(() => { if (fcmToken) setEffectiveToken(fcmToken); }, [fcmToken]);
+
+  // 백엔드에서 최신 상태 동기화(백그라운드). OS 권한이 꺼져 있으면 ON으로 표시하지 않음.
   useEffect(() => {
     const loadSettings = async () => {
-      if (!isLogin || !fcmToken) return;
+      const token = effectiveToken || fcmToken;
+      if (!isLogin || !token) return;
       try {
         const url = `${backendUrl}/fcm/get_notification_settings`;
-        const result = await fetchDataAsync(url, 'POST', { fcm_token: fcmToken });
+        const result = await fetchDataAsync(url, 'POST', { fcm_token: token });
         if (result.code === 200) {
-          setIsStudyAllowed(result.is_study_allowed);
-          setIsMarketingAllowed(result.is_marketing_allowed);
+          const allowed = permissionGrantedRef.current;
+          const study = result.is_study_allowed && allowed;
+          const marketing = result.is_marketing_allowed && allowed;
+          setIsStudyAllowed(study);
+          setIsMarketingAllowed(marketing);
           try {
-            localStorage.setItem('pushSettings', JSON.stringify({ study: result.is_study_allowed, marketing: result.is_marketing_allowed }));
+            localStorage.setItem('pushSettings', JSON.stringify({ study, marketing }));
           } catch (e) { /* noop */ }
         }
       } catch (error) {
@@ -77,43 +101,107 @@ const PushNotificationsNewFullSheet = () => {
     loadSettings();
   }, [isLogin, fcmToken]);
 
+  // 진입 시 OS 알림 권한 확인(프롬프트 없이) → 미허용이면 토글을 OFF로 반영
+  // (네이티브 핸들러를 지원하는 앱 버전에서만 — 구버전/웹은 백엔드 값 그대로 사용)
+  useEffect(() => {
+    if (!supportsNativePermission) return;
+    const onStatus = (data) => {
+      postMessageManager.removeListener('notification_permission_status');
+      permissionGrantedRef.current = !!data.granted;
+      if (!data.granted) {
+        setIsStudyAllowed(false);
+        setIsMarketingAllowed(false);
+      } else if (data.token) {
+        setEffectiveToken(data.token);
+      }
+    };
+    postMessageManager.addListener('notification_permission_status', onStatus);
+    postMessageManager.sendMessageToReactNative('checkNotificationPermission', {});
+    return () => postMessageManager.removeListener('notification_permission_status');
+  }, []);
+
+  // OS 알림 권한 보장. 허용 시 { granted:true, token }, 미허용 시 { granted:false }.
+  // 순수 웹에서는 권한 개념이 없어 항상 허용으로 간주.
+  const ensureNotificationPermission = () =>
+    new Promise((resolve) => {
+      // 구버전 앱/순수 웹: 네이티브 권한 게이팅 없이 기존 동작(허용으로 간주, 토글 즉시 반영)
+      if (!supportsNativePermission) { resolve({ granted: true, token: effectiveToken }); return; }
+      const onResult = (data) => {
+        postMessageManager.removeListener('notification_permission_result');
+        resolve({ granted: !!data.granted, token: data.token || null });
+      };
+      postMessageManager.addListener('notification_permission_result', onResult);
+      postMessageManager.sendMessageToReactNative('requestNotificationPermission', {});
+    });
+
+  const guideToEnableNotification = () => {
+    showToast('알림 권한이 꺼져 있어요. 휴대폰 설정에서 알림을 허용해주세요.');
+    if (supportsNativePermission) {
+      postMessageManager.sendMessageToReactNative('openAppSettings', {});
+    }
+  };
+
+  // 새로 발급받은 토큰을 백엔드에 등록 (권한을 새로 허용한 경우)
+  const registerToken = async (token) => {
+    if (!token) return;
+    try {
+      await fetchDataAsync(`${backendUrl}/fcm/save_token`, 'POST', { fcm_token: token });
+    } catch (e) { /* noop */ }
+  };
+
+  // 알림 설정 값 저장. 실패 시 onFail 롤백.
+  const persistSetting = async (token, payload, onFail) => {
+    if (!token) return;
+    try {
+      await fetchDataAsync(`${backendUrl}/fcm/is_message_allowed`, 'POST', { fcm_token: token, ...payload });
+    } catch (error) {
+      console.error('알림 설정 업데이트 실패:', error);
+      onFail && onFail();
+    }
+  };
+
+  // 토글 ON 시 OS 권한을 확보하고, 미허용이면 ON 하지 않은 채 설정으로 유도하는 공통 처리.
+  const turnOn = async (setLocal, persistKey, otherKey, otherVal) => {
+    if (permRequestInFlight.current) return;
+    permRequestInFlight.current = true;
+    const { granted, token } = await ensureNotificationPermission();
+    permRequestInFlight.current = false;
+    permissionGrantedRef.current = granted;
+    if (!granted) {
+      setLocal(false); // 권한 미허용 → 토글 ON 하지 않음
+      guideToEnableNotification();
+      return;
+    }
+    let useToken = effectiveToken;
+    if (token && token !== effectiveToken) {
+      setEffectiveToken(token);
+      await registerToken(token);
+      useToken = token;
+    }
+    setLocal(true);
+    try { localStorage.setItem('pushSettings', JSON.stringify({ [persistKey]: true, [otherKey]: otherVal })); } catch (e) { /* noop */ }
+    await persistSetting(useToken, { [persistKey === 'study' ? 'is_study_allowed' : 'is_marketing_allowed']: true }, () => setLocal(false));
+  };
+
   const handleToggleStudy = async () => {
     vibrate({ duration: 5 });
-    const newVal = !isStudyAllowed;
-    setIsStudyAllowed(newVal);
-    try { localStorage.setItem('pushSettings', JSON.stringify({ study: newVal, marketing: isMarketingAllowed })); } catch (e) { /* noop */ }
-
-    if (fcmToken) {
-      try {
-        const url = `${backendUrl}/fcm/is_message_allowed`;
-        await fetchDataAsync(url, 'POST', {
-          fcm_token: fcmToken,
-          is_study_allowed: newVal
-        });
-      } catch (error) {
-        console.error('학습 알림 설정 업데이트 실패:', error);
-        setIsStudyAllowed(!newVal); // 실패 시 롤백
-      }
+    if (!isStudyAllowed) {
+      await turnOn(setIsStudyAllowed, 'study', 'marketing', isMarketingAllowed);
+    } else {
+      setIsStudyAllowed(false);
+      try { localStorage.setItem('pushSettings', JSON.stringify({ study: false, marketing: isMarketingAllowed })); } catch (e) { /* noop */ }
+      await persistSetting(effectiveToken, { is_study_allowed: false }, () => setIsStudyAllowed(true));
     }
   };
 
   const handleToggleMarketing = async () => {
     vibrate({ duration: 5 });
-    const newVal = !isMarketingAllowed;
-    setIsMarketingAllowed(newVal);
-    try { localStorage.setItem('pushSettings', JSON.stringify({ study: isStudyAllowed, marketing: newVal })); } catch (e) { /* noop */ }
-
-    if (fcmToken) {
-      try {
-        const url = `${backendUrl}/fcm/is_message_allowed`;
-        await fetchDataAsync(url, 'POST', {
-          fcm_token: fcmToken,
-          is_marketing_allowed: newVal
-        });
-      } catch (error) {
-        console.error('마케팅 알림 설정 업데이트 실패:', error);
-        setIsMarketingAllowed(!newVal); // 실패 시 롤백
-      }
+    if (!isMarketingAllowed) {
+      await turnOn(setIsMarketingAllowed, 'marketing', 'study', isStudyAllowed);
+    } else {
+      setIsMarketingAllowed(false);
+      try { localStorage.setItem('pushSettings', JSON.stringify({ study: isStudyAllowed, marketing: false })); } catch (e) { /* noop */ }
+      await persistSetting(effectiveToken, { is_marketing_allowed: false }, () => setIsMarketingAllowed(true));
     }
   };
 

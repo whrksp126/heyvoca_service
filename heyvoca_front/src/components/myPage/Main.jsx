@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { vibrate, openExternalUrl, parseAppVersion } from '../../utils/osFunction';
 
 const APP_VERSION_INFO = parseAppVersion();
@@ -28,6 +29,7 @@ const Main = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { isDark } = useTheme();
+  const { showExamples } = useExampleSettings();
 
 
 
@@ -138,16 +140,17 @@ const Main = () => {
           </div>
         </li>
 
-        {/* <li onClick={handleExampleSettingsClick} className="flex items-center justify-between px-5 py-5 border-b border-[#ddd] dark:border-border-dark">
-            <div className="flex items-center gap-2">
-              <TextAlignJustify weight="fill" className="text-[20px] text-primary-main-600" />
-              <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">예문 설정</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-normal text-[#999]">항상 보기</span>
-              <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
-            </div>
-          </li> */}
+        <li onClick={() => { vibrate({ duration: 5 }); handleExampleSettingsClick(); }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <TextAlignJustify weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">예문 보기</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-normal text-[#999]">{showExamples ? "항상 보기" : "숨김"}</span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
 
         <li onClick={handlePushNotificationsClick} className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
           <div className="flex items-center gap-2">

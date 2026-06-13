@@ -3,11 +3,12 @@ import { SpeakerHigh, CaretLeft, CaretUp } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { getTextSound } from '../../utils/common';
+import { getTextSound, stripHtmlTags } from '../../utils/common';
 import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBottomSheet';
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import gem from '../../assets/images/gem.png';
 
 // Hook 제거 - 직접 컴포넌트 사용
@@ -24,6 +25,9 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { vocabularySheets } = useVocabulary();
+  const { showExamples } = useExampleSettings();
+  // 예문 표시 여부에 따라 윈도우 렌더링 높이 추정치를 보정 (150=예제 포함, 90=예제 숨김)
+  const itemHeightEstimate = showExamples ? ITEM_HEIGHT_ESTIMATE : 90;
 
   // 무한 스크롤을 위한 state
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -72,11 +76,11 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
     if (!container) return { start: 0, end: MAX_RENDERED_ITEMS };
 
     const containerHeight = container.clientHeight;
-    const buffer = Math.ceil(containerHeight / ITEM_HEIGHT_ESTIMATE) + 10; // 위아래 버퍼 증가
+    const buffer = Math.ceil(containerHeight / itemHeightEstimate) + 10; // 위아래 버퍼 증가
 
     // scrollTop state를 사용하여 리렌더링 트리거
     const currentScrollTop = scrollTop;
-    const visibleStartIndex = Math.floor(currentScrollTop / ITEM_HEIGHT_ESTIMATE);
+    const visibleStartIndex = Math.floor(currentScrollTop / itemHeightEstimate);
     const startIndex = Math.max(0, visibleStartIndex - buffer);
     const endIndex = Math.min(
       allDisplayedWords.length,
@@ -311,7 +315,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
         <div className="flex flex-col gap-[10px] flex-1">
           {/* 상단 패딩 (스크롤 위치 보정) */}
           {visibleRange.start > 0 && (
-            <div style={{ height: visibleRange.start * ITEM_HEIGHT_ESTIMATE }} />
+            <div style={{ height: visibleRange.start * itemHeightEstimate }} />
           )}
 
           {displayedWords.map((item, localIndex) => {
@@ -365,12 +369,17 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                       {item.meanings.join(", ")}
                     </span>
                   </div>
-                  {item?.examples?.map((example, example_index) => (
+                  {showExamples && item?.examples?.map((example, example_index) => {
+                    // 예문 키 호환: 앱 표준 origin/meaning + admin 저장본 en/ko 모두 허용
+                    const exOrigin = example.origin ?? example.en ?? '';
+                    const exMeaning = example.meaning ?? example.ko ?? '';
+                    if (!exOrigin && !exMeaning) return null;
+                    return (
                     <div key={`${item.id}-${example_index}`}>
                       <div className="flex flex-wrap">
                         <p
                           onClick={() => {
-                            getTextSound(example.origin, "en");
+                            getTextSound(stripHtmlTags(exOrigin), "en");
                           }}
                           className="
                         text-[12px] font-[400] text-layout-black
@@ -379,13 +388,13 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                       "
                           id={`example-${item.id}-${example_index}`}
                         >
-                          <span dangerouslySetInnerHTML={{ __html: example.origin }} />
+                          <span dangerouslySetInnerHTML={{ __html: exOrigin }} />
                         </p>
                       </div>
                       <div className="flex flex-wrap">
                         <p
                           onClick={() => {
-                            getTextSound(example.meaning, "ko");
+                            getTextSound(stripHtmlTags(exMeaning), "ko");
                           }}
                           className="
                         text-[12px] font-[400] text-layout-black
@@ -394,11 +403,12 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                       "
                           id={`example-${item.id}-${example_index}-meaning`}
                         >
-                          {example.meaning}
+                          <span dangerouslySetInnerHTML={{ __html: exMeaning }} />
                         </p>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 <div
                   style={{
@@ -418,7 +428,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
 
           {/* 하단 패딩 (스크롤 위치 보정) */}
           {visibleRange.end < allDisplayedWords.length && (
-            <div style={{ height: (allDisplayedWords.length - visibleRange.end) * ITEM_HEIGHT_ESTIMATE }} />
+            <div style={{ height: (allDisplayedWords.length - visibleRange.end) * itemHeightEstimate }} />
           )}
 
           {/* 로딩 인디케이터 */}

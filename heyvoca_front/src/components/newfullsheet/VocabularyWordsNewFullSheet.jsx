@@ -15,6 +15,8 @@ import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomShe
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
+import { useExampleSettings } from '../../context/ExampleSettingsContext';
+import ExampleList from '../common/ExampleList';
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
@@ -27,6 +29,9 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { isDark } = useTheme();
+  const { showExamples } = useExampleSettings();
+  // 예문을 표시하면 아이템 높이가 커지므로 윈도우 렌더링 높이 추정치를 보정한다.
+  const itemHeightEstimate = showExamples ? ITEM_HEIGHT_ESTIMATE + 90 : ITEM_HEIGHT_ESTIMATE;
 
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -125,10 +130,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     if (!container) return { start: 0, end: MAX_RENDERED_ITEMS };
 
     const containerHeight = container.clientHeight;
-    const buffer = Math.ceil(containerHeight / ITEM_HEIGHT_ESTIMATE) + 10;
+    const buffer = Math.ceil(containerHeight / itemHeightEstimate) + 10;
 
     const currentScrollTop = scrollTop;
-    const visibleStartIndex = Math.floor(currentScrollTop / ITEM_HEIGHT_ESTIMATE);
+    const visibleStartIndex = Math.floor(currentScrollTop / itemHeightEstimate);
     const startIndex = Math.max(0, visibleStartIndex - buffer);
     const endIndex = Math.min(
       wordsToShow.length,
@@ -611,7 +616,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           <>
             {/* 상단 패딩 (스크롤 위치 보정) */}
             {visibleRange.start > 0 && (
-              <div style={{ height: visibleRange.start * ITEM_HEIGHT_ESTIMATE }} />
+              <div style={{ height: visibleRange.start * itemHeightEstimate }} />
             )}
 
             {displayedWords.map((item, localIndex) => {
@@ -690,13 +695,19 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                       {item.meanings.join(", ")}
                     </span>
                   </div>
+
+                  {showExamples && (
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <ExampleList examples={item.examples} />
+                    </div>
+                  )}
                 </div>
               );
             })}
 
             {/* 하단 패딩 (스크롤 위치 보정) */}
             {visibleRange.end < allDisplayedWords.length && (
-              <div style={{ height: (allDisplayedWords.length - visibleRange.end) * ITEM_HEIGHT_ESTIMATE }} />
+              <div style={{ height: (allDisplayedWords.length - visibleRange.end) * itemHeightEstimate }} />
             )}
 
             {/* 로딩 인디케이터 */}

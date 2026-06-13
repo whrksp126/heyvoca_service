@@ -29,6 +29,26 @@ export function parseAppVersion() {
   return { platform: m[1], version: m[2], build: m[3] || null };
 }
 
+// "x.y.z" 단순 semver 비교: a >= b 면 true (빌드/프리릴리스 무시).
+function isVersionGte(a, b) {
+  const pa = String(a || '').split('.').map((n) => parseInt(n, 10) || 0);
+  const pb = String(b || '').split('.').map((n) => parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const diff = (pa[i] || 0) - (pb[i] || 0);
+    if (diff !== 0) return diff > 0;
+  }
+  return true; // 동일
+}
+
+// 현재 앱(WebView) 버전이 minVersion 이상인지. 순수 웹 브라우저면 false(네이티브 기능 없음).
+// 웹앱 구조상, 웹이 의존하는 네이티브 기능이 특정 앱 버전부터 존재할 때 이 함수로 분기한다.
+// (앱 심사/업데이트 지연으로 구버전 앱이 남아있을 수 있으므로, 버전 미달 시 구버전 동작으로 폴백)
+export function isAppVersionAtLeast(minVersion) {
+  const info = parseAppVersion();
+  if (!info || !info.version) return false;
+  return isVersionGte(info.version, minVersion);
+}
+
 // 외부 브라우저로 URL 열기
 // - 앱(WebView): 네이티브에 메시지 전달 → Linking.openURL
 // - 웹: 새 탭으로 열기
@@ -235,6 +255,11 @@ export function onBackPressed(options = {}) {
   const shouldExitApp = /^\/(home|vocabulary-sheets|book-store|class|mypage|dictionary)\/?$/.test(currentPath);
 
   if (shouldExitApp) {
+    // iOS 가로(엣지) 스와이프는 루트 페이지(홈/단어장/사전/상점/마이페이지)에서 아무 동작도 하지 않음.
+    // (풀시트가 열렸거나 한 스텝 들어간 경우에만 위에서 처리됨)
+    if (horizontal) {
+      return;
+    }
     // 앱 종료가 필요한 상황에서는 더블탭 방식
     if (!appExitPressed) {
       // 첫 번째 뒤로가기: 토스트 표시
@@ -267,8 +292,8 @@ export function onBackPressed(options = {}) {
           window.location.href = lastPage.path;
         }
       }
-    } else {
-      // 히스토리가 없으면 앱 종료 요청
+    } else if (!horizontal) {
+      // 히스토리가 없으면 앱 종료 요청 (가로 스와이프는 앱을 종료하지 않음)
       closeApp();
     }
   }
