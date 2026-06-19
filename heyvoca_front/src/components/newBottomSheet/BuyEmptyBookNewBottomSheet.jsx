@@ -5,11 +5,12 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { purchaseBookApi } from '../../api/store';
 import { StorePurchaseResultNewBottomSheet } from './StorePurchaseResultNewBottomSheet';
+import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 import gem from '../../assets/images/gem.png';
 import voca_1 from '../../assets/images/voca_book_1.png';
 import { vibrate } from '../../utils/osFunction';
 
-const PRICE_PER_BOOK = 10;
+const PRICE_PER_BOOK = 3;
 const MIN_AMOUNT = 1;
 const MAX_AMOUNT = 100;
 
@@ -74,12 +75,9 @@ export const BuyEmptyBookNewBottomSheet = () => {
     vibrate({ duration: 5 });
 
     if (userProfile.gem_cnt < totalCost) {
-      openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
-        options: {
-          success: false,
-          message: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
-          image: gem,
-        },
+      // 보석 부족 → 현재 구매 시트를 보석 구매 바텀시트로 교체
+      openNewBottomSheet(GemPurchaseNewBottomSheet, {
+        notice: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
       });
       return;
     }

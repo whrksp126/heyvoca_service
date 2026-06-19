@@ -13,7 +13,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const ALL_CATEGORY = '전체';
-const EMPTY_BOOK_PRICE = 10;
+const EMPTY_BOOK_PRICE = 3;
 const RECOMMEND_LIMIT = 3;
 
 const BookCard = ({ item, onClick, className = '' }) => {
@@ -153,9 +153,6 @@ const BookSection = () => {
   if (isBookStoreLoading) {
     return (
       <section className="flex flex-col gap-[16px] py-[20px]">
-        <h3 className="text-center text-[16px] font-[700] text-layout-black dark:text-layout-white">
-          단어장
-        </h3>
         <div className="flex items-center justify-center py-[40px]">
           <p className="text-[14px] text-layout-gray-200">로딩 중...</p>
         </div>
@@ -165,10 +162,6 @@ const BookSection = () => {
 
   return (
     <section className="relative flex flex-col gap-[16px] py-[20px]">
-      <h3 className="text-center text-[16px] font-[700] text-layout-black dark:text-layout-white">
-        단어장
-      </h3>
-
       {!isRecommendedLoading && recommendedBooks.length > 0 && (
         <div className="flex flex-col gap-[10px] px-[16px]">
           <div className="flex flex-col gap-[2px]">

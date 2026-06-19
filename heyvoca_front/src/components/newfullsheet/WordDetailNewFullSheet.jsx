@@ -1,9 +1,10 @@
 import React from 'react';
-import { CaretLeft, Plus, SpeakerHigh } from '@phosphor-icons/react';
+import { CaretLeft, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound, stripHtmlTags } from '../../utils/common';
+import SpeakerButton from '../common/SpeakerButton';
 import { vibrate } from '../../utils/osFunction';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 
@@ -98,17 +99,11 @@ const WordDetailNewFullSheet = ({ word }) => {
       <div className="flex flex-col gap-[20px] px-[20px] pb-[20px] pt-[12px]">
         <div className="border border-border dark:border-border-dark rounded-[12px] p-[16px]">
           <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-[8px] cursor-pointer"
-              onClick={() => {
-                vibrate({ duration: 5 });
-                getTextSound(detail.word, 'en');
-              }}
-            >
+            <div className="flex items-center gap-[8px]">
               <span className="text-[22px] font-[700] text-layout-black dark:text-layout-white">
                 {detail.word}
               </span>
-              <SpeakerHigh size={18} className="text-layout-gray-300" />
+              <SpeakerButton text={detail.word} lang="en" label="단어 발음 듣기" />
             </div>
             <button
               onClick={handleAddWord}

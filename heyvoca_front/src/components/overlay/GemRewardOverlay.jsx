@@ -6,17 +6,21 @@ import gemImg from '../../assets/images/gem.png';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 
+// 레이어 자동 닫힘 시간(ms)
+const AUTO_DISMISS_MS = 3000;
+
 const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "보상이 정상적으로 지급되었습니다." }) => {
     const { resolveOverlay } = useOverlayActions();
 
     React.useEffect(() => {
         vibrate({ type: 'notificationSuccess' });
+        // 확인 버튼 없이 일정 시간 후 자동으로 레이어 제거
+        const timer = setTimeout(() => {
+            resolveOverlay({ confirmed: true });
+        }, AUTO_DISMISS_MS);
+        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const handleConfirm = () => {
-        vibrate({ duration: 5 });
-        resolveOverlay({ confirmed: true });
-    };
 
     return (
         <div className="flex flex-col items-center justify-center h-full w-full pointer-events-none">
@@ -36,31 +40,31 @@ const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "�
                     <div className="relative z-10 flex flex-col items-center gap-[40px] w-full">
                         {/* 보석 컨테이너 (글로우 포함) */}
                         <div className="relative flex items-center justify-center">
-                            {/* 글로우 배경 효과 (보석 중앙 기준) */}
+                            {/* 글로우 배경 효과 (보석 중앙 기준) — 학습 결과 화면과 동일한 크기/효과 */}
                             <motion.img
                                 src={ResultItemBackground01}
                                 alt="bg01"
-                                className="absolute max-w-none w-[320px] h-[320px] object-contain"
+                                className="absolute max-w-none w-[230px] h-[230px] object-contain"
                                 animate={{
-                                    rotate: [0, 360],
-                                    scale: [1, 1.1, 1],
-                                    opacity: [0.3, 0.6, 0.3],
+                                    rotate: [0, 360, 720],
+                                    scale: [1, 2, 1, 2, 1],
+                                    opacity: [0.8, 1, 0.8, 1, 0.8],
                                 }}
                                 transition={{
-                                    duration: 10,
+                                    duration: 4,
                                     repeat: Infinity,
-                                    ease: "linear",
+                                    ease: "easeInOut",
                                 }}
                             />
                             <motion.img
                                 src={ResultItemBackground02}
                                 alt="bg02"
-                                className="absolute max-w-none w-[600px] h-[500px] object-contain opacity-20"
+                                className="absolute max-w-none w-[757px] h-[600px] object-contain"
                                 animate={{
                                     scale: [1, 1.05, 1],
                                 }}
                                 transition={{
-                                    duration: 5,
+                                    duration: 3,
                                     repeat: Infinity,
                                     ease: "easeInOut",
                                 }}
@@ -113,21 +117,8 @@ const GemRewardOverlay = ({ gemCount, title = "보석 획득!", description = "�
                     </div>
                 </div>
 
-                <div className="w-full pb-[20px]">
-                    <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                        onClick={handleConfirm}
-                        className="
-                            w-full h-[45px]
-                            bg-primary-main-600
-                            rounded-[8px]
-                            text-layout-white text-[16px] font-[700]
-                        "
-                    >
-                        확인
-                    </motion.button>
-                </div>
+                {/* 하단 여백 (확인 버튼 제거 — 자동 닫힘) */}
+                <div className="w-full pb-[20px]" />
             </div>
         </div>
     );

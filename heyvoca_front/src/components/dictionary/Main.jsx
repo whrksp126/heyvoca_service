@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, SpeakerHigh, Timer } from '@phosphor-icons/react';
+import { MagnifyingGlass, Plus, SlidersHorizontal, ArrowUp, Timer } from '@phosphor-icons/react';
+import SpeakerButton from '../common/SpeakerButton';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -484,14 +485,11 @@ const Main = () => {
           {/* 단어 상세 카드 */}
           <div className="border border-border dark:border-border-dark rounded-[12px] p-[16px]">
             <div className="flex items-center justify-between">
-              <div
-                className="flex items-center gap-[8px] cursor-pointer"
-                onClick={() => getTextSound(selectedWord.word, 'en')}
-              >
+              <div className="flex items-center gap-[8px]">
                 <span className="text-[22px] font-[700] text-layout-black dark:text-layout-white">
                   {selectedWord.word}
                 </span>
-                <SpeakerHigh size={18} className="text-layout-gray-300" />
+                <SpeakerButton text={selectedWord.word} lang="en" label="단어 발음 듣기" />
               </div>
               <button
                 onClick={handleAddWord}
@@ -779,12 +777,12 @@ const Main = () => {
                       onClick={() => handleWordItemClick(word)}
                     >
                       <div className="flex items-center justify-between w-full">
-                        <span
-                          className="text-[14px] font-[700] text-layout-black dark:text-layout-white cursor-pointer"
-                          onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(word.origin, 'en'); }}
-                        >
-                          {word.origin}
-                        </span>
+                        <div className="flex items-center gap-[5px] min-w-0">
+                          <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white break-words">
+                            {word.origin}
+                          </span>
+                          <SpeakerButton text={word.origin} lang="en" label="단어 발음 듣기" />
+                        </div>
                         <div className="flex items-center gap-[5px] shrink-0">
                           {isWordOverdue(word) && (
                             <div className="flex items-center justify-center w-[16px] h-[16px] bg-status-error-500 rounded-full">
@@ -805,8 +803,7 @@ const Main = () => {
                         {meaningLines.map((line, i) => (
                           <p
                             key={i}
-                            className="text-[13px] text-[#666] dark:text-layout-gray-300 line-clamp-2 leading-[1.5] cursor-pointer w-fit max-w-full"
-                            onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(meaningTtsText, 'ko'); }}
+                            className="text-[13px] text-[#666] dark:text-layout-gray-300 line-clamp-2 leading-[1.5] w-fit max-w-full"
                           >
                             {line}
                           </p>

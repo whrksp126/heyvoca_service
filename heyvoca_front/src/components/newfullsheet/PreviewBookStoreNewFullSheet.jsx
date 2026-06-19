@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SpeakerHigh, CaretLeft, CaretUp } from '@phosphor-icons/react';
+import { CaretLeft, CaretUp } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { getTextSound, stripHtmlTags } from '../../utils/common';
+import SpeakerButton from '../common/SpeakerButton';
 import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBottomSheet';
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
@@ -342,29 +342,22 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                   w-full
                 "
                 >
-                  <div className="flex flex-wrap">
+                  <div className="flex items-center gap-[5px]">
                     <h3
-                      onClick={() => {
-                        getTextSound(item.origin, "en");
-                      }}
                       className="
                       text-[16px] font-[700] text-layout-black dark:text-layout-white
-                      cursor-pointer
-                      break-words 
+                      break-words
                     "
                       id={`word-${item.id}`}
                     >
                       {item.origin}
                     </h3>
+                    <SpeakerButton text={item.origin} lang="en" label="단어 발음 듣기" />
                   </div>
                   <div className="flex flex-wrap">
                     <span
-                      onClick={() => {
-                        getTextSound(item.meanings.join(", "), "ko");
-                      }}
                       className="
                       text-[12px] font-[400] text-layout-black dark:text-layout-white
-                      cursor-pointer
                       break-words
                     "
                       id={`meaning-${item.id}`}
@@ -381,12 +374,8 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                     <div key={`${item.id}-${example_index}`}>
                       <div className="flex flex-wrap">
                         <p
-                          onClick={() => {
-                            getTextSound(stripHtmlTags(exOrigin), "en");
-                          }}
                           className="
                         text-[12px] font-[400] text-layout-black dark:text-layout-white
-                        cursor-pointer
                         break-words
                       "
                           id={`example-${item.id}-${example_index}`}
@@ -396,12 +385,8 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                       </div>
                       <div className="flex flex-wrap">
                         <p
-                          onClick={() => {
-                            getTextSound(stripHtmlTags(exMeaning), "ko");
-                          }}
                           className="
                         text-[12px] font-[400] text-layout-black dark:text-layout-white
-                        cursor-pointer
                         break-words
                       "
                           id={`example-${item.id}-${example_index}-meaning`}
@@ -412,18 +397,6 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                     </div>
                     );
                   })}
-                </div>
-                <div
-                  style={{
-                    color: bookStoreVocabularySheet.color.main
-                  }}
-                  className="
-                  flex gap-[8px]
-                  text-[20px]
-                ">
-                  <button onClick={() => getTextSound(item.origin, "en")}>
-                    <SpeakerHigh weight="fill" />
-                  </button>
                 </div>
               </li>
             )

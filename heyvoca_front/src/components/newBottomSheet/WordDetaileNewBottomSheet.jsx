@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { getTextSound, stripHtmlTags } from '../../utils/common';
+import { stripHtmlTags } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
+import SpeakerButton from '../common/SpeakerButton';
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from './AddWordNewBottomSheet';
@@ -99,77 +100,34 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               )}
             </div>
           </div>
-          <div className="flex flex-wrap">
-            <h3 className="text-[20px] font-[700] text-layout-black dark:text-layout-white">
-              <motion.span
-                onClick={() => getTextSound(word.origin, "en")}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 20
-                }}
-                className="inline-block cursor-pointer"
-                style={{ willChange: 'transform' }}
-              >
-                {word.origin}
-              </motion.span>
+          <div className="flex items-center gap-[6px]">
+            <h3 className="text-[20px] font-[700] text-layout-black dark:text-layout-white break-words">
+              {word.origin}
             </h3>
+            <SpeakerButton text={word.origin} lang="en" label="단어 발음 듣기" />
           </div>
-          <div className="flex flex-wrap">
-            <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
-              <motion.span
-                onClick={() => getTextSound(word.meanings.join(", "), "ko")}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 20
-                }}
-                className="inline-block cursor-pointer"
-                style={{ willChange: 'transform' }}
-              >
-                {word.meanings.join(", ")}
-              </motion.span>
+          <div className="flex items-center gap-[6px]">
+            <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words">
+              {word.meanings.join(", ")}
             </span>
+            <SpeakerButton text={word.meanings.join(", ")} lang="ko" label="의미 듣기" />
           </div>
           {
             word.examples?.map((example, index) => (
-              <div key={`${id}-${index}`} className="flex flex-col">
-                <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
-                  <motion.span
-                    onClick={() => getTextSound(stripHtmlTags(example.origin), "en")}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 20
-                    }}
-                    className="inline-block cursor-pointer"
-                    style={{ willChange: 'transform' }}
-                  >
-                    <span dangerouslySetInnerHTML={{ __html: example.origin }} />
-                  </motion.span>
-                </span>
-                <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
-                  <motion.span
-                    onClick={() => getTextSound(stripHtmlTags(example.meaning), "ko")}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 20
-                    }}
-                    className="inline-block cursor-pointer"
-                    style={{ willChange: 'transform' }}
-                  >
+              <div key={`${id}-${index}`} className="flex flex-col gap-[2px]">
+                <div className="flex items-center gap-[6px]">
+                  <span
+                    className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words"
+                    dangerouslySetInnerHTML={{ __html: example.origin }}
+                  />
+                  <SpeakerButton text={stripHtmlTags(example.origin)} lang="en" label="예문 발음 듣기" />
+                </div>
+                <div className="flex items-center gap-[6px]">
+                  <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words">
                     {example.meaning}
-                  </motion.span>
-                </span>
+                  </span>
+                  <SpeakerButton text={stripHtmlTags(example.meaning)} lang="ko" label="예문 의미 듣기" />
+                </div>
               </div>
             ))
           }

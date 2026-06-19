@@ -220,6 +220,57 @@ def get_purchase_history():
         }), 500
 
 
+@purchase_bp.route('/gem-history', methods=['GET'])
+@jwt_required
+def get_gem_history():
+    """사용자 보석 적립/사용 내역 조회 API (GemLog)"""
+    try:
+        user_id = UUID(g.user_id)
+
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 20, type=int)
+
+        logs = GemLog.query.filter_by(
+            user_id=user_id
+        ).order_by(GemLog.created_at.desc()).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
+
+        log_list = []
+        for log in logs.items:
+            log_list.append({
+                'id': str(log.id),
+                'amount': log.amount,            # 적립=양수, 사용=음수
+                'reason': log.reason.value if hasattr(log.reason, 'value') else log.reason,
+                'description': log.description,
+                'balance_after': log.balance_after,
+                'created_at': log.created_at.isoformat() if log.created_at else None
+            })
+
+        return jsonify({
+            'code': 200,
+            'message': '보석 내역을 조회했습니다.',
+            'data': {
+                'logs': log_list,
+                'pagination': {
+                    'page': logs.page,
+                    'per_page': logs.per_page,
+                    'total': logs.total,
+                    'pages': logs.pages,
+                    'has_next': logs.has_next,
+                    'has_prev': logs.has_prev
+                }
+            }
+        }), 200
+
+    except Exception as e:
+        logging.getLogger(__name__).error('보석 내역 조회 오류', exc_info=True)
+        return jsonify({
+            'code': 500,
+            'message': '서버 오류가 발생했습니다.'
+        }), 500
+
+
 @purchase_bp.route('/products', methods=['GET'])
 def get_products():
     """상품 목록 조회 API"""
@@ -263,7 +314,7 @@ def get_products():
 
 
 # 단어장 1개당 차감되는 보석 단가
-BOOK_PRICE_PER_UNIT = 10
+BOOK_PRICE_PER_UNIT = 3
 # 한 번에 구매 가능한 최대 단어장 수
 BOOK_PURCHASE_MAX_AMOUNT = 100
 

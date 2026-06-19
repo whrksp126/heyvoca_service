@@ -21,6 +21,8 @@ import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
 import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
 import VoiceSettingsNewFullSheet from '../newfullsheet/VoiceSettingsNewFullSheet';
+import GemNewFullSheet from '../newfullsheet/GemNewFullSheet';
+import gemImg from '../../assets/images/gem.png';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -74,6 +76,14 @@ const Main = () => {
     });
   }
 
+  // 보석
+  const handleGemClick = () => {
+    pushNewFullSheet(GemNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
+
   return (
     <motion.main
       className="flex-grow"
@@ -95,6 +105,18 @@ const Main = () => {
             <span className="text-[12px] font-normal text-[#999]">
               {userProfile?.email || "로그인 필요"}
             </span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
+
+        <li onClick={() => { vibrate({ duration: 5 }); handleGemClick(); }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <img src={gemImg} alt="보석" className="w-[20px] h-[18px]" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">보석</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-normal text-[#999]">{userProfile?.gem_cnt ?? 0}개</span>
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
           </div>
         </li>

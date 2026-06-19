@@ -76,18 +76,8 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
     <motion.div
       key={newBottomSheet.id}
       {...commonProps}
-      className={`
-        left-0 right-0 bottom-0 z-[1001]
-        fixed
-        max-h-[90vh]
-        rounded-t-2xl
-        bg-layout-white
-        after:content-['']
-        after:absolute after:left-0 after:right-0 after:bottom-[-100vh]
-        after:h-[101vh]
-        after:bg-layout-white
-      `}
-      initial={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
+      // hidden 시트는 보이는 위치(y:0)에서 시작해 아래로 슬라이드(일반 닫힘과 동일).
+      initial={{ y: 0, opacity: 1 }}
       animate={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
       style={newBottomSheet.options?.hidden ? { pointerEvents: 'none' } : undefined}

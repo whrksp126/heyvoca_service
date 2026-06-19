@@ -189,6 +189,25 @@ let currentRequestId = 0;
 let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
 let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸들
 
+// 첫 user gesture에서 sharedAudio를 unlock하기 위한 무음 클립.
+// 캐시 미스(uncached) 단어는 resolveTtsUrl await 이후에 play()가 호출되는데, 그 사이
+// gesture activation이 만료되어 "첫 클릭 무음, 둘째 클릭부터 재생" 버그가 있었다.
+// 클릭 동기 컨텍스트에서 무음을 한 번 play()해 element를 활성화하면 이후 async play()도 허용된다.
+const SILENT_AUDIO = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+let audioPrimed = false;
+
+// 반드시 클릭 등 user gesture의 동기 호출 스택에서 호출되어야 한다.
+const primeAudioWithinGesture = () => {
+  if (!sharedAudio) sharedAudio = new Audio();
+  if (audioPrimed) return;
+  audioPrimed = true;
+  try {
+    sharedAudio.src = SILENT_AUDIO;
+    const p = sharedAudio.play();
+    if (p && typeof p.catch === 'function') p.catch(() => { /* 무음 재생 reject 무시 */ });
+  } catch (e) { /* noop */ }
+};
+
 // ── 클라이언트 TTS 오디오 prefetch 캐시 ─────────────────────────────────
 // presigned URL이 가리키는 mp3를 미리 받아 objectURL로 들고 있다가, 클릭 시
 // 네트워크 왕복 없이 즉시 재생한다(클릭=즉시). objectstore가 CORS를 허용하므로
@@ -287,6 +306,9 @@ export const prefetchTtsList = async (items, concurrency = 4) => {
 // 클라이언트 blob 캐시에 있으면 네트워크 없이 즉시 재생, 없으면 받아서(생성 포함) 재생.
 // 캐시 미스(비로그인 등)면 url이 없으므로 조용히 종료한다.
 export const getTextSound = async (text, lang) => {
+  // user gesture 동기 시점에 오디오 element를 unlock (첫 클릭 무음 버그 방지).
+  primeAudioWithinGesture();
+
   // 이전 재생의 cleanup을 먼저 호출하여 리스너 제거 + resolve.
   if (currentCleanup) {
     currentCleanup();
@@ -309,20 +331,20 @@ export const getTextSound = async (text, lang) => {
     const key = ttsCacheKey(text, lang);
     let audioUrl = ttsBlobCache.get(key) || null;
 
-    // 2) blob 캐시 miss → mp3 전체 다운로드를 기다리지 않고 presigned URL을 <audio>에
-    //    직접 물려 progressive 재생(받으면서 즉시 시작). 동시에 백그라운드로 blob을 받아
-    //    캐시를 채워 다음/반복 재생을 즉시화한다(prefetch는 inflight를 재사용).
+    // 2) blob 캐시 miss → mp3 blob을 받아 objectURL로 재생.
+    //    presigned URL을 <audio>에 직접 물리면 응답 Content-Type에 따라 NotSupportedError가
+    //    날 수 있으므로(캐시 미스 첫 클릭 무음 원인), blob을 받아 재생한다(느리지만 확실).
+    //    prefetchTextSound가 resolve→fetch→objectURL 후 캐시까지 채운다(inflight 재사용).
     if (!audioUrl) {
-      audioUrl = await resolveTtsUrl(text, lang);
+      audioUrl = await prefetchTextSound(text, lang);
       // 받아오는 사이 더 새 요청이 왔으면 무효화
       if (requestId !== currentRequestId) {
         return;
       }
-      if (audioUrl) prefetchTextSound(text, lang);
     }
 
     if (!audioUrl) {
-      // 캐시 미스(비로그인) 또는 resolve 실패 — 음성 없이 조용히 종료
+      // 캐시 미스(비로그인) 또는 resolve/다운로드 실패 — 음성 없이 조용히 종료
       return;
     }
 
@@ -333,19 +355,36 @@ export const getTextSound = async (text, lang) => {
     return new Promise((resolve) => {
       currentAudioResolve = resolve;
 
+      let watchdog = null;
+
       const cleanup = () => {
         sharedAudio.removeEventListener('ended', cleanup);
         sharedAudio.removeEventListener('error', cleanup);
+        sharedAudio.removeEventListener('loadedmetadata', scheduleWatchdog);
+        if (watchdog) { clearTimeout(watchdog); watchdog = null; }
         if (currentCleanup === cleanup) currentCleanup = null;
         if (currentAudioResolve === resolve) {
           currentAudioResolve = null;
         }
         resolve();
       };
+
+      // 'ended' 이벤트가 일부 환경(WebView/짧은 mp3)에서 누락될 수 있어,
+      // 재생 길이 기반 안전 타이머로 반드시 종료 처리한다.
+      const scheduleWatchdog = () => {
+        const dur = sharedAudio.duration;
+        if (Number.isFinite(dur) && dur > 0) {
+          if (watchdog) clearTimeout(watchdog);
+          watchdog = setTimeout(cleanup, (dur + 0.4) * 1000);
+        }
+      };
+
       currentCleanup = cleanup;
 
       sharedAudio.addEventListener('ended', cleanup);
       sharedAudio.addEventListener('error', cleanup);
+      sharedAudio.addEventListener('loadedmetadata', scheduleWatchdog);
+      scheduleWatchdog(); // 메타데이터가 이미 로드된 경우 대비
 
       sharedAudio.play().catch(err => {
         console.error('오디오 재생 실패:', err);

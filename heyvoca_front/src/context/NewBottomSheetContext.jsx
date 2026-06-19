@@ -58,7 +58,12 @@ const newBottomSheetReducer = (state, action) => {
         return { stack: [], activeIndex: -1 };
       }
       const updatedStack = state.stack.slice(0, -1);
-      updatedStack[updatedStack.length - 1].isActive = true;
+      const newTop = updatedStack[updatedStack.length - 1];
+      updatedStack[updatedStack.length - 1] = {
+        ...newTop,
+        isActive: true,
+        options: { ...newTop.options, hidden: false }
+      };
       return {
         stack: updatedStack,
         activeIndex: updatedStack.length - 1

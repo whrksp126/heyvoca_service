@@ -4,6 +4,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { purchaseBookApi } from '../../api/store';
 import { StorePurchaseResultNewBottomSheet } from './StorePurchaseResultNewBottomSheet';
+import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 import gem from '../../assets/images/gem.png';
 import { vibrate } from '../../utils/osFunction';
 
@@ -18,17 +19,10 @@ export const StoreBuyBookNewBottomSheet = ({ options }) => {
     const handleBuy = async () => {
         vibrate({ duration: 5 });
         if (userProfile.gem_cnt < cost) {
-            // 보석 부족 결과 표시 - 기존 스택을 대체하여 확인 창이 남지 않도록 함
-            openNewBottomSheet(
-                StorePurchaseResultNewBottomSheet,
-                {
-                    options: {
-                        success: false,
-                        message: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
-                        image: gem
-                    }
-                }
-            );
+            // 보석 부족 → 구매 시트를 보석 구매 바텀시트로 교체
+            openNewBottomSheet(GemPurchaseNewBottomSheet, {
+                notice: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
+            });
             return;
         }
 

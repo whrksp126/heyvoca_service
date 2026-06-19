@@ -28,6 +28,7 @@ import { getTodaySummary } from '../../api/study';
 import { useTheme } from '../../context/ThemeContext';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import StudyNewFullSheet from '../newfullsheet/StudyNewFullSheet';
+import { GemPurchaseNewBottomSheet } from '../newBottomSheet/GemPurchaseNewBottomSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOverlayActions } from '../../context/OverlayContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
@@ -205,10 +206,17 @@ const Main = () => {
       ">
         <img src={logo_h} alt="heyvoca logo" className="h-[25px]" />
         <div className="flex gap-[8px] items-center">
-          <div className="flex gap-[5px] items-center">
+          <button
+            type="button"
+            onClick={() => {
+              vibrate({ duration: 5 });
+              pushNewBottomSheet(GemPurchaseNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+            }}
+            className="flex gap-[5px] items-center"
+          >
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
             <span className="text-layout-white text-[14px] font-bold">{userProfile.gem_cnt}</span>
-          </div>
+          </button>
         </div>
       </div>
       <motion.div

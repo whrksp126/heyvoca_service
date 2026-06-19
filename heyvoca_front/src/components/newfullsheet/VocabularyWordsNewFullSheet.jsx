@@ -6,7 +6,8 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { motion, AnimatePresence } from 'framer-motion';
 // import { useWordSetBottomSheet } from '../vocabularySheets/WordBottomSheet';
-import { getTextSound, isWordOverdue } from '../../utils/common';
+import { isWordOverdue } from '../../utils/common';
+import SpeakerButton from '../common/SpeakerButton';
 import UpdateVocabularyWordsNewFullSheet from './UpdateVocabularyWordsNewFullSheet';
 import MemorizationStatus from "../common/MemorizationStatus";
 // import DeleteWordNewBottomSheet from '../newBottomSheet/DeleteWordNewBottomSheet';
@@ -637,20 +638,17 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                   <div className="flex justify-between items-center w-full">
                     <div className="flex items-center gap-[5px]">
                       <h3
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          getTextSound(item.origin, "en");
-                        }}
                         className="
                           text-[16px] font-[700] text-layout-black dark:text-layout-white
                           tracking-[-0.32px]
-                          cursor-pointer relative
+                          relative
                           overflow-hidden
                           break-words
                         "
                       >
                         {item.origin}
                       </h3>
+                      <SpeakerButton text={item.origin} lang="en" label="단어 발음 듣기" />
                     </div>
 
                     <div className="flex items-center gap-[5px] shrink-0">
@@ -680,14 +678,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
                   <div className="flex flex-wrap w-full">
                     <span
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        getTextSound(item.meanings.join(", "), "ko");
-                      }}
                       className="
                         text-[12px] font-normal text-layout-gray-500 dark:text-layout-gray-50
                         tracking-[-0.24px]
-                        cursor-pointer relative
+                        relative
                         overflow-hidden
                         break-words
                       "
@@ -697,9 +691,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                   </div>
 
                   {showExamples && (
-                    <div onClick={(e) => e.stopPropagation()}>
-                      <ExampleList examples={item.examples} />
-                    </div>
+                    <ExampleList examples={item.examples} />
                   )}
                 </div>
               );

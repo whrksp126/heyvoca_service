@@ -20,8 +20,8 @@ const shiftYM = (y, m, offset) => {
 const buildCells = (y, m, days) => {
   const firstDayOfWeek = new Date(y, m - 1, 1).getDay();
   const daysInMonth = new Date(y, m, 0).getDate();
-  const totalCells = firstDayOfWeek + daysInMonth;
-  const rows = Math.ceil(totalCells / 7);
+  // 모든 달의 그리드 높이를 고정하기 위해 항상 6주(최대치)로 렌더 → 모달 높이 불변
+  const rows = 6;
 
   const cells = [];
   for (let i = 0; i < rows * 7; i++) {
@@ -168,7 +168,7 @@ const AttendanceCalendarOverlay = ({ initialYear, initialMonth }) => {
           w-[88%] max-w-[328px]
           bg-primary-main-100 dark:bg-layout-gray-dark
           rounded-[16px]
-          px-[15px] pt-[12px] pb-[6px]
+          px-[15px] pt-[12px] pb-[12px]
           flex flex-col gap-[20px]
         "
         onClick={(e) => e.stopPropagation()}
