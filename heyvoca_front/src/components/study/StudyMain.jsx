@@ -374,7 +374,7 @@ const StudyMain = ({ words }) => {
           w-full h-[16px]
           mb-[8px]
           rounded-[50px]
-          bg-primary-main-100
+          bg-primary-main-100 dark:bg-layout-gray-dark
           overflow-hidden
         ">
           <motion.div
@@ -407,7 +407,7 @@ const StudyMain = ({ words }) => {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.2}
             onDragEnd={handleDragEnd}
-            className="absolute inset-x-[20px] top-[15px] bottom-0 bg-layout-gray-50 dark:bg-layout-gray-900 rounded-[12px] overflow-y-auto touch-pan-y"
+            className="absolute inset-x-[20px] top-[15px] bottom-0 bg-layout-gray-50 dark:bg-layout-gray-dark rounded-[12px] overflow-y-auto touch-pan-y"
           >
             <div className="p-[20px] flex flex-col gap-[25px]">
               {/* 암기 상태 아이콘 */}
@@ -426,7 +426,7 @@ const StudyMain = ({ words }) => {
                   {/* 단어 */}
                   {isVisible('word') ? (
                     <div className={`flex items-start justify-between gap-[5px] ${playingItemId === 'word' ? 'text-primary-main-600' : ''}`}>
-                      <span className={`text-[24px] font-[700] line-height-[29px] flex-1 ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black'}`}>
+                      <span className={`text-[24px] font-[700] line-height-[29px] flex-1 ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                         {word.origin}
                       </span>
                       <motion.button
@@ -448,7 +448,7 @@ const StudyMain = ({ words }) => {
                       const isActive = playingItemId === 'meanings' && playingItemIndex === idx;
                       return (
                         <div key={idx} className="flex items-center justify-between gap-[8px]">
-                          <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${isActive ? 'text-primary-main-600' : 'text-layout-gray-600 dark:text-layout-black'}`}>
+                          <span className={`text-[13px] font-[400] line-height-[16px] flex-1 ${isActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
                             {meaning}
                           </span>
                           <motion.button
@@ -468,7 +468,7 @@ const StudyMain = ({ words }) => {
               {/* 예문 */}
               {examples.length > 0 && (
                 <div className="flex flex-col gap-[8px]">
-                  <p className="text-[14px] font-[700] text-layout-black">
+                  <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                     예문
                   </p>
                   {examples.map((example, idx) => {
@@ -481,7 +481,7 @@ const StudyMain = ({ words }) => {
                         {/* 예문 원문 */}
                         {isVisible('exampleSentences') ? (
                           <div className="flex items-start justify-between gap-[5px]">
-                            <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black'}`}>
+                            <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                               {exOrigin}
                             </span>
                             <motion.button
@@ -499,7 +499,7 @@ const StudyMain = ({ words }) => {
                         {/* 예문 의미 */}
                         {isVisible('exampleMeanings') ? (
                           <div className="flex items-start justify-between gap-[8px]">
-                            <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500'}`}>
+                            <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
                               {exMeaning}
                             </span>
                             <motion.button

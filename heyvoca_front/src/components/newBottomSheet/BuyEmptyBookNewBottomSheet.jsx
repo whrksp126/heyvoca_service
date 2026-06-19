@@ -183,7 +183,7 @@ export const BuyEmptyBookNewBottomSheet = () => {
       <div className="w-full flex gap-[15px] items-start">
         <motion.button
           onClick={() => { vibrate({ duration: 5 }); popNewBottomSheet(); }}
-          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white font-bold text-[16px] flex items-center justify-center"
+          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black font-bold text-[16px] flex items-center justify-center"
           whileTap={{ scale: 0.95 }}
         >
           취소

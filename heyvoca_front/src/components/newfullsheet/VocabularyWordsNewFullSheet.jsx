@@ -484,7 +484,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           px-[15px]
                           text-left text-[13px]
                           ${sortBy === key ? 'text-primary-main-600 font-[600]' : 'text-[#666]'}
-                          hover:bg-layout-gray-50
+                          hover:bg-layout-gray-50 dark:hover:bg-layout-gray-dark
                           transition-colors
                         `}
                       >
@@ -629,7 +629,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                     flex flex-col gap-[10px] items-start
                     p-[20px] mx-[16px] mb-[10px]
                     rounded-[12px]
-                    ${overdue ? 'bg-status-error-100' : 'bg-layout-gray-50'}
+                    ${overdue ? 'bg-status-error-100 dark:bg-status-error-dark' : 'bg-layout-gray-50 dark:bg-layout-gray-dark'}
                     cursor-pointer
                   `}
                   onClick={() => handleCardClick(item.id)}
@@ -642,7 +642,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                           getTextSound(item.origin, "en");
                         }}
                         className="
-                          text-[16px] font-[700] text-layout-black
+                          text-[16px] font-[700] text-layout-black dark:text-layout-white
                           tracking-[-0.32px]
                           cursor-pointer relative
                           overflow-hidden
@@ -685,7 +685,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                         getTextSound(item.meanings.join(", "), "ko");
                       }}
                       className="
-                        text-[12px] font-normal text-layout-gray-500
+                        text-[12px] font-normal text-layout-gray-500 dark:text-layout-gray-50
                         tracking-[-0.24px]
                         cursor-pointer relative
                         overflow-hidden
@@ -803,7 +803,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               z-[50]
             "
           >
-            <CaretUp size={24} weight="bold" />
+            <CaretUp size={24} weight="bold" className="dark:text-layout-black" />
           </motion.button>
         )}
       </AnimatePresence>

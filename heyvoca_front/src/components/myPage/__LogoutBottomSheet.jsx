@@ -73,7 +73,7 @@
 //         pt-[40px] px-[20px] pb-[10px]
 //       ">
 //         <h3 className="text-[18px] font-[700]">정말 로그아웃 하시겠어요?</h3>
-//         <p className="text-[14px] font-[400] text-layout-black">단어 공부를 포기하지 마세요..😢</p>
+//         <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">단어 공부를 포기하지 마세요..😢</p>
 //       </div>
 //       <div className="flex items-center justify-between gap-[15px] p-[20px]">
 //         <motion.button 

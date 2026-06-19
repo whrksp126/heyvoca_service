@@ -112,7 +112,7 @@ const WordDetailNewFullSheet = ({ word }) => {
             </div>
             <button
               onClick={handleAddWord}
-              className="flex items-center gap-[4px] px-[10px] py-[6px] rounded-[8px] bg-primary-main-50 dark:bg-[#1a1a2e]"
+              className="flex items-center gap-[4px] px-[10px] py-[6px] rounded-[8px] bg-primary-main-50 dark:bg-primary-main-dark"
             >
               <Plus size={16} className="text-primary-main-600" />
               <span className="text-[12px] font-[600] text-primary-main-600">단어장에 추가</span>
@@ -129,7 +129,7 @@ const WordDetailNewFullSheet = ({ word }) => {
               {detail.meanings.map((meaning, i) => (
                 <p
                   key={i}
-                  className="text-[14px] text-[#555] dark:text-[#aaa] leading-[1.7] cursor-pointer"
+                  className="text-[14px] text-[#555] dark:text-layout-gray-300 leading-[1.7] cursor-pointer"
                   onClick={() => {
                     vibrate({ duration: 5 });
                     getTextSound(stripHtmlTags(meaning), 'ko');
@@ -149,7 +149,7 @@ const WordDetailNewFullSheet = ({ word }) => {
               {detail.examples.map((ex, i) => (
                 <div
                   key={i}
-                  className="bg-layout-gray-50 dark:bg-[#111] rounded-[8px] px-[12px] py-[10px]"
+                  className="bg-layout-gray-50 dark:bg-layout-black rounded-[8px] px-[12px] py-[10px]"
                 >
                   <p
                     className="text-[13px] text-layout-black dark:text-layout-white leading-[1.6] italic cursor-pointer"

@@ -10,6 +10,8 @@ import { vibrate } from '../../utils/osFunction';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import gem from '../../assets/images/gem.png';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -26,6 +28,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { vocabularySheets } = useVocabulary();
   const { showExamples } = useExampleSettings();
+  const { isDark } = useTheme();
   // 예문 표시 여부에 따라 윈도우 렌더링 높이 추정치를 보정 (150=예제 포함, 90=예제 숨김)
   const itemHeightEstimate = showExamples ? ITEM_HEIGHT_ESTIMATE : 90;
 
@@ -300,7 +303,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                 className="
                   py-[3px] px-[6px]
                   rounded-[50px]
-                  text-[8px] font-[700] text-layout-white
+                  text-[8px] font-[700] text-layout-white dark:text-layout-black
                 "
               >
                 {bookStoreVocabularySheet.category}
@@ -324,7 +327,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
               <li
                 key={item.id}
                 style={{
-                  backgroundColor: bookStoreVocabularySheet.color.background
+                  backgroundColor: resolveVocaBookBackground(bookStoreVocabularySheet.color.background, isDark)
                 }}
                 className="
                   flex gap-[10px] items-start
@@ -345,7 +348,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                         getTextSound(item.origin, "en");
                       }}
                       className="
-                      text-[16px] font-[700] text-layout-black
+                      text-[16px] font-[700] text-layout-black dark:text-layout-white
                       cursor-pointer
                       break-words 
                     "
@@ -360,7 +363,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                         getTextSound(item.meanings.join(", "), "ko");
                       }}
                       className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       cursor-pointer
                       break-words
                     "
@@ -382,7 +385,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                             getTextSound(stripHtmlTags(exOrigin), "en");
                           }}
                           className="
-                        text-[12px] font-[400] text-layout-black
+                        text-[12px] font-[400] text-layout-black dark:text-layout-white
                         cursor-pointer
                         break-words
                       "
@@ -397,7 +400,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
                             getTextSound(stripHtmlTags(exMeaning), "ko");
                           }}
                           className="
-                        text-[12px] font-[400] text-layout-black
+                        text-[12px] font-[400] text-layout-black dark:text-layout-white
                         cursor-pointer
                         break-words
                       "
@@ -580,7 +583,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
               z-[50]
             "
           >
-            <CaretUp size={24} weight="bold" />
+            <CaretUp size={24} weight="bold" className="dark:text-layout-black" />
           </motion.button>
         )}
       </AnimatePresence>

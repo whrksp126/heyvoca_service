@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -17,6 +19,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet } = useNewBottomSheetActions();
+  const { isDark } = useTheme();
 
   // 무한 스크롤을 위한 state
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -206,7 +209,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                 className="
                 py-[3px] px-[6px]
                 rounded-[50px]
-                text-[8px] font-[700] text-layout-white
+                text-[8px] font-[700] text-layout-white dark:text-layout-black
               "
               >
                 {vocabularySheet.category}
@@ -214,7 +217,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
             )}
             {vocabularySheet.name}
           </div>
-          <div className="text-[12px] font-[400] text-layout-black">
+          <div className="text-[12px] font-[400] text-layout-black dark:text-layout-white">
             {vocabularySheet.words.length}개의 단어
           </div>
         </div>
@@ -231,7 +234,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
               <li
                 key={item.id}
                 style={{
-                  backgroundColor: vocabularySheet.color.background
+                  backgroundColor: resolveVocaBookBackground(vocabularySheet.color.background, isDark)
                 }}
                 className="
                 flex gap-[10px] items-start
@@ -259,7 +262,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                         damping: 20
                       }}
                       className="
-                    text-[16px] font-[700] text-layout-black
+                    text-[16px] font-[700] text-layout-black dark:text-layout-white
                     cursor-pointer
                     break-words 
                   "
@@ -281,7 +284,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                         damping: 20
                       }}
                       className="
-                    text-[12px] font-[400] text-layout-black
+                    text-[12px] font-[400] text-layout-black dark:text-layout-white
                     cursor-pointer
                     break-words
                   "
@@ -305,7 +308,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                             damping: 20
                           }}
                           className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       cursor-pointer
                       break-words
                     "
@@ -327,7 +330,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                             damping: 20
                           }}
                           className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       cursor-pointer
                       break-words
                     "

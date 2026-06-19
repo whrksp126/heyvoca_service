@@ -315,23 +315,23 @@ const Main = () => {
               flex flex-col gap-[20px]
               px-[15px] py-[12px]
               rounded-[12px]
-              bg-primary-main-100
+              bg-primary-main-100 dark:bg-layout-gray-dark
               cursor-pointer
             "
             onClick={handleAttendanceClick}
           >
-            <h2 className="text-layout-black text-[16px] font-[700]">출석체크</h2>
+            <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">출석체크</h2>
             <div className="flex justify-between">
               {userMainPage?.dates?.map((item, index) => (
                 <div key={index} className="flex flex-col gap-[10px] items-center">
-                  <h3 className="text-layout-black text-[12px] font-[600]">{item.date}</h3>
+                  <h3 className="text-layout-black dark:text-layout-white text-[12px] font-[600]">{item.date}</h3>
                   {(item.attend && item.daily_mission) && (
                     <div className="w-[30px] h-[30px] flex items-center justify-center">
                       <div className="flex items-center justify-center w-[24px] h-[24px] 
                       bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                       rounded-[50%]
                     ">
-                        <Heart size={12} weight="fill" color="var(--layout-white)" />
+                        <Heart size={12} weight="fill" className="text-layout-white dark:text-layout-black" />
                       </div>
                     </div>
                   )}
@@ -353,9 +353,9 @@ const Main = () => {
             flex flex-col gap-[20px]
             px-[15px] py-[12px]
             rounded-[12px]
-            bg-secondary-purple-100 
+            bg-secondary-purple-100 dark:bg-secondary-purple-dark 
           ">
-            <h2 className="text-layout-black text-[16px] font-[700]">나의 업적</h2>
+            <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">나의 업적</h2>
             <div className="grid grid-cols-3 gap-y-4 justify-items-center">
               {userMainPage?.goals?.map((goal, idx) => (
                 <div
@@ -385,7 +385,7 @@ const Main = () => {
                       <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
                     </span>
                   </div>
-                  <span className="text-layout-black text-[12px] font-[600]">
+                  <span className="text-layout-black dark:text-layout-white text-[12px] font-[600]">
                     {goal.type}
                   </span>
                 </div>

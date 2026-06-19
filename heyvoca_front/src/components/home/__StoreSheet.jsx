@@ -68,7 +68,7 @@
 //             className="flex gap-[5px] items-center"
 //           >
 //             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-//             <span className="text-layout-black text-[16px] font-bold">{userProfile.gem_cnt}</span>
+//             <span className="text-layout-black dark:text-layout-white text-[16px] font-bold">{userProfile.gem_cnt}</span>
 //           </div>
 //         </div>
 //       </div>
@@ -85,7 +85,7 @@
 //           </div>
 //           )}
 //           <div className="flex flex-col gap-[3px]">
-//             <h1 className="text-[14px] font-[600] text-layout-black">{gem.name}</h1>
+//             <h1 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">{gem.name}</h1>
 //             <span className="text-center text-[14px] font-[700] text-primary-main-600">₩ {gem.price}</span>
 //           </div>
 //         </div>

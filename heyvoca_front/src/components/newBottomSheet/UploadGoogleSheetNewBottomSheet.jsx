@@ -405,9 +405,9 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
                   className="
                     flex items-center gap-[12px]
                     w-full px-[15px] py-[12px]
-                    border border-layout-gray-200 dark:border-[#333]
+                    border border-layout-gray-200 dark:border-border-dark
                     rounded-[8px]
-                    bg-layout-white dark:bg-[#1A1A1A]
+                    bg-layout-white dark:bg-layout-gray-dark
                     text-left
                   "
                   onClick={() => handleSelectSheet(sheet)}
@@ -443,9 +443,9 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
                 className="
                   flex items-center gap-[12px]
                   w-full px-[15px] py-[12px]
-                  border border-layout-gray-200 dark:border-[#333]
+                  border border-layout-gray-200 dark:border-border-dark
                   rounded-[8px]
-                  bg-layout-white dark:bg-[#1A1A1A]
+                  bg-layout-white dark:bg-layout-gray-dark
                   text-left
                 "
                 onClick={() => handleSelectTab(tab)}
@@ -466,7 +466,7 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
       {!isLoading && step === STEP.SETTINGS && (
         <div className="flex flex-col gap-[24px] max-h-[calc(90vh-150px)] p-[20px] pb-[20px] overflow-y-auto">
           {/* 선택된 시트 정보 */}
-          <div className="flex items-center gap-[8px] px-[12px] py-[8px] bg-primary-main-100 dark:bg-[#2A2A2A] rounded-[8px]">
+          <div className="flex items-center gap-[8px] px-[12px] py-[8px] bg-primary-main-100 dark:bg-layout-gray-dark rounded-[8px]">
             <Table size={16} weight="bold" className="text-primary-main-600 shrink-0" />
             <span className="text-[13px] text-layout-black dark:text-layout-white truncate">
               {selectedSheet?.name} {tabList.length > 1 ? `/ ${selectedTab?.title}` : ''}

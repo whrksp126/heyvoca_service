@@ -208,7 +208,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >
@@ -220,11 +220,11 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
               defaultValue={title}
               type="text"
               placeholder="단어장 이름을 입력하세요"
-              className="
+              className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px]
                 px-[15px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[14px] text-layout-black
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border-primary-main-600
                 transition-colors
@@ -239,7 +239,7 @@ export const AddVocabularySheet = ({ id, title, selectedColor, setSelectedColor,
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >

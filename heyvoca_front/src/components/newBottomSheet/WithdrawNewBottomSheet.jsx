@@ -26,10 +26,10 @@ export const WithdrawNewBottomSheet = () => {
           정말 회원 탈퇴를 하시겠어요?
         </h3>
         <div className="flex flex-col gap-[8px] px-[10px]">
-          <p className="text-center text-[14px] font-[400] text-[#666] dark:text-[#999] leading-[1.5]">
+          <p className="text-center text-[14px] font-[400] text-[#666] dark:text-layout-gray-300 leading-[1.5]">
             탈퇴하시면 <span className="font-[700] text-[#F26A6A]">모든 사용자 기록과 데이터가 즉시 삭제</span>됩니다.
           </p>
-          <p className="text-center text-[14px] font-[400] text-[#666] dark:text-[#999] leading-[1.5]">
+          <p className="text-center text-[14px] font-[400] text-[#666] dark:text-layout-gray-300 leading-[1.5]">
             단어장, 학습 기록, 보석, 업적 등<br />복구할 수 없습니다.
           </p>
         </div>

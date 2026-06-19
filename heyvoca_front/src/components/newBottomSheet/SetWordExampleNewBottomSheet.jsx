@@ -57,7 +57,7 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >
@@ -73,11 +73,11 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
                 exampleOriginInputRef.current.value = e.target.value;
               }}
               placeholder="예문을 입력하세요"
-              className="
+              className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[16px] text-layout-black
+                font-[400] text-[16px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border-primary-main-600
                 transition-colors
@@ -93,11 +93,11 @@ const SetWordExampleNewBottomSheet = ({ examples, setType = "add", exampleIndex 
                 exampleMeaningInputRef.current.value = e.target.value;
               }}
               placeholder="의미를 입력하세요"
-              className="
+              className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[16px] text-layout-black
+                font-[400] text-[16px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border-primary-main-600
                 transition-colors

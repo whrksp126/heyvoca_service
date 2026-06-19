@@ -35,9 +35,9 @@ const BottomNav = () => {
           >
             <House
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/home' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/home' ? 'text-primary-main-600' : 'text-[#999] dark:text-layout-gray-400'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/home' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/home' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-layout-gray-400'
               }`}>
               홈
             </span>
@@ -57,9 +57,9 @@ const BottomNav = () => {
           >
             <Notepad
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600' : 'text-[#999] dark:text-layout-gray-400'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/vocabulary-sheets' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-layout-gray-400'
               }`}>
               단어장
             </span>
@@ -79,9 +79,9 @@ const BottomNav = () => {
           >
             <BookBookmark
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/dictionary' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/dictionary' ? 'text-primary-main-600' : 'text-[#999] dark:text-layout-gray-400'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/dictionary' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/dictionary' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-layout-gray-400'
               }`}>
               사전
             </span>
@@ -101,9 +101,9 @@ const BottomNav = () => {
           >
             <Storefront
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/book-store' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/book-store' ? 'text-primary-main-600' : 'text-[#999] dark:text-layout-gray-400'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/book-store' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-layout-gray-400'
               }`}>
               상점
             </span>
@@ -125,9 +125,9 @@ const BottomNav = () => {
           >
             <User
               weight="fill"
-              className={`w-6 h-6 ${location.pathname === '/mypage' ? 'text-primary-main-600' : 'text-[#999] dark:text-[#666]'}`}
+              className={`w-6 h-6 ${location.pathname === '/mypage' ? 'text-primary-main-600' : 'text-[#999] dark:text-layout-gray-400'}`}
             />
-            <span className={`text-[10px] mt-1 ${location.pathname === '/mypage' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-[#666]'
+            <span className={`text-[10px] mt-1 ${location.pathname === '/mypage' ? 'text-primary-main-600 font-bold' : 'text-[#999] dark:text-layout-gray-400'
               }`}>
               마이페이지
             </span>

@@ -31,7 +31,7 @@ const SaveStudyData = ({ endInitialProfile, studySessionRef }) => {
       flex flex-col items-center justify-center
       w-full h-screen 
       p-[20px]
-      bg-primary-main-100
+      bg-primary-main-100 dark:bg-layout-gray-dark
     ">
 
       <div className="

@@ -753,9 +753,9 @@ export const UploadAnkiNewBottomSheet = () => {
             {(() => {
               const sample = mappedSamples[0];
               return (
-                <div className="flex flex-col gap-[5px] p-[15px] rounded-[8px] bg-primary-main-100">
+                <div className="flex flex-col gap-[5px] p-[15px] rounded-[8px] bg-primary-main-100 dark:bg-layout-gray-dark">
                   <div className="flex items-baseline gap-[8px] flex-wrap">
-                    <span className="text-[16px] font-[700] text-layout-black">{sample.word || '-'}</span>
+                    <span className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{sample.word || '-'}</span>
                     {sample.pronunciation && (
                       <span className="text-[12px] text-layout-gray-400">{sample.pronunciation}</span>
                     )}
@@ -766,7 +766,7 @@ export const UploadAnkiNewBottomSheet = () => {
                   {(sample.example || sample.exampleMeaning) && (
                     <div className="mt-[5px] pt-[8px] border-t border-layout-gray-200">
                       {sample.example && (
-                        <p className="text-[13px] text-layout-black">{sample.example}</p>
+                        <p className="text-[13px] text-layout-black dark:text-layout-white">{sample.example}</p>
                       )}
                       {sample.exampleMeaning && (
                         <p className="text-[12px] text-layout-gray-400 mt-[2px]">{sample.exampleMeaning}</p>

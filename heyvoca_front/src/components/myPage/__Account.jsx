@@ -80,12 +80,12 @@
 //                 <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">로그인 방식</h2>
 //                 <div className="flex items-center gap-[5px]">
 //                   <img src={google} alt="google" className="inline-block w-[16px] h-[16px]" />
-//                   <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">Google 로그인</span>
+//                   <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">Google 로그인</span>
 //                 </div>
 //             </li>
 //             <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] bg-layout-white dark:bg-layout-black">
 //                 <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">계정 이메일</h2>
-//                 <span className="text-[14px] font-[400] text-[#999] dark:text-[#999]">{userProfile?.email || "로그인 필요"}</span>
+//                 <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">{userProfile?.email || "로그인 필요"}</span>
 //             </li>
 //           </ul>
 //           <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black"

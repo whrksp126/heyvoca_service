@@ -106,7 +106,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
     };
 
     return (
-        <div className="flex flex-col h-full w-full bg-primary-main-100">
+        <div className="flex flex-col h-full w-full bg-primary-main-100 dark:bg-layout-gray-dark">
             <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
             <div data-page-header className="relative flex items-center justify-center h-[55px] pt-[20px] px-[10px] pb-[14px]">
                 <motion.button
@@ -121,7 +121,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                     <CaretLeft size={24} />
                 </motion.button>
             </div>
-            <div className="relative flex flex-col items-center gap-[45px] justify-end w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))] p-[20px] bg-primary-main-100">
+            <div className="relative flex flex-col items-center gap-[45px] justify-end w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))] p-[20px] bg-primary-main-100 dark:bg-layout-gray-dark">
                 <div className="absolute top-[35px] left-[50%] translate-x-[-50%] flex flex-col items-center gap-[10px]">
                     <div
                         className="w-[max-content] px-[20px] py-[14px] rounded-[14px] font-[18px] font-[700] bg-layout-white text-center relative"
@@ -134,7 +134,7 @@ const InitialProfileStepPromoCodeNewFullSheet = ({ userInitialProfile, setUserIn
                     <img src={HeyCharacter} alt="logo" className="w-[200px]" />
                 </div>
                 <div className="relative w-full">
-                    <div className="relative flex flex-col items-center gap-[15px] w-full bg-primary-main-100">
+                    <div className="relative flex flex-col items-center gap-[15px] w-full bg-primary-main-100 dark:bg-layout-gray-dark">
                         <input
                             type="text"
                             placeholder="초대 코드를 입력해주세요"

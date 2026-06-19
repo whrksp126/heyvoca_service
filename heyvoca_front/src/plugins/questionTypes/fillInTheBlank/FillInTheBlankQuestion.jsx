@@ -13,10 +13,10 @@ const stateIconMap = {
 };
 
 const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3]' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB]' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE]' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8]' },
+  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
+  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
+  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
+  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
 };
 
 const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
@@ -142,7 +142,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
   const blankClass = isAnswered
     ? isCorrect
       ? 'border-status-success-500 text-status-success-600 bg-status-success-100'
-      : 'border-status-error-500 text-status-error-600 bg-status-error-100'
+      : 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark'
     : 'border-layout-gray-300 bg-layout-white dark:bg-layout-black';
 
   // 복습 예정일 텍스트 — 채점 시 고정된 displayNextReview 사용(백엔드 응답으로 덮지 않음)
@@ -168,16 +168,16 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
       <div className="relative flex flex-col h-full rounded-[12px] overflow-hidden">
 
         {/* 한국어 예문 (primary 배경, target-word 강조) */}
-        <div className="flex items-center min-h-[72px] px-[20px] py-[15px] bg-primary-main-50">
-          <p className="text-[14px] font-[400] text-layout-black">
+        <div className="flex items-center min-h-[72px] px-[20px] py-[15px] bg-primary-main-50 dark:bg-primary-main-dark">
+          <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
             {renderHighlightedText(exampleTranslation)}
           </p>
         </div>
 
         {/* 영어 예문 + 빈칸 박스 + O/X + 복습일 */}
-        <div className="relative flex-1 bg-layout-gray-50 px-[20px] py-[15px]">
+        <div className="relative flex-1 bg-layout-gray-50 dark:bg-layout-gray-dark px-[20px] py-[15px]">
           {/* 예문 텍스트 + 빈칸 (O/X 위에) */}
-          <p className="relative z-[2] text-[16px] font-[400] text-layout-black leading-[2.2]">
+          <p className="relative z-[2] text-[16px] font-[400] text-layout-black dark:text-layout-white leading-[2.2]">
             {before}
             <span
               className={`
@@ -266,7 +266,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
+              className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
             >
               {reviewText}
             </motion.div>
@@ -281,9 +281,9 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
           if (isAnswered && resultIndex === index) {
             btnStyle = 'border-status-success-500 text-status-success-600 bg-status-success-100';
           } else if (isAnswered && selectedIndex === index && !isCorrect) {
-            btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100';
+            btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
           } else if (!isAnswered && selectedIndex === index) {
-            btnStyle = 'border-primary-main-600 bg-primary-main-50 text-layout-black dark:text-layout-white';
+            btnStyle = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
           }
 
           return (

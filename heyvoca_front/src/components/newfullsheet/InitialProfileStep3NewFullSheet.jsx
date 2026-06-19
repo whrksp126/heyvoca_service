@@ -94,7 +94,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-primary-main-100
+      bg-primary-main-100 dark:bg-layout-gray-dark
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -140,7 +140,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
         flex flex-col items-center gap-[45px] justify-end 
         w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))]
         p-[20px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
       ">
         <div className="
             absolute top-[35px] left-[50%] translate-x-[-50%] z-0
@@ -192,7 +192,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               font-[16px] font-[700]
               ${selectedLevel === 1
                   ? 'border-primary-main-600 text-primary-main-600 bg-layout-white shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
-                  : 'border-layout-gray-200 text-layout-black bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
+                  : 'border-layout-gray-200 text-layout-black dark:text-layout-white bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(1)}
@@ -214,7 +214,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               font-[16px] font-[700]
               ${selectedLevel === 2
                   ? 'border-primary-main-600 text-primary-main-600 bg-layout-white shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
-                  : 'border-layout-gray-200 text-layout-black bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
+                  : 'border-layout-gray-200 text-layout-black dark:text-layout-white bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(2)}
@@ -236,7 +236,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               font-[16px] font-[700]
               ${selectedLevel === 3
                   ? 'border-primary-main-600 text-primary-main-600 bg-layout-white shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
-                  : 'border-layout-gray-200 text-layout-black bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
+                  : 'border-layout-gray-200 text-layout-black dark:text-layout-white bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(3)}
@@ -258,7 +258,7 @@ const InitialProfileStep3NewFullSheet = ({ userInitialProfile, setUserInitialPro
               font-[16px] font-[700]
               ${selectedLevel === 4
                   ? 'border-primary-main-600 text-primary-main-600 bg-layout-white shadow-[0_2px_8px_rgba(255,112,212,0.3)]'
-                  : 'border-layout-gray-200 text-layout-black bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
+                  : 'border-layout-gray-200 text-layout-black dark:text-layout-white bg-layout-white hover:border-primary-main-600 hover:text-primary-main-600 focus:border-primary-main-600 focus:text-primary-main-600'
                 }
             `}
               onClick={() => handleLevelSelect(4)}

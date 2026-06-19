@@ -22,6 +22,7 @@ module.exports = {
             200: 'var(--primary-main-200)',
             100: 'var(--primary-main-100)',
             50: 'var(--primary-main-50)',
+            dark: 'var(--primary-main-dark)',
           }
         },
         secondary: {
@@ -33,6 +34,7 @@ module.exports = {
             200: 'var(--secondary-blue-200)',
             100: 'var(--secondary-blue-100)',
             50: 'var(--secondary-blue-50)',
+            dark: 'var(--secondary-blue-dark)',
           },
           purple: {
             600: 'var(--secondary-purple-600)',
@@ -42,6 +44,7 @@ module.exports = {
             200: 'var(--secondary-purple-200)',
             100: 'var(--secondary-purple-100)',
             50: 'var(--secondary-purple-50)',
+            dark: 'var(--secondary-purple-dark)',
           },
           yellow: {
             600: 'var(--secondary-yellow-600)',
@@ -51,6 +54,7 @@ module.exports = {
             200: 'var(--secondary-yellow-200)',
             100: 'var(--secondary-yellow-100)',
             50: 'var(--secondary-yellow-50)',
+            dark: 'var(--secondary-yellow-dark)',
           },
           mint: {
             600: 'var(--secondary-mint-600)',
@@ -60,6 +64,7 @@ module.exports = {
             200: 'var(--secondary-mint-200)',
             100: 'var(--secondary-mint-100)',
             50: 'var(--secondary-mint-50)',
+            dark: 'var(--secondary-mint-dark)',
           },
         },
         status: {
@@ -71,6 +76,7 @@ module.exports = {
             200: 'var(--status-success-200)',
             100: 'var(--status-success-100)',
             50: 'var(--status-success-50)',
+            dark: 'var(--status-success-dark)',
           },
           error: {
             600: 'var(--status-error-600)',
@@ -80,6 +86,7 @@ module.exports = {
             200: 'var(--status-error-200)',
             100: 'var(--status-error-100)',
             50: 'var(--status-error-50)',
+            dark: 'var(--status-error-dark)',
           }
         },
         layout: {
@@ -92,6 +99,7 @@ module.exports = {
             200: 'var(--layout-gray-200)',
             100: 'var(--layout-gray-100)',
             50: 'var(--layout-gray-50)',
+            dark: 'var(--layout-gray-dark)',
           }
         },
         border: {

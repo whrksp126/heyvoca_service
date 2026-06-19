@@ -163,9 +163,9 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                 </div>
 
                 {/* 리스트 영역 - 연한 보라색 배경 */}
-                <div className="flex flex-col gap-[15px] p-[20px] bg-secondary-purple-100 rounded-[12px]">
+                <div className="flex flex-col gap-[15px] p-[20px] bg-secondary-purple-100 dark:bg-secondary-purple-dark rounded-[12px]">
                     {/* 선택된 업적 이름 */}
-                    <h2 className="text-[16px] font-[700] text-layout-black tracking-[-0.32px]">
+                    <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white tracking-[-0.32px]">
                         {activeTab}
                     </h2>
 
@@ -199,7 +199,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                         </div>
 
                                         {/* 목표 설명 */}
-                                        <span className="text-[13px] font-[400] text-layout-gray-500 tracking-[-0.26px] leading-[1.5]">
+                                        <span className="text-[13px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 tracking-[-0.26px] leading-[1.5]">
                                             {levelInfo.goal}
                                         </span>
                                     </div>

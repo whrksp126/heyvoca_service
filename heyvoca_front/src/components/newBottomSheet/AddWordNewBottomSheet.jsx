@@ -235,7 +235,7 @@ const AddWordNewBottomSheet = ({
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >
@@ -263,7 +263,7 @@ const AddWordNewBottomSheet = ({
                   transition-colors
                   appearance-none
                   ${editableSheets.length === 0
-                    ? 'border-layout-gray-200 bg-layout-gray-50 text-[#999999]'
+                    ? 'border-layout-gray-200 bg-layout-gray-50 dark:bg-layout-gray-dark text-[#999999]'
                     : 'border-layout-gray-200 bg-layout-white dark:bg-layout-black text-layout-black dark:text-layout-white focus:border--primary-main-600'}
                 `}
                 style={{ WebkitAppearance: 'none', appearance: 'none' }}
@@ -291,7 +291,7 @@ const AddWordNewBottomSheet = ({
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >
@@ -311,11 +311,11 @@ const AddWordNewBottomSheet = ({
               }}
               type="text"
               placeholder="단어를 입력하세요"
-              className="
+              className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px]
                 px-[15px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[14px] text-layout-black
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -328,7 +328,7 @@ const AddWordNewBottomSheet = ({
             )}
           </div>
           {wordSearchResults && wordSearchResults.length > 0 && (
-            <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 overflow-y-auto">
+            <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 dark:bg-layout-gray-dark overflow-y-auto">
               {wordSearchResults.map(({ word, meanings, examples }, index) => (
                 <li
                   key={index}
@@ -351,7 +351,7 @@ const AddWordNewBottomSheet = ({
                       );
                     })}
                   </span>
-                  <p className="text-[11px] font-[400] text-layout-black self-center">{meanings.join(', ')}</p>
+                  <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white self-center">{meanings.join(', ')}</p>
                 </li>
               ))}
             </ul>
@@ -364,7 +364,7 @@ const AddWordNewBottomSheet = ({
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
           >
@@ -387,11 +387,11 @@ const AddWordNewBottomSheet = ({
               }}
               type="text"
               placeholder="의미를 입력하세요"
-              className="
+              className="bg-layout-white dark:bg-layout-black
                 w-full h-[45px]
                 px-[15px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[14px] text-layout-black
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -407,7 +407,7 @@ const AddWordNewBottomSheet = ({
           <div className="flex justify-between items-center">
             <h3
               className="
-                text-[14px] font-[700] text-layout-black 
+                text-[14px] font-[700] text-layout-black dark:text-layout-white 
               dark:text-layout-white
               "
             >
@@ -459,11 +459,11 @@ const AddWordNewBottomSheet = ({
                 flex flex-col gap-[5px] 
                 p-[15px] 
                 rounded-[8px]
-                bg-primary-main-100
+                bg-primary-main-100 dark:bg-layout-gray-dark
               "
               >
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[14px] font-[600] text-layout-black">
+                  <h2 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">
                     {index + 1}
                   </h2>
                   <div className="
@@ -515,7 +515,7 @@ const AddWordNewBottomSheet = ({
                   </div>
                 </div>
                 <div>
-                  <p className="text-[14px] font-[400] text-layout-black">
+                  <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                     <span
                       className="cursor-pointer"
                       onClick={() => getTextSound(stripHtmlTags(origin), "en")}
@@ -612,7 +612,7 @@ const AddWordNewBottomSheet = ({
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-layout-black 
+  //             text-[14px] font-[700] text-layout-black dark:text-layout-white 
   //           dark:text-layout-white
   //           "
   //         >
@@ -640,7 +640,7 @@ const AddWordNewBottomSheet = ({
   //                 appearance-none
   //                 ${id ? false : true ? 
   //                   'border-[#CCCCCC] bg-layout-gray-50 text-[#999999]' : 
-  //                   'border-layout-gray-200 text-layout-black focus:border--primary-main-600'
+  //                   'border-layout-gray-200 text-layout-black dark:text-layout-white focus:border--primary-main-600'
   //                 }
   //               `}
   //             >
@@ -666,7 +666,7 @@ const AddWordNewBottomSheet = ({
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-layout-black 
+  //             text-[14px] font-[700] text-layout-black dark:text-layout-white 
   //           dark:text-layout-white
   //           "
   //         >
@@ -686,7 +686,7 @@ const AddWordNewBottomSheet = ({
   //               w-full h-[45px]
   //               px-[15px]
   //               border-[1px] border-layout-gray-200 rounded-[8px]
-  //               font-[400] text-[14px] text-layout-black
+  //               font-[400] text-[14px] text-layout-black dark:text-layout-white
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -732,7 +732,7 @@ const AddWordNewBottomSheet = ({
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-layout-black 
+  //             text-[14px] font-[700] text-layout-black dark:text-layout-white 
   //           dark:text-layout-white
   //           "
   //         >
@@ -755,7 +755,7 @@ const AddWordNewBottomSheet = ({
   //               w-full h-[45px]
   //               px-[15px]
   //               border-[1px] border-layout-gray-200 rounded-[8px]
-  //               font-[400] text-[14px] text-layout-black
+  //               font-[400] text-[14px] text-layout-black dark:text-layout-white
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -771,7 +771,7 @@ const AddWordNewBottomSheet = ({
   //         <div className="flex justify-between items-center">
   //           <h3 
   //             className="
-  //               text-[14px] font-[700] text-layout-black 
+  //               text-[14px] font-[700] text-layout-black dark:text-layout-white 
   //             dark:text-layout-white
   //             "
   //           >
@@ -961,7 +961,7 @@ const AddWordNewBottomSheet = ({
   //       >
   //         <h3 
   //           className="
-  //             text-[14px] font-[700] text-layout-black 
+  //             text-[14px] font-[700] text-layout-black dark:text-layout-white 
   //           dark:text-layout-white
   //           "
   //         >
@@ -981,7 +981,7 @@ const AddWordNewBottomSheet = ({
   //               w-full h-[45px] min-h-[45px] max-h-[135px]
   //               px-[15px] py-[10px]
   //               border-[1px] border-layout-gray-200 rounded-[8px]
-  //               font-[400] text-[16px] text-layout-black
+  //               font-[400] text-[16px] text-layout-black dark:text-layout-white
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors
@@ -1001,7 +1001,7 @@ const AddWordNewBottomSheet = ({
   //               w-full h-[45px] min-h-[45px] max-h-[135px]
   //               px-[15px] py-[10px]
   //               border-[1px] border-layout-gray-200 rounded-[8px]
-  //               font-[400] text-[16px] text-layout-black
+  //               font-[400] text-[16px] text-layout-black dark:text-layout-white
   //               outline-none
   //               focus:border--primary-main-600
   //               transition-colors

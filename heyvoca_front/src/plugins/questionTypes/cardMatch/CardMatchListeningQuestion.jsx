@@ -13,10 +13,10 @@ const stateIconMap = {
 };
 
 const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3]' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB]' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE]' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8]' },
+  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
+  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
+  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
+  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
 };
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
@@ -216,10 +216,10 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   const getLeftCardStyle = (index) => {
     const word = leftWords[index];
     if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
-    if (failedWordIds.has(word.id)) return 'opacity-50 border-status-error-500 bg-status-error-100';
+    if (failedWordIds.has(word.id)) return 'opacity-50 border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100';
-    if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100';
-    if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50';
+    if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
+    if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
     return 'border-layout-gray-200';
   };
 
@@ -235,14 +235,14 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     const word = leftWords[index];
     if (matchedWordIds.has(word.id) || correctFlashWordIds.has(word.id)) return 'text-status-success-600';
     if (failedWordIds.has(word.id) || wrongFlashLeftWordIds.has(word.id)) return 'text-status-error-600';
-    return 'text-layout-black';
+    return 'text-layout-black dark:text-layout-white';
   };
 
   const getRightStyle = (index) => {
     const word = rightWords[index];
     if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
     if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100';
-    if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100';
+    if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedRight === index) return 'border-primary-main-600';
     return 'border-layout-gray-200 bg-layout-white dark:bg-layout-black';
   };
@@ -270,7 +270,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 relative overflow-hidden
                 flex flex-col items-center justify-center
                 flex-1 rounded-[12px] p-[10px]
-                bg-layout-gray-50
+                bg-layout-gray-50 dark:bg-layout-gray-dark
                 transition-colors duration-150
                 ${getLeftCardStyle(index)}
               `}
@@ -386,7 +386,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                      className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
+                      className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
                     >
                       {text}
                     </motion.div>

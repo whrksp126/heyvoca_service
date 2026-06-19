@@ -225,7 +225,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
             >
@@ -252,8 +252,8 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                   transition-colors
                   appearance-none
                   ${id ? false : true ?
-                      'border-layout-gray-200 bg-layout-gray-50 text-layout-gray-400' :
-                      'border-layout-gray-200 text-layout-black focus:border-primary-main-600'
+                      'border-layout-gray-200 bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400' :
+                      'border-layout-gray-200 text-layout-black dark:text-layout-white focus:border-primary-main-600'
                     }
                 `}
                 >
@@ -279,7 +279,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
             >
@@ -295,11 +295,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 }}
                 type="text"
                 placeholder="단어를 입력하세요"
-                className="
+                className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px]
                 px-[15px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[14px] text-layout-black
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -312,7 +312,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
               )}
             </div>
             {wordSearchResults && wordSearchResults.length > 0 && (
-              <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 overflow-y-auto">
+              <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 dark:bg-layout-gray-dark overflow-y-auto">
                 {wordSearchResults.map(({ word, meanings, examples }, index) => (
                   <li
                     key={index}
@@ -348,7 +348,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
             >
@@ -367,11 +367,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 }}
                 type="text"
                 placeholder="의미를 입력하세요"
-                className="
+                className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px]
                 px-[15px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[14px] text-layout-black
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -387,7 +387,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
             <div className="flex justify-between items-center">
               <h3
                 className="
-                text-[14px] font-[700] text-layout-black 
+                text-[14px] font-[700] text-layout-black dark:text-layout-white 
               dark:text-layout-white
               "
               >
@@ -421,7 +421,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                 flex flex-col gap-[5px] 
                 p-[15px] 
                 rounded-[8px]
-                bg-primary-main-100
+                bg-primary-main-100 dark:bg-layout-gray-dark
               "
                 >
                   <div className="flex items-center justify-between">
@@ -561,7 +561,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
           >
             <h3
               className="
-              text-[14px] font-[700] text-layout-black 
+              text-[14px] font-[700] text-layout-black dark:text-layout-white 
             dark:text-layout-white
             "
             >
@@ -577,11 +577,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                   exampleOriginInputRef.current.value = e.target.value;
                 }}
                 placeholder="예문을 입력하세요"
-                className="
+                className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[16px] text-layout-black
+                font-[400] text-[16px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -597,11 +597,11 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                   exampleMeaningInputRef.current.value = e.target.value;
                 }}
                 placeholder="의미를 입력하세요"
-                className="
+                className="bg-layout-white dark:bg-layout-black 
                 w-full h-[45px] min-h-[45px] max-h-[135px]
                 px-[15px] py-[10px]
                 border-[1px] border-layout-gray-200 rounded-[8px]
-                font-[400] text-[16px] text-layout-black
+                font-[400] text-[16px] text-layout-black dark:text-layout-white
                 outline-none
                 focus:border--primary-main-600
                 transition-colors
@@ -692,7 +692,7 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
 //         pt-[40px] px-[20px] pb-[10px]
 //       ">
 //         <h3 className="text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
-//         <p className="text-[14px] font-[400] text-layout-black">삭제 후에는 복구가 불가능해요 😢</p>
+//         <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">삭제 후에는 복구가 불가능해요 😢</p>
 //       </div>
 //       <div className="flex items-center justify-between gap-[15px] p-[20px]">
 //         <motion.button 

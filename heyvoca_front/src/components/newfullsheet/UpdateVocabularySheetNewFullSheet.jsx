@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { useVocabularySetNewBottomSheet } from '../newBottomSheet/VocabularySetNewBottomSheet';
 import { useVocabularyDeleteNewBottomSheet } from '../newBottomSheet/VocabularyDeleteNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const UpdateVocabularySheetNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -13,6 +15,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
+  const { isDark } = useTheme();
   const { showVocabularySetNewBottomSheet } = useVocabularySetNewBottomSheet();
   const { showVocabularyDeleteNewBottomSheet } = useVocabularyDeleteNewBottomSheet();
 
@@ -111,7 +114,7 @@ const UpdateVocabularySheetNewFullSheet = () => {
           return (
             <li
               key={item.id}
-              style={{ backgroundColor: item.color.background }}
+              style={{ backgroundColor: resolveVocaBookBackground(item.color.background, isDark) }}
               className="
                 flex gap-[15px] items-start
                 p-[20px]
@@ -125,8 +128,8 @@ const UpdateVocabularySheetNewFullSheet = () => {
                 w-full
               "
               >
-                <h3 className="text-[16px] font-[700]">{item.title}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
+                <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
+                <span className="text-[10px] font-[400] text-layout-gray-300">{item.total || 0}</span>
               </div>
 
               <div className="flex items-center gap-[8px]">

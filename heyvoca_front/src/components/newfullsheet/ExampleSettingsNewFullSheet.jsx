@@ -68,7 +68,7 @@ const ExampleSettingsNewFullSheet = () => {
             <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
               예문 항상 보기
             </span>
-            <span className="text-[13px] text-layout-gray-200 dark:text-layout-white/60 leading-tight">
+            <span className="text-[13px] text-layout-gray-200 dark:text-layout-gray-300 leading-tight">
               단어 목록에서 예문을 항상 함께 표시합니다.
             </span>
           </div>

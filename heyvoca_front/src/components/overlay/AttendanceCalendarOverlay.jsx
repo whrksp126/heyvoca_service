@@ -42,7 +42,7 @@ const MonthGrid = ({ cells }) => (
     <div className="grid grid-cols-7 mb-[6px]">
       {DAY_LABELS.map(day => (
         <div key={day} className="flex items-center justify-center">
-          <span className="text-[12px] font-[600] text-layout-black">{day}</span>
+          <span className="text-[12px] font-[600] text-layout-black dark:text-layout-white">{day}</span>
         </div>
       ))}
     </div>
@@ -63,7 +63,7 @@ const MonthGrid = ({ cells }) => (
                   bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                   rounded-[50%]
                 ">
-                  <Heart size={12} weight="fill" color="var(--layout-white)" />
+                  <Heart size={12} weight="fill" className="text-layout-white dark:text-layout-black" />
                 </div>
               </div>
             )}
@@ -166,21 +166,21 @@ const AttendanceCalendarOverlay = ({ initialYear, initialMonth }) => {
         className="
           relative z-[1]
           w-[88%] max-w-[328px]
-          bg-primary-main-100
+          bg-primary-main-100 dark:bg-layout-gray-dark
           rounded-[16px]
           px-[15px] pt-[12px] pb-[6px]
           flex flex-col gap-[20px]
         "
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-[16px] font-[700] text-layout-black">
+        <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
           출석체크
         </h2>
 
         <div>
           <div className="flex items-center gap-[10px] mb-[15px]">
             <motion.button
-              className={`flex items-center justify-center ${isPrevDisabled ? 'opacity-30 cursor-default' : 'text-layout-black'}`}
+              className={`flex items-center justify-center ${isPrevDisabled ? 'opacity-30 cursor-default' : 'text-layout-black dark:text-layout-white'}`}
               onClick={handlePrev}
               whileTap={!isPrevDisabled ? { scale: 0.9 } : {}}
               disabled={isPrevDisabled}
@@ -188,7 +188,7 @@ const AttendanceCalendarOverlay = ({ initialYear, initialMonth }) => {
               <CaretLeft size={16} weight="bold" />
             </motion.button>
 
-            <span className="text-[16px] font-[700] text-layout-black">
+            <span className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
               {month}월
             </span>
 

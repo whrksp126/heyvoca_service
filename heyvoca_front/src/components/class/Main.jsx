@@ -97,14 +97,14 @@ const Main = () => {
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
           border-[1px] border-primary-main-600 rounded-[12px]
-          bg-primary-main-100
+          bg-primary-main-100 dark:bg-layout-gray-dark
         ">
           <div className="
             flex flex-col items-center justify-center gap-[10px]
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-layout-black
+              text-[22px] font-[700] text-layout-black dark:text-layout-white
             ">
               <div className="
                 flex items-center justify-center
@@ -119,7 +119,7 @@ const Main = () => {
             </h2>
             <p
               className="
-                text-[13px] font-[400] text-layout-black text-center
+                text-[13px] font-[400] text-layout-black dark:text-layout-white text-center
               "
             >자주 틀리거나<br />잊어버린 단어 위주로 복습해요!</p>
           </div>
@@ -144,14 +144,14 @@ const Main = () => {
           flex flex-col items-center justify-center gap-[30px]
           p-[30px] pt-[40px]
           border-[1px] border-[#CD8DFF] rounded-[12px]
-          bg-secondary-purple-100
+          bg-secondary-purple-100 dark:bg-secondary-purple-dark
         ">
           <div className="
             flex flex-col items-center justify-center gap-[10px]
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-layout-black
+              text-[22px] font-[700] text-layout-black dark:text-layout-white
             ">
               <div className="
                 flex items-center justify-center
@@ -166,7 +166,7 @@ const Main = () => {
             </h2>
             <p
               className="
-                text-[13px] font-[400] text-layout-black text-center
+                text-[13px] font-[400] text-layout-black dark:text-layout-white text-center
               "
             >나의 단어 실력을<br />테스트로 점검해보세요!</p>
           </div>
@@ -207,7 +207,7 @@ const Main = () => {
           ">
             <h2 className="
               flex items-center gap-[8px]
-              text-[22px] font-[700] text-layout-black
+              text-[22px] font-[700] text-layout-black dark:text-layout-white
             ">
               <div 
                 className="
@@ -224,7 +224,7 @@ const Main = () => {
             </h2>
             <p 
               className="
-                text-[13px] font-[400] text-layout-black text-center
+                text-[13px] font-[400] text-layout-black dark:text-layout-white text-center
               "
             >
               나의 단어 실력을<br />

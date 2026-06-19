@@ -25,12 +25,12 @@ const ExampleList = ({ examples, className = '' }) => {
             className="flex flex-col gap-[1px]"
           >
             {origin && (
-              <p className="text-[12px] font-[400] leading-snug text-layout-black dark:text-layout-white/90">
+              <p className="text-[12px] font-[400] leading-snug text-layout-black dark:text-layout-white">
                 <span dangerouslySetInnerHTML={{ __html: origin }} />
               </p>
             )}
             {meaning && (
-              <p className="text-[12px] font-[400] leading-snug text-layout-gray-400 dark:text-layout-white/50">
+              <p className="text-[12px] font-[400] leading-snug text-layout-gray-400 dark:text-layout-gray-300">
                 <span dangerouslySetInnerHTML={{ __html: meaning }} />
               </p>
             )}

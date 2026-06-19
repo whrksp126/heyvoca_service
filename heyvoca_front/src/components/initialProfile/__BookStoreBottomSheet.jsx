@@ -56,7 +56,7 @@
 //         <div className="flex flex-col gap-[5px]">
 //           <div className="
 //             flex items-center gap-[5px]
-//             text-[16px] font-[700] text-layout-black
+//             text-[16px] font-[700] text-layout-black dark:text-layout-white
 //           ">
 //             {vocabularySheet.category && (
 //               <div 
@@ -74,7 +74,7 @@
 //             )}
 //             {vocabularySheet.name}
 //           </div>
-//           <div className="text-[12px] font-[400] text-layout-black">
+//           <div className="text-[12px] font-[400] text-layout-black dark:text-layout-white">
 //             {vocabularySheet.words.length}개의 단어
 //           </div>
 //         </div>
@@ -112,7 +112,7 @@
 //                     damping: 20
 //                   }}
 //                   className="
-//                     text-[16px] font-[700] text-layout-black
+//                     text-[16px] font-[700] text-layout-black dark:text-layout-white
 //                     cursor-pointer
 //                     break-words 
 //                   "
@@ -134,7 +134,7 @@
 //                     damping: 20
 //                   }}
 //                   className="
-//                     text-[12px] font-[400] text-layout-black
+//                     text-[12px] font-[400] text-layout-black dark:text-layout-white
 //                     cursor-pointer
 //                     break-words
 //                   "
@@ -158,7 +158,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-layout-black
+//                       text-[12px] font-[400] text-layout-black dark:text-layout-white
 //                       cursor-pointer
 //                       break-words
 //                     "
@@ -180,7 +180,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-layout-black
+//                       text-[12px] font-[400] text-layout-black dark:text-layout-white
 //                       cursor-pointer
 //                       break-words
 //                     "

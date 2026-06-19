@@ -24,7 +24,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-primary-main-100
+      bg-primary-main-100 dark:bg-layout-gray-dark
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -70,7 +70,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
         flex flex-col items-center justify-between
         w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))]
         p-[20px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
       ">
         <div></div>
         <div className="
@@ -81,7 +81,7 @@ const InitialProfileStep4NewFullSheet = ({ userInitialProfile, endInitialProfile
             className="
               px-[15px] py-[12px]
               bg-layout-white
-              text-layout-black
+              text-layout-black dark:text-layout-white
               rounded-[10px]
               font-[16px] font-[600]
             "

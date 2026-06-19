@@ -187,7 +187,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[16px] font-[700] text-layout-black
+//                       text-[16px] font-[700] text-layout-black dark:text-layout-white
 //                       cursor-pointer relative
 //                       overflow-hidden
 //                       break-words 
@@ -234,7 +234,7 @@
 //                       damping: 20
 //                     }}
 //                     className="
-//                       text-[12px] font-[400] text-layout-black
+//                       text-[12px] font-[400] text-layout-black dark:text-layout-white
 //                       cursor-pointer relative
 //                       overflow-hidden
 //                       break-words

@@ -302,7 +302,7 @@ const DictionaryOcrResultNewFullSheet = () => {
       {/* 이미지 프리뷰 영역 */}
       <div
         ref={previewContainerRef}
-        className="relative flex-1 min-h-0 bg-layout-gray-50 dark:bg-[#111] overflow-hidden"
+        className="relative flex-1 min-h-0 bg-layout-gray-50 dark:bg-layout-black overflow-hidden"
       >
         {payload?.imageBase64 ? (
           containSize ? (
@@ -396,10 +396,10 @@ const DictionaryOcrResultNewFullSheet = () => {
         ) : selectedWord ? (
           <div className="rounded-[10px] bg-[#FFEFFA] px-[20px] py-[10px]">
             <div className="flex items-start gap-[12px]">
-              <span className="text-[16px] font-[700] text-layout-black">
+              <span className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
                 {selectedWord.word || '-'}
               </span>
-              <span className="text-[13px] text-layout-black leading-[1.5] break-keep">
+              <span className="text-[13px] text-layout-black dark:text-layout-white leading-[1.5] break-keep">
                 {formatMeaningsSummary(selectedWord.meanings, 4) || '-'}
               </span>
             </div>
@@ -423,10 +423,10 @@ const DictionaryOcrResultNewFullSheet = () => {
                   }}
                   className="w-full flex items-start gap-[12px] py-[8px] text-left border-b border-[#F2D7E5] last:border-b-0"
                 >
-                  <span className="text-[15px] font-[700] text-layout-black min-w-[80px]">
+                  <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white min-w-[80px]">
                     {item.word || '(단어 없음)'}
                   </span>
-                  <span className="flex-1 text-[13px] text-layout-black leading-[1.5] break-keep line-clamp-2">
+                  <span className="flex-1 text-[13px] text-layout-black dark:text-layout-white leading-[1.5] break-keep line-clamp-2">
                     {formatMeaningsSummary(item.meanings, 2) || '-'}
                   </span>
                 </button>

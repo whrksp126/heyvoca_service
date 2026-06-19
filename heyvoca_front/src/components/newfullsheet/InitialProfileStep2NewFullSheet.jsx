@@ -95,7 +95,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
   return (
     <div className="
       flex flex-col h-full w-full
-      bg-primary-main-100
+      bg-primary-main-100 dark:bg-layout-gray-dark
     ">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       {/* Header */}
@@ -142,7 +142,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
         flex flex-col items-center gap-[45px] justify-end 
         w-full h-[calc(100vh-var(--status-bar-height)-var(--current-header-height))]
         p-[20px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
       ">
         <div className="
             absolute top-[35px] left-[50%] translate-x-[-50%]
@@ -177,7 +177,7 @@ const InitialProfileStep2NewFullSheet = ({ userInitialProfile, setUserInitialPro
             relative
             flex flex-col items-center gap-[15px]
             w-full
-            bg-primary-main-100
+            bg-primary-main-100 dark:bg-layout-gray-dark
           ">
             <input type="text" placeholder="닉네임을 입력해주세요(8자 이내)"
               id="name"

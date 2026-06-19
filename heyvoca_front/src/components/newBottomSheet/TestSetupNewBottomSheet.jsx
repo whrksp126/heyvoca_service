@@ -310,7 +310,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black text-center
+              text-[14px] font-[700] text-layout-black dark:text-layout-white text-center
             dark:text-layout-white
             "
           >
@@ -398,7 +398,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black text-center
+              text-[14px] font-[700] text-layout-black dark:text-layout-white text-center
             dark:text-layout-white
             "
           >
@@ -459,7 +459,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         >
           <h3
             className="
-              text-[14px] font-[700] text-layout-black text-center
+              text-[14px] font-[700] text-layout-black dark:text-layout-white text-center
             dark:text-layout-white
             "
           >

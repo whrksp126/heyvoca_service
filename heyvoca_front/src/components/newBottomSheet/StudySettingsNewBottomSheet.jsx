@@ -16,7 +16,7 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
         flex items-center gap-[10px]
         h-[60px]
         px-[15px] py-[15px]
-        bg-layout-gray-50
+        bg-layout-gray-50 dark:bg-layout-gray-dark
         rounded-[10px]
         list-none touch-none
       "

@@ -169,7 +169,7 @@ const Main = () => {
         flex flex-col items-center justify-between
         w-full h-[calc(100vh-var(--status-bar-height))]
         p-[20px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
       ">
         <div></div>
         <div className="
@@ -180,7 +180,7 @@ const Main = () => {
             className="
               px-[15px] py-[12px]
               bg-layout-white
-              text-layout-black
+              text-layout-black dark:text-layout-white
               rounded-[10px]
               font-[16px] font-[600]
             "

@@ -9,11 +9,13 @@ import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBot
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
 
 const StudyNewFullSheet = () => {
   "use memo";
 
   const navigate = useNavigate();
+  const { isDark } = useTheme();
   const { popNewFullSheet, pushNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
@@ -119,7 +121,15 @@ const StudyNewFullSheet = () => {
         backgroundOrigin: 'border-box',
         backgroundClip: 'padding-box, border-box',
       },
-      darkBorderStyle: null,
+      darkBorderStyle: {
+        border: '1.5px solid transparent',
+        // 채움 그라데이션(파스텔 20%) → 불투명 다크 베이스 → 선명한 보더 그라데이션 순으로 겹쳐
+        // 투명 파스텔이 다크 배경 위에 합성되게 한다(보더만 선명, 안쪽은 어둡게).
+        backgroundImage:
+          'linear-gradient(135deg, rgba(255,239,250,0.2) 0%, rgba(246,239,255,0.2) 50%, rgba(234,246,255,0.2) 100%), linear-gradient(#111111, #111111), linear-gradient(135deg, #FF88DC 0%, #9B8AFB 50%, #53B1FD 100%)',
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'padding-box, padding-box, border-box',
+      },
       chevronColor: 'var(--secondary-blue-600)',
       onClick: async () => {
         vibrate({ duration: 5 });
@@ -171,7 +181,7 @@ const StudyNewFullSheet = () => {
       desc: '보고 듣고 따라 읽으며!\n단어의 뜻과 예문까지 깊이 있게 외워요.',
       borderStyle: null,
       chevronColor: 'var(--primary-main-600)',
-      className: 'border-[1px] border-primary-main-600 bg-primary-main-100',
+      className: 'border-[1px] border-primary-main-600 bg-primary-main-100 dark:bg-layout-gray-dark',
       onClick: () => {
         vibrate({ duration: 5 });
         pushNewFullSheet(VocabularySheetNewFullSheet, { testType: 'study' }, {
@@ -191,7 +201,7 @@ const StudyNewFullSheet = () => {
       desc: '옵션을 내 마음대로!\n원하는 조건만 쏙쏙 골라 집중해서 점검해요.',
       borderStyle: null,
       chevronColor: 'var(--secondary-purple-600)',
-      className: 'border-[1px] border-secondary-purple-600 bg-secondary-purple-100',
+      className: 'border-[1px] border-secondary-purple-600 bg-secondary-purple-100 dark:bg-secondary-purple-dark',
       onClick: handleTestClick,
     },
   ];
@@ -237,17 +247,17 @@ const StudyNewFullSheet = () => {
               rounded-[12px]
               ${card.className || ''}
             `}
-            style={card.borderStyle || {}}
+            style={(isDark ? (card.darkBorderStyle || card.borderStyle) : card.borderStyle) || {}}
             whileTap={{ scale: 0.97 }}
             whileHover={{ scale: 1.01 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
             {card.icon}
             <div className="flex flex-col gap-[6px] flex-1 items-start">
-              <span className="text-[18px] font-[700] text-layout-black">
+              <span className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
                 {card.title}
               </span>
-              <span className="text-[11px] font-[400] text-layout-gray-500 whitespace-pre-line text-left">
+              <span className="text-[11px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 whitespace-pre-line text-left">
                 {card.desc}
               </span>
             </div>

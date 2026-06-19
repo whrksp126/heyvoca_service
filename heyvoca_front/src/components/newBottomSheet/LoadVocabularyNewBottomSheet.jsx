@@ -184,7 +184,7 @@ export const LoadVocabularyNewBottomSheet = () => {
               className="
                                 flex items-center justify-center gap-[8px]
                                 w-full h-[45px]
-                                bg-layout-white dark:bg-[#1A1A1A]
+                                bg-layout-white dark:bg-layout-gray-dark
                                 border border-primary-main-600 border-solid
                                 rounded-[8px]
                                 text-primary-main-600 font-bold text-[16px] tracking-[-0.32px]

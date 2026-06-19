@@ -38,10 +38,10 @@ const stateIconMap = {
 };
 
 const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3]' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB]' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE]' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8]' },
+  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
+  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
+  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
+  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
 };
 
 // 낙관적 fsrs 추정 — 백엔드 응답 도착 전까지 즉각 UI에 표시할 임시값.
@@ -625,7 +625,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           w-full h-[16px]
           mb-[15px]
           rounded-[50px]
-          bg-primary-main-100
+          bg-primary-main-100 dark:bg-layout-gray-dark
           overflow-hidden
         ">
           <motion.div
@@ -686,7 +686,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         w-full h-[16px]
         mb-[15px]
         rounded-[50px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
         overflow-hidden
       ">
         <motion.div
@@ -734,7 +734,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     flex items-center justify-center flex-1
                     w-full
                     rounded-[12px]
-                    bg-layout-gray-50
+                    bg-layout-gray-50 dark:bg-layout-gray-dark
                     cursor-pointer
                   `}
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -767,7 +767,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           whitespace-nowrap
                           ${stateColorMap[memoryStateChange.stateKey]?.border ?? 'border-[#38CE38]'}
                           ${stateColorMap[memoryStateChange.stateKey]?.text ?? 'text-[#38CE38]'}
-                          ${stateColorMap[memoryStateChange.stateKey]?.bg ?? 'bg-[#EBFFEE]'}
+                          ${stateColorMap[memoryStateChange.stateKey]?.bg ?? 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20'}
                         `}
                         initial={{ maxWidth: 28 }}
                         animate={{ maxWidth: 300 }}
@@ -843,7 +843,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     <h2 className="
                       relative z-[1]
                       max-w-[90%]
-                      text-[28px] font-[700] text-layout-black text-center
+                      text-[28px] font-[700] text-layout-black dark:text-layout-white text-center
                     ">
 
                       <div className="
@@ -906,7 +906,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                          className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
+                          className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
                         >
                           {text}
                         </motion.div>
@@ -953,9 +953,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     if (isCorrect !== null && testQuestions[progressIndex].resultIndex == index) {
                       btnStyle = 'border-status-success-500 text-status-success-600 bg-status-success-100';
                     } else if (isCorrect === false && userSelected === index) {
-                      btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100';
+                      btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
                     } else if (isCorrect === null && userSelected == index) {
-                      btnStyle = 'border-primary-main-600 bg-primary-main-50 text-layout-black dark:text-layout-white';
+                      btnStyle = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
                     } else {
                       btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
                     }
@@ -1032,12 +1032,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           ">
               {iconComponentMap[isSuspicious.icon]}
               <span className="
-              text-layout-black text-[16px] font-[600]
+              text-layout-black dark:text-layout-white text-[16px] font-[600]
             ">
                 {isSuspicious.message}
               </span>
               <span className="
-              text-layout-black text-[14px] font-[400]
+              text-layout-black dark:text-layout-white text-[14px] font-[400]
             ">
                 암기 상태를 수정하시겠습니까?
               </span>

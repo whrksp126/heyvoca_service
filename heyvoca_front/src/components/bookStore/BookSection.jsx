@@ -9,15 +9,19 @@ import { BuyEmptyBookNewBottomSheet } from '../newBottomSheet/BuyEmptyBookNewBot
 import { getBookStoreDetailApi, getRecommendedBookStoreApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
 import gem from '../../assets/images/gem.png';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const ALL_CATEGORY = '전체';
 const EMPTY_BOOK_PRICE = 10;
 const RECOMMEND_LIMIT = 3;
 
-const BookCard = ({ item, onClick, className = '' }) => (
+const BookCard = ({ item, onClick, className = '' }) => {
+  const { isDark } = useTheme();
+  return (
   <motion.li
     key={item.id}
-    style={{ backgroundColor: item.color.background }}
+    style={{ backgroundColor: resolveVocaBookBackground(item.color.background, isDark) }}
     className={`
       flex flex-col gap-[15px] justify-between
       p-[20px]
@@ -36,15 +40,15 @@ const BookCard = ({ item, onClick, className = '' }) => (
       {item.category && (
         <div
           style={{ backgroundColor: item.color.main }}
-          className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] text-[8px] font-[700] text-layout-white"
+          className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] text-[8px] font-[700] text-layout-white dark:text-layout-black"
         >
           {item.category}
         </div>
       )}
-      <h2 className="font-[700] text-[16px] text-layout-black">{item.name}</h2>
+      <h2 className="font-[700] text-[16px] text-layout-black dark:text-layout-white">{item.name}</h2>
     </div>
     <div className="flex items-end justify-between">
-      <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black">
+      <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
         <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
       </span>
       <div
@@ -55,7 +59,8 @@ const BookCard = ({ item, onClick, className = '' }) => (
       </div>
     </div>
   </motion.li>
-);
+  );
+};
 
 const BookSection = () => {
   "use memo";
@@ -238,7 +243,7 @@ const BookSection = () => {
               cursor-pointer
               shadow-sm
               aspect-square
-              bg-layout-gray-50
+              bg-layout-gray-50 dark:bg-layout-gray-dark
             "
             whileTap={{ scale: 0.96 }}
             whileHover={{ scale: 1.04 }}
@@ -246,13 +251,13 @@ const BookSection = () => {
             onClick={handleEmptyBookClick}
           >
             <div className="flex flex-col gap-[5px]">
-              <div className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] bg-layout-gray-400 text-[8px] font-[700] text-layout-white">
+              <div className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] bg-layout-gray-400 text-[8px] font-[700] text-layout-white dark:text-layout-black">
                 CUSTOM
               </div>
-              <h2 className="font-[700] text-[16px] text-layout-black">빈 단어장</h2>
+              <h2 className="font-[700] text-[16px] text-layout-black dark:text-layout-white">빈 단어장</h2>
             </div>
             <div className="flex items-end justify-between">
-              <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black">
+              <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
                 <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {EMPTY_BOOK_PRICE}
               </span>
               <div className="flex items-center justify-center w-[30px] h-[30px] rounded-[50px] bg-layout-gray-100 text-layout-gray-300">

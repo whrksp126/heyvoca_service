@@ -13,6 +13,8 @@ import { PreviewBookStoreNewFullSheet } from '../newfullsheet/PreviewBookStoreNe
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const ITEMS_PER_PAGE = 30;
 const SCROLL_THRESHOLD = 200;
@@ -23,6 +25,7 @@ const Main = () => {
   const { userDictionary, isUserDictionaryLoading, vocaBooks } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { pushNewFullSheet } = useNewFullSheetActions();
+  const { isDark } = useTheme();
 
   // 검색 상태
   const [searchQuery, setSearchQuery] = useState('');
@@ -426,7 +429,7 @@ const Main = () => {
                       px-[15px] py-[11px]
                       border-b last:border-b-0 border-layout-gray-100 dark:border-border-dark
                       cursor-pointer
-                      active:bg-layout-gray-50 dark:active:bg-[#1a1a1a]
+                      active:bg-layout-gray-50 dark:active:bg-layout-gray-dark
                     "
                   >
                     <MagnifyingGlass size={14} className="text-layout-gray-300 shrink-0" />
@@ -492,7 +495,7 @@ const Main = () => {
               </div>
               <button
                 onClick={handleAddWord}
-                className="flex items-center gap-[4px] px-[10px] py-[6px] rounded-[8px] bg-primary-main-50 dark:bg-[#1a1a2e]"
+                className="flex items-center gap-[4px] px-[10px] py-[6px] rounded-[8px] bg-primary-main-50 dark:bg-primary-main-dark"
               >
                 <Plus size={16} className="text-primary-main-600" />
                 <span className="text-[12px] font-[600] text-primary-main-600">추가</span>
@@ -505,7 +508,7 @@ const Main = () => {
                 {selectedWord.meanings.map((meaning, i) => (
                   <p
                     key={i}
-                    className="text-[14px] text-[#555] dark:text-[#aaa] leading-[1.7] cursor-pointer"
+                    className="text-[14px] text-[#555] dark:text-layout-gray-300 leading-[1.7] cursor-pointer"
                     onClick={() => {
                       vibrate({ duration: 5 });
                       getTextSound(stripHtmlTags(meaning), 'ko');
@@ -525,7 +528,7 @@ const Main = () => {
                 {selectedWord.examples.map((ex, i) => (
                   <div
                     key={i}
-                    className="bg-layout-gray-50 dark:bg-[#111] rounded-[8px] px-[12px] py-[10px]"
+                    className="bg-layout-gray-50 dark:bg-layout-black rounded-[8px] px-[12px] py-[10px]"
                   >
                     <p
                       className="text-[13px] text-layout-black dark:text-layout-white leading-[1.6] italic cursor-pointer"
@@ -573,7 +576,7 @@ const Main = () => {
                     );
                     const bookTitle = vocaBook?.title || '단어장';
                     const color = vocaBook?.color;
-                    const bgColor = color?.background || '#FFF0F9';
+                    const bgColor = resolveVocaBookBackground(color?.background || '#FFF0F9', isDark);
                     const subColor = color?.sub || '#FFD8EE';
 
                     const meanings = vb.meanings ?? word.meanings;
@@ -587,7 +590,7 @@ const Main = () => {
                       >
                         <div className="p-[15px]">
                           <div className="flex items-center justify-between w-full">
-                            <span className="text-[14px] font-[700] text-layout-black">
+                            <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                               {word.origin}
                             </span>
                             <div className="flex items-center gap-[5px] shrink-0">
@@ -634,7 +637,7 @@ const Main = () => {
               </p>
               <div className="flex flex-col gap-[10px]">
                 {storeResults.map((item, index) => {
-                  const bgColor = JSON.parse(item.color)?.background || '#F5F0FF';
+                  const bgColor = resolveVocaBookBackground(JSON.parse(item.color)?.background || '#F5F0FF', isDark);
                   const subColor = JSON.parse(item.color)?.sub || '#DDD0FF';
 
                   return (
@@ -643,7 +646,7 @@ const Main = () => {
                       className="p-[15px] rounded-[12px] overflow-hidden"
                       style={{ backgroundColor: bgColor }}
                     >
-                      <span className="text-[14px] font-[700] text-layout-black">
+                      <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                         {item.word}
                       </span>
                       <p className="mt-[8px] text-[11px] text-layout-gray-400">
@@ -694,7 +697,7 @@ const Main = () => {
                   vibrate({ duration: 5 });
                   setShowSortDropdown(prev => !prev);
                 }}
-                className="flex items-center gap-[4px] text-[#999] dark:text-[#666]"
+                className="flex items-center gap-[4px] text-[#999] dark:text-layout-gray-400"
               >
                 <SlidersHorizontal size={18} />
               </button>
@@ -802,7 +805,7 @@ const Main = () => {
                         {meaningLines.map((line, i) => (
                           <p
                             key={i}
-                            className="text-[13px] text-[#666] dark:text-[#999] line-clamp-2 leading-[1.5] cursor-pointer w-fit max-w-full"
+                            className="text-[13px] text-[#666] dark:text-layout-gray-300 line-clamp-2 leading-[1.5] cursor-pointer w-fit max-w-full"
                             onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); getTextSound(meaningTtsText, 'ko'); }}
                           >
                             {line}
@@ -843,7 +846,7 @@ const Main = () => {
               rounded-full shadow-md
             "
           >
-            <ArrowUp size={18} />
+            <ArrowUp size={18} className="dark:text-layout-black" />
           </motion.button>
         )}
       </AnimatePresence>

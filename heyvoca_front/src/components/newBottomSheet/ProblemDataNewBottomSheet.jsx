@@ -84,7 +84,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
               <div className="flex flex-wrap">
                 <span
                   className="
-                    text-[12px] font-[400] text-layout-gray-500
+                    text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50
                     relative
                     overflow-hidden
                     break-words
@@ -110,7 +110,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                 <div className="flex flex-col gap-[8px]">
                   {correctOption.examples.map((example, index) => (
                     <div key={`correct_example_${index}`} className="flex flex-col">
-                      <p className="text-[12px] font-[400] text-layout-gray-500">
+                      <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                         <motion.span
                           onClick={() => getTextSound(example.origin, "en")}
                           whileHover={{ scale: 1.02 }}
@@ -126,7 +126,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                           <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                         </motion.span>
                       </p>
-                      <p className="text-[12px] font-[400] text-layout-gray-500">
+                      <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                         <motion.span
                           onClick={() => getTextSound(example.meaning, "ko")}
                           whileHover={{ scale: 1.02 }}
@@ -170,7 +170,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   flex gap-[10px] items-start
                   p-[20px]
                   rounded-[12px]
-                  bg-layout-gray-50
+                  bg-layout-gray-50 dark:bg-layout-gray-dark
                 "
               >
                 <div
@@ -181,7 +181,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   <div className="flex flex-wrap">
                     <h3
                       className="
-                        text-[16px] font-[700] text-layout-black
+                        text-[16px] font-[700] text-layout-black dark:text-layout-white
                         relative
                         overflow-hidden
                         break-words 
@@ -206,7 +206,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   <div className="flex flex-wrap">
                     <span
                       className="
-                        text-[12px] font-[400] text-layout-black
+                        text-[12px] font-[400] text-layout-black dark:text-layout-white
                         relative
                         overflow-hidden
                         break-words
@@ -232,7 +232,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                     <div className="flex flex-col gap-[8px]">
                       {option.examples.map((example, exIndex) => (
                         <div key={`option_example_${index}_${exIndex}`} className="flex flex-col">
-                          <p className="text-[12px] font-[400] text-layout-gray-500">
+                          <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                             <motion.span
                               onClick={() => getTextSound(example.origin, "en")}
                               whileHover={{ scale: 1.02 }}
@@ -248,7 +248,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                               <span dangerouslySetInnerHTML={{ __html: example.origin }} />
                             </motion.span>
                           </p>
-                          <p className="text-[12px] font-[400] text-layout-gray-500">
+                          <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                             <motion.span
                               onClick={() => getTextSound(example.meaning, "ko")}
                               whileHover={{ scale: 1.02 }}

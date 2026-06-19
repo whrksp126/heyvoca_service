@@ -32,7 +32,7 @@ export const VocabularyLimitNewBottomSheet = () => {
                 <p className="text-[18px] font-bold text-layout-black dark:text-layout-white tracking-[-0.36px]">
                     추가 가능 단어장이 부족해요😢
                 </p>
-                <p className="text-[14px] font-normal text-layout-black dark:text-[#eee] tracking-[-0.28px]">
+                <p className="text-[14px] font-normal text-layout-black dark:text-layout-gray-100 tracking-[-0.28px]">
                     상점에서 단어장을 구매하세요.
                 </p>
             </div>

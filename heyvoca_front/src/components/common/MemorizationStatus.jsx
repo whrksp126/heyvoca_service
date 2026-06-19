@@ -325,31 +325,31 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
       unlearned: {
         border: 'border-[#9D835A]',
         text: 'text-[#9D835A]',
-        bg: 'bg-[#FFFCF3]',
+        bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20',
         icon: <EggCrack size={10} weight="fill" />
       },
       leaf: {
         border: 'border-[#77CE4F]',
         text: 'text-[#77CE4F]',
-        bg: 'bg-[#F2FFEB]',
+        bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20',
         icon: <Leaf size={10} weight="fill" />
       },
       plant: {
         border: 'border-[#38CE38]',
         text: 'text-[#38CE38]',
-        bg: 'bg-[#EBFFEE]',
+        bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20',
         icon: <Plant size={10} weight="fill" />
       },
       carrot: {
         border: 'border-[#F68300]',
         text: 'text-[#F68300]',
-        bg: 'bg-[#FFF8E8]',
+        bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20',
         icon: <Carrot size={10} weight="fill" />
       },
       new: {
         border: 'border-secondary-yellow-500',
         text: 'text-secondary-yellow-500',
-        bg: 'bg-secondary-yellow-100',
+        bg: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark',
         icon: null
       }
     };
@@ -366,7 +366,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         ...styles,
         border: 'border-[#F26A6A]',
         text: 'text-[#F26A6A]',
-        bg: 'bg-[#FFE9E9]'
+        bg: 'bg-[#FFE9E9] dark:bg-[#FFE9E9]/20'
       };
     }
 
@@ -376,7 +376,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         ...styles,
         border: 'border-[#F26A6A]',
         text: 'text-[#F26A6A]',
-        bg: 'bg-[#FFE9E9]'
+        bg: 'bg-[#FFE9E9] dark:bg-[#FFE9E9]/20'
       };
     }
 

@@ -27,7 +27,7 @@ const ToggleSwitch = ({ checked, onChange, label, description }) => (
         {label}
       </span>
       {description && (
-        <span className="text-[13px] text-layout-gray-200 dark:text-layout-white/60 leading-tight">
+        <span className="text-[13px] text-layout-gray-200 dark:text-layout-gray-300 leading-tight">
           {description}
         </span>
       )}

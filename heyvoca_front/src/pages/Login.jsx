@@ -153,7 +153,7 @@ const Login = () => {
 
 
   return (
-    <div className="bg-primary-main-100 w-full h-screen absolute top-0 left-0 flex flex-col items-center">
+    <div className="bg-primary-main-100 dark:bg-layout-gray-dark w-full h-screen absolute top-0 left-0 flex flex-col items-center">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         id="lottie-container"
@@ -186,7 +186,7 @@ const Login = () => {
               placeholder="test@test.com"
               value={devEmail}
               onChange={(e) => setDevEmail(e.target.value)}
-              className="w-full p-2 border border-gray-400 rounded text-sm text-layout-black"
+              className="bg-layout-white dark:bg-layout-black w-full p-2 border border-gray-400 rounded text-sm text-layout-black dark:text-layout-white"
             />
             <button
               onClick={handleDevLogin}

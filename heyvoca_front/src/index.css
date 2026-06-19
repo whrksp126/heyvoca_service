@@ -92,6 +92,16 @@
   --layout-gray-200: #CCCCCC;
   --layout-gray-100: #DDDDDD;
   --layout-gray-50: #F5F5F5;
+
+  /* Dark surface tokens (다크모드 틴트 surface) */
+  --primary-main-dark: #3D1D34;
+  --secondary-blue-dark: #192431;
+  --secondary-purple-dark: #1B1B2A;
+  --secondary-yellow-dark: #2B271D;
+  --secondary-mint-dark: #1C2625;
+  --layout-gray-dark: #242424;
+  --status-error-dark: #420F0A;
+  --status-success-dark: #1B2D24;
 }
 
 html,

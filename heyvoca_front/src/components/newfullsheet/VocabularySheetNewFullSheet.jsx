@@ -10,6 +10,8 @@ import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomShe
 import { StudySetupNewBottomSheet } from '../newBottomSheet/StudySetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const VocabularySheetNewFullSheet = ({ testType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -19,6 +21,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const navigate = useNavigate();
+  const { isDark } = useTheme();
 
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedIds, setSelectedIds] = useState(new Set());
@@ -205,13 +208,21 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto"
       >
         <motion.li
-          style={isAllSelected ? {
+          style={isAllSelected ? (isDark ? {
+            // 다크: 파스텔 20% → 불투명 다크(#111) → 선명한 보더 순으로 겹쳐, 안쪽은 어둡고 보더만 선명
+            background: 'linear-gradient(160deg, rgba(255, 239, 250, 0.2) 10%, rgba(246, 239, 255, 0.2) 50%, rgba(246, 239, 255, 0.2) 90%) padding-box, linear-gradient(#111111, #111111) padding-box, linear-gradient(to right, #FF88DC, #9B8AFB, #53B1FD) border-box',
+            border: '1px solid transparent',
+          } : {
             background: 'linear-gradient(160deg,rgba(255, 239, 250, 1) 10%, rgba(246, 239, 255, 1) 50%, rgba(246, 239, 255, 1) 90%) padding-box, linear-gradient(to right, #FF88DC, #9B8AFB, #53B1FD) border-box',
+            border: '1px solid transparent',
+          }) : (isDark ? {
+            // 다크(비선택): 보더 없음 → 파스텔 20%가 다크 페이지 위에 비쳐 어두운 카드로
+            background: 'linear-gradient(160deg, rgba(255, 239, 250, 0.2) 10%, rgba(246, 239, 255, 0.2) 50%, rgba(246, 239, 255, 0.2) 90%)',
             border: '1px solid transparent',
           } : {
             background: 'linear-gradient(160deg,rgba(255, 239, 250, 1) 10%, rgba(246, 239, 255, 1) 50%, rgba(246, 239, 255, 1) 90%)',
             border: '1px solid transparent',
-          }}
+          })}
           className={`
                 flex flex-col gap-[15px]
                 p-[20px]
@@ -234,7 +245,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
           >
             <h2 className="
               flex items-center gap-[10px]
-              text-[16px] font-[700] text-layout-black
+              text-[16px] font-[700] text-layout-black dark:text-layout-white
             ">
               <div
                 className="
@@ -258,7 +269,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
             <motion.li
               key={item.id}
               style={{
-                backgroundColor: item.color.background,
+                backgroundColor: resolveVocaBookBackground(item.color.background, isDark),
                 ...(isSelected && { border: `1px solid ${item.color.main}` })
               }}
               className={`
@@ -283,14 +294,14 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                 w-full
               "
               >
-                <h3 className="text-[16px] font-[700]">{item.title}</h3>
-                <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
+                <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
+                <span className="text-[10px] font-[400] text-layout-gray-300">{item.total || 0}</span>
               </div>
 
               {/* 암기 상태별 단어 개수 표시 */}
               <div className="flex items-center gap-[12px] flex-wrap">
                 <div className="flex items-center gap-[4px]">
-                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3] dark:bg-[#FFFCF3]/20">
                     <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#9D835A]">
@@ -298,7 +309,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB] dark:bg-[#F2FFEB]/20">
                     <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#77CE4F]">
@@ -306,7 +317,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE] dark:bg-[#EBFFEE]/20">
                     <Plant size={8} weight="fill" className="text-[#38CE38]" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#38CE38]">
@@ -314,7 +325,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                   </span>
                 </div>
                 <div className="flex items-center gap-[4px]">
-                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8]">
+                  <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8] dark:bg-[#FFF8E8]/20">
                     <Carrot size={8} weight="fill" className="text-[#F68300]" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#F68300]">

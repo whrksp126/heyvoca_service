@@ -4,6 +4,8 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import WordDetaileNewBottomSheet from './WordDetaileNewBottomSheet';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 // 한 단어가 여러 단어장에 속해 있을 때, 어떤 단어장 컨텍스트로 상세를 열지 고르는 바텀시트.
 // 탭 즉시 해당 단어장의 WordDetaileNewBottomSheet로 교체된다.
@@ -12,6 +14,7 @@ const SelectVocaBookForWordNewBottomSheet = ({ vocaIndexId, vocaBookIds }) => {
 
   const { vocabularySheets } = useVocabulary();
   const { popNewBottomSheet, pushNewBottomSheet } = useNewBottomSheetActions();
+  const { isDark } = useTheme();
 
   const targetSheets = useMemo(() => {
     const idSet = new Set(vocaBookIds ?? []);
@@ -38,7 +41,7 @@ const SelectVocaBookForWordNewBottomSheet = ({ vocaIndexId, vocaBookIds }) => {
         <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">
           어느 단어장의 내용을 볼까요?
         </h3>
-        <p className="text-[#666] dark:text-[#999] text-[13px] font-[400]">
+        <p className="text-[#666] dark:text-layout-gray-300 text-[13px] font-[400]">
           이 단어는 여러 단어장에 포함되어 있어요.
         </p>
       </div>
@@ -50,7 +53,7 @@ const SelectVocaBookForWordNewBottomSheet = ({ vocaIndexId, vocaBookIds }) => {
           return (
             <motion.li
               key={sheet.id}
-              style={{ backgroundColor: sheet.color?.background }}
+              style={{ backgroundColor: resolveVocaBookBackground(sheet.color?.background, isDark) }}
               className="
                 flex flex-col gap-[6px]
                 p-[16px]
@@ -62,7 +65,7 @@ const SelectVocaBookForWordNewBottomSheet = ({ vocaIndexId, vocaBookIds }) => {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <h4 className="text-[15px] font-[700] text-layout-black">{sheet.title}</h4>
+              <h4 className="text-[15px] font-[700] text-layout-black dark:text-layout-white">{sheet.title}</h4>
               {preview && (
                 <p className="text-[13px] text-[#555] line-clamp-2 leading-[1.5]">
                   {preview}

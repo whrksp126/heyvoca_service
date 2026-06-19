@@ -358,7 +358,7 @@ const StudyResult = () => {
                     cy="119"
                     r="104.8"
                     fill="none"
-                    stroke="var(--layout-gray-50)"
+                    stroke={isDark ? 'var(--layout-gray-dark)' : 'var(--layout-gray-50)'}
                     strokeWidth="28.4"
                   />
                   {/* 실제 핑크색 프로그레스 바 (반시계 방향으로 채워짐) */}
@@ -430,7 +430,7 @@ const StudyResult = () => {
                         flex flex-col gap-[10px]
                         px-[20px] py-[18px]
                         rounded-[12px]
-                        ${item.isCorrect ? 'bg-status-success-100' : 'bg-status-error-50'}
+                        ${item.isCorrect ? 'bg-status-success-100 dark:bg-status-success-dark' : 'bg-status-error-50 dark:bg-status-error-dark'}
                       `}
                     >
                       <div className='flex items-center gap-[10px]'>
@@ -445,7 +445,7 @@ const StudyResult = () => {
                           <div className="flex items-center justify-between">
                             <h3
                               onClick={() => getTextSound(item.origin, "en")}
-                              className="text-[16px] font-[700] text-layout-black cursor-pointer"
+                              className="text-[16px] font-[700] text-layout-black dark:text-layout-white cursor-pointer"
                             >
                               {item.origin}
                             </h3>
@@ -461,7 +461,7 @@ const StudyResult = () => {
                           </div>
                           <p
                             onClick={() => getTextSound(meaningsArr.join(", "), "ko")}
-                            className="text-[12px] font-[400] text-layout-gray-400 cursor-pointer"
+                            className="text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 cursor-pointer"
                           >
                             {meaningsArr.join(', ')}
                           </p>
@@ -588,9 +588,9 @@ const StudyResult = () => {
     } else if (currentScreen.type === 'memoryImproved') {
       // 이번 학습으로 암기 상태가 좋아진 단어 — 가장 높이 도달한 상태 1개 아이콘으로 표시
       const STATE_INFO = {
-        leaf:   { Icon: Leaf,   bg: 'bg-[#F2FFEB]', border: 'border-[#77CE4F]', color: '#77CE4F' },
-        plant:  { Icon: Plant,  bg: 'bg-[#EBFFEE]', border: 'border-[#38CE38]', color: '#38CE38' },
-        carrot: { Icon: Carrot, bg: 'bg-[#FFF8E8]', border: 'border-[#F68300]', color: '#F68300' },
+        leaf:   { Icon: Leaf,   bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20', border: 'border-[#77CE4F]', color: '#77CE4F' },
+        plant:  { Icon: Plant,  bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20', border: 'border-[#38CE38]', color: '#38CE38' },
+        carrot: { Icon: Carrot, bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20', border: 'border-[#F68300]', color: '#F68300' },
       };
       const topState = ['carrot', 'plant', 'leaf']
         .find(k => (currentScreen.data.byState?.[k] || 0) > 0) || 'leaf';
@@ -927,7 +927,7 @@ const StudyResult = () => {
 
   if (screenList.length === 0) {
     // 학습 결과 API 응답 대기 중 — 깜빡임 방지를 위해 빈 화면 (배경은 다음 화면과 동일하게 프라이머리 톤 유지)
-    return <div className='h-[100dvh] bg-primary-main-100' />;
+    return <div className='h-[100dvh] bg-primary-main-100 dark:bg-layout-gray-dark' />;
   }
 
   return (

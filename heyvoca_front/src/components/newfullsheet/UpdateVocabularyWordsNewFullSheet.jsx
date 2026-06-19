@@ -107,7 +107,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
           </motion.button>
           <h1 className="
             text-[18px] font-[700]
-            text-layout-black 
+            text-layout-black dark:text-layout-white 
           ">
             {vocabularySheet.title}
           </h1>
@@ -151,7 +151,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                 flex gap-[10px] items-start
                 p-[20px]
                 rounded-[12px]
-                bg-layout-gray-50
+                bg-layout-gray-50 dark:bg-layout-gray-dark
               "
             >
 
@@ -190,7 +190,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       damping: 20
                     }}
                     className="
-                      text-[16px] font-[700] text-layout-black
+                      text-[16px] font-[700] text-layout-black dark:text-layout-white
                       cursor-pointer relative
                       overflow-hidden
                       break-words 
@@ -237,7 +237,7 @@ const UpdateVocabularyWordsNewFullSheet = ({ id }) => {
                       damping: 20
                     }}
                     className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       cursor-pointer relative
                       overflow-hidden
                       break-words

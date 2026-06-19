@@ -57,7 +57,7 @@ export const VocabularyDeleteNewBottomSheet = () => {
                 <h3 className="text-[18px] font-bold text-layout-black dark:text-layout-white">
                     단어장을 정말 삭제하시겠어요?
                 </h3>
-                <p className="text-[14px] font-normal text-[#666] dark:text-[#999]">
+                <p className="text-[14px] font-normal text-[#666] dark:text-layout-gray-300">
                     삭제 후에는 복구가 불가능해요 😢
                 </p>
             </div>

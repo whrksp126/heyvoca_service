@@ -121,7 +121,7 @@ export const VocabularySetNewBottomSheet = ({ initialData }) => {
                         defaultValue={initialData.title}
                         type="text"
                         placeholder="단어장 이름을 입력하세요"
-                        className="w-full h-[45px] px-[15px] border border-layout-gray-200 rounded-[8px] font-normal text-[14px] text-layout-black outline-none focus:border-primary-main-600 transition-colors"
+                        className="bg-layout-white dark:bg-layout-black w-full h-[45px] px-[15px] border border-layout-gray-200 rounded-[8px] font-normal text-[14px] text-layout-black dark:text-layout-white outline-none focus:border-primary-main-600 transition-colors"
                     />
                 </div>
 
@@ -149,7 +149,7 @@ export const VocabularySetNewBottomSheet = ({ initialData }) => {
                                             setCurrentColor(color.value);
                                         }}
                                     />
-                                    {isSelected && <Check weight="bold" className="w-[15px] h-[15px] text-white" />}
+                                    {isSelected && <Check weight="bold" className="w-[15px] h-[15px] text-white dark:text-layout-black" />}
                                 </motion.label>
                             );
                         })}

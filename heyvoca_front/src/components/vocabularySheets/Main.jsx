@@ -9,6 +9,8 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import note_ring from '../../assets/images/note_ring.png';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 
 const Main = () => {
 
@@ -16,6 +18,7 @@ const Main = () => {
   // const { pushFullSheet } = useFullSheet();
   const { pushNewFullSheet } = useNewFullSheet();
   const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
+  const { isDark } = useTheme();
 
   // Hook은 항상 조건부 return 전에 호출되어야 합니다
   useEffect(() => {
@@ -118,7 +121,7 @@ const Main = () => {
         pt-[30px] px-[20px] pb-[20px]
         mb-[15px]
         rounded-[12px]
-        bg-primary-main-100
+        bg-primary-main-100 dark:bg-layout-gray-dark
       ">
         <div
           className="
@@ -163,13 +166,13 @@ const Main = () => {
             return (
               <motion.li
                 key={item.id}
-                style={overdue ? undefined : { backgroundColor: item.color.background }}
+                style={overdue ? undefined : { backgroundColor: resolveVocaBookBackground(item.color.background, isDark) }}
                 className={`
                   flex flex-col gap-[15px]
                   p-[20px]
                   rounded-[12px]
                   cursor-pointer
-                  ${overdue ? 'bg-status-error-100' : ''}
+                  ${overdue ? 'bg-status-error-100 dark:bg-status-error-dark' : ''}
                 `}
                 onClick={() => {
                   vibrate({ duration: 5 });
@@ -180,9 +183,9 @@ const Main = () => {
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <div className="flex items-center justify-between w-full">
-                  <h3 className="text-[16px] font-[700] text-layout-black">{item.title}</h3>
+                  <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
                   {overdue && (
-                    <div className="flex items-center gap-[3px] h-[16px] bg-status-error-500 px-[5px] rounded-full">
+                    <div className="flex items-center gap-[3px] h-[16px] bg-status-error-500 dark:bg-[#ffffff1a] px-[5px] rounded-full">
                       <Timer size={10} weight="fill" className="text-white" />
                       <span className="text-[10px] font-[600] text-white">복습 지연</span>
                     </div>
@@ -200,7 +203,7 @@ const Main = () => {
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-[12px] flex-wrap">
                     <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3]">
+                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3] dark:bg-[#FFFCF3]/20">
                         <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
                       </div>
                       <span className="text-[11px] font-[500] text-[#9D835A]">
@@ -208,7 +211,7 @@ const Main = () => {
                       </span>
                     </div>
                     <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB]">
+                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB] dark:bg-[#f2ffeb]/20">
                         <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
                       </div>
                       <span className="text-[11px] font-[500] text-[#77CE4F]">
@@ -216,7 +219,7 @@ const Main = () => {
                       </span>
                     </div>
                     <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE]">
+                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE] dark:bg-[#EBFFEE]/20">
                         <Plant size={8} weight="fill" className="text-[#38CE38]" />
                       </div>
                       <span className="text-[11px] font-[500] text-[#38CE38]">
@@ -224,7 +227,7 @@ const Main = () => {
                       </span>
                     </div>
                     <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8]">
+                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8] dark:bg-[#FFF8E8]/20">
                         <Carrot size={8} weight="fill" className="text-[#F68300]" />
                       </div>
                       <span className="text-[11px] font-[500] text-[#F68300]">
@@ -232,7 +235,7 @@ const Main = () => {
                       </span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-[400] text-[#999]">{item.total || 0}</span>
+                  <span className="text-[10px] font-[400] text-layout-gray-300">{item.total || 0}</span>
                 </div>
               </motion.li>
             )

@@ -125,7 +125,7 @@
 //             >
 //               <h2 className="
 //               flex items-center gap-[10px]
-//               text-[16px] font-[700] text-layout-black
+//               text-[16px] font-[700] text-layout-black dark:text-layout-white
 //             ">
 //               <div 
 //                 className="

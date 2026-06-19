@@ -26,7 +26,7 @@ const CustomSelect = ({
     ? 'border-layout-gray-200'
     : 'border-layout-gray-200 focus:border-primary-main-600';
   const bgClass = disabled
-    ? 'bg-layout-gray-50 text-[#999999]'
+    ? 'bg-layout-gray-50 dark:bg-layout-gray-dark text-[#999999]'
     : 'bg-layout-white dark:bg-layout-black text-layout-black dark:text-layout-white';
 
   const hasPreview = options.some((o) => o && o.preview);
@@ -133,8 +133,8 @@ const CustomSelect = ({
               className={`
                 w-full px-[15px] py-[10px] text-left
                 flex items-center justify-between gap-[8px]
-                hover:bg-primary-main-100
-                ${(!value || value === '') ? 'bg-primary-main-100' : ''}
+                hover:bg-primary-main-100 dark:hover:bg-layout-gray-dark
+                ${(!value || value === '') ? 'bg-primary-main-100 dark:bg-layout-gray-dark' : ''}
               `}
             >
               <span className="text-[14px] text-[#999999]">{placeholder}</span>
@@ -153,8 +153,8 @@ const CustomSelect = ({
                 className={`
                   w-full px-[15px] py-[10px] text-left
                   flex items-center justify-between gap-[8px]
-                  hover:bg-primary-main-100
-                  ${active ? 'bg-primary-main-100' : ''}
+                  hover:bg-primary-main-100 dark:hover:bg-layout-gray-dark
+                  ${active ? 'bg-primary-main-100 dark:bg-layout-gray-dark' : ''}
                 `}
               >
                 <span className="flex items-baseline gap-[8px] min-w-0">

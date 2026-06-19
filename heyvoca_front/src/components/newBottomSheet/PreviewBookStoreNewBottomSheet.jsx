@@ -5,6 +5,8 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { AddBookStoreNewBottomSheet } from './AddBookStoreNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
+import { useTheme } from '../../context/ThemeContext';
+import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 // Hook 제거 - 직접 컴포넌트 사용
 
 const ITEMS_PER_PAGE = 30; // 한 번에 로드할 단어 개수
@@ -17,6 +19,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
+  const { isDark } = useTheme();
 
   // 무한 스크롤을 위한 state
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -208,7 +211,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                 className="
                 py-[3px] px-[6px]
                 rounded-[50px]
-                text-[8px] font-[700] text-layout-white
+                text-[8px] font-[700] text-layout-white dark:text-layout-black
               "
               >
                 {bookStoreVocabularySheet.category}
@@ -216,7 +219,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
             )}
             {bookStoreVocabularySheet.name}
           </div>
-          <div className="text-[12px] font-[400] text-layout-black">
+          <div className="text-[12px] font-[400] text-layout-black dark:text-layout-white">
             {bookStoreVocabularySheet.words.length}개의 단어
           </div>
         </div>
@@ -232,7 +235,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
               <li
                 key={item.id}
                 style={{
-                  backgroundColor: bookStoreVocabularySheet.color.background
+                  backgroundColor: resolveVocaBookBackground(bookStoreVocabularySheet.color.background, isDark)
                 }}
                 className="
                 flex gap-[10px] items-start
@@ -250,7 +253,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                   <div className="flex flex-wrap">
                     <h3
                       className="
-                    text-[16px] font-[700] text-layout-black
+                    text-[16px] font-[700] text-layout-black dark:text-layout-white
                     break-words 
                   "
                       id={`word-${item.id}`}
@@ -274,7 +277,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                   <div className="flex flex-wrap">
                     <span
                       className="
-                    text-[12px] font-[400] text-layout-black
+                    text-[12px] font-[400] text-layout-black dark:text-layout-white
                     break-words
                   "
                       id={`meaning-${item.id}`}
@@ -300,7 +303,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                       <div className="flex flex-wrap">
                         <p
                           className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       break-words
                     "
                           id={`example-${item.id}-${example_index}`}
@@ -324,7 +327,7 @@ export const PreviewBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => 
                       <div className="flex flex-wrap">
                         <p
                           className="
-                      text-[12px] font-[400] text-layout-black
+                      text-[12px] font-[400] text-layout-black dark:text-layout-white
                       break-words
                     "
                           id={`example-${item.id}-${example_index}-meaning`}
