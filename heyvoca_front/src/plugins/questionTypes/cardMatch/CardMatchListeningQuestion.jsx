@@ -4,6 +4,7 @@ import { SpeakerHigh, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/reac
 import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import TtsRipple from '../../../components/common/TtsRipple';
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -73,6 +74,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   const [wrongFlashRightWordIds, setWrongFlashRightWordIds] = useState(new Set());
   const [animatingWordIds, setAnimatingWordIds] = useState(new Set());
   const [speakingWordId, setSpeakingWordId] = useState(null);
+  const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
   const wordResultsRef = useRef({});
   const resolvedCountRef = useRef(0);
@@ -191,7 +193,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
     const wordId = word.id;
     setSpeakingWordId(wordId);
-    getTextSound(word.origin, "en").finally(() => {
+    setSpeakingDuration(null);
+    getTextSound(word.origin, "en", setSpeakingDuration).finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
     });
 
@@ -215,9 +218,9 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
   const getLeftCardStyle = (index) => {
     const word = leftWords[index];
-    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
+    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
     if (failedWordIds.has(word.id)) return 'opacity-50 border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
-    if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100';
+    if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
     return 'border-layout-gray-200';
@@ -240,8 +243,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
   const getRightStyle = (index) => {
     const word = rightWords[index];
-    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
-    if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100';
+    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
+    if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedRight === index) return 'border-primary-main-600';
     return 'border-layout-gray-200 bg-layout-white dark:bg-layout-black';
@@ -336,22 +339,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 />
               ) : (
                 <div className="relative flex items-center justify-center">
-                  {isSpeaking && (
-                    <>
-                      <motion.div
-                        className="absolute rounded-full border-2 border-primary-main-600"
-                        initial={{ width: 30, height: 30, opacity: 0.7 }}
-                        animate={{ width: 62, height: 62, opacity: 0 }}
-                        transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
-                      />
-                      <motion.div
-                        className="absolute rounded-full border-2 border-primary-main-600"
-                        initial={{ width: 30, height: 30, opacity: 0.7 }}
-                        animate={{ width: 62, height: 62, opacity: 0 }}
-                        transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
-                      />
-                    </>
-                  )}
+                  {isSpeaking && <TtsRipple size={62} duration={speakingDuration} />}
                   <motion.div
                     animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
                     transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}

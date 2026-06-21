@@ -4,6 +4,7 @@ import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import { getQuestionType } from '../plugins/questionTypes';
+import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
@@ -94,6 +95,10 @@ const TakeTest = () => {
       state.data.questionType === 'recommended' ||
       (Array.isArray(state.data.questionType) && state.data.questionType.includes('recommended'));
 
+    // "듣기 문제 건너뛰기"가 활성이면 듣기 유형을 일반 유형으로 변환해 출제
+    const skipListening = isListeningSkipActive();
+    const resolveType = (type) => (skipListening ? mapSkippedQuestionType(type) : type);
+
     const wordsWithSheetId = selectedWords.map(word => ({
       ...word,
       vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
@@ -116,7 +121,7 @@ const TakeTest = () => {
     // Phase 2.2: 단일 단어에 대해 suggestedQuestionType을 시도하고 실패 시 폴백
     const buildSingleWordQuestion = (word, fallbackType) => {
       const suggestedType = isRecommendedMode ? (word.suggestedQuestionType ?? null) : null;
-      const targetType = suggestedType ?? fallbackType ?? 'multipleChoice';
+      const targetType = resolveType(suggestedType ?? fallbackType ?? 'multipleChoice');
       const plugin = getQuestionType(targetType);
 
       // plugin이 없거나 setupQuestions가 없는 유형 (multipleChoice 계열)
@@ -141,11 +146,12 @@ const TakeTest = () => {
     };
 
     if (questionTypesArr.length === 1 && !isRecommendedMode) {
-      const plugin = getQuestionType(questionTypesArr[0]);
+      const singleType = resolveType(questionTypesArr[0]);
+      const plugin = getQuestionType(singleType);
       if (plugin?.setupQuestions) {
         return plugin.setupQuestions(wordsWithSheetId, allWords);
       }
-      return wordsWithSheetId.map(word => createMultipleChoiceQuestion(word, questionTypesArr[0]));
+      return wordsWithSheetId.map(word => createMultipleChoiceQuestion(word, singleType));
     }
 
     // 추천 모드이거나 복수 유형인 경우: 단어별 suggestedQuestionType 우선 처리
@@ -160,7 +166,7 @@ const TakeTest = () => {
       // Phase 2.2: 추천 모드일 때 suggestedQuestionType 우선
       const suggestedType = isRecommendedMode ? (currentWord.suggestedQuestionType ?? null) : null;
       const randomType = questionTypesArr[Math.floor(Math.random() * questionTypesArr.length)];
-      const chosenType = suggestedType ?? randomType;
+      const chosenType = resolveType(suggestedType ?? randomType);
 
       const plugin = getQuestionType(chosenType);
 

@@ -305,7 +305,9 @@ export const prefetchTtsList = async (items, concurrency = 4) => {
 // 백엔드 /tts/resolve가 objectstore presigned URL을 JSON으로 반환 → 직접 재생.
 // 클라이언트 blob 캐시에 있으면 네트워크 없이 즉시 재생, 없으면 받아서(생성 포함) 재생.
 // 캐시 미스(비로그인 등)면 url이 없으므로 조용히 종료한다.
-export const getTextSound = async (text, lang) => {
+// onMeta: 오디오 메타데이터 로드 시 실제 재생 길이(초)를 전달하는 콜백(선택).
+//         ripple 등 시각 효과를 실제 재생 시간에 동기화하는 데 사용한다.
+export const getTextSound = async (text, lang, onMeta) => {
   // user gesture 동기 시점에 오디오 element를 unlock (첫 클릭 무음 버그 방지).
   primeAudioWithinGesture();
 
@@ -374,6 +376,9 @@ export const getTextSound = async (text, lang) => {
       const scheduleWatchdog = () => {
         const dur = sharedAudio.duration;
         if (Number.isFinite(dur) && dur > 0) {
+          if (typeof onMeta === 'function') {
+            try { onMeta(dur); } catch { /* 콜백 오류는 재생에 영향 주지 않음 */ }
+          }
           if (watchdog) clearTimeout(watchdog);
           watchdog = setTimeout(cleanup, (dur + 0.4) * 1000);
         }

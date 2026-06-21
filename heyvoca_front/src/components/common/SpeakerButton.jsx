@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { getTextSound } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
+import TtsRipple from './TtsRipple';
 
 /**
  * 단어/문장 발음 듣기 공용 스피커 버튼.
@@ -18,14 +18,16 @@ import { vibrate } from '../../utils/osFunction';
  */
 const SpeakerButton = ({ text, lang, size = 18, className = '', label = '발음 듣기' }) => {
   const [playing, setPlaying] = useState(false);
+  const [duration, setDuration] = useState(null);
 
   const handleClick = async (e) => {
     e.stopPropagation();
     if (!text) return;
     vibrate({ duration: 5 });
     setPlaying(true);
+    setDuration(null);
     try {
-      await getTextSound(text, lang);
+      await getTextSound(text, lang, setDuration);
     } finally {
       setPlaying(false);
     }
@@ -41,24 +43,7 @@ const SpeakerButton = ({ text, lang, size = 18, className = '', label = '발음 
       aria-label={label}
     >
       {/* 재생 중 ripple(파동) — playing=false면 즉시 언마운트되어 잔상이 남지 않음 */}
-      {playing && (
-        <>
-          <motion.span
-            className="absolute left-1/2 top-1/2 rounded-full border border-primary-main-600 pointer-events-none"
-            style={{ translateX: '-50%', translateY: '-50%' }}
-            initial={{ width: size, height: size, opacity: 0.6 }}
-            animate={{ width: rippleEnd, height: rippleEnd, opacity: 0 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'easeOut' }}
-          />
-          <motion.span
-            className="absolute left-1/2 top-1/2 rounded-full border border-primary-main-600 pointer-events-none"
-            style={{ translateX: '-50%', translateY: '-50%' }}
-            initial={{ width: size, height: size, opacity: 0.6 }}
-            animate={{ width: rippleEnd, height: rippleEnd, opacity: 0 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'easeOut', delay: 0.4 }}
-          />
-        </>
-      )}
+      {playing && <TtsRipple size={rippleEnd} duration={duration} />}
       <SpeakerHigh size={size} weight={playing ? 'fill' : 'regular'} />
     </button>
   );

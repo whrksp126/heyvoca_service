@@ -375,7 +375,7 @@ const DictionaryOcrResultNewFullSheet = () => {
           )
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-[14px] text-[#999]">
+            <p className="text-[14px] text-layout-gray-300">
               이미지를 기다리는 중...
             </p>
           </div>
@@ -388,13 +388,13 @@ const DictionaryOcrResultNewFullSheet = () => {
         style={{ paddingBottom: 'max(20px, var(--safe-area-bottom, 0px))' }}
       >
         {isFiltering ? (
-          <div className="rounded-[10px] bg-[#FFEFFA] px-[20px] py-[14px] text-center">
-            <p className="text-[13px] font-[500] text-[#FF87B0]">
+          <div className="rounded-[10px] bg-primary-main-100 dark:bg-primary-main-dark px-[20px] py-[14px] text-center">
+            <p className="text-[13px] font-[500] text-primary-main-500">
               단어 정제 중입니다...
             </p>
           </div>
         ) : selectedWord ? (
-          <div className="rounded-[10px] bg-[#FFEFFA] px-[20px] py-[10px]">
+          <div className="rounded-[10px] bg-primary-main-100 dark:bg-primary-main-dark px-[20px] py-[10px]">
             <div className="flex items-start gap-[12px]">
               <span className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
                 {selectedWord.word || '-'}
@@ -405,10 +405,10 @@ const DictionaryOcrResultNewFullSheet = () => {
             </div>
           </div>
         ) : (
-          <div className="rounded-[10px] bg-[#FFEFFA] px-[16px] py-[4px] max-h-[140px] overflow-y-auto">
+          <div className="rounded-[10px] bg-primary-main-100 dark:bg-primary-main-dark px-[16px] py-[4px] max-h-[140px] overflow-y-auto">
             {matchedWords.length === 0 ? (
               <div className="py-[16px] text-center">
-                <p className="text-[13px] text-[#888]">
+                <p className="text-[13px] text-layout-gray-400 dark:text-layout-gray-300">
                   일치하는 단어를 찾지 못했습니다.
                 </p>
               </div>
@@ -421,7 +421,7 @@ const DictionaryOcrResultNewFullSheet = () => {
                     vibrate({ duration: 5 });
                     setSelectedWord(item);
                   }}
-                  className="w-full flex items-start gap-[12px] py-[8px] text-left border-b border-[#F2D7E5] last:border-b-0"
+                  className="w-full flex items-start gap-[12px] py-[8px] text-left border-b border-primary-main-200 dark:border-layout-gray-500 last:border-b-0"
                 >
                   <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white min-w-[80px]">
                     {item.word || '(단어 없음)'}
@@ -440,14 +440,14 @@ const DictionaryOcrResultNewFullSheet = () => {
             <button
               type="button"
               onClick={handleReselect}
-              className="flex-1 h-[54px] rounded-[10px] bg-[#CCCCCC] text-white text-[15px] font-[600]"
+              className="flex-1 h-[54px] rounded-[10px] bg-layout-gray-200 dark:bg-layout-gray-dark text-white text-[15px] font-[600]"
             >
               다시 선택
             </button>
             <button
               type="button"
               onClick={handleConfirmSelection}
-              className="flex-1 h-[54px] rounded-[10px] bg-[#FF8DD4] text-white text-[15px] font-[600]"
+              className="flex-1 h-[54px] rounded-[10px] bg-primary-main-600 text-white text-[15px] font-[600]"
             >
               선택
             </button>
@@ -456,7 +456,7 @@ const DictionaryOcrResultNewFullSheet = () => {
           <button
             type="button"
             onClick={handleRetake}
-            className="w-full h-[54px] rounded-[10px] bg-[#CCCCCC] text-white text-[15px] font-[600]"
+            className="w-full h-[54px] rounded-[10px] bg-layout-gray-200 dark:bg-layout-gray-dark text-white text-[15px] font-[600]"
           >
             재촬영
           </button>

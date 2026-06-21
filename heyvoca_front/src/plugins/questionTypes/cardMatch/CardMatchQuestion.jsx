@@ -4,6 +4,7 @@ import { EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
 import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import TtsRipple from '../../../components/common/TtsRipple';
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -72,6 +73,8 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
   const [wrongFlashLeftWordIds, setWrongFlashLeftWordIds] = useState(new Set());
   const [wrongFlashRightWordIds, setWrongFlashRightWordIds] = useState(new Set());
   const [animatingWordIds, setAnimatingWordIds] = useState(new Set());
+  const [speakingWordId, setSpeakingWordId] = useState(null);
+  const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
   const wordResultsRef = useRef({});
   const resolvedCountRef = useRef(0);
@@ -188,7 +191,13 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
   const handleLeftClick = (index) => {
     const word = leftWords[index];
     if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
-    getTextSound(word.origin, "en");
+
+    const wordId = word.id;
+    setSpeakingWordId(wordId);
+    setSpeakingDuration(null);
+    getTextSound(word.origin, "en", setSpeakingDuration).finally(() => {
+      setSpeakingWordId(prev => prev === wordId ? null : prev);
+    });
 
     if (selectedRight !== null) {
       checkMatch(index, selectedRight);
@@ -210,9 +219,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
 
   const getLeftStyle = (index) => {
     const word = leftWords[index];
-    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
+    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
     if (failedWordIds.has(word.id)) return 'opacity-50 border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
-    if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100';
+    if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
     return 'border-layout-gray-200';
@@ -227,8 +236,8 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
 
   const getRightStyle = (index) => {
     const word = rightWords[index];
-    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 border-status-success-500';
-    if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100';
+    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
+    if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedRight === index) return 'border-primary-main-600';
     return 'border-layout-gray-200 bg-layout-white dark:bg-layout-black';
@@ -248,11 +257,12 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
         {leftWords.map((word, index) => {
           const isResolved = matchedWordIds.has(word.id) || failedWordIds.has(word.id);
           const isAnimating = animatingWordIds.has(word.id);
+          const isSpeaking = speakingWordId === word.id;
           return (
             <motion.button
               key={word.id}
               className={`
-                relative
+                relative overflow-hidden
                 flex flex-col items-center justify-center
                 flex-1 rounded-[12px] p-[10px]
                 bg-layout-gray-50 dark:bg-layout-gray-dark
@@ -316,8 +326,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
                 text={word.origin}
                 maxSize={20}
                 minSize={12}
-                className={`font-[800] w-full text-center ${getLeftTextStyle(index)}`}
+                className={`relative z-[1] font-[800] w-full text-center ${getLeftTextStyle(index)}`}
               />
+              {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 카드 중앙에서 확산 */}
+              {isSpeaking && !isResolved && <TtsRipple size={96} duration={speakingDuration} />}
 
               {/* 하단 중앙 - 복습 예정일 (채점 후) */}
               {!!wordResolvedStates[word.id] && (() => {

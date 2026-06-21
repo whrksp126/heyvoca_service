@@ -10,11 +10,13 @@ import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
-import { getTextSound } from '../../utils/common';
 import { warmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
+import SpeakerButton from '../common/SpeakerButton';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 
@@ -100,8 +102,27 @@ const StudyResult = () => {
 
   const { isDark } = useTheme();
   const { showExamples } = useExampleSettings();
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, fetchRecommendedBooks } = useVocabulary();
   const { updateUserHistory } = useUser();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+
+  // 결과 단어 클릭 시 단어 상세 바텀시트 — 단어장에 존재할 때만(추천/삭제 등으로 없으면 무시)
+  const handleOpenWordDetail = (item) => {
+    if (item?.vocabularySheetId == null || item?.id == null) return;
+    // getWord는 sheet 미존재 시 throw할 수 있어 방어적으로 조회
+    let word = null;
+    try {
+      word = typeof getWord === 'function' ? getWord(item.vocabularySheetId, item.id) : null;
+    } catch {
+      word = null;
+    }
+    if (!word) return;
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(WordDetaileNewBottomSheet, {
+      vocabularyId: item.vocabularySheetId,
+      id: item.id,
+    });
+  };
   const navigate = useNavigate();
   const { state } = useLocation();
   // cardMatch/cardMatchListening 세트는 words 배열을 개별 단어로 flatten
@@ -160,6 +181,8 @@ const StudyResult = () => {
 
       // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
       fetchVocabularySheets();
+      // 학습 완료 시 백엔드 추천 캐시가 무효화되므로(레벨 프로필 변화) 추천 단어장도 갱신
+      if (typeof fetchRecommendedBooks === 'function') fetchRecommendedBooks();
 
       setResultData(result);
 
@@ -426,10 +449,11 @@ const StudyResult = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2 + (index * 0.1) }}
+                      onClick={() => handleOpenWordDetail(item)}
                       className={`
                         flex flex-col gap-[10px]
                         px-[20px] py-[18px]
-                        rounded-[12px]
+                        rounded-[12px] cursor-pointer
                         ${item.isCorrect ? 'bg-status-success-100 dark:bg-status-success-dark' : 'bg-status-error-50 dark:bg-status-error-dark'}
                       `}
                     >
@@ -441,14 +465,14 @@ const StudyResult = () => {
                             <X size={24} weight="bold" className='text-status-error-500' />
                           )}
                         </div>
-                        <div className='flex flex-col flex-1 gap-[5px]'>
-                          <div className="flex items-center justify-between">
-                            <h3
-                              onClick={() => getTextSound(item.origin, "en")}
-                              className="text-[16px] font-[700] text-layout-black dark:text-layout-white cursor-pointer"
-                            >
-                              {item.origin}
-                            </h3>
+                        <div className='flex flex-col flex-1 gap-[5px] min-w-0'>
+                          <div className="flex items-center justify-between gap-[8px]">
+                            <div className="flex items-center gap-[6px] min-w-0">
+                              <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white truncate">
+                                {item.origin}
+                              </h3>
+                              <SpeakerButton text={item.origin} lang="en" size={16} label="단어 발음 듣기" />
+                            </div>
                             <MemorizationStatus
                               repetition={fsrsReps}
                               interval={fsrsStability}
@@ -459,10 +483,7 @@ const StudyResult = () => {
                               forceText={item.priorityBucket === 'new' ? 'NEW' : null}
                             />
                           </div>
-                          <p
-                            onClick={() => getTextSound(meaningsArr.join(", "), "ko")}
-                            className="text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 cursor-pointer"
-                          >
+                          <p className="text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-50">
                             {meaningsArr.join(', ')}
                           </p>
                           {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}

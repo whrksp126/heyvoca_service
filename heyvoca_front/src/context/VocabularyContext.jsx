@@ -17,7 +17,10 @@ import {
   updateVocaBookApi,
   deleteVocaBookApi
 } from '../api/vocaBooks';
-import { getBookStoreApi } from '../api/bookStore';
+import { getBookStoreApi, getRecommendedBookStoreApi } from '../api/bookStore';
+
+// 추천 단어장 노출 개수
+const RECOMMEND_LIMIT = 3;
 import { showToast } from '../utils/osFunction';
 import { toLocalDateString } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
@@ -42,6 +45,8 @@ export const VocabularyProvider = ({ children }) => {
 
   const [bookStore, setBookStore] = useState([]);
   const [isBookStoreLoading, setIsBookStoreLoading] = useState(true);
+  const [recommendedBooks, setRecommendedBooks] = useState([]);
+  const [isRecommendedBooksLoading, setIsRecommendedBooksLoading] = useState(true);
   const [errorBookStore, setErrorBookStore] = useState(null);
   const [recentStudy, setRecentStudy] = useState({});
   const [isRecentStudyLoading, setIsRecentStudyLoading] = useState(true);
@@ -639,6 +644,31 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, []);
 
+  // 추천 단어장 불러오기 (앱 시작 시 prefetch + 학습 완료 후 갱신)
+  // 매 상점 진입마다 호출하던 것을 전역 캐시로 끌어올려 즉시 노출되게 함
+  const fetchRecommendedBooks = useCallback(async () => {
+    try {
+      setIsRecommendedBooksLoading(true);
+      const result = await getRecommendedBookStoreApi(RECOMMEND_LIMIT);
+      if (result?.code !== 200) {
+        setRecommendedBooks([]);
+        return;
+      }
+      const recommendations = Array.isArray(result?.data?.recommendations)
+        ? result.data.recommendations
+        : [];
+      const visibleRecommendations = recommendations
+        .filter((item) => !item.owned)
+        .slice(0, RECOMMEND_LIMIT);
+      setRecommendedBooks(visibleRecommendations);
+    } catch (error) {
+      console.error('추천 단어장 조회 오류:', error);
+      setRecommendedBooks([]);
+    } finally {
+      setIsRecommendedBooksLoading(false);
+    }
+  }, []);
+
   // 서점의 단어장 내 단어장에 추가
   const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
     try {
@@ -792,6 +822,7 @@ export const VocabularyProvider = ({ children }) => {
           await Promise.all([
             fetchVocabularySheets(),
             fetchBookStore(),
+            fetchRecommendedBooks(),
             fetchRecentStudy()
           ]);
         } catch (error) {
@@ -835,6 +866,10 @@ export const VocabularyProvider = ({ children }) => {
     getBookStore,
     getBookStoreVocabularySheet,
     addBookStoreVocabularySheet,
+
+    recommendedBooks,
+    isRecommendedBooksLoading,
+    fetchRecommendedBooks,
 
     recentStudy,
     isRecentStudyLoading,

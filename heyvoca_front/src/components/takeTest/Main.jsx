@@ -6,6 +6,9 @@ import { Circle, X, BookOpenText, WarningCircle, HandsClapping, Leaf, Plant, Car
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
+import SkipListeningNewBottomSheet from '../newBottomSheet/SkipListeningNewBottomSheet';
+import { isListeningType, isListeningSkipActive, activateListeningSkip } from '../../utils/listeningSkip';
+import TtsRipple from '../common/TtsRipple';
 import { analyzeLearningPattern } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 import { vibrate } from '../../utils/osFunction';
@@ -111,11 +114,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakDuration, setSpeakDuration] = useState(null);
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  // 듣기 문제 건너뛰기 활성 여부 (localStorage 기반, 5분간 유지)
+  const [listeningSkipActive, setListeningSkipActive] = useState(() => isListeningSkipActive());
   const { updateWord, updateRecentStudy, recentStudy, setRecentStudy, updateWordState, updateRecentStudyState } = useVocabulary();
   const [isSuspicious, setIsSuspicious] = useState(null);
 
@@ -149,6 +155,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     console.log("testType,", testType);
   }, [])
 
+  // 문제가 바뀔 때마다 듣기 건너뛰기 만료 여부 재확인 (만료되면 버튼 다시 노출)
+  useEffect(() => {
+    if (listeningSkipActive && !isListeningSkipActive()) setListeningSkipActive(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progressIndex])
+
   // 문제가 변경될 때마다 텍스트 읽기 (cardMatch는 제외 - 단어 클릭 시 재생)
   useEffect(() => {
     setIsSpeaking(false);
@@ -157,8 +169,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
         (async () => {
           setIsSpeaking(true);
+          setSpeakDuration(null);
           try {
-            await getTextSound(question.origin, "en");
+            await getTextSound(question.origin, "en", setSpeakDuration);
           } finally {
             setIsSpeaking(false);
           }
@@ -406,11 +419,26 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const textToRead = question.origin;
     const lang = "en";
     setIsSpeaking(true);
+    setSpeakDuration(null);
     try {
-      await getTextSound(textToRead, lang);
+      await getTextSound(textToRead, lang, setSpeakDuration);
     } finally {
       setIsSpeaking(false);
     }
+  }
+
+  // 듣기 문제 건너뛰기: 안내 바텀시트 확인 → 5분 활성화 + 진행 중 미답 듣기 문제를 일반 유형으로 즉시 변환
+  const handleSkipListening = async () => {
+    const result = await pushAwaitNewBottomSheet(SkipListeningNewBottomSheet, {});
+    if (!result?.confirmed) return;
+    activateListeningSkip();
+    setListeningSkipActive(true);
+    setTestQuestions(prev => prev.map((q, idx) => {
+      if (idx < progressIndex) return q; // 이미 푼 문제는 유지
+      if (q.questionType === 'cardMatchListening') return { ...q, questionType: 'cardMatch' };
+      if (q.questionType === 'multipleChoiceListening') return { ...q, questionType: 'multipleChoice' };
+      return q;
+    }));
   }
 
   // React Compiler가 자동으로 useCallback 처리
@@ -605,6 +633,31 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   );
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
+
+  // 듣기 문제 건너뛰기 버튼 — 현재 문제가 듣기 유형이고, 아직 건너뛰기 비활성이며, 미답일 때만 노출
+  const showListeningSkip =
+    !listeningSkipActive &&
+    isListeningType(testQuestions[progressIndex]?.questionType) &&
+    !isAnswered;
+  const listeningSkipButton = showListeningSkip ? (
+    <div className="flex-shrink-0 flex justify-center pt-[10px]">
+      <motion.button
+        type="button"
+        onClick={() => { vibrate({ duration: 5 }); handleSkipListening(); }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        className="
+          flex items-center justify-center
+          px-[16px] py-[8px] rounded-[10px]
+          text-[14px] font-[600]
+          text-layout-gray-400 dark:text-layout-gray-300
+        "
+      >
+        듣기 일시 중단
+      </motion.button>
+    </div>
+  ) : null;
+
   if (currentPlugin?.component) {
     const PluginComponent = currentPlugin.component;
     return (
@@ -642,7 +695,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             {Math.floor(progressBarIndex)}/{totalWordCount}
           </span>
         </motion.div>
-        <div className="relative flex h-full overflow-hidden">
+        <div className="relative flex flex-1 min-h-0 overflow-hidden">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
               key={progressIndex}
@@ -664,6 +717,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             </motion.div>
           </AnimatePresence>
         </div>
+        {listeningSkipButton}
       </motion.div>
     );
   }
@@ -710,7 +764,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         </span>
       </motion.div>
 
-      <div className="relative middle flex h-full overflow-hidden">
+      <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={progressIndex}
@@ -747,6 +801,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     handleClickTTS();
                   }}
                 >
+
+                  {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 카드 중앙에서 확산 */}
+                  {testQuestions[progressIndex].questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered && (
+                    <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+                  )}
 
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김) */}
                   {isCorrect !== null && (
@@ -812,22 +871,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     /* 듣기 모드: 채점 전 스피커 아이콘 */
                     <div className="relative flex items-center justify-center">
                       {/* 재생 중 ripple 애니메이션 */}
-                      {isSpeaking && (
-                        <>
-                          <motion.div
-                            className="absolute rounded-full border-2 border-primary-main-600"
-                            initial={{ width: 60, height: 60, opacity: 0.7 }}
-                            animate={{ width: 110, height: 110, opacity: 0 }}
-                            transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
-                          />
-                          <motion.div
-                            className="absolute rounded-full border-2 border-primary-main-600"
-                            initial={{ width: 60, height: 60, opacity: 0.7 }}
-                            animate={{ width: 110, height: 110, opacity: 0 }}
-                            transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
-                          />
-                        </>
-                      )}
+                      {isSpeaking && <TtsRipple size={110} duration={speakDuration} />}
                       <motion.div
                         animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
                         transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
@@ -1005,6 +1049,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
         </AnimatePresence>
       </div>
+      {listeningSkipButton}
       <AnimatePresence>
         {isSuspicious && (
           <motion.div
