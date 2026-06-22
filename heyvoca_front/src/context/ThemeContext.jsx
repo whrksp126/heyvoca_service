@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { setDefaultStatusBarStyle } from '../utils/statusBarManager';
+import postMessageManager from '../utils/postMessageManager';
 
 const ThemeContext = createContext();
 
@@ -35,6 +36,7 @@ export const ThemeProvider = ({ children }) => {
       }
 
       setDefaultStatusBarStyle(effectiveTheme === 'dark' ? 'light-content' : 'dark-content');
+      postMessageManager.sendMessageToReactNative('setNativeTheme', { theme: effectiveTheme });
     };
 
     applyTheme();

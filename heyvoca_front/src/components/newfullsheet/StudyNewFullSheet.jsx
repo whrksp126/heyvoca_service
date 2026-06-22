@@ -59,7 +59,7 @@ const StudyNewFullSheet = () => {
       state: {
         testType: 'quick',
         data: {
-          questionType: ['multipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'cardMatch', 'cardMatchListening'],
+          questionType: ['multipleChoice', 'multipleChoiceListening', 'cardMatch', 'cardMatchListening'],
           vocabularySheetId: "all",
           memoryState: null,
           count,
@@ -156,7 +156,7 @@ const StudyNewFullSheet = () => {
               state: {
                 testType: 'quick',
                 data: {
-                  questionType: ['multipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'cardMatch', 'cardMatchListening'],
+                  questionType: ['multipleChoice', 'multipleChoiceListening', 'cardMatch', 'cardMatchListening'],
                   vocabularySheetId: "all",
                   memoryState: null,
                   count: Math.min(14, allWords.length),

@@ -317,7 +317,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             문제 유형
           </h3>
           <div className="grid grid-cols-2 gap-[10px]">
-            {QUESTION_TYPE_PLUGINS.map((plugin, index) => {
+            {QUESTION_TYPE_PLUGINS.filter(p => p.enabled).map((plugin, index) => {
               const isSelected = questionTypes.includes(plugin.id);
               return (
                 <div

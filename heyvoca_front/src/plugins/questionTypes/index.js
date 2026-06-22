@@ -82,7 +82,7 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     id: 'fillInTheBlank',
     label: '빈칸 채우기',
-    enabled: true,
+    enabled: false,
     minWords: 4,
     component: FillInTheBlankQuestion,
     setupQuestions: (selectedWords, allWords) => {
