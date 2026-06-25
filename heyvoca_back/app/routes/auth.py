@@ -123,7 +123,7 @@ def google_oauth_app():
             httponly=True,  # JavaScript에서 접근 불가 (보안 강화)
             secure=not is_local,  # local이 아니면 HTTPS 사용
             samesite='Lax',
-            max_age=60*60*24*30  # 30일
+            max_age=60*60*24*90  # 90일
         )
         
         return response
@@ -209,7 +209,7 @@ def dev_login():
             httponly=True,
             secure=False, 
             samesite='Lax',
-            max_age=60*60*24*30
+            max_age=60*60*24*90
         )
 
         return response
@@ -342,7 +342,7 @@ def apple_oauth_app():
             httponly=True,
             secure=not is_local,
             samesite='Lax',
-            max_age=60*60*24*30
+            max_age=60*60*24*90
         )
         return response
 
@@ -882,7 +882,7 @@ def login():
         httponly=True,  # JavaScript에서 접근 불가 (보안 강화)
         secure=not is_local,  # local이 아니면 HTTPS 사용
         samesite='Lax',
-        max_age=60*60*24*14
+        max_age=60*60*24*90
     )
     return response
 
@@ -917,11 +917,25 @@ def refresh():
     # 새로운 액세스 토큰 발급
     new_access_token = generate_access_token(user_id)
     print(f"✅ 새로운 액세스 토큰 발급 성공: {new_access_token[:20]}...")
-    
-    return jsonify({
+
+    # 슬라이딩 만료(회전): refresh token도 새로 발급하고 쿠키 만료를 갱신한다.
+    # → 활성 사용자는 refresh가 일어날 때마다 90일 윈도우가 갱신되어 사실상 무한 유지,
+    #   90일 이상 미접속(=refresh 미발생)한 사용자만 자연 만료되어 재로그인.
+    new_refresh_token = generate_refresh_token(user_id)
+    is_local = os.getenv('FLASK_CONFIG') == 'local'
+    response = jsonify({
         'code': 200,
         'access_token': new_access_token
-    }), 200
+    })
+    response.set_cookie(
+        'refresh_token',
+        new_refresh_token,
+        httponly=True,
+        secure=not is_local,
+        samesite='Lax',
+        max_age=60*60*24*90  # 90일
+    )
+    return response, 200
 
 
 # 테스트용 엔드포인트 - 토큰 상태 확인

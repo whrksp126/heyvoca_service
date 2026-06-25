@@ -13,7 +13,7 @@ REFRESH_SECRET_KEY = REFRESH_SECRET
 
 # JWT 유효 시간 설정
 ACCESS_TTL_SECONDS = int(os.getenv("ACCESS_TTL_SECONDS", 60 * 60))  # 기본 60분
-REFRESH_TTL_SECONDS = int(os.getenv("REFRESH_TTL_SECONDS", 60 * 60 * 24 * 30))  # 기본 30일
+REFRESH_TTL_SECONDS = int(os.getenv("REFRESH_TTL_SECONDS", 60 * 60 * 24 * 90))  # 기본 90일 (슬라이딩 회전: /auth/refresh 호출 시마다 재발급되어 활성 사용자는 사실상 무한 유지)
 
 
 def jwt_required(f):
