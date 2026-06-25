@@ -3,22 +3,21 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { deductGemApi } from '../../api/auth';
 import { showToast } from '../../utils/osFunction';
 import { vibrate } from '../../utils/osFunction';
+import { StorePurchaseResultNewBottomSheet } from './StorePurchaseResultNewBottomSheet';
+import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 
 export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { addBookStoreVocabularySheet } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { popNewBottomSheet, clearStack, closeNewBottomSheet } = useNewBottomSheetActions();
+  const { popNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
   const { getUserProfile, setUserProfile } = useUser();
   const [alertType, setAlertType] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
-  const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
   useEffect(() => {
     const userProfile = getUserProfile();
     if (bookStoreVocabularySheet.gem == 0) {
@@ -33,20 +32,14 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   // React Compiler가 자동으로 useCallback 처리
   const handleClose = () => {
     if (isAdding) return; // 추가 중에는 닫기 방지
-    if (alertType == "unavailable") {
-      closeNewBottomSheet();
-    } else {
-      popNewBottomSheet();
-    }
+    popNewBottomSheet();
   };
 
   const handleSet = async () => {
     if (!alertType || isAdding) return;
     if (alertType == "unavailable") {
-      closeNewBottomSheet();
-      pushNewFullSheet(StoreNewFullSheet, {}, {
-        smFull: true,
-        closeOnBackdropClick: true
+      openNewBottomSheet(GemPurchaseNewBottomSheet, {
+        notice: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
       });
       return;
     }
@@ -69,11 +62,14 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       }
 
       await addBookStoreVocabularySheet(bookStoreVocabularySheet);
-      clearStack();
-      // 단어장 추가 성공 후 미리보기 풀시트도 닫기
-      setTimeout(() => {
-        popNewFullSheet();
-      }, 300);
+      openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
+        options: {
+          success: true,
+          packageName: bookStoreVocabularySheet.name,
+          color: bookStoreVocabularySheet.color,
+          category: bookStoreVocabularySheet.category,
+        },
+      });
     } catch (error) {
       console.error('단어장 추가 실패:', error);
       const errorMessage = error?.message || '단어장 추가에 실패했습니다.';
@@ -187,7 +183,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
                 }}
               />
             </div>
-          ) : (alertType == "unavailable" ? "상점으로 이동" : "추가")}
+          ) : (alertType == "unavailable" ? "보석 충전하기" : "추가")}
         </motion.button>
       </div>
     </div>

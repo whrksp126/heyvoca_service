@@ -126,7 +126,8 @@ const StudyResult = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   // cardMatch/cardMatchListening 세트는 words 배열을 개별 단어로 flatten
-  const testQuestions = state.testQuestions.flatMap(q => {
+  // state.testQuestions가 없거나 빈 배열이어도 렌더 오류 없이 빈 결과로 처리
+  const testQuestions = (state?.testQuestions ?? []).flatMap(q => {
     if (q.questionType === 'cardMatch' || q.questionType === 'cardMatchListening') {
       return (q.words ?? []).map(word => ({
         ...word,

@@ -165,6 +165,19 @@ export const finishStudySession = async (sessionId) => {
   return result;
 };
 
+// 복습 일정 및 분포 조회
+// GET /study/review-schedule
+// 응답: { code:200, data: { distribution, due, total, today, days } }
+// days: [{ date:"YYYY-MM-DD", count:n, words:[{ user_voca_id, word, meaning }] }]
+export const getReviewScheduleApi = async () => {
+  const url = `${backendUrl}/study/review-schedule`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getReviewScheduleApi 오류:', error);
+  }
+};
+
 // ─── 추천 API ───────────────────────────────────────────────────────────────
 // GET /study/recommend — 단어 추천 (세션 구성 + session_id 동시 반환)
 // 응답: { code: 200, data: { session_id, composition, items } }

@@ -51,13 +51,13 @@ export const devLoginApi = async ({ email }) => {
 
 
 // 사용자 기본 정보 업데이트 API
-export const updateUserInfoApi = async ({ username, level_id }) => {
+export const updateUserInfoApi = async ({ username, level_id, daily_new_limit } = {}) => {
   const url = `${backendUrl}/auth/update_user_info`;
   const method = 'PATCH';
-  const fetchData = {
-    username,
-    level_id
-  };
+  const fetchData = {};
+  if (username !== undefined) fetchData.username = username;
+  if (level_id !== undefined) fetchData.level_id = level_id;
+  if (daily_new_limit !== undefined) fetchData.daily_new_limit = daily_new_limit;
   try {
     const result = await fetchDataAsync(url, method, fetchData);
     return result;

@@ -38,7 +38,7 @@ const Header = () => {
         className="absolute right-[16px] flex gap-[5px] items-center"
       >
         <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-        <span className="text-layout-black dark:text-layout-white text-[16px] font-[600]">{userProfile.gem_cnt}</span>
+        <span className="text-layout-black dark:text-layout-white text-[16px] font-bold">{userProfile.gem_cnt}</span>
       </button>
     </div>
   );

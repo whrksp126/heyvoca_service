@@ -45,10 +45,12 @@ def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
 
     next_review_raw = fsrs_state.get("next_review")
     try:
+        from app.services.study_day import logical_date
         next_review_dt = dt.datetime.fromisoformat(
             str(next_review_raw).replace("Z", "+00:00")
         ).replace(tzinfo=None)
-        next_review_date = next_review_dt.date()
+        # next_review도 today와 동일한 logical 기준으로 변환 (UTC date 직접 비교 시 경계 skew)
+        next_review_date = logical_date(next_review_dt)
     except (ValueError, AttributeError):
         return "new"
 
@@ -98,7 +100,8 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
 
     voca_books = query.all()
 
-    today = dt.datetime.utcnow().date()
+    from app.services.study_day import logical_today
+    today = logical_today()
     seen_voca_ids = set()
     items: list[CandidateItem] = []
 

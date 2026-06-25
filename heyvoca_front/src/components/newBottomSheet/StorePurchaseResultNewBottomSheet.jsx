@@ -23,17 +23,21 @@ export const StorePurchaseResultNewBottomSheet = ({ options }) => {
         <div className="flex flex-col gap-[30px] items-center pt-[40px] pb-[20px] px-[20px] relative">
             {/* 결과 아이콘 및 텍스트 구역 */}
             <div className="flex flex-col items-center gap-[10px] w-full">
-                <div className="relative size-[80px] flex items-center justify-center">
-                    <img
-                        src={image}
-                        alt="result"
-                        className={`object-contain ${success ? 'w-full h-full' : 'w-[50px] h-[45px] opacity-80'}`}
-                    />
-                </div>
+                {image && (
+                    <div className="relative size-[80px] flex items-center justify-center">
+                        <img
+                            src={image}
+                            alt="result"
+                            className={`object-contain ${success ? 'w-full h-full' : 'w-[50px] h-[45px] opacity-80'}`}
+                        />
+                    </div>
+                )}
                 <h1 className="text-[18px] font-bold leading-[1.4] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
                     {success ? (
                         <>
-                            <span className="text-primary-main-600">{packageName}</span> 구매 완료!
+                            <span>{packageName}</span>
+                            <br />
+                            구매 완료!
                         </>
                     ) : (
                         <span className="whitespace-pre-line">{message || '구매를 처리할 수 없습니다.'}</span>

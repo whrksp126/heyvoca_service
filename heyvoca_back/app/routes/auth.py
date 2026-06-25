@@ -563,6 +563,7 @@ def get_user_info():
         'gem_cnt' : user.gem_cnt,
         'set_goal_cnt' : user.set_goal_cnt,
         'invite_code' : user.invite_code,
+        'daily_new_limit' : user.daily_new_limit,
     }
     return jsonify({'code':200, 'data': user_item})
 
@@ -586,6 +587,13 @@ def update_user_info():
         user_item.level_id = data['level_id']
     if 'username' in data:
         user_item.username = data['username']
+    if 'daily_new_limit' in data:
+        # 하루 신규 단어 상한 (0=무제한, 상한 100). 잘못된 값은 무시.
+        try:
+            v = int(data['daily_new_limit'])
+            user_item.daily_new_limit = max(0, min(v, 100))
+        except (TypeError, ValueError):
+            pass
 
     try:
         db.session.commit()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, SpeakerHigh, CaretRight, FileText, ShieldCheck, Info } from "@phosphor-icons/react";
+import { UserCircle, SunDim, TextAlignJustify, HardDrives, Bell, SpeakerHigh, BookOpen, CaretRight, FileText, ShieldCheck, Info, CalendarCheck } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
@@ -21,7 +21,9 @@ import ThemeNewFullSheet from '../newfullsheet/ThemeNewFullSheet';
 import ExampleSettingsNewFullSheet from '../newfullsheet/ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from '../newfullsheet/PushNotificationsNewFullSheet';
 import VoiceSettingsNewFullSheet from '../newfullsheet/VoiceSettingsNewFullSheet';
+import DailyNewLimitNewFullSheet from '../newfullsheet/DailyNewLimitNewFullSheet';
 import GemNewFullSheet from '../newfullsheet/GemNewFullSheet';
+import ReviewScheduleNewFullSheet from '../newfullsheet/ReviewScheduleNewFullSheet';
 import gemImg from '../../assets/images/gem.png';
 
 const Main = () => {
@@ -76,9 +78,25 @@ const Main = () => {
     });
   }
 
+  // 하루 신규 단어 수 설정
+  const handleDailyNewLimitClick = () => {
+    pushNewFullSheet(DailyNewLimitNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
+
   // 보석
   const handleGemClick = () => {
     pushNewFullSheet(GemNewFullSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
+  }
+
+  // 복습 일정/분포
+  const handleReviewScheduleClick = () => {
+    pushNewFullSheet(ReviewScheduleNewFullSheet, {}, {
       smFull: true,
       closeOnBackdropClick: true
     });
@@ -189,6 +207,31 @@ const Main = () => {
           <div className="flex items-center gap-2">
             <SpeakerHigh weight="fill" className="text-[20px] text-primary-main-600" />
             <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">음성</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
+
+        <li onClick={() => { vibrate({ duration: 5 }); handleDailyNewLimitClick(); }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <BookOpen weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">학습 설정</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-normal text-[#999]">
+              {(userProfile?.daily_new_limit ?? 20) === 0 ? '무제한' : `${userProfile?.daily_new_limit ?? 20}개`}
+            </span>
+            <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />
+          </div>
+        </li>
+
+        <li onClick={() => { vibrate({ duration: 5 }); handleReviewScheduleClick(); }}
+          className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark">
+          <div className="flex items-center gap-2">
+            <CalendarCheck weight="fill" className="text-[20px] text-primary-main-600" />
+            <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">복습 일정/분포</span>
           </div>
           <div className="flex items-center gap-1.5">
             <CaretRight className="text-[20px] text-layout-black dark:text-layout-white" />

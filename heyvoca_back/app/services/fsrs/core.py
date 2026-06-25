@@ -6,17 +6,20 @@ FSRS-5 알고리즘 내부 구현체 (Python 3.8 호환)
      "A Stochastic Shortest Path Algorithm for Optimizing a Fixed-Point
       Iteration Scheduling Policy" (Ye 2022)
 
-FSRS-5 기본 파라미터 (17개):
+FSRS-4.5 기본 파라미터 (17개, 표준 정본 인덱스):
   w[0]~w[3]: 초기 stability (각 rating별 s0)
-  w[4]~w[6]: 난이도 초기화/분산 관련
-  w[7]~w[8]: stability recall 지수 상수
-  w[9]:      난이도 영향도
-  w[10]:     보안 감소 계수
+  w[4]~w[5]: 초기 난이도 D0
+  w[6]:      난이도 갱신 delta 계수
+  w[7]:      난이도 mean-reversion 가중치
+  w[8]:      recall stability 지수 상수
+  w[9]:      recall stability의 S 지수(난이도/안정성 영향)
+  w[10]:     recall stability의 (1-R) 스케일 계수
   w[11]:     lapse 후 stability 복구 상수
-  w[12]:     lapse 후 stability 감소 비율
-  w[13]:     lapse 후 stability 상한
-  w[14]~[15]: 하드(2)/이지(4) stability 보정
-  w[16]:     짧은 간격 복습 hard ceiling
+  w[12]:     lapse 후 stability 난이도 역지수
+  w[13]:     lapse 후 stability (s+1) 지수
+  w[14]:     lapse 후 stability의 (1-R) 지수 계수
+  w[15]:     Hard 패널티 (정답 stability)
+  w[16]:     Easy 보너스 (정답 stability)
 """
 
 import math
@@ -44,9 +47,9 @@ STATE_LEARNING  = "learning"
 STATE_REVIEW    = "review"
 STATE_RELEARNING = "relearning"
 
-# 망각 임계값 (retrievability < 0.9 → due)
+# 망각 곡선 상수 (retrievability < 0.9 → due)
 DECAY    = -0.5
-FACTOR   = 0.9 ** (1.0 / DECAY) - 1.0   # ≈ 0.0000019
+FACTOR   = 0.9 ** (1.0 / DECAY) - 1.0   # = 0.9^(-2) - 1 ≈ 0.2346
 
 
 def _init_difficulty(w: List[float], rating: int) -> float:
@@ -72,10 +75,10 @@ def _init_stability(w: List[float], rating: int) -> float:
 def _stability_after_recall(
     w: List[float], d: float, s: float, r: float, rating: int
 ) -> float:
-    """정답 시 stability 갱신 (SIncrease)."""
-    hard_penalty = w[14] if rating == HARD else 1.0
-    easy_bonus   = w[15] if rating == EASY else 1.0
-    inner = (
+    """정답 시 stability 갱신 (SIncrease). 표준 FSRS-4.5: S·(1 + SInc)."""
+    hard_penalty = w[15] if rating == HARD else 1.0
+    easy_bonus   = w[16] if rating == EASY else 1.0
+    sinc = (
         math.exp(w[8])
         * (11.0 - d)
         * (s ** (-w[9]))
@@ -83,12 +86,17 @@ def _stability_after_recall(
         * hard_penalty
         * easy_bonus
     )
-    return max(s * inner, s + 0.01)   # stability는 단조 증가 보장
+    return max(s * (1.0 + sinc), s + 0.01)   # stability는 단조 증가 보장
 
 
 def _stability_after_lapse(w: List[float], d: float, s: float, r: float) -> float:
-    """오답 시 stability 갱신 (SDecrease)."""
-    new_s = w[11] * (d ** (-w[12])) * ((s + 1.0) ** w[13] - 1.0) * r
+    """오답 시 stability 갱신 (SDecrease). 표준 FSRS-4.5: (1-R) 지수항 사용."""
+    new_s = (
+        w[11]
+        * (d ** (-w[12]))
+        * ((s + 1.0) ** w[13] - 1.0)
+        * math.exp(w[14] * (1.0 - r))
+    )
     return max(new_s, 0.1)
 
 
@@ -150,10 +158,11 @@ def fsrs_review(
 
     # 상태에 따른 처리
     if current_state == STATE_NEW or s == 0:
-        # 첫 학습
+        # 첫 학습 — 표준처럼 등급별 상태 전이
+        # (Again=실패 → 아직 학습 단계, Hard/Good/Easy → 복습 단계로 졸업)
         new_s = _init_stability(w, rating)
         new_d = _init_difficulty(w, rating)
-        new_state = STATE_LEARNING
+        new_state = STATE_LEARNING if rating == AGAIN else STATE_REVIEW
         new_lapses = lapses
         new_reps   = 1
     elif rating == AGAIN:

@@ -31,6 +31,16 @@ const TakeTest = () => {
   // 진행 중인 /study/log Promise 큐 — 결과 화면/홈 카운터 갱신 전에 모두 await
   const pendingLogPromisesRef = useRef([]);
 
+  // ─── 재출제 시스템용 ref ───────────────────────────────────────────────────
+  // 세션에서 /study/log를 이미 보낸 user_voca_id 집합 (첫 시도 1회만 로깅 보장)
+  const loggedVocaIdsRef = useRef(new Set());
+  // 단어별 재시도 횟수 Map (무한루프 방지 상한: 10회)
+  const retryCountMapRef = useRef(new Map());
+  // 세션에서 최소 1번 정답 처리된 고유 단어 ID 집합 (완료 판정 + 진행률용)
+  const passedVocaIdsRef = useRef(new Set());
+  // 세션의 고유 단어 수 (진행률 분모 — 초기화 시 확정)
+  const totalUniqueVocaCountRef = useRef(0);
+
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
     const shuffled = [...array];
@@ -320,6 +330,23 @@ const TakeTest = () => {
           setTestQuestions(studyData);
           setProgressIndex(recentStudy[state.testType].progress_index);
           setIsTestQuestionsSetting(false);
+          // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)
+          loggedVocaIdsRef.current = new Set();
+          retryCountMapRef.current = new Map();
+          passedVocaIdsRef.current = new Set();
+          // 고유 단어 수 재계산
+          {
+            const uniqueIds = new Set();
+            for (const q of studyData) {
+              if (Array.isArray(q.words)) {
+                q.words.forEach(w => { if (w.id != null) uniqueIds.add(w.id); });
+              } else {
+                const id = q.vocaIndexId ?? q.id;
+                if (id != null) uniqueIds.add(id);
+              }
+            }
+            totalUniqueVocaCountRef.current = uniqueIds.size || studyData.length;
+          }
           warmSession(studyData);
           return;
         }
@@ -335,6 +362,11 @@ const TakeTest = () => {
             state.testType
           );
 
+          // 재출제 시스템 ref 초기화 (새 세션마다 리셋)
+          loggedVocaIdsRef.current = new Set();
+          retryCountMapRef.current = new Map();
+          passedVocaIdsRef.current = new Set();
+
           // 출제 가능한 문제가 0개이면 (예: 빈칸 채우기 단독 선택인데 강조 예문이 없는 경우) 알림 후 복귀
           if (!tempTestQuestions || tempTestQuestions.length === 0) {
             window.alert('출제 가능한 문제가 없어요. 다른 유형을 함께 선택해주세요');
@@ -349,6 +381,20 @@ const TakeTest = () => {
 
           // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
           studySessionRef.current = sessionId ?? null;
+
+          // 재출제 시스템: 고유 단어 수 확정 (cardMatch는 words 배열 개별 단어 카운트)
+          {
+            const uniqueIds = new Set();
+            for (const q of tempTestQuestions) {
+              if (Array.isArray(q.words)) {
+                q.words.forEach(w => { if (w.id != null) uniqueIds.add(w.id); });
+              } else {
+                const id = q.vocaIndexId ?? q.id;
+                if (id != null) uniqueIds.add(id);
+              }
+            }
+            totalUniqueVocaCountRef.current = uniqueIds.size || tempTestQuestions.length;
+          }
 
           await updateRecentStudy(state.testType, {
             ...recentStudy[state.testType],
@@ -479,9 +525,21 @@ const TakeTest = () => {
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
         }
         await updateVocabularySheetAndRecentStudyData();
+        // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달
+        // (재출제로 맞춘 걸 정답으로 뒤집지 않기 위해 첫 등장 순서 기준)
+        const seenIds = new Set();
+        const resultQuestions = testQuestions.filter(q => {
+          if (q.isRetry) return false; // 재출제 문제 제외
+          // cardMatch 세트는 words 기준 중복 없으면 포함
+          if (Array.isArray(q.words)) return true;
+          const id = q.vocaIndexId ?? q.id;
+          if (seenIds.has(id)) return false;
+          seenIds.add(id);
+          return true;
+        });
         navigate("/take-test/result", {
           state: {
-            testQuestions: testQuestions,
+            testQuestions: resultQuestions,
             testType: state.testType,
           },
           replace: true,
@@ -547,6 +605,10 @@ const TakeTest = () => {
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
           studySessionRef={studySessionRef}
           pendingLogPromisesRef={pendingLogPromisesRef}
+          loggedVocaIdsRef={loggedVocaIdsRef}
+          retryCountMapRef={retryCountMapRef}
+          passedVocaIdsRef={passedVocaIdsRef}
+          totalUniqueVocaCountRef={totalUniqueVocaCountRef}
         />
       </div>
     );

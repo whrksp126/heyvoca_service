@@ -7,7 +7,7 @@ from flask import Blueprint, jsonify, request, g
 from sqlalchemy import text
 
 from app import db
-from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat
+from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
 
 study_bp = Blueprint('study', __name__, url_prefix='/study')
@@ -389,17 +389,15 @@ def today_summary():
     여러 세션에서 학습해도 1회만 계산. 메인 동기부여 멘트("새 단어 N개")용.
     """
     user_id = UUID(g.user_id)
-    utc_now = dt.datetime.utcnow()
-    # KST 오늘 자정 = UTC 어제 15:00 (_fetch_user_stats와 동일 계산)
-    kst_today_midnight_utc = dt.datetime(
-        utc_now.year, utc_now.month, utc_now.day, 0, 0, 0
-    ) - dt.timedelta(hours=9)
+    # 하루 경계 = APP_TZ + 새벽 컷오프 (logical_day_start_utc 단일 소스)
+    from app.services.study_day import logical_day_start_utc
+    day_start_utc = logical_day_start_utc()
 
     rows = (
         db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
         .filter(
             UserStudyLog.user_id == user_id,
-            UserStudyLog.created_at >= kst_today_midnight_utc,
+            UserStudyLog.created_at >= day_start_utc,
         )
         .all()
     )
@@ -420,6 +418,86 @@ def today_summary():
             new_ids.add(vid)
 
     return jsonify({'code': 200, 'data': {'new_words': len(new_ids)}}), 200
+
+
+@study_bp.route('/review-schedule', methods=['GET'])
+@jwt_required
+def review_schedule():
+    """마이페이지 '복습 일정/분포' — 암기상태 분포 + due 카운트 + 날짜별 복습 예정 단어.
+
+    응답:
+      {
+        "distribution": {"new":n,"short":n,"medium":n,"long":n},  # 암기상태 분포(칩 개수)
+        "due":          {"overdue":n,"today":n},
+        "total":        n,
+        "today":        "YYYY-MM-DD",   # logical today(KST+컷오프)
+        "days":         [{"date":"YYYY-MM-DD","count":n,
+                          "words":[{"user_voca_id","word","meaning"}]}, ...]  # 캘린더용
+      }
+    """
+    from app.services.recommend.pool import build_candidate_pool
+    from app.services.study_day import logical_today, logical_date
+
+    user_id = UUID(g.user_id)
+
+    try:
+        pool = build_candidate_pool(user_id, None)
+    except Exception:
+        logging.getLogger(__name__).error('review-schedule pool 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+    today = logical_today()
+    distribution = {'new': 0, 'short': 0, 'medium': 0, 'long': 0}
+    due = {'overdue': 0, 'today': 0}
+    days_map: dict = {}   # date_str -> [word dict]  (오늘 + 향후 복습 예정)
+
+    def _word_entry(it):
+        return {
+            'user_voca_id': it.user_voca_id,
+            'word':         it.word,
+            'meaning':      it.meanings[0] if it.meanings else '',
+        }
+
+    for it in pool:
+        b = it.bucket
+        if b == 'new':
+            distribution['new'] += 1
+        elif b == 'overdue':
+            due['overdue'] += 1
+        elif b == 'today':
+            due['today'] += 1
+            days_map.setdefault(today.isoformat(), []).append(_word_entry(it))
+        elif b in ('short', 'medium', 'long'):
+            distribution[b] += 1
+            nr = (it.fsrs_state or {}).get('next_review')
+            if nr:
+                try:
+                    nr_dt = dt.datetime.fromisoformat(
+                        str(nr).replace('Z', '+00:00')
+                    ).replace(tzinfo=None)
+                    nr_date = logical_date(nr_dt)
+                except (ValueError, AttributeError):
+                    nr_date = None
+                if nr_date and nr_date >= today:
+                    days_map.setdefault(nr_date.isoformat(), []).append(_word_entry(it))
+
+    days = []
+    for date_str in sorted(days_map.keys()):
+        words = sorted(days_map[date_str], key=lambda w: (w['word'] or '').lower())
+        days.append({'date': date_str, 'count': len(words), 'words': words})
+
+    total = sum(distribution.values()) + due['overdue'] + due['today']
+
+    return jsonify({
+        'code': 200,
+        'data': {
+            'distribution': distribution,
+            'due':          due,
+            'total':        total,
+            'today':        today.isoformat(),
+            'days':         days,   # 오늘+향후 날짜별 복습 예정 단어 리스트 (캘린더용)
+        },
+    }), 200
 
 
 @study_bp.route('/predict-reviews', methods=['POST'])
@@ -510,11 +588,9 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         }
     """
     utc_now = dt.datetime.utcnow()
-    # KST 오늘 자정 = UTC 어제 15:00
-    kst_today_midnight_utc = dt.datetime(
-        utc_now.year, utc_now.month, utc_now.day,
-        0, 0, 0
-    ) - dt.timedelta(hours=9)
+    # 하루 경계 = APP_TZ + 새벽 컷오프 (due 판정과 동일 소스)
+    from app.services.study_day import logical_day_start_utc
+    day_start_utc = logical_day_start_utc(utc_now)
 
     seven_days_ago    = utc_now - dt.timedelta(days=7)
     lapse_window_from = utc_now - dt.timedelta(hours=48)
@@ -526,6 +602,7 @@ def _fetch_user_stats(user_id: UUID) -> dict:
             UserStudyLog.question_type,
             UserStudyLog.was_correct,
             UserStudyLog.created_at,
+            UserStudyLog.state_before,
         )
         .filter(
             UserStudyLog.user_id == user_id,
@@ -542,13 +619,29 @@ def _fetch_user_stats(user_id: UUID) -> dict:
     # 오늘 본 단어/유형 + 단어별 가장 최근 로그 추적 (lapse 판정용)
     today_seen: dict = {}
     latest_log_by_voca: dict = {}  # {user_voca_id: log} — 단어별 최신 로그
+    new_today_ids: set = set()     # 오늘 처음 학습(state_before=new)한 단어 (신규 cap용)
     for r in recent_logs:
-        if r.created_at >= kst_today_midnight_utc:
+        if r.created_at >= day_start_utc:
             vid = r.user_voca_id
             if vid not in today_seen:
                 today_seen[vid] = []
             if r.question_type and r.question_type not in today_seen[vid]:
                 today_seen[vid].append(r.question_type)
+
+            # 오늘 신규로 소개된 단어인지 (today_summary와 동일 판정)
+            sb = r.state_before
+            is_new = False
+            if not sb:
+                is_new = True
+            else:
+                try:
+                    st = json.loads(sb)
+                    if not st or st.get('state') in ('new', None):
+                        is_new = True
+                except Exception:
+                    is_new = False
+            if is_new:
+                new_today_ids.add(vid)
 
         # 단어별 가장 최근 로그 추적
         prev = latest_log_by_voca.get(r.user_voca_id)
@@ -586,6 +679,7 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         'weakness_types':         weakness_types,
         'today_seen':             today_seen,
         'recent_lapse_voca_ids':  recent_lapse_voca_ids,
+        'new_introduced_today':   len(new_today_ids),
     }
 
 
@@ -688,8 +782,25 @@ def get_recommend():
         if allowed_buckets:
             pool = [it for it in pool if it.bucket in allowed_buckets]
 
+    # ── AI 추천 모드 판정 + 신규 일일 cap 산출 ──
+    # 사용자가 암기상태를 명시(target_states)하거나 random이면 그 의도를 그대로 존중 → cap/floor 미적용.
+    full_recommend = (selection == 'recommended' and target_states is None)
+    new_allowance = None
+    if full_recommend:
+        user_row = db.session.query(User).filter(User.id == user_id).first()
+        daily_limit = getattr(user_row, 'daily_new_limit', 20) if user_row else 20
+        if daily_limit is None:
+            daily_limit = 20
+        if daily_limit > 0:
+            new_today = (user_stats or {}).get('new_introduced_today', 0)
+            new_allowance = max(0, daily_limit - new_today)
+        # daily_limit <= 0 → 무제한 → new_allowance=None
+
     # ── 세션 구성 ──
-    result = compose(pool, count, selection=selection, user_stats=user_stats)
+    result = compose(
+        pool, count, selection=selection, user_stats=user_stats,
+        full_recommend=full_recommend, new_allowance=new_allowance,
+    )
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 

@@ -1,5 +1,5 @@
 // src/components/home/main
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import logo_h from '../../assets/images/logo_h.png';
@@ -20,7 +20,7 @@ import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
-import { getTodaySummary } from '../../api/study';
+import { getTodaySummary, getReviewScheduleApi } from '../../api/study';
 
 
 // import StoreSheet from './StoreSheet';
@@ -110,7 +110,32 @@ const Main = () => {
   const { isDark } = useTheme();
   const { vocabularySheets, memoryStats, lastSessionResult } = useVocabulary();
   const [todayNewWords, setTodayNewWords] = useState(0);
-  const greeting = getHomeGreeting(memoryStats, lastSessionResult, todayNewWords);
+  // 백엔드 KST+새벽4시 컷오프 기준 reviewDue (null이면 클라이언트 계산값 폴백)
+  const [backendReviewDue, setBackendReviewDue] = useState(null);
+
+  // memoryStats를 백엔드 reviewDue로 오버라이드 (KST+4시 기준 일치)
+  const effectiveStats = backendReviewDue !== null
+    ? { ...memoryStats, reviewDue: backendReviewDue }
+    : memoryStats;
+  const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
+  // useMemo로 감싸 입력이 바뀌지 않는 한 같은 방문 내 재셔플 방지.
+  // 홈 재진입(remount) 시에는 새로 뽑힌다.
+  const greeting = useMemo(
+    () => getHomeGreeting(effectiveStats, lastSessionResult, todayNewWords, dailyNewLimit),
+    // effectiveStats 객체 참조 대신 핵심 필드를 의존성으로 나열해 불필요한 재계산 방지.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      effectiveStats?.reviewDue,
+      effectiveStats?.unlearned,
+      effectiveStats?.longTerm,
+      effectiveStats?.shortTerm,
+      effectiveStats?.mediumTerm,
+      effectiveStats?.total,
+      lastSessionResult?.completedAt,
+      todayNewWords,
+      dailyNewLimit,
+    ]
+  );
 
   // React Compiler가 자동으로 메모이제이션 처리
   // 오늘의 요일 확인 및 각 미션별 완료 상태 체크
@@ -144,12 +169,22 @@ const Main = () => {
     fetchUserCheckin();
   }, []);
 
-  // 오늘 누적 새 단어 수 조회 (학습 직후 lastSessionResult 변경 시 갱신)
+  // 오늘 누적 새 단어 수 조회 + 백엔드 reviewDue 조회 (학습 직후 lastSessionResult 변경 시 갱신)
+  // 백엔드 /study/review-schedule의 due(overdue+today)를 단일 소스로 사용해
+  // 클라이언트 자정 기준 vs 서버 KST+4시 컷오프 기준 불일치를 해소.
   useEffect(() => {
     let alive = true;
     getTodaySummary().then(res => {
       if (alive && res?.code === 200) {
         setTodayNewWords(res.data?.new_words ?? 0);
+      }
+    });
+    getReviewScheduleApi(30).then(res => {
+      if (alive && res?.code === 200) {
+        const due = res.data?.due;
+        if (due) {
+          setBackendReviewDue((due.overdue ?? 0) + (due.today ?? 0));
+        }
       }
     });
     return () => { alive = false; };
@@ -215,7 +250,7 @@ const Main = () => {
             className="flex gap-[5px] items-center"
           >
             <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
-            <span className="text-layout-white text-[14px] font-bold">{userProfile.gem_cnt}</span>
+            <span className="text-layout-white text-[16px] font-bold">{userProfile.gem_cnt}</span>
           </button>
         </div>
       </div>
@@ -266,7 +301,7 @@ const Main = () => {
                 bg-gradient-to-br from-[rgba(255,141,212,1)] via-[rgba(205,141,255,1)] to-[rgba(116,213,255,1)]
                 text-[16px] font-[800]
               ">
-                {todayStatus.dailyMissionCompleted ? '학습하기' : '학습하기'}
+                학습하기
               </span>
             </button>
           </motion.div>

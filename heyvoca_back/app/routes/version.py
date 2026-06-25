@@ -12,7 +12,7 @@ def get_version():
       # 스토어에 새 버전을 실제로 출시한 직후에만 올릴 것 (아직 심사/롤아웃 중이면 절대 올리지 말 것 — 무한 업데이트 모달 발생).
       "app_android_version": "1.0.1",  # Play Store 출시 버전 (versionName)
       "app_ios_version": "1.0.1",  # App Store 출시 버전 (MARKETING_VERSION)
-      "web_version": "1.0.2",  # 웹 버전 (스플래시 프로그래스/Lottie, 빈칸채우기 숨김, 테마 동기화 메시지 — 기존 사용자 reload 트리거)
+      "web_version": "1.0.3",  # 웹 버전 (FSRS 코어 정정·복습일정/학습설정, 테스트 재출제 완료버그 픽스·듣기버튼 유지, 홈 격려 메시지 다양화, 구매/보석 시트·예문 스피커 QA — 기존 사용자 reload 트리거)
       "release_date": datetime.now().isoformat(),
       "api_status": "stable",
       "min_app_version": "1.0.0",  # 앱의 최소 요구 버전 (이 값 미만이면 강제 업데이트)

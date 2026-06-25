@@ -113,23 +113,27 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             <SpeakerButton text={word.meanings.join(", ")} lang="ko" label="의미 듣기" />
           </div>
           {
-            word.examples?.map((example, index) => (
-              <div key={`${id}-${index}`} className="flex flex-col gap-[2px]">
-                <div className="flex items-center gap-[6px]">
-                  <span
-                    className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words"
-                    dangerouslySetInnerHTML={{ __html: example.origin }}
-                  />
-                  <SpeakerButton text={stripHtmlTags(example.origin)} lang="en" label="예문 발음 듣기" />
+            word.examples?.map((example, index) => {
+              const originText = stripHtmlTags(example.origin || '').trim();
+              if (!originText) return null;
+              return (
+                <div key={`${id}-${index}`} className="flex flex-col gap-[2px]">
+                  <div className="flex items-center gap-[6px]">
+                    <span
+                      className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words"
+                      dangerouslySetInnerHTML={{ __html: example.origin }}
+                    />
+                    <SpeakerButton text={originText} lang="en" label="예문 발음 듣기" />
+                  </div>
+                  <div className="flex items-center gap-[6px]">
+                    <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words">
+                      {example.meaning}
+                    </span>
+                    <SpeakerButton text={stripHtmlTags(example.meaning || '')} lang="ko" label="예문 의미 듣기" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words">
-                    {example.meaning}
-                  </span>
-                  <SpeakerButton text={stripHtmlTags(example.meaning)} lang="ko" label="예문 의미 듣기" />
-                </div>
-              </div>
-            ))
+              );
+            })
           }
         </div>
       </div>

@@ -105,9 +105,6 @@ const VoiceSettingsNewFullSheet = () => {
 
       {/* Content */}
       <div className="flex flex-col flex-1 overflow-y-auto">
-        <p className="px-5 pt-4 pb-1 text-[13px] text-layout-gray-200 dark:text-layout-gray-300 leading-tight">
-          학습 중 들리는 발음 음성을 언어별로 선택하세요. 목소리를 누르면 미리 들어볼 수 있어요.
-        </p>
         {LANG_ORDER.map((lang) => (
           <div key={lang}>
             <div className="px-5 pt-4 pb-2 text-[13px] font-bold text-layout-gray-200 dark:text-layout-gray-300">

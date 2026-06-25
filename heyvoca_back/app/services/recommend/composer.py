@@ -147,6 +147,9 @@ def _decide_slot_quotas(
     available: Dict[str, int],
     count: int,
     user_level: str,
+    *,
+    full_recommend: bool = False,
+    new_allowance: Optional[int] = None,
 ) -> Dict[str, int]:
     """
     풀 분포(available)와 사용자 능력(user_level)을 보고
@@ -154,27 +157,20 @@ def _decide_slot_quotas(
 
     원칙:
       1. 위급 망각 위험 단어(lapse + overdue + today)는 가용한 만큼 우선 채운다.
-         단, count의 100%까지 채울 수 있음.
-      2. 위급분으로 count가 다 차면 거기서 끝 (새 단어 추가 안 함).
-      3. 부족분이 있으면 사용자 능력에 따라 분배:
-         - high: 새 단어 적극 + 단기/중기 균형
-         - low : 단기/중기 강화 + 새 단어 자제
-         - mid : 균형
-      4. 그래도 부족하면 long 등에서 보충.
+      2. 부족분이 있으면 사용자 능력에 따라 (new, short, medium) 분배.
+      3. 그래도 부족하면 long 등에서 보충.
+
+    AI 추천 모드(full_recommend=True)에서만 추가 보정:
+      - new_allowance: 하루 신규 상한 잔량. new bucket을 이 값으로 캡 → 초과분은 복습 슬롯으로.
+      - 신규/단기 floor 예약: overdue 백로그가 커도 매 세션에 신규·단기를
+        레벨별 비율만큼 최소 보장 (overdue가 count의 100%를 먹지 못하게).
+      명시적 선택(자유설정/암기상태 지정 등, full_recommend=False)에서는 사용자 의도
+      그대로 — 위급분을 100%까지 채우는 기존 동작 유지.
     """
     quotas: Dict[str, int] = {b: 0 for b in _BUCKET_PRIORITY}
-    remaining = count
+    avail = dict(available)
 
-    # ── 1. 위급 망각 위험 ──
-    for b in ('lapse', 'overdue', 'today'):
-        take = min(available.get(b, 0), remaining)
-        quotas[b] = take
-        remaining -= take
-        if remaining == 0:
-            return quotas
-
-    # ── 2. 사용자 능력 기반 분배 ──
-    # 부족분을 (new, short, medium) 중심으로 능력별 가중치로 나눔
+    # 사용자 능력 기반 가중치 (floor 계산과 분배에 공통 사용)
     if user_level == 'high':
         weights = {'new': 0.55, 'short': 0.25, 'medium': 0.20}
     elif user_level == 'low':
@@ -182,12 +178,40 @@ def _decide_slot_quotas(
     else:  # mid
         weights = {'new': 0.30, 'short': 0.40, 'medium': 0.30}
 
+    # AI 추천 한정: 신규 일일 상한 캡
+    if full_recommend and new_allowance is not None:
+        avail['new'] = min(avail.get('new', 0), max(0, new_allowance))
+
+    # AI 추천 한정: 신규/단기 floor 예약 (overdue가 다 먹지 못하게)
+    reserve = 0
+    if full_recommend:
+        floor_new = min(avail.get('new', 0), round(count * weights['new']))
+        floor_short = min(avail.get('short', 0), round(count * weights['short']))
+        reserve = floor_new + floor_short
+
+    remaining = count
+
+    # ── 1. lapse(최근 실패, 소수)는 항상 우선 ──
+    take = min(avail.get('lapse', 0), remaining)
+    quotas['lapse'] = take
+    remaining -= take
+
+    # ── 1b. overdue/today는 reserve를 남기고 채움 ──
+    urgent_cap = max(0, remaining - reserve)
+    for b in ('overdue', 'today'):
+        take = min(avail.get(b, 0), urgent_cap)
+        quotas[b] = take
+        urgent_cap -= take
+        remaining -= take
+    if remaining == 0:
+        return quotas
+
     # 각 카테고리 가용분만큼 가중치대로 할당
     # 풀에 없는 카테고리는 자동으로 0이 되고 부족분은 다른 곳에서 보충됨
     raw_alloc: Dict[str, int] = {}
     for b, w in weights.items():
         target = round(remaining * w)
-        raw_alloc[b] = min(available.get(b, 0), target)
+        raw_alloc[b] = min(avail.get(b, 0), target)
 
     # 반올림 오차 보정 — 합이 remaining과 다를 수 있으므로 우선순위 순 재분배
     allocated = sum(raw_alloc.values())
@@ -199,7 +223,7 @@ def _decide_slot_quotas(
         for b, _ in order:
             if delta == 0:
                 break
-            slack = available.get(b, 0) - raw_alloc[b] if delta > 0 else raw_alloc[b]
+            slack = avail.get(b, 0) - raw_alloc[b] if delta > 0 else raw_alloc[b]
             if slack <= 0:
                 continue
             change = min(abs(delta), slack)
@@ -215,7 +239,7 @@ def _decide_slot_quotas(
     # ── 3. 그래도 부족하면 long, 그다음 medium/short/new 순으로 보충 ──
     if remaining > 0:
         for b in ('long', 'medium', 'short', 'new', 'today', 'overdue'):
-            slack = available.get(b, 0) - quotas[b]
+            slack = avail.get(b, 0) - quotas[b]
             if slack <= 0:
                 continue
             take = min(slack, remaining)
@@ -295,6 +319,8 @@ def _compose_recommend(
     pool: List[CandidateItem],
     count: int,
     user_stats: Optional[Dict],
+    full_recommend: bool = False,
+    new_allowance: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
     사용자 상태 기반 동적 추천.
@@ -317,7 +343,11 @@ def _compose_recommend(
     user_level = _evaluate_user_level(user_stats)
 
     # 5. 슬롯 분배 결정
-    quotas = _decide_slot_quotas(available, count, user_level)
+    quotas = _decide_slot_quotas(
+        available, count, user_level,
+        full_recommend=full_recommend,
+        new_allowance=new_allowance,
+    )
 
     # 6. 선택 (각 bucket에서 quota만큼)
     selected_with_bucket: List[Tuple[CandidateItem, str]] = []
@@ -407,6 +437,8 @@ def compose(
     *,
     selection: str = 'recommended',
     user_stats: Optional[Dict] = None,
+    full_recommend: bool = False,
+    new_allowance: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
     pool에서 count개를 골라 세션을 구성해 반환한다.
@@ -443,4 +475,4 @@ def compose(
 
     if selection == 'random':
         return _compose_random(pool, count)
-    return _compose_recommend(pool, count, user_stats)
+    return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance)
