@@ -82,6 +82,8 @@ class User(db.Model):
     tts_voices = Column(Text, nullable=True, default=None)
     # 하루에 새로 소개할 신규 단어 상한 (AI 추천 한정). 0 이하면 무제한. 기본 20.
     daily_new_limit = Column(Integer, nullable=False, default=20, server_default='20')
+    # 당근 농장 부활템 보유 수 (죽은 단어 1개 부활 = 1개 소모). 보석 1개=5개 구매.
+    revive_item_cnt = Column(Integer, nullable=False, default=0, server_default='0')
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
@@ -533,7 +535,39 @@ class UserCombo(db.Model):
         self.current_combo = 0
         self.best_combo = 0
         self.status = 'ACTIVE'
-### 게임 레이어 (콤보) ###
+
+
+class UserVocaGame(db.Model):
+    """당근 농장 게임 레이어 — UserVoca 1:1. FSRS 데이터(UserVoca.data)는 절대 건드리지 않음.
+
+    성장 단계(씨앗/새싹/잎/당근)는 저장하지 않고 FSRS 분류에서 파생.
+    이 테이블은 게임 전용 상태(생사/부활/당근보상 여부)만 보관한다.
+
+    life:
+      ALIVE — 정상 (시듦 단계는 조회 시 farm 서비스가 계산)
+      DEAD  — 방치로 죽음 (AI 추천에서만 제외, 부활 전까지 유지)
+    """
+    __tablename__ = 'user_voca_game'
+
+    user_voca_id   = Column(Integer, ForeignKey('user_voca.id'), primary_key=True, nullable=False)
+    user_id        = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
+    life           = Column(String(8), nullable=False, default='ALIVE')  # ALIVE | DEAD
+    died_at        = Column(DateTime, nullable=True)     # 죽음 확정 시각
+    death_seen     = Column(Boolean, nullable=False, default=False)  # 죽음 연출 노출 여부
+    deaths_cnt     = Column(Integer, nullable=False, default=0)  # 누적 죽은 횟수 (밸런싱 관찰용)
+    revives_cnt    = Column(Integer, nullable=False, default=0)  # 누적 부활 횟수
+    carrot_rewarded = Column(Boolean, nullable=False, default=False)  # 당근(장기) 첫 도달 보석 지급 여부(1회만)
+    updated_at     = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __init__(self, user_voca_id, user_id):
+        self.user_voca_id = user_voca_id
+        self.user_id = user_id
+        self.life = 'ALIVE'
+        self.death_seen = False
+        self.deaths_cnt = 0
+        self.revives_cnt = 0
+        self.carrot_rewarded = False
+### 게임 레이어 (콤보 / 농장) ###
 
 
 ### 재편성된 단어장 ###

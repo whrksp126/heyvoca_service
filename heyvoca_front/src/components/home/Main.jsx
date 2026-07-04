@@ -21,6 +21,9 @@ import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../../api/study';
+import { getFarmSummaryApi } from '../../api/game';
+import PlantIllustration from '../common/PlantIllustration';
+import FarmNewFullSheet from '../newfullsheet/FarmNewFullSheet';
 
 
 // import StoreSheet from './StoreSheet';
@@ -123,6 +126,8 @@ const Main = () => {
   const [backendReviewDue, setBackendReviewDue] = useState(null);
   // 오늘의 기억 변화 (승급/신규) — 변화 0개면 카드 숨김
   const [todayChanges, setTodayChanges] = useState(null);
+  // 당근 농장 요약 (홈 카드)
+  const [farmSummary, setFarmSummary] = useState(null);
 
   // memoryStats를 백엔드 reviewDue로 오버라이드 (KST+4시 기준 일치)
   const effectiveStats = backendReviewDue !== null
@@ -203,6 +208,11 @@ const Main = () => {
         setTodayChanges(res.data);
       }
     });
+    getFarmSummaryApi().then(res => {
+      if (alive && res?.code === 200) {
+        setFarmSummary(res.data);
+      }
+    });
     return () => { alive = false; };
   }, [lastSessionResult?.completedAt]);
 
@@ -216,6 +226,16 @@ const Main = () => {
       { changes: todayChanges },
       { isBackdropClickClosable: true }
     );
+  };
+
+  // 당근 농장 카드 표시 여부 — 심은 단어(살아있음+죽음)가 1개라도 있으면
+  const farmTotal = farmSummary?.total ?? 0;
+  const farmWilting = farmSummary?.wilting ?? 0;
+  const farmDead = farmSummary?.dead ?? 0;
+
+  const handleFarmClick = () => {
+    vibrate({ duration: 5 });
+    pushNewFullSheet(FarmNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
   };
 
   // React Compiler가 자동으로 useCallback 처리
@@ -418,6 +438,46 @@ const Main = () => {
                       </span>
                     );
                   })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 당근 농장 요약 카드 — 심은 단어가 있으면 표시 (승인된 프로토타입) */}
+          {farmTotal > 0 && (
+            <div
+              className="
+                flex flex-col gap-[12px]
+                px-[15px] py-[12px]
+                rounded-[12px]
+                bg-layout-gray-50 dark:bg-layout-gray-dark
+                cursor-pointer
+              "
+              onClick={handleFarmClick}
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">나의 당근 농장</h2>
+                <span className="flex items-center gap-[2px] text-[12px] font-[500] text-layout-gray-300">
+                  더보기
+                  <CaretRight size={11} weight="bold" />
+                </span>
+              </div>
+              <div className="flex items-center gap-[6px]">
+                <PlantIllustration stage="carrot" wilt="fresh" size={40} />
+                <PlantIllustration stage="leaf" wilt="fresh" size={40} />
+                <PlantIllustration stage="sprout" wilt={farmWilting > 0 ? 'wilt1' : 'fresh'} size={40} />
+                <PlantIllustration stage="seed" wilt="fresh" size={40} />
+                <div className="ml-auto text-right">
+                  <div className="text-[13px] font-[700] text-layout-black dark:text-layout-white">
+                    당근 {farmSummary?.by_stage?.carrot ?? 0} · 잎 {farmSummary?.by_stage?.leaf ?? 0}
+                  </div>
+                  {(farmWilting > 0 || farmDead > 0) && (
+                    <div className="text-[12px] font-[600] text-[#E8890C]">
+                      {farmWilting > 0 && `${farmWilting}개 시드는 중`}
+                      {farmWilting > 0 && farmDead > 0 && ' · '}
+                      {farmDead > 0 && <span className="text-status-error-600">죽음 {farmDead}</span>}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

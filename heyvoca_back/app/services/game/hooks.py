@@ -2,7 +2,9 @@
 
 post_study_log가 학습 데이터를 커밋한 '직후' 호출한다.
 여기서의 실패는 학습 저장에 영향을 주지 않는다 (호출부 try/except).
-트랙 ④ 당근 농장도 이 함수에 합류한다 — study.py 재수정 없음.
+
+- 콤보: AI 추천 테스트(test_type='quick')에서만 적립.
+- 농장: 모든 학습 모드에서 반영(당근 첫 도달 보석은 모드 무관).
 """
 
 from typing import Optional
@@ -12,14 +14,29 @@ from uuid import UUID
 AI_RECOMMEND_TEST_TYPES = {'quick'}
 
 
-def on_study_answer(user_id: UUID, test_type: str, was_correct: bool) -> Optional[dict]:
-    """답안 1건을 게임 레이어에 반영. /study/log 응답의 'combo' 키로 그대로 나간다.
+def on_study_answer(
+    user_id: UUID,
+    test_type: str,
+    was_correct: bool,
+    user_voca_id: Optional[int] = None,
+    memory_state_after: Optional[str] = None,
+) -> dict:
+    """답안 1건을 게임 레이어(콤보 + 농장)에 반영.
 
     Returns:
-        콤보 payload dict — 대상 모드가 아니면 None.
+        {'combo': <combo payload|None>, 'farm': <farm event|None>}
+        — /study/log 응답의 'combo' / 'farm' 키로 그대로 나간다.
     """
-    if test_type not in AI_RECOMMEND_TEST_TYPES:
-        return None
+    result = {'combo': None, 'farm': None}
 
-    from app.services.game.combo import apply_answer
-    return apply_answer(user_id, was_correct)
+    # 콤보 — AI 추천 테스트만
+    if test_type in AI_RECOMMEND_TEST_TYPES:
+        from app.services.game.combo import apply_answer
+        result['combo'] = apply_answer(user_id, was_correct)
+
+    # 농장 — 모든 모드 (당근 첫 도달 보석 등)
+    if user_voca_id is not None and memory_state_after is not None:
+        from app.services.game.farm import on_answer
+        result['farm'] = on_answer(user_id, user_voca_id, memory_state_after, bool(was_correct))
+
+    return result

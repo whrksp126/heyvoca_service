@@ -369,10 +369,13 @@ def post_study_log():
 
     # ── 게임 레이어 hook (콤보/농장) — 학습 커밋 이후 별도 트랜잭션 ──
     # 여기서의 실패는 학습 저장에 영향 없음. 게임 로직은 services/game/에만 둔다.
-    combo_payload = None
+    game_payload = {'combo': None, 'farm': None}
     try:
         from app.services.game.hooks import on_study_answer
-        combo_payload = on_study_answer(user_id, session_obj.test_type, bool(was_correct))
+        game_payload = on_study_answer(
+            user_id, session_obj.test_type, bool(was_correct),
+            user_voca_id=user_voca_id, memory_state_after=memory_state_after,
+        )
     except Exception:
         db.session.rollback()
         logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
@@ -386,7 +389,8 @@ def post_study_log():
                 'from': memory_state_before,
                 'to':   memory_state_after,
             },
-            'combo': combo_payload,
+            'combo': (game_payload or {}).get('combo'),
+            'farm':  (game_payload or {}).get('farm'),
         },
     }), 200
 
@@ -778,6 +782,16 @@ def get_recommend():
     except Exception as e:
         logging.getLogger(__name__).error('후보 풀 빌드 오류', exc_info=True)
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+    # ── 당근 농장: 죽은 단어는 AI 추천에서만 제외 (부활 전까지). 직접 학습·시험은 영향 없음. ──
+    # 게임 로직은 services/game/에만 두고, 실패해도 추천을 막지 않는다.
+    try:
+        from app.services.game.farm import dead_user_voca_ids
+        dead_ids = dead_user_voca_ids(user_id, [it.user_voca_id for it in pool])
+        if dead_ids:
+            pool = [it for it in pool if it.user_voca_id not in dead_ids]
+    except Exception:
+        logging.getLogger(__name__).warning('농장 죽은단어 필터 실패 (추천은 정상)', exc_info=True)
 
     # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
     if target_states:

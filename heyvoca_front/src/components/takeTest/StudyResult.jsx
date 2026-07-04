@@ -12,6 +12,7 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 import { vibrate } from '../../utils/osFunction';
 import { warmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
+import PlantIllustration from '../common/PlantIllustration';
 import SpeakerButton from '../common/SpeakerButton';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
@@ -258,6 +259,21 @@ const StudyResult = () => {
           }
         }
       } catch (e) { /* 콤보 요약 파싱 실패는 무시 */ }
+
+      // 당근 수확 슬라이드 (장기 암기 첫 도달) — 세션 중 수확 있었으면 표시
+      try {
+        const rawFarm = sessionStorage.getItem('heyvoca_farm_summary');
+        if (rawFarm) {
+          sessionStorage.removeItem('heyvoca_farm_summary');
+          const farmSummary = JSON.parse(rawFarm);
+          if ((farmSummary?.harvests?.length ?? 0) > 0) {
+            screens.push({
+              type: 'farmHarvest',
+              data: farmSummary,
+            });
+          }
+        }
+      } catch (e) { /* 농장 요약 파싱 실패는 무시 */ }
 
       // 2. 데일리 미션 달성 표현 페이지
       if (result.today_study_complete) {
@@ -779,6 +795,47 @@ const StudyResult = () => {
               <Trophy weight="fill" className='text-[16px] text-primary-main-600' />
               <span className='text-[13px] font-[700] text-layout-black dark:text-layout-white'>
                 최고 기록 갱신! {best}콤보
+              </span>
+            </motion.div>
+          )}
+        </div>
+      );
+    } else if (currentScreen.type === 'farmHarvest') {
+      // 당근 수확 (장기 암기 첫 도달)
+      const { harvests = [], gems = 0 } = currentScreen.data;
+      const count = harvests.length;
+      content = (
+        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+          <motion.div
+            initial={{ scale: 0, opacity: 0, rotate: -20 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0, y: [0, -8, 0] }}
+            transition={{
+              scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+              rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+              opacity: { duration: 0.6 },
+              y: { delay: 0.8, duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' },
+            }}
+          >
+            <PlantIllustration stage='carrot' wilt='fresh' size={100} />
+          </motion.div>
+          <motion.p
+            className='text-[16px] font-[700] text-center'
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <strong className='text-primary-main-600'>단어 {count}개</strong>가 당근으로 자랐어요!
+          </motion.p>
+          {gems > 0 && (
+            <motion.div
+              className='flex items-center gap-[6px] px-[14px] py-[8px] rounded-[50px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <img src={gemImg} alt='보석' className='w-[16px] h-[14px]' />
+              <span className='text-[13px] font-[700] text-layout-black dark:text-layout-white'>
+                수확 보상 보석 +{gems}개
               </span>
             </motion.div>
           )}

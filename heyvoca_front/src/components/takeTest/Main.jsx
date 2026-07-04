@@ -125,6 +125,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
   const isComboMode = testType === 'quick';
+  // ── 당근 농장 세션 요약 (당근 수확 이벤트 누적) ──
+  const farmSessionRef = useRef({ harvests: [], gems: 0 });
   // 마지막 enqueueRetry가 큐에 실제로 삽입했는지 여부 저장 (세션 종료 판정 보정용)
   const lastRetryEnqueuedRef = useRef(false);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -211,6 +213,23 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     } catch (e) { /* 저장 실패는 무시 */ }
   };
 
+  // /study/log 응답의 farm 이벤트 처리 — 당근 수확(장기 첫 도달) 누적 + 보석 갱신
+  const handleFarmPayload = (payload, word) => {
+    if (!payload || payload.type !== 'carrot_harvest') return;
+    const f = farmSessionRef.current;
+    f.harvests.push(word || '');
+    f.gems += payload.gem ?? 0;
+    if (typeof payload.gem_balance === 'number') {
+      setUserProfile((prev) => (prev ? { ...prev, gem_cnt: payload.gem_balance } : prev));
+    }
+    try {
+      sessionStorage.setItem('heyvoca_farm_summary', JSON.stringify({
+        harvests: f.harvests,
+        gems: f.gems,
+      }));
+    } catch (e) { /* 저장 실패 무시 */ }
+  };
+
   // /study/log 응답의 combo payload 처리 — 상태 갱신 + 위기 시 보호 팝업
   const handleComboPayload = async (payload) => {
     if (!payload) return;
@@ -265,6 +284,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        if (logRes?.data?.farm) handleFarmPayload(logRes.data.farm, question.origin);
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
             (q) => (q.vocaIndexId ?? q.id) === vocaId && !q.isRetry
@@ -696,6 +716,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             client_now: new Date().toISOString(),
           }).then(logRes => {
             if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+            if (logRes?.data?.farm) {
+              const w = Array.isArray(setWords) ? setWords.find(x => x.id === wordId) : null;
+              handleFarmPayload(logRes.data.farm, w?.origin);
+            }
             if (logRes?.data?.fsrs) {
               updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
               if (Array.isArray(setWords)) {
