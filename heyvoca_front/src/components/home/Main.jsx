@@ -42,6 +42,7 @@ const ACHIEVEMENT_IMAGES = {
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
   '암기왕': MemorizedKing,
+  '콤보왕': NoryeokKing, // TODO: 콤보왕 전용 캐릭터 에셋 나오면 교체
 };
 
 // 레벨별 배경 색상 및 스타일

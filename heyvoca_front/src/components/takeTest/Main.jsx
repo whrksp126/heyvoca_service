@@ -15,6 +15,10 @@ import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
 import { logStudyQuestion } from '../../api/study';
 import { getAdvanceDelay } from '../../utils/studyTiming';
+import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
+import ComboBar from './ComboBar';
+import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
+import { useUser } from '../../context/UserContext';
 
 
 // stability 기반 암기 상태 키 (FSRS)
@@ -113,6 +117,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
+  // ── 전역 콤보 (AI 추천 테스트 전용) ──
+  const { userProfile, setUserProfile } = useUser();
+  const [combo, setCombo] = useState(null);
+  const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
+  const comboPopupOpenRef = useRef(false);
+  const isComboMode = testType === 'quick';
   // 마지막 enqueueRetry가 큐에 실제로 삽입했는지 여부 저장 (세션 종료 판정 보정용)
   const lastRetryEnqueuedRef = useRef(false);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -177,6 +187,68 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return true;
   };
 
+  // ── 콤보: 학습 진입 시 현재 상태 로드 (AI 추천 테스트만) ──
+  useEffect(() => {
+    if (!isComboMode) return;
+    let mounted = true;
+    (async () => {
+      const res = await getComboApi();
+      if (mounted && res?.code === 200) setCombo(res.data);
+    })();
+    return () => { mounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isComboMode]);
+
+  // 콤보 세션 요약을 결과 화면(StudyResult)에 전달 (sessionStorage 경유)
+  const persistComboSummary = () => {
+    try {
+      sessionStorage.setItem('heyvoca_combo_summary', JSON.stringify({
+        sessionId: studySessionRef?.current ?? null,
+        ...comboSessionRef.current,
+      }));
+    } catch (e) { /* 저장 실패는 무시 */ }
+  };
+
+  // /study/log 응답의 combo payload 처리 — 상태 갱신 + 위기 시 보호 팝업
+  const handleComboPayload = async (payload) => {
+    if (!payload) return;
+    const s = comboSessionRef.current;
+    s.maxCombo = Math.max(s.maxCombo, payload.current ?? 0, payload.at_risk_combo ?? 0);
+    s.bestUpdated = s.bestUpdated || !!payload?.events?.best_updated;
+    s.best = payload.best ?? s.best;
+    persistComboSummary();
+    setCombo(payload);
+
+    if (payload.status !== 'AT_RISK' || comboPopupOpenRef.current) return;
+    comboPopupOpenRef.current = true;
+    try {
+      const choice = await pushAwaitNewBottomSheet(
+        ComboProtectNewBottomSheet,
+        {
+          atRiskCombo: payload.at_risk_combo,
+          protectCost: payload.protect_cost,
+          gemCnt: userProfile?.gem_cnt ?? 0,
+        },
+        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+      );
+      if (choice === 'protect') {
+        const res = await protectComboApi();
+        if (res?.code === 200) {
+          setCombo(res.data);
+          if (typeof res.data.gem_cnt === 'number' && setUserProfile) {
+            setUserProfile(prev => ({ ...prev, gem_cnt: res.data.gem_cnt }));
+          }
+          return;
+        }
+        // 보호 실패(보석 부족/네트워크) → 포기로 폴백
+      }
+      const res = await forfeitComboApi();
+      if (res?.code === 200) setCombo(res.data);
+    } finally {
+      comboPopupOpenRef.current = false;
+    }
+  };
+
   // 첫 시도 1회만 /study/log를 보내는 래퍼
   // isRetry=true인 재출제 문제는 로깅 스킵
   const logIfFirstAttempt = (question, payload) => {
@@ -190,6 +262,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     loggedVocaIdsRef.current.add(vocaId);
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
+        if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
             (q) => (q.vocaIndexId ?? q.id) === vocaId && !q.isRetry
@@ -616,6 +689,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
             client_now: new Date().toISOString(),
           }).then(logRes => {
+            if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
             if (logRes?.data?.fsrs) {
               updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
               if (Array.isArray(setWords)) {
@@ -744,6 +818,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         transition={optimizedTransition}
         style={{ willChange: 'transform, opacity' }}
       >
+        {isComboMode && <ComboBar combo={combo} />}
         <motion.div className="
           relative
           w-full h-[16px]
@@ -806,6 +881,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       transition={optimizedTransition}
       style={{ willChange: 'transform, opacity' }}
     >
+      {isComboMode && <ComboBar combo={combo} />}
       <motion.div className="
         relative
         w-full h-[16px]

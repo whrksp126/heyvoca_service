@@ -188,6 +188,7 @@ def create_app():
   from app.routes.voca_indexs import voca_indexs_bp
   from app.routes.voca_books import voca_books_bp
   from app.routes.study import study_bp
+  from app.routes.game import game_bp
   from app.routes.admin import admin_bp
   from app.routes.admin_voca_books import admin_voca_books_bp
   from app.routes import admin_dashboard  # noqa: F401  (admin_bp에 라우트 등록 — Blueprint 별도 없음. `import app.routes...`는 함수 내 지역변수 app(Flask)을 모듈로 가려 register_blueprint 깨짐)
@@ -207,6 +208,7 @@ def create_app():
   app.register_blueprint(voca_indexs_bp)
   app.register_blueprint(voca_books_bp)
   app.register_blueprint(study_bp)
+  app.register_blueprint(game_bp)
   app.register_blueprint(admin_bp)
   app.register_blueprint(admin_voca_books_bp)
 

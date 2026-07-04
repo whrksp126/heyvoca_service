@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Check, Star, Leaf, Plant, Carrot } from '@phosphor-icons/react';
+import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, Trophy } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -38,6 +38,7 @@ const ACHIEVEMENT_IMAGES = {
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
   '암기왕': MemorizedKing,
+  '콤보왕': NoryeokKing, // TODO: 콤보왕 전용 캐릭터 에셋 나오면 교체
 };
 
 // 레벨별 배경 색상 및 스타일
@@ -234,6 +235,21 @@ const StudyResult = () => {
           completedAt:     Date.now(),
         });
       }
+
+      // 콤보 슬라이드 (AI 추천 테스트 전용) — 세션 최고 콤보 5 이상이면 표시
+      try {
+        const rawCombo = sessionStorage.getItem('heyvoca_combo_summary');
+        if (rawCombo) {
+          sessionStorage.removeItem('heyvoca_combo_summary');
+          const comboSummary = JSON.parse(rawCombo);
+          if (testType === 'quick' && (comboSummary?.maxCombo ?? 0) >= 5) {
+            screens.push({
+              type: 'combo',
+              data: comboSummary,
+            });
+          }
+        }
+      } catch (e) { /* 콤보 요약 파싱 실패는 무시 */ }
 
       // 2. 데일리 미션 달성 표현 페이지
       if (result.today_study_complete) {
@@ -701,6 +717,48 @@ const StudyResult = () => {
           >
             <strong className='text-primary-main-600'>데일리 미션</strong>을 완료했어요!
           </motion.p>
+        </div>
+      );
+    } else if (currentScreen.type === 'combo') {
+      // 콤보 달성 (AI 추천 테스트)
+      const { maxCombo, best, bestUpdated } = currentScreen.data;
+      content = (
+        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+          <motion.div
+            className='flex items-center justify-center w-[100px] h-[100px] rounded-full bg-primary-main-100 dark:bg-layout-gray-dark'
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+              scale: [0, 1.2, 1, 1.1, 1],
+              opacity: 1,
+            }}
+            transition={{
+              scale: { type: "tween", ease: "easeOut", duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
+              opacity: { duration: 0.6 },
+            }}
+          >
+            <Flame weight="fill" className='text-[56px] text-primary-main-600' />
+          </motion.div>
+          <motion.p
+            className='text-[16px] font-[700]'
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <strong className='text-primary-main-600'>연속 정답 {maxCombo}콤보</strong>를 달성했어요!
+          </motion.p>
+          {bestUpdated && (
+            <motion.div
+              className='flex items-center gap-[6px] px-[14px] py-[8px] rounded-[50px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <Trophy weight="fill" className='text-[16px] text-primary-main-600' />
+              <span className='text-[13px] font-[700] text-layout-black dark:text-layout-white'>
+                최고 기록 갱신! {best}콤보
+              </span>
+            </motion.div>
+          )}
         </div>
       );
     } else if (currentScreen.type === 'achievement') {

@@ -510,6 +510,32 @@ class GemLog(db.Model):
 ### 보석 로그용 ###
 
 
+### 게임 레이어 (콤보) ###
+class UserCombo(db.Model):
+    """AI 추천 테스트 전역 연속 정답 콤보 (세션·날짜 경계 무관, 오답 시 리셋).
+
+    status:
+      ACTIVE  — 정상 적립 중
+      AT_RISK — 오답 직후 보호 팝업 대기 (at_risk_combo에 위기 직전 값 보존)
+    """
+    __tablename__ = 'user_combo'
+
+    user_id       = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    current_combo = Column(Integer, nullable=False, default=0)
+    best_combo    = Column(Integer, nullable=False, default=0)
+    status        = Column(String(8), nullable=False, default='ACTIVE')  # ACTIVE | AT_RISK
+    at_risk_combo = Column(Integer, nullable=True)   # 위기 직전 콤보 (보호 성공 시 복원값)
+    at_risk_at    = Column(DateTime, nullable=True)
+    updated_at    = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __init__(self, user_id):
+        self.user_id = user_id
+        self.current_combo = 0
+        self.best_combo = 0
+        self.status = 'ACTIVE'
+### 게임 레이어 (콤보) ###
+
+
 ### 재편성된 단어장 ###
 class AdminVocaBook(db.Model):
     __tablename__ = 'admin_voca_book'

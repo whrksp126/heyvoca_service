@@ -367,6 +367,16 @@ def post_study_log():
     except Exception:
         pass  # 캐시 무효화 실패는 비치명적
 
+    # ── 게임 레이어 hook (콤보/농장) — 학습 커밋 이후 별도 트랜잭션 ──
+    # 여기서의 실패는 학습 저장에 영향 없음. 게임 로직은 services/game/에만 둔다.
+    combo_payload = None
+    try:
+        from app.services.game.hooks import on_study_answer
+        combo_payload = on_study_answer(user_id, session_obj.test_type, bool(was_correct))
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
+
     return jsonify({
         'code': 200,
         'data': {
@@ -376,6 +386,7 @@ def post_study_log():
                 'from': memory_state_before,
                 'to':   memory_state_after,
             },
+            'combo': combo_payload,
         },
     }), 200
 
