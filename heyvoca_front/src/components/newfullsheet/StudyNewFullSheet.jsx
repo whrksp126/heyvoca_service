@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb, Lock } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -10,6 +10,7 @@ import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
+import { getUnlockStatusApi } from '../../api/study';
 
 const StudyNewFullSheet = () => {
   "use memo";
@@ -19,6 +20,26 @@ const StudyNewFullSheet = () => {
   const { popNewFullSheet, pushNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
+
+  // 온보딩 점진 해금 — study(반복듣기, 4회)·test(커스텀, 5회) 카드 게이팅
+  const [unlock, setUnlock] = useState(null);
+  const [lockToast, setLockToast] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    getUnlockStatusApi().then((res) => { if (alive && res?.code === 200) setUnlock(res.data); });
+    return () => { alive = false; };
+  }, []);
+  const CARD_LOCK_KEY = { study: 'listen', test: 'custom' };
+  const isCardLocked = (key) => {
+    const lk = CARD_LOCK_KEY[key];
+    if (!lk || !unlock || unlock.legacy) return false;
+    return unlock.unlocked?.[lk] === false;
+  };
+  const cardRemaining = (key) => {
+    const lk = CARD_LOCK_KEY[key];
+    if (!lk || !unlock) return 0;
+    return Math.max(0, (unlock.thresholds?.[lk] ?? 0) - (unlock.completed_sessions ?? 0));
+  };
 
   const startFreshQuickReview = async () => {
     const allWords = vocabularySheets.flatMap(sheet => sheet.words);
@@ -235,39 +256,63 @@ const StudyNewFullSheet = () => {
       </div>
 
       {/* Cards */}
-      <div className="flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
-        {cards.map((card) => (
-          <motion.button
-            key={card.key}
-            onClick={card.onClick}
-            className={`
-              flex items-center gap-[15px]
-              w-full
-              px-[15px] py-[40px]
-              rounded-[12px]
-              ${card.className || ''}
-            `}
-            style={(isDark ? (card.darkBorderStyle || card.borderStyle) : card.borderStyle) || {}}
-            whileTap={{ scale: 0.97 }}
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-          >
-            {card.icon}
-            <div className="flex flex-col gap-[6px] flex-1 items-start">
-              <span className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
-                {card.title}
-              </span>
-              <span className="text-[11px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 whitespace-pre-line text-left">
-                {card.desc}
-              </span>
-            </div>
-            <CaretRight
-              size={24}
-              weight="bold"
-              style={{ color: card.chevronColor, flexShrink: 0 }}
-            />
-          </motion.button>
-        ))}
+      <div className="relative flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
+        {/* 잠금 안내 토스트 */}
+        <AnimatePresence>
+          {lockToast && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              className="absolute top-[4px] left-1/2 -translate-x-1/2 z-[10] px-[14px] py-[8px] rounded-[20px] bg-layout-black/85 dark:bg-layout-white/90 whitespace-nowrap"
+            >
+              <span className="text-[12px] font-[600] text-layout-white dark:text-layout-black">{lockToast}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {cards.map((card) => {
+          const locked = isCardLocked(card.key);
+          return (
+            <motion.button
+              key={card.key}
+              onClick={() => {
+                if (locked) {
+                  vibrate({ duration: 5 });
+                  setLockToast(`${card.title}은 학습 ${cardRemaining(card.key)}회 더 하면 열려요`);
+                  setTimeout(() => setLockToast(null), 2000);
+                  return;
+                }
+                card.onClick();
+              }}
+              className={`
+                relative flex items-center gap-[15px]
+                w-full
+                px-[15px] py-[40px]
+                rounded-[12px]
+                ${card.className || ''}
+                ${locked ? 'opacity-50' : ''}
+              `}
+              style={(isDark ? (card.darkBorderStyle || card.borderStyle) : card.borderStyle) || {}}
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            >
+              {card.icon}
+              <div className="flex flex-col gap-[6px] flex-1 items-start">
+                <span className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
+                  {card.title}
+                </span>
+                <span className="text-[11px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 whitespace-pre-line text-left">
+                  {locked ? `학습 ${cardRemaining(card.key)}회 더 하면 열려요` : card.desc}
+                </span>
+              </div>
+              {locked ? (
+                <Lock size={22} weight="fill" style={{ color: 'var(--layout-gray-300)', flexShrink: 0 }} />
+              ) : (
+                <CaretRight size={24} weight="bold" style={{ color: card.chevronColor, flexShrink: 0 }} />
+              )}
+            </motion.button>
+          );
+        })}
       </div>
     </div>
   );

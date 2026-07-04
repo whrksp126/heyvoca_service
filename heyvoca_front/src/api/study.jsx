@@ -180,21 +180,21 @@ export const getReviewScheduleApi = async () => {
 
 // ─── 온보딩 API ─────────────────────────────────────────────────────────────
 
-// 게스트 맛보기 5문제 (비인증)
-export const getTrialWordsApi = async () => {
-  const url = `${backendUrl}/onboarding/trial-words`;
+// 레벨별 단어장(단어 포함) — 비인증, 맛보기 소스 (level: 1 초등 ~ 4 대학생)
+export const getLevelBookApi = async (level) => {
+  const url = `${backendUrl}/onboarding/level-book`;
   try {
-    return await fetchDataAsync(url, 'GET', {});
+    return await fetchDataAsync(url, 'GET', { level });
   } catch (error) {
-    console.error('getTrialWordsApi 오류:', error);
+    console.error('getLevelBookApi 오류:', error);
   }
 };
 
-// 가입 직후 맛본 기록 이전 (인증)
-export const migrateOnboardingApi = async ({ source_channel, learning_goal, username, answers }) => {
+// 가입 직후 맛본 기록 이전 (인증) — 레벨 단어장 생성 + 답안 반영 + 보상
+export const migrateOnboardingApi = async ({ level, source_channel, learning_goal, daily_new_limit, username, answers }) => {
   const url = `${backendUrl}/onboarding/migrate`;
   try {
-    return await fetchDataAsync(url, 'POST', { source_channel, learning_goal, username, answers });
+    return await fetchDataAsync(url, 'POST', { level, source_channel, learning_goal, daily_new_limit, username, answers });
   } catch (error) {
     console.error('migrateOnboardingApi 오류:', error);
   }

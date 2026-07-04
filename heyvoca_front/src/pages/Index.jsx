@@ -148,12 +148,19 @@ const Index = () => {
     if (!pending) return;
     migratedRef.current = true;
     migrateOnboardingApi({
+      level: pending.level,
       source_channel: pending.source_channel,
       learning_goal: pending.learning_goal,
+      daily_new_limit: pending.daily_new_limit,
       username: pending.username,
       answers: pending.answers,
     }).then((res) => {
-      if (res?.code === 200 || res?.code === 409) clearGuest();
+      if (res?.code === 200 || res?.code === 409) {
+        clearGuest();
+        // migrate가 서버에서 username·레벨·단어장을 세팅 → 로컬 userProfile은 아직 username=null이라
+        // 기본 네비게이트가 /initial-profile로 갈 수 있음. 온보딩 완료 사용자는 홈으로 직행.
+        if (res?.code === 200) navigate('/home', { replace: true });
+      }
     }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });
   }, [userProfile]);
 

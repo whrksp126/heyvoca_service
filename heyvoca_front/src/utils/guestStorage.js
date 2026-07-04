@@ -28,9 +28,10 @@ export function clearGuest() {
   } catch { /* 무시 */ }
 }
 
-// 온보딩 맛보기를 마쳤고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
+// 온보딩(레벨 선택 이상)을 진행했고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
+// 맛보기를 건너뛰어 answers가 비어도 레벨이 있으면 이전 대상(레벨 단어장 생성 + 설정).
 export function pendingGuestMigration() {
   const g = getGuest();
-  if (g && Array.isArray(g.answers) && g.answers.length > 0) return g;
+  if (g && g.level != null) return g;
   return null;
 }

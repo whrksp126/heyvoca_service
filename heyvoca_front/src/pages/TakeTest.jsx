@@ -313,7 +313,25 @@ const TakeTest = () => {
     }).catch(() => { /* 예측 실패 시 기존 낙관적 추정으로 폴백 */ });
   };
 
+  // 게스트 맛보기 모드 — 로컬 문제 배열로 실제 UI 재사용 (추천/세션/로깅 없음)
+  const isGuestMode = !!state?.guestMode;
+
   useEffect(() => {
+    if (!isGuestMode) return;
+    const gq = Array.isArray(state.guestQuestions) ? state.guestQuestions : [];
+    setTestQuestions(gq);
+    setProgressIndex(0);
+    studySessionRef.current = null;            // 세션 없음 → 로깅/finish 자동 스킵
+    loggedVocaIdsRef.current = new Set();
+    retryCountMapRef.current = new Map();
+    passedVocaIdsRef.current = new Set();
+    totalUniqueVocaCountRef.current = gq.length;
+    setIsTestQuestionsSetting(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGuestMode]);
+
+  useEffect(() => {
+    if (isGuestMode) return; // 게스트는 위 전용 이펙트에서 처리
     const initializeTest = async () => {
       if (isRecentStudyLoading || isVocabularySheetsLoading) return;
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
@@ -519,6 +537,20 @@ const TakeTest = () => {
   useEffect(() => {
     const handleUpdateAndNavigate = async () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
+        // 게스트 맛보기 종료 → 서버 동기화 없이 답안만 챙겨 온보딩 보상으로
+        if (isGuestMode) {
+          const seen = new Set();
+          const answers = [];
+          testQuestions.forEach((q) => {
+            if (q.isRetry) return;
+            const id = q.vocaIndexId ?? q.id;
+            if (id == null || seen.has(id)) return;
+            seen.add(id);
+            answers.push({ voca_id: id, correct: !!q.isCorrect });
+          });
+          navigate('/onboarding', { state: { step: 'reward', answers }, replace: true });
+          return;
+        }
         // 학습 세션 종료 (fire-and-forget)
         if (studySessionRef?.current) {
           finishStudySession(studySessionRef.current)
