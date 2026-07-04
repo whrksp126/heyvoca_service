@@ -475,6 +475,9 @@ class GemReason(enum.Enum):
     ADMIN_ADJUST  = "ADMIN_ADJUST"    # 관리자 조정
     REFUND        = "REFUND"          # 환불(보석 회수)
     REFERRAL      = "REFERRAL"        # 초대 보상
+    COMBO_PROTECT = "COMBO_PROTECT"   # 콤보 보호(보석 차감)
+    ITEM_PURCHASE = "ITEM_PURCHASE"   # 게임 아이템 구매(부활템 등)
+    FARM_REWARD   = "FARM_REWARD"     # 당근 농장 보상(2차 승급 등)
 
 
 class GemLog(db.Model):
