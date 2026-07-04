@@ -111,8 +111,8 @@ export const UserProvider = ({ children }) => {
     if (result.code != 200) return;
     setUserProfile(prevProfile => ({
       ...prevProfile,
-      level_id: level_id,
-      username: username,
+      ...(level_id !== undefined ? { level_id } : {}),
+      ...(username !== undefined ? { username } : {}),
     }));
   }, [userProfile]);
 

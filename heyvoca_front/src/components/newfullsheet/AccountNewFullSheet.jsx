@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CaretLeft, SignOut, Copy } from '@phosphor-icons/react';
+import { CaretLeft, SignOut, PencilSimple } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -8,6 +8,7 @@ import google from '../../assets/images/google_logo.png';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { LogoutNewBottomSheet } from '../newBottomSheet/LogoutNewBottomSheet';
 import { WithdrawNewBottomSheet } from '../newBottomSheet/WithdrawNewBottomSheet';
+import { NicknameEditNewBottomSheet } from '../newBottomSheet/NicknameEditNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import { withdrawApi } from '../../api/auth';
 import { setCookie } from '../../utils/common';
@@ -19,36 +20,26 @@ const AccountNewFullSheet = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { popNewFullSheet, clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
-  const { userProfile, setIsWithdrawInProgress } = useUser();
+  const { userProfile, setIsWithdrawInProgress, updateUserProfile } = useUser();
   const navigate = useNavigate();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
-  const [copied, setCopied] = useState(false);
 
-  const handleCopyInviteCode = async () => {
-    if (!userProfile?.invite_code) return;
-
-    try {
-      await navigator.clipboard.writeText(userProfile.invite_code);
-      setCopied(true);
-      showToast('초대 코드가 복사되었습니다.');
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('복사 실패:', error);
-      // fallback: 텍스트 영역 생성하여 복사
-      try {
-        const textArea = document.createElement('textarea');
-        textArea.value = userProfile.invite_code;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        setCopied(true);
-        showToast('초대 코드가 복사되었습니다.');
-        setTimeout(() => setCopied(false), 2000);
-      } catch (fallbackError) {
-        console.error('복사 fallback 실패:', fallbackError);
-        showToast('복사에 실패했습니다.');
+  const handleNicknameEdit = async () => {
+    const newNickname = await pushAwaitNewBottomSheet(
+      NicknameEditNewBottomSheet,
+      { initialNickname: userProfile?.username || '' },
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
       }
+    );
+    if (!newNickname || newNickname === userProfile?.username) return;
+    try {
+      await updateUserProfile({ username: newNickname });
+      showToast('닉네임이 변경되었습니다.');
+    } catch (error) {
+      console.error('닉네임 변경 실패:', error);
+      showToast('닉네임 변경에 실패했습니다.');
     }
   }
 
@@ -186,6 +177,18 @@ const AccountNewFullSheet = () => {
       {/* Content */}
       <div className="flex flex-col gap-[10px] bg-layout-gray-50 dark:bg-layout-black">
         <ul className="flex flex-col">
+          <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black"
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleNicknameEdit();
+            }}
+          >
+            <div className="flex flex-col items-start gap-[10px]">
+              <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">닉네임</h2>
+              <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">{userProfile?.username || "미설정"}</span>
+            </div>
+            <PencilSimple size={20} className="text-layout-gray-200 dark:text-layout-gray-200" />
+          </li>
           <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">
             <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">로그인 방식</h2>
             <div className="flex items-center gap-[5px]">
@@ -196,19 +199,6 @@ const AccountNewFullSheet = () => {
           <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">
             <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">계정 이메일</h2>
             <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">{userProfile?.email || "로그인 필요"}</span>
-          </li>
-          <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">
-            <div className="flex flex-col items-start gap-[10px]">
-              <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">초대 코드</h2>
-              <div className="flex items-center gap-[5px]" onClick={() => {
-                vibrate({ duration: 5 });
-                handleCopyInviteCode();
-              }}>
-                <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">{userProfile?.invite_code || "-"}</span>
-                <Copy size={14} className="text-primary-main-600 dark:text-primary-main-600" />
-
-              </div>
-            </div>
           </li>
         </ul>
         <li className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black"

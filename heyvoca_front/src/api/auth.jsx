@@ -66,6 +66,18 @@ export const updateUserInfoApi = async ({ username, level_id, daily_new_limit } 
   }
 }
 
+// 초대 기록 조회 API (내 초대 코드 + 초대한 사용자 목록)
+export const getInvitesApi = async () => {
+  const url = `${backendUrl}/auth/invites`;
+  const method = 'GET';
+  try {
+    const result = await fetchDataAsync(url, method, {});
+    return result;
+  } catch (error) {
+    console.error('getInvitesApi 오류:', error);
+  }
+}
+
 // 사용자 정보 조회 API
 export const getUserInfoApi = async () => {
   const url = `${backendUrl}/auth/get_user_info`;

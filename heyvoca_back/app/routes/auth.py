@@ -770,6 +770,69 @@ def save_invite_code():
         return jsonify({'code': 500, 'message': '보상 처리 중 서버 오류가 발생했습니다.'}), 500
 
 
+@auth_bp.route('/invites', methods=['GET'])
+@jwt_required
+def get_invites():
+    """내가 초대한 사용자 목록 + 보상 지급 이력 (마이페이지 초대하기 탭).
+
+    응답:
+      {
+        "code": 200,
+        "data": {
+          "invite_code": "ABC12",
+          "total": 2,
+          "invites": [
+            {"username": "...", "joined_at": "...", "reward": 10},
+            ...
+          ]
+        }
+      }
+    """
+    user_id = UUID(g.user_id)
+    user = db.session.query(User).filter(User.id == user_id).first()
+    if not user:
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+
+    rows = (
+        db.session.query(InviteMap, User)
+        .join(User, User.id == InviteMap.invitee_id)
+        .filter(InviteMap.inviter_id == user_id)
+        .order_by(InviteMap.created_at.desc())
+        .all()
+    )
+
+    # 초대 성공 보상 이력 (source_id = 피초대자 id)
+    reward_by_invitee = {}
+    reward_logs = (
+        db.session.query(GemLog)
+        .filter(
+            GemLog.user_id == user_id,
+            GemLog.reason == GemReason.REFERRAL,
+            GemLog.source_id.isnot(None),
+        )
+        .all()
+    )
+    for log in reward_logs:
+        reward_by_invitee[log.source_id] = reward_by_invitee.get(log.source_id, 0) + log.amount
+
+    invites = []
+    for invite_map, invitee in rows:
+        invites.append({
+            'username': invitee.username or invitee.name or '알 수 없음',
+            'joined_at': invite_map.created_at.isoformat() if invite_map.created_at else None,
+            'reward': reward_by_invitee.get(invitee.id, 0),
+        })
+
+    return jsonify({
+        'code': 200,
+        'data': {
+            'invite_code': user.invite_code,
+            'total': len(invites),
+            'invites': invites,
+        },
+    })
+
+
 ### (회원가입 시) 단어장 선택 레벨링
 @auth_bp.route('/level_book_list', methods=['GET'])
 def level_voca_list():
