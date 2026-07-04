@@ -188,6 +188,7 @@ def create_app():
   from app.routes.voca_indexs import voca_indexs_bp
   from app.routes.voca_books import voca_books_bp
   from app.routes.study import study_bp
+  from app.routes.study_insights import insights_bp
   from app.routes.game import game_bp
   from app.routes.admin import admin_bp
   from app.routes.admin_voca_books import admin_voca_books_bp
@@ -208,6 +209,7 @@ def create_app():
   app.register_blueprint(voca_indexs_bp)
   app.register_blueprint(voca_books_bp)
   app.register_blueprint(study_bp)
+  app.register_blueprint(insights_bp)
   app.register_blueprint(game_bp)
   app.register_blueprint(admin_bp)
   app.register_blueprint(admin_voca_books_bp)

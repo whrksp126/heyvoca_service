@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SpeakerHigh, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
+import { SpeakerHigh, EggCrack, Leaf, Plant, Carrot, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
 import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
@@ -19,6 +19,8 @@ const stateColorMap = {
   plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
   carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
 };
+
+const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -120,12 +122,17 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     next.setDate(next.getDate() + daysAhead);
     const optimisticNextReview = next.toISOString();
 
+    // 결과 화면 '암기 상태 변화' 리스트용 — word 객체에 직접 기록 (StudyResult가 flatten해서 읽음)
+    word.prevMemoryStateKey = word.prevMemoryStateKey ?? prevKey;
+    word.nextMemoryStateKey = newKey;
+
     setWordResolvedStates(prev => ({
       ...prev,
       [word.id]: {
         prevKey,
         newKey,
         to: stateNameMap[newKey] ?? newKey,
+        dir: (STATE_RANK[newKey] ?? 0) > (STATE_RANK[prevKey] ?? 0) ? 'up' : 'down',
         nextReview: optimisticNextReview,
         changed: prevKey !== newKey,
         isCorrect: isMatch,
@@ -291,25 +298,22 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                     {resolved.changed ? (
                       <motion.div
                         className={`
-                          flex items-center gap-[3px]
+                          flex items-center gap-[2px]
                           py-[2px] px-[6px]
                           border rounded-[50px]
-                          text-[9px] font-[600]
-                          overflow-hidden whitespace-nowrap
-                          ${colors.border} ${colors.text} ${colors.bg}
+                          whitespace-nowrap
+                          ${resolved.dir === 'up'
+                            ? `${colors.border} ${colors.text} ${colors.bg}`
+                            : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'}
                         `}
-                        initial={{ maxWidth: 20 }}
-                        animate={{ maxWidth: 200 }}
-                        transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                       >
+                        {resolved.dir === 'up'
+                          ? <ArrowUpRight size={9} weight="bold" />
+                          : <ArrowDownRight size={9} weight="bold" />}
                         <span className="flex-shrink-0">{stateIconMap[resolved.newKey]}</span>
-                        <motion.span
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2, duration: 0.25 }}
-                        >
-                          {resolved.to}로 변경!
-                        </motion.span>
                       </motion.div>
                     ) : (
                       <motion.div

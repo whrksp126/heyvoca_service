@@ -178,6 +178,32 @@ export const getReviewScheduleApi = async () => {
   }
 };
 
+// ─── 암기 인사이트 API ──────────────────────────────────────────────────────
+
+// 단어별 기억 인사이트 (단어 상세 '나의 기억' 섹션)
+// GET /insights/word/<user_voca_id>
+// 응답: { code:200, data:{ memory, recent_results, streak, next_stage, timeline, total_count } }
+export const getWordInsightsApi = async (userVocaId) => {
+  const url = `${backendUrl}/insights/word/${userVocaId}`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getWordInsightsApi 오류:', error);
+  }
+};
+
+// 오늘의 기억 변화 (홈 위젯)
+// GET /insights/today-changes
+// 응답: { code:200, data:{ promoted, new, counts:{ promoted, new, by_state } } }
+export const getTodayMemoryChangesApi = async () => {
+  const url = `${backendUrl}/insights/today-changes`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getTodayMemoryChangesApi 오류:', error);
+  }
+};
+
 // ─── 추천 API ───────────────────────────────────────────────────────────────
 // GET /study/recommend — 단어 추천 (세션 구성 + session_id 동시 반환)
 // 응답: { code: 200, data: { session_id, composition, items } }

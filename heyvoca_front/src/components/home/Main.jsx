@@ -6,7 +6,7 @@ import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Heart, CheckCircle, CircleDashed } from '@phosphor-icons/react';
+import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 
 // import { useFullSheet } from '../../context/FullSheetContext';
@@ -20,7 +20,7 @@ import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
-import { getTodaySummary, getReviewScheduleApi } from '../../api/study';
+import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../../api/study';
 
 
 // import StoreSheet from './StoreSheet';
@@ -33,6 +33,14 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOverlayActions } from '../../context/OverlayContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
+import TodayMemoryChangesNewBottomSheet from '../newBottomSheet/TodayMemoryChangesNewBottomSheet';
+
+// 오늘의 기억 변화 — 상태별 칩 아이콘 (백엔드 키: short/medium/long)
+const MEMORY_STATE_CHIPS = [
+  { key: 'long',   Icon: Carrot, color: '#F68300' },
+  { key: 'medium', Icon: Plant,  color: '#38CE38' },
+  { key: 'short',  Icon: Leaf,   color: '#77CE4F' },
+];
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {
@@ -113,6 +121,8 @@ const Main = () => {
   const [todayNewWords, setTodayNewWords] = useState(0);
   // 백엔드 KST+새벽4시 컷오프 기준 reviewDue (null이면 클라이언트 계산값 폴백)
   const [backendReviewDue, setBackendReviewDue] = useState(null);
+  // 오늘의 기억 변화 (승급/신규) — 변화 0개면 카드 숨김
+  const [todayChanges, setTodayChanges] = useState(null);
 
   // memoryStats를 백엔드 reviewDue로 오버라이드 (KST+4시 기준 일치)
   const effectiveStats = backendReviewDue !== null
@@ -188,8 +198,25 @@ const Main = () => {
         }
       }
     });
+    getTodayMemoryChangesApi().then(res => {
+      if (alive && res?.code === 200) {
+        setTodayChanges(res.data);
+      }
+    });
     return () => { alive = false; };
   }, [lastSessionResult?.completedAt]);
+
+  const todayChangeTotal =
+    (todayChanges?.counts?.promoted ?? 0) + (todayChanges?.counts?.new ?? 0);
+
+  const handleTodayChangesClick = () => {
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(
+      TodayMemoryChangesNewBottomSheet,
+      { changes: todayChanges },
+      { isBackdropClickClosable: true }
+    );
+  };
 
   // React Compiler가 자동으로 useCallback 처리
   const handleStoreButtonClick = () => {
@@ -353,6 +380,48 @@ const Main = () => {
               </div>
             </div>
           </div>
+
+          {/* 오늘의 기억 변화 — 승급/신규 있는 날만 표시 (승인된 프로토타입 A안) */}
+          {todayChangeTotal > 0 && (
+            <div
+              className="
+                flex flex-col gap-[12px]
+                px-[15px] py-[12px]
+                rounded-[12px]
+                bg-layout-gray-50 dark:bg-layout-gray-dark
+                cursor-pointer
+              "
+              onClick={handleTodayChangesClick}
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">오늘의 기억 변화</h2>
+                <span className="flex items-center gap-[2px] text-[12px] font-[500] text-layout-gray-300">
+                  더보기
+                  <CaretRight size={11} weight="bold" />
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-[5px]">
+                  <TrendUp size={16} weight="bold" className="text-primary-main-600" />
+                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">
+                    승급 {todayChanges?.counts?.promoted ?? 0} · 신규 {todayChanges?.counts?.new ?? 0}
+                  </span>
+                </div>
+                <div className="flex items-center gap-[8px]">
+                  {MEMORY_STATE_CHIPS.map(({ key, Icon, color }) => {
+                    const cnt = todayChanges?.counts?.by_state?.[key] ?? 0;
+                    if (cnt === 0) return null;
+                    return (
+                      <span key={key} className="flex items-center gap-[3px]">
+                        <Icon size={14} weight="fill" color={color} />
+                        <span className="text-[12px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{cnt}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div
             className="

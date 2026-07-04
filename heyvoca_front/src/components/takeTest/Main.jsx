@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Circle, X, BookOpenText, Leaf, Plant, Carrot, EggCrack, SpeakerHigh } from "@phosphor-icons/react";
+import { Circle, X, BookOpenText, Leaf, Plant, Carrot, EggCrack, SpeakerHigh, ArrowUpRight, ArrowDownRight } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -29,7 +29,9 @@ const getMemoryStateKeyByStability = (stability, state) => {
   return 'carrot';
 };
 
-const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+// 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
+const backendStateKeyMap = { unlearned: 'unlearned', short: 'leaf', medium: 'plant', long: 'carrot' };
+const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -269,16 +271,20 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           );
           if (idx !== -1) {
             testQuestions[idx].fsrs = logRes.data.fsrs;
+            // 결과 화면 '암기 상태 변화' 리스트용 — 백엔드 확정값으로 기록
+            testQuestions[idx].nextMemoryStateKey = getMemoryStateKeyByStability(
+              logRes.data.fsrs.stability ?? 0,
+              logRes.data.fsrs.state
+            );
             setTestQuestions([...testQuestions]);
           }
           if (logRes.data.memory_state_change) {
-            const fromKey = logRes.data.memory_state_change.from;
-            const toKey = logRes.data.memory_state_change.to;
+            const fromKey = backendStateKeyMap[logRes.data.memory_state_change.from] ?? logRes.data.memory_state_change.from;
+            const toKey = backendStateKeyMap[logRes.data.memory_state_change.to] ?? logRes.data.memory_state_change.to;
             if (fromKey && toKey && fromKey !== toKey) {
               setMemoryStateChange({
-                from: stateNameMap[fromKey] ?? fromKey,
-                to: stateNameMap[toKey] ?? toKey,
-                stateKey: toKey,
+                toKey,
+                dir: (STATE_RANK[toKey] ?? 0) > (STATE_RANK[fromKey] ?? 0) ? 'up' : 'down',
               });
             }
           } else {
@@ -286,9 +292,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             const newStateKey = getMemoryStateKeyByStability(stability, logRes.data.fsrs.state);
             if (prevMemoryState && prevMemoryState !== newStateKey) {
               setMemoryStateChange({
-                from: stateNameMap[prevMemoryState],
-                to: stateNameMap[newStateKey],
-                stateKey: newStateKey,
+                toKey: newStateKey,
+                dir: (STATE_RANK[newStateKey] ?? 0) > (STATE_RANK[prevMemoryState] ?? 0) ? 'up' : 'down',
               });
             }
           }
@@ -410,11 +415,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const dispStability = predicted?.stability ?? optimistic.stability;
     const dispState = predicted?.state ?? optimistic.state;
     const newStateKey = getMemoryStateKeyByStability(dispStability, dispState);
+    // 결과 화면 '암기 상태 변화' 리스트용 낙관값 — 백엔드 응답 도착 시 확정값으로 덮임
+    q.nextMemoryStateKey = newStateKey;
     if (prevMemoryState && prevMemoryState !== newStateKey) {
       setMemoryStateChange({
-        from: stateNameMap[prevMemoryState] ?? prevMemoryState,
-        to: stateNameMap[newStateKey] ?? newStateKey,
-        stateKey: newStateKey,
+        toKey: newStateKey,
+        dir: (STATE_RANK[newStateKey] ?? 0) > (STATE_RANK[prevMemoryState] ?? 0) ? 'up' : 'down',
       });
     }
   }
@@ -968,25 +974,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           flex items-center gap-[3px]
                           py-[3px] px-[8px]
                           border rounded-[50px]
-                          text-[10px] font-[600]
-                          overflow-hidden
                           whitespace-nowrap
-                          ${stateColorMap[memoryStateChange.stateKey]?.border ?? 'border-[#38CE38]'}
-                          ${stateColorMap[memoryStateChange.stateKey]?.text ?? 'text-[#38CE38]'}
-                          ${stateColorMap[memoryStateChange.stateKey]?.bg ?? 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20'}
+                          ${memoryStateChange.dir === 'up'
+                            ? `${stateColorMap[memoryStateChange.toKey]?.border ?? 'border-[#38CE38]'}
+                               ${stateColorMap[memoryStateChange.toKey]?.text ?? 'text-[#38CE38]'}
+                               ${stateColorMap[memoryStateChange.toKey]?.bg ?? 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20'}`
+                            : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'}
                         `}
-                        initial={{ maxWidth: 28 }}
-                        animate={{ maxWidth: 300 }}
-                        transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                       >
-                        <span className="flex-shrink-0">{stateIconMap[memoryStateChange.stateKey]}</span>
-                        <motion.span
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2, duration: 0.25 }}
-                        >
-                          암기 상태가 {memoryStateChange.to}로 변경되었어요!
-                        </motion.span>
+                        {memoryStateChange.dir === 'up'
+                          ? <ArrowUpRight size={10} weight="bold" />
+                          : <ArrowDownRight size={10} weight="bold" />}
+                        <span className="flex-shrink-0">{stateIconMap[memoryStateChange.toKey]}</span>
                       </motion.div>
                     ) : (
                       (() => {

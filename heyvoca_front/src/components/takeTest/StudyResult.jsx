@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, Trophy } from '@phosphor-icons/react';
+import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, Trophy, EggCrack, ArrowRight } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -216,10 +216,18 @@ const StudyResult = () => {
         acc[q.nextMemoryStateKey] = (acc[q.nextMemoryStateKey] || 0) + 1;
         return acc;
       }, {});
-      if (improvedWords.length > 0) {
+      // 단어별 변화 리스트 — 재출제로 같은 단어가 중복되면 마지막 결과만 유지
+      const improvedMap = new Map();
+      improvedWords.forEach(q => improvedMap.set(q.vocaIndexId ?? q.id, q));
+      const improvedList = [...improvedMap.values()].map(q => ({
+        origin: q.origin,
+        from: q.prevMemoryStateKey,
+        to: q.nextMemoryStateKey,
+      }));
+      if (improvedList.length > 0) {
         screens.push({
           type: 'memoryImproved',
-          data: { totalCnt: improvedWords.length, byState }
+          data: { totalCnt: improvedList.length, byState, words: improvedList }
         });
       }
 
@@ -624,41 +632,30 @@ const StudyResult = () => {
         </div>
       );
     } else if (currentScreen.type === 'memoryImproved') {
-      // 이번 학습으로 암기 상태가 좋아진 단어 — 가장 높이 도달한 상태 1개 아이콘으로 표시
+      // 이번 학습으로 암기 상태가 좋아진 단어 — 단어별 이전 → 이후 변화 리스트 (승인된 프로토타입 B안)
       const STATE_INFO = {
-        leaf:   { Icon: Leaf,   bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20', border: 'border-[#77CE4F]', color: '#77CE4F' },
-        plant:  { Icon: Plant,  bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20', border: 'border-[#38CE38]', color: '#38CE38' },
-        carrot: { Icon: Carrot, bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20', border: 'border-[#F68300]', color: '#F68300' },
+        unlearned: { Icon: EggCrack, color: '#9D835A' },
+        leaf:      { Icon: Leaf,     color: '#77CE4F' },
+        plant:     { Icon: Plant,    color: '#38CE38' },
+        carrot:    { Icon: Carrot,   color: '#F68300' },
       };
       const topState = ['carrot', 'plant', 'leaf']
         .find(k => (currentScreen.data.byState?.[k] || 0) > 0) || 'leaf';
-      const { Icon: TopIcon, bg: topBg, border: topBorder, color: topColor } = STATE_INFO[topState];
+      const { Icon: TopIcon, color: topColor } = STATE_INFO[topState];
 
       content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+        <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
           <motion.div
-            className={`flex items-center justify-center w-[100px] h-[100px] rounded-full border-[3px] ${topBg} ${topBorder}`}
+            className='flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
             initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              rotate: 0,
-              y: [0, -10, 0]
-            }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{
               scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
               rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
               opacity: { duration: 0.6 },
-              y: {
-                delay: 0.8,
-                duration: 2,
-                repeat: Infinity,
-                repeatType: 'reverse',
-                ease: 'easeInOut'
-              }
             }}
           >
-            <TopIcon size={56} weight="fill" color={topColor} />
+            <TopIcon size={44} weight="fill" color={topColor} />
           </motion.div>
           <motion.p
             className='text-[16px] font-[700]'
@@ -671,6 +668,32 @@ const StudyResult = () => {
           >
             <strong className='text-primary-main-600'>{currentScreen.data.totalCnt}개</strong>의 단어 암기 상태가 상승했어요!
           </motion.p>
+          <motion.div
+            className='flex flex-col w-full max-w-[300px] max-h-[240px] overflow-y-auto gap-[8px]'
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+          >
+            {(currentScreen.data.words ?? []).map((w, i) => {
+              const FromInfo = STATE_INFO[w.from] ?? STATE_INFO.unlearned;
+              const ToInfo = STATE_INFO[w.to] ?? STATE_INFO.leaf;
+              return (
+                <div
+                  key={`${w.origin}-${i}`}
+                  className='flex items-center justify-between py-[10px] px-[14px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+                >
+                  <span className='text-[14px] font-[700] text-layout-black dark:text-layout-white truncate'>
+                    {w.origin}
+                  </span>
+                  <span className='flex items-center gap-[6px] flex-shrink-0 ml-[10px]'>
+                    <FromInfo.Icon size={14} weight='fill' color={FromInfo.color} />
+                    <ArrowRight size={12} weight='bold' className='text-layout-gray-300' />
+                    <ToInfo.Icon size={16} weight='fill' color={ToInfo.color} />
+                  </span>
+                </div>
+              );
+            })}
+          </motion.div>
         </div>
       );
     } else if (currentScreen.type === 'dailyMission') {

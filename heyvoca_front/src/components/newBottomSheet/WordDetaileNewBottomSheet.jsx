@@ -4,6 +4,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { stripHtmlTags } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
+import WordMemorySection from '../common/WordMemorySection';
 import SpeakerButton from '../common/SpeakerButton';
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
@@ -112,6 +113,8 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             </span>
             <SpeakerButton text={word.meanings.join(", ")} lang="ko" label="의미 듣기" />
           </div>
+          {/* 나의 기억 — 최근 결과 + 승급 진행 + 학습 기록 (기록 없으면 미표시) */}
+          <WordMemorySection userVocaId={word.vocaIndexId ?? id} />
           {
             word.examples?.map((example, index) => {
               const originText = stripHtmlTags(example.origin || '').trim();

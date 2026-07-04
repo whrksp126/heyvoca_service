@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
+import { Circle, X, Leaf, Plant, Carrot, EggCrack, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getAdvanceDelay } from '../../../utils/studyTiming';
@@ -20,6 +20,8 @@ const stateColorMap = {
 };
 
 const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
+
+const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 
 const renderHighlightedText = (html) => {
   if (!html) return null;
@@ -107,18 +109,18 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
     question.displayNextReview = displayReview;
     setNextReviewDate(displayReview);
 
-    // 낙관적 암기상태 변경 알림 — 미학습이었으면 즉시 "단기 암기로 변경되었어요!" 표시
+    // 낙관적 암기상태 변경 알림 — 승급/강등을 화살표 배지로 즉시 표시
     {
       const prevKey = prevStateKeyRef.current;
       const optimisticStability = correct ? 3.13 : 0.5;
       const optimisticState = 'learning';
       const newKey = getMemoryStateKeyByStability(optimisticStability, optimisticState);
+      // 결과 화면 '암기 상태 변화' 리스트용 낙관값 — 백엔드 응답 도착 시 확정값으로 덮임
+      question.nextMemoryStateKey = newKey;
       if (prevKey && prevKey !== newKey) {
-        const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
         setMemoryStateChange({
-          from: stateNameMap[prevKey] ?? prevKey,
-          to: stateNameMap[newKey] ?? newKey,
-          stateKey: newKey,
+          toKey: newKey,
+          dir: (STATE_RANK[newKey] ?? 0) > (STATE_RANK[prevKey] ?? 0) ? 'up' : 'down',
         });
       }
     }
@@ -201,15 +203,19 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
           <div className="absolute top-[12px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2] whitespace-nowrap">
             {memoryStateChange ? (
               <motion.div
-                className={`flex items-center gap-[3px] py-[3px] px-[8px] border rounded-[50px] text-[10px] font-[600] overflow-hidden whitespace-nowrap ${stateColorMap[memoryStateChange.stateKey]?.border} ${stateColorMap[memoryStateChange.stateKey]?.text} ${stateColorMap[memoryStateChange.stateKey]?.bg}`}
-                initial={{ maxWidth: 28 }}
-                animate={{ maxWidth: 300 }}
-                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                className={`flex items-center gap-[3px] py-[3px] px-[8px] border rounded-[50px] whitespace-nowrap ${
+                  memoryStateChange.dir === 'up'
+                    ? `${stateColorMap[memoryStateChange.toKey]?.border} ${stateColorMap[memoryStateChange.toKey]?.text} ${stateColorMap[memoryStateChange.toKey]?.bg}`
+                    : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'
+                }`}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
               >
-                <span className="flex-shrink-0">{stateIconMap[memoryStateChange.stateKey]}</span>
-                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 0.25 }}>
-                  암기 상태가 {memoryStateChange.to}로 변경되었어요!
-                </motion.span>
+                {memoryStateChange.dir === 'up'
+                  ? <ArrowUpRight size={10} weight="bold" />
+                  : <ArrowDownRight size={10} weight="bold" />}
+                <span className="flex-shrink-0">{stateIconMap[memoryStateChange.toKey]}</span>
               </motion.div>
             ) : (
               (() => {
