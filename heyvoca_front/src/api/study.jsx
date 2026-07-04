@@ -178,6 +178,38 @@ export const getReviewScheduleApi = async () => {
   }
 };
 
+// ─── 온보딩 API ─────────────────────────────────────────────────────────────
+
+// 게스트 맛보기 5문제 (비인증)
+export const getTrialWordsApi = async () => {
+  const url = `${backendUrl}/onboarding/trial-words`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getTrialWordsApi 오류:', error);
+  }
+};
+
+// 가입 직후 맛본 기록 이전 (인증)
+export const migrateOnboardingApi = async ({ source_channel, learning_goal, username, answers }) => {
+  const url = `${backendUrl}/onboarding/migrate`;
+  try {
+    return await fetchDataAsync(url, 'POST', { source_channel, learning_goal, username, answers });
+  } catch (error) {
+    console.error('migrateOnboardingApi 오류:', error);
+  }
+};
+
+// 기능 해금 상태 (인증)
+export const getUnlockStatusApi = async () => {
+  const url = `${backendUrl}/onboarding/unlock-status`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getUnlockStatusApi 오류:', error);
+  }
+};
+
 // ─── 암기 인사이트 API ──────────────────────────────────────────────────────
 
 // 단어별 기억 인사이트 (단어 상세 '나의 기억' 섹션)

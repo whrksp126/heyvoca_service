@@ -1,8 +1,10 @@
 // src/pages/Index.jsx
 // 앱 초기 진입 스플래시 — 전체 초기 데이터 로딩 완료 후 홈으로 진입
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import { migrateOnboardingApi } from '../api/study';
+import { pendingGuestMigration, clearGuest } from '../utils/guestStorage';
 import { useVocabulary } from '../context/VocabularyContext';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
@@ -117,10 +119,12 @@ const Index = () => {
   const doneCount = steps.filter(s => s.done).length;
   const totalSteps = steps.length;
 
-  // 비로그인이면 즉시 /login 이동 (데이터 대기 불필요)
+  // 비로그인이면 온보딩으로 (온보딩 안에 '이미 계정 있어요' → /login 경로 있음)
+  // 단, 게스트 온보딩을 마치고 로그인하러 온 경우(pending)만 곧장 /login으로 보낼 필요 없음 —
+  // 온보딩이 navigate('/login')로 직접 보내므로 여기선 항상 /onboarding.
   useEffect(() => {
     if (isLoginChecked && !isLogin) {
-      navigate('/login');
+      navigate('/onboarding');
     }
   }, [isLoginChecked, isLogin, navigate]);
 
@@ -133,6 +137,25 @@ const Index = () => {
     const timer = setTimeout(() => setGraceDone(true), GRACE_DELAY);
     return () => clearTimeout(timer);
   }, [dataReady]);
+
+  // 게스트 온보딩 이전 — 로그인 후 프로필 로드 시 1회, pending 게스트 데이터를 서버로 이전.
+  // 멱등(서버 409) + fire-and-forget이라 네비게이트를 막지 않음.
+  const migratedRef = useRef(false);
+  useEffect(() => {
+    if (migratedRef.current) return;
+    if (!userProfile || !userProfile.id) return;
+    const pending = pendingGuestMigration();
+    if (!pending) return;
+    migratedRef.current = true;
+    migrateOnboardingApi({
+      source_channel: pending.source_channel,
+      learning_goal: pending.learning_goal,
+      username: pending.username,
+      answers: pending.answers,
+    }).then((res) => {
+      if (res?.code === 200 || res?.code === 409) clearGuest();
+    }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });
+  }, [userProfile]);
 
   // graceDone + 최소 노출시간 경과 후 실제 네비게이트
   // minTimeElapsed: 로그인 사용자의 스플래시가 최소 800ms는 보이도록 보장

@@ -84,6 +84,11 @@ class User(db.Model):
     daily_new_limit = Column(Integer, nullable=False, default=20, server_default='20')
     # 당근 농장 부활템 보유 수 (죽은 단어 1개 부활 = 1개 소모). 보석 1개=5개 구매.
     revive_item_cnt = Column(Integer, nullable=False, default=0, server_default='0')
+    # 온보딩 — 유입 경로 / 학습 목표 (맞춤 설정 수집값)
+    source_channel = Column(String(50), nullable=True, default=None)
+    learning_goal  = Column(String(50), nullable=True, default=None)
+    # 온보딩 버전: NULL=기존 사용자(전 기능 해금), '1'=신규(세션 수 기반 점진 해금)
+    onboarding_ver = Column(String(20), nullable=True, default=None)
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,

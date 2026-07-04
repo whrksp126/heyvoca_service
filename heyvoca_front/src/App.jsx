@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Onboarding from './pages/Onboarding';
 import InitialProfile from './pages/InitialProfile';
 import VocabularySheets from './pages/VocabularySheets';
 import BookStore from './pages/BookStore';
@@ -40,6 +41,7 @@ const AppLayout = () => {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/initial-profile" element={<InitialProfile />} />
 
       <Route path="/home" element={<Home />} />
