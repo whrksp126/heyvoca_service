@@ -28,6 +28,20 @@ export function clearGuest() {
   } catch { /* 무시 */ }
 }
 
+// 맛보기(게스트 takeTest) 문제 배열 — 기기 WebView에서 router location.state가 유실돼도
+// 맛보기가 게스트 모드로 뜨도록 localStorage에 별도 보관(진입 직전 저장, 완료 시 clear).
+const TRIAL_KEY = 'heyvoca_guest_trial_v1';
+
+export function setGuestTrial(questions) {
+  try { localStorage.setItem(TRIAL_KEY, JSON.stringify(Array.isArray(questions) ? questions : [])); } catch { /* 무시 */ }
+}
+export function getGuestTrial() {
+  try { return JSON.parse(localStorage.getItem(TRIAL_KEY) || 'null'); } catch { return null; }
+}
+export function clearGuestTrial() {
+  try { localStorage.removeItem(TRIAL_KEY); } catch { /* 무시 */ }
+}
+
 // 온보딩(레벨 선택 이상)을 진행했고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
 // 맛보기를 건너뛰어 answers가 비어도 레벨이 있으면 이전 대상(레벨 단어장 생성 + 설정).
 export function pendingGuestMigration() {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
@@ -14,6 +14,9 @@ const Login = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
+  const location = useLocation();
+  // 온보딩(회원가입) 흐름을 거쳐 도달한 로그인 페이지에서는 회원가입 버튼을 숨긴다.
+  const fromOnboarding = !!location.state?.fromOnboarding;
   const { auth, Login, AppleLogin, clickGoogleOauth, clickAppleOauth } = useUser();
 
   const platform = getDevicePlatform();
@@ -159,21 +162,32 @@ const Login = () => {
         id="lottie-container"
         className="w-[240px] absolute top-[150px] left-1/2 transform -translate-x-1/2"
       ></div>
-      <div className="absolute bottom-[100px] w-[300px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+      <div className="absolute bottom-[90px] w-[320px] left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-[12px]">
         <button
-          className="flex items-center justify-center w-full bg-layout-white border border-layout-gray-200 rounded-md py-[13.5px] px-5 text-black text-[15px] font-medium gap-2"
+          className="flex items-center justify-center w-full h-[56px] bg-layout-white border border-layout-gray-200 rounded-[12px] px-5 text-black text-[17px] font-[600] gap-[10px] shadow-sm"
           onClick={clickGoogleOauth}
         >
-          <img src={googleLogo} alt="Google Logo" className="h-[18px]" />
-          <span>Google 로그인</span>
+          <img src={googleLogo} alt="Google Logo" className="h-[24px]" />
+          <span>Google로 로그인</span>
         </button>
         {!isAndroid && (
           <button
-            className="flex items-center justify-center w-full bg-black border border-black rounded-md py-[13.5px] px-5 text-layout-white text-[15px] font-medium gap-2"
+            className="flex items-center justify-center w-full h-[56px] bg-black border border-black rounded-[12px] px-5 text-layout-white text-[17px] font-[600] gap-[10px] shadow-sm"
             onClick={clickAppleOauth}
           >
-            <AppleLogo size={20} weight="fill" color="#FFFFFF" />
+            <AppleLogo size={24} weight="fill" color="#FFFFFF" />
             <span>Apple로 로그인</span>
+          </button>
+        )}
+
+        {/* 온보딩(회원가입)을 거쳐 온 경우가 아니면, 계정이 없을 때 회원가입(온보딩)으로 유도 */}
+        {!fromOnboarding && (
+          <button
+            type="button"
+            onClick={() => navigate('/onboarding')}
+            className="mt-[6px] text-[13px] font-[500] text-layout-gray-400 dark:text-layout-gray-200 underline"
+          >
+            아직 계정이 없으신가요? · 회원가입
           </button>
         )}
 

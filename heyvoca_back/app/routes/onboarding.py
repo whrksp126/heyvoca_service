@@ -31,6 +31,14 @@ SIGNUP_REWARD_GEM = 5
 LEVEL_ADMIN_BOOK = {'1': 10, '2': 11, '3': 12, '4': 13}
 DEFAULT_DAILY_LIMIT = 10
 
+# 레벨별 카드 표시 메타 (카테고리 라벨 + 서점 카드 색상 family 토큰)
+LEVEL_META = {
+    '1': {'category': '초등', 'color': {'main': 'var(--secondary-mint-500)', 'sub': 'var(--secondary-mint-200)', 'background': 'var(--secondary-mint-100)'}},
+    '2': {'category': '중등', 'color': {'main': 'var(--secondary-blue-500)', 'sub': 'var(--secondary-blue-200)', 'background': 'var(--secondary-blue-100)'}},
+    '3': {'category': '고등', 'color': {'main': 'var(--secondary-purple-500)', 'sub': 'var(--secondary-purple-200)', 'background': 'var(--secondary-purple-100)'}},
+    '4': {'category': '대학생 이상', 'color': {'main': 'var(--secondary-yellow-500)', 'sub': 'var(--secondary-yellow-200)', 'background': 'var(--secondary-yellow-100)'}},
+}
+
 
 def _level_book(level) -> dict:
     """레벨별 단어장 조회 (AdminVocaBook). 반환: {id,title,color,vocaList:[{origin,meanings,examples,voca_id}]} 또는 None."""
@@ -57,12 +65,57 @@ def _level_book(level) -> dict:
         'voca_id': voca.id,
     } for amap, voca in rows]
 
+    color = (LEVEL_META.get(str(level)) or {}).get('color') or {
+        'main': 'var(--primary-main-500)', 'sub': 'var(--primary-main-200)', 'background': 'var(--primary-main-100)',
+    }
     return {
         'id': admin_book.id,
         'title': admin_book.book_nm,
-        'color': {'main': 'var(--primary-main-500)', 'sub': 'var(--primary-main-200)', 'background': 'var(--primary-main-100)'},
+        'color': color,
         'vocaList': voca_list,
     }
+
+
+@onboarding_bp.route('/books', methods=['GET'])
+def books():
+    """온보딩에서 선택 가능한 단어장 목록(카드용) — 비인증.
+
+    레벨 4종(초/중/고/대) 각각 {level,id,name,category,word_count,color,sample_words}.
+    맛보기/미리보기의 실제 단어는 /onboarding/level-book?level=N 으로 별도 조회.
+    """
+    from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
+
+    cards = []
+    for level in sorted(LEVEL_ADMIN_BOOK.keys()):
+        book_id = LEVEL_ADMIN_BOOK[level]
+        admin_book = AdminVocaBook.query.get(book_id)
+        if not admin_book:
+            continue
+        word_count = (
+            db.session.query(db.func.count(AdminVocaBookMap.id))
+            .filter(AdminVocaBookMap.book_id == book_id)
+            .scalar()
+        ) or 0
+        samples = (
+            db.session.query(Voca.word)
+            .join(AdminVocaBookMap, AdminVocaBookMap.voca_id == Voca.id)
+            .filter(AdminVocaBookMap.book_id == book_id)
+            .order_by(AdminVocaBookMap.id.asc())
+            .limit(6)
+            .all()
+        )
+        meta = LEVEL_META.get(level, {})
+        cards.append({
+            'level': int(level),
+            'id': admin_book.id,
+            'name': admin_book.book_nm,
+            'category': meta.get('category'),
+            'word_count': int(word_count),
+            'color': meta.get('color'),
+            'sample_words': [w[0] for w in samples],
+        })
+
+    return jsonify({'code': 200, 'data': cards}), 200
 
 
 @onboarding_bp.route('/level-book', methods=['GET'])

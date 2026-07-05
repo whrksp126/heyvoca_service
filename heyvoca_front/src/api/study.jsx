@@ -180,6 +180,16 @@ export const getReviewScheduleApi = async () => {
 
 // ─── 온보딩 API ─────────────────────────────────────────────────────────────
 
+// 온보딩 선택용 단어장 목록(카드 메타) — 비인증
+export const getOnboardingBooksApi = async () => {
+  const url = `${backendUrl}/onboarding/books`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getOnboardingBooksApi 오류:', error);
+  }
+};
+
 // 레벨별 단어장(단어 포함) — 비인증, 맛보기 소스 (level: 1 초등 ~ 4 대학생)
 export const getLevelBookApi = async (level) => {
   const url = `${backendUrl}/onboarding/level-book`;
@@ -221,6 +231,20 @@ export const getWordInsightsApi = async (userVocaId) => {
     return await fetchDataAsync(url, 'GET', {});
   } catch (error) {
     console.error('getWordInsightsApi 오류:', error);
+  }
+};
+
+// 학습 타임라인 페이지네이션 (단어 상세 무한 스크롤)
+// GET /insights/word/<user_voca_id>/timeline?before=<ISO>&limit=<n>
+// 응답: { code:200, data:{ timeline, has_more, next_before } }
+export const getWordTimelineApi = async (userVocaId, before = null, limit = 20) => {
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (before) params.set('before', before);
+  const url = `${backendUrl}/insights/word/${userVocaId}/timeline?${params.toString()}`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getWordTimelineApi 오류:', error);
   }
 };
 

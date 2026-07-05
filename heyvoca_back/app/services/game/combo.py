@@ -6,8 +6,8 @@
   미만이면 조용히 0 리셋.
 - 보호: 보석 PROTECT_COST개 차감 후 위기 직전 값 복원. 포기: 0 확정.
 - AT_RISK 방치 중 다음 답안 유입 시 자동 포기 처리(팝업 이탈 안전장치).
-- 업적(콤보왕): best_combo 도달형 — 기존 Goals/UserGoals/보상 흐름 재사용하되
-  증가형 update_user_goal 대신 도달값 동기화 방식.
+- 업적(암기왕): best_combo 도달형 — 기존 Goals/UserGoals/보상 흐름 재사용하되
+  증가형 update_user_goal 대신 도달값 동기화 방식. (콤보왕 GoalType 삭제, 암기왕으로 통합)
 
 이 모듈의 함수들은 study/log 커밋 '이후' 별도 트랜잭션으로 실행된다
 (콤보 실패가 학습 저장을 깨지 않도록).
@@ -30,7 +30,9 @@ PROTECT_COST      = 1   # 콤보 보호 보석 비용 (고정)
 STATUS_ACTIVE  = 'ACTIVE'
 STATUS_AT_RISK = 'AT_RISK'
 
-_GOAL_TYPE_NAME = '콤보왕'
+# 암기왕: 연속 정답 콤보 최고치 기준으로 전환 (2026-07-06)
+# 콤보왕 GoalType은 마이그레이션으로 삭제, 암기왕 Goals를 콤보 임계값으로 교체함.
+_GOAL_TYPE_NAME = '암기왕'
 
 
 def _get_or_create_locked(user_id: UUID) -> UserCombo:
@@ -64,7 +66,7 @@ def _payload(row: UserCombo, *, best_updated=False, goal_completed=None) -> dict
 
 
 def _sync_combo_goal(user_id: UUID, best_combo: int) -> Optional[dict]:
-    """콤보왕 업적을 best_combo 도달값으로 동기화.
+    """암기왕 업적을 best_combo 도달값으로 동기화.
 
     update_user_goal(+1 증가형)과 달리 current_value를 도달값으로 직접 세팅.
     임계 통과 시 완료 처리 + 다음 레벨 생성 + 보석 지급(기존 흐름과 동일).
@@ -129,7 +131,7 @@ def _sync_combo_goal(user_id: UUID, best_combo: int) -> Optional[dict]:
                 user_id=user_id,
                 amount=goal.reward_count,
                 reason=GemReason.ACHIEVEMENT,
-                description=f'콤보왕 Lv.{goal.level} 달성',
+                description=f'암기왕 Lv.{goal.level} 달성 (콤보 {goal.goal}회)',
                 source_type='goal',
                 source_id=None,
                 balance_after=user.gem_cnt,

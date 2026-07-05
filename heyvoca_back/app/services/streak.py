@@ -1,7 +1,8 @@
-"""연속 학습일(streak) 계산.
+"""연속 데일리 미션 달성일(streak) 계산.
 
-CheckIn.today_study_complete == True 인 날짜만 카운팅.
-오늘 미학습이면 어제까지 연속을 streak으로 보고, today_completed 플래그를 따로 반환.
+끈기왕 = 데일리 미션(신규+복습) 연속 달성일수.
+CheckIn.daily_mission_complete == True 인 날짜만 카운팅.
+오늘 미달성이면 어제까지 연속을 streak으로 보고, today_completed 플래그를 따로 반환.
 """
 
 from datetime import date, datetime, timedelta
@@ -26,13 +27,13 @@ def _streak_from_dates(date_set: set, today: date) -> tuple:
 
 
 def get_user_streak(user_id: UUID, today: date = None) -> tuple:
-    """단일 사용자 streak. (streak, today_completed) 반환."""
+    """단일 사용자 데일리 미션 연속 달성 streak. (streak, today_completed) 반환."""
     if today is None:
         today = kst_today()
     rows = (
         db.session.query(CheckIn.attendence_date)
         .filter(CheckIn.user_id == user_id)
-        .filter(CheckIn.today_study_complete == True)
+        .filter(CheckIn.daily_mission_complete == True)
         .filter(CheckIn.attendence_date >= today - timedelta(days=365))
         .all()
     )
@@ -40,7 +41,7 @@ def get_user_streak(user_id: UUID, today: date = None) -> tuple:
 
 
 def get_streaks_batch(user_ids, today: date = None) -> dict:
-    """여러 사용자의 streak을 한 번의 쿼리로. {user_id: (streak, today_completed)}."""
+    """여러 사용자의 데일리 미션 streak을 한 번의 쿼리로. {user_id: (streak, today_completed)}."""
     if today is None:
         today = kst_today()
     if not user_ids:
@@ -48,7 +49,7 @@ def get_streaks_batch(user_ids, today: date = None) -> dict:
     rows = (
         db.session.query(CheckIn.user_id, CheckIn.attendence_date)
         .filter(CheckIn.user_id.in_(list(user_ids)))
-        .filter(CheckIn.today_study_complete == True)
+        .filter(CheckIn.daily_mission_complete == True)
         .filter(CheckIn.attendence_date >= today - timedelta(days=365))
         .all()
     )

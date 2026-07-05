@@ -4,7 +4,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { stripHtmlTags } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
-import WordMemorySection from '../common/WordMemorySection';
+import { useWordInsights, WordMemoryProgress, WordMemoryHistory } from '../common/WordMemorySection';
 import SpeakerButton from '../common/SpeakerButton';
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
@@ -23,7 +23,9 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   const word = getWord(vocabularyId, id);
   const vocabularySheet = typeof getVocabularySheet === 'function' ? getVocabularySheet(vocabularyId) : null;
   const isPurchasedBook = vocabularySheet?.vocaBookStoreId != null;
-  console.log(word);
+  // '나의 기억' — 진행(예문 위)/기록(예문 아래) 두 곳에서 공유하므로 한 번만 조회
+  const userVocaId = word?.vocaIndexId ?? id;
+  const insights = useWordInsights(userVocaId);
 
   // 단어가 삭제되어 없으면 자동으로 닫기
   React.useEffect(() => {
@@ -65,8 +67,8 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   }
 
   return (
-    <div className="">
-      <div className="p-[20px] pb-[10px]">
+    <div className="relative">
+      <div className="overflow-y-auto max-h-[calc(90vh-85px)] p-[20px] pb-[85px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex items-center justify-between">
             <div>
@@ -113,8 +115,6 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             </span>
             <SpeakerButton text={word.meanings.join(", ")} lang="ko" label="의미 듣기" />
           </div>
-          {/* 나의 기억 — 최근 결과 + 승급 진행 + 학습 기록 (기록 없으면 미표시) */}
-          <WordMemorySection userVocaId={word.vocaIndexId ?? id} />
           {
             word.examples?.map((example, index) => {
               const originText = stripHtmlTags(example.origin || '').trim();
@@ -129,18 +129,22 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                     <SpeakerButton text={originText} lang="en" label="예문 발음 듣기" />
                   </div>
                   <div className="flex items-center gap-[6px]">
-                    <span className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words">
-                      {example.meaning}
-                    </span>
+                    <span
+                      className="text-[14px] font-[400] text-layout-black dark:text-layout-white break-words"
+                      dangerouslySetInnerHTML={{ __html: example.meaning }}
+                    />
                     <SpeakerButton text={stripHtmlTags(example.meaning || '')} lang="ko" label="예문 의미 듣기" />
                   </div>
                 </div>
               );
             })
           }
+          {/* 예문 아래: 복습 예정 + 암기 진행 → 학습 기록 순 */}
+          <WordMemoryProgress insights={insights} />
+          <WordMemoryHistory insights={insights} userVocaId={userVocaId} />
         </div>
       </div>
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
+      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-[15px] p-[20px] bg-layout-white dark:bg-layout-black">
         <motion.button
           className="
             flex-1

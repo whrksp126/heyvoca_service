@@ -418,7 +418,9 @@ def today_summary():
     )
 
     new_ids = set()
+    studied_ids = set()
     for vid, state_before in rows:
+        studied_ids.add(vid)
         is_new = False
         if not state_before:
             is_new = True
@@ -432,7 +434,13 @@ def today_summary():
         if is_new:
             new_ids.add(vid)
 
-    return jsonify({'code': 200, 'data': {'new_words': len(new_ids)}}), 200
+    # 오늘 복습 완료 수 = 오늘 학습한 단어 중 신규 도입이 아닌 단어(distinct)
+    reviews_done = len(studied_ids - new_ids)
+
+    return jsonify({
+        'code': 200,
+        'data': {'new_words': len(new_ids), 'reviews_done': reviews_done},
+    }), 200
 
 
 @study_bp.route('/review-schedule', methods=['GET'])

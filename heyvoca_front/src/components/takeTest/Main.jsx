@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Circle, X, BookOpenText, Leaf, Plant, Carrot, EggCrack, SpeakerHigh, ArrowUpRight, ArrowDownRight } from "@phosphor-icons/react";
+import { Circle, X, BookOpenText, Leaf, Plant, Carrot, EggCrack, SpeakerHigh, ArrowUp, ArrowDown } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -89,7 +89,9 @@ const computeOptimisticFsrs = (prevFsrs, isCorrect) => {
   };
 };
 
-// meanings가 여러 개면 랜덤하게 2~3개만 선택 (중복 제거)
+// meanings가 여러 개면 2~3개만 선택 (중복 제거).
+// 표시 뜻은 '뜻 내용'을 시드로 결정적으로 고른다 → 정답 선택 등으로 재렌더돼도
+// 옵션 텍스트가 바뀌지 않는다(기존엔 Math.random이라 재계산 시 옵션이 변경되는 버그).
 const getDisplayMeanings = (meanings) => {
   if (!meanings || meanings.length === 0) return [];
 
@@ -98,9 +100,19 @@ const getDisplayMeanings = (meanings) => {
 
   if (uniqueMeanings.length <= 2) return uniqueMeanings;
 
-  // 2개 또는 3개를 랜덤하게 선택
-  const count = Math.random() < 0.5 ? 2 : 3;
-  const shuffled = [...uniqueMeanings].sort(() => Math.random() - 0.5);
+  // 내용 기반 시드 PRNG(mulberry32) — 같은 뜻 집합이면 항상 같은 결과.
+  const seedStr = uniqueMeanings.join('|');
+  let h = 2166136261;
+  for (let i = 0; i < seedStr.length; i++) { h ^= seedStr.charCodeAt(i); h = Math.imul(h, 16777619); }
+  const rand = () => {
+    h = (h + 0x6D2B79F5) | 0;
+    let t = Math.imul(h ^ (h >>> 15), 1 | h);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+
+  const count = rand() < 0.5 ? 2 : 3;
+  const shuffled = [...uniqueMeanings].sort(() => rand() - 0.5);
   return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
 };
 
@@ -125,8 +137,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
   const isComboMode = testType === 'quick';
-  // ── 당근 농장 세션 요약 (당근 수확 이벤트 누적) ──
-  const farmSessionRef = useRef({ harvests: [], gems: 0 });
   // 마지막 enqueueRetry가 큐에 실제로 삽입했는지 여부 저장 (세션 종료 판정 보정용)
   const lastRetryEnqueuedRef = useRef(false);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -213,23 +223,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     } catch (e) { /* 저장 실패는 무시 */ }
   };
 
-  // /study/log 응답의 farm 이벤트 처리 — 당근 수확(장기 첫 도달) 누적 + 보석 갱신
-  const handleFarmPayload = (payload, word) => {
-    if (!payload || payload.type !== 'carrot_harvest') return;
-    const f = farmSessionRef.current;
-    f.harvests.push(word || '');
-    f.gems += payload.gem ?? 0;
-    if (typeof payload.gem_balance === 'number') {
-      setUserProfile((prev) => (prev ? { ...prev, gem_cnt: payload.gem_balance } : prev));
-    }
-    try {
-      sessionStorage.setItem('heyvoca_farm_summary', JSON.stringify({
-        harvests: f.harvests,
-        gems: f.gems,
-      }));
-    } catch (e) { /* 저장 실패 무시 */ }
-  };
-
   // /study/log 응답의 combo payload 처리 — 상태 갱신 + 위기 시 보호 팝업
   const handleComboPayload = async (payload) => {
     if (!payload) return;
@@ -284,7 +277,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
-        if (logRes?.data?.farm) handleFarmPayload(logRes.data.farm, question.origin);
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
             (q) => (q.vocaIndexId ?? q.id) === vocaId && !q.isRetry
@@ -677,79 +669,65 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   };
 
   // 플러그인 컴포넌트용 완료 콜백 (cardMatch, fillInTheBlank 등)
+  // 카드 1장 결과 처리(로그+콤보+농장+fsrs+통과) — 카드 채점 즉시/세트 완료 공용.
+  // cardMatch는 카드 맞추기 UI 특성상 단어별 즉시 반복 재시도가 없어(세트 단위 1회 진행)
+  // 오답도 "해결됨"으로 통과 처리한다(진행률 즉시 반영). loggedVocaIdsRef로 중복 로깅 방지.
+  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs }, currentQuestion, setWords, questionType) => {
+    if (wordId == null) return;
+    updateWordState(sheetId, wordId, updateData);
+    setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
+    setPendingUpdateWords(prev => {
+      const map = new Map(prev);
+      map.set(wordId, { sheetId, wordId, updateData });
+      return map;
+    });
+    if (Array.isArray(setWords)) {
+      const target = setWords.find(w => w.id === wordId);
+      if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
+    }
+
+    if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
+      loggedVocaIdsRef.current.add(wordId);
+      const promise = logStudyQuestion({
+        session_id: studySessionRef.current,
+        user_voca_id: wordId,
+        user_voca_book_id: sheetId ?? null,
+        question_type: questionType,
+        was_correct: !!wordIsCorrect,
+        time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
+        client_now: new Date().toISOString(),
+      }).then(logRes => {
+        if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        if (logRes?.data?.fsrs) {
+          updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
+          if (Array.isArray(setWords)) {
+            const target = setWords.find(w => w.id === wordId);
+            if (target) target.fsrs = logRes.data.fsrs;
+          }
+          if (currentQuestion?.id === wordId) currentQuestion.fsrs = logRes.data.fsrs;
+          setTestQuestions([...testQuestions]);
+        }
+      }).catch(e => console.warn('[FSRS] logStudyQuestion(card) 실패:', e));
+      if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
+    }
+
+    markVocaPassed(wordId);
+  };
+
+  // 카드 1장 채점 즉시 호출 — 콤보/프로그래스가 슬라이드 끝이 아니라 바로 반영되도록.
+  const handleCardMatched = (result) => {
+    if (!result || result.wordId == null) return;
+    const currentQuestion = testQuestions[progressIndex];
+    processCardWord(result, currentQuestion, currentQuestion?.words, currentQuestion?.questionType);
+  };
+
   const handlePluginComplete = (results) => {
     const currentQuestion = testQuestions[progressIndex];
     const setWords = currentQuestion.words;
     const questionType = currentQuestion.questionType;
 
-    // cardMatch 오답 단어 — 재출제 가능 여부 사전 판별
-    // (enqueueRetry는 setTestQuestions를 호출해 큐를 늘리므로 results 순회 전에 목록 확정)
-    const incorrectResults = results.filter(r => !r.isCorrect);
-
-    results.forEach(({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs }) => {
-      updateWordState(sheetId, wordId, updateData);
-      setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
-      setPendingUpdateWords(prev => {
-        const map = new Map(prev);
-        map.set(wordId, { sheetId, wordId, updateData });
-        return map;
-      });
-      if (Array.isArray(setWords)) {
-        const target = setWords.find(w => w.id === wordId);
-        if (target) {
-          target.isCorrect = wordIsCorrect ?? target.isCorrect;
-        }
-      }
-
-      // 첫 시도 1회만 /study/log 로깅
-      // cardMatch 세트 내 단어는 isRetry 없이 개별 wordId로 중복 방지
-      if (studySessionRef?.current != null && loggedVocaIdsRef?.current) {
-        if (!loggedVocaIdsRef.current.has(wordId)) {
-          loggedVocaIdsRef.current.add(wordId);
-          const promise = logStudyQuestion({
-            session_id: studySessionRef.current,
-            user_voca_id: wordId,
-            user_voca_book_id: sheetId ?? null,
-            question_type: questionType,
-            was_correct: !!wordIsCorrect,
-            time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
-            client_now: new Date().toISOString(),
-          }).then(logRes => {
-            if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
-            if (logRes?.data?.farm) {
-              const w = Array.isArray(setWords) ? setWords.find(x => x.id === wordId) : null;
-              handleFarmPayload(logRes.data.farm, w?.origin);
-            }
-            if (logRes?.data?.fsrs) {
-              updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
-              if (Array.isArray(setWords)) {
-                const target = setWords.find(w => w.id === wordId);
-                if (target) target.fsrs = logRes.data.fsrs;
-              }
-              if (currentQuestion?.id === wordId) {
-                currentQuestion.fsrs = logRes.data.fsrs;
-              }
-              setTestQuestions([...testQuestions]);
-            }
-          }).catch(e => console.warn('[FSRS] logStudyQuestion(plugin) 실패:', e));
-          if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
-        }
-      }
-
-      // 정답 단어는 통과 처리 (진행률 카운트)
-      if (wordIsCorrect) {
-        markVocaPassed(wordId);
-      }
-    });
-
-    // cardMatch 세트 안 오답 단어 처리:
-    // cardMatch는 카드 맞추기 UI 특성상 단어별 즉시 반복 재시도가 없다(세트 단위로 1회 진행).
-    // 따라서 오답 단어도 "해결됨"으로 통과 처리해 세션이 끝까지 진행되게 한다.
-    // (FSRS에는 logStudyQuestion에서 was_correct:false로 이미 기록됨 → 다음 복습에 반영,
-    //  결과 화면에서도 isCorrect=false로 표시됨)
-    incorrectResults.forEach(({ wordId }) => {
-      markVocaPassed(wordId);
-    });
+    // 각 단어 처리(카드 채점 시 이미 처리된 단어는 loggedVocaIdsRef/passed Set로 중복 방지)
+    results.forEach(r => processCardWord(r, currentQuestion, setWords, questionType));
 
     currentQuestion.isCorrect = results.every(r => r.isCorrect);
 
@@ -888,7 +866,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 question={testQuestions[progressIndex]}
                 testType={testType}
                 onComplete={handlePluginComplete}
-                onCardMatched={() => {/* 진행률은 세션 완료 기준으로 관리 */}}
+                onCardMatched={handleCardMatched}
               />
             </motion.div>
           </AnimatePresence>
@@ -1009,9 +987,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                       >
-                        {memoryStateChange.dir === 'up'
-                          ? <ArrowUpRight size={10} weight="bold" />
-                          : <ArrowDownRight size={10} weight="bold" />}
+                        {/* 등장 애니메이션 — 상승: 아래→위로 두 번 나타났다 중앙 안착 / 강등: 위→아래로 두 번 나타났다 중앙 안착 */}
+                        <motion.span
+                          className="flex items-center flex-shrink-0"
+                          initial={{ y: memoryStateChange.dir === 'up' ? 7 : -7, opacity: 0 }}
+                          animate={memoryStateChange.dir === 'up'
+                            ? { y: [7, -4, 7, -4, 0], opacity: [0, 1, 0, 1, 1] }
+                            : { y: [-7, 4, -7, 4, 0], opacity: [0, 1, 0, 1, 1] }}
+                          transition={{ duration: 0.8, times: [0, 0.25, 0.5, 0.75, 1], ease: 'easeInOut' }}
+                        >
+                          {memoryStateChange.dir === 'up'
+                            ? <ArrowUp size={10} weight="bold" />
+                            : <ArrowDown size={10} weight="bold" />}
+                        </motion.span>
                         <span className="flex-shrink-0">{stateIconMap[memoryStateChange.toKey]}</span>
                       </motion.div>
                     ) : (

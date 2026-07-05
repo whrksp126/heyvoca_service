@@ -1,5 +1,6 @@
-// 게스트 맛보기용 문제 생성 — 선택한 레벨 단어장 단어로 로컬 multipleChoice 문제 배열 생성.
+// 게스트 맛보기용 문제 생성 — 선택한 레벨 단어장 단어로 로컬 문제 배열 생성.
 // 실제 takeTest UI가 읽는 question 스키마와 동일하게 만든다 (서버 추천/세션 없이).
+// 유형: 사지선다 / 사지선다(듣기) / 카드맞추기 / 카드맞추기(듣기) 각 1문제.
 
 const shuffle = (arr) => {
   const a = [...arr];
@@ -15,51 +16,124 @@ const firstMeaning = (m) => {
   return typeof m[0] === 'string' ? m[0] : (m[0]?.meaning || '');
 };
 
-/**
- * words: [{origin, meanings, examples, voca_id}] (레벨 단어장)
- * count: 출제 수 (기본 5)
- * 반환: takeTest용 question 배열 (questionType: multipleChoice)
- *   각 question은 voca_id를 vocaIndexId/id로 사용 → migrate 답안 매칭에 재사용.
- */
-export function buildGuestQuestions(words, count = 5) {
-  const valid = (words || []).filter((w) => w?.origin && firstMeaning(w.meanings));
-  if (valid.length < 4) return [];
+// meanings를 문자열 배열로 정규화 (사지선다 options / 카드매치 표시 공용)
+const toMeaningStrings = (m) => (Array.isArray(m) ? m : [])
+  .map((x) => (typeof x === 'string' ? x : (x?.meaning || '')))
+  .filter(Boolean);
 
-  const picked = shuffle(valid).slice(0, Math.min(count, valid.length));
+const fsrsStub = () => {
+  const now = new Date();
+  const next = new Date();
+  next.setDate(next.getDate() + 3);
+  return {
+    state: 'new', stability: 0, difficulty: 0, retrievability: 0,
+    next_review: next.toISOString(), last_review: now.toISOString(), reps: 0, lapses: 0,
+  };
+};
 
-  return picked.map((w, idx) => {
-    const wid = w.voca_id ?? idx;
-    // 오답 보기 3개 — 같은 단어장 다른 단어의 뜻에서
-    const distractors = shuffle(valid.filter((x) => (x.voca_id ?? -1) !== wid))
-      .slice(0, 3)
-      .map((x, i) => ({ id: x.voca_id ?? `d-${i}`, origin: x.origin, meanings: x.meanings }));
+// 사지선다형 1문제 (multipleChoice / multipleChoiceListening 공용).
+// 정답 뜻 + 다른 단어 뜻 3개를 보기로. voca_id를 vocaIndexId/id로 사용 → migrate 답안 매칭.
+function buildChoiceQuestion(word, pool, questionType) {
+  const wid = word.voca_id;
+  const distractors = shuffle(pool.filter((x) => x.voca_id !== wid))
+    .slice(0, 3)
+    .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings }));
+  const correctOption = { id: wid, origin: word.origin, meanings: word.meanings };
+  const options = shuffle([correctOption, ...distractors]);
+  const resultIndex = options.findIndex((o) => o.id === wid);
 
-    const correctOption = { id: wid, origin: w.origin, meanings: w.meanings };
-    const options = shuffle([correctOption, ...distractors]);
-    const resultIndex = options.findIndex((o) => o.id === wid);
+  return {
+    id: wid,
+    vocaIndexId: wid,
+    vocabularySheetId: 'guest-trial',
+    origin: word.origin,
+    meanings: word.meanings,
+    examples: word.examples || [],
+    fsrs: fsrsStub(),
+    priorityBucket: 'new',
+    suggestedQuestionType: questionType,
+    reason: null,
+    questionType,
+    options,
+    resultIndex,
+    isCorrect: null,
+    userResultIndex: null,
+    displayNextReview: null,
+    isRetry: false,
+  };
+}
 
-    const now = new Date();
-    const next = new Date();
-    next.setDate(next.getDate() + 3);
-
-    return {
-      id: wid,
-      vocaIndexId: wid,
-      vocabularySheetId: 'guest-trial',
+// 카드매치 세트 1문제 (cardMatch / cardMatchListening 공용). words = 단어 객체 배열.
+function buildCardMatchQuestion(words, questionType, idx) {
+  return {
+    questionType,
+    id: `${questionType}-set-${idx}`,
+    words: shuffle(words.map((w) => ({
+      id: w.voca_id,
+      vocaIndexId: w.voca_id,
       origin: w.origin,
       meanings: w.meanings,
       examples: w.examples || [],
-      fsrs: { state: 'new', stability: 0, difficulty: 0, retrievability: 0, next_review: next.toISOString(), last_review: now.toISOString(), reps: 0, lapses: 0 },
+      vocabularySheetId: 'guest-trial',
+      fsrs: fsrsStub(),
       priorityBucket: 'new',
-      suggestedQuestionType: 'multipleChoice',
-      reason: null,
-      questionType: 'multipleChoice',
-      options,
-      resultIndex,
       isCorrect: null,
-      userResultIndex: null,
-      displayNextReview: null,
-      isRetry: false,
-    };
-  });
+    }))),
+    vocabularySheetId: 'guest-trial',
+    isCorrect: null,
+  };
+}
+
+/**
+ * words: [{origin, meanings, examples, voca_id}] (레벨 단어장)
+ * 반환: takeTest용 question 배열 — 사지선다/사지선다듣기/카드맞추기/카드맞추기듣기 각 1문제.
+ *   단어가 부족하면 가능한 유형만 생성. 최소 4단어 미만이면 빈 배열.
+ */
+export function buildGuestQuestions(words) {
+  const valid = (words || [])
+    .filter((w) => w?.origin && firstMeaning(w.meanings) && w?.voca_id != null)
+    .map((w) => ({ ...w, meanings: toMeaningStrings(w.meanings) }));
+  if (valid.length < 4) return [];
+
+  const pool = shuffle(valid);
+  const used = new Set();
+
+  // 아직 안 쓴 단어 1개 소비
+  const takeOne = () => {
+    for (const w of pool) {
+      if (!used.has(w.voca_id)) { used.add(w.voca_id); return w; }
+    }
+    return null;
+  };
+  // 뜻(첫 뜻)이 서로 겹치지 않는 n개 단어 세트 소비 (카드매치 매칭 모호성 방지)
+  const takeSet = (n) => {
+    const set = [];
+    const seenMeaning = new Set();
+    for (const w of pool) {
+      if (used.has(w.voca_id)) continue;
+      const m = (w.meanings[0] || '').trim();
+      if (!m || seenMeaning.has(m)) continue;
+      seenMeaning.add(m);
+      used.add(w.voca_id);
+      set.push(w);
+      if (set.length === n) break;
+    }
+    return set;
+  };
+
+  const questions = [];
+
+  const mc = takeOne();
+  if (mc) questions.push(buildChoiceQuestion(mc, pool, 'multipleChoice'));
+
+  const mcl = takeOne();
+  if (mcl) questions.push(buildChoiceQuestion(mcl, pool, 'multipleChoiceListening'));
+
+  const cmSet = takeSet(4);
+  if (cmSet.length >= 2) questions.push(buildCardMatchQuestion(cmSet, 'cardMatch', 0));
+
+  const cmlSet = takeSet(4);
+  if (cmlSet.length >= 2) questions.push(buildCardMatchQuestion(cmlSet, 'cardMatchListening', 1));
+
+  return questions;
 }

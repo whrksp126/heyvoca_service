@@ -345,24 +345,34 @@ def revive(user_id: UUID, user_voca_id: int) -> dict:
     }
 
 
-def buy_revive(user_id: UUID) -> dict:
-    """보석 BUY_REVIVE_GEM_COST개로 부활템 REVIVE_PER_GEM개 구매.
+def buy_revive(user_id: UUID, packs: int = 1) -> dict:
+    """보석 (BUY_REVIVE_GEM_COST × packs)개로 부활템 (REVIVE_PER_GEM × packs)개 구매.
+
+    packs = 묶음 수(1묶음 = 보석 BUY_REVIVE_GEM_COST개 = 부활템 REVIVE_PER_GEM개).
+    한 트랜잭션에서 원자적으로 처리한다.
 
     Raises:
         PermissionError — 보석 부족
     """
+    try:
+        packs = max(1, int(packs))
+    except (TypeError, ValueError):
+        packs = 1
+    cost = BUY_REVIVE_GEM_COST * packs
+    items = REVIVE_PER_GEM * packs
+
     user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
     if user is None:
         raise LookupError('사용자 없음')
-    if (user.gem_cnt or 0) < BUY_REVIVE_GEM_COST:
+    if (user.gem_cnt or 0) < cost:
         raise PermissionError('보석이 부족합니다.')
 
-    user.gem_cnt = (user.gem_cnt or 0) - BUY_REVIVE_GEM_COST
-    user.revive_item_cnt = (user.revive_item_cnt or 0) + REVIVE_PER_GEM
+    user.gem_cnt = (user.gem_cnt or 0) - cost
+    user.revive_item_cnt = (user.revive_item_cnt or 0) + items
     db.session.flush()
     register_gem_log(
-        user_id=user_id, amount=-BUY_REVIVE_GEM_COST, reason=GemReason.ITEM_PURCHASE,
-        description=f'부활템 {REVIVE_PER_GEM}개 구매',
+        user_id=user_id, amount=-cost, reason=GemReason.ITEM_PURCHASE,
+        description=f'부활템 {items}개 구매',
         source_type='revive_item', source_id=None,
         balance_after=user.gem_cnt,
     )  # register_gem_log가 내부 commit
@@ -370,5 +380,5 @@ def buy_revive(user_id: UUID) -> dict:
     return {
         'gem_cnt': user.gem_cnt,
         'revive_item_cnt': user.revive_item_cnt,
-        'purchased': REVIVE_PER_GEM,
+        'purchased': items,
     }

@@ -334,12 +334,16 @@ class CheckIn(db.Model):
     __tablename__ = 'check_in'
     user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False, default=uuid4)
     attendence_date = Column(Date, primary_key=True, nullable=False)
+    # 출석(오늘 학습함): 하루에 한 번이라도 학습 세션을 완료하면 True
     today_study_complete = Column(Boolean, nullable=False, default=False)
+    # 데일리 미션 완료: 신규 목표 달성 AND 복습 잔여 0 둘 다 충족된 날만 True
+    daily_mission_complete = Column(Boolean, nullable=False, default=False, server_default='0')
 
-    def __init__(self, user_id, attendence_date, today_study_complete):
+    def __init__(self, user_id, attendence_date, today_study_complete, daily_mission_complete=False):
         self.user_id = user_id
         self.attendence_date = attendence_date
         self.today_study_complete = today_study_complete
+        self.daily_mission_complete = daily_mission_complete
 
 
 class UserRecentStudy(db.Model):

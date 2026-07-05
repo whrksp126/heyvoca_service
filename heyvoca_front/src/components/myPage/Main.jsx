@@ -1,22 +1,20 @@
 import React from 'react';
-import { UserCircle, CaretRight, EnvelopeSimple, EggCrack, Leaf, Plant, Carrot } from "@phosphor-icons/react";
+import { CaretRight, EnvelopeSimple } from "@phosphor-icons/react";
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
-import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate } from '../../utils/osFunction';
 
 import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
 import GemNewFullSheet from '../newfullsheet/GemNewFullSheet';
 import InviteHistoryNewFullSheet from '../newfullsheet/InviteHistoryNewFullSheet';
-import ReviewScheduleNewFullSheet from '../newfullsheet/ReviewScheduleNewFullSheet';
+import ReviewScheduleContent from './ReviewScheduleContent';
 import gemImg from '../../assets/images/gem.png';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { userProfile } = useUser();
-  const { memoryStats } = useVocabulary();
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
 
@@ -41,16 +39,13 @@ const Main = () => {
           onClick={() => openSheet(AccountNewFullSheet)}
           className="flex items-center justify-between p-[20px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
         >
-          <div className="flex items-center gap-[14px] min-w-0">
-            <UserCircle weight="fill" className="text-[48px] text-primary-main-600 shrink-0" />
-            <div className="flex flex-col gap-[2px] min-w-0">
-              <span className="text-[18px] font-[800] text-layout-black dark:text-layout-white truncate">
-                {userProfile?.username || '닉네임을 설정해주세요'}
-              </span>
-              <span className="text-[13px] font-[400] text-layout-gray-300 truncate">
-                {userProfile?.email || '로그인 필요'}
-              </span>
-            </div>
+          <div className="flex flex-col gap-[2px] min-w-0">
+            <span className="text-[18px] font-[800] text-layout-black dark:text-layout-white truncate">
+              {userProfile?.username || '닉네임을 설정해주세요'}
+            </span>
+            <span className="text-[13px] font-[400] text-layout-gray-300 truncate">
+              {userProfile?.email || '로그인 필요'}
+            </span>
           </div>
           <CaretRight className="text-[20px] text-layout-gray-300 shrink-0" />
         </div>
@@ -81,38 +76,10 @@ const Main = () => {
           </div>
         </div>
 
-        {/* 통계 요약 카드 → 복습 일정/분포 시트 */}
-        <div className="flex flex-col gap-[10px]">
+        {/* 통계 — 풀시트로 들어가지 않고 마이페이지에서 바로 상세 표시 */}
+        <div className="flex flex-col gap-[12px]">
           <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white">통계</h3>
-          <div
-            onClick={() => openSheet(ReviewScheduleNewFullSheet)}
-            className="flex flex-col gap-[14px] p-[20px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-[14px] font-[600] text-layout-black dark:text-layout-white">
-                복습 예정 {memoryStats?.reviewDue ?? 0}개 · 오늘 {memoryStats?.dueToday ?? 0}개
-              </span>
-              <CaretRight className="text-[16px] text-layout-gray-300" />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-[4px]">
-                <EggCrack weight="fill" className="text-[18px] text-[#9D835A]" />
-                <span className="text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{memoryStats?.unlearned ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-[4px]">
-                <Leaf weight="fill" className="text-[18px] text-[#77CE4F]" />
-                <span className="text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{memoryStats?.shortTerm ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-[4px]">
-                <Plant weight="fill" className="text-[18px] text-[#38CE38]" />
-                <span className="text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{memoryStats?.mediumTerm ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-[4px]">
-                <Carrot weight="fill" className="text-[18px] text-[#F68300]" />
-                <span className="text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{memoryStats?.longTerm ?? 0}</span>
-              </div>
-            </div>
-          </div>
+          <ReviewScheduleContent />
         </div>
       </div>
     </motion.main>

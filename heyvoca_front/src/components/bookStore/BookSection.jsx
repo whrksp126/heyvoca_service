@@ -15,7 +15,8 @@ import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 const ALL_CATEGORY = '전체';
 const EMPTY_BOOK_PRICE = 3;
 
-const BookCard = ({ item, onClick, className = '' }) => {
+// priceLabel: 지정 시 보석 가격 대신 해당 텍스트 표시(온보딩 '무료' 등). 미지정이면 서점 기본(보석).
+export const BookCard = ({ item, onClick, className = '', priceLabel }) => {
   const { isDark } = useTheme();
   return (
   <motion.li
@@ -48,7 +49,9 @@ const BookCard = ({ item, onClick, className = '' }) => {
     </div>
     <div className="flex items-end justify-between">
       <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
-        <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}
+        {priceLabel != null
+          ? priceLabel
+          : (<><img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}</>)}
       </span>
       <div
         style={{ color: item.color.main, backgroundColor: item.color.sub }}

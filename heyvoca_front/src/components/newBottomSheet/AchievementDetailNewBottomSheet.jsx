@@ -18,7 +18,7 @@ const ACHIEVEMENT_IMAGES = {
     '노력왕': NoryeokKing,
     '끈기왕': PerseveranceKing,
     '독서왕': ReadingKing,
-    '암기왕': MemorizedKing,
+    '암기왕': MemorizedKing, // 암기왕 = 연속 정답 콤보 (콤보왕 폐지 후 통합)
 };
 
 // 레벨별 배경 색상

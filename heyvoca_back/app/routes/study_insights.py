@@ -1,8 +1,9 @@
 import json
 import logging
+from datetime import datetime
 from uuid import UUID
 
-from flask import Blueprint, jsonify, g
+from flask import Blueprint, jsonify, g, request
 
 from app import db
 from app.models.models import UserStudyLog, UserVoca
@@ -26,6 +27,20 @@ def _classify_json(raw):
         return 'unlearned'
 
 
+def _timeline_entry(log):
+    """UserStudyLog → 학습 타임라인 항목 dict."""
+    from_key = _classify_json(log.state_before)
+    to_key = _classify_json(log.state_after)
+    return {
+        'created_at': log.created_at.isoformat() if log.created_at else None,
+        'test_type': log.test_type,
+        'question_type': log.question_type,
+        'was_correct': bool(log.was_correct),
+        'state': to_key,  # 채점 직후 암기 상태
+        'state_change': {'from': from_key, 'to': to_key} if from_key != to_key else None,
+    }
+
+
 @insights_bp.route('/word/<int:user_voca_id>', methods=['GET'])
 @jwt_required
 def word_insights(user_voca_id):
@@ -36,8 +51,9 @@ def word_insights(user_voca_id):
         "memory":  {"state": "medium", "stability": 34.2, "next_review": "...", "reps": 7},
         "recent_results": [true, false, ...],   # 최신순 최대 5개
         "streak": 2,                            # 최근 연속 정답 수
-        "next_stage": {"state": "long", "threshold_days": 60.0, "progress": 0.57} | null,
-        "timeline": [{"created_at","test_type","question_type","was_correct",
+        "next_stage": {"state": "long", "threshold_days": 60.0, "progress": 0.57,
+                        "on_correct": {"state","progress","gain","promotes"}} | null,
+        "timeline": [{"created_at","test_type","question_type","was_correct","state",
                       "state_change": {"from","to"} | null}, ...],  # 최신순, 최대 50개
         "total_count": 12
       }
@@ -66,11 +82,36 @@ def word_insights(user_voca_id):
         # unlearned의 목표는 우선 단기 진입(short) — 임계값은 short 상한과 동일
         if state == 'unlearned':
             target_state = 'short'
+        cur_progress = min(1.0, stability / threshold) if threshold else 0.0
         next_stage = {
             'state': target_state,
             'threshold_days': threshold,
-            'progress': min(1.0, stability / threshold) if threshold else 0.0,
+            'progress': cur_progress,
         }
+        # 다음 복습에서 맞혔을 때(GOOD) 예측 — 진행률 증가분 / 승급 여부
+        try:
+            from app.services.fsrs.scheduler import review as fsrs_review
+            from app.services.fsrs.core import GOOD
+            # 예정된 다음 복습 시각 기준으로 정답 시뮬레이션 (없으면 now)
+            sim_now = datetime.utcnow()
+            nr = fsrs.get('next_review')
+            if nr:
+                try:
+                    sim_now = datetime.fromisoformat(str(nr).replace('Z', ''))
+                except ValueError:
+                    pass
+            proj = fsrs_review(fsrs, GOOD, sim_now)
+            proj_stability = float(proj.get('stability') or 0.0)
+            proj_state = _classify_memory_state(proj)
+            proj_progress = min(1.0, proj_stability / threshold) if threshold else 0.0
+            next_stage['on_correct'] = {
+                'state': proj_state,
+                'progress': round(proj_progress, 4),
+                'gain': round(max(0.0, proj_progress - cur_progress), 4),
+                'promotes': _STATE_RANK.get(proj_state, 0) > _STATE_RANK.get(state, 0),
+            }
+        except Exception:
+            pass  # 예측 실패는 무시 (프론트가 없으면 미표시)
 
     logs = (
         UserStudyLog.query
@@ -88,17 +129,7 @@ def word_insights(user_voca_id):
         .scalar()
     ) or 0
 
-    timeline = []
-    for log in logs:
-        from_key = _classify_json(log.state_before)
-        to_key = _classify_json(log.state_after)
-        timeline.append({
-            'created_at': log.created_at.isoformat() if log.created_at else None,
-            'test_type': log.test_type,
-            'question_type': log.question_type,
-            'was_correct': bool(log.was_correct),
-            'state_change': {'from': from_key, 'to': to_key} if from_key != to_key else None,
-        })
+    timeline = [_timeline_entry(log) for log in logs]
 
     recent_results = [bool(log.was_correct) for log in logs[:5]]
     streak = 0
@@ -122,6 +153,48 @@ def word_insights(user_voca_id):
             'timeline': timeline,
             'total_count': int(total_count),
         },
+    }), 200
+
+
+@insights_bp.route('/word/<int:user_voca_id>/timeline', methods=['GET'])
+@jwt_required
+def word_timeline(user_voca_id):
+    """학습 타임라인 페이지네이션 — 최신순, cursor(before) 기반 무한 스크롤용.
+
+    query: before=<ISO created_at>(옵션, 이 시각 이전 기록만), limit=<1~50, 기본 20>
+    응답 data: { "timeline": [...], "has_more": bool, "next_before": <ISO>|null }
+    """
+    user_id = UUID(g.user_id)
+
+    uv = UserVoca.query.filter_by(id=user_voca_id, user_id=user_id).first()
+    if not uv:
+        return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
+
+    try:
+        limit = min(max(int(request.args.get('limit', 20)), 1), _TIMELINE_LIMIT)
+    except (TypeError, ValueError):
+        limit = 20
+
+    q = UserStudyLog.query.filter_by(user_id=user_id, user_voca_id=user_voca_id)
+    before = request.args.get('before')
+    if before:
+        try:
+            bdt = datetime.fromisoformat(before.replace('Z', ''))
+            q = q.filter(UserStudyLog.created_at < bdt)
+        except ValueError:
+            pass
+
+    # has_more 판정을 위해 limit+1개 조회
+    rows = q.order_by(UserStudyLog.created_at.desc()).limit(limit + 1).all()
+    has_more = len(rows) > limit
+    rows = rows[:limit]
+
+    timeline = [_timeline_entry(log) for log in rows]
+    next_before = rows[-1].created_at.isoformat() if rows else None
+
+    return jsonify({
+        'code': 200,
+        'data': {'timeline': timeline, 'has_more': has_more, 'next_before': next_before},
     }), 200
 
 

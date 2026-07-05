@@ -20,7 +20,9 @@ const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
 const MAX_RENDERED_ITEMS = 100; // DOM에 최대 렌더링할 아이템 개수 (성능 최적화)
 const ITEM_HEIGHT_ESTIMATE = 150; // 각 아이템의 예상 높이 (px, 예제 포함)
 
-export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
+// onPrimaryAction/primaryActionLabel: 지정 시 하단 주요 버튼을 구매/추가 대신 커스텀 동작으로 대체
+// (온보딩에서 '이 단어장으로 시작하기' 선택에 재사용). 미지정이면 서점 기본(구매/추가).
+export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet, onPrimaryAction, primaryActionLabel }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
@@ -510,6 +512,7 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
           "
           onClick={() => {
             vibrate({ duration: 5 });
+            if (onPrimaryAction) { onPrimaryAction(); return; }
             handleAdd();
           }}
           whileTap={{ scale: 0.95 }}
@@ -519,7 +522,9 @@ export const PreviewBookStoreNewFullSheet = ({ bookStoreVocabularySheet }) => {
             damping: 15
           }}
         >
-          {bookStoreVocabularySheet.gem > 0 ? (
+          {onPrimaryAction ? (
+            primaryActionLabel || '선택'
+          ) : bookStoreVocabularySheet.gem > 0 ? (
             <>
               <img src={gem} alt="보석" className="w-[20px] h-[18px]" />
               {bookStoreVocabularySheet.gem}개로 구매

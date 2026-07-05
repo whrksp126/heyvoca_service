@@ -17,11 +17,11 @@ const APP_VERSION_INFO = parseAppVersion();
 const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
 const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
 
-// 설정 항목 한 줄
+// 설정 항목 한 줄 (배경 통일 — 레이어 없이 갭으로 구분)
 const SettingsItem = ({ icon, label, value, onClick, showCaret = true }) => (
   <li
     onClick={onClick ? () => { vibrate({ duration: 5 }); onClick(); } : undefined}
-    className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-border-dark bg-layout-white dark:bg-layout-black"
+    className="flex items-center justify-between px-[20px] py-[15px] bg-layout-white dark:bg-layout-black"
   >
     <div className="flex items-center gap-2">
       {icon}
@@ -34,9 +34,9 @@ const SettingsItem = ({ icon, label, value, onClick, showCaret = true }) => (
   </li>
 );
 
-// 그룹 라벨
+// 그룹 라벨 — 배경 레이어 없이 상단 여백(갭)으로 구분
 const GroupLabel = ({ children }) => (
-  <li className="px-5 pt-6 pb-2 bg-layout-gray-50 dark:bg-layout-black">
+  <li className="px-[20px] pt-[22px] pb-[6px] bg-layout-white dark:bg-layout-black">
     <span className="text-[13px] font-[600] text-layout-gray-300">{children}</span>
   </li>
 );

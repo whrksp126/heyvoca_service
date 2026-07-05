@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { EggCrack, Leaf, Plant, Carrot, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
+import { EggCrack, Leaf, Plant, Carrot, ArrowUp, ArrowDown } from '@phosphor-icons/react';
 import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
@@ -156,6 +156,17 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
     setSelectedRight(null);
     setAnimatingWordIds(prev => new Set([...prev, leftWord.id]));
 
+    // 카드 1장 채점 즉시 부모에 결과 전달 → 콤보/프로그래스 바로 반영
+    const notifyResolved = () => {
+      onCardMatched?.({
+        wordId: leftWord.id,
+        sheetId: leftWord.vocabularySheetId ?? question.vocabularySheetId,
+        isCorrect: isMatch,
+        timeTakenMs,
+        updateData: { fsrs: leftWord.fsrs, isCorrect: isMatch, updatedAt: new Date().toISOString() },
+      });
+    };
+
     if (isMatch) {
       vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
@@ -166,7 +177,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
         setCorrectFlashWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
         setMatchedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        onCardMatched?.();
+        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {
@@ -185,7 +196,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
         setWrongFlashRightWordIds(prev => { const s = new Set(prev); s.delete(rightWord.id); return s; });
         setFailedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        onCardMatched?.();
+        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {
@@ -302,9 +313,19 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                       >
-                        {resolved.dir === 'up'
-                          ? <ArrowUpRight size={9} weight="bold" />
-                          : <ArrowDownRight size={9} weight="bold" />}
+                        {/* 등장 애니메이션 — 상승: 아래→위 / 강등: 위→아래로 두 번 나타났다 안착 */}
+                        <motion.span
+                          className="flex items-center flex-shrink-0"
+                          initial={{ y: resolved.dir === 'up' ? 6 : -6, opacity: 0 }}
+                          animate={resolved.dir === 'up'
+                            ? { y: [6, -3, 6, -3, 0], opacity: [0, 1, 0, 1, 1] }
+                            : { y: [-6, 3, -6, 3, 0], opacity: [0, 1, 0, 1, 1] }}
+                          transition={{ duration: 0.8, times: [0, 0.25, 0.5, 0.75, 1], ease: 'easeInOut' }}
+                        >
+                          {resolved.dir === 'up'
+                            ? <ArrowUp size={9} weight="bold" />
+                            : <ArrowDown size={9} weight="bold" />}
+                        </motion.span>
                         <span className="flex-shrink-0">{stateIconMap[resolved.newKey]}</span>
                       </motion.div>
                     ) : (

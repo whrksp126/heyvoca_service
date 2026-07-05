@@ -11,11 +11,21 @@ import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBo
 import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
 import { warmTts, collectTestTexts } from '../api/tts';
+import { useUser } from '../context/UserContext';
+import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { state } = useLocation();
+  const { state: rawState } = useLocation();
+  const { isLogin } = useUser();
+  // 기기 WebView에서 navigate state가 유실돼도 맛보기가 게스트로 뜨도록 localStorage에서 복원.
+  const [pendingGuestTrial] = useState(() => getGuestTrial());
+  const state = rawState || (
+    !isLogin && Array.isArray(pendingGuestTrial) && pendingGuestTrial.length > 0
+      ? { testType: 'today', guestMode: true, guestQuestions: pendingGuestTrial }
+      : rawState
+  );
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const [testQuestions, setTestQuestions] = useState([]);
@@ -325,7 +335,19 @@ const TakeTest = () => {
     loggedVocaIdsRef.current = new Set();
     retryCountMapRef.current = new Map();
     passedVocaIdsRef.current = new Set();
-    totalUniqueVocaCountRef.current = gq.length;
+    // 진행률 분모: 고유 단어 수 (카드매치 세트는 words 개별 단어를 카운트)
+    {
+      const uniqueIds = new Set();
+      for (const q of gq) {
+        if (Array.isArray(q.words)) {
+          q.words.forEach((w) => { if (w.id != null) uniqueIds.add(w.id); });
+        } else {
+          const id = q.vocaIndexId ?? q.id;
+          if (id != null) uniqueIds.add(id);
+        }
+      }
+      totalUniqueVocaCountRef.current = uniqueIds.size || gq.length;
+    }
     setIsTestQuestionsSetting(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGuestMode]);
@@ -445,6 +467,13 @@ const TakeTest = () => {
 
   // 학습 종료 확인 및 네비게이션 함수
   const handleStopLearning = async () => {
+    // 게스트 맛보기: 확인 바텀시트 없이 온보딩 진행화면(일일 목표)으로 복귀
+    if (isGuestMode) {
+      clearGuestTrial();
+      navigate('/onboarding', { state: { step: 'daily' }, replace: true });
+      return;
+    }
+
     // 1. 이미 바텀시트가 열려있는지 확인 (중복 실행 방지)
     if (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) {
       window.newBottomSheetContext.popNewBottomSheet();
@@ -541,14 +570,36 @@ const TakeTest = () => {
         if (isGuestMode) {
           const seen = new Set();
           const answers = [];
-          testQuestions.forEach((q) => {
-            if (q.isRetry) return;
-            const id = q.vocaIndexId ?? q.id;
+          const pushAns = (id, correct) => {
             if (id == null || seen.has(id)) return;
             seen.add(id);
-            answers.push({ voca_id: id, correct: !!q.isCorrect });
+            answers.push({ voca_id: id, correct: !!correct });
+          };
+          testQuestions.forEach((q) => {
+            if (q.isRetry) return;
+            if (Array.isArray(q.words)) {
+              // 카드매치 세트 — 단어별 정오답
+              q.words.forEach((w) => pushAns(w.vocaIndexId ?? w.id, w.isCorrect));
+            } else {
+              pushAns(q.vocaIndexId ?? q.id, q.isCorrect);
+            }
           });
-          navigate('/onboarding', { state: { step: 'reward', answers }, replace: true });
+          patchGuest({ answers });   // 가입 후 migrate가 읽음
+          clearGuestTrial();
+          // 결과는 실제 StudyResult 화면을 그대로 재사용 (재출제 제외, 고유 단어 기준)
+          const seenIds = new Set();
+          const resultQuestions = testQuestions.filter((q) => {
+            if (q.isRetry) return false;
+            if (Array.isArray(q.words)) return true;
+            const id = q.vocaIndexId ?? q.id;
+            if (seenIds.has(id)) return false;
+            seenIds.add(id);
+            return true;
+          });
+          navigate('/take-test/result', {
+            state: { testQuestions: resultQuestions, testType: state.testType, guestMode: true },
+            replace: true,
+          });
           return;
         }
         // 학습 세션 종료 (fire-and-forget)
@@ -626,6 +677,7 @@ const TakeTest = () => {
         <Header
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
           onBackClick={handleStopLearning}
+          questionType={testQuestions[progressIndex]?.questionType}
         />
         <Main
           testQuestions={testQuestions}

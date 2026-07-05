@@ -21,9 +21,6 @@ import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../../api/study';
-import { getFarmSummaryApi } from '../../api/game';
-import PlantIllustration from '../common/PlantIllustration';
-import FarmNewFullSheet from '../newfullsheet/FarmNewFullSheet';
 
 
 // import StoreSheet from './StoreSheet';
@@ -37,6 +34,7 @@ import { useOverlayActions } from '../../context/OverlayContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
 import TodayMemoryChangesNewBottomSheet from '../newBottomSheet/TodayMemoryChangesNewBottomSheet';
+import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
 
 // 오늘의 기억 변화 — 상태별 칩 아이콘 (백엔드 키: short/medium/long)
 const MEMORY_STATE_CHIPS = [
@@ -52,8 +50,7 @@ const ACHIEVEMENT_IMAGES = {
   '노력왕': NoryeokKing,
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
-  '암기왕': MemorizedKing,
-  '콤보왕': NoryeokKing, // TODO: 콤보왕 전용 캐릭터 에셋 나오면 교체
+  '암기왕': MemorizedKing, // 암기왕 = 연속 정답 콤보 (콤보왕 폐지 후 통합)
 };
 
 // 레벨별 배경 색상 및 스타일
@@ -122,12 +119,12 @@ const Main = () => {
   const { isDark } = useTheme();
   const { vocabularySheets, memoryStats, lastSessionResult } = useVocabulary();
   const [todayNewWords, setTodayNewWords] = useState(0);
+  // 오늘 복습 완료 수 (today-summary)
+  const [todayReviewsDone, setTodayReviewsDone] = useState(0);
   // 백엔드 KST+새벽4시 컷오프 기준 reviewDue (null이면 클라이언트 계산값 폴백)
   const [backendReviewDue, setBackendReviewDue] = useState(null);
   // 오늘의 기억 변화 (승급/신규) — 변화 0개면 카드 숨김
   const [todayChanges, setTodayChanges] = useState(null);
-  // 당근 농장 요약 (홈 카드)
-  const [farmSummary, setFarmSummary] = useState(null);
 
   // memoryStats를 백엔드 reviewDue로 오버라이드 (KST+4시 기준 일치)
   const effectiveStats = backendReviewDue !== null
@@ -185,6 +182,20 @@ const Main = () => {
     fetchUserCheckin();
   }, []);
 
+  // 온보딩→가입→로그인 후 홈 첫 진입 시 1회 알림 권한 프롬프트 (온보딩 signup에서 플래그 설정)
+  useEffect(() => {
+    let pending = null;
+    try { pending = localStorage.getItem('heyvoca_notif_prompt'); } catch (e) { pending = null; }
+    if (pending !== '1') return;
+    if (!userProfile || !userProfile.id) return;
+    try { localStorage.removeItem('heyvoca_notif_prompt'); } catch (e) { /* noop */ }
+    const t = setTimeout(() => {
+      pushNewBottomSheet(NotifPermissionNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+    }, 700);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userProfile?.id]);
+
   // 오늘 누적 새 단어 수 조회 + 백엔드 reviewDue 조회 (학습 직후 lastSessionResult 변경 시 갱신)
   // 백엔드 /study/review-schedule의 due(overdue+today)를 단일 소스로 사용해
   // 클라이언트 자정 기준 vs 서버 KST+4시 컷오프 기준 불일치를 해소.
@@ -193,6 +204,7 @@ const Main = () => {
     getTodaySummary().then(res => {
       if (alive && res?.code === 200) {
         setTodayNewWords(res.data?.new_words ?? 0);
+        setTodayReviewsDone(res.data?.reviews_done ?? 0);
       }
     });
     getReviewScheduleApi(30).then(res => {
@@ -208,11 +220,6 @@ const Main = () => {
         setTodayChanges(res.data);
       }
     });
-    getFarmSummaryApi().then(res => {
-      if (alive && res?.code === 200) {
-        setFarmSummary(res.data);
-      }
-    });
     return () => { alive = false; };
   }, [lastSessionResult?.completedAt]);
 
@@ -226,16 +233,6 @@ const Main = () => {
       { changes: todayChanges },
       { isBackdropClickClosable: true }
     );
-  };
-
-  // 당근 농장 카드 표시 여부 — 심은 단어(살아있음+죽음)가 1개라도 있으면
-  const farmTotal = farmSummary?.total ?? 0;
-  const farmWilting = farmSummary?.wilting ?? 0;
-  const farmDead = farmSummary?.dead ?? 0;
-
-  const handleFarmClick = () => {
-    vibrate({ duration: 5 });
-    pushNewFullSheet(FarmNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
   };
 
   // React Compiler가 자동으로 useCallback 처리
@@ -358,130 +355,44 @@ const Main = () => {
           flex flex-col gap-[15px] 
           px-[16px] py-[18px] pb-[88px]
         ">
-          <div className="
-            flex items-start gap-[50px]
-            px-[15px] py-[12px]
-            rounded-[12px]
-            bg-primary-main-600 
-          ">
-            <h2 className="text-layout-white dark:text-layout-black text-[16px] font-[700]">데일리 미션</h2>
-            <div className="flex flex-col flex-1 gap-[8px]">
-              <div className="flex justify-between">
-                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">접속하기</span>
-                <div className={`
-                  flex items-center justify-center 
-                  w-[60px] h-[20px] 
-                  px-[6px] py-[4px] 
-                  rounded-[5px] 
-                  text-[10px] font-[700]
-                  ${todayStatus.attendCompleted
-                    ? 'text-layout-white dark:text-layout-black bg-[#E569B7]'
-                    : 'text-primary-main-600 bg-layout-white'
-                  }
-                `}>
-                  {todayStatus.attendCompleted ? '완료' : '미완료'}
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">학습하기</span>
-                <div className={`
-                  flex items-center justify-center 
-                  w-[60px] h-[20px] 
-                  px-[6px] py-[4px] 
-                  rounded-[5px] 
-                  text-[10px] font-[700]
-                  ${todayStatus.dailyMissionCompleted
-                    ? 'text-layout-white dark:text-layout-black bg-[#E569B7]'
-                    : 'text-primary-main-600 bg-layout-white'
-                  }
-                `}>
-                  {todayStatus.dailyMissionCompleted ? '완료' : '미완료'}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 오늘의 기억 변화 — 승급/신규 있는 날만 표시 (승인된 프로토타입 A안) */}
-          {todayChangeTotal > 0 && (
-            <div
-              className="
-                flex flex-col gap-[12px]
-                px-[15px] py-[12px]
-                rounded-[12px]
-                bg-layout-gray-50 dark:bg-layout-gray-dark
-                cursor-pointer
-              "
-              onClick={handleTodayChangesClick}
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">오늘의 기억 변화</h2>
-                <span className="flex items-center gap-[2px] text-[12px] font-[500] text-layout-gray-300">
-                  더보기
-                  <CaretRight size={11} weight="bold" />
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[5px]">
-                  <TrendUp size={16} weight="bold" className="text-primary-main-600" />
-                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">
-                    승급 {todayChanges?.counts?.promoted ?? 0} · 신규 {todayChanges?.counts?.new ?? 0}
-                  </span>
-                </div>
-                <div className="flex items-center gap-[8px]">
-                  {MEMORY_STATE_CHIPS.map(({ key, Icon, color }) => {
-                    const cnt = todayChanges?.counts?.by_state?.[key] ?? 0;
-                    if (cnt === 0) return null;
-                    return (
-                      <span key={key} className="flex items-center gap-[3px]">
-                        <Icon size={14} weight="fill" color={color} />
-                        <span className="text-[12px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">{cnt}</span>
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 당근 농장 요약 카드 — 심은 단어가 있으면 표시 (승인된 프로토타입) */}
-          {farmTotal > 0 && (
-            <div
-              className="
-                flex flex-col gap-[12px]
-                px-[15px] py-[12px]
-                rounded-[12px]
-                bg-layout-gray-50 dark:bg-layout-gray-dark
-                cursor-pointer
-              "
-              onClick={handleFarmClick}
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="text-layout-black dark:text-layout-white text-[16px] font-[700]">나의 당근 농장</h2>
-                <span className="flex items-center gap-[2px] text-[12px] font-[500] text-layout-gray-300">
-                  더보기
-                  <CaretRight size={11} weight="bold" />
-                </span>
-              </div>
-              <div className="flex items-center gap-[6px]">
-                <PlantIllustration stage="carrot" wilt="fresh" size={40} />
-                <PlantIllustration stage="leaf" wilt="fresh" size={40} />
-                <PlantIllustration stage="sprout" wilt={farmWilting > 0 ? 'wilt1' : 'fresh'} size={40} />
-                <PlantIllustration stage="seed" wilt="fresh" size={40} />
-                <div className="ml-auto text-right">
-                  <div className="text-[13px] font-[700] text-layout-black dark:text-layout-white">
-                    당근 {farmSummary?.by_stage?.carrot ?? 0} · 잎 {farmSummary?.by_stage?.leaf ?? 0}
-                  </div>
-                  {(farmWilting > 0 || farmDead > 0) && (
-                    <div className="text-[12px] font-[600] text-[#E8890C]">
-                      {farmWilting > 0 && `${farmWilting}개 시드는 중`}
-                      {farmWilting > 0 && farmDead > 0 && ' · '}
-                      {farmDead > 0 && <span className="text-status-error-600">죽음 {farmDead}</span>}
+          {/* 데일리 미션 — '학습하기'(한 번이라도 학습=출석/attend) + '신규/복습'(둘 다 달성=데일리 미션 완료).
+              출석은 출석왕, 신규+복습 완료는 끈기왕/보석 구동. */}
+          {(() => {
+            const reviewDue = effectiveStats?.reviewDue ?? 0;
+            const studiedToday = todayStatus.attendCompleted; // 학습하기 = 한 번이라도 학습(출석)
+            // 신규: 목표=일일 한도, 현재=오늘 신규 학습 수
+            const newTarget = dailyNewLimit > 0 ? dailyNewLimit : todayNewWords;
+            const newCurrent = todayNewWords;
+            // 복습: 목표=완료+남은개수(오늘 전체 복습량), 현재=오늘 복습 완료 수
+            const reviewTarget = todayReviewsDone + reviewDue;
+            const reviewCurrent = todayReviewsDone;
+            const goalDone = newCurrent >= newTarget && reviewDue === 0;
+            const rows = [
+              { key: 'study', label: '학습하기', done: studiedToday },
+              {
+                key: 'goal',
+                label: (
+                  <>신규 <strong className="font-[700]">{newCurrent}/{newTarget}</strong>  복습 <strong className="font-[700]">{reviewCurrent}/{reviewTarget}</strong></>
+                ),
+                done: goalDone,
+              },
+            ];
+            return (
+              <div className="flex items-start gap-[30px] px-[15px] py-[12px] rounded-[12px] bg-primary-main-600">
+                <h2 className="text-layout-white dark:text-layout-black text-[16px] font-[700] whitespace-nowrap">데일리 미션</h2>
+                <div className="flex flex-col flex-1 gap-[8px]">
+                  {rows.map((r) => (
+                    <div key={r.key} className="flex justify-between items-center gap-[10px]">
+                      <span className="text-layout-white dark:text-layout-black text-[12px] font-[600]">{r.label}</span>
+                      <div className={`flex items-center justify-center shrink-0 w-[60px] h-[20px] px-[6px] py-[4px] rounded-[5px] text-[10px] font-[700] ${r.done ? 'text-layout-white dark:text-layout-black bg-[#E569B7]' : 'text-primary-main-600 bg-layout-white'}`}>
+                        {r.done ? '완료' : '미완료'}
+                      </div>
                     </div>
-                  )}
+                  ))}
                 </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           <div
             className="

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, Trophy, EggCrack, ArrowRight } from '@phosphor-icons/react';
+import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, EggCrack, ArrowRight, ArrowUp } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -12,7 +12,6 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 import { vibrate } from '../../utils/osFunction';
 import { warmTts } from '../../api/tts';
 import MemorizationStatus from '../common/MemorizationStatus';
-import PlantIllustration from '../common/PlantIllustration';
 import SpeakerButton from '../common/SpeakerButton';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
@@ -38,8 +37,7 @@ const ACHIEVEMENT_IMAGES = {
   '단어왕': WordKing,
   '끈기왕': PerseveranceKing,
   '독서왕': ReadingKing,
-  '암기왕': MemorizedKing,
-  '콤보왕': NoryeokKing, // TODO: 콤보왕 전용 캐릭터 에셋 나오면 교체
+  '암기왕': MemorizedKing, // 암기왕 = 연속 정답 콤보 최고치 (콤보왕 폐지 후 통합)
 };
 
 // 레벨별 배경 색상 및 스타일
@@ -145,6 +143,9 @@ const StudyResult = () => {
     return q;
   });
   const testType = state.testType;
+  // 게스트 맛보기 결과 — 로그인 전용 서버로직(기록 저장·업적·추천 갱신)은 건너뛰고
+  // 동일한 결과/보상 화면만 재사용한다. 완료 시 온보딩 가입으로 연결.
+  const isGuest = !!state?.guestMode;
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   const [resultData, setResultData] = useState(null);
@@ -152,9 +153,10 @@ const StudyResult = () => {
 
   // 학습 결과 저장
   useEffect(() => {
-    if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "end") {
+    if (isGuest || (recentStudy && recentStudy[testType] && recentStudy[testType].status === "end")) {
       updateUserHistoryAndNavigate()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 결과 페이지 TTS 사전 캐싱 — 단어 클릭/뜻 클릭이 보내는 텍스트를 그대로 워밍.
@@ -175,33 +177,33 @@ const StudyResult = () => {
     const correctCnt = testQuestions.filter(question => question.isCorrect).length;
     const incorrectCnt = testQuestions.filter(question => !question.isCorrect).length;
     try {
-      const result = await updateUserHistory({
-        'correct_cnt': correctCnt,
-        'incorrect_cnt': incorrectCnt
-      })
+      let result;
+      if (isGuest) {
+        // 게스트: 서버 저장 없이 합성 결과 — 가입 시 지급될 보석 +5을 동일 보석 슬라이드로 연출
+        result = { gem: { before: 0, after: 5 }, goals: [], today_study_complete: false };
+      } else {
+        result = await updateUserHistory({
+          'correct_cnt': correctCnt,
+          'incorrect_cnt': incorrectCnt
+        })
 
-      if (!result) return;
+        if (!result) return;
 
-      // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
-      fetchVocabularySheets();
-      // 학습 완료 시 백엔드 추천 캐시가 무효화되므로(레벨 프로필 변화) 추천 단어장도 갱신
-      if (typeof fetchRecommendedBooks === 'function') fetchRecommendedBooks();
+        // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
+        fetchVocabularySheets();
+        // 학습 완료 시 백엔드 추천 캐시가 무효화되므로(레벨 프로필 변화) 추천 단어장도 갱신
+        if (typeof fetchRecommendedBooks === 'function') fetchRecommendedBooks();
+      }
 
       setResultData(result);
 
       // 표시할 화면 리스트 생성
       const screens = [];
 
-      // 1. 새 단어(처음 학습) 개수 슬라이드 — 0개면 건너뜀
+      // 새 단어(처음 학습) 개수 집계
       const newWordCount = testQuestions.filter(q => q.priorityBucket === 'new').length;
-      if (newWordCount > 0) {
-        screens.push({
-          type: 'newWords',
-          data: { totalCnt: newWordCount }
-        });
-      }
 
-      // 2. 암기 상태가 좋아진 단어 개수 슬라이드 — 0개면 건너뜀
+      // 암기 상태가 좋아진 단어 집계
       const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
       const improvedWords = testQuestions.filter(q => {
         const before = STATE_RANK[q.prevMemoryStateKey];
@@ -225,6 +227,8 @@ const StudyResult = () => {
         from: q.prevMemoryStateKey,
         to: q.nextMemoryStateKey,
       }));
+
+      // 1. 암기 상태 상승 슬라이드 — 제일 먼저 표현 (0개면 건너뜀)
       if (improvedList.length > 0) {
         screens.push({
           type: 'memoryImproved',
@@ -232,8 +236,16 @@ const StudyResult = () => {
         });
       }
 
-      // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시
-      if (typeof setLastSessionResult === 'function') {
+      // 2. 새 단어(처음 학습) 개수 슬라이드 — 0개면 건너뜀
+      if (newWordCount > 0) {
+        screens.push({
+          type: 'newWords',
+          data: { totalCnt: newWordCount }
+        });
+      }
+
+      // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시 (게스트는 홈 진입 전이라 생략)
+      if (!isGuest && typeof setLastSessionResult === 'function') {
         setLastSessionResult({
           totalCnt:        testQuestions.length,
           correctCnt,
@@ -260,23 +272,16 @@ const StudyResult = () => {
         }
       } catch (e) { /* 콤보 요약 파싱 실패는 무시 */ }
 
-      // 당근 수확 슬라이드 (장기 암기 첫 도달) — 세션 중 수확 있었으면 표시
-      try {
-        const rawFarm = sessionStorage.getItem('heyvoca_farm_summary');
-        if (rawFarm) {
-          sessionStorage.removeItem('heyvoca_farm_summary');
-          const farmSummary = JSON.parse(rawFarm);
-          if ((farmSummary?.harvests?.length ?? 0) > 0) {
-            screens.push({
-              type: 'farmHarvest',
-              data: farmSummary,
-            });
-          }
-        }
-      } catch (e) { /* 농장 요약 파싱 실패는 무시 */ }
+      // 출석 표현 페이지 (오늘 첫 학습 = 출석)
+      if (result.attend) {
+        screens.push({
+          type: 'attend',
+          data: {}
+        });
+      }
 
-      // 2. 데일리 미션 달성 표현 페이지
-      if (result.today_study_complete) {
+      // 데일리 미션(신규+복습 달성) 표현 페이지
+      if (result.daily_mission_complete) {
         screens.push({
           type: 'dailyMission',
           data: {}
@@ -363,6 +368,11 @@ const StudyResult = () => {
   }
 
   const onClickEndStudy = async () => {
+    // 게스트 맛보기: 결과 확인 후 온보딩 회원가입으로 (맛본 답안은 guestStorage에 저장됨)
+    if (isGuest) {
+      navigate('/onboarding', { state: { step: 'signup' }, replace: true });
+      return;
+    }
     navigate('/home');
   }
 
@@ -546,7 +556,7 @@ const StudyResult = () => {
               background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}`
             }}
           >
-            {testType !== 'quick' && (
+            {testType !== 'quick' && !isGuest && (
               <motion.button
                 className="
                     flex-1
@@ -585,16 +595,171 @@ const StudyResult = () => {
                 stiffness: 500,
                 damping: 15
               }}
-            >학습 종료</motion.button>
+            >{isGuest ? '계속하기' : '학습 종료'}</motion.button>
           </div>
         </motion.div>
       );
     }
 
-    // 나머지 화면들 (newWords, memoryImproved, dailyMission, achievement, gem)
+    // 암기 상태 상승 화면 — 전체 화면 차지 + 상단 아이콘에 오로라 고정(스크롤해도 따라다님)
+    if (currentScreen.type === 'memoryImproved') {
+      const STATE_INFO = {
+        unlearned: { Icon: EggCrack, color: '#9D835A' },
+        leaf:      { Icon: Leaf,     color: '#77CE4F' },
+        plant:     { Icon: Plant,    color: '#38CE38' },
+        carrot:    { Icon: Carrot,   color: '#F68300' },
+      };
+      const words = currentScreen.data.words ?? [];
+
+      // 다른 리워드 슬라이드와 동일한 형식 — 헤더는 고정, 아래 콘텐츠만 슬라이드
+      return (
+        <div className='relative flex flex-col h-[100dvh] bg-layout-white dark:bg-layout-black'>
+          <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
+          {/* 고정 헤더 (슬라이드와 무관하게 항상 고정) */}
+          <div
+            className='absolute left-0 flex items-end justify-center w-full h-[55px] px-[16px] py-[14px] z-20'
+            style={{ top: 'var(--status-bar-height)' }}
+          >
+            <div className="center">
+              <h2 className='text-[18px] font-[700] leading-[21px]'>학습 결과</h2>
+            </div>
+          </div>
+
+          {/* 슬라이드되는 영역 (콘텐츠만) */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentScreenIndex}
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '-100%', opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
+              className='relative flex flex-col flex-1 pt-[55px] overflow-hidden'
+            >
+              {/* 상단 아이콘 + 오로라 */}
+              <div className='relative flex flex-col items-center justify-center pt-[24px] pb-[20px] shrink-0'>
+                {/* 오로라 글로우 — 아이콘 뒤에서 회전 */}
+                <div className='pointer-events-none absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[240px] h-[240px] z-0'>
+                  <motion.img
+                    src={ResultItemBackground01}
+                    alt=""
+                    className='w-full h-full object-contain'
+                    animate={{ rotate: [0, 360, 720], scale: [1, 1.6, 1, 1.6, 1], opacity: [0.7, 1, 0.7, 1, 0.7] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+                <motion.div
+                  className='relative z-10 flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
+                  initial={{ scale: 0, opacity: 0, rotate: -180 }}
+                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                  transition={{
+                    scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+                    rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+                    opacity: { duration: 0.6 },
+                  }}
+                >
+                  {/* 상승 화살표 — 영역 중앙 고정, 아래→중앙 안착 후 위로 사라짐 반복 */}
+                  <motion.span
+                    className='text-status-success-500'
+                    animate={{ y: [14, 0, 0, -16], opacity: [0, 1, 1, 0] }}
+                    transition={{
+                      duration: 1.6,
+                      times: [0, 0.22, 0.62, 1],
+                      repeat: Infinity,
+                      repeatDelay: 0.2,
+                      ease: 'easeOut',
+                    }}
+                  >
+                    <ArrowUp size={40} weight="bold" />
+                  </motion.span>
+                </motion.div>
+                <motion.p
+                  className='relative z-10 text-[16px] font-[700] mt-[14px] text-center'
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  <strong className='text-primary-main-600'>{currentScreen.data.totalCnt}개</strong>의 단어 암기 상태가 상승했어요!
+                </motion.p>
+              </div>
+
+              {/* 변경 단어 목록 — 화면 전체 스크롤 영역 */}
+              <div className='flex-1 overflow-y-auto scrollbar-hide px-[20px] pb-[100px]'>
+                <motion.div
+                  className='flex flex-col gap-[8px]'
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                >
+                  {words.map((w, i) => {
+                    const FromInfo = STATE_INFO[w.from] ?? STATE_INFO.unlearned;
+                    const ToInfo = STATE_INFO[w.to] ?? STATE_INFO.leaf;
+                    return (
+                      <div
+                        key={`${w.origin}-${i}`}
+                        className='flex items-center justify-between py-[14px] px-[16px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+                      >
+                        <span className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>
+                          {w.origin}
+                        </span>
+                        <span className='flex items-center gap-[8px] flex-shrink-0 ml-[10px]'>
+                          <FromInfo.Icon size={16} weight='fill' color={FromInfo.color} />
+                          <ArrowRight size={14} weight='bold' className='text-layout-gray-300' />
+                          <ToInfo.Icon size={20} weight='fill' color={ToInfo.color} />
+                        </span>
+                      </div>
+                    );
+                  })}
+                </motion.div>
+              </div>
+
+              {/* 확인 버튼 */}
+              <div
+                className="absolute bottom-0 left-0 right-0 flex items-center justify-center p-[16px] py-[20px]"
+                style={{ background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}` }}
+              >
+                <motion.button
+                  className="w-full h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
+                  onClick={() => { vibrate({ duration: 5 }); handleNextScreen(); }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                >확인</motion.button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      );
+    }
+
+    // 나머지 화면들 (attend, newWords, dailyMission, achievement, gem)
     let content = null;
 
-    if (currentScreen.type === 'newWords') {
+    if (currentScreen.type === 'attend') {
+      // 출석 (오늘 첫 학습)
+      content = (
+        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+          <motion.img
+            src={AttendanceKing}
+            alt="출석"
+            className='w-[100px] h-[100px] object-contain'
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1, rotate: [0, 5, -5, 0] }}
+            transition={{
+              scale: { type: "tween", ease: "easeOut", duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
+              opacity: { duration: 0.6 },
+              rotate: { delay: 0.8, duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+            }}
+          />
+          <motion.p
+            className='text-[16px] font-[700]'
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            오늘도 <strong className='text-primary-main-600'>출석 완료</strong>!
+          </motion.p>
+        </div>
+      );
+    } else if (currentScreen.type === 'newWords') {
       // 이번 학습으로 처음 학습한 단어 개수
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
@@ -647,71 +812,6 @@ const StudyResult = () => {
           </motion.p>
         </div>
       );
-    } else if (currentScreen.type === 'memoryImproved') {
-      // 이번 학습으로 암기 상태가 좋아진 단어 — 단어별 이전 → 이후 변화 리스트 (승인된 프로토타입 B안)
-      const STATE_INFO = {
-        unlearned: { Icon: EggCrack, color: '#9D835A' },
-        leaf:      { Icon: Leaf,     color: '#77CE4F' },
-        plant:     { Icon: Plant,    color: '#38CE38' },
-        carrot:    { Icon: Carrot,   color: '#F68300' },
-      };
-      const topState = ['carrot', 'plant', 'leaf']
-        .find(k => (currentScreen.data.byState?.[k] || 0) > 0) || 'leaf';
-      const { Icon: TopIcon, color: topColor } = STATE_INFO[topState];
-
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
-          <motion.div
-            className='flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            transition={{
-              scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-              rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-              opacity: { duration: 0.6 },
-            }}
-          >
-            <TopIcon size={44} weight="fill" color={topColor} />
-          </motion.div>
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.5
-            }}
-          >
-            <strong className='text-primary-main-600'>{currentScreen.data.totalCnt}개</strong>의 단어 암기 상태가 상승했어요!
-          </motion.p>
-          <motion.div
-            className='flex flex-col w-full max-w-[300px] max-h-[240px] overflow-y-auto gap-[8px]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
-          >
-            {(currentScreen.data.words ?? []).map((w, i) => {
-              const FromInfo = STATE_INFO[w.from] ?? STATE_INFO.unlearned;
-              const ToInfo = STATE_INFO[w.to] ?? STATE_INFO.leaf;
-              return (
-                <div
-                  key={`${w.origin}-${i}`}
-                  className='flex items-center justify-between py-[10px] px-[14px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark'
-                >
-                  <span className='text-[14px] font-[700] text-layout-black dark:text-layout-white truncate'>
-                    {w.origin}
-                  </span>
-                  <span className='flex items-center gap-[6px] flex-shrink-0 ml-[10px]'>
-                    <FromInfo.Icon size={14} weight='fill' color={FromInfo.color} />
-                    <ArrowRight size={12} weight='bold' className='text-layout-gray-300' />
-                    <ToInfo.Icon size={16} weight='fill' color={ToInfo.color} />
-                  </span>
-                </div>
-              );
-            })}
-          </motion.div>
-        </div>
-      );
     } else if (currentScreen.type === 'dailyMission') {
       // 데일리 미션 달성
       content = (
@@ -760,63 +860,20 @@ const StudyResult = () => {
       );
     } else if (currentScreen.type === 'combo') {
       // 콤보 달성 (AI 추천 테스트)
-      const { maxCombo, best, bestUpdated } = currentScreen.data;
+      const { maxCombo, bestUpdated } = currentScreen.data;
+      // 불꽃 계열(주황)로 — 아이콘 + 한 줄만 두어 오로라 중앙 아이콘 정렬 유지
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
           <motion.div
-            className='flex items-center justify-center w-[100px] h-[100px] rounded-full bg-primary-main-100 dark:bg-layout-gray-dark'
+            className='flex items-center justify-center w-[100px] h-[100px] rounded-full bg-[#FFF1DE] dark:bg-layout-gray-dark'
             initial={{ scale: 0, opacity: 0 }}
-            animate={{
-              scale: [0, 1.2, 1, 1.1, 1],
-              opacity: 1,
-            }}
+            animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1 }}
             transition={{
               scale: { type: "tween", ease: "easeOut", duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
               opacity: { duration: 0.6 },
             }}
           >
-            <Flame weight="fill" className='text-[56px] text-primary-main-600' />
-          </motion.div>
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <strong className='text-primary-main-600'>연속 정답 {maxCombo}콤보</strong>를 달성했어요!
-          </motion.p>
-          {bestUpdated && (
-            <motion.div
-              className='flex items-center gap-[6px] px-[14px] py-[8px] rounded-[50px] bg-layout-gray-50 dark:bg-layout-gray-dark'
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <Trophy weight="fill" className='text-[16px] text-primary-main-600' />
-              <span className='text-[13px] font-[700] text-layout-black dark:text-layout-white'>
-                최고 기록 갱신! {best}콤보
-              </span>
-            </motion.div>
-          )}
-        </div>
-      );
-    } else if (currentScreen.type === 'farmHarvest') {
-      // 당근 수확 (장기 암기 첫 도달)
-      const { harvests = [], gems = 0 } = currentScreen.data;
-      const count = harvests.length;
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.div
-            initial={{ scale: 0, opacity: 0, rotate: -20 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0, y: [0, -8, 0] }}
-            transition={{
-              scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-              rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-              opacity: { duration: 0.6 },
-              y: { delay: 0.8, duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' },
-            }}
-          >
-            <PlantIllustration stage='carrot' wilt='fresh' size={100} />
+            <Flame weight="fill" className='text-[56px] text-[#FF7A00]' />
           </motion.div>
           <motion.p
             className='text-[16px] font-[700] text-center'
@@ -824,21 +881,12 @@ const StudyResult = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <strong className='text-primary-main-600'>단어 {count}개</strong>가 당근으로 자랐어요!
+            {bestUpdated ? (
+              <><strong className='text-[#FF7A00]'>최고 기록 갱신!</strong> {maxCombo}콤보</>
+            ) : (
+              <><strong className='text-[#FF7A00]'>연속 정답 {maxCombo}콤보</strong> 달성!</>
+            )}
           </motion.p>
-          {gems > 0 && (
-            <motion.div
-              className='flex items-center gap-[6px] px-[14px] py-[8px] rounded-[50px] bg-layout-gray-50 dark:bg-layout-gray-dark'
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <img src={gemImg} alt='보석' className='w-[16px] h-[14px]' />
-              <span className='text-[13px] font-[700] text-layout-black dark:text-layout-white'>
-                수확 보상 보석 +{gems}개
-              </span>
-            </motion.div>
-          )}
         </div>
       );
     } else if (currentScreen.type === 'achievement') {

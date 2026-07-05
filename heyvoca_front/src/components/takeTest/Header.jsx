@@ -7,14 +7,23 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 
-const Header = ({ testType, onBackClick }) => {
+// 문제 유형별 안내 문구 — 상단 헤더에 현재 문제가 무엇을 요구하는지 표시.
+const QUESTION_INSTRUCTIONS = {
+  multipleChoice: '알맞은 뜻을 선택하세요',
+  multipleChoiceListening: '듣고 알맞은 뜻을 선택하세요',
+  fillInTheBlank: '빈칸에 알맞은 단어를 입력하세요',
+  cardMatch: '같은 뜻끼리 짝지어 보세요',
+  cardMatchListening: '듣고 같은 카드를 짝지어 보세요',
+};
+
+const Header = ({ testType, onBackClick, questionType }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { recentStudy } = useVocabulary();
   const navigate = useNavigate();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
 
-  console.log(recentStudy);
+  const instruction = QUESTION_INSTRUCTIONS[questionType] || '테스트';
 
   // 상위에서 전달받은 onBackClick이 있으면 사용, 없으면 기본 동작
   const handleBackClick = async () => {
@@ -68,9 +77,9 @@ const Header = ({ testType, onBackClick }) => {
           <CaretLeft size={24} />
         </motion.button>
       </div>
-      <div className="center">
-        <h2 className='text-[18px] font-[700] leading-[21px]'>
-          테스트
+      <div className="center px-[44px]">
+        <h2 className='text-[18px] font-[700] leading-[21px] text-center'>
+          {instruction}
         </h2>
       </div>
       <div className="right">

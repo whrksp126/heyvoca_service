@@ -112,11 +112,13 @@ def revive_plant():
 @game_bp.route('/farm/buy-revive', methods=['POST'])
 @jwt_required
 def buy_revive_items():
-    """보석으로 부활템 구매 (1보석=5개)."""
+    """보석으로 부활템 구매 (1보석=5개). body.packs 묶음 수(기본 1)."""
     from app.services.game.farm import buy_revive
     user_id = UUID(g.user_id)
+    data = request.get_json(silent=True) or {}
+    packs = data.get('packs', 1)
     try:
-        return jsonify({'code': 200, 'data': buy_revive(user_id)}), 200
+        return jsonify({'code': 200, 'data': buy_revive(user_id, packs)}), 200
     except PermissionError:
         return jsonify({'code': 400, 'message': '보석이 부족합니다.'}), 400
     except Exception:
