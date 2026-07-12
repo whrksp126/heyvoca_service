@@ -108,6 +108,7 @@ export const VocabularyProvider = ({ children }) => {
   const memoryStats = useMemo(() => {
     let total = 0, unlearned = 0, shortTerm = 0, mediumTerm = 0, longTerm = 0;
     let overdue = 0, dueToday = 0;
+    let lastReviewMs = null; // 전체 단어 중 가장 최근 fsrs.last_review (= 마지막 학습 시각)
 
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
@@ -119,6 +120,13 @@ export const VocabularyProvider = ({ children }) => {
         const reps = fsrs?.reps ?? 0;
         const stability = fsrs?.stability ?? 0;
         const nextReview = fsrs?.next_review;
+
+        if (fsrs?.last_review) {
+          const lrMs = new Date(fsrs.last_review).getTime();
+          if (!Number.isNaN(lrMs) && (lastReviewMs === null || lrMs > lastReviewMs)) {
+            lastReviewMs = lrMs;
+          }
+        }
 
         if (!fsrs || fsrs.state === 'new' || !fsrs.state) {
           unlearned++;
@@ -136,9 +144,23 @@ export const VocabularyProvider = ({ children }) => {
         }
       }
     }
+
+    // daysSinceLastStudy: 마지막 학습일로부터 경과한 일수(달력 기준, 오늘=0).
+    // 한 번도 학습한 적 없으면 null.
+    let daysSinceLastStudy = null;
+    if (lastReviewMs !== null) {
+      const lastReviewDate = new Date(lastReviewMs);
+      lastReviewDate.setHours(0, 0, 0, 0);
+      daysSinceLastStudy = Math.round((todayDate.getTime() - lastReviewDate.getTime()) / 86400000);
+    }
+
     // reviewDue: 오늘 안에 학습해야 할 단어 (= 복습 지연 + 오늘 예정)
     // 메인 화면 "오늘 복습 N개" 멘트의 카운트 기준
-    return { total, unlearned, shortTerm, mediumTerm, longTerm, overdue, dueToday, reviewDue: overdue + dueToday };
+    return {
+      total, unlearned, shortTerm, mediumTerm, longTerm, overdue, dueToday,
+      reviewDue: overdue + dueToday,
+      daysSinceLastStudy,
+    };
   }, [vocabularySheets]);
 
   // [NEW] 사용자 사전 데이터 불러오기

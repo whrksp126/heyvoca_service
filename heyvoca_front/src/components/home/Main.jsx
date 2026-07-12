@@ -144,6 +144,7 @@ const Main = () => {
       effectiveStats?.shortTerm,
       effectiveStats?.mediumTerm,
       effectiveStats?.total,
+      effectiveStats?.daysSinceLastStudy,
       lastSessionResult?.completedAt,
       todayNewWords,
       dailyNewLimit,

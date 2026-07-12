@@ -11,7 +11,7 @@ function pick(candidates) {
 }
 
 /**
- * @param {object} stats           - effectiveStats (total, unlearned, shortTerm, mediumTerm, longTerm, reviewDue, …)
+ * @param {object} stats           - effectiveStats (total, unlearned, shortTerm, mediumTerm, longTerm, reviewDue, daysSinceLastStudy, …)
  * @param {object|null} sessionResult - lastSessionResult (totalCnt, correctCnt, incorrectCnt, improvedCount, decreasedCount, newLearnedCount, completedAt)
  * @param {number} todayNewWords   - 오늘 처음 배운 새 단어 수
  * @param {number} dailyNewLimit   - userProfile.daily_new_limit (0=무제한)
@@ -25,6 +25,7 @@ export function getHomeGreeting(stats, sessionResult = null, todayNewWords = 0, 
     mediumTerm = 0,
     longTerm   = 0,
     reviewDue  = 0,
+    daysSinceLastStudy = 0,
   } = stats || {};
 
   // ── 신규 여력 계산 ──
@@ -168,13 +169,74 @@ export function getHomeGreeting(stats, sessionResult = null, todayNewWords = 0, 
     };
   }
 
-  // ── C. 위험: 잊기 직전 단어가 너무 많음 (잃는 공포 — 강) ──
+  // ── C. 복습 밀림이 많음 (reviewDue >= 20) ──
+  // 방치 일수(daysSinceLastStudy)에 따라 톤을 다르게: 막 밀리기 시작 vs 오래 방치.
+  // 며칠이 지났든 숫자만 보고 매번 "위험해요"를 반복하면 방치가 길어질수록
+  // 오히려 죄책감만 커지고 복귀 동기가 떨어지므로 단계적으로 톤을 낮춘다.
   if (reviewDue >= 20) {
-    return {
-      line1: '위험해요!',
-      line2: <><strong>{reviewDue}개 단어</strong>의 기억이</>,
-      line3: '흐려지고 있어요',
-    };
+    // C1. 1~2일 (진짜 임박한 위험 — 잃는 공포 유지)
+    if (daysSinceLastStudy <= 2) {
+      const candidates = [
+        {
+          line1: '슬슬 챙겨볼까요?',
+          line2: <><strong>{reviewDue}개 단어</strong>가</>,
+          line3: '기다리고 있어요',
+        },
+        {
+          line1: '지금이 딱이에요!',
+          line2: <><strong>{reviewDue}개</strong>만</>,
+          line3: '훑어봐요',
+        },
+        {
+          line1: '복습 타이밍이에요',
+          line2: <><strong>{reviewDue}개</strong></>,
+          line3: '확인해볼까요?',
+        },
+      ];
+      return pick(candidates);
+    }
+
+    // C2. 3~6일 방치 (welcome-back 톤)
+    if (daysSinceLastStudy <= 6) {
+      const candidates = [
+        {
+          line1: '오랜만이에요!',
+          line2: <><strong>{reviewDue}개 단어</strong>가</>,
+          line3: '기다리고 있어요',
+        },
+        {
+          line1: '그동안 잘 지내셨어요?',
+          line2: <><strong>{reviewDue}개</strong> 복습이</>,
+          line3: '쌓였어요',
+        },
+        {
+          line1: '다시 볼 준비 됐어요',
+          line2: <><strong>{reviewDue}개</strong>부터</>,
+          line3: '가볍게 시작해볼까요',
+        },
+      ];
+      return pick(candidates);
+    }
+
+    // C3. 7일+ 방치 (부담 없는 재시작 — 죄책감 유발 없이 초대)
+    const candidates = [
+      {
+        line1: '천천히 다시 가볼까요?',
+        line2: <><strong>{reviewDue}개</strong>가</>,
+        line3: '있어요',
+      },
+      {
+        line1: '리셋하는 마음으로',
+        line2: <><strong>{reviewDue}개</strong>부터</>,
+        line3: '살펴봐요',
+      },
+      {
+        line1: '오랜만이에요!',
+        line2: <>부담 없이 <strong>{reviewDue}개</strong>만</>,
+        line3: '볼까요',
+      },
+    ];
+    return pick(candidates);
   }
 
   // ── D. 잊기 전에 챙겨야 할 단어가 꽤 있음 (잃는 공포 — 중) ──
