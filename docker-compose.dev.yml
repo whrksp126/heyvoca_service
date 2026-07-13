@@ -22,6 +22,11 @@ services:
       - heyvoca_dev
       - nginx_proxy
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1.0"
 
   back:
     container_name: heyvoca_back_dev
@@ -40,16 +45,25 @@ services:
     networks:
       - heyvoca_dev
       - nginx_proxy
+    # DB/Redis가 healthy 된 뒤 기동 → 정전 재부팅 시 mysql 미준비로 인한 부팅 실패/재시작 루프 방지
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/health')\" || exit 1"]
+      # ubuntu:20.04 베이스는 `python`이 없다 → 반드시 python3 (기존 python은 항상 실패해 unhealthy 오탐)
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/health')\" || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1.5"
 
   mysql:
     container_name: heyvoca_mysql_dev
@@ -66,6 +80,18 @@ services:
     networks:
       - heyvoca_dev
     restart: always
+    healthcheck:
+      # ping은 인증 없이 서버 도달 여부만 확인(자격증명 불필요) → 비밀번호의 ! 이스케이프 이슈 없음
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1.0"
 
   redis:
     container_name: heyvoca_redis_dev
@@ -73,6 +99,17 @@ services:
     networks:
       - heyvoca_dev
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+          cpus: "0.5"
 
 networks:
   heyvoca_dev:
