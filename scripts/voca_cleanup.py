@@ -92,12 +92,19 @@ def main():
     cur.execute(f'SELECT COUNT(*) AS c FROM admin_voca_book_map WHERE voca_id IN ({ph})', delete_ids)
     abm_hit = cur.fetchone()['c']
 
-    # 교정 충돌 검사 — 하이픈 뗀 결과가 이미 존재하면 교정 대신 삭제해야 중복이 안 생김
+    # 교정 충돌 검사 — 기호 뗀 결과가 이미 존재하면 교정 대신 삭제해야 중복이 안 생김.
+    # 단, 그 단어가 단어장에 실려 있으면 매핑을 살아남는 원형으로 이관한 뒤 삭제해야
+    # 판매 중인 단어장에서 단어가 사라지지 않는다.
     fix_apply, fix_collide = [], []
     for r in fix_rows:
         cur.execute('SELECT id FROM voca WHERE word = %s AND id <> %s',
                     (r['fixed_word'], int(r['voca_id'])))
-        (fix_collide if cur.fetchone() else fix_apply).append(r)
+        row = cur.fetchone()
+        if row:
+            r['survivor_id'] = row['id']   # 매핑을 넘겨받을 원형
+            fix_collide.append(r)
+        else:
+            fix_apply.append(r)
 
     log('\n[영향 범위]')
     log(f'  삭제로 함께 지워질 매핑 — 뜻 {mm_hit} / 예문 {em_hit} / 단어장 {bm_hit} (CASCADE)')
@@ -121,25 +128,37 @@ def main():
                         (r['fixed_word'], int(r['voca_id'])))
         log(f'  1) 교정 완료: {len(fix_apply)}건')
 
-        # 충돌난 교정 대상은 삭제 목록에 합류
+        # 2. 충돌 건 — 단어장 매핑을 살아남는 원형으로 이관 후 삭제 목록에 합류.
+        #    (그냥 지우면 판매 중인 단어장에서 단어가 사라짐)
+        moved = 0
+        for r in fix_collide:
+            dead, alive = int(r['voca_id']), int(r['survivor_id'])
+            for table in ('admin_voca_book_map', 'voca_book_map'):
+                # 원형이 이미 그 단어장에 있으면 이관 불가(중복) → 매핑만 버림
+                cur.execute(
+                    f'UPDATE IGNORE {table} SET voca_id = %s WHERE voca_id = %s',
+                    (alive, dead))
+                moved += cur.rowcount
+        log(f'  2) 충돌 건 단어장 매핑 이관: {moved}건 ({len(fix_collide)}개 단어)')
+
         all_delete = delete_ids + [int(r['voca_id']) for r in fix_collide]
         ph2 = ','.join(['%s'] * len(all_delete))
 
-        # 2. admin 매핑 선삭제 (이 FK만 NO ACTION)
+        # 3. admin 매핑 선삭제 (이 FK만 NO ACTION — 남아 있으면 DELETE가 거부됨)
         cur.execute(f'DELETE FROM admin_voca_book_map WHERE voca_id IN ({ph2})', all_delete)
-        log(f'  2) admin_voca_book_map 선삭제: {cur.rowcount}건')
+        log(f'  3) admin_voca_book_map 선삭제: {cur.rowcount}건')
 
-        # 3. voca 삭제 (나머지 매핑은 CASCADE)
+        # 4. voca 삭제 (나머지 매핑은 CASCADE)
         cur.execute(f'DELETE FROM voca WHERE id IN ({ph2})', all_delete)
-        log(f'  3) voca 삭제: {cur.rowcount}건')
+        log(f'  4) voca 삭제: {cur.rowcount}건')
 
-        # 4. 고아 정리 — 어떤 단어와도 연결되지 않은 뜻/예문만
+        # 5. 고아 정리 — 어떤 단어와도 연결되지 않은 뜻/예문만
         cur.execute("""
             DELETE vm FROM voca_meaning vm
             LEFT JOIN voca_meaning_map vmm ON vm.id = vmm.meaning_id
             WHERE vmm.meaning_id IS NULL
         """)
-        log(f'  4) 고아 뜻 삭제: {cur.rowcount}건')
+        log(f'  5) 고아 뜻 삭제: {cur.rowcount}건')
         cur.execute("""
             DELETE ve FROM voca_example ve
             LEFT JOIN voca_example_map vem ON ve.id = vem.example_id

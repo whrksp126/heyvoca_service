@@ -61,7 +61,17 @@ def db_connect():
 # ---------- 분류 규칙 ----------
 
 RE_HANGUL = re.compile(r'[가-힣]')
+RE_CJK = re.compile(r'[぀-ヿ一-鿿]')   # 일본어 가나 + 한자
 RE_PAGE = re.compile(r'^page\s?\d+$', re.IGNORECASE)
+# 특수기호 오염 — word에 기호가 들어간 것 자체가 비정상.
+# 단, 단어 자체는 멀쩡한 경우가 많으므로(예: 'Return on Investment (ROI)')
+# 기호를 떼낸 원형으로 교정하고, 원형이 이미 있으면 중복으로 삭제한다.
+RE_BRACKET = re.compile(r'[\[\]()~=]|\.\.')            # bill[v.] / cup(v) / remind~of / put..together
+RE_STARTS_ALPHA = re.compile(r'^[A-Za-z]')
+
+# 쉼표 — 나열형('be,become,seem')과 앞뒤 쉼표(',which', 'Notably,')만 오염.
+# 'no pain, no gain' 같은 속담(쉼표+공백)은 정상 표현이므로 제외.
+RE_COMMA_BAD = re.compile(r'^,|,$|,\S')
 
 # 접사(prefix) — 'ex-', 're-' 처럼 꼬리하이픈으로 표기된 접두사.
 # Wiktionary는 'ex'/'re'/'pre'를 독립 단어로도 수록하므로 API로는 구분이 안 된다.
@@ -71,24 +81,83 @@ AFFIXES = {
     'hyper', 'il', 'im', 'in', 'inter', 'ir', 'micro', 'mid', 'mis', 'mono',
     'multi', 'non', 'over', 'post', 'pre', 'pro', 're', 'semi', 'sub', 'super',
     'tele', 'trans', 'tri', 'un', 'under', 'uni',
+    # 접미사 — '-fold', '-less' 처럼 선행 하이픈으로 표기된 것
+    'fold', 'legged', 'less', 'meter', 'ward', 'wise', 'ful', 'able', 'ish',
 }
+
+# 정상 약어 — 마침표가 단어의 일부라 떼면 안 된다. 규칙에 걸려도 보존.
+ABBREVIATIONS = {
+    'a.d.', 'b.c.', 'a.m.', 'p.m.', 'a.m', 'p.m', 'e.g.', 'i.e.', 'etc.',
+    'mr.', 'mrs.', 'ms.', 'dr.', 'bldg.', 'dia.', 'ext.', 'gov.', 'imp.',
+    'max.', 'min.', 'mech.', 'mezz.', 'prep.', 'rev.', 'p.c.', 'p.d.',
+    'p.e.', 'r.c.', 'r.d.', 'r.s.v.p', 'n.g.o', 'no.',
+}
+
+# 규칙에 걸리지만 실재하는 정상 단어 — 보존
+KEEP_WORDS = {'œuvre'}
 
 
 def classify(word):
     """단어 하나를 보고 사유를 반환. 정상이면 None.
 
-    공백 표현(clinical trial)과 중간 하이픈(e-commerce)은 규칙에 걸리지 않는다.
+    보존 예외:
+      - 공백 표현      : clinical trial
+      - 중간 하이픈    : e-commerce, mother-in-law
+      - 정상 약어      : a.m., etc., Mr.  (ABBREVIATIONS)
     """
     w = word.strip()
+    if w.lower() in ABBREVIATIONS or w.lower() in KEEP_WORDS:
+        return None              # 정상 약어/단어 → 보존
     if RE_HANGUL.search(w):
         return 'hangul'          # 한글 섞임
+    if RE_CJK.search(w):
+        return 'cjk'             # 중국어/일본어 문장
     if '+' in w:
         return 'plus'            # acro+phobia
     if RE_PAGE.match(w):
         return 'page'            # page60
+    if RE_BRACKET.search(w):
+        return 'bracket'         # bill[v.] / cup(v) / Return on Investment (ROI)
+    if RE_COMMA_BAD.search(w):
+        return 'comma'           # be,become,seem / ,which / Notably,
     if w.endswith('-'):
         return 'tail_hyphen'     # abandon- / re- / -----22----
+    if not RE_STARTS_ALPHA.match(w):
+        return 'lead_symbol'     # -fold / .deep / ..-oriented / 1-2copyright
+    if w.endswith('.'):
+        return 'tail_period'     # alert. / Absolutely. (약어는 위에서 걸러짐)
     return None
+
+
+RE_WORDLIKE = re.compile(r"^[A-Za-z][A-Za-z'\- ]*$")
+
+
+def stem_candidates(word):
+    """오염된 표기에서 원형 후보들을 만든다. 어느 것이 맞는지는 DB/Wiktionary로 검증.
+
+    괄호는 두 가지 해석이 가능해 후보를 모두 낸다:
+      'defence(se)'  → 'defence'(내용 제거) / 'defencese'(내용 유지)  → 앞이 정답
+      'corpor(e)al'  → 'corporal'          / 'corporeal'            → 뒤가 정답
+    검증을 거치므로 어느 쪽이 맞는지 미리 알 필요가 없다.
+
+    '~'(by~ing)나 '..'(put..together)는 문법 패턴이라 원형이 없다 → 후보 없음(삭제).
+    """
+    w = word.strip()
+    if '~' in w or '..' in w:
+        return []                      # 문법 패턴 — 살릴 원형이 없음
+    w = w.split('=')[0]                # 동의어 표기: amphibolous=ambiguous → 앞쪽
+    w = w.split(',')[0]                # 나열형: removal,remover → 앞쪽
+
+    # 괄호 내용을 제거한 것 / 유지한 것 두 후보
+    dropped = re.sub(r'\([^)]*\)|\[[^\]]*\]', '', w)   # cando(u)r → candor
+    kept = re.sub(r'[()\[\]]', '', w)                  # cando(u)r → candour
+
+    out = []
+    for c in (dropped, kept):
+        c = re.sub(r'\s+', ' ', c).strip(" .-,")
+        if c and RE_WORDLIKE.match(c) and c not in out:
+            out.append(c)
+    return out
 
 
 def check_wiktionary(word, session):
@@ -135,40 +204,54 @@ def main():
             flagged.append({**v, 'reason': reason})
     log(f'규칙에 걸린 후보: {len(flagged):,}개')
 
-    # 2) 꼬리하이픈 분해 — 원형이 DB에 있으면 순수 중복(삭제), 없으면 교정 후보
+    # 2) 기호 오염 분해 — 기호를 떼낸 원형이 DB에 있으면 순수 중복(삭제),
+    #    없으면 교정 후보(그냥 지우면 단어가 사라짐).
+    #    'Return on Investment (ROI)' → 'Return on Investment' 처럼 괄호 주석을 떼낸다.
+    SYMBOL_REASONS = {'tail_hyphen', 'tail_period', 'lead_symbol', 'bracket', 'comma'}
     fix_candidates = []
     for f in flagged:
-        if f['reason'] != 'tail_hyphen':
+        if f['reason'] not in SYMBOL_REASONS:
             continue
-        stem = f['word'].strip().rstrip('-').strip()
-        # 한글/기호 섞인 쓰레기(-----22----, q비율-)는 원형이 단어가 아님 → 교정 대상 아님
-        if not stem or not re.fullmatch(r"[A-Za-z][A-Za-z'\- ]*", stem):
-            f['reason'] = 'tail_hyphen_garbage'
+        cands = stem_candidates(f['word'])
+        # 살릴 원형이 없으면(-----22----, by~ing, 1-2copyright) 삭제
+        if not cands:
+            f['reason'] += '_garbage'
             continue
-        if stem.lower() in AFFIXES:
-            f['reason'] = 'affix'             # re-, pre- 등 접두사 → 삭제
-        elif stem.lower() in all_words:
-            f['reason'] = 'tail_hyphen_dup'   # 원형 이미 존재 → 삭제해도 손실 0
-        else:
-            f['reason'] = 'tail_hyphen_orphan'  # 원형 없음 → 교정으로 살려야 함
-            f['fixed_word'] = stem
-            fix_candidates.append(f)
+        if cands[0].lower() in AFFIXES:
+            f['reason'] = 'affix'             # re-, -fold 등 접사 → 삭제
+            continue
+        # 후보 중 하나라도 DB에 이미 있으면 중복 → 삭제해도 손실 0
+        dup = next((c for c in cands if c.lower() in all_words), None)
+        if dup:
+            f['reason'] += '_dup'
+            continue
+        f['reason'] = 'symbol_orphan'         # 원형 없음 → 교정으로 살려야 함
+        f['candidates'] = cands               # Wiktionary가 맞는 쪽을 골라준다
+        fix_candidates.append(f)
 
-    log(f'  └ 꼬리하이픈 중 "원형 없음"(교정 후보): {len(fix_candidates)}개')
+    log(f'  └ 기호 오염 중 "원형 없음"(교정 후보): {len(fix_candidates)}개')
 
     # 3) 교정 후보만 Wiktionary 검증 (실재 단어면 교정, 아니면 LLM 판정)
     if not args.no_wiktionary and fix_candidates:
         log(f'Wiktionary 검증 시작 ({len(fix_candidates)}개)...')
         session = requests.Session()
         for i, f in enumerate(fix_candidates, 1):
-            ok = check_wiktionary(f['fixed_word'], session)
-            f['wiktionary'] = {True: 'found', False: 'not_found', None: 'error'}[ok]
+            # 후보를 순서대로 조회해 실재하는 첫 단어를 교정값으로 채택.
+            # (defence(se) → 'defence' 채택 / corpor(e)al → 'corporeal' 채택)
+            f['wiktionary'] = 'not_found'
+            for c in f['candidates']:
+                if check_wiktionary(c, session):
+                    f['fixed_word'], f['wiktionary'] = c, 'found'
+                    break
+                time.sleep(WIKTIONARY_DELAY)
+            f.setdefault('fixed_word', f['candidates'][0])
             time.sleep(WIKTIONARY_DELAY)
-            if i % 10 == 0:
+            if i % 20 == 0:
                 log(f'  {i}/{len(fix_candidates)}')
     else:
         for f in fix_candidates:
             f['wiktionary'] = 'skipped'
+            f['fixed_word'] = f['candidates'][0]
 
     # 4) 최종 분류 — 삭제 / 교정 / LLM판정
     delete_rows, fix_rows, llm_review = [], [], []
@@ -182,12 +265,17 @@ def main():
             'fixed_word': f.get('fixed_word', ''),
             'wiktionary': f.get('wiktionary', ''),
         }
-        if f['reason'] != 'tail_hyphen_orphan':
-            delete_rows.append(row)          # 쓰레기/중복/접사 → 삭제
-        elif f.get('wiktionary') == 'not_found':
-            llm_review.append(row)           # 실재 불확실 → LLM 판정 (삭제 보류)
+        if f['reason'] == 'symbol_orphan':
+            if f.get('wiktionary') == 'not_found':
+                llm_review.append(row)       # 실재 불확실 → LLM 판정 (삭제 보류)
+            else:
+                fix_rows.append(row)         # 실재 단어 → 기호 제거 교정
+        elif row['in_admin_book']:
+            # 서점에서 판매 중인 단어는 자동 삭제하지 않는다.
+            # (1차에서 공백 표현 980개가 삭제될 뻔한 것과 같은 함정)
+            llm_review.append(row)
         else:
-            fix_rows.append(row)             # 실재 단어 → 하이픈 제거 교정
+            delete_rows.append(row)          # 쓰레기/중복/접사 → 삭제
 
     # 5) 리포트 출력
     def write_csv(name, rows):

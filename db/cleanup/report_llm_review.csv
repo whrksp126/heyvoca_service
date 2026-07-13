@@ -1,3 +1,19 @@
 ﻿voca_id,word,reason,has_meaning,in_admin_book,fixed_word,wiktionary,llm_verdict,llm_reason
-32168,denail-,tail_hyphen_orphan,True,False,denail,not_found,delete,'denial'의 오타. 뜻(거부/부정)이 denial과 일치하고 denial(id 8027)이 이미 DB에 존재
-29613,restorable-,tail_hyphen_orphan,True,False,restorable,not_found,fix,'restorable'은 실재 영단어(회복할 수 있는). DB에 없고 Wiktionary 미수록일 뿐
+34994,choose-chose=chosen,symbol_orphan,True,False,choose-chose,not_found,delete,동사 활용 표기(choose-chose-chosen). 표제어가 아님
+52697,Corporate Social Responsibility (CSR),symbol_orphan,True,True,Corporate Social Responsibility,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+52695,Customer Relationship Management (CRM),symbol_orphan,True,True,Customer Relationship Management,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+52555,Explanation of Benefits (EOB),symbol_orphan,True,True,Explanation of Benefits,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+28004,EXW[EX-Work],symbol_orphan,True,False,EXW,not_found,fix,무역조건 Ex Works 약어
+52554,Flexible Spending Account (FSA),symbol_orphan,True,True,Flexible Spending Account,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+33890,GB(gigabyte),symbol_orphan,True,False,GB,not_found,fix,정상 약어
+43835,go(come)home,symbol_orphan,True,False,gohome,not_found,fix,"관용구 ""go/come home""(가슴 깊이 호소하다). 표기만 오염"
+52547,Health Maintenance Organization (HMO),symbol_orphan,True,True,Health Maintenance Organization,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+52553,Health Savings Account (HSA),symbol_orphan,True,True,Health Savings Account,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+52616,KPI (Key Performance Indicator),symbol_orphan,True,True,KPI,not_found,fix,표제어는 KPI
+43494,leaker.,symbol_orphan,True,False,leaker,not_found,fix,실재 영단어. 꼬리 마침표만 오염
+40767,metacarpophalangeal[joint],symbol_orphan,True,False,metacarpophalangeal,not_found,fix,실재 의학 용어
+52548,Preferred Provider Organization (PPO),symbol_orphan,True,True,Preferred Provider Organization,not_found,fix,정상 다단어 용어. 괄호 약어 표기만 제거 (서점 판매중)
+51429,psr(s),symbol_orphan,True,False,psr,not_found,fix,뜻=프로젝트 특정 요구사항. (s)는 복수 표기
+52659,Return on Investment (ROI),bracket_dup,True,True,,,fix,"정상 용어. 깨끗한 원형(52740)이 이미 있어 중복이나, 판매중이라 삭제 대신 교정"
+39356,trancelike(a),symbol_orphan,True,False,trancelike,not_found,fix,실재 영단어. (a)는 품사 표기
+39355,unrelentingly(adv),symbol_orphan,True,False,unrelentingly,not_found,fix,실재 영단어. (adv)는 품사 표기
