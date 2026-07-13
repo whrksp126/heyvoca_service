@@ -1,0 +1,3 @@
+﻿voca_id,word,reason,has_meaning,in_admin_book,fixed_word,wiktionary,llm_verdict,llm_reason
+32168,denail-,tail_hyphen_orphan,True,False,denail,not_found,delete,'denial'의 오타. 뜻(거부/부정)이 denial과 일치하고 denial(id 8027)이 이미 DB에 존재
+29613,restorable-,tail_hyphen_orphan,True,False,restorable,not_found,fix,'restorable'은 실재 영단어(회복할 수 있는). DB에 없고 Wiktionary 미수록일 뿐
