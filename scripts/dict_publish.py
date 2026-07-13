@@ -35,7 +35,7 @@ CHANGELOG_PATH = PROJECT_ROOT / 'db' / 'dict' / 'CHANGELOG.md'
 
 DICT_SCHEMA = 'heyvoca_dict'
 TRACKED_TABLES = [
-    'voca', 'voca_meaning', 'voca_example',
+    'voca', 'voca_meaning', 'voca_example', 'voca_label',
     'voca_book', 'admin_voca_book', 'bookstore', 'daily_sentence',
     'voca_book_map', 'voca_meaning_map', 'voca_example_map',
     'admin_voca_book_map',
