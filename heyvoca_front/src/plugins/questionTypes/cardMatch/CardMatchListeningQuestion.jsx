@@ -155,6 +155,18 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     setSelectedRight(null);
     setAnimatingWordIds(prev => new Set([...prev, leftWord.id]));
 
+    // 카드 1장 채점 즉시 부모에 결과 전달 → 콤보/프로그래스 바로 반영
+    // (CardMatchQuestion.jsx의 notifyResolved와 동일한 데이터 구조/타이밍)
+    const notifyResolved = () => {
+      onCardMatched?.({
+        wordId: leftWord.id,
+        sheetId: leftWord.vocabularySheetId ?? question.vocabularySheetId,
+        isCorrect: isMatch,
+        timeTakenMs,
+        updateData: { fsrs: leftWord.fsrs, isCorrect: isMatch, updatedAt: new Date().toISOString() },
+      });
+    };
+
     if (isMatch) {
       vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
@@ -165,7 +177,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
         setCorrectFlashWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
         setMatchedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        onCardMatched?.();
+        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {
@@ -184,7 +196,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
         setWrongFlashRightWordIds(prev => { const s = new Set(prev); s.delete(rightWord.id); return s; });
         setFailedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        onCardMatched?.();
+        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {

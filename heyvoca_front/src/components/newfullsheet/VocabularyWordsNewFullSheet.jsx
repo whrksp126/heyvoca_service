@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { CaretLeft, Plus, Trash, CaretDown, CaretUp, Timer } from '@phosphor-icons/react';
+import { CaretLeft, Plus, Trash, CaretDown, CaretUp, Timer, Lock } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -14,7 +14,7 @@ import MemorizationStatus from "../common/MemorizationStatus";
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import ExampleList from '../common/ExampleList';
@@ -286,7 +286,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
   const handleAddClick = () => {
     vibrate({ duration: 5 });
-    if (isPurchasedBook) return;
+    if (isPurchasedBook) {
+      showToast('제공받은 단어장은 단어를 추가할 수 없어요.');
+      return;
+    }
     pushNewBottomSheet(AddWordNewBottomSheet, { vocabularyId: vocabularySheet.id }, {
       smFull: true,
       closeOnBackdropClick: true
@@ -360,24 +363,26 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         <div className="flex items-center gap-[10px]">
 
           <div className="relative">
-            {!isPurchasedBook && (
-              <motion.button
-                style={{
-                  width: '20px',
-                  height: '20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--primary-main-600)'
-                }}
-                variants={buttonVariants}
-                whileTap="tap"
-                onClick={handleAddClick}
-                aria-label="새 단어 추가"
-              >
+            <motion.button
+              style={{
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: isPurchasedBook ? 'var(--layout-gray-300)' : 'var(--primary-main-600)'
+              }}
+              variants={buttonVariants}
+              whileTap="tap"
+              onClick={handleAddClick}
+              aria-label={isPurchasedBook ? '제공받은 단어장은 단어를 추가할 수 없어요' : '새 단어 추가'}
+            >
+              {isPurchasedBook ? (
+                <Lock size={18} weight="light" />
+              ) : (
                 <Plus size={20} weight="light" />
-              </motion.button>
-            )}
+              )}
+            </motion.button>
 
             {/* Tooltip when empty - Positioned relative to the 20x20 button container */}
             {!isPurchasedBook && vocabularySheet?.words?.length === 0 && (
@@ -587,31 +592,34 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             </div>
 
             {/* Add Button - 136x40, rounded-8px */}
-            {!isPurchasedBook && (
-              <motion.button
-                onClick={handleAddClick}
-                whileTap={{ scale: 0.95 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '5px',
-                  width: '136px',
-                  height: '40px',
-                  backgroundColor: 'var(--primary-main-600)',
-                  borderRadius: '8px',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
+            <motion.button
+              onClick={handleAddClick}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '5px',
+                width: '136px',
+                height: '40px',
+                backgroundColor: isPurchasedBook ? 'var(--layout-gray-200)' : 'var(--primary-main-600)',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              aria-label={isPurchasedBook ? '제공받은 단어장은 단어를 추가할 수 없어요' : '단어 추가하기'}
+            >
+              {isPurchasedBook ? (
+                <Lock size={16} color={isDark ? 'var(--layout-black)' : 'var(--layout-white)'} weight="light" />
+              ) : (
                 <Plus size={16} color={isDark ? 'var(--layout-black)' : 'var(--layout-white)'} weight="light" />
-                <span
-                  className="text-[14px] font-[700] text-layout-white dark:text-layout-black"
-                >
-                  단어 추가하기
-                </span>
-              </motion.button>
-            )}
+              )}
+              <span
+                className="text-[14px] font-[700] text-layout-white dark:text-layout-black"
+              >
+                단어 추가하기
+              </span>
+            </motion.button>
           </div>
         ) : (
           <>

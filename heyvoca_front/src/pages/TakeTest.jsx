@@ -50,6 +50,10 @@ const TakeTest = () => {
   const passedVocaIdsRef = useRef(new Set());
   // 세션의 고유 단어 수 (진행률 분모 — 초기화 시 확정)
   const totalUniqueVocaCountRef = useRef(0);
+  // 카드매칭 오답 → 사지선다 변환 재출제가 이미 큐에 삽입된 단어 ID 집합
+  // (카드 1장 즉시 콜백(onCardMatched)과 세트 완료 콜백(onComplete)이 같은 단어를 중복 처리하므로
+  //  단어당 재출제를 정확히 1회만 큐잉하도록 방지)
+  const cardRetryEnqueuedRef = useRef(new Set());
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -335,6 +339,7 @@ const TakeTest = () => {
     loggedVocaIdsRef.current = new Set();
     retryCountMapRef.current = new Map();
     passedVocaIdsRef.current = new Set();
+    cardRetryEnqueuedRef.current = new Set();
     // 진행률 분모: 고유 단어 수 (카드매치 세트는 words 개별 단어를 카운트)
     {
       const uniqueIds = new Set();
@@ -374,6 +379,7 @@ const TakeTest = () => {
           loggedVocaIdsRef.current = new Set();
           retryCountMapRef.current = new Map();
           passedVocaIdsRef.current = new Set();
+          cardRetryEnqueuedRef.current = new Set();
           // 고유 단어 수 재계산
           {
             const uniqueIds = new Set();
@@ -406,6 +412,7 @@ const TakeTest = () => {
           loggedVocaIdsRef.current = new Set();
           retryCountMapRef.current = new Map();
           passedVocaIdsRef.current = new Set();
+          cardRetryEnqueuedRef.current = new Set();
 
           // 출제 가능한 문제가 0개이면 (예: 빈칸 채우기 단독 선택인데 강조 예문이 없는 경우) 알림 후 복귀
           if (!tempTestQuestions || tempTestQuestions.length === 0) {
@@ -693,6 +700,7 @@ const TakeTest = () => {
           retryCountMapRef={retryCountMapRef}
           passedVocaIdsRef={passedVocaIdsRef}
           totalUniqueVocaCountRef={totalUniqueVocaCountRef}
+          cardRetryEnqueuedRef={cardRetryEnqueuedRef}
         />
       </div>
     );

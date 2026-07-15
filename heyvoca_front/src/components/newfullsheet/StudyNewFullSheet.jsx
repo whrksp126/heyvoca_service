@@ -11,6 +11,7 @@ import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { getUnlockStatusApi } from '../../api/study';
+import { primeSfx } from '../../utils/audio';
 
 const StudyNewFullSheet = () => {
   "use memo";
@@ -275,6 +276,9 @@ const StudyNewFullSheet = () => {
             <motion.button
               key={card.key}
               onClick={() => {
+                // 학습/테스트 시작 진입점 — 이후 문제풀이에서 재생될 정답/오답 효과음을
+                // iOS WKWebView에서 지연 없이 재생하려면 user gesture 동기 스택에서 미리 unlock해야 한다.
+                primeSfx();
                 if (locked) {
                   vibrate({ duration: 5 });
                   setLockToast(`${card.title}은 학습 ${cardRemaining(card.key)}회 더 하면 열려요`);

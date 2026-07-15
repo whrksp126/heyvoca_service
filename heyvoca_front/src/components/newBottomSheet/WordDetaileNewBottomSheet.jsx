@@ -6,10 +6,10 @@ import { stripHtmlTags } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
 import { useWordInsights, WordMemoryProgress, WordMemoryHistory } from '../common/WordMemorySection';
 import SpeakerButton from '../common/SpeakerButton';
-import { PencilSimple, Trash } from '@phosphor-icons/react';
+import { PencilSimple, Trash, Lock } from '@phosphor-icons/react';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from './AddWordNewBottomSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
 
 
 const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
@@ -81,7 +81,17 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               />
             </div>
             <div className="flex items-center gap-[8px]">
-              {!isPurchasedBook && (
+              {isPurchasedBook ? (
+                <motion.button
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    showToast('제공받은 단어장은 수정할 수 없어요.');
+                  }}
+                  aria-label="제공받은 단어장은 수정할 수 없어요"
+                >
+                  <Lock size={18} className="text-layout-gray-300 dark:text-layout-gray-200" />
+                </motion.button>
+              ) : (
                 <>
                   <motion.button
                     onClick={() => {

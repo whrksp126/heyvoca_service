@@ -158,11 +158,27 @@ def fsrs_review(
 
     # 상태에 따른 처리
     if current_state == STATE_NEW or s == 0:
-        # 첫 학습 — 표준처럼 등급별 상태 전이
-        # (Again=실패 → 아직 학습 단계, Hard/Good/Easy → 복습 단계로 졸업)
+        if rating == AGAIN:
+            # 미학습(new) 단어를 최초 학습 중 오답 — "아무것도 학습되지 않은 것"으로
+            # 취급해 미학습 상태를 그대로 유지한다 (learning으로 승격시키지 않음).
+            # UI에서 "단기암기"로 잘못 표시되는 것을 방지하기 위함.
+            return {
+                "state":          STATE_NEW,
+                "difficulty":     0.0,
+                "stability":      0.0,
+                "retrievability": 0.0,
+                "elapsed_days":   0,
+                "scheduled_days": 0,
+                "reps":           0,
+                "lapses":         0,
+                "last_review":    None,
+                "next_review":    None,
+                "params_version": "default-v1",
+            }
+        # 첫 학습 정답(Hard/Good/Easy) — 복습 단계로 졸업
         new_s = _init_stability(w, rating)
         new_d = _init_difficulty(w, rating)
-        new_state = STATE_LEARNING if rating == AGAIN else STATE_REVIEW
+        new_state = STATE_REVIEW
         new_lapses = lapses
         new_reps   = 1
     elif rating == AGAIN:

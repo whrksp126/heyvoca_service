@@ -180,8 +180,15 @@ class TestNextReviewDate:
         assert nr > BASE_TIME
 
     def test_scheduled_days_positive(self):
-        """scheduled_days는 항상 양수."""
-        for rating in (AGAIN, HARD, GOOD, EASY):
+        """정답(Hard/Good/Easy)의 scheduled_days는 항상 양수."""
+        for rating in (HARD, GOOD, EASY):
             state = dict(DEFAULT_FSRS_NEW)
             result = review(state, rating, BASE_TIME)
             assert result["scheduled_days"] >= 1
+
+    def test_new_again_scheduled_days_zero(self):
+        """미학습 단어를 최초 학습 중 오답 → scheduled_days=0 (미학습 유지, 스케줄 없음)."""
+        state = dict(DEFAULT_FSRS_NEW)
+        result = review(state, AGAIN, BASE_TIME)
+        assert result["scheduled_days"] == 0
+        assert result["next_review"] is None

@@ -102,9 +102,20 @@ class TestLapseFormula:
 class TestFirstReviewStateTransition:
     """첫 복습 등급별 상태 전이."""
 
-    def test_new_again_goes_learning(self):
+    def test_new_again_stays_new(self):
+        """미학습(new) 단어를 최초 학습 중 오답 → 미학습 상태를 그대로 유지한다.
+
+        (구 동작: learning으로 승격 + stability=0.4072 → UI에서 "단기암기"로
+         잘못 분류되는 버그가 있었음. 이제는 아무 일도 없었던 것처럼 되돌린다.)
+        """
         r = _fsrs_review({"state": "new", "stability": 0, "difficulty": 0}, AGAIN, BASE_TIME)
-        assert r["state"] == "learning"
+        assert r["state"] == "new"
+        assert r["stability"] == 0.0
+        assert r["difficulty"] == 0.0
+        assert r["reps"] == 0
+        assert r["lapses"] == 0
+        assert r["last_review"] is None
+        assert r["next_review"] is None
 
     def test_new_good_goes_review(self):
         r = _fsrs_review({"state": "new", "stability": 0, "difficulty": 0}, GOOD, BASE_TIME)

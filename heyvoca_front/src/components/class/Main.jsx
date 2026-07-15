@@ -12,6 +12,7 @@ import { Brain, Lightbulb } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNavigate } from 'react-router-dom';
 import { vibrate } from '../../utils/osFunction';
+import { primeSfx } from '../../utils/audio';
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -24,7 +25,10 @@ const Main = () => {
   const { pushNewBottomSheet, clearStack: clearNewBottomSheetStack, popNewBottomSheet } = useNewBottomSheetActions();
 
   // React Compiler가 자동으로 useCallback 처리
+  // 학습/테스트 시작 진입점 — 이후 실제 문제풀이(Main.jsx)에서 재생될 정답/오답 효과음을
+  // iOS WKWebView에서 지연 없이 재생하려면 user gesture 동기 스택에서 미리 unlock해야 한다.
   const handleStartClick = (testType) => {
+    primeSfx();
     console.log("???testType", testType);
     const isLearning = recentStudy[testType]?.status === "learning";
     if (isLearning) {

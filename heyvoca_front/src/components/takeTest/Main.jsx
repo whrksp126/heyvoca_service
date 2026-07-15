@@ -116,7 +116,54 @@ const getDisplayMeanings = (meanings) => {
   return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef }) => {
+// ─── 카드매칭 오답 → 사지선다 변환 (재출제용) ───────────────────────────────────
+// 세션에 존재하는 모든 단어(사지선다류 문제 자신 + 카드매칭 세트의 words[])를 모아
+// 오답 보기(distractor) 풀로 사용한다. 카드매칭 word 객체는 TakeTest.jsx의 setupTestQuestions에서
+// 이미 meanings/origin/vocaIndexId/vocabularySheetId를 갖고 있으므로 추가 API 호출 없이 변환 가능.
+const collectSessionWordPool = (questions) => {
+  const pool = [];
+  const seen = new Set();
+  for (const q of questions ?? []) {
+    if (Array.isArray(q.words)) {
+      for (const w of q.words) {
+        const wid = w.vocaIndexId ?? w.id;
+        if (wid == null || seen.has(wid)) continue;
+        seen.add(wid);
+        pool.push(w);
+      }
+    } else {
+      const wid = q.vocaIndexId ?? q.id;
+      if (wid == null || seen.has(wid)) continue;
+      seen.add(wid);
+      pool.push(q);
+    }
+  }
+  return pool;
+};
+
+// 카드매칭 word 객체(오답)를 사지선다(multipleChoice) question으로 변환.
+// 오답 보기(distractor)는 같은 세션(다른 문제/다른 카드매칭 세트 포함)의 다른 단어 뜻을 재사용한다
+// (allWords 풀에 API로 다시 접근하지 않고, 이미 로드된 testQuestions에서 충분히 구할 수 있음).
+const buildMultipleChoiceFromWord = (word, pool) => {
+  const wordId = word.vocaIndexId ?? word.id;
+  const distractorCandidates = (pool ?? []).filter(w => {
+    const wid = w.vocaIndexId ?? w.id;
+    return wid !== wordId && Array.isArray(w.meanings) && w.meanings.length > 0;
+  });
+  const shuffledDistractors = [...distractorCandidates].sort(() => Math.random() - 0.5).slice(0, 3);
+  const options = [word, ...shuffledDistractors].sort(() => Math.random() - 0.5);
+  const resultIndex = options.findIndex(o => (o.vocaIndexId ?? o.id) === wordId);
+  return {
+    ...word,
+    options,
+    resultIndex: resultIndex >= 0 ? resultIndex : 0,
+    questionType: 'multipleChoice',
+    isCorrect: null,
+    userResultIndex: null,
+  };
+};
+
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isCorrect, setIsCorrect] = useState(null);
@@ -136,9 +183,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [combo, setCombo] = useState(null);
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
+  // 콤보 보존 팝업이 열려 있는 동안 대기시킬 카드 채점 로그 큐 (cardMatch/cardMatchListening 전용).
+  // 백엔드 combo 로직(combo.py:163-167)이 AT_RISK 상태에서 새 로그가 들어오면 자동 포기시키므로,
+  // 팝업 응답을 기다리는 카드 이후의 로그는 팝업이 닫힐 때까지 순서대로 큐잉해둔다.
+  const pendingCardLogQueueRef = useRef([]);
+  const isFlushingCardLogQueueRef = useRef(false);
   const isComboMode = testType === 'quick';
   // 마지막 enqueueRetry가 큐에 실제로 삽입했는지 여부 저장 (세션 종료 판정 보정용)
   const lastRetryEnqueuedRef = useRef(false);
+  // enqueueRetry가 실제로 큐에 삽입에 성공할 때마다 누적 증가하는 카운터.
+  // handlePluginComplete(카드매칭 세트 완료 콜백)는 한 번에 여러 단어를 처리할 수 있어
+  // boolean 플래그로는 "이번 호출에서 몇 개가 새로 재출제됐는지" 표현이 안 되므로 카운터로 추적한다.
+  const retryEnqueueCounterRef = useRef(0);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   // 듣기 문제 건너뛰기 활성 여부 (localStorage 기반, 5분간 유지)
@@ -151,7 +207,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const navigate = useNavigate();
 
   // ─── 재출제 유틸 ─────────────────────────────────────────────────────────────
-  // 오답 문제를 현재 위치에서 2~3문제 뒤에 재삽입
+  // 오답 문제를 큐의 맨 마지막에 재삽입 (마지막 슬라이드로 재출제)
   // 재출제용 문제는 options를 셔플해서 새 객체로 생성
   const enqueueRetry = (currentIdx, question) => {
     const retryMap = retryCountMapRef?.current;
@@ -189,15 +245,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       };
     }
 
-    // 현재 index에서 2~3문제 뒤 삽입 (최소한 현재 문제 바로 다음은 피함)
-    const offset = Math.random() < 0.5 ? 2 : 3;
-    const insertIdx = Math.min(currentIdx + offset, testQuestions.length);
-
+    // 큐의 맨 마지막에 삽입 (재출제분은 모든 신규 문제를 다 푼 뒤 마지막에 등장)
     setTestQuestions((prev) => {
       const next = [...prev];
-      next.splice(insertIdx, 0, retryQuestion);
+      next.splice(next.length, 0, retryQuestion);
       return next;
     });
+    retryEnqueueCounterRef.current += 1;
     return true;
   };
 
@@ -260,6 +314,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       if (res?.code === 200) setCombo(res.data);
     } finally {
       comboPopupOpenRef.current = false;
+      // 팝업 응답 처리 완료 → 대기 중이던 카드 채점 로그를 순서대로 전송 재개
+      flushCardLogQueue();
     }
   };
 
@@ -668,35 +724,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
   };
 
-  // 플러그인 컴포넌트용 완료 콜백 (cardMatch, fillInTheBlank 등)
-  // 카드 1장 결과 처리(로그+콤보+농장+fsrs+통과) — 카드 채점 즉시/세트 완료 공용.
-  // cardMatch는 카드 맞추기 UI 특성상 단어별 즉시 반복 재시도가 없어(세트 단위 1회 진행)
-  // 오답도 "해결됨"으로 통과 처리한다(진행률 즉시 반영). loggedVocaIdsRef로 중복 로깅 방지.
-  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs }, currentQuestion, setWords, questionType) => {
-    if (wordId == null) return;
-    updateWordState(sheetId, wordId, updateData);
-    setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
-    setPendingUpdateWords(prev => {
-      const map = new Map(prev);
-      map.set(wordId, { sheetId, wordId, updateData });
-      return map;
-    });
-    if (Array.isArray(setWords)) {
-      const target = setWords.find(w => w.id === wordId);
-      if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
-    }
-
-    if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
-      loggedVocaIdsRef.current.add(wordId);
-      const promise = logStudyQuestion({
-        session_id: studySessionRef.current,
-        user_voca_id: wordId,
-        user_voca_book_id: sheetId ?? null,
-        question_type: questionType,
-        was_correct: !!wordIsCorrect,
-        time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
-        client_now: new Date().toISOString(),
-      }).then(logRes => {
+  // 카드 1장 채점 로그 전송(실제 /study/log 호출 + combo/fsrs 반영). 큐에서 꺼내 호출하거나
+  // 팝업이 열려있지 않을 때 즉시 호출한다.
+  const sendCardLog = (payload, { sheetId, wordId, currentQuestion, setWords }) => {
+    return logStudyQuestion(payload)
+      .then(logRes => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.fsrs) {
           updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
@@ -707,11 +739,95 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           if (currentQuestion?.id === wordId) currentQuestion.fsrs = logRes.data.fsrs;
           setTestQuestions([...testQuestions]);
         }
-      }).catch(e => console.warn('[FSRS] logStudyQuestion(card) 실패:', e));
-      if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
+      })
+      .catch(e => console.warn('[FSRS] logStudyQuestion(card) 실패:', e));
+  };
+
+  // 콤보 보존 팝업이 열려 있는 동안 큐잉된 카드 로그를 순서대로(직렬로) 전송한다.
+  // 팝업이 떠 있는데(comboPopupOpenRef) 다음 로그가 도착하면 백엔드가 AT_RISK 콤보를
+  // 자동 포기시키므로(combo.py:163-167), 팝업이 닫힐 때까지는 큐에서 꺼내지 않는다.
+  // 큐에서 꺼낸 로그 자체가 다시 AT_RISK를 유발해 팝업을 새로 띄우면(handleComboPayload가
+  // comboPopupOpenRef를 동기적으로 true로 세팅) while 조건에서 즉시 멈추고, 그 팝업이
+  // 닫힐 때 다시 flushCardLogQueue가 호출되어 이어서 처리된다.
+  const flushCardLogQueue = async () => {
+    if (isFlushingCardLogQueueRef.current) return; // 중복 flush 방지
+    isFlushingCardLogQueueRef.current = true;
+    try {
+      while (pendingCardLogQueueRef.current.length > 0 && !comboPopupOpenRef.current) {
+        const job = pendingCardLogQueueRef.current.shift();
+        await job();
+      }
+    } finally {
+      isFlushingCardLogQueueRef.current = false;
+    }
+  };
+
+  // 플러그인 컴포넌트용 완료 콜백 (cardMatch, fillInTheBlank 등)
+  // 카드 1장 결과 처리(로그+콤보+농장+fsrs+통과/재출제) — 카드 채점 즉시/세트 완료 공용.
+  // cardMatch는 카드 맞추기 UI 특성상 단어별 즉시 반복 재시도가 없다(세트 단위 1회 진행).
+  // 정답 카드만 즉시 통과 처리(markVocaPassed)하고, 오답 카드는 사지선다(multipleChoice) 문제로
+  // 변환해 enqueueRetry로 큐 맨 끝에 재출제한다(맞출 때까지 반복, 통과 처리하지 않음).
+  // loggedVocaIdsRef로 중복 로깅 방지, cardRetryEnqueuedRef로 동일 단어의 중복 재출제
+  // (카드 즉시 콜백 onCardMatched + 세트 완료 콜백 onComplete 이중 호출) 방지.
+  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs }, currentQuestion, setWords, questionType) => {
+    if (wordId == null) return;
+    updateWordState(sheetId, wordId, updateData);
+    setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
+    setPendingUpdateWords(prev => {
+      const map = new Map(prev);
+      map.set(wordId, { sheetId, wordId, updateData });
+      return map;
+    });
+    let target = null;
+    if (Array.isArray(setWords)) {
+      target = setWords.find(w => w.id === wordId);
+      if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
     }
 
-    markVocaPassed(wordId);
+    if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
+      loggedVocaIdsRef.current.add(wordId);
+      const payload = {
+        session_id: studySessionRef.current,
+        user_voca_id: wordId,
+        user_voca_book_id: sheetId ?? null,
+        question_type: questionType,
+        was_correct: !!wordIsCorrect,
+        time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
+        client_now: new Date().toISOString(),
+      };
+
+      // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야
+      // 세션 종료 시(updateVocabularySheetAndRecentStudyData) 큐에 남은 로그까지 기다릴 수 있다.
+      let resolvePending;
+      const pendingPromise = new Promise((resolve) => { resolvePending = resolve; });
+      if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(pendingPromise);
+
+      const job = () => sendCardLog(payload, { sheetId, wordId, currentQuestion, setWords }).finally(resolvePending);
+
+      if (comboPopupOpenRef.current) {
+        // 콤보 보존 팝업 응답 대기 중 — 이 카드 로그는 큐에 쌓아두고 팝업이 닫힌 뒤 전송
+        pendingCardLogQueueRef.current.push(job);
+      } else {
+        job();
+      }
+    }
+
+    if (wordIsCorrect) {
+      markVocaPassed(wordId);
+      return;
+    }
+
+    // 오답 카드: 통과 처리하지 않음(passedVocaIdsRef에 추가 안 함) → 세션이 재출제 소진까지 유지됨.
+    // 사지선다로 변환해 큐 끝에 재출제 (단어당 1회만 — 즉시 콜백/세트 완료 콜백 이중 호출 방지)
+    if (cardRetryEnqueuedRef?.current && !cardRetryEnqueuedRef.current.has(wordId)) {
+      cardRetryEnqueuedRef.current.add(wordId);
+      const wordObj = target ?? currentQuestion?.words?.find(w => w.id === wordId);
+      if (wordObj) {
+        const pool = collectSessionWordPool(testQuestions);
+        const retryQuestion = buildMultipleChoiceFromWord(wordObj, pool);
+        enqueueRetry(progressIndex, retryQuestion);
+      }
+    }
   };
 
   // 카드 1장 채점 즉시 호출 — 콤보/프로그래스가 슬라이드 끝이 아니라 바로 반영되도록.
@@ -726,8 +842,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const setWords = currentQuestion.words;
     const questionType = currentQuestion.questionType;
 
-    // 각 단어 처리(카드 채점 시 이미 처리된 단어는 loggedVocaIdsRef/passed Set로 중복 방지)
+    // 각 단어 처리(카드 채점 시 이미 처리된 단어는 loggedVocaIdsRef/passed Set/cardRetryEnqueuedRef로 중복 방지)
+    const retryCountBefore = retryEnqueueCounterRef.current;
     results.forEach(r => processCardWord(r, currentQuestion, setWords, questionType));
+    const retriesEnqueuedThisCall = retryEnqueueCounterRef.current - retryCountBefore;
 
     currentQuestion.isCorrect = results.every(r => r.isCorrect);
 
@@ -735,7 +853,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const targetCount = totalUniqueVocaCountRef?.current || testQuestions.length;
     const nextIndex = progressIndex + 1;
     // 큐 소진 안전망: 더 이상 출제할 문제가 없으면(다음 인덱스가 큐 끝) 세션 종료 보장.
-    const isQueueExhausted = nextIndex >= testQuestions.length;
+    // — enqueueRetry는 setTestQuestions(함수형 업데이트)로 비동기 삽입하므로 이 클로저가 보는
+    //   testQuestions.length는 삽입 전 값일 수 있다. 카드는 대부분 onCardMatched(즉시 콜백)에서
+    //   먼저 재출제되어 이 시점엔 이미 반영돼 있지만, 혹시 이번 배치 호출(onComplete)에서
+    //   새로 재출제된 게 있다면(retriesEnqueuedThisCall) 그만큼 큐 길이를 보정해
+    //   재출제 슬라이드가 추가되기 전에 세션이 끝나버리지 않도록 한다.
+    const isQueueExhausted = nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
     const isSessionDone = currentPassedCount >= targetCount || isQueueExhausted;
 
     updateRecentStudyState({

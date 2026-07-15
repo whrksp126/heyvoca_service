@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PencilSimple, Trash, Leaf, Plant, Carrot, EggCrack, Timer } from '@phosphor-icons/react';
+import { PencilSimple, Trash, Leaf, Plant, Carrot, EggCrack, Timer, Storefront } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -183,7 +183,17 @@ const Main = () => {
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <div className="flex items-center justify-between w-full">
-                  <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
+                  <div className="flex items-center gap-[6px]">
+                    <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
+                    {item.vocaBookStoreId != null && (
+                      <Storefront
+                        size={14}
+                        weight="fill"
+                        className="shrink-0 text-layout-gray-400 dark:text-layout-gray-100"
+                        aria-label="서점에서 제공받은 단어장"
+                      />
+                    )}
+                  </div>
                   {overdue && (
                     <div className="flex items-center gap-[3px] h-[16px] bg-status-error-500 dark:bg-[#ffffff1a] px-[5px] rounded-full">
                       <Timer size={10} weight="fill" className="text-white" />
