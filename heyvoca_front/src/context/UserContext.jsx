@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
-import { getDevicePlatform } from '../utils/osFunction';
+import { getDevicePlatform, isAppVersionAtLeast } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi, devLoginApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi, getAchievementCriteriaApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
@@ -342,26 +342,53 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  // 앱에서 온 FCM 토큰 처리 리스너
+  // 앱에서 온 FCM 토큰 처리 리스너 + 앱 시작 시 알림 권한(프롬프트 없이) 처리
   useEffect(() => {
-    const handleFcmToken = (data) => {
-      console.log('FCM token received from RN:', data.token);
-      if (data.token) {
-        setFcmToken(data.token);
-        // 만약 이미 로그인 상태라면 즉시 서버로 보냄
-        if (isLogin && isLoginChecked) {
-          saveFcmTokenToBackend(data.token);
-        }
+    const registerToken = (token) => {
+      if (!token) return;
+      setFcmToken(token);
+      // 이미 로그인 상태라면 즉시 서버로 보냄
+      if (isLogin && isLoginChecked) {
+        saveFcmTokenToBackend(token);
       }
     };
 
+    const handleFcmToken = (data) => {
+      console.log('FCM token received from RN:', data?.token);
+      registerToken(data?.token);
+    };
     postMessageManager.setupFcmToken(handleFcmToken);
 
-    // 앱 시작 시 RN(네이티브)에게 토큰을 달라고 요청
-    postMessageManager.sendMessageToReactNative('requestFcmToken', {});
+    // 앱 시작 시에는 OS 알림 프롬프트를 띄우지 않는다(프라이밍 패턴).
+    // iOS는 시스템 프롬프트를 설치당 최초 1회만 띄울 수 있으므로, 차가운 실행 즉시 요청을 없애고
+    // 사용자가 '알림 받기' 바텀시트(NotifPermissionNewBottomSheet)에서 명시적으로 '받기'를 누를 때만
+    // requestNotificationPermission으로 프롬프트한다.
+    // 여기서는 프롬프트 없이 현재 권한만 조회(checkNotificationPermission)해, 이미 허용한 사용자에
+    // 한해 FCM 토큰을 조용히 받아 등록한다. (미허용/미정 사용자에게는 아무 프롬프트도 뜨지 않음)
+    //
+    // 단, checkNotificationPermission 핸들러가 없는 구버전 앱(< 1.0.3)에서는 조용한 조회가 불가능하다.
+    // 이런 구버전에서 실행 시 토큰 등록을 아예 건너뛰면 기존 허용 유저의 토큰 갱신이 끊길 수 있으므로,
+    // 구버전에 한해 기존 동작(requestFcmToken)으로 폴백한다(구버전은 원래 실행 시 프롬프트가 떴었음 — 회귀 없음).
+    let silentTimer = null;
+    if (isAppVersionAtLeast('1.0.3')) {
+      const onSilentStatus = (data) => {
+        postMessageManager.removeListener('notification_permission_status');
+        if (data?.granted) registerToken(data?.token);
+      };
+      postMessageManager.addListener('notification_permission_status', onSilentStatus);
+      postMessageManager.sendMessageToReactNative('checkNotificationPermission', {});
+      silentTimer = setTimeout(
+        () => postMessageManager.removeListener('notification_permission_status'),
+        1500,
+      );
+    } else {
+      postMessageManager.sendMessageToReactNative('requestFcmToken', {});
+    }
 
     return () => {
+      if (silentTimer) clearTimeout(silentTimer);
       postMessageManager.removeFcmToken();
+      postMessageManager.removeListener('notification_permission_status');
     };
   }, [isLogin, isLoginChecked, saveFcmTokenToBackend]);
 

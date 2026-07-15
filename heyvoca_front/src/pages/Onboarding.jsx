@@ -357,7 +357,7 @@ const Onboarding = () => {
               <div className="w-full">
                 <motion.button type="button" whileTap={{ scale: 0.97 }}
                   onClick={() => { vibrate({ duration: 5 }); setStep('level'); }}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[17px] font-[700]">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[17px] font-[700]">
                   시작하기
                 </motion.button>
                 <LoginFooter />
@@ -398,7 +398,7 @@ const Onboarding = () => {
               <div className="mt-auto pt-[20px]">
                 <motion.button type="button" whileTap={channel ? { scale: 0.97 } : undefined} disabled={!channel}
                   onClick={() => { vibrate({ duration: 5 }); setStep('goal'); }}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-40">
                   다음
                 </motion.button>
                 <LoginFooter />
@@ -421,7 +421,7 @@ const Onboarding = () => {
               <div className="mt-auto pt-[20px]">
                 <motion.button type="button" whileTap={goal ? { scale: 0.97 } : undefined} disabled={!goal}
                   onClick={() => { vibrate({ duration: 5 }); setStep('daily'); }}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-40">
                   다음
                 </motion.button>
                 <LoginFooter />
@@ -444,7 +444,7 @@ const Onboarding = () => {
               <div className="mt-auto pt-[20px]">
                 <motion.button type="button" whileTap={daily && !loadingTrial ? { scale: 0.97 } : undefined} disabled={loadingTrial || !daily}
                   onClick={startTrial}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-40">
                   {loadingTrial ? '불러오는 중...' : '시작하기'}
                 </motion.button>
                 <LoginFooter />
@@ -483,7 +483,7 @@ const Onboarding = () => {
               </div>
               <div className="w-full mt-auto pt-[24px]">
                 <motion.button type="button" whileTap={{ scale: 0.97 }} onClick={() => { vibrate({ duration: 5 }); setStep('signup'); }}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700]">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]">
                   가입하고 받기
                 </motion.button>
               </div>
@@ -505,7 +505,7 @@ const Onboarding = () => {
                 <motion.button type="button" whileTap={username.trim() && !finishingOnboarding ? { scale: 0.97 } : undefined}
                   disabled={!username.trim() || finishingOnboarding}
                   onClick={handleSignup}
-                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40">
+                  className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-40">
                   {finishingOnboarding ? '처리 중...' : '다음'}
                 </motion.button>
               </div>

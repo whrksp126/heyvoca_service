@@ -4,6 +4,7 @@ import { Bell } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import postMessageManager from '../../utils/postMessageManager';
+import { backendUrl, fetchDataAsync } from '../../utils/common';
 
 // 로그인 후 홈 첫 진입에서 뜨는 알림 권한 요청 프롬프트.
 // "알림 받기" → OS 알림 권한 요청(네이티브), "나중에" → 닫기.
@@ -14,6 +15,17 @@ export const NotifPermissionNewBottomSheet = () => {
   const handle = (allow) => {
     vibrate({ duration: 5 });
     if (allow) {
+      // '받기' → OS 알림 권한 요청(네이티브). 허용되면 네이티브가 돌려준 FCM 토큰을 백엔드에 등록해
+      // 즉시 푸시를 받을 수 있게 한다. (앱 실행 시 자동 요청을 없앴으므로 이 시점의 등록이 중요)
+      const onResult = (data) => {
+        postMessageManager.removeListener('notification_permission_result');
+        if (data?.granted && data?.token) {
+          fetchDataAsync(`${backendUrl}/fcm/save_token`, 'POST', { fcm_token: data.token }).catch(() => { /* noop */ });
+        }
+      };
+      postMessageManager.addListener('notification_permission_result', onResult);
+      // 사용자가 프롬프트에 응답하지 않는 경우를 대비한 리스너 정리 안전장치
+      setTimeout(() => postMessageManager.removeListener('notification_permission_result'), 3000);
       try { postMessageManager.sendMessageToReactNative('requestNotificationPermission', {}); } catch (e) { /* 웹은 무시 */ }
     }
     popNewBottomSheet();
