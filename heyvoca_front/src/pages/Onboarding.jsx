@@ -13,6 +13,7 @@ import { getOnboardingBooksApi, getLevelBookApi, migrateOnboardingApi } from '..
 import { patchGuest, getGuest, setGuestTrial, clearGuest } from '../utils/guestStorage';
 import { buildGuestQuestions } from '../utils/guestQuestions';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
+import { primeSfx } from '../utils/audio';
 import { BookCard } from '../components/bookStore/BookSection';
 import { PreviewBookStoreNewFullSheet } from '../components/newfullsheet/PreviewBookStoreNewFullSheet';
 import { SwitchAccountNewBottomSheet } from '../components/newBottomSheet/SwitchAccountNewBottomSheet';
@@ -236,6 +237,10 @@ const Onboarding = () => {
   const startTrial = async () => {
     if (loadingTrial || !level || !daily) return;
     vibrate({ duration: 5 });
+    // 체험 테스트 채점 효과음 저지연 재생 준비 — 반드시 이 클릭(user gesture)의 동기 시점에
+    // 호출해야 Web Audio AudioContext가 unlock되고 mp3가 미리 디코드된다(await 이후엔 unlock 실패).
+    // 미호출 시 /take-test에서 느린 HTMLAudio 폴백으로 재생돼 효과음이 늦게 난다.
+    primeSfx();
     setLoadingTrial(true);
     persistAll({});
     try {
