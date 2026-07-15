@@ -185,6 +185,8 @@ class Voca(db.Model):
     voca_books = relationship("VocaBookMap", back_populates="voca")
     voca_meanings = relationship("VocaMeaningMap", back_populates="voca")
     voca_examples = relationship("VocaExampleMap", back_populates="voca")
+    label = relationship("VocaLabel", back_populates="voca", uselist=False,
+                         cascade="all, delete-orphan")
 
     def __init__(self, word, pronunciation=None):
         self.word = word
@@ -192,6 +194,43 @@ class Voca(db.Model):
 
     def __repr__(self):
         return f"<Voca(word='{self.word}', pronunciation='{self.pronunciation}')>"
+
+
+# 단어 라벨 — 외부 표준 데이터로 산출한 난이도/빈도/품사 (scripts/label_voca.py가 채움)
+#
+# voca 본체를 비대하게 만들지 않으려고 1:1 별도 테이블로 분리했다.
+# 소스는 전부 무료·상업 사용 가능:
+#   CEFR-J(TUFS) + Octanove(CC BY-SA) / wordfreq / spaCy / WordNet
+class VocaLabel(db.Model):
+    __tablename__ = 'voca_label'
+    __bind_key__ = 'dict'
+
+    voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE'), primary_key=True)
+
+    # 난이도. cefr는 앱이 그대로 쓰는 최종값이고, 어디서 왔는지는 cefr_source로 구분한다.
+    #   cefrj/octanove = 워드리스트 검증값(신뢰 높음)
+    #   freq-est       = 워드리스트에 없어 빈도로 추정한 값
+    # 워드리스트가 8,827개뿐이라 5만 단어를 다 못 덮는다(검증 매칭 26%).
+    # 다만 CEFR 등급별 평균 빈도가 A1 5.01 → C2 2.81로 단조 감소해,
+    # 빈도로 등급을 추정해도 난이도 순서가 유지된다.
+    cefr = Column(String(2), nullable=True, index=True)          # A1~C2
+    cefr_source = Column(String(16), nullable=True)              # cefrj|octanove|freq-est
+
+    # 사용빈도 Zipf (약 1~7, 클수록 흔한 단어). 다단어 표현은 구성 단어 중 최솟값.
+    freq_zipf = Column(Float, nullable=True, index=True)
+
+    pos = Column(String(16), nullable=True)          # spaCy 주 품사 (NOUN/VERB/ADJ…)
+    pos_wordnet = Column(String(16), nullable=True)  # WordNet 품사 — spaCy와 교차검증용
+    lemma = Column(String(255), nullable=True, index=True)  # 원형. 활용형 중복 병합에 사용
+    sense_count = Column(Integer, nullable=True)     # WordNet 뜻 개수(다의어일수록 큼)
+
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    voca = relationship("Voca", back_populates="label")
+
+    def __repr__(self):
+        return f"<VocaLabel(voca_id={self.voca_id}, cefr='{self.cefr}', zipf={self.freq_zipf})>"
 # 단어 뜻
 class VocaMeaning(db.Model):
     __tablename__ = 'voca_meaning'

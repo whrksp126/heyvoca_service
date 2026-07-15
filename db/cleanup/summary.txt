@@ -1,0 +1,18 @@
+==============================================
+voca 전체            : 50,824
+삭제 대상            : 188
+    - bracket_dup           : 68
+    - tail_period_dup       : 46
+    - bracket_garbage       : 31
+    - lead_symbol_dup       : 14
+    - lead_symbol_garbage   : 14
+    - affix                 : 6
+    - comma_dup             : 5
+    - comma_garbage         : 2
+    - tail_period_garbage   : 1
+    - cjk                   : 1
+교정 대상(하이픈 제거): 13
+LLM 판정 필요        : 18
+----------------------------------------------
+삭제 대상 중 서점 판매중: 0  (>0이면 admin_voca_book_map 선삭제 필요)
+==============================================
