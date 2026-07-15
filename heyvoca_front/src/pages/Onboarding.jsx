@@ -299,12 +299,16 @@ const Onboarding = () => {
   };
 
   // 하단 상시 로그인 링크 — 로그인된 상태로 온보딩에 들어온 경우 계정 전환(로그아웃) 출구로 전환
-  const LoginFooter = () => (
-    <button type="button" onClick={isLogin ? goSwitchAccount : goLogin}
-      className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 underline">
-      {isLogin ? '다른 계정으로 로그인' : '이미 계정이 있어요 · 로그인'}
-    </button>
-  );
+  const LoginFooter = () => {
+    // 로그인된 상태의 '다른 계정으로 로그인'(계정 전환)은 첫 슬라이드(start)에서만 노출
+    if (isLogin && step !== 'start') return null;
+    return (
+      <button type="button" onClick={isLogin ? goSwitchAccount : goLogin}
+        className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 underline">
+        {isLogin ? '다른 계정으로 로그인' : '이미 계정이 있어요 · 로그인'}
+      </button>
+    );
+  };
 
   return (
     <div className="flex flex-col h-screen w-full bg-layout-white dark:bg-layout-black">
