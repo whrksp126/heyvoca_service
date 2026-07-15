@@ -54,7 +54,7 @@ export const SwitchAccountNewBottomSheet = () => {
             h-[45px]
             rounded-[8px]
             bg-primary-main-600
-            text-layout-white text-[16px] font-[700]
+            text-layout-white dark:text-layout-black text-[16px] font-[700]
           "
           onClick={() => {
             vibrate({ duration: 5 });
@@ -66,7 +66,7 @@ export const SwitchAccountNewBottomSheet = () => {
             stiffness: 500,
             damping: 15
           }}
-        >로그아웃하고 로그인</motion.button>
+        >로그아웃</motion.button>
       </div>
     </div>
   );

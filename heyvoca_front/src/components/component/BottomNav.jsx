@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Notepad, Storefront, User, House, BookBookmark, Lock } from "@phosphor-icons/react";
-import { AnimatePresence, motion } from 'framer-motion';
 import { vibrate } from '../../utils/osFunction';
 import { getUnlockStatusApi } from '../../api/study';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 
 // 탭 정의 — lockKey 있는 탭은 온보딩 점진 해금 대상
 const NAV_ITEMS = [
@@ -19,9 +20,9 @@ const BottomNav = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   const [unlock, setUnlock] = useState(null); // null=미조회(기본 전부 열림 취급)
-  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     let alive = true;
@@ -36,18 +37,14 @@ const BottomNav = () => {
     return unlock.unlocked?.[lockKey] === false;
   };
 
-  const remainingSessions = (lockKey) => {
-    if (!unlock || !lockKey) return 0;
-    const thr = unlock.thresholds?.[lockKey] ?? 0;
-    return Math.max(0, thr - (unlock.completed_sessions ?? 0));
-  };
-
   const handleTap = (item) => {
     vibrate({ duration: 5 });
     if (isLocked(item.lockKey)) {
-      const n = remainingSessions(item.lockKey);
-      setToast(`${item.label}은 학습 ${n}회 더 하면 열려요`);
-      setTimeout(() => setToast(null), 2000);
+      pushNewBottomSheet(
+        UnlockGuideNewBottomSheet,
+        { unlock, highlightKey: item.lockKey },
+        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+      );
       return;
     }
     navigate(item.path);
@@ -58,20 +55,6 @@ const BottomNav = () => {
       data-bottom-nav
       className="fixed bottom-0 w-full border-t border-border bg-layout-white/90 dark:bg-layout-black/90 dark:border-border-dark backdrop-blur-md"
     >
-      {/* 해금 안내 토스트 */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute -top-[44px] left-1/2 -translate-x-1/2 px-[14px] py-[8px] rounded-[20px] bg-layout-black/85 dark:bg-layout-white/90 whitespace-nowrap"
-          >
-            <span className="text-[12px] font-[600] text-layout-white dark:text-layout-black">{toast}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <ul className="flex justify-around items-center h-[70px] max-w-md mx-auto">
         {NAV_ITEMS.map((item) => {
           const active = location.pathname === item.path;

@@ -354,6 +354,10 @@ const TakeTest = () => {
       totalUniqueVocaCountRef.current = uniqueIds.size || gq.length;
     }
     setIsTestQuestionsSetting(false);
+    // 게스트 온보딩 TTS 사전 캐싱 — 로그인 경로(warmSession)와 동일하게 문제 단어들을 prefetch.
+    // 캐시 미스 단어의 /tts/resolve가 404라 소리가 안 나는 이슈 대응 배선(백엔드가 게스트 온보딩
+    // 단어 TTS 생성/허용을 지원해야 실제로 재생됨 — 미지원 시에도 prefetch 자체는 안전한 fire-and-forget).
+    warmTts(collectTestTexts(gq));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGuestMode]);
 
@@ -701,6 +705,7 @@ const TakeTest = () => {
           passedVocaIdsRef={passedVocaIdsRef}
           totalUniqueVocaCountRef={totalUniqueVocaCountRef}
           cardRetryEnqueuedRef={cardRetryEnqueuedRef}
+          guestMode={isGuestMode}
         />
       </div>
     );

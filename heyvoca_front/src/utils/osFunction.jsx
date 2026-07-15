@@ -1,5 +1,6 @@
 import { refreshAccessToken, getCookie } from './common';
 import { AppHistory } from './appHistory';
+import postMessageManager from './postMessageManager';
 
 // 기기 타입 조회
 export function getDevicePlatform() {
@@ -47,6 +48,48 @@ export function isAppVersionAtLeast(minVersion) {
   const info = parseAppVersion();
   if (!info || !info.version) return false;
   return isVersionGte(info.version, minVersion);
+}
+
+// OS 알림 권한 네이티브 핸들러(checkNotificationPermission)가 포함된 최소 앱 버전.
+// PushNotificationsNewFullSheet.jsx의 동일 상수와 맞춰야 함 — 네이티브 응답 포맷 변경 시 함께 확인.
+const NOTIF_PERMISSION_MIN_APP_VERSION = '1.0.3';
+
+// 현재 OS 알림 권한이 "이미 허용"된 상태인지 확인한다 (권한 요청 프롬프트 없이 상태만 조회).
+// 반환값: true(허용됨) | false(거부/미허용) | null(확인 불가 — 구버전 앱, 응답 지연 등).
+// 호출부는 null을 "확인 불가"로 취급해 안전하게 기존 동작(프롬프트 노출)을 유지해야 한다.
+export function checkNotificationPermissionGranted() {
+  return new Promise((resolve) => {
+    const isRNWebView = typeof window !== 'undefined' && !!window.ReactNativeWebView;
+
+    if (isRNWebView) {
+      if (!isAppVersionAtLeast(NOTIF_PERMISSION_MIN_APP_VERSION)) {
+        resolve(null); // 구버전 앱 — 네이티브 핸들러 없음
+        return;
+      }
+      let settled = false;
+      const finish = (value) => {
+        if (settled) return;
+        settled = true;
+        postMessageManager.removeListener('notification_permission_status');
+        resolve(value);
+      };
+      postMessageManager.addListener('notification_permission_status', (data) => {
+        finish(!!data.granted);
+      });
+      postMessageManager.sendMessageToReactNative('checkNotificationPermission', {});
+      // 네이티브 응답이 오지 않는 경우를 대비한 안전장치
+      setTimeout(() => finish(null), 1500);
+      return;
+    }
+
+    // 순수 웹(비앱) 환경 폴백: 브라우저 Notification API
+    if (typeof Notification !== 'undefined' && Notification.permission) {
+      resolve(Notification.permission === 'granted');
+      return;
+    }
+
+    resolve(null);
+  });
 }
 
 // 외부 브라우저로 URL 열기

@@ -18,7 +18,7 @@ import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, checkNotificationPermissionGranted } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../../api/study';
 
@@ -183,16 +183,25 @@ const Main = () => {
   }, []);
 
   // 온보딩→가입→로그인 후 홈 첫 진입 시 1회 알림 권한 프롬프트 (온보딩 signup에서 플래그 설정)
+  // 단, 이미 OS 알림 권한이 허용된 유저에게는 굳이 다시 물어볼 필요가 없으므로
+  // 프롬프트를 띄우기 전에 현재 권한 상태를 먼저 확인해 이미 허용된 경우 스킵한다.
   useEffect(() => {
     let pending = null;
     try { pending = localStorage.getItem('heyvoca_notif_prompt'); } catch (e) { pending = null; }
     if (pending !== '1') return;
     if (!userProfile || !userProfile.id) return;
     try { localStorage.removeItem('heyvoca_notif_prompt'); } catch (e) { /* noop */ }
-    const t = setTimeout(() => {
-      pushNewBottomSheet(NotifPermissionNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
-    }, 700);
-    return () => clearTimeout(t);
+
+    let cancelled = false;
+    let t = null;
+    checkNotificationPermissionGranted().then((granted) => {
+      if (cancelled) return;
+      if (granted === true) return; // 이미 허용됨 → 바텀시트 노출 없이 플래그만 소비
+      t = setTimeout(() => {
+        pushNewBottomSheet(NotifPermissionNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+      }, 700);
+    });
+    return () => { cancelled = true; if (t) clearTimeout(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile?.id]);
 

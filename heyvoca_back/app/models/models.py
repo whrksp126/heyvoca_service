@@ -722,6 +722,9 @@ class UserStudySession(db.Model):
     correct_count  = Column(Integer, nullable=False, default=0)
     started_at    = Column(DateTime, nullable=False, default=datetime.utcnow)
     finished_at   = Column(DateTime, nullable=True)
+    # 온보딩 가입 직후(/onboarding/migrate)가 만든 맛보기 이전 세션 표식.
+    # unlock_status의 완료 세션 카운트(정규 학습 횟수)에서 제외하기 위한 마커 — 정규 학습만 카운트.
+    is_onboarding = Column(Boolean, nullable=False, default=False, server_default='0')
 
     # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
     logs = relationship(
@@ -731,13 +734,15 @@ class UserStudySession(db.Model):
         primaryjoin='UserStudySession.id == foreign(UserStudyLog.session_id)',
     )
 
-    def __init__(self, user_id, test_type, book_ids=None, question_count=0, correct_count=0, finished_at=None):
+    def __init__(self, user_id, test_type, book_ids=None, question_count=0, correct_count=0,
+                 finished_at=None, is_onboarding=False):
         self.user_id        = user_id
         self.test_type      = test_type
         self.book_ids       = book_ids
         self.question_count = question_count
         self.correct_count  = correct_count
         self.finished_at    = finished_at
+        self.is_onboarding   = is_onboarding
 
 
 class UserStudyLog(db.Model):

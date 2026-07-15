@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb, Lock } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -7,6 +7,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
+import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
@@ -24,7 +25,6 @@ const StudyNewFullSheet = () => {
 
   // 온보딩 점진 해금 — study(반복듣기, 4회)·test(커스텀, 5회) 카드 게이팅
   const [unlock, setUnlock] = useState(null);
-  const [lockToast, setLockToast] = useState(null);
   useEffect(() => {
     let alive = true;
     getUnlockStatusApi().then((res) => { if (alive && res?.code === 200) setUnlock(res.data); });
@@ -258,18 +258,6 @@ const StudyNewFullSheet = () => {
 
       {/* Cards */}
       <div className="relative flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
-        {/* 잠금 안내 토스트 */}
-        <AnimatePresence>
-          {lockToast && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-              className="absolute top-[4px] left-1/2 -translate-x-1/2 z-[10] px-[14px] py-[8px] rounded-[20px] bg-layout-black/85 dark:bg-layout-white/90 whitespace-nowrap"
-            >
-              <span className="text-[12px] font-[600] text-layout-white dark:text-layout-black">{lockToast}</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {cards.map((card) => {
           const locked = isCardLocked(card.key);
           return (
@@ -281,8 +269,11 @@ const StudyNewFullSheet = () => {
                 primeSfx();
                 if (locked) {
                   vibrate({ duration: 5 });
-                  setLockToast(`${card.title}은 학습 ${cardRemaining(card.key)}회 더 하면 열려요`);
-                  setTimeout(() => setLockToast(null), 2000);
+                  pushNewBottomSheet(
+                    UnlockGuideNewBottomSheet,
+                    { unlock, highlightKey: CARD_LOCK_KEY[card.key] },
+                    { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+                  );
                   return;
                 }
                 card.onClick();

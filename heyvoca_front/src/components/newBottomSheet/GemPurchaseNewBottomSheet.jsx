@@ -60,14 +60,14 @@ export const GemPurchaseNewBottomSheet = ({ notice }) => {
               <img src={g.image_url} alt="" className="w-[80px] h-[80px]" />
               {g.bonus > 0 && (
                 <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-primary-main-600">
-                  <span className="text-[10px] font-[600] text-layout-white">+{g.bonus}</span>
+                  <span className="text-[10px] font-[600] text-layout-white dark:text-layout-black">+{g.bonus}</span>
                 </div>
               )}
               <div className="flex flex-col gap-[3px] items-center">
                 <h4 className="text-[14px] font-[600] text-layout-black dark:text-layout-white">
                   {g.name}
                 </h4>
-                <span className="px-[12px] py-[4px] rounded-[6px] bg-primary-main-600 text-[14px] font-[700] text-layout-white">
+                <span className="px-[12px] py-[4px] rounded-[6px] bg-primary-main-600 text-[14px] font-[700] text-layout-white dark:text-layout-black">
                   ₩ {g.price.toLocaleString('ko-KR')}
                 </span>
               </div>

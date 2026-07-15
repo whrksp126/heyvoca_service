@@ -163,7 +163,7 @@ const buildMultipleChoiceFromWord = (word, pool) => {
   };
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const [isCorrect, setIsCorrect] = useState(null);
@@ -188,7 +188,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 팝업 응답을 기다리는 카드 이후의 로그는 팝업이 닫힐 때까지 순서대로 큐잉해둔다.
   const pendingCardLogQueueRef = useRef([]);
   const isFlushingCardLogQueueRef = useRef(false);
-  const isComboMode = testType === 'quick';
+  // 게스트 온보딩 맛보기(testType 'today' + guestMode)에서도 콤보 표시를 켠다.
+  // 단, 아래 콤보 소스는 서버(quick)와 로컬(게스트 온보딩)로 분기된다 — isGuestCombo 참고.
+  const isComboMode = testType === 'quick' || (guestMode && testType === 'today');
+  // 게스트 온보딩 전용 로컬 콤보 — 서버 API(getComboApi/protect/forfeit)·보석 개념을 전혀 사용하지 않고
+  // 클라이언트에서만 연속 정답을 카운트한다(정답 +1, 오답 0으로 리셋). 재출제(isRetry) 문제는
+  // 이미 한 번 틀린 단어를 다시 푸는 것이라 스트릭에 반영하지 않는다(서버 로깅이 첫 시도만 집계하는 것과 동일한 원칙).
+  const isGuestCombo = isComboMode && !!guestMode;
+  const localComboCountRef = useRef(0);
+  const bumpLocalCombo = (isCorrectAnswer) => {
+    if (!isGuestCombo) return;
+    localComboCountRef.current = isCorrectAnswer ? localComboCountRef.current + 1 : 0;
+    setCombo({ current: localComboCountRef.current });
+  };
   // 마지막 enqueueRetry가 큐에 실제로 삽입했는지 여부 저장 (세션 종료 판정 보정용)
   const lastRetryEnqueuedRef = useRef(false);
   // enqueueRetry가 실제로 큐에 삽입에 성공할 때마다 누적 증가하는 카운터.
@@ -255,9 +267,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return true;
   };
 
-  // ── 콤보: 학습 진입 시 현재 상태 로드 (AI 추천 테스트만) ──
+  // ── 콤보: 학습 진입 시 현재 상태 로드 ──
+  // - 로그인 콤보(quick): 서버 /combo 상태를 조회
+  // - 게스트 온보딩 콤보: 서버 호출 없이 로컬 카운터만 0으로 초기화 (보석 개념 없음)
   useEffect(() => {
     if (!isComboMode) return;
+    if (isGuestCombo) {
+      localComboCountRef.current = 0;
+      setCombo({ current: 0 });
+      return;
+    }
     let mounted = true;
     (async () => {
       const res = await getComboApi();
@@ -265,7 +284,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     })();
     return () => { mounted = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isComboMode]);
+  }, [isComboMode, isGuestCombo]);
 
   // 콤보 세션 요약을 결과 화면(StudyResult)에 전달 (sessionStorage 경유)
   const persistComboSummary = () => {
@@ -539,6 +558,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       client_now: new Date().toISOString(),
     });
 
+    // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
+    if (!question.isRetry) bumpLocalCombo(isCorrectAnswer);
+
     if (studySessionRef?.current == null) {
       // 방어 가드: 세션이 없는 비정상 경로
       question.isCorrect = isCorrectAnswer;
@@ -593,6 +615,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       time_taken_ms: timeTakenMs,
       client_now: new Date().toISOString(),
     });
+
+    // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
+    if (!question.isRetry) bumpLocalCombo(isCorrectAnswer);
 
     if (studySessionRef?.current == null) {
       // 방어 가드: 세션이 없는 비정상 경로
@@ -783,6 +808,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       target = setWords.find(w => w.id === wordId);
       if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
     }
+
+    // 게스트 온보딩 로컬 콤보 — 카드매칭은 항상 첫 시도(오답 카드는 사지선다로 재출제되어 이 경로를 다시 타지 않음)
+    bumpLocalCombo(!!wordIsCorrect);
 
     if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
       loggedVocaIdsRef.current.add(wordId);

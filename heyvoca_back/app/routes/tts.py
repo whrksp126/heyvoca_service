@@ -184,7 +184,7 @@ def _record_gen_stats(language, fallback):
 
 
 def _daily_gen_count(user_id):
-    """user별 일일 생성 카운터 증가 후 현재값 반환(best-effort, Redis)."""
+    """user(또는 게스트 식별자)별 일일 생성 카운터 증가 후 현재값 반환(best-effort, Redis)."""
     day = datetime.utcnow().strftime('%Y%m%d')
     k = f'tts:gencount:{user_id}:{day}'
     try:
@@ -193,6 +193,49 @@ def _daily_gen_count(user_id):
         return cur
     except Exception:
         return 0
+
+
+_ONBOARDING_WHITELIST_TTL = 3600  # 온보딩 단어 화이트리스트 캐시(1시간, 관리자 단어장 변경 반영 지연 허용)
+_ONBOARDING_WHITELIST_KEY = 'tts:onboarding_words'
+
+
+def _onboarding_words_whitelist():
+    """온보딩 레벨(1~4) 단어장에 포함된 영어 단어 집합(소문자, 정규화 기준).
+
+    게스트(비로그인) TTS **생성**(캐시 미스) 허용 대상을 이 집합으로 한정한다.
+    레벨 단어장은 관리자가 구성하는 고정 세트(AdminVocaBook)라 텍스트가 임의 사용자
+    입력이 아니므로 무제한 생성 남용 없이 화이트리스트로 안전하게 쓸 수 있다.
+    """
+    try:
+        cached = cache.get(_ONBOARDING_WHITELIST_KEY)
+        if cached is not None:
+            return set(json.loads(cached))
+    except Exception:
+        pass
+
+    from app.routes.onboarding import LEVEL_ADMIN_BOOK
+    from app.models.models import AdminVocaBookMap, Voca
+
+    book_ids = list(LEVEL_ADMIN_BOOK.values())
+    rows = (
+        db.session.query(Voca.word)
+        .join(AdminVocaBookMap, AdminVocaBookMap.voca_id == Voca.id)
+        .filter(AdminVocaBookMap.book_id.in_(book_ids))
+        .all()
+    )
+    words = {normalize_text(w[0]).lower() for w in rows if w[0] and normalize_text(w[0])}
+    try:
+        cache.set(_ONBOARDING_WHITELIST_KEY, json.dumps(list(words)), timeout=_ONBOARDING_WHITELIST_TTL)
+    except Exception:
+        pass
+    return words
+
+
+def _is_onboarding_word(norm_text, language):
+    """게스트 miss-생성 허용 여부 — 온보딩 레벨 단어장 소속 영어 단어인지."""
+    if language != 'en':
+        return False
+    return norm_text.lower() in _onboarding_words_whitelist()
 
 
 # ── 신규: objectstore 캐싱 + presigned URL ──────────────────────────────
@@ -242,9 +285,13 @@ def tts_resolve():
     if obj_exists:
         return jsonify({"url": _cached_presigned_url(object_key), "cached": True}), 200
 
-    # 2) miss → 생성(과금) 경로: 로그인 필수
+    # 2) miss → 생성(과금) 경로: 기본은 로그인 필수.
+    #    단, 온보딩 레벨 단어장(관리자 구성 고정 세트) 화이트리스트 단어는 게스트도 허용
+    #    — 게스트 온보딩 맛보기의 듣기형 문제 대응. 무제한 게스트 생성은 그대로 차단된다.
+    #    (레벨 단어 음성은 /onboarding/level-book 조회 시 백그라운드로 미리 생성되므로,
+    #     여기는 그 사이 레이스 상황을 위한 안전망 역할)
     user_id = _optional_user_id()
-    if not user_id:
+    if not user_id and not _is_onboarding_word(norm, language):
         return jsonify({"error": "음성이 아직 준비되지 않았습니다. 로그인 후 재생해주세요."}), 404
 
     # 길이 상한
@@ -255,9 +302,10 @@ def tts_resolve():
     if current_app.config.get('TTS_GENERATE_REQUIRE_DICT', True) and not _exists_in_dict(norm, language):
         return jsonify({"error": "사전에 없는 텍스트입니다."}), 404
 
-    # 일일 생성 상한
+    # 일일 생성 상한 — 게스트(화이트리스트 허용)는 로그인 사용자와 분리해 IP 기준으로 카운트.
+    gen_count_key = user_id or f'guest:{request.remote_addr or "unknown"}'
     daily_cap = int(current_app.config.get('TTS_DAILY_GEN_CAP', 1000))
-    if daily_cap and _daily_gen_count(user_id) > daily_cap:
+    if daily_cap and _daily_gen_count(gen_count_key) > daily_cap:
         return jsonify({"error": "오늘 음성 생성 한도를 초과했습니다."}), 429
 
     # 생성 + 업로드. 1차 provider(영어=ElevenLabs) 실패 시 service가 gTTS로 fallback.

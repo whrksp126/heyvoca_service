@@ -1,6 +1,8 @@
 """온보딩 (트랙 ⑤) — 게스트 맛보기 → 가입 → 데이터 이전 → 점진 해금.
 
-- GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — 맛보기 소스
+- GET  /onboarding/books              (비인증) 레벨 카드 목록
+- GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — 맛보기 소스.
+       응답 전 해당 레벨 단어 TTS를 백그라운드로 미리 생성·캐싱(게스트 무인증 재생 대비).
 - POST /onboarding/migrate           (인증) 가입 직후 1회, 레벨 단어장 생성 + 맛본 답안 반영 + 보상
 - GET  /onboarding/unlock-status     (인증) 세션 수 기반 기능 해금 상태(5단계)
 
@@ -9,12 +11,14 @@
 """
 
 import json
+import logging
+import threading
 import datetime as dt
 from uuid import UUID
 
-from flask import Blueprint, jsonify, g, request
+from flask import Blueprint, jsonify, g, request, current_app
 
-from app import db
+from app import db, cache
 from app.models.models import (
     User, UserVoca, UserVocaBook, UserVocaBookMap, UserStudyLog, UserStudySession,
 )
@@ -118,6 +122,58 @@ def books():
     return jsonify({'code': 200, 'data': cards}), 200
 
 
+# 레벨당 prewarm 백그라운드 스레드 재트리거 최소 간격(초). 레벨 단어(최대 4종) 구성이 고정이라
+# 짧은 시간 내 반복 호출로 스레드가 계속 생기는 것만 막으면 충분 — 실제 생성 여부는
+# objectstore 존재 확인으로 결정되므로 중복 트리거돼도 재생성/재과금 되지 않는다.
+_LEVEL_TTS_PREWARM_TRIGGER_TTL = 6 * 3600
+
+
+def _trigger_level_tts_prewarm(level, book):
+    """레벨 단어장의 영어 단어(origin) 음성을 백그라운드로 미리 생성·캐싱한다.
+
+    게스트(비로그인) 온보딩 맛보기는 듣기형 문제에서 단어(origin) 음성을 재생하는데,
+    /tts/resolve는 캐시 미스 시 로그인을 요구한다. 레벨 단어장은 관리자가 구성한
+    고정 세트(AdminVocaBook, 텍스트가 사용자 입력이 아님)라 무인증으로 미리 생성해도
+    남용 위험이 낮다 — 이 함수가 그 사전 생성을 담당한다(요청-응답 흐름은 막지 않음).
+
+    /tts/resolve 쪽에도 동일 화이트리스트 기준 게스트 허용 안전망이 있어(레이스 대비),
+    이 prewarm이 실패하거나 늦어도 맛보기 흐름 자체는 깨지지 않는다.
+    """
+    trigger_key = f'onboarding:tts_prewarm:{level}'
+    try:
+        if cache.get(trigger_key):
+            return
+        cache.set(trigger_key, '1', timeout=_LEVEL_TTS_PREWARM_TRIGGER_TTL)
+    except Exception:
+        pass  # Redis 장애 시에도 prewarm 자체는 계속 시도(중복 트리거만 못 막을 뿐)
+
+    words = [w['origin'] for w in (book.get('vocaList') or []) if w.get('origin')]
+    if not words:
+        return
+
+    app = current_app._get_current_object()
+
+    def _worker():
+        with app.app_context():
+            from app.services.tts import service
+            from app.services.tts.registry import get_provider_for_language
+            from app.services.tts.base import TTSError
+            try:
+                provider = get_provider_for_language('en')
+            except TTSError:
+                logging.getLogger(__name__).warning('온보딩 TTS prewarm: provider 조회 실패', exc_info=True)
+                return
+            for word in words:
+                try:
+                    service.ensure_cached(word, 'en', provider=provider)
+                except Exception:
+                    logging.getLogger(__name__).warning(
+                        '온보딩 TTS prewarm 실패: level=%s word=%s', level, word, exc_info=True,
+                    )
+
+    threading.Thread(target=_worker, name=f'onboarding-tts-prewarm-{level}', daemon=True).start()
+
+
 @onboarding_bp.route('/level-book', methods=['GET'])
 def level_book():
     """레벨별 단어장(단어 포함) — 비인증. 게스트 맛보기 소스."""
@@ -127,6 +183,7 @@ def level_book():
     book = _level_book(level)
     if not book:
         return jsonify({'code': 404, 'message': '해당 레벨의 단어장을 찾을 수 없습니다.'}), 404
+    _trigger_level_tts_prewarm(level, book)
     return jsonify({'code': 200, 'data': book}), 200
 
 
@@ -193,9 +250,13 @@ def migrate():
     db.session.add(vbook)
     db.session.flush()
 
+    # is_onboarding=True — unlock_status의 완료 세션(정규 학습 횟수) 카운트에서 제외되는 마커.
+    # 맛보기 문항 수와 무관하게(0개 포함) 가입 시 항상 finished_at이 채워지므로, 카운트에 포함되면
+    # 가입 직후 바로 단어장 등이 해금돼버린다 — 정규 학습 1회를 거쳐야 해금되도록 별도 표식으로 제외.
     session = UserStudySession(user_id=user_id, test_type='today',
                                book_ids=json.dumps([str(vbook.id)]),
-                               question_count=0, correct_count=0)
+                               question_count=0, correct_count=0,
+                               is_onboarding=True)
     session.started_at = now
     session.finished_at = now
     db.session.add(session)
@@ -292,9 +353,14 @@ def unlock_status():
         return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
 
     legacy = user.onboarding_ver != '1'
+    # 온보딩 가입 세션(is_onboarding=True)은 정규 학습이 아니므로 완료 세션 카운트에서 제외.
     completed = (
         db.session.query(db.func.count(UserStudySession.id))
-        .filter(UserStudySession.user_id == user_id, UserStudySession.finished_at.isnot(None))
+        .filter(
+            UserStudySession.user_id == user_id,
+            UserStudySession.finished_at.isnot(None),
+            UserStudySession.is_onboarding.is_(False),
+        )
         .scalar()
     ) or 0
 

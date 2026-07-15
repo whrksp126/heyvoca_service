@@ -10,7 +10,7 @@ import { getBookStoreDetailApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
 import gem from '../../assets/images/gem.png';
 import { useTheme } from '../../context/ThemeContext';
-import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
+import { resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor } from '../../utils/vocaBookColor';
 
 const ALL_CATEGORY = '전체';
 const EMPTY_BOOK_PRICE = 3;
@@ -39,7 +39,7 @@ export const BookCard = ({ item, onClick, className = '', priceLabel }) => {
     <div className="flex flex-col gap-[5px]">
       {item.category && (
         <div
-          style={{ backgroundColor: item.color.main }}
+          style={{ backgroundColor: resolveVocaBookAccentColor(item.color.main, isDark) }}
           className="flex items-center justify-center w-[max-content] px-[6px] py-[3px] rounded-[20px] text-[8px] font-[700] text-layout-white dark:text-layout-black"
         >
           {item.category}
@@ -54,7 +54,10 @@ export const BookCard = ({ item, onClick, className = '', priceLabel }) => {
           : (<><img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}</>)}
       </span>
       <div
-        style={{ color: item.color.main, backgroundColor: item.color.sub }}
+        style={{
+          color: resolveVocaBookAccentColor(item.color.main, isDark),
+          backgroundColor: resolveVocaBookSubColor(item.color.sub, item.color.main, isDark),
+        }}
         className="flex items-center justify-center w-[30px] h-[30px] rounded-[50px] text-[16px]"
       >
         <Plus />
