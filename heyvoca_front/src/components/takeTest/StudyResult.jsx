@@ -637,41 +637,44 @@ const StudyResult = () => {
             >
               {/* 상단 아이콘 + 오로라 */}
               <div className='relative flex flex-col items-center justify-center pt-[24px] pb-[20px] shrink-0'>
-                {/* 오로라 글로우 — 아이콘 뒤에서 회전 */}
-                <div className='pointer-events-none absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[240px] h-[240px] z-0'>
-                  <motion.img
-                    src={ResultItemBackground01}
-                    alt=""
-                    className='w-full h-full object-contain'
-                    animate={{ rotate: [0, 360, 720], scale: [1, 1.6, 1, 1.6, 1], opacity: [0.7, 1, 0.7, 1, 0.7] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </div>
-                <motion.div
-                  className='relative z-10 flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
-                  initial={{ scale: 0, opacity: 0, rotate: -180 }}
-                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                  transition={{
-                    scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-                    rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-                    opacity: { duration: 0.6 },
-                  }}
-                >
-                  {/* 상승 화살표 — 영역 중앙 고정, 아래→중앙 안착 후 위로 사라짐 반복 */}
-                  <motion.span
-                    className='text-status-success-500'
-                    animate={{ y: [14, 0, 0, -16], opacity: [0, 1, 1, 0] }}
+                {/* 원 배경 + 오로라 글로우 공용 컨테이너 — 원과 정확히 같은 중심을 공유하도록 원 크기(80px)로 고정 */}
+                <div className='relative flex items-center justify-center w-[80px] h-[80px]'>
+                  {/* 오로라 글로우 — 아이콘 뒤에서 회전. 원 배경과 동일 중심(top/left 50% + translate -50%)에 고정 */}
+                  <div className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] z-0'>
+                    <motion.img
+                      src={ResultItemBackground01}
+                      alt=""
+                      className='w-full h-full object-contain origin-center'
+                      animate={{ rotate: [0, 360, 720], scale: [1, 1.6, 1, 1.6, 1], opacity: [0.7, 1, 0.7, 1, 0.7] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </div>
+                  <motion.div
+                    className='relative z-10 flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
+                    initial={{ scale: 0, opacity: 0, rotate: -180 }}
+                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
                     transition={{
-                      duration: 1.6,
-                      times: [0, 0.22, 0.62, 1],
-                      repeat: Infinity,
-                      repeatDelay: 0.2,
-                      ease: 'easeOut',
+                      scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+                      rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
+                      opacity: { duration: 0.6 },
                     }}
                   >
-                    <ArrowUp size={40} weight="bold" />
-                  </motion.span>
-                </motion.div>
+                    {/* 상승 화살표 — 영역 중앙 고정, 아래→중앙 안착 후 위로 사라짐 반복 */}
+                    <motion.span
+                      className='text-status-success-500'
+                      animate={{ y: [14, 0, 0, -16], opacity: [0, 1, 1, 0] }}
+                      transition={{
+                        duration: 1.6,
+                        times: [0, 0.22, 0.62, 1],
+                        repeat: Infinity,
+                        repeatDelay: 0.2,
+                        ease: 'easeOut',
+                      }}
+                    >
+                      <ArrowUp size={40} weight="bold" />
+                    </motion.span>
+                  </motion.div>
+                </div>
                 <motion.p
                   className='relative z-10 text-[16px] font-[700] mt-[14px] text-center'
                   initial={{ y: 20, opacity: 0 }}

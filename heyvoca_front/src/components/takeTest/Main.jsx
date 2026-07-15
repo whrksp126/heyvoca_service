@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Circle, X, BookOpenText, Leaf, Plant, Carrot, EggCrack, SpeakerHigh, ArrowUp, ArrowDown } from "@phosphor-icons/react";
+import { Circle, X, BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -10,6 +10,10 @@ import SkipListeningNewBottomSheet from '../newBottomSheet/SkipListeningNewBotto
 import { isListeningType, isListeningSkipActive, activateListeningSkip } from '../../utils/listeningSkip';
 import TtsRipple from '../common/TtsRipple';
 import MemorizationStatus from "../common/MemorizationStatus";
+import MemoryStateChangeBadge, {
+  MEMORY_STATE_RANK as STATE_RANK,
+  getMemoryStateKeyByStability,
+} from "../common/MemoryStateChangeBadge";
 import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
@@ -21,31 +25,8 @@ import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBot
 import { useUser } from '../../context/UserContext';
 
 
-// stability 기반 암기 상태 키 (FSRS)
-const getMemoryStateKeyByStability = (stability, state) => {
-  if (!state || state === 'new') return 'unlearned';
-  if (stability < 10) return 'leaf';
-  if (stability < 60) return 'plant';
-  return 'carrot';
-};
-
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
 const backendStateKeyMap = { unlearned: 'unlearned', short: 'leaf', medium: 'plant', long: 'carrot' };
-const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
-
-const stateIconMap = {
-  unlearned: <EggCrack size={10} weight="fill" />,
-  leaf: <Leaf size={10} weight="fill" />,
-  plant: <Plant size={10} weight="fill" />,
-  carrot: <Carrot size={10} weight="fill" />,
-};
-
-const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
-};
 
 // 낙관적 fsrs 추정 — 백엔드 응답 도착 전까지 즉각 UI에 표시할 임시값.
 // 첫 학습이라도 알고리즘 결과는 단순(정답=수일 후, 오답=1일 후)하니 추정해도 실값과 분류(leaf/plant/carrot)가 거의 같음.
@@ -1121,57 +1102,23 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     whitespace-nowrap
                   ">
                     {memoryStateChange ? (
-                      <motion.div
-                        className={`
-                          flex items-center gap-[3px]
-                          py-[3px] px-[8px]
-                          border rounded-[50px]
-                          whitespace-nowrap
-                          ${memoryStateChange.dir === 'up'
-                            ? `${stateColorMap[memoryStateChange.toKey]?.border ?? 'border-[#38CE38]'}
-                               ${stateColorMap[memoryStateChange.toKey]?.text ?? 'text-[#38CE38]'}
-                               ${stateColorMap[memoryStateChange.toKey]?.bg ?? 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20'}`
-                            : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'}
-                        `}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                      >
-                        {/* 등장 애니메이션 — 상승: 아래→위로 두 번 나타났다 중앙 안착 / 강등: 위→아래로 두 번 나타났다 중앙 안착 */}
-                        <motion.span
-                          className="flex items-center flex-shrink-0"
-                          initial={{ y: memoryStateChange.dir === 'up' ? 7 : -7, opacity: 0 }}
-                          animate={memoryStateChange.dir === 'up'
-                            ? { y: [7, -4, 7, -4, 0], opacity: [0, 1, 0, 1, 1] }
-                            : { y: [-7, 4, -7, 4, 0], opacity: [0, 1, 0, 1, 1] }}
-                          transition={{ duration: 0.8, times: [0, 0.25, 0.5, 0.75, 1], ease: 'easeInOut' }}
-                        >
-                          {memoryStateChange.dir === 'up'
-                            ? <ArrowUp size={10} weight="bold" />
-                            : <ArrowDown size={10} weight="bold" />}
-                        </motion.span>
-                        <span className="flex-shrink-0">{stateIconMap[memoryStateChange.toKey]}</span>
-                      </motion.div>
+                      <MemoryStateChangeBadge
+                        toKey={memoryStateChange.toKey}
+                        dir={memoryStateChange.dir}
+                        changed={true}
+                        size="large"
+                      />
                     ) : (
                       (() => {
                         const stability = testQuestions[progressIndex].fsrs?.stability ?? 0;
                         const fsrsState = testQuestions[progressIndex].fsrs?.state ?? null;
                         const stateKey = getMemoryStateKeyByStability(stability, fsrsState);
-                        const colors = stateColorMap[stateKey];
                         return (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.15 }}
-                            className={`
-                              flex items-center justify-center
-                              w-[18px] h-[18px]
-                              border rounded-[18px]
-                              ${colors.border} ${colors.text} ${colors.bg}
-                            `}
-                          >
-                            {stateIconMap[stateKey]}
-                          </motion.div>
+                          <MemoryStateChangeBadge
+                            toKey={stateKey}
+                            changed={false}
+                            size="large"
+                          />
                         );
                       })()
                     )}

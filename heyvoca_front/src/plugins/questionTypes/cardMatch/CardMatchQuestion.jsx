@@ -1,26 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { EggCrack, Leaf, Plant, Carrot, ArrowUp, ArrowDown } from '@phosphor-icons/react';
 import { getTextSound } from '../../../utils/common';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import TtsRipple from '../../../components/common/TtsRipple';
-
-const stateIconMap = {
-  unlearned: <EggCrack size={10} weight="fill" />,
-  leaf: <Leaf size={10} weight="fill" />,
-  plant: <Plant size={10} weight="fill" />,
-  carrot: <Carrot size={10} weight="fill" />,
-};
-
-const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
-};
-
-const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
+import MemoryStateChangeBadge, {
+  MEMORY_STATE_RANK as STATE_RANK,
+  getMemoryStateKeyByStability,
+} from '../../../components/common/MemoryStateChangeBadge';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -94,14 +81,6 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
         updateData: { fsrs: word.fsrs, isCorrect: result.isCorrect, updatedAt: new Date().toISOString() },
       };
     });
-  };
-
-  // stability 기반 암기 상태 키
-  const getMemoryStateKeyByStability = (stability, state) => {
-    if (!state || state === 'new') return 'unlearned';
-    if (stability < 10) return 'leaf';
-    if (stability < 60) return 'plant';
-    return 'carrot';
   };
 
   const resolveWordState = (word, isMatch, attempts) => {
@@ -295,54 +274,14 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
               {/* 상단 중앙 - 암기 상태 배지 (채점 후) */}
               {!!wordResolvedStates[word.id] && (() => {
                 const resolved = wordResolvedStates[word.id];
-                const colors = stateColorMap[resolved.newKey];
                 return (
                   <div className="absolute top-[8px] left-0 right-0 flex justify-center z-[2]">
-                    {resolved.changed ? (
-                      <motion.div
-                        className={`
-                          flex items-center gap-[2px]
-                          py-[2px] px-[6px]
-                          border rounded-[50px]
-                          whitespace-nowrap
-                          ${resolved.dir === 'up'
-                            ? `${colors.border} ${colors.text} ${colors.bg}`
-                            : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'}
-                        `}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                      >
-                        {/* 등장 애니메이션 — 상승: 아래→위 / 강등: 위→아래로 두 번 나타났다 안착 */}
-                        <motion.span
-                          className="flex items-center flex-shrink-0"
-                          initial={{ y: resolved.dir === 'up' ? 6 : -6, opacity: 0 }}
-                          animate={resolved.dir === 'up'
-                            ? { y: [6, -3, 6, -3, 0], opacity: [0, 1, 0, 1, 1] }
-                            : { y: [-6, 3, -6, 3, 0], opacity: [0, 1, 0, 1, 1] }}
-                          transition={{ duration: 0.8, times: [0, 0.25, 0.5, 0.75, 1], ease: 'easeInOut' }}
-                        >
-                          {resolved.dir === 'up'
-                            ? <ArrowUp size={9} weight="bold" />
-                            : <ArrowDown size={9} weight="bold" />}
-                        </motion.span>
-                        <span className="flex-shrink-0">{stateIconMap[resolved.newKey]}</span>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        className={`
-                          flex items-center justify-center
-                          w-[18px] h-[18px]
-                          border rounded-[18px]
-                          ${colors.border} ${colors.text} ${colors.bg}
-                        `}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {stateIconMap[resolved.newKey]}
-                      </motion.div>
-                    )}
+                    <MemoryStateChangeBadge
+                      toKey={resolved.newKey}
+                      dir={resolved.dir}
+                      changed={resolved.changed}
+                      size="small"
+                    />
                   </div>
                 );
               })()}
