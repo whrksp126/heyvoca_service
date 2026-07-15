@@ -93,6 +93,14 @@ class Config:
     APPLE_APP_STORE_CONNECT_KEY_ID = os.getenv('APPLE_APP_STORE_CONNECT_KEY_ID')
     APPLE_APP_STORE_CONNECT_PRIVATE_KEY = os.getenv('APPLE_APP_STORE_CONNECT_PRIVATE_KEY')
 
+    # Sign in with Apple (App Store Connect용 APPLE_APP_STORE_CONNECT_* 와는 다른 키 —
+    # Apple Developer > Certificates,IDs&Profiles > Keys 에서 별도로 발급한 "Sign in with Apple" 키(.p8) 필요.
+    # 회원 탈퇴 시 apple refresh_token revoke(https://appleid.apple.com/auth/revoke)에 사용.
+    # 값이 없으면 revoke를 skip하고 로그만 남김(탈퇴 자체는 계속 진행).
+    APPLE_TEAM_ID = os.getenv('APPLE_TEAM_ID')                       # Apple Developer Team ID (10자)
+    APPLE_SIGNIN_KEY_ID = os.getenv('APPLE_SIGNIN_KEY_ID')           # Sign in with Apple key의 Key ID
+    APPLE_SIGNIN_PRIVATE_KEY = os.getenv('APPLE_SIGNIN_PRIVATE_KEY')  # Sign in with Apple .p8 private key 내용
+
     # FCM
     FCM_API_KEY = os.getenv('FCM_API_KEY')
 

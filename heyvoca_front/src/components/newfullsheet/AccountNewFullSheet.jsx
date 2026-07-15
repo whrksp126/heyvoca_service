@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CaretLeft, SignOut, PencilSimple } from '@phosphor-icons/react';
+import { CaretLeft, SignOut, PencilSimple, AppleLogo } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -12,7 +12,7 @@ import { NicknameEditNewBottomSheet } from '../newBottomSheet/NicknameEditNewBot
 import { useUser } from '../../context/UserContext';
 import { withdrawApi } from '../../api/auth';
 import { setCookie } from '../../utils/common';
-import { launchGoogleWithdraw, showToast, vibrate } from '../../utils/osFunction';
+import { launchGoogleWithdraw, showToast, vibrate, getDevicePlatform } from '../../utils/osFunction';
 
 const AccountNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -20,7 +20,7 @@ const AccountNewFullSheet = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { popNewFullSheet, clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
-  const { userProfile, setIsWithdrawInProgress, updateUserProfile } = useUser();
+  const { userProfile, setIsWithdrawInProgress, updateUserProfile, loginProvider } = useUser();
   const navigate = useNavigate();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
@@ -75,12 +75,38 @@ const AccountNewFullSheet = () => {
       // 회원 탈퇴 프로세스 시작 표시 (로그아웃과 동일한 앱 콜백을 구분하기 위함)
       setIsWithdrawInProgress(true);
 
-      // 앱 환경인 경우 앱에 구글 계정 선택 요청 전송
-      await launchGoogleWithdraw();
+      const platform = getDevicePlatform();
 
-      // 앱 환경이면 launchGoogleWithdraw에서 처리하고 여기서 종료
-      // 앱에서 google_logout_app_callback을 받으면 UserContext에서 실제 회원 탈퇴 처리 진행
-      if (getDevicePlatform() !== 'web') {
+      if (platform !== 'web') {
+        // 앱 환경 — 로그인 방식에 따라 분기해야 한다.
+        // 애플 로그인 사용자는 구글 세션이 없어 launchGoogleWithdraw()가 트리거하는
+        // GoogleSignin.signOut()이 실패(callback status≠200)한다. 그 결과 UserContext의
+        // handleAppGoogleAccountAction이 status===200 게이트를 통과하지 못해 performWithdraw가
+        // 아예 실행되지 않고 탈퇴가 중단된다. 애플 사용자는 이 구글 로그아웃 채널을 타지 않고
+        // 웹과 동일하게 withdrawApi를 직접 호출해 탈퇴를 완료시킨다.
+        if (loginProvider === 'apple') {
+          const result = await withdrawApi();
+
+          if (result.code !== 200) {
+            alert('회원 탈퇴 중 오류가 발생하였습니다.');
+            setIsWithdrawing(false);
+            setIsWithdrawInProgress(false);
+            return;
+          }
+
+          localStorage.clear();
+          sessionStorage.clear();
+          setCookie('userAccessToken', '', -1);
+          clearNewBottomSheetStack();
+          clearNewFullSheetStack();
+          window.location.href = '/login';
+          return;
+        }
+
+        // 구글 로그인(또는 로그인 방식을 알 수 없는 경우) — 기존 앱 구글 계정 선택 팝업 흐름 유지.
+        // 앱에서 google_logout_app_callback(status:200)을 받으면
+        // UserContext.handleAppGoogleAccountAction이 isWithdrawInProgress를 보고 performWithdraw를 실행한다.
+        await launchGoogleWithdraw();
         return;
       }
 
@@ -90,6 +116,7 @@ const AccountNewFullSheet = () => {
       if (result.code !== 200) {
         alert('회원 탈퇴 중 오류가 발생하였습니다.');
         setIsWithdrawing(false);
+        setIsWithdrawInProgress(false);
         return;
       }
 
@@ -113,6 +140,7 @@ const AccountNewFullSheet = () => {
       console.error('회원 탈퇴 실패:', error);
       alert('회원 탈퇴 중 오류가 발생하였습니다.');
       setIsWithdrawing(false);
+      setIsWithdrawInProgress(false);
     }
   }
 
@@ -192,8 +220,17 @@ const AccountNewFullSheet = () => {
           <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">
             <h2 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">로그인 방식</h2>
             <div className="flex items-center gap-[5px]">
-              <img src={google} alt="google" className="inline-block w-[16px] h-[16px]" />
-              <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">Google 로그인</span>
+              {loginProvider === 'apple' ? (
+                <>
+                  <AppleLogo size={16} weight="fill" className="text-layout-black dark:text-layout-white" />
+                  <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">Apple 로그인</span>
+                </>
+              ) : (
+                <>
+                  <img src={google} alt="google" className="inline-block w-[16px] h-[16px]" />
+                  <span className="text-[14px] font-[400] text-[#999] dark:text-layout-gray-300">Google 로그인</span>
+                </>
+              )}
             </div>
           </li>
           <li className="flex flex-col items-start gap-[10px] px-[20px] py-[20px] border-b border-[#ddd] bg-layout-white dark:bg-layout-black">

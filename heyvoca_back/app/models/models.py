@@ -64,6 +64,9 @@ class User(db.Model):
     email = Column(String(128), nullable=False) 
     google_id = Column(String(128), nullable=True)
     apple_id = Column(String(128), nullable=True) # Apple 고유 ID 추가
+    # Sign in with Apple refresh_token (authorizationCode 교환으로 최초 로그인 시에만 발급됨).
+    # 회원 탈퇴 시 이 토큰으로 https://appleid.apple.com/auth/revoke 호출.
+    apple_refresh_token = Column(String(512), nullable=True)
     name = Column(String(32), nullable=False)
     username = Column(String(36), nullable=True, default=None)
     phone = Column(String(16), nullable=True)

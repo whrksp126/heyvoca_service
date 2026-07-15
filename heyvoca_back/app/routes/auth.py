@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db, limiter
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -36,6 +36,103 @@ from datetime import datetime, timedelta, timezone
 # -------------------
 # UTC+9 (Asia/Seoul) 기준 타임스탬프
 KST = timezone(timedelta(hours=9))
+
+# --------------------------------------------------------------------------------
+# Sign in with Apple — client_secret(JWT) 생성 & authorizationCode 교환 / revoke
+#
+# 주의: APPLE_APP_STORE_CONNECT_*(config.py) 는 인앱결제(App Store Connect API)용 키라
+#       Sign in with Apple과는 다른 키다. 여기서는 별도 env(APPLE_TEAM_ID/APPLE_SIGNIN_KEY_ID/
+#       APPLE_SIGNIN_PRIVATE_KEY)를 사용한다. 미설정 시 관련 기능은 skip하고 로그만 남긴다.
+# --------------------------------------------------------------------------------
+APPLE_TEAM_ID = os.getenv('APPLE_TEAM_ID')
+APPLE_SIGNIN_KEY_ID = os.getenv('APPLE_SIGNIN_KEY_ID')
+APPLE_SIGNIN_PRIVATE_KEY = os.getenv('APPLE_SIGNIN_PRIVATE_KEY')
+APPLE_SIGNIN_CLIENT_ID = os.getenv('APPLE_CLIENT_ID')  # Sign in with Apple의 client_id (=Bundle ID/Service ID)
+
+
+def _generate_apple_signin_client_secret():
+    """Sign in with Apple 전용 client_secret(JWT, ES256) 생성.
+
+    필요 env: APPLE_TEAM_ID, APPLE_SIGNIN_KEY_ID, APPLE_SIGNIN_PRIVATE_KEY, APPLE_CLIENT_ID
+    값이 하나라도 없으면 None 반환 → 호출부에서 해당 기능(code 교환/revoke)을 skip 처리.
+    """
+    if not (APPLE_TEAM_ID and APPLE_SIGNIN_KEY_ID and APPLE_SIGNIN_PRIVATE_KEY and APPLE_SIGNIN_CLIENT_ID):
+        print('[Apple SignIn] client_secret 생성 스킵 - 필수 env 미설정 '
+              '(APPLE_TEAM_ID/APPLE_SIGNIN_KEY_ID/APPLE_SIGNIN_PRIVATE_KEY/APPLE_CLIENT_ID)')
+        return None
+
+    try:
+        # .p8 파일 내용을 그대로 넣거나, 개행이 '\n' 문자열로 이스케이프되어 들어온 경우 모두 대응
+        private_key = APPLE_SIGNIN_PRIVATE_KEY.replace('\\n', '\n')
+        now = datetime.utcnow()
+        payload = {
+            'iss': APPLE_TEAM_ID,
+            'iat': now,
+            'exp': now + timedelta(minutes=20),  # Apple 최대 6개월까지 허용, 호출 시점에 매번 생성하므로 짧게
+            'aud': 'https://appleid.apple.com',
+            'sub': APPLE_SIGNIN_CLIENT_ID,
+        }
+        headers = {'kid': APPLE_SIGNIN_KEY_ID, 'alg': 'ES256'}
+        return jwt.encode(payload, private_key, algorithm='ES256', headers=headers)
+    except Exception as e:
+        print(f'[Apple SignIn] client_secret 생성 실패: {e}')
+        return None
+
+
+def _exchange_apple_authorization_code(authorization_code):
+    """authorizationCode → apple refresh_token 교환 (authorizationCode는 최초 로그인 시에만 유효, 1회성)."""
+    client_secret = _generate_apple_signin_client_secret()
+    if not client_secret:
+        return None
+    try:
+        resp = requests.post(
+            'https://appleid.apple.com/auth/token',
+            data={
+                'client_id': APPLE_SIGNIN_CLIENT_ID,
+                'client_secret': client_secret,
+                'code': authorization_code,
+                'grant_type': 'authorization_code',
+            },
+            headers={'Content-Type': 'application/x-www-form-urlencoded'},
+            timeout=10,
+        )
+        if resp.status_code != 200:
+            print(f'[Apple SignIn] authorizationCode 교환 실패: {resp.status_code} {resp.text}')
+            return None
+        return resp.json()  # {'access_token':..., 'refresh_token':..., 'id_token':..., ...}
+    except Exception as e:
+        print(f'[Apple SignIn] authorizationCode 교환 오류: {e}')
+        return None
+
+
+def _revoke_apple_refresh_token(refresh_token):
+    """회원 탈퇴 시 Apple refresh_token revoke. 실패해도 예외를 삼켜 탈퇴 흐름을 막지 않는다."""
+    if not refresh_token:
+        print('[Apple SignIn] revoke 스킵 - 저장된 apple_refresh_token 없음')
+        return
+    client_secret = _generate_apple_signin_client_secret()
+    if not client_secret:
+        print('[Apple SignIn] revoke 스킵 - client_secret 생성 불가(env 미설정)')
+        return
+    try:
+        resp = requests.post(
+            'https://appleid.apple.com/auth/revoke',
+            data={
+                'client_id': APPLE_SIGNIN_CLIENT_ID,
+                'client_secret': client_secret,
+                'token': refresh_token,
+                'token_type_hint': 'refresh_token',
+            },
+            headers={'Content-Type': 'application/x-www-form-urlencoded'},
+            timeout=10,
+        )
+        if resp.status_code != 200:
+            print(f'[Apple SignIn] revoke 실패: {resp.status_code} {resp.text}')
+        else:
+            print('[Apple SignIn] revoke 성공')
+    except Exception as e:
+        print(f'[Apple SignIn] revoke 요청 오류: {e}')
+
 
 # # ## 구글 로그인(앱) ##
 # # # access, refresh 백엔드 처리
@@ -231,6 +328,8 @@ def apple_oauth_app():
         full_name = data.get('fullName')  # 선택적 (최초 로그인 시에만 올 수 있음)
         # full_name 예: {'givenName': 'Gildong', 'familyName': 'Hong'}
         # email = data.get('email') # identityToken에서 추출하는 것이 더 안전함
+        # authorizationCode: 최초 로그인 시에만 제공됨(1회성). apple refresh_token 교환 → 탈퇴 시 revoke에 사용.
+        authorization_code = data.get('authorizationCode')
 
         if not identity_token:
             return jsonify({'code': 400, 'message': 'identityToken이 없습니다.'}), 400
@@ -313,6 +412,15 @@ def apple_oauth_app():
                 db.session.rollback()
                 print(f"Apple User Creation Error: {e}")
                 return jsonify({'code': 400, 'message': '사용자 생성 실패'}), 400
+
+        # 4-1. authorizationCode → apple refresh_token 교환 (최초 로그인 시에만 제공됨, 1회성 code).
+        #      회원 탈퇴 시 revoke에 사용. 실패해도 로그인 자체는 계속 진행(로그인 차단 금지).
+        if authorization_code:
+            apple_token_resp = _exchange_apple_authorization_code(authorization_code)
+            if apple_token_resp and apple_token_resp.get('refresh_token'):
+                user.apple_refresh_token = apple_token_resp['refresh_token']
+            else:
+                print('[Apple SignIn] apple_refresh_token 저장 실패 - authorizationCode 교환 실패 또는 응답에 refresh_token 없음')
 
         # 5. 토큰 발급
         access_token = generate_access_token(user.id, user.email)
@@ -564,6 +672,10 @@ def get_user_info():
         'set_goal_cnt' : user.set_goal_cnt,
         'invite_code' : user.invite_code,
         'daily_new_limit' : user.daily_new_limit,
+        # 온보딩: NULL=기존 사용자(전 기능 해금), '1'=신규(세션 수 기반 점진 해금)
+        'onboarding_ver' : user.onboarding_ver,
+        'source_channel' : user.source_channel,
+        'learning_goal' : user.learning_goal,
     }
     return jsonify({'code':200, 'data': user_item})
 
@@ -1054,7 +1166,7 @@ def withdraw():
             }), 400
         
         user_id = UUID(g.user_id)
-        
+
         # 사용자 존재 확인
         user = db.session.query(User).filter(User.id == user_id).first()
         if not user:
@@ -1063,67 +1175,101 @@ def withdraw():
                 'message': '사용자를 찾을 수 없습니다.',
                 'status': 'error'
             }), 404
-        
+
+        # Apple revoke에 필요한 값은 User row 삭제 전에 미리 확보해둔다.
+        apple_id = user.apple_id
+        apple_refresh_token = user.apple_refresh_token
+
         # 트랜잭션 시작 - 모든 삭제 작업을 하나의 트랜잭션으로 처리
         try:
             # 1. UserHasToken 삭제 (FCM 토큰)
             db.session.query(UserHasToken).filter(UserHasToken.user_id == user_id).delete()
-            
+
             # 2. InviteMap 삭제 (초대 관련 - inviter_id 또는 invitee_id가 해당 user_id인 경우)
             # BinaryUUID 타입을 사용하므로 UUID 객체를 그대로 전달 가능
             db.session.query(InviteMap).filter(
                 (InviteMap.inviter_id == user_id) | (InviteMap.invitee_id == user_id)
             ).delete()
-            
+
+            # 2-1. User.invited_by 자기참조 FK 정리 — 이 유저가 초대한 다른 유저들의
+            #      invited_by를 NULL로 갱신(관계 해제)한 뒤 유저를 삭제해야 FK 위반이 안 남.
+            db.session.query(User).filter(User.invited_by == user_id).update(
+                {User.invited_by: None}, synchronize_session=False
+            )
+
+            # 2-2. UserCombo 삭제 (콤보 게임 레이어, PK=user_id)
+            db.session.query(UserCombo).filter(UserCombo.user_id == user_id).delete()
+
+            # 2-3. UserVocaGame 삭제 (당근 농장 게임 레이어)
+            #      user_voca_id → user_voca.id FK를 가지므로 UserVoca를 삭제하기 전에 먼저 삭제되어야 함
+            db.session.query(UserVocaGame).filter(UserVocaGame.user_id == user_id).delete()
+
             # 3-1. UserVocaBookMap 삭제 (사용자 단어장 내 단어 매핑)
             # UserVocaBook이 삭제되기 전에 먼저 삭제되어야 함 (CASCADE 설정이 없을 수 있으므로 명시적 삭제)
             # UserVocaBookMap은 user_voca_book_id를 외래키로 가짐
             # 따라서 UserVocaBook을 먼저 조회해서 ID 목록을 가져오거나, join delete를 수행해야 함
-            
+
             # 먼저 사용자의 모든 단어장 ID 조회
             user_voca_book_ids = db.session.query(UserVocaBook.id).filter(UserVocaBook.user_id == user_id).all()
             user_voca_book_ids = [row[0] for row in user_voca_book_ids]
-            
+
             if user_voca_book_ids:
                 # 해당 단어장들에 속한 맵핑 삭제
                 db.session.query(UserVocaBookMap).filter(UserVocaBookMap.user_voca_book_id.in_(user_voca_book_ids)).delete(synchronize_session=False)
 
             # 3-2. UserVoca 삭제 (사용자 단어)
             # UserVoca는 user_id를 외래키로 가짐
-            # UserVocaBookMap에서 user_voca_id를 참조할 수 있으므로, Map 삭제 후 삭제 안전
+            # UserVocaBookMap / UserVocaGame에서 user_voca_id를 참조할 수 있으므로, 위에서 먼저 삭제 후 처리해야 안전
             db.session.query(UserVoca).filter(UserVoca.user_id == user_id).delete()
 
             # 3-3. UserVocaBook 삭제 (사용자 단어장)
             db.session.query(UserVocaBook).filter(UserVocaBook.user_id == user_id).delete()
-            
+
             # 4. CheckIn 삭제 (출석 체크)
             db.session.query(CheckIn).filter(CheckIn.user_id == user_id).delete()
-            
+
             # 5. UserRecentStudy 삭제 (최근 학습)
             db.session.query(UserRecentStudy).filter(UserRecentStudy.user_id == user_id).delete()
-            
+
             # 6. UserGoals 삭제 (사용자 목표)
             db.session.query(UserGoals).filter(UserGoals.user_id == user_id).delete()
-            
+
             # 7. Purchase 삭제 (구매 기록)
             db.session.query(Purchase).filter(Purchase.user_id == user_id).delete()
-            
+
             # 8. GemLog 삭제 (보석 로그)
             db.session.query(GemLog).filter(GemLog.user_id == user_id).delete()
-            
+
+            # 8-1. UserStudyLog / UserStudySession 삭제 (학습 이력)
+            #      UserStudySession.user_id는 실제 FK라 삭제 안 하면 500 유발.
+            #      UserStudyLog는 파티션 테이블이라 FK는 없지만(session_id 등), 개인정보 정리 차원에서 함께 삭제.
+            db.session.query(UserStudyLog).filter(UserStudyLog.user_id == user_id).delete()
+            db.session.query(UserStudySession).filter(UserStudySession.user_id == user_id).delete()
+
+            # 8-2. UserQuestionTypeStat 삭제 (문제 유형별 정답률 집계, 실제 FK)
+            db.session.query(UserQuestionTypeStat).filter(UserQuestionTypeStat.user_id == user_id).delete()
+
             # 9. User 삭제 (사용자 자체)
             db.session.delete(user)
-            
+
             # 모든 변경사항 커밋
             db.session.commit()
-            
+
+            # 10. Apple Sign In revoke — DB 트랜잭션과 분리된 외부 API 호출.
+            #     이미 회원 탈퇴(커밋)는 완료된 상태이므로 revoke 실패가 탈퇴 자체를 막지 않는다.
+            if apple_id:
+                try:
+                    _revoke_apple_refresh_token(apple_refresh_token)
+                except Exception as revoke_err:
+                    print(f"[Apple SignIn] 탈퇴 후 revoke 처리 중 예외(무시): {revoke_err}")
+
             # 응답 생성 및 refresh_token 쿠키 제거
             response = make_response(jsonify({
                 'code': 200,
                 'message': '회원 탈퇴가 성공적으로 완료되었습니다.',
                 'status': 'success'
             }), 200)
-            
+
             # refresh_token 쿠키 제거
             is_local = os.getenv('FLASK_CONFIG') == 'local'
             response.set_cookie(
@@ -1134,9 +1280,9 @@ def withdraw():
                 samesite='Lax',
                 max_age=0  # 즉시 만료
             )
-            
+
             return response
-            
+
         except Exception as e:
             # 에러 발생 시 롤백
             db.session.rollback()

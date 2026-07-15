@@ -19,13 +19,16 @@ export const loginApi = async ({ googleId, email, name }) => {
 
 
 // Apple 로그인 API
-export const appleLoginApi = async ({ identityToken, fullName, email }) => {
+// authorizationCode: 최초 로그인 시에만 앱에서 전달되는 1회성 코드.
+// 백엔드가 이 코드로 apple refresh_token을 교환해 저장 → 이후 회원 탈퇴 시 revoke에 사용.
+export const appleLoginApi = async ({ identityToken, fullName, email, authorizationCode }) => {
   const url = `${backendUrl}/auth/apple/oauth/app`;
   const method = 'POST';
   const fetchData = {
     identityToken,
     fullName,
-    email
+    email,
+    authorizationCode
   };
   try {
     const result = await fetchDataAsync(url, method, fetchData);

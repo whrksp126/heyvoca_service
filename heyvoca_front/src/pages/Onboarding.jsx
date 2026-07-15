@@ -9,8 +9,8 @@ import {
 import HeyCharacter from '../assets/images/HeyCharacter02.png';
 import gemImg from '../assets/images/gem.png';
 import googleLogo from '../assets/images/google_logo.png';
-import { getOnboardingBooksApi, getLevelBookApi } from '../api/study';
-import { patchGuest, getGuest, setGuestTrial } from '../utils/guestStorage';
+import { getOnboardingBooksApi, getLevelBookApi, migrateOnboardingApi } from '../api/study';
+import { patchGuest, getGuest, setGuestTrial, clearGuest } from '../utils/guestStorage';
 import { buildGuestQuestions } from '../utils/guestQuestions';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
 import { BookCard } from '../components/bookStore/BookSection';
@@ -84,7 +84,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
-  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth } = useUser();
+  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile } = useUser();
 
   // 온보딩 내부 로그인/회원가입 스텝(auth)에서만 앱 OAuth 노출 (안드로이드는 애플 숨김)
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
@@ -104,6 +104,8 @@ const Onboarding = () => {
   const [username, setUsername] = useState('');
   const [loadingTrial, setLoadingTrial] = useState(false);
   const [openingPreview, setOpeningPreview] = useState(false);
+  // 이미 로그인된 사용자가 온보딩을 진행할 때 auth 스텝을 건너뛰고 서버 migrate 처리 중임을 표시
+  const [finishingOnboarding, setFinishingOnboarding] = useState(false);
 
   // 맛보기 결과 (takeTest에서 넘어온 답안)
   const answers = returned ? (location.state?.answers ?? []) : (saved.answers ?? []);
@@ -136,10 +138,10 @@ const Onboarding = () => {
       } catch (e) { /* 로그인 처리 오류 무시 */ }
     };
     const onApple = async (data) => {
-      const { identityToken, email, fullName, status } = data || {};
+      const { identityToken, email, fullName, status, authorizationCode } = data || {};
       if (!identityToken || !status) return;
       try {
-        const result = await AppleLogin({ identityToken, fullName, email, status });
+        const result = await AppleLogin({ identityToken, fullName, email, status, authorizationCode });
         if (result?.success) navigate('/');
       } catch (e) { /* 로그인 처리 오류 무시 */ }
     };
@@ -229,11 +231,50 @@ const Onboarding = () => {
 
   const handleSignup = () => {
     vibrate({ duration: 5 });
-    persistAll({ username: username.trim() || null });
+    const trimmedUsername = username.trim() || null;
+    persistAll({ username: trimmedUsername });
     // 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다
     try { localStorage.setItem('heyvoca_notif_prompt', '1'); } catch (e) { /* 무시 */ }
-    // 로그인 페이지로 나가지 않고 온보딩 내부 인증 스텝으로 이어간다 (온보딩 형식 유지)
+
+    if (isLogin) {
+      // 이미 로그인된 사용자(게스트 온보딩 없이 로그인 후 다시 온보딩에 진입한 경우) —
+      // 재로그인이 필요 없으므로 마지막 auth 스텝은 건너뛰고 서버로 바로 이전(migrate)한 뒤 홈으로 이동.
+      finishLoggedInOnboarding(trimmedUsername);
+      return;
+    }
+
+    // 비로그인(게스트) — 온보딩 내부 인증 스텝으로 이어간다 (온보딩 형식 유지)
     setStep('auth');
+  };
+
+  // 이미 로그인된 사용자의 온보딩 완료 처리 — guestStorage 대신 현재 온보딩 진행 상태(state)를
+  // 곧바로 서버 /onboarding/migrate로 전송한다. 성공(200) 또는 이미 처리됨(409) 모두 정상 종료로 본다.
+  // 네트워크 실패 등으로 migrate가 실패해도 로그인 상태 자체는 유효하므로 홈으로는 보낸다 —
+  // 이 경우 onboarding_ver가 갱신되지 않아 다음 앱 실행 시 Index.jsx가 다시 /onboarding으로 보내는
+  // 자연스러운 재시도가 이루어진다.
+  const finishLoggedInOnboarding = async (trimmedUsername) => {
+    if (finishingOnboarding) return;
+    setFinishingOnboarding(true);
+    try {
+      const res = await migrateOnboardingApi({
+        level,
+        source_channel: channel,
+        learning_goal: goal,
+        daily_new_limit: daily,
+        username: trimmedUsername,
+        answers,
+      });
+      if (res?.code === 200 || res?.code === 409) {
+        clearGuest();
+        // 홈 등 다른 화면에서 최신 닉네임/온보딩 상태가 바로 보이도록 프로필 재조회(best-effort)
+        fetchUserProfile().catch(() => { /* 무시 — 다음 조회 시 갱신됨 */ });
+      }
+    } catch (e) {
+      /* 실패해도 로그인 흐름은 계속 — 아래 finally에서 홈으로 이동 */
+    } finally {
+      setFinishingOnboarding(false);
+      navigate('/home', { replace: true });
+    }
   };
 
   // 하단 상시 로그인 링크
@@ -436,16 +477,18 @@ const Onboarding = () => {
                 className="w-full px-[14px] py-[13px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] text-layout-black dark:text-layout-white outline-none"
               />
               <div className="mt-auto pt-[24px]">
-                <motion.button type="button" whileTap={username.trim() ? { scale: 0.97 } : undefined} disabled={!username.trim()}
+                <motion.button type="button" whileTap={username.trim() && !finishingOnboarding ? { scale: 0.97 } : undefined}
+                  disabled={!username.trim() || finishingOnboarding}
                   onClick={handleSignup}
                   className="w-full py-[16px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40">
-                  다음
+                  {finishingOnboarding ? '처리 중...' : '다음'}
                 </motion.button>
               </div>
             </motion.div>
           )}
 
-          {/* 5 로그인/회원가입 — 온보딩 마지막 챕터 (온보딩 형식 유지, 내부 버튼) */}
+          {/* 5 로그인/회원가입 — 온보딩 마지막 챕터 (온보딩 형식 유지, 내부 버튼) — 비로그인(게스트) 전용.
+              이미 로그인된 사용자는 handleSignup에서 이 스텝을 건너뛰고 곧장 홈으로 이동한다. */}
           {step === 'auth' && (
             <motion.div key="auth" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="flex flex-col flex-1">

@@ -157,8 +157,9 @@ const Index = () => {
     }).then((res) => {
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
-        // migrate가 서버에서 username·레벨·단어장을 세팅 → 로컬 userProfile은 아직 username=null이라
-        // 기본 네비게이트가 /initial-profile로 갈 수 있음. 온보딩 완료 사용자는 홈으로 직행.
+        // migrate가 서버에서 username·레벨·단어장·onboarding_ver('1')를 세팅하지만,
+        // 로컬 userProfile은 아직 이 응답을 반영 전(onboarding_ver!=='1')이라 아래 기본 네비게이트
+        // 이펙트가 /onboarding으로 되돌릴 수 있음. 온보딩 완료 사용자는 홈으로 직행시켜 우회한다.
         if (res?.code === 200) navigate('/home', { replace: true });
       }
     }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });
@@ -166,13 +167,23 @@ const Index = () => {
 
   // graceDone + 최소 노출시간 경과 후 실제 네비게이트
   // minTimeElapsed: 로그인 사용자의 스플래시가 최소 800ms는 보이도록 보장
+  //
+  // 온보딩 완료 여부는 서버의 onboarding_ver로 판단한다(레거시 username==null 체크 아님):
+  //  - onboarding_ver === '1' : 새 온보딩(/onboarding)을 마친 사용자 → 홈으로.
+  //  - onboarding_ver !== '1' (null/undefined 포함) : 새 온보딩 진행 기록이 없는 사용자
+  //      (온보딩을 안 거치고 바로 로그인한 최초 로그인 유저 포함) → /onboarding으로 보내
+  //      새 온보딩을 진행시킨다. 이미 로그인 상태이므로 Onboarding.jsx가 마지막 auth 스텝을
+  //      건너뛰고 서버 migrate 후 홈으로 이어간다.
   useEffect(() => {
     if (!dataReady || !graceDone || !minTimeElapsed) return;
     if (userProfile && userProfile.id) {
-      if (userProfile.username == null) {
-        navigate('/initial-profile');
-      } else {
+      if (userProfile.onboarding_ver === '1') {
+        // 엣지 케이스: onboarding_ver는 '1'인데 username이 비어있는 경우(예: migrate 직후 로컬
+        // 캐시가 아직 최신화되지 않은 상태) — 온보딩을 다시 태우면 중복 경험이 되므로
+        // 온보딩 완료로 간주하고 홈으로 보낸다. 닉네임은 마이페이지(계정)에서 나중에 설정 가능.
         navigate('/home');
+      } else {
+        navigate('/onboarding');
       }
     } else {
       navigate('/login');

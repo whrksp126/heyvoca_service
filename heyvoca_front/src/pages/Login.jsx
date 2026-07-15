@@ -69,8 +69,8 @@ const Login = () => {
   // 앱 Apple OAuth 핸들러
   const handleAppAppleAuth = async (data) => {
     console.log(`앱 Apple OAuth 정보 받음: ${JSON.stringify(data)}`);
-    // data: { identityToken, email, fullName, user, status }
-    const { identityToken, email, fullName, status } = data;
+    // data: { identityToken, email, fullName, user, status, authorizationCode }
+    const { identityToken, email, fullName, status, authorizationCode } = data;
 
     if (!identityToken || !status) {
       console.error('Apple 로그인 정보 불완전');
@@ -78,7 +78,7 @@ const Login = () => {
     }
 
     try {
-      const result = await AppleLogin({ identityToken, fullName, email, status });
+      const result = await AppleLogin({ identityToken, fullName, email, status, authorizationCode });
       if (result.success) {
         console.log("App Apple Login Success");
         navigate('/');

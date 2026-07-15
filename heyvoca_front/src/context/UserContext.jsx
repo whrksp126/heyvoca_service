@@ -9,9 +9,28 @@ import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
 import { invalidateCurrentAttendance } from './AttendanceCalendarContext';
 
+// 로그인 방식(google/apple/dev) — 회원 탈퇴 시 앱 채널 분기(구글 세션 재사용 불가한 애플 사용자 구분)에 사용.
+// get_user_info 응답에는 google_id/apple_id가 내려오지 않으므로, 로그인 성공 시 프론트에서 직접 기록해
+// 새로고침 후에도 남도록 localStorage에 persist한다.
+const LOGIN_PROVIDER_KEY = 'heyvoca_login_provider';
+const getStoredLoginProvider = () => {
+  try { return localStorage.getItem(LOGIN_PROVIDER_KEY) || null; } catch { return null; }
+};
+const setStoredLoginProvider = (provider) => {
+  try {
+    if (provider) localStorage.setItem(LOGIN_PROVIDER_KEY, provider);
+    else localStorage.removeItem(LOGIN_PROVIDER_KEY);
+  } catch { /* 저장 실패 무시 */ }
+};
+
 const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState({});
+  const [loginProvider, setLoginProviderState] = useState(getStoredLoginProvider);
+  const setLoginProvider = useCallback((provider) => {
+    setStoredLoginProvider(provider);
+    setLoginProviderState(provider);
+  }, []);
   const [userMainPage, setUserMainPage] = useState({});
   const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
@@ -385,6 +404,7 @@ export const UserProvider = ({ children }) => {
       });
       setIsLogin(true);
       setIsLoginChecked(true);
+      setLoginProvider('google');
 
       // 서버에서 실제 사용자 프로필 정보 가져오기
 
@@ -398,10 +418,11 @@ export const UserProvider = ({ children }) => {
       console.log('로그인 중 오류가 발생하였습니다.');
       return { success: false };
     }
-  }, []);
+  }, [setLoginProvider]);
 
   // Apple 로그인 처리 함수
-  const AppleLogin = useCallback(async ({ identityToken, fullName, email, status }) => {
+  // authorizationCode: 앱이 최초 로그인 시에만 전달하는 1회성 코드 → 백엔드가 apple refresh_token 교환에 사용(탈퇴 시 revoke).
+  const AppleLogin = useCallback(async ({ identityToken, fullName, email, status, authorizationCode }) => {
     try {
       console.log("AppleLogin 함수 내부 시작됨");
 
@@ -410,7 +431,7 @@ export const UserProvider = ({ children }) => {
         return { success: false };
       }
 
-      const result = await appleLoginApi({ identityToken, fullName, email });
+      const result = await appleLoginApi({ identityToken, fullName, email, authorizationCode });
       if (!result || result.code !== 200) {
         console.log('Apple 로그인 API 실패');
         return { success: false };
@@ -441,6 +462,7 @@ export const UserProvider = ({ children }) => {
       });
       setIsLogin(true);
       setIsLoginChecked(true);
+      setLoginProvider('apple');
 
       const userProfileResult = await fetchUserProfile();
       if (userProfileResult.success) {
@@ -451,7 +473,7 @@ export const UserProvider = ({ children }) => {
       console.error('Apple 로그인 오류:', error);
       return { success: false };
     }
-  }, []); // loginApi 의존성 제거
+  }, [setLoginProvider]);
 
   // 개발자 로그인 처리 함수 (Local Only)
   const DevLogin = useCallback(async ({ email }) => {
@@ -463,6 +485,7 @@ export const UserProvider = ({ children }) => {
 
       const accessToken = result.accessToken;
       setCookie('userAccessToken', accessToken);
+      setLoginProvider('dev');
 
       const userName = result.user.name || 'Developer';
 
@@ -484,7 +507,7 @@ export const UserProvider = ({ children }) => {
       console.error('Dev Login Error:', error);
       return { success: false, message: '서버 오류' };
     }
-  }, []);
+  }, [setLoginProvider]);
 
   // 구글 로그인 클릭 처리 (웹/앱 자동 구분)
   const clickGoogleOauth = useCallback(() => {
@@ -536,13 +559,14 @@ export const UserProvider = ({ children }) => {
       // 로그인 상태 초기화
       setIsLogin(false);
       setIsLoginChecked(true);
+      setLoginProvider(null);
 
       return { success: true };
     } catch (error) {
       console.error('로그아웃 실패:', error);
       return { success: false, error: error.message };
     }
-  }, [setAuth]);
+  }, [setAuth, setLoginProvider]);
 
   // 회원 탈퇴 처리 함수 (웹/앱 공통)
   const performWithdraw = useCallback(async () => {
@@ -570,13 +594,14 @@ export const UserProvider = ({ children }) => {
       // 로그인 상태 초기화
       setIsLogin(false);
       setIsLoginChecked(true);
+      setLoginProvider(null);
 
       return { success: true };
     } catch (error) {
       console.error('회원 탈퇴 실패:', error);
       return { success: false, error: error.message };
     }
-  }, [setAuth]);
+  }, [setAuth, setLoginProvider]);
 
   // 앱 구글 로그아웃/회원탈퇴 콜백 처리 (앱에서는 두 경우 모두 같은 콜백을 보낼 수 있음)
   const handleAppGoogleAccountAction = useCallback(async (data) => {
@@ -706,6 +731,9 @@ export const UserProvider = ({ children }) => {
     // 로그인 상태 관리
     isLogin,
     isLoginChecked,
+    // 로그인 방식(google/apple/dev) — 탈퇴 시 앱 채널 분기에 사용
+    loginProvider,
+    setLoginProvider,
     // 회원 탈퇴 상태 관리
     isWithdrawInProgress,
     setIsWithdrawInProgress,
