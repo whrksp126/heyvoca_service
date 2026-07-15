@@ -15,7 +15,9 @@ import { buildGuestQuestions } from '../utils/guestQuestions';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
 import { BookCard } from '../components/bookStore/BookSection';
 import { PreviewBookStoreNewFullSheet } from '../components/newfullsheet/PreviewBookStoreNewFullSheet';
+import { SwitchAccountNewBottomSheet } from '../components/newBottomSheet/SwitchAccountNewBottomSheet';
 import { useNewFullSheetActions } from '../context/NewFullSheetContext';
+import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
 import PlantIllustration from '../components/common/PlantIllustration';
@@ -84,7 +86,8 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
-  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile } = useUser();
+  const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout } = useUser();
 
   // 온보딩 내부 로그인/회원가입 스텝(auth)에서만 앱 OAuth 노출 (안드로이드는 애플 숨김)
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
@@ -162,6 +165,24 @@ const Onboarding = () => {
   const stepIndex = PERSONALIZE_ORDER.indexOf(step);
 
   const goLogin = () => { vibrate({ duration: 5 }); navigate('/login'); };
+
+  // 이미 로그인된 상태에서 온보딩에 갇힌 경우 — 확인 바텀시트 후 로그아웃하고 로그인 화면으로 이동.
+  // fromOnboarding state를 넘기지 않으므로 Login.jsx에서 회원가입 버튼도 그대로 노출된다.
+  const goSwitchAccount = async () => {
+    vibrate({ duration: 5 });
+    const confirmed = await pushAwaitNewBottomSheet(
+      SwitchAccountNewBottomSheet,
+      {},
+      {
+        isBackdropClickClosable: true,
+        isDragToCloseEnabled: true
+      }
+    );
+    if (!confirmed) return;
+    await performLogout();
+    navigate('/login');
+  };
+
   const goBack = () => {
     vibrate({ duration: 5 });
     const order = ['start', ...PERSONALIZE_ORDER];
@@ -277,11 +298,11 @@ const Onboarding = () => {
     }
   };
 
-  // 하단 상시 로그인 링크
+  // 하단 상시 로그인 링크 — 로그인된 상태로 온보딩에 들어온 경우 계정 전환(로그아웃) 출구로 전환
   const LoginFooter = () => (
-    <button type="button" onClick={goLogin}
+    <button type="button" onClick={isLogin ? goSwitchAccount : goLogin}
       className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 underline">
-      이미 계정이 있어요 · 로그인
+      {isLogin ? '다른 계정으로 로그인' : '이미 계정이 있어요 · 로그인'}
     </button>
   );
 
