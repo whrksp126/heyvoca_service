@@ -1,97 +1,150 @@
 import React from 'react';
-import { CheckCircle, Lock } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
+import { CheckCircle, Lock, CaretRight } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 
-// 온보딩 점진 해금 5단계 정의 — 백엔드 UNLOCK_THRESHOLDS(heyvoca_back/app/routes/onboarding.py)와 동일 순서/키.
-const STAGES = [
-  { key: 'vocabook', order: 1, label: '단어장' },
-  { key: 'store', order: 2, label: '상점' },
-  { key: 'dict', order: 3, label: '사전' },
-  { key: 'listen', order: 4, label: '집중 반복 학습' },
-  { key: 'custom', order: 5, label: '자유 설정 테스트' },
-];
+// 미션 key → CTA 동작 매핑. make_book/buy_book은 백엔드 훅 전용(사용자가 실제 행동을 완료해야 자동 처리)이라
+// 이동만 시켜주고 완료 처리는 하지 않는다.
+const MISSION_CTA = {
+  ai_test: { label: '학습하러 가기', type: 'study' },
+  make_book: { label: '단어장 만들러 가기', type: 'navigate', path: '/vocabulary-sheets' },
+  buy_book: { label: '서점 가기', type: 'navigate', path: '/book-store' },
+  search_word: { label: '사전에서 찾아보기', type: 'navigate', path: '/dictionary' },
+  focus_study: { label: '학습하러 가기', type: 'study' },
+};
 
-// 잠긴 하단탭/학습카드를 클릭했을 때 뜨는 단계별 해금 안내 바텀시트.
+// 잠긴 하단탭/학습카드를 클릭했을 때, 또는 홈 배너를 눌렀을 때 뜨는 단계별 미션 체크리스트 바텀시트.
 // props:
-//  - unlock: getUnlockStatusApi() 응답 data ({ legacy, completed_sessions, thresholds, unlocked })
-//  - highlightKey: 사용자가 클릭한 기능의 lockKey (예: 'vocabook' | 'store' | 'dict' | 'listen' | 'custom')
-export const UnlockGuideNewBottomSheet = ({ unlock, highlightKey }) => {
+//  - highlightKey: 사용자가 클릭한 기능의 unlock key (예: 'vocabook' | 'store' | 'dict' | 'listen' | 'custom') — 선택 사항
+export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   "use memo";
 
-  const { popNewBottomSheet } = useNewBottomSheetActions();
+  const navigate = useNavigate();
+  const { closeNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewFullSheet } = useNewFullSheetActions();
+  const { missions, currentMission } = useOnboardingUnlock();
 
-  const legacy = unlock?.legacy ?? false;
-  const completedSessions = unlock?.completed_sessions ?? 0;
-  const thresholds = unlock?.thresholds ?? { vocabook: 1, store: 2, dict: 3, listen: 4, custom: 5 };
-  const unlockedMap = unlock?.unlocked ?? {};
+  const doneCount = missions.filter((m) => m.done).length;
+  const total = missions.length || 5;
 
-  const isUnlocked = (key) => {
-    if (legacy) return true;
-    if (typeof unlockedMap[key] === 'boolean') return unlockedMap[key];
-    return completedSessions >= (thresholds[key] ?? 0);
+  const handleCta = (missionKey) => {
+    vibrate({ duration: 5 });
+    const cta = MISSION_CTA[missionKey];
+    if (!cta) return;
+
+    closeNewBottomSheet();
+
+    if (cta.type === 'study') {
+      // 학습하기 풀시트를 새로 열기 위해 닫힘 트랜지션 이후 여는 편이 자연스럽다.
+      // StudyNewFullSheet를 동적 import로 불러와 순환 참조(StudyNewFullSheet → 이 컴포넌트)를 피한다.
+      setTimeout(() => {
+        import('../newfullsheet/StudyNewFullSheet').then(({ default: StudyNewFullSheet }) => {
+          pushNewFullSheet(StudyNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
+        });
+      }, 300);
+      return;
+    }
+
+    if (cta.type === 'navigate' && cta.path) {
+      navigate(cta.path);
+    }
   };
 
   return (
     <div className="flex flex-col gap-[24px] pt-[30px] pb-[20px] px-[20px]">
-      <div className="flex flex-col gap-[4px] items-center text-center">
+      <div className="flex flex-col gap-[8px] items-center text-center">
         <h3 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
-          학습을 이어가면 기능이 열려요
+          단계별 미션
         </h3>
         <p className="text-[13px] font-[500] text-layout-gray-300">
-          현재 학습 {completedSessions}회 완료
+          미션을 완료하고 기능을 열어보세요
         </p>
+        <div className="flex items-center gap-[6px] mt-[2px]">
+          {missions.map((m) => (
+            <span
+              key={m.key}
+              className={`w-[7px] h-[7px] rounded-full ${m.done ? 'bg-status-success-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'}`}
+            />
+          ))}
+          <span className="ml-[4px] text-[12px] font-[700] text-layout-gray-300">
+            {doneCount}/{total}
+          </span>
+        </div>
       </div>
 
       <ul className="flex flex-col gap-[10px]">
-        {STAGES.map((stage) => {
-          const unlocked = isUnlocked(stage.key);
-          const isHighlighted = stage.key === highlightKey;
-          const threshold = thresholds[stage.key] ?? stage.order;
-          const remaining = Math.max(0, threshold - completedSessions);
+        {missions.map((mission) => {
+          const isCurrent = mission.key === currentMission;
+          const isHighlighted = mission.unlocks === highlightKey;
+          const featureLabel = FEATURE_LABELS[mission.unlocks] || mission.unlocks;
+          const cta = MISSION_CTA[mission.key];
 
           return (
             <li
-              key={stage.key}
+              key={mission.key}
               className={`
-                flex items-center gap-[12px]
+                flex flex-col gap-[10px]
                 px-[14px] py-[12px]
                 rounded-[10px]
                 border-[1px]
-                ${unlocked
+                ${mission.done
                   ? 'border-status-success-300 bg-status-success-50 dark:border-status-success-dark dark:bg-status-success-dark'
-                  : isHighlighted
+                  : isCurrent
                     ? 'border-primary-main-600 bg-primary-main-100 dark:bg-primary-main-dark'
-                    : 'border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark'
+                    : `border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark ${isHighlighted ? '' : 'opacity-60'}`
                 }
               `}
             >
-              <div
-                className={`
-                  flex items-center justify-center w-[26px] h-[26px] rounded-full shrink-0
-                  ${unlocked ? 'bg-status-success-600' : 'bg-layout-gray-300 dark:bg-layout-gray-400'}
-                `}
-              >
-                {unlocked ? (
-                  <CheckCircle size={18} weight="fill" className="text-layout-white" />
-                ) : (
-                  <Lock size={13} weight="bold" className="text-layout-white dark:text-layout-black" />
-                )}
+              <div className="flex items-center gap-[12px]">
+                <div
+                  className={`
+                    flex items-center justify-center w-[26px] h-[26px] rounded-full shrink-0
+                    ${mission.done
+                      ? 'bg-status-success-600'
+                      : isCurrent
+                        ? 'bg-primary-main-600'
+                        : 'bg-layout-gray-300 dark:bg-layout-gray-400'
+                    }
+                  `}
+                >
+                  {mission.done ? (
+                    <CheckCircle size={18} weight="fill" className="text-layout-white" />
+                  ) : (
+                    <Lock size={13} weight="bold" className="text-layout-white dark:text-layout-black" />
+                  )}
+                </div>
+
+                <div className="flex flex-col flex-1 min-w-0">
+                  <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+                    {mission.order}. {mission.title}
+                  </span>
+                  <span className="text-[12px] font-[500] text-layout-gray-300">
+                    {mission.done
+                      ? `→ ${featureLabel}이 열렸어요`
+                      : isCurrent
+                        ? `완료하면 '${featureLabel}' 기능이 열려요 · 보석 +${mission.reward_gem}`
+                        : '이전 미션을 먼저 완료해주세요'}
+                  </span>
+                </div>
               </div>
 
-              <div className="flex flex-col flex-1 min-w-0">
-                <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
-                  {stage.order}회 · {stage.label}
-                </span>
-                <span className="text-[12px] font-[500] text-layout-gray-300">
-                  {unlocked ? '해제 완료' : `학습 ${threshold}회 필요 · ${remaining}회 남음`}
-                </span>
-              </div>
-
-              {isHighlighted && !unlocked && (
-                <span className="text-[11px] font-[700] text-primary-main-600 shrink-0">
-                  지금 선택
-                </span>
+              {isCurrent && cta && (
+                <button
+                  type="button"
+                  onClick={() => handleCta(mission.key)}
+                  className="
+                    flex items-center justify-center gap-[6px]
+                    h-[38px] rounded-[8px]
+                    bg-primary-main-600
+                    text-[13px] font-[700] text-layout-white dark:text-layout-black
+                  "
+                >
+                  {cta.label}
+                  <CaretRight size={14} weight="bold" />
+                </button>
               )}
             </li>
           );
@@ -100,7 +153,7 @@ export const UnlockGuideNewBottomSheet = ({ unlock, highlightKey }) => {
 
       <button
         type="button"
-        onClick={() => { vibrate({ duration: 5 }); popNewBottomSheet(); }}
+        onClick={() => { vibrate({ duration: 5 }); closeNewBottomSheet(); }}
         className="h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
       >
         확인

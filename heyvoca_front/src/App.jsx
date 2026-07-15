@@ -34,6 +34,8 @@ import { ThemeProvider } from './context/ThemeContext';
 import { ExampleSettingsProvider } from './context/ExampleSettingsContext';
 import { KeyboardProvider } from './context/KeyboardContext';
 import { AttendanceCalendarProvider } from './context/AttendanceCalendarContext';
+import { OnboardingUnlockProvider, OnboardingUnlockContext } from './context/OnboardingUnlockContext';
+import { StatsProvider } from './context/StatsContext';
 import WebStorageMigration from './context/WebStorageMigration';
 
 const AppLayout = () => {
@@ -69,6 +71,7 @@ function AppWithContexts() {
   const newBottomSheetActions = useContext(NewBottomSheetActionsContext);
   const overlayContext = useContext(OverlayStateContext);
   const overlayActions = useContext(OverlayActionsContext);
+  const onboardingUnlockContext = useContext(OnboardingUnlockContext);
 
   // NewFullSheetContext를 전역에 등록 (state와 actions를 합쳐서)
   window.newFullSheetContext = {
@@ -83,6 +86,9 @@ function AppWithContexts() {
     ...overlayContext,
     ...overlayActions
   };
+  // OnboardingUnlockContext를 전역에 등록 — VocabularyContext(Provider 트리 상 이 Context보다 바깥)에서
+  // 단어장 생성/서점 담기 성공 후 refreshUnlock()을 호출하기 위한 용도(다른 window.*Context와 동일 패턴).
+  window.onboardingUnlockContext = onboardingUnlockContext;
 
   return (
     <Layout>
@@ -114,7 +120,11 @@ function AppRouter() {
                   <ThemeProvider>
                     <ExampleSettingsProvider>
                       <KeyboardProvider>
-                        <AppWithContexts />
+                        <OnboardingUnlockProvider>
+                          <StatsProvider>
+                            <AppWithContexts />
+                          </StatsProvider>
+                        </OnboardingUnlockProvider>
                       </KeyboardProvider>
                     </ExampleSettingsProvider>
                   </ThemeProvider>

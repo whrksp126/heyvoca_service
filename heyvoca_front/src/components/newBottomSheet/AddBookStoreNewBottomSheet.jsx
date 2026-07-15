@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { deductGemApi } from '../../api/auth';
 import { showToast } from '../../utils/osFunction';
 import { vibrate } from '../../utils/osFunction';
@@ -16,6 +17,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
   const { getUserProfile, setUserProfile } = useUser();
+  const { refreshUnlock } = useOnboardingUnlock();
   const [alertType, setAlertType] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   useEffect(() => {
@@ -62,6 +64,8 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       }
 
       await addBookStoreVocabularySheet(bookStoreVocabularySheet);
+      // 온보딩 미션(M3: 서점 단어장 담기) 완료 갱신 — 백엔드 훅으로 자동 완료되므로 최신 상태만 재조회
+      refreshUnlock();
       openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
         options: {
           success: true,

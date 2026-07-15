@@ -4,7 +4,13 @@
 - GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — 맛보기 소스.
        응답 전 해당 레벨 단어 TTS를 백그라운드로 미리 생성·캐싱(게스트 무인증 재생 대비).
 - POST /onboarding/migrate           (인증) 가입 직후 1회, 레벨 단어장 생성 + 맛본 답안 반영 + 보상
-- GET  /onboarding/unlock-status     (인증) 세션 수 기반 기능 해금 상태(5단계)
+- GET  /onboarding/unlock-status      (인증) 온보딩 행동 기반 미션 해금 상태(5단계)
+- POST /onboarding/mission/complete   (인증) 프론트 신호 미션(ai_test/search_word/focus_study) 완료 처리
+
+온보딩 행동 기반 미션(5단계 선형 체인, ONBOARDING_MISSIONS 참고):
+  ai_test → make_book → buy_book → search_word → focus_study
+make_book/buy_book은 app/routes/voca_books.py의 create_voca_book/append_vocas_to_book 훅에서
+백엔드가 자동 감지해 완료 처리하고, 나머지는 프론트가 /onboarding/mission/complete로 신호를 보낸다.
 
 레벨(1 초등 / 2 중등 / 3 고등 / 4 대학생)별 단어는 AdminVocaBook에서 구성 —
 기존 /auth/level_book_list와 동일 소스. 학습 알고리즘(FSRS)은 services/fsrs를 '호출만' 한다.
@@ -26,10 +32,142 @@ from app.utils.jwt_utils import jwt_required
 
 onboarding_bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
 
-# 기능 점진 해금(5단계, 승인) — 홈·마이페이지는 즉시. 완료 세션 수 기준 임계값.
+# 기능 점진 해금(5단계, 승인) — 홈·마이페이지는 즉시.
 #  vocabook(단어장)·store(상점)·dict(사전)은 BottomNav 탭, listen(반복듣기)·custom(커스텀)은 학습 시작 카드.
+# 과거엔 "완료 세션 수" 임계값으로 해금 여부를 판정했으나, 온보딩 행동 기반 미션 체계로 교체됨
+# (아래 ONBOARDING_MISSIONS). UNLOCK_THRESHOLDS는 completed_sessions와 함께 하위호환 필드로만 유지.
 UNLOCK_THRESHOLDS = {'vocabook': 1, 'store': 2, 'dict': 3, 'listen': 4, 'custom': 5}
 SIGNUP_REWARD_GEM = 5
+
+# ──────────────────────────────────────────────
+# 온보딩 행동 기반 미션 (5단계 선형 체인)
+# ──────────────────────────────────────────────
+# key         : 미션 식별자 (UserOnboardingMission.mission_key)
+# order       : 화면 노출 순서 / 다음 미션(current_mission) 판정 순서
+# title       : 사용자 노출 한국어 라벨
+# unlocks     : 완료 시 해금되는 feature (UNLOCK_THRESHOLDS와 동일 키 체계)
+# reward_gem  : 완료 보상 보석
+ONBOARDING_MISSIONS = [
+    {'key': 'ai_test',     'order': 1, 'title': 'AI 추천 테스트 완료',   'unlocks': 'vocabook', 'reward_gem': 5},
+    {'key': 'make_book',   'order': 2, 'title': '단어장 직접 만들기 완료', 'unlocks': 'store',    'reward_gem': 5},
+    {'key': 'buy_book',    'order': 3, 'title': '서점 단어장 담기 완료',   'unlocks': 'dict',     'reward_gem': 10},
+    {'key': 'search_word', 'order': 4, 'title': '사전에서 단어 찾아보기 완료', 'unlocks': 'listen', 'reward_gem': 5},
+    {'key': 'focus_study', 'order': 5, 'title': '집중 반복 학습 완료',    'unlocks': 'custom',   'reward_gem': 10},
+]
+ONBOARDING_MISSION_BY_KEY = {m['key']: m for m in ONBOARDING_MISSIONS}
+ONBOARDING_MISSION_KEYS = set(ONBOARDING_MISSION_BY_KEY.keys())
+# feature(해금 대상) → 이를 해금시키는 mission_key
+FEATURE_UNLOCK_MISSION = {m['unlocks']: m['key'] for m in ONBOARDING_MISSIONS}
+# /onboarding/mission/complete로 프론트가 직접 신호를 보내는 미션(백엔드 자동 감지 대상 제외).
+# make_book/buy_book은 voca_books.py 훅에서만 완료 처리한다 — API로 임의 완료 방지.
+FRONTEND_SIGNAL_MISSION_KEYS = {'ai_test', 'search_word', 'focus_study'}
+
+
+def complete_onboarding_mission(user_id, mission_key) -> dict:
+    """온보딩 미션을 멱등하게 완료 처리한다.
+
+    이미 완료된 (user_id, mission_key)면 아무 것도 하지 않고 newly_completed=False 반환.
+    신규 완료면 UserOnboardingMission row insert + gem_cnt 증가 + gem 로그 기록.
+
+    반환: {'newly_completed': bool, 'reward_gem': int, 'unlocks': str}
+    """
+    from sqlalchemy.exc import IntegrityError
+    from app.models.models import UserOnboardingMission, GemReason
+    from app.routes.common import register_gem_log
+
+    mission = ONBOARDING_MISSION_BY_KEY.get(mission_key)
+    if not mission:
+        raise ValueError(f'유효하지 않은 온보딩 미션 key: {mission_key}')
+
+    if isinstance(user_id, str):
+        user_id = UUID(user_id)
+
+    existing = (
+        db.session.query(UserOnboardingMission)
+        .filter(UserOnboardingMission.user_id == user_id, UserOnboardingMission.mission_key == mission_key)
+        .first()
+    )
+    if existing:
+        return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
+
+    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    if user is None:
+        raise ValueError('사용자를 찾을 수 없습니다.')
+
+    reward = mission['reward_gem']
+    db.session.add(UserOnboardingMission(user_id=user_id, mission_key=mission_key))
+    user.gem_cnt = (user.gem_cnt or 0) + reward
+
+    try:
+        db.session.commit()
+    except IntegrityError:
+        # 동시 요청 등으로 UniqueConstraint 위반 → 이미 다른 요청이 완료 처리한 것으로 간주(멱등).
+        db.session.rollback()
+        return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
+
+    register_gem_log(
+        user_id=user_id, amount=reward, reason=GemReason.ONBOARDING_MISSION,
+        description=f"온보딩 미션 완료: {mission['title']}",
+        source_type='onboarding_mission', source_id=None,
+        balance_after=user.gem_cnt,
+    )  # register_gem_log 내부 commit
+
+    return {'newly_completed': True, 'reward_gem': reward, 'unlocks': mission['unlocks']}
+
+
+def _build_unlock_status(user) -> dict:
+    """GET /onboarding/unlock-status 및 POST /onboarding/mission/complete가 공유하는 페이로드.
+
+    legacy(onboarding_ver != '1') 유저는 전부 해금(True)·전부 완료로 간주.
+    신규 유저는 UserOnboardingMission 완료 기록 기준으로 missions/unlocked/current_mission을 계산한다.
+    """
+    from app.models.models import UserOnboardingMission
+
+    legacy = user.onboarding_ver != '1'
+
+    rows = (
+        db.session.query(UserOnboardingMission)
+        .filter(UserOnboardingMission.user_id == user.id)
+        .all()
+    )
+    completed_at_by_key = {r.mission_key: r.completed_at for r in rows}
+    completed_keys = set(completed_at_by_key.keys())
+
+    missions = []
+    current_mission = None
+    for m in ONBOARDING_MISSIONS:
+        done = legacy or (m['key'] in completed_keys)
+        completed_at = completed_at_by_key.get(m['key'])
+        missions.append({
+            'key': m['key'],
+            'order': m['order'],
+            'title': m['title'],
+            'done': done,
+            'completed_at': (completed_at.isoformat() + 'Z') if completed_at else None,
+            'unlocks': m['unlocks'],
+            'reward_gem': m['reward_gem'],
+        })
+        if not done and current_mission is None:
+            current_mission = m['key']
+
+    if legacy:
+        unlocked = {k: True for k in UNLOCK_THRESHOLDS}
+    else:
+        unlocked = {
+            feature: (mission_key in completed_keys)
+            for feature, mission_key in FEATURE_UNLOCK_MISSION.items()
+        }
+
+    return {
+        'legacy': legacy,
+        # 하위호환용 — 과거 "완료 세션 수" 대신 "완료한 미션 수"로 채운다(프론트 레거시 폴백 대비).
+        'completed_sessions': len(completed_keys) if not legacy else len(ONBOARDING_MISSIONS),
+        'thresholds': UNLOCK_THRESHOLDS,
+        'unlocked': unlocked,
+        'missions': missions,
+        'current_mission': current_mission,
+        'gem_cnt': user.gem_cnt,
+    }
 
 # 레벨 → AdminVocaBook id (auth.level_book_list와 동일 매핑)
 LEVEL_ADMIN_BOOK = {'1': 10, '2': 11, '3': 12, '4': 13}
@@ -342,39 +480,63 @@ def migrate():
 @onboarding_bp.route('/unlock-status', methods=['GET'])
 @jwt_required
 def unlock_status():
-    """세션 수 기반 기능 해금 상태(5단계).
+    """온보딩 행동 기반 미션 해금 상태(5단계).
 
     legacy(onboarding_ver NULL)=기존 사용자 → 전부 해금.
-    신규(=1) → 완료 세션 수로 단어장/상점/사전/반복듣기/커스텀 점진 해금.
+    신규(=1) → 미션(ai_test/make_book/buy_book/search_word/focus_study) 완료 기록 기준으로
+    단어장/상점/사전/반복듣기/커스텀을 점진 해금한다(과거 "완료 세션 수" 방식 대체).
     """
     user_id = UUID(g.user_id)
     user = db.session.query(User).filter(User.id == user_id).first()
     if user is None:
         return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
 
-    legacy = user.onboarding_ver != '1'
-    # 온보딩 가입 세션(is_onboarding=True)은 정규 학습이 아니므로 완료 세션 카운트에서 제외.
-    completed = (
-        db.session.query(db.func.count(UserStudySession.id))
-        .filter(
-            UserStudySession.user_id == user_id,
-            UserStudySession.finished_at.isnot(None),
-            UserStudySession.is_onboarding.is_(False),
-        )
-        .scalar()
-    ) or 0
+    return jsonify({'code': 200, 'data': _build_unlock_status(user)}), 200
 
-    if legacy:
-        unlocked = {k: True for k in UNLOCK_THRESHOLDS}
-    else:
-        unlocked = {k: completed >= thr for k, thr in UNLOCK_THRESHOLDS.items()}
+
+@onboarding_bp.route('/mission/complete', methods=['POST'])
+@jwt_required
+def mission_complete():
+    """프론트 신호 기반 온보딩 미션 완료 처리 — ai_test / search_word / focus_study 전용.
+
+    (make_book / buy_book은 voca_books.py의 create_voca_book / append_vocas_to_book 훅에서만
+     완료 처리한다 — 이 엔드포인트로는 완료시킬 수 없다.)
+
+    body: { "key": "ai_test" | "search_word" | "focus_study" }
+
+    응답: unlock-status와 동일한 missions/unlocked/current_mission 전체를 함께 반환해
+    프론트가 재조회 없이 바로 연출·갱신할 수 있도록 한다.
+    """
+    body = request.get_json(silent=True) or {}
+    key = body.get('key')
+
+    if key not in FRONTEND_SIGNAL_MISSION_KEYS:
+        return jsonify({'code': 400, 'message': '유효하지 않은 미션 key입니다.'}), 400
+
+    user_id = UUID(g.user_id)
+
+    try:
+        result = complete_onboarding_mission(user_id, key)
+    except ValueError as e:
+        db.session.rollback()
+        return jsonify({'code': 404, 'message': str(e)}), 404
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).error('온보딩 미션 완료 처리 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '미션 완료 처리 중 오류가 발생했습니다.'}), 500
+
+    user = db.session.query(User).filter(User.id == user_id).first()
+    if user is None:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+
+    status = _build_unlock_status(user)
 
     return jsonify({
         'code': 200,
         'data': {
-            'legacy': legacy,
-            'completed_sessions': int(completed),
-            'thresholds': UNLOCK_THRESHOLDS,
-            'unlocked': unlocked,
+            'newly_completed': result['newly_completed'],
+            'reward_gem': result['reward_gem'],
+            'unlocks': result['unlocks'],
+            **status,
         },
     }), 200

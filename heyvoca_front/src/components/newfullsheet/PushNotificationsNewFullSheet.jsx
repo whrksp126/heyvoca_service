@@ -22,7 +22,7 @@ const ToggleSwitch = ({ checked, onChange, label, description }) => (
     className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] dark:border-border-dark bg-layout-white dark:bg-layout-black"
     onClick={onChange}
   >
-    <div className="flex flex-col gap-[4px]">
+    <div className="flex flex-col gap-[4px] pr-[16px]">
       <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
         {label}
       </span>
@@ -265,12 +265,6 @@ const PushNotificationsNewFullSheet = () => {
             description="오후 1시와 저녁 9시에 오늘의 남은 학습량을 알려드립니다."
             checked={isStudyAllowed}
             onChange={handleToggleStudy}
-          />
-          <ToggleSwitch
-            label="마케팅 혜택 알림"
-            description="이벤트, 할인 혜택, 업데이트 등 유용한 소식을 보내드립니다."
-            checked={isMarketingAllowed}
-            onChange={handleToggleMarketing}
           />
         </ul>
       </div>

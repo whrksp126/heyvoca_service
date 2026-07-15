@@ -461,6 +461,13 @@ export const VocabularyProvider = ({ children }) => {
         }));
       }
 
+      // 온보딩 미션(M2: 단어장 직접 만들기 / M3: 서점 단어장 담기) 자동 완료 갱신 — 백엔드 훅 처리 후 최신화.
+      // 이 Context는 Provider 트리 상 OnboardingUnlockProvider보다 바깥이라 훅 대신 전역 참조 사용
+      // (window.overlayContext 등 다른 Context와 동일한 패턴).
+      if (window.onboardingUnlockContext?.refreshUnlock) {
+        window.onboardingUnlockContext.refreshUnlock();
+      }
+
       return newBook;
     } catch (err) {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');

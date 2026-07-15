@@ -16,6 +16,7 @@ import { vibrate } from '../../utils/osFunction';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 
 const ITEMS_PER_PAGE = 30;
 const SCROLL_THRESHOLD = 200;
@@ -27,6 +28,7 @@ const Main = () => {
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { isDark } = useTheme();
+  const { completeMission } = useOnboardingUnlock();
 
   // 검색 상태
   const [searchQuery, setSearchQuery] = useState('');
@@ -257,7 +259,9 @@ const Main = () => {
     searchInputRef.current?.blur();
     executeSearch(item.word);
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
-  }, [executeSearch]);
+    // 온보딩 미션(M4: 사전에서 단어 찾아보기) 완료 신호 — 이미 완료/legacy면 Context 내부에서 스킵
+    completeMission('search_word');
+  }, [executeSearch, completeMission]);
 
   // 외부(OCR 풀시트 등)에서 단어 선택 이벤트 수신
   useEffect(() => {

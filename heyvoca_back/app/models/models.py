@@ -531,6 +531,7 @@ class GemReason(enum.Enum):
     COMBO_PROTECT = "COMBO_PROTECT"   # 콤보 보호(보석 차감)
     ITEM_PURCHASE = "ITEM_PURCHASE"   # 게임 아이템 구매(부활템 등)
     FARM_REWARD   = "FARM_REWARD"     # 당근 농장 보상(2차 승급 등)
+    ONBOARDING_MISSION = "ONBOARDING_MISSION"  # 온보딩 행동 기반 미션 완료 보상
 
 
 class GemLog(db.Model):
@@ -846,6 +847,30 @@ class UserQuestionTypeStat(db.Model):
         self.last_30d_correct_rate = last_30d_correct_rate
 
 ### 문제 유형별 사용자 정답률 집계 ###
+
+
+### 온보딩 행동 기반 미션 완료 기록 (사용자 DB) ###
+class UserOnboardingMission(db.Model):
+    """온보딩 5단계 미션(ai_test/make_book/buy_book/search_word/focus_study) 완료 기록.
+
+    '완료 세션 수' 방식 대신 미션별 명시적 완료 시점을 기록한다(멱등, 1인당 1회).
+    reward_gem 지급 및 feature 해금 판정은 이 테이블의 존재 여부로 결정한다.
+    """
+    __tablename__ = 'user_onboarding_mission'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'mission_key', name='uq_user_onboarding_mission'),
+    )
+
+    id           = Column(Integer, primary_key=True, autoincrement=True)
+    user_id      = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
+    mission_key  = Column(String(32), nullable=False, comment='ai_test|make_book|buy_book|search_word|focus_study')
+    completed_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, user_id, mission_key, completed_at=None):
+        self.user_id = user_id
+        self.mission_key = mission_key
+        self.completed_at = completed_at or datetime.utcnow()
+### 온보딩 행동 기반 미션 완료 기록 ###
 
 
 ### 사전 메타 (dict_sync.py가 현재 적용된 dump의 sha256 저장) ###

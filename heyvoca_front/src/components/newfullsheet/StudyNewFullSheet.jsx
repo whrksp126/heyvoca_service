@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb, Lock } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
-import { getUnlockStatusApi } from '../../api/study';
 import { primeSfx } from '../../utils/audio';
 
 const StudyNewFullSheet = () => {
@@ -23,23 +23,24 @@ const StudyNewFullSheet = () => {
   const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
 
-  // 온보딩 점진 해금 — study(반복듣기, 4회)·test(커스텀, 5회) 카드 게이팅
-  const [unlock, setUnlock] = useState(null);
-  useEffect(() => {
-    let alive = true;
-    getUnlockStatusApi().then((res) => { if (alive && res?.code === 200) setUnlock(res.data); });
-    return () => { alive = false; };
-  }, []);
+  // 온보딩 미션 기반 해금 — study(집중 반복 학습)·test(자유 설정 테스트) 카드 게이팅
+  const { missions, isFeatureLocked } = useOnboardingUnlock();
   const CARD_LOCK_KEY = { study: 'listen', test: 'custom' };
   const isCardLocked = (key) => {
     const lk = CARD_LOCK_KEY[key];
-    if (!lk || !unlock || unlock.legacy) return false;
-    return unlock.unlocked?.[lk] === false;
+    if (!lk) return false;
+    return isFeatureLocked(lk);
   };
-  const cardRemaining = (key) => {
+  // 잠긴 카드 설명 — 해당 기능을 여는 미션 안내로 대체(세션 횟수 카운트 대신 미션명 노출)
+  const cardLockText = (key) => {
     const lk = CARD_LOCK_KEY[key];
-    if (!lk || !unlock) return 0;
-    return Math.max(0, (unlock.thresholds?.[lk] ?? 0) - (unlock.completed_sessions ?? 0));
+    if (!lk) return '';
+    const mission = missions.find((m) => m.unlocks === lk);
+    if (mission?.title) {
+      const action = mission.title.replace(/\s*완료\s*$/, '').trim();
+      return `'${action}' 미션을 완료하면 열려요`;
+    }
+    return '이전 미션을 완료하면 열려요';
   };
 
   const startFreshQuickReview = async () => {
@@ -271,7 +272,7 @@ const StudyNewFullSheet = () => {
                   vibrate({ duration: 5 });
                   pushNewBottomSheet(
                     UnlockGuideNewBottomSheet,
-                    { unlock, highlightKey: CARD_LOCK_KEY[card.key] },
+                    { highlightKey: CARD_LOCK_KEY[card.key] },
                     { isBackdropClickClosable: true, isDragToCloseEnabled: true }
                   );
                   return;
@@ -297,7 +298,7 @@ const StudyNewFullSheet = () => {
                   {card.title}
                 </span>
                 <span className="text-[11px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 whitespace-pre-line text-left">
-                  {locked ? `학습 ${cardRemaining(card.key)}회 더 하면 열려요` : card.desc}
+                  {locked ? cardLockText(card.key) : card.desc}
                 </span>
               </div>
               {locked ? (

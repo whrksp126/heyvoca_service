@@ -1,13 +1,15 @@
 // src/components/home/main
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight } from '@phosphor-icons/react';
+import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight, Target } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 
 // import { useFullSheet } from '../../context/FullSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -20,7 +22,7 @@ import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate, checkNotificationPermissionGranted } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
-import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../../api/study';
+import { useStats } from '../../context/StatsContext';
 
 
 // import StoreSheet from './StoreSheet';
@@ -118,13 +120,17 @@ const Main = () => {
   const { userMainPage, userProfile } = useUser();
   const { isDark } = useTheme();
   const { vocabularySheets, memoryStats, lastSessionResult } = useVocabulary();
-  const [todayNewWords, setTodayNewWords] = useState(0);
+
+  // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
+  // 학습 세션 완료 시에만 조용히 갱신된다.
+  const { todaySummary, reviewSchedule, todayChanges } = useStats();
+  const todayNewWords = todaySummary?.new_words ?? 0;
   // 오늘 복습 완료 수 (today-summary)
-  const [todayReviewsDone, setTodayReviewsDone] = useState(0);
+  const todayReviewsDone = todaySummary?.reviews_done ?? 0;
   // 백엔드 KST+새벽4시 컷오프 기준 reviewDue (null이면 클라이언트 계산값 폴백)
-  const [backendReviewDue, setBackendReviewDue] = useState(null);
-  // 오늘의 기억 변화 (승급/신규) — 변화 0개면 카드 숨김
-  const [todayChanges, setTodayChanges] = useState(null);
+  const backendReviewDue = reviewSchedule?.due
+    ? ((reviewSchedule.due.overdue ?? 0) + (reviewSchedule.due.today ?? 0))
+    : null;
 
   // memoryStats를 백엔드 reviewDue로 오버라이드 (KST+4시 기준 일치)
   const effectiveStats = backendReviewDue !== null
@@ -175,6 +181,23 @@ const Main = () => {
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { showAwaitOverlay } = useOverlayActions();
 
+  // 온보딩 행동 기반 미션 — legacy거나 전부 완료면 노출 안 함
+  const { legacy: unlockLegacy, missions: unlockMissions, currentMission } = useOnboardingUnlock();
+  const currentMissionData = unlockMissions.find((m) => m.key === currentMission);
+  const showMissionBanner = !unlockLegacy && !!currentMissionData;
+  const missionDoneCount = unlockMissions.filter((m) => m.done).length;
+  // 미션 title(예: "단어장 직접 만들기 완료")에서 '완료' 접미어를 떼어 행동 표현으로 변환
+  const currentMissionAction = currentMissionData?.title?.replace(/\s*완료\s*$/, '').trim();
+
+  const handleMissionBannerClick = () => {
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(
+      UnlockGuideNewBottomSheet,
+      { highlightKey: currentMissionData?.unlocks },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+    );
+  };
+
   const { fetchUserCheckin } = useUser();
 
   // 홈 화면 진입 시 출석 체크 호출
@@ -205,32 +228,8 @@ const Main = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile?.id]);
 
-  // 오늘 누적 새 단어 수 조회 + 백엔드 reviewDue 조회 (학습 직후 lastSessionResult 변경 시 갱신)
-  // 백엔드 /study/review-schedule의 due(overdue+today)를 단일 소스로 사용해
-  // 클라이언트 자정 기준 vs 서버 KST+4시 컷오프 기준 불일치를 해소.
-  useEffect(() => {
-    let alive = true;
-    getTodaySummary().then(res => {
-      if (alive && res?.code === 200) {
-        setTodayNewWords(res.data?.new_words ?? 0);
-        setTodayReviewsDone(res.data?.reviews_done ?? 0);
-      }
-    });
-    getReviewScheduleApi(30).then(res => {
-      if (alive && res?.code === 200) {
-        const due = res.data?.due;
-        if (due) {
-          setBackendReviewDue((due.overdue ?? 0) + (due.today ?? 0));
-        }
-      }
-    });
-    getTodayMemoryChangesApi().then(res => {
-      if (alive && res?.code === 200) {
-        setTodayChanges(res.data);
-      }
-    });
-    return () => { alive = false; };
-  }, [lastSessionResult?.completedAt]);
+  // 오늘 요약/복습 due/오늘의 기억 변화는 StatsContext에서 구독한다(위 useStats).
+  // 학습 직후(lastSessionResult 변경) 갱신은 StatsProvider가 담당하므로 여기서 별도 조회하지 않는다.
 
   const todayChangeTotal =
     (todayChanges?.counts?.promoted ?? 0) + (todayChanges?.counts?.new ?? 0);
@@ -364,6 +363,36 @@ const Main = () => {
           flex flex-col gap-[15px] 
           px-[16px] py-[18px] pb-[88px]
         ">
+          {/* 온보딩 행동 기반 미션 배너 — legacy 유저이거나 모든 미션을 완료했으면 노출하지 않음 */}
+          {showMissionBanner && (
+            <button
+              type="button"
+              onClick={handleMissionBannerClick}
+              className="
+                flex items-center justify-between gap-[10px]
+                px-[15px] py-[12px]
+                rounded-[12px]
+                bg-secondary-blue-100 dark:bg-secondary-blue-dark
+                text-left
+              "
+            >
+              <div className="flex items-center gap-[10px] min-w-0">
+                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-full bg-secondary-blue-600 shrink-0">
+                  <Target size={17} weight="fill" className="text-layout-white" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[11px] font-[600] text-secondary-blue-600">
+                    다음 미션 · {missionDoneCount}/5
+                  </span>
+                  <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white truncate">
+                    {currentMissionAction}
+                  </span>
+                </div>
+              </div>
+              <CaretRight size={18} weight="bold" className="text-secondary-blue-600 shrink-0" />
+            </button>
+          )}
+
           {/* 데일리 미션 — '학습하기'(한 번이라도 학습=출석/attend) + '신규/복습'(둘 다 달성=데일리 미션 완료).
               출석은 출석왕, 신규+복습 완료는 끈기왕/보석 구동. */}
           {(() => {

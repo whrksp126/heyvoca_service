@@ -220,6 +220,18 @@ export const getUnlockStatusApi = async () => {
   }
 };
 
+// 온보딩 행동 기반 미션 완료 처리 (인증) — key: 'ai_test' | 'search_word' | 'focus_study'
+// (make_book/buy_book은 백엔드 훅 전용이라 프론트에서 직접 호출하지 않음 — 400 응답)
+// 응답: { code:200, data:{ newly_completed, reward_gem, unlocks, gem_cnt, ...unlock-status 전체 필드 } }
+export const completeOnboardingMissionApi = async (key) => {
+  const url = `${backendUrl}/onboarding/mission/complete`;
+  try {
+    return await fetchDataAsync(url, 'POST', { key });
+  } catch (error) {
+    console.error('completeOnboardingMissionApi 오류:', error);
+  }
+};
+
 // ─── 암기 인사이트 API ──────────────────────────────────────────────────────
 
 // 단어별 기억 인사이트 (단어 상세 '나의 기억' 섹션)

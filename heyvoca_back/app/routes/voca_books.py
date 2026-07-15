@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import shutil
 import datetime
 import io
@@ -35,6 +36,17 @@ UPLOAD_MAX_ROWS = 20000              # 파싱 행 수 상한
 def is_purchased_book(voca_book):
     """구매한 단어장(bookstore_id가 NULL이 아닌 단어장)인지 여부."""
     return voca_book is not None and voca_book.bookstore_id is not None
+
+
+def _try_complete_onboarding_mission(user_id, mission_key):
+    """온보딩 미션 완료 훅. 실패해도 본 요청(단어장 생성/단어 추가) 흐름은 절대 깨지 않는다."""
+    try:
+        from app.routes.onboarding import complete_onboarding_mission
+        complete_onboarding_mission(user_id, mission_key)
+    except Exception:
+        logging.getLogger(__name__).warning(
+            '온보딩 미션 완료 처리 실패: mission_key=%s', mission_key, exc_info=True,
+        )
 
 
 # 강조 마크업을 헤이보카 표준 형식(<strong class="target-word">)으로 정규화한다.
@@ -577,6 +589,13 @@ def create_voca_book():
         voca_book.updated_at = datetime.datetime.utcnow()
 
         db.session.commit()
+
+        # 온보딩 미션 훅 — 서점 등록(buy_book) vs 직접 생성+단어 포함(make_book).
+        # 실패해도 단어장 생성 자체는 이미 성공했으므로 응답에 영향 없음.
+        if bookstore_id:
+            _try_complete_onboarding_mission(user_id, 'buy_book')
+        elif added_count > 0:
+            _try_complete_onboarding_mission(user_id, 'make_book')
 
         return jsonify({'code': 201, 'data': build_voca_book_response(voca_book)}), 201
 
@@ -1124,6 +1143,10 @@ def append_vocas_to_book(vocaBookId):
         voca_book.updated_at = datetime.datetime.utcnow()
 
         db.session.commit()
+
+        # 온보딩 미션 훅 — 직접 만든 단어장(bookstore_id NULL)에 단어를 추가한 경우 make_book 완료.
+        # (구매 단어장은 함수 상단에서 이미 403으로 차단되므로 이 지점에선 항상 직접 생성 단어장)
+        _try_complete_onboarding_mission(user_id, 'make_book')
 
         return jsonify({
             'code': 201,

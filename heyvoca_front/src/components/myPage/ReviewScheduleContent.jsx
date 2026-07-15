@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { EggCrack, Leaf, Plant, Carrot, WarningCircle } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { getReviewScheduleApi } from '../../api/study';
+import { useStats } from '../../context/StatsContext';
 import { vibrate } from '../../utils/osFunction';
 import ReviewScheduleCalendar from './ReviewScheduleCalendar';
 
@@ -182,37 +182,30 @@ const AUTO_PLAY_INTERVAL_MS = 3500;
 const ReviewScheduleContent = () => {
   "use memo";
 
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // 복습 일정은 StatsContext 캐시에서 구독 — 마이페이지를 다시 열어도 재조회/스피너 없이 즉시 표시된다.
+  const { reviewSchedule, reviewLoaded } = useStats();
+  const data = reviewSchedule;
+  const isLoading = !reviewLoaded && !reviewSchedule;      // 최초 로드 전에만 스피너
+  const error = reviewLoaded && !reviewSchedule ? '복습 일정을 불러오지 못했어요.' : null;
+
   const [activeKey, setActiveKey] = useState('new');
   const intervalRef = useRef(null);
   const [activeDate, setActiveDate] = useState(null);
   const [activeDateWords, setActiveDateWords] = useState([]);
 
+  // 캐시된 복습 일정이 준비/갱신되면 선택 날짜의 단어 목록을 최신화.
+  // 사용자가 아직 날짜를 안 골랐으면 오늘로 기본 선택하고, 이미 골랐으면 그 날짜를 유지한 채 목록만 갱신한다.
   useEffect(() => {
-    let alive = true;
-    setIsLoading(true);
-    getReviewScheduleApi()
-      .then(res => {
-        if (!alive) return;
-        if (res?.code === 200) {
-          const d = res.data;
-          setData(d);
-          const todayStr = d?.today ?? null;
-          if (todayStr) {
-            setActiveDate(todayStr);
-            const todayEntry = (d?.days ?? []).find(entry => entry.date === todayStr);
-            setActiveDateWords(todayEntry?.words ?? []);
-          }
-        } else {
-          setError('복습 일정을 불러오지 못했어요.');
-        }
-      })
-      .catch(() => { if (alive) setError('복습 일정을 불러오지 못했어요.'); })
-      .finally(() => { if (alive) setIsLoading(false); });
-    return () => { alive = false; };
-  }, []);
+    if (!data) return;
+    const days = data?.days ?? [];
+    const todayStr = data?.today ?? null;
+    const targetDate = activeDate || todayStr;
+    if (!targetDate) return;
+    if (!activeDate && todayStr) setActiveDate(todayStr);
+    const entry = days.find(e => e.date === targetDate);
+    setActiveDateWords(entry?.words ?? []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const startAutoPlay = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);

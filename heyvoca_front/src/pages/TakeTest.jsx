@@ -12,6 +12,7 @@ import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
 import { warmTts, collectTestTexts } from '../api/tts';
 import { useUser } from '../context/UserContext';
+import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
 
 const TakeTest = () => {
@@ -28,6 +29,7 @@ const TakeTest = () => {
   );
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { completeMission } = useOnboardingUnlock();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
   const [progressIndex, setProgressIndex] = useState(0);
@@ -617,6 +619,12 @@ const TakeTest = () => {
         if (studySessionRef?.current) {
           finishStudySession(studySessionRef.current)
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
+        }
+        // 온보딩 미션 완료 신호 — M1(AI 추천 테스트)·M5(집중 반복 학습). 게스트/맛보기(today)는 위에서 이미 return됨.
+        if (state.testType === 'quick') {
+          completeMission('ai_test');
+        } else if (state.testType === 'study') {
+          completeMission('focus_study');
         }
         await updateVocabularySheetAndRecentStudyData();
         // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Notepad, Storefront, User, House, BookBookmark, Lock } from "@phosphor-icons/react";
 import { vibrate } from '../../utils/osFunction';
-import { getUnlockStatusApi } from '../../api/study';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 
 // 탭 정의 — lockKey 있는 탭은 온보딩 점진 해금 대상
@@ -21,20 +21,11 @@ const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
-
-  const [unlock, setUnlock] = useState(null); // null=미조회(기본 전부 열림 취급)
-
-  useEffect(() => {
-    let alive = true;
-    getUnlockStatusApi().then((res) => {
-      if (alive && res?.code === 200) setUnlock(res.data);
-    });
-    return () => { alive = false; };
-  }, []);
+  const { isFeatureLocked } = useOnboardingUnlock();
 
   const isLocked = (lockKey) => {
-    if (!lockKey || !unlock || unlock.legacy) return false;
-    return unlock.unlocked?.[lockKey] === false;
+    if (!lockKey) return false;
+    return isFeatureLocked(lockKey);
   };
 
   const handleTap = (item) => {
@@ -42,7 +33,7 @@ const BottomNav = () => {
     if (isLocked(item.lockKey)) {
       pushNewBottomSheet(
         UnlockGuideNewBottomSheet,
-        { unlock, highlightKey: item.lockKey },
+        { highlightKey: item.lockKey },
         { isBackdropClickClosable: true, isDragToCloseEnabled: true }
       );
       return;
