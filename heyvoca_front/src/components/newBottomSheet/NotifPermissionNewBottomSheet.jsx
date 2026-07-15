@@ -46,7 +46,7 @@ export const NotifPermissionNewBottomSheet = () => {
       </div>
       <div className="absolute bottom-0 left-0 right-0 flex flex-col p-[20px] gap-[10px]">
         <motion.button
-          className="w-full h-[48px] rounded-[10px] bg-primary-main-600 text-layout-white text-[16px] font-[700]"
+          className="w-full h-[48px] rounded-[10px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
           onClick={() => handle(true)}
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 500, damping: 15 }}

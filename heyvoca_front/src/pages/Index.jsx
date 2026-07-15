@@ -27,6 +27,7 @@ const Index = () => {
     isUserProfileLoading,
     isAchievementCriteriaLoading,
     performLogout,
+    fetchUserProfile,
   } = useUser();
 
   const {
@@ -158,8 +159,11 @@ const Index = () => {
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
         // migrate가 서버에서 username·레벨·단어장·onboarding_ver('1')를 세팅하지만,
-        // 로컬 userProfile은 아직 이 응답을 반영 전(onboarding_ver!=='1')이라 아래 기본 네비게이트
-        // 이펙트가 /onboarding으로 되돌릴 수 있음. 온보딩 완료 사용자는 홈으로 직행시켜 우회한다.
+        // 로컬 userProfile은 아직 이 응답을 반영 전(onboarding_ver!=='1', username=null)이라
+        //  ① 아래 기본 네비게이트 이펙트가 /onboarding으로 되돌릴 수 있고
+        //  ② 홈/마이페이지가 stale 프로필을 읽어 닉네임이 '미설정'으로 보인다.
+        // 따라서 서버가 방금 세팅한 최신 프로필(닉네임·온보딩 상태)을 즉시 재조회한 뒤 홈으로 보낸다.
+        fetchUserProfile().catch(() => { /* 실패해도 흐름은 계속 — 다음 조회 시 갱신됨 */ });
         if (res?.code === 200) navigate('/home', { replace: true });
       }
     }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });

@@ -175,6 +175,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isFetching, setIsFetching] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
+  // TTS 재생 "세대" 가드. getTextSound는 새 재생 시작 시 이전 재생을 강제 resolve하므로,
+  // 등장 자동재생이 진행 중일 때 카드를 클릭하면 중단된 이전 재생의 finally가 isSpeaking을
+  // false로 덮어써 음파(TtsRipple)가 사라진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
+  // "자신이 최신 재생일 때만" 상태를 갱신하도록 한다.
+  const speakGenRef = useRef(0);
+  const speakText = async (text, lang = 'en') => {
+    const gen = ++speakGenRef.current;
+    setIsSpeaking(true);
+    setSpeakDuration(null);
+    try {
+      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+    } finally {
+      if (gen === speakGenRef.current) setIsSpeaking(false);
+    }
+  };
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
@@ -438,15 +453,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
       if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
-        (async () => {
-          setIsSpeaking(true);
-          setSpeakDuration(null);
-          try {
-            await getTextSound(question.origin, "en", setSpeakDuration);
-          } finally {
-            setIsSpeaking(false);
-          }
-        })();
+        speakText(question.origin, "en");
       }
 
       // 다음 1~2문제의 음성을 미리 받아 blob 캐시에 채워둔다 → 전환 시 즉시 재생.
@@ -643,15 +650,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 읽기
   const handleClickTTS = async () => {
     const question = testQuestions[progressIndex];
-    const textToRead = question.origin;
-    const lang = "en";
-    setIsSpeaking(true);
-    setSpeakDuration(null);
-    try {
-      await getTextSound(textToRead, lang, setSpeakDuration);
-    } finally {
-      setIsSpeaking(false);
-    }
+    await speakText(question.origin, "en");
   }
 
   // 듣기 문제 건너뛰기: 안내 바텀시트 확인 → 5분 활성화 + 진행 중 미답 듣기 문제를 일반 유형으로 즉시 변환
