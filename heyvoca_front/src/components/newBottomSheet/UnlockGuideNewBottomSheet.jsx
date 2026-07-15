@@ -27,9 +27,6 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { missions, currentMission } = useOnboardingUnlock();
 
-  const doneCount = missions.filter((m) => m.done).length;
-  const total = missions.length || 5;
-
   const handleCta = (missionKey) => {
     vibrate({ duration: 5 });
     const cta = MISSION_CTA[missionKey];
@@ -54,28 +51,22 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   };
 
   return (
-    <div className="flex flex-col gap-[24px] pt-[30px] pb-[20px] px-[20px]">
-      <div className="flex flex-col gap-[8px] items-center text-center">
+    <div className="flex flex-col max-h-[85vh] pt-[30px] pb-[20px] px-[20px]">
+      <div className="flex flex-col gap-[10px] items-center text-center shrink-0 mb-[24px]">
         <h3 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
-          단계별 미션
+          입문 퀘스트
         </h3>
-        <p className="text-[13px] font-[500] text-layout-gray-300">
-          미션을 완료하고 기능을 열어보세요
-        </p>
-        <div className="flex items-center gap-[6px] mt-[2px]">
+        <div className="flex items-center gap-[6px]">
           {missions.map((m) => (
             <span
               key={m.key}
               className={`w-[7px] h-[7px] rounded-full ${m.done ? 'bg-status-success-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'}`}
             />
           ))}
-          <span className="ml-[4px] text-[12px] font-[700] text-layout-gray-300">
-            {doneCount}/{total}
-          </span>
         </div>
       </div>
 
-      <ul className="flex flex-col gap-[10px]">
+      <ul className="flex flex-col gap-[10px] flex-1 min-h-0 overflow-y-auto">
         {missions.map((mission) => {
           const isCurrent = mission.key === currentMission;
           const isHighlighted = mission.unlocks === highlightKey;
@@ -154,7 +145,7 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
       <button
         type="button"
         onClick={() => { vibrate({ duration: 5 }); closeNewBottomSheet(); }}
-        className="h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
+        className="shrink-0 mt-[24px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
       >
         확인
       </button>
