@@ -48,9 +48,13 @@ def _cached_presigned_url(object_key):
             return cached
     except Exception:
         pass
-    url = service.presigned_url(object_key)
+    # 서명 만료(ttl)와 Redis 캐시 TTL을 반드시 같은 소스(config)에서 도출한다.
+    # service.presigned_url에 ttl_seconds를 넘기지 않으면 service.py가 별도 기본값
+    # (os.getenv('TTS_PRESIGN_TTL','3600')=1h)으로 서명해, 캐시(config 기본 6h)가 서명보다
+    # 오래 살아남아 만료된 URL을 계속 서빙(200 cached지만 mp3는 403)하는 버그가 있었다.
+    ttl = int(current_app.config.get('TTS_PRESIGN_TTL', 3600))
+    url = service.presigned_url(object_key, ttl_seconds=ttl)
     try:
-        ttl = int(current_app.config.get('TTS_PRESIGN_TTL', 3600))
         cache.set(uk, url, timeout=max(60, ttl - _URL_CACHE_MARGIN))
     except Exception:
         pass
