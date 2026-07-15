@@ -25,7 +25,7 @@ export const FEATURE_LABELS = {
 export const OnboardingUnlockContext = createContext(null);
 
 export const OnboardingUnlockProvider = ({ children }) => {
-  const { isLogin, isLoginChecked, fetchUserProfile, setUserProfile } = useUser();
+  const { isLogin, isLoginChecked, userProfile, fetchUserProfile, setUserProfile } = useUser();
   const { showOverlay } = useOverlayActions();
 
   const [unlock, setUnlock] = useState(null); // unlock-status 응답 data 전체
@@ -86,7 +86,11 @@ export const OnboardingUnlockProvider = ({ children }) => {
     }
   }, [applyUnlockData]);
 
-  // 로그인 상태에서 최초 1회 조회. 로그아웃 시 초기화.
+  // 로그인 상태에서 조회. 로그아웃 시 초기화.
+  // userProfile.id / onboarding_ver도 의존성에 포함 — 온보딩 직후 애플 가입/로그인 시
+  // unlock-status를 먼저 가져온 뒤 migrate가 onboarding_ver='1'을 세팅하는 레이스가 있어
+  // (그 순간엔 legacy=true로 잡혀 미션/잠금이 숨겨진다), migrate 후 fetchUserProfile로
+  // onboarding_ver가 갱신되면 여기서 재조회해 legacy=false(미션 노출) 상태로 정정한다.
   useEffect(() => {
     if (isLogin && isLoginChecked) {
       refreshUnlock();
@@ -95,7 +99,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       missionsRef.current = null;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin, isLoginChecked]);
+  }, [isLogin, isLoginChecked, userProfile?.id, userProfile?.onboarding_ver]);
 
   // 프론트 트리거 미션 완료 처리 — key: 'ai_test' | 'search_word' | 'focus_study'
   // (make_book/buy_book은 백엔드 훅 전용 — 여기서 호출하지 않음)
