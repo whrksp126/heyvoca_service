@@ -6,7 +6,7 @@ import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight, Target } from '@phosphor-icons/react';
+import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
@@ -185,7 +185,6 @@ const Main = () => {
   const { legacy: unlockLegacy, missions: unlockMissions, currentMission } = useOnboardingUnlock();
   const currentMissionData = unlockMissions.find((m) => m.key === currentMission);
   const showMissionBanner = !unlockLegacy && !!currentMissionData;
-  const missionDoneCount = unlockMissions.filter((m) => m.done).length;
   // 미션 title(예: "단어장 직접 만들기 완료")에서 '완료' 접미어를 떼어 행동 표현으로 변환
   const currentMissionAction = currentMissionData?.title?.replace(/\s*완료\s*$/, '').trim();
 
@@ -370,26 +369,21 @@ const Main = () => {
               onClick={handleMissionBannerClick}
               className="
                 flex items-center justify-between gap-[10px]
-                px-[15px] py-[12px]
+                px-[16px] py-[13px]
                 rounded-[12px]
-                bg-secondary-blue-100 dark:bg-secondary-blue-dark
+                bg-layout-gray-50 dark:bg-layout-gray-dark
                 text-left
               "
             >
-              <div className="flex items-center gap-[10px] min-w-0">
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-full bg-secondary-blue-600 shrink-0">
-                  <Target size={17} weight="fill" className="text-layout-white" />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-[600] text-secondary-blue-600">
-                    다음 미션 · {missionDoneCount}/5
-                  </span>
-                  <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white truncate">
-                    {currentMissionAction}
-                  </span>
-                </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-[11px] font-[600] text-primary-main-600">
+                  입문 퀘스트
+                </span>
+                <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white truncate">
+                  {currentMissionAction}
+                </span>
               </div>
-              <CaretRight size={18} weight="bold" className="text-secondary-blue-600 shrink-0" />
+              <CaretRight size={18} className="text-layout-gray-300 shrink-0" />
             </button>
           )}
 

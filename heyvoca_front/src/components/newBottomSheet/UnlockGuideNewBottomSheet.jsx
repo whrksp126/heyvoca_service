@@ -52,18 +52,10 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
 
   return (
     <div className="flex flex-col max-h-[85vh] pt-[30px] pb-[20px] px-[20px]">
-      <div className="flex flex-col gap-[10px] items-center text-center shrink-0 mb-[24px]">
+      <div className="flex flex-col items-center text-center shrink-0 mb-[24px]">
         <h3 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
           입문 퀘스트
         </h3>
-        <div className="flex items-center gap-[6px]">
-          {missions.map((m) => (
-            <span
-              key={m.key}
-              className={`w-[7px] h-[7px] rounded-full ${m.done ? 'bg-status-success-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'}`}
-            />
-          ))}
-        </div>
       </div>
 
       <ul className="flex flex-col gap-[10px] flex-1 min-h-0 overflow-y-auto">
