@@ -9,6 +9,8 @@ import MemorizationStatus from '../common/MemorizationStatus';
 import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
 import { warmTts, collectStudyTexts } from '../../api/tts';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
 import { AppHistory } from '../../utils/appHistory';
 
@@ -33,6 +35,10 @@ const StudyMain = ({ words }) => {
 
   const navigate = useNavigate();
   const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { completeMission } = useOnboardingUnlock();
+  const { isLogin } = useUser();
+  // 온보딩 M5(집중 반복 학습) 완료 신호는 세션당 1회만 — 중복 클릭 등으로 인한 불필요 호출 방지.
+  const missionSignaledRef = useRef(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('next');
@@ -275,9 +281,17 @@ const StudyMain = ({ words }) => {
     );
   };
 
+  // 마지막 카드까지 도달해 "종료" 버튼으로 정상 완료한 지점.
+  // (중간 이탈은 handleStopLearning의 확인 바텀시트를 거치므로 여기 도달하지 않음)
   const handleEnd = () => {
     stopPlayback();
     vibrate({ duration: 5 });
+    // 온보딩 M5(집중 반복 학습) 완료 신호 — 로그인 사용자에서만, 세션당 1회.
+    // /study 경로는 로그인 사용자만 도달(게스트 온보딩 체험은 /take-test guestMode 흐름 별도).
+    if (isLogin && !missionSignaledRef.current) {
+      missionSignaledRef.current = true;
+      completeMission('focus_study');
+    }
     navigate(-1);
   };
 
