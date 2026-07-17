@@ -491,6 +491,15 @@ def migrate():
             balance_after=user.gem_cnt,
         )  # register_gem_log 내부 commit
 
+    # 방금 생성한 온보딩 단어가 AI 추천 후보 풀(recommend:pool:{user_id}, Redis TTL 30초)에 즉시
+    # 반영되도록 stale 캐시를 무효화한다. 온보딩 중 단어 생성 전에 빈 풀이 캐시돼 있으면, 무효화하지
+    # 않으면 30초 동안 AI 추천 테스트가 "출제 가능한 문제가 없어요"로 실패한다(온보딩 직후 첫 세션 버그).
+    try:
+        from app.services.recommend.pool import invalidate_pool_cache
+        invalidate_pool_cache(user_id)
+    except Exception:
+        logging.getLogger(__name__).warning('온보딩 migrate 후 추천 풀 캐시 무효화 실패(무해)', exc_info=True)
+
     return jsonify({
         'code': 200,
         'data': {
