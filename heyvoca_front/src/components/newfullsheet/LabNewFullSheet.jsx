@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, showToast, checkNotificationPermissionGranted } from '../../utils/osFunction';
 import postMessageManager from '../../utils/postMessageManager';
-import { getLabSettingsApi, setLabFeatureApi } from '../../api/lab';
+import { getLabSettingsApi, setLabFeatureApi, getCachedLabFeatures } from '../../api/lab';
 
 // 실험실 기능 목록 — 새 기능은 이 배열에 한 줄 추가로 노출된다.
 const LAB_FEATURES = [
@@ -49,9 +49,10 @@ const LabNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet } = useNewFullSheetActions();
-  const [features, setFeatures] = useState({});
+  // 앱 시작 시 prefetch된 캐시로 초기화 → 열자마자 올바른 토글 상태(OFF 깜빡임 없음).
+  const [features, setFeatures] = useState(() => getCachedLabFeatures() || {});
 
-  // 진입 시 현재 설정 로드
+  // 진입 시 최신 설정으로 재검증(캐시가 있으면 화면은 이미 정확하므로 깜빡임 없음)
   useEffect(() => {
     let mounted = true;
     (async () => {

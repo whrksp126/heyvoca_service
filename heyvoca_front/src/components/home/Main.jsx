@@ -23,6 +23,7 @@ import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import { vibrate, checkNotificationPermissionGranted } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
 import { useStats } from '../../context/StatsContext';
+import { prefetchLabSettings } from '../../api/lab';
 
 
 // import StoreSheet from './StoreSheet';
@@ -199,9 +200,10 @@ const Main = () => {
 
   const { fetchUserCheckin } = useUser();
 
-  // 홈 화면 진입 시 출석 체크 호출
+  // 홈 화면 진입 시 출석 체크 호출 + 실험실 설정 프리로드(실험실 화면 즉시 반영용)
   useEffect(() => {
     fetchUserCheckin();
+    prefetchLabSettings();
   }, []);
 
   // 온보딩→가입→로그인 후 홈 첫 진입 시 1회 알림 권한 프롬프트 (온보딩 signup에서 플래그 설정)
