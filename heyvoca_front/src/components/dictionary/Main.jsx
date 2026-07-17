@@ -15,7 +15,7 @@ import { getBookStoreDetailApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
-import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
+import { resolveVocaBookBackground, resolveVocaBookSubColor } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 
 const ITEMS_PER_PAGE = 30;
@@ -579,7 +579,7 @@ const Main = () => {
                     const bookTitle = vocaBook?.title || '단어장';
                     const color = vocaBook?.color;
                     const bgColor = resolveVocaBookBackground(color?.background || '#FFF0F9', isDark);
-                    const subColor = color?.sub || '#FFD8EE';
+                    const subColor = resolveVocaBookSubColor(color?.sub || '#FFD8EE', color?.main, isDark);
 
                     const meanings = vb.meanings ?? word.meanings;
                     const meaningText = Array.isArray(meanings) ? meanings.join(', ') : meanings || '';
@@ -611,7 +611,7 @@ const Main = () => {
                               />
                             </div>
                           </div>
-                          <p className="mt-[8px] text-[11px] text-layout-gray-400">
+                          <p className="mt-[8px] text-[11px] text-layout-gray-400 dark:text-layout-gray-300">
                             {meaningText}
                           </p>
                           <button
@@ -619,8 +619,8 @@ const Main = () => {
                             className="flex items-center justify-between w-full mt-[10px] px-[10px] py-[6px] rounded-[8px]"
                             style={{ backgroundColor: subColor }}
                           >
-                            <span className="text-[12px] font-[400] text-layout-gray-400">{bookTitle}</span>
-                            <span className="text-[12px] font-[600] text-layout-gray-400">단어장 보기 →</span>
+                            <span className="text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-200">{bookTitle}</span>
+                            <span className="text-[12px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">단어장 보기 →</span>
                           </button>
                         </div>
                       </div>
@@ -639,8 +639,9 @@ const Main = () => {
               </p>
               <div className="flex flex-col gap-[10px]">
                 {storeResults.map((item, index) => {
-                  const bgColor = resolveVocaBookBackground(JSON.parse(item.color)?.background || '#F5F0FF', isDark);
-                  const subColor = JSON.parse(item.color)?.sub || '#DDD0FF';
+                  const parsedColor = JSON.parse(item.color) || {};
+                  const bgColor = resolveVocaBookBackground(parsedColor.background || '#F5F0FF', isDark);
+                  const subColor = resolveVocaBookSubColor(parsedColor.sub || '#DDD0FF', parsedColor.main, isDark);
 
                   return (
                     <div
@@ -651,7 +652,7 @@ const Main = () => {
                       <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                         {item.word}
                       </span>
-                      <p className="mt-[8px] text-[11px] text-layout-gray-400">
+                      <p className="mt-[8px] text-[11px] text-layout-gray-400 dark:text-layout-gray-300">
                         {Array.isArray(item.meanings)
                           ? item.meanings.join(', ')
                           : item.meanings || ''}
@@ -661,8 +662,8 @@ const Main = () => {
                         className="flex items-center justify-between w-full mt-[10px] px-[10px] py-[6px] rounded-[8px]"
                         style={{ backgroundColor: subColor }}
                       >
-                        <span className="text-[12px] font-[400] text-layout-gray-400">{item.bookstore_name}</span>
-                        <span className="text-[12px] font-[600] text-layout-gray-400">단어장 보기 →</span>
+                        <span className="text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-200">{item.bookstore_name}</span>
+                        <span className="text-[12px] font-[600] text-layout-gray-400 dark:text-layout-gray-200">단어장 보기 →</span>
                       </button>
                     </div>
                   );

@@ -31,7 +31,7 @@ const REVEAL_STEP_MS = 1100;
 export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   "use memo";
 
-  const { closeNewBottomSheet } = useNewBottomSheetActions();
+  const { closeNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
   const { missions, currentMission, pendingMissionRewards, consumePendingMissionRewards } = useOnboardingUnlock();
 
   // 대기 중인 보상이 있으면 이 시트를 "보상 받기" 연출 모드로 먼저 보여준다.
@@ -91,11 +91,20 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     return () => clearTimeout(timer);
   }, [stage, revealIndex, rewardItems.length]);
 
-  // 리워드 연출 '확인' — 시트를 닫지 않고 대기열만 비워, 같은 시트를 입문 퀘스트 목록(체크리스트)
-  // 화면으로 전환한다. (리워드와 목록을 독립적으로 처리: 리워드 확인 → 목록 등장 → 목록 확인 → 닫힘)
+  // 리워드 연출 '확인' — 리워드 시트를 닫고(아래로 슬라이드) 잠시 후 입문 퀘스트 목록 시트를
+  // 새로 연다(아래→위 등장). 리워드와 목록을 완전히 독립된 두 시트로 처리한다.
   const handleRewardDone = () => {
     vibrate({ duration: 5 });
-    consumePendingMissionRewards();
+    consumePendingMissionRewards();   // 대기열 비움 → 새로 여는 시트는 목록(체크리스트)로 렌더
+    closeNewBottomSheet();            // 리워드 시트 닫힘(아래로 슬라이드)
+    // 닫힘 애니메이션 후 목록 시트를 아래에서 위로 새로 등장시킨다.
+    setTimeout(() => {
+      openNewBottomSheet(
+        UnlockGuideNewBottomSheet,
+        {},
+        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+      );
+    }, 320);
   };
 
   // 체크리스트 '확인' — 이 시트만 닫는다.
@@ -122,20 +131,21 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-center py-[20px]">
+        {/* 고정 높이 — reveal↔done 전환 시 시트가 리사이즈(재배치)되지 않도록 콘텐츠 영역 높이를 고정한다. */}
+        <div className="flex flex-col items-center justify-center h-[172px] py-[16px]">
           {isDone ? (
-            // 연출 종료 → 받은 보상 요약(정적)
+            // 연출 종료 → 받은 보상 요약(정적). 크기는 reveal과 동일하게 맞춰 시각적 축소 방지.
             <div className="flex items-end justify-center gap-[24px]">
               {hasBookReward && (
-                <div className="flex flex-col items-center gap-[8px]">
-                  <img src={emptyBookImg} alt="" className="w-[64px] h-[64px] object-contain" />
+                <div className="flex flex-col items-center gap-[10px]">
+                  <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
                   <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
                 </div>
               )}
               {totalGemReward > 0 && (
-                <div className="flex flex-col items-center gap-[8px]">
-                  <div className="flex items-center justify-center w-[64px] h-[64px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
-                    <img src={gemImg} alt="" className="w-[36px] h-[36px] object-contain" />
+                <div className="flex flex-col items-center gap-[10px]">
+                  <div className="flex items-center justify-center w-[84px] h-[84px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
+                    <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
                   </div>
                   <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
                 </div>
