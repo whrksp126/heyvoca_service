@@ -379,7 +379,7 @@ const Onboarding = () => {
               </h1>
               <ul className="grid grid-cols-2 gap-[15px]">
                 {books.map((b) => (
-                  <BookCard key={b.id} item={b} priceLabel="무료" onClick={() => openBookPreview(b)} />
+                  <BookCard key={b.id} item={b} priceLabel="" onClick={() => openBookPreview(b)} />
                 ))}
               </ul>
               <div className="mt-auto pt-[8px]">
