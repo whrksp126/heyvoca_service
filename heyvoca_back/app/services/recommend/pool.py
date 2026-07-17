@@ -191,8 +191,12 @@ def build_candidate_pool(user_id, book_ids=None) -> list:
 
     items = _load_pool_raw(user_id, book_ids_filter)
 
-    # TTL 30초로 캐싱
-    cache.set(cache_key, items, timeout=30)
+    # 빈 풀은 캐싱하지 않는다. 온보딩 직후 migrate가 단어를 생성하기 전에 recommend가
+    # 호출되면(레이스) 빈 결과가 30초간 캐시돼, 그 사이 AI 추천 테스트가
+    # "출제 가능한 문제가 없어요"로 실패한다. 빈 결과를 캐시에서 제외하면 다음 호출
+    # (단어 생성 후)이 곧바로 신선한 풀을 읽어 레이스 자체가 사라진다.
+    if items:
+        cache.set(cache_key, items, timeout=30)
 
     return items
 
@@ -205,7 +209,9 @@ def invalidate_pool_cache(user_id) -> None:
     실패해도 조용히 무시 (캐시는 TTL 30초로 자연 만료).
     """
     try:
-        redis_client = cache.cache._client  # type: ignore[attr-defined]
+        # Flask-Caching RedisCache의 실제 클라이언트 속성은 _write_client(_client 아님).
+        # 과거 _client로 접근해 AttributeError로 조용히 무효화가 no-op이 되던 버그가 있었다.
+        redis_client = getattr(cache.cache, '_write_client', None) or cache.cache._read_client  # type: ignore[attr-defined]
         pattern = f"recommend:pool:{user_id}:*"
         # Flask-Caching의 key_prefix를 고려한 실제 키 탐색
         prefixed_pattern = f"{cache.cache.key_prefix}{pattern}"
