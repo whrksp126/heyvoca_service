@@ -778,6 +778,13 @@ def get_recommend():
     # type은 통계 라벨로만 사용 (알고리즘 분기 없음)
     type_label = request.args.get('type', 'recommend').lower()
 
+    # [진단] 엔드포인트 호출/파라미터 확인용 (원인 확인 후 제거).
+    print(
+        f"[recommend-start] user={str(user_id)[:8]} type={type_label} "
+        f"target_states_raw={target_states_raw!r} count={count} selection={selection} book_ids={book_ids}",
+        flush=True,
+    )
+
     # ── 사용자 통계 조회 (1쿼리로 묶음) ──
     try:
         user_stats = _fetch_user_stats(user_id)
@@ -879,13 +886,13 @@ def get_recommend():
         })
 
     # [진단] AI 추천이 0개를 반환하는 케이스 추적용 (신규 온보딩 유저 "출제 가능한 문제가 없어요" 이슈).
-    #        원인 확인 후 제거 예정.
-    logging.getLogger(__name__).info(
-        "[recommend-diag] user=%s type=%s target_states_raw=%r selection=%s count=%d "
-        "pool=%d full_recommend=%s new_allowance=%s items=%d comp=%s user_stats=%s",
-        str(user_id)[:8], type_label, target_states_raw, selection, count,
-        len(pool), full_recommend, new_allowance, len(items_response), composition,
-        {k: (v if not isinstance(v, (dict, set)) else len(v)) for k, v in (user_stats or {}).items()},
+    #        원인 확인 후 제거 예정. print로 stdout에 출력(INFO 로그가 억제되는 환경 대비).
+    print(
+        f"[recommend-diag] user={str(user_id)[:8]} type={type_label} "
+        f"target_states_raw={target_states_raw!r} selection={selection} count={count} "
+        f"pool={len(pool)} full_recommend={full_recommend} new_allowance={new_allowance} "
+        f"items={len(items_response)} comp={composition}",
+        flush=True,
     )
 
     return jsonify({
