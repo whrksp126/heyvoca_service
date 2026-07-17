@@ -128,3 +128,58 @@ def select_message(category: str, time_slot: str, ctx: dict) -> tuple:
         'streak': ctx.get('streak') or 0,
     }
     return title_tpl.format(**fmt), body_tpl.format(**fmt)
+
+
+# ──────────────────────────────────────────────
+# '채팅으로 학습' 알림 문구 (실험실 기능, fcm.run_chat_reminder 전용)
+# ──────────────────────────────────────────────
+
+CHAT_TIME_SLOTS = ('morning', 'late_morning', 'afternoon', 'evening', 'night')
+
+CHAT_MESSAGES = {
+    'morning': [
+        ("좋은 아침이에요 {name}님 ☀️",
+         "오늘 단어 {n}개, 채팅으로 가볍게 풀어볼까요?"),
+        ("눈 뜨자마자 단어 한 판 어때요? 👋",
+         "{name}님을 위한 {n}개, 채팅으로 3분이면 끝나요."),
+    ],
+    'late_morning': [
+        ("잠깐 쉬는 틈에 단어 {n}개 어때요? ☕",
+         "채팅으로 톡톡 풀면 금방이에요, {name}님!"),
+        ("오전 루틴에 단어 한 스푼 추가 🍯",
+         "{n}개만 채팅으로 풀고 넘어가요."),
+    ],
+    'afternoon': [
+        ("나른한 오후, 단어로 잠깐 깨워볼까요? 🌤️",
+         "{name}님, {n}개가 채팅으로 기다리고 있어요."),
+        ("오후 텀에 단어 {n}개 — 채팅이라 편해요",
+         "눌러서 바로 풀어보세요!"),
+    ],
+    'evening': [
+        ("이동 중에도 단어 {n}개, 채팅으로 🚶",
+         "{name}님, 부담 없이 톡톡 풀어봐요."),
+        ("저녁 전에 단어 {n}개 가볍게 정리해요",
+         "채팅으로 후딱 — 오늘 몫 끝내볼까요?"),
+    ],
+    'night': [
+        ("자기 전 마지막 단어 {n}개 🌙",
+         "{name}님, 채팅으로 후딱 풀고 편히 주무세요."),
+        ("오늘 하루 마무리는 단어로 ✨",
+         "{n}개 남았어요, 채팅으로 가볍게 풀어봐요."),
+    ],
+}
+
+
+def select_chat_message(time_slot: str, ctx: dict, n: int = None) -> tuple:
+    """채팅 학습 알림 문구 선택 (title, body).
+
+    n 미지정 시 ctx['review_due']를 사용. time_slot이 CHAT_TIME_SLOTS에 없으면
+    'afternoon' 풀로 폴백.
+    """
+    pool = list(CHAT_MESSAGES.get(time_slot) or CHAT_MESSAGES['afternoon'])
+    title_tpl, body_tpl = random.choice(pool)
+    fmt = {
+        'name': ctx.get('display_name') or '회원',
+        'n': n if n is not None else (ctx.get('review_due') or 0),
+    }
+    return title_tpl.format(**fmt), body_tpl.format(**fmt)

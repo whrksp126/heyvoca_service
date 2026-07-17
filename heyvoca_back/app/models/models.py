@@ -92,6 +92,8 @@ class User(db.Model):
     learning_goal  = Column(String(50), nullable=True, default=None)
     # 온보딩 버전: NULL=기존 사용자(전 기능 해금), '1'=신규(세션 수 기반 점진 해금)
     onboarding_ver = Column(String(20), nullable=True, default=None)
+    # 실험실 — '채팅으로 학습' 기능 ON/OFF. 알림 발송 대상 판정 + 채팅 진입 게이트.
+    chat_study_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,

@@ -18,14 +18,20 @@ from app.models.models import User, UserHasToken, UserVoca
 from app.services.streak import get_streaks_batch, kst_today
 
 
-def query_message_allowed_users() -> dict:
-    """알림 허용 토큰을 사용자별로 묶어 반환. {user_id: {'username','name','tokens':[..]}}."""
-    rows = (
+def query_message_allowed_users(require_chat_study_enabled: bool = False) -> dict:
+    """알림 허용 토큰을 사용자별로 묶어 반환. {user_id: {'username','name','tokens':[..]}}.
+
+    require_chat_study_enabled=True 면 User.chat_study_enabled(실험실 '채팅으로 학습' ON)
+    사용자만 조회 — 채팅 알림 발송 대상 필터링용.
+    """
+    q = (
         db.session.query(UserHasToken.user_id, UserHasToken.token, User.username, User.name)
         .join(User, UserHasToken.user_id == User.id)
         .filter(UserHasToken.is_message_allowed == True)
-        .all()
     )
+    if require_chat_study_enabled:
+        q = q.filter(User.chat_study_enabled == True)
+    rows = q.all()
     out = {}
     for user_id, token, username, name in rows:
         slot = out.setdefault(user_id, {'username': username, 'name': name, 'tokens': []})

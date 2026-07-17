@@ -1,5 +1,5 @@
 import React from 'react';
-import { CaretLeft, CaretRight, SunDim, TextAlignJustify, Bell, SpeakerHigh, BookOpen, FileText, ShieldCheck, Info } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, SunDim, TextAlignJustify, Bell, SpeakerHigh, BookOpen, FileText, ShieldCheck, Info, Flask } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -11,6 +11,7 @@ import ExampleSettingsNewFullSheet from './ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from './PushNotificationsNewFullSheet';
 import VoiceSettingsNewFullSheet from './VoiceSettingsNewFullSheet';
 import DailyNewLimitNewFullSheet from './DailyNewLimitNewFullSheet';
+import LabNewFullSheet from './LabNewFullSheet';
 
 const APP_VERSION_INFO = parseAppVersion();
 
@@ -111,6 +112,13 @@ const SettingsNewFullSheet = () => {
             label="신규 단어 목표"
             value={(userProfile?.daily_new_limit ?? 20) === 0 ? '무제한' : `${userProfile?.daily_new_limit ?? 20}개`}
             onClick={() => openSheet(DailyNewLimitNewFullSheet)}
+          />
+
+          <GroupLabel>실험실</GroupLabel>
+          <SettingsItem
+            icon={<Flask weight="fill" className={iconClass} />}
+            label="실험실"
+            onClick={() => openSheet(LabNewFullSheet)}
           />
 
           <GroupLabel>정보</GroupLabel>

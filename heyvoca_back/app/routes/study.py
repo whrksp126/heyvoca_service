@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 import datetime as dt
 from uuid import UUID, uuid4
 
@@ -884,6 +885,172 @@ def get_recommend():
             'session_id':  str(session_obj.id),
             'composition': composition,
             'items':       items_response,
+        },
+    }), 200
+
+
+def _build_mcq_options(correct: str, distractor_pool: list, k: int = 3):
+    """정답 + 오답 k개로 사지선다 보기 구성.
+
+    Returns:
+        (options: list[str], answer_index: int) — 오답을 하나도 못 뽑으면 (None, None).
+    """
+    candidates = [d for d in distractor_pool if d and d != correct]
+    # 중복 제거(순서 무관, 셔플하므로)
+    candidates = list(dict.fromkeys(candidates))
+    if not candidates:
+        return None, None
+    distractors = random.sample(candidates, min(k, len(candidates)))
+    options = distractors + [correct]
+    random.shuffle(options)
+    return options, options.index(correct)
+
+
+@study_bp.route('/chat-session', methods=['GET'])
+@jwt_required
+def get_chat_session():
+    """GET /study/chat-session — 채팅 학습용 완성형 사지선다 세션.
+
+    /study/recommend와 동일한 추천 알고리즘으로 오늘 복습+신규 단어를 뽑되,
+    각 문제에 서버가 사지선다 보기(정답+오답)를 만들어 붙여 반환한다.
+    (네이티브 클라이언트가 보기 풀을 갖지 않아도 되게 하기 위함.)
+
+    쿼리 파라미터:
+      count : 1~50 (default 50) — 오늘 학습 세트 상한.
+
+    응답:
+      { "code":200, "data": {
+          "session_id": "<uuid>" | null,
+          "composition": {...},
+          "questions": [{
+            "user_voca_id", "user_voca_book_id", "word",
+            "meanings", "examples",
+            "options": [str,...], "answer_index": int,
+            "fsrs": {...}, "priority_bucket", "suggested_question_type"
+          }, ...]
+      }}
+    """
+    from app.services.recommend.pool import build_candidate_pool
+    from app.services.recommend.composer import compose
+
+    user_id = UUID(g.user_id)
+
+    try:
+        count = int(request.args.get('count', 50))
+    except (TypeError, ValueError):
+        count = 50
+    count = max(1, min(count, 50))
+
+    # ── 사용자 통계 ──
+    try:
+        user_stats = _fetch_user_stats(user_id)
+    except Exception:
+        user_stats = None
+
+    # ── 후보 풀 ──
+    try:
+        pool = build_candidate_pool(user_id, None)
+    except Exception:
+        logging.getLogger(__name__).error('chat-session 풀 빌드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+    # ── 당근 농장: 죽은 단어 제외 (get_recommend와 동일) ──
+    try:
+        from app.services.game.farm import dead_user_voca_ids
+        dead_ids = dead_user_voca_ids(user_id, [it.user_voca_id for it in pool])
+        if dead_ids:
+            pool = [it for it in pool if it.user_voca_id not in dead_ids]
+    except Exception:
+        logging.getLogger(__name__).warning('농장 죽은단어 필터 실패 (채팅세션은 정상)', exc_info=True)
+
+    # ── 신규 일일 cap (get_recommend와 동일) ──
+    new_allowance = None
+    user_row = db.session.query(User).filter(User.id == user_id).first()
+    daily_limit = getattr(user_row, 'daily_new_limit', 20) if user_row else 20
+    if daily_limit is None:
+        daily_limit = 20
+    if daily_limit > 0:
+        new_today = (user_stats or {}).get('new_introduced_today', 0)
+        new_allowance = max(0, daily_limit - new_today)
+
+    # ── 세션 구성 ──
+    result = compose(
+        pool, count, selection='recommended', user_stats=user_stats,
+        full_recommend=True, new_allowance=new_allowance,
+    )
+    composition:    dict = result['composition']
+    enriched_items: list = result['enriched_items']
+
+    # ── 오답 풀: 후보 전체 단어의 대표 뜻 모음 ──
+    distractor_pool = []
+    seen_d = set()
+    for it in pool:
+        if it.meanings:
+            m = it.meanings[0]
+            if m and m not in seen_d:
+                seen_d.add(m)
+                distractor_pool.append(m)
+
+    # ── 사지선다 생성 ──
+    questions = []
+    for enriched in enriched_items:
+        item = enriched['_item']
+        if not item.meanings:
+            continue  # 정답으로 쓸 뜻이 없으면 스킵
+        correct = item.meanings[0]
+        options, answer_index = _build_mcq_options(correct, distractor_pool, k=3)
+        if options is None:
+            continue  # 오답을 하나도 못 뽑으면 스킵(최소 2지선다 보장)
+
+        fsrs = item.fsrs_state or {}
+        questions.append({
+            'user_voca_id':            item.user_voca_id,
+            'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
+            'word':                    item.word,
+            'meanings':                item.meanings,
+            'examples':                item.examples,
+            'options':                 options,
+            'answer_index':            answer_index,
+            'fsrs': {
+                'state':          fsrs.get('state', 'new'),
+                'stability':      fsrs.get('stability', 0.0),
+                'difficulty':     fsrs.get('difficulty', 0.0),
+                'retrievability': fsrs.get('retrievability', 0.0),
+                'next_review':    fsrs.get('next_review'),
+            },
+            'priority_bucket':         enriched.get('src_bucket', item.bucket),
+            'suggested_question_type': enriched['suggested_question_type'],
+        })
+
+    # ── 문제가 없으면 세션 생성 없이 빈 응답 ──
+    if not questions:
+        return jsonify({
+            'code': 200,
+            'data': {'session_id': None, 'composition': composition, 'questions': []},
+        }), 200
+
+    # ── 세션 INSERT ──
+    session_obj = UserStudySession(
+        user_id=user_id,
+        test_type='chat',
+        book_ids=json.dumps(['all'], ensure_ascii=False),
+        question_count=0,
+        correct_count=0,
+    )
+    try:
+        db.session.add(session_obj)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).error('chat-session 세션 생성 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '세션 생성에 실패했습니다.'}), 500
+
+    return jsonify({
+        'code': 200,
+        'data': {
+            'session_id':  str(session_obj.id),
+            'composition': composition,
+            'questions':   questions,
         },
     }), 200
 
