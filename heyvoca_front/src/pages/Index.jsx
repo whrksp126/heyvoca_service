@@ -14,6 +14,7 @@ import '../index.css';
 const GRACE_DELAY = 420; // 바가 100% 찬 뒤 네비게이트 전 대기(ms)
 const BROKEN_SESSION_DELAY = 1500; // 깨진 세션 감지 후 로그인 강제 이동(ms)
 const MIN_SPLASH_DURATION = 800; // 로그인 사용자 최소 스플래시 노출시간(ms)
+const MIGRATION_MAX_WAIT = 8000; // 게스트 온보딩 이전(migrate) 최대 대기(ms) — 초과 시 스플래시 정지 방지용 강제 진행
 
 const Index = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -45,6 +46,12 @@ const Index = () => {
   const [brokenSessionTriggered, setBrokenSessionTriggered] = useState(false);
   // 최소 스플래시 노출시간 경과 여부 (로그인 사용자 전용)
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
+  // 게스트 온보딩 이전(migrate) 정착 여부 — 게이트용.
+  //  - pending 게스트 데이터가 없으면(일반 로그인) 처음부터 true(대기할 것 없음).
+  //  - pending이 있으면 false로 시작해, migrate가 서버 저장(단어장+단어)을 끝낼 때까지
+  //    스플래시가 홈/온보딩으로 넘어가지 못하게 막는다. 반쯤 준비된 상태로 홈에 진입해
+  //    AI 추천이 단어 생성 전에 호출되는 레이스를 원천 차단.
+  const [migrationSettled, setMigrationSettled] = useState(() => !pendingGuestMigration());
 
   // --- 마운트 시 네이티브로 "웹 준비됨" 신호 전송 (1회, double rAF) ---
   // double rAF: 핑크 스플래시가 실제로 브라우저에 페인트된 뒤 신호를 보내
@@ -173,8 +180,22 @@ const Index = () => {
         }
         if (res?.code === 200) navigate('/home', { replace: true });
       }
-    }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });
+      // migrate가 끝났으므로(성공/이미완료/기타응답) 스플래시 네비게이트 게이트를 연다.
+      // 이 시점엔 서버 저장(단어장+단어)이 완료돼 AI 추천이 곧바로 후보를 읽을 수 있다.
+      setMigrationSettled(true);
+    }).catch(() => {
+      // 실패해도 스플래시가 영원히 멈추지 않도록 게이트를 연다(로그인 흐름 계속).
+      setMigrationSettled(true);
+    });
   }, [userProfile]);
+
+  // migrate 안전장치: pending이 있는데 프로필 미로딩·migrate 지연 등으로 오래 걸려도
+  // 스플래시가 무한정 멈추지 않도록 최대 대기(MIGRATION_MAX_WAIT) 후 강제로 게이트를 연다.
+  useEffect(() => {
+    if (migrationSettled) return;
+    const t = setTimeout(() => setMigrationSettled(true), MIGRATION_MAX_WAIT);
+    return () => clearTimeout(t);
+  }, [migrationSettled]);
 
   // graceDone + 최소 노출시간 경과 후 실제 네비게이트
   // minTimeElapsed: 로그인 사용자의 스플래시가 최소 800ms는 보이도록 보장
@@ -186,7 +207,9 @@ const Index = () => {
   //      새 온보딩을 진행시킨다. 이미 로그인 상태이므로 Onboarding.jsx가 마지막 auth 스텝을
   //      건너뛰고 서버 migrate 후 홈으로 이어간다.
   useEffect(() => {
-    if (!dataReady || !graceDone || !minTimeElapsed) return;
+    // migrationSettled: 게스트 온보딩 이전(단어장 서버 저장)이 끝나기 전엔 홈/온보딩으로
+    // 넘기지 않는다 — 반쯤 준비된 상태 진입으로 인한 AI 추천 레이스 방지.
+    if (!dataReady || !graceDone || !minTimeElapsed || !migrationSettled) return;
     if (userProfile && userProfile.id) {
       if (userProfile.onboarding_ver === '1') {
         // 엣지 케이스: onboarding_ver는 '1'인데 username이 비어있는 경우(예: migrate 직후 로컬
@@ -199,7 +222,7 @@ const Index = () => {
     } else {
       navigate('/login');
     }
-  }, [dataReady, graceDone, minTimeElapsed, userProfile, navigate]);
+  }, [dataReady, graceDone, minTimeElapsed, migrationSettled, userProfile, navigate]);
 
   // 깨진 세션 가드: 로그인으로 표시됐으나 프로필 로드 완료 후 userProfile이 없는 경우
   useEffect(() => {
@@ -233,6 +256,11 @@ const Index = () => {
     // 비로그인 → /login 이동 중이므로 바를 약간만 채워 둠
     progress = 0.06;
     message = '로그인 상태를 확인하고 있어요';
+  } else if (dataReady && !migrationSettled) {
+    // 데이터는 다 불러왔지만 게스트 온보딩 이전(단어장 서버 저장)이 아직 진행 중 —
+    // 이 저장이 끝나야 홈으로 넘어가므로, 그 대기 상태를 사용자에게 알린다.
+    progress = 1;
+    message = '맞춤 단어장을 준비하는 중';
   } else if (dataReady) {
     progress = 1;
     message = '거의 다 됐어요';
