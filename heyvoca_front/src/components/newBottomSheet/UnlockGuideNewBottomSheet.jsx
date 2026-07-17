@@ -9,7 +9,7 @@ import gemImg from '../../assets/images/gem.png';
 // 현재 진행 미션의 "무엇을 해야 열리는지" 구체 안내 문구(미션 key별).
 // 미션 title만으로는 행동이 애매한 경우(특히 make_book=단어장 만들고 '단어 추가')를 명확히 안내한다.
 const MISSION_ACTION_HINTS = {
-  ai_test: "AI 추천 테스트를 완료하면 '단어장'이 열려요",
+  ai_test: "AI 추천 테스트를 완료하면 온보딩에서 고른 단어장이 열려요",
   make_book: "단어장을 만든 뒤 단어를 추가하면 '상점'이 열려요",
   buy_book: "상점에서 단어장을 담으면 '사전'이 열려요",
   search_word: "사전에서 단어를 찾아보면 '집중 반복 학습'이 열려요",
