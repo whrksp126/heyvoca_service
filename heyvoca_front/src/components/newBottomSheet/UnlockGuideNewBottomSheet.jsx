@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { CheckCircle, Lock } from '@phosphor-icons/react';
-import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewBottomSheetActions, useNewBottomSheetContext } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 import gemImg from '../../assets/images/gem.png';
@@ -19,9 +19,6 @@ const MISSION_ACTION_HINTS = {
   free_test: "자유 설정 테스트를 완료하면 입문 퀘스트가 모두 끝나요",
 };
 
-// 보상 순차 연출에서 한 항목이 화면에 머무는 시간(ms)
-const REVEAL_STEP_MS = 1100;
-
 // 잠긴 하단탭/학습카드를 클릭했을 때, 또는 홈 배너를 눌렀을 때 뜨는 입문 퀘스트(미션 체크리스트) 바텀시트.
 // 미션이 새로 완료돼 보상 연출 대기열(pendingMissionRewards)이 남아있으면, 이 시트는 자동으로
 // "퀘스트 완료! → 보상 받기 → 순차 지급 연출" 화면으로 먼저 열리고, 연출이 끝나면 자연스럽게
@@ -31,17 +28,13 @@ const REVEAL_STEP_MS = 1100;
 export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   "use memo";
 
-  const { closeNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
+  const { closeNewBottomSheet, openNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
+  const { stack } = useNewBottomSheetContext();
   const { missions, currentMission, pendingMissionRewards, consumePendingMissionRewards } = useOnboardingUnlock();
 
   // 대기 중인 보상이 있으면 이 시트를 "보상 받기" 연출 모드로 먼저 보여준다.
   // 연출이 끝나면 pendingMissionRewards가 비워지며 아래 일반 체크리스트로 자연스럽게 전환된다.
   const hasCelebration = pendingMissionRewards.length > 0;
-
-  // 연출 단계: 'revealing'(순차 지급 연출) | 'done'(연출 종료 → 확인 버튼).
-  // 예전 'intro'(보상 리스트 나열 + '보상 받기' 탭) 단계는 제거하고, 곧바로 지급 연출을 시작한다.
-  const [stage, setStage] = useState(pendingMissionRewards.length > 0 ? 'revealing' : 'done');
-  const [revealIndex, setRevealIndex] = useState(0);
 
   // 스와이프/백드롭 클릭 등으로 연출 도중 시트가 닫혀도 대기열을 비워 재노출 스팸을 방지한다.
   // (보상 자체는 완료 시점에 이미 지급됐으므로 큐를 비워도 데이터 손실은 없음)
@@ -63,48 +56,29 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   const hasBookReward = pendingMissionRewards.some((m) => m.reward_book);
   const totalGemReward = pendingMissionRewards.reduce((sum, m) => sum + (m.reward_gem || 0), 0);
 
-  // 지급 연출 순서: 빈 단어장 먼저, 그다음 보석
-  const rewardItems = useMemo(() => {
-    const items = [];
-    if (hasBookReward) items.push({ type: 'book' });
-    if (totalGemReward > 0) items.push({ type: 'gem', amount: totalGemReward });
-    return items;
-  }, [hasBookReward, totalGemReward]);
-
-  // 연출 시작 시 1회 성공 진동 — 리스트/‘보상 받기’ 탭 없이 곧바로 지급 연출을 시작한다.
+  // 리워드 등장 시 1회 성공 진동. (순차 연출 없이 처음부터 최종 상태로 한 번에 등장)
   useEffect(() => {
     if (pendingMissionRewards.length > 0) vibrate({ type: 'notificationSuccess' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 한 항목씩 순차로 노출 → 마지막 항목까지 노출되면 'done'으로 전환
-  useEffect(() => {
-    if (stage !== 'revealing') return;
-    if (revealIndex >= rewardItems.length - 1) {
-      const timer = setTimeout(() => setStage('done'), REVEAL_STEP_MS);
-      return () => clearTimeout(timer);
-    }
-    const timer = setTimeout(() => {
-      vibrate({ duration: 5 });
-      setRevealIndex((i) => i + 1);
-    }, REVEAL_STEP_MS);
-    return () => clearTimeout(timer);
-  }, [stage, revealIndex, rewardItems.length]);
-
-  // 리워드 연출 '확인' — 리워드 시트를 닫고(아래로 슬라이드) 잠시 후 입문 퀘스트 목록 시트를
-  // 새로 연다(아래→위 등장). 리워드와 목록을 완전히 독립된 두 시트로 처리한다.
+  // 리워드 연출 '확인' — 리워드 시트만 닫고(아래로 슬라이드) 입문 퀘스트 목록 시트를 새로 연다
+  // (아래→위 등장). pop으로 리워드 시트만 제거하므로 아래에 다른 시트가 있으면 그대로 보존된다.
   const handleRewardDone = () => {
     vibrate({ duration: 5 });
-    consumePendingMissionRewards();   // 대기열 비움 → 새로 여는 시트는 목록(체크리스트)로 렌더
-    closeNewBottomSheet();            // 리워드 시트 닫힘(아래로 슬라이드)
-    // 닫힘 애니메이션 후 목록 시트를 아래에서 위로 새로 등장시킨다.
-    setTimeout(() => {
-      openNewBottomSheet(
-        UnlockGuideNewBottomSheet,
-        {},
-        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-      );
-    }, 320);
+    const soloReward = stack.length <= 1;   // 리워드 시트가 스택의 유일한 시트인가
+    consumePendingMissionRewards();          // 대기열 비움 → (재)오픈 시 목록으로 렌더
+    popNewBottomSheet();                     // 리워드 시트만 닫음(아래 시트 보존)
+    if (soloReward) {
+      // 리워드가 유일했으면, 닫힘 후 목록 시트를 아래→위로 새로 등장시킨다.
+      setTimeout(() => {
+        openNewBottomSheet(
+          UnlockGuideNewBottomSheet,
+          {},
+          { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+        );
+      }, 320);
+    }
   };
 
   // 체크리스트 '확인' — 이 시트만 닫는다.
@@ -113,11 +87,8 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     closeNewBottomSheet();
   };
 
-  // ── 보상 지급 연출 화면 (리스트 없이 곧바로 순차 지급 → 확인) ──────────────
+  // ── 보상 화면 — 최종 상태로 한 번에 등장(순차 연출/글자 변경 없음) → 확인 ──────────
   if (hasCelebration) {
-    const isDone = stage === 'done';
-    const currentItem = rewardItems[Math.min(revealIndex, Math.max(rewardItems.length - 1, 0))];
-
     return (
       <div className="flex flex-col max-h-[85vh] pt-[30px] pb-[20px] px-[20px]">
         <div className="flex flex-col items-center text-center shrink-0 gap-[6px]">
@@ -131,70 +102,29 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           )}
         </div>
 
-        {/* 고정 높이 — reveal↔done 전환 시 시트가 리사이즈(재배치)되지 않도록 콘텐츠 영역 높이를 고정한다. */}
+        {/* 받은 보상을 처음부터 최종 형태로 한 번에 표시(한 번 pop-in). 텍스트/크기 변경 없음. */}
         <div className="flex flex-col items-center justify-center h-[172px] py-[16px]">
-          {isDone ? (
-            // 연출 종료 → 받은 보상 요약(정적). 크기는 reveal과 동일하게 맞춰 시각적 축소 방지.
-            <div className="flex items-end justify-center gap-[24px]">
-              {hasBookReward && (
-                <div className="flex flex-col items-center gap-[10px]">
-                  <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
-                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
+          <motion.div
+            className="flex items-end justify-center gap-[24px]"
+            initial={{ scale: 0.6, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 220, damping: 16 }}
+          >
+            {hasBookReward && (
+              <div className="flex flex-col items-center gap-[10px]">
+                <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
+                <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
+              </div>
+            )}
+            {totalGemReward > 0 && (
+              <div className="flex flex-col items-center gap-[10px]">
+                <div className="flex items-center justify-center w-[84px] h-[84px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
+                  <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
                 </div>
-              )}
-              {totalGemReward > 0 && (
-                <div className="flex flex-col items-center gap-[10px]">
-                  <div className="flex items-center justify-center w-[84px] h-[84px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
-                    <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
-                  </div>
-                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              <AnimatePresence mode="wait">
-                {currentItem && (
-                  <motion.div
-                    key={currentItem.type}
-                    initial={{ opacity: 0, y: 16, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -16, scale: 0.9 }}
-                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                    className="flex flex-col items-center gap-[14px]"
-                  >
-                    <motion.div
-                      initial={{ scale: 0, rotate: -30 }}
-                      animate={{ scale: [0, 1.15, 1], rotate: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className={`flex items-center justify-center w-[84px] h-[84px] rounded-full ${currentItem.type === 'gem' ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''}`}
-                    >
-                      {currentItem.type === 'book' ? (
-                        <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
-                      ) : (
-                        <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
-                      )}
-                    </motion.div>
-                    <p className="text-[16px] font-[800] text-layout-black dark:text-layout-white">
-                      {currentItem.type === 'book' ? '빈 단어장 +1개 지급!' : `보석 +${currentItem.amount}개 지급!`}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {rewardItems.length > 1 && (
-                <div className="flex items-center gap-[6px] mt-[20px]">
-                  {rewardItems.map((item, idx) => (
-                    <span
-                      key={item.type}
-                      className={`w-[6px] h-[6px] rounded-full ${idx <= revealIndex ? 'bg-primary-main-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'
-                        }`}
-                    />
-                  ))}
-                </div>
-              )}
-            </>
-          )}
+                <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
+              </div>
+            )}
+          </motion.div>
         </div>
 
         {/* 확인 버튼은 처음부터 고정 노출(늦게 삽입되지 않음). 연출 중 눌러도 목록으로 넘어간다. */}
