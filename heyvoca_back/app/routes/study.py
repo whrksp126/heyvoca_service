@@ -878,6 +878,16 @@ def get_recommend():
             'reason':                  enriched['reason'],
         })
 
+    # [진단] AI 추천이 0개를 반환하는 케이스 추적용 (신규 온보딩 유저 "출제 가능한 문제가 없어요" 이슈).
+    #        원인 확인 후 제거 예정.
+    logging.getLogger(__name__).info(
+        "[recommend-diag] user=%s type=%s target_states_raw=%r selection=%s count=%d "
+        "pool=%d full_recommend=%s new_allowance=%s items=%d comp=%s user_stats=%s",
+        str(user_id)[:8], type_label, target_states_raw, selection, count,
+        len(pool), full_recommend, new_allowance, len(items_response), composition,
+        {k: (v if not isinstance(v, (dict, set)) else len(v)) for k, v in (user_stats or {}).items()},
+    )
+
     return jsonify({
         'code': 200,
         'data': {
