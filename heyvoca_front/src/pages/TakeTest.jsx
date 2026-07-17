@@ -18,7 +18,10 @@ import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorag
 
 // 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
 // (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
-const PREPARE_MAX_WAIT_MS = 7000;
+const PREPARE_MAX_WAIT_MS = 8000;
+// 진입 게이트로 "대기"할 앞쪽 문제 수. 전체를 기다리면 너무 오래 걸리므로, 처음 몇 문제의
+// 자동재생 단어만 확실히 준비되면 진입하고 나머지는 백그라운드로 이어서 캐싱한다.
+const GATE_PRIORITY_QUESTIONS = 3;
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -311,7 +314,8 @@ const TakeTest = () => {
   //  - 최대 대기(PREPARE_MAX_WAIT_MS) 초과 시 준비가 덜 됐어도 진입(무한 대기 방지).
   //  - 진입 게이트 이후, 의미·예문 등 나머지 음성은 백그라운드로 계속 캐싱(결과·단어상세 TTS 대비).
   const prepareThenReveal = async (questions) => {
-    const gateTexts = collectTestTexts(questions); // 자동재생 단어(en)
+    // 게이트(대기) 대상: 앞쪽 몇 문제의 자동재생 단어만 — 진입을 빠르게 하고 첫 재생을 안정화.
+    const gateTexts = collectTestTexts(questions.slice(0, GATE_PRIORITY_QUESTIONS));
     if (gateTexts.length === 0) {
       // 준비할 자동재생 음성이 없으면 곧바로 진입.
       setIsTestQuestionsSetting(false);

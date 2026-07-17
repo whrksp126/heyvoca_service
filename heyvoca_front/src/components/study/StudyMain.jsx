@@ -19,6 +19,9 @@ import { AppHistory } from '../../utils/appHistory';
 // - PREPARE_PRIORITY_COUNT: 전체 준비가 늦어질 때 최소한으로 보장할 앞쪽 카드 수.
 // - PREPARE_MAX_WAIT_MS: 전체 prefetch를 기다려주는 최대 시간(넘으면 앞쪽만 보장 후 진입).
 const PREPARE_PRIORITY_COUNT = 3;
+// 한 라인(단어/뜻/예문) 최소 노출시간(ms). 캐시 미스로 오디오가 즉시 끝나도(재생 실패)
+// 라인이 0ms에 스킵돼 "렉 걸린 듯 순식간에 넘어가는" 것을 막는 최소 지속시간.
+const MIN_LINE_DWELL_MS = 650;
 const PREPARE_MAX_WAIT_MS = 6000;
 
 const DEFAULT_SETTINGS = {
@@ -137,17 +140,27 @@ const StudyMain = ({ words }) => {
       setPlayingItemId(itemId);
       setPlayingItemIndex(index);
       await new Promise(resolve => {
-        let settled = false;
-        const settle = () => {
+        let settled = false, audioDone = false, minDone = false, minTimer = null;
+        const finish = () => {
           if (settled) return;
           settled = true;
-          if (playbackResolveRef.current === settle) {
+          if (minTimer) { clearTimeout(minTimer); minTimer = null; }
+          if (playbackResolveRef.current === forceSettle) {
             playbackResolveRef.current = null;
           }
           resolve();
         };
-        playbackResolveRef.current = settle;
-        Promise.resolve(getTextSound(text, lang)).then(settle, settle);
+        // 정지(stopPlayback)로 즉시 해제되는 경로.
+        const forceSettle = () => finish();
+        // 오디오 종료 + 최소 노출시간을 "모두" 만족해야 다음 라인으로 진행.
+        // 캐시 미스로 오디오가 즉시 끝나도(재생 실패) 최소 노출시간은 보장 → 0ms 스킵 방지.
+        const maybeFinish = () => { if (audioDone && minDone) finish(); };
+        playbackResolveRef.current = forceSettle;
+        minTimer = setTimeout(() => { minDone = true; maybeFinish(); }, MIN_LINE_DWELL_MS);
+        Promise.resolve(getTextSound(text, lang)).then(
+          () => { audioDone = true; maybeFinish(); },
+          () => { audioDone = true; maybeFinish(); },
+        );
       });
     };
 
@@ -268,28 +281,28 @@ const StudyMain = ({ words }) => {
 
     const prepareAndStart = async () => {
       const allTexts = collectStudyTexts(words);
+      // 게이트(대기) 대상: 앞쪽 카드만 — 전체를 기다리면 너무 오래 걸린다. 앞 카드가 확실히
+      // 준비되면 진입하고, 나머지는 백그라운드로 이어서 준비(다음 카드 prefetch가 앞서 채움).
       const priorityTexts = collectStudyTexts(words.slice(0, PREPARE_PRIORITY_COUNT));
 
-      // 생성 청크 단위로 진행률을 세밀하게 올리며 준비(단어·의미·예문 전체).
-      // fire-and-forget으로 시작하되(백그라운드에서 계속 진행), 준비 완료 여부는 아래에서 기다린다.
-      const fullPreparePromise = prepareTtsWithProgress(allTexts, (p) => {
+      // 앞쪽 카드 준비 — 생성 청크 단위로 진행률을 세밀하게 올린다.
+      const gatePromise = prepareTtsWithProgress(priorityTexts, (p) => {
         if (!cancelled) setPrepareProgress(p);
       }).catch(() => {});
-      const timedOut = await Promise.race([
-        fullPreparePromise.then(() => false),
-        new Promise(resolve => setTimeout(() => resolve(true), PREPARE_MAX_WAIT_MS)),
+      // 최대 대기 초과 시 진입(무한 대기 방지) — 나머지는 아래 백그라운드가 계속 준비.
+      await Promise.race([
+        gatePromise,
+        new Promise(resolve => setTimeout(resolve, PREPARE_MAX_WAIT_MS)),
       ]);
-
-      if (timedOut && !cancelled) {
-        // 전체 준비가 늦어짐 → 앞쪽 카드 재생분만 최소 보장하고 진입 (나머지는 fullPreparePromise가 계속 백그라운드 진행)
-        await prefetchTtsList(priorityTexts);
-      }
 
       if (cancelled) return;
       setPrepareProgress(1);
       setIsPreparing(false);
       setIsPlaying(true);
       startPlayback(0);
+
+      // 진입 후: 전체(단어·의미·예문) 음성을 백그라운드로 계속 준비(진행률 없이).
+      prepareTtsWithProgress(allTexts, null).catch(() => {});
     };
 
     prepareAndStart();

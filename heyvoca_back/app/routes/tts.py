@@ -360,6 +360,7 @@ def tts_prewarm():
 
     requested = cached = generated = failed = 0
     seen_keys = set()
+    to_generate = []  # 캐시에 없어 생성이 필요한 항목: (text, language, provider, voice, requested_key)
 
     for it in items:
         if not isinstance(it, dict):
@@ -396,24 +397,45 @@ def tts_prewarm():
             cached += 1
             continue
 
-        # 캐시 없음 → 생성. 요청당/일일 상한, 사전 실재 검증은 resolve와 동일 정책.
-        if generated >= gen_budget:
+        # 캐시 없음 → 생성 대상 후보. 요청당/일일 상한, 사전 실재 검증은 resolve와 동일 정책.
+        if len(to_generate) >= gen_budget:
             continue
         if require_dict and not _exists_in_dict(norm, language):
             continue
         if daily_cap and _daily_gen_count(user_id) > daily_cap:
             break  # 일일 한도 초과 → 중단
 
-        requested_key = object_key
-        try:
-            object_key, _created = service.ensure_cached(text, language, provider=provider, user_voice=voice)
-        except TTSError:
-            logging.getLogger(__name__).warning('TTS prewarm 생성 실패', exc_info=True)
-            failed += 1
-            continue
-        _record_gen_stats(language, object_key != requested_key)
-        cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
-        generated += 1
+        to_generate.append((text, language, provider, voice, object_key))
+
+    # 캐시에 없는 항목을 "병렬"로 생성(생성=외부 API 호출+업로드, I/O 바운드).
+    # 과거엔 순차 생성이라 20개만 돼도 수십 초 걸려, 학습 진입 전 준비가 너무 오래 걸렸다.
+    # ThreadPoolExecutor로 동시 생성해 대기를 대폭 단축(동시성은 TTS_PREWARM_CONCURRENCY로 조절).
+    if to_generate:
+        from concurrent.futures import ThreadPoolExecutor
+        app = current_app._get_current_object()
+        concurrency = int(current_app.config.get('TTS_PREWARM_CONCURRENCY', 4))
+        concurrency = max(1, min(concurrency, len(to_generate)))
+
+        def _gen_one(job):
+            j_text, j_lang, j_provider, j_voice, j_req_key = job
+            with app.app_context():
+                try:
+                    object_key, _created = service.ensure_cached(
+                        j_text, j_lang, provider=j_provider, user_voice=j_voice,
+                    )
+                except TTSError:
+                    logging.getLogger(__name__).warning('TTS prewarm 생성 실패', exc_info=True)
+                    return ('failed', j_lang, False)
+                cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
+                return ('generated', j_lang, object_key != j_req_key)
+
+        with ThreadPoolExecutor(max_workers=concurrency) as pool:
+            for status, lang, fallback in pool.map(_gen_one, to_generate):
+                if status == 'generated':
+                    generated += 1
+                    _record_gen_stats(lang, fallback)
+                else:
+                    failed += 1
 
     return jsonify({"code": 200, "data": {
         "requested": requested,
