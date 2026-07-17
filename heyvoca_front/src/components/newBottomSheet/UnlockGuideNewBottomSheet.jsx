@@ -91,10 +91,16 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     return () => clearTimeout(timer);
   }, [stage, revealIndex, rewardItems.length]);
 
+  // 리워드 연출 '확인' — 시트를 닫지 않고 대기열만 비워, 같은 시트를 입문 퀘스트 목록(체크리스트)
+  // 화면으로 전환한다. (리워드와 목록을 독립적으로 처리: 리워드 확인 → 목록 등장 → 목록 확인 → 닫힘)
+  const handleRewardDone = () => {
+    vibrate({ duration: 5 });
+    consumePendingMissionRewards();
+  };
+
+  // 체크리스트 '확인' — 이 시트만 닫는다.
   const handleConfirm = () => {
     vibrate({ duration: 5 });
-    // 연출 대기열이 남아있으면 비운 뒤 닫는다(확인으로 마무리).
-    if (pendingMissionRewards.length > 0) consumePendingMissionRewards();
     closeNewBottomSheet();
   };
 
@@ -105,7 +111,7 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
 
     return (
       <div className="flex flex-col max-h-[85vh] pt-[30px] pb-[20px] px-[20px]">
-        <div className="flex flex-col items-center text-center shrink-0 mb-[24px] gap-[8px]">
+        <div className="flex flex-col items-center text-center shrink-0 gap-[6px]">
           <h3 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
             퀘스트 완료!
           </h3>
@@ -116,27 +122,24 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-center flex-1 min-h-[220px]">
+        <div className="flex flex-col items-center justify-center py-[20px]">
           {isDone ? (
-            // 연출 종료 → 받은 보상 요약(정적) + 확인 버튼
-            <div className="flex flex-col items-center gap-[18px]">
-              <div className="flex items-end justify-center gap-[24px]">
-                {hasBookReward && (
-                  <div className="flex flex-col items-center gap-[8px]">
-                    <img src={emptyBookImg} alt="" className="w-[64px] h-[64px] object-contain" />
-                    <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
+            // 연출 종료 → 받은 보상 요약(정적)
+            <div className="flex items-end justify-center gap-[24px]">
+              {hasBookReward && (
+                <div className="flex flex-col items-center gap-[8px]">
+                  <img src={emptyBookImg} alt="" className="w-[64px] h-[64px] object-contain" />
+                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
+                </div>
+              )}
+              {totalGemReward > 0 && (
+                <div className="flex flex-col items-center gap-[8px]">
+                  <div className="flex items-center justify-center w-[64px] h-[64px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
+                    <img src={gemImg} alt="" className="w-[36px] h-[36px] object-contain" />
                   </div>
-                )}
-                {totalGemReward > 0 && (
-                  <div className="flex flex-col items-center gap-[8px]">
-                    <div className="flex items-center justify-center w-[64px] h-[64px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
-                      <img src={gemImg} alt="" className="w-[36px] h-[36px] object-contain" />
-                    </div>
-                    <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
-                  </div>
-                )}
-              </div>
-              <p className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-50">보상을 받았어요!</p>
+                  <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
+                </div>
+              )}
             </div>
           ) : (
             <>
@@ -184,15 +187,14 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           )}
         </div>
 
-        {isDone && (
-          <button
-            type="button"
-            onClick={handleConfirm}
-            className="shrink-0 mt-[24px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
-          >
-            확인
-          </button>
-        )}
+        {/* 확인 버튼은 처음부터 고정 노출(늦게 삽입되지 않음). 연출 중 눌러도 목록으로 넘어간다. */}
+        <button
+          type="button"
+          onClick={handleRewardDone}
+          className="shrink-0 mt-[20px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
+        >
+          확인
+        </button>
       </div>
     );
   }

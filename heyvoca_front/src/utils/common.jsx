@@ -205,20 +205,17 @@ const primeAudioWithinGesture = () => {
   if (!sharedAudio) sharedAudio = new Audio();
   if (audioUnlocked) return;
   // 현재 실제 음성이 재생 중이면 unlock을 미룬다(무음 src로 덮어써 재생을 끊지 않도록).
-  // 다음 idle gesture에서 다시 시도한다.
   if (!sharedAudio.paused && sharedAudio.src && !sharedAudio.src.startsWith('data:')) return;
+  // 최초 1회만 무음 재생으로 unlock한다(성공 여부와 무관하게 이후 재시도하지 않음).
+  // 매 제스처마다 무음 HTMLAudio를 재생하면, 정답 탭 순간 재생되는 효과음(Web Audio)과
+  // iOS 오디오 세션에서 충돌해 효과음 꼬리가 잘리는 문제가 있어 반드시 1회로 제한한다.
+  // (첫 unlock은 학습 진입 전 네비게이션 탭에서 일어나므로 자동재생 시점엔 이미 unlock 상태)
+  audioUnlocked = true;
   try {
     sharedAudio.src = SILENT_AUDIO;
     const p = sharedAudio.play();
-    if (p && typeof p.then === 'function') {
-      p.then(
-        () => { audioUnlocked = true; },
-        () => { /* 실패 → audioUnlocked=false 유지 → 다음 gesture에서 재시도 */ },
-      );
-    } else {
-      audioUnlocked = true;
-    }
-  } catch (e) { /* 다음 gesture에서 재시도 */ }
+    if (p && typeof p.catch === 'function') p.catch(() => { /* 무음 재생 reject 무시 */ });
+  } catch (e) { /* noop */ }
 };
 
 // 앱 전역: 실제 user gesture에서 오디오를 미리 unlock한다(자동재생 대비).
@@ -347,8 +344,9 @@ export const prefetchTtsList = async (items, concurrency = 4, onProgress = null)
 // onMeta: 오디오 메타데이터 로드 시 실제 재생 길이(초)를 전달하는 콜백(선택).
 //         ripple 등 시각 효과를 실제 재생 시간에 동기화하는 데 사용한다.
 export const getTextSound = async (text, lang, onMeta) => {
-  // user gesture 동기 시점에 오디오 element를 unlock (첫 클릭 무음 버그 방지).
-  primeAudioWithinGesture();
+  // 오디오 unlock은 전역 gesture 리스너(_tryUnlockAudio)가 실제 첫 탭에서 처리한다.
+  // 여기서(대개 gesture 밖에서 호출됨) prime하면 one-shot unlock을 헛되이 소모해
+  // 자동재생이 영영 무음이 되므로, 여기서는 prime을 호출하지 않는다.
 
   // 이전 재생의 cleanup을 먼저 호출하여 리스너 제거 + resolve.
   if (currentCleanup) {
