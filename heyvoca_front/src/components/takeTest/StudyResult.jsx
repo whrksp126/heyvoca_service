@@ -737,21 +737,31 @@ const StudyResult = () => {
     let content = null;
 
     if (currentScreen.type === 'attend') {
-      // 출석 (오늘 첫 학습)
+      // 출석 (오늘 첫 학습) — 출석 업적 배지처럼 캐릭터를 컬러 원형 배경 위에 올려 표시.
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img
-            src={AttendanceKing}
-            alt="출석"
-            className='w-[100px] h-[100px] object-contain'
+          <motion.div
+            className='relative w-[100px] h-[100px]'
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1, rotate: [0, 5, -5, 0] }}
+            animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1, y: [0, -8, 0] }}
             transition={{
               scale: { type: "tween", ease: "easeOut", duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
               opacity: { duration: 0.6 },
-              rotate: { delay: 0.8, duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+              y: { delay: 0.8, duration: 2.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
             }}
-          />
+          >
+            {/* 컬러 원형 배경 (업적 배지와 동일 스타일) */}
+            <div
+              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80px] h-[80px] rounded-full'
+              style={{ background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)' }}
+            ></div>
+            {/* 캐릭터 — 원 위에 살짝 올라선 형태 */}
+            <img
+              src={AttendanceKing}
+              alt="출석"
+              className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] w-[84px] h-[84px] object-contain z-10'
+            />
+          </motion.div>
           <motion.p
             className='text-[16px] font-[700]'
             initial={{ y: 20, opacity: 0 }}

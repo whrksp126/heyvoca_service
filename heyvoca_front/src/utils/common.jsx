@@ -204,6 +204,9 @@ let audioUnlocked = false;
 const primeAudioWithinGesture = () => {
   if (!sharedAudio) sharedAudio = new Audio();
   if (audioUnlocked) return;
+  // 현재 실제 음성이 재생 중이면 unlock을 미룬다(무음 src로 덮어써 재생을 끊지 않도록).
+  // 다음 idle gesture에서 다시 시도한다.
+  if (!sharedAudio.paused && sharedAudio.src && !sharedAudio.src.startsWith('data:')) return;
   try {
     sharedAudio.src = SILENT_AUDIO;
     const p = sharedAudio.play();

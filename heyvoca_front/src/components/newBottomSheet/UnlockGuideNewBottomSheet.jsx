@@ -38,7 +38,9 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
   // 연출이 끝나면 pendingMissionRewards가 비워지며 아래 일반 체크리스트로 자연스럽게 전환된다.
   const hasCelebration = pendingMissionRewards.length > 0;
 
-  const [stage, setStage] = useState('intro'); // 'intro' | 'revealing' | 'done'
+  // 연출 단계: 'revealing'(순차 지급 연출) | 'done'(연출 종료 → 확인 버튼).
+  // 예전 'intro'(보상 리스트 나열 + '보상 받기' 탭) 단계는 제거하고, 곧바로 지급 연출을 시작한다.
+  const [stage, setStage] = useState(pendingMissionRewards.length > 0 ? 'revealing' : 'done');
   const [revealIndex, setRevealIndex] = useState(0);
 
   // 스와이프/백드롭 클릭 등으로 연출 도중 시트가 닫혀도 대기열을 비워 재노출 스팸을 방지한다.
@@ -69,11 +71,11 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     return items;
   }, [hasBookReward, totalGemReward]);
 
-  const handleClaimRewards = () => {
-    vibrate({ type: 'notificationSuccess' });
-    setRevealIndex(0);
-    setStage('revealing');
-  };
+  // 연출 시작 시 1회 성공 진동 — 리스트/‘보상 받기’ 탭 없이 곧바로 지급 연출을 시작한다.
+  useEffect(() => {
+    if (pendingMissionRewards.length > 0) vibrate({ type: 'notificationSuccess' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 한 항목씩 순차로 노출 → 마지막 항목까지 노출되면 'done'으로 전환
   useEffect(() => {
@@ -89,18 +91,16 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     return () => clearTimeout(timer);
   }, [stage, revealIndex, rewardItems.length]);
 
-  // 연출 종료 → 대기열을 비워 일반 체크리스트로 자연스럽게 복귀
-  useEffect(() => {
-    if (stage === 'done') consumePendingMissionRewards();
-  }, [stage, consumePendingMissionRewards]);
-
   const handleConfirm = () => {
     vibrate({ duration: 5 });
+    // 연출 대기열이 남아있으면 비운 뒤 닫는다(확인으로 마무리).
+    if (pendingMissionRewards.length > 0) consumePendingMissionRewards();
     closeNewBottomSheet();
   };
 
-  // ── 보상 받기 연출 화면 ──────────────────────────────────────────────
-  if (hasCelebration && stage !== 'done') {
+  // ── 보상 지급 연출 화면 (리스트 없이 곧바로 순차 지급 → 확인) ──────────────
+  if (hasCelebration) {
+    const isDone = stage === 'done';
     const currentItem = rewardItems[Math.min(revealIndex, Math.max(rewardItems.length - 1, 0))];
 
     return (
@@ -116,79 +116,81 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           )}
         </div>
 
-        {stage === 'intro' ? (
-          <div className="flex flex-col gap-[10px] flex-1 min-h-0">
-            {hasBookReward && (
-              <div className="flex items-center gap-[12px] px-[14px] py-[12px] rounded-[10px] border-[1px] border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark">
-                <img src={emptyBookImg} alt="" className="w-[36px] h-[36px] object-contain shrink-0" />
-                <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
-                  빈 단어장 +1개
-                </span>
+        <div className="flex flex-col items-center justify-center flex-1 min-h-[220px]">
+          {isDone ? (
+            // 연출 종료 → 받은 보상 요약(정적) + 확인 버튼
+            <div className="flex flex-col items-center gap-[18px]">
+              <div className="flex items-end justify-center gap-[24px]">
+                {hasBookReward && (
+                  <div className="flex flex-col items-center gap-[8px]">
+                    <img src={emptyBookImg} alt="" className="w-[64px] h-[64px] object-contain" />
+                    <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">빈 단어장 +1개</span>
+                  </div>
+                )}
+                {totalGemReward > 0 && (
+                  <div className="flex flex-col items-center gap-[8px]">
+                    <div className="flex items-center justify-center w-[64px] h-[64px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
+                      <img src={gemImg} alt="" className="w-[36px] h-[36px] object-contain" />
+                    </div>
+                    <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">보석 +{totalGemReward}개</span>
+                  </div>
+                )}
               </div>
-            )}
-            {totalGemReward > 0 && (
-              <div className="flex items-center gap-[12px] px-[14px] py-[12px] rounded-[10px] border-[1px] border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark">
-                <div className="flex items-center justify-center w-[36px] h-[36px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark shrink-0">
-                  <img src={gemImg} alt="" className="w-[20px] h-[20px] object-contain" />
-                </div>
-                <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
-                  보석 +{totalGemReward}개
-                </span>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center flex-1 min-h-[220px]">
-            <AnimatePresence mode="wait">
-              {currentItem && (
-                <motion.div
-                  key={currentItem.type}
-                  initial={{ opacity: 0, y: 16, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -16, scale: 0.9 }}
-                  transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                  className="flex flex-col items-center gap-[14px]"
-                >
+              <p className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-50">보상을 받았어요!</p>
+            </div>
+          ) : (
+            <>
+              <AnimatePresence mode="wait">
+                {currentItem && (
                   <motion.div
-                    initial={{ scale: 0, rotate: -30 }}
-                    animate={{ scale: [0, 1.15, 1], rotate: 0 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className={`flex items-center justify-center w-[84px] h-[84px] rounded-full ${currentItem.type === 'gem' ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''}`}
+                    key={currentItem.type}
+                    initial={{ opacity: 0, y: 16, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -16, scale: 0.9 }}
+                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                    className="flex flex-col items-center gap-[14px]"
                   >
-                    {currentItem.type === 'book' ? (
-                      <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
-                    ) : (
-                      <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
-                    )}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -30 }}
+                      animate={{ scale: [0, 1.15, 1], rotate: 0 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      className={`flex items-center justify-center w-[84px] h-[84px] rounded-full ${currentItem.type === 'gem' ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''}`}
+                    >
+                      {currentItem.type === 'book' ? (
+                        <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
+                      ) : (
+                        <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
+                      )}
+                    </motion.div>
+                    <p className="text-[16px] font-[800] text-layout-black dark:text-layout-white">
+                      {currentItem.type === 'book' ? '빈 단어장 +1개 지급!' : `보석 +${currentItem.amount}개 지급!`}
+                    </p>
                   </motion.div>
-                  <p className="text-[16px] font-[800] text-layout-black dark:text-layout-white">
-                    {currentItem.type === 'book' ? '빈 단어장 +1개 지급!' : `보석 +${currentItem.amount}개 지급!`}
-                  </p>
-                </motion.div>
+                )}
+              </AnimatePresence>
+
+              {rewardItems.length > 1 && (
+                <div className="flex items-center gap-[6px] mt-[20px]">
+                  {rewardItems.map((item, idx) => (
+                    <span
+                      key={item.type}
+                      className={`w-[6px] h-[6px] rounded-full ${idx <= revealIndex ? 'bg-primary-main-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'
+                        }`}
+                    />
+                  ))}
+                </div>
               )}
-            </AnimatePresence>
+            </>
+          )}
+        </div>
 
-            {rewardItems.length > 1 && (
-              <div className="flex items-center gap-[6px] mt-[20px]">
-                {rewardItems.map((item, idx) => (
-                  <span
-                    key={item.type}
-                    className={`w-[6px] h-[6px] rounded-full ${idx <= revealIndex ? 'bg-primary-main-600' : 'bg-layout-gray-200 dark:bg-layout-gray-400'
-                      }`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {stage === 'intro' && (
+        {isDone && (
           <button
             type="button"
-            onClick={handleClaimRewards}
+            onClick={handleConfirm}
             className="shrink-0 mt-[24px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
           >
-            보상 받기
+            확인
           </button>
         )}
       </div>
