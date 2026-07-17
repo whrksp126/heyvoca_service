@@ -36,6 +36,7 @@ const Index = () => {
     isRecentStudyLoading,
     isBookStoreLoading,
     isRecommendedBooksLoading,
+    fetchVocabularySheets,
   } = useVocabulary();
 
   // 바가 100% 차 보이고 나서 실제 네비게이트
@@ -164,6 +165,12 @@ const Index = () => {
         //  ② 홈/마이페이지가 stale 프로필을 읽어 닉네임이 '미설정'으로 보인다.
         // 따라서 서버가 방금 세팅한 최신 프로필(닉네임·온보딩 상태)을 즉시 재조회한 뒤 홈으로 보낸다.
         fetchUserProfile().catch(() => { /* 실패해도 흐름은 계속 — 다음 조회 시 갱신됨 */ });
+        // migrate가 방금 만든 온보딩 단어장(+단어)을 프론트 vocabularySheets에 즉시 반영한다.
+        // 이걸 안 하면 로그인 시점에 로드된 빈 목록이 그대로 남아, 홈에서 AI 추천 테스트 진입 시
+        // "단어가 부족해요"가 뜬다(앱 재시작 전까지). fetchVocabularySheets가 vocaBooks+userDictionary를 재조회.
+        if (typeof fetchVocabularySheets === 'function') {
+          fetchVocabularySheets().catch(() => { /* 실패해도 흐름은 계속 */ });
+        }
         if (res?.code === 200) navigate('/home', { replace: true });
       }
     }).catch(() => { /* 실패해도 로그인 흐름은 계속 */ });
