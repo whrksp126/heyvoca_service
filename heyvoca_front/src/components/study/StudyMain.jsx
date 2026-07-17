@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+import { SpeakerHigh, SpinnerGap } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import StudyHeader from './StudyHeader';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
@@ -13,6 +13,12 @@ import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
 import { AppHistory } from '../../utils/appHistory';
+
+// 학습 진입 전 TTS 준비(prefetch) 튜닝값.
+// - PREPARE_PRIORITY_COUNT: 전체 준비가 늦어질 때 최소한으로 보장할 앞쪽 카드 수.
+// - PREPARE_MAX_WAIT_MS: 전체 prefetch를 기다려주는 최대 시간(넘으면 앞쪽만 보장 후 진입).
+const PREPARE_PRIORITY_COUNT = 3;
+const PREPARE_MAX_WAIT_MS = 6000;
 
 const DEFAULT_SETTINGS = {
   visibility: {
@@ -42,6 +48,8 @@ const StudyMain = ({ words }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('next');
+  // 카드 노출 전 TTS 준비(prefetch) 단계 — 준비가 끝나기 전까지 "학습 준비 중" 화면을 보여준다.
+  const [isPreparing, setIsPreparing] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingItemId, setPlayingItemId] = useState(null);
   // 의미·예문처럼 한 항목에 여러 라인이 있을 때 현재 재생 중인 라인의 인덱스.
@@ -248,13 +256,39 @@ const StudyMain = ({ words }) => {
     if (!isPlaying) stopPlayback();
   }, [isPlaying, stopPlayback]);
 
-  // 마운트 시 자동 재생 시작. 언마운트 시 모든 비동기 체인(setTimeout/audio) 정리.
+  // 마운트 시: 카드를 보여주기 전에 TTS를 최대한 미리 준비(서버 캐싱 + 클라이언트 blob prefetch)한다.
+  // 전체 prefetch를 우선 시도하되, 너무 오래 걸리면(PREPARE_MAX_WAIT_MS) 앞쪽 카드만 최소 보장하고
+  // 진입 — 첫 재생 지연만 확실히 없애고 나머지는 백그라운드에서 계속 준비한다.
+  // 언마운트 시 모든 비동기 체인(setTimeout/audio) 정리.
   useEffect(() => {
-    // 서버 캐싱 + 클라이언트 blob prefetch — 학습 중 재생 지연 제거. fire-and-forget.
-    warmTts(collectStudyTexts(words));
-    setIsPlaying(true);
-    startPlayback(0);
+    let cancelled = false;
+
+    const prepareAndStart = async () => {
+      const allTexts = collectStudyTexts(words);
+      const priorityTexts = collectStudyTexts(words.slice(0, PREPARE_PRIORITY_COUNT));
+
+      // fire-and-forget으로 시작하되(백그라운드에서 계속 진행), 준비 완료 여부는 아래에서 기다린다.
+      const fullPreparePromise = warmTts(allTexts).catch(() => {});
+      const timedOut = await Promise.race([
+        fullPreparePromise.then(() => false),
+        new Promise(resolve => setTimeout(() => resolve(true), PREPARE_MAX_WAIT_MS)),
+      ]);
+
+      if (timedOut && !cancelled) {
+        // 전체 준비가 늦어짐 → 앞쪽 카드 재생분만 최소 보장하고 진입 (나머지는 fullPreparePromise가 계속 백그라운드 진행)
+        await prefetchTtsList(priorityTexts);
+      }
+
+      if (cancelled) return;
+      setIsPreparing(false);
+      setIsPlaying(true);
+      startPlayback(0);
+    };
+
+    prepareAndStart();
+
     return () => {
+      cancelled = true;
       stopPlayback();
       stopCurrentSound();
     };
@@ -343,6 +377,20 @@ const StudyMain = ({ words }) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isPreparing) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-var(--status-bar-height))] bg-layout-white dark:bg-layout-black">
+        <StudyHeader onBackClick={handleStopLearning} onSettingsClick={handleSettingsClick} />
+        <div className="flex flex-1 flex-col items-center justify-center gap-[14px]">
+          <SpinnerGap size={36} className="animate-spin text-primary-main-600" />
+          <p className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-50">
+            학습 준비 중...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!word) {
     return (
@@ -479,8 +527,8 @@ const StudyMain = ({ words }) => {
                   <HiddenPlaceholder onReveal={() => handleReveal('meanings')} label="의미" />
                 )}
               </div>
-              {/* 예문 */}
-              {examples.length > 0 && (
+              {/* 예문 — 원문/뜻 텍스트가 하나도 없는 단어는 섹션 자체를 숨긴다 */}
+              {examples.length > 0 && examples.some(ex => (ex.origin || ex.sentence) || (ex.meaning || ex.translation)) && (
                 <div className="flex flex-col gap-[8px]">
                   <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
                     예문
@@ -488,44 +536,49 @@ const StudyMain = ({ words }) => {
                   {examples.map((example, idx) => {
                     const exOrigin = example.origin || example.sentence || '';
                     const exMeaning = example.meaning || example.translation || '';
+                    if (!exOrigin && !exMeaning) return null;
                     const isOriginActive = playingItemId === 'exampleSentences' && playingItemIndex === idx;
                     const isMeaningActive = playingItemId === 'exampleMeanings' && playingItemIndex === idx;
                     return (
                       <div key={idx} className="flex flex-col gap-[10px]">
-                        {/* 예문 원문 */}
-                        {isVisible('exampleSentences') ? (
-                          <div className="flex items-start justify-between gap-[5px]">
-                            <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
-                              {exOrigin}
-                            </span>
-                            <motion.button
-                              onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, 'en')}
-                              className="flex-shrink-0 mt-[2px] text-layout-gray-300"
-                              whileTap={{ scale: 0.85 }}
-                            >
-                              <SpeakerHigh weight="fill" color={isOriginActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
-                            </motion.button>
-                          </div>
-                        ) : (
-                          <HiddenPlaceholder onReveal={() => handleReveal('exampleSentences')} label="예문 문장" small />
+                        {/* 예문 원문 — 텍스트가 있을 때만 스피커 포함 렌더 */}
+                        {exOrigin && (
+                          isVisible('exampleSentences') ? (
+                            <div className="flex items-start justify-between gap-[5px]">
+                              <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
+                                {exOrigin}
+                              </span>
+                              <motion.button
+                                onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, 'en')}
+                                className="flex-shrink-0 mt-[2px] text-layout-gray-300"
+                                whileTap={{ scale: 0.85 }}
+                              >
+                                <SpeakerHigh weight="fill" color={isOriginActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
+                              </motion.button>
+                            </div>
+                          ) : (
+                            <HiddenPlaceholder onReveal={() => handleReveal('exampleSentences')} label="예문 문장" small />
+                          )
                         )}
 
-                        {/* 예문 의미 */}
-                        {isVisible('exampleMeanings') ? (
-                          <div className="flex items-start justify-between gap-[8px]">
-                            <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
-                              {exMeaning}
-                            </span>
-                            <motion.button
-                              onClick={() => handleSpeakerClick('exampleMeanings', idx, exMeaning, 'ko')}
-                              className="flex-shrink-0 mt-[2px] text-layout-gray-300"
-                              whileTap={{ scale: 0.85 }}
-                            >
-                              <SpeakerHigh weight="fill" color={isMeaningActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
-                            </motion.button>
-                          </div>
-                        ) : (
-                          <HiddenPlaceholder onReveal={() => handleReveal('exampleMeanings')} label="예문 뜻" small />
+                        {/* 예문 의미 — 텍스트가 있을 때만 스피커 포함 렌더 */}
+                        {exMeaning && (
+                          isVisible('exampleMeanings') ? (
+                            <div className="flex items-start justify-between gap-[8px]">
+                              <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
+                                {exMeaning}
+                              </span>
+                              <motion.button
+                                onClick={() => handleSpeakerClick('exampleMeanings', idx, exMeaning, 'ko')}
+                                className="flex-shrink-0 mt-[2px] text-layout-gray-300"
+                                whileTap={{ scale: 0.85 }}
+                              >
+                                <SpeakerHigh weight="fill" color={isMeaningActive ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={16} />
+                              </motion.button>
+                            </div>
+                          ) : (
+                            <HiddenPlaceholder onReveal={() => handleReveal('exampleMeanings')} label="예문 뜻" small />
+                          )
                         )}
                       </div>
                     );

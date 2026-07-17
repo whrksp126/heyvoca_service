@@ -4,13 +4,14 @@
 - GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — 맛보기 소스.
        응답 전 해당 레벨 단어 TTS를 백그라운드로 미리 생성·캐싱(게스트 무인증 재생 대비).
 - POST /onboarding/migrate           (인증) 가입 직후 1회, 레벨 단어장 생성 + 맛본 답안 반영 + 보상
-- GET  /onboarding/unlock-status      (인증) 온보딩 행동 기반 미션 해금 상태(5단계)
-- POST /onboarding/mission/complete   (인증) 프론트 신호 미션(ai_test/search_word/focus_study) 완료 처리
+- GET  /onboarding/unlock-status      (인증) 온보딩 행동 기반 미션 해금 상태(6단계)
+- POST /onboarding/mission/complete   (인증) 프론트 신호 미션(ai_test/search_word/focus_study/free_test) 완료 처리
 
-온보딩 행동 기반 미션(5단계 선형 체인, ONBOARDING_MISSIONS 참고):
-  ai_test → make_book → buy_book → search_word → focus_study
+온보딩 행동 기반 미션(6단계 선형 체인, ONBOARDING_MISSIONS 참고):
+  ai_test → make_book → buy_book → search_word → focus_study → free_test
 make_book/buy_book은 app/routes/voca_books.py의 create_voca_book/append_vocas_to_book 훅에서
 백엔드가 자동 감지해 완료 처리하고, 나머지는 프론트가 /onboarding/mission/complete로 신호를 보낸다.
+free_test(M6)는 unlocks=None인 종료 미션 — 더 이상 해금할 feature가 없다(체인의 마무리 신호용).
 
 레벨(1 초등 / 2 중등 / 3 고등 / 4 대학생)별 단어는 AdminVocaBook에서 구성 —
 기존 /auth/level_book_list와 동일 소스. 학습 알고리즘(FSRS)은 services/fsrs를 '호출만' 한다.
@@ -53,14 +54,16 @@ ONBOARDING_MISSIONS = [
     {'key': 'buy_book',    'order': 3, 'title': '서점 단어장 담기 완료',   'unlocks': 'dict',     'reward_gem': 10},
     {'key': 'search_word', 'order': 4, 'title': '사전에서 단어 찾아보기 완료', 'unlocks': 'listen', 'reward_gem': 5},
     {'key': 'focus_study', 'order': 5, 'title': '집중 반복 학습 완료',    'unlocks': 'custom',   'reward_gem': 10},
+    # M6: 더 이상 해금할 기능이 없는 종료 미션(unlocks=None) — 온보딩 체인의 마무리 신호용.
+    {'key': 'free_test',   'order': 6, 'title': '자유 설정 테스트 완료',  'unlocks': None,       'reward_gem': 20},
 ]
 ONBOARDING_MISSION_BY_KEY = {m['key']: m for m in ONBOARDING_MISSIONS}
 ONBOARDING_MISSION_KEYS = set(ONBOARDING_MISSION_BY_KEY.keys())
-# feature(해금 대상) → 이를 해금시키는 mission_key
-FEATURE_UNLOCK_MISSION = {m['unlocks']: m['key'] for m in ONBOARDING_MISSIONS}
+# feature(해금 대상) → 이를 해금시키는 mission_key. unlocks=None(해금 대상 없는 종료 미션)은 제외.
+FEATURE_UNLOCK_MISSION = {m['unlocks']: m['key'] for m in ONBOARDING_MISSIONS if m['unlocks']}
 # /onboarding/mission/complete로 프론트가 직접 신호를 보내는 미션(백엔드 자동 감지 대상 제외).
 # make_book/buy_book은 voca_books.py 훅에서만 완료 처리한다 — API로 임의 완료 방지.
-FRONTEND_SIGNAL_MISSION_KEYS = {'ai_test', 'search_word', 'focus_study'}
+FRONTEND_SIGNAL_MISSION_KEYS = {'ai_test', 'search_word', 'focus_study', 'free_test'}
 
 
 def complete_onboarding_mission(user_id, mission_key) -> dict:
@@ -168,6 +171,9 @@ def _build_unlock_status(user) -> dict:
             'completed_at': (completed_at.isoformat() + 'Z') if completed_at else None,
             'unlocks': m['unlocks'],
             'reward_gem': m['reward_gem'],
+            # 완료 시 보석 외 추가로 지급되는 아이템(빈 단어장) 여부 — make_book만 True.
+            # 실제 지급 로직은 complete_onboarding_mission()에 있고, 이 필드는 프론트 "보상 받기" UI 노출용.
+            'reward_book': m['key'] == 'make_book',
         })
         if not done and current_mission is None:
             current_mission = m['key']
@@ -502,11 +508,12 @@ def migrate():
 @onboarding_bp.route('/unlock-status', methods=['GET'])
 @jwt_required
 def unlock_status():
-    """온보딩 행동 기반 미션 해금 상태(5단계).
+    """온보딩 행동 기반 미션 해금 상태(6단계).
 
     legacy(onboarding_ver NULL)=기존 사용자 → 전부 해금.
-    신규(=1) → 미션(ai_test/make_book/buy_book/search_word/focus_study) 완료 기록 기준으로
+    신규(=1) → 미션(ai_test/make_book/buy_book/search_word/focus_study/free_test) 완료 기록 기준으로
     단어장/상점/사전/반복듣기/커스텀을 점진 해금한다(과거 "완료 세션 수" 방식 대체).
+    free_test(M6)는 unlocks=None이라 unlocked 맵에는 영향을 주지 않는다(종료 미션).
     """
     user_id = UUID(g.user_id)
     user = db.session.query(User).filter(User.id == user_id).first()
@@ -519,12 +526,12 @@ def unlock_status():
 @onboarding_bp.route('/mission/complete', methods=['POST'])
 @jwt_required
 def mission_complete():
-    """프론트 신호 기반 온보딩 미션 완료 처리 — ai_test / search_word / focus_study 전용.
+    """프론트 신호 기반 온보딩 미션 완료 처리 — ai_test / search_word / focus_study / free_test 전용.
 
     (make_book / buy_book은 voca_books.py의 create_voca_book / append_vocas_to_book 훅에서만
      완료 처리한다 — 이 엔드포인트로는 완료시킬 수 없다.)
 
-    body: { "key": "ai_test" | "search_word" | "focus_study" }
+    body: { "key": "ai_test" | "search_word" | "focus_study" | "free_test" }
 
     응답: unlock-status와 동일한 missions/unlocked/current_mission 전체를 함께 반환해
     프론트가 재조회 없이 바로 연출·갱신할 수 있도록 한다.

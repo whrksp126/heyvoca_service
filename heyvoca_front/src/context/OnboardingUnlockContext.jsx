@@ -9,9 +9,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useUser } from './UserContext';
-import { useOverlayActions } from './OverlayContext';
 import { getUnlockStatusApi, completeOnboardingMissionApi } from '../api/study';
-import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 
 // 잠금 대상 기능 key → 한국어 라벨 (UnlockGuideNewBottomSheet, 홈 배너 등에서 공용으로 사용)
 export const FEATURE_LABELS = {
@@ -26,36 +24,33 @@ export const OnboardingUnlockContext = createContext(null);
 
 export const OnboardingUnlockProvider = ({ children }) => {
   const { isLogin, isLoginChecked, userProfile, fetchUserProfile, setUserProfile } = useUser();
-  const { showOverlay } = useOverlayActions();
 
   const [unlock, setUnlock] = useState(null); // unlock-status 응답 data 전체
   const [loading, setLoading] = useState(false);
-  const [celebration, setCelebration] = useState(null); // 최근 트리거된 축하 연출 항목(참고/디버그용)
+  // 보상 지급이 완료됐지만 아직 유저에게 "보상 받기" 연출로 보여주지 못한 미션 큐.
+  // (백엔드가 완료 시점에 이미 보석/빈 단어장을 지급하므로, 이 큐는 순수 연출용 대기열이다)
+  // 실제 자동 노출은 OnboardingMissionRewardWatcher가 라우트(학습 결과 화면 회피)를 보고 처리한다.
+  const [pendingMissionRewards, setPendingMissionRewards] = useState([]);
 
   // 직전 missions 스냅샷 — refreshUnlock 시 done false→true 전환 감지(diff)용
   const missionsRef = useRef(null);
 
-  // 새로 완료된 미션들에 대한 축하 오버레이를 순서대로 큐잉
-  // silent=true면 오버레이 없이 완료 상태·연출 참조값만 갱신
-  // (AI 추천 테스트/집중 반복 학습처럼 완료 직후 학습결과 화면 자체가 리워드를 표현하는 흐름에서는
-  //  이 레이어 기반 오버레이가 학습결과 화면(콤보/보석/업적 슬라이드)과 겹쳐 보이므로 억제한다)
-  const celebrateMissions = useCallback((newlyDoneMissions, { silent = false } = {}) => {
+  // 새로 완료된 미션(들)을 보상 연출 대기열에 큐잉(key 기준 중복 방지).
+  // 실제 표시는 OnboardingMissionRewardWatcher가 안전한 라우트에서만 자동으로 연다.
+  const queueMissionRewards = useCallback((newlyDoneMissions) => {
     if (!newlyDoneMissions || newlyDoneMissions.length === 0) return;
-    newlyDoneMissions.forEach((mission) => {
-      const label = FEATURE_LABELS[mission.unlocks] || mission.unlocks || '새 기능';
-      const rewardGem = mission.reward_gem ?? 0;
-      const entry = { key: mission.key, label, reward_gem: rewardGem };
-      setCelebration(entry);
-      if (silent) return;
-      showOverlay(GemRewardOverlay, {
-        gemCount: rewardGem,
-        title: `${label} 기능이 열렸어요!`,
-        description: '다음 미션에 도전해보세요!',
+    setPendingMissionRewards((prev) => {
+      const merged = [...prev];
+      newlyDoneMissions.forEach((mission) => {
+        if (!mission?.key) return;
+        if (merged.some((m) => m.key === mission.key)) return;
+        merged.push(mission);
       });
+      return merged;
     });
-  }, [showOverlay]);
+  }, []);
 
-  // unlock-status 응답(data)을 상태에 반영. celebrate=true면 이전 missions와 비교해 새로 완료된 항목을 축하 연출.
+  // unlock-status 응답(data)을 상태에 반영. celebrate=true면 이전 missions와 비교해 새로 완료된 항목을 보상 큐에 적재.
   const applyUnlockData = useCallback((data, { celebrate = true } = {}) => {
     if (!data) return;
     const prevMissions = missionsRef.current;
@@ -65,12 +60,12 @@ export const OnboardingUnlockProvider = ({ children }) => {
         const prev = prevMissions.find((p) => p.key === m.key);
         return m.done && (!prev || !prev.done);
       });
-      celebrateMissions(newlyDone);
+      queueMissionRewards(newlyDone);
     }
 
     missionsRef.current = Array.isArray(data.missions) ? data.missions : null;
     setUnlock(data);
-  }, [celebrateMissions]);
+  }, [queueMissionRewards]);
 
   // 해금 상태 재조회
   const refreshUnlock = useCallback(async () => {
@@ -105,12 +100,12 @@ export const OnboardingUnlockProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin, isLoginChecked, userProfile?.id, userProfile?.onboarding_ver]);
 
-  // 프론트 트리거 미션 완료 처리 — key: 'ai_test' | 'search_word' | 'focus_study'
+  // 프론트 트리거 미션 완료 처리 — key: 'ai_test' | 'search_word' | 'focus_study' | 'free_test'
   // (make_book/buy_book은 백엔드 훅 전용 — 여기서 호출하지 않음)
-  // silent=true: 완료 처리(보석 지급·상태 갱신)는 그대로 하되 축하 오버레이는 띄우지 않음.
-  // (예: AI 추천 테스트/집중 반복 학습처럼 완료 직후 학습결과 화면이 자체 리워드 연출을
-  //  이미 보여주는 흐름 — 오버레이가 겹쳐 보이는 것을 방지)
-  const completeMission = useCallback(async (key, { silent = false } = {}) => {
+  // 보상(보석 지급 + make_book이면 빈 단어장 생성)은 백엔드가 이 호출 시점에 이미 처리한다.
+  // 여기서는 완료 상태만 갱신하고, "보상 받기" 연출은 pendingMissionRewards 큐에 적재해
+  // OnboardingMissionRewardWatcher가 학습 결과 화면과 겹치지 않는 안전한 라우트에서 자동으로 보여준다.
+  const completeMission = useCallback(async (key) => {
     // 이미 완료된 미션이거나 legacy 유저면 호출 스킵(멱등이라 안전하지만 불필요한 호출 방지)
     const existing = unlock?.missions?.find((m) => m.key === key);
     if (unlock?.legacy || existing?.done) {
@@ -123,11 +118,15 @@ export const OnboardingUnlockProvider = ({ children }) => {
 
       const { newly_completed, reward_gem, unlocks, gem_cnt } = res.data;
 
-      // diff 기반 축하 연출은 스킵하고(celebrate:false), newly_completed 응답을 직접 사용해 트리거
+      // diff 기반 큐잉은 스킵하고(celebrate:false), newly_completed 응답을 직접 사용해 큐잉
       applyUnlockData(res.data, { celebrate: false });
 
       if (newly_completed) {
-        celebrateMissions([{ key, unlocks, reward_gem }], { silent });
+        // 응답에 포함된 unlock-status 전체 missions에서 완료된 항목의 전체 정보(title/order/reward_book 등)를 찾는다.
+        const fullMission = Array.isArray(res.data.missions)
+          ? res.data.missions.find((m) => m.key === key)
+          : null;
+        queueMissionRewards([fullMission || { key, unlocks, reward_gem, title: FEATURE_LABELS[unlocks] || unlocks, reward_book: false }]);
       }
 
       if (typeof gem_cnt === 'number') {
@@ -141,7 +140,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       console.error('completeMission 오류:', error);
       return null;
     }
-  }, [unlock, applyUnlockData, celebrateMissions, setUserProfile, fetchUserProfile]);
+  }, [unlock, applyUnlockData, queueMissionRewards, setUserProfile, fetchUserProfile]);
 
   // featureKey(vocabook/store/dict/listen/custom) 잠금 여부.
   // legacy거나 unlock 미조회(null)면 낙관적으로 열림 처리(false=안 잠김).
@@ -150,8 +149,10 @@ export const OnboardingUnlockProvider = ({ children }) => {
     return unlock.unlocked?.[featureKey] === false;
   }, [unlock]);
 
-  const consumeCelebration = useCallback(() => {
-    setCelebration(null);
+  // "보상 받기" 연출을 다 보여줬거나(또는 사용자가 시트를 닫아) 더 이상 대기열이 필요 없을 때 비운다.
+  // 보상 자체는 이미 완료 시점에 지급되었으므로, 큐를 비워도 데이터 손실은 없다(연출만 재노출되지 않음).
+  const consumePendingMissionRewards = useCallback(() => {
+    setPendingMissionRewards([]);
   }, []);
 
   const value = {
@@ -166,9 +167,9 @@ export const OnboardingUnlockProvider = ({ children }) => {
     isFeatureLocked,
     refreshUnlock,
     completeMission,
-    // 축하 연출 상태/소비 API(참고용) — 실제 오버레이 표시는 Context 내부에서 자동 트리거됨
-    celebration,
-    consumeCelebration,
+    // 보상 받기 연출 대기열 — 실제 자동 노출은 OnboardingMissionRewardWatcher가 처리
+    pendingMissionRewards,
+    consumePendingMissionRewards,
   };
 
   return (

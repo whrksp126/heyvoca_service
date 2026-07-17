@@ -37,6 +37,7 @@ import { AttendanceCalendarProvider } from './context/AttendanceCalendarContext'
 import { OnboardingUnlockProvider, OnboardingUnlockContext } from './context/OnboardingUnlockContext';
 import { StatsProvider } from './context/StatsContext';
 import WebStorageMigration from './context/WebStorageMigration';
+import OnboardingMissionRewardWatcher from './components/onboarding/OnboardingMissionRewardWatcher';
 
 const AppLayout = () => {
   return (
@@ -95,6 +96,7 @@ function AppWithContexts() {
       {/* <BottomSheetProvider> */}
       {/* <FullSheetProvider> */}
       <WebStorageMigration />
+      <OnboardingMissionRewardWatcher />
       <AppLayout />
       <NewFullSheetProvider />
       <NewBottomSheetProvider />

@@ -95,7 +95,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
           whitespace-normal
           break-words
         ">
-            {bookStoreVocabularySheet.name}을 내 단어장에 추가하시겠어요?
+            단어장을 추가하시겠어요?
           </h3>
         }
         {alertType == "unavailable" &&
@@ -104,7 +104,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
           whitespace-normal
           break-words
         ">
-            보석이 부족합니다.<br />보석을 충전 후 이용해주세요 🥺
+            보석이 부족합니다.<br />보석을 충전 후 이용해주세요
           </h3>
         }
         {alertType == "available" &&
@@ -113,13 +113,8 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
           whitespace-normal
           break-words
         ">
-            보석 {bookStoreVocabularySheet.gem}개로 ‘{bookStoreVocabularySheet.name}’을 내 단어장에 추가하시겠어요?
+            보석 {bookStoreVocabularySheet.gem}개로<br />단어장을 추가하시겠어요?
           </h3>
-        }
-        {alertType != "unavailable" &&
-          <p className="text-layout-black dark:text-layout-white text-[14px] font-[400]">
-            추가 후에는 내 단어장에서 수정 가능해요 😉
-          </p>
         }
 
       </div>
