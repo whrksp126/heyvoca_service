@@ -7,7 +7,7 @@ import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewB
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
-import { warmTts, prewarmTts, collectStudyTexts } from '../../api/tts';
+import { collectStudyTexts, prepareTtsWithProgress } from '../../api/tts';
 import ProgressSplash from '../common/ProgressSplash';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
@@ -270,15 +270,11 @@ const StudyMain = ({ words }) => {
       const allTexts = collectStudyTexts(words);
       const priorityTexts = collectStudyTexts(words.slice(0, PREPARE_PRIORITY_COUNT));
 
-      // 서버 배치 생성(prewarm) 후 클라이언트 prefetch — prefetch 진행률로 준비 바를 채운다.
+      // 생성 청크 단위로 진행률을 세밀하게 올리며 준비(단어·의미·예문 전체).
       // fire-and-forget으로 시작하되(백그라운드에서 계속 진행), 준비 완료 여부는 아래에서 기다린다.
-      const fullPreparePromise = (async () => {
-        try { await prewarmTts(allTexts); } catch (e) { /* prefetch 개별 폴백 */ }
-        if (!cancelled) setPrepareProgress(0.35);
-        await prefetchTtsList(allTexts, 4, (done, total) => {
-          if (!cancelled) setPrepareProgress(0.35 + 0.65 * (total ? done / total : 1));
-        });
-      })().catch(() => {});
+      const fullPreparePromise = prepareTtsWithProgress(allTexts, (p) => {
+        if (!cancelled) setPrepareProgress(p);
+      }).catch(() => {});
       const timedOut = await Promise.race([
         fullPreparePromise.then(() => false),
         new Promise(resolve => setTimeout(() => resolve(true), PREPARE_MAX_WAIT_MS)),
@@ -390,8 +386,8 @@ const StudyMain = ({ words }) => {
   }, []);
 
   if (isPreparing) {
-    // 로그인 스플래시와 동일한 프로그래스 화면으로 발음(TTS) 준비 상태를 보여준다.
-    return <ProgressSplash progress={prepareProgress} message="발음을 준비하는 중" />;
+    // 로그인 스플래시와 동일한 프로그래스 화면으로 준비 상태를 보여준다(범용 문구).
+    return <ProgressSplash progress={prepareProgress} message="학습을 준비하는 중" />;
   }
 
   if (!word) {

@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, Lock, BookBookmark, Sparkle } from '@phosphor-icons/react';
+import { CheckCircle, Lock } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 import gemImg from '../../assets/images/gem.png';
+import emptyBookImg from '../../assets/images/voca_book_1.png';
 
 // 현재 진행 미션의 "무엇을 해야 열리는지" 구체 안내 문구(미션 key별).
 // 미션 title만으로는 행동이 애매한 경우(특히 make_book=단어장 만들고 '단어 추가')를 명확히 안내한다.
@@ -14,6 +15,8 @@ const MISSION_ACTION_HINTS = {
   buy_book: "상점에서 단어장을 담으면 '사전'이 열려요",
   search_word: "사전에서 단어를 찾아보면 '집중 반복 학습'이 열려요",
   focus_study: "집중 반복 학습을 완료하면 '자유 설정 테스트'가 열려요",
+  // 마지막 미션(free_test)은 unlocks=None(더 열릴 기능 없음) — 종료 안내 문구.
+  free_test: "자유 설정 테스트를 완료하면 입문 퀘스트가 모두 끝나요",
 };
 
 // 보상 순차 연출에서 한 항목이 화면에 머무는 시간(ms)
@@ -103,9 +106,6 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
     return (
       <div className="flex flex-col max-h-[85vh] pt-[30px] pb-[20px] px-[20px]">
         <div className="flex flex-col items-center text-center shrink-0 mb-[24px] gap-[8px]">
-          <div className="flex items-center justify-center w-[56px] h-[56px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark">
-            <Sparkle size={28} weight="fill" className="text-primary-main-600" />
-          </div>
           <h3 className="text-[18px] font-[700] text-layout-black dark:text-layout-white">
             퀘스트 완료!
           </h3>
@@ -120,11 +120,9 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
           <div className="flex flex-col gap-[10px] flex-1 min-h-0">
             {hasBookReward && (
               <div className="flex items-center gap-[12px] px-[14px] py-[12px] rounded-[10px] border-[1px] border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark">
-                <div className="flex items-center justify-center w-[36px] h-[36px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark shrink-0">
-                  <BookBookmark size={18} weight="fill" className="text-primary-main-600" />
-                </div>
+                <img src={emptyBookImg} alt="" className="w-[36px] h-[36px] object-contain shrink-0" />
                 <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
-                  빈 단어장
+                  빈 단어장 +1개
                 </span>
               </div>
             )}
@@ -155,16 +153,16 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
                     initial={{ scale: 0, rotate: -30 }}
                     animate={{ scale: [0, 1.15, 1], rotate: 0 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="flex items-center justify-center w-[84px] h-[84px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark"
+                    className={`flex items-center justify-center w-[84px] h-[84px] rounded-full ${currentItem.type === 'gem' ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''}`}
                   >
                     {currentItem.type === 'book' ? (
-                      <BookBookmark size={40} weight="fill" className="text-primary-main-600" />
+                      <img src={emptyBookImg} alt="" className="w-[72px] h-[72px] object-contain" />
                     ) : (
                       <img src={gemImg} alt="" className="w-[46px] h-[46px] object-contain" />
                     )}
                   </motion.div>
                   <p className="text-[16px] font-[800] text-layout-black dark:text-layout-white">
-                    {currentItem.type === 'book' ? '빈 단어장 지급!' : `보석 +${currentItem.amount}개 지급!`}
+                    {currentItem.type === 'book' ? '빈 단어장 +1개 지급!' : `보석 +${currentItem.amount}개 지급!`}
                   </p>
                 </motion.div>
               )}
@@ -254,7 +252,8 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
                   {mission.done
                     ? (mission.unlocks ? `→ ${featureLabel}이 열렸어요` : '완료했어요')
                     : isCurrent
-                      ? (MISSION_ACTION_HINTS[mission.key] || `완료하면 '${featureLabel}' 기능이 열려요`)
+                      ? (MISSION_ACTION_HINTS[mission.key]
+                          || (mission.unlocks ? `완료하면 '${featureLabel}' 기능이 열려요` : '완료하면 입문 퀘스트가 끝나요'))
                       : '이전 미션을 먼저 완료해주세요'}
                 </span>
               </div>

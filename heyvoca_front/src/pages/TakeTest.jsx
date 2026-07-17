@@ -10,8 +10,7 @@ import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
-import { warmTts, prewarmTts, collectTestTexts, collectTestFullTexts } from '../api/tts';
-import { prefetchTtsList } from '../utils/common';
+import { warmTts, collectTestTexts, collectTestFullTexts, prepareTtsWithProgress } from '../api/tts';
 import ProgressSplash from '../components/common/ProgressSplash';
 import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
@@ -324,15 +323,8 @@ const TakeTest = () => {
     setIsPreparingTts(true);
     setIsTestQuestionsSetting(false); // 준비 스플래시로 전환(빈 화면 대신)
 
-    const prepare = (async () => {
-      // ① 서버 배치 생성 — 없는 음성만 생성(0 → 35%)
-      try { await prewarmTts(gateTexts); } catch (e) { /* 실패해도 prefetch가 개별 폴백 */ }
-      setPrepareProgress(0.35);
-      // ② 클라이언트 prefetch — 실제 준비 개수 기반 35% → 100%
-      await prefetchTtsList(gateTexts, 4, (done, total) => {
-        setPrepareProgress(0.35 + 0.65 * (total ? done / total : 1));
-      });
-    })();
+    // 생성 청크 단위로 진행률을 세밀하게 올리며 준비.
+    const prepare = prepareTtsWithProgress(gateTexts, setPrepareProgress);
 
     // 최대 대기 초과 시 진입(나머지는 백그라운드 계속 진행)
     await Promise.race([
@@ -740,10 +732,9 @@ const TakeTest = () => {
     // 게스트 맛보기는 기존처럼 빈 화면으로 빠르게 진입(준비 스플래시 미사용).
     if (isGuestMode) return null;
     // 로그인 학습: 로그인 스플래시와 동일한 프로그래스 화면으로 준비 상태를 보여준다.
-    //  - 문제 데이터 로딩 단계: '학습을 준비하는 중'
-    //  - 발음(TTS) 캐싱 단계: 실제 진행률과 함께 '발음을 준비하는 중'
-    const message = isPreparingTts ? '발음을 준비하는 중' : '학습을 준비하는 중';
-    const prog = isPreparingTts ? prepareProgress : 0.08;
+    // 상황에 무관한 범용 문구 사용(발음/데이터 등 단계 노출 안 함).
+    const message = '학습을 준비하는 중';
+    const prog = isPreparingTts ? prepareProgress : 0.06;
     return <ProgressSplash progress={prog} message={message} />;
   } else {
     if (recentStudy[state.testType]?.status === "end") {

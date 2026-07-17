@@ -64,6 +64,46 @@ export const collectTestTexts = (questions) => {
   return out;
 };
 
+// 준비 진행률을 "세밀하게" 보고하며 TTS를 사전 캐싱한다.
+// 서버 배치 생성(prewarm)을 통째로 한 번 부르면 생성이 끝날 때까지 진행률이 멈췄다가 갑자기
+// 차오른다. 이를 막기 위해 생성을 작은 청크로 나눠 호출하고, 청크가 끝날 때마다 진행률을 올린다.
+// 마지막에 클라이언트 blob prefetch(대부분 캐시 히트)로 마무리한다. onProgress(0~1) 콜백.
+export const prepareTtsWithProgress = async (items, onProgress, { chunkSize = 4 } = {}) => {
+  const report = (p) => {
+    if (typeof onProgress === 'function') {
+      try { onProgress(Math.max(0, Math.min(1, p))); } catch (e) { /* 콜백 오류 무시 */ }
+    }
+  };
+
+  // dedup + 유효 항목만
+  const seen = new Set();
+  const list = [];
+  for (const it of (Array.isArray(items) ? items : [])) {
+    const text = (it?.text ?? '').trim();
+    const language = it?.language;
+    if (!text || (language !== 'en' && language !== 'ko')) continue;
+    const k = `${language}::${text}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    list.push({ text, language });
+  }
+  const total = list.length;
+  if (total === 0) { report(1); return; }
+
+  // 1) 서버 배치 생성 — 청크 단위로 진행률 0 → 0.85 (생성 진행에 따라 바가 꾸준히 오름)
+  let generated = 0;
+  for (let i = 0; i < list.length; i += chunkSize) {
+    const chunk = list.slice(i, i + chunkSize);
+    try { await prewarmTts(chunk); } catch (e) { /* 실패해도 prefetch가 개별 폴백 */ }
+    generated += chunk.length;
+    report(0.85 * (generated / total));
+  }
+
+  // 2) 클라이언트 blob prefetch(대부분 캐시 히트) — 0.85 → 1
+  await prefetchTtsList(list, 4, (done, t) => report(0.85 + 0.15 * (t ? done / t : 1)));
+  report(1);
+};
+
 // 테스트 문제에서 재생 가능한 "모든" 텍스트(단어·의미·예문) 수집 — 진입 후 백그라운드 캐싱용.
 // 테스트 자체는 단어(origin)만 자동재생하지만, 학습 결과·단어 상세에서 의미/예문 TTS를
 // 즉시 재생할 수 있도록 진행 중 백그라운드로 미리 데워둔다(진입 게이트에는 포함하지 않음).

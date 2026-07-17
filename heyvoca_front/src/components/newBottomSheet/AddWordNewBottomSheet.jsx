@@ -211,8 +211,8 @@ const AddWordNewBottomSheet = ({
   };
 
   return (
-    <div className="relative">
-      <div>
+    <div className="relative flex flex-col max-h-[85vh]">
+      <div className="shrink-0">
         <div className="left"></div>
         <div className="
           flex items-center justify-center
@@ -224,8 +224,8 @@ const AddWordNewBottomSheet = ({
       </div>
       <div className="
         flex flex-col gap-[15px]
-        max-h-[calc(90vh-47px)]
-        p-[20px] pb-[105px]
+        flex-1 min-h-0
+        p-[20px]
         overflow-y-auto
       ">
         <div
@@ -543,10 +543,10 @@ const AddWordNewBottomSheet = ({
         </div>
       </div>
       <div className="
-        absolute bottom-0 left-0 right-0
-        flex items-center justify-between gap-[15px] 
+        shrink-0
+        flex items-center justify-between gap-[15px]
         p-[20px]
-        bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
+        bg-layout-white dark:bg-layout-black
       ">
         <motion.button
           className="
