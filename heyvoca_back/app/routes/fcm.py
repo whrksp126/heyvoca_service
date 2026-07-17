@@ -335,12 +335,15 @@ def _has_studied_today(user_id) -> bool:
     return exists is not None
 
 
-def run_chat_reminder(app, time_slot: str):
+def run_chat_reminder(app, time_slot: str, test_mode: bool = False):
     """'채팅으로 학습' 딥링크 알림 발송.
 
     대상: chat_study_enabled=True AND is_message_allowed=True 토큰 보유 사용자.
     조건: (1) 오늘 복습+신규 예정 수 > 0, (2) 금일 발송 횟수 < 5회,
           (3) 오늘 아직 학습(채팅 포함) 안 함 — 하나라도 걸리면 스킵.
+
+    test_mode=True(개발 전용): 5회 상한·당일 학습 중단·카운터 증가를 모두 건너뛴다.
+    딥링크 진입 플로우를 반복 검증하기 위한 용도(due_total>0 조건만 유지).
 
     TODO: 여력 되면 발송 시 해당 사용자 chat-session을 미리 만들어 Redis에
     짧은 TTL(예: 60초)로 캐싱하고, GET /study/chat-session이 캐시 우선 반환하도록
@@ -363,18 +366,19 @@ def run_chat_reminder(app, time_slot: str):
                 skipped += 1
                 continue
 
-            if _chat_notif_capped(user_id):
+            if not test_mode and _chat_notif_capped(user_id):
                 skipped += 1
                 continue
 
-            try:
-                if _has_studied_today(user_id):
+            if not test_mode:
+                try:
+                    if _has_studied_today(user_id):
+                        skipped += 1
+                        continue
+                except Exception as e:
+                    print(f"[FCM-chat {time_slot}] study-check failed for {user_id}:", e)
                     skipped += 1
                     continue
-            except Exception as e:
-                print(f"[FCM-chat {time_slot}] study-check failed for {user_id}:", e)
-                skipped += 1
-                continue
 
             try:
                 title, body = select_chat_message(time_slot, ctx, n=due_total)
@@ -385,7 +389,8 @@ def run_chat_reminder(app, time_slot: str):
             data = {'screen': 'chatStudy', 'type': 'chat_reminder'}
             for token in ctx.get('tokens') or []:
                 _send_with_token_cleanup(title, body, token, data=data)
-            _chat_notif_incr(user_id)
+            if not test_mode:
+                _chat_notif_incr(user_id)
             sent += 1
 
         print(f"[FCM-chat {time_slot}] sent={sent} skipped={skipped}")
@@ -435,6 +440,19 @@ def create_scheduler(app):
             CronTrigger(hour=_hour, minute=30, timezone=KST),
             id=f'chat_reminder_{_slot}',
         )
+
+    # [테스트 전용] dev/local(DEBUG=True)에서만 — 5분마다 채팅 알림 발송.
+    # 5회 상한·당일 학습 중단을 무시(test_mode)해 딥링크 진입을 반복 검증한다.
+    # stg/prod(DEBUG=False)에는 등록되지 않는다.
+    # TODO(테스트 종료 후 제거): 이 블록은 임시 검증용이다.
+    if app.config.get('DEBUG'):
+        from apscheduler.triggers.interval import IntervalTrigger
+        scheduler.add_job(
+            lambda: run_chat_reminder(app, 'afternoon', test_mode=True),
+            IntervalTrigger(minutes=5, timezone=KST),
+            id='chat_reminder_test_5min',
+        )
+        print("  -> [DEV] 채팅 테스트 알림 5분 간격 등록됨")
 
     # Phase 2.1 — 문제 유형별 정답률 30일 집계 (매일 04:00 KST)
     def _refresh_qstat():
