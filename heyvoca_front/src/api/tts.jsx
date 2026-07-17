@@ -64,6 +64,32 @@ export const collectTestTexts = (questions) => {
   return out;
 };
 
+// 테스트 문제에서 재생 가능한 "모든" 텍스트(단어·의미·예문) 수집 — 진입 후 백그라운드 캐싱용.
+// 테스트 자체는 단어(origin)만 자동재생하지만, 학습 결과·단어 상세에서 의미/예문 TTS를
+// 즉시 재생할 수 있도록 진행 중 백그라운드로 미리 데워둔다(진입 게이트에는 포함하지 않음).
+export const collectTestFullTexts = (questions) => {
+  const out = [];
+  const pushWord = (w) => {
+    if (!w) return;
+    if (w.origin) out.push({ text: w.origin, language: 'en' });
+    for (const m of (w.meanings || [])) {
+      if (typeof m === 'string' && m) out.push({ text: m, language: 'ko' });
+    }
+    for (const ex of (w.examples || [])) {
+      const en = ex?.origin || ex?.sentence;
+      const ko = ex?.meaning || ex?.translation;
+      if (en) out.push({ text: en, language: 'en' });
+      if (ko) out.push({ text: ko, language: 'ko' });
+    }
+  };
+  if (!Array.isArray(questions)) return out;
+  for (const q of questions) {
+    pushWord(q);
+    if (Array.isArray(q?.words)) q.words.forEach(pushWord);
+  }
+  return out;
+};
+
 // 학습 카드 목록에서 자동 재생되는 텍스트 전부 수집.
 // 재생 순서: 단어(en) → 뜻(ko) → 예문(en) → 예문 뜻(ko).
 export const collectStudyTexts = (words) => {

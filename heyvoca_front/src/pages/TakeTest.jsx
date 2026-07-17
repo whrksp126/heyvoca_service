@@ -10,10 +10,16 @@ import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
-import { warmTts, collectTestTexts } from '../api/tts';
+import { warmTts, prewarmTts, collectTestTexts, collectTestFullTexts } from '../api/tts';
+import { prefetchTtsList } from '../utils/common';
+import ProgressSplash from '../components/common/ProgressSplash';
 import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
+
+// 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
+// (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
+const PREPARE_MAX_WAIT_MS = 7000;
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -32,6 +38,9 @@ const TakeTest = () => {
   const { completeMission } = useOnboardingUnlock();
   const [testQuestions, setTestQuestions] = useState([]);
   const [isTestQuestionsSetting, setIsTestQuestionsSetting] = useState(true);
+  // TTS 사전 캐싱(발음 준비) 게이트 — 준비가 끝나기 전엔 학습 화면 대신 준비 스플래시를 보여준다.
+  const [isPreparingTts, setIsPreparingTts] = useState(false);
+  const [prepareProgress, setPrepareProgress] = useState(0);
   const [progressIndex, setProgressIndex] = useState(0);
   const navigate = useNavigate();
   // 업데이트해야 할 단어장 아이디를 저장할 Set (중복 방지)
@@ -297,15 +306,55 @@ const TakeTest = () => {
     return { testQuestions, sessionId, composition, compositionStrategy };
   };
 
-  // 세션 시작 시 워밍: ① 캐시에 없는 TTS 미리 생성, ② 정답/오답 복습 예정일 미리 계산.
-  // 둘 다 백그라운드(fire-and-forget) — 학습 진입을 막지 않는다.
+  // 발음(TTS) 준비가 끝난 뒤에 학습 화면을 연다.
+  //  - 게이트(대기) 대상: 테스트에서 "자동 재생"되는 단어(발음)만 — 이것만 기다리면 자동재생이 안 끊긴다.
+  //  - 서버 배치 생성(prewarm)으로 없는 음성만 만들고, 클라이언트 blob prefetch로 즉시 재생 준비.
+  //  - 최대 대기(PREPARE_MAX_WAIT_MS) 초과 시 준비가 덜 됐어도 진입(무한 대기 방지).
+  //  - 진입 게이트 이후, 의미·예문 등 나머지 음성은 백그라운드로 계속 캐싱(결과·단어상세 TTS 대비).
+  const prepareThenReveal = async (questions) => {
+    const gateTexts = collectTestTexts(questions); // 자동재생 단어(en)
+    if (gateTexts.length === 0) {
+      // 준비할 자동재생 음성이 없으면 곧바로 진입.
+      setIsTestQuestionsSetting(false);
+      warmTts(collectTestFullTexts(questions)); // 나머지는 백그라운드
+      return;
+    }
+
+    setPrepareProgress(0);
+    setIsPreparingTts(true);
+    setIsTestQuestionsSetting(false); // 준비 스플래시로 전환(빈 화면 대신)
+
+    const prepare = (async () => {
+      // ① 서버 배치 생성 — 없는 음성만 생성(0 → 35%)
+      try { await prewarmTts(gateTexts); } catch (e) { /* 실패해도 prefetch가 개별 폴백 */ }
+      setPrepareProgress(0.35);
+      // ② 클라이언트 prefetch — 실제 준비 개수 기반 35% → 100%
+      await prefetchTtsList(gateTexts, 4, (done, total) => {
+        setPrepareProgress(0.35 + 0.65 * (total ? done / total : 1));
+      });
+    })();
+
+    // 최대 대기 초과 시 진입(나머지는 백그라운드 계속 진행)
+    await Promise.race([
+      prepare.catch(() => {}),
+      new Promise((resolve) => setTimeout(resolve, PREPARE_MAX_WAIT_MS)),
+    ]);
+
+    setPrepareProgress(1);
+    setIsPreparingTts(false);
+
+    // 진입 이후: 의미·예문까지 포함한 전체 음성을 백그라운드로 계속 데운다(결과/단어상세 대비).
+    warmTts(collectTestFullTexts(questions));
+    // 복습 예정일 예측(TTS와 별개) — 준비와 무관하게 백그라운드로 진행.
+    warmSession(questions);
+  };
+
+  // 세션 시작 시 복습 예정일 예측 — 각 문제에 predictedReview 부착(백그라운드).
+  // (TTS 사전 캐싱은 prepareThenReveal 게이트에서 처리하므로 여기선 예측만 담당.)
   const warmSession = (questions) => {
     if (!Array.isArray(questions) || questions.length === 0) return;
 
-    // ① TTS 사전 캐싱 + 클라이언트 blob prefetch (클릭/자동재생 즉시화)
-    warmTts(collectTestTexts(questions));
-
-    // ② 복습 예정일 예측 — 각 문제(및 cardMatch 내부 단어)에 predictedReview 부착
+    // 복습 예정일 예측 — 각 문제(및 cardMatch 내부 단어)에 predictedReview 부착
     const ids = [];
     const pushId = (id) => { if (id != null) ids.push(id); };
     for (const q of questions) {
@@ -380,7 +429,6 @@ const TakeTest = () => {
         if (isCacheValid) {
           setTestQuestions(studyData);
           setProgressIndex(recentStudy[state.testType].progress_index);
-          setIsTestQuestionsSetting(false);
           // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)
           loggedVocaIdsRef.current = new Set();
           retryCountMapRef.current = new Map();
@@ -399,7 +447,8 @@ const TakeTest = () => {
             }
             totalUniqueVocaCountRef.current = uniqueIds.size || studyData.length;
           }
-          warmSession(studyData);
+          // 발음(TTS) 준비 완료까지 준비 화면을 보여준 뒤 학습으로 진입.
+          await prepareThenReveal(studyData);
           return;
         }
         // 잘못된 캐시 → else 블록으로 fall-through해서 재생성
@@ -460,8 +509,8 @@ const TakeTest = () => {
           });
 
           setTestQuestions(tempTestQuestions);
-          setIsTestQuestionsSetting(false);
-          warmSession(tempTestQuestions);
+          // 발음(TTS) 준비 완료까지 준비 화면을 보여준 뒤 학습으로 진입.
+          await prepareThenReveal(tempTestQuestions);
         } catch (e) {
           console.error('[TakeTest] 학습 데이터 초기화 실패:', e);
           window.alert('학습을 시작할 수 없어요. 잠시 후 다시 시도해주세요');
@@ -687,9 +736,15 @@ const TakeTest = () => {
     }
   };
 
-  if (isTestQuestionsSetting) {
-    // 학습 데이터 fetch 동안 빈 화면 유지. 정적 로딩 이미지 대신 짧은 깜빡임으로 처리.
-    return null;
+  if (isTestQuestionsSetting || isPreparingTts) {
+    // 게스트 맛보기는 기존처럼 빈 화면으로 빠르게 진입(준비 스플래시 미사용).
+    if (isGuestMode) return null;
+    // 로그인 학습: 로그인 스플래시와 동일한 프로그래스 화면으로 준비 상태를 보여준다.
+    //  - 문제 데이터 로딩 단계: '학습을 준비하는 중'
+    //  - 발음(TTS) 캐싱 단계: 실제 진행률과 함께 '발음을 준비하는 중'
+    const message = isPreparingTts ? '발음을 준비하는 중' : '학습을 준비하는 중';
+    const prog = isPreparingTts ? prepareProgress : 0.08;
+    return <ProgressSplash progress={prog} message={message} />;
   } else {
     if (recentStudy[state.testType]?.status === "end") {
       // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.

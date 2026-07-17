@@ -1,13 +1,14 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SpeakerHigh, SpinnerGap } from '@phosphor-icons/react';
+import { SpeakerHigh } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import StudyHeader from './StudyHeader';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import MemorizationStatus from '../common/MemorizationStatus';
 import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
-import { warmTts, collectStudyTexts } from '../../api/tts';
+import { warmTts, prewarmTts, collectStudyTexts } from '../../api/tts';
+import ProgressSplash from '../common/ProgressSplash';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { useUser } from '../../context/UserContext';
@@ -48,8 +49,10 @@ const StudyMain = ({ words }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('next');
-  // 카드 노출 전 TTS 준비(prefetch) 단계 — 준비가 끝나기 전까지 "학습 준비 중" 화면을 보여준다.
+  // 카드 노출 전 TTS 준비(prefetch) 단계 — 준비가 끝나기 전까지 준비 스플래시를 보여준다.
   const [isPreparing, setIsPreparing] = useState(true);
+  // 준비 진행률(0~1) — 로그인 스플래시와 동일한 프로그래스바 표시에 사용.
+  const [prepareProgress, setPrepareProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingItemId, setPlayingItemId] = useState(null);
   // 의미·예문처럼 한 항목에 여러 라인이 있을 때 현재 재생 중인 라인의 인덱스.
@@ -267,8 +270,15 @@ const StudyMain = ({ words }) => {
       const allTexts = collectStudyTexts(words);
       const priorityTexts = collectStudyTexts(words.slice(0, PREPARE_PRIORITY_COUNT));
 
+      // 서버 배치 생성(prewarm) 후 클라이언트 prefetch — prefetch 진행률로 준비 바를 채운다.
       // fire-and-forget으로 시작하되(백그라운드에서 계속 진행), 준비 완료 여부는 아래에서 기다린다.
-      const fullPreparePromise = warmTts(allTexts).catch(() => {});
+      const fullPreparePromise = (async () => {
+        try { await prewarmTts(allTexts); } catch (e) { /* prefetch 개별 폴백 */ }
+        if (!cancelled) setPrepareProgress(0.35);
+        await prefetchTtsList(allTexts, 4, (done, total) => {
+          if (!cancelled) setPrepareProgress(0.35 + 0.65 * (total ? done / total : 1));
+        });
+      })().catch(() => {});
       const timedOut = await Promise.race([
         fullPreparePromise.then(() => false),
         new Promise(resolve => setTimeout(() => resolve(true), PREPARE_MAX_WAIT_MS)),
@@ -280,6 +290,7 @@ const StudyMain = ({ words }) => {
       }
 
       if (cancelled) return;
+      setPrepareProgress(1);
       setIsPreparing(false);
       setIsPlaying(true);
       startPlayback(0);
@@ -379,17 +390,8 @@ const StudyMain = ({ words }) => {
   }, []);
 
   if (isPreparing) {
-    return (
-      <div className="flex flex-col h-[calc(100vh-var(--status-bar-height))] bg-layout-white dark:bg-layout-black">
-        <StudyHeader onBackClick={handleStopLearning} onSettingsClick={handleSettingsClick} />
-        <div className="flex flex-1 flex-col items-center justify-center gap-[14px]">
-          <SpinnerGap size={36} className="animate-spin text-primary-main-600" />
-          <p className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-50">
-            학습 준비 중...
-          </p>
-        </div>
-      </div>
-    );
+    // 로그인 스플래시와 동일한 프로그래스 화면으로 발음(TTS) 준비 상태를 보여준다.
+    return <ProgressSplash progress={prepareProgress} message="발음을 준비하는 중" />;
   }
 
   if (!word) {

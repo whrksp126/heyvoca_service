@@ -277,7 +277,8 @@ export const prefetchTextSound = (text, lang) => {
 };
 
 // 목록을 동시성 제한으로 prefetch. 학습/테스트/결과 진입 시 백그라운드 호출.
-export const prefetchTtsList = async (items, concurrency = 4) => {
+// onProgress(done, total): 항목 하나가 prefetch될 때마다 진행률 콜백(선택) — 준비 화면 프로그래스바용.
+export const prefetchTtsList = async (items, concurrency = 4, onProgress = null) => {
   if (!Array.isArray(items) || items.length === 0) return;
   const seen = new Set();
   const queue = [];
@@ -290,15 +291,22 @@ export const prefetchTtsList = async (items, concurrency = 4) => {
     seen.add(k);
     queue.push({ text: t, lang });
   }
+  const total = queue.length;
+  if (total === 0) return;
+  let done = 0;
   let idx = 0;
   const worker = async () => {
     while (idx < queue.length) {
       const cur = queue[idx++];
       await prefetchTextSound(cur.text, cur.lang);
+      done += 1;
+      if (typeof onProgress === 'function') {
+        try { onProgress(done, total); } catch (e) { /* 콜백 오류는 무시 */ }
+      }
     }
   };
   await Promise.all(
-    Array.from({ length: Math.min(concurrency, queue.length) }, worker)
+    Array.from({ length: Math.min(concurrency, total) }, worker)
   );
 };
 
