@@ -441,18 +441,6 @@ def create_scheduler(app):
             id=f'chat_reminder_{_slot}',
         )
 
-    # [테스트 전용] dev/local(DEBUG=True)에서만 — 5분마다 채팅 알림 발송.
-    # 5회 상한·당일 학습 중단을 무시(test_mode)해 딥링크 진입을 반복 검증한다.
-    # stg/prod(DEBUG=False)에는 등록되지 않는다.
-    # TODO(테스트 종료 후 제거): 이 블록은 임시 검증용이다.
-    if app.config.get('DEBUG'):
-        from apscheduler.triggers.interval import IntervalTrigger
-        scheduler.add_job(
-            lambda: run_chat_reminder(app, 'afternoon', test_mode=True),
-            IntervalTrigger(minutes=5, timezone=KST),
-            id='chat_reminder_test_5min',
-        )
-        print("  -> [DEV] 채팅 테스트 알림 5분 간격 등록됨")
 
     # Phase 2.1 — 문제 유형별 정답률 30일 집계 (매일 04:00 KST)
     def _refresh_qstat():

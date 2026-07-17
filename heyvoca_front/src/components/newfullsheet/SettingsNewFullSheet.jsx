@@ -5,7 +5,11 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
-import { vibrate, openExternalUrl, parseAppVersion } from '../../utils/osFunction';
+import { vibrate, openExternalUrl, parseAppVersion, isAppVersionAtLeast } from '../../utils/osFunction';
+
+// '실험실'(채팅으로 학습 등 네이티브 기능)을 지원하는 최소 앱 버전.
+// 구버전 앱에는 네이티브 채팅 화면/알림 핸들러가 없으므로 이 버전 미만에서는 실험실을 숨긴다.
+const LAB_MIN_APP_VERSION = '1.1.0';
 import ThemeNewFullSheet from './ThemeNewFullSheet';
 import ExampleSettingsNewFullSheet from './ExampleSettingsNewFullSheet';
 import PushNotificationsNewFullSheet from './PushNotificationsNewFullSheet';
@@ -114,12 +118,18 @@ const SettingsNewFullSheet = () => {
             onClick={() => openSheet(DailyNewLimitNewFullSheet)}
           />
 
-          <GroupLabel>실험실</GroupLabel>
-          <SettingsItem
-            icon={<Flask weight="fill" className={iconClass} />}
-            label="실험실"
-            onClick={() => openSheet(LabNewFullSheet)}
-          />
+          {/* 실험실 — 네이티브 채팅 등 신기능 지원 앱 버전(1.1.0+)에서만 노출.
+              구버전 앱/순수 웹에서는 숨겨 먹통 진입/무의미한 알림을 방지한다. */}
+          {isAppVersionAtLeast(LAB_MIN_APP_VERSION) && (
+            <>
+              <GroupLabel>실험실</GroupLabel>
+              <SettingsItem
+                icon={<Flask weight="fill" className={iconClass} />}
+                label="실험실"
+                onClick={() => openSheet(LabNewFullSheet)}
+              />
+            </>
+          )}
 
           <GroupLabel>정보</GroupLabel>
           <SettingsItem

@@ -20,7 +20,7 @@ import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-import { vibrate, checkNotificationPermissionGranted } from '../../utils/osFunction';
+import { vibrate, checkNotificationPermissionGranted, isAppVersionAtLeast } from '../../utils/osFunction';
 import { getHomeGreeting } from '../../utils/homeGreeting';
 import { useStats } from '../../context/StatsContext';
 import { prefetchLabSettings } from '../../api/lab';
@@ -200,10 +200,10 @@ const Main = () => {
 
   const { fetchUserCheckin } = useUser();
 
-  // 홈 화면 진입 시 출석 체크 호출 + 실험실 설정 프리로드(실험실 화면 즉시 반영용)
+  // 홈 화면 진입 시 출석 체크 호출 + (실험실 지원 앱 버전에서만) 실험실 설정 프리로드
   useEffect(() => {
     fetchUserCheckin();
-    prefetchLabSettings();
+    if (isAppVersionAtLeast('1.1.0')) prefetchLabSettings();
   }, []);
 
   // 온보딩→가입→로그인 후 홈 첫 진입 시 1회 알림 권한 프롬프트 (온보딩 signup에서 플래그 설정)
