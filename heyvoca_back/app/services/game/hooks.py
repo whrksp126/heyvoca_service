@@ -10,8 +10,9 @@ post_study_log가 학습 데이터를 커밋한 '직후' 호출한다.
 from typing import Optional
 from uuid import UUID
 
-# 콤보를 적립하는 학습 모드 (AI 추천 테스트)
-AI_RECOMMEND_TEST_TYPES = {'quick'}
+# 콤보를 적립하는 학습 모드 (AI 추천 테스트 + 채팅으로 학습)
+# 채팅 학습은 사실상 AI 추천 테스트의 채팅 버전이므로 콤보/암기왕을 동일하게 적립한다.
+AI_RECOMMEND_TEST_TYPES = {'quick', 'chat'}
 
 
 def on_study_answer(
