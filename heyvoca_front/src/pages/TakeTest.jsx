@@ -621,10 +621,12 @@ const TakeTest = () => {
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
         }
         // 온보딩 미션 완료 신호 — M1(AI 추천 테스트)·M5(집중 반복 학습). 게스트/맛보기(today)는 위에서 이미 return됨.
+        // silent: true — 완료 직후 학습결과 화면(StudyResult)이 콤보/보석/업적 리워드를 자체적으로
+        // 보여주므로, 옛 레이어(오버레이) 기반 미션 축하 화면은 억제해 결과 화면과 겹치지 않게 한다.
         if (state.testType === 'quick') {
-          completeMission('ai_test');
+          completeMission('ai_test', { silent: true });
         } else if (state.testType === 'study') {
-          completeMission('focus_study');
+          completeMission('focus_study', { silent: true });
         }
         await updateVocabularySheetAndRecentStudyData();
         // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달

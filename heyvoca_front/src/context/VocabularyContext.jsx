@@ -531,7 +531,16 @@ export const VocabularyProvider = ({ children }) => {
   // [UPDATED] 단어 추가
   const addWord = useCallback(async (sheetId, word) => {
     try {
-      return await addUserDictionaryWord(sheetId, word);
+      const result = await addUserDictionaryWord(sheetId, word);
+
+      // 온보딩 미션(단어 추가 관련) 자동 완료 갱신 — 백엔드 훅 처리 후 최신화.
+      // 이 Context는 Provider 트리 상 OnboardingUnlockProvider보다 바깥이라 훅 대신 전역 참조 사용
+      // (window.overlayContext 등 다른 Context와 동일한 패턴).
+      if (window.onboardingUnlockContext?.refreshUnlock) {
+        window.onboardingUnlockContext.refreshUnlock();
+      }
+
+      return result;
     } catch (err) {
       setErrorVocabularySheets('단어 추가에 실패했습니다.');
       throw err;

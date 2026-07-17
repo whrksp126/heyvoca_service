@@ -49,7 +49,7 @@ SIGNUP_REWARD_GEM = 5
 # reward_gem  : 완료 보상 보석
 ONBOARDING_MISSIONS = [
     {'key': 'ai_test',     'order': 1, 'title': 'AI 추천 테스트 완료',   'unlocks': 'vocabook', 'reward_gem': 5},
-    {'key': 'make_book',   'order': 2, 'title': '단어장 직접 만들기 완료', 'unlocks': 'store',    'reward_gem': 5},
+    {'key': 'make_book',   'order': 2, 'title': '단어장 만들고 단어 추가',  'unlocks': 'store',    'reward_gem': 5},
     {'key': 'buy_book',    'order': 3, 'title': '서점 단어장 담기 완료',   'unlocks': 'dict',     'reward_gem': 10},
     {'key': 'search_word', 'order': 4, 'title': '사전에서 단어 찾아보기 완료', 'unlocks': 'listen', 'reward_gem': 5},
     {'key': 'focus_study', 'order': 5, 'title': '집중 반복 학습 완료',    'unlocks': 'custom',   'reward_gem': 10},
@@ -111,6 +111,28 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
         source_type='onboarding_mission', source_id=None,
         balance_after=user.gem_cnt,
     )  # register_gem_log 내부 commit
+
+    # M2(make_book) 완료 보상: 보석 외에 빈 단어장 1개를 자동 지급한다.
+    # (미션이 멱등하게 1회만 신규 완료되므로 이 지급도 1회만 발생)
+    if mission_key == 'make_book':
+        import json as _json
+        try:
+            reward_book = UserVocaBook(
+                user_id=user_id,
+                bookstore_id=None,
+                color=_json.dumps({'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'}, ensure_ascii=False),
+                name='나의 단어장',
+                total_word_cnt=0,
+                memorized_word_cnt=0,
+                voca_list=None,
+                updated_at=None,
+            )
+            db.session.add(reward_book)
+            db.session.commit()
+        except Exception:
+            # 보상 단어장 생성 실패는 미션 완료 자체를 되돌리지 않는다(보석은 이미 지급됨).
+            db.session.rollback()
+            logging.getLogger(__name__).error('make_book 보상 빈 단어장 생성 실패', exc_info=True)
 
     return {'newly_completed': True, 'reward_gem': reward, 'unlocks': mission['unlocks']}
 

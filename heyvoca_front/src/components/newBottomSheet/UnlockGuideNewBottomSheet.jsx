@@ -4,6 +4,16 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 
+// 현재 진행 미션의 "무엇을 해야 열리는지" 구체 안내 문구(미션 key별).
+// 미션 title만으로는 행동이 애매한 경우(특히 make_book=단어장 만들고 '단어 추가')를 명확히 안내한다.
+const MISSION_ACTION_HINTS = {
+  ai_test: "AI 추천 테스트를 완료하면 '단어장'이 열려요",
+  make_book: "단어장을 만든 뒤 단어를 추가하면 '상점'이 열려요",
+  buy_book: "상점에서 단어장을 담으면 '사전'이 열려요",
+  search_word: "사전에서 단어를 찾아보면 '집중 반복 학습'이 열려요",
+  focus_study: "집중 반복 학습을 완료하면 '자유 설정 테스트'가 열려요",
+};
+
 // 잠긴 하단탭/학습카드를 클릭했을 때, 또는 홈 배너를 눌렀을 때 뜨는 입문 퀘스트(미션 체크리스트) 바텀시트.
 // props:
 //  - highlightKey: 사용자가 클릭한 기능의 unlock key (예: 'vocabook' | 'store' | 'dict' | 'listen' | 'custom') — 선택 사항
@@ -69,7 +79,7 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
                   {mission.done
                     ? `→ ${featureLabel}이 열렸어요`
                     : isCurrent
-                      ? `완료하면 '${featureLabel}' 기능이 열려요`
+                      ? (MISSION_ACTION_HINTS[mission.key] || `완료하면 '${featureLabel}' 기능이 열려요`)
                       : '이전 미션을 먼저 완료해주세요'}
                 </span>
               </div>

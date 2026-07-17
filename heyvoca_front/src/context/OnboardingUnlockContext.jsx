@@ -36,13 +36,17 @@ export const OnboardingUnlockProvider = ({ children }) => {
   const missionsRef = useRef(null);
 
   // 새로 완료된 미션들에 대한 축하 오버레이를 순서대로 큐잉
-  const celebrateMissions = useCallback((newlyDoneMissions) => {
+  // silent=true면 오버레이 없이 완료 상태·연출 참조값만 갱신
+  // (AI 추천 테스트/집중 반복 학습처럼 완료 직후 학습결과 화면 자체가 리워드를 표현하는 흐름에서는
+  //  이 레이어 기반 오버레이가 학습결과 화면(콤보/보석/업적 슬라이드)과 겹쳐 보이므로 억제한다)
+  const celebrateMissions = useCallback((newlyDoneMissions, { silent = false } = {}) => {
     if (!newlyDoneMissions || newlyDoneMissions.length === 0) return;
     newlyDoneMissions.forEach((mission) => {
       const label = FEATURE_LABELS[mission.unlocks] || mission.unlocks || '새 기능';
       const rewardGem = mission.reward_gem ?? 0;
       const entry = { key: mission.key, label, reward_gem: rewardGem };
       setCelebration(entry);
+      if (silent) return;
       showOverlay(GemRewardOverlay, {
         gemCount: rewardGem,
         title: `${label} 기능이 열렸어요!`,
@@ -103,7 +107,10 @@ export const OnboardingUnlockProvider = ({ children }) => {
 
   // 프론트 트리거 미션 완료 처리 — key: 'ai_test' | 'search_word' | 'focus_study'
   // (make_book/buy_book은 백엔드 훅 전용 — 여기서 호출하지 않음)
-  const completeMission = useCallback(async (key) => {
+  // silent=true: 완료 처리(보석 지급·상태 갱신)는 그대로 하되 축하 오버레이는 띄우지 않음.
+  // (예: AI 추천 테스트/집중 반복 학습처럼 완료 직후 학습결과 화면이 자체 리워드 연출을
+  //  이미 보여주는 흐름 — 오버레이가 겹쳐 보이는 것을 방지)
+  const completeMission = useCallback(async (key, { silent = false } = {}) => {
     // 이미 완료된 미션이거나 legacy 유저면 호출 스킵(멱등이라 안전하지만 불필요한 호출 방지)
     const existing = unlock?.missions?.find((m) => m.key === key);
     if (unlock?.legacy || existing?.done) {
@@ -120,7 +127,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       applyUnlockData(res.data, { celebrate: false });
 
       if (newly_completed) {
-        celebrateMissions([{ key, unlocks, reward_gem }]);
+        celebrateMissions([{ key, unlocks, reward_gem }], { silent });
       }
 
       if (typeof gem_cnt === 'number') {

@@ -331,7 +331,14 @@ export const AddWordSheet = ({ id, vocabularyId, dictionaryId, origin, meanings,
                           i >= startIndex &&
                           i < startIndex + searchWord.length;
                         return (
-                          <span key={i} style={{ color: isHighlighted ? 'var(--primary-main-600)' : 'var(--layout-black)' }}>{char}</span>
+                          <span
+                            key={i}
+                            className={isHighlighted
+                              ? 'text-primary-main-600 dark:text-primary-main-400'
+                              : 'text-layout-black dark:text-layout-white'}
+                          >
+                            {char}
+                          </span>
                         );
                       })}
                     </span>

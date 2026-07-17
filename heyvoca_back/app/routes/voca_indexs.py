@@ -23,6 +23,20 @@ def _is_purchased_book_id(user_id, voca_book_id):
     return book is not None and book.bookstore_id is not None
 
 
+def _try_complete_onboarding_mission(user_id, mission_key):
+    """온보딩 미션 완료 훅. 실패해도 본 요청(단어 생성/연결) 흐름은 절대 깨지 않는다.
+
+    voca_books.py의 동일 이름 헬퍼와 로직이 같다(순환 import 방지를 위해 중복 정의).
+    """
+    try:
+        from app.routes.onboarding import complete_onboarding_mission
+        complete_onboarding_mission(user_id, mission_key)
+    except Exception:
+        logging.getLogger(__name__).warning(
+            '온보딩 미션 완료 처리 실패: mission_key=%s', mission_key, exc_info=True,
+        )
+
+
 def merge_meanings(existing_json, new_list):
     """기존 meanings JSON과 새 meanings 리스트를 합산 (중복 제거)"""
     existing = json.loads(existing_json) if existing_json else []
@@ -182,6 +196,10 @@ def create_voca_index():
         db.session.add(book_map)
 
         db.session.commit()
+
+        # 온보딩 미션 훅 — 직접 만든 단어장(bookstore_id NULL)에 단어를 추가한 경우 make_book 완료.
+        # (구매 단어장은 함수 상단에서 이미 403으로 차단되므로 이 지점에선 항상 직접 생성 단어장)
+        _try_complete_onboarding_mission(user_id, 'make_book')
 
         return jsonify({'code': 201, 'data': build_voca_index_response(user_voca)}), 201
 
@@ -352,8 +370,12 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
         
         db.session.commit()
 
+        # 온보딩 미션 훅 — 직접 만든 단어장(bookstore_id NULL)에 단어를 연결한 경우 make_book 완료.
+        # (구매 단어장은 함수 상단에서 이미 403으로 차단되므로 이 지점에선 항상 직접 생성 단어장)
+        _try_complete_onboarding_mission(user_id, 'make_book')
+
         # 응답 데이터 구성 (프론트엔드 형식에 맞게)
-        # build_voca_index_response는 전체 정보를 반환하지만, 여기서는 연결된 결과(UserVoca 정보)를 
+        # build_voca_index_response는 전체 정보를 반환하지만, 여기서는 연결된 결과(UserVoca 정보)를
         # 리턴하여 프론트에서 업데이트할 수 있게 함.
         return jsonify({'code': 201, 'data': build_voca_index_response(user_voca)}), 201
 
