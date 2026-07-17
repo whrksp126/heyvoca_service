@@ -194,19 +194,47 @@ let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸�
 // gesture activation이 만료되어 "첫 클릭 무음, 둘째 클릭부터 재생" 버그가 있었다.
 // 클릭 동기 컨텍스트에서 무음을 한 번 play()해 element를 활성화하면 이후 async play()도 허용된다.
 const SILENT_AUDIO = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-let audioPrimed = false;
+// unlock "성공"(무음 재생 resolve) 시에만 true. 실패하면 다음 gesture에서 다시 시도한다.
+// (과거엔 시도 즉시 true로 막아, 자동재생 흐름이 먼저 실패하면 이후 탭에서도 영영 unlock 못 했다.)
+let audioUnlocked = false;
 
 // 반드시 클릭 등 user gesture의 동기 호출 스택에서 호출되어야 한다.
+// 자동재생(집중 반복 학습 등 gesture 밖 play)이 iOS WebView autoplay 정책에 막혀 무음+즉시 스킵되는
+// 문제를, 앱 사용 중 발생한 gesture에서 element를 미리 unlock해 해결한다.
 const primeAudioWithinGesture = () => {
   if (!sharedAudio) sharedAudio = new Audio();
-  if (audioPrimed) return;
-  audioPrimed = true;
+  if (audioUnlocked) return;
   try {
     sharedAudio.src = SILENT_AUDIO;
     const p = sharedAudio.play();
-    if (p && typeof p.catch === 'function') p.catch(() => { /* 무음 재생 reject 무시 */ });
-  } catch (e) { /* noop */ }
+    if (p && typeof p.then === 'function') {
+      p.then(
+        () => { audioUnlocked = true; },
+        () => { /* 실패 → audioUnlocked=false 유지 → 다음 gesture에서 재시도 */ },
+      );
+    } else {
+      audioUnlocked = true;
+    }
+  } catch (e) { /* 다음 gesture에서 재시도 */ }
 };
+
+// 앱 전역: 실제 user gesture에서 오디오를 미리 unlock한다(자동재생 대비).
+// unlock에 성공할 때까지 리스너를 유지하다가, 성공하면 스스로 제거한다.
+if (typeof window !== 'undefined') {
+  const _tryUnlockAudio = () => {
+    primeAudioWithinGesture();
+    if (audioUnlocked) {
+      window.removeEventListener('pointerdown', _tryUnlockAudio, true);
+      window.removeEventListener('touchend', _tryUnlockAudio, true);
+      window.removeEventListener('mousedown', _tryUnlockAudio, true);
+      window.removeEventListener('keydown', _tryUnlockAudio, true);
+    }
+  };
+  window.addEventListener('pointerdown', _tryUnlockAudio, true);
+  window.addEventListener('touchend', _tryUnlockAudio, true);
+  window.addEventListener('mousedown', _tryUnlockAudio, true);
+  window.addEventListener('keydown', _tryUnlockAudio, true);
+}
 
 // ── 클라이언트 TTS 오디오 prefetch 캐시 ─────────────────────────────────
 // presigned URL이 가리키는 mp3를 미리 받아 objectURL로 들고 있다가, 클릭 시
