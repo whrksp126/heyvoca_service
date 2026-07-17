@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db, limiter
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -1248,6 +1248,10 @@ def withdraw():
 
             # 8-2. UserQuestionTypeStat 삭제 (문제 유형별 정답률 집계, 실제 FK)
             db.session.query(UserQuestionTypeStat).filter(UserQuestionTypeStat.user_id == user_id).delete()
+
+            # 8-3. UserOnboardingMission 삭제 (온보딩 미션 완료 기록, user.id 참조 FK)
+            #      이걸 안 지우면 User 삭제 시 FK 제약 위반(1451)으로 탈퇴가 실패한다.
+            db.session.query(UserOnboardingMission).filter(UserOnboardingMission.user_id == user_id).delete()
 
             # 9. User 삭제 (사용자 자체)
             db.session.delete(user)
