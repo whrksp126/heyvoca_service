@@ -266,7 +266,6 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
     hide = Column(String(1), nullable=False)
-    level = Column(String(50), nullable=True)
     level_id = Column(Integer, nullable=False)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
     admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=True)

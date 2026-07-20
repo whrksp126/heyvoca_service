@@ -81,7 +81,6 @@ def _bookstore_to_dict(bs):
         'color': bs.color,
         'gem': bs.gem,
         'hide': bs.hide,
-        'level': bs.level,
         'level_id': bs.level_id,
         'admin_voca_book_id': bs.admin_voca_book_id,
         'created_at': bs.created_at.isoformat() if bs.created_at else None,
@@ -627,7 +626,6 @@ def toggle_bookstore(book_id):
         bs.color = payload.get('color') or None
         bs.gem = gem
         bs.hide = 'N'
-        bs.level = payload.get('level') or None
         bs.level_id = level_id
         bs.book_id = None
         bs.admin_voca_book_id = book_id
