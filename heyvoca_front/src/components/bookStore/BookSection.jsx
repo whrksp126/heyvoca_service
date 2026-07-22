@@ -67,8 +67,7 @@ export const BookCard = ({ item, onClick, className = '', priceLabel }) => {
 const BookSection = () => {
   "use memo";
 
-  // 추천 단어장은 전역 prefetch(앱 시작 시 + 학습 완료 후) 결과를 사용 — 상점 진입 시 즉시 노출
-  const { isBookStoreLoading, bookStore, recommendedBooks, isRecommendedBooksLoading } = useVocabulary();
+  const { isBookStoreLoading, bookStore } = useVocabulary();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -87,8 +86,6 @@ const BookSection = () => {
     if (selectedCategory === ALL_CATEGORY) return bookStore;
     return bookStore.filter((b) => b.category === selectedCategory);
   }, [bookStore, selectedCategory]);
-
-  const usesScrollableRecommendations = recommendedBooks.length >= 3;
 
   const handleBookStoreClick = async (id) => {
     try {
@@ -127,35 +124,6 @@ const BookSection = () => {
 
   return (
     <section className="relative flex flex-col gap-[16px] py-[20px]">
-      {!isRecommendedBooksLoading && recommendedBooks.length > 0 && (
-        <div className="flex flex-col gap-[10px] px-[16px]">
-          <div className="flex flex-col gap-[2px]">
-            <h4 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
-              추천 단어장
-            </h4>
-            <p className="text-[12px] font-[500] text-layout-gray-300">
-              현재 레벨에 맞춰 골랐어요
-            </p>
-          </div>
-          <ul
-            className={
-              usesScrollableRecommendations
-                ? 'flex gap-[15px] overflow-x-auto scrollbar-hide pb-[4px] -mx-[16px] px-[16px]'
-                : 'grid grid-cols-2 gap-[15px]'
-            }
-          >
-            {recommendedBooks.map((item) => (
-              <BookCard
-                key={`recommended-${item.id}`}
-                item={item}
-                onClick={() => handleBookStoreClick(item.id)}
-                className={usesScrollableRecommendations ? 'w-[160px] min-w-[160px] flex-shrink-0' : ''}
-              />
-            ))}
-          </ul>
-        </div>
-      )}
-
       {/* 카테고리 필터 칩 */}
       <div className="px-[16px]">
         <div className="flex gap-[8px] overflow-x-auto scrollbar-hide">

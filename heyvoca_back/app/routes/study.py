@@ -361,9 +361,7 @@ def post_study_log():
     # 학습 완료 후 recommend pool 캐시 무효화 (stale 방지)
     try:
         from app.services.recommend.pool import invalidate_pool_cache
-        from app.services.bookstore_recommend import invalidate_bookstore_recommend_cache
         invalidate_pool_cache(user_id)
-        invalidate_bookstore_recommend_cache(user_id)
     except Exception:
         pass  # 캐시 무효화 실패는 비치명적
 

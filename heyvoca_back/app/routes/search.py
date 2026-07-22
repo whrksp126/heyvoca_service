@@ -7,7 +7,6 @@ from sqlalchemy import text, select, case, func
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
-from app.services.bookstore_recommend import recommend_bookstores_for_user
 from app.utils.jwt_utils import jwt_required
 from flask_caching import Cache
 import redis
@@ -388,35 +387,6 @@ def search_bookstore_all():
         })
 
     return jsonify({'code': 200, 'data': final_results}), 200
-
-
-@search_bp.route('/bookstore/recommend', methods=['GET'])
-@jwt_required
-def search_bookstore_recommend():
-    try:
-        user_id = UUID(g.user_id)
-    except (TypeError, ValueError):
-        return jsonify({'code': 401, 'message': '유효하지 않은 사용자입니다.'}), 401
-
-    try:
-        limit = int(request.args.get('limit', 12))
-    except (TypeError, ValueError):
-        limit = 12
-    limit = max(1, min(limit, 50))
-
-    category = (request.args.get('category') or '').strip() or None
-
-    try:
-        result = recommend_bookstores_for_user(
-            user_id,
-            category=category,
-            limit=limit,
-        )
-    except Exception as e:
-        logging.getLogger(__name__).error('서점 추천 생성 오류', exc_info=True)
-        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
-
-    return jsonify({'code': 200, 'data': result}), 200
 
 
 ## 서점 단어장 상세 데이터 API

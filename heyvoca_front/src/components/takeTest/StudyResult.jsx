@@ -102,7 +102,7 @@ const StudyResult = () => {
 
   const { isDark } = useTheme();
   const { showExamples } = useExampleSettings();
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, fetchRecommendedBooks } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord } = useVocabulary();
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -191,8 +191,6 @@ const StudyResult = () => {
 
         // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
         fetchVocabularySheets();
-        // 학습 완료 시 백엔드 추천 캐시가 무효화되므로(레벨 프로필 변화) 추천 단어장도 갱신
-        if (typeof fetchRecommendedBooks === 'function') fetchRecommendedBooks();
       }
 
       setResultData(result);

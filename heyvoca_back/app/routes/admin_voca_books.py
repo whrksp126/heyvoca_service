@@ -580,7 +580,8 @@ def delete_word(book_id, map_id):
 # 7. POST /admin/voca-books/<book_id>/bookstore/toggle — 서점 등록 토글
 # ──────────────────────────────────────────────────────────
 
-_BOOKSTORE_REQUIRED_ON_CREATE = ('gem', 'category', 'level_id')
+# level_id는 레벨 기준 재정립 대기로 필수에서 제외(2026-07-22). 컬럼은 유지되며 PATCH로 나중에 부여 가능.
+_BOOKSTORE_REQUIRED_ON_CREATE = ('gem', 'category')
 
 
 @admin_voca_books_bp.route('/<int:book_id>/bookstore/toggle', methods=['POST'])
@@ -589,8 +590,8 @@ def toggle_bookstore(book_id):
     """단어장의 서점 노출 토글.
 
     - Bookstore 레코드가 없으면 신규 생성 (`hide='N'`).
-      body 필수: gem(int), category(str), level_id(int)
-      body 선택: name(기본 book_nm), downloads(기본 0), color, category_id, level
+      body 필수: gem(int), category(str)
+      body 선택: name(기본 book_nm), downloads(기본 0), color, category_id, level_id
     - 있으면 hide만 'N'↔'Y' 토글. (downloads/created_at 보존)
 
     응답: { code, data: {bookstore, action: 'created'|'shown'|'hidden'} }
@@ -614,7 +615,8 @@ def toggle_bookstore(book_id):
 
         try:
             gem = int(payload.get('gem'))
-            level_id = int(payload.get('level_id'))
+            raw_level_id = payload.get('level_id')
+            level_id = int(raw_level_id) if raw_level_id not in ('', None) else None
         except (TypeError, ValueError):
             return jsonify({'code': 400, 'message': 'gem/level_id는 정수여야 합니다.'}), 400
 

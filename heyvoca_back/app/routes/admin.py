@@ -103,7 +103,7 @@ def create_bookstore():
         color=color,
         hide='N' if data.get('is_visible', True) else 'Y',
         gem=data.get('gem', 0),
-        level_id=data['level_id'],
+        level_id=data.get('level_id'),
         book_id=data.get('book_id'),
         admin_voca_book_id=data.get('admin_voca_book_id'),
         category_id=data.get('category_id'),

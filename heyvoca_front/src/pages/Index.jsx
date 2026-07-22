@@ -34,7 +34,6 @@ const Index = () => {
     isUserDictionaryLoading,
     isRecentStudyLoading,
     isBookStoreLoading,
-    isRecommendedBooksLoading,
   } = useVocabulary();
 
   // 바가 100% 차 보이고 나서 실제 네비게이트
@@ -105,10 +104,6 @@ const Index = () => {
     {
       done: !isBookStoreLoading,
       label: '서점을 불러오는 중',
-    },
-    {
-      done: !isRecommendedBooksLoading,
-      label: '추천 단어장을 불러오는 중',
     },
     {
       done: !isAchievementCriteriaLoading,

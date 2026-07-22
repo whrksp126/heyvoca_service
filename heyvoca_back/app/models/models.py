@@ -266,7 +266,9 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
     hide = Column(String(1), nullable=False)
-    level_id = Column(Integer, nullable=False)
+    # 레벨 기준 재정립 대기 중(2026-07-22). 기존 추천 알고리즘 제거와 함께 값 전부 NULL로 초기화.
+    # 새 기준 확정 시 이 컬럼에 재부여 예정이라 컬럼 자체는 유지한다.
+    level_id = Column(Integer, nullable=True)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
     admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
