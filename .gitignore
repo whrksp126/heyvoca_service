@@ -17,3 +17,7 @@ db/admin_emphasis/
 .claude/
 dummy_vocalist/
 db/word_renewal/
+
+.mcp.json
+# 작업용 계획/보고 문서 (로컬 참고용)
+docs/voca_*.md
