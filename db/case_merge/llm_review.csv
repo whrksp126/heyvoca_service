@@ -1,0 +1,379 @@
+﻿class,lower,variants,rep_word,rep_voca_id,merge_voca_ids,rep_meanings,merge_meanings,rep_examples,merge_examples,merge_book_maps
+llm-proper,aaron,aaron | Aaron,Aaron,50057,31991,이름,아론 / 모세의 형 / 유대교 최초의 제사장,0,0,7
+llm-sense,acron,acron | Acron,acron,46321,48224,선절 / 구전부,도토리,0,0,1
+llm-sense,adolescent,adolescent | Adolescent,adolescent,1266,37610,청소년 / 청년,청춘기의 / 사춘기의,2,0,1
+llm-sense,advanced,advanced | Advanced,advanced,2358,29844,앞선 / 진보한 / 고등의 / 선진의 / 진행한,증진시키다,3,0,1
+llm-proper,africa,africa | Africa,Africa,33990,16308,아프리카,아프리카,0,0,13
+llm-proper,african,african | African,African,33989,2209,1. 아프리카의 / 아프리카인의  2. 흑인의; (교회 등이) 흑인에 의한  3. 아프리카인 / 아프리카 흑인 / 아프리카의 / 아프리카 사람(의),아프리카의 / 아프리카인,0,0,8
+llm-sense,after,after | After,after,3820,45606,…후에 / …뒤에 / 그 후 / 다음의 / …하고 나서,후에 / 뒤에 / 나중ㅇ에,2,0,1
+llm-sense,agglutination,agglutination | Agglutination,agglutination,37867,44564,교착 / 응집 / 접합,상처의]유착 / 응집,0,0,1
+llm-sense,agitate,agitate | Agitate,agitate,6833,32996,선동하다 / 흥분시키다 / 휘젓다,휘젓다 / 선동하다 / 교반하다,2,0,1
+llm-proper,alan,Alan | alan,Alan,50066,50301,이름,남자 이름,0,0,1
+llm-sense,alive,alive | Alive,alive,2212,48238,살아 있는 / 계속하여 / 생기에 넘치는 / 생생한 / 이 세상의 / 살아있는,활기찬 / 살아 있는,2,0,1
+llm-sense,ally,ally | Ally,ally,3812,37536,동맹 / 우방 / 동지 / 협력 / 연합 / 동맹국 / 협력자,앨리,2,0,1
+llm-proper,alma,Alma | alma,Alma,30019,48888,① 무희 ② 여자 이름,무희 / 여자 이름,0,0,2
+llm-sense,although,although | Although,although,3810,45596,비록…이지만 / …임에도 불구하고 / …이지만 / ~에도 불구하고,비록 ~일지라도,2,0,1
+llm-proper,amanda,amanda | Amanda,Amanda,50217,47935,이름,아만다 / 어맨다,0,0,2
+llm-sense,amazing,amazing | Amazing,amazing,2066,36165,엄청난 / 놀라운 / 대단한 / 멋진 / 흥미로운,놀랄만한.  굉장한,2,0,1
+llm-sense,ambition,ambition | Ambition,ambition,1433,48243,야망 / 야심 / 꿈 / 욕심 / 포부,목표,2,0,1
+llm-proper,america,america | America,America,33985,5343,1. 아메리카 합중국  2. 북아메리카 / 북미  3. 남아메리카 / 남미 / 미국,미국 / 아메리카,0,0,30
+llm-proper,american,american | American,American,33984,338,1. 미국의; 미국인의  2. 북(남) 아메리카의 / 미국의 / 미국인 / 미국 어 / 미국의│미국인의│미국인,미국의 / 미국적인 / 미국인 / 아메리카의 / 아메리칸,0,2,30
+llm-proper,amy,amy | Amy,Amy,50197,28454,이름,여자 이름,0,0,1
+llm-proper,andy,andy | Andy,Andy,50214,16970,이름,남자 이름,0,0,4
+llm-proper,anna,anna | Anna,Anna,50090,27459,이름,여자 이름 / 안나 / 인도 / 파키스탄 / 미얀마의 옛 화폐,0,0,3
+llm-proper,annie,annie | Annie,Annie,50138,36268,이름,여자 이름,0,0,1
+llm-sense,antarctic,antarctic | Antarctic,antarctic,16476,34368,남극의 / 남극지방(대륙),남극의 / 남극지역 / 남극 지역 / 남극,1,0,7
+llm-proper,antarctica,Antarctica | antarctica,Antarctica,35141,51872,남극 대륙 / 남극 / 남극대륙,남극대륙,0,1,1
+llm-proper,apache,Apache | apache,Apache,30024,43979,① 아파치족 ② 아파슈단의 단원 ③ 깡패,아파치족 / 아파슈단의 단원 / 깡패,0,0,3
+llm-sense,apollo,apollo | Apollo,apollo,25779,34011,아폴로 / 빛·음악·시·예언·남성미의 신 / 태양,1. [그리스 / 로마 신화] 아폴로 / 아폴론  2. 미모의 청년 / 미남 청년  3. 미국의 아폴로 계획용 우주선,0,0,1
+llm-sense,apple,apple | Apple | apple,apple,3799,"36222,51960",애플 / 사과 / 사과나무,사과 / 사과1 / 과일의 일종,2,2,2
+llm-sense,arabic,arabic | Arabic,arabic,22036,36189,아랍어,아랍의,2,0,1
+llm-sense,archly,archly | Archly,archly,39383,48572,능글맞게 / 짖궂게 / 익살맞게,짖궃게 교활하게,0,0,1
+llm-sense,arctic,arctic | Arctic,arctic,16306,29932,북극의 / 극지방,① 북극의 ② 극지방 / 북극의 / 극한의 / 극지방 / 북극,2,0,7
+llm-sense,arteriole,arteriole | Arteriole,arteriole,44460,44560,소동맥,동맥의,0,0,1
+llm-sense,as,as | As,as,1364,45597,…처럼 / …으로서 / …하면서,"""~만큼"" / ""~와 같을 정도로"" / ""~이므로"" / ""~때에"" / ""~로써""",2,0,1
+llm-proper,asa,asa | Asa,Asa,50212,35902,이름,필름 감도 기준 / 남자 이름 / 미국 표준 협회,0,0,2
+llm-proper,ashley,ashley | Ashley,Ashley,50148,48895,이름,남자 이름,0,0,1
+llm-proper,asia,asia | Asia,Asia,34003,16309,아시아,아시아,0,0,22
+llm-proper,asian,asian | Asian,Asian,34002,2059,1. 아시아의  2. 아시아인  3. 동양인 / 아시아의 / 아시아 사람,아시아의 / 아시안 / 아시아인 / 동양인,0,0,13
+llm-sense,ass,ass | ASS,ass,9664,45425,엉덩이 / 걷어 차다 / 구하다 / 바보 / 골칫거리,자동고장부분 개폐기,2,0,1
+llm-sense,assuage,assuage | Assuage,assuage,11029,33003,완화시키다 / 진정시키다 / 누그러뜨리다 / 달래다,누그러뜨리다 / 달래다 / 채우다,1,0,1
+llm-sense,atlantic,atlantic | Atlantic,atlantic,10219,33900,대서양 / 아틀란틱,대서양; 대서양의 / 1. 대서양(상)의  2. 대서양 연안의 / 대서양의 / 대서양 / 아틀라스 산맥의,2,0,7
+llm-sense,attrite,Attrite | attrite,attrite,39745,28024,마멸된,마모된,0,0,1
+llm-proper,audrey,audrey | Audrey,Audrey,49967,12950,이름,여자 이름,0,0,1
+llm-sense,australian,australian | Australian,australian,2455,33996,오스트레일리아의 / 오스트레일리아 사람,1. 호주의   2. 호주 사람 / 호주의 / 호주인 / 호주 사람 / 호주 언어 / 오스트레일리아 사람 / 호주 어,0,0,4
+llm-sense,austrian,Austrian | austrian,austrian,34726,33994,오스트리아의 / 오스트리아 학파의 / 오스트리아 학파의 경제학자,오스트리아의 / 오스트리아인,0,0,1
+llm-sense,autograph,autograph | Autograph,autograph,7819,48407,서명 / 사인 / 서명(하다) / 사인(하다),자서전,3,0,1
+llm-sense,baltic,baltic | Baltic,baltic,25836,33974,발트 해의 / 발트 어파 / 혹한의,발트 해(연안)의,0,0,1
+llm-sense,banking,banking | Banking,banking,26896,27788,은행의 / 금융 / 뱅킹 / 바탕 / 은행업 / 금융업,은행거래,1,0,1
+llm-sense,become,become | Become,become,137,48242,…이 되다 / 어울리다 / …해지다 / ~이 되다,목표,2,0,1
+llm-sense,before,before | Before,before,3777,45605,전 / 이전에 / 적 / 앞에 / ~전에,~전에 / 앞쪽에 / 앞서서,2,0,1
+llm-sense,beguile,beguile | Beguile,beguile,20294,33017,달래다 / 속이다 / 현혹시키다 / 기만하다 / 심심풀이하다,속이다 / 기만하다 / 속여서 빼앗다,2,0,1
+llm-sense,berlin,berlin | Berlin,berlin,25861,33967,베를린 / 독일의 수도,베를린[독일의 수도 / 통일 전에는 시가지가 동 / 서독으로 양분되어 있었다.),0,0,1
+llm-sense,billing,billing | Billing,billing,12947,27784,순위 / 게시 / 광고에 소요된 경비,청구,0,0,1
+llm-proper,bobby,bobby | Bobby,Bobby,50233,30501,이름,남자 이름 / 경찰관 / 여자 이름,0,0,2
+llm-sense,bonded,bonded | Bonded,bonded,18204,28030,공채에 의해 보증된 / 공채가 붙은 / 특수 접착제로 접착시킨,보세,2,0,1
+llm-proper,boston,boston | Boston,Boston,49985,28628,미국 도시 이름,보스턴 / 보스턴 왈츠,0,0,4
+llm-proper,boulevard,boulevard | Boulevard,Boulevard,48391,10274,(가로수가 늘어선 도시의) 도로,대로 / 넓은 가로수 길 / 큰 길,0,1,44
+llm-proper,brad,Brad | brad,Brad,50075,50882,이름,영국 British Rate and Data의 줄임말,0,0,1
+llm-proper,brady,brady | Brady,Brady,50062,30567,이름,「더딘」 「둔한」 「짧은」 「천천히」의 뜻,0,0,1
+llm-sense,brandish,brandish | Brandish,brandish,6342,33000,휘두르다 / 휘두르기 / …을 과시하다,휘두르다 / 휘두르기 / 바싹 당기다,0,0,1
+llm-sense,brazilian,brazilian | Brazilian,brazilian,10603,41035,브라질의 / 브라질인,브라질인 / 브라질 어,0,0,1
+llm-proper,brian,brian | Brian,Brian,50199,35483,이름,남자 이름,0,0,2
+llm-sense,british,british | British,british,286,34986,영국의 / 영연방의,영국사람 / 영국의 / 영국인의 / 영국인 / 영국 어 / 영국인│영국의,1,0,7
+llm-proper,brown,brown | Brown,Brown,50207,2007,이름,브라운 / 갈색,0,2,100
+llm-sense,brutal,brutal | Brutal,brutal,7404,29851,잔인한 / 폭력적인 / 무자비한 / 야만적인,잔혹한,2,0,1
+llm-sense,buddhist,buddhist | Buddhist,buddhist,2724,37332,불교도 / 불교의 / 부처의,불교신자 / 불교도 / 부처의 / 불교의 / 불교도의,2,0,4
+llm-sense,burden,burden | Burden,burden,674,47599,부담감 / 부담 / 짐 / 책임 / 가중되다,무거운짐 / 부담 / 귀찮은일 / 무거운짐을 지우다 / 귀찮은 / 요지,2,0,1
+llm-sense,cajole,cajole | Cajole,cajole,17271,32999,감언이설로 속이다 / 감언으로 꾀다 / 아첨하다,감언으로 꾀다 / 부추겨서 하게 하다 / 그만두게 하다,2,0,1
+llm-proper,caleb,caleb | Caleb,Caleb,50219,32008,이름,갈렙 / 남자 이름,0,0,2
+llm-sense,canadian,canadian | Canadian,canadian,1314,36192,캐나다 사람 / 캐나다의,캐나다의 / 캐나다인,0,0,2
+llm-sense,capillary,capillary | Capillary,capillary,17530,44558,모세관 현상의 / 모세관의 / 모세관,모세혈관,0,0,1
+llm-sense,capitol,capitol | Capitol,capitol,7532,35142,미국 국회 의사당 / 수도,연방 의회 의사당,0,0,1
+llm-sense,carnival,carnival | Carnival,carnival,9310,9491,카니발 / 축제 / 전시회 / 난장판,카니발 / 사육제,2,0,1
+llm-proper,caroline,caroline | Caroline,Caroline,49959,28399,이름,영국 왕 찰스 1 / 2세의 / 여자 이름,0,0,1
+llm-proper,carter,carter | Carter,Carter,49962,41407,이름,카터,0,0,3
+llm-sense,catholic,catholic | Catholic,catholic,2363,36482,가톨릭 교회의 / 천주교의 / 가톨릭교도,가톨릭교의,1,0,1
+llm-sense,chat,chat | Chat,chat,478,36163,채팅하다 / 이야기하다 / 수다떨다 / 메시지 / 채팅 / 대화하다,잡담하다. 잡담,2,0,1
+llm-sense,chinese,chinese | Chinese,chinese,2226,35337,중국인 / 중국어 / 중국의 / 중국 사람,중국어 중국의 / 중국어 / 중국의 / 중국식 / 중국인,2,0,7
+llm-proper,chloe,chloe | Chloe,Chloe,50045,14534,이름,여자 이름 / 클로에 / 전원시에 나오는 양치는 소녀,0,0,2
+llm-proper,christine,christine | Christine,Christine,49946,37491,이름,여자 이름,0,0,2
+llm-sense,christmas,christmas | Christmas,christmas,8048,34086,크리스마스 / 성탄절,(보통 무관사 단수) 크리스마스 / 그리스도 강탄제 / 성탄절[12월 25일 / 크리스마스 기간 / 크리스마스,2,0,5
+llm-sense,circumvent,circumvent | Circumvent,circumvent,11638,33016,"포위하다 / 우회하다 / …을 포위하다 / 일주하다 / 사기 치다 / (불법적으로, 교묘하게) 피하다",우회하다 / 교묘히 회피하다 / …을 포위하다,3,0,1
+llm-proper,civic,civic | Civic,Civic,30130,20876,① 시민의 ② 민간 ③ 도시의 ④ 시빅,시민의 / 민간 / 도시의 / 시빅 / 시민적,0,2,35
+llm-proper,claire,claire | Claire,Claire,49986,29482,이름,여자 이름,0,0,1
+llm-sense,clot,clot | Clot,clot,14159,44555,응고하다 / 응고시키다 / 미끈거리는 덩어리,피가]엉긴 덩어리,1,0,1
+llm-sense,cloudy,cloudy | Cloudy,cloudy,4593,36234,흐린 / 구름의 / 구름이 낀 / 구름이 많은,구름낀,2,0,1
+llm-sense,collectively,collectively | Collectively,collectively,10900,40183,전체적으로 / 일괄하여 / 단결하여,집합적으로 / 전체적으로,0,0,1
+llm-sense,communist,communist | Communist,communist,2215,16736,공산주의의 / 공산당원,공산주의자,0,0,1
+llm-sense,composite,composite | Composite,composite,6424,30378,복합의 / 합성어,① 합성의 ② 합성물 ③ 복합 재료,2,0,1
+llm-sense,conclude,conclude | Conclude,conclude,1766,29813,결론짓다 / 체결하다 / 맺다 / 종결하다,결론을내리다,2,0,1
+llm-sense,confinement,confinement | Confinement,confinement,7314,29821,감금 / 속박 / 유폐,갇힘,2,0,1
+llm-sense,congratulation,congratulation | Congratulation,congratulation,1395,37645,축하하다 / 축하의 말,축하해,2,0,1
+llm-sense,congress,congress | Congress,congress,1078,30106,의회 / 회의,① 의회 ② 회의 / 의회 / 국회,1,0,3
+llm-sense,conscientiously,conscientiously | Conscientiously,conscientiously,18504,29847,양심적으로 / 성실히 / 소심하게,성실하게,0,0,1
+llm-sense,consign,consign | Consign,consign,15182,33012,위탁하다 / 맡기다 / 탁송하다,위탁하다 / 동의하다 / …을 넘기다,2,0,1
+llm-proper,continental,continental | Continental,Continental,30107,2106,① 대륙의 ② (미국 독립전쟁 당시의) 식민지의 ③ 유럽 대륙의,대륙의 / 유럽의 / 컨티넨탈,0,2,60
+llm-sense,cost,cost | Cost,cost,205,29825,비용 / 들다 / 가격 / 얼마이다 / 경비,잃게하다,2,0,1
+llm-sense,counter-productive,Counter-productive | counter-productive,counter-productive,48875,9395,역효과를 낳는,역효과가 나타나는,0,0,1
+llm-sense,crown,crown | Crown,crown,4681,30361,수관 / 크라운 (기공물),① 왕관 ② 크라운 ③ 관 ④ 국왕,2,0,1
+llm-sense,crude,crude | Crude,crude,2594,36257,천연 그대로의 / 조잡한 / 거친,품위없는,2,0,1
+llm-sense,customer,customer | Customer,customer,3246,45797,고객 / 소비자 / 단골 / 손님,손님 / 고객 / 거래처,2,0,1
+llm-sense,cv,cv | CV,cv,36334,45438,항공모함의 함종별 기호 / 이력서,케이블의 종류,0,0,1
+llm-proper,dan,dan | Dan,Dan,50165,42077,이름,단,0,2,3
+llm-proper,daniel,daniel | Daniel,Daniel,50117,16217,이름,다니엘 / 다니엘서 / 명재판관,0,1,8
+llm-proper,danny,danny | Danny,Danny,50021,45021,이름,대니,0,0,1
+llm-proper,daphne,daphne | Daphne,Daphne,50094,47320,이름,다프네 / 서향 / 서향속의 총칭,0,0,1
+llm-sense,daunt,daunt | Daunt,daunt,8972,48570,기가 죽다 / 겁 / 억제 / 위축,-를 위압하다 으르다,1,0,1
+llm-proper,dave,dave | Dave,Dave,50213,34608,이름,남자 이름,0,0,1
+llm-proper,david,david | David,David,29975,10616,① 데이빗 ② 다비드 ③ 다윗 / 데이빗( 다윗 ) / 이름,데이빗 / 다윗 / 다비드,0,0,6
+llm-proper,dean,dean | Dean,Dean,50245,12894,이름,딘 / 학장 / 원장 / 처장,0,0,58
+llm-sense,december,december | December,december,8030,16716,12월 / 4분기 / 섣달,12월 / 석달,0,0,6
+llm-sense,declaration,declaration | Declaration,declaration,842,28031,선언 / 발표 / 포고 / 주장 / 성명 / 신고,신고 / 고백 / 성명서 / ① 선언 ② 신고 ③ 포고,2,0,2
+llm-sense,delegate,delegate | Delegate,delegate,7357,33010,대표 / 대의원 / 위임하다 / 사절,대표 / 대리자 / 대의원,2,0,1
+llm-proper,dependent,dependent | Dependent,Dependent,30291,2243,① 의존하는 ② 의지하는 ③ 종속의 ④ 부양 가족,의존하는 / 종속의 / 부양 가족 / 의지하는,0,2,149
+llm-sense,depreciation,depreciation | Depreciation,depreciation,9859,45585,감가상각 / 절하 / 약세 / 가치 하락 / 저감 / 자산 가치 감소,저하 / 화폐의 구매력 저하 / 경시,2,0,1
+llm-sense,determined,determined | Determined,determined,2538,37469,결정된 / 결심한 / 생각 / 결의 / 의지,단호한,2,0,1
+llm-proper,diana,diana | Diana,Diana,50161,25969,이름,다이애나 / 다이아나 / 디아나,0,0,1
+llm-proper,diane,diane | Diane,Diane,50073,45356,이름,여자 이름,0,0,1
+llm-sense,diastole,diastole | Diastole,diastole,24042,44553,심확장 / 심이완 / 음절 연장,심장]이완기 / 확장기,0,0,1
+llm-sense,director,director | Director,director,1290,40180,관리자 / 감독,이사,2,0,1
+llm-sense,disconcert,disconcert | Disconcert,disconcert,20545,32994,…을 당황하게 하다 / 혼란시키다 / 교란시키다,…을 당황하게 하다 / 교란시키다 / 침착성을 잃게 하다,0,0,1
+llm-sense,dismember,dismember | Dismember,dismember,16526,33007,해체하다 / 분할하다 / 업무를 축소하다,분할하다 / 업무를 축소하다 / …의 팔다리를 잘라버리다,0,0,1
+llm-proper,don,don | Don,Don,50129,5498,이름,명사 / 거물 / 입다,0,1,50
+llm-sense,draining,Draining | draining,draining,28159,9396,배수,지겨운 / 지루한,0,0,1
+llm-sense,drawback,drawback | Drawback,drawback,10594,28028,결점 / 단점 / 결함,문제점,2,0,1
+llm-sense,drowsiness,drowsiness | Drowsiness,drowsiness,10653,29796,졸음 / 기면 상태,졸림,0,0,1
+llm-sense,dutch,dutch | Dutch,dutch,2475,30020,네덜란드의 / 네덜란드인 / 네덜란드어 / 독일의,① 네덜란드의 ② 네덜란드인 ③ 네덜란드어 ④ 독일의 / 네덜란드의 / 네덜람드 사람,0,0,4
+llm-sense,eastern,eastern | Eastern,eastern,1959,36591,동부의 / 동쪽의 / 동양의 / 동구의,동양의 / 동쪽에 위치한,2,0,1
+llm-sense,eccentricity,eccentricity | Eccentricity,eccentricity,21506,28009,별남 / 기행 / 비정상,편심,2,0,1
+llm-sense,economic,economic | Economic,economic,305,15620,경제의 / 경기의,경제학의 / 생산 경제의,2,0,1
+llm-proper,eddie,eddie | Eddie,Eddie,50105,35867,이름,남자 이름,0,0,1
+llm-proper,edward,edward | Edward,Edward,50229,28442,이름,남자 이름 / 에드워드,0,0,3
+llm-sense,electronic,electronic | Electronic,electronic,2269,37430,전자의 / 전자기기 / 전자 장치 / 전자 부품 / 일렉트로닉,전기제품 / 전기기기등,2,0,1
+llm-sense,electronics,electronics | Electronics,electronics,16522,27767,전자 기술 / 전자 기기,전자제품,1,0,1
+llm-sense,encapsulation,encapsulation | Encapsulation,encapsulation,31170,45291,요약 / 응축,캡슐화,0,0,1
+llm-sense,endangered,endangered | Endangered,endangered,8000,37416,멸종 위기의 / 위험한,위험에 빠진,1,0,1
+llm-sense,english,english | English,english,341,34123,영문학 / 영어 / 영국인 / 영국의 / 잉글랜드인,1. 영국인  2. 영어  3. 영문학  4. 영국의 / 영어 / 잉글랜드인 / 잉글랜드어 / 영어의 / 영국인,2,0,5
+llm-sense,englishness,Englishness | englishness,englishness,47234,39089,영국적 특징 / 영국다움,영국(사람)다움 / 영국(사람)식,0,0,1
+llm-proper,eric,eric | Eric,Eric,50054,28872,이름,에릭 / 살인범 및 그 친척이 희생자의 가족에게 지불한 벌금,0,0,1
+llm-proper,erica,Erica | erica,Erica,30186,49314,① 여자 이름 ② 에리카 / 중복,여자 이름 / 에리카,0,0,1
+llm-proper,ethan,ethan | Ethan,Ethan,50000,48597,이름,남자 이름,0,0,1
+llm-proper,ethnic,ethnic | Ethnic,Ethnic,36118,2468,민족의,민족의 / 혈통의 / 종족 / 인종의,0,2,211
+llm-proper,eurasia,eurasia | Eurasia,Eurasia,34119,31449,유라시아 / 구아(歐亞) [유럽과 아시아를 일체로 본 명칭,유라시아 / 유라시아 대륙,0,0,1
+llm-proper,europe,europe | Europe,Europe,34118,5336,유럽 / 구주(歐洲),유럽 / 유럽 대륙 / 유럽 연합 / 구라파 / 유럽 공동 시장,0,2,23
+llm-proper,european,european | European,European,16737,320,유럽의 / 유렵의 / 유럽적인|유럽의|유럽사람 / 유럽인,유럽의,0,0,15
+llm-sense,exactly,exactly | Exactly,exactly,1366,4863,정확히 / 바로 / 그렇소 / 딱 / 확실히,맞아 그거야,2,0,1
+llm-sense,excel,excel | Excel,excel,12582,29835,탁월하다,뛰어나다,2,0,1
+llm-sense,excitedly,excitedly | Excitedly,excitedly,30628,37477,흥분하여 / 기를 쓰고 / 격하여,흥분하게,0,0,1
+llm-sense,exploit,exploit | Exploit | exploit | exploit,exploit,1875,"29797,52386,52469",이용하다 / 활용하다 / 착취하다 / 업적 / 묘기,착취하다 / 이용하다 / 개발하다,3,0,3
+llm-sense,explore,explore | Explore,explore,602,48226,탐구하다 / 탐험하다 / 연구하다 / 개척하다 / 파헤치다 / 강구하다 / 둘러보다 / 탐색하다 / 발견하다 / 조사하다,탐험하다 / 답사하다,2,0,1
+llm-sense,false,false | FALSE,false,2250,47620,거짓의 / 허위인 / 잘못하여 / 틀린 / 부정의 / 가짜의,틀린 / 사실이 아닌 / 거짓의 / 가짜의,2,0,1
+llm-sense,fixture,fixture | Fixture,fixture,10180,28007,고정적인 요소 / 설비 / 고정물,고정용 보조기구,2,0,1
+llm-sense,flippers,flippers | Flippers,flippers,35352,37424,오리발,지느러미발,0,0,1
+llm-sense,fluctuation,fluctuation | Fluctuation | fluctuation,fluctuation,6781,"29806,52371",동요 / 변동 / 파동,변동 / 오르내림,0,0,2
+llm-sense,fortunately,fortunately | Fortunately,fortunately,7017,30272,다행히 / 운좋게,① 다행히 ② 운좋게 / 운 좋게도 / 다행스럽게도,1,0,2
+llm-sense,framework,framework | Framework | framework,framework,14237,"29942,52425",체제 / 근거 / 틀 / 구조,① 틀 ② 체제 ③ 근거 ④ 구조 / 틀 / 구조 / 체계,1,0,2
+llm-sense,frustrate,frustrate | Frustrate | frustrate,frustrate,6925,"36169,52470",좌절시키다 / 실망시키다 / 짜증나는 / 화나게 하다 / 안타까운,좌절시키다 / 방해하다,2,0,2
+llm-sense,frustrated,frustrated | Frustrated,frustrated,5020,29800,낙담한 / 좌절된 / 욕구 불만의 / 좌절한 / 짜증난,불만스러운,2,0,1
+llm-sense,funny,funny | Funny,funny,2002,35669,재미있는 / 웃기는 / 이상한 / 농담조의 / 유쾌한,즐거운 / 재미있는,2,0,2
+llm-sense,further,further | Further,further,943,40184,더 / 더 나아가 / 더 멀리 / 그 이상의 / 게다가,뿐만 아니라 / 게다가,2,0,1
+llm-sense,given,given | Given,given,2366,30609,주어진 / 받은 / 감안하면 / 얻은 / 실시된,~을 고려해 볼 때,2,0,1
+llm-sense,granted,granted | Granted,granted,12943,33483,당연히 / 허가 / 부여된 / 받은 / 승인,~말한대로이긴 하지만 / 인정하기는 하지만,2,0,2
+llm-sense,grateful,grateful | Grateful | grateful,grateful,1229,"37468,51969",감사하는 / 고마운,감사하는 / 고마워하는,2,0,2
+llm-proper,gwen,gwen | Gwen,Gwen,50204,28814,이름,여자 이름,0,0,1
+llm-sense,hail,hail | Hail,hail,6091,29852,출신 / 환영하다 / 찬양 / 인정받다 / 부르다 / 우박 / 우박이 내리다,일컫다,2,0,1
+llm-sense,halloween,halloween | Halloween,halloween,12309,34739,할로윈 / 핼러윈,핼 로 윈 / 할로윈 / 핼로윈 / 할로인 / 할로윈데이,0,0,6
+llm-proper,hank,hank | Hank,Hank,50201,39151,이름,타래 / 한 타래분의 길이 / 남자 이름,0,0,1
+llm-sense,happy,happy | Happy,happy,5,47937,행복한 / 기쁜 / 만족한 / 즐거운 / 축하하다,기분이 좋다,2,0,1
+llm-sense,hardly,hardly | Hardly,hardly,4835,36255,거의 …할 것 같지 않다 / 거의 …아니다 / 가혹하게 / …하기 어렵다 / 거의 ~않다,거의....않다 / 거의 아니다,2,0,2
+llm-proper,helena,helena | Helena,Helena,50252,28630,이름,여자 이름 / 헬레나,0,0,1
+llm-proper,henry,henry | Henry,Henry,50085,10356,이름,헨리 / 남자 이름,0,0,2
+llm-sense,herald,herald | Herald,herald,13261,30280,헤럴드 / 알리다 / 신문 / 전령 / 예고,① 왕의 사자 ② …을 보도하다 ③ 의전관,2,0,1
+llm-proper,hilda,hilda | Hilda,Hilda,50167,28398,이름,여자 이름,0,0,1
+llm-sense,hindu,hindu | Hindu,hindu,33692,36600,힌두교의 / 힌두인 / 힌두의,힌두교의 / 힌두교 신자,0,0,2
+llm-proper,hispanic,hispanic | Hispanic,Hispanic,33859,13173,(특히 미국이나 케나다에 사는) 라틴아메리카 계의 사람들,히스패닉계의 / 라틴 아메리카계 사람 / 라틴 아메리카의,0,1,10
+llm-sense,hit,hit | Hit,hit,191,37344,치다 / 히트를 치다 / 타격 / 달하다 / 부딪히다,때리다,2,0,1
+llm-sense,hollywood,hollywood | Hollywood,hollywood,4809,30021,할리우드 / 미국 영화,① 할리우드 ② 영화 산업의 중심지 ③ 미국 영화계 / 헐리우드,0,0,2
+llm-proper,homer,homer | Homer,Homer,49997,29279,이름,홈런을 치다 / 전서구 / 고대 그리스의 시인,0,1,10
+llm-sense,homogeneous,homogeneous | Homogeneous,homogeneous,13951,28027,불변의 / 동종의 / 순일의 / 동원의 / 동질적인,동종의 / 동일한 / 같은 제품의[형용사,2,0,1
+llm-sense,id,id | ID,id,35698,40897,신분증 / 이드 / 특수 원형질 / 알레르기성 피부진,신문증,0,0,1
+llm-sense,illustrate,illustrate | Illustrate | illustrate,illustrate,1769,"29856,52159",설명하다 / 삽화를 넣다 / 예시하다,분명히 보여주다 / 삽화를 넣다 / 설명하다,2,0,2
+llm-proper,imposter,imposter | Imposter,Imposter,48566,16506,사기꾼 협잡꾼 남의 이름을 사칭하는자,사칭하는 사람 / 사기꾼,0,0,23
+llm-sense,indecisive,indecisive | Indecisive,indecisive,11983,36250,우유부단한 / 승패가 나지 않은,결단력이 없는,2,0,1
+llm-sense,individually,individually | Individually,individually,8408,34552,개별적으로 / 개인적으로 / 하나하나 / 각자에게,개인으로 / 개별적으로,2,0,1
+llm-sense,insalvageable,insalvageable | INSALVAGEABLE,insalvageable,39066,40115,구해낼수 있는,구해낼 수 없는,0,0,1
+llm-sense,internet,internet | Internet,internet,5286,35054,인터넷,인터넷 / 웹사이트,2,0,3
+llm-sense,inviting,inviting | Inviting,inviting,9035,29816,초대하는 / 유혹적인 / 솔깃한,매력적인,1,0,1
+llm-proper,irredentism,Irredentism | irredentism,Irredentism,30096,32600,① 민족 통일주의 ② 이레덴티즘 ③ 19세기 말부터 제1차 세계 대전 때까지 전개되었음,민족 통일주의 / 이레덴티즘,0,0,1
+llm-proper,isaac,isaac | Isaac,Isaac,50089,31645,이름,아이작 / 아이잭 / 이사악 / 아이삭,0,0,2
+llm-sense,isolate,isolate | Isolate,isolate,1497,43940,분리하다 / 고립시키다 / 격리하다 / 소외시키다 / 축출되다,고립(분리)시키다,2,0,1
+llm-sense,israelite,israelite | Israelite,israelite,27279,41013,하나님의 선민 / 야곱의 자손 / 고대 이스라엘,이스라엘인 / 이스라엘 어,0,0,1
+llm-sense,issue,issue | Issue,issue,241,30822,지급하다 / 발표하다 / 문제 / 쟁점 / 이슈 / 사안 / 발행하다 / 발급하다 / 문제사안 / 발행,문제점 / 잡지의 호,2,0,1
+llm-sense,it,it | IT,it,3560,37337,그것 / 이것 / 그런,정보기술,2,0,1
+llm-sense,italy,italy | Italy,italy,7958,35583,이탈리아,이탈리아 / 이태리,0,0,3
+llm-proper,jackson,jackson | Jackson,Jackson,50251,28632,이름,잭슨 / 남자 이름,0,0,1
+llm-proper,james,james | James,James,50033,8575,이름,제임스 / 야고보,0,0,9
+llm-proper,jamie,jamie | Jamie,Jamie,49982,36265,이름,남자 이름,0,0,1
+llm-proper,jane,jane | Jane,Jane,49384,10598,제인 / 이름,처녀 / 여자 / 여자 이름,0,0,6
+llm-proper,jennifer,jennifer | Jennifer,Jennifer,50071,45357,이름,제니퍼,0,0,1
+llm-proper,jenny,jenny | Jenny,Jenny,49999,28452,이름,암컷 / 방적기 / 여자 이름,0,0,5
+llm-proper,jerry,jerry | Jerry,Jerry,30145,5427,① 독일인 ② 육체 노동자 ③ 철도 선로공 / 이름,독일인 / 육체 노동자 / 철도 선로공,0,1,1
+llm-proper,jessica,jessica | Jessica,Jessica,50038,28952,이름,,0,0,2
+llm-sense,jig,JIG | jig,jig,30668,28006,지그 / 지그를 쓰다 / 흑인,보조기구,0,0,1
+llm-proper,jill,jill | Jill,Jill,50180,30566,이름,여자 이름 / 소녀 / 젊은 여자,0,0,1
+llm-proper,jim,jim | Jim,Jim,50048,44620,이름,남자 이름 / 못쓰게 만들다,0,0,2
+llm-proper,joe,joe | Joe,Joe,50067,12892,이름,녀석 / 병사 / 남자 이름,0,1,4
+llm-proper,john,john | John,John,50002,5205,이름,요한복음 / 요한의 편지 / 세례 요한,0,0,4
+llm-proper,johnny,johnny | Johnny,Johnny,50144,18349,이름,녀석 / 놈 / 짧은 가운,0,0,2
+llm-sense,join,join | Join,join,387,30819,참여하다 / 가입하다 / 합치다 / 잇다 / 만나다 / 동참하다 / ~에 가입하다 / 연결하다,결합하다 / 가입하다,2,0,1
+llm-proper,josh,josh | Josh,Josh,50059,12803,이름,놀리다 / 농담하다 / 남자이름,0,0,3
+llm-sense,judaism,judaism | Judaism,judaism,27562,40885,유대교 / 유대 정신 / 유대인,유대교 / 유대주의,0,0,2
+llm-proper,julia,julia | Julia,Julia,50120,28808,이름,여자이름,0,0,2
+llm-proper,karen,karen | Karen,Karen,50077,10606,이름,카렌족 / 카렌어 / 여자 이름,0,0,4
+llm-proper,kate,kate | Kate,Kate,49389,37698,케이트 / 이름,여자 이름,0,0,2
+llm-proper,kelly,kelly | Kelly,Kelly,50241,28453,이름,켈리 / 캘리,0,0,1
+llm-proper,kevin,kevin | Kevin,Kevin,50044,29477,이름,남자 이름,0,0,2
+llm-proper,kim,kim | Kim,Kim,49950,45341,이름,남자 이름 / 여자 이름 / 킴,0,0,2
+llm-proper,lack,lack | Lack,Lack,30818,1053,"""부족"" / ""부족하다""",부족 / …이 없다 / 결핍 / 부재 / 모자라다,0,2,316
+llm-sense,landscape,landscape | Landscape,landscape,4429,30817,경관 / 풍경 / 지형 / 조경 / 지역,경치 / 풍경 / 조경,3,0,1
+llm-proper,larry,larry | Larry,Larry,50100,7499,이름,래리,0,1,6
+llm-sense,last,last | Last,last,1780,30815,지속하다 / 지난 / 마지막의 / 지속되다 / 최종의 / 끝,지속되다 / 계속하다 / 최후의,3,0,2
+llm-sense,latin,latin | Latin,latin,2490,36188,라틴의 / 라틴어,라틴계의 / 고대 로마언어,2,0,2
+llm-sense,launch,launch | Launch,launch,1740,29804,발사하다 / 시작하다 / 출시하다 / 발표 / 개시하다,분명히하다 / 시작하다 / 출시하다,2,0,2
+llm-sense,leap,leap | Leap,leap,1924,36148,도약하다 / 건너 뛰다 / 상승하다 / 발전하다 / 자살하다 / 뛰다,껑충뛰다. 도약하다 / 뛰어오르다,2,0,2
+llm-sense,lease,lease | Lease,lease,7950,30814,임대하다 / 리스 / 임대 계약서 / 대여하다 / 민간자본유치사업 / 임대 계약,"""임대차계약"" / ""임대하다"" / ""임차하다"" / ""차용계약""",2,0,1
+llm-proper,lee,lee | Lee,Lee,50131,23046,이름,바람 불어가는 쪽,0,2,22
+llm-sense,lengthy,lengthy | Lengthy,lengthy,2288,30813,오랜 / 긴,긴 / 장황한,2,0,1
+llm-proper,letterhead,letterhead | Letterhead,Letterhead,30458,26744,① 편지지의 윗머리에 인쇄한 개인·회사 등의 주소·이름 등 ② 1이 인쇄된 편지지,편지지의 윗머리에 인쇄한 개인·회사 등의 주소·이름 등 / 1이 인쇄된 편지지 / 레터헤드,0,0,19
+llm-sense,letters,Letters | letters,letters,50170,27780,문학 / 문서,서신,0,0,1
+llm-sense,liable,liable | Liable,liable,2482,30811,…해야 할 / 책임 있는 / …하기 쉬운 / 여지가 있는,책임이있는,2,0,1
+llm-sense,like-minded,like-minded | LIKE-MINDED,like-minded,39075,40110,취향이나 이견이 비슷한 / 생각(뜻)이 비슷한,취향이나 의견이 비슷한,0,0,1
+llm-sense,likely,likely | Likely,likely,307,30809,가능성 있는 / 할 것 같은 / …할 듯한 / 아마 / ~할 것 같은,~할 가능성이 있는,2,0,1
+llm-proper,lily,lily | Lily,Lily,50228,4436,이름,백합 / 수련 / 릴리 / 은방울꽃,0,2,33
+llm-sense,limited,limited | Limited,limited,1853,30808,한정된 / 제한을 받은 / 특별 급행 열차,제한된,2,0,1
+llm-sense,listing,listing | Listing,listing,7946,30807,표 작성 / 일람표에의 기재 / 변폭 / 목록 / 리스트,명부에 기재 / 기입,1,0,1
+llm-proper,liz,liz | Liz,Liz,50083,36985,이름,여자 이름,0,0,1
+llm-sense,long,long | Long,long,283,36162,긴 / 오래 / 오랫동안 / 장거리의 / 오랜 / 갈망하다,긴 / 오랜. 간절히바라다 / 열망하다.,2,0,1
+llm-sense,lure,lure | Lure,lure,6757,33015,유혹하다 / 유치하다 / 끌어들이다,유혹하다 / 마음을 끄는 것 / 미끼,2,0,1
+llm-proper,mac,mac | Mac,Mac,50087,44927,이름,남자 이름 / 맥 / 이봐,0,1,2
+llm-sense,machiavellism,Machiavellism | machiavellism,machiavellism,46863,33137,마키아벨리주의,권모술수주의,0,0,1
+llm-sense,makeup,makeup | Makeup,makeup,4422,48410,구성,화장하다,2,0,1
+llm-proper,malcolm,malcolm | Malcolm,Malcolm,50133,49648,이름,남자 이름 / 맬컴,0,0,1
+llm-sense,manifest,manifest | Manifest | manifest,manifest,6752,"30099,52428",분명한 / 명백한 / 나타나다 / 승객 명단 / 분명하게 하다 / 매니페스트 / 명백히 하다 / 감정을 드러내다,① 나타나다 ② 승객 명단 ③ 분명하게 하다 ④ 매니페스트 / 나타내다 / 분명한,2,0,2
+llm-proper,mark,mark | Mark,Mark,30322,245,① 마크 ② 기념하다 ③ 표시 ④ 기록 ⑤ 흔적 / 이름,마크 / 표시 / 기록 / 기념하다 / 흔적 / 정정 / 점수,0,2,172
+llm-proper,martin,martin | Martin,Martin,50211,10353,이름,마틴 / 마르틴 / 마르탱,0,0,5
+llm-proper,mary,mary | Mary,Mary,50064,18374,이름,메리 / 마리아 / 매리 / 마리,0,0,6
+llm-proper,mason,mason | Mason,Mason,30050,17362,① 석공 ② 벽돌공 ③ 남자 이름,석공,0,0,18
+llm-sense,mater,Mater | mater,mater,30543,30018,모교 / 출신학교 / 메이터,① 엄마 ② 어머니 ③ 뇌막,0,0,1
+llm-sense,matter-of-fact,matter-of-fact | MATTER-OF-FACT,matter-of-fact,39074,40109,현실적인,현실적인 / 실질적인,0,0,1
+llm-sense,measuring,measuring | Measuring,measuring,29183,47113,계측용의,측정,0,0,1
+llm-sense,media,Media | media,media,51538,27744,미디어,대중매체 / 미디어,1,0,2
+llm-sense,meeting,meeting | Meeting,meeting,1381,37700,회의 / 만남 / 집회 / 미팅 / 충족하는 / 모임,음~~.,2,0,1
+llm-sense,mend,mend | Mend,mend,2657,29802,개선하다 / 고치다 / 낫다,수리하다,2,0,1
+llm-proper,michael,michael | Michael,Michael,30166,4100,① 남자 이름 ② 대천사 미가엘 ③ 천사장 미가엘 / 이름,남자 이름 / 대천사 미카엘 / 천사장 미카엘,0,0,3
+llm-proper,michelle,Michelle | michelle,Michelle,50193,50515,이름,미셸 / 미쉘 / 미셀 / 미첼 / 미셜,0,0,1
+llm-proper,mike,mike | Mike,Mike,29978,5453,① 게으름 피우기 ② 마이크 ③ 현미경 / 이름,게으름 피우기 / 마이크 / 현미경,0,2,6
+llm-sense,mindful,mindful | Mindful,mindful,11564,29823,주의하는 / 염두에 두는 / 신경을 쓰는,유념하는 / ① 주의하는 ② 염두에 두는 ③ 신경을 쓰는,2,0,2
+llm-sense,miss,miss | Miss,miss,108,37458,놓치다 / 그리워하다 / 미스 / 실종되다 / 빼먹다 / 그립다,실수,2,0,1
+llm-sense,mitigate,mitigate | Mitigate,mitigate,6746,33004,경감하다 / 완화하다 / 줄이다 / 저감 / 경감 / 감소 / 누그러뜨리다,누그러뜨리다 / 가볍게 하다 / 완화시키다,2,0,1
+llm-sense,mogul,mogul | Mogul,mogul,14462,38460,거물 / 중요 인물 / 무굴인,거물 / 실력자,1,0,1
+llm-proper,molly,molly | Molly,Molly,50079,35204,이름,여자 이름 / 대형 바다새의 총칭 / 미국 남부산의 송사리 비슷한 난태생 담수어,0,0,2
+llm-proper,monica,monica | Monica,Monica,50178,49371,이름,여자 이름,0,0,1
+llm-sense,moroccan,moroccan | Moroccan,moroccan,9694,36612,모로코의 / 모로코인 / 모로코 사람,모로코 사람 / 모로코 언어,0,0,1
+llm-sense,mrs,mrs | Mrs,mrs,5388,35027,…부인 / 미세스,① …부인 ② 미세스 / 여인의 성 / 성명 앞에 붙이는 경칭(공경하는 뜻으로 부르는 칭호),2,0,2
+llm-sense,ms,ms | Ms,ms,5340,35026,…씨 / 부인 / 다발성경화증 / 초속 미터 / 석사학위,① …씨 ② 부인 ③ 석사학위 ④ 다발성경화증 / 결혼전 젊은 여자의 호칭,0,0,2
+llm-sense,muslim,muslim | Muslim,muslim,25725,33474,이슬람교의 / 이슬람교도 / 무슬림,이슬람교도 / 이슬람교도(의) / 회교도 / 이슬람교의 / 회교의,0,0,5
+llm-proper,nancy,nancy | Nancy,Nancy,50153,37438,이름,여자 이름 / 여자 같은 남자 / 남성 동성애자,0,0,2
+llm-proper,nationality,nationality | Nationality,Nationality,30037,4173,① 국적 ② 국가 ③ 국민,국적 / 국가 / 국민,0,2,89
+llm-sense,nonfiction,nonfiction | Nonfiction,nonfiction,21912,48417,논픽션 / 전기·역사·에세이 등 / 논픽션 작품,소설.이야기,0,0,1
+llm-sense,november,november | November,november,7920,41023,11월,11월 / 동짓달 / 동지달,0,0,6
+llm-sense,october,october | October,october,7919,35727,10월,10월 / 상달 / 10월(본래 8월),1,0,6
+llm-sense,offend,offend | Offend,offend,3157,29826,기분이 상하다 / 불쾌하게 하다 / 성나게 하다 / 위반하다 / 해치다 / 기분 상하게 하다,기분나쁘게하다,2,0,1
+llm-sense,offensive,offensive | Offensive,offensive,3496,36256,공격 / 모욕적인 / 불쾌한,불쾌하게만드는,2,0,1
+llm-sense,ok,ok | OK,ok,2303,26946,좋은 / 알았어 / 괜찮은 / 됐어 / 예,좋아 / ① 괜찮은 ② 좋은 ③ 알았어 ④ 됐어 ⑤ 그래 / 오케이,2,0,3
+llm-sense,once,once | Once,once,3491,45601,한 번 / 한때 / 일단 / 옛날 / 언젠가 / 일단 ~하면,한번 / 이전에 / 한번~하면,2,0,1
+llm-sense,origin,origin | Origin,origin,4398,29832,기원 / 태생 / 유래 / 원인 / 시작,근원,2,0,1
+llm-sense,ostensible,ostensible | Ostensible,ostensible,10787,34544,표면상의 / 겉보기만의 / 표면만의,겉으로만 그럴 듯한,1,0,1
+llm-sense,overlooker,Overlooker | overlooker,overlooker,42962,40178,감독 / 감독자 / 반장,조장,0,0,1
+llm-proper,paul,paul | Paul,Paul,50001,30484,이름,폴 / 바오로 / 파울 / 바울로,0,0,7
+llm-sense,pentecost,pentecost | Pentecost,pentecost,28252,50393,성령 강림절 / 부활절 뒤 7번째 일요일 / 수확절,오순절,0,0,1
+llm-sense,perceptual,perceptual | Perceptual,perceptual,15843,50352,지각의,지각의 / 지각있는,2,0,1
+llm-sense,perfect,perfect | Perfect,perfect,1279,37495,완벽한 / 완전한 / 최적의 / 퍼펙트 / 이상적인,완전한 / 완료 시제,2,0,1
+llm-sense,performance,performance | Performance | performance | performance | performance,performance,1013,"37347,52188,52229,52277",성능 / 성과 / 수행 / 공연 / 실적 / 이행,연주 / 성과 / 수행 / 공연,2,0,4
+llm-sense,personnel,personnel | Personnel,personnel,9364,27777,인력 / 사람들 / 직원 / 인원 / 요원 / [자체가 복수형] 직원들 / 담당자들,인사,3,0,1
+llm-sense,persuade,persuade | Persuade,persuade,1787,36172,설득하다 / 하게 만들다 / 납득시키다 / 기대하다 / 종용하다,석득하다. 설득하여~시키다,2,0,1
+llm-sense,perturb,perturb | Perturb,perturb,19322,32995,혼란시키다 / …을 당황하게 하다 / 교란하다,혼란시키다 / …을 당황하게 하다 / 뒤흔들어놓다,0,0,1
+llm-proper,pete,pete | Pete,Pete,50124,34979,이름,남자 이름 / 금고,0,0,3
+llm-proper,peter,peter | Peter,Peter,30469,17589,① 남자 이름 ② 금고 ③ 점차 가늘어지다 / 이름,남자 이름 / 금고 / 점차 가늘어지다,0,0,21
+llm-proper,phil,phil | Phil,Phil,49956,38487,이름,남자이름 / 「…에 친화적인」 「…에 편드는」의 뜻 / 「…을 좋아하는 사람」 「…에 친화력을 가진 물질」의 뜻,0,0,2
+llm-proper,philip,philip | Philip,Philip,50072,45757,이름,남자 이름,0,0,1
+llm-sense,philistine,philistine | Philistine,philistine,21166,38440,속물 / 교양 없는 / 실리주의자,필리스틴 사람 / 속물 / 실리주의자 2 잔인한 원수 3 필리스틴 사람의,0,0,1
+llm-sense,posture,posture | Posture,posture,12217,28025,자세 / 태세 / 배치하다 / 태도 / 몸의 위치,자세 / 포즈[명사 / 타동사,2,0,1
+llm-sense,potable,potable | Potable,potable,17895,36151,상수 / 식수 / 마실수있는,마시기에적합한,1,0,1
+llm-sense,profitable,profitable | Profitable,profitable,2131,29811,수익성이 좋은 / 이익이 되는 / 이윤을 내는 / 돈벌이가 되는 / 도움이 되는,수익성있는,2,0,1
+llm-sense,prosperous,prosperous | Prosperous,prosperous,12355,29837,번영하는 / 성공한,번창한,2,0,1
+llm-proper,proteus,proteus | Proteus,Proteus,49965,47353,이름,자유 자재로 변하는 모습과 예언력을 가진 해신 / 프로테우스,0,0,2
+llm-sense,provoke,provoke | Provoke,provoke,1454,36248,자극하다 / 일으키다 / 유발하다 / 도발하다 / 촉발시키다,성나게 하다,2,0,1
+llm-sense,puritan,puritan | Puritan,puritan,17855,34854,청교도 / 엄격주의자 / 퓨리턴,청교도 / 청도교,1,0,4
+llm-proper,rachel,rachel | Rachel,Rachel,50186,45753,이름,여자 이름 / 살빛 / 라헬,0,0,1
+llm-proper,randy,randy | Randy,Randy,49979,27350,이름,남자 이름 / 난잡한 / 떠들썩한,0,0,6
+llm-sense,reap,reap | Reap,reap,6363,36149,이익을 얻다 / 거둬들이다,수확하다. 베어들이다. 거두어들이다,2,0,1
+llm-sense,redeemable,redeemable | Redeemable,redeemable,2738,45586,상환할 수 있는 / 다시 사들일 수 있는 / 환급 가능한,상환할 수 있는 / 다시 사들일 수 있는 / 보상이 가능한,0,0,1
+llm-sense,refreshing,refreshing | Refreshing,refreshing,3113,29848,상쾌한 / 심신을 상쾌하게 하는 / 기운이 나게 하는 / 새롭게 하는,기운나게하는,2,0,1
+llm-sense,relegate,relegate | Relegate | relegate,relegate,4654,"33011,52034",좌천시키다 / …을 내려앉히다 / 이관하다 / 격하시키다 / (덜 중요한 위치로) 밀쳐 버리다 / 강등시키다 / 내려보내다,좌천시키다 / 보다 하위 리그로 강등시키다 / 위임하다 / 격하시키다 / (낮은 위치로) 밀쳐버리다,2,0,2
+llm-sense,remit,remit | Remit,remit,6716,33009,송금하다 / 면제하다 / 보내다,면제하다 / 사건 기록의 이송 / 검토 과제,2,0,1
+llm-sense,restore,restore | Restore | restore,restore,1647,"29818,52397",회복하다 / 복원하다 / 되찾다 / 되돌리다 / 재건하다,복원하다 / 복구하다 / 회복시키다,2,0,2
+llm-sense,restrict,restrict | Restrict | restrict,restrict,1650,"29809,52474",제한하다 / 규제 / 금지하다 / 제약 / 통제,제한하다 / 한정하다,2,0,2
+llm-proper,rex,rex | Rex,Rex,50173,3240,이름,왕 / 국왕 / 짧은 털의 변이종,0,0,4
+llm-sense,rhyme,rhyme | Rhyme,rhyme,16269,30466,운을 맞추다 / 운문 / 랩,① 운을 맞추다 ② 랩 ③ 운문 / 라임,2,0,2
+llm-proper,rick,rick | Rick,Rick,50018,12957,이름,남자 이름 / 건초의 가리 / 쌓아올리다,0,0,2
+llm-proper,robert,robert | Robert,Robert,49973,43688,이름,남자 이름 / 로버트,0,0,1
+llm-proper,roger,roger | Roger,Roger,50118,26169,이름,로저 / 알았다 / 좋아,0,0,11
+llm-proper,rose,rose | Rose,Rose,50019,4963,이름,올랐다 / 장미 / 로즈,0,2,72
+llm-proper,ross,ross | Ross,Ross,50013,12956,이름,남자 이름 / 나무 껍질을 벗기다 / 꺼칠꺼칠한 외피,0,0,2
+llm-proper,royal,royal | Royal,Royal,30323,344,① 왕실의 ② 로열 ③ 왕족,왕실의 / 로열 / 왕족,0,2,115
+llm-sense,russian,russian | Russian,russian,1981,36611,러시아의 / 러시아어 / 러시아인의,러시아 사람 / 러시아 언어 / 러시아 인 / 러시아 어,2,0,2
+llm-sense,salaries,Salaries | salaries,salaries,49372,27773,급여,봉급,0,0,1
+llm-proper,sally,sally | Sally,Sally,30474,22508,① 반격 ② 출격 ③ 여자 이름 / 샐리 / 이름,반격 / 출격 / 여자 이름,0,2,26
+llm-proper,sarah,sarah | Sarah,Sarah,50248,32963,이름,사라 / 세라 / 새러 / 새라,0,0,8
+llm-proper,scant,scant | Scant,Scant,48561,18485,부족한 인색하게 굴다,거의 없는 / 줄이다 / 빈약한 / 부족한,0,3,92
+llm-proper,scott,scott | Scott,Scott,50192,8688,이름,스콧 / 남자 이름,0,0,4
+llm-proper,sean,sean | Sean,Sean,50130,44450,이름,남자 이름,0,0,1
+llm-proper,seth,seth | Seth,Seth,50220,34863,이름,세스,0,0,2
+llm-proper,sharon,sharon | Sharon,Sharon,50070,18339,이름,샤론 / 섀런 / 셰론 / 무궁화,0,0,3
+llm-sense,shipment,shipment | Shipment,shipment,11186,30433,배송 / 선적량 / 출하 / 수송 / 운반,① 선적 ② 발송 ③ 적재,0,0,1
+llm-sense,shipping,shipping | Shipping,shipping,24154,27769,선적 / 선박 톤수 / 해운업,운송,2,0,1
+llm-sense,shout,shout | Shout,shout,1763,37453,외치다 / 소리지르다 / 큰 소리 / 고함치다 / 외침,소리치다,2,0,1
+llm-sense,shut,shut | Shut,shut,1784,48223,폐쇄하다 / 닫다 / 차단하다 / 막다 / 다물다,가두다,2,0,1
+llm-sense,silvery,silvery | Silvery,silvery,23696,37352,은백색의 / 은빛나는 / 은색,맑은,2,0,1
+llm-proper,simon,simon | Simon,Simon,50060,45748,이름,남자 이름 / 끌려다니는 사람 / 시몬,0,0,1
+llm-sense,since,since | Since,since,3254,45598,…이후 / …때부터 / …이래 / 그 후 / ~이래로,"""~이래"" / ""~때문에"" / ""~이후"" / ""~한 까닭에"" / ""그 후""",2,0,1
+llm-proper,smith,smith | Smith,Smith,29920,10346,① 금속 세공인 ② 대장장이 ③ 스미스 / 이름,금속 세공인,0,0,12
+llm-sense,so,so | So,so,3394,37175,그래서 / 그렇게 / 그렇다면 / 그러니 / 따라서,그래서 / 그렇게 / 그렇다면 / 따라서 / 그러므로,2,0,1
+llm-sense,sora,sora | Sora,sora,28957,49386,쇠뜸부기의 일종,소라,0,0,1
+llm-sense,spartan,spartan | Spartan,spartan,21953,43994,스파르타의 / 스파르타인 같은 기질의 사람 / 스파르타인의,삼가는 / 절제하는,2,0,1
+llm-sense,specifications,Specifications | specifications,specifications,30750,27763,설명서,명세서,0,0,1
+llm-proper,stephen,stephen | Stephen,Stephen,50115,31625,이름,남자 이름 / 스티븐,0,0,2
+llm-proper,steve,steve | Steve,Steve,50179,48593,이름,스티브,0,0,2
+llm-sense,struggling,struggling | Struggling,struggling,12570,30413,고군분투하는 / 어려워하는 / 애쓰는 / 노력하는 / 힘든 / 다투고 있는 / 곤경을 겪고 있는,① 기를 쓰는 ② 분투하는 ③ 몸부림치는,2,0,1
+llm-sense,subcontractor,Subcontractor | subcontractor,subcontractor,28828,28010,하청업자 / 하청 회사,하청업체,0,0,1
+llm-proper,sue,sue | Sue,Sue,50172,1547,이름,고소하다,0,2,104
+llm-sense,sunburn,sunburn | Sunburn,sunburn,6661,48409,햇볕에 탐 / 볕에 타기 / 볕에 태우다,햇빛에 탐,1,0,1
+llm-sense,sunny,sunny | Sunny,sunny,4600,36233,맑은 / 햇살의 / 밝은 / 쨍쨍한 / 화창한 / 햇볕이 나는,햇빛이  반짝이는,2,0,1
+llm-proper,susan,Susan | susan,Susan,50136,50710,이름,여자 이름,0,0,1
+llm-proper,tad,tad | Tad,Tad,50208,12001,이름,조금 / 약간 / 꼬마,0,0,24
+llm-sense,taiwanese,taiwanese | Taiwanese,taiwanese,34729,36609,대만의 / 대만 사람 / 대만어,대만 사람 / 대만 언어,0,0,1
+llm-sense,taxis,Taxis | taxis,taxis,49415,27759,순서 / 「배열」 「주성」의 뜻 / 계통적 배열,택시,0,0,1
+llm-proper,taylor,taylor | Taylor,Taylor,50181,29051,이름,테일러 / 영국의 수학자,0,0,2
+llm-sense,tedious,tedious | Tedious,tedious,8681,50353,진부한 / 지루한 / 장황한,지루한 장황한 싫증나는 / 말수가 많은,2,0,1
+llm-proper,thomas,thomas | Thomas,Thomas,49971,28451,이름,남자 이름 / 성 토마 / …을 성희롱 혐의로 고발하다,0,0,5
+llm-sense,tibetan,tibetan | Tibetan,tibetan,25155,36606,티베트의 / 티베트인의 / 티베트인,티벳 사람 / 티벳 언어,0,0,1
+llm-sense,tiresome,tiresome | TIRESOME,tiresome,14647,44500,피곤한 / 지겨운,지루한 / 넌더리나는 / 싫증나는,2,0,1
+llm-sense,titan,titan | Titan,titan,26403,50471,티탄 / 헬리오스 / 거인 / 「티탄」의 뜻,타이탄 (토성의 위성),0,0,1
+llm-proper,tom,tom | Tom,Tom,49387,5298,톰 / 이름,수고양이 / 남자 이름 / 백인에게 굽실거리다,0,0,3
+llm-proper,tony,tony | Tony,Tony,30131,10341,① 토니상 ② 멋진 ③ 유행의 / 이름,토니상 / 멋진 / 유행의,0,3,7
+llm-sense,tortilla,tortilla | Tortilla,tortilla,5878,35672,토르티야 / 토르티아,또르띠아,0,0,1
+llm-sense,trap,trap | Trap,trap,1446,49888,덫 / 가두다 / 잡다 / 빨아들이다 / 과속 감시 장치 / 함정,트랩,2,0,1
+llm-sense,treatment,treatment | Treatment,treatment,3337,29820,치료 / 처리 / 대우 / 관리 / 처치,처지,3,0,1
+llm-proper,trey,trey | Trey,Trey,50126,10069,이름,3 / 3개 한 벌 / 3펜스 화폐,0,0,3
+llm-sense,trimming,Trimming | trimming,trimming,30782,28029,깎아 다듬기 / 정돈 / 손질,트리밍[다듬는 공정,2,0,1
+llm-sense,trouble,trouble | Trouble,trouble,745,48227,문제 / 곤란 / 어려움 / 고통 / 말썽 / 고생,문제 / 걱정거리,2,0,1
+llm-sense,truncate,truncate | Truncate,truncate,18919,33005,끝을 자르다 / 꼭대기를 자르다 / 일부를 생략하여 줄이다,상부를 자르다 / 줄이다 / 끝을 자른,1,0,1
+llm-sense,tuesday,tuesday | Tuesday,tuesday,4968,31979,화요일,화요일 / 화요일의 / 화요일에 / 목요일,0,0,9
+llm-sense,turkey,turkey | Turkey,turkey,4549,49948,칠면조 / 튀르키예,터키,1,0,1
+llm-sense,uncovered,uncovered | Uncovered,uncovered,20969,29855,폭로된 / 모자를 벗은 / 무담보의,알아내다,1,0,1
+llm-sense,undaunted,undaunted | Undaunted,undaunted,8975,48569,굽히지 않는 / 두려워하지 않는 / 용감한,당당한,2,0,1
+llm-sense,unless,unless | Unless,unless,675,45593,…하지 않는다면 / 제외하면 / …한다면 모를까 / ~하지 않으면,~하지 않는 한,2,0,1
+llm-sense,unsatisfied,Unsatisfied | unsatisfied,unsatisfied,40875,29857,만족되지 않은 / 만족하고 있지 않은,불만스러운,2,0,1
+llm-sense,venule,venule | Venule,venule,44459,44536,작은 맥 / 작은 날개맥 / 작은 정맥 / 세정맥,소정맥,0,0,1
+llm-sense,vindicate,vindicate | Vindicate,vindicate,11644,32998,옹호하다 / 변호하다 / …의 정당성을 입증하다 / …을 변호하다 / 비난을 풀다 / 오해를 풀다,비난을 풀다 / 옳음을 밝히다 / 회복하다,3,0,1
+llm-sense,wafer,wafer | Wafer,wafer,26254,43491,웨이퍼 / 면병 / …을 봉하다,얇고 딱딱한 과자 / 약한 것을 총칭,0,0,1
+llm-sense,wanted,wanted | Wanted,wanted,10834,31262,하고자 / 싶었다 / 원했다 / 바랐다 / 희망했다 / 구인모집,구인광고 / 사람을 구함,1,0,1
+llm-sense,washington,washington | Washington,washington,17199,29919,워싱턴 / 미국 정부 / 워싱턴 주 / 워싱턴 호,① 워싱턴 ② 미국 정부 ③ 워싱턴 주 ④ 워싱턴 호 / 워싱톤,0,0,2
+llm-sense,watchdog,watchdog | Watchdog,watchdog,4057,30392,감시 단체,① 감시인 ② 감시견 ③ 파수꾼,2,0,1
+llm-sense,western,western | Western,western,1800,36590,서양의 / 서부의 / 서쪽의,서양의 / 서쪽에 위치한,2,0,1
+llm-sense,whereas,whereas | Whereas,whereas,4860,45594,…임에 비하여 / …인데도 / 서문 / ~라는 사실에 비추어 / ~한 사실이 있으므로 / ~인 반면에,~임에 반해서,3,0,1
+llm-sense,while,while | While,while,3294,45603,…하면서 / …동안에 / …에 반하여 / 동시에 / 잠시 / ~하는 동안,~하는 동안에 / ~하는 한,2,0,1
+llm-proper,william,william | William,William,49963,37557,이름,남자 이름 / 윌리엄 / 지폐,0,0,1
+llm-sense,worth,worth | Worth,worth,626,29812,가치있는 / …어치 / …할 만한 / 재산 / 중요성 / ..의 값어치가 있다 / ...할 가치가 있다 / 가치 있는,가치가있는,2,0,1
