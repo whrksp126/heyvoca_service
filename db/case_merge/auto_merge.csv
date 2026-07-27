@@ -1,0 +1,791 @@
+﻿class,lower,variants,rep_word,rep_voca_id,merge_voca_ids,rep_meanings,merge_meanings,rep_examples,merge_examples,merge_book_maps
+auto,aboriginal,aboriginal | Aboriginal,aboriginal,19381,39134,원주민 / 토착 / 원시 / 원래의,호주 원주민의,2,0,2
+auto,aborigine,aborigine | Aborigine,aborigine,10288,36471,원주민 / 오스트레일리아 원주민 / 토착 동식물군,오스트레일리아 원주민,0,0,1
+auto,abounding,Abounding | abounding,abounding,33189,29839,풍부한 / 많은,풍부한,0,0,1
+auto,access,access | Access,access,1163,30289,접근 / 이용 / 접속 / 출입 / ~를 이용하다 / ~에 접근하다,① 접근 ② 이용 ③ 접속 ④ 출입,2,0,1
+auto,accident,accident | Accident,accident,3825,48408,사고 / 교통사고 / 재난 / 사건 / 우연한 사고 / 우연한 일,사고,2,0,1
+auto,accompany,accompany | Accompany,accompany,921,37350,동행하다 / 함께 ~하다 / 수반하다 / 따르다 / 수행하다 / 동반하다,동반하다,2,0,1
+auto,according,according | According,according,1119,30371,따르는 / 의한 / 일치한 / 따라서,①  따르는 ② 의한,0,0,1
+auto,accounting,accounting | Accounting,accounting,4084,27785,회계 / 차지하는 / 달하는 / 넘는 / 해당되는 / 회계학,회계,1,0,1
+auto,acculturation,Acculturation | acculturation,acculturation,30531,30047,문화 변용 / 사회화 / 그 결과,① 문화 변용 ② 사회화 ③ 그 결과,0,0,1
+auto,acknowledgment,acknowledgment | Acknowledgment,acknowledgment,29194,30435,승인 / 인정 / 인지,① 승인 ② 인정 ③ 인지,2,0,1
+auto,activation,activation | Activation,activation,15626,28017,활성화 / 활동화 / 촉진,활성화,0,0,1
+auto,administer,administer | Administer,administer,1475,36129,공급하다 / 투여하다 / 관리하다 / 실시하다 / 운영하다 / 통치하다 / (정식으로)배부하다,관리하다. 경영하다. 운영하다,3,0,1
+auto,administration,administration | Administration,administration,1028,30338,정부 / 행정 / 정권 / 관리 / 경영 / 투여,① 정부 ② 정권 ③ 행정 ④ 관리 ⑤ 지배,2,0,1
+auto,admiral,admiral | Admiral,admiral,24630,30359,해군 대장 / 제독,① 해군 대장 ② 제독,1,0,1
+auto,adult,adult | Adult,adult,1283,30326,성인용의 / 성인 / 어른 / 성체 / 다 자란,① 성인 ② 어른 ③ 다 자란 ④ 성체 ⑤ 성인용의,2,0,1
+auto,advice,advice | Advice,advice,685,30427,조언 / 충고 / 도움 / 권고 / 지시,① 조언 ② 충고 ③ 도움 ④ 권고 ⑤ 지시,2,0,1
+auto,afternoons,AFTERNOONS | afternoons,afternoons,30545,30030,오후에는 언제나 / 오후에는 흔히,① 오후에는 언제나 ② 오후에는 흔히,0,0,1
+auto,against,against | Against,against,3818,37163,…에 대한 / 반대로 / 대항하여 / 반하는 / 기대어서 / ~에 반대하여,~에 반대하여,2,0,1
+auto,agriculture,agriculture | Agriculture,agriculture,3817,36164,농업 / 축산,농업. 농사. 농예,2,0,1
+auto,aids,aids | AIDS,aids,8084,48307,에이즈 / 지원 / 후천성 면역 결핍증 / 에이드 / 가속하다,후천성면역결핍증후군,0,0,1
+auto,alaska,alaska | Alaska,alaska,8083,16901,알래스카,알래스카,0,0,1
+auto,alliance,alliance | Alliance,alliance,6145,29854,동맹 / 협력 / 연합 / 단체,동맹,2,0,1
+auto,allow,allow | Allow,allow,150,48241,…할 수 있게 하다 / 허용하다 / 허락하다 / 승인하다,허락하다,2,0,1
+auto,alternative,alternative | Alternative | alternative,alternative,1986,"29849,52343",해결책 / 대안 / 대체 / 다른 / 대신의 / 얼터너티브 / 방안 / 교대로의 / 양자택일,대체대안 / 대안 / 대안의,2,0,2
+auto,altogether,altogether | Altogether,altogether,2939,30038,전적으로 / 모두 함께 / 합하여,① 전적으로 ② 모두 함께 ③ 합하여,2,0,1
+auto,amendment,amendment | Amendment,amendment,11640,30135,수정 / 개정 / 개심,① 수정 ② 개정 ③ 개심,2,0,1
+auto,amount,amount | Amount,amount,914,30327,양 / 되다 / 금액 / 달하다 / 액수 / 총액,① 되다 ② 금액 ③ 양 ④ 액수 ⑤ 달하다,2,0,1
+auto,amputate,amputate | Amputate,amputate,15516,32993,절단하다 / 잘라내다,절단하다 / 잘라내다,0,0,1
+auto,anaconda,anaconda | Anaconda,anaconda,9671,30208,아나콘다 / 애너콘다 / 큰 뱀,① 아나콘다 ② 애너콘다 ③ 큰 뱀,0,0,1
+auto,anasazi,anasazi | Anasazi,anasazi,20844,47687,아나사지 문화 / 아나사지족,아나사지,0,0,1
+auto,android,Android | android,android,32712,30314,안드로이드 / 로봇 / 인조 인간,① 로봇 ② 인조 인간,0,0,1
+auto,annexation,annexation | Annexation,annexation,911,30091,합병 / 부가 / 첨가,① 합병 ② 부가 ③ 첨가,1,0,1
+auto,annual,annual | Annual,annual,928,30281,연간의 / 연례의 / 매년의 / 연마다의 / 1년의,① 연간의 ② 연례의 ③ 매년의 ④ 연마다의 ⑤ 해마다,2,0,1
+auto,ant,ant | Ant,ant,9670,36227,개미,개미,1,0,1
+auto,antigen,Antigen | antigen,antigen,51943,44562,항원,항원,0,0,1
+auto,anyone,anyone | Anyone,anyone,5369,30083,모든 사람 / 누군가 / 아무도,① 누군가 ② 아무도 ③ 모든 사람,2,0,1
+auto,aorta,aorta | Aorta,aorta,23313,44561,대동맥,대동맥,0,0,1
+auto,apartment,apartment | Apartment,apartment,1375,30351,아파트 / 주거,① 아파트,2,0,1
+auto,apology,apology | Apology,apology,4195,30417,사과 / 사죄 / 변명,① 사과 ② 사죄 ③ 변명,2,0,1
+auto,appease,appease | Appease,appease,9093,33006,달래다 / 진정시키다 / …을 가라앉히다,달래다 / …을 가라앉히다 / 진정시키다,2,0,1
+auto,applicable,applicable | Applicable,applicable,2603,45288,적용할 수 있는 / 적절한 / 적용 가능한 / 적용되는 / 해당되는 / 해당,적용,2,0,1
+auto,approval,approval | Approval,approval,8451,30337,승인 / 허가 / 동의 / 찬성,① 승인 ② 동의 ③ 허가 ④ 찬성,2,0,1
+auto,arabia,arabia | Arabia,arabia,4125,34009,아라비아,아라비아: 쿠웨이트·사우디아라비아·오만·예멘·아랍 에미리트 등을 포함함.,0,0,1
+auto,arabian,arabian | Arabian,arabian,4126,34008,아라비아의 / 아라비아인 / 아랍의,1.아라비아의  2.아라비아인  3.아랍의,1,0,1
+auto,argentina,argentina | Argentina,argentina,9392,34006,아르헨티나,아르헨티나,0,0,1
+auto,arrogance,arrogance | Arrogance,arrogance,9269,36247,오만 / 거만 / 자만 / 만용 / 불손 / 건방짐,오만함,3,0,1
+auto,art,art | Art,art,3796,27745,예술 / 미술품 / 미술 / 아트 / 기술,미술,2,0,1
+auto,artery,artery | Artery,artery,5656,44559,동맥,동맥,1,0,1
+auto,ascertain,ascertain | Ascertain,ascertain,7289,50350,확인하다 / 규명하다 / 찾아내다 / 알아내다.확인하다,규명하다 찾아내다 확인하다,3,0,1
+auto,assign,assign | Assign,assign,1492,30298,부여하다 / 할당하다 / 지정하다 / 정하다 / 배정하다,① 할당하다 ② 지정하다 ③ 부여하다 ④ 정하다,2,0,1
+auto,association,association | Association,association,3038,30352,협회 / 단체 / 연합 / 관련 / 조합,① 협회 ② 단체 ③ 연합 ④ 조합,2,0,1
+auto,athenian,athenian | Athenian,athenian,25755,34000,아테네의 / 아테네인의 / 아테네인,1. 아테네의  2. 아테네인의  3. 아테네 사람 / 아테네,0,0,2
+auto,athens,athens | Athens,athens,12992,33999,아테네 / 애선스 / 그리스의 수도,1. 아테네  2. 그리스 수도(首都),0,0,1
+auto,august,august | August,august,4256,41021,8월,8월,2,0,4
+auto,awaken,awaken | Awaken,awaken,3098,35679,각성하다 / 깨다 / 깨닫다,깨다,0,0,1
+auto,aware,aware | Aware,aware,1794,36158,알고 있는 / 인식하는 / 깨달은 / 의식하는,~을 알고있는,2,0,1
+auto,babysitter,babysitter | BABYSITTER,babysitter,10138,30446,보모 / 베이비시터,① 베이비시터 ② 보모,0,0,1
+auto,bachelor,bachelor | Bachelor,bachelor,2928,30440,학사 / 미혼 남자,① 미혼 남자 ② 학사 ③ 독신자,2,0,1
+auto,backward,backward | Backward,backward,12166,36125,뒤의 / 뒤로 / 뒤떨어진 / 과거 / 거꾸로 / 소극적인 / 백워드 / 숙성이 더딘 / 발전이 더딘 / 낙후된,뒤쪽으로. 뒤로,3,0,1
+auto,bacon,bacon | Bacon,bacon,13300,29962,베이컨,베이컨,2,0,1
+auto,badly,badly | Badly,badly,5342,36138,나쁘게 / 심하게 / 잘못 / 매우 / 절실하게,나쁘게. 몹시. 심하게,2,0,1
+auto,bankruptcy,bankruptcy | Bankruptcy,bankruptcy,2757,30381,파산 / 부도,① 파산 ② 부도,2,0,1
+auto,baptist,baptist | Baptist,baptist,16509,33973,침례교도 / 침례파의 / 세례 요한,1. 침례교도   2. 침례파의  3. 세례 요한,0,0,1
+auto,barbecue,barbecue | Barbecue,barbecue,2021,30473,바비큐 / …을 통째로 굽다 / 야외 파티 / 불고기 굽기 / 구이,① 바비큐 ② …을 통째로 굽다 ③ 야외 파티,2,0,1
+auto,baron,baron | Baron,baron,23287,30471,남작 / …왕 / 봉건 영주,① 남작 ② …왕 ③ 봉건 영주,2,0,1
+auto,bear,bear | Bear,bear,217,36224,있다 / 견디다 / 곰 / 참다 / 아이를 낳다 / 지니다,곰,3,0,1
+auto,beat,beat | Beat,beat,232,48240,이기다 / 때리다 / 물리치다 / 비트 / 뛰다 / ~에 종사하다; ~을 노리다 / (기자의) 취재 분야 및 담당 / 치다,치다 / 때리다,2,0,1
+auto,beautiful,beautiful | Beautiful,beautiful,12,48239,아름다운 / 예쁜 / 훌륭한 / 멋있는 / 화창한 / 고운,아름다운,2,0,1
+auto,beauty,beauty | Beauty,beauty,7783,48237,아름다움 / 미용의 / 미인 / 미 / 미녀 / 미용,아름다움 / 미,2,0,1
+auto,because,because | Because,because,3779,45599,…때문에 / …하다고 해서 / 왜냐하면 / ~때문에,~때문에 / 왜냐하면,2,0,2
+auto,beef,beef | Beef,beef,4575,48233,쇠고기 / 강화하다 / 불만 / 비프 / 소고기,쇠고기 / 강화하다 / 불만 / 비프,2,0,1
+auto,beginning,beginning | Beginning,beginning,5257,30022,시작 / 처음 / 초 / 기원 / 개시,① 시작 ② 초 ③ 처음 ④ 기원 ⑤ 개시,2,0,1
+auto,beholder,beholder | Beholder,beholder,8755,48244,보는 사람 / 구경꾼,보는사람 / 구경꾼,0,0,1
+auto,believing,believing | Believing,believing,12847,30120,믿는 / 신앙심 있는 / 믿음,① 믿는 ② 신앙심 있는 ③ 믿음,0,0,1
+auto,besiege,besiege | Besiege,besiege,15463,28919,에워싸다 / 포위하다 / 공격하다 / 쇄도하다,포위하다,2,0,1
+auto,biting,biting | Biting,biting,19377,30254,무는 / 괴롭히는 / 신랄한,① 무는 ② 신랄한 ③ 괴롭히는,2,0,1
+auto,blood,blood | Blood,blood,3766,30334,혈액 / 피 / 혈통 / 혈연 / 유혈,① 혈액 ② 피 ③ 혈통 ④ 혈연 ⑤ 유혈,2,0,1
+auto,bloody,bloody | Bloody,bloody,1979,30078,유혈의 / 잔혹한 / 빌어먹을 / 엄청난 / 피의 / 피비린내 나는 / 피투성이의,① 유혈의 ② 피의 ③ 잔혹한 ④ 빌어먹을 ⑤ 엄청난,4,0,1
+auto,bloom,bloom | Bloom,bloom,10085,29953,꽃이 피다 / 블룸 / 개화,① 꽃이 피다 ② 개화 ③ 블룸,2,0,1
+auto,bloomed,bloomed | Bloomed,bloomed,28954,37425,코팅된,코팅된,0,0,1
+auto,boasting,boasting | Boasting,boasting,10316,30245,자랑 / 자랑하는 / 과시,① 자랑 ② 자랑하는 ③ 과시,0,0,1
+auto,bolster,bolster | Bolster,bolster,15861,30387,강화하다 / 지지하다 / 보강하다 / 긴 베개,① 지지하다 ② 보강하다 ③ 긴 베개,1,0,1
+auto,book,book | Book,book,884,36225,책 / 도서 / 저서 / 서적 / 예약하다,책,2,0,1
+auto,boom,boom | Boom,boom,21926,30207,붐 / 인기 / 알리다 / 붐을 일으키다 / 급격한 증가,① 붐 ② 인기 ③ 알리다 ④ 붐을 일으키다 ⑤ 급격한 증가,2,0,1
+auto,bored,bored | Bored,bored,9,48447,지루한 / 싫증난 / 지루해하는,지루한,2,0,1
+auto,bowl,bowl | Bowl,bowl,4759,30080,그릇 / 볼링 / 볼 / 사료 그릇,① 그릇 ② 볼링 ③ 볼,2,0,1
+auto,brain,brain | Brain,brain,3755,30332,뇌 / 두뇌 / 머리 / 브레인,① 뇌 ② 두뇌 ③ 머리 ④ 브레인,2,0,1
+auto,brazil,brazil | Brazil,brazil,10613,37499,브라질,브라질,0,0,2
+auto,britain,britain | Britain,britain,7779,41037,영국,영국,0,0,1
+auto,briton,briton | Briton,briton,17164,34033,영국인,1. 영국인[특히 잉글랜드의 주민]  2. 브리튼인[고대에 영국 남부에 살던 켈트인,0,0,1
+auto,brussels,Brussels | brussels,brussels,37723,34031,브뤼셀 / 벨기에의 수도,블뤼셀[벨기에의 수도,0,0,1
+auto,bull,bull | Bull,bull,4236,30268,황소 / 거짓말 / 강세의,① 황소 ② 강세의 ③ 거짓말,2,0,1
+auto,bundles,bundles | Bundles,bundles,37432,37471,번들의 / 묶음,묶음,0,0,1
+auto,bureau,bureau | Bureau,bureau,8065,29926,…국(局) / 기관 / 책상,① …국(局) ② 기관 ③ 책상,2,0,2
+auto,bush,bush | Bush,bush,6990,30035,부시 / 덤불 / 숲 / 수풀 / 관목,① 부시 ② 덤불 ③ 관목 ④ 숲 ⑤ 수풀,2,0,1
+auto,busy,busy | Busy,busy,1978,37457,바쁜 / 분주한 / 붐비다 / 통화 중인,바쁜,2,0,1
+auto,calcium,calcium | Calcium,calcium,22124,30318,칼슘 / 미네랄,① 칼슘,2,0,1
+auto,california,california | California,california,4609,49947,캘리포니아,캘리포니아,0,0,1
+auto,camel,camel | Camel,camel,4520,37421,낙타,낙타,2,0,1
+auto,canada,canada | Canada,canada,8061,35576,캐나다,캐나다,0,0,3
+auto,candidate,candidate | Candidate,candidate,3738,30441,후보자 / 지원자 / 수험생 / 후보생,① 후보자 ② 지원자 ③ 수험생,2,0,1
+auto,canyon,canyon | Canyon,canyon,4522,29933,협곡,① 협곡,0,0,1
+auto,capitalistic,capitalistic | CAPITALISTIC,capitalistic,24557,30163,자본주의적인 / 자본의 / 자본가의,① 자본주의적인 ② 자본의 ③ 자본가의,1,0,1
+auto,capitalize,capitalize | Capitalize,capitalize,17431,30461,투자하다 / 이용하다 / 자본화하다 / …을 대문자로 쓰다 / 계산하다 / 대문자로 쓰다,① 이용하다 ② 자본화하다 ③ …을 대문자로 쓰다,2,0,1
+auto,carrier,carrier | Carrier,carrier,4036,30144,통신업체 / 항공사 / 매개체 / 화물선 / 캐리어 / 보균자 / (병원체의) 매개체,① 통신업체 ② 운수 회사 ③ 나르는 것 ④ 항공모함 ⑤ 매개체,2,0,1
+auto,cat,cat | Cat,cat,3734,36228,고양이 / 고양이과 동물,고양이,2,0,1
+auto,cause,cause | Cause,cause,370,29833,원인 / 초래하다 / 일으키다 / 발생하다 / 명분,원인,2,0,1
+auto,cellar,cellar | Cellar,cellar,12011,30036,지하실 / 저장실,① 지하실 ② 저장실,2,0,1
+auto,celsius,celsius | Celsius,celsius,12856,32534,섭씨 / 셀시우스,섭씨의 / 섭씨,0,0,6
+auto,census,census | Census,census,15886,29927,인구 조사 / 공적인 조사 / …의 조사를 하다,① 인구 조사 ② 공적인 조사 ③ …의 조사를 하다,2,0,1
+auto,centigrade,centigrade | Centigrade,centigrade,14923,34871,섭씨의 / 100도 눈금으로 나뉜,섭씨,2,0,1
+auto,century,century | Century,century,3732,37429,세기 / 100년,세기,2,0,1
+auto,ceremony,ceremony | Ceremony,ceremony,668,30421,의식 / 의례 / 식,① 의식 ② 의례 ③ 식,2,0,1
+auto,cession,cession | Cession,cession,16913,30103,양도 / 양여 / 할양,① 양도 ② 양여 ③ 할양,1,0,1
+auto,chafe,chafe | Chafe,chafe,5718,30142,화나게 하다 / 비벼서 따뜻하게 하다 / 안달 / 쓸다 / 비벼서 벗기다 / 쓸리다,① 비벼서 따뜻하게 하다 ② 안달 ③ 쓸다,2,0,1
+auto,championship,championship | Championship,championship,8052,30410,선수권 / 우승 / 챔피언쉽 / 챔피언십 / 대회,① 선수권 ② 우승 ③ 챔피언쉽,2,0,1
+auto,chapter,chapter | Chapter,chapter,4505,30397,장 / 챕터 / 편,① 장 ② 챕터 ③ 편,2,0,1
+auto,chastity,chastity | CHASTITY,chastity,24490,29998,순결 / 고상함 / 정숙함,① 순결 ② 고상함 ③ 정숙함,0,0,1
+auto,chateau,chateau,chateau,10212,,샤토 / 성 / 궁전 / 대저택,,1,0,0
+auto,chatterbox,chatterbox | Chatterbox,chatterbox,34396,37261,수다쟁이 / 기관총 / 카 라디오,수다쟁이,0,0,1
+auto,cheers!,Cheers! | cheers!,cheers!,48344,4915,건배,건배!,0,0,1
+auto,chicago,chicago | Chicago,chicago,10604,50196,시카고,시카고,0,0,1
+auto,china,china | China,china,5095,35582,중국 / 중화 인민 공화국 / 도자기,중국,1,0,5
+auto,cholesterol,cholesterol | Cholesterol,cholesterol,24984,44557,콜레스테롤 / 콜레스테린 / 혈중 지질,콜레스테롤,1,0,1
+auto,chorus,chorus | Chorus,chorus,21308,37343,코러스 / 합창 / 이구동성,합창단,2,0,1
+auto,christ,christ | Christ,christ,7776,50184,그리스도,그리스도,2,0,1
+auto,christian,christian | Christian,christian,1945,40880,기독교도 / 기독교의 / 크리스천 / 예수의 / 그리스도의,기독교,2,0,1
+auto,christianity,christianity | Christianity,christianity,8190,40881,기독교,기독교,0,0,2
+auto,churn,churn | Churn,churn,6866,32997,교유기 / 음료 교반기 / 휘젓다 / (물이) 마구 휘돌다 / (속이) 뒤틀리다 / (분노가) 들끓다,교유기 / 음료 교반기 / 휘젓다,4,0,1
+auto,château,château,château,51344,,대저택,,1,0,0
+auto,cinderella,Cinderella | cinderella,cinderella,36009,34083,신데렐라 / 숨겨진 미인 / 숨겨진 탓으로 좀처럼 진가를 인정받지 못하는 사람,1. 숨겨진 미인; 숨겨진 탓으로 좀처럼 진가를 인정받지 못하는 사람[물건]  2. 갑자기 유명해진 무명 인사  3.  신데렐라: 동화의 여주인공,0,0,1
+auto,cinema,cinema | Cinema,cinema,10367,27748,영화관 / 영화 / 극장,영화,2,0,1
+auto,circulation,circulation | Circulation,circulation,868,30333,순환 / 유통 / 발행 부수 / 동선 / 돌다,① 유통 ② 발행 부수 ③ 순환 ④ 통화 ⑤ 대중적인,2,0,1
+auto,civil,civil | Civil,civil,1814,29917,시민의 / 민사의 / 민간의 / 예의 바른 / 친근한,① 시민의 ② 민간의 ③ 민사의 ④ 예의 바른 ⑤ 친근한,2,0,1
+auto,classroom,classroom | Classroom,classroom,2896,13289,교실 / 수업 / 지식·경험을 쌓는 장소 / 학급,교실,1,0,1
+auto,cleanliness,cleanliness | CLEANLINESS,cleanliness,9249,30000,청결 / 깨끗한 것을 좋아하기 / 결벽,① 청결 ② 깨끗한 것을 좋아하기 ③ 결벽,0,0,1
+auto,cleave,cleave | CLEAVE,cleave,17344,30385,정착하다 / 쪼개다 / 쪼개지다 / 고수하다,① 쪼개다 ② 쪼개지다 ③ 고수하다,2,0,1
+auto,cliche,cliche,cliche,6476,,진부한 표현 / 진부한 / 판에 박은 문구 / 상투적 문구,,2,0,0
+auto,cliché,cliché,cliché,47636,,상투 어구 / 상투어구,,0,0,0
+auto,closely,closely | Closely,closely,864,36137,긴밀히 / 면밀하게 / 더 / 가까이 / 유심히,바싹. 가까이. 면밀히 주의깊게. 꼭. 빈틈없이,2,0,1
+auto,clothes,clothes | Clothes,clothes,5059,13308,옷 / 의복 / 의상 / 세탁물 / 옷가지,의복,2,0,1
+auto,clown,clown | Clown,clown,2695,37456,광대 / 시골뜨기,광대,2,0,1
+auto,club,club | Club,club,5338,29977,모임 / 클럽 / 동아리 / 팀 / 구단 / 곤봉 / 골프채 / 동호회,① 클럽 ② 팀 ③ 동아리 ④ 골프채 ⑤ 구단,3,0,1
+auto,coagulation,coagulation | Coagulation,coagulation,21751,44556,응결 / 응고 / 응고물,응고,1,0,1
+auto,coat,coat | Coat,coat,545,36226,코트 / 칠하다 / 도금 / 외피 / 외투,코트,2,0,1
+auto,college,college | College,college,1228,30449,대학 / 연구소 / 칼리지,① 대학 ② 연구소 ③ 칼리지,2,0,1
+auto,colonial,colonial | Colonial,colonial,2562,30115,식민지의 / 일제 강점기 / 식민지적인,① 식민지의 ② 일제 강점기,2,0,1
+auto,colossians,colossians | Colossians,colossians,40794,46310,골로새서,골로새서,0,0,1
+auto,combustible,combustible | Combustible,combustible,15063,30293,흥분하기 쉬운 / 불붙기 쉬운 / 가연성의,① 흥분하기 쉬운 ② 불붙기 쉬운 ③ 가연성의,1,0,1
+auto,comfort,comfort | Comfort,comfort,661,36252,위로 / 편안함 / 쾌적함 / 달래다,...을 위로하다,2,0,1
+auto,commerce,commerce | Commerce,commerce,18030,30437,상업 / 커머스 / 무역,① 상업 ② 무역 ③ 커머스,2,0,1
+auto,commercial,commercial | Commercial,commercial,1015,29831,상업용의 / 상업적인 / 광고 / 민간의 / 통상의,광고 / ① 상업적인 ② 광고 ③ 상업용의 ④ 민간의 ⑤ 통상의,2,0,2
+auto,commission,commission | Commission,commission,1525,45424,위원회 / 수수료 / 의뢰 / 권한 / 사관,① 위원회 ② 수수료 ③ 의뢰 ④ 권한 ⑤ 사관,2,0,1
+auto,committee,committee | Committee,committee,3718,30074,위원회,① 위원회,2,0,1
+auto,commutator,COMMUTATOR | commutator,commutator,37212,30221,정류기 / 정류자 / 전환기,① 정류기 ② 정류자 ③ 전환기,0,0,1
+auto,complain,complain | Complain,complain,1387,36143,불평하다 / 호소하다 / 고발하다 / 투덜거리다,불평하다,2,0,1
+auto,complaint,complaint | Complaint,complaint,8040,30426,불만 / 불평 / 고발 / 불편,① 불만 ② 불평 ③ 고발 ④ 불편,2,0,1
+auto,complimentary,complimentary | Complimentary,complimentary,6648,30345,칭찬하는 / 무료의 / 칭찬의 / 서비스로 제공되는 / 서비스가 포함된,① 칭찬하는 ② 무료의 ③ 칭찬의,2,0,1
+auto,compose,compose | Compose,compose,1882,37427,구성하다 / 작곡하다 / 만들다 / 쓰다 / 조직하다 / 작성하다,구성하다,2,0,1
+auto,concentrated,concentrated | Concentrated,concentrated,15530,30330,집중된 / 밀집한 / 농축된,① 집중된 ② 밀집한 ③ 농축된,2,0,1
+auto,concessionaire,concessionaire | CONCESSIONAIRE,concessionaire,29234,30196,양수인 / 특허권 소유자 / 영업권 소유자,① 양수인 ② 특허권 소유자 ③ 영업권 소유자,0,0,1
+auto,condolence,condolence | Condolence,condolence,10620,30416,애도 / 애도의 말 / 조위,① 애도 ② 애도의 말 ③ 조위,2,0,1
+auto,conduct,conduct | Conduct,conduct,1783,30296,실시하다 / 수행하다 / 행동하다 / 시행하다 / 지휘하다,① 실시하다 ② 수행하다 ③ 행동하다 ④ 시행하다 ⑤ 운영하다 / 행동하다. 지도하다,2,0,2
+auto,confederacy,confederacy | Confederacy,confederacy,19280,30070,연합 / 동맹 / 동맹국,① 연합 ② 동맹 ③ 동맹국,0,0,1
+auto,confederate,confederate | Confederate,confederate,20466,30071,남부동맹군 / 동맹하다 / 연합 / 일원,① 동맹하다 ② 남부동맹군 ③ 연합 ④ 일원,1,0,1
+auto,conference,conference | Conference,conference,1938,30230,회견 / 회의 / 회담 / 총회 / 협의 / 컨퍼런스,① 회견 ② 회의 ③ 회담 ④ 총회 ⑤ 협의,2,0,1
+auto,confucian,confucian | Confucian,confucian,17824,34718,유생 / 유교의 / 공자의,공자의 / 유교의,0,0,3
+auto,confucianism,confucianism | Confucianism,confucianism,18554,40882,유교 / 공자의 가르침,유교,0,0,3
+auto,confucius,confucius | Confucius,confucius,13159,34367,공자 / 유교의 시조,공자,0,0,3
+auto,consequently,consequently | Consequently,consequently,6957,30160,결과적으로 / 그 결과로서 / 그에 따른,① 결과적으로 ② 그 결과로서 ③ 그에 따른,2,0,1
+auto,consideration,consideration | Consideration,consideration,14045,30157,고려 / 배려 / 생각 / 이해 / 숙고,① 고려 ② 생각 ③ 배려 ④ 이해 ⑤ 숙고,2,0,1
+auto,constancy,constancy | Constancy,constancy,23856,30139,불변 / 항구성 / 영구적인 것,① 불변 ② 항구성 ③ 영구적인 것,1,0,1
+auto,constant,constant | Constant,constant,1998,29807,지속적인 / 끊임없는,끊임없는,3,0,1
+auto,constitution,constitution | Constitution,constitution,6015,30089,헌법 / 규약 / 체격 / 구성,① 헌법 ② 규약 ③ 체격,2,0,1
+auto,construction,construction | Construction,construction,6460,27764,건설 / 공사 / 건축 / 건립,건설,2,0,1
+auto,contact,contact | Contact,contact,1150,36135,접촉 / 연락 / 콘택트 렌즈 / 교제 / 시선을 마주치다 / ~에게 연락하다 / 연락처 / 연락하다 / 접촉하다,접촉. 연락. 맞닿음. 접촉하다,2,0,1
+auto,contracts,Contracts | contracts,contracts,37360,27794,계약,계약,0,0,1
+auto,controversy,controversy | Controversy,controversy,12589,29841,분쟁 / 논란 / 논쟁 / 문제 / 갈등 / 의혹,논란,2,0,1
+auto,convenient,convenient | Convenient,convenient,1277,37165,편리한 / 간편한 / 손쉬운 / 알맞은,편리한,2,0,1
+auto,cooperation,cooperation | Cooperation,cooperation,4094,30386,협력 / 협조 / 교류 / 협동조합,① 협력 ② 협조 ③ 교류 ④ 협동조합,2,0,1
+auto,coordinator,coordinator | Coordinator,coordinator,15425,30447,코디네이터 / 조정자 / 책임자 / 심의관 / 위원장,① 코디네이터 ② 동격으로 하는 것 ③ 조정자,0,0,1
+auto,coterie,coterie | Coterie,coterie,20531,48565,친구 / 동인 / 한패,동료 친구 동인 써클,1,0,1
+auto,cotton,cotton | Cotton,cotton,3709,30053,면 / 목화 / 면화 / 솜 / 무명,① 목화 ② 면 ③ 면화 ④ 솜 ⑤ 무명,2,0,1
+auto,countermeasure,countermeasure | Countermeasure,countermeasure,23304,28026,대응책 / 대책 / 대처 / 조치 / 제재,대책,0,0,1
+auto,county,county | County,county,4489,30382,주 / 군 / (주에서 가장 큰 행정구역) 군 / 카운티,① 주 ② 군,1,0,1
+auto,covenant,covenant | Covenant,covenant,11649,29985,협정 / 계약 / 서약 / 계약하다 / (신과의)언약,① 계약 ② 서약 ③ 계약하다,3,0,1
+auto,crash,crash | Crash,crash,1906,30383,으깨다 / 충돌하다 / 추락하다 / 붕괴하다 / 폭락 / 무너짐 / 잘게 부수다,① 충돌하다 ② 추락하다,2,0,1
+auto,crop,crop | Crop,crop,4273,36136,작물 / 농작물 / 곡물 / 수확 / 곡식,농작물. 수확물,2,0,1
+auto,crucible,crucible | Crucible,crucible,15091,30212,도가니 / 쇳물 괴는 곳 / 용광로,① 도가니 ② 쇳물 괴는 곳 ③ 용광로,1,0,1
+auto,cult,cult | CULT,cult,12651,29965,숭배 / 컬트 / 광신적 교단,① 숭배 ② 컬트 ③ 광신적 교단,2,0,1
+auto,culture,culture | Culture,culture,3702,29971,문화 / 배양 / 문명 / 배양하다 / 풍습 / 전통,① 문화 ② 문명 ③ 배양,2,0,1
+auto,curiosity,curiosity | Curiosity,curiosity,4870,30156,호기심 / 큐리오시티,① 호기심 ② 큐리오시티,2,0,2
+auto,curtsy,curtsy | CURTSY,curtsy,25939,30462,인사 / 무릎을 굽혀 인사하다 / 절,① 인사 ② 무릎을 굽혀 인사하다 ③ 절,1,0,1
+auto,dangerously,dangerously | Dangerously,dangerously,34143,37472,위험할 정도로 / 위험에 빠져 / 위험하게,위험하게,1,0,1
+auto,date,date | Date,date,1675,37649,데이트 / 날짜 / …일 / 시작되다 / …기한,날짜,2,0,1
+auto,dawn,dawn | Dawn,dawn,1164,36144,새벽 / 시작 / 동이 트다 / 생각나다 / 여명,새벽. 동틀녘,3,0,1
+auto,day,day | Day,day,3697,37648,날 / 하루 / 낮 / 데이 / 시절,날,2,0,1
+auto,deal,deal | Deal,deal,392,30395,다루다 / 거래 / 대처하다 / 계약 / 주다,① 거래 ② 다루다 ③ 계약 ④ 대처하다 ⑤ 처리,2,0,1
+auto,decameron,decameron | Decameron,decameron,32303,44071,「데카메론」 / 열흘 이야기,열흘 이야기,0,0,1
+auto,deceive,deceive | Deceive,deceive,10022,36251,속이다 / 기만하다 / 현혹시키다 / 거짓말을 하다,...을 속이다,2,0,1
+auto,decor,decor,decor,21965,,장식 / 장식 양식 / 무대 장치 / 인테리어,,1,0,0
+auto,deformation,deformation | Deformation,deformation,15175,28008,변형 / 기형 / 변한 모양,변형,0,0,1
+auto,degree,degree | Degree,degree,3695,30438,학위 / 도 / 등급 / 급,① 학위 ② 도 ③ 급 ④ 등급,2,0,1
+auto,dehydration,dehydration | Dehydration,dehydration,12015,28015,탈수 / 건조 / 탈수증,탈수,0,0,1
+auto,democrat,democrat | Democrat,democrat,3831,30197,민주당의 / 민주당원,① 민주당의 ② 민주당원,0,0,1
+auto,departure,departure | Departure | departure,departure,2953,"30307,52107",떠남 / 출발 / 사임 / 벗어남 / 출발 시간,① 출발 ② 떠남 ③ 사임 ④ 벗어남 / 출발,2,0,2
+auto,depression,depression | Depression,depression,3691,30040,우울 / 침체 / 불경기 / 공황 / 불황 / 우울증,① 우울 ② 침체 ③ 공황 ④ 불경기 ⑤ 불황,2,0,1
+auto,describe,describe | Describe,describe,172,37465,묘사하다 / 설명하다 / 표현하다 / 기술하다 / 그리다,묘사하다,2,0,2
+auto,despite,despite | Despite,despite,2610,29983,불구하고 / --함에도 불구하고,① 불구하고,2,0,1
+auto,destiny,destiny | Destiny,destiny,7426,30098,운명 / 숙명,① 운명 ② 숙명,2,0,1
+auto,detente,detente,detente,21571,,화해 / 평화주의 / 긴장 완화 / 데탕트,,1,0,0
+auto,deteriorate,deteriorate | Deteriorate,deteriorate,6798,29819,악화되다 / 나쁘게 하다 / 악화시키다 / 타락하다 / 저하시키다 / 악화하다,타락하다,1,0,1
+auto,deviant,deviant | Deviant,deviant,19993,30151,벗어난 / 비정상적인 사람 / 비정상인,① 벗어난 ② 비정상적인 사람 ③ 비정상인,0,0,1
+auto,dial,dial | Dial,dial,5318,29976,다이얼 / 전화를 걸다 / 조절장치 / 숫자판 / 신호,① 전화를 걸다 ② 다이얼 ③ 신호 ④ 조절장치 ⑤ 숫자판,2,0,1
+auto,dictionary,dictionary | Dictionary,dictionary,2899,30051,사전 / 딕셔너리,① 사전 ② 딕셔너리,2,0,1
+auto,dimension,dimension | Dimension,dimension,9345,29951,차원 / 부피 / 크기 / 면 / 규모,① 차원 ② 크기 ③ 부피 ④ 면,2,0,1
+auto,dining,dining | Dining,dining,9006,30342,식사하기 / 식사 / 정찬,① 식사하기 ② 식사 ③ 정찬,1,0,1
+auto,directness,directness | Directness,directness,21554,30259,솔직함 / 직접 / 똑바름,① 솔직함 ② 직접 ③ 똑바름,0,0,1
+auto,dirty,dirty | Dirty,dirty,701,48236,더러운 / 지저분한 / 더러워지다 / 오염된 / 비열한,더러운,2,0,1
+auto,discord,discord | Discord,discord,8099,30033,불화 / 불일치 / 알력,① 불화 ② 불일치 ③ 알력,2,0,1
+auto,discount,discount | Discount,discount,3263,30344,할인 / 디스카운트 / 싸게 / 값깎기 / 무시하다 / 세일,① 할인 ② 값깎기 ③ 디스카운트 ④ 싸게 ⑤ 무시하다,2,0,1
+auto,disease,disease | Disease,disease,3682,36139,질환 / 질병 / 병 / 부패 / 병폐,병. 질병,2,0,1
+auto,disobedience,disobedience | Disobedience,disobedience,16148,30118,불복종 / 반항 / 위반,① 불복종 ② 반항 ③ 위반,0,0,1
+auto,dispatch,dispatch | Dispatch,dispatch,1939,30434,파견 / 파병 / 보내다 / 급파 / 배치,① 신속함 ② 특전 ③ 파견,2,0,1
+auto,disproportionate,disproportionate | Disproportionate,disproportionate,20147,50563,불균형인 / 어울리지 않는 / 불균형의,어울리지 않는,1,0,1
+auto,disrepair,disrepair | Disrepair,disrepair,12869,29817,황폐 / 파손 / 파손 상태,황폐,2,0,1
+auto,district,district | District,district,6940,30109,지역 / 행정구 / 지방 / 지구 / 구역,① 지역 ② 지방 ③ 행정구 ④ 지구 ⑤ 선거구 / 구역. 지역.  지방,2,0,2
+auto,disturb,disturb | Disturb,disturb,1918,30347,방해하다 / 불안하게 하다 / 교란하다 / 어지럽히다 / 저해하다,① 방해하다 ② 혼란시키다 ③ 어지럽히다 ④ 불안하게 하다,2,0,1
+auto,divided,divided | Divided,divided,16987,30390,나누어진 / 분단된 / 분열된 / 분리된 / 분할된,① 분할된 ② 나누어진 ③ 분열된,2,0,1
+auto,dixie,Dixie | dixie,dixie,38786,30052,미국 남부 여러 주의 / 미국 남부 여러 주의 별명 / 큰 쇠냄비,① 미국 남부 여러 주의 ② 미국 남부 여러 주의 별명 ③ 큰 쇠냄비,0,0,1
+auto,doctor,doctor | Doctor,doctor,3677,48235,의사 / 박사 / 선생 / 닥터 / 진료 의사,의사,2,0,1
+auto,drawer,drawer | Drawer | drawer,drawer,5062,"48228,52049",서랍 / 보관함 / 금고 / 장롱,서랍,2,0,2
+auto,duke,duke | Duke,duke,11152,30472,듀크 / 공작 / 때려 눕히다 / 주먹 / 무릎,① 공작 ② 듀크 ③ 주먹 ④ 때려 눕히다 ⑤ 무릎,0,0,1
+auto,dust,dust | Dust,dust,1386,30081,먼지 / 황사 / 가루 / 모래 / 티끌,① 먼지 ② 가루 ③ 모래,2,0,1
+auto,décor,décor,décor,31338,,장식 / 장식물,,0,0,0
+auto,détente,détente,détente,43282,,긴장완화 / 데탕트,,0,0,0
+auto,earth,earth | Earth,earth,3669,36604,지구 / 땅 / 흙,지구,2,0,1
+auto,easter,easter | Easter,easter,27576,30470,부활절 / 이스터 섬,① 부활절 ② 이스터 섬 / 부활절,0,0,4
+auto,edible,edible | Edible,edible,3118,30328,음식 / 먹을 수 있는 / 식품 / 먹는데 적합한 / 먹어도 되는 / 식용의 / 식용에 적합한,① 먹을 수 있는 ② 식품,2,0,1
+auto,education,education | Education,education,1088,29921,교육 / 훈련 / 교양,① 교육 ② 훈련 ③ 교양,2,0,1
+auto,egypt,egypt | Egypt,egypt,16307,36022,이집트,이집트,0,0,2
+auto,eligibility,eligibility | Eligibility,eligibility,4298,30308,적격 / 적임 / 피선거 자격,① 적격 ② 적임 ③ 피선거 자격,0,0,1
+auto,elite,elite | Elite,elite,1086,30270,엘리트 / 엘리트의 / 정예의 / 정예 / 지식인 / 일류의 / 우수자,① 엘리트 ② 권력 집단 ③ 선발된,2,0,1
+auto,emancipation,emancipation | Emancipation,emancipation,6790,30068,해방 / 노예해방 / 해방된 상태,① 해방 ② 노예해방 ③ 해방된 상태,2,0,1
+auto,emergency,emergency | Emergency,emergency,2035,30042,응급 / 비상 / 긴급한 / 위기 / 급변 / 응급 상황 / 비상사태,① 비상 ② 긴급한 ③ 응급 ④ 위기 ⑤ 급변,2,0,1
+auto,empire,empire | Empire,empire,5304,29931,제국 / 왕국 / 제국주의,① 제국 ② 왕국,2,0,1
+auto,employment,employment | Employment,employment,1936,30450,고용 / 취업 / 일자리 / 직업 / 업무,① 고용 ② 일자리 ③ 취업 ④ 직업 ⑤ 업무,2,0,1
+auto,encyclopedia,encyclopedia | Encyclopedia,encyclopedia,4998,30198,백과사전,① 백과사전,2,0,1
+auto,endowment,endowment | Endowment,endowment,14336,30056,기부 / 기증 / 재능 / 기부금 / 소유 / 자신이 가진 것의 가치,① 기부 ② 기증 ③ 재능,3,0,1
+auto,engine,engine | Engine,engine,3656,37164,엔진 / 기관차 / 기관 / 동력 / 기계,엔진,2,0,1
+auto,england,england | England,england,7999,35724,영국 / 잉글랜드,영국 / 잉글랜드,0,0,4
+auto,enormous,enormous | Enormous,enormous,2214,35667,엄청난 / 거대한 / 큰 / 막대한 / 어마어마하다,거대한,2,0,2
+auto,entertainment,entertainment | Entertainment,entertainment,9697,27749,엔터테인먼트 / 연예 / 오락 / 즐거움 / 여흥 / 여흥거리,여흥,2,0,1
+auto,entry,entry | Entry,entry,5305,30302,가입 / 진출 / 참가 / 수입 / 들어감 / 입장 / 입회,① 들어감 ② 진출 ③ 가입 ④ 참가 ⑤ 항목,2,0,1
+auto,envious,envious | Envious,envious,2692,36120,부러워하는 / 시기하는,질투심이강한. 부러워하는,1,0,1
+auto,equally,equally | Equally,equally,7786,29952,똑같이 / 마찬가지로 / 동등하게 / 평등하게 / 균등하게,① 똑같이 ② 마찬가지로 ③ 동등하게 ④ 평등하게 ⑤ 균등하게,2,0,1
+auto,equipment,equipment | Equipment,equipment,2959,37166,장비 / 설비 / 기기 / 기술 / 부품 / 기구,장비 용품,2,0,1
+auto,errands,errands | Errands,errands,37433,37473,심부름,심부름,0,0,1
+auto,erythrocyte,erythrocyte | Erythrocyte,erythrocyte,22061,44550,적혈구,적혈구,0,0,1
+auto,eschew,eschew | Eschew,eschew,16653,33013,피하다 / 삼가다 / 멀리하다,삼가다 / 피하다 / 회피하다,1,0,1
+auto,eskimo,eskimo | Eskimo,eskimo,17085,35574,에스키모인 / 에스키모어 / 에스키모 사람,에스키모(사람),1,0,1
+auto,estimation,estimation | Estimation,estimation,16498,29803,판단 / 평가 / 견적,의견평가,2,0,1
+auto,estonia,Estonia | estonia,estonia,34503,16733,에스토니아 / 발트 해 연안의 공화국,에스토니아,0,0,1
+auto,ethical,ethical | ETHICAL,ethical,2312,30188,윤리의 / 도덕의,① 윤리적인 ② 윤리의 ③ 처방전 없이는 판매할 수 없는,2,0,1
+auto,ethics,ethics | ETHICS | Ethics,ethics,6870,"30187,36119",윤리 / 윤리학 / 도덕,① 윤리 ② 도덕 ③ 윤리학 / 윤리학. 윤리,2,0,2
+auto,etiquette,etiquette | Etiquette,etiquette,8276,30257,예절 / 에티켓,① 예절 ② 에티켓,2,0,1
+auto,evidence,evidence | Evidence | evidence,evidence,826,"36132,52114",증거 / 근거 / 흔적 / 단서 / 증명,증거,2,0,2
+auto,except,except | Except,except,2680,29947,제외하다 / …외에는 / …이 없으면 / 다만 / 예외로 하다 / ~을 제외하고,① 제외하다 ② …외에는,2,0,1
+auto,expansionism,expansionism | Expansionism,expansionism,19076,30097,팽창 정책,① 팽창 정책,0,0,1
+auto,export,export | Export,export,959,30428,수출 / 수출액 / 수출품 / 수출하다,① 수출 ② 수출액 ③ 수출품 / 수출,2,0,2
+auto,extensive,extensive | Extensive,extensive,2218,31343,광범위한 / 대규모의 / 넓은 / 방대한 / 포괄적,폭넓은 / 광범위한,2,0,1
+auto,extra,extra | Extra,extra,823,30349,추가의 / 여분의 / 특별한 / 별도로 / 임시의,① 추가의 ② 여분의 ③ 특별한 ④ 별도로 ⑤ 임시의,2,0,1
+auto,extract,extract | Extract,extract,1509,30329,추출하다 / 이끌어 내다 / 농축액 / 뽑아 내다 / 채굴하다,① 추출하다 ② 이끌어 내다 ③ 채굴하다 ④ 뽑아 내다 ⑤ 농축액,2,0,1
+auto,eyeball,eyeball | Eyeball,eyeball,11836,30210,안 / 눈알 / 안구 / 눈,① 눈알 ② 안구 ③ 눈,1,0,1
+auto,facade,facade,facade,6511,,정면 / 외관 / 앞면,,1,0,0
+auto,facility,facility | Facility,facility,4474,27851,시설 / 설비 / 재능,시설 / ① 시설 ② 설비 ③ 재능,2,0,2
+auto,fact,fact | Fact,fact,3197,37418,사실 / 일 / 정보 / 실제 / 사건 / 현황 / 진실,사실,2,0,1
+auto,fahrenheit,fahrenheit | Fahrenheit,fahrenheit,14924,31333,화씨,화씨의 / 화씨,1,0,10
+auto,fairy,fairy | Fairy,fairy,14196,48222,요정 / 남자 동성애자,요정,2,0,1
+auto,faithful,faithful | Faithful,faithful,3117,29828,충실한 / 독실한 / 신의 있는 / 헌신적인,충실한,2,0,1
+auto,fame,fame | Fame,fame,4465,30058,명성 / 명예 / 유명 / 인기 / 이름,① 명성 ② 평판 ③ 유명하게 하다,2,0,1
+auto,farewell,farewell | Farewell,farewell,3256,30364,작별 / 안녕 / 작별 인사 / 이별,① 작별 ② 안녕,2,0,1
+auto,fasten,fasten | Fasten,fasten,4466,30367,고정시키다 / 매다 / 조이다 / 채우다 / 고정하다,① 매다 ② 채우다 ③ 조이다 ④ 고정하다,3,0,1
+auto,façade,façade,façade,47638,,정면 / 표면,,0,0,0
+auto,february,february | February,february,7992,41017,2월,2월,1,0,5
+auto,feeding,feeding | Feeding,feeding,11788,30283,급식 / 사육 / 음식을 섭취하는,① 급식 ② 사육 ③ 음식을 섭취하는,0,0,1
+auto,ferry,ferry | Ferry,ferry,5525,30049,여객선 / 페리 / 배 / 나르다 / (짧은 거리) 수송하다,① 페리 ② 배 ③ 여객선 ④ 나르다,3,0,1
+auto,fiercely,fiercely | Fiercely,fiercely,7570,30656,치열하게 / 필사적으로,치열하게,1,0,1
+auto,fighting,fighting | Fighting,fighting,5399,30226,싸우는 / 전투적인 / 맞서다 / 애를 쓰다,① 싸우는 ② 전투적인 ③ 맞서다 ④ 애를 쓰다,2,0,1
+auto,finally,finally | Finally,finally,1310,36973,마침내 / 마지막으로 / 결국 / 드디어 / 결정적으로,마지막으로,3,0,1
+auto,firstly,firstly | Firstly,firstly,27839,36975,첫째로 / 맨 먼저 / 최초로,첫째로,0,0,1
+auto,fish,fish | Fish,fish,3632,36229,물고기 / 어류 / 생선 / 고기잡이하다 / 어업의,물고기,2,0,1
+auto,flatware,Flatware | flatware,flatware,31454,30243,은식기류 / 접시류,① 은식기류 ② 접시류,0,0,1
+auto,flaw,flaw | Flaw,flaw,887,28021,결점 / 흠 / 결함,흠 / 결함,2,0,1
+auto,float,float | Float,float,1465,28556,떠오르다 / 떠다니다 / 부유 / 플로트 / 유동 / 뜨다,뜨다,2,0,1
+auto,flower,flower | Flower,flower,3272,37452,꽃 / 꽃을 피우다,꽃,2,0,1
+auto,fold,fold | Fold,fold,1514,48229,접다 / …배 / 끼다 / 개다 / 쇠약해지다,접다,2,0,1
+auto,forecast,forecast | Forecast | forecast,forecast,7594,"30265,51970",예상 / 전망하다 / 예보 / 내다보다 / 예측 / 전망 / 기상 예측,① 전망하다 ② 예상 ③ 예보 ④ 내다보다 / 예보 / 예측,2,0,2
+auto,foremost,foremost | Foremost,foremost,12618,16715,최우선 / 가장 / 중요한 / 무엇보다도 / 첫번째의,무엇보다도,2,0,1
+auto,fort,fort | Fort,fort,4081,30069,요새 / 포트,① 요새 ② 포트,0,0,1
+auto,fortune,fortune | Fortune,fortune,3876,30463,재산 / 행운 / 포춘 / 운 / 운명,① 재산 ② 행운 ③ 운 ④ 부 ⑤ 포춘,2,0,1
+auto,forward,forward | Forward,forward,2306,36121,앞으로 / 전진하는 / 발전한 / 포워드 / 진보적인 / 바꿔 주다 / 재전송하다 / 전달하다 / 포워드하다,앞으로. 전방으로,2,0,1
+auto,found,found | Found,found,1700,30278,발견했다 / 찾아냈다 / 알아냈다 / 만났다 / 설립하다,① 발견했다 ② 찾아냈다 ③ 알아냈다 ④ 만났다 ⑤ 설립하다,2,0,1
+auto,france,france | France,france,7983,35468,프랑스 / 불란서 / 에어프랑스,프랑스,0,0,5
+auto,freezing,freezing | Freezing,freezing,10617,36171,동결 / 얼어붙은 / 몹시 추운 / 영하의 / 차가운,몹시추운. 냉동용의;결빙 / 동결,2,0,1
+auto,frequency,frequency | Frequency,frequency,9473,28022,주파수 / 빈도 / 진동 / 도수 / 주기,빈도,2,0,1
+auto,frequent,frequent | Frequent,frequent,2463,36127,잦은 / 자주 / 빈번한 / 흔한 / 종종 / 자주 발생하는,자주일어나는. 빈번한,2,0,1
+auto,friday,friday | Friday,friday,7982,37651,금요일,금요일,1,0,6
+auto,frost,frost | Frost,frost,17334,29944,프로스트 / 서리 / 결빙 / 얼어붙다 / 추위 / 냉기,① 서리 ② 프로스트 ③ 얼어붙다 ④ 결빙 ⑤ 추위,2,0,1
+auto,frugality,frugality | FRUGALITY,frugality,21389,30004,검약 / 절약 / 검소 / 근검절약,① 검약 ② 검소 ③ 절약,1,0,1
+auto,fugitive,fugitive | Fugitive,fugitive,9470,30054,도망자 / 도피자 / 탈주자 / 도주한,① 도망자 ② 변하기 쉬운 ③ 일시적인,2,0,1
+auto,gadget,gadget | Gadget,gadget,10525,37167,기기 / 장치 / 제품 / 기계 / 도구 / 고안품 / 간단한 기계장치,도구,0,0,1
+auto,galaxy,galaxy | Galaxy,galaxy,2685,30312,은하 / 화려한 집단 / 은하계,① 은하 ② 화려한 집단,1,0,1
+auto,gender,gender | Gender,gender,7577,30146,성별 / 성 / 젠더 / 남녀 / 성차,① 성 ② 성별 ③ 성차,2,0,1
+auto,genesis,genesis | Genesis,genesis,11677,29984,제네시스 / 생성 / 창세기 / 발생 / 기원,① 창세기 ② 기원 ③ 발생 ④ 유래 ⑤ 시초 / 창세기,1,0,2
+auto,german,german | German,german,1803,30194,독일 / 독일어 / 독일인 / 게르만,① 독일의 ② 독일풍의 ③ 독일인 / 독일사람/독일어 / 독일의 / 독일인 / 독일 어,2,0,5
+auto,germane,germane | GERMANE,germane,19291,30193,적절한 / 밀접한 관계가 있는 / 직접적인 관계가 있는,① 적절한 ② 밀접한 관계가 있는 ③ 직접적인 관계가 있는,1,0,1
+auto,giant,giant | Giant,giant,4454,37419,거대한 / 자이언트 / 거인 / 위대한,거대한,2,0,1
+auto,gilded,gilded | Gilded,gilded,27464,30189,금박을 입힌 / 금빛의 / 부자의,① 금박을 입힌 ② 금빛의 ③ 부자의,2,0,1
+auto,gloria,GLORIA | gloria,gloria,35203,30177,영광의 찬가 / 후광 / 원광,① 영광의 찬가 ② 후광 ③ 원광,0,0,1
+auto,glow,glow | Glow,glow,5396,37353,불빛 / 빛나다 / 불이 켜지다 / 석양 / 활기가 넘치다 / 홍조 / 광채,빛,2,0,1
+auto,god,god | God,god,3611,35207,신 / 하느님 / 세상에 / 우상,신,2,0,1
+auto,governmental,governmental | Governmental,governmental,28910,30354,정치의 / 행정 기관의 / 정부의,① 정치의 ② 행정 기관의 ③ 정부의,0,0,1
+auto,grade,grade | Grade,grade,2910,30315,학년 / 성적 / 등급 / 점수 / 평가,① 성적 ② 점수 ③ 학년 ④ 등급 ⑤ 평가,2,0,1
+auto,graduate,graduate | Graduate,graduate,7354,30448,졸업하다 / 대학원생의 / 대졸자 / 학사,① 졸업하다 ② 대학원생의 ③ 대졸자 ④ 학사,2,0,1
+auto,grand,grand | Grand,grand,624,30389,위대한 / 웅장한 / 원대한 / 위엄 있는,① 웅장한 ② 위대한 ③ 원대한 ④ 위엄 있는,2,0,1
+auto,grant,grant | Grant,grant,1734,30065,"부여하다 / 주다 / 보조금 / 허가하다 / 승인하다 / (자격, 점수 등을) 부여하다",① 부여하다 ② 주다 ③ 허가하다 ④ 보조금 ⑤ 승인하다,3,0,1
+auto,gravity,gravity | Gravity,gravity,6291,48415,중력 / 중대함,중력,2,0,1
+auto,greece,greece | Greece,greece,28331,35579,그리스,그리스,0,0,1
+auto,greek,greek | Greek,greek,2391,36190,그리스의 / 그리스인 / 그리스어,그리스의 / 그리스인 / 그리스(사람)의; 그리스어의,2,0,3
+auto,greeting,greeting | Greeting,greeting,1933,30456,인사 / 인사말 / 환영의 말,① 인사 ② 인사말 ③ 환영의 말,2,0,1
+auto,guardian,guardian | Guardian,guardian,8508,30379,가디언 / 보호자 / 수호자 / 감시인,① 보호자 ② 수호자 ③ 감시인 ④ 가디언,2,0,1
+auto,guilty,guilty | Guilty,guilty,2213,36157,유죄의 / 죄책감 / 죄의 / 범죄적인,유죄의,2,0,1
+auto,gulf,gulf | Gulf,gulf,8955,29939,만 / 걸프 / 격차,① 만 ② 걸프 ③ 격차,2,0,1
+auto,habitat,habitat | Habitat,habitat,2942,30287,서식지 / 살다 / 생태 / _지 / 해비타트,① 서식지 ② 거주지 ③ 서식 환경,2,0,1
+auto,hall,hall | Hall,hall,4458,30059,홀 / 넓은 방 / 복도,① 넓은 방 ② 홀 ③ 복도,2,0,1
+auto,haughty,haughty | Haughty,haughty,10657,29830,오만한 / 거만한 / 건방진,거만한,1,0,1
+auto,health,health | Health,health,3601,27743,건강 / 보건 / 의료 / 헬스 / 몸에 좋음 / 안녕,건강,2,0,1
+auto,hearty,hearty | Hearty,hearty,12007,30419,많은 / 진심어린 / 영양분이 있는 / 기분 좋은,① 진심어린 ② 많은 ③ 기분 좋은 ④ 영양분이 있는,2,0,1
+auto,hebrew,hebrew | Hebrew,hebrew,6565,37331,히브리어 / 히브리 / 유대인 / 이스라엘 / 히브라이,유대인,0,0,1
+auto,hector,hector | Hector,hector,16001,30044,괴롭히다 / 헥토르 / 못살게 굴다,① 괴롭히다 ② 헥토르 ③ 못살게 굴다,0,0,1
+auto,hibernate,hibernate | Hibernate,hibernate,18188,37417,동면하다 / 피한하다 / 피안하다,동면하다,0,0,1
+auto,hickey,Hickey | hickey,hickey,46521,30164,뾰루지 / 장치 / 기계,① 뾰루지 ② 장치 ③ 기계,0,0,1
+auto,hinduism,hinduism | Hinduism,hinduism,27561,40884,힌두교,힌두교,0,0,1
+auto,hiring,hiring | Hiring,hiring,15411,27775,고용 / 임대차,고용,1,0,1
+auto,homecoming,homecoming | Homecoming,homecoming,14176,30225,귀향 / 귀성 / 동창회,① 귀향 ② 귀성 ③ 동창회,0,0,1
+auto,homestead,homestead | Homestead,homestead,23701,30101,…에 입주하다 / 가산 / 자작 농장,① …에 입주하다 ② 가산 ③ 자작 농장,0,0,1
+auto,honesty,honesty | Honesty,honesty,12056,30155,정직 / 솔직 / 양심 / 청렴결백,① 정직 ② 솔직 ③ 양심 ④ 청렴결백,2,0,1
+auto,horoscope,horoscope | Horoscope,horoscope,13065,30372,별점 / 점성술 / 12궁도,① 별점 ② 점성술 ③ 12궁도,1,0,1
+auto,hotel,hotel | Hotel,hotel,3584,30353,호텔 / 숙소,① 호텔,2,0,1
+auto,how,how | How,how,3582,36232,어떻게 / 얼마나 / 방법 / 몇 / 정말,어떻게,2,0,1
+auto,hum,hum | Hum,hum,9758,37356,콧노래를 부르다 / 윙윙거리다 / 활기가 있다 / 웅얼거리다,윙윙거리다,2,0,1
+auto,humility,humility | HUMILITY,humility,13662,29996,겸손,① 겸손,1,0,1
+auto,hyper,hyper | HYPER,hyper,14201,30203,과잉 / 하이퍼 / 극도의 / 매우 / 지나치게,① 극도로 활동적인 사람 ② 긴장해 있는 사람 ③ 매우 흥분한,1,0,1
+auto,i,i | I,i,3576,26950,나는 / 나 / 내가,나[대명사 / 나는 / 나 / 내가[1인칭 단수의 주격 대명사 / 내가,2,0,12
+auto,if,if | If,if,3573,36112,…라면 / 만약 / 만일,만약~라면,2,0,1
+auto,ignore,ignore | Ignore,ignore,258,36128,무시하다 / 모르는 체하다 / 간과하다 / 묵살하다,무시하다,2,0,1
+auto,imitate,imitate | Imitate,imitate,7366,29995,모방하다 / 흉내내다 / 따라 하다 / 도용하다,① 흉내내다 ② 모방하다 ③ 따라 하다 ④ 도용하다,2,0,1
+auto,immortal,immortal | Immortal,immortal,6892,43926,불멸의 / 불사의,불멸의(죽지 않는),2,0,1
+auto,impact,impact | Impact,impact,6996,48029,영향 / 충격 / 효과 / 임펙트 / 임팩트,임팩트,2,0,1
+auto,impolite,impolite | Impolite,impolite,11460,43932,무례한 / 상스러운 / 불친절한,무례한,2,0,1
+auto,import,import | Import,import,1549,30429,수입하다 / 들여오다 / 중요하다,① 수입하다 ② 들여오다 ③ 중요하다 / 수입,2,0,2
+auto,important,important | Important,important,282,37464,중요한 / 중대한 / 소중한 / 주요한,중요한,2,0,1
+auto,impressionist,impressionist | Impressionist,impressionist,8444,50423,인상파 화가 / 연예인 / 인상주의의 / 인상파,인상파 화가,1,0,1
+auto,improper,improper | Improper,improper,10770,30284,부적절한 / 잘못된,① 부적절한 ② 잘못된,2,0,1
+auto,inalienable,inalienable | INALIENABLE,inalienable,11196,30169,양도할 수 없는 / 빼앗을 수 없는 / 양도해 줄 수 없는,① 양도할 수 없는 ② 빼앗을 수 없는 ③ 양도해 줄 수 없는,1,0,1
+auto,incarnation,incarnation | Incarnation,incarnation,19800,48456,화신 / 구체화 / 육체화,1. (특정한 형태로 사는) 생애   2. 화신(추상적인 특질・특별한 성격 등을 놀라울 정도로 ...,2,0,1
+auto,increase,increase | Increase,increase,378,30335,증가하다 / 늘리다 / 인상되다 / 확대하다 / 상승하다,① 증가하다 ② 늘리다 ③ 인상되다 ④ 확대하다 ⑤ 상승하다,2,0,1
+auto,indented,indented | Indented,indented,28199,30460,톱니 모양의 / 들쭉날쭉한 / 기한부 도제로 들어간,① 톱니 모양의 ② 들쭉날쭉한 ③ 기한부 도제로 들어간,0,0,1
+auto,independently,independently | Independently,independently,19225,30149,독립적으로 / 자유롭게 / 공식적으로 / 따로따로,① 독립적으로 ② 자유롭게 ③ 따로따로 ④ 공식적으로,0,0,1
+auto,indication,indication | Indication,indication,11452,29805,표시 / 가리키는 / 징후,징후,2,0,1
+auto,indonesia,indonesia | Indonesia,indonesia,25672,37501,인도네시아,인도네시아,0,0,1
+auto,industrial,industrial | Industrial,industrial,362,29957,산업의 / 공업의,① 산업의 ② 공업의,2,0,1
+auto,infinite,infinite | Infinite,infinite,14129,43938,무한한 / 끝없는 / 무궁한 / 무수한 / 인피니트,무한한(끝이 없는),2,0,1
+auto,infinitely,infinitely | Infinitely,infinitely,33690,43937,무한히 / 한없이 / 크게,무한히(끝이없이),0,0,1
+auto,informality,informality | Informality,informality,17984,30128,비공식 / 약식 / 격식 차리지 않는 행위,① 비공식 ② 약식 ③ 격식 차리지 않는 행위,0,0,1
+auto,inheritance,inheritance | Inheritance,inheritance,8584,45289,상속 / 계승,상속,2,0,1
+auto,initially,initially | Initially,initially,8938,30073,처음에 / 당초에 / 시초에 / 원래 / 첫머리에,① 처음에 ② 당초에 ③ 시초에 ④ 원래,0,0,1
+auto,injure,injure | Injure,injure,730,36145,부상을 입히다 / 상처를 입히다,상처를입히다,2,0,1
+auto,innocent,innocent | Innocent,innocent,808,36156,순수한 / 무고한 / 순진한 / 무죄의,순진한. 순결한. 무죄의. 결백한,2,0,1
+auto,instead,instead | Instead,instead,964,30168,대신에 / 보다 / 하지만 / 아닌 / 그렇기는커녕,① 대신에 ② 보다 ③ 하지만 ④ 그렇기는커녕 ⑤ 아닌,2,0,2
+auto,institute,institute | Institute,institute,6908,30256,연구소 / 협회 / 대학교 / 전문교육기관 / 시행하다,① 연구소 ② 전문교육기관 ③ 대학교 ④ 협회 ⑤ 시행하다,2,0,1
+auto,insurance,insurance | Insurance,insurance,3567,30309,보험 / 보험금 / 보험업 / 보장,① 보험 ② 보험금,2,0,1
+auto,interaction,interaction | Interaction,interaction,6917,30239,상호 작용 / 관계 / 소통 / 교류 / 반응 / 상호 영향 / 약물 상호작용,① 상호 작용 ② 관련 ③ 상호 영향,1,0,1
+auto,interagency,interagency | Interagency,interagency,18289,30290,중간적 기관 / 여러 기관 사이의 / 관계 부처간의,① 중간적 기관 ② 여러 기관 사이의 ③ 관계 부처간의,0,0,1
+auto,intercultural,intercultural | Intercultural,intercultural,16435,30240,문화간의 / 이 문화간의,① 문화간의 ② 이 문화간의,0,0,1
+auto,interpretative,interpretative | INTERPRETATIVE,interpretative,12546,30219,설명적인 / 추론에 입각한 / 해석에 의한,① 설명적인 ② 추론에 입각한 ③ 해석에 의한,0,0,1
+auto,interrupt,interrupt | Interrupt,interrupt,1921,37461,방해하다 / 중단하다 / 끊다 / 끼어들다 / 가로막다,방해하다,2,0,1
+auto,interstate,interstate | Interstate,interstate,6153,30348,주간 / 국가간 / 주사이의 / 정부간 / 전국적,① 각 주 연합의 ② 주간 고속도로 ③ 각 주간의,1,0,1
+auto,introduction,introduction | Introduction,introduction,1929,29972,도입 / 소개 / 서문 / 입문 / 머리말 / 서론,① 도입 ② 소개 ③ 서문 ④ 머리말 ⑤ 입문,2,0,1
+auto,invitation,invitation | Invitation,invitation,3842,30423,초대 / 초청 / 참석 / 제의 / 신청,① 초대 ② 초청,2,0,1
+auto,inward,inward | Inward,inward,15789,36124,내부의 / 중심으로 / 안으로 / 내면,안으로. 속에서,2,0,1
+auto,irish,irish | Irish,irish,1960,36400,아일랜드인 / 아일랜드의 / 아이리시,아일랜드의 / 아일랜드인,2,0,1
+auto,irrespective,irrespective | Irrespective,irrespective,8985,49807,관련 없는 / 고려하지 않고 / 관계 없는 / 무시하고,관련 없는 / 고려하지 않고,2,0,1
+auto,iso,iso | ISO,iso,42491,45440,국제 표준화 기구 / 독방 / 「같은」 「등(等)」 「동(同)」의 뜻,국제 표준화 기구???,1,0,1
+auto,israel,israel | Israel,israel,16426,29989,이스라엘 / 이스라엘인 / 유대인,① 이스라엘 ② 이스라엘인 ③ 유대인 / 이스라엘,0,0,2
+auto,italian,italian | Italian,italian,2223,36191,이탈리아의 / 이탈리아인 / 이탈리아어,이탈리아의,0,0,1
+auto,item,item | Item,item,1209,30821,물품 / 품목 / 아이템 / 사항 / 도구 / 물건 / 항목,품목 / 항목 / 품목(물품),2,0,2
+auto,itinerary,itinerary | Itinerary,itinerary,9484,30820,일정 / 기행 / 여정 / 여행 / 여행 일정 / 여행 계획 / 계획 / 여행 계획서 / 루트,여행 일정표,2,0,1
+auto,january,january | January,january,7957,36602,1월,1월 / 정월,0,0,7
+auto,japan,japan | Japan,japan,5086,35581,일본,일본,0,0,4
+auto,japanese,japanese | Japanese,japanese,1983,41014,일본의 / 일본식 / 일본인 / 일본어,일본인 / 일본 어 / 일본의 / 일본어,2,0,3
+auto,jewish,jewish | Jewish,jewish,2488,48764,유대인의 / 유대교의 / 이스라엘의,유대인의 / 유대교의,0,0,2
+auto,joyful,joyful | JOYFUL,joyful,15534,30173,즐거운,① 즐거운,2,0,1
+auto,july,july | July,july,5355,41020,7월 / 3분기,7월,0,0,5
+auto,june,june | June,june,1394,41019,6월,6월,2,0,5
+auto,justice,justice | JUSTICE,justice,7000,30002,정의 / 사법 / 재판 / 공정 / 판사,① 정의 ② 재판 ③ 사법 ④ 판사 ⑤ 공정,2,0,1
+auto,kafkaesque,Kafkaesque | kafkaesque,kafkaesque,49913,28233,카프카의 / 카프카적인 / 부조리하고 절망적인,카프카의[작품 같은] / 카프카적인 / 부조리하고 절망적인.,0,0,1
+auto,kangaroo,kangaroo | Kangaroo,kangaroo,9605,37420,캥거루,캥거루,0,0,1
+auto,kibosh,kibosh | Kibosh,kibosh,17638,48573,끝 / 허튼 소리 / 잠꼬대,허튼소리,0,0,1
+auto,kingdom,kingdom | Kingdom,kingdom,4113,30066,왕국 / 왕조,① 왕국 ② 왕조,2,0,1
+auto,korean,korean | Korean,korean,1313,35348,한국의 / 한국적인 / 한국인 / 한국어 / 한국 국민,국어 / 한국의 / 한국인(의) / 한국어(의),2,0,2
+auto,kraft,Kraft | kraft,kraft,44753,30411,크라프트지 / 크라프트 종이,① 크라프트지 ② 크라프트 종이,0,0,1
+auto,landlord,landlord | Landlord,landlord,7008,30303,주인 / 건물주 / 집주인 / 임대인,① 주인 ② 건물주,1,0,1
+auto,landmark,landmark | Landmark,landmark,8945,30393,획기적인 사건 / 경계표 / 표지물 / 두드러진 특색 / 랜드마크 / 기념물 / 주요 지형지물,① 경계표 ② 표지물 ③ 두드러진 특색,1,0,1
+auto,largely,largely | Largely,largely,10564,30816,주로 / 대량으로 / 다량으로,주로 / 대량으로,2,0,1
+auto,lastly,lastly | Lastly,lastly,4430,36972,마지막으로 / 그리고 / 최근에 / 마침내 / 끝으로,마지막으로,3,0,1
+auto,lawyer,lawyer | Lawyer,lawyer,4432,30380,변호사 / 변호인 / 법률가 / 법조인,① 변호사 ② 변호인 ③ 법조인 ④ 법률가,2,0,1
+auto,league,league | League,league,8274,30231,리그 / 연맹 / 부류 / 대회,① 리그 ② 연맹 ③ 대회 ④ 부류,2,0,2
+auto,leak,leak | Leak,leak,2929,36161,유출 / 누출 / 새다 / 누설되다 / 흘리다,누출. 누설. 새다. 누설되다,2,0,1
+auto,lecture,lecture | Lecture,lecture,15547,29973,강의 / 강연 / 연설 / 설교 / 훈계,① 강의 ② 강연 ③ 잔소리 ④ 설교 ⑤ 훈계,2,0,1
+auto,led,led | LED,led,4242,45433,이끈 / 발광 다이오드 / …하게 하다 / 주도한 / 유발한,발광 다이오드,1,0,1
+auto,legacy,legacy | Legacy,legacy,937,30235,유산 / 업적 / 결과 / 여파 / 유물,① 유산 ② 유물 ③ 유증,2,0,1
+auto,legitimate,legitimate | LEGITIMATE,legitimate,2567,30093,합법의 / 정당한 / 정통의 / 합법적인,① 합법의 ② 정당한 ③ 정통의,2,0,1
+auto,leukocyte,leukocyte | Leukocyte,leukocyte,20806,44548,백혈구,백혈구,0,0,1
+auto,liability,liability | Liability,liability,7253,30300,의무 / 책임 / 부채 / 배상 책임,① 의무 ② 책임 ③ 부채,3,0,1
+auto,likelihood,likelihood | Likelihood,likelihood,8600,30810,가능성 / 기회 / 가망,가능성 / 가망성,2,0,1
+auto,liner,liner | Liner,liner,19129,48563,…파(派) / 정기선 / 단문 / 안감 / 레코드 재킷,정기선 안감,1,0,1
+auto,literacy,literacy | Literacy,literacy,7945,30445,읽고 쓰는 능력 / 읽고 쓸 줄 앎 / 교양이 있음 / 문해력,① 읽고 쓰는 능력 ② 읽고 쓸 줄 앎 ③ 교양이 있음,3,0,1
+auto,local,local | Local,local,280,30806,지방의 / 지역의 / 국내의 / 주민 / 현지의,지방의,2,0,1
+auto,logogram,LOGOGRAM | logogram,logogram,38894,30453,기호 / 약어 / 표어 문자,① 기호 ② 약어 ③ 표어 문자,0,0,1
+auto,london,london | London,london,5363,50175,런던,런던,1,0,1
+auto,lotion,lotion | Lotion,lotion,17084,30325,화장수 / 로션 / 술 / 유액,① 화장수 ② 로션 ③ 술,2,0,1
+auto,louvre,louvre | Louvre,louvre,37439,37537,루브르 박물관,루브르,0,0,1
+auto,luggage,luggage | Luggage,luggage,12680,30356,짐 / 수화물 / 가방 / 수하물 / 여행가방,① 짐 ② 가방 ③ 수화물,2,0,1
+auto,lung,lung | Lung,lung,9763,30403,폐 / 허파,① 폐 ② 허파,2,0,1
+auto,lydia,lydia | Lydia,lydia,27658,50792,리디아 / 여자 이름,리디아,0,0,1
+auto,madness,madness | Madness,madness,10692,30269,광기 / 미친 짓 / 열중 / 정신 착란,① 광기 ② 미친 짓 ③ 열중 ④ 정신 착란,2,0,1
+auto,magnolia,magnolia | Magnolia,magnolia,23678,30062,목련 / 목련의 꽃 / 목련속의 나무,① 목련 ② 1의 꽃 ③ 목련속의 나무,0,0,1
+auto,majesty,majesty | Majesty,majesty,6435,30360,폐하 / 웅장함 / 위엄,① 폐하 ② 위엄 ③ 웅장함,2,0,1
+auto,manoeuvre,manoeuvre,manoeuvre,12512,,책략 / 움직이다 / 조종하다,,1,0,0
+auto,manufacturing,manufacturing | Manufacturing,manufacturing,12239,27789,제조업 / 생산 / 제작 / 공산품 / 제조,제조,2,0,1
+auto,manœuvre,manœuvre,manœuvre,49795,,조작,,0,0,0
+auto,march,march | March,march,1021,41018,3월 / 행진하다 / 시위하다 / 진행하다,3월,2,0,4
+auto,marketing,marketing | Marketing,marketing,17349,27792,마케팅 / 홍보 / 영업,마케팅,2,0,1
+auto,mars,mars | Mars,mars,10701,29444,화성 / 마르스,화성 / ① 화성 ② 마르스,0,0,8
+auto,masters,Masters | masters,masters,49399,40372,마스터스 골프 / 석사,석사 (학위),0,0,1
+auto,materialism,materialism | Materialism,materialism,17711,30260,유물론 / 물질주의 / 유물주의,① 유물론 ② 물질주의 ③ 유물주의,0,0,1
+auto,materiality,materiality | Materiality,materiality,40586,50564,물질성 / 유형물 / 실재물,유형,0,0,1
+auto,matinee,matinee,matinee,10641,,마티네 / 실내복 / 화 장옷,,0,0,0
+auto,matineé,matineé,matineé,31817,,낮 공연,,0,0,0
+auto,may,may | May,may,133,34841,수도 있다 / 것이다 / 지도 모른다 / 5월 / 아마도 / ~일지도 모른다,5월 / 5월 메이,2,0,7
+auto,mayan,mayan | Mayan,mayan,29681,37357,마야인의 / 마야어의 / 마야인,마야인,0,0,1
+auto,measure,measure | Measure,measure,926,36175,방법 / 측정하다 / 대책 / 조치 / 평가하다 / 기준 / 치수 / 방안 / 분량 / 재다 / 측량하다 / 계량하다 / 양 / (양을) 재다,재다. 측정하다. 조치,2,0,1
+auto,mechanical,mechanical | MECHANICAL | mechanical,mechanical,2044,"29959,52003",기계적인 / 기술적인 / 자동적인,① 기계적인 ② 자동적인 ③ 기술적인 / 기계적인,2,0,2
+auto,medicine,medicine | Medicine,medicine,650,30341,의학 / 약 / 의술 / 의사직,① 약 ② 의학 ③ 의사직 ④ 의술,2,0,1
+auto,medieval,medieval | MEDIEVAL,medieval,2444,30275,중세의,① 중세의,1,0,1
+auto,mediterranean,mediterranean | Mediterranean,mediterranean,8957,34366,지중해의,지중해의 / 지중해,2,0,6
+auto,membership,membership | Membership,membership,11283,30365,회원 / 이사 / 멤버십,① 회원 ② 이사 ③ 멤버십,2,0,1
+auto,memorial,memorial | Memorial,memorial,7937,30236,기념의 / 기념관 / 추도의,① 기념의 ② 기념관 ③ 추도의,2,0,1
+auto,merchandise,merchandise | Merchandise,merchandise,4764,36134,상품 / 물품,물건. 제품. 상품. 물품,2,0,1
+auto,merchant,merchant | Merchant,merchant,649,36133,상인 / 상선의 / 무역상 / 상업의,상인,2,0,1
+auto,mercury,mercury | Mercury,mercury,11525,34879,수은 / 온도계 / 수성 / 머큐리,수성,2,0,2
+auto,merry,merry | Merry,merry,6974,30266,즐거운 / 행복한 / 메리 / 흥겹게,① 즐거운,2,0,1
+auto,mess,mess | Mess,mess,4206,30237,혼란한 / 혼잡 / 엉망인 / 엉망 / 혼란 / 망치다 / 난장판 / 문제 / 엉망진창,① 혼란 ② 엉망진창 ③ 엉망을 만들다,2,0,1
+auto,metaphor,metaphor | Metaphor,metaphor,9328,30467,은유 / 암유 / 비유,① 은유 ② 암유 ③ 비유,1,0,1
+auto,mexico,mexico | Mexico,mexico,5084,47107,멕시코,멕시코,0,0,3
+auto,mill,mill | Mill,mill,14831,30182,공장 / 밀 / 제분하다 / 방앗간,① 공장 ② 밀 ③ 제분하다 ④ 방앗간,2,0,1
+auto,millionaire,millionaire | Millionaire,millionaire,28406,29843,백만장자 / 대부호,백만장자,0,0,1
+auto,millstone,millstone | Millstone,millstone,25197,30336,맷돌,① 맷돌 ② 무거운 짐 ③ 가는 것,1,0,1
+auto,minister,minister | Minister,minister,3530,36130,장관 / 목사 / 성직자,장관. 목사. 성직자,2,0,1
+auto,ministry,ministry | Ministry,ministry,9468,29954,정부의 부서 / 장관의 직무 / 목사의 직무,① 정부의 부서 ② 장관의 직무 ③ 목사의 직무,2,0,2
+auto,minor,minor | Minor,minor,3529,30439,소수의 / 사소한 / 미성년자 / 단조 / 부전공의,① 사소한 ② 소수의 ③ 미성년자 ④ 마이너 ⑤ 부전공의,2,0,1
+auto,missing,missing | Missing,missing,2577,29850,실종된 / 없어진 / 놓친 / 부족한 / 그리운 / 빠진,없어진,3,0,1
+auto,moderation,moderation | MODERATION,moderation,10462,30001,중용,① 중용 ② 절제 ③ 알맞음,2,0,1
+auto,monday,monday | Monday,monday,4974,37654,월요일,월요일,0,0,6
+auto,monitor,monitor | Monitor,monitor,1171,35681,모니터링 / 감시하다 / 조사하다 / 모니터 / 감독하다 / 모니터하다 / 모니터링하다,모니터,2,0,1
+auto,month,month | Month,month,1373,37646,달 / 개월 / 월 / 달(월) / 한 달,달,2,0,1
+auto,monthly,monthly | Monthly,monthly,2062,30085,월간 / 한달에 한번 / 매달 / 한 달의,① 월간 ② 매달 ③ 한달에 한번 ④ 한 달의,2,0,1
+auto,monument,monument | Monument,monument,4788,30027,기념물 / 유적 / 표지,① 기념물 ② 유적 ③ 표지 / 기념물,2,0,2
+auto,moral,moral | Moral | MORAL,moral,1982,"15619,29969",도덕의 / 윤리의 / 정신적인 / 교훈적인 / 도의의 / 도덕적인,도덕적인 / ① 도덕의 ② 윤리의 ③ 교훈적인 ④ 도의의 ⑤ 정신적인,2,0,2
+auto,moscow,moscow | Moscow,moscow,4262,16730,모스크바,모스크바,0,0,1
+auto,mountain,mountain | Mountain,mountain,3521,35678,산 / 거대한 / 산에 사는,산,2,0,1
+auto,mr,mr | Mr,mr,5179,35028,…씨 / …선생,① …씨 ② …선생,2,0,1
+auto,muscle,muscle | Muscle,muscle,2719,36166,근육,근육,2,0,1
+auto,music,music | Music,music,3517,27746,음악 / 노래,음악,2,0,1
+auto,myth,myth | Myth,myth,4877,37358,신화 / 미신 / 이야기,신화,2,0,1
+auto,naive,naive | Naive,naive,5780,36249,순진한 / 고지식한,순진한,2,0,1
+auto,nanny,nanny | Nanny,nanny,8590,48225,유모 / 아이보는 여자 / 여자 이름,유모,0,0,1
+auto,narrator,narrator | NARRATOR,narrator,27447,30179,이야기하는 사람 / 내레이터 / 해설자,① 이야기하는 사람 ② 내레이터 ③ 해설자,0,0,1
+auto,native,native | Native,native,2456,30028,원주민의 / 태생의 / 토착의 / 토박이의 / 고유한 / 모국의,① 원주민의 ② 태생의 ③ 토착의 ④ 모국의 ⑤ 토박이의,2,0,1
+auto,naïve,naïve,naïve,26701,,순진한,,0,0,0
+auto,necessity,necessity | NECESSITY | necessity,necessity,3216,"29994,52140",필요성 / 필수품,① 필요성 ② 필수품 / 필수품,2,0,2
+auto,negative,negative | Negative,negative,2006,30444,부정의 / 음성의 / 마이너스의 / 네거티브 / 반대의 / 음성(반응) / 부정적인,① 부정의 ② 반대의 ③ 마이너스의 ④ 음성의 ⑤ 비판적인,2,0,1
+auto,neptune,neptune | Neptune,neptune,15844,29443,넵튠 / 해왕성 / 바다,해왕성,1,0,3
+auto,nevertheless,nevertheless | Nevertheless,nevertheless,6994,16704,그럼에도 불구하고 / 그렇지만 / 어쨌거나,그럼에도 불구하고 / ① 그럼에도 불구하고 ② 그렇지만 ③ 어쨌거나,2,0,2
+auto,nexus,nexus | Nexus,nexus,11323,30311,결합 / 연쇄 / 연합,① 결합 ② 연쇄 ③ 연합,1,0,1
+auto,nightmare,nightmare | Nightmare,nightmare,1202,30190,악몽 / 끔찍한 / 문제,① 악몽 ② 끔찍한 ③ 문제,2,0,1
+auto,nonconformity,Nonconformity | nonconformity,nonconformity,33558,30154,불일치 / 부적합 / 따르지 않음,① 불일치 ② 부적합 ③ 따르지 않음,0,0,1
+auto,north,north | North,north,3503,36441,북 / 북쪽 / 북부 / 북측,북쪽,2,0,1
+auto,northeast,Northeast | northeast,northeast,34224,29928,북동 / 북동의 / 북동으로부터의 / 북동에 / 북동으로의,① 북동 ② 북동의 ③ 북동으로부터의,0,0,2
+auto,norway,norway | Norway,norway,18001,35577,노르웨이,노르웨이,0,0,1
+auto,notification,notification | Notification,notification,10385,30301,통보 / 알림 / 고지 / 신고 / 통지,① 통지 ② 알림 ③ 통보,1,0,1
+auto,nourish,nourish | Nourish,nourish,7921,36147,영양분을 공급하다 / 육성하다 / 풍요롭게 하다 / 영양을 공급하다 / 기르다 / 영양을 주다 / 영양 공급하다,영양분을 주다.  기르다,2,0,1
+auto,nowadays,nowadays | Nowadays,nowadays,4805,30224,요즈음 / 오늘날 / 현재 / 최근 / 오늘날에는,① 요즈음 ② 오늘날 ③ 최근 ④ 현재,3,0,1
+auto,numerous,numerous | Numerous,numerous,861,29858,수많은 / 다양한 / 다수의 / 무수한 / 많은,수 많은,2,0,1
+auto,obedience,obedience | Obedience,obedience,18889,30153,복종 / 순종 / 공손함 / 훈련,① 복종 ② 순종 ③ 공손함,2,0,1
+auto,objective,objective | Objective | objective,objective,2114,"47114,52337",목표의 / 객관적인 / 목적의 / 현실 / 대물의 / 목표 / 목적,1.\t목표의2.\t객관적인3.\t목적의 / 객관적인 / 목표,2,0,2
+auto,obstruction,obstruction | Obstruction,obstruction,7245,30294,방해물 / 장애물 / 방해,① 방해물 ② 장애물 ③ 방해,2,0,1
+auto,oceania,oceania | Oceania,oceania,31448,40864,오세아니아 / 대양주 / 때로 오스트레일리아·뉴질랜드·말레이 제도를 포함함,오세아니아 / 대양주,0,0,1
+auto,ongoing,ongoing | Ongoing,ongoing,984,29842,진행 중인 / 진행 / 전진,진행중인,2,0,1
+auto,onto,onto | Onto,onto,5248,29986,위에 / 위로의 / 알고 / ~위로,① 위에 ② 위로의 ③ 알고,2,0,1
+auto,oops,oops | Oops,oops,15994,30238,이런 / 아차 / 아이코,① 이런 ② 아차 ③ 아이코,0,0,1
+auto,opposition,opposition | Opposition,opposition,12417,30376,반대 / 야당 / 반발 / 상대방,① 야당 ② 반대,2,0,1
+auto,oral,oral | Oral,oral,2500,37467,입의 / 구두의,구두의,2,0,1
+auto,ordeal,ordeal | Ordeal,ordeal,14458,36246,시련 / 고난 / 괴로운 체험,혹독한시련,2,0,1
+auto,ordinance,ordinance | Ordinance,ordinance,7918,30104,법령 / 조례 / 규정,① 법령 ② 조례 ③ 규정,1,0,1
+auto,osmosis,osmosis | Osmosis,osmosis,18674,44545,삼투 / 삼투성 / 흡수함,삼투성,0,0,1
+auto,outward,outward | Outward,outward,17371,36122,표면상의 / 밖으로 향하는 / 외부,밖으로향하는. 밖으로가는,2,0,1
+auto,overly,overly | Overly,overly,12004,30086,몹시 / 지나치게 / 너무 / 과도하게,① 지나치게 ② 너무 ③ 과도하게,3,0,1
+auto,overnight,overnight | Overnight,overnight,13113,30181,하룻밤에 / 하루짜리 / 밤새 / 하루 아침에 / 간밤에 / 하룻밤 사이에,① 하룻밤에 ② 하루짜리 ③ 밤새 ④ 하루 아침에 ⑤ 간밤에,2,0,1
+auto,owing,owing | Owing,owing,16765,30032,…해서 / …덕택에 / …때문에 / 빚지고 있는,① …때문에 ② …해서 ③ …덕택에 ④ 빚지고 있는,1,0,1
+auto,ownership,ownership | Ownership,ownership,19252,29814,소유권 / 지분 / 지배권 / 소유,소유주,2,0,1
+auto,pacific,pacific | Pacific,pacific,8280,29938,태평양 / 퍼시픽 / 온화한,① 태평양 ② 퍼시픽 ③ 온화한 / 태평양; 태평양의 / 태평양 / 태평양의,1,0,6
+auto,pain,pain | Pain,pain,3483,30384,통증 / 고통 / 진통 / 아프다 / 괴로움 / 아픔,① 고통 ② 통증 ③ 아프다 ④ 진통 ⑤ 귀찮다,3,0,1
+auto,pan,pan | Pan,pan,3482,48567,팬 / 프라이팬 / 냄비,팬,2,0,1
+auto,paradox,paradox | Paradox | paradox,paradox,6897,"30465,52394",역설 / 패러독스 / 모순,① 역설 ② 모순 ③ 패러독스 / 역설 / 모순,1,0,2
+auto,parental,parental | Parental,parental,2147,30158,부모의 / 부모다운 / 모체가 되어 있는,① 부모의 ② 부모다운 ③ 모체가 되어 있는,2,0,1
+auto,paris,paris | Paris,paris,9003,30110,파리 / 프랑스 정부 / 패리스,① 파리 ② 패리스 ③ 프랑스 정부 / 파리,0,0,3
+auto,parking,parking | Parking,parking,1377,30299,주차 / 파킹,① 주차 ② 파킹,2,0,1
+auto,parliament,parliament | Parliament,parliament,3478,33518,국회 / 의회 / 하원 / 모임,의회,2,0,1
+auto,partnership,partnership | Partnership,partnership,1093,30366,파트너십 / 동반자 / 협력 / 제휴 / 함께 하는,① 제휴 ② 파트너십 ③ 동반자 ④ 협력 ⑤ 함께 하는,2,0,1
+auto,pastoral,pastoral | Pastoral,pastoral,17311,30064,목가 / 전원시 / 시골의,① 목가 ② 전원시 ③ 시골의,2,0,1
+auto,perform,perform | Perform,perform,223,37345,공연하다 / 수행하다 / 연주하다 / 노래하다 / 연기하다,연기하다,2,0,1
+auto,pericardium,pericardium | Pericardium,pericardium,40488,44544,심막 / 심낭,심막,0,0,1
+auto,pericles,Pericles | pericles,pericles,42117,38481,페리클레스,페리클레스(델로스 동맹을 결성한 아테네의 대 정치가 (민주주의) ),0,0,1
+auto,petroleum,petroleum | Petroleum,petroleum,5843,30373,석유,① 석유,2,0,1
+auto,philosopher,philosopher | Philosopher,philosopher,22593,30088,철학자,① 철학자,1,0,1
+auto,phoenix,phoenix | Phoenix,phoenix,7910,30023,피닉스 / 불사조 / 봉황 / 휘닉스 / 대천재,① 피닉스 ② 불사조 ③ 절세의 미인,1,0,1
+auto,physical,physical | PHYSICAL,physical,1806,29970,물리의 / 신체의 / 육체의 / 물질의 / 몸의 / 물리적인,① 신체의 ② 물리의 ③ 육체의 ④ 건강진단 ⑤ 몸의,2,0,1
+auto,pierce,pierce | Pierce,pierce,7349,30048,피어싱 / 뚫다 / 꽂다 / 꿰뚫다 / 찢어질 듯한,① 피어싱 ② 뚫다 ③ 찢어질 듯한 ④ 꿰뚫다 ⑤ 꽂다,2,0,1
+auto,pity,pity | Pity,pity,6881,36159,연민 / 동정 / 유감 / 애석한 / 불쌍한 / 가련함,불쌍히여김. 동정 / 연민 / 동정,2,0,2
+auto,plasma,plasma | Plasma,plasma,26127,44543,플라스마 / 혈장 / 림프장,혈장,2,0,1
+auto,plentiful,plentiful | Plentiful,plentiful,17029,29840,풍부한 / 많은,풍부한,2,0,1
+auto,pluralism,pluralism | Pluralism,pluralism,17699,30124,다원론 / 성직 겸임 / 다원적 문화,① 다원론 ② 성직 겸임 ③ 다원적 문화,0,0,1
+auto,pluto,pluto | Pluto,pluto,4154,34881,명왕성 / 플루토,명왕성,0,0,1
+auto,pointer,pointer | Pointer,pointer,7699,30468,가리키는 사람 / 교편 / 바늘,① 가리키는 사람 ② 교편 ③ 바늘,1,0,1
+auto,poland,Poland | poland,poland,25987,16732,폴란드,폴란드,0,0,1
+auto,policy,policy | Policy,policy,3458,30346,정책 / 제도 / 방침 / 규정 / 방책 / 보험 증권,① 정책 ② 제도 ③ 방침 ④ 보험증서 ⑤ 규정,2,0,1
+auto,polish,polish | Polish,polish,2580,30191,다듬다 / 폴란드의 / 광택 / 세련되다 / 닦다,① 광택 ② 닦다 ③ 다듬다 ④ 세련되다 ⑤ 폴란드의,2,0,1
+auto,polymorphism,polymorphism | Polymorphism,polymorphism,16518,45290,동질 이상 / 다형 / 다형성,다형성,0,0,1
+auto,pope,pope | Pope,pope,2913,36414,교황,교황,2,0,1
+auto,port,port | Port,port,3455,36154,항만 / 항구 / 포트 / ...항,항구. 항만,2,0,1
+auto,portable,portable | Portable,portable,790,36150,휴대용의 / 이동식 / 포터블,휴대할 수 있는. 휴대용의,0,0,1
+auto,porter,porter | Porter,porter,17896,36153,포터 / 짐꾼 / 포르테 / 사환,짐꾼. 운반기,2,0,1
+auto,portugal,portugal | Portugal,portugal,11155,41015,포르투갈,포르투갈,0,0,1
+auto,portuguese,portuguese | Portuguese,portuguese,16767,41016,포르투갈의 / 포르투갈어 / 포르투갈인,포르투갈인(어),0,0,1
+auto,pot,pot | Pot,pot,989,36155,냄비 / 화분 / 항아리 / 포트 / 단지,항아리. 단지. 주전자,2,0,1
+auto,pragmatism,pragmatism | Pragmatism,pragmatism,11032,29974,실용주의 / 프래그머티즘 / 참견,① 실용주의 ② 프래그머티즘 ③ 참견,0,0,1
+auto,pregnant,pregnant | Pregnant,pregnant,732,30319,임신한 / 임산부,① 임신한 ② 임산부,2,0,1
+auto,premier,premier | Premier,premier,2531,30408,총리 / 최고의 / 주지사,① 총리 ② 최고의 ③ 주지사,2,0,1
+auto,premium,premium | Premium,premium,19771,30316,프리미엄 / 보험료 / 고급의 / 권리금 / 높은,① 보험료 ② 수수료 ③ 상,2,0,1
+auto,present,present | Present,present,343,37460,현재의 / 제시하다 / 선물하다 / 보여주다 / 발표하다 / 증정하다 / 선물,선물,2,0,1
+auto,president,president | President,president,3451,40179,대통령 / 사장 / 회장 / 총장 / 위원장,사장,2,0,1
+auto,price,price | Price,price,1486,30394,가격 / 물가 / 가치 / 요금 / 대가,① 가격 ② 물가 ③ 대가 ④ 요금 ⑤ 가치,2,0,1
+auto,proclamation,proclamation | Proclamation,proclamation,19154,30067,선언 / 선포 / 성명 / 공표,① 선언 ② 선포 ③ 공표 ④ 성명,2,0,1
+auto,profound,profound | Profound | profound,profound,2583,"29838,52414",심오한 / 깊은 / 지대한,깊은 / 심오한,2,0,2
+auto,progressive,progressive | Progressive,progressive,2101,30122,진보적인 / 점진적인 / 진보주의의 / 진행하는,① 진보적인 ② 진보주의의 ③ 점진적인 ④ 진행하는,2,0,1
+auto,prominent,prominent | Prominent,prominent,780,30292,유명한 / 두드러진 / 탁월한 / 뛰어난 / 실력 있는,① 유명한 ② 두드러진 ③ 탁월한 ④ 뛰어난 ⑤ 실력 있는,2,0,1
+auto,promotional,promotional | Promotional,promotional,24497,30420,촉진 장려용의 / 선전용의 / 홍보의 / 홍보용의 / 촉진하는,① 촉진 장려용의 ② 선전용의 ③ 홍보의,1,0,1
+auto,property,property | Property,property,735,30295,특성 / 부동산 / 재산 / 소유 / 토지 / 속성 / 소유물,① 부동산 ② 재산 ③ 소유,2,0,1
+auto,proposal,proposal | Proposal,proposal,578,30350,제안 / 계획 / 제의 / 안 / 청혼 / 제안서,① 제안 ② 안 ③ 계획 ④ 제의 ⑤ 청혼,2,0,1
+auto,protectionist,protectionist | Protectionist,protectionist,30844,45587,보호 무역론자 / 보호 무역 주의의,보호무역론자,0,0,1
+auto,protege,protege,protege,20644,,피보호자 / 부하 / 제자,,0,0,0
+auto,protestant,protestant | Protestant,protestant,2313,33513,개신교 / 신교도 / 프로테스탄트,개신교 / 신교도,2,0,1
+auto,protestantism,protestantism | Protestantism,protestantism,11933,33492,신교 / 신교 교회 / 신교도,개신교,0,0,2
+auto,protégé,protégé,protégé,39653,,피보호자,,0,0,0
+auto,psychology,psychology | Psychology,psychology,4235,30209,심리 / 심리학,① 심리,2,0,1
+auto,pulley,pulley | Pulley,pulley,17035,37160,도르래 / 풀리 / 벨트차,도르래,2,0,1
+auto,pulse,pulse | Pulse,pulse,4189,36160,맥박 / 파동 / 고동,맥박. 진동. 파동,2,0,1
+auto,punishment,punishment | Punishment,punishment,7900,30152,처벌 / 체벌 / 징계 / 벌 / 처형,① 처벌 ② 체벌 ③ 벌 ④ 징계 ⑤ 처형,2,0,1
+auto,purchase,purchase | Purchase,purchase,1004,29924,구매하다 / 구입하다 / 매수하다 / 사다 / 인수하다,① 구입하다 ② 구매하다 ③ 매수하다 ④ 사다 ⑤ 인수하다,2,0,1
+auto,puritanism,Puritanism | puritanism,puritanism,43144,29993,청교도의 신조·관습 / 청교주의 / 엄격주의,① 청교도의 신조·관습 ② 청교주의 ③ 엄격주의,0,0,1
+auto,quantity,quantity | Quantity,quantity,3249,30132,양 / 수량 / 양적인 / 다량 / 분량,① 양 ② 수량 ③ 양적인 ④ 다량,2,0,1
+auto,quarterly,quarterly | Quarterly,quarterly,26200,30121,분기의 / 계간의 / 계절마다 / 연 4회 / 분기별의 / 3개월마다 / 분기별 / 분기마다,① 1년 4회의 ② 계간지 ③ 계간의,2,0,1
+auto,quit,quit | Quit,quit,73,30404,그만두다 / 끊다 / 관두다 / 포기하다 / 떠나다,① 그만두다 ② 끊다 ③ 포기하다 ④ 떠나다 ⑤ 관두다,3,0,1
+auto,quite,quite | Quite,quite,774,29950,꽤 / 상당히 / 아주 / 상당수의 / 완전히,① 꽤 ② 아주 ③ 상당히,2,0,1
+auto,quota,quota | Quota,quota,10174,30041,쿼터 / 정원 / 할당 / 물량 / 할당량,① 몫 ② 할당 ③ 할당액,3,0,1
+auto,quotation,quotation | Quotation,quotation,10382,30436,인용 / 글귀 / 어록 / 문구 / 평가,① 인용,2,0,1
+auto,rain,rain | Rain,rain,445,36235,비 / 비가 오다 / 비가 내리다 / 강우 / 빗물,비,2,0,1
+auto,rainbow,rainbow | Rainbow,rainbow,17590,35677,무지개 / 다채로운 색,무지개,2,0,1
+auto,rarely,rarely | Rarely,rarely,3031,29997,드물게 / 거의 ~하지 않는 / 좀처럼 ~하지 않는 / 조금도,① 드물게 ② 거의 ~하지 않는 ③ 좀처럼 ~하지 않는 ④ 조금도,2,0,1
+auto,reason,reason | Reason | reason | reason,reason,769,"37462,52243,52291",이유 / 원인 / 이성 / 요인 / 근거,이유 / 이성,2,0,3
+auto,recess,recess | Recess,recess,4588,35668,휴회 / 휴식 / 쉬다 / 휴정 / 휴가,휴식 / 휴정,2,0,2
+auto,recording,recording | Recording,recording,7896,30057,기록 / 녹음 / 음반 / 녹화 / 레코딩,① 녹음 ② 음반 ③ 기록 ④ 녹화,0,0,1
+auto,recruiting,Recruiting | recruiting,recruiting,30608,27776,구인활동 / 모집하는 / 구인 / 모집 / 모집하고 있는,모집,0,0,1
+auto,redundant,redundant | Redundant,redundant,2274,29799,여분의 / 장황한 / 과다한 / 불필요한 / 중복된 / 정리해고당한,불필요한,2,0,1
+auto,region,region | Region,region,5122,36142,지역 / 지방 / 지대 / 와인 생산 지역,지역. 지방. 범위. 분야,2,0,1
+auto,registered,registered | Registered,registered,2126,30324,등록된 / 등기의,① 등록된 ② 등기의,2,0,1
+auto,rehabilitation,rehabilitation | Rehabilitation,rehabilitation,23301,30263,회복 / 부흥 / 재활 / 재건 / 갱생 / 사회 복귀 / 재활원 / 치료소 / 복귀,① 재활 ② 재건 ③ 사회 복귀 ④ 갱생,2,0,1
+auto,reimbursement,reimbursement | Reimbursement,reimbursement,13167,29824,상환 / 변제 / 환급 / 보전 / 배상 / 보상,상환,3,0,1
+auto,reinforce,reinforce | Reinforce | reinforce | reinforce,reinforce,1727,"29801,52396,52432",보강하다 / 강화하다 / 강조하다,강화하다 / 보강하다,2,0,3
+auto,relativity,relativity | Relativity,relativity,23600,31329,상대성 / 상대성 원리 / 관련성,상대성이론,0,0,1
+auto,remark,remark | Remark,remark,767,29827,발언 / 말 / 언급 / 견해 / 이야기 / 주기 / 의견 / 비고 / 비평,발언,2,0,1
+auto,renaissance,renaissance | Renaissance,renaissance,4757,35573,르네상스 / 부흥 / 재생,르네상스,1,0,1
+auto,repatriation,repatriation | Repatriation,repatriation,14014,30039,본국 송환,① 본국 송환,0,0,1
+auto,repetition,repetition | Repetition,repetition,11398,48413,반복 / 재현 / 되풀이 / 여러 번 / 중복,반복,1,0,1
+auto,repetitive,repetitive | Repetitive,repetitive,4274,30147,반복적인 / 되풀이하는 / 반복성의,① 반복적인 ② 되풀이하는 ③ 반복성의,0,0,1
+auto,representative,representative | Representative,representative,2584,30388,대표적인 / 대의원의 / 국회의원 / 하원 의원 / 대리인 / 대표자,① 대표적인 ② 국회의원 ③ 대의원의 ④ 직원 ⑤ 대리인,2,0,1
+auto,republic,republic | Republic,republic,640,30046,공화국,① 공화국,2,0,2
+auto,republican,republican | Republican,republican,6106,30102,공화당의 / 공화국의,① 공화당의 ② 공화국의,1,0,1
+auto,research,research | Research,research,1458,27783,연구하다 / 연구 / 조사 / 탐구 / 탐사,연구 / ① 연구 ② 조사 ③ 탐사 ④ 탐구,2,0,2
+auto,reservation,reservation | Reservation | reservation,reservation,2433,"30025,51973",예비 / 예약 / 보호 구역 / 유보 / 의구심 / 거리낌 / 예약된 자리 / 예약하기 / 미리 준비 / 예약 사항,① 예약 ② 보호 구역 ③ 유보 ④ 거리낌 / 예약,3,0,2
+auto,reserve,reserve | Reserve,reserve,1469,30108,준비의 / 예비 / 매장량 / 예약하다 / 보유하다 / 보류지 / 비축,① 보유하다 ② 예약하다 ③ 준비의 ④ 보호지역 ⑤ 매장량,2,0,1
+auto,residential,residential | Residential,residential,1016,30310,주거의 / 주택의 / 거주의,① 주택의 ② 주거의 ③ 거주의,2,0,1
+auto,resistance,resistance | Resistance,resistance,6307,50349,저항 / 내성 / 반대 / 저지 / 레지스탕스,저항 내성 반대 저지 면역,2,0,1
+auto,resolution,resolution | RESOLUTION | resolution | resolution,resolution,3442,"30006,51989,52086",해상도 / 해결 / 결심 / 결의 / 결정,① 결의 ② 결심 ③ 해결 ④ 해상도 ⑤ 계획 / 해결,2,0,3
+auto,resolve,resolve | Resolve,resolve,1639,30005,해결하다 / 결의하다 / 대책을 마련하다 / 해법,① 해결하다 ② 결의하다 ③ 대책을 마련하다 ④ 해법,2,0,1
+auto,responsibility,responsibility | Responsibility,responsibility,2422,36141,책임 / 의무 / 할 일 / 책무 / 임무,책임. 의무,2,0,1
+auto,retiring,Retiring | retiring,retiring,28209,27774,은퇴의 / 퇴직의 / 퇴거하는,퇴직,2,0,1
+auto,revenue,revenue | REVENUE,revenue,762,30165,"소득 / 매출 / 세입 / 수익 / 수입 / 순이익 / ""매출"" / ""사전이 변경이 되어"" / ""단어장에서 해당 단어를 학습하실 수 없습니다. 양해해 주시기 바랍니다."" / ""수익"" / ""수입"" / ""세입"" / ""순이익"" / 총소득",① 매출 ② 수입 ③ 세입 ④ 수익 ⑤ 순이익,2,0,1
+auto,revolution,revolution | Revolution,revolution,6986,29937,혁명 / 혁신 / 개혁 / 변혁 / 회전 / 변화,① 혁명 ② 회전 ③ 변혁,2,0,1
+auto,revolutionary,revolutionary | Revolutionary,revolutionary,2454,29930,혁명의 / 혁신적인 / 변혁,① 혁명의 ② 혁신적인,2,0,1
+auto,riff,riff | Riff,riff,27312,48560,반복 악절 / 냉동 화물차 / 화제에서 벗어나기 / 재미있게 말하다,마리화나 반복악절,1,0,1
+auto,rocky,rocky | Rocky,rocky,15467,30113,바위가 많은 / 로키 / 장애가 많은 / 불안정한,① 로키 ② 바위가 많은 ③ 장애가 많은 ④ 불안정한,2,0,1
+auto,romantic,romantic | Romantic,romantic,2516,29960,로맨틱한 / 연애의 / 낭만적인 / 낭만주의의 / 비현실적인,① 로맨틱한 ② 낭만적인 ③ 연애의 ④ 낭만주의의 ⑤ 비현실적인,2,0,1
+auto,round,round | Round,round,1581,37455,라운드 / 둥근 / 차례 / 계속 / 돌다,둥근,2,0,1
+auto,ruffian,ruffian | Ruffian,ruffian,7444,30077,악당 / 잔인한 / 악한,① 악당 ② 잔인한 ③ 악한,0,0,1
+auto,rush,rush | Rush,rush,1687,30184,서두르다 / 돌진하다 / 급한 / 혼잡 / 재촉하다,① 서두르다 ② 급한 ③ 돌진하다 ④ 재촉하다 ⑤ 혼잡,2,0,1
+auto,russia,russia | Russia,russia,7887,16728,러시아,러시아,0,0,4
+auto,sales,sales | Sales,sales,16791,27791,판매량 / 매출 / 수출 / 영업 / 매매,판매,0,0,1
+auto,satan,satan | Satan,satan,13064,40889,사탄 / 악마,사탄,1,0,1
+auto,saturday,saturday | Saturday,saturday,4912,37650,토요일,토요일,1,0,6
+auto,saturn,saturn | Saturn,saturn,13161,29442,토성 / 사투르누스 / 고대 로마의 농경의 신,토성,0,0,5
+auto,scared,scared | Scared,scared,22,37454,무서운 / 두려워하는 / 겁먹은 / 놀란 / 공포에 떠는,무서운,2,0,1
+auto,scarlet,scarlet | Scarlet,scarlet,14773,30213,주홍 / 진홍 / 주홍색 / 주홍빛의 / (노여움) 얼굴이 새빨간,① 주홍 ② 진홍,3,0,1
+auto,scatter,scatter | Scatter,scatter,1546,28016,분산시키다 / 흩어지다 / 뿌리다 / 흩어버리다,흩]뿌리다,2,0,1
+auto,scent,scent | Scent,scent,4214,30063,향기 / 냄새 / 향수,① 향기 ② 냄새 ③ 향수,3,0,1
+auto,scottish,scottish | Scottish,scottish,1802,35436,스코틀랜드의,스코틀랜드의,0,0,1
+auto,scream,scream | Scream,scream,589,48230,비명 / 소리치다 / 절규 / 환호,비명 / 절규,2,0,1
+auto,search,search | Search,search,588,36131,찾다 / 수색하다 / 검색하다 / 연구하다 / 구조하다,찾다. 수색사다,2,0,1
+auto,seattle,seattle | Seattle,seattle,28449,50174,시애틀,시애틀,0,0,1
+auto,second,second | Second,second,3422,37346,두 번째의 / 후반 / 다른 / 초 / 잠깐 / 2번째,두 번째의,2,0,1
+auto,secondly,secondly | Secondly,secondly,24611,36974,둘째로 / 두 번째로 / 다음으로,둘째로,1,0,1
+auto,secretary,secretary | Secretary,secretary,7014,40181,장관 / 비서 / 차관 / 서기 / 간사,비서,2,0,1
+auto,seed,seed | Seed,seed,1121,48412,종자 / 씨앗 / 씨 / 뿌리다 / 시드,씨,2,0,1
+auto,seem,seem | Seem,seem,138,36253,…것처럼 보이다 / …것 같다 / 듯하다 / 생각되다 / 느껴지다 / ~처럼 보이다,...와 같이 생각되다,2,0,1
+auto,senate,senate | Senate,senate,3419,29115,상원 / 의회 / 원로원,상원 / ① 상원 ② 의회 ③ 원로원 / (미국) 상원,1,0,4
+auto,senator,senator | Senator,senator,4259,30075,상원 의원,① 상원 의원,1,0,1
+auto,seoul,seoul | Seoul,seoul,5094,49388,서울,서울,0,0,1
+auto,september,september | September,september,7880,41022,9월,9월,0,0,5
+auto,serving,serving | Serving,serving,2614,30321,음식 시중 / 봉사하기 / 1인분 / 서빙,① 음식 시중 ② 봉사하기 ③ 1인분,2,0,1
+auto,settlement,settlement | Settlement,settlement,5991,29945,정착 / 해결 / 합의 / 타결 / 식민지 / 결제 / 정산,① 정착 ② 해결 ③ 타결 ④ 합의 ⑤ 식민지,2,0,1
+auto,sever,sever | Sever,sever,6541,33008,자르다 / 잘라내다 / …을 절단하다 / 분리하다 / 절단되다 / 절단하다,…을 절단하다 / 절단되다 / 분리하다,3,0,1
+auto,severe,severe | Severe,severe,2004,36167,심각한 / 무거운 / 크게 / 가차없는 / 엄격한,엄격한. 심각한.,2,0,1
+auto,sew,sew | Sew,sew,10942,48231,바느질하다 / 꿰매다 / 봉합하다,바느질하다,2,0,1
+auto,share,share | Share,share,436,36146,점유율 / 공유하다 / 나누다,몫. 할당. 분배하다.  공유하다,2,0,1
+auto,sheen,sheen | Sheen,sheen,19315,30276,광택 / 광휘 / 광채,① 광택 ② 광휘 ③ 광채,0,0,1
+auto,shield,shield | Shield,shield,5196,29940,차폐 / 방패 / 실드 / 보호하다 / 차단,① 보호하다 ② 방패 ③ 감싸다,2,0,1
+auto,shin,shin | Shin,shin,2826,30277,신 / 정강이,① 신 ② 정강이,2,0,1
+auto,show,show | Show,show,80,35666,보여주다 / 쇼 / 보이고 있다 / 나타나다 / 전시회,쇼,2,0,1
+auto,signature,signature | Signature | signature,signature,7818,"30363,52090",서명 / 특징 / 사인,① 서명 ② 사인 ③ 특징 / 특징 / 서명,2,0,2
+auto,similarly,similarly | Similarly,similarly,8260,30141,비슷하게 / 마찬가지로 / 유사하게 / 이와 같이,① 비슷하게 ② 마찬가지로 ③ 유사하게 ④ 이와 같이,0,0,1
+auto,sincerely,sincerely | Sincerely,sincerely,9321,30459,진심으로 / 진정으로 / 성실히 / 정말로 / 진지하게,① 진심으로 ② 진정으로 ③ 진지하게 ④ 성실히 ⑤ 정말로,1,0,1
+auto,sincerity,sincerity | SINCERITY,sincerity,17729,30003,진심 / 진정성 / 진실 / 성실 / 성의 / 정직 / 순수함,① 진실 ② 성실 ③ 진정성 ④ 성의 ⑤ 정직,1,0,1
+auto,six,six | Six,six,3402,42699,여섯,6,2,0,1
+auto,slavery,slavery | Slavery,slavery,17042,29916,노예제 / 노예 제도,① 노예 제도 ② 노예제,2,0,1
+auto,sledding,sledding | Sledding,sledding,13131,30233,눈썰매 / 썰매,① 썰매의 진행 상태 ② 일의 진행 상태 ③ 썰매 사용에 적합한 눈의 상태,1,0,1
+auto,snippet,snippet | Snippet,snippet,13986,48564,단편 / 작은 조각 / 자투리,단편 작은조각 짜투리,0,0,1
+auto,social,social | Social,social,281,15618,사회의 / 소셜 / 사교적인 / 사회주의의 / 사귀는 / 사회적인,사회적인,2,0,1
+auto,solid,solid | Solid,solid,2263,29808,고체의 / 단단한 / 확실한 / 연속된 / 훌륭한,확실한,2,0,1
+auto,somewhere,somewhere | SOMEWHERE,somewhere,1051,30261,어딘가에 / 어떤 곳 / 대략 / 언젠가,① 어딘가에 ② 어떤 곳 ③ 대략 ④ 언젠가,2,0,1
+auto,southeast,southeast | Southeast,southeast,18376,29925,동남 / 남동 / 남동부,① 동남 ② 남동 ③ 남동부,2,0,1
+auto,southwest,southwest | Southwest,southwest,26717,29923,남서 / 서남 / 사우스웨스트,① 남서 ② 사우스웨스트 ③ 서남,0,0,2
+auto,soviet,soviet | Soviet,soviet,1790,30412,소련 / 구소련 / 소비에트,① 소련 ② 소비에트 ③ 구소련,2,0,1
+auto,spain,spain | Spain,spain,34629,35584,스페인,스페인 / 스페인(에스파냐),0,0,3
+auto,spanish,spanish | Spanish,spanish,2352,35451,스페인의 / 스페인어 / 스페인 사람,스페인어 / 스페인의 / 스페인사람 / 스페인 어,0,0,3
+auto,spare,spare | Spare,spare,1541,30464,예비의 / 아끼다 / 남은 / 여가 / 여분의,① 여가 ② 아끼다 ③ 여유 ④ 남은 ⑤ 예비의,2,0,1
+auto,specialty,specialty | Specialty,specialty,2762,30317,특수성 / 전문 / 전공 / 특별 메뉴 / 특선 요리,① 특수성 ② 전문 ③ 전공,2,0,1
+auto,speeding,speeding | Speeding,speeding,11920,30286,속도위반 / 과속 / 고속 진행,① 속도위반 ② 과속 ③ 고속 진행,1,0,1
+auto,sphinx,sphinx | Sphinx,sphinx,23369,48390,스핑크스 / 기자의 대스핑크스 / 원래 이집트에서 유래된 것,스핑크스,0,0,2
+auto,sphygmomanometer,sphygmomanometer | Sphygmomanometer,sphygmomanometer,26424,44541,혈압계 / 맥압계 / 압력계,혈압계,1,0,1
+auto,spoil,spoil | Spoil,spoil,1575,36168,망치다 / 버릇없는 / 상하다 / 전리품 / 스포일러,망치다. 버리다,2,0,1
+auto,statistician,statistician | STATISTICIAN,statistician,18433,30202,통계학자 / 통계가,① 통계학자 ② 통계가,0,0,1
+auto,statistics,statistics | Statistics,statistics,4268,30370,통계학 / 통계 / 통계 자료,① 통계 ② 통계 자료 ③ 통계학,2,0,1
+auto,steady,steady | Steady,steady,2413,37475,지속적인 / 안정된 / 견실한 / 고정된 / 진정시키다 / 한결같은 / 꾸준한,안정된,2,0,1
+auto,stock,stock | Stock,stock,7772,30377,주식 / 증권 / 스톡 / 재고,① 주식 ② 증권 ③ 재고 ④ 스톡,2,0,1
+auto,strength,strength | Strength,strength,4565,30331,힘 / 강점 / 강함 / 능력 / 강세 / 강도,① 힘 ② 강점 ③ 강세 ④ 강함 ⑤ 능력,2,0,1
+auto,studio,studio | Studio,studio,7863,30279,스튜디오 / 원룸 / 화실,① 스튜디오 ② 원룸 ③ 화실,2,0,1
+auto,sublet,sublet | Sublet,sublet,12752,30297,전대하다 / 전대 / …을 하청을 주다 / 서브렛,① 전대하다 ② 전대 ③ …을 하청을 주다,1,0,1
+auto,subscription,subscription | Subscription,subscription,3265,30391,구독 / 기부 / 신청 / 응모 / 예약금 / 가입신청 / 구독신청,① 구독 ② 기부 ③ 신청,2,0,1
+auto,suffer,suffer | Suffer,suffer,426,35674,겪다 / 고통을 받다 / 입다 / 앓다 / 고생하다 / 고통받다,고생하다,2,0,1
+auto,suffrage,suffrage | Suffrage,suffrage,17049,30143,참정권 / 투표 / 선거권 / 투표권,① 참정권 ② 투표 ③ 선거권,2,0,1
+auto,summary,summary | Summary,summary,1154,37466,요약 / 개괄 / 약식 / 성명 / 개요 / 정리,요약,2,0,1
+auto,sunday,sunday | Sunday,sunday,4966,35725,일요일,일요일,2,0,6
+auto,super,super | Super,super,2551,30228,슈퍼 / 초… / 아주 …한 / 최고의 / 슈퍼마켓,① 슈퍼 ② 최고의 ③ 초… ④ 아주 …한 ⑤ 슈퍼마켓,2,0,1
+auto,supervision,supervision | Supervision,supervision,8413,30148,감독 / 관리 / 감시 / 지휘,① 감독 ② 관리 ③ 감시 ④ 지휘,1,0,1
+auto,supply,supply | Supply,supply,250,30396,공급하다 / 물품 / 비축물자 / 배급 / 보급하다,① 공급하다 ② 물품 ③ 비축물자,2,0,1
+auto,support,support | Support,support,382,36152,지원하다 / 지지하다 / 뒷받침하다 / 돕다 / 유지하다 / 지지 / 지원,지지하다. 부양하다,2,0,1
+auto,surface,surface | Surface,surface,3372,37159,표면 / 겉으로 드러나다 / 수면 / 지표의,표면 여정중항공으로 연결되지 않는 구간,2,0,1
+auto,surgeon,surgeon | Surgeon,surgeon,5559,30405,외과의사 / 군의관 / 외과 의사,① 외과의사 ② 군의관,1,0,1
+auto,sweden,sweden | Sweden,sweden,10543,35578,스웨덴,스웨덴,0,0,2
+auto,swish,swish | Swish,swish,5662,33001,휙휙 소리내다 / 호화로운 / 휙 소리내며 움직이다,휙휙 소리내다 / 호화로운 / 휙 소리내며 움직이다,2,0,1
+auto,sydney,sydney | Sydney,sydney,36343,50139,시드니 / 남자 이름 / 오스트레일리아 남동부의 항구로 최대 도시,시드니,0,0,1
+auto,systole,systole | Systole,systole,16568,44540,심장 수축,심장수축,0,0,1
+auto,tablet,tablet | Tablet,tablet,7858,30320,태블릿 / 알약 / 판 / 정제,① 태블릿 ② 알약 ③ 판,2,0,1
+auto,taiwan,taiwan | Taiwan,taiwan,4160,36610,대만 / 타이완 / 자유중국,대만,0,0,1
+auto,tall,tall | Tall,tall,25,48416,키 / 키가 큰 / 높은 / 높이가 …인 / 긴,키가 큰,2,0,1
+auto,taoism,taoism | Taoism,taoism,22163,32705,노장 철학 / 도교,도교,0,0,2
+auto,teacher,teacher | Teacher,teacher,2894,30418,교사 / 선생 / 교원 / 스승 / 선생님,① 교사 ② 선생 ③ 교원 ④ 스승,2,0,1
+auto,technology,technology | Technology,technology,749,27766,기술 / 과학 기술 / 테크놀러지 / 공학 / 기술(과학),기술,2,0,1
+auto,telephone,telephone | Telephone,telephone,1896,27779,전화 / 통화,전화,2,0,1
+auto,temperance,temperance | Temperance,temperance,15813,30007,절제 / 자제 / 금주,① 절제 ② 자제 ③ 금주,2,0,1
+auto,tense,tense | Tense,tense,4560,30274,시제 / 긴장한,① 긴장한 ② 팽팽한 ③ 시제 ④ 긴박한,2,0,1
+auto,termination,termination | Termination,termination,15962,30306,종료 / 종결 / 만기 / 해지,① 종료 ② 종결 ③ 만기,2,0,1
+auto,thailand,thailand | Thailand,thailand,9245,36608,타이 / 태국 / 태국의,태국,0,0,1
+auto,thanksgiving,thanksgiving | Thanksgiving,thanksgiving,12308,36619,감사의 표시 / 감사의 축제 / 추수 감사절,추수감사절,2,0,2
+auto,theater,theater | Theater,theater,3361,27747,극장 / 연극 / 영화관 / 현장,연극,2,0,1
+auto,therefore,therefore | Therefore,therefore,4758,50639,따라서 / 그러므로 / 그래서 / 그렇기 때문에 / 그러니까,그러므로,2,0,1
+auto,thermometer,thermometer | Thermometer,thermometer,7849,28014,온도계 / 온도를 측정하는 기계,온도계,2,0,1
+auto,thesis,thesis | Thesis,thesis,10547,30100,논문 / 주제,① 논문 ② 주제,1,0,1
+auto,though,though | Though,though,678,45595,비록 …일지라도 / 그러나 / …임에도 불구하고 / …이지만 / 그래도 / 비록 ~이지만,그러나 / 그래도,2,0,1
+auto,threat,threat | Threat,threat,5385,36140,위협 / 우려 / 조짐,위협. 협박,2,0,1
+auto,thrombocyte,thrombocyte | Thrombocyte,thrombocyte,21980,44539,혈소판 / 전구,혈소판,0,0,1
+auto,thursday,thursday | Thursday,thursday,4969,37652,목요일,목요일,0,0,6
+auto,thus,thus | Thus,thus,5099,29967,따라서 / 그렇게 / 현재까지 / 그렇기 때문에,① 따라서 ② 그렇게 ③ 현재까지 ④ 그렇기 때문에,2,0,1
+auto,tiger,tiger | Tiger,tiger,9524,37422,호랑이 / 타이거,호랑이,1,0,1
+auto,tolerate,tolerate | Tolerate,tolerate,2914,29999,참다 / 견디다 / 내성이 있다,① 참다 ② 견디다 ③ 내성이 있다,2,0,1
+auto,toward,toward | Toward,toward,676,36123,…에 대한 / 향해서 / …쪽으로 / 무렵 / ~을 향하여,~쪽으로. ~을향하여,2,0,1
+auto,tower,tower | Tower,tower,5373,30362,타워 / 탑 / 고층 빌딩 / 뛰어나다,① 탑 ② 타워 ③ 고층 빌딩 ④ 뛰어나다,2,0,1
+auto,trace,trace | TRACE,trace,1856,29968,추적하다 / 흔적 / 미량 / 발견하다 / 유래하다 / 찾다,① 추적하다 ② 발견하다 ③ 흔적 ④ 유래하다 ⑤ 귀결되다,2,0,1
+auto,traitor,traitor | Traitor,traitor,2635,30357,반역자 / 배신자 / 매국노,① 배신자 ② 반역자 ③ 매국노,2,0,1
+auto,transcendentalism,transcendentalism | Transcendentalism,transcendentalism,17701,29992,선험론 / 고매한 사상 / 공상적인 이상주의,① 선험론 ② 고매한 사상 ③ 공상적인 이상주의,0,0,1
+auto,transparent,transparent | Transparent,transparent,10466,30211,투명한 / 솔직한 / 속보이는,① 투명한 ② 속보이는 ③ 솔직한,2,0,1
+auto,transport,transport | Transport,transport,461,30425,다른 세상에 있는 것처럼 느끼게 하다 / 운송하다 / 이동시키다,① 운송하다 ② 교통 ③ 이동하다 / 운송하다. 수송하다.,2,0,2
+auto,travel,travel | Travel,travel,225,27762,여행 / 이동 / 교통 / 운행 / 달리다 / 여행하다 / 이동하다,여행,2,0,1
+auto,treaty,treaty | Treaty,treaty,3336,30111,조약 / 협정 / 협약,① 조약 ② 협정 ③ 협약,2,0,1
+auto,tribune,tribune | Tribune,tribune,28168,30076,강단 / 설교단 / 평민의 권리의 옹호자,① 강단 ② 설교단 ③ 평민의 권리의 옹호자,0,0,2
+auto,trick,trick | Trick,trick,3332,30267,속이다 / 묘기 / 재주 / 요령 / 장난 / 속임수,① 속이다 ② 묘기 ③ 장난 ④ 재주 ⑤ 요령,2,0,1
+auto,trophy,trophy | Trophy,trophy,10203,30206,트로피 / 우승컵 / 상 / 전리품,① 트로피 ② 우승컵 ③ 상 ④ 전리품,1,0,1
+auto,trustworthy,trustworthy | Trustworthy,trustworthy,2659,30150,신뢰할 수 있는,① 신뢰할 수 있는,1,0,1
+auto,turbulence,turbulence | Turbulence,turbulence,12190,30368,대란 / 동요 / 소란 / 난기류 / 터뷸런스,① 소란 ② 동요 ③ 난기류,1,0,1
+auto,turner,turner | Turner,turner,15036,30117,선반공,① 선반공 ② 터너 ③ 물체를 돌리는 사람,0,0,1
+auto,type,type | Type,type,1293,30455,유형 / 종류 / 양식 / 타입 / 타자 / 타자 치다,① 종류 ② 유형 ③ 양식 ④ 타자 ⑤ 타입,2,0,1
+auto,ufo,ufo | UFO,ufo,26316,36476,미확인 비행 물체 / 유에프오 / 비행접시,미확인 비행 물체,0,0,1
+auto,ukraine,Ukraine | ukraine,ukraine,35423,16740,우크라이나 / 1991년 소련의 해체와 더불어 독립국이 됨,우크라이나,0,0,1
+auto,underground,underground | Underground,underground,2317,30055,지하의 / 땅속의 / 언더그라운드 / 비밀의 / 지하철 / 지하에 있는,① 지하의 ② 땅속의 ③ 언더그라운드 ④ 비밀의,2,0,1
+auto,understand,understand | Understand,understand,89,37463,이해하다 / 알다 / 깨닫다 / 납득하다,이해하다,2,0,1
+auto,undertake,undertake | UNDERTAKE,undertake,1759,30008,착수하다 / 떠맡다 / (책임을 맡아서) 착수하다 / 어떤 일을 시작하다,① 떠맡다 ② 착수하다,2,0,1
+auto,underwrite,underwrite | UNDERWRITE,underwrite,19674,30246,…에 서명하다 / 인수하다 / …에 동의하여 서명하다,인수하다 / 서명하다 / …에 동의하여 서명하다,2,0,1
+auto,unesco,unesco | UNESCO,unesco,18173,37137,유네스코 / 유엔 교육 과학 문화 기구,유네스코(유엔 교육 과학 문화 기구),0,0,1
+auto,unheard,unheard | Unheard,unheard,9081,30248,들어주지 않는 / 들리지 않는 / 변명을 들어주지 않는,① 들어주지 않는 ② 들리지 않는 ③ 변명을 들어주지 않는,1,0,1
+auto,unit,unit | Unit,unit,1148,30304,단위 / …개 / 부대 / 장치 / 계열사,① …개 ② 부대 ③ 계열사 ④ 단위 ⑤ 장치,2,0,1
+auto,united,united | United,united,1837,29948,통일된 / 통합한 / 연합한 / 유나이티드 / 단결된,① 통합한 ② 통일된 ③ 연합한 ④ 유나이티드 ⑤ 단결된,2,0,2
+auto,until,until | Until,until,3321,45602,…할 때까지 / …이 되어 비로소 / …까지 / ~까지,~까지 / ~때까지,2,0,1
+auto,upstairs,upstairs | Upstairs,upstairs,10339,48234,위층 / 2층 / 위층으로,2층 / 위층,2,0,1
+auto,uranus,uranus | Uranus,uranus,21923,29441,천왕성 / 유러너스 / 하늘을 인격화한 세계의 지배신,천왕성,0,0,2
+auto,utterly,utterly | Utterly,utterly,7774,36254,완전히 / 전혀 / 철저히,전혀,2,0,1
+auto,vacuum,vacuum | Vacuum,vacuum,2688,37161,진공 / 공백 / 배큠 / 부재 / 전무 / 석션,진공 공백,3,0,1
+auto,valley,valley | Valley,valley,707,30026,계곡 / 골짜기 / 유역,① 계곡 ② 유역 ③ 골짜기,2,0,1
+auto,vein,vein | Vein,vein,10978,44538,정맥 / 맥락 / 광맥,정맥,2,0,1
+auto,versatile,versatile | Versatile,versatile,6686,29834,다재 다능한 / 다양한 / 다용도의 / 다목적 / 다기능,다용도의,2,0,1
+auto,victim,victim | Victim,victim,3313,36174,피해자 / 희생자 / 희생양 / 이재민,희생. 희생자,2,0,1
+auto,victorian,victorian | Victorian,victorian,28188,30232,빅토리아 여왕 시대의 / 빅토리아 여왕 시대의 사람 / 빅토리아조의 / 빅토리아풍의,① 빅토리아 여왕 시대의 ② 빅토리아 여왕 시대의 사람 ③ 빅토리아조의 ④ 빅토리아풍의,2,0,1
+auto,vocabulary,vocabulary | Vocabulary | vocabulary,vocabulary,3879,"30205,52082",어휘 / 단어,① 어휘 ② 단어 / 어휘,2,0,2
+auto,volcano,volcano | Volcano,volcano,4211,35673,화산,화산,2,0,1
+auto,voluntarism,Voluntarism | voluntarism,voluntarism,33645,30262,주의설 / 자발적 행동 주의 / 자유주의,① 주의설 ② 자발적 행동 주의 ③ 자유주의,0,0,1
+auto,vomit,vomit | VOMIT,vomit,2793,29982,구토 / 토하다 / 토사물 / 게워내다,① 토하다 ② 게우다 ③ 분출,2,0,1
+auto,warn,warn | Warn,warn,744,36173,경고하다 / 주의하다 / 조심시키다 / 충고하다,경고하다. 조심시키다. 예고하다,2,0,1
+auto,warpage,warpage | Warpage,warpage,11601,28005,휨 / 뒤틀림,뒤틀림이나 왜곡,1,0,1
+auto,weather,weather | Weather,weather,3302,36231,날씨 / 기상 / 기후 / 일기 / 극복하다,날씨,2,0,1
+auto,wedding,wedding | Wedding,wedding,627,30422,결혼 / 웨딩 / 결혼식,① 결혼 ② 웨딩,2,0,1
+auto,wednesday,wednesday | Wednesday,wednesday,4901,37653,수요일,수요일,0,0,5
+auto,week,week | Week,week,3301,37647,주 / 일주일 / 주간 / 주(week),주,2,0,1
+auto,west,west | West,west,3300,37336,서양 / 서부 / 웨스트 / 서방 / 서 / 서쪽,서양,2,0,1
+auto,westerner,Westerner | westerner,westerner,34659,30250,서부 사람 / 서양 사람 / 서쪽에 사는 사람,① 서부 사람 ② 서양 사람 ③ 서쪽에 사는 사람,0,0,1
+auto,when,when | When,when,3297,45604,때 / 언제 / 경우 / 얼마쯤에서,~때 / 언제,2,0,1
+auto,whenever,whenever | Whenever,whenever,5103,45600,…할 때마다 / …하면 / …할 때는 언제나 / 언제든지,~할 때는 언제든지,2,0,1
+auto,whisper,whisper | Whisper,whisper,1696,37355,속삭이다 / 속삭임 / 휘파람 불다,속삭이다,2,0,2
+auto,whomever,whomever | Whomever,whomever,14381,30443,누구를 …하든지 / …하는 사람은 누구나 / 도대체 누구를,① 누구를 …하든지 ② …하는 사람은 누구나 ③ 도대체 누구를,2,0,1
+auto,whomsoever,whomsoever | Whomsoever,whomsoever,12649,30442,누구를 …하든지 / …하는 사람은 누구나,① 누구를 …하든지 ② …하는 사람은 누구나,0,0,1
+auto,whose,whose | Whose,whose,5411,37693,누구의 / 누구의 것,누구의,2,0,1
+auto,wield,wield | Wield,wield,7105,33002,휘두르다 / 행사하다 / 교묘하게 쓰다,교묘하게 쓰다 / 휘두르다 / 행사하다,2,0,1
+auto,wig,wig | Wig,wig,5874,48411,가발 / …에게 가발을 씌우다,가발,1,0,1
+auto,wipe,wipe | Wipe,wipe,1880,36170,닦다 / 없애다 / 청산하다,닦다. 씻다,2,0,1
+auto,wrath,wrath | Wrath,wrath,6675,30180,분노 / 격노 / 복수,① 분노 ② 격노 ③ 복수,2,0,1
+auto,wriggle,wriggle | Wriggle,wriggle,5836,37351,꿈틀거리다 / 꿈틀거리기 / 굼실거리다,꿈틀거리다,2,0,1
+auto,xanadu,Xanadu | xanadu,xanadu,43313,33152,도원향 / 도원경,도원향,0,0,1
+auto,you,you | You,you,3277,35076,여러분 / 당신 / 너 / 자네,① 당신 ② 너 ③ 여러분 ④ 자네 / 너,2,0,2
+auto,yours,yours | Yours,yours,3275,30424,당신의 / 당신의 것 / 네 것,① 당신의 ② 당신의 것,2,0,1
