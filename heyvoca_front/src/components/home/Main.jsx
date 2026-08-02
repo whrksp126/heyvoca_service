@@ -267,13 +267,10 @@ const Main = () => {
 
       {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.
           §7 — CTA 가 흘러나온 만큼 상단 패딩 30px 으로 비켜 준다 */}
-      {/*
-        진입 애니메이션을 두지 않는다. 홈은 자주 리렌더되는 화면이라(통계 갱신 · 출석 체크 ·
-        농장 조회) motion 이 매번 처음부터 다시 시작해 본문이 계속 흔들리고,
-        translateY 가 남아 히어로와 본문 사이에 없어야 할 12px 이 생겼다.
-        시안에도 이 연출은 없다.
-      */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
         className="
           relative z-[2] flex-1 min-h-0 overflow-y-auto
           flex flex-col gap-[12px]
@@ -326,7 +323,7 @@ const Main = () => {
           />
         )}
 
-      </div>
+      </motion.div>
     </div>
   );
 };

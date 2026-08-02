@@ -109,8 +109,8 @@ const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
         */}
         {/*
           시안 `.scene` 그대로 — **높이 313px 고정** + `background-size:100% auto`.
-          <img h-auto> 로 두면 폭에 비례해 높이가 무한정 커진다(넓은 화면에서 밭이 히어로를
-          삼키고 화면 밖으로 넘친다). 시안은 세로를 고정하고 아래를 기준으로 잘라 낸다.
+          <img h-auto> 로 두면 폭에 비례해 높이가 무한정 커진다(뷰포트 2056px 에서 1637px 이
+          됐다). 시안은 세로를 고정하고 아래를 기준으로 잘라 낸다.
         */}
         <div
           className="absolute left-[-6%] w-[112%] bottom-0 h-[313px] bg-no-repeat bg-bottom"
