@@ -2,20 +2,34 @@ from flask import Blueprint, jsonify
 from datetime import datetime
 
 from app.routes import version_bp
+from app.services.store_version import get_versions as get_store_versions
 
 @version_bp.route('/get_version', methods=['GET'])
 def get_version():
   """현재 앱 및 웹의 버전 정보를 반환합니다."""
+  # 앱 안내값은 **스토어 실조회**로 채운다(app/services/store_version.py).
+  #  손으로 적던 시절의 사고 두 가지를 구조적으로 없앤다:
+  #   · 낮게 방치 → 출시해도 업데이트 안내가 안 나감(실제로 스토어 1.0.5 / 안내 1.0.1 이었다)
+  #   · 미리 올림 → 없는 버전으로 안내 → 무한 업데이트 모달
+  #  조회가 실패하면 마지막 성공값 → env(APP_LATEST_*) → 아래 상수 순으로 폴백하며, **값이 내려가지는 않는다.**
+  store = get_store_versions()
+
   version_info = {
-      # ⚠️ 아래 두 값은 "실제 스토어에 출시된 최신 버전"과 항상 일치해야 함.
-      # 클라이언트는 자신의 버전 < 이 값이면 "권장 업데이트" 모달을 띄움.
-      # 스토어에 새 버전을 실제로 출시한 직후에만 올릴 것 (아직 심사/롤아웃 중이면 절대 올리지 말 것 — 무한 업데이트 모달 발생).
-      "app_android_version": "1.0.1",  # Play Store 출시 버전 (versionName)
-      "app_ios_version": "1.0.1",  # App Store 출시 버전 (MARKETING_VERSION)
-      "web_version": "1.0.3",  # 웹 버전 (FSRS 코어 정정·복습일정/학습설정, 테스트 재출제 완료버그 픽스·듣기버튼 유지, 홈 격려 메시지 다양화, 구매/보석 시트·예문 스피커 QA — 기존 사용자 reload 트리거)
+      "app_android_version": store['android'],  # Play Store 게시 버전 (versionName)
+      "app_ios_version": store['ios'],  # App Store 게시 버전 (MARKETING_VERSION)
+      # 어디서 온 값인지(store|cache|last_good|fallback). **진단 전용 — 클라이언트 분기 금지.**
+      "app_version_source": store['source'],
+      # 웹 버전 — 스토리지 마이그레이션 트리거용으로 남겨 둔 **수기 값**이다.
+      #  ⚠ "배포했는데 구버전 탭이 안 갱신됨" 을 이 값에 기대지 말 것. 프론트는 이제 자기 빌드 지문
+      #    (`/version.json`, vite 가 빌드마다 생성)을 스스로 폴링해 갱신한다 — 수기 bump 를 잊어도 안전하다.
+      #    이 값은 저장소 스키마를 바꿨을 때처럼 "웹 쪽 계약이 바뀌었다" 를 알릴 때만 올린다.
+      "web_version": "1.0.3",
       "release_date": datetime.now().isoformat(),
       "api_status": "stable",
-      "min_app_version": "1.0.0",  # 앱의 최소 요구 버전 (이 값 미만이면 강제 업데이트)
+      # 이 값 미만이면 **강제 업데이트**(닫을 수 없는 모달). 올리면 그 미만 사용자는 스토어에 다녀오기
+      #  전까지 앱을 못 쓴다 → 브릿지 계약이 깨져 정상 이용이 불가능한 버전에만 쓸 것.
+      #  올리기 전에 반드시 그 버전대 사용자 비율을 확인할 것(현재는 측정 수단이 없다 — docs 참조).
+      "min_app_version": "1.0.0",
       "min_web_version": "1.0.0",  # 웹의 최소 요구 버전
 
       # 스토어 URL (앱 업데이트 안내 모달에서 사용)

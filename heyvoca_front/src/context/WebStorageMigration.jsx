@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { backendUrl, fetchDataAsync } from '../utils/common';
 import { useNewBottomSheetActions } from './NewBottomSheetContext';
 import { UpdateNewBottomSheet } from '../components/newBottomSheet/UpdateNewBottomSheet';
+import { startBuildVersionWatch } from '../utils/buildVersion';
 
 // 백엔드 version 조회 API 주소
 const CHECK_VERSION_URL = `${backendUrl}/version/get_version`;
@@ -179,11 +180,18 @@ export default function WebStorageMigration() {
 
     check();
 
+    // 프론트 배포 감지는 백엔드 web_version(수기)이 아니라 **빌드 지문**(/version.json)이 담당한다.
+    //  수기 bump 를 잊어도 열려 있던 탭이 스스로 낡음을 알고 안전한 순간에 갱신한다.
+    const stopBuildWatch = startBuildVersionWatch();
+
     const onVisible = () => {
       if (document.visibilityState === "visible") check();
     };
     document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      stopBuildWatch();
+    };
   }, [openAwaitNewBottomSheet]);
 
   return null;
