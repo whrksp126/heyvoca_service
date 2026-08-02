@@ -6,11 +6,17 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import postMessageManager from '../../utils/postMessageManager';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
+import { nativeUnavailableReason, describeBridgeError } from '../../utils/nativeBridge';
 import CameraSourceNewBottomSheet from '../newBottomSheet/CameraSourceNewBottomSheet';
 
 const INITIAL_SCALE = 1.6;
 const SELECT_ZOOM_SCALE = 2.5;
+// 네이티브가 ocrResult/ocrCancel/ocrError 중 무엇도 안 보내면 이 화면은 촬영 대기 상태로 고착한다.
+//  ⚠ 이건 **교착만 푸는 마지막 그물**이지 "느린 작업 끊기"가 아니다. 사진 고르기·촬영·크롭은 사람이
+//   몇 분씩 걸릴 수 있고, 여기서 시트를 닫으면 그 뒤에 온 결과는 리스너와 함께 사라져 작업이 날아간다.
+//   그래서 오탐이 사실상 불가능한 길이로 잡는다(10분 동안 아무 신호도 없음 = 네이티브가 죽은 것).
+const PICKER_WATCHDOG_MS = 10 * 60 * 1000;
 
 const formatMeaningsSummary = (meanings, limit = 2) => {
   if (!meanings || !Array.isArray(meanings) || meanings.length === 0) return '';
@@ -92,6 +98,15 @@ const DictionaryOcrResultNewFullSheet = () => {
   const requestImagePicker = useCallback(async () => {
     const source = await pushAwaitNewBottomSheet(CameraSourceNewBottomSheet);
     if (source === 'camera' || source === 'library') {
+      // 네이티브가 이 요청을 못 받는 환경(웹 브라우저·구버전 앱)이면 **보내지 않는다.**
+      //  보내 봤자 응답이 없고, 이 화면은 응답이 있어야만 촬영 대기가 풀린다 = 멈춘 화면.
+      const blocked = nativeUnavailableReason('openImagePicker');
+      if (blocked) {
+        showToast(describeBridgeError(blocked, '사진을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.'));
+        if (!hasDataRef.current) popNewFullSheet();
+        else setIsCapturing(false);
+        return;
+      }
       // 바텀시트 exit 애니메이션이 끝나기 전 웹뷰가 백그라운드로 가면
       // Framer Motion rAF 가 멈춰 바텀시트가 DOM 에 남는 문제가 있어 잠깐 대기
       await new Promise((r) => setTimeout(r, 280));
@@ -158,6 +173,19 @@ const DictionaryOcrResultNewFullSheet = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 촬영 대기 교착 방지 — 네이티브가 어떤 종료 신호도 안 주는 경우의 마지막 그물.
+  //  (구버전 앱은 위 pre-gate 에서 걸리고, 여기서 잡히는 건 네이티브가 응답 없이 죽은 경우다.)
+  useEffect(() => {
+    if (!isCapturing) return undefined;
+    const timer = setTimeout(() => {
+      showToast('사진을 불러오지 못했어요. 다시 시도해 주세요.');
+      clearBottomSheetStack();
+      if (!hasDataRef.current) popNewFullSheet();
+      else setIsCapturing(false);
+    }, PICKER_WATCHDOG_MS);
+    return () => clearTimeout(timer);
+  }, [isCapturing, clearBottomSheetStack, popNewFullSheet]);
 
   // 재촬영
   const handleRetake = useCallback(() => {

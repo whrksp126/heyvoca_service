@@ -6,6 +6,12 @@
 class PostMessageManager {
   constructor() {
     this.listeners = new Map();
+    // 응답 대기자(waiter) — `listeners` 와 **완전히 분리된 채널**이다.
+    //  왜 분리했나: `listeners` 는 타입당 1개만 유지되는 Map 이라(addListener 가 덮어쓴다)
+    //  여기에 대기자를 끼워 넣으면 기존 화면의 콜백을 조용히 밀어낸다. 반대로 Set 으로 바꿔
+    //  여러 개를 허용하면 오늘 "덮어쓰기"에 의존하는 곳(setupAppGoogleLogout /
+    //  setupAppGoogleWithdraw 는 같은 타입을 쓴다)이 이중 실행된다. 그래서 채널을 하나 더 판다.
+    this.waiters = new Map(); // type -> Set<fn>
     this.isInitialized = false;
   }
 
@@ -209,15 +215,6 @@ class PostMessageManager {
   }
 
   /**
-   * 특정 메시지 타입에 대한 리스너 등록
-   * @param {string} messageType - 메시지 타입
-   * @param {Function} callback - 콜백 함수
-   */
-  addListener(messageType, callback) {
-    this.listeners.set(messageType, callback);
-  }
-
-  /**
    * FCM 토큰 수신 콜백 등록
    * @param {Function} callback - FCM 토큰 처리 콜백 함수
    */
@@ -259,6 +256,9 @@ class PostMessageManager {
           callback(data);
         }
       });
+
+      // 응답 대기자 전달(별도 채널 — 위 리스너와 서로 영향 없음)
+      this._dispatchWaiters(data);
     } catch (error) {
       console.error(`❌ 포스트메시지 파싱 오류:`, error);
       console.error(`📝 원본 데이터:`, event.data);
@@ -272,6 +272,41 @@ class PostMessageManager {
    */
   addListener(messageType, callback) {
     this.listeners.set(messageType, callback);
+  }
+
+  /**
+   * 응답 대기자 등록 — 같은 타입에 **여러 개**를 붙일 수 있고, 기존 addListener 콜백을 건드리지 않는다.
+   *  주로 nativeBridge.requestNative() 가 쓴다(요청 1건의 수명 동안만 살아 있는 임시 대기자).
+   * @param {string} messageType
+   * @param {Function} callback
+   * @returns {Function} 해제 함수 — 반드시 호출할 것(안 하면 화면을 떠난 뒤에도 콜백이 남는다)
+   */
+  waitFor(messageType, callback) {
+    this.init();
+    if (!this.waiters.has(messageType)) this.waiters.set(messageType, new Set());
+    this.waiters.get(messageType).add(callback);
+    return () => {
+      const set = this.waiters.get(messageType);
+      if (!set) return;
+      set.delete(callback);
+      if (set.size === 0) this.waiters.delete(messageType);
+    };
+  }
+
+  /**
+   * 대기자 전달. 한 대기자가 던져도 나머지가 굶지 않도록 개별로 감싼다
+   * (여기서 예외가 새면 이 메시지를 기다리던 다른 요청이 영원히 안 끝난다 = 우리가 없애려는 그 증상).
+   */
+  _dispatchWaiters(data) {
+    const set = this.waiters.get(data?.type);
+    if (!set || set.size === 0) return;
+    for (const fn of Array.from(set)) {
+      try {
+        fn(data);
+      } catch (error) {
+        console.error(`❌ 대기자 처리 오류(${data?.type}):`, error);
+      }
+    }
   }
 
   /**
@@ -293,6 +328,8 @@ class PostMessageManager {
    * React Native로 메시지 전송
    * @param {string} type - 메시지 타입
    * @param {Object} data - 전송할 데이터
+   * @returns {boolean} 실제로 전송됐는지. **false 를 무시하면 호출부가 오지 않을 응답을 기다린다** —
+   *   순수 웹 브라우저에서 정확히 그 일이 벌어진다(예전에는 console.warn 만 하고 true/false 구분이 없었다).
    */
   sendMessageToReactNative(type, data = {}) {
     const message = {
@@ -307,11 +344,13 @@ class PostMessageManager {
         window.ReactNativeWebView.postMessage(JSON.stringify(message));
         console.log(`📤 React Native로 메시지 전송: ${type}`, message);
         // alert('메시지 전송 완료');
-      } else {
-        console.warn('⚠️ React Native WebView 환경이 아닙니다. 메시지 전송이 불가능합니다.');
+        return true;
       }
+      console.warn('⚠️ React Native WebView 환경이 아닙니다. 메시지 전송이 불가능합니다.');
+      return false;
     } catch (error) {
       console.error('❌ React Native 메시지 전송 실패:', error);
+      return false;
     }
   }
 

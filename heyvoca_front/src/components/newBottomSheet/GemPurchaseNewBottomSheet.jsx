@@ -2,7 +2,8 @@ import React from 'react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { StoreBuyItemNewBottomSheet } from './StoreBuyItemNewBottomSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
+import { nativeUnavailableReason, describeBridgeError } from '../../utils/nativeBridge';
 
 // 보석 구매 전용 바텀시트 (구매 내역 없음).
 // 진입점: 홈/상점 헤더의 보석, 단어장 구매 시 보석 부족, 마이페이지 보석 구매 버튼.
@@ -15,6 +16,14 @@ export const GemPurchaseNewBottomSheet = ({ notice }) => {
   // 보석 구매(IAP)
   const handleGemClick = (id) => {
     vibrate({ duration: 5 });
+    // ⚠ 아래 결제 시트는 backdrop·드래그 닫기가 모두 꺼져 있고 버튼도 응답이 와야 열린다 →
+    //  네이티브가 못 받는 환경에서 열면 **빠져나올 수 없는 화면**이 된다(웹 브라우저에서는
+    //  postMessage 가 조용히 무시돼 정확히 그 일이 벌어졌다). 그래서 열기 전에 먼저 막는다.
+    const blocked = nativeUnavailableReason('iapPurchase');
+    if (blocked) {
+      showToast(describeBridgeError(blocked));
+      return;
+    }
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: 'iapPurchase', props: { itemId: id } })
     );

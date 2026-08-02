@@ -2,7 +2,8 @@ import React from 'react';
 import { useUser } from '../../context/UserContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { StoreBuyItemNewBottomSheet } from '../newBottomSheet/StoreBuyItemNewBottomSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
+import { nativeUnavailableReason, describeBridgeError } from '../../utils/nativeBridge';
 
 const GemSection = () => {
   "use memo";
@@ -12,6 +13,13 @@ const GemSection = () => {
 
   const handleGemClick = (id) => {
     vibrate({ duration: 5 });
+    // 결제 시트는 닫기 수단이 응답에 달려 있다 → 네이티브가 못 받는 환경이면 열지 않는다
+    //  (GemPurchaseNewBottomSheet 와 같은 이유. 두 진입점 모두 막아야 의미가 있다.)
+    const blocked = nativeUnavailableReason('iapPurchase');
+    if (blocked) {
+      showToast(describeBridgeError(blocked));
+      return;
+    }
     window.ReactNativeWebView?.postMessage(
       JSON.stringify({ type: 'iapPurchase', props: { itemId: id } })
     );
