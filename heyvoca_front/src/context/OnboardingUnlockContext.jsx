@@ -20,6 +20,33 @@ export const FEATURE_LABELS = {
   custom: '자유 설정 테스트',
 };
 
+/**
+ * 온보딩 행동 미션·기능 잠금 스위치.
+ *
+ * 당근 농장 V2 를 검토하는 동안 꺼 둔다. 켜져 있으면 단어장·상점·사전 탭이 잠기고
+ * 홈에 미션 배너와 보상 팝업이 떠서, 정작 봐야 할 화면에 닿기까지 미션을 먼저 깨야 한다.
+ *
+ * 코드를 지우지 않고 스위치로 둔 이유는 새 기획에 맞춰 **다시 설계할 대상**이기 때문이다.
+ * 되살리려면 이 값을 true 로 되돌리면 된다 — 아래 로직은 전부 그대로 살아 있다.
+ *
+ * 끈 상태에서는 `unlock` 을 legacy(기존 가입자) 형태로 고정한다. 이 Context 를 구독하는
+ * UI 는 이미 legacy 일 때 스스로 숨도록 만들어져 있어서, 화면마다 조건을 새로 넣을 필요가 없다.
+ *
+ * **가입 퍼널(`/onboarding` 페이지)은 이 스위치와 무관하다.** 그건 비로그인 사용자의
+ * 레벨·목표 선택과 회원가입 흐름이라 끄면 신규 가입이 막힌다.
+ */
+export const ONBOARDING_MISSIONS_ENABLED = false;
+
+// 스위치를 껐을 때 쓰는 응답. 백엔드가 기존 가입자에게 내려주는 형태와 같다.
+const DISABLED_UNLOCK = {
+  legacy: true,
+  missions: [],
+  current_mission: null,
+  unlocked: {},
+  thresholds: {},
+  completed_sessions: 0,
+};
+
 export const OnboardingUnlockContext = createContext(null);
 
 export const OnboardingUnlockProvider = ({ children }) => {
@@ -69,6 +96,11 @@ export const OnboardingUnlockProvider = ({ children }) => {
 
   // 해금 상태 재조회
   const refreshUnlock = useCallback(async () => {
+    // 스위치가 꺼져 있으면 조회하지 않는다. 서버는 그대로 두고 화면만 덮는다.
+    if (!ONBOARDING_MISSIONS_ENABLED) {
+      setUnlock(DISABLED_UNLOCK);
+      return DISABLED_UNLOCK;
+    }
     try {
       setLoading(true);
       const res = await getUnlockStatusApi();
