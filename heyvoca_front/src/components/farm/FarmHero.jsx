@@ -107,13 +107,15 @@ const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
           하단이 알파로 페이드되어 있어 어떤 배경 위에 놓아도 그 색으로 녹아든다(§17).
           팻말은 이 상자 안에 % 로 얹혀 이미지와 함께 움직인다.
         */}
-        <div className="absolute left-[-6%] w-[112%] bottom-0">
-          <img
-            src={HERO_SRC[mood]}
-            alt=""
-            draggable={false}
-            className="block w-full h-auto select-none"
-          />
+        {/*
+          시안 `.scene` 그대로 — **높이 313px 고정** + `background-size:100% auto`.
+          <img h-auto> 로 두면 폭에 비례해 높이가 무한정 커진다(넓은 화면에서 밭이 히어로를
+          삼키고 화면 밖으로 넘친다). 시안은 세로를 고정하고 아래를 기준으로 잘라 낸다.
+        */}
+        <div
+          className="absolute left-[-6%] w-[112%] bottom-0 h-[313px] bg-no-repeat bg-bottom"
+          style={{ backgroundImage: `url(${HERO_SRC[mood]})`, backgroundSize: '100% auto' }}
+        >
 
           {SIGNS.map((sign) => {
             const n = counts?.[sign.crop] ?? 0;
