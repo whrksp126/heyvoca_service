@@ -12,8 +12,8 @@ import emptyBookImg from '../../assets/images/voca_book_1.png';
 const MISSION_ACTION_HINTS = {
   ai_test: "AI 추천 테스트를 완료하면 온보딩에서 고른 단어장이 열려요",
   make_book: "단어장을 만든 뒤 단어를 추가하면 '상점'이 열려요",
-  buy_book: "상점에서 단어장을 담으면 '사전'이 열려요",
-  search_word: "사전에서 단어를 찾아보면 '집중 반복 학습'이 열려요",
+  buy_book: "상점에서 단어장을 담으면 '찾기'가 열려요",
+  search_word: "찾기에서 단어를 검색해 보면 '집중 반복 학습'이 열려요",
   focus_study: "집중 반복 학습을 완료하면 '자유 설정 테스트'가 열려요",
   // 마지막 미션(free_test)은 unlocks=None(더 열릴 기능 없음) — 종료 안내 문구.
   free_test: "자유 설정 테스트를 완료하면 입문 퀘스트가 모두 끝나요",

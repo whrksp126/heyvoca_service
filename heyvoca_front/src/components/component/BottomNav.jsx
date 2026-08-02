@@ -14,12 +14,19 @@ import navMypage from '../../assets/images/farm/mypage.png';
 // 탭 정의 — lockKey 있는 탭은 온보딩 점진 해금 대상
 // 라벨은 화면에 그리지 않는다(아이콘이 곧 그 탭의 사물이라 같은 말이 두 번 된다).
 // 스크린리더·툴팁 용도로만 남긴다.
+//
+// 시안 §10 화면 구조 — "농장 · 단어장 · 찾기 · 상점 · 마이"
+//   기존 5탭 유지. 첫 탭은 "홈" → "농장", 셋째 탭은 "사전" → "찾기".
+// 바뀐 것은 탭 이름뿐이고 경로는 그대로다.
+//   /home     — 시안이 "홈(= 농장)"이라 부르는 그 화면 자체. (/farm 은 별도의 농장 상세 화면이라 여기 걸면 안 된다)
+//   /dictionary — 찾기는 기존 사전 탭을 다시 그린 것(시안 찾기 1절)이라 같은 화면이다.
+// lockKey('dict' 등)는 온보딩 해금 키라서 이름과 무관하게 유지한다.
 const NAV_ITEMS = [
-  { path: '/home', label: '홈', icon: navHome, lockKey: null },
+  { path: '/home', label: '농장', icon: navHome, lockKey: null },
   { path: '/vocabulary-sheets', label: '단어장', icon: navVocabulary, lockKey: 'vocabook' },
-  { path: '/dictionary', label: '사전', icon: navDictionary, lockKey: 'dict' },
+  { path: '/dictionary', label: '찾기', icon: navDictionary, lockKey: 'dict' },
   { path: '/book-store', label: '상점', icon: navStore, lockKey: 'store' },
-  { path: '/mypage', label: '마이페이지', icon: navMypage, lockKey: null },
+  { path: '/mypage', label: '마이', icon: navMypage, lockKey: null },
 ];
 
 const BottomNav = () => {

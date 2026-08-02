@@ -172,19 +172,25 @@ const Main = () => {
 
   // 삽·회복제가 모자랄 때 상점 도구 탭으로 보낸다. 돌보기 시트 위에 얹으므로
   // 상점을 닫으면 고르던 목록이 그대로 남는다(선택이 날아가지 않는다).
-  const openToolShop = () => {
-    pushNewFullSheet(
-      StoreNewFullSheet,
-      { initialTab: 'tools' },
-      { smFull: true, closeOnBackdropClick: true },
-    );
-  };
-
   const openRottenSheet = () => {
     vibrate({ duration: 5 });
     pushNewFullSheet(
       RottenListSheet,
       { onChanged: refresh, onOpenShop: openToolShop },
+      { smFull: true, closeOnBackdropClick: true },
+    );
+  };
+
+  const openToolShop = () => {
+    pushNewFullSheet(
+      StoreNewFullSheet,
+      {
+        initialTab: 'tools',
+        // 구매 결과의 "썩은 작물 보러 가기"(shop-result §2⑤) — 상점을 닫고 썩은 목록을 연다.
+        // 넘기지 않으면 시트만 닫혀 그 버튼이 아무 데도 데려가지 못한다.
+        onGoRotten: openRottenSheet,
+        onInventoryChanged: refresh,
+      },
       { smFull: true, closeOnBackdropClick: true },
     );
   };

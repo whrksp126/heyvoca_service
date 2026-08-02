@@ -14,6 +14,9 @@ const QUESTION_INSTRUCTIONS = {
   fillInTheBlank: '빈칸에 알맞은 단어를 입력하세요',
   cardMatch: '같은 뜻끼리 짝지어 보세요',
   cardMatchListening: '듣고 같은 카드를 짝지어 보세요',
+  // 부패 진단 (당근 농장 V2 학습 시안 §6) — 헤더가 "알맞은 뜻을 선택하세요"가 아니라
+  // "다시 심기 진단"으로 바뀌는 것이 이 화면이 일반 학습과 다른 첫 신호다.
+  multipleChoiceDiagnosis: '다시 심기 진단',
 };
 
 const Header = ({ testType, onBackClick, questionType }) => {

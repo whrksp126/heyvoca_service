@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { CaretLeft, Minus, Plus } from '@phosphor-icons/react';
+import { Minus, Plus, Sparkle, SortAscending, Info } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { updateUserInfoApi } from '../../api/auth';
 import { vibrate } from '../../utils/osFunction';
+import { readFarmSettings, writeFarmSettings } from '../../utils/farmSettings';
+import { SheetBar, GroupLabel, SettingRow, InfoBox, Hint } from './settingsUi';
 
 // 선택 가능한 단계: 0(무제한), 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
 const STEP = 5;
@@ -17,161 +18,129 @@ const clampToStep = (value) => {
   return Math.min(MAX_LIMIT, Math.max(MIN_LIMIT, Math.round(value / STEP) * STEP));
 };
 
+/**
+ * 학습 설정 — 심는 양과 주는 양 (시안 설정 1절 ③).
+ * 새 단어 수만 있던 자리에 복습량과 순서가 붙는다.
+ * 저장 버튼이 없다 — 고르면 바로 저장된다(기존 음성/테마 설정과 같은 규칙).
+ */
 const DailyNewLimitNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewFullSheet } = useNewFullSheetActions();
   const { userProfile, setUserProfile } = useUser();
 
   const rawLimit = userProfile?.daily_new_limit ?? 20;
   const [localLimit, setLocalLimit] = useState(
     rawLimit === UNLIMITED ? UNLIMITED : clampToStep(rawLimit)
   );
-  const [isSaving, setIsSaving] = useState(false);
+  const [farm, setFarm] = useState(readFarmSettings);
 
-  // 표시 레이블
-  const displayLabel = localLimit === UNLIMITED ? '무제한' : `${localLimit}개`;
+  const displayLabel = localLimit === UNLIMITED ? '무제한' : String(localLimit);
+
+  // 값이 바뀌는 즉시 저장한다. 실패하면 이전 값으로 되돌린다.
+  const commit = async (next) => {
+    const prev = userProfile?.daily_new_limit;
+    setLocalLimit(next);
+    setUserProfile((p) => ({ ...p, daily_new_limit: next }));
+    try {
+      const result = await updateUserInfoApi({ daily_new_limit: next });
+      if (!result || result.code !== 200) throw new Error('save failed');
+    } catch (e) {
+      setUserProfile((p) => ({ ...p, daily_new_limit: prev }));
+      setLocalLimit(prev === UNLIMITED ? UNLIMITED : clampToStep(prev ?? 20));
+    }
+  };
 
   // 감소: 5 → 무제한(0), 나머지 -5
   const handleDecrement = () => {
     vibrate({ duration: 5 });
     if (localLimit === UNLIMITED) return;
-    if (localLimit <= MIN_LIMIT) {
-      setLocalLimit(UNLIMITED);
-    } else {
-      setLocalLimit((prev) => prev - STEP);
-    }
+    commit(localLimit <= MIN_LIMIT ? UNLIMITED : localLimit - STEP);
   };
 
   // 증가: 무제한 → 5, 나머지 +5
   const handleIncrement = () => {
     vibrate({ duration: 5 });
-    if (localLimit === UNLIMITED) {
-      setLocalLimit(MIN_LIMIT);
-    } else if (localLimit < MAX_LIMIT) {
-      setLocalLimit((prev) => prev + STEP);
-    }
+    if (localLimit >= MAX_LIMIT) return;
+    commit(localLimit === UNLIMITED ? MIN_LIMIT : localLimit + STEP);
   };
 
   const isDecrementDisabled = localLimit === UNLIMITED;
   const isIncrementDisabled = localLimit >= MAX_LIMIT;
 
-  const handleSave = async () => {
-    if (isSaving) return;
+  const toggleFarm = (key) => {
     vibrate({ duration: 5 });
-
-    // 낙관적 업데이트
-    const prevLimit = userProfile?.daily_new_limit;
-    setUserProfile((prev) => ({ ...prev, daily_new_limit: localLimit }));
-    setIsSaving(true);
-
-    try {
-      const result = await updateUserInfoApi({ daily_new_limit: localLimit });
-      if (!result || result.code !== 200) {
-        // 실패 시 롤백
-        setUserProfile((prev) => ({ ...prev, daily_new_limit: prevLimit }));
-        setLocalLimit(prevLimit === UNLIMITED ? UNLIMITED : clampToStep(prevLimit ?? 20));
-      }
-    } catch (e) {
-      setUserProfile((prev) => ({ ...prev, daily_new_limit: prevLimit }));
-      setLocalLimit(prevLimit === UNLIMITED ? UNLIMITED : clampToStep(prevLimit ?? 20));
-    } finally {
-      setIsSaving(false);
-    }
-
-    popNewFullSheet();
+    setFarm(writeFarmSettings({ ...farm, [key]: !farm[key] }));
   };
+
+  const stepBtn = (disabled) =>
+    `w-[44px] h-[44px] rounded-[10px] border-[1.5px] flex items-center justify-center ${
+      disabled
+        ? 'border-[#EEEEEE] text-layout-gray-200 dark:border-[#2A2A2A]'
+        : 'border-layout-gray-100 text-layout-gray-400 dark:border-[#3A3A3A] dark:text-layout-gray-200'
+    }`;
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-      {/* Header */}
-      <div
-        data-page-header
-        className="relative flex items-center justify-between h-[55px] pt-[20px] px-[16px] pb-[14px] border-b border-border dark:border-border-dark bg-layout-white dark:bg-layout-black"
-      >
-        <div className="flex items-center gap-[4px]">
+      <SheetBar title="학습 설정" />
+
+      <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
+        {/* ── 하루 새 단어 ── */}
+        <GroupLabel first>하루 새 단어</GroupLabel>
+        <Hint>
+          하루에 새로 심을 씨앗 수예요.
+          많이 심으면 <b className="font-[700] text-layout-gray-400">나중에 물 줄 작물도 그만큼 늘어요.</b>
+        </Hint>
+        <div className="flex items-center justify-center gap-[14px] mt-[16px] mb-[4px]">
           <motion.button
-            onClick={() => { vibrate({ duration: 5 }); popNewFullSheet(); }}
-            className="text-layout-gray-200 dark:text-layout-white rounded-[8px]"
-            whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', scale: 1.05 }}
-            whileTap={{ scale: 0.95, backgroundColor: 'rgba(0, 0, 0, 0.1)' }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            onClick={handleDecrement}
+            disabled={isDecrementDisabled}
+            className={stepBtn(isDecrementDisabled)}
+            whileTap={isDecrementDisabled ? {} : { scale: 0.9 }}
           >
-            <CaretLeft size={24} />
+            <Minus size={17} />
+          </motion.button>
+          <span className="w-[86px] text-center text-[30px] font-[800] tracking-[-0.04em] text-primary-main-600 tabular-nums">
+            {displayLabel}
+          </span>
+          <motion.button
+            onClick={handleIncrement}
+            disabled={isIncrementDisabled}
+            className={stepBtn(isIncrementDisabled)}
+            whileTap={isIncrementDisabled ? {} : { scale: 0.9 }}
+          >
+            <Plus size={17} />
           </motion.button>
         </div>
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-[18px] font-[700] text-layout-black dark:text-layout-white">
-          학습 설정
-        </h1>
-        <div className="flex items-center gap-[8px] text-layout-gray-200 dark:text-layout-white"></div>
-      </div>
+        <Hint className="text-center">
+          5개씩 조절 · 5에서 한 번 더 내리면 <b className="font-[700] text-layout-gray-400">무제한</b>
+        </Hint>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 overflow-y-auto">
+        {/* ── 하루 복습량 — 시스템 권장량이 이미 계산되고 있다 (시안 2절) ── */}
+        <GroupLabel>하루 복습량</GroupLabel>
+        <SettingRow
+          first
+          icon={<Sparkle size={16} />}
+          title="자동으로 맞추기"
+          sub="밭 크기에 따라 헤이보카가 정해요"
+          toggle={farm.reviewAuto}
+          onClick={() => toggleFarm('reviewAuto')}
+        />
+        <InfoBox tone="blue" icon={<Info size={13} />}>
+          권장량을 넘긴 작물 중 <b className="font-[700]">오늘 안 주면 썩는 것</b>은
+          자동으로 하루 더 보호돼요. 도구를 쓰지 않아요.
+        </InfoBox>
 
-        {/* ── 새 단어 수 설정 행 ── */}
-        <div className="px-[16px] py-[20px] border-b border-border dark:border-border-dark">
-          <div className="flex items-center justify-between gap-[12px]">
-            {/* 라벨 */}
-            <div className="flex flex-col gap-[2px]">
-              <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white">새 단어 수</span>
-              <span className="text-[12px] text-layout-gray-300 dark:text-layout-gray-400">하루에 새로 학습할 단어 수</span>
-            </div>
-
-            {/* 스테퍼 */}
-            <div className="flex items-center gap-[12px] shrink-0">
-              <motion.button
-                onClick={handleDecrement}
-                disabled={isDecrementDisabled}
-                className={`
-                  flex items-center justify-center w-[36px] h-[36px] rounded-[8px] border-[1.5px]
-                  ${isDecrementDisabled
-                    ? 'border-layout-gray-200 text-layout-gray-200 dark:border-layout-gray-500 dark:text-layout-gray-500'
-                    : 'border-primary-main-600 text-primary-main-600'
-                  }
-                `}
-                whileTap={isDecrementDisabled ? {} : { scale: 0.9 }}
-              >
-                <Minus size={16} />
-              </motion.button>
-
-              <span className="w-[64px] text-center text-[20px] font-[800] text-primary-main-600 tabular-nums">
-                {displayLabel}
-              </span>
-
-              <motion.button
-                onClick={handleIncrement}
-                disabled={isIncrementDisabled}
-                className={`
-                  flex items-center justify-center w-[36px] h-[36px] rounded-[8px] border-[1.5px]
-                  ${isIncrementDisabled
-                    ? 'border-layout-gray-200 text-layout-gray-200 dark:border-layout-gray-500 dark:text-layout-gray-500'
-                    : 'border-primary-main-600 text-primary-main-600'
-                  }
-                `}
-                whileTap={isIncrementDisabled ? {} : { scale: 0.9 }}
-              >
-                <Plus size={16} />
-              </motion.button>
-            </div>
-          </div>
-        </div>
-
-        {/* 향후 다른 학습 설정 항목이 이 아래에 추가됨 */}
-
-      </div>
-
-      {/* 저장 버튼 — 하단 고정 */}
-      <div className="px-5 py-4 border-t border-border dark:border-border-dark bg-layout-white dark:bg-layout-black">
-        <motion.button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="w-full h-[48px] rounded-[10px] bg-primary-main-600 text-layout-white text-[16px] font-bold disabled:opacity-50"
-          whileTap={isSaving ? {} : { scale: 0.97 }}
-        >
-          저장
-        </motion.button>
+        {/* ── 복습 순서 — CRITICAL 작물을 앞으로 (기획 8.4) ── */}
+        <GroupLabel>복습 순서</GroupLabel>
+        <SettingRow
+          first
+          icon={<SortAscending size={16} />}
+          title="급한 것부터"
+          sub="썩기 직전 작물을 앞으로"
+          toggle={farm.reviewUrgentFirst}
+          onClick={() => toggleFarm('reviewUrgentFirst')}
+        />
       </div>
     </div>
   );

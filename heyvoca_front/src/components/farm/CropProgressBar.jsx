@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 
 /**
  * 당근 농장 V2 — 학습 상태 바의 **막대 부분만** 떼어낸 재사용 컴포넌트.
- * 시안 `study_css.py` 의 `.fb .tk` / `.fb .tk u` / `.fb.up` / `.fb.ng` 규격을 그대로 옮겼다.
+ * 시안 study.html 의 `.fb .tk` / `.fb .tk u` / `.fb.up` / `.fb.ng` 규격을 그대로 옮겼다.
+ * (`study_css.py` 는 `max-width:78px` 로 남아 있는 구버전이다. 시안 렌더값은 **132px**.)
  *
  * 진화(단계 상승)일 때는 막대가 **100% 를 찍고 0% 로 리셋된 뒤** 새 단계 진행률로 간다.
  * 그냥 새 값으로 갈아 끼우면 막대가 줄어든 것처럼 보인다.
@@ -28,7 +29,7 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {number} props.pctTo    학습 후 진행률 (0~100)
  * @param {boolean} props.grew    단계가 올랐는지 — true 면 100% → 0% → 새 진행률 연출
  * @param {'primary'|'up'|'ng'} props.tone
- * @param {number|string} props.width  막대 최대 폭 (기본 78px — 시안 `.fb .tk` 규격)
+ * @param {number|string} props.width  막대 최대 폭 (기본 132px — 시안 `.fb .tk{max-width:132px}`)
  * @param {number} props.height 막대 두께 (기본 5px. 좁은 형 `.fb.sm .tk` 는 4px)
  * @param {string} props.className
  */
@@ -37,7 +38,7 @@ const CropProgressBar = ({
   pctTo = 0,
   grew = false,
   tone = 'primary',
-  width = 78,
+  width = 132,
   height = 5,
   className = '',
 }) => {
@@ -46,12 +47,21 @@ const CropProgressBar = ({
   const color = TONE[tone] || TONE.primary;
   const gained = !grew && to > from;
 
-  // 진화: 이전 진행률 → 100% → (즉시) 0% → 새 단계 진행률
+  // 진화: 이전 진행률 → 100% → (즉시) 0% → 새 단계 진행률.
+  // 시안 3절의 구간표를 그대로 시간축에 옮긴다 (총 600ms 기준):
+  //   0~120ms   막대가 100% 까지 찬다            times 0    → 0.20
+  //   120~280ms 면 전체가 초록으로 물든다(막대 유지) times 0.20 → 0.467
+  //   280~300ms 0% 로 리셋                       times 0.467→ 0.50
+  //   ~600ms    다음 단계 진행률로               times 0.50 → 1
   const fillAnimate = grew
-    ? { width: [`${from}%`, '100%', '0%', `${to}%`] }
+    ? { width: [`${from}%`, '100%', '100%', '0%', `${to}%`] }
     : { width: `${to}%` };
   const fillTransition = grew
-    ? { duration: 0.95, times: [0, 0.42, 0.44, 1], ease: 'easeOut' }
+    ? {
+        duration: 0.6,
+        times: [0, 0.2, 0.467, 0.5, 1],
+        ease: ['easeOut', 'linear', 'easeIn', 'easeOut'],
+      }
     : { duration: 0.45, ease: 'easeOut' };
 
   return (

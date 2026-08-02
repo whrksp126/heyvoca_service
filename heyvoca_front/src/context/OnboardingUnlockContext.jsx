@@ -15,7 +15,8 @@ import { getUnlockStatusApi, completeOnboardingMissionApi } from '../api/study';
 export const FEATURE_LABELS = {
   vocabook: '단어장',
   store: '상점',
-  dict: '사전',
+  dict: '찾기', // 키는 백엔드 계약이라 'dict' 그대로, 사용자에게 보이는 이름만 시안 §10 의 탭 이름
+
   listen: '집중 반복 학습',
   custom: '자유 설정 테스트',
 };

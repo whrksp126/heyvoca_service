@@ -103,27 +103,56 @@
   --status-error-dark: #420F0A;
   --status-success-dark: #1B2D24;
 
-  /* 당근 농장 V2 — 작물 단계 색 (crop 네임스페이스, 신규 V2 화면 전용) */
-  --crop-seed: #9D835A;
-  --crop-sprout: #77CE4F;
-  --crop-leaf: #38CE38;
-  --crop-carrot: #F68300;
-  --crop-golden: #E8A317;
+  /* ─────────────────────────────────────────────────────────────
+     당근 농장 V2 신규 토큰 — 시안 "13. 필요한 신규 토큰" 정본.
+     V2 화면(crop / health / farm 네임스페이스)에서만 쓴다.
+     위쪽 Figma Colors 블록은 한 줄도 바꾸지 않는다.
+     ───────────────────────────────────────────────────────────── */
 
-  --crop-seed-bg: #FFFCF3;
-  --crop-sprout-bg: #F2FFEB;
-  --crop-leaf-bg: #EBFFEE;
-  --crop-carrot-bg: #FFF8E8;
-  --crop-golden-bg: #FFF8E0;
+  /* 성장 단계 — 기존 암기 상태 색의 승격. 실제 신규는 golden 하나뿐이다.
+     이름 대응(시안 13절): 코드의 leaf 가 기획안의 새싹, 코드의 plant 가 기획안의 이파리다.
+     시안은 seed/sprout/leaf/carrot/golden 으로의 개명을 권하지만, 기존 MEMORY_STATE_* 를
+     실제로 개명하면 다른 화면이 깨지므로 V2 네임스페이스(crop)에서만 시안 이름을 쓴다. */
+  --crop-seed: #9D835A;   /* 기존 unlearned */
+  --crop-sprout: #77CE4F; /* 기존 leaf */
+  --crop-leaf: #38CE38;   /* 기존 plant */
+  --crop-carrot: #F68300; /* 기존 carrot */
+  --crop-golden: #F2B713; /* 신규 */
+
+  /* 건강 상태 6종 — 5종은 기존 토큰 재사용, golden 만 신규 */
+  --health-fresh: var(--status-success-600);    /* #12B76A */
+  --health-thirsty: var(--secondary-blue-600);  /* #2E90FA */
+  --health-wilted: var(--secondary-yellow-500); /* #FD853A */
+  --health-critical: var(--secondary-yellow-600); /* #FB6514 */
+  --health-rotten: var(--layout-gray-400);      /* #7B7B7B */
+  --health-golden: #F2B713;                     /* 신규 (crop-golden 과 같은 값) */
+
+  /* 농장 자연색 8종 — 전부 신규.
+     canvas/ink/line 은 값이 기존 layout 토큰과 같아 var 로 잇는다(시안 15절 "되돌린 것"). */
+  --farm-canvas: var(--layout-white);    /* #FFFFFF · 화면 배경 */
+  --farm-sky-100: #FBF1DE;               /* 히어로 상단 */
+  --farm-grass-500: #AAD97F;             /* 지면 */
+  --farm-grass-300: #CEECB2;             /* 뒤쪽 언덕 */
+  --farm-soil-400: #C69465;              /* 밭 윗면 */
+  --farm-soil-600: #845A34;              /* 밭 측면 */
+  --farm-ink: var(--layout-black);       /* #111111 · 헤드라인 */
+  --farm-line: var(--layout-gray-100);   /* #DDDDDD · 카드 보더 */
+
+  /* 13절 표에는 없지만 시안 CSS 의 히어로 그라디언트 중간 stop 이라 함께 둔다.
+     .hero{linear-gradient(180deg, farm-sky-100 0%, farm-sky-200 32%, farm-canvas 100%)} */
+  --farm-sky-200: #F8F1DC;
 }
 
-/* 당근 농장 V2 — 다크 모드 배경(단계 색은 그대로 두고 surface 만 어둡게) */
+/* 당근 농장 V2 다크 모드 — 시안 17절: 새 색을 하나도 만들지 않고
+   시스템 dark surface 토큰 8종만 쓴다. 일러스트 색(grass/soil)은 그대로 둔다. */
 html.dark {
-  --crop-seed-bg: #2A2419;
-  --crop-sprout-bg: #1B2A17;
-  --crop-leaf-bg: #162A18;
-  --crop-carrot-bg: #2E2114;
-  --crop-golden-bg: #2E2611;
+  --farm-canvas: var(--layout-black);            /* #111111 */
+  --farm-sky-100: var(--secondary-yellow-dark);  /* #2B271D */
+  --farm-sky-200: #1E1A14;                       /* 히어로 그라디언트 중간 stop */
+  --farm-ink: var(--layout-white);
+  /* 다크에서 카드는 보더가 아니라 면 밝기(layout-gray-dark)로 분리한다 —
+     #DDDDDD 를 어둡게 낮추면 배경과 구분이 사라져 보더가 아무 역할도 못 하기 때문이다. */
+  --farm-line: transparent;
 }
 
 html,

@@ -224,7 +224,9 @@ export const UserProvider = ({ children }) => {
   // 출석 체크
   const fetchUserCheckin = useCallback(async () => {
     const result = await setUserCheckinApi();
-    if (result.code != 200) return;
+    // 토큰이 없거나 만료됐으면 래퍼가 null 을 돌려준다 — 여기서 result.code 를 그냥 읽으면
+    // 홈 진입마다 uncaught TypeError 가 떴다(로그아웃 상태·세션 만료 직후).
+    if (result?.code !== 200) return;
 
     // 오늘 출석을 클라이언트 상태에 즉시 반영
     // (백엔드는 CheckIn 레코드 기준으로만 attend를 판정하므로, 이 호출 결과를
@@ -232,14 +234,14 @@ export const UserProvider = ({ children }) => {
     const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const todayName = dayNames[new Date().getDay()];
     setUserMainPage(prevMainPage => {
-      const updatedDates = prevMainPage.dates?.map(date =>
+      const updatedDates = prevMainPage?.dates?.map(date =>
         date.date === todayName ? { ...date, attend: true } : date
       );
       return updatedDates ? { ...prevMainPage, dates: updatedDates } : prevMainPage;
     });
 
     // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
-    if (result.data.goals && result.data.goals.length > 0) {
+    if (result.data?.goals && result.data.goals.length > 0) {
       // 업적 오버레이 표시
       if (window.overlayContext?.showAwaitOverlay) {
         result.data.goals.forEach(goal => {
@@ -768,7 +770,6 @@ export const UserProvider = ({ children }) => {
     Login,
     AppleLogin,
     clickGoogleOauth,
-    clickAppleOauth,
     clickAppleOauth,
     DevLogin,
     checkLoginStatus,

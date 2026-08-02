@@ -111,31 +111,65 @@ export const CROP_LABEL = {
   golden: '황금 당근',
 };
 
-/** 단계 대표 색 (시안 확정값) */
+/**
+ * 단계 대표 색 — 시안 13절 "성장 단계" 표 정본.
+ * seed/sprout/leaf/carrot 은 기존 암기 상태 색을 그대로 승격한 값이고 golden 만 신규다.
+ * (SVG fill 처럼 Tailwind 로 못 쓰는 자리에만 이 hex 를 쓰고, 나머지는 아래 클래스 맵을 쓴다.)
+ */
 export const CROP_COLOR = {
-  seed: '#9D835A',
-  sprout: '#77CE4F',
-  leaf: '#38CE38',
-  carrot: '#F68300',
-  golden: '#E8A317',
+  seed: '#9D835A',   // 기존 unlearned
+  sprout: '#77CE4F', // 기존 leaf
+  leaf: '#38CE38',   // 기존 plant
+  carrot: '#F68300', // 기존 carrot
+  golden: '#F2B713', // 신규
 };
 
-/** 단계 배경색 (라이트) */
-export const CROP_BG = {
-  seed: '#FFFCF3',
-  sprout: '#F2FFEB',
-  leaf: '#EBFFEE',
-  carrot: '#FFF8E8',
-  golden: '#FFF8E0',
+/** 단계 색 Tailwind 클래스 — 클래스명을 문자열로 조립하면 Tailwind 가 못 찾으니 맵으로 둔다 */
+export const CROP_TEXT_CLASS = {
+  seed: 'text-crop-seed',
+  sprout: 'text-crop-sprout',
+  leaf: 'text-crop-leaf',
+  carrot: 'text-crop-carrot',
+  golden: 'text-crop-golden',
 };
 
-/** 단계 배경색 (다크) — 라이트 배경과 같은 색조를 어두운 surface 로 옮긴 값 */
-export const CROP_BG_DARK = {
-  seed: '#2A2419',
-  sprout: '#1B2A17',
-  leaf: '#162A18',
-  carrot: '#2E2114',
-  golden: '#2E2611',
+export const CROP_BG_CLASS = {
+  seed: 'bg-crop-seed',
+  sprout: 'bg-crop-sprout',
+  leaf: 'bg-crop-leaf',
+  carrot: 'bg-crop-carrot',
+  golden: 'bg-crop-golden',
+};
+
+/**
+ * 건강 상태 색 — 시안 13절 "건강 상태" 표 정본.
+ * golden 을 뺀 5종은 기존 토큰을 그대로 재사용한다.
+ */
+export const HEALTH_COLOR = {
+  FRESH: '#12B76A',    // status-success-600
+  THIRSTY: '#2E90FA',  // secondary-blue-600
+  WILTED: '#FD853A',   // secondary-yellow-500
+  CRITICAL: '#FB6514', // secondary-yellow-600
+  ROTTEN: '#7B7B7B',   // layout-gray-400
+  GOLDEN: '#F2B713',   // 신규
+};
+
+export const HEALTH_TEXT_CLASS = {
+  FRESH: 'text-health-fresh',
+  THIRSTY: 'text-health-thirsty',
+  WILTED: 'text-health-wilted',
+  CRITICAL: 'text-health-critical',
+  ROTTEN: 'text-health-rotten',
+  GOLDEN: 'text-health-golden',
+};
+
+export const HEALTH_BG_CLASS = {
+  FRESH: 'bg-health-fresh',
+  THIRSTY: 'bg-health-thirsty',
+  WILTED: 'bg-health-wilted',
+  CRITICAL: 'bg-health-critical',
+  ROTTEN: 'bg-health-rotten',
+  GOLDEN: 'bg-health-golden',
 };
 
 /** 건강 상태 문구 — 죽음·손실 공포 뉘앙스를 쓰지 않는다 (기획 13.4) */
@@ -148,13 +182,38 @@ export const HEALTH_LABEL = {
   GOLDEN: '황금이에요',
 };
 
-export const healthLabel = (health) =>
-  HEALTH_LABEL[String(health || '').trim().toUpperCase()] || HEALTH_LABEL.FRESH;
+/** 입력값을 HEALTH_* 키로 정규화 (없는 값이면 FRESH) */
+const healthKey = (health) => {
+  const upper = String(health || '').trim().toUpperCase();
+  return HEALTH_STATES[upper] ? upper : HEALTH_STATES.FRESH;
+};
+
+export const healthLabel = (health) => HEALTH_LABEL[healthKey(health)];
+export const healthColor = (health) => HEALTH_COLOR[healthKey(health)];
+export const healthTextClass = (health) => HEALTH_TEXT_CLASS[healthKey(health)];
+export const healthBgClass = (health) => HEALTH_BG_CLASS[healthKey(health)];
 
 export const cropLabel = (stage) => CROP_LABEL[stageToCrop(stage)];
 export const cropColor = (stage) => CROP_COLOR[stageToCrop(stage)];
-export const cropBg = (stage) => CROP_BG[stageToCrop(stage)];
-export const cropBgDark = (stage) => CROP_BG_DARK[stageToCrop(stage)];
+export const cropTextClass = (stage) => CROP_TEXT_CLASS[stageToCrop(stage)];
+export const cropBgClass = (stage) => CROP_BG_CLASS[stageToCrop(stage)];
+
+/**
+ * 농장 자연색 — 시안 13절 "농장 자연색" 표 정본.
+ * 캔버스로 지형을 합성하는 자리(시안 16절 ①)처럼 Tailwind 를 못 쓰는 곳에서만 이 hex 를 쓴다.
+ * UI 자리는 bg-farm-canvas / text-farm-ink / border-farm-line 클래스를 쓸 것.
+ * grass/soil 은 일러스트 색이라 다크 모드에서도 같은 값이다 (시안 17절).
+ */
+export const FARM_COLOR = {
+  canvas: '#FFFFFF',
+  sky100: '#FBF1DE',
+  grass500: '#AAD97F',
+  grass300: '#CEECB2',
+  soil400: '#C69465',
+  soil600: '#845A34',
+  ink: '#111111',
+  line: '#DDDDDD',
+};
 
 /** 농장 아이템 키 — 백엔드 FarmItem 값과 동일하다 */
 export const FARM_ITEMS = {
@@ -163,16 +222,20 @@ export const FARM_ITEMS = {
   SHIELD: 'SHIELD',
 };
 
-/** 아이템 이름 */
+/**
+ * 아이템 이름 — 상점 · 마이페이지 창고 · 학습 결과가 모두 이 하나를 쓴다.
+ * 시안(shop §1·§2, mypage §4, study-result §1⑤)이 삽을 "새심기 삽"으로 부른다.
+ * 화면마다 다른 이름을 쓰면 같은 물건이 두 개로 읽히므로 여기서만 정한다.
+ */
 export const FARM_ITEM_LABEL = {
-  SHOVEL: '삽',
+  SHOVEL: '새심기 삽',
   NUTRIENT: '영양 회복제',
   SHIELD: '연속 학습 보호권',
 };
 
-/** 아이템 한 줄 설명 */
+/** 아이템 한 줄 설명 (시안 mypage §4 창고 표의 문구) */
 export const FARM_ITEM_DESC = {
-  SHOVEL: '썩은 자리를 정리하고 씨앗부터 다시 심어요.',
-  NUTRIENT: '지금까지 키운 단계를 그대로 두고 되살려요.',
-  SHIELD: '학습을 쉬는 날에도 연속 기록을 이어줘요.',
+  SHOVEL: '썩은 작물을 씨앗부터 다시 심어요',
+  NUTRIENT: '썩기 전 단계를 그대로 되살려요',
+  SHIELD: '학습을 쉬는 날에도 연속 기록을 이어줘요',
 };

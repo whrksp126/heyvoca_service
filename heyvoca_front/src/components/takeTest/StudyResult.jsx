@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Check, Star, Leaf, Plant, Carrot, Flame, EggCrack, ArrowRight, ArrowUp, Drop } from '@phosphor-icons/react';
+import { Circle, X, Flame, Drop } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
-import DailyMissionComplete from '../../assets/images/DailyMissionComplete.svg';
-import WordsStudied from '../../assets/images/WordsStudied.svg';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
@@ -21,7 +19,9 @@ import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS, getCropAsset } from '../farm/CropImage';
-import { stageToCrop, cropLabel, cropIndex, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
+import { stageToCrop, cropLabel, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
+
+// 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
 
 // 업적 이미지 import
@@ -119,7 +119,8 @@ const FarmArt = ({ src, alt }) => (
   />
 );
 
-// 성장 목록 한 줄 — [작물][단어·뜻][오른쪽 결과]. 단어장·최종 결과와 같은 배치다.
+// 성장 목록 한 줄 — 시안 `.grow2` [작물][단어·뜻][오른쪽 결과].
+// 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
 const FarmGrowRow = ({ crop, word, meaning, right }) => (
   <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
     <CropImage stage={crop} size={30} className='flex-shrink-0' />
@@ -131,10 +132,22 @@ const FarmGrowRow = ({ crop, word, meaning, right }) => (
         </span>
       ) : null}
     </div>
-    <span className='flex items-center gap-[4px] flex-shrink-0 text-[11.5px] font-[700] text-status-success-500'>
+    {/* 시안 `.grow2 .rt` — 11.5px/700 #12B76A(status-success-600) */}
+    <span className='flex-shrink-0 whitespace-nowrap text-[11.5px] font-[700] text-status-success-600'>
       {right}
     </span>
   </div>
+);
+
+// 단계 상승 표기 — 시안 `<s>이전</s> → 이후`. 이전 단계는 #BBBBBB/600 으로 물러난다.
+const CropStep = ({ from, to }) => (
+  from && from !== to ? (
+    <>
+      <span className='font-[600] text-[#BBBBBB]'>{cropLabel(from)}</span>
+      {' → '}
+      {cropLabel(to)}
+    </>
+  ) : cropLabel(to)
 );
 
 // 목록형 슬라이드 — 보상 슬라이드와 같은 형식(그림 + 한 줄 + 목록). 전부 가운데 정렬.
@@ -143,7 +156,7 @@ const FarmListSlide = ({ art, line, rows }) => (
   <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
     {art}
     <motion.p
-      className='text-[16px] font-[700] text-center'
+      className='text-[16px] font-[700] text-center leading-[1.45]'
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
@@ -161,21 +174,29 @@ const FarmListSlide = ({ art, line, rows }) => (
   </div>
 );
 
-// 보상 슬라이드 — 그림 + 한 줄 (+ 여러 개를 받았을 때만 아래 한 줄)
+// 보상 슬라이드 — 시안 `award()`. 그림 100px + 16px/700 한 줄 (+ 여러 개일 때만 아래 한 줄)
+// 시안 `.rin` gap 15px, `.rwhy` 는 margin-top:-7px 로 8px 만 띄운다.
 const FarmAwardSlide = ({ art, line, why }) => (
-  <div className='relative flex flex-col items-center justify-center gap-[15px]'>
+  <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
     {art}
-    <motion.div
-      className='flex flex-col items-center gap-[6px]'
+    <motion.p
+      className='text-[16px] font-[700] text-center leading-[1.45]'
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
     >
-      <p className='text-[16px] font-[700] text-center'>{line}</p>
-      {why ? (
-        <p className='text-[12px] font-[400] text-center text-layout-gray-300 dark:text-layout-gray-100'>{why}</p>
-      ) : null}
-    </motion.div>
+      {line}
+    </motion.p>
+    {why ? (
+      <motion.p
+        className='-mt-[7px] text-[12px] font-[500] text-center text-layout-gray-300'
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.45, duration: 0.5 }}
+      >
+        {why}
+      </motion.p>
+    ) : null}
   </div>
 );
 
@@ -200,14 +221,15 @@ const StreakWeek = ({ current }) => (
           className={`
             flex items-center justify-center w-full aspect-square rounded-[10px]
             ${cell.state === 'on' ? 'bg-primary-main-600' : ''}
-            ${cell.state === 'today' ? 'bg-primary-main-100 dark:bg-layout-gray-dark border-[2px] border-primary-main-600' : ''}
+            ${cell.state === 'today' ? 'bg-primary-main-100 dark:bg-[#3D1D34] border-[2px] border-primary-main-600' : ''}
             ${cell.state === 'off' || cell.state === 'future' ? 'bg-layout-gray-50 dark:bg-layout-gray-dark' : ''}
           `}
         >
           {cell.state === 'on' && <Drop size={15} weight='fill' className='text-layout-white' />}
           {cell.state === 'today' && <Drop size={15} weight='fill' className='text-primary-main-600' />}
         </div>
-        <span className='text-[10px] font-[600] text-layout-gray-200'>{cell.label}</span>
+        {/* 시안 `.wk .l` — 10px/600 #BBBBBB */}
+        <span className='text-[10px] font-[600] text-[#BBBBBB]'>{cell.label}</span>
       </div>
     ))}
   </div>
@@ -361,18 +383,36 @@ const StudyResult = () => {
       const rescuedList = farm?.rescued ?? [];
       const farmRewards = farm?.rewards ?? {};
       const farmStreak = farm?.streak ?? null;
-      // 황금 당근은 따로 한 장 — 목록에 섞어 두면 그냥 한 줄이 되어버린다.
-      const goldenList = grownAll.filter(g => stageToCrop(g.to_stage ?? g.crop) === 'golden');
-      const grownList = grownAll.filter(g => stageToCrop(g.to_stage ?? g.crop) !== 'golden');
 
-      // 표시할 화면 리스트 생성
+      // 시안 §1 ① — "신규 씨앗은 여기 없다(②가 맡는다). 같은 단어를 두 번 보이지 않는다."
+      // 이번에 심은 씨앗이 같은 세션에서 발아까지 했더라도 ②에만 남긴다.
+      const plantedIds = new Set(plantedList.map(p => p.user_voca_id));
+      const grownOnly = grownAll.filter(g => !plantedIds.has(g.user_voca_id));
+      const cropOfRow = (row) => stageToCrop(row.to_stage ?? row.crop);
+      // ③ 새싹 발아 · ⑨ 황금 당근은 각각 한 장이라 ① 목록에서 뺀다.
+      const sproutedList = grownOnly.filter(g => cropOfRow(g) === 'sprout');
+      const goldenList = grownOnly.filter(g => cropOfRow(g) === 'golden');
+      const grownList = grownOnly.filter(g => !['sprout', 'golden'].includes(cropOfRow(g)));
+
+      // 표시할 화면 리스트 생성 — 순서는 시안 §4 순서표가 정본이다.
       const screens = [];
 
-      // 새 단어(처음 학습) 개수 집계
-      const newWordCount = testQuestions.filter(q => q.priorityBucket === 'new').length;
+      // 새 단어(처음 학습) 목록 — 농장 요약을 못 받았을 때 ② 슬라이드를 채운다
+      const newWordMap = new Map();
+      testQuestions
+        .filter(q => q.priorityBucket === 'new')
+        .forEach(q => newWordMap.set(q.vocaIndexId ?? q.id, q));
+      const newWordRows = [...newWordMap.values()].map(q => ({
+        user_voca_id: q.vocaIndexId ?? q.id,
+        word: q.origin,
+        meaning: Array.isArray(q.meanings) ? q.meanings.join(', ') : '',
+      }));
+      const newWordCount = newWordRows.length;
 
       // 암기 상태가 좋아진 단어 집계
       const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
+      // 기존 암기 상태 키 → 작물 단계 (코드 leaf = 기획 새싹, 코드 plant = 기획 이파리)
+      const STATE_TO_CROP = { unlearned: 'seed', leaf: 'sprout', plant: 'leaf', carrot: 'carrot' };
       const improvedWords = testQuestions.filter(q => {
         const before = STATE_RANK[q.prevMemoryStateKey];
         const after = STATE_RANK[q.nextMemoryStateKey];
@@ -383,46 +423,81 @@ const StudyResult = () => {
         const after = STATE_RANK[q.nextMemoryStateKey];
         return before != null && after != null && after < before;
       });
-      const byState = improvedWords.reduce((acc, q) => {
-        acc[q.nextMemoryStateKey] = (acc[q.nextMemoryStateKey] || 0) + 1;
-        return acc;
-      }, {});
-      // 단어별 변화 리스트 — 재출제로 같은 단어가 중복되면 마지막 결과만 유지
+      // 단어별 변화 리스트 — 재출제로 같은 단어가 중복되면 마지막 결과만 유지.
+      // 신규는 ②가 맡으므로 여기서 뺀다(시안 §4 1행 "신규 제외").
       const improvedMap = new Map();
-      improvedWords.forEach(q => improvedMap.set(q.vocaIndexId ?? q.id, q));
-      const improvedList = [...improvedMap.values()].map(q => ({
-        origin: q.origin,
-        from: q.prevMemoryStateKey,
-        to: q.nextMemoryStateKey,
+      improvedWords
+        .filter(q => q.priorityBucket !== 'new')
+        .forEach(q => improvedMap.set(q.vocaIndexId ?? q.id, q));
+      const improvedRows = [...improvedMap.values()].map(q => ({
+        user_voca_id: q.vocaIndexId ?? q.id,
+        word: q.origin,
+        meaning: Array.isArray(q.meanings) ? q.meanings.join(', ') : '',
+        from_stage: STATE_TO_CROP[q.prevMemoryStateKey] ?? null,
+        to_stage: STATE_TO_CROP[q.nextMemoryStateKey] ?? 'sprout',
       }));
 
-      // 1. 새로 심은 씨앗 — 농장 요약이 있으면 어떤 단어인지까지 보여준다.
-      //    농장 요약을 못 받았을 때만 기존 '새 단어 개수' 슬라이드로 대체한다
+      // ① 자란 작물 — 농장 요약이 없을 때만 기존 암기 상태 상승 집계로 같은 형식을 채운다
       //    (둘은 같은 사실을 말하므로 함께 띄우지 않는다).
+      if (grownList.length > 0) {
+        screens.push({ type: 'farmGrown', data: { items: grownList } });
+      } else if (improvedRows.length > 0) {
+        screens.push({ type: 'farmGrown', data: { items: improvedRows } });
+      }
+
+      // ② 씨앗 심기 — 어떤 단어를 심었는지까지 보여준다
       if (plantedList.length > 0) {
         screens.push({ type: 'farmPlanted', data: { items: plantedList } });
       } else if (newWordCount > 0) {
-        screens.push({ type: 'newWords', data: { totalCnt: newWordCount } });
+        screens.push({ type: 'farmPlanted', data: { items: newWordRows } });
       }
 
-      // 2. 자란 작물 — 마찬가지로 기존 '암기 상태 상승' 슬라이드와 같은 사실이라 하나만 띄운다.
-      if (grownList.length > 0) {
-        screens.push({ type: 'farmGrown', data: { items: grownList } });
-      } else if (improvedList.length > 0) {
+      // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어
+      if (sproutedList.length > 0) {
+        screens.push({ type: 'farmSprouted', data: { items: sproutedList } });
+      }
+
+      // ④ 보석
+      if (result.gem && result.gem.after > result.gem.before) {
         screens.push({
-          type: 'memoryImproved',
-          data: { totalCnt: improvedList.length, byState, words: improvedList }
+          type: 'gem',
+          data: { gemCount: result.gem.after - result.gem.before }
         });
       }
 
-      // 3. 황금 당근 도달
-      if (goldenList.length > 0) {
-        screens.push({ type: 'farmGolden', data: { items: goldenList } });
-      }
+      // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장. 한 화면에 모아 두면 영수증이 된다(시안 §3).
+      //     삽은 여러 개일 때만 어느 단어에서 왔는지, 보호권은 항상 주간 지급분이라고 적는다.
+      const leafWords = grownAll
+        .filter(g => stageToCrop(g.to_stage ?? g.crop) === 'leaf')
+        .map(g => g.word)
+        .filter(Boolean);
+      [FARM_ITEMS.SHOVEL, FARM_ITEMS.NUTRIENT, FARM_ITEMS.SHIELD].forEach((itemKey) => {
+        const qty = farmRewards?.[itemKey] ?? 0;
+        if (qty <= 0) return;
+        let why = null;
+        if (itemKey === FARM_ITEMS.SHOVEL && qty > 1 && leafWords.length > 0) {
+          why = `${leafWords.join(' · ')} 이 이파리가 됐어요`;
+        } else if (itemKey === FARM_ITEMS.SHIELD) {
+          why = '이번 주 지급분이에요';
+        }
+        screens.push({ type: 'farmItem', data: { itemKey, qty, why } });
+      });
 
-      // 4. 되살린 작물
+      // ⑧ 시든 작물 회복 — 이미 안전해진 사실만 적는다(시안 §4 콜아웃)
       if (rescuedList.length > 0) {
         screens.push({ type: 'farmRescued', data: { items: rescuedList } });
+      }
+
+      // ⑨ 황금 당근 — 이 슬라이드만 글로우가 금색이다
+      if (goldenList.length > 0) {
+        screens.push({ type: 'farmGolden', gold: true, data: { items: goldenList } });
+      }
+
+      // ⑩ 연속 학습 — 오늘 5개 이상 정답일 때만(기획 11.1)
+      const todayDone = farmStreak?.today_done
+        ?? ((farm?.correct ?? correctCnt) >= 5);
+      if ((farmStreak?.current ?? 0) > 0 && todayDone) {
+        screens.push({ type: 'farmStreak', data: farmStreak });
       }
 
       // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시 (게스트는 홈 진입 전이라 생략)
@@ -438,15 +513,14 @@ const StudyResult = () => {
         });
       }
 
-      // 콤보 슬라이드 (AI 추천 테스트 전용) — 세션 최고 콤보 5 이상이면 표시
+      // 시안 순서표에 없는 기존 슬라이드 — 콤보(AI 추천 전용)와 출석.
+      // 출석은 연속 학습과 겹치지만 출석왕 업적이 attend 를 쓰고 있어 지우지 않았다(시안 §4 콜아웃).
       if (testType === 'quick' && (comboSummary?.maxCombo ?? 0) >= 5) {
         screens.push({
           type: 'combo',
           data: comboSummary,
         });
       }
-
-      // 출석 표현 페이지 (오늘 첫 학습 = 출석)
       if (result.attend) {
         screens.push({
           type: 'attend',
@@ -454,7 +528,7 @@ const StudyResult = () => {
         });
       }
 
-      // 데일리 미션(신규+복습 달성) 표현 페이지
+      // ⑪ 데일리 목표 — 복습과 신규를 모두 끝낸 날
       if (result.daily_mission_complete) {
         screens.push({
           type: 'dailyMission',
@@ -462,7 +536,7 @@ const StudyResult = () => {
         });
       }
 
-      // 3. 업적 달성 표현 페이지 (각 업적마다 별도 화면 추가)
+      // ⑫ 업적 — 달성마다 한 장
       if (result.goals && result.goals.length > 0) {
         result.goals.forEach((goal) => {
           screens.push({
@@ -472,35 +546,7 @@ const StudyResult = () => {
         });
       }
 
-      // 4. 보석 획득 표현 페이지
-      if (result.gem && result.gem.after > result.gem.before) {
-        screens.push({
-          type: 'gem',
-          data: { gemCount: result.gem.after - result.gem.before }
-        });
-      }
-
-      // 5. 농장 아이템 — 종류마다 한 장. 한 화면에 모아 두면 영수증이 된다.
-      //    여러 개를 받았을 때만 왜 받았는지 한 줄 덧붙인다.
-      const leafWords = grownAll
-        .filter(g => stageToCrop(g.to_stage ?? g.crop) === 'leaf')
-        .map(g => g.word)
-        .filter(Boolean);
-      [FARM_ITEMS.SHOVEL, FARM_ITEMS.NUTRIENT, FARM_ITEMS.SHIELD].forEach((itemKey) => {
-        const qty = farmRewards?.[itemKey] ?? 0;
-        if (qty <= 0) return;
-        const why = (itemKey === FARM_ITEMS.SHOVEL && qty > 1 && leafWords.length > 0)
-          ? `이파리가 된 ${leafWords.join(' · ')}`
-          : null;
-        screens.push({ type: 'farmItem', data: { itemKey, qty, why } });
-      });
-
-      // 6. 연속 학습일
-      if ((farmStreak?.current ?? 0) > 0) {
-        screens.push({ type: 'farmStreak', data: farmStreak });
-      }
-
-      // 7. 학습 결과 페이지 (항상 마지막)
+      // ⑬ 최종 결과 (항상 마지막)
       screens.push({
         type: 'result',
         data: {}
@@ -612,8 +658,8 @@ const StudyResult = () => {
           </div>
 
           <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[100px]'>
-            {/* 프로그레스 서클 영역 */}
-            <div className='flex flex-col items-center justify-center py-[40px]'>
+            {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
+            <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
                 {/* SVG 영역: 반시계 방향을 위해 scaleY(-1)과 rotate(-90) 적용 */}
                 <svg
@@ -803,139 +849,8 @@ const StudyResult = () => {
       );
     }
 
-    // 암기 상태 상승 화면 — 전체 화면 차지 + 상단 아이콘에 오로라 고정(스크롤해도 따라다님)
-    if (currentScreen.type === 'memoryImproved') {
-      const STATE_INFO = {
-        unlearned: { Icon: EggCrack, color: '#9D835A' },
-        leaf:      { Icon: Leaf,     color: '#77CE4F' },
-        plant:     { Icon: Plant,    color: '#38CE38' },
-        carrot:    { Icon: Carrot,   color: '#F68300' },
-      };
-      const words = currentScreen.data.words ?? [];
 
-      // 다른 리워드 슬라이드와 동일한 형식 — 헤더는 고정, 아래 콘텐츠만 슬라이드
-      return (
-        <div className='relative flex flex-col h-[100dvh] bg-layout-white dark:bg-layout-black'>
-          <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-          {/* 고정 헤더 (슬라이드와 무관하게 항상 고정) */}
-          <div
-            className='absolute left-0 flex items-end justify-center w-full h-[55px] px-[16px] py-[14px] z-20'
-            style={{ top: 'var(--status-bar-height)' }}
-          >
-            <div className="center">
-              <h2 className='text-[18px] font-[700] leading-[21px]'>학습 결과</h2>
-            </div>
-          </div>
-
-          {/* 슬라이드되는 영역 (콘텐츠만) */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentScreenIndex}
-              initial={{ x: '100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '-100%', opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
-              className='relative flex flex-col flex-1 pt-[55px] overflow-hidden'
-            >
-              {/* 상단 아이콘 + 오로라 */}
-              <div className='relative flex flex-col items-center justify-center pt-[24px] pb-[20px] shrink-0'>
-                {/* 원 배경 + 오로라 글로우 공용 컨테이너 — 원과 정확히 같은 중심을 공유하도록 원 크기(80px)로 고정 */}
-                <div className='relative flex items-center justify-center w-[80px] h-[80px]'>
-                  {/* 오로라 글로우 — 아이콘 뒤에서 회전. 원 배경과 동일 중심(top/left 50% + translate -50%)에 고정 */}
-                  <div className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] z-0'>
-                    <motion.img
-                      src={ResultItemBackground01}
-                      alt=""
-                      className='w-full h-full object-contain origin-center'
-                      animate={{ rotate: [0, 360, 720], scale: [1, 1.6, 1, 1.6, 1], opacity: [0.7, 1, 0.7, 1, 0.7] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  </div>
-                  <motion.div
-                    className='relative z-10 flex items-center justify-center w-[80px] h-[80px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark'
-                    initial={{ scale: 0, opacity: 0, rotate: -180 }}
-                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                    transition={{
-                      scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-                      rotate: { type: 'spring', stiffness: 200, damping: 15, duration: 0.6 },
-                      opacity: { duration: 0.6 },
-                    }}
-                  >
-                    {/* 상승 화살표 — 영역 중앙 고정, 아래→중앙 안착 후 위로 사라짐 반복 */}
-                    <motion.span
-                      className='text-status-success-500'
-                      animate={{ y: [14, 0, 0, -16], opacity: [0, 1, 1, 0] }}
-                      transition={{
-                        duration: 1.6,
-                        times: [0, 0.22, 0.62, 1],
-                        repeat: Infinity,
-                        repeatDelay: 0.2,
-                        ease: 'easeOut',
-                      }}
-                    >
-                      <ArrowUp size={40} weight="bold" />
-                    </motion.span>
-                  </motion.div>
-                </div>
-                <motion.p
-                  className='relative z-10 text-[16px] font-[700] mt-[14px] text-center'
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                  <strong className='text-primary-main-600'>{currentScreen.data.totalCnt}개</strong>의 단어 암기 상태가 상승했어요!
-                </motion.p>
-              </div>
-
-              {/* 변경 단어 목록 — 화면 전체 스크롤 영역 */}
-              <div className='flex-1 overflow-y-auto scrollbar-hide px-[20px] pb-[100px]'>
-                <motion.div
-                  className='flex flex-col gap-[8px]'
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                >
-                  {words.map((w, i) => {
-                    const FromInfo = STATE_INFO[w.from] ?? STATE_INFO.unlearned;
-                    const ToInfo = STATE_INFO[w.to] ?? STATE_INFO.leaf;
-                    return (
-                      <div
-                        key={`${w.origin}-${i}`}
-                        className='flex items-center justify-between py-[14px] px-[16px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'
-                      >
-                        <span className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>
-                          {w.origin}
-                        </span>
-                        <span className='flex items-center gap-[8px] flex-shrink-0 ml-[10px]'>
-                          <FromInfo.Icon size={16} weight='fill' color={FromInfo.color} />
-                          <ArrowRight size={14} weight='bold' className='text-layout-gray-300' />
-                          <ToInfo.Icon size={20} weight='fill' color={ToInfo.color} />
-                        </span>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              </div>
-
-              {/* 확인 버튼 */}
-              <div
-                className="absolute bottom-0 left-0 right-0 flex items-center justify-center p-[16px] py-[20px]"
-                style={{ background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}` }}
-              >
-                <motion.button
-                  className="w-full h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
-                  onClick={() => { vibrate({ duration: 5 }); handleNextScreen(); }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                >확인</motion.button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      );
-    }
-
-    // 나머지 화면들 (attend, newWords, dailyMission, achievement, gem, 농장 V2)
+    // 나머지 화면들 — 시안 §1 규격(그림 100px + 한 줄 + 확인 버튼)을 공유한다
     let content = null;
 
     if (currentScreen.type === 'farmPlanted') {
@@ -957,15 +872,11 @@ const StudyResult = () => {
         />
       );
     } else if (currentScreen.type === 'farmGrown') {
-      // 자란 작물 — 이번 학습으로 단계가 오른 단어들
+      // ① 자란 작물 — 이미 심은 것만. 시안은 목록 내용과 무관하게 이파리 그림을 대표로 쓴다.
       const items = currentScreen.data.items ?? [];
-      const topCrop = items.reduce((top, row) => {
-        const next = stageToCrop(row.to_stage ?? row.crop);
-        return cropIndex(next) > cropIndex(top) ? next : top;
-      }, 'seed');
       content = (
         <FarmListSlide
-          art={<FarmArt src={getCropAsset(topCrop, 'FRESH')} alt="자란 작물" />}
+          art={<FarmArt src={getCropAsset('leaf', 'FRESH')} alt="자란 작물" />}
           line={<><strong className='text-primary-main-600'>{items.length}개</strong>의 작물이 자랐어요!</>}
           rows={items.map((row) => {
             const to = stageToCrop(row.to_stage ?? row.crop);
@@ -976,53 +887,46 @@ const StudyResult = () => {
                 crop={to}
                 word={row.word}
                 meaning={row.meaning}
-                right={
-                  <>
-                    {from && from !== to && (
-                      <>
-                        <span className='font-[600] text-layout-gray-200'>{cropLabel(from)}</span>
-                        <ArrowRight size={11} weight='bold' className='text-layout-gray-300' />
-                      </>
-                    )}
-                    <span>{cropLabel(to)}</span>
-                  </>
-                }
+                right={<CropStep from={from} to={to} />}
               />
             );
           })}
         />
       );
-    } else if (currentScreen.type === 'farmGolden') {
-      // 황금 당근 도달 — 이 슬라이드만 글로우가 금색이다
+    } else if (currentScreen.type === 'farmSprouted') {
+      // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어. 목록 없이 한 줄만 적는다.
       const items = currentScreen.data.items ?? [];
       content = (
-        <div className='relative flex flex-col items-center justify-center'>
-          <div
-            className='pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full'
-            style={{
-              background: 'radial-gradient(circle, rgba(242,183,19,.34) 0%, rgba(242,183,19,.12) 45%, rgba(242,183,19,0) 70%)',
-            }}
-          ></div>
-          <div className='relative z-10 w-full'>
-            <FarmAwardSlide
-              art={<FarmArt src={CROP_ASSETS.goldenCarrot} alt="황금 당근" />}
-              line={
-                items.length === 1
-                  ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>, 이제 황금 당근이에요!</>
-                  : <><strong className='text-primary-main-600'>{items.length}개</strong>가 황금 당근이 됐어요!</>
-              }
-              why={items.length === 1 ? '이 단어는 더 이상 시들지 않아요' : '이 단어들은 더 이상 시들지 않아요'}
-            />
-          </div>
-        </div>
+        <FarmAwardSlide
+          art={<FarmArt src={getCropAsset('sprout', 'FRESH')} alt="새싹 발아" />}
+          line={
+            items.length === 1
+              ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>에 새싹이 돋았어요!</>
+              : <><strong className='text-primary-main-600'>{items.length}개</strong>에 새싹이 돋았어요!</>
+          }
+        />
+      );
+    } else if (currentScreen.type === 'farmGolden') {
+      // ⑨ 황금 당근 도달 — 이 슬라이드만 글로우가 금색이다(배경 교체는 아래 래퍼가 한다)
+      const items = currentScreen.data.items ?? [];
+      content = (
+        <FarmAwardSlide
+          art={<FarmArt src={CROP_ASSETS.goldenCarrot} alt="황금 당근" />}
+          line={
+            items.length === 1
+              ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>이 황금 당근이 됐어요!</>
+              : <><strong className='text-primary-main-600'>{items.length}개</strong>가 황금 당근이 됐어요!</>
+          }
+          why={items.length === 1 ? '이제 이 단어는 썩지 않아요' : '이제 이 단어들은 썩지 않아요'}
+        />
       );
     } else if (currentScreen.type === 'farmRescued') {
-      // 되살린 작물 — 이미 안전해진 사실만 적는다 (기획 13.4)
+      // ⑧ 시든 작물 회복 — 이미 안전해진 사실만 적는다 (기획 13.4)
       const items = currentScreen.data.items ?? [];
       content = (
         <FarmListSlide
           art={<FarmArt src={getCropAsset('leaf', 'FRESH')} alt="되살린 작물" />}
-          line={<><strong className='text-primary-main-600'>{items.length}개</strong>가 다시 촉촉해졌어요!</>}
+          line={<>시들었던 <strong className='text-primary-main-600'>{items.length}개</strong>를 되살렸어요!</>}
           rows={items.map((row) => (
             <FarmGrowRow
               key={row.user_voca_id}
@@ -1035,36 +939,30 @@ const StudyResult = () => {
         />
       );
     } else if (currentScreen.type === 'farmItem') {
-      // 농장 아이템 — 종류마다 한 장
+      // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장
       const { itemKey, qty, why } = currentScreen.data;
+      const label = FARM_ITEM_LABEL[itemKey];
       content = (
         <FarmAwardSlide
-          art={<FarmArt src={FARM_ITEM_ASSETS[itemKey]} alt={FARM_ITEM_LABEL[itemKey]} />}
-          line={<><strong className='text-primary-main-600'>{FARM_ITEM_LABEL[itemKey]} {qty}개</strong>를 받았어요!</>}
+          art={<FarmArt src={FARM_ITEM_ASSETS[itemKey]} alt={label} />}
+          line={<><strong className='text-primary-main-600'>{label} {qty}개</strong>를 받았어요!</>}
           why={why}
         />
       );
     } else if (currentScreen.type === 'farmStreak') {
-      // 연속 학습일 — 이번 주 물뿌리개 기록
-      const { current, milestone } = currentScreen.data;
+      // ⑩ 연속 학습 — 마스코트 + 한 줄 + 이번 주 물뿌리개 기록. 시안에는 아래 한 줄이 없다.
+      const { current } = currentScreen.data;
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
           <FarmArt src={CROP_ASSETS.mascotWalk} alt="연속 학습" />
-          <motion.div
-            className='flex flex-col items-center gap-[6px]'
+          <motion.p
+            className='text-[16px] font-[700] text-center leading-[1.45]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <p className='text-[16px] font-[700] text-center'>
-              <strong className='text-primary-main-600'>{current}일</strong> 연속으로 농장을 돌봤어요!
-            </p>
-            {milestone?.days ? (
-              <p className='text-[12px] font-[400] text-center text-layout-gray-300 dark:text-layout-gray-100'>
-                {milestone.days}일 달성 보상이 도착했어요
-              </p>
-            ) : null}
-          </motion.div>
+            <strong className='text-primary-main-600'>{current}일</strong> 연속으로 농장을 돌봤어요!
+          </motion.p>
           <motion.div
             className='w-full'
             initial={{ y: 20, opacity: 0 }}
@@ -1111,104 +1009,13 @@ const StudyResult = () => {
           </motion.p>
         </div>
       );
-    } else if (currentScreen.type === 'newWords') {
-      // 이번 학습으로 처음 학습한 단어 개수
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img
-            src={WordsStudied}
-            alt="새 단어 학습"
-            className='w-[100px] h-[100px] object-contain'
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              rotate: 0,
-              y: [0, -10, 0]
-            }}
-            transition={{
-              scale: {
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                duration: 0.6
-              },
-              rotate: {
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                duration: 0.6
-              },
-              opacity: {
-                duration: 0.6
-              },
-              y: {
-                delay: 0.8,
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-          />
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.5
-            }}
-          >
-            <strong className='text-primary-main-600'>새 단어 {currentScreen.data.totalCnt}개</strong>를 학습했어요!
-          </motion.p>
-        </div>
-      );
     } else if (currentScreen.type === 'dailyMission') {
-      // 데일리 미션 달성
+      // ⑪ 데일리 목표 — 복습과 신규를 모두 끝낸 날
       content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img
-            src={DailyMissionComplete}
-            alt="데일리 미션 완료"
-            className='w-[100px] h-[100px] object-contain'
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-              scale: [0, 1.2, 1, 1.1, 1],
-              opacity: 1,
-              rotate: [0, 5, -5, 0]
-            }}
-            transition={{
-              scale: {
-                type: "tween",
-                ease: "easeOut",
-                duration: 0.6,
-                times: [0, 0.5, 0.7, 0.85, 1]
-              },
-              opacity: {
-                duration: 0.6
-              },
-              rotate: {
-                delay: 0.8,
-                duration: 3,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-          />
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.5
-            }}
-          >
-            <strong className='text-primary-main-600'>데일리 미션</strong>을 완료했어요!
-          </motion.p>
-        </div>
+        <FarmAwardSlide
+          art={<FarmArt src={CROP_ASSETS.mascotWatering} alt="데일리 목표 완료" />}
+          line={<>오늘 농장을 <strong className='text-primary-main-600'>다 돌봤어요!</strong></>}
+        />
       );
     } else if (currentScreen.type === 'combo') {
       // 콤보 달성 (AI 추천 테스트)
@@ -1361,7 +1168,7 @@ const StudyResult = () => {
       );
     }
 
-    // 나머지 화면들 (words, dailyMission, achievement, gem) - 헤더 + 확인 버튼
+    // 공용 슬라이드 껍데기 — 고정 헤더 + 배경 + 확인 버튼
     if (!content) return null;
 
     return (
@@ -1405,7 +1212,17 @@ const StudyResult = () => {
               flex flex-col items-center justify-center flex-1
               px-[20px] py-[40px]
             '>
-              {/* 핑크 글로우 배경 효과 */}
+              {/* 배경 — 시안 ⑨ 황금 당근만 금색 글로우로 통째로 바꾼다("배경부터 다르게 둔다").
+                  나머지 슬라이드는 지금 형식(핑크 오로라) 그대로다. */}
+              {currentScreen.gold ? (
+                <div
+                  className='pointer-events-none absolute top-[50%] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[300px] h-[300px] rounded-full'
+                  style={{
+                    background: 'radial-gradient(circle, rgba(242,183,19,.34) 0%, rgba(242,183,19,.12) 45%, rgba(242,183,19,0) 70%)',
+                  }}
+                ></div>
+              ) : (
+              <>
               {/* ResultItemBackground01: 크기 변화 + 회전 + 섬광 효과 */}
               <div className='absolute top-[50%] left-[50%] z-10 translate-x-[-50%] translate-y-[-50%] w-[230px] h-[230px]'>
                 <motion.img
@@ -1440,6 +1257,8 @@ const StudyResult = () => {
                   }}
                 />
               </div>
+              </>
+              )}
 
               {/* 콘텐츠 */}
 

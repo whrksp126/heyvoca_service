@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CaretLeft } from '@phosphor-icons/react';
+import { Drop, Leaf, Warning, Flame, CalendarBlank, Gift, Info } from '@phosphor-icons/react';
 
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { motion } from 'framer-motion';
 import { vibrate, showToast, isAppVersionAtLeast } from '../../utils/osFunction';
 import { useUser } from '../../context/UserContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import postMessageManager from '../../utils/postMessageManager';
+import { readFarmSettings, writeFarmSettings } from '../../utils/farmSettings';
+import { SheetBar, GroupLabel, SettingRow, InfoBox } from './settingsUi';
 
 // 앱(WebView) 환경 여부 — 순수 웹에서는 OS 알림 권한 개념이 없어 게이팅을 건너뛴다.
 const isRNWebView = typeof window !== 'undefined' && !!window.ReactNativeWebView;
@@ -17,47 +17,18 @@ const isRNWebView = typeof window !== 'undefined' && !!window.ReactNativeWebView
 const NOTIF_PERMISSION_MIN_APP_VERSION = '1.0.3';
 const supportsNativePermission = isRNWebView && isAppVersionAtLeast(NOTIF_PERMISSION_MIN_APP_VERSION);
 
-const ToggleSwitch = ({ checked, onChange, label, description }) => (
-  <li
-    className="flex items-center justify-between px-[20px] py-[20px] border-b border-[#ddd] dark:border-border-dark bg-layout-white dark:bg-layout-black"
-    onClick={onChange}
-  >
-    <div className="flex flex-col gap-[4px] pr-[16px]">
-      <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">
-        {label}
-      </span>
-      {description && (
-        <span className="text-[13px] text-layout-gray-200 dark:text-layout-gray-300 leading-tight">
-          {description}
-        </span>
-      )}
-    </div>
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      className={`
-        relative inline-flex h-[28px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent
-        transition-colors duration-200 ease-in-out focus:outline-none
-        ${checked ? 'bg-primary-main-500' : 'bg-layout-gray-100 dark:bg-layout-gray-300'}
-      `}
-    >
-      <span className="sr-only">Toggle {label}</span>
-      <span
-        className={`
-          pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-layout-white shadow ring-0
-          transition duration-200 ease-in-out
-          ${checked ? 'translate-x-[22px]' : 'translate-x-0'}
-        `}
-      />
-    </button>
-  </li>
-);
-
+/**
+ * 알림 설정 — 토글 하나에서 다섯 개로 (시안 설정 3절).
+ *
+ * 서버가 아는 값은 둘뿐이다(is_study_allowed / is_marketing_allowed).
+ *   오늘의 물주기 → is_study_allowed (기존 "학습 유도 알림"과 같은 알림이다)
+ *   혜택 · 이벤트 → is_marketing_allowed
+ * 시듦 경고 · 부패 임박 · 연속 학습 위험 · 주간 요약은 아직 계약이 없어 기기 로컬에 남는다.
+ * (utils/farmSettings.js 주석 참고)
+ */
 const PushNotificationsNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewFullSheet } = useNewFullSheetActions();
   const { fcmToken, isLogin } = useUser();
 
   // localStorage 캐시 우선 → 매번 로딩 없이 즉시 렌더. 마운트 후 백그라운드로 최신화.
@@ -66,6 +37,7 @@ const PushNotificationsNewFullSheet = () => {
   })();
   const [isStudyAllowed, setIsStudyAllowed] = useState(cachedPush?.study ?? true);
   const [isMarketingAllowed, setIsMarketingAllowed] = useState(cachedPush?.marketing ?? false);
+  const [farm, setFarm] = useState(readFarmSettings);
 
   // 권한 요청 결과로 갱신될 수 있는 실제 사용 토큰 (context fcmToken 우선)
   const [effectiveToken, setEffectiveToken] = useState(fcmToken);
@@ -160,113 +132,122 @@ const PushNotificationsNewFullSheet = () => {
     }
   };
 
-  // 토글 ON 시 OS 권한을 확보하고, 미허용이면 ON 하지 않은 채 설정으로 유도하는 공통 처리.
-  const turnOn = async (setLocal, persistKey, otherKey, otherVal) => {
-    if (permRequestInFlight.current) return;
+  // 토글을 켤 때만 OS 권한을 확보한다. 미허용이면 켜지 않고 설정으로 유도한다.
+  const grantIfTurningOn = async (turningOn) => {
+    if (!turningOn) return true;
+    if (permRequestInFlight.current) return false;
     permRequestInFlight.current = true;
     const { granted, token } = await ensureNotificationPermission();
     permRequestInFlight.current = false;
     permissionGrantedRef.current = granted;
     if (!granted) {
-      setLocal(false); // 권한 미허용 → 토글 ON 하지 않음
       guideToEnableNotification();
-      return;
+      return false;
     }
-    let useToken = effectiveToken;
     if (token && token !== effectiveToken) {
       setEffectiveToken(token);
       await registerToken(token);
-      useToken = token;
     }
-    setLocal(true);
-    try { localStorage.setItem('pushSettings', JSON.stringify({ [persistKey]: true, [otherKey]: otherVal })); } catch (e) { /* noop */ }
-    await persistSetting(useToken, { [persistKey === 'study' ? 'is_study_allowed' : 'is_marketing_allowed']: true }, () => setLocal(false));
+    return true;
   };
 
-  const handleToggleStudy = async () => {
+  // ── 서버가 아는 두 값 ─────────────────────────────
+  const toggleServerFlag = async (key) => {
     vibrate({ duration: 5 });
-    if (!isStudyAllowed) {
-      await turnOn(setIsStudyAllowed, 'study', 'marketing', isMarketingAllowed);
-    } else {
-      setIsStudyAllowed(false);
-      try { localStorage.setItem('pushSettings', JSON.stringify({ study: false, marketing: isMarketingAllowed })); } catch (e) { /* noop */ }
-      await persistSetting(effectiveToken, { is_study_allowed: false }, () => setIsStudyAllowed(true));
-    }
+    const isStudy = key === 'study';
+    const current = isStudy ? isStudyAllowed : isMarketingAllowed;
+    const setLocal = isStudy ? setIsStudyAllowed : setIsMarketingAllowed;
+    const next = !current;
+
+    if (!(await grantIfTurningOn(next))) { setLocal(false); return; }
+
+    setLocal(next);
+    const merged = isStudy
+      ? { study: next, marketing: isMarketingAllowed }
+      : { study: isStudyAllowed, marketing: next };
+    try { localStorage.setItem('pushSettings', JSON.stringify(merged)); } catch (e) { /* noop */ }
+    await persistSetting(
+      effectiveToken,
+      { [isStudy ? 'is_study_allowed' : 'is_marketing_allowed']: next },
+      () => setLocal(current),
+    );
   };
 
-  const handleToggleMarketing = async () => {
+  // ── 아직 계약이 없어 기기 로컬에만 남는 값 ─────────
+  const toggleFarmFlag = async (key) => {
     vibrate({ duration: 5 });
-    if (!isMarketingAllowed) {
-      await turnOn(setIsMarketingAllowed, 'marketing', 'study', isStudyAllowed);
-    } else {
-      setIsMarketingAllowed(false);
-      try { localStorage.setItem('pushSettings', JSON.stringify({ study: isStudyAllowed, marketing: false })); } catch (e) { /* noop */ }
-      await persistSetting(effectiveToken, { is_marketing_allowed: false }, () => setIsMarketingAllowed(true));
-    }
+    const next = !farm[key];
+    if (!(await grantIfTurningOn(next))) return;
+    setFarm(writeFarmSettings({ ...farm, [key]: next }));
   };
+
+  const iconSize = 16;
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-      {/* Header */}
-      <div
-        data-page-header
-        className="
-        relative
-        flex items-center justify-between
-        h-[55px]
-        pt-[20px] px-[16px] pb-[14px]
-        border-b border-[#ddd]
-        bg-layout-white dark:bg-layout-black
-      ">
-        <div className="flex items-center gap-[4px]">
-          <motion.button
-            onClick={() => {
-              vibrate({ duration: 5 });
-              popNewFullSheet();
-            }}
-            className="
-              text-layout-gray-200 dark:text-layout-white
-              rounded-[8px]
-            "
-            whileHover={{
-              backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              scale: 1.05
-            }}
-            whileTap={{
-              scale: 0.95,
-              backgroundColor: 'rgba(0, 0, 0, 0.1)'
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 17
-            }}
-          >
-            <CaretLeft size={24} />
-          </motion.button>
-        </div>
-        <h1 className="
-            absolute
-            left-1/2 -translate-x-1/2
-            text-[18px] font-[700]
-            text-layout-black dark:text-layout-white
-          ">
-          알림 설정
-        </h1>
-        <div className="flex items-center gap-[8px] text-layout-gray-200 dark:text-layout-white"></div>
-      </div>
+      <SheetBar title="알림 설정" />
 
-      {/* Content */}
-      <div className="flex flex-col gap-[10px] bg-layout-gray-50 dark:bg-layout-black">
-        <ul className="flex flex-col">
-          <ToggleSwitch
-            label="학습 유도 알림"
-            description="오후 1시와 저녁 9시에 오늘의 남은 학습량을 알려드립니다."
-            checked={isStudyAllowed}
-            onChange={handleToggleStudy}
-          />
-        </ul>
+      <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
+        <GroupLabel first>농장 알림</GroupLabel>
+        <SettingRow
+          first
+          icon={<Drop size={iconSize} />}
+          title="오늘의 물주기"
+          sub="오후 1시 · 저녁 9시"
+          toggle={isStudyAllowed}
+          onClick={() => toggleServerFlag('study')}
+        />
+        {/* 시듦과 부패는 급한 정도가 달라 같은 경고 아이콘을 쓰지 않는다 (시안 7절) */}
+        <SettingRow
+          icon={<Leaf size={iconSize} />}
+          title="시듦 경고"
+          sub="물 줄 때가 지난 작물이 있을 때"
+          toggle={farm.notifyWilt}
+          onClick={() => toggleFarmFlag('notifyWilt')}
+        />
+        {/* 부패는 공포로 쓰지 않는다 — 사실 서술로 적는다 (시안 3절) */}
+        <SettingRow
+          icon={<Warning size={iconSize} />}
+          title="부패 임박"
+          sub="오늘 안 주면 썩는 작물이 있을 때"
+          toggle={farm.notifyRot}
+          onClick={() => toggleFarmFlag('notifyRot')}
+        />
+        <SettingRow
+          icon={<Flame size={iconSize} />}
+          title="연속 학습 위험"
+          sub="자정까지 5개를 못 맞혔을 때"
+          toggle={farm.notifyStreak}
+          onClick={() => toggleFarmFlag('notifyStreak')}
+        />
+
+        <GroupLabel>요약</GroupLabel>
+        <SettingRow
+          first
+          icon={<CalendarBlank size={iconSize} />}
+          title="주간 요약"
+          sub="월요일 아침에 지난주 성장을"
+          toggle={farm.notifyWeekly}
+          onClick={() => toggleFarmFlag('notifyWeekly')}
+        />
+
+        <GroupLabel>기타</GroupLabel>
+        <SettingRow
+          first
+          icon={<Gift size={iconSize} />}
+          title="혜택 · 이벤트"
+          toggle={isMarketingAllowed}
+          onClick={() => toggleServerFlag('marketing')}
+        />
+
+        <InfoBox icon={<Info size={13} />}>
+          알림은 <b className="font-[700] text-layout-gray-500 dark:text-layout-gray-100">하루 최대 3번</b>까지만 보내요.
+          여러 조건이 겹치면 가장 급한 것 하나로 합쳐서 보내드려요.
+        </InfoBox>
+        <InfoBox tone="warn" icon={<Warning size={13} />}>
+          기기에서 알림을 꺼두면 여기 설정과 관계없이 오지 않아요.
+        </InfoBox>
       </div>
     </div>
   );

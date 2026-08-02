@@ -1,19 +1,32 @@
 // src/components/home/StreakCard.jsx
 //
-// 홈 — 연속 학습일 카드.
-// 최근 35일을 한 눈에 보여주고(이어간 날 / 보호권으로 지킨 날 / 쉰 날), 오늘 남은 목표를 알려준다.
+// 홈 — 연속 학습 카드 (시안 §6 · §10 "연속 학습 112px").
 //
-// 기획 11.5 — 기록이 끊겨도 **큰 빨간 0 을 쓰지 않는다.** 최고 기록은 늘 옆에 남고,
-// 끊긴 날은 "지금까지 만든 습관"을 먼저 말한 뒤 오늘부터 다시 잇자고 제안한다.
-// 보호권이 없을 때 구매를 권하지 않는다(기획 13.4 결제 압박 금지).
+// §6 — 지표 두 개를 나란히 놓던 행을 해체했다. 보석은 히어로 우측 상단 칩으로 올리고
+// (성격이 "얼마 있나"뿐인 재화라 본문 세로 흐름을 차지할 이유가 없다),
+// 연속 학습만 본문 최상단 카드 · 3층으로 남겼다.
+//   1층 헤더 — 불꽃 26px + "12일 연속"(15px/700) + 우측 "최장 24일"(11px/700) + CaretRight
+//   2층 일별 학습량 막대 7칸 — 높이 38px · radius 4. 높이 = 그날 맞힌 개수. 맨 오른쪽이 오늘
+//   3층 요일 라벨 10px/700
+//
+// §6 — 점 7개에서 막대 7개로 바꿨다. 점은 "했다 / 안 했다"밖에 말하지 못하는데,
+// "5개 하고 끝낸 날"과 "40개 몰아친 날"은 전혀 다른 기억이고 그 리듬이 보여야
+// 오늘 어느 정도 할지를 스스로 정한다.
+// 오늘 칸만 트랙을 깔아 둔다 — 나머지 6칸은 결과지만 오늘 칸은 아직 채우는 중이다.
+// 트랙이 보여주는 것은 연속 인정 기준(5개) 대비 진행이다(기획 11.1).
+//
+// §6 — 홈은 "얼마나 해 왔나"만 말한다. "14일 배지까지 2일 남음" 같은 남은 거리 문구는
+// 두지 않는다. 홈에서 눌러야 할 것은 CTA 하나인데 또 하나의 목표가 생기면 시선이 나뉜다.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Drop, ShieldCheck } from '@phosphor-icons/react';
-import { getStreakApi, recoverStreakApi } from '../../api/farm';
+import { CaretRight } from '@phosphor-icons/react';
+import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
+import { useOverlayActions } from '../../context/OverlayContext';
+import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -21,8 +34,8 @@ const StreakCard = () => {
   "use memo";
 
   const { lastSessionResult } = useVocabulary();
+  const { showAwaitOverlay } = useOverlayActions();
   const [streak, setStreak] = useState(null);
-  const [recovering, setRecovering] = useState(false);
 
   const loadStreak = useCallback(async () => {
     const res = await getStreakApi();
@@ -35,29 +48,50 @@ const StreakCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastSessionResult?.completedAt]);
 
-  // 최근 35일 — 날짜 오름차순으로 세워 5주 격자에 그대로 흘린다
-  const days = useMemo(
-    () => (streak?.calendar ?? []).slice().sort((a, b) => (a.date < b.date ? -1 : 1)),
-    [streak]
+  const today = toLocalDateString(new Date());
+  const required = Math.max(1, streak?.required ?? 5);
+  const todayCorrect = streak?.today_correct ?? 0;
+
+  /**
+   * 최근 7일 — 날짜 오름차순, 맨 오른쪽이 오늘.
+   *
+   * 막대 높이는 "그날 맞힌 개수"인데 GET /farm/streak 의 calendar 는 date/qualified/protected
+   * 세 필드만 준다(백엔드에 CheckIn.correct_word_cnt 는 있으나 응답에 실리지 않는다 — 보고 참조).
+   * 개수 필드가 실려 오면 그대로 쓰고, 없으면 자격을 채운 날을 기준선(required)으로 근사한다.
+   */
+  const days = useMemo(() => {
+    const calendar = (streak?.calendar ?? [])
+      .slice()
+      .sort((a, b) => (a.date < b.date ? -1 : 1))
+      .slice(-7);
+    return calendar.map((d) => {
+      const isToday = d.date === today;
+      const counted = d.qualified || d.protected;
+      const value = isToday
+        ? todayCorrect
+        : (d.correct_cnt ?? d.correct_word_cnt ?? (counted ? required : 0));
+      const date = new Date(`${d.date}T00:00:00`);
+      return {
+        date: d.date,
+        isToday,
+        value,
+        label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
+      };
+    });
+  }, [streak, today, todayCorrect, required]);
+
+  // §16 ⑤ — 막대 상한은 최근 7일 최댓값이다(시안이 가정한 방식).
+  const peak = useMemo(
+    () => Math.max(required, ...days.map((d) => d.value || 0)),
+    [days, required]
   );
 
-  // 35일 창이 월 경계와 무관하므로 요일 머리글은 첫 칸의 실제 요일에서 시작한다
-  const dowOffset = useMemo(() => {
-    if (!days.length) return 0;
-    const d = new Date(`${days[0].date}T00:00:00`);
-    return Number.isNaN(d.getTime()) ? 0 : d.getDay();
-  }, [days]);
-
-  const handleRecover = async () => {
-    if (recovering) return;
+  const handleBest = () => {
     vibrate({ duration: 5 });
-    setRecovering(true);
-    try {
-      const res = await recoverStreakApi();
-      if (res?.code === 200) await loadStreak();
-    } finally {
-      setRecovering(false);
-    }
+    showAwaitOverlay(AttendanceCalendarOverlay, {
+      initialYear: new Date().getFullYear(),
+      initialMonth: new Date().getMonth() + 1,
+    });
   };
 
   // 조회 전이거나 실패했으면 홈에 빈 카드를 남기지 않는다
@@ -65,149 +99,81 @@ const StreakCard = () => {
 
   const current = streak.current ?? 0;
   const best = streak.best ?? 0;
-  const required = streak.required ?? 0;
-  const todayCorrect = streak.today_correct ?? 0;
-  const todayDone = !!streak.today_done;
-  const remain = Math.max(0, required - todayCorrect);
-  const milestone = streak.next_milestone;
-  const canRecover = !!streak.recoverable && (streak.shield_cnt ?? 0) > 0;
-  const today = toLocalDateString(new Date());
 
   return (
     <div className="
-      flex flex-col gap-[12px]
-      px-[15px] py-[12px]
-      rounded-[12px]
+      rounded-[12px] p-[14px]
       bg-primary-main-50 dark:bg-primary-main-dark
+      border border-primary-main-200 dark:border-transparent
     ">
-      <div className="flex items-center gap-[8px]">
+      {/* 1층 — 불꽃 · 연속 일수 · 최장 기록 */}
+      <div className="flex items-center gap-[10px]">
         <img
           src={CROP_ASSETS.streak}
           alt=""
           draggable={false}
-          className="w-[26px] h-[26px] object-contain select-none"
+          className="w-[26px] h-[26px] object-contain select-none flex-shrink-0"
         />
-        {current > 0 ? (
-          <span className="text-layout-black dark:text-layout-white text-[20px] font-[800] leading-[1.1]">
-            {current}
-            <span className="text-[13px] font-[700] ml-[2px]">일 연속</span>
-          </span>
-        ) : (
-          <span className="text-layout-black dark:text-layout-white text-[16px] font-[700]">
-            오늘부터 다시 이어가요
-          </span>
-        )}
-        {best > 0 && (
-          <span className="ml-auto text-primary-main-600 text-[11.5px] font-[700]">최고 {best}일</span>
-        )}
-      </div>
-
-      {/* 끊긴 뒤에는 지금까지 만든 습관을 먼저 말한다 */}
-      {current === 0 && (
-        <p className="text-layout-gray-400 dark:text-layout-gray-200 text-[12px] font-[600] leading-[1.5]">
-          {best > 0
-            ? `${best}일 동안 만든 습관은 사라지지 않아요. 오늘부터 다시 이어가요.`
-            : '오늘 물을 주면 첫 기록이 시작돼요.'}
-        </p>
-      )}
-
-      {/* 최근 35일 — 5주 격자 */}
-      <div>
-        <div className="grid grid-cols-7 gap-[4px] mb-[5px]">
-          {Array.from({ length: 7 }, (v, i) => (
-            <span
-              key={i}
-              className="text-center text-layout-gray-200 dark:text-layout-gray-300 text-[10px] font-[700]"
-            >
-              {DOW[(dowOffset + i) % 7]}
-            </span>
-          ))}
-        </div>
-        <div className="grid grid-cols-7 gap-[4px]">
-          {days.map((d) => {
-            const isToday = d.date === today;
-            const ring = isToday
-              ? 'ring-[1.5px] ring-inset ring-layout-black dark:ring-layout-white'
-              : '';
-            if (d.protected) {
-              return (
-                <span
-                  key={d.date}
-                  className={`h-[24px] rounded-[7px] flex items-center justify-center bg-secondary-yellow-100 dark:bg-secondary-yellow-dark ${ring}`}
-                >
-                  <ShieldCheck size={12} weight="fill" className="text-secondary-yellow-600" />
-                </span>
-              );
-            }
-            if (d.qualified) {
-              return (
-                <span
-                  key={d.date}
-                  className={`h-[24px] rounded-[7px] flex items-center justify-center bg-primary-main-600 ${ring}`}
-                >
-                  <Drop size={12} weight="fill" className="text-layout-white" />
-                </span>
-              );
-            }
-            return (
-              <span
-                key={d.date}
-                className={`h-[24px] rounded-[7px] bg-layout-gray-50 dark:bg-layout-gray-dark ${ring}`}
-              />
-            );
-          })}
-        </div>
-        <div className="flex flex-wrap gap-x-[12px] gap-y-[5px] mt-[10px]">
-          <span className="flex items-center gap-[5px] text-layout-gray-300 text-[10.5px] font-[600]">
-            <i className="block w-[12px] h-[12px] rounded-[4px] bg-primary-main-600" />
-            이어간 날
-          </span>
-          <span className="flex items-center gap-[5px] text-layout-gray-300 text-[10.5px] font-[600]">
-            <i className="block w-[12px] h-[12px] rounded-[4px] bg-secondary-yellow-100 dark:bg-secondary-yellow-dark" />
-            보호권으로 지킴
-          </span>
-          <span className="flex items-center gap-[5px] text-layout-gray-300 text-[10.5px] font-[600]">
-            <i className="block w-[12px] h-[12px] rounded-[4px] bg-layout-gray-50 dark:bg-layout-gray-dark" />
-            쉰 날
-          </span>
-        </div>
-      </div>
-
-      {/* 오늘 남은 목표 */}
-      <div className="flex items-center gap-[8px] px-[12px] py-[9px] rounded-[10px] bg-layout-white dark:bg-layout-gray-dark">
-        <span className="flex-1 min-w-0 text-layout-black dark:text-layout-white text-[12.5px] font-[700]">
-          {todayDone
-            ? '오늘 기록을 이어갔어요'
-            : (required > 0
-              ? `오늘 ${todayCorrect}/${required}개 · ${remain}개만 더 맞히면 오늘도 이어져요`
-              : '오늘 학습하면 기록이 이어져요')}
+        <span className="flex-1 text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.03em]">
+          {current}일 연속
         </span>
-        {milestone?.days > 0 && (
-          <span className="shrink-0 text-primary-main-600 text-[11px] font-[700]">
-            {milestone.days}일까지 {Math.max(0, milestone.days - current)}일
-          </span>
-        )}
-      </div>
-
-      {/* 복구 창이 열려 있고 보호권이 있을 때만 노출. 없을 때 구매를 권하지 않는다 */}
-      {canRecover && (
         <button
           type="button"
-          onClick={handleRecover}
-          disabled={recovering}
-          className="
-            flex items-center justify-center gap-[6px]
-            h-[40px] w-full
-            rounded-[10px]
-            bg-primary-main-600
-            text-layout-white dark:text-layout-black text-[13px] font-[700]
-            disabled:opacity-60
-          "
+          onClick={handleBest}
+          className="flex items-center gap-[3px] text-[11px] font-[700] text-[#B8709F] dark:text-primary-main-400"
         >
-          <ShieldCheck size={16} weight="fill" />
-          보호권으로 기록 잇기
+          최장 {best}일
+          <CaretRight size={10} weight="fill" className="text-[#D9A8C8] dark:text-primary-main-400" />
         </button>
-      )}
+      </div>
+
+      {/* 2층 — 일별 학습량 막대 7칸. 맨 오른쪽이 오늘 */}
+      <div className="flex items-end gap-[6px] h-[38px] mt-[12px] mb-[5px]">
+        {days.map((d) => {
+          if (d.isToday) {
+            // 오늘 — 옅은 트랙 위에 목표(5개) 대비 채움. 아직 채우는 중이라는 뜻이다
+            const pct = Math.min(100, Math.round((d.value / required) * 100));
+            return (
+              <div
+                key={d.date}
+                className="flex-1 h-full flex items-end rounded-[4px] bg-[#FFE3F5] dark:bg-[rgba(255,255,255,.14)]"
+              >
+                <i
+                  style={{ height: `${Math.max(pct, d.value > 0 ? 10 : 0)}%` }}
+                  className="block w-full rounded-[4px] bg-primary-main-600"
+                />
+              </div>
+            );
+          }
+          const pct = peak > 0 ? Math.round((d.value / peak) * 100) : 0;
+          return (
+            <div key={d.date} className="flex-1 h-full flex items-end">
+              {/* 학습한 날 #FF88DC · 최소 높이 4px — 1개만 해도 흔적이 남는다.
+                  빠뜨린 날은 회색이 아니라 연한 핑크다 — 실패로 읽히지 않게 */}
+              <i
+                style={{ height: `${pct}%`, minHeight: 4 }}
+                className={`block w-full rounded-[4px] ${
+                  d.value > 0
+                    ? 'bg-primary-main-500'
+                    : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
+                }`}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 3층 — 요일 라벨. 오늘만 브랜드 핑크 */}
+      <div className="flex gap-[6px] text-[10px] font-[700] tracking-[-0.02em] text-[#B8709F] dark:text-primary-main-400">
+        {days.map((d) => (
+          <span
+            key={d.date}
+            className={`flex-1 text-center ${d.isToday ? 'text-primary-main-600 dark:text-primary-main-500' : ''}`}
+          >
+            {d.label}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

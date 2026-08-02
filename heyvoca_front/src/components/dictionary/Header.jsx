@@ -27,7 +27,9 @@ const Header = () => {
       dark:bg-layout-black
     '>
       <div className="center">
-        <h2 className='text-[16px] font-[700]'>사전</h2>
+        {/* 시안 §10 · find 1절 — 탭 이름이 "사전"에서 "찾기"로 바뀌었다.
+            검색 전에는 내가 가진 단어 목록이고, 검색 후에야 사전이 되는 화면이라서다. */}
+        <h2 className='text-[16px] font-[700]'>찾기</h2>
       </div>
       <div
         className="absolute right-[16px] flex items-center cursor-pointer"

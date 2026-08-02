@@ -106,14 +106,43 @@ module.exports = {
           DEFAULT: '#dddddd',
           dark: '#222222'
         },
-        // 당근 농장 V2 작물 단계 색. bg 는 다크 모드에서 html.dark 변수로 자동 전환된다.
-        // 예: text-crop-sprout / bg-crop-sprout-bg
+        // ── 당근 농장 V2 신규 토큰 (시안 13절) ────────────────────
+        // 성장 단계. 예: text-crop-sprout / bg-crop-carrot
+        // 코드의 leaf=기획안 새싹, 코드의 plant=기획안 이파리라는 이름 어긋남이 있어
+        // V2 는 crop 네임스페이스에서만 시안 이름을 쓰고 MEMORY_STATE_* 는 그대로 둔다.
         crop: {
-          seed: { DEFAULT: 'var(--crop-seed)', bg: 'var(--crop-seed-bg)' },
-          sprout: { DEFAULT: 'var(--crop-sprout)', bg: 'var(--crop-sprout-bg)' },
-          leaf: { DEFAULT: 'var(--crop-leaf)', bg: 'var(--crop-leaf-bg)' },
-          carrot: { DEFAULT: 'var(--crop-carrot)', bg: 'var(--crop-carrot-bg)' },
-          golden: { DEFAULT: 'var(--crop-golden)', bg: 'var(--crop-golden-bg)' },
+          seed: 'var(--crop-seed)',
+          sprout: 'var(--crop-sprout)',
+          leaf: 'var(--crop-leaf)',
+          carrot: 'var(--crop-carrot)',
+          golden: 'var(--crop-golden)',
+        },
+        // 건강 상태 6종. golden 만 신규, 나머지는 기존 토큰 재사용값이다.
+        health: {
+          fresh: 'var(--health-fresh)',
+          thirsty: 'var(--health-thirsty)',
+          wilted: 'var(--health-wilted)',
+          critical: 'var(--health-critical)',
+          rotten: 'var(--health-rotten)',
+          golden: 'var(--health-golden)',
+        },
+        // 농장 자연색 8종. canvas/sky/ink/line 은 html.dark 에서 자동 전환된다.
+        farm: {
+          canvas: 'var(--farm-canvas)',
+          ink: 'var(--farm-ink)',
+          line: 'var(--farm-line)',
+          sky: {
+            100: 'var(--farm-sky-100)',
+            200: 'var(--farm-sky-200)',
+          },
+          grass: {
+            500: 'var(--farm-grass-500)',
+            300: 'var(--farm-grass-300)',
+          },
+          soil: {
+            400: 'var(--farm-soil-400)',
+            600: 'var(--farm-soil-600)',
+          },
         }
       },
       fontFamily: {

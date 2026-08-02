@@ -29,6 +29,18 @@ import FarmStatusBar from '../farm/FarmStatusBar';
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
 const backendStateKeyMap = { unlearned: 'unlearned', short: 'leaf', medium: 'plant', long: 'carrot' };
 
+// ── 부패 진단 문제 판별 (시안 6절) ────────────────────────────────────────────
+// 삽으로 '다시 심기'를 예약한 작물은 다음 학습에서 진단 문제 1개로 만난다.
+// 화면은 이 문제만 다르게 그린다 — 주황 진행바 + 채점 전부터 뜨는 삽 pill.
+// 서버가 어떤 이름으로 표시를 내려주든 받도록 세 형태를 모두 본다
+// (현재 /study/recommend 응답에는 표시 필드가 없다 — 보고 참고).
+const isDiagnosisQuestion = (question) => {
+  if (!question) return false;
+  if (question.isDiagnosis) return true;
+  if (question.pending_action === 'REPLANT' || question.pendingAction === 'REPLANT') return true;
+  return question.questionType === 'multipleChoiceDiagnosis';
+};
+
 // 낙관적 fsrs 추정 — 백엔드 응답 도착 전까지 즉각 UI에 표시할 임시값.
 // 첫 학습이라도 알고리즘 결과는 단순(정답=수일 후, 오답=1일 후)하니 추정해도 실값과 분류(leaf/plant/carrot)가 거의 같음.
 // 백엔드 응답 도착 시 정확한 값으로 자연스럽게 덮어씌워짐.
@@ -415,15 +427,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 세션의 총 고유 단어 수 (분모)
   const totalUniqueCount = totalUniqueVocaCountRef?.current || testQuestions.length;
 
-  // 안전성 체크: testQuestions가 비어있거나 progressIndex가 범위를 벗어난 경우
-  if (!testQuestions || testQuestions.length === 0 || !testQuestions[progressIndex]) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-[16px] text-[#999]">문제를 불러오는 중...</p>
-      </div>
-    );
-  }
-
   // 현재 문제의 옵션들에 대해 displayMeanings를 한 번만 계산
   const optionsWithDisplayMeanings = useMemo(() => {
     if (!testQuestions[progressIndex] || !testQuestions[progressIndex].options) {
@@ -487,6 +490,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   useEffect(() => {
 
   }, [progressIndex]);
+
+  // 안전성 체크: testQuestions가 비어있거나 progressIndex가 범위를 벗어난 경우.
+  // 훅을 전부 부른 **뒤에** 빠져나간다 — 훅보다 위에 두면 이 분기가 실제로 걸리는 순간
+  // 렌더마다 훅 개수가 달라져 "Rendered more hooks than during the previous render"로
+  // 터진다. 안내 문구를 띄우려고 만든 방어 코드가 오히려 화면을 죽이던 자리였다.
+  if (!testQuestions || testQuestions.length === 0 || !testQuestions[progressIndex]) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-[16px] text-[#999]">문제를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   // React Compiler가 자동으로 useCallback 처리
   // 문제 선택지 선택 시
@@ -944,6 +959,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 
+  // 부패 진단(시안 6절) — 진행바가 주황이 되고, 채점 전부터 삽 pill 이 붙는다.
+  const isDiagnosis = isDiagnosisQuestion(testQuestions[progressIndex]);
+  const progressFillClass = isDiagnosis ? 'bg-crop-carrot' : 'bg-primary-main-600';
+
   // 농장 상태 바 노출 여부 — 지금 보고 있는 문제의 payload 일 때만 띄운다(응답 지연 대비).
   // payload 가 없으면 기존 암기상태 배지·복습 예정일 배지가 그대로 보인다.
   const currentVocaId =
@@ -1003,7 +1022,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           overflow-hidden
         ">
           <motion.div
-            className="h-[100%] rounded-[50px] bg-primary-main-600"
+            className={`h-[100%] rounded-[50px] ${progressFillClass}`}
             initial={{ width: "0%" }}
             animate={{ width: `${Math.floor(passedCount / totalWordCount * 100)}%` }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
@@ -1068,11 +1087,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         overflow-hidden
       ">
         <motion.div
-          className="
+          className={`
             h-[100%]
             rounded-[50px]
-            bg-primary-main-600
-          "
+            ${progressFillClass}
+          `}
           initial={{ width: "0%" }}
           animate={{
             width: `${Math.floor(passedCount / totalWordCount * 100)}%`
@@ -1132,8 +1151,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   )}
 
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)
-                      농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다 */}
-                  {isCorrect !== null && !showFarmBar && (
+                      농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다.
+                      부패 진단(6절)은 시안에 이 배지가 없다 — 하단 삽 pill 하나만 쓴다. */}
+                  {isCorrect !== null && !showFarmBar && !isDiagnosis && (
                   <div className="
                     absolute top-[15px] left-[50%] translate-x-[-50%]
                     flex items-center justify-center
@@ -1229,6 +1249,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       {testQuestions[progressIndex].origin}
                     </h2>
                   )}
+                  {/* 하단 - 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
+                      삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'.
+                      삽은 누른 순간이 아니라 진단 정답에서 빠지므로 여기서는 안내만 한다.
+                      채점 결과(농장 payload)가 오면 평소 상태 바로 교체된다. */}
+                  {isDiagnosis && !showFarmBar && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                      className="absolute bottom-[14px] left-[14px] right-[14px] z-[2]"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FarmStatusBar diagnosis />
+                    </motion.div>
+                  )}
+
                   {/* 하단 - 채점 후: 농장 상태 바 (작물·성장 막대·다음 복습일) */}
                   {showFarmBar && (
                     <motion.div
@@ -1259,7 +1295,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
                   {/* displayNextReview는 채점 시 고정 — 백엔드 응답으로 덮지 않아 깜빡임 없음 */}
                   {/* 농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-                  {isCorrect !== null && !showFarmBar && (() => {
+                  {isCorrect !== null && !showFarmBar && !isDiagnosis && (() => {
                     const nextReviewDate = testQuestions[progressIndex].displayNextReview;
                     if (!nextReviewDate) return null;
                     const date = new Date(nextReviewDate);
