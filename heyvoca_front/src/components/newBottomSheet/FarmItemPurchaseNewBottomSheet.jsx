@@ -11,7 +11,7 @@ import { purchaseFarmItemApi, getRottenPlantsApi } from '../../api/farm';
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
 import { FARM_ITEM_LABEL } from '../../utils/crop';
 import { vibrate } from '../../utils/osFunction';
-import iconGem from '../../assets/images/farm/icon-gem.png';
+import { Gem } from './purchaseParts';
 
 /**
  * 농장 도구 상세 시트 · 구매 확인 · 결과.
@@ -53,16 +53,12 @@ const ITEM_LEDE = {
 
 // ── 공용 조각 ────────────────────────────────────────────────
 
-/** 보석 아이콘 + 숫자 (시안 gm) */
-export const Gem = ({ n, size = 'm', className = '' }) => {
-  const px = size === 's' ? 'w-[14px] h-[14px]' : size === 'l' ? 'w-[20px] h-[20px]' : 'w-[17px] h-[17px]';
-  return (
-    <span className={`inline-flex items-center gap-[3px] ${className}`}>
-      <img src={iconGem} alt="보석" draggable={false} className={`${px} shrink-0 object-contain select-none`} />
-      {n}
-    </span>
-  );
-};
+/**
+ * 보석 아이콘 + 숫자 (시안 gm).
+ * 정본은 purchaseParts 하나다 — 상점·구매 확인·리턴 화면이 모두 같은 표기를 써야 해서
+ * 여기서는 다시 정의하지 않고 그대로 내보내기만 한다(상점 탭이 이 경로로 가져다 쓴다).
+ */
+export { Gem };
 
 const Em = ({ children }) => (
   <b className="font-[800] text-layout-black dark:text-layout-white">{children}</b>

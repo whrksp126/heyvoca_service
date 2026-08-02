@@ -171,6 +171,19 @@ const AccountNewFullSheet = () => {
     }
   }
 
+  // 함께한 날 — 가입일로부터 며칠째인지 (시안 설정 ④ · 4절).
+  // 백엔드 /get_user_info 응답에 가입일이 없다(User.created_at 은 DB 에만 있다).
+  // 값이 실릴 때만 줄이 뜬다 — 필드가 추가되면 코드 변경 없이 그대로 켜진다.
+  const daysTogether = (() => {
+    const raw = userProfile?.created_at;
+    if (!raw) return null;
+    const s = String(raw);
+    // 백엔드 created_at 은 timezone 없는 UTC — 로컬 표시를 위해 Z 보정
+    const t = new Date(/[Z+]|-\d{2}:\d{2}$/.test(s.slice(10)) ? s : `${s}Z`);
+    if (Number.isNaN(t.getTime())) return null;
+    return Math.max(1, Math.floor((Date.now() - t.getTime()) / 86400000) + 1);
+  })();
+
   const rowCls = 'flex items-center gap-[10px] px-[14px] py-[13px]';
   const keyCls = 'w-[82px] shrink-0 text-[12px] font-[700] tracking-[-0.02em] text-layout-gray-300';
   const valCls = 'flex-1 min-w-0 text-[13.5px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white truncate';
@@ -200,6 +213,12 @@ const AccountNewFullSheet = () => {
             <span className={keyCls}>이메일</span>
             <span className={valCls}>{userProfile?.email || '로그인 필요'}</span>
           </div>
+          {daysTogether !== null && (
+            <div className={`${rowCls} ${divider}`}>
+              <span className={keyCls}>함께한 날</span>
+              <span className={valCls}>{daysTogether}일째</span>
+            </div>
+          )}
         </div>
 
         {/* ── 이 계정의 농장 — 탈퇴하면 사라질 것의 목록 ── */}

@@ -127,7 +127,7 @@ const DailyNewLimitNewFullSheet = () => {
           onClick={() => toggleFarm('reviewAuto')}
         />
         <InfoBox tone="blue" icon={<Info size={13} />}>
-          권장량을 넘긴 작물 중 <b className="font-[700]">오늘 안 주면 썩는 것</b>은
+          권장량을 넘긴 작물 중 <b>오늘 안 주면 썩는 것</b>은
           자동으로 하루 더 보호돼요. 도구를 쓰지 않아요.
         </InfoBox>
 

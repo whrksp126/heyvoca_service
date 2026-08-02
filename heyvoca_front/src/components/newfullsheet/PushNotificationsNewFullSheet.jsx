@@ -242,7 +242,7 @@ const PushNotificationsNewFullSheet = () => {
         />
 
         <InfoBox icon={<Info size={13} />}>
-          알림은 <b className="font-[700] text-layout-gray-500 dark:text-layout-gray-100">하루 최대 3번</b>까지만 보내요.
+          알림은 <b>하루 최대 3번</b>까지만 보내요.
           여러 조건이 겹치면 가장 급한 것 하나로 합쳐서 보내드려요.
         </InfoBox>
         <InfoBox tone="warn" icon={<Warning size={13} />}>

@@ -1,259 +1,258 @@
-import React, { useEffect } from 'react';
-import { PencilSimple, Trash, Leaf, Plant, Carrot, EggCrack, Timer, Storefront } from '@phosphor-icons/react';
+import React, { useMemo, useState } from 'react';
+import { Plus, Storefront, WarningCircle, Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../../context/VocabularyContext';
-// import { useFullSheet } from '../../context/FullSheetContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
-// import VocabularyWords from './VocabularyWords';
+import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
-import note_ring from '../../assets/images/note_ring.png';
+import CropImage from '../farm/CropImage';
 import { vibrate } from '../../utils/osFunction';
-import { useTheme } from '../../context/ThemeContext';
-import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
+import { HEALTH_STATES, CROP_LABEL } from '../../utils/crop';
+import {
+  CROP_ORDER,
+  bookStageCounts,
+  bookCareCount,
+  bookThumbKey,
+  bookBadge,
+} from '../../utils/vocaCrop';
 
+// 밭 썸네일 — 시안 §2. 홈 히어로와 같은 렌더러로 뽑되 팻말과 마스코트가 없다.
+import bookSeed from '../../assets/images/farm/book-seed.png';
+import bookEarly from '../../assets/images/farm/book-early.png';
+import bookMid from '../../assets/images/farm/book-mid.png';
+import bookDone from '../../assets/images/farm/book-done.png';
+import bookEmpty from '../../assets/images/farm/book-empty.png';
+
+const BOOK_THUMB = {
+  seed: bookSeed,
+  early: bookEarly,
+  mid: bookMid,
+  done: bookDone,
+  empty: bookEmpty,
+};
+
+const BOOK_THUMB_ALT = {
+  seed: '아직 시작하지 않은 밭',
+  early: '새싹이 자라는 밭',
+  mid: '여러 단계가 섞인 밭',
+  done: '당근이 가득한 밭',
+  empty: '비어 있는 밭',
+};
+
+/** 카드 배지 — 시안 §1① (돌봄 N · 완료 · 씨앗) */
+const BADGE_CLASS = {
+  care: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-secondary-yellow-600',
+  done: 'bg-status-success-100 dark:bg-status-success-dark text-status-success-600',
+  new: 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200',
+};
+
+const BADGE_ICON = {
+  care: WarningCircle,
+  done: Check,
+  new: null,
+};
+
+/** 최근 학습 정렬용 — 이 단어장에서 가장 최근에 갱신된 단어 시각 */
+const lastTouchedAt = (book) => {
+  let latest = 0;
+  (book.words || []).forEach((word) => {
+    const t = new Date(word.updatedAt || word.createdAt || 0).getTime();
+    if (!Number.isNaN(t) && t > latest) latest = t;
+  });
+  return latest;
+};
+
+/**
+ * 단어장 목록 — 시안 vocabooks §1① · §2.
+ *
+ * 밭 썸네일로 상태를 그림으로 먼저 읽고, 바로 아래 단계 분포를 본다.
+ * 진행률 바가 없다 — 142/200 은 "이 밭이 지금 어떤 상태인가"에 답하지 못한다.
+ */
 const Main = () => {
+  "use memo";
 
-  const navigate = useNavigate();
-  // const { pushFullSheet } = useFullSheet();
   const { pushNewFullSheet } = useNewFullSheet();
-  const { vocabularySheets, isVocabularySheetsLoading } = useVocabulary();
-  const { isDark } = useTheme();
+  const { vocabularySheets } = useVocabulary();
+  const { showVocabularyManageNewBottomSheet } = useVocabularyManageNewBottomSheet();
 
-  // Hook은 항상 조건부 return 전에 호출되어야 합니다
-  useEffect(() => {
-    console.log(vocabularySheets);
-  }, [isVocabularySheetsLoading, vocabularySheets]);
+  const [filter, setFilter] = useState('all'); // all | care | recent
 
-  // const today_sentence = {
-  //   title: "오늘의 문장 💬",
-  //   sentence: "Could you recommend a dish that's not too spicy but still flavorful?",
-  //   translation: "너무 맵지 않으면서도 맛있는 음식을 추천해 주실 수 있나요?",
-  // };
+  // 카드마다 필요한 파생값을 한 번만 계산한다 — 목록·칩·배지가 같은 수를 봐야 한다
+  const books = useMemo(() => vocabularySheets.map((book) => {
+    const counts = bookStageCounts(book.words);
+    return {
+      book,
+      counts,
+      care: bookCareCount(book.words),
+      thumb: bookThumbKey(book.words, counts),
+      badge: bookBadge(book.words, counts),
+      touchedAt: lastTouchedAt(book),
+    };
+  }), [vocabularySheets]);
 
-  // if (isVocabularySheetsLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center h-full">
-  //       <p>로딩 중...</p>
-  //     </div>
-  //   );
-  // }
+  const careCount = books.filter((row) => row.care > 0).length;
 
-  // updatedAt 기준으로 정렬된 단어장 목록
-  const sortedVocabularySheets = [...vocabularySheets].sort((a, b) =>
-    new Date(b.updatedAt) - new Date(a.updatedAt)
-  );
+  const visible = useMemo(() => {
+    if (filter === 'care') return books.filter((row) => row.care > 0);
+    if (filter === 'recent') return [...books].sort((a, b) => b.touchedAt - a.touchedAt);
+    return books;
+  }, [books, filter]);
 
   const handleCardClick = (id) => {
+    vibrate({ duration: 5 });
     pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, {
       smFull: true,
-      closeOnBackdropClick: true
+      closeOnBackdropClick: true,
     });
   };
 
-  // 암기 상태별 단어 개수 계산 함수 (MemorizationStatus와 동일한 로직)
-  const calculateMemorizationStats = (words) => {
-    if (!words || words.length === 0) {
-      return { unlearned: 0, leaf: 0, plant: 0, carrot: 0 };
-    }
-
-    const stats = {
-      unlearned: 0,  // 미학습 (EggCrack)
-      leaf: 0,       // 단기 (Leaf, interval < 10)
-      plant: 0,      // 중기 (Plant, interval < 60)
-      carrot: 0      // 장기 (Carrot, interval >= 60)
-    };
-
-    words.forEach(word => {
-      // FSRS 기반 암기 상태 판단
-      const fsrs = word.fsrs;
-      const stability = fsrs?.stability ?? 0;
-
-      // 미학습 상태 체크
-      if (!fsrs || fsrs.state === 'new' || !fsrs.state) {
-        stats.unlearned++;
-        return;
-      }
-
-      // 암기 상태 판단
-      if (stability < 10) {
-        stats.leaf++;
-      } else if (stability < 60) {
-        stats.plant++;
-      } else {
-        stats.carrot++;
-      }
-    });
-
-    return stats;
+  const handleAddBook = () => {
+    vibrate({ duration: 5 });
+    showVocabularyManageNewBottomSheet();
   };
 
-  const hasOverdueWords = (words) => {
-    if (!words || words.length === 0) return false;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return words.some(word => {
-      const nextReview = word.fsrs?.next_review;
-      if (!nextReview) return false;
-      const reviewDate = new Date(nextReview);
-      reviewDate.setHours(0, 0, 0, 0);
-      return reviewDate < today;
-    });
-  };
+  const chips = [
+    { key: 'all', label: '전체', count: books.length },
+    { key: 'care', label: '돌봄 필요', count: careCount },
+    { key: 'recent', label: '최근 학습', count: null },
+  ];
 
   return (
     <motion.div
       className="
-        flex flex-col 
+        flex flex-col
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
-        px-[16px] py-[10px]
         overflow-y-auto
       "
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
-      {/* 
-      <div className="
-        top 
-        relative
-        flex flex-col gap-[15px]
-        pt-[30px] px-[20px] pb-[20px]
-        mb-[15px]
-        rounded-[12px]
-        bg-primary-main-100 dark:bg-layout-gray-dark
-      ">
-        <div
-          className="
-            absolute top-[0] left-[0]
-            flex items-center justify-between
-            w-full
-            px-[14px]
-            translate-y-[-20%]
-          ">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-            <img
-              key={item}
-              src={note_ring}
-              alt="노트 위 고리 이미지"
+      {/* 필터 칩 — 읽기만 하는 숫자 대신 눌러서 걸러지는 숫자를 둔다 (시안 §4) */}
+      <div className="flex gap-[6px] shrink-0 px-[16px] pb-[10px] overflow-x-auto">
+        {chips.map((chip) => {
+          const on = filter === chip.key;
+          return (
+            <button
+              key={chip.key}
+              type="button"
+              onClick={() => {
+                vibrate({ duration: 5 });
+                setFilter(chip.key);
+              }}
+              className={`
+                flex items-center gap-[4px] shrink-0
+                h-[30px] px-[11px] rounded-full
+                text-[12.5px] font-[700] tracking-[-0.02em] whitespace-nowrap
+                ${on
+                  ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+                  : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
+              `}
+            >
+              {chip.label}
+              {chip.count !== null && <b className="font-[800]">{chip.count}</b>}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col gap-[10px] px-[16px] pb-[20px]">
+        {visible.map(({ book, counts, thumb, badge }) => {
+          const BadgeIcon = badge ? BADGE_ICON[badge.kind] : null;
+
+          return (
+            <motion.button
+              key={book.id}
+              type="button"
+              onClick={() => handleCardClick(book.id)}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               className="
-                note_ring
-                w-[12px] h-[24px]
+                flex items-center gap-[12px] w-full p-[12px] text-left
+                rounded-[12px]
+                border border-farm-line
+                bg-farm-canvas dark:bg-layout-gray-dark
               "
-            />
-          ))}
-        </div>
-        <h2 className="text-[16px] font-[700]">{today_sentence.title}</h2>
-        <div className="flex flex-col gap-[10px]">
-          <span className="text-[14px] font-[600]">
-            {today_sentence.sentence}
-          </span>
-          <p className="text-[12px] font-[400]">
-            {today_sentence.translation}
-          </p>
-        </div>
-      </div> 
-      */}
+            >
+              <img
+                src={BOOK_THUMB[thumb]}
+                alt={BOOK_THUMB_ALT[thumb]}
+                draggable={false}
+                className="w-[64px] h-[40px] shrink-0 object-contain select-none"
+              />
 
-      <div className="middle">
-        <ul
-          className="flex flex-col gap-[15px]"
-        >
-          {sortedVocabularySheets.map((item) => {
-            const memorizationStats = calculateMemorizationStats(item.words);
-            const overdue = hasOverdueWords(item.words);
-
-            return (
-              <motion.li
-                key={item.id}
-                style={overdue ? undefined : { backgroundColor: resolveVocaBookBackground(item.color.background, isDark) }}
-                className={`
-                  flex flex-col gap-[15px]
-                  p-[20px]
-                  rounded-[12px]
-                  cursor-pointer
-                  ${overdue ? 'bg-status-error-100 dark:bg-status-error-dark' : ''}
-                `}
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleCardClick(item.id);
-                }}
-                whileTap={{ scale: 0.96 }}
-                whileHover={{ scale: 1.04 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-[6px]">
-                    <h3 className="text-[16px] font-[700] text-layout-black dark:text-layout-white">{item.title}</h3>
-                    {item.vocaBookStoreId != null && (
-                      <Storefront
-                        size={14}
-                        weight="fill"
-                        className="shrink-0 text-layout-gray-400 dark:text-layout-gray-100"
-                        aria-label="서점에서 제공받은 단어장"
-                      />
-                    )}
-                  </div>
-                  {overdue && (
-                    <div className="flex items-center gap-[3px] h-[16px] bg-status-error-500 dark:bg-[#ffffff1a] px-[5px] rounded-full">
-                      <Timer size={10} weight="fill" className="text-white" />
-                      <span className="text-[10px] font-[600] text-white">복습 지연</span>
-                    </div>
+              <span className="flex-1 min-w-0">
+                <span className="flex items-center gap-[6px]">
+                  <span className="flex-1 min-w-0 truncate text-[15px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+                    {book.title}
+                  </span>
+                  {book.vocaBookStoreId != null && (
+                    <Storefront
+                      size={14}
+                      weight="fill"
+                      className="shrink-0 text-layout-gray-400 dark:text-layout-gray-200"
+                      aria-label="서점에서 제공받은 단어장"
+                    />
                   )}
-                </div>
+                  {badge && (
+                    <span
+                      className={`
+                        flex items-center gap-[3px] shrink-0
+                        px-[7px] py-[2px] rounded-full
+                        text-[11px] font-[800] tracking-[-0.02em]
+                        ${BADGE_CLASS[badge.kind]}
+                      `}
+                    >
+                      {BadgeIcon && <BadgeIcon size={10} weight="bold" />}
+                      {badge.text}
+                    </span>
+                  )}
+                </span>
 
-                <div className="hidden">
-                  <div className="btns">
-                    <button><PencilSimple /></button>
-                    <button><Trash /></button>
-                  </div>
-                </div>
+                {/* 단계별 개수 — 아이콘은 홈의 팻말·단어 목록 행과 같은 작물 에셋이다 */}
+                <span className="flex gap-[10px] mt-[6px]">
+                  {CROP_ORDER.map((stage) => (
+                    <span
+                      key={stage}
+                      className={`
+                        flex items-center gap-[3px]
+                        text-[12.5px] font-[800] tracking-[-0.03em]
+                        ${counts[stage] === 0 ? 'opacity-[0.32]' : ''}
+                      `}
+                      style={{ color: `var(--crop-${stage})` }}
+                    >
+                      <CropImage
+                        stage={stage}
+                        health={HEALTH_STATES.FRESH}
+                        size={20}
+                        alt={CROP_LABEL[stage]}
+                        className="object-bottom"
+                      />
+                      {counts[stage]}
+                    </span>
+                  ))}
+                </span>
+              </span>
+            </motion.button>
+          );
+        })}
 
-                {/* 암기 상태별 단어 개수 + 총 단어 수 */}
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-[12px] flex-wrap">
-                    <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3] dark:bg-[#FFFCF3]/20">
-                        <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
-                      </div>
-                      <span className="text-[11px] font-[500] text-[#9D835A]">
-                        {memorizationStats.unlearned || 0}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB] dark:bg-[#f2ffeb]/20">
-                        <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
-                      </div>
-                      <span className="text-[11px] font-[500] text-[#77CE4F]">
-                        {memorizationStats.leaf || 0}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE] dark:bg-[#EBFFEE]/20">
-                        <Plant size={8} weight="fill" className="text-[#38CE38]" />
-                      </div>
-                      <span className="text-[11px] font-[500] text-[#38CE38]">
-                        {memorizationStats.plant || 0}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-[4px]">
-                      <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8] dark:bg-[#FFF8E8]/20">
-                        <Carrot size={8} weight="fill" className="text-[#F68300]" />
-                      </div>
-                      <span className="text-[11px] font-[500] text-[#F68300]">
-                        {memorizationStats.carrot || 0}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-[400] text-layout-gray-300">{item.total || 0}</span>
-                </div>
-              </motion.li>
-            )
-          })}
-        </ul>
+        <button
+          type="button"
+          onClick={handleAddBook}
+          className="
+            flex items-center justify-center gap-[6px]
+            h-[48px] rounded-[12px]
+            border-[1.5px] border-dashed border-layout-gray-100 dark:border-layout-gray-dark
+            text-[14px] font-[700] tracking-[-0.02em] text-layout-gray-300
+          "
+        >
+          <Plus size={15} weight="bold" className="text-layout-gray-200" />
+          단어장 만들기
+        </button>
       </div>
     </motion.div>
   );
 };
 
-export default Main; 
+export default Main;

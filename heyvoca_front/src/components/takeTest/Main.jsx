@@ -24,6 +24,7 @@ import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar from '../farm/FarmStatusBar';
+import { removePendingReplantIds } from '../../utils/replantPending';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -365,6 +366,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       return;
     }
     loggedVocaIdsRef.current.add(vocaId);
+    // 학습 시안 §6 — 삽은 누른 순간이 아니라 **진단 정답**에서 빠진다.
+    // 확정은 서버(restore.complete_diagnosis)가 하고, 여기서는 화면 표시용 예약 기록만 지운다.
+    if (isDiagnosisQuestion(question) && payload.was_correct) {
+      removePendingReplantIds([vocaId]);
+    }
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);

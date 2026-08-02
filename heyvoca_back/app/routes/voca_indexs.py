@@ -93,6 +93,38 @@ def build_voca_index_response(user_voca):
 
 
 # 사용자 사전 전체 조회
+def _farm_state(game, fsrs, now, farm_answer, farm_growth, farm_health):
+    """단어 1개의 농장 상태 — 화면이 그대로 쓰는 형태.
+
+    게임 행이 아직 없는 단어(한 번도 학습하지 않음)는 보유 씨앗이다. 행을 만들지는
+    않는다 — 목록 조회가 쓰기를 하면 단어 수천 개인 사용자의 첫 진입이 통째로 느려진다.
+    """
+    from app.models.models import HealthState, VisualStage
+
+    stage = (game.visual_stage if game else None) or VisualStage.UNPLANTED_SEED
+    is_golden = stage == VisualStage.GOLDEN
+    due_at = farm_growth.parse_fsrs_due(fsrs)
+    stability = farm_growth._stability(fsrs)
+
+    h = farm_health.compute_health(
+        due_at, stability, now,
+        visual_stage=stage,
+        protection_days=(game.protection_days if game else 0) or 0,
+        is_golden=is_golden,
+        already_rotten=bool(game and game.health_state == HealthState.ROTTEN),
+    )
+    return {
+        'stage': stage,
+        'crop': farm_answer.CROP_KEY.get(stage, 'seed'),
+        'highest_stage': (game.highest_stage if game else None) or stage,
+        'health': h['state'],
+        'pct': farm_answer.stage_progress(game, fsrs, now) if game else 0,
+        'days_to_review': farm_health.ceil_days(due_at - now) if due_at else None,
+        'days_to_rot': h['days_to_rot'],
+        'studiable': farm_health.is_studiable(h['state']),
+    }
+
+
 @voca_indexs_bp.route('', methods=['GET'])
 @jwt_required
 def get_voca_indexs():
@@ -105,6 +137,24 @@ def get_voca_indexs():
     ).filter(
         UserVoca.user_id == user_id
     ).all()
+
+    # ── 농장 상태(당근 농장 V2) ──
+    # 화면이 FSRS 로 단계·건강을 다시 계산하면 서버 판정과 어긋난다. 특히
+    # 보유 씨앗/심은 씨앗 구분과 황금·보호 일수는 FSRS 만으로는 알 수 없어,
+    # 같은 단어가 홈에서는 새싹인데 단어장에서는 씨앗으로 보이는 일이 생긴다.
+    # 여기서 한 번에 실어 보낸다 — 사용자당 1쿼리다.
+    from app.models.models import UserVocaGame
+    from app.services.game.farm_v2 import answer as farm_answer
+    from app.services.game.farm_v2 import growth as farm_growth
+    from app.services.game.farm_v2 import health as farm_health
+
+    games = {
+        g_.user_voca_id: g_
+        for g_ in db.session.query(UserVocaGame)
+        .filter(UserVocaGame.user_id == user_id)
+        .all()
+    }
+    now = datetime.datetime.utcnow()
 
     data = []
     for uv in user_vocas:
@@ -129,6 +179,8 @@ def get_voca_indexs():
             'vocaIndexId': uv.id,
             'fsrs': fsrs,
             'vocaBooks': voca_books,
+            'farm': _farm_state(games.get(uv.id), fsrs, now,
+                                farm_answer, farm_growth, farm_health),
             'createdAt': (uv.created_at).isoformat() + 'Z' if uv.created_at else None,
             'updatedAt': (uv.updated_at).isoformat() + 'Z' if uv.updated_at else None,
         })

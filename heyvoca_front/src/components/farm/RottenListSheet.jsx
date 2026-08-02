@@ -15,6 +15,7 @@ import { cropLabel } from '../../utils/crop';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import ReplantConfirmNewBottomSheet from '../newBottomSheet/ReplantConfirmNewBottomSheet';
 import RecoverConfirmNewBottomSheet from '../newBottomSheet/RecoverConfirmNewBottomSheet';
+import { addPendingReplantIds, removePendingReplantIds } from '../../utils/replantPending';
 
 const PAGE_SIZE = 20;
 /** 기획 7.4 — 한 번에 몰아치지 않는다. 오늘 가볍게 돌볼 기본 묶음 */
@@ -222,6 +223,9 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       dropDone(done);
       setOwned((prev) => ({ ...prev, SHOVEL: res?.data?.shovel_left ?? prev.SHOVEL }));
       setNotice(`작물 ${done.length}개를 다시 심었어요. 오늘 학습에서 진단 문제로 만나요.`);
+      // 학습 시안 §6 — 다음 학습에서 이 단어를 "다시 심기 진단"으로 그린다.
+      // 서버가 진단 표시를 내려주지 않아 예약 id 를 기기에 적어 둔다(utils/replantPending 참조).
+      addPendingReplantIds(done);
       setUndoState({ ids: done, rows: removedRows, until: cancelUntil(res?.data?.cancel_until) });
       onChanged?.();
     } else {
@@ -263,6 +267,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
         const has = new Set(prev.map((it) => it.user_voca_id));
         return [...rows.filter((it) => !has.has(it.user_voca_id)), ...prev];
       });
+      removePendingReplantIds(undoState.ids);
       setUndoState(null);
       setNotice('다시 심기를 되돌렸어요. 삽도 그대로 돌려놓았어요.');
       loadItems();

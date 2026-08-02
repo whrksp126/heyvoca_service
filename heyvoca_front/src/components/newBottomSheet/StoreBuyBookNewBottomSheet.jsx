@@ -1,101 +1,161 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { purchaseBookApi } from '../../api/store';
-import { StorePurchaseResultNewBottomSheet } from './StorePurchaseResultNewBottomSheet';
+import {
+  StorePurchaseResultNewBottomSheet, PurchaseResultBody, ResultEm,
+} from './StorePurchaseResultNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
-import gem from '../../assets/images/gem.png';
+import {
+  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead,
+  RecvBox, RecvRow, RecvHr, Arrow, Up, Down, HintB,
+} from './purchaseParts';
 import { vibrate } from '../../utils/osFunction';
+import emptyBookImg from '../../assets/images/farm/book-empty.png';
 
-export const StoreBuyBookNewBottomSheet = ({ options }) => {
-    "use memo";
-    const { popNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
-    const { userProfile, setUserProfile } = useUser();
-    const [isLoading, setIsLoading] = useState(false);
+/**
+ * 묶음 단어장 구매 확인 시트 (수량이 이미 정해진 상품을 바로 확인하는 자리).
+ *
+ * 시안 정본: shop-purchase.txt §3(확인 시트가 반드시 보여줘야 하는 세 값),
+ *            shop-result.txt §2④(성공) · §3⑦⑧(보석 부족 · 처리 실패) · §5(리턴 공통 규격).
+ *
+ * 수량 스테퍼가 있는 자리는 `BuyEmptyBookNewBottomSheet` 다. 여기는 수량 고정 묶음용이라
+ * 스테퍼 없이 확인만 받는다 — 나머지 규격(결제 요약 · 실패 갈래 · 리턴 화면)은 같다.
+ */
+export const StoreBuyBookNewBottomSheet = ({ options = {} }) => {
+  "use memo";
 
-    const { packageName, cost, amount, image } = options;
+  const navigate = useNavigate();
+  const { popNewBottomSheet, openNewBottomSheet, clearStack } = useNewBottomSheetActions();
+  const { popNewFullSheet } = useNewFullSheetActions();
+  const { userProfile, setUserProfile } = useUser();
+  const [status, setStatus] = useState('confirm'); // confirm | loading | short | error
 
-    const handleBuy = async () => {
-        vibrate({ duration: 5 });
-        if (userProfile.gem_cnt < cost) {
-            // 보석 부족 → 구매 시트를 보석 구매 바텀시트로 교체
-            openNewBottomSheet(GemPurchaseNewBottomSheet, {
-                notice: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
-            });
-            return;
-        }
+  const { packageName, cost = 0, amount = 1, image } = options;
 
-        setIsLoading(true);
-        try {
-            const result = await purchaseBookApi(amount);
-            if (result && result.code === 200) {
-                // 유저 정보 업데이트
-                setUserProfile(prev => ({
-                    ...prev,
-                    gem_cnt: result.data.gem_cnt,
-                    book_cnt: result.data.book_cnt
-                }));
+  const gemCnt = Number(userProfile?.gem_cnt) || 0;
+  const bookCnt = Number(userProfile?.book_cnt) || 0;
+  const price = Number(cost) || 0;
+  const qty = Number(amount) || 1;
+  const shortage = Math.max(0, price - gemCnt);
+  const n = (v) => v.toLocaleString('ko-KR');
 
-                // 성공 결과 표시 - 기존 스택을 대체하여 확인 창이 남지 않도록 함
-                openNewBottomSheet(
-                    StorePurchaseResultNewBottomSheet,
-                    {
-                        options: {
-                            success: true,
-                            packageName: packageName,
-                            image: image
-                        }
-                    }
-                );
-            } else {
-                alert(result?.message || '구매 중 오류가 발생했습니다.');
-            }
-        } catch (error) {
-            console.error('구매 오류:', error);
-            alert('서버 오류가 발생했습니다.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  const close = () => {
+    vibrate({ duration: 5 });
+    popNewBottomSheet();
+  };
 
+  const openSuccess = (remainGem, nextBookCnt) => {
+    openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
+      options: {
+        success: true,
+        image: image || emptyBookImg,
+        plot: !image,
+        title: <>빈 단어장 <ResultEm>{n(qty)}개</ResultEm>를<br />만들었어요</>,
+        pill: { from: `단어장 ${n(bookCnt)}개`, to: `${n(nextBookCnt)}개` },
+        secondary: { label: '확인' },
+        primary: {
+          label: '단어 넣으러 가기',
+          onClick: () => {
+            clearStack();
+            popNewFullSheet();
+            navigate('/vocabulary-sheets');
+          },
+        },
+        caption: <>남은 보석 <HintB>{n(remainGem)}</HintB></>,
+      },
+    });
+  };
+
+  const handleBuy = async () => {
+    if (status === 'loading') return;
+    vibrate({ duration: 5 });
+    if (gemCnt < price) { setStatus('short'); return; }
+
+    setStatus('loading');
+    const res = await purchaseBookApi(qty);
+    if (res?.code !== 200 || !res?.data) { setStatus('error'); return; }
+
+    const remainGem = Number(res.data.gem_cnt);
+    const nextBookCnt = Number(res.data.book_cnt);
+    setUserProfile((prev) => ({ ...prev, gem_cnt: remainGem, book_cnt: nextBookCnt }));
+    openSuccess(remainGem, nextBookCnt);
+  };
+
+  // ── ⑦ 보석 부족 ────────────────────────────────────────
+  if (status === 'short') {
     return (
-        <div className="flex flex-col gap-[30px] items-center pt-[40px] pb-[20px] px-[20px] relative">
-            {/* 타이틀 구역 */}
-            <div className="w-full flex flex-col items-center justify-center">
-                <h1 className="text-[18px] font-bold leading-[1.4] text-layout-black dark:text-layout-white text-center tracking-[-0.36px]">
-                    {packageName}를 구매할까요?
-                </h1>
-            </div>
-
-            {/* 버튼 구역 */}
-            <div className="w-full flex gap-[15px] items-start">
-                <motion.button
-                    onClick={() => {
-                        vibrate({ duration: 5 });
-                        popNewBottomSheet();
-                    }}
-                    className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-white font-bold text-[16px] text-layout-white dark:text-layout-black flex items-center justify-center"
-                    whileTap={{ scale: 0.95 }}
-                >
-                    취소
-                </motion.button>
-                <motion.button
-                    onClick={handleBuy}
-                    disabled={isLoading}
-                    className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-white font-bold text-[16px] text-layout-white dark:text-layout-black flex items-center justify-center gap-[3px]"
-                    whileTap={{ scale: 0.95 }}
-                >
-                    {isLoading ? (
-                        <div className="animate-spin rounded-full h-[20px] w-[20px] border-b-2 border-white"></div>
-                    ) : (
-                        <>
-                            <img src={gem} alt="heart" className="w-[20px] h-[18px]" />
-                            {cost}개로 구매
-                        </>
-                    )}
-                </motion.button>
-            </div>
-        </div>
+      <div className={SHEET_SHELL}>
+        <Grab />
+        <PurchaseResultBody
+          success={false}
+          kind="shortage"
+          title={<>보석이 <ResultEm>{n(shortage)}개</ResultEm> 모자라요</>}
+        />
+        <Btns>
+          <Btn tone="sec" onClick={close}>나중에 하기</Btn>
+          <Btn
+            tone="pri"
+            onClick={() => { vibrate({ duration: 5 }); openNewBottomSheet(GemPurchaseNewBottomSheet, {}); }}
+          >
+            보석 충전
+          </Btn>
+        </Btns>
+      </div>
     );
+  }
+
+  // ── ⑧ 처리 실패 ────────────────────────────────────────
+  if (status === 'error') {
+    return (
+      <div className={SHEET_SHELL}>
+        <Grab />
+        <PurchaseResultBody
+          success={false}
+          kind="error"
+          title="단어장을 받지 못했어요"
+          desc="연결이 잠시 끊겼어요."
+        />
+        <Btns>
+          <Btn tone="sec" onClick={close}>닫기</Btn>
+          <Btn tone="pri" onClick={() => setStatus('confirm')}>다시 시도</Btn>
+        </Btns>
+      </div>
+    );
+  }
+
+  // ── 구매 확인 ──────────────────────────────────────────
+  return (
+    <div className={`${SHEET_SHELL} max-h-[calc(90vh-40px)] overflow-y-auto`}>
+      <Grab />
+
+      <SheetHead
+        image={image || emptyBookImg}
+        title={packageName || `빈 단어장 ${n(qty)}개`}
+        desc="단어가 들어 있지 않은 밭이에요"
+      />
+
+      <RecvBox>
+        <RecvRow k="결제" tight><Gem n={price} /></RecvRow>
+        <RecvHr />
+        <RecvRow k="보유 보석" tight>
+          <span>{n(gemCnt)}</span><Arrow /><Down>{n(Math.max(0, gemCnt - price))}</Down>
+        </RecvRow>
+        <RecvRow k="단어장">
+          <span>{n(bookCnt)}개</span><Arrow /><Up>{n(bookCnt + qty)}개</Up>
+        </RecvRow>
+      </RecvBox>
+
+      <Btns>
+        <Btn tone="sec" onClick={close} disabled={status === 'loading'}>취소</Btn>
+        <Btn tone="pri" onClick={handleBuy} disabled={status === 'loading'}>
+          {status === 'loading' ? <BtnSpinner /> : <><Gem n={price} size="s" />개로 구매</>}
+        </Btn>
+      </Btns>
+    </div>
+  );
 };
+
+export default StoreBuyBookNewBottomSheet;

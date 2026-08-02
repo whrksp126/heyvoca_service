@@ -1,7 +1,7 @@
 // src/App.jsx
 
 import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -11,7 +11,6 @@ import VocabularySheets from './pages/VocabularySheets';
 import BookStore from './pages/BookStore';
 import Dictionary from './pages/Dictionary';
 import Class from './pages/Class';
-import Farm from './pages/Farm';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 import Study from './pages/Study';
@@ -49,7 +48,13 @@ const AppLayout = () => {
       <Route path="/initial-profile" element={<InitialProfile />} />
 
       <Route path="/home" element={<Home />} />
-      <Route path="/farm" element={<Farm />} />
+      {/* /farm(농장 상세 · 단계별 작물 목록)은 시안에 없는 화면이라 제거했다.
+          홈 시안 §10 화면 구조는 히어로·보석 칩·주 CTA·연속 학습·성과 카드·바텀 네비뿐이고,
+          §11 의 첫 탭 "농장"은 홈 그 자체다. 단계별 목록은 단어장 시안 4절(단어장 안)이,
+          황금 당근은 마이페이지 시안 4절(창고 · 황금 온실)이 이미 맡고 있다.
+          다만 이 앱에는 catch-all 라우트가 없어서 지우기만 하면 /farm 이 빈 화면이 된다
+          (앱 WebView 히스토리·북마크에 남아 있을 수 있다) → 홈으로 넘긴다. */}
+      <Route path="/farm" element={<Navigate to="/home" replace />} />
       <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
       <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
       <Route path="/dictionary" element={<Dictionary />} />

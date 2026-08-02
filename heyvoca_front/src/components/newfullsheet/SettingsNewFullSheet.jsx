@@ -27,7 +27,8 @@ const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
 const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
 
 // 하루 도구 구매 지출 상한 (기획 9.4). 백엔드 shop.DAILY_GEM_SPEND_LIMIT 과 같은 값이며
-// 사용자별 컬럼이 아직 없어 서버가 전역 고정값으로 다룬다 → 여기서는 읽기 전용으로 보여준다.
+// 사용자별 컬럼이 아직 없어 서버가 전역 고정값으로 다룬다.
+// 시안대로 값 + 캐럿을 그대로 두되(설정 메인 ①), 바꿀 API 가 생기기 전까지 눌러도 이동하지 않는다.
 const DAILY_GEM_SPEND_LIMIT = 30;
 
 /**
@@ -65,7 +66,6 @@ const SettingsNewFullSheet = () => {
           title="하루 도구 구매 한도"
           sub={`보석 ${DAILY_GEM_SPEND_LIMIT}개까지 살 수 있어요`}
           value={`${DAILY_GEM_SPEND_LIMIT}보석`}
-          caret={false}
         />
         <SettingRow
           icon={<HandHeart size={iconSize} />}

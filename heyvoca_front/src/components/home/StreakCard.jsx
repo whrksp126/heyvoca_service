@@ -25,8 +25,8 @@ import { CROP_ASSETS } from '../farm/CropImage';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
-import { useOverlayActions } from '../../context/OverlayContext';
-import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -34,7 +34,7 @@ const StreakCard = () => {
   "use memo";
 
   const { lastSessionResult } = useVocabulary();
-  const { showAwaitOverlay } = useOverlayActions();
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const [streak, setStreak] = useState(null);
 
   const loadStreak = useCallback(async () => {
@@ -86,11 +86,13 @@ const StreakCard = () => {
     [days, required]
   );
 
+  // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
+  // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
   const handleBest = () => {
     vibrate({ duration: 5 });
-    showAwaitOverlay(AttendanceCalendarOverlay, {
-      initialYear: new Date().getFullYear(),
-      initialMonth: new Date().getMonth() + 1,
+    pushNewFullSheet(FarmVisitCalendarSheet, {}, {
+      smFull: true,
+      closeOnBackdropClick: true,
     });
   };
 

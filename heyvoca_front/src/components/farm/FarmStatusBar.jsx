@@ -172,7 +172,9 @@ const FarmStatusBar = ({
           부패 진단만 막대 대신 `.st` 문구를 쓴다(6절). */}
       <div className={`relative z-[1] flex flex-1 min-w-0 items-center ${compact ? 'gap-[6px]' : 'gap-[8px]'}`}>
         {diagnosis ? (
-          <span className="flex-shrink-0 text-[12.5px] font-[800] tracking-[-0.02em] text-[#B54708]">
+          /* 라이트는 시안 값(#B54708) 그대로. 다크는 아래 복습일 강조와 같은 이유로
+             밝은 쪽으로 되돌린다 — #B54708 이 다크 surface(#2E2E2E) 위에서 안 읽힌다. */
+          <span className="flex-shrink-0 text-[12.5px] font-[800] tracking-[-0.02em] text-[#B54708] dark:text-secondary-yellow-400">
             삽 1개를 씁니다
           </span>
         ) : (

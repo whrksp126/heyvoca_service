@@ -60,10 +60,10 @@ export const WithdrawNewBottomSheet = ({
       </div>
 
       {/* 환불되지 않는다는 사실은 반드시 적는다 (시안 4절) */}
-      <div className="flex gap-[8px] mt-[12px] px-[11px] py-[10px] rounded-[10px] text-[11.5px] leading-[1.55] tracking-[-0.02em] bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-[#B54708] dark:text-[#FDB022]">
+      <div className="flex gap-[8px] mt-[12px] px-[11px] py-[10px] rounded-[10px] text-[11px] leading-[1.55] tracking-[-0.02em] bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-[#B54708] dark:text-[#FDB022] [&_b]:font-[700] [&_b]:text-[#93370D] dark:[&_b]:text-[#FEC84B]">
         <Warning size={13} className="shrink-0 mt-[1px] text-[#FB6514]" />
         <span>
-          남은 보석과 도구는 <b className="font-[700]">환불되지 않아요.</b> 같은 계정으로 다시 가입해도 복구되지 않아요.
+          남은 보석과 도구는 <b>환불되지 않아요.</b> 같은 계정으로 다시 가입해도 복구되지 않아요.
         </span>
       </div>
 

@@ -15,6 +15,7 @@ import ProgressSplash from '../components/common/ProgressSplash';
 import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
+import { getPendingReplantIds } from '../utils/replantPending';
 
 // 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
 // (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
@@ -286,6 +287,11 @@ const TakeTest = () => {
     // allWords(오답 선택지용)는 로컬 vocabularySheets에서 구성
     let allWords = buildAllWordsPool(vocabularySheetId);
 
+    // 부패 진단(학습 시안 §6) — 삽으로 다시 심기를 예약한 단어는 이번 학습에서 진단 문제로 만난다.
+    // 서버 응답에 진단 표시가 없어(pending_action / pending_targets 미노출) 기기에 적어 둔
+    // 예약 id 로 표시한다. 서버가 표시를 내려주면 아래 두 줄만 지우면 된다.
+    const pendingReplant = getPendingReplantIds();
+
     const selectedWords = res.data.items.map(item => ({
       id: item.user_voca_id,
       vocaIndexId: item.user_voca_id,
@@ -297,6 +303,8 @@ const TakeTest = () => {
       priorityBucket: item.priority_bucket,
       suggestedQuestionType: item.suggested_question_type ?? null,
       reason: item.reason ?? null,
+      // 서버가 표시를 내려주면 그쪽이 정본이다
+      isDiagnosis: item.pending_action === 'REPLANT' || pendingReplant.has(String(item.user_voca_id)),
     }));
 
     if (allWords.length === 0) {
@@ -545,7 +553,7 @@ const TakeTest = () => {
         title: (
           <>
             학습할 단어가 남아있어요.<br />
-            학습을 종료하시겠습니까?😢
+            학습을 종료할까요?
           </>
         ),
         btns: {
@@ -754,7 +762,13 @@ const TakeTest = () => {
         <Header
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
           onBackClick={handleStopLearning}
-          questionType={testQuestions[progressIndex]?.questionType}
+          /* 학습 시안 §6 — 부패 진단은 헤더가 "알맞은 뜻을 선택하세요"가 아니라
+             "다시 심기 진단"이다. 이 화면이 일반 학습과 다르다는 첫 신호다. */
+          questionType={
+            testQuestions[progressIndex]?.isDiagnosis
+              ? 'multipleChoiceDiagnosis'
+              : testQuestions[progressIndex]?.questionType
+          }
         />
         <Main
           testQuestions={testQuestions}

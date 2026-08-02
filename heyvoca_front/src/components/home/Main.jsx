@@ -42,6 +42,7 @@ import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermission
 
 import FarmHero from '../farm/FarmHero';
 import CropImage, { CROP_ASSETS } from '../farm/CropImage';
+import RottenListSheet from '../farm/RottenListSheet';
 import FarmCta, {
   CRITICAL_CTA_THRESHOLD,
   HOME_STATES,
@@ -75,7 +76,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges } = useStats();
+  const { todaySummary, farmOverview, todayChanges, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -88,6 +89,9 @@ const Main = () => {
   const criticalCnt = today.critical_first ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
   const golden = counts.golden ?? 0;
+  const rottenCnt = health.rotten ?? 0;
+  const inventory = farmOverview?.items ?? {};
+  const restoreItemCnt = (inventory.SHOVEL ?? 0) + (inventory.NUTRIENT ?? 0);
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
 
   // 농장 조회 전에는 §12 5번(빈 밭)으로 떨어지지 않게 2번(가장 흔한 상태)을 깔아 둔다.
@@ -171,10 +175,34 @@ const Main = () => {
   const showWaterStrip = criticalCnt > 0 && criticalCnt < CRITICAL_CTA_THRESHOLD;
   // §1 완료 프레임 — 급한 일이 없어 seed 변형으로 다음 학습거리를 제안한다
   const showSeedStrip = homeState === HOME_STATES.DONE && unplanted > 0;
+  // §8 amber 변형 — "썩은 작물 N개를 되살릴 수 있어요 · 회복 아이템 보유 시 안내".
+  // 시안 표에 (예약)으로 적힌 변형이지만 배경·문구·조건이 모두 규정돼 있고,
+  // 돌볼 작물(부패) 목록으로 가는 유일한 진입점이라 여기에 둔다(보고 참조).
+  const showAmberStrip = rottenCnt > 0 && restoreItemCnt > 0;
+
+  // 돌볼 작물 목록 — 도구가 모자라면 상점 도구 탭을 그 위에 얹는다.
+  // 상점을 닫으면 고르던 목록이 그대로 남아 선택이 날아가지 않는다.
+  const openToolShop = () => {
+    pushNewFullSheet(StoreNewFullSheet, {
+      initialTab: 'tools',
+      onGoRotten: () => openRottenSheet(),
+      onInventoryChanged: refreshStats,
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
+
+  const openRottenSheet = () => {
+    pushNewFullSheet(RottenListSheet, {
+      onChanged: refreshStats,
+      onOpenShop: openToolShop,
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
 
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
-    <div className="flex flex-col h-screen bg-farm-canvas dark:bg-layout-black">
+    /* isolate — 히어로(z-1)와 본문(z-2)의 겹침 순서는 홈 **안에서만** 유효해야 한다.
+       stacking context 를 끊지 않으면 본문 카드(z-2)가 화면 전체 기준으로 떠올라
+       바텀 네비(fixed · z-auto)를 덮어 버린다(스크롤 영역이 길어지는 순간 네비가 사라진다). */
+    <div className="isolate flex flex-col h-screen bg-farm-canvas dark:bg-layout-black">
 
       <FarmHero counts={counts} health={health} state={view.mood}>
         {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
@@ -263,14 +291,27 @@ const Main = () => {
           />
         )}
 
-        {/* 성과 카드 — 여기부터 스크롤 영역(§10). 첫 화면에 반쯤 걸쳐 더 있음을 알린다 */}
-        <GrewTodayCard items={grewItems} />
-        {golden > 0 && (
-          <GoldenCarrotCard
-            count={golden}
-            onMore={() => { vibrate({ duration: 5 }); navigate('/farm'); }}
+        {/* §8 amber 스트립 — 되살릴 수 있는 썩은 작물이 있고 도구를 가진 사용자에게만 */}
+        {showAmberStrip && (
+          <InfoStrip
+            variant="amber"
+            icon={<CropImage stage="leaf" health={HEALTH_STATES.ROTTEN} size={24} />}
+            label={`썩은 작물 ${rottenCnt}개를 되살릴 수 있어요`}
+            onClick={openRottenSheet}
           />
         )}
+
+        {/* 성과 카드 — 여기부터 스크롤 영역(§10). 첫 화면에 반쯤 걸쳐 더 있음을 알린다.
+            §10 "오늘 자란 단어"는 조건부다(없으면 카드를 아예 띄우지 않는다).
+            "황금 당근"은 조건이 없다 — 시안 기본·위험 프레임 모두 이 카드가 서 있고,
+            위험 프레임에서는 오늘 자란 단어가 없는 자리를 이 카드가 대신한다.
+            그래서 개수가 0이어도 골격을 남긴다(그러지 않으면 스크롤 영역이 통째로 비어
+            "반쯤 걸쳐 더 있음을 알린다"가 성립하지 않는다). */}
+        <GrewTodayCard items={grewItems} />
+        <GoldenCarrotCard
+          count={golden}
+          onMore={() => { vibrate({ duration: 5 }); navigate('/mypage'); }}
+        />
 
         {/* §8 seed 스트립 — 급한 일이 없을 때 다음 학습거리를 제안한다 */}
         {showSeedStrip && (

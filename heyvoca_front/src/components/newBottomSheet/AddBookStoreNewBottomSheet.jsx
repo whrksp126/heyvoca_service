@@ -1,190 +1,228 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Seal } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useStats } from '../../context/StatsContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { deductGemApi } from '../../api/auth';
-import { showToast } from '../../utils/osFunction';
 import { vibrate } from '../../utils/osFunction';
-import { StorePurchaseResultNewBottomSheet } from './StorePurchaseResultNewBottomSheet';
+import {
+  StorePurchaseResultNewBottomSheet, PurchaseResultBody, ResultEm,
+} from './StorePurchaseResultNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
+import {
+  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead,
+  RecvBox, RecvRow, RecvHr, Arrow, Up, Down, InfoBox, EmBlue, HintB,
+} from './purchaseParts';
+import seedImg from '../../assets/images/farm/solo-healthy-seed.png';
 
+/**
+ * 서점 단어장 구매 확인 시트.
+ *
+ * 시안 정본: shop-purchase.txt §2⑥(단어장 구매 확인) · §3(확인 시트의 세 값) ·
+ *            §6(겹치는 단어를 사기 전에 말한다) · §7(산 것은 보유 씨앗이다),
+ *            shop-result.txt §2③(단어장 성공) · §3⑦⑧(보석 부족 · 처리 실패) · §6(실패를 네 갈래로).
+ *
+ * 전 버전은 "보석 N개로 단어장을 추가하시겠어요?" 한 문장이 전부였다(§3 이 지목한 그 화면).
+ * 시안이 요구하는 건 결제액 하나가 아니라 **세 값이 어떻게 바뀌는지**다 —
+ * 보석 잔액 · 보유 씨앗 · 단어장 수. 화살표는 늘 "지금 → 산 뒤" 방향이다.
+ *
+ * 실패는 한 화면으로 합치지 않는다(§6). 보석 부족에서 "다시 시도"는 반드시 또 실패하므로
+ * 본문을 한 줄로 줄인 뒤에도 **버튼만은 원인마다 다르게** 둔다.
+ */
 export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
-  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+  "use memo";
 
-  const { addBookStoreVocabularySheet } = useVocabulary();
-  // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
-  const { popNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
-  const { getUserProfile, setUserProfile } = useUser();
+  const navigate = useNavigate();
+  const { addBookStoreVocabularySheet, vocabularySheets } = useVocabulary();
+  const { popNewBottomSheet, openNewBottomSheet, clearStack } = useNewBottomSheetActions();
+  const { popNewFullSheet } = useNewFullSheetActions();
+  const { userProfile, setUserProfile } = useUser();
+  const { farmOverview, refreshStats } = useStats();
   const { refreshUnlock } = useOnboardingUnlock();
-  const [alertType, setAlertType] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-  useEffect(() => {
-    const userProfile = getUserProfile();
-    if (bookStoreVocabularySheet.gem == 0) {
-      setAlertType("free");
-    } else if (userProfile.gem_cnt < bookStoreVocabularySheet.gem) {
-      setAlertType("unavailable");
-    } else {
-      setAlertType("available");
-    }
-  }, [bookStoreVocabularySheet])
 
-  // React Compiler가 자동으로 useCallback 처리
-  const handleClose = () => {
-    if (isAdding) return; // 추가 중에는 닫기 방지
+  // confirm → loading → (성공: 결과 시트로 교체) | short | error
+  const [status, setStatus] = useState('confirm');
+
+  const name = bookStoreVocabularySheet?.name || '단어장';
+  const cost = Number(bookStoreVocabularySheet?.gem) || 0;
+  const seeds = Array.isArray(bookStoreVocabularySheet?.words)
+    ? bookStoreVocabularySheet.words.length
+    : (Number(bookStoreVocabularySheet?.vocaCount) || 0);
+
+  const gemCnt = Number(userProfile?.gem_cnt) || 0;
+  const shortage = Math.max(0, cost - gemCnt);
+  const bookCnt = Array.isArray(vocabularySheets) ? vocabularySheets.length : null;
+  // 보유 씨앗 = 아직 밭에 심지 않은 단어(§7). 농장 요약이 아직 없으면 그 줄만 접는다 —
+  // 없는 값을 0 으로 적으면 "지금 → 산 뒤"가 거짓말이 된다.
+  const heldSeeds = Number.isFinite(Number(farmOverview?.seed_detail?.unplanted))
+    ? Number(farmOverview.seed_detail.unplanted)
+    : null;
+
+  const n = (v) => v.toLocaleString('ko-KR');
+
+  const close = () => {
+    vibrate({ duration: 5 });
     popNewBottomSheet();
   };
 
-  const handleSet = async () => {
-    if (!alertType || isAdding) return;
-    if (alertType == "unavailable") {
-      openNewBottomSheet(GemPurchaseNewBottomSheet, {
-        notice: '보석이 부족해요!\n보석을 먼저 충전해 볼까요?',
-      });
-      return;
-    }
+  /** 성공 리턴 — 심긴 게 아니라 도착한 것(§7). 다음 행동이 주 버튼이다(§5) */
+  const openSuccess = (remainGem) => {
+    openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
+      options: {
+        success: true,
+        image: seedImg,
+        title: <>밭에 <ResultEm>씨앗 {n(seeds)}개</ResultEm>가<br />도착했어요</>,
+        secondary: { label: '확인' },
+        primary: {
+          label: '이 단어장 물주기',
+          onClick: () => {
+            clearStack();
+            popNewFullSheet();
+            navigate('/vocabulary-sheets');
+          },
+        },
+        caption: <>남은 보석 <HintB>{n(remainGem)}</HintB></>,
+      },
+    });
+  };
 
-    setIsAdding(true);
+  const handleBuy = async () => {
+    if (status === 'loading') return;
+    vibrate({ duration: 5 });
+    if (cost > 0 && gemCnt < cost) { setStatus('short'); return; }
+
+    setStatus('loading');
     try {
-      if (alertType == "available") {
-        // 보석 차감 후 단어장 추가
-        // 백엔드에서 bookstore_id를 받아서 자동으로 description을 생성함
-        const result = await deductGemApi({
-          gem_cnt: bookStoreVocabularySheet.gem,
-          bookstore_id: bookStoreVocabularySheet.id
+      let remainGem = gemCnt;
+      if (cost > 0) {
+        const res = await deductGemApi({
+          gem_cnt: cost,
+          bookstore_id: bookStoreVocabularySheet.id,
         });
-        if (!result || result.code != 200) {
-          showToast("보석 차감에 실패했습니다.");
-          setIsAdding(false);
-          return;
-        }
-        setUserProfile(prevProfile => ({ ...prevProfile, gem_cnt: result.data.remaining_gem_cnt }));
+        // fetchDataAsync 는 비-2xx 도 throw 하지 않는다 — code 로 확인한다.
+        if (res?.code !== 200) { setStatus('error'); return; }
+        remainGem = Number(res.data?.remaining_gem_cnt);
+        setUserProfile((prev) => ({ ...prev, gem_cnt: remainGem }));
       }
 
       await addBookStoreVocabularySheet(bookStoreVocabularySheet);
-      // 온보딩 미션(M3: 서점 단어장 담기) 완료 갱신 — 백엔드 훅으로 자동 완료되므로 최신 상태만 재조회
+      // 온보딩 미션(M3: 서점 단어장 담기)은 백엔드 훅이 완료 처리한다 — 최신 상태만 재조회.
       refreshUnlock();
-      openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
-        options: {
-          success: true,
-          packageName: bookStoreVocabularySheet.name,
-          color: bookStoreVocabularySheet.color,
-          category: bookStoreVocabularySheet.category,
-        },
-      });
-    } catch (error) {
-      console.error('단어장 추가 실패:', error);
-      const errorMessage = error?.message || '단어장 추가에 실패했습니다.';
-      showToast(errorMessage);
-    } finally {
-      setIsAdding(false);
+      // 밭에 씨앗이 늘었다. 홈·마이 통계 캐시를 조용히 맞춘다.
+      refreshStats?.();
+      openSuccess(remainGem);
+    } catch (e) {
+      console.error('단어장 추가 실패:', e);
+      setStatus('error');
     }
   };
 
-  return (
-    <div className="">
-      <div className="
-        flex flex-col gap-[15px] items-center justify-center 
-        pt-[40px] px-[20px] pb-[10px]
-      ">
-        {alertType == "free" &&
-          <h3 className="
-          text-layout-black dark:text-layout-white text-[18px] font-[700] text-center
-          whitespace-normal
-          break-words
-        ">
-            단어장을 추가하시겠어요?
-          </h3>
-        }
-        {alertType == "unavailable" &&
-          <h3 className="
-          text-layout-black dark:text-layout-white text-[18px] font-[700] text-center
-          whitespace-normal
-          break-words
-        ">
-            보석이 부족합니다.<br />보석을 충전 후 이용해주세요
-          </h3>
-        }
-        {alertType == "available" &&
-          <h3 className="
-          text-layout-black dark:text-layout-white text-[18px] font-[700] text-center
-          whitespace-normal
-          break-words
-        ">
-            보석 {bookStoreVocabularySheet.gem}개로<br />단어장을 추가하시겠어요?
-          </h3>
-        }
+  // ── ⑦ 보석 부족 — 모자란 양과 두 갈래 (shop-result §3⑦) ──
+  if (status === 'short') {
+    return (
+      <div className={SHEET_SHELL}>
+        <Grab />
+        <PurchaseResultBody
+          success={false}
+          kind="shortage"
+          title={<>보석이 <ResultEm>{n(shortage)}개</ResultEm> 모자라요</>}
+        />
+        <Btns>
+          <Btn tone="sec" onClick={close}>나중에 하기</Btn>
+          <Btn
+            tone="pri"
+            onClick={() => { vibrate({ duration: 5 }); openNewBottomSheet(GemPurchaseNewBottomSheet, {}); }}
+          >
+            보석 충전
+          </Btn>
+        </Btns>
+      </div>
+    );
+  }
 
+  // ── ⑧ 처리 실패 — 원인 한 줄과 다시 시도 (shop-result §3⑧) ──
+  if (status === 'error') {
+    return (
+      <div className={SHEET_SHELL}>
+        <Grab />
+        <PurchaseResultBody
+          success={false}
+          kind="error"
+          title="단어장을 받지 못했어요"
+          desc="연결이 잠시 끊겼어요."
+        />
+        <Btns>
+          <Btn tone="sec" onClick={close}>닫기</Btn>
+          <Btn tone="pri" onClick={() => setStatus('confirm')}>다시 시도</Btn>
+        </Btns>
       </div>
-      <div className="flex items-center justify-between gap-[15px] p-[20px]">
-        <motion.button
-          disabled={isAdding}
-          className={`
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-layout-gray-200
-            text-layout-white dark:text-layout-black text-[16px] font-[700]
-            ${isAdding ? 'opacity-30' : ''}
-          `}
-          onClick={() => {
-            if (isAdding) return;
-            vibrate({ duration: 5 });
-            handleClose();
-          }}
-          whileTap={isAdding ? {} : { scale: 0.95 }}
-          transition={{
-            type: "spring",
-            stiffness: 500,
-            damping: 15
-          }}
-        >취소</motion.button>
-        <motion.button
-          disabled={isAdding}
-          className={`
-            relative
-            flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-primary-main-600
-            text-layout-white dark:text-layout-black text-[16px] font-[700]
-            ${isAdding ? 'opacity-70 pointer-events-none' : ''}
-          `}
-          onClick={() => {
-            if (isAdding) return;
-            vibrate({ duration: 5 });
-            handleSet();
-          }}
-          whileTap={isAdding ? {} : { scale: 0.95 }}
-          transition={{
-            type: "spring",
-            stiffness: 500,
-            damping: 15
-          }}
-        >
-          {isAdding ? (
-            <div className="flex items-center justify-center h-full">
-              <motion.div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  border: "3px solid rgba(255, 255, 255, 0.3)",
-                  borderTop: "3px solid #fff",
-                  borderRadius: "50%"
-                }}
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-            </div>
-          ) : (alertType == "unavailable" ? "보석 충전하기" : "추가")}
-        </motion.button>
-      </div>
+    );
+  }
+
+  // 화살표 줄은 "지금 → 산 뒤" 하나뿐이라 값이 있는 것만 순서대로 쌓는다(§3).
+  const changeRows = [];
+  if (cost > 0) {
+    changeRows.push({
+      k: '보유 보석',
+      value: <><span>{n(gemCnt)}</span><Arrow /><Down>{n(Math.max(0, gemCnt - cost))}</Down></>,
+    });
+  }
+  if (heldSeeds !== null && seeds > 0) {
+    changeRows.push({
+      k: '보유 씨앗',
+      value: <><span>{n(heldSeeds)}개</span><Arrow /><Up>{n(heldSeeds + seeds)}개</Up></>,
+    });
+  }
+  if (bookCnt !== null) {
+    changeRows.push({
+      k: '단어장',
+      value: <><span>{n(bookCnt)}개</span><Arrow /><Up>{n(bookCnt + 1)}개</Up></>,
+    });
+  }
+
+  // ── ⑥ 구매 확인 (shop-purchase §2⑥) ─────────────────────
+  return (
+    <div className={`${SHEET_SHELL} max-h-[calc(90vh-40px)] overflow-y-auto`}>
+      <Grab />
+
+      <SheetHead
+        image={seedImg}
+        imageAlt=""
+        title={name}
+        desc={seeds > 0 ? `심을 씨앗 ${n(seeds)}개 · 헤이보카 검증` : '헤이보카 검증'}
+      />
+
+      {/* §3 — 결제액 하나가 아니라 세 값이 어떻게 바뀌는지를 적는다 */}
+      <RecvBox>
+        <RecvRow k="결제" tight>
+          {cost > 0 ? <Gem n={cost} /> : '무료'}
+        </RecvRow>
+        {changeRows.length > 0 && <RecvHr />}
+        {changeRows.map((r, i) => (
+          <RecvRow key={r.k} k={r.k} tight={i === 0}>{r.value}</RecvRow>
+        ))}
+      </RecvBox>
+
+      {/* §6 — 겹치는 단어를 사기 전에 말한다. 검증 시스템의 이득으로 읽히게 먼저 말한다 */}
+      <InfoBox tone="blue" icon={<Seal size={13} weight="fill" className="text-secondary-blue-600" />}>
+        검증된 단어라 <EmBlue>다른 단어장에 같은 단어가 있으면 성장 상태를 함께 써요.</EmBlue>
+        {' '}이미 키우던 단어는 처음부터 다시 심지 않아요.
+      </InfoBox>
+
+      <Btns>
+        <Btn tone="sec" onClick={close} disabled={status === 'loading'}>취소</Btn>
+        <Btn tone="pri" onClick={handleBuy} disabled={status === 'loading'}>
+          {status === 'loading'
+            ? <BtnSpinner />
+            : (cost > 0 ? <><Gem n={cost} size="s" />개로 구매</> : '무료로 담기')}
+        </Btn>
+      </Btns>
     </div>
   );
 };
+
+export default AddBookStoreNewBottomSheet;

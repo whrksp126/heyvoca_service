@@ -93,15 +93,18 @@ export const SettingRow = ({ icon, title, sub, value, onClick, caret = true, tog
   </div>
 );
 
-/** 안내 박스 — 시안 .info / .info.warn / .info.blue */
+/**
+ * 안내 박스 — 시안 .info / .info.warn / .info.blue (11px · line-height 1.55).
+ * 강조(b)는 톤마다 색이 따로 있다 — 회색 #404040 · 경고 #93370D · 파랑 #1849A9.
+ */
 export const InfoBox = ({ tone = 'gray', icon, children }) => {
   const tones = {
-    gray: 'bg-[#F7F7F7] dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-300',
-    warn: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-[#B54708] dark:text-[#FDB022]',
-    blue: 'bg-[#EFF8FF] dark:bg-secondary-blue-dark text-[#175CD3] dark:text-[#84CAFF]',
+    gray: 'bg-[#F7F7F7] dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-300 [&_b]:font-[700] [&_b]:text-layout-gray-500 dark:[&_b]:text-layout-gray-100',
+    warn: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-[#B54708] dark:text-[#FDB022] [&_b]:font-[700] [&_b]:text-[#93370D] dark:[&_b]:text-[#FEC84B]',
+    blue: 'bg-[#EFF8FF] dark:bg-secondary-blue-dark text-[#175CD3] dark:text-[#84CAFF] [&_b]:font-[700] [&_b]:text-[#1849A9] dark:[&_b]:text-[#B2DDFF]',
   };
   return (
-    <div className={`flex gap-[8px] mt-[12px] px-[11px] py-[10px] rounded-[10px] text-[11.5px] leading-[1.55] tracking-[-0.02em] ${tones[tone]}`}>
+    <div className={`flex gap-[8px] mt-[12px] px-[11px] py-[10px] rounded-[10px] text-[11px] leading-[1.55] tracking-[-0.02em] ${tones[tone]}`}>
       <span className="shrink-0 mt-[1px]">{icon}</span>
       <span>{children}</span>
     </div>
