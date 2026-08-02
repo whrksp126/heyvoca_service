@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, X, Leaf, Plant, Carrot, EggCrack, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
+import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getAdvanceDelay } from '../../../utils/studyTiming';
@@ -55,7 +56,7 @@ const parseExampleText = (html) => {
   return { before, after };
 };
 
-const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched }) => {
+const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched, farm }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -198,8 +199,9 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
           </p>
         </div>
 
-        {/* 암기 상태 배지 (채점 후, 전체 영역 상단 중앙) */}
-        {isAnswered && (
+        {/* 암기 상태 배지 (채점 후, 전체 영역 상단 중앙)
+            농장 상태 바가 같은 것을 하단에서 말하므로 payload 가 오면 숨긴다 */}
+        {isAnswered && !farm && (
           <div className="absolute top-[12px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2] whitespace-nowrap">
             {memoryStateChange ? (
               <motion.div
@@ -265,8 +267,33 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched 
             )}
           </AnimatePresence>
         </div>
-        {/* 복습 예정일 (그레이 카드 하단 중앙) */}
-        {reviewText && (
+        {/* 농장 상태 바 (채점 후, 카드 하단) — 다른 문제 유형과 같은 컴포넌트를 쓴다 */}
+        {farm && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute bottom-[14px] left-[14px] right-[14px] z-[2]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <FarmStatusBar
+              crop={farm.crop}
+              stage={farm.stage}
+              crop_from={farm.crop_from}
+              stage_from={farm.stage_from}
+              grew={!!farm.grew}
+              pct_from={farm.pct_from}
+              pct_to={farm.pct_to}
+              health={farm.health}
+              days_to_review={farm.days_to_review}
+              wasCorrect={farm.wasCorrect}
+            />
+          </motion.div>
+        )}
+
+        {/* 복습 예정일 (그레이 카드 하단 중앙)
+            농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
+        {reviewText && !farm && (
           <div className="absolute bottom-[12px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2]">
             <motion.div
               initial={{ opacity: 0, y: 8 }}

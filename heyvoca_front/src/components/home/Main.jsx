@@ -6,7 +6,7 @@ import logo_h from '../../assets/images/logo_h.png';
 import HeyCharacter02 from '../../assets/images/HeyCharacter02.png';
 import gem from '../../assets/images/gem.png';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Heart, CheckCircle, CircleDashed, TrendUp, Leaf, Plant, Carrot, CaretRight } from '@phosphor-icons/react';
+import { Heart, CheckCircle, CircleDashed, CaretRight } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
@@ -36,15 +36,9 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOverlayActions } from '../../context/OverlayContext';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 import AttendanceCalendarOverlay from '../overlay/AttendanceCalendarOverlay';
-import TodayMemoryChangesNewBottomSheet from '../newBottomSheet/TodayMemoryChangesNewBottomSheet';
 import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
-
-// 오늘의 기억 변화 — 상태별 칩 아이콘 (백엔드 키: short/medium/long)
-const MEMORY_STATE_CHIPS = [
-  { key: 'long',   Icon: Carrot, color: '#F68300' },
-  { key: 'medium', Icon: Plant,  color: '#38CE38' },
-  { key: 'short',  Icon: Leaf,   color: '#77CE4F' },
-];
+import FarmSummaryCard from './FarmSummaryCard';
+import StreakCard from './StreakCard';
 
 // 업적 타입과 이미지 매핑
 const ACHIEVEMENT_IMAGES = {
@@ -124,7 +118,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, reviewSchedule, todayChanges } = useStats();
+  const { todaySummary, reviewSchedule } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   // 오늘 복습 완료 수 (today-summary)
   const todayReviewsDone = todaySummary?.reviews_done ?? 0;
@@ -231,18 +225,6 @@ const Main = () => {
 
   // 오늘 요약/복습 due/오늘의 기억 변화는 StatsContext에서 구독한다(위 useStats).
   // 학습 직후(lastSessionResult 변경) 갱신은 StatsProvider가 담당하므로 여기서 별도 조회하지 않는다.
-
-  const todayChangeTotal =
-    (todayChanges?.counts?.promoted ?? 0) + (todayChanges?.counts?.new ?? 0);
-
-  const handleTodayChangesClick = () => {
-    vibrate({ duration: 5 });
-    pushNewBottomSheet(
-      TodayMemoryChangesNewBottomSheet,
-      { changes: todayChanges },
-      { isBackdropClickClosable: true }
-    );
-  };
 
   // React Compiler가 자동으로 useCallback 처리
   const handleStoreButtonClick = () => {
@@ -427,6 +409,12 @@ const Main = () => {
               </div>
             );
           })()}
+
+          {/* 당근 농장 — 단계별 보유 · 오늘 돌볼 작물. 누르면 농장 상세로 이동 */}
+          <FarmSummaryCard />
+
+          {/* 연속 학습일 — 최근 35일 */}
+          <StreakCard />
 
           <div
             className="

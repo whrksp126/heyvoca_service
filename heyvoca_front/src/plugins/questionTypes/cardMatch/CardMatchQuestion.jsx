@@ -8,6 +8,7 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from '../../../components/common/MemoryStateChangeBadge';
+import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -51,7 +52,7 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) => {
+const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farmByWordId }) => {
   const [leftWords] = useState(() => question.words);
   const [rightWords] = useState(() => shuffleArray(question.words));
   const [selectedLeft, setSelectedLeft] = useState(null);
@@ -271,8 +272,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
               whileTap={!isResolved && !isAnimating ? { scale: 0.95 } : {}}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
-              {/* 상단 중앙 - 암기 상태 배지 (채점 후) */}
-              {!!wordResolvedStates[word.id] && (() => {
+              {/* 상단 중앙 - 암기 상태 배지 (채점 후)
+                  농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다 */}
+              {!!wordResolvedStates[word.id] && !farmByWordId?.[word.id] && (() => {
                 const resolved = wordResolvedStates[word.id];
                 return (
                   <div className="absolute top-[8px] left-0 right-0 flex justify-center z-[2]">
@@ -295,8 +297,34 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched }) =>
               {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 카드 중앙에서 확산 */}
               {isSpeaking && !isResolved && <TtsRipple size={96} duration={speakingDuration} />}
 
-              {/* 하단 중앙 - 복습 예정일 (채점 후) */}
-              {!!wordResolvedStates[word.id] && (() => {
+              {/* 하단 - 채점 후: 농장 상태 바 좁은 형 (작물·성장 막대·다음 복습일) */}
+              {!!farmByWordId?.[word.id] && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute bottom-[8px] left-[8px] right-[8px] z-[2]"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <FarmStatusBar
+                    compact
+                    crop={farmByWordId[word.id].crop}
+                    stage={farmByWordId[word.id].stage}
+                    crop_from={farmByWordId[word.id].crop_from}
+                    stage_from={farmByWordId[word.id].stage_from}
+                    grew={!!farmByWordId[word.id].grew}
+                    pct_from={farmByWordId[word.id].pct_from}
+                    pct_to={farmByWordId[word.id].pct_to}
+                    health={farmByWordId[word.id].health}
+                    days_to_review={farmByWordId[word.id].days_to_review}
+                    wasCorrect={farmByWordId[word.id].wasCorrect}
+                  />
+                </motion.div>
+              )}
+
+              {/* 하단 중앙 - 복습 예정일 (채점 후)
+                  농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
+              {!!wordResolvedStates[word.id] && !farmByWordId?.[word.id] && (() => {
                 // 낙관 추정값(wordResolvedStates) 우선 — word.fsrs.next_review는 학습 직전 값이라 과거.
                 const nextReview = wordResolvedStates[word.id].nextReview ?? word.fsrs?.next_review;
                 if (!nextReview) return null;

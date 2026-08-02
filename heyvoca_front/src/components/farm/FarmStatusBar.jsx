@@ -1,0 +1,180 @@
+import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import CropImage from './CropImage';
+import CropProgressBar from './CropProgressBar';
+import { CROP_STAGES, cropIndex, stageToCrop, isCritical } from '../../utils/crop';
+import { vibrate } from '../../utils/osFunction';
+
+/**
+ * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
+ * 시안 `study_css.py` 의 `.fb` / `.fb.up` / `.fb.ng` / `.fb.sm` 규격을 그대로 옮겼다.
+ *
+ *   [작물 26px] [막대 5px] [+25%] [12일 뒤]
+ *
+ * - 단계명 텍스트를 넣지 않는다. 작물 그림이 이미 그 말이라 같은 말을 두 번 하게 된다.
+ * - 진화는 화살표로 이전→이후를 나열하지 않는다. 작물 자리 안에서 그래픽이 전환된다.
+ * - 오답은 막대가 늘지도 줄지도 않는다. '그대로' 같은 문구를 적지 않는다.
+ * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 컴포넌트가 접히는 것**이라
+ *   `+N%` 만 접히고 작물·막대·일수는 남는다.
+ */
+
+/** 진화 스파클 — 새 작물이 솟아오를 때 바깥으로 튀는 세 점 (시안 `.fb .spk`) */
+const SPARKS = [
+  { className: 'top-0 left-[50%] ml-[-2px] w-[4px] h-[4px]', peak: 1 },
+  { className: 'bottom-[3px] left-[1px] w-[3px] h-[3px]', peak: 0.8 },
+  { className: 'top-[6px] right-0 w-[3px] h-[3px]', peak: 0.65 },
+];
+
+const FarmStatusBar = ({
+  crop,
+  stage,
+  crop_from: cropFrom,
+  stage_from: stageFrom,
+  grew = false,
+  pct_from: pctFrom = 0,
+  pct_to: pctTo = 0,
+  health,
+  days_to_review: daysToReview = null,
+  wasCorrect = true,
+  compact = false,
+  className = '',
+}) => {
+  // 백엔드는 `crop`(화면 키)과 `stage`(visual_stage)를 함께 준다. 둘 중 있는 쪽을 쓴다.
+  const cropKey = stageToCrop(crop || stage);
+  // 진화 연출의 '이전 작물'. 서버가 crop_from 을 주면 그대로 쓴다.
+  // 없을 때만 성장 순서에서 한 칸 앞을 추정한다 — 회복제로 단계가 복원되거나 한 번에
+  // 두 단계가 오르면 추정이 틀리므로, 구버전 응답에 대한 폴백으로만 남겨 둔다.
+  const prevCrop = (cropFrom || stageFrom)
+    ? stageToCrop(cropFrom || stageFrom)
+    : CROP_STAGES[Math.max(0, cropIndex(cropKey) - 1)];
+
+  const tone = grew ? 'up' : (wasCorrect === false ? 'ng' : 'primary');
+  const gain = !grew && pctTo > pctFrom ? Math.round(pctTo - pctFrom) : 0;
+
+  const size = compact ? 18 : 26;
+
+  // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다)
+  const buzzedRef = useRef(false);
+  useEffect(() => {
+    if (grew && !buzzedRef.current) {
+      buzzedRef.current = true;
+      vibrate({ duration: 5 });
+    }
+  }, [grew]);
+
+  // 우측 문구 — 오답이어도 '그대로' 같은 말을 적지 않는다. 다음에 언제 만나는지만 알린다.
+  let dayLabel = null;
+  let daySuffix = '뒤';
+  if (wasCorrect === false) {
+    dayLabel = '내일';
+    daySuffix = '다시';
+  } else if (typeof daysToReview === 'number' && daysToReview >= 1) {
+    if (daysToReview <= 1) {
+      dayLabel = '내일';
+      daySuffix = '다시';
+    } else {
+      dayLabel = `${daysToReview}일`;
+    }
+  }
+
+  const surface = grew
+    ? 'bg-[#EAFBF0] dark:bg-status-success-dark'
+    : 'bg-layout-white dark:bg-[#2E2E2E] shadow-[0_1px_6px_rgba(0,0,0,0.06)] dark:shadow-none';
+
+  return (
+    <div
+      className={`
+        flex items-center
+        ${compact ? 'h-[26px] px-[8px] gap-[6px] rounded-[8px]' : 'h-[40px] px-[12px] gap-[10px] rounded-[11px]'}
+        ${surface}
+        ${isCritical(health) ? 'ring-1 ring-inset ring-[#D9A15C]' : ''}
+        ${className}
+      `}
+    >
+      {/* 작물 자리 — 진화할 때 이 안에서 그래픽이 바뀐다 */}
+      <span
+        className="relative flex-shrink-0 flex items-center justify-center"
+        style={{ width: size, height: size }}
+      >
+        {grew && (
+          // 이전 작물이 쪼그라들며 사라진다 (0~120ms)
+          <motion.span
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            initial={{ scale: 1, opacity: 1 }}
+            animate={{ scale: 0.55, opacity: 0 }}
+            transition={{ duration: 0.12, ease: 'easeIn' }}
+          >
+            <CropImage stage={prevCrop} health={health} size={size} alt="" />
+          </motion.span>
+        )}
+        <motion.span
+          key={`${cropKey}-${grew ? 'up' : 'keep'}`}
+          className="absolute inset-0 flex items-center justify-center"
+          initial={grew ? { scale: 0.4, opacity: 0 } : { scale: 1, opacity: 1 }}
+          animate={grew ? { scale: [0.4, 1.2, 1], opacity: [0, 1, 1] } : { scale: 1, opacity: 1 }}
+          transition={
+            grew
+              // 새 작물이 튀어오르고(120~280ms) 자리를 잡는다(280~360ms)
+              ? { duration: 0.24, delay: 0.12, times: [0, 0.67, 1], ease: 'easeOut' }
+              : { duration: 0.2, ease: 'easeOut' }
+          }
+        >
+          <CropImage stage={cropKey} health={health} size={size} />
+        </motion.span>
+        {grew && (
+          <span className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
+            {SPARKS.map((spark, i) => (
+              <motion.i
+                key={i}
+                className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
+                transition={{ duration: 0.34, delay: 0.28 + i * 0.03, ease: 'easeOut' }}
+              />
+            ))}
+          </span>
+        )}
+      </span>
+
+      {/* 막대 — 진화하면 100% 를 찍고 0% 로 리셋된 뒤 새 단계 진행률로 간다 */}
+      <div className={`flex flex-1 min-w-0 items-center ${compact ? 'gap-[6px]' : 'gap-[8px]'}`}>
+        <CropProgressBar
+          pctFrom={pctFrom}
+          pctTo={pctTo}
+          grew={grew}
+          tone={tone}
+          width={compact ? '100%' : 78}
+          height={compact ? 4 : 5}
+        />
+        {!compact && gain > 0 && (
+          <motion.span
+            className={`flex-shrink-0 text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+          >
+            +{gain}%
+          </motion.span>
+        )}
+      </div>
+
+      {dayLabel && (
+        <span
+          className={`
+            flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300
+            ${compact ? 'text-[10.5px]' : 'text-[12px]'}
+          `}
+        >
+          {/* 오답 강조색(#B54708)은 다크 surface(#2E2E2E) 위에서 거의 안 읽힌다 —
+              시안도 다크에서는 이 자리를 밝은 색으로 되돌린다. */}
+          <b className={`font-[700] ${wasCorrect === false ? 'text-[#B54708] dark:text-secondary-yellow-400' : 'text-layout-black dark:text-layout-white'}`}>
+            {dayLabel}
+          </b>
+          {` ${daySuffix}`}
+        </span>
+      )}
+    </div>
+  );
+};
+
+export default FarmStatusBar;

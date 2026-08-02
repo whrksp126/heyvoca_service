@@ -65,6 +65,24 @@ def day_bounds_utc(day: dt.date, tz_name: str = DEFAULT_TZ) -> tuple:
             end_local.astimezone(pytz.utc).replace(tzinfo=None))
 
 
+def iso_utc(value: Optional[dt.datetime]) -> Optional[str]:
+    """API 로 나가는 시각 → **시간대가 붙은** ISO 문자열.
+
+    DB 의 시각은 전부 naive UTC 다(`datetime.utcnow()`). 그대로 `isoformat()` 해서
+    내보내면 `2026-08-02T09:00:00` 처럼 tz 가 없는 문자열이 되고, 브라우저의
+    `new Date(...)` 는 그걸 **로컬 시각으로** 읽는다 — KST 사용자에게 9시간 어긋난다.
+    "10초 안에 취소" 가 "9시간 전에 만료" 로 보이는 식이다.
+
+    날짜(`date`)에는 쓰지 않는다. 캘린더의 'YYYY-MM-DD' 는 시각이 아니라 날짜라
+    시간대를 붙이면 오히려 틀린다.
+    """
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        value = pytz.utc.localize(value)
+    return value.isoformat()
+
+
 def week_monday(day: dt.date) -> dt.date:
     """그 주의 월요일. 보호권 주간 지급 판정용(기획 11.3)."""
     return day - dt.timedelta(days=day.weekday())

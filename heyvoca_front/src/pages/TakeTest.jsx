@@ -694,6 +694,8 @@ const TakeTest = () => {
           state: {
             testQuestions: resultQuestions,
             testType: state.testType,
+            // 농장 세션 요약(/farm/session-summary) 조회에 필요 — 결과 화면이 이 값으로 조회한다
+            sessionId: studySessionRef?.current ?? null,
           },
           replace: true,
         });

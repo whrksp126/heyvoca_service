@@ -12,6 +12,7 @@ import React, { createContext, useContext, useState, useCallback, useEffect, use
 import { useUser } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
+import { getFarmOverviewApi } from '../api/farm';
 
 const StatsContext = createContext(null);
 
@@ -22,23 +23,27 @@ export const StatsProvider = ({ children }) => {
   const [todaySummary, setTodaySummary] = useState(null);     // { new_words, reviews_done }
   const [reviewSchedule, setReviewSchedule] = useState(null); // { distribution, due, total, today, days }
   const [todayChanges, setTodayChanges] = useState(null);     // { counts, ... }
+  const [farmOverview, setFarmOverview] = useState(null);     // { counts, health, today, items, streak, ... }
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
 
   const inFlightRef = useRef(false);
 
-  // 세 통계를 한 번에 조회. 이미 조회 중이면 중복 방지. 성공 항목만 갱신(기존 캐시 보존).
+  // 네 통계를 한 번에 조회. 이미 조회 중이면 중복 방지. 성공 항목만 갱신(기존 캐시 보존).
+  // 농장 요약은 .catch 로 개별 격리한다 — 농장 API 가 실패해도 기존 세 통계의 동작이 바뀌면 안 된다.
   const refreshStats = useCallback(async () => {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
     try {
-      const [summary, schedule, changes] = await Promise.all([
+      const [summary, schedule, changes, farm] = await Promise.all([
         getTodaySummary(),
         getReviewScheduleApi(),
         getTodayMemoryChangesApi(),
+        getFarmOverviewApi().catch(() => null),
       ]);
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);
       if (changes?.code === 200) setTodayChanges(changes.data);
+      if (farm?.code === 200) setFarmOverview(farm.data);
     } catch (e) {
       console.error('refreshStats 오류:', e);
     } finally {
@@ -56,6 +61,7 @@ export const StatsProvider = ({ children }) => {
       setTodaySummary(null);
       setReviewSchedule(null);
       setTodayChanges(null);
+      setFarmOverview(null);
       setReviewLoaded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,6 +71,7 @@ export const StatsProvider = ({ children }) => {
     todaySummary,
     reviewSchedule,
     todayChanges,
+    farmOverview,
     reviewLoaded,
     refreshStats,
   };

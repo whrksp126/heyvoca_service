@@ -3,7 +3,8 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 const KeyboardContext = createContext();
 
 const DEFAULT_HEADER_HEIGHT = '55px';
-const DEFAULT_BOTTOM_NAV_HEIGHT = '70px';
+// BottomNav 실제 높이(`h-[60px]`)와 반드시 같아야 한다 — index.css 의 --height-bottom-nav 도 동일값
+const DEFAULT_BOTTOM_NAV_HEIGHT = '60px';
 
 const isFocusableInput = (target) => {
   if (!target || !target.tagName) return false;

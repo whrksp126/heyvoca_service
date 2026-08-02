@@ -11,6 +11,7 @@ import VocabularySheets from './pages/VocabularySheets';
 import BookStore from './pages/BookStore';
 import Dictionary from './pages/Dictionary';
 import Class from './pages/Class';
+import Farm from './pages/Farm';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 import Study from './pages/Study';
@@ -48,6 +49,7 @@ const AppLayout = () => {
       <Route path="/initial-profile" element={<InitialProfile />} />
 
       <Route path="/home" element={<Home />} />
+      <Route path="/farm" element={<Farm />} />
       <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
       <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
       <Route path="/dictionary" element={<Dictionary />} />

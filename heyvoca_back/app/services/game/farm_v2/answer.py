@@ -128,7 +128,14 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     # ── 건강 갱신 ──
     # 정답이면 물을 준 것이다. FSRS 가 다음 예정일을 새로 잡았으므로 상태는 FRESH 로 돌아가고
     # 보호 일수도 리셋된다(급수는 그 회차의 지연을 메우는 것이지 영구 연장이 아니다).
-    if was_correct and game.health_state != HealthState.GOLDEN:
+    #
+    # **부패는 예외다(기획 6.1/7.1).** 썩은 작물은 삽·회복제를 거쳐야만 벗어난다.
+    # 여기서 무조건 FRESH 로 되돌리면, 부패 작물을 아무 학습 모드에서나 한 번 맞히는 것만으로
+    # 아이템 없이 완전 복구가 된다 — 상점과 부패 후 처리(기획 7·8)가 통째로 무의미해진다.
+    # 삽/회복제로 예약된 진단 답안은 restore.complete_diagnosis 가 따로 FRESH 로 확정한다.
+    if game.health_state == HealthState.ROTTEN:
+        pass
+    elif was_correct and game.health_state != HealthState.GOLDEN:
         if game.health_state != HealthState.FRESH:
             events.log(user_id, FarmEvent.REVIEW_WATERED, user_voca_id=user_voca_id,
                        from_state=game.health_state, to_state=HealthState.FRESH,
@@ -143,7 +150,13 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
 
     due_at = growth.parse_fsrs_due(fsrs_state)
     stability = growth._stability(fsrs_state)
-    if due_at is not None and game.visual_stage != VisualStage.UNPLANTED_SEED:
+    # 부패 상태에서는 마감을 다시 잡지 않는다. 여기서 미래로 밀면 조회 집계
+    # (query.effective_health_expr)와 부패 목록이 서로 다른 답을 내놓는다.
+    # 황금은 부패 자체가 없으므로(10.3) 마감 컬럼을 비워 둔 채로 유지한다 —
+    # _apply_golden 이 None 으로 지운 값을 다음 답안이 되살리면 안 된다.
+    if (due_at is not None and game.visual_stage != VisualStage.UNPLANTED_SEED
+            and game.visual_stage != VisualStage.GOLDEN
+            and game.health_state not in (HealthState.ROTTEN, HealthState.GOLDEN)):
         t = health.thresholds(due_at, stability, game.visual_stage, game.protection_days)
         game.rot_due_at = t['rotten_at']
 
@@ -158,17 +171,24 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
 
     stage_after = game.visual_stage or VisualStage.UNPLANTED_SEED
     grew = VisualStage.rank(stage_after) > VisualStage.rank(stage_before)
-    pct_after = 0 if grew else stage_progress(game, fsrs_state, now)
+    # 진화한 회차에도 **새 단계에서의** 진행률을 보낸다. 0 으로 눌러 버리면
+    # pct_from(0) == pct_to(0) 이 되어, 가장 보여 줘야 할 순간에 막대가 멈춘다.
+    pct_after = stage_progress(game, fsrs_state, now)
 
     return {
         'crop': CROP_KEY.get(stage_after, 'seed'),
         'stage': stage_after,
         'grew': grew,
+        # 진화 연출은 **이전 작물이 쪼그라들고 새 작물이 튀어오르는** 전환이라 이전 그림이
+        # 필요하다. 이걸 안 주면 화면이 "한 단계 아래"로 추정하는데, 회복제로 단계가
+        # 복원되거나 한 번에 두 단계가 오르면 잘못된 작물이 0.12초 스쳐 간다.
+        'crop_from': CROP_KEY.get(stage_before, 'seed'),
+        'stage_from': stage_before,
         # 시안의 막대 — 진화한 회차는 새 단계의 진행률로 리셋되므로 from 을 0 으로 보낸다
         'pct_from': 0 if grew else pct_before,
         'pct_to': pct_after,
         'health': game.health_state,
-        'next_review_at': due_at.isoformat() if due_at else None,
+        'next_review_at': localday.iso_utc(due_at) if due_at else None,
         'days_to_review': health.ceil_days(due_at - now) if due_at else None,
         'rewards': rewards,
     }

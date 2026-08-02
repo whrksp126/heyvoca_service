@@ -23,6 +23,7 @@ import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
+import FarmStatusBar from '../farm/FarmStatusBar';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -211,6 +212,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [tempSm2, setTempSm2] = useState(null);
   const [prevMemoryState, setPrevMemoryState] = useState(null);
   const [memoryStateChange, setMemoryStateChange] = useState(null);
+  // ── 당근 농장 V2 상태 바 ──
+  // /study/log 응답의 data.farm 을 그대로 담는다. 구버전 응답(payload 없음)이면 null 로 남고
+  // 화면은 기존 암기상태 배지로 폴백한다 — 응답이 없을 때 화면이 비면 안 된다.
+  // 응답이 늦게 도착해 이미 다음 문제로 넘어갔을 수 있어 vocaId 를 함께 들고 비교한다.
+  const [farmStatus, setFarmStatus] = useState(null);
+  // 카드 매칭은 카드마다 따로 채점되므로 단어별로 보관한다.
+  const [cardFarmByWordId, setCardFarmByWordId] = useState({});
 
   const navigate = useNavigate();
 
@@ -348,6 +356,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        // 농장 상태 바 payload — 없으면(구버전 응답) 기존 암기상태 배지가 그대로 보인다
+        if (logRes?.data?.farm) {
+          setFarmStatus({
+            ...logRes.data.farm,
+            vocaId,
+            qIndex: progressIndex,
+            wasCorrect: !!payload.was_correct,
+          });
+        }
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
             (q) => (q.vocaIndexId ?? q.id) === vocaId && !q.isRetry
@@ -459,6 +476,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         });
       }
       setMemoryStateChange(null);
+      setFarmStatus(null);
+      setCardFarmByWordId({});
     }
     startTimeRef.current = Date.now();
     endTimeRef.current = null; // 항상 초기화!
@@ -735,6 +754,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return logStudyQuestion(payload)
       .then(logRes => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        // 농장 상태 바 payload — 카드 매칭은 카드(단어)마다 따로 붙는다
+        if (logRes?.data?.farm) {
+          setCardFarmByWordId(prev => ({
+            ...prev,
+            [wordId]: { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
+          }));
+        }
         if (logRes?.data?.fsrs) {
           updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
           if (Array.isArray(setWords)) {
@@ -918,6 +944,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 
+  // 농장 상태 바 노출 여부 — 지금 보고 있는 문제의 payload 일 때만 띄운다(응답 지연 대비).
+  // payload 가 없으면 기존 암기상태 배지·복습 예정일 배지가 그대로 보인다.
+  const currentVocaId =
+    testQuestions[progressIndex]?.vocaIndexId ?? testQuestions[progressIndex]?.id;
+  const showFarmBar =
+    isCorrect !== null &&
+    !!farmStatus &&
+    farmStatus.qIndex === progressIndex &&
+    farmStatus.vocaId === currentVocaId;
+
   // 듣기 문제 건너뛰기 버튼 — 현재 문제가 듣기 유형이고, 아직 건너뛰기 비활성이면 노출
   // (채점 후에도 유지해 레이아웃 점프 방지 — 누르면 이후 문제들을 일반 유형으로 전환)
   const showListeningSkip =
@@ -998,6 +1034,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 testType={testType}
                 onComplete={handlePluginComplete}
                 onCardMatched={handleCardMatched}
+                farmByWordId={cardFarmByWordId}
+                farm={showFarmBar ? farmStatus : null}
               />
             </motion.div>
           </AnimatePresence>
@@ -1093,8 +1131,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
                   )}
 
-                  {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김) */}
-                  {isCorrect !== null && (
+                  {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)
+                      농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다 */}
+                  {isCorrect !== null && !showFarmBar && (
                   <div className="
                     absolute top-[15px] left-[50%] translate-x-[-50%]
                     flex items-center justify-center
@@ -1190,9 +1229,37 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       {testQuestions[progressIndex].origin}
                     </h2>
                   )}
+                  {/* 하단 - 채점 후: 농장 상태 바 (작물·성장 막대·다음 복습일) */}
+                  {showFarmBar && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                      className={`
+                        absolute bottom-[14px] left-[14px] z-[2]
+                        ${testType === "test" && isAnswered ? 'right-[50px]' : 'right-[14px]'}
+                      `}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FarmStatusBar
+                        crop={farmStatus.crop}
+                        stage={farmStatus.stage}
+                        crop_from={farmStatus.crop_from}
+                        stage_from={farmStatus.stage_from}
+                        grew={!!farmStatus.grew}
+                        pct_from={farmStatus.pct_from}
+                        pct_to={farmStatus.pct_to}
+                        health={farmStatus.health}
+                        days_to_review={farmStatus.days_to_review}
+                        wasCorrect={farmStatus.wasCorrect}
+                      />
+                    </motion.div>
+                  )}
+
                   {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
                   {/* displayNextReview는 채점 시 고정 — 백엔드 응답으로 덮지 않아 깜빡임 없음 */}
-                  {isCorrect !== null && (() => {
+                  {/* 농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
+                  {isCorrect !== null && !showFarmBar && (() => {
                     const nextReviewDate = testQuestions[progressIndex].displayNextReview;
                     if (!nextReviewDate) return null;
                     const date = new Date(nextReviewDate);

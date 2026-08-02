@@ -368,14 +368,16 @@ def post_study_log():
     except Exception:
         pass  # 캐시 무효화 실패는 비치명적
 
-    # ── 게임 레이어 hook (콤보/농장) — 학습 커밋 이후 별도 트랜잭션 ──
+    # ── 게임 레이어 hook (콤보/농장/연속 학습일) — 학습 커밋 이후 별도 트랜잭션 ──
     # 여기서의 실패는 학습 저장에 영향 없음. 게임 로직은 services/game/에만 둔다.
-    game_payload = {'combo': None, 'farm': None}
+    # session_id 는 농장 V2 가 요구한다(씨앗 구간 독립 정답 판정 + 세션 종료 요약).
+    game_payload = {'combo': None, 'farm': None, 'streak': None}
     try:
         from app.services.game.hooks import on_study_answer
         game_payload = on_study_answer(
             user_id, session_obj.test_type, bool(was_correct),
             user_voca_id=user_voca_id, memory_state_after=memory_state_after,
+            session_id=session_uuid,
         )
     except Exception:
         db.session.rollback()
@@ -390,8 +392,9 @@ def post_study_log():
                 'from': memory_state_before,
                 'to':   memory_state_after,
             },
-            'combo': (game_payload or {}).get('combo'),
-            'farm':  (game_payload or {}).get('farm'),
+            'combo':  (game_payload or {}).get('combo'),
+            'farm':   (game_payload or {}).get('farm'),
+            'streak': (game_payload or {}).get('streak'),
         },
     }), 200
 

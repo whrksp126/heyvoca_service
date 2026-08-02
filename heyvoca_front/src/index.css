@@ -21,11 +21,11 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   --height-header: 55px;
-  --height-bottom-nav: 70px;
+  --height-bottom-nav: 60px;
   --status-bar-height: env(safe-area-inset-top, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
   --current-header-height: 55px;
-  --current-bottom-nav-height: 70px;
+  --current-bottom-nav-height: 60px;
 
   /* Figma Colors */
   --primary-main-600: #FF70D4;
@@ -102,6 +102,28 @@
   --layout-gray-dark: #242424;
   --status-error-dark: #420F0A;
   --status-success-dark: #1B2D24;
+
+  /* 당근 농장 V2 — 작물 단계 색 (crop 네임스페이스, 신규 V2 화면 전용) */
+  --crop-seed: #9D835A;
+  --crop-sprout: #77CE4F;
+  --crop-leaf: #38CE38;
+  --crop-carrot: #F68300;
+  --crop-golden: #E8A317;
+
+  --crop-seed-bg: #FFFCF3;
+  --crop-sprout-bg: #F2FFEB;
+  --crop-leaf-bg: #EBFFEE;
+  --crop-carrot-bg: #FFF8E8;
+  --crop-golden-bg: #FFF8E0;
+}
+
+/* 당근 농장 V2 — 다크 모드 배경(단계 색은 그대로 두고 surface 만 어둡게) */
+html.dark {
+  --crop-seed-bg: #2A2419;
+  --crop-sprout-bg: #1B2A17;
+  --crop-leaf-bg: #162A18;
+  --crop-carrot-bg: #2E2114;
+  --crop-golden-bg: #2E2611;
 }
 
 html,

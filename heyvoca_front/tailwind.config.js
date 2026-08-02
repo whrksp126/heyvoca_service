@@ -6,11 +6,11 @@ module.exports = {
     extend: {
       spacing: {
         'header': '55px',
-        'bottom-nav': '70px',
+        'bottom-nav': '60px',
       },
       height: {
         'header': '55px',
-        'bottom-nav': '70px',
+        'bottom-nav': '60px',
       },
       colors: {
         primary: {
@@ -105,6 +105,15 @@ module.exports = {
         border: {
           DEFAULT: '#dddddd',
           dark: '#222222'
+        },
+        // 당근 농장 V2 작물 단계 색. bg 는 다크 모드에서 html.dark 변수로 자동 전환된다.
+        // 예: text-crop-sprout / bg-crop-sprout-bg
+        crop: {
+          seed: { DEFAULT: 'var(--crop-seed)', bg: 'var(--crop-seed-bg)' },
+          sprout: { DEFAULT: 'var(--crop-sprout)', bg: 'var(--crop-sprout-bg)' },
+          leaf: { DEFAULT: 'var(--crop-leaf)', bg: 'var(--crop-leaf-bg)' },
+          carrot: { DEFAULT: 'var(--crop-carrot)', bg: 'var(--crop-carrot-bg)' },
+          golden: { DEFAULT: 'var(--crop-golden)', bg: 'var(--crop-golden-bg)' },
         }
       },
       fontFamily: {
