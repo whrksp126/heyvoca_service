@@ -31,7 +31,7 @@ import json
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import and_, case, func
+from sqlalchemy import and_, case, func, or_
 
 from app import db
 from app.models.models import (CheckIn, FarmEvent, FarmEventLog, FarmItem, FarmItemReason,
@@ -348,35 +348,49 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     now = now or dt.datetime.utcnow()
     limit = max(1, min(int(limit or 50), 100))
 
+    # **UserVoca 를 기준으로 LEFT JOIN 한다.** 게임 행(UserVocaGame)은 그 단어를 한 번이라도
+    # 학습해야 생기므로, 게임 행을 기준으로 조인하면 아직 심지 않은 보유 씨앗이 목록에서
+    # 통째로 빠진다. 실측으로 단어 514개 중 145개만 나왔다 — 밭의 대부분을 차지하는
+    # 씨앗이 사라지는 셈이라 홈의 카운트(514)와도 어긋났다.
     q = (
         db.session.query(UserVocaGame, UserVoca)
-        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
-        .filter(UserVocaGame.user_id == user_id)
+        .select_from(UserVoca)
+        .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
+        .filter(UserVoca.user_id == user_id)
     )
 
     if group:
         stages = GROUP_STAGES.get(str(group).lower())
         if stages is None:
             raise ValueError('알 수 없는 작물 그룹이에요.')
-        q = q.filter(UserVocaGame.visual_stage.in_(stages))
+        # 게임 행이 없으면 보유 씨앗이다 — seed 그룹을 물으면 그것들도 함께 나와야 한다.
+        cond = UserVocaGame.visual_stage.in_(stages)
+        if VisualStage.UNPLANTED_SEED in stages:
+            cond = or_(cond, UserVocaGame.user_voca_id.is_(None))
+        q = q.filter(cond)
 
     if health:
         want = str(health).upper()
         if want not in _HEALTH_KEYS and want != HealthState.GOLDEN:
             raise ValueError('알 수 없는 건강 상태예요.')
-        q = q.filter(effective_health_expr(now) == want)
+        if want == HealthState.FRESH:
+            # 게임 행이 없는 보유 씨앗은 영구 FRESH 다(기획 6.4)
+            q = q.filter(or_(effective_health_expr(now) == want,
+                             UserVocaGame.user_voca_id.is_(None)))
+        else:
+            q = q.filter(effective_health_expr(now) == want)
 
     if cursor:
-        q = q.filter(UserVocaGame.user_voca_id > int(cursor))
+        q = q.filter(UserVoca.id > int(cursor))
 
-    rows = q.order_by(UserVocaGame.user_voca_id.asc()).limit(limit + 1).all()
+    rows = q.order_by(UserVoca.id.asc()).limit(limit + 1).all()
     has_more = len(rows) > limit
     rows = rows[:limit]
 
     items = [_plant_item(game, user_voca, now) for game, user_voca in rows]
     return {
         'items': items,
-        'next_cursor': rows[-1][0].user_voca_id if (has_more and rows) else None,
+        'next_cursor': rows[-1][1].id if (has_more and rows) else None,
     }
 
 
@@ -385,24 +399,26 @@ def _plant_item(game: UserVocaGame, user_voca: UserVoca, now: dt.datetime) -> di
     사용자가 실제로 읽는 숫자("3일 뒤")는 반올림 오차도 티가 나기 때문이다."""
     fsrs_state = growth.load_fsrs_state(user_voca)
     due_at = growth.parse_fsrs_due(fsrs_state)
-    stage = game.visual_stage or VisualStage.UNPLANTED_SEED
+    # game 이 None 이면 한 번도 학습하지 않은 단어다 — 보유 씨앗이고 썩지 않는다(6.4).
+    # 여기서 행을 만들지는 않는다. 목록 조회가 쓰기를 하면 첫 진입이 통째로 느려진다.
+    stage = (game.visual_stage if game else None) or VisualStage.UNPLANTED_SEED
 
     h = health_calc.compute_health(
         due_at, growth._stability(fsrs_state), now,
         visual_stage=stage,
-        protection_days=game.protection_days or 0,
+        protection_days=(game.protection_days if game else 0) or 0,
         is_golden=(stage == VisualStage.GOLDEN),
-        already_rotten=(game.health_state == HealthState.ROTTEN),
+        already_rotten=bool(game and game.health_state == HealthState.ROTTEN),
     )
 
     return {
-        'user_voca_id': game.user_voca_id,
+        'user_voca_id': user_voca.id,
         'word': user_voca.word or '',
         'meaning': _first_meaning(user_voca.voca_meanings),
         'stage': stage,
         'crop': answer.CROP_KEY.get(stage, 'seed'),
         'health': h['state'],
-        'pct': answer.stage_progress(game, fsrs_state, now),
+        'pct': answer.stage_progress(game, fsrs_state, now) if game else 0,
         'days_to_review': health_calc.ceil_days(due_at - now) if due_at else None,
         'days_to_rot': h['days_to_rot'],
         'rot_due_at': localday.iso_utc(h['rot_due_at']) if h['rot_due_at'] else None,
