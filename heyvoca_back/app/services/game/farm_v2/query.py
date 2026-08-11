@@ -394,6 +394,68 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     }
 
 
+def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
+              limit: int = 5) -> dict:
+    """홈 아래쪽에 붙는 "지금 볼 만한 단어" 묶음.
+
+    홈은 히어로·연속 학습·성과 카드까지만 규정돼 있어서, 급한 일이 없는 날에는
+    스크롤 영역이 사실상 비었다. 그렇다고 지표를 늘리면 §7("홈에는 진행 지표가 없다")과
+    부딪힌다. 그래서 **지표가 아니라 단어 자체**를 내려 준다 — 사용자가 홈에서
+    실제로 궁금해하는 건 "몇 %"가 아니라 "무슨 단어를 봐야 하나"다.
+
+    네 묶음을 한 번에 주고 무엇을 그릴지는 화면이 상태에 따라 고른다. 각각을 따로
+    호출하면 홈 첫 진입에 왕복이 네 번 늘어난다.
+
+        care     지금 물이 필요한 작물 — 급한 순(부패 마감이 가까운 순)
+        rotten   되살릴 수 있는 썩은 작물 — 최근에 썩은 순
+        seeds    아직 심지 않은 보유 씨앗 — 최근에 담은 순
+        recent   최근에 심은 단어 — 심은 순
+
+    정렬을 rot_due_at 으로 잡은 이유: 실제 복습 예정일은 FSRS state(TEXT) 안에 있어
+    SQL 로 정렬할 수 없다. rot_due_at 은 컬럼이고 '예정일 + 유예'라 예정일과 같은
+    순서를 준다. 인덱스(ix_uvg_user_rotdue)도 이미 이 컬럼에 걸려 있다.
+    """
+    now = now or dt.datetime.utcnow()
+    limit = max(1, min(int(limit or 5), 20))
+
+    def rows(build):
+        q = build(
+            db.session.query(UserVocaGame, UserVoca)
+            .select_from(UserVoca)
+            .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
+            .filter(UserVoca.user_id == user_id)
+        )
+        return [_plant_item(game, uv, now) for game, uv in q.limit(limit).all()]
+
+    eff = effective_health_expr(now)
+    care_states = (HealthState.THIRSTY, HealthState.WILTED, HealthState.CRITICAL)
+
+    care = rows(lambda q: q
+                .filter(eff.in_(care_states))
+                # 마감이 없는 행은 뒤로 — MySQL 은 NULL 을 먼저 놓는다
+                .order_by(UserVocaGame.rot_due_at.is_(None).asc(),
+                          UserVocaGame.rot_due_at.asc()))
+
+    rotten = rows(lambda q: q
+                  .filter(eff == HealthState.ROTTEN)
+                  # MySQL 에는 NULLS LAST 문법이 없다 — 불리언 정렬로 대신한다
+                  .order_by(UserVocaGame.rotten_at.is_(None).asc(),
+                            UserVocaGame.rotten_at.desc(),
+                            UserVoca.id.desc()))
+
+    # 게임 행이 아예 없거나 아직 심기 전인 것 둘 다 "보유 씨앗"이다(기획 5.1).
+    seeds = rows(lambda q: q
+                 .filter(or_(UserVocaGame.user_voca_id.is_(None),
+                             UserVocaGame.visual_stage == VisualStage.UNPLANTED_SEED))
+                 .order_by(UserVoca.id.desc()))
+
+    recent = rows(lambda q: q
+                  .filter(UserVocaGame.first_planted_at.isnot(None))
+                  .order_by(UserVocaGame.first_planted_at.desc()))
+
+    return {'care': care, 'rotten': rotten, 'seeds': seeds, 'recent': recent}
+
+
 def _plant_item(game: UserVocaGame, user_voca: UserVoca, now: dt.datetime) -> dict:
     """카드 1장. 여기서는 행마다 정확히 계산한다 — 페이지당 수십 건이라 감당 가능하고,
     사용자가 실제로 읽는 숫자("3일 뒤")는 반올림 오차도 티가 나기 때문이다."""

@@ -152,13 +152,15 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
       vibrate({ type: 'notificationSuccess' });
       playSuccessSound();
       resolveWordState(leftWord, true, newAttempts);
+      // 카드가 풀린 **그 순간** 부모에 알린다. 800ms 뒤에 알리면 그동안 구버전 표시가
+      // 먼저 떴다가 농장 상태 바로 바뀌어, 채점 결과가 두 번 다른 모습으로 나타난다.
+      notifyResolved();
       setCorrectFlashWordIds(prev => new Set([...prev, leftWord.id]));
 
       setTimeout(() => {
         setCorrectFlashWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
         setMatchedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {
@@ -169,6 +171,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
       vibrate({ type: 'notificationError' });
       playErrorSound();
       resolveWordState(leftWord, false, newAttempts);
+      notifyResolved();   // 정답 분기와 같은 이유 — 표시가 두 번 바뀌지 않게 즉시 알린다
       setWrongFlashLeftWordIds(prev => new Set([...prev, leftWord.id]));
       setWrongFlashRightWordIds(prev => new Set([...prev, rightWord.id]));
 
@@ -177,7 +180,6 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
         setWrongFlashRightWordIds(prev => { const s = new Set(prev); s.delete(rightWord.id); return s; });
         setFailedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
-        notifyResolved();
 
         resolvedCountRef.current++;
         if (resolvedCountRef.current === question.words.length) {

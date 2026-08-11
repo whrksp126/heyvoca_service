@@ -85,9 +85,24 @@ function buildCardMatchQuestion(words, questionType, idx) {
 }
 
 /**
+ * 첫날 심는 씨앗 수. 온보딩 첫 세션은 **이 수만큼 심고 끝난다** —
+ * 오답은 맞힐 때까지 세션 뒤쪽에 다시 나오므로(기획 §5.3) 중간에 그만두지 않는 한
+ * 여기 담긴 단어는 전부 심긴다. 하루 목표(daily_new_limit)는 **다음 날부터** 적용된다.
+ */
+export const ONBOARDING_FIRST_DAY_WORDS = 14;
+
+// 유형별 분량 — 합이 ONBOARDING_FIRST_DAY_WORDS 가 되게 맞춘다.
+// 한 유형만 반복하면 그 유형에만 익숙해져 '외운 척'이 되므로 네 유형을 돌린다.
+const CHOICE_COUNT = 3;       // 뜻 고르기 3문항 = 3단어
+const LISTEN_COUNT = 3;       // 듣고 고르기 3문항 = 3단어
+const MATCH_SIZE = 4;         // 카드 맞추기 1세트 = 4단어
+const MATCH_LISTEN_SIZE = 4;  // 듣고 맞추기 1세트 = 4단어
+
+/**
  * words: [{origin, meanings, examples, voca_id}] (레벨 단어장)
- * 반환: takeTest용 question 배열 — 사지선다/사지선다듣기/카드맞추기/카드맞추기듣기 각 1문제.
- *   단어가 부족하면 가능한 유형만 생성. 최소 4단어 미만이면 빈 배열.
+ * 반환: takeTest용 question 배열 — 뜻 고르기 3 · 듣고 고르기 3 · 카드 맞추기 1세트 ·
+ *   듣고 맞추기 1세트 = **14단어 8문항**.
+ *   단어가 부족하면 가능한 만큼만 생성. 최소 4단어 미만이면 빈 배열.
  */
 export function buildGuestQuestions(words) {
   const valid = (words || [])
@@ -123,17 +138,33 @@ export function buildGuestQuestions(words) {
 
   const questions = [];
 
-  const mc = takeOne();
-  if (mc) questions.push(buildChoiceQuestion(mc, pool, 'multipleChoice'));
+  // 뜻 고르기 · 듣고 고르기를 번갈아 낸다 — 같은 유형이 연달아 나오면 지루하다
+  for (let t = 0; t < Math.max(CHOICE_COUNT, LISTEN_COUNT); t += 1) {
+    if (t < CHOICE_COUNT) {
+      const w = takeOne();
+      if (w) questions.push(buildChoiceQuestion(w, pool, 'multipleChoice'));
+    }
+    if (t < LISTEN_COUNT) {
+      const w = takeOne();
+      if (w) questions.push(buildChoiceQuestion(w, pool, 'multipleChoiceListening'));
+    }
+  }
 
-  const mcl = takeOne();
-  if (mcl) questions.push(buildChoiceQuestion(mcl, pool, 'multipleChoiceListening'));
-
-  const cmSet = takeSet(4);
+  const cmSet = takeSet(MATCH_SIZE);
   if (cmSet.length >= 2) questions.push(buildCardMatchQuestion(cmSet, 'cardMatch', 0));
 
-  const cmlSet = takeSet(4);
+  const cmlSet = takeSet(MATCH_LISTEN_SIZE);
   if (cmlSet.length >= 2) questions.push(buildCardMatchQuestion(cmlSet, 'cardMatchListening', 1));
 
   return questions;
+}
+
+/** 문제 배열이 실제로 다루는 **고유 단어 수**. 문항 수가 아니라 심는 씨앗 수다. */
+export function countGuestWords(questions) {
+  const ids = new Set();
+  (questions || []).forEach((q) => {
+    if (Array.isArray(q?.words)) q.words.forEach((w) => ids.add(w.vocaIndexId ?? w.id));
+    else if (q) ids.add(q.vocaIndexId ?? q.id);
+  });
+  return ids.size;
 }

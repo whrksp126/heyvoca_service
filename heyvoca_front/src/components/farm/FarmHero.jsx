@@ -14,20 +14,14 @@
 // children 으로 받는다. 홈은 넷 다 넘기고, 농장 상세(/farm)는 아무것도 넘기지 않는다.
 
 import React from 'react';
-// 팻말이 **없는** 판을 쓴다. 나무 판까지 이미지에 구워 두면 보유 0 인 단계에서
-// 글자만 사라지고 빈 판이 밭에 남는다(§3 "보유 0 인 단계에는 팻말이 서지 않는다" 위반).
-// 판·말뚝은 아래에서 CSS 로 그린다 — 생성 스크립트(hero_v4.py `sign()`)의 색·치수 그대로.
-import heroFresh from '../../assets/images/farm/hero-fresh-nosign.png';
-import heroThirsty from '../../assets/images/farm/hero-thirsty-nosign.png';
-import heroRisk from '../../assets/images/farm/hero-risk-nosign.png';
+// 밭 그림은 더 이상 상태별 완성본(hero-fresh/thirsty/risk)을 골라 쓰지 않는다.
+// 그 그림들은 작물까지 구워져 있어 **사용자의 실제 밭과 달랐다** — 새싹 3개뿐인 사람에게도
+// 새싹 12개짜리 그림이 나갔다. 지금은 바탕만 굽고(field-base.png) 작물은 FarmField 가
+// 실제 counts·건강 분포대로 심는다. 하늘색과 해만 상태에 따라 바뀐다.
 import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
 import CropImage from './CropImage';
-
-const HERO_SRC = {
-  fresh: heroFresh,
-  thirsty: heroThirsty,
-  risk: heroRisk,
-};
+import FarmField from './FarmField';
+import { SIGN_ANCHORS } from '../../utils/farmField';
 
 /**
  * 하늘 그라디언트 — 시안 CSS `.hero` 정본.
@@ -61,16 +55,16 @@ const SUN_CLASS = {
     'dark:bg-[radial-gradient(circle,rgba(255,233,168,.22)_0%,rgba(255,246,220,.08)_60%,rgba(255,246,220,0)_72%)]',
 };
 
-// 팻말 좌표 — hero_v4.py 가 내보낸 layout.json 의 값을 **이미지 크기(1200×860) 대비 %**로 바꾼 것.
-// px 로 두면 폰 폭이 달라질 때 팻말이 밭에서 떨어져 나간다. 이미지와 같은 상자 안에서
-// %로 두면 폭과 무관하게 늘 같은 자리에 붙는다.
-// (390px 기준으로 환산하면 시안 CSS 의 left:164/67/261/164 · top:214/257/257/300 과 같다.)
-const SIGNS = [
-  { crop: 'seed', left: 50, top: 32.79 },
-  { crop: 'sprout', left: 27.83, top: 46.51 },
-  { crop: 'leaf', left: 72.17, top: 46.51 },
-  { crop: 'carrot', left: 50, top: 60.23 },
-];
+// 팻말 좌표는 farmField 의 SIGN_ANCHORS 를 쓴다 — 작물을 심는 마름모에서 바로 나온 값이라
+// 심는 범위를 조정해도 팻말이 자기 구역을 계속 가리킨다. 이미지 상자(1200×860) 대비 %라
+// 폰 폭이 달라져도 밭에 붙어 있는다.
+/**
+ * 팻말 아이콘이 쓸 visual_stage.
+ * 씨앗 팻말은 **밭에 심긴 씨앗** 구역을 가리키므로 흙에 묻힌 씨앗 그림이어야 한다.
+ * crop 키('seed')를 그냥 넘기면 봉투(보유 씨앗)가 나와, 밭 밖 "보유 씨앗" 간판과
+ * 똑같은 그림이 한 화면에 두 개 뜬다.
+ */
+const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT' };
 
 // 밭 전체의 분위기 — 가장 손이 필요한 상태가 밭 전체의 인상을 정한다.
 // 홈은 §12 의 상태 판정 결과를 `state` 로 직접 넘기고, 농장 상세는 이 폴백을 쓴다.
@@ -80,7 +74,15 @@ export const heroMood = (health) => {
   return 'fresh';
 };
 
-const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
+/**
+ * @param {object} counts      단계별 **보유** 수 — 팻말에 적히는 값
+ * @param {object} fieldCounts 단계별 **심은** 수 — 밭에 실제로 서는 작물.
+ *                             주지 않으면 counts 를 쓴다(단어장 화면처럼 둘이 같은 경우).
+ *                             홈은 아직 심지 않은 씨앗을 빼고 넘긴다.
+ * @param {object} healthMix   그림 variant 분포 { healthy, drying, wilted, rotten }
+ * @param {number} storedSeeds 아직 심지 않은 보유 씨앗 — 밭 **밖** 간판에 적힌다(기획 5.1)
+ */
+const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, health, state, onSelectGroup, children }) => {
   "use memo";
 
   const mood = SKY_CLASS[state] ? state : heroMood(health);
@@ -100,26 +102,32 @@ const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
         시안의 bottom:-4px 흘러내림은 그대로 살린다.
         (히어로에 overflow 를 걸면 CTA 까지 잘리므로 한 겹 안에서 처리한다.)
       */}
+      {/*
+        클립 상자 — 시안 `.scene` 은 높이를 313px 로 고정하고 아래를 기준으로 잘라 낸다.
+        그 잘라내기는 여기가 맡고, 안쪽 상자는 밭 그림의 제 비율(1200:860)을 지킨다.
+        예전에는 이 상자 자체에 배경 이미지를 깔았는데, 폭이 390px 이 아니면
+        상자 높이(313 고정)와 그림 높이(폭×0.717)가 어긋나 팻말이 밭에서 떠올랐다.
+      */}
       <div className="absolute inset-x-0 top-0 bottom-[-4px] overflow-hidden">
         {/*
-          이미지 상자 — 시안 CSS 와 같은 배치다: width 112%, left -6%, bottom -4px.
+          밭 상자 — width 112%, left -6%, 아래 정렬.
           밭이 화면 좌우로 살짝 넘쳐야 섬이 잘린 게 아니라 이어지는 것처럼 보인다.
           하단이 알파로 페이드되어 있어 어떤 배경 위에 놓아도 그 색으로 녹아든다(§17).
-          팻말은 이 상자 안에 % 로 얹혀 이미지와 함께 움직인다.
+          작물·마스코트·팻말이 모두 이 상자 안에 % 로 얹혀 함께 움직인다.
         */}
-        {/*
-          시안 `.scene` 그대로 — **높이 313px 고정** + `background-size:100% auto`.
-          <img h-auto> 로 두면 폭에 비례해 높이가 무한정 커진다(뷰포트 2056px 에서 1637px 이
-          됐다). 시안은 세로를 고정하고 아래를 기준으로 잘라 낸다.
-        */}
-        <div
-          className="absolute left-[-6%] w-[112%] bottom-0 h-[313px] bg-no-repeat bg-bottom"
-          style={{ backgroundImage: `url(${HERO_SRC[mood]})`, backgroundSize: '100% auto' }}
+        <div className="absolute left-[-6%] w-[112%] bottom-0">
+        <FarmField
+          counts={fieldCounts || counts}
+          healthMix={healthMix}
+          maxSprites={96}
+          mascot
+          storedSeeds={storedSeeds}
         >
-
-          {SIGNS.map((sign) => {
-            const n = counts?.[sign.crop] ?? 0;
-            // §3 — 보유가 0인 단계에는 팻말이 서지 않는다. 빈 구역 자체가 정보다.
+          {SIGN_ANCHORS.map((sign) => {
+            // 팻말은 **그 구역에 실제로 선 작물**을 센다. 보유 씨앗은 밭 밖 간판이 따로 말하므로
+            // 여기에 더하면 같은 씨앗이 두 번 세어지고, 팻말이 가리키는 빈 구역과도 어긋난다.
+            const n = (fieldCounts || counts)?.[sign.crop] ?? 0;
+            // §3 — 그 구역에 아무것도 없으면 팻말이 서지 않는다. 빈 구역 자체가 정보다.
             if (n <= 0) return null;
             const Tag = onSelectGroup ? 'button' : 'div';
             return (
@@ -155,7 +163,7 @@ const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
                     aria-hidden
                     className="absolute left-[5%] right-[5%] top-[9%] h-[42%] rounded-[4px] bg-[rgba(255,240,214,0.18)] blur-[2px]"
                   />
-                  <CropImage stage={sign.crop} health={HEALTH_STATES.FRESH} size={17} />
+                  <CropImage stage={SIGN_STAGE[sign.crop]} health={HEALTH_STATES.FRESH} size={30} />
                   {/* §5 — 단계명 9px/700 #7A5433 · 보유 수 13px/800 #4A2E17 (나무 위에서 읽히는 갈색) */}
                   <span className="relative min-w-0 text-left">
                     <span className="block text-[9px] font-[700] text-[#7A5433] tracking-[-0.05em] leading-[1.05]">
@@ -169,6 +177,7 @@ const FarmHero = ({ counts, health, state, onSelectGroup, children }) => {
               </Tag>
             );
           })}
+        </FarmField>
         </div>
       </div>
 

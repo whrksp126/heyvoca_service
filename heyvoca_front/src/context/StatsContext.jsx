@@ -12,7 +12,7 @@ import React, { createContext, useContext, useState, useCallback, useEffect, use
 import { useUser } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
-import { getFarmOverviewApi } from '../api/farm';
+import { getFarmOverviewApi, getFarmHomeFeedApi } from '../api/farm';
 
 const StatsContext = createContext(null);
 
@@ -24,6 +24,7 @@ export const StatsProvider = ({ children }) => {
   const [reviewSchedule, setReviewSchedule] = useState(null); // { distribution, due, total, today, days }
   const [todayChanges, setTodayChanges] = useState(null);     // { counts, ... }
   const [farmOverview, setFarmOverview] = useState(null);     // { counts, health, today, items, streak, ... }
+  const [farmFeed, setFarmFeed] = useState(null);             // { care, rotten, seeds, recent } — 홈 아래 목록
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
 
   const inFlightRef = useRef(false);
@@ -34,16 +35,18 @@ export const StatsProvider = ({ children }) => {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
     try {
-      const [summary, schedule, changes, farm] = await Promise.all([
+      const [summary, schedule, changes, farm, feed] = await Promise.all([
         getTodaySummary(),
         getReviewScheduleApi(),
         getTodayMemoryChangesApi(),
         getFarmOverviewApi().catch(() => null),
+        getFarmHomeFeedApi({ limit: 5 }).catch(() => null),
       ]);
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);
       if (changes?.code === 200) setTodayChanges(changes.data);
       if (farm?.code === 200) setFarmOverview(farm.data);
+      if (feed?.code === 200) setFarmFeed(feed.data);
     } catch (e) {
       console.error('refreshStats 오류:', e);
     } finally {
@@ -62,6 +65,7 @@ export const StatsProvider = ({ children }) => {
       setReviewSchedule(null);
       setTodayChanges(null);
       setFarmOverview(null);
+      setFarmFeed(null);
       setReviewLoaded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,6 +76,7 @@ export const StatsProvider = ({ children }) => {
     reviewSchedule,
     todayChanges,
     farmOverview,
+    farmFeed,
     reviewLoaded,
     refreshStats,
   };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  CaretLeft, CaretRight, Plus, PencilSimple, Info, CalendarCheck, Drop, Target, Plant,
+  CaretLeft, CaretRight, Plus, PencilSimple, Info,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -13,7 +13,7 @@ import { BuyEmptyBookNewBottomSheet } from '../newBottomSheet/BuyEmptyBookNewBot
 import { PreviewBookStoreNewFullSheet } from './PreviewBookStoreNewFullSheet';
 import GemNewFullSheet from './GemNewFullSheet';
 import {
-  FarmItemPurchaseNewBottomSheet, PackCard, CapBar, Rows, Gem, nextGrantLabel,
+  FarmItemPurchaseNewBottomSheet, PackCard, CapBar, Gem, nextGrantLabel,
   ITEM_NAME, ITEM_SHORT, ITEM_TAG,
 } from '../newBottomSheet/FarmItemPurchaseNewBottomSheet';
 import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
@@ -24,7 +24,8 @@ import {
 } from '../../utils/vocaBookColor';
 import { vibrate } from '../../utils/osFunction';
 import iconGem from '../../assets/images/farm/icon-gem.png';
-import seedImg from '../../assets/images/farm/solo-healthy-seed.png';
+// 아직 사지 않은 단어장의 '심을 씨앗' — 봉투 그림이 맞다 (기획 5.1 보유 씨앗)
+import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 
 /**
  * 상점 — 단어장 · 농장 도구 · 보석 3탭 (시안 shop.txt §1).
@@ -115,7 +116,7 @@ const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
       <div>
         {/* 새로 들어간 줄 — 단어 수는 이 밭이 얼마나 커지는지를 정하는 가장 큰 값이다 */}
         <div className="flex items-center gap-[4px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-          <img src={seedImg} alt="" draggable={false} className="w-[13px] h-[13px] object-contain select-none" />
+          <img src={seedImg} alt="" draggable={false} className="w-[26px] h-[26px] object-contain select-none" />
           {custom ? '씨앗 0 — 직접 추가' : `심을 씨앗 ${seeds.toLocaleString('ko-KR')}개`}
         </div>
         {custom && (
@@ -553,47 +554,15 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
               </div>
             </div>
 
-            {/* 현금 상품보다 무료로 얻는 경로를 같은 화면에 적는다 (§7) */}
-            <div>
-              <SecHead title="무료로 보석 얻기" sub="하루 평균 1.5~2개" />
-              <Rows
-                items={[
-                  {
-                    key: 'checkin',
-                    tint: 'yellow',
-                    icon: <CalendarCheck size={15} weight="fill" className="text-secondary-yellow-600" />,
-                    title: '농장 출석',
-                    desc: '하루 한 번 학습을 시작하면',
-                    value: <Gem n={1} size="s" />,
-                  },
-                  {
-                    key: 'water',
-                    tint: 'blue',
-                    icon: <Drop size={15} weight="fill" className="text-secondary-blue-600" />,
-                    title: '오늘의 물주기 목표',
-                    desc: '오늘 할 일을 다 끝내면',
-                    value: <Gem n={1} size="s" />,
-                  },
-                  {
-                    key: 'mission',
-                    tint: 'purple',
-                    icon: <Target size={15} weight="fill" className="text-secondary-purple-600" />,
-                    title: '주간 미션',
-                    desc: '주마다 3개',
-                    value: <Gem n={3} size="s" />,
-                  },
-                  {
-                    key: 'sprout',
-                    tint: 'mint',
-                    icon: <Plant size={15} weight="fill" className="text-crop-sprout" />,
-                    title: '새싹 첫 발아',
-                    desc: '단어 하나당 처음 한 번',
-                    value: <Gem n={1} size="s" />,
-                  },
-                ]}
-              />
-            </div>
+            {/*
+              "무료로 보석 얻기" 안내표를 내렸다.
+              읽을거리일 뿐 여기서 할 수 있는 일이 없었다 — 네 줄 모두 학습하다 저절로
+              들어오는 보상이라 상점에서 누를 것이 하나도 없었고, 보석 충전 바로 아래에서
+              화면의 절반을 차지했다. (지급 자체는 그대로다 — 출석·물주기 목표·주간 미션·
+              새싹 첫 발아 보상은 백엔드가 계속 준다.)
+            */}
 
+            {/* 결제 고지는 남긴다 — 유료 상품이 있는 화면에서 빼면 안 되는 안내다 */}
             <div className="flex gap-[8px] px-[11px] py-[10px] rounded-[10px] bg-[#F7F7F7] dark:bg-layout-gray-dark text-[11px] leading-[1.55] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
               <Info size={13} weight="fill" className="shrink-0 mt-[1px] text-[#BBBBBB]" />
               <span>

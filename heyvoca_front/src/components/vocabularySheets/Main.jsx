@@ -1,55 +1,35 @@
 import React, { useMemo, useState } from 'react';
-import { Plus, Storefront, WarningCircle, Check } from '@phosphor-icons/react';
+import { Plus, WarningCircle, Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import CropImage from '../farm/CropImage';
+// 밭 썸네일 — 시안 §2. 홈 히어로와 같은 밭을 작게 그린다.
+// 예전에는 미리 구워 둔 네 장(book-seed/early/mid/done) 중 하나를 골라 썼는데,
+// 그러면 어느 단어장이든 넷 중 하나로만 보였다. 지금은 그 단어장에 실제로 심긴
+// 작물을 그대로 심는다 — 목록에서 밭 그림을 먼저 본다는 시안 §2 가 그제야 성립한다.
+import FarmField from '../farm/FarmField';
 import { vibrate } from '../../utils/osFunction';
 import { HEALTH_STATES, CROP_LABEL } from '../../utils/crop';
 import {
   CROP_ORDER,
   bookStageCounts,
   bookCareCount,
-  bookThumbKey,
+  bookFieldData,
   bookBadge,
 } from '../../utils/vocaCrop';
-
-// 밭 썸네일 — 시안 §2. 홈 히어로와 같은 렌더러로 뽑되 팻말과 마스코트가 없다.
-import bookSeed from '../../assets/images/farm/book-seed.png';
-import bookEarly from '../../assets/images/farm/book-early.png';
-import bookMid from '../../assets/images/farm/book-mid.png';
-import bookDone from '../../assets/images/farm/book-done.png';
-import bookEmpty from '../../assets/images/farm/book-empty.png';
-
-const BOOK_THUMB = {
-  seed: bookSeed,
-  early: bookEarly,
-  mid: bookMid,
-  done: bookDone,
-  empty: bookEmpty,
-};
-
-const BOOK_THUMB_ALT = {
-  seed: '아직 시작하지 않은 밭',
-  early: '새싹이 자라는 밭',
-  mid: '여러 단계가 섞인 밭',
-  done: '당근이 가득한 밭',
-  empty: '비어 있는 밭',
-};
 
 /** 카드 배지 — 시안 §1① (돌봄 N · 완료 · 씨앗) */
 const BADGE_CLASS = {
   care: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-secondary-yellow-600',
   done: 'bg-status-success-100 dark:bg-status-success-dark text-status-success-600',
-  new: 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200',
 };
 
 const BADGE_ICON = {
   care: WarningCircle,
   done: Check,
-  new: null,
 };
 
 /** 최근 학습 정렬용 — 이 단어장에서 가장 최근에 갱신된 단어 시각 */
@@ -83,8 +63,8 @@ const Main = () => {
     return {
       book,
       counts,
+      field: bookFieldData(book.words),
       care: bookCareCount(book.words),
-      thumb: bookThumbKey(book.words, counts),
       badge: bookBadge(book.words, counts),
       touchedAt: lastTouchedAt(book),
     };
@@ -157,7 +137,7 @@ const Main = () => {
       </div>
 
       <div className="flex flex-col gap-[10px] px-[16px] pb-[20px]">
-        {visible.map(({ book, counts, thumb, badge }) => {
+        {visible.map(({ book, counts, field, badge }) => {
           const BadgeIcon = badge ? BADGE_ICON[badge.kind] : null;
 
           return (
@@ -174,26 +154,27 @@ const Main = () => {
                 bg-farm-canvas dark:bg-layout-gray-dark
               "
             >
-              <img
-                src={BOOK_THUMB[thumb]}
-                alt={BOOK_THUMB_ALT[thumb]}
-                draggable={false}
-                className="w-[64px] h-[40px] shrink-0 object-contain select-none"
-              />
+              {/* 이 단어장의 밭. 64px 에서는 작물 하나하나가 점만 하지만,
+                  밭의 **어느 구역이 찼는가**는 그 크기에서도 읽힌다.
+                  크기는 이 상자가 정한다 — FarmField 는 상자를 100% 채운다. */}
+              <span className="block w-[64px] shrink-0">
+                <FarmField
+                  counts={field.counts}
+                  healthMix={field.healthMix}
+                  maxSprites={18}
+                  shadows={false}
+                  reserveSigns={false}
+                />
+              </span>
 
               <span className="flex-1 min-w-0">
                 <span className="flex items-center gap-[6px]">
                   <span className="flex-1 min-w-0 truncate text-[15px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                     {book.title}
                   </span>
-                  {book.vocaBookStoreId != null && (
-                    <Storefront
-                      size={14}
-                      weight="fill"
-                      className="shrink-0 text-layout-gray-400 dark:text-layout-gray-200"
-                      aria-label="서점에서 제공받은 단어장"
-                    />
-                  )}
+                  {/* 서점 아이콘은 두지 않는다 — 어디서 왔는지는 목록에서 내리는 판단
+                      ("어느 밭이 급한가")에 쓰이지 않고, 배지 옆에 붙어 돌봄 배지의
+                      눈에 띄는 정도만 깎아 먹었다. */}
                   {badge && (
                     <span
                       className={`
@@ -224,9 +205,8 @@ const Main = () => {
                       <CropImage
                         stage={stage}
                         health={HEALTH_STATES.FRESH}
-                        size={20}
+                        size={36}
                         alt={CROP_LABEL[stage]}
-                        className="object-bottom"
                       />
                       {counts[stage]}
                     </span>

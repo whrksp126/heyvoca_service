@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { CaretLeft, Plus, CaretUp, Lock } from '@phosphor-icons/react';
+import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -8,11 +8,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
+import { VocabularyBookMenuNewBottomSheet } from '../newBottomSheet/VocabularyBookMenuNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
 import WordRow from '../vocabularySheets/WordRow';
 import {
   bookStageCounts,
+  bookFieldData,
   bookDueTodayCount,
   bookWiltedCount,
   bookUnverifiedCount,
@@ -75,6 +77,13 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   }, [words]);
 
   const counts = useMemo(() => bookStageCounts(words), [words]);
+  // 밭에 실제로 서는 작물 — 아직 학습하지 않은 단어는 빼고 심는다
+  const field = useMemo(() => bookFieldData(words), [words]);
+  // 아직 한 번도 맞히지 못해 밭에 심기지 않은 단어 — 밭 밖 간판이 센다 (기획 5.1)
+  const storedSeeds = useMemo(
+    () => (words || []).filter((w) => isUnplanted(w)).length,
+    [words],
+  );
   const todayCnt = useMemo(() => bookDueTodayCount(words), [words]);
   const wiltedCnt = useMemo(() => bookWiltedCount(words), [words]);
   const unverifiedCnt = useMemo(() => bookUnverifiedCount(words), [words]);
@@ -236,6 +245,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     });
   };
 
+  const handleBookMenuClick = () => {
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(VocabularyBookMenuNewBottomSheet, {
+      bookId: vocabularySheet.id,
+      title: vocabularySheet.title,
+      onDeleted: popNewFullSheet,
+    }, {
+      isBackdropClickClosable: true,
+      isDragToCloseEnabled: true,
+    });
+  };
+
   const handleCardClick = (wordId) => {
     vibrate({ duration: 5 });
     pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id: wordId });
@@ -289,6 +310,20 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           {vocabularySheet.title}
         </h1>
 
+        {/* 이 단어장의 이름·색을 고치거나 지우는 자리.
+            목록 화면 헤더에 있던 ✎ 를 여기로 옮겼다 — 거기서는 "어느 단어장인지"를
+            먼저 골라야 했는데, 이 화면은 이미 그 단어장을 열어 둔 상태다. */}
+        <motion.button
+          className="flex items-center justify-center w-[32px] h-[32px] rounded-[8px] shrink-0"
+          style={{ color: 'var(--layout-gray-400)' }}
+          variants={buttonVariants}
+          whileTap="tap"
+          onClick={handleBookMenuClick}
+          aria-label="단어장 정보 수정"
+        >
+          <DotsThreeVertical size={22} weight="bold" />
+        </motion.button>
+
         <div className="relative shrink-0">
           <motion.button
             className="flex items-center justify-center w-[32px] h-[32px] rounded-[8px]"
@@ -333,7 +368,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         }}
       >
         {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA */}
-        <BookFieldHero counts={counts}>
+        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} storedSeeds={storedSeeds}>
           <motion.button
             type="button"
             onClick={handleStudyClick}

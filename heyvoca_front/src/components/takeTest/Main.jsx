@@ -24,6 +24,7 @@ import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar from '../farm/FarmStatusBar';
+import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
 
 
@@ -517,6 +518,42 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     handleClickExamOption(index, option);
   }
 
+  /*
+    게스트(온보딩 첫 학습)용 농장 상태 바 payload.
+
+    상태 바는 원래 `/study/log` 응답의 `farm` 으로 그린다. 그런데 게스트는 학습 세션이
+    없어 그 요청을 아예 보내지 않아(logIfFirstAttempt 첫 줄) 온보딩에서만 구버전 화면
+    (상단 암기상태 배지 + 하단 '3일 후 복습 예정' pill)이 남아 있었다.
+    온보딩에서 본 화면과 실제가 다르면 안 되므로(시안 study.html 2절) 같은 값을 만든다.
+
+    온보딩 단어는 전부 **한 번도 심지 않은 씨앗**이라 계산이 단순하다 —
+    첫 정답이 곧 씨앗 심기이고(기획 5.1 조건 4), 그 순간이 유일한 승급이다.
+    막대는 0 이다. 서버도 같다: 심은 씨앗의 진행률은 '심은 시각 → 첫 예정 복습' 사이의
+    경과 비율인데(farm_v2/answer.py stage_progress) 막 심은 참이라 아직 0 이다.
+  */
+  const daysUntilReview = (iso) => {
+    if (!iso) return null;
+    const target = new Date(iso);
+    const today = new Date();
+    target.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    const diff = Math.round((target - today) / 86400000);
+    return diff >= 1 ? diff : null;
+  };
+
+  const guestFarmPayload = (wasCorrect, nextReviewIso) => ({
+    crop: 'seed',
+    stage: wasCorrect ? 'PLANTED_SEED' : 'UNPLANTED_SEED',
+    crop_from: 'seed',
+    stage_from: 'UNPLANTED_SEED',
+    grew: !!wasCorrect,
+    pct_from: 0,
+    pct_to: 0,
+    health: HEALTH_STATES.FRESH,
+    days_to_review: daysUntilReview(nextReviewIso),
+    wasCorrect: !!wasCorrect,
+  });
+
   // 채점 직후 즉시 표시할 낙관적 fsrs + 복습 예정일 고정 + 암기상태 변경 알림.
   // predictedReview(백엔드 사전 계산)가 있으면 정확값으로 displayNextReview를 고정해
   // 이후 /study/log 응답에도 흔들리지 않게 한다(깜빡임 제거). 없으면 낙관적 추정으로 폴백.
@@ -536,6 +573,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       setMemoryStateChange({
         toKey: newStateKey,
         dir: (STATE_RANK[newStateKey] ?? 0) > (STATE_RANK[prevMemoryState] ?? 0) ? 'up' : 'down',
+      });
+    }
+    // 게스트는 서버 응답이 없으므로 여기서 상태 바를 직접 세운다(재출제는 성장이 아니다)
+    if (guestMode && !q.isRetry) {
+      setFarmStatus({
+        ...guestFarmPayload(isCorrectAnswer, q.displayNextReview),
+        vocaId: q.vocaIndexId ?? q.id,
+        qIndex: idx,
       });
     }
   }
@@ -838,6 +883,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // 게스트 온보딩 로컬 콤보 — 카드매칭은 항상 첫 시도(오답 카드는 사지선다로 재출제되어 이 경로를 다시 타지 않음)
     bumpLocalCombo(!!wordIsCorrect);
+
+    // 게스트 온보딩 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다.
+    // 서버 경로(sendCardLog)의 setCardFarmByWordId 와 같은 모양을 로컬로 만든다.
+    if (guestMode) {
+      const optimistic = computeOptimisticFsrs(target?.fsrs, !!wordIsCorrect);
+      setCardFarmByWordId(prev => ({
+        ...prev,
+        [wordId]: guestFarmPayload(!!wordIsCorrect, optimistic?.next_review),
+      }));
+    }
 
     if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
       loggedVocaIdsRef.current.add(wordId);

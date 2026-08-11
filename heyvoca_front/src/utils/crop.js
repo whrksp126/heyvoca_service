@@ -102,7 +102,7 @@ export const isCritical = (health) =>
 export const isStudiable = (health) =>
   String(health || '').trim().toUpperCase() !== HEALTH_STATES.ROTTEN;
 
-/** 단계 이름 */
+/** 단계 이름 — 밭의 **구역** 이름이다. 홈 팻말·단어장 카드가 쓴다. */
 export const CROP_LABEL = {
   seed: '씨앗',
   sprout: '새싹',
@@ -110,6 +110,52 @@ export const CROP_LABEL = {
   carrot: '당근',
   golden: '황금 당근',
 };
+
+/* ── 단어 하나의 상태 — 기획 5.1 의 여섯 단계 ─────────────────────────
+   밭은 씨앗·새싹·이파리·당근 네 구역으로만 나눈다(기획 5.1 "메인 홈은 복잡도를 줄이기
+   위해 4개 그룹을 유지"). 그래서 CROP_LABEL 에는 씨앗이 하나뿐이다.
+
+   하지만 **단어 하나**를 두고 말할 때는 그 씨앗이 둘로 갈린다.
+     보유 씨앗  담아만 두고 한 번도 독립 정답을 맞히지 못했다 → 밭에 없다. 썩지도 않는다
+     심은 씨앗  첫 독립 정답을 맞혀 흙에 심겼다 → 밭에 있고 물이 필요하다
+   둘을 똑같이 "씨앗"이라 부르면 "왜 이건 물을 줘야 하고 저건 아닌가"에 답할 말이 없다. */
+export const CROP_DETAIL_STAGES = ['unplanted', 'seed', 'sprout', 'leaf', 'carrot', 'golden'];
+
+const STAGE_TO_DETAIL = {
+  UNPLANTED_SEED: 'unplanted',
+  PLANTED_SEED: 'seed',
+  SPROUT: 'sprout',
+  LEAF: 'leaf',
+  CARROT: 'carrot',
+  GOLDEN: 'golden',
+};
+
+/**
+ * 백엔드 visual_stage → 여섯 단계 키.
+ * **crop 키(`seed`)를 넘기면 구분이 되지 않는다** — 그건 이미 둘을 합친 값이다.
+ * 반드시 visual_stage(`UNPLANTED_SEED` 등)를 넘길 것.
+ */
+export const stageDetail = (visualStage) => {
+  const raw = String(visualStage || '').trim();
+  if (STAGE_TO_DETAIL[raw.toUpperCase()]) return STAGE_TO_DETAIL[raw.toUpperCase()];
+  const lower = raw.toLowerCase();
+  if (CROP_DETAIL_STAGES.includes(lower)) return lower;
+  return stageToCrop(visualStage);
+};
+
+export const CROP_LABEL_DETAIL = {
+  unplanted: '보유 씨앗',
+  seed: '심은 씨앗',
+  sprout: '새싹',
+  leaf: '이파리',
+  carrot: '당근',
+  golden: '황금 당근',
+};
+
+export const cropLabelDetail = (visualStage) => CROP_LABEL_DETAIL[stageDetail(visualStage)];
+
+/** 아직 밭에 없는 단어인가 — 보유 씨앗 */
+export const isUnplantedStage = (visualStage) => stageDetail(visualStage) === 'unplanted';
 
 /**
  * 단계 대표 색 — 시안 13절 "성장 단계" 표 정본.

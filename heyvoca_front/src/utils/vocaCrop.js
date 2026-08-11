@@ -10,6 +10,7 @@
  */
 
 import { HEALTH_STATES } from './crop';
+import { fieldDataFromPlants } from './farmField';
 
 /* ── 성장 단계 ─────────────────────────────────────────────
    시안 §2 — "이름만 바뀌고(미학습→씨앗, 단기→새싹, 중기→이파리, 장기→당근) 색은 유지".
@@ -33,6 +34,22 @@ export const isUnplanted = (word) => {
   if (f) return f.stage === 'UNPLANTED_SEED';
   const fsrs = word?.fsrs;
   return !fsrs || !fsrs.state || fsrs.state === 'new';
+};
+
+/**
+ * 단어 → 백엔드 visual_stage (UNPLANTED_SEED / PLANTED_SEED / SPROUT / LEAF / CARROT / GOLDEN).
+ *
+ * `wordCropStage` 는 밭의 **구역**(씨앗·새싹·이파리·당근)을 돌려주므로 보유 씨앗과
+ * 심은 씨앗이 둘 다 'seed' 로 뭉개진다. 단어 하나의 상태를 이름으로 부를 자리
+ * (상세 시트 · 찾기)에서는 이쪽을 써야 기획 5.1 의 여섯 단계가 그대로 나온다.
+ */
+export const wordStage = (word) => {
+  const f = serverFarm(word);
+  if (f?.stage) return f.stage;
+  // 구버전 응답 폴백 — 심었는지만 알 수 있고 심은 씨앗/새싹 구분은 FSRS 로 추정한다
+  if (isUnplanted(word)) return 'UNPLANTED_SEED';
+  const crop = wordCropStage(word);
+  return { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT', golden: 'GOLDEN' }[crop];
 };
 
 /** 단어 → 작물 단계 키 (seed / sprout / leaf / carrot) */
@@ -200,28 +217,30 @@ export const bookUnverifiedCount = (words) =>
   (words || []).filter((word) => wordVerification(word) === 'unverified').length;
 
 /**
- * 밭 썸네일 키 — 시안 §2 표.
- *   흙 + 씨앗 몇 개   산 뒤 아직 안 시작
- *   새싹 위주·일부 마름 초반, 관리 필요
- *   섞임 · 시든 것 보임 오래 방치
- *   당근 가득          거의 다 외움
- * 단어가 하나도 없는 단어장은 시안에 없어 빈 밭(book-empty)을 쓴다.
+ * 이 단어장의 밭에 실제로 심을 것 — FarmField 가 그대로 받는 형태.
+ *
+ * **아직 학습하지 않은 단어는 뺀다.** 담아만 두고 한 번도 열지 않은 단어는 씨앗을
+ * 심은 것도 아니라 밭에 있을 수 없다. 그 수는 팻말(보유 수)과 밭의 차이로 읽힌다.
  */
-export const bookThumbKey = (words, counts) => {
-  const total = (words || []).length;
-  if (total === 0) return 'empty';
-  const c = counts || bookStageCounts(words);
-  const grown = c.sprout + c.leaf + c.carrot;
-  if (grown === 0) return 'seed';
-  if (c.carrot / total >= 0.5) return 'done';
-  // 시안 §1① 표본: [58,42,28,14] 은 mid, [78,30,12,0] 은 early 다.
-  // 동수(42 vs 28+14)일 때 early 로 넘어가면 앞의 표본이 어긋나므로 초과일 때만 early.
-  if (c.sprout > c.leaf + c.carrot) return 'early';
-  return 'mid';
-};
+export const bookFieldData = (words, now = new Date()) =>
+  fieldDataFromPlants(
+    (words || [])
+      .filter((word) => !isUnplanted(word))
+      .map((word) => ({ crop: wordCropStage(word), health: wordHealth(word, now) })),
+  );
+
+/* 밭 썸네일을 네 장(book-seed/early/mid/done) 중에서 고르던 `bookThumbKey` 는 지웠다.
+   시안 §2 가 말하는 "밭 그림으로 상태를 먼저 읽는다"는 그 넷으로는 성립하지 않았다 —
+   단어장이 몇 개든 결국 같은 그림 넷 중 하나였다. 지금은 bookFieldData 가 실제로
+   심긴 작물을 내려주고 FarmField 가 그대로 심는다. */
 
 /**
- * 카드 배지 — 시안 §1① (완료 / 돌봄 N / 씨앗).
+ * 카드 배지 — 시안 §1① 의 세 배지 중 **둘만** 남긴다 (완료 / 돌봄 N).
+ *
+ * "씨앗" 배지를 뺐다. 카드에는 이미 씨앗 아이콘과 개수가 찍혀 있고 밭 썸네일도
+ * 흙과 씨앗뿐인 그림이라, 배지가 세 번째로 같은 말을 하고 있었다.
+ * 배지 자리는 "지금 손이 필요한가"에만 쓴다 — 그래야 돌봄 배지가 눈에 걸린다.
+ *
  * 어디에도 해당하지 않으면 null (배지를 비운다).
  */
 export const bookBadge = (words, counts, now = new Date()) => {
@@ -230,7 +249,6 @@ export const bookBadge = (words, counts, now = new Date()) => {
   const care = bookCareCount(words, now);
   if (care > 0) return { kind: 'care', text: `돌봄 ${care}` };
   const c = counts || bookStageCounts(words);
-  if (c.seed === total) return { kind: 'new', text: '씨앗' };
   if (c.carrot / total >= 0.5) return { kind: 'done', text: '완료' };
   return null;
 };

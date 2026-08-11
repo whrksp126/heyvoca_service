@@ -533,10 +533,11 @@ const TakeTest = () => {
 
   // 학습 종료 확인 및 네비게이션 함수
   const handleStopLearning = async () => {
-    // 게스트 맛보기: 확인 바텀시트 없이 온보딩 진행화면(일일 목표)으로 복귀
+    // 게스트 첫 학습: 확인 바텀시트 없이 온보딩 예고 화면으로 복귀 —
+    // 중간에 그만둔 것이므로 다시 시작할 수 있는 자리로 되돌린다
     if (isGuestMode) {
       clearGuestTrial();
-      navigate('/onboarding', { state: { step: 'daily' }, replace: true });
+      navigate('/onboarding', { state: { step: 'ready' }, replace: true });
       return;
     }
 

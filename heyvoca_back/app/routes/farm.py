@@ -152,6 +152,25 @@ def list_plants():
         return _fail('작물 목록 조회')
 
 
+@farm_bp.route('/home-feed', methods=['GET'])
+@jwt_required
+def home_feed():
+    """홈 아래쪽 "지금 볼 만한 단어" 묶음 (care / rotten / seeds / recent).
+
+    무엇을 그릴지는 화면이 상태를 보고 고른다. 네 묶음을 한 응답에 담는 이유는
+    따로 부르면 홈 첫 진입에 왕복이 네 번 늘기 때문이다.
+    """
+    from app.services.game.farm_v2 import query
+
+    user_id = UUID(g.user_id)
+    try:
+        data = query.home_feed(user_id, now=dt.datetime.utcnow(),
+                               limit=_int_arg('limit', 5))
+        return jsonify({'code': 200, 'data': data}), 200
+    except Exception:
+        return _fail('홈 목록 조회')
+
+
 # ──────────────────────────────────────────────────────────────
 # 부패 후 처리 (기획 7)
 # ──────────────────────────────────────────────────────────────

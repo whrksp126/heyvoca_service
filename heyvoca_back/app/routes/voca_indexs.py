@@ -85,6 +85,9 @@ def build_voca_index_response(user_voca):
     return {
         'origin': user_voca.word,
         'vocaIndexId': user_voca.id,
+        # 헤이보카 사전(Voca)에 연결된 단어인지. 화면의 검증 마크가 이 값 하나로 갈린다
+        # (시안 vocabooks §3). None 이면 사용자가 직접 입력해 사전에 없는 단어다.
+        'vocaId': user_voca.voca_id,
         'fsrs': fsrs,
         'vocaBooks': voca_books,
         'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
@@ -177,6 +180,10 @@ def get_voca_indexs():
         data.append({
             'origin': uv.word,
             'vocaIndexId': uv.id,
+            # 사전 연결 여부 — 검증 마크(시안 vocabooks §3)가 이 값으로 갈린다.
+            # 서점 단어장의 단어는 사전에서 만든 것이라 전부 값이 있고, 직접 입력한
+            # 단어는 None 이다. 값이 아예 없으면 화면은 마크를 그리지 않는다.
+            'vocaId': uv.voca_id,
             'fsrs': fsrs,
             'vocaBooks': voca_books,
             'farm': _farm_state(games.get(uv.id), fsrs, now,

@@ -22,7 +22,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import CropImage, { CROP_ASSETS } from '../farm/CropImage';
-import { stageToCrop, cropLabel } from '../../utils/crop';
+import { stageToCrop, cropLabelDetail } from '../../utils/crop';
 import useFarmPlants from './useFarmPlants';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
 
@@ -503,7 +503,7 @@ const Main = () => {
           onClick={() => { vibrate({ duration: 5 }); setFilter(key); }}
           className={`${chipBase} pl-[8px] pr-[11px] ${filter === key ? chipOn : chipOff}`}
         >
-          <CropImage stage={key} health="FRESH" size={19} alt="" />
+          <CropImage stage={key} health="FRESH" size={34} alt="" />
           {label} <b className="font-[800]">{filterCounts[key]}</b>
         </button>
       ))}
@@ -540,8 +540,8 @@ const Main = () => {
         <CropImage
           stage={plant?.stage ?? 'seed'}
           health={plant?.health ?? 'FRESH'}
-          size={30}
-          className="object-bottom shrink-0"
+          size={52}
+          className="shrink-0"
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-[5px]">
@@ -664,7 +664,7 @@ const Main = () => {
         className="flex items-center gap-[11px] w-full rounded-[12px] p-[12px] bg-primary-main-50 dark:bg-primary-main-dark"
       >
         <span className="flex items-center justify-center w-[38px] h-[38px] shrink-0 rounded-[10px] bg-layout-white dark:bg-white/10">
-          <Camera size={19} weight="fill" className="text-primary-main-600" />
+          <Camera size={34} weight="fill" className="text-primary-main-600" />
         </span>
         <span className="flex-1 min-w-0 text-left">
           <span className="block text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
@@ -706,8 +706,7 @@ const Main = () => {
                 <CropImage
                   stage={plant?.stage ?? 'seed'}
                   health={plant?.health ?? 'FRESH'}
-                  size={22}
-                  className="object-bottom"
+                  size={38}
                 />
               ) : (
                 <MagnifyingGlass size={13} weight="fill" className="text-layout-gray-200" />
@@ -783,10 +782,9 @@ const Main = () => {
                   <CropImage
                     stage={plant?.stage ?? 'seed'}
                     health={plant?.health ?? 'FRESH'}
-                    size={20}
-                    className="object-bottom"
+                    size={36}
                   />
-                  {cropLabel(plant?.stage ?? 'seed')}
+                  {cropLabelDetail(plant?.stage ?? 'UNPLANTED_SEED')}
                 </span>
               ) : (
                 <button
@@ -872,7 +870,7 @@ const Main = () => {
             {books.map((vb, i) => {
               const book = vocaBooks.find(v => String(v.vocaBookId) === String(vb.vocaBookId));
               const bg = resolveVocaBookBackground(book?.color?.background || '#FFF0F9', isDark);
-              const stageLabel = cropLabel(plant?.stage ?? 'seed');
+              const stageLabel = cropLabelDetail(plant?.stage ?? 'UNPLANTED_SEED');
               const badge = dueBadge(plant, myWord?.fsrs);
               const sub = i === 0
                 ? `${stageLabel} · 다음 복습 ${badge ? badge.text : '예정 없음'}`
@@ -886,8 +884,8 @@ const Main = () => {
                   <CropImage
                     stage={plant?.stage ?? 'seed'}
                     health={plant?.health ?? 'FRESH'}
-                    size={30}
-                    className="object-bottom shrink-0"
+                    size={52}
+                    className="shrink-0"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
@@ -955,13 +953,13 @@ const Main = () => {
                   className="flex items-center gap-[10px] rounded-[12px] px-[12px] py-[10px] mb-[7px]"
                   style={{ backgroundColor: bg }}
                 >
-                  <CropImage stage="seed" health="FRESH" size={30} className="object-bottom shrink-0" />
+                  <CropImage stage="seed" health="FRESH" size={52} className="shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                       {item.bookstore_name}
                     </div>
                     <div className="mt-[2px] flex items-center gap-[4px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
-                      <CropImage stage="seed" health="FRESH" size={13} alt="" />
+                      <CropImage stage="seed" health="FRESH" size={36} alt="" />
                       {store?.vocaCount ? `심을 씨앗 ${store.vocaCount}개` : '심을 씨앗이 들어 있어요'}
                     </div>
                   </div>

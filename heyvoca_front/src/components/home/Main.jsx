@@ -8,7 +8,7 @@
 //   보석 칩     36px   히어로 우측 상단에 떠 있는 반투명 칩 (본문 흐름에서 뺀다)
 //   주 CTA      56px   히어로 하단에 겹쳐 뜬다(bottom -16px). 홈에서 유일하게 핑크를 쓰는 곳
 //   연속 학습   112px  연속 일수 · 최장 기록 · 일별 학습량 막대 7개
-//   성과 카드   가변   오늘 자란 단어 · 황금 당근 — 여기부터 스크롤 영역
+//   성과 카드   가변   오늘 자란 단어 (황금 당근 카드는 내렸다 — 마이페이지 온실에 있다)
 //   바텀 네비   60px   농장 · 단어장 · 찾기 · 상점 · 마이 (BottomNav)
 //
 // §9 상단과 본문을 잇는 방식 — 히어로와 본문 사이에 선도, 색 경계도, 모서리도 없다.
@@ -17,6 +17,8 @@
 //   ③ 본문은 배경 없이 z-index 2 로 올려 페이드된 지면이 카드 사이로 비친다.
 //
 // §10 은 홈에 놓이는 것을 전부 열거한다 — 히어로 · 보석 칩 · 주 CTA · 연속 학습 · 성과 카드.
+// 그 아래에 "지금 볼 만한 단어"(WordFeedCard)를 더했다 — 시안 구조대로만 두면 급한 일이
+// 없는 날 스크롤 영역이 통째로 비어서다. 지표가 아니라 단어를 채우므로 §7 과 부딪히지 않는다.
 // 이전 라운드에서 "지우지 않고 아래로 밀어 둔" 네 블록은 통합 단계에서 제거했다.
 //   나의 업적    → 마이페이지로 이관(mypage 시안 1절 "홈에 있던 업적을 여기로 옮기고")
 //   데일리 미션  → §7 "홈에는 진행 지표가 없다". 신규 n/m · 복습 n/m 이 정확히 그 지표였다
@@ -51,9 +53,10 @@ import FarmCta, {
 } from './FarmCta';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
-import GoldenCarrotCard from './GoldenCarrotCard';
 import InfoStrip from './InfoStrip';
-import { HEALTH_STATES } from '../../utils/crop';
+import WordFeedCard from './WordFeedCard';
+import { HEALTH_STATES, CROP_LABEL } from '../../utils/crop';
+import { healthMixFromOverview } from '../../utils/farmField';
 
 /**
  * `/insights/today-changes` 의 암기 상태 키 → 농장 단계 키.
@@ -68,6 +71,21 @@ const MEMORY_TO_CROP = {
   long: 'carrot',
 };
 
+/* ── 홈 아래 "지금 볼 만한 단어" 우측 상태 문구 ─────────────────────
+   단어장·찾기 목록과 **같은 말**을 쓴다. 같은 단어가 화면마다 다른 문구로 불리면
+   사용자는 그게 같은 상태인지 매번 확인해야 한다. */
+const careTone = (item) => {
+  const d = item.days_to_review;
+  if (d === null || d === undefined) return { text: '물 필요', tone: 'today' };
+  if (d < 0) return { text: `${Math.abs(d)}일 지남`, tone: 'late' };
+  if (d === 0) return { text: '오늘 물 필요', tone: 'today' };
+  return { text: `${d}일 뒤`, tone: 'muted' };
+};
+
+const rottenTone = () => ({ text: '되살리기', tone: 'rot' });
+const seedTone = () => ({ text: '안 배움', tone: 'muted' });
+const grownTone = (item) => ({ text: CROP_LABEL[item.crop] || '', tone: 'grown' });
+
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -76,7 +94,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -88,11 +106,20 @@ const Main = () => {
 
   const criticalCnt = today.critical_first ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
-  const golden = counts.golden ?? 0;
   const rottenCnt = health.rotten ?? 0;
   const inventory = farmOverview?.items ?? {};
   const restoreItemCnt = (inventory.SHOVEL ?? 0) + (inventory.NUTRIENT ?? 0);
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
+
+  // 밭에 실제로 서는 작물 — **심은 것만** 센다 (기획 5.1).
+  // 한 번도 독립 정답을 맞히지 못한 단어는 심긴 적이 없어 흙 위에 있을 수 없고 썩지도 않는다.
+  // 그 수는 밭 **밖** 우측 상단의 "보유 씨앗" 간판이 따로 말한다.
+  const fieldCounts = useMemo(() => ({
+    ...counts,
+    seed: Math.max(0, (counts.seed ?? 0) - unplanted),
+  }), [counts, unplanted]);
+
+  const healthMix = useMemo(() => healthMixFromOverview(health), [health]);
 
   // 농장 조회 전에는 §12 5번(빈 밭)으로 떨어지지 않게 2번(가장 흔한 상태)을 깔아 둔다.
   // 단어를 가진 사용자에게 "아직 밭이 비어 있어요"가 한 프레임 스치는 편이 훨씬 나쁘다.
@@ -197,14 +224,96 @@ const Main = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
+  /*
+    성과 카드 아래에 붙는 "지금 볼 만한 단어".
+
+    시안 §10 이 홈에 놓는 것을 다 적어 두긴 했지만, 그 목록대로만 두면 급한 일이 없는
+    날의 스크롤 영역이 황금 당근 카드 하나로 끝난다 — 개수가 0이면 카드 하나가
+    "0개"만 말하고 화면이 통째로 빈다. §7 이 금지한 건 **진행 지표**(n/m · 퍼센트)이지
+    내용이 아니므로, 지표 대신 단어 자체를 채운다.
+
+    상태에 따라 순서를 바꾸고 **최대 두 묶음만** 그린다. 넷을 다 그리면 이번엔 반대로
+    홈이 목록 화면이 된다. 우선순위는 §12 의 CTA 우선순위와 같은 순서다 —
+    화면 위의 버튼과 아래 목록이 서로 다른 것을 급하다고 말하면 안 된다.
+  */
+  const feed = farmFeed ?? {};
+  const feedCandidates = [
+    {
+      key: 'care',
+      title: '지금 물이 필요한 단어',
+      items: feed.care ?? [],
+      tone: careTone,
+      moreLabel: '물주기',
+      onMore: handleTodayStudyButtonClick,
+    },
+    {
+      key: 'rotten',
+      title: '되살릴 수 있는 단어',
+      items: feed.rotten ?? [],
+      tone: rottenTone,
+      moreLabel: '보관소',
+      onMore: openRottenSheet,
+    },
+    {
+      key: 'seeds',
+      title: '아직 심지 않은 씨앗',
+      items: feed.seeds ?? [],
+      tone: seedTone,
+      moreLabel: '심으러 가기',
+      onMore: handleTodayStudyButtonClick,
+    },
+    {
+      key: 'recent',
+      title: '최근에 심은 단어',
+      items: feed.recent ?? [],
+      tone: grownTone,
+      moreLabel: null,
+      onMore: null,
+    },
+  ];
+
+  // 급한 일이 없는 상태에서는 "심을 씨앗"이 먼저다 — 그때의 CTA 도 씨앗을 가리킨다
+  const feedOrder = (homeState === HOME_STATES.DONE || homeState === HOME_STATES.NEW_SEED)
+    ? ['seeds', 'recent', 'care', 'rotten']
+    : ['care', 'rotten', 'seeds', 'recent'];
+
+  const feedSections = feedOrder
+    .map((key) => feedCandidates.find((c) => c.key === key))
+    .filter((section) => section && section.items.length > 0)
+    .slice(0, 2);
+
+  /*
+    §8 스트립과 아래 목록이 **같은 것을 두 번 말하지 않게** 한다.
+    "오늘 안에 물이 필요한 작물 3개" 바로 아래에 그 3개를 이름까지 적은 카드가 서면,
+    같은 사실이 두 줄 연속으로 나오고 스트립은 카드가 이미 한 말의 요약이 된다.
+    둘 중 남길 것은 카드다 — 개수만 있는 줄보다 단어가 적힌 목록이 할 일을 더 정확히 말하고,
+    카드의 우측 링크가 스트립이 하던 진입점 노릇도 그대로 한다.
+    카드가 안 뜨는 상태(그 묶음이 비었거나 다른 묶음에 밀렸을 때)에는 스트립이 그대로 선다.
+  */
+  const shownFeedKeys = new Set(feedSections.map((s) => s.key));
+
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
     /* isolate — 히어로(z-1)와 본문(z-2)의 겹침 순서는 홈 **안에서만** 유효해야 한다.
        stacking context 를 끊지 않으면 본문 카드(z-2)가 화면 전체 기준으로 떠올라
        바텀 네비(fixed · z-auto)를 덮어 버린다(스크롤 영역이 길어지는 순간 네비가 사라진다). */
-    <div className="isolate flex flex-col h-screen bg-farm-canvas dark:bg-layout-black">
+    /*
+      화면 전체가 하나의 스크롤이다.
+      예전에는 히어로를 고정하고 아래 카드 영역만 스크롤했다. 그러면 손가락을 올린 곳에
+      따라 움직이는 곳과 안 움직이는 곳이 갈려서, 밭을 잡고 끌면 아무 일도 안 일어났다.
+      화면의 절반을 차지하는 그림이 스크롤에 반응하지 않는 건 "고정된 헤더"가 아니라
+      **고장 난 화면**으로 읽힌다.
+    */
+    <div className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black">
 
-      <FarmHero counts={counts} health={health} state={view.mood}>
+      <FarmHero
+        counts={counts}
+        fieldCounts={fieldCounts}
+        healthMix={healthMix}
+        storedSeeds={unplanted}
+        health={health}
+        state={view.mood}
+      >
         {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
             히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
         <button
@@ -272,7 +381,7 @@ const Main = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
         className="
-          relative z-[2] flex-1 min-h-0 overflow-y-auto
+          relative z-[2] shrink-0
           flex flex-col gap-[12px]
           px-[20px] pt-[30px]
           pb-[calc(84px+var(--safe-area-bottom))]
@@ -282,46 +391,51 @@ const Main = () => {
         <StreakCard />
 
         {/* §8 water 스트립 — 부패 직전이 1~3개일 때만 */}
-        {showWaterStrip && (
+        {showWaterStrip && !shownFeedKeys.has('care') && (
           <InfoStrip
             variant="water"
-            icon={<CropImage stage="leaf" health={HEALTH_STATES.WILTED} size={24} />}
+            icon={<CropImage stage="leaf" health={HEALTH_STATES.WILTED} size={40} />}
             label={`오늘 안에 물이 필요한 작물 ${criticalCnt}개`}
             onClick={handleTodayStudyButtonClick}
           />
         )}
 
         {/* §8 amber 스트립 — 되살릴 수 있는 썩은 작물이 있고 도구를 가진 사용자에게만 */}
-        {showAmberStrip && (
+        {showAmberStrip && !shownFeedKeys.has('rotten') && (
           <InfoStrip
             variant="amber"
-            icon={<CropImage stage="leaf" health={HEALTH_STATES.ROTTEN} size={24} />}
+            icon={<CropImage stage="leaf" health={HEALTH_STATES.ROTTEN} size={40} />}
             label={`썩은 작물 ${rottenCnt}개를 되살릴 수 있어요`}
             onClick={openRottenSheet}
           />
         )}
 
-        {/* 성과 카드 — 여기부터 스크롤 영역(§10). 첫 화면에 반쯤 걸쳐 더 있음을 알린다.
-            §10 "오늘 자란 단어"는 조건부다(없으면 카드를 아예 띄우지 않는다).
-            "황금 당근"은 조건이 없다 — 시안 기본·위험 프레임 모두 이 카드가 서 있고,
-            위험 프레임에서는 오늘 자란 단어가 없는 자리를 이 카드가 대신한다.
-            그래서 개수가 0이어도 골격을 남긴다(그러지 않으면 스크롤 영역이 통째로 비어
-            "반쯤 걸쳐 더 있음을 알린다"가 성립하지 않는다). */}
+        {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
+            "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,
+            황금 당근은 마이페이지 온실에 그대로 있다. */}
         <GrewTodayCard items={grewItems} />
-        <GoldenCarrotCard
-          count={golden}
-          onMore={() => { vibrate({ duration: 5 }); navigate('/mypage'); }}
-        />
 
         {/* §8 seed 스트립 — 급한 일이 없을 때 다음 학습거리를 제안한다 */}
-        {showSeedStrip && (
+        {showSeedStrip && !shownFeedKeys.has('seeds') && (
           <InfoStrip
             variant="seed"
-            icon={<CropImage stage="seed" health={HEALTH_STATES.FRESH} size={24} />}
+            icon={<CropImage stage="seed" health={HEALTH_STATES.FRESH} size={40} />}
             label={`새 씨앗 ${unplanted}개가 밭에 도착했어요`}
             onClick={handleTodayStudyButtonClick}
           />
         )}
+
+        {/* 지금 볼 만한 단어 — 상태에 따라 최대 두 묶음 */}
+        {feedSections.map((section) => (
+          <WordFeedCard
+            key={section.key}
+            title={section.title}
+            items={section.items}
+            tone={section.tone}
+            moreLabel={section.moreLabel}
+            onMore={section.onMore}
+          />
+        ))}
 
       </motion.div>
     </div>

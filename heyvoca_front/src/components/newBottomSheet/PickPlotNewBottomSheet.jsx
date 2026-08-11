@@ -148,7 +148,9 @@ const PickPlotNewBottomSheet = ({ origin = '', meanings = [], examples = [] }) =
                   border-[1.5px] ${selected ? 'border-primary-main-600' : 'border-transparent'}
                 `}
               >
-                <CropImage stage="seed" health="FRESH" size={15} alt="" className="shrink-0" />
+                {/* 자리는 18px 이지만 씨앗은 단계 비율(0.64)만큼 작게 그려진다 —
+                    15px 로 두면 실제로 10px 이 채 안 돼 무엇인지 안 보인다 */}
+                <CropImage stage="seed" health="FRESH" size={34} alt="" className="shrink-0" />
                 <span className="truncate">{sheet.title || '단어장'}</span>
                 <span className="ml-auto shrink-0 font-[600] text-layout-gray-300">
                   씨앗 {sheet.total ?? (sheet.words?.length ?? 0)}

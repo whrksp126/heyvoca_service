@@ -1,29 +1,33 @@
 import React from 'react';
-// 팻말이 **없는** 판. 나무 판까지 이미지에 구워 두면 보유 0 인 단계에서 글자만 사라지고
-// 빈 판이 밭에 남는다. 판·말뚝은 아래에서 CSS 로 그린다(홈 히어로와 같은 처리).
-import bookHero from '../../assets/images/farm/book-hero-nosign.png';
+import FarmField from '../farm/FarmField';
 import CropImage from '../farm/CropImage';
 import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
+import { SIGN_ANCHORS } from '../../utils/farmField';
 
 /**
  * 단어장 안 — 이 단어장만의 밭. 시안 vocabooks §4.
  *
  * 홈의 히어로를 그대로 축소했다. 밭 + 나무 팻말 4개 + 히어로 하단에 겹쳐 뜬 주 CTA.
- * 좌표계만 줄였고(히어로 341px · 이미지 108%) 구성은 하나도 바꾸지 않았다.
+ * 좌표계만 줄였고 구성은 하나도 바꾸지 않았다.
  * 마스코트는 없다 — 농장 전체의 주인이라 밭 하나짜리 화면에는 서지 않는다.
  *
- * 팻말 좌표는 herov4/layout.json 의 `book-hero` 값(1200×860 기준)을 %로 바꾼 것이다.
- * px 로 두면 폰 폭이 달라질 때 팻말이 밭에서 떨어져 나간다.
+ * 밭에 서는 작물은 **이 단어장에서 실제로 심은 것**이다(FarmField).
+ * 팻말은 보유 수를 적는다 — 아직 안 심은 씨앗이 많으면 팻말 수와 밭의 씨앗 수가
+ * 벌어지고, 그 차이가 곧 "심을 게 남았다"는 뜻이다.
+ *
+ * 팻말 좌표는 farmField 의 SIGN_ANCHORS 를 쓴다 — 홈 히어로와 같은 값이고, 작물을 심는
+ * 마름모에서 바로 나오므로 심는 범위를 조정해도 팻말이 자기 구역을 계속 가리킨다.
  * 판·말뚝까지 여기서 그린다 — 이미지에 구워 두면 보유 0 인 단계에 빈 판이 남는다.
  */
-const SIGNS = [
-  { crop: 'seed', left: 50, top: 32.79 },     // x 600 / y 282
-  { crop: 'sprout', left: 27.83, top: 46.51 }, // x 334 / y 400
-  { crop: 'leaf', left: 72.17, top: 46.51 },   // x 866 / y 400
-  { crop: 'carrot', left: 50, top: 60.23 },    // x 600 / y 518
-];
+/**
+ * 팻말 아이콘이 쓸 visual_stage.
+ * 씨앗 팻말은 **밭에 심긴 씨앗** 구역을 가리키므로 흙에 묻힌 씨앗 그림이어야 한다.
+ * crop 키('seed')를 그냥 넘기면 봉투(보유 씨앗)가 나와, 밭 밖 "보유 씨앗" 간판과
+ * 똑같은 그림이 한 화면에 두 개 뜬다.
+ */
+const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT' };
 
-const BookFieldHero = ({ counts, children }) => {
+const BookFieldHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, children }) => {
   "use memo";
 
   return (
@@ -36,11 +40,16 @@ const BookFieldHero = ({ counts, children }) => {
       {/* 일러스트가 좌우로 넘치는 만큼만 잘라 낸다. 아래로 2px 흘러내리는 건 그대로 둔다. */}
       <div className="absolute inset-x-0 top-0 bottom-[-2px] overflow-hidden">
         <div className="absolute left-[-4%] w-[108%] bottom-0">
-          <img src={bookHero} alt="" draggable={false} className="block w-full h-auto select-none" />
-
-          {SIGNS.map((sign) => {
-            const n = counts?.[sign.crop] ?? 0;
-            // 보유가 0인 단계에는 팻말이 서지 않는다. 빈 구역 자체가 정보다.
+        <FarmField
+          counts={fieldCounts || counts}
+          healthMix={healthMix}
+          maxSprites={72}
+          storedSeeds={storedSeeds}
+        >
+          {SIGN_ANCHORS.map((sign) => {
+            // 팻말은 그 구역에 실제로 선 작물을 센다 — 보유 씨앗은 밭 밖 간판이 따로 말한다
+            const n = (fieldCounts || counts)?.[sign.crop] ?? 0;
+            // 그 구역에 아무것도 없으면 팻말이 서지 않는다. 빈 구역 자체가 정보다.
             if (n <= 0) return null;
             return (
               <span
@@ -71,9 +80,9 @@ const BookFieldHero = ({ counts, children }) => {
                     className="absolute left-[5%] right-[5%] top-[9%] h-[42%] rounded-[4px] bg-[rgba(255,240,214,0.18)] blur-[2px]"
                   />
                   <CropImage
-                    stage={sign.crop}
+                    stage={SIGN_STAGE[sign.crop]}
                     health={HEALTH_STATES.FRESH}
-                    size={16}
+                    size={28}
                     className="shrink-0"
                   />
                   <span className="relative min-w-0 text-left">
@@ -88,6 +97,7 @@ const BookFieldHero = ({ counts, children }) => {
               </span>
             );
           })}
+        </FarmField>
         </div>
       </div>
 

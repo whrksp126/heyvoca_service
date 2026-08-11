@@ -17,7 +17,8 @@ import {
   SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead,
   RecvBox, RecvRow, RecvHr, Arrow, Up, Down, InfoBox, EmBlue, HintB,
 } from './purchaseParts';
-import seedImg from '../../assets/images/farm/solo-healthy-seed.png';
+// 아직 사지 않은 단어장의 '심을 씨앗' — 봉투 그림이 맞다 (기획 5.1 보유 씨앗)
+import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 
 /**
  * 서점 단어장 구매 확인 시트.

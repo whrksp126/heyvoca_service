@@ -123,7 +123,7 @@ const FarmArt = ({ src, alt }) => (
 // 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
 const FarmGrowRow = ({ crop, word, meaning, right }) => (
   <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
-    <CropImage stage={crop} size={30} className='flex-shrink-0' />
+    <CropImage stage={crop} size={52} className='flex-shrink-0' />
     <div className='flex flex-col flex-1 min-w-0 text-left'>
       <span className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>{word}</span>
       {meaning ? (
@@ -608,9 +608,11 @@ const StudyResult = () => {
   }
 
   const onClickEndStudy = async () => {
-    // 게스트 맛보기: 결과 확인 후 온보딩 회원가입으로 (맛본 답안은 guestStorage에 저장됨)
+    // 게스트 첫 학습: 결과 확인 후 온보딩 질문 구간으로 (심은 답안은 guestStorage에 저장됨).
+    // 예고 화면(ready)이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 예고로 되돌리면
+    // 같은 학습을 다시 하게 된다.
     if (isGuest) {
-      navigate('/onboarding', { state: { step: 'signup' }, replace: true });
+      navigate('/onboarding', { state: { step: 'channel' }, replace: true });
       return;
     }
     navigate('/home');
@@ -753,7 +755,7 @@ const StudyResult = () => {
                     >
                       <div className='flex items-center gap-[11px]'>
                         {crop && (
-                          <CropImage stage={crop} size={30} className='flex-shrink-0' />
+                          <CropImage stage={crop} size={52} className='flex-shrink-0' />
                         )}
                         <div className='flex flex-col flex-1 gap-[2px] min-w-0'>
                           <div className="flex items-center gap-[6px] min-w-0">

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { PencilSimple, Trash, SealCheck, Timer, WarningCircle } from '@phosphor-icons/react';
+import { PencilSimple, Trash, Timer, WarningCircle } from '@phosphor-icons/react';
 
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -19,9 +19,10 @@ import VerifyMark from '../vocabularySheets/VerifyMark';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getFarmItemsApi, replantApi, recoverPlantsApi } from '../../api/farm';
 import { addPendingReplantIds } from '../../utils/replantPending';
-import { CROP_LABEL } from '../../utils/crop';
+import { CROP_LABEL, stageDetail } from '../../utils/crop';
 import {
   wordCropStage,
+  wordStage,
   wordHealth,
   wordVerification,
   daysToReview,
@@ -113,10 +114,24 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   const stage = wordCropStage(word);
   const health = wordHealth(word);
   const planted = !isUnplanted(word);
+  // 기획 5.1 의 여섯 단계 — 보유 씨앗과 심은 씨앗을 이름으로 갈라 준다.
+  // 시트 맨 위 그림은 둘이 같아서(에셋이 하나뿐이라) 글자가 없으면 구분이 안 된다.
+  const detailStage = wordStage(word);
+  const golden = stageDetail(detailStage) === 'golden';
 
-  const cur = insights?.memory?.state
-    ? (STATE_INDEX[insights.memory.state] ?? 0)
-    : (CROP_INDEX[stage] ?? 0);
+  /*
+    성장 경로가 가리킬 단계.
+
+    **농장의 visual_stage 를 먼저 본다.** 예전에는 `/insights` 의 FSRS 구간
+    (unlearned/short/medium/long)을 먼저 봤는데, 그 둘은 같은 값이 아니다 —
+    성장 단계는 오답으로 내려가지 않고 최고 도달 단계가 보존되며(기획 5.2),
+    새싹 승급에는 "첫 예정 복습 이후의 독립 정답"이라는 별도 조건이 붙는다(기획 5.1).
+    그래서 같은 단어가 목록·밭에서는 당근인데 이 시트에서만 새싹으로 보이는 일이 있었다.
+    FSRS 구간은 농장 정보가 없는 구버전 응답의 폴백으로만 남긴다.
+  */
+  const cur = word?.farm?.stage
+    ? (CROP_INDEX[stage] ?? 0)
+    : (STATE_INDEX[insights?.memory?.state] ?? CROP_INDEX[stage] ?? 0);
   const pct = Math.round((insights?.next_stage?.progress ?? 0) * 100);
   const onCorrect = insights?.next_stage?.on_correct ?? null;
   const gain = Math.round((onCorrect?.gain ?? 0) * 100);
@@ -243,45 +258,43 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     <div className="max-h-[90vh] overflow-y-auto px-[20px] pt-[8px] pb-[22px]">
       <span className="block w-[38px] h-[4px] mx-auto mb-[10px] rounded-full bg-layout-gray-100 dark:bg-[#3A3A3A]" />
 
-      {/* 도구 줄 — 검증이면 잠금 칩, 아니면 편집·삭제 (시안 §6) */}
-      <div className="flex items-center justify-end gap-[4px] h-[26px] mb-[2px]">
-        {canEdit ? (
-          <>
-            <motion.button
-              type="button"
-              onClick={handleEdit}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
-              aria-label="단어 수정"
-            >
-              <PencilSimple size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
-            </motion.button>
-            <motion.button
-              type="button"
-              onClick={handleDelete}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
-              aria-label="단어 삭제"
-            >
-              <Trash size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
-            </motion.button>
-          </>
-        ) : (
-          <span className="
-            flex items-center gap-[4px]
-            px-[9px] py-[4px] rounded-full
-            text-[11px] font-[700] tracking-[-0.02em]
-            text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark
-          ">
-            <SealCheck size={11} weight="fill" />
-            {isPurchasedBook ? '제공받은 단어장 · 수정 불가' : '사전 단어 · 수정 불가'}
-          </span>
-        )}
-      </div>
+      {/*
+        도구 줄 — 고칠 수 있는 단어에만 편집·삭제를 둔다.
 
-      {/* 헤더 — 작물 52px · 단어 24px · 발음기호 · 검증 마크 · 36px 스피커 */}
-      <div className="flex items-start gap-[13px]">
-        <CropImage stage={stage} health={health} size={52} className="shrink-0 object-bottom" />
+        고칠 수 없는 단어에 "사전 단어 · 수정 불가" 칩을 띄우던 것은 내렸다.
+        할 수 없는 일을 굳이 이름 붙여 알리는 자리였고, 시트에서 가장 눈에 띄는 위치를
+        차지했다. 버튼이 없는 것 자체가 이미 "여기서는 못 고친다"는 답이다.
+        (검증된 단어라는 사실은 단어 옆 파란 인장이 말한다.)
+      */}
+      {canEdit && (
+        <div className="flex items-center justify-end gap-[4px] h-[26px] mb-[2px]">
+          <motion.button
+            type="button"
+            onClick={handleEdit}
+            whileTap={{ scale: 0.9 }}
+            className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
+            aria-label="단어 수정"
+          >
+            <PencilSimple size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={handleDelete}
+            whileTap={{ scale: 0.9 }}
+            className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
+            aria-label="단어 삭제"
+          >
+            <Trash size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
+          </motion.button>
+        </div>
+      )}
+
+      {/* 헤더 — 작물 · 단어 24px · 발음기호 · 검증 마크 · 36px 스피커.
+          가운데 정렬이다. 작물 그림은 512 상자 안에서 세로 가운데에 놓여 있어
+          위 정렬로 두면 씨앗처럼 작은 단계가 상자 한가운데(=글자보다 한참 아래)에
+          떨어져 단어와 따로 노는 것처럼 보인다. */}
+      <div className="flex items-center gap-[13px]">
+        <CropImage stage={detailStage} health={health} size={88} className="shrink-0 -my-[10px]" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
             <span className="min-w-0 break-words">{word.origin}</span>
@@ -292,6 +305,10 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               {word.pronunciation || '발음 정보 없음'}
             </div>
           )}
+          {/* 단계·건강을 글자로 적던 줄은 내렸다.
+              새 작물 세트가 그 둘을 그림 하나로 이미 말한다 — 봉투인지 흙 구멍인지가
+              보유/심은 씨앗이고, 잎이 처졌는지 갈변했는지가 건강이다.
+              옆에 "심은 씨앗 · 많이 시들었어요"를 덧붙이면 같은 말이 두 번이 된다. */}
         </div>
         <span className="flex items-center justify-center w-[36px] h-[36px] shrink-0 rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark">
           <SpeakerButton text={word.origin} lang="en" size={19} label="단어 발음 듣기" />
@@ -434,6 +451,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         gain={rotten ? 0 : gain}
         planted={planted}
         rotten={rotten}
+        golden={golden}
       />
 
       {/* 이 단어가 있는 단어장 — 기록이 아니라 이 단어가 무엇인지에 관한 사실이다 */}

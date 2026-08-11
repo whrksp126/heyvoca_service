@@ -19,9 +19,17 @@ import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
  */
 const STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
 
-const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false }) => {
+/**
+ * @param {boolean} props.golden 황금 당근에 도달했는가.
+ *   시안 §6 이 그리는 경로는 네 단계까지다. 황금은 당근 위의 별도 상태(기획 5.1 · Q6)라
+ *   **도달한 단어에만** 다섯 번째 칸으로 붙인다. 아직 아닌 단어에 옅게 그려 두면
+ *   "언젠가 반드시 거쳐야 할 단계"로 읽히는데, 황금은 조건을 만족해야 오는 것이지
+ *   순서대로 오는 단계가 아니다.
+ */
+const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false, golden = false }) => {
   "use memo";
 
+  const stages = golden ? [...STAGES, 'golden'] : STAGES;
   const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
   const p = clamp(pct);
   const g = clamp(gain);
@@ -34,16 +42,19 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
       rounded-[12px] px-[14px] py-[12px]
       bg-layout-gray-50 dark:bg-layout-gray-dark
     ">
-      {STAGES.map((stage, i) => {
-        const isDone = planted && i < cur;
-        const isNow = planted && i === cur;
+      {stages.map((stage, i) => {
+        // 황금이면 마지막 칸이 곧 현재다 — cur 은 4단계 index 라 golden 을 가리키지 못한다
+        const curIndex = golden ? stages.length - 1 : cur;
+        const isDone = planted && i < curIndex;
+        const isNow = planted && i === curIndex;
 
         return (
           <React.Fragment key={stage}>
             {i > 0 && (() => {
               const linkIndex = i - 1;
+              const curIndex = golden ? stages.length - 1 : cur;
               // 지나온 구간 — 끝까지 찬 초록 막대
-              if (planted && linkIndex < cur) {
+              if (planted && linkIndex < curIndex) {
                 return (
                   <span className="relative flex-1 mx-[2px] h-[6px] rounded-[99px] bg-[#E4E4E4] dark:bg-[#3A3A3A]">
                     <i className="absolute left-0 top-0 h-full w-full rounded-[99px] bg-crop-leaf" />
@@ -51,7 +62,7 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
                 );
               }
               // 현재 구간 — 진행 + 예상 증가분 + 배지 문구
-              if (planted && linkIndex === cur) {
+              if (planted && linkIndex === curIndex) {
                 return (
                   <span className="relative flex-1 mx-[2px] h-[6px] rounded-[99px] bg-[#E4E4E4] dark:bg-[#3A3A3A]">
                     {g > 0 && (
@@ -87,9 +98,9 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
                 stage={stage}
                 health={rotten && isNow ? HEALTH_STATES.ROTTEN : HEALTH_STATES.FRESH}
                 solo={false}
-                size={30}
+                size={46}
                 className={`
-                  object-bottom
+
                   ${isDone || isNow ? 'opacity-100' : 'opacity-[0.28]'}
                   ${isNow ? 'scale-[1.18]' : ''}
                   ${rotten && isNow ? 'grayscale-[0.55]' : ''}
@@ -105,7 +116,8 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
                       : 'font-[700] text-layout-gray-200 dark:text-layout-gray-500'}
                 `}
               >
-                {CROP_LABEL[stage]}
+                {/* 칸 폭이 46px 라 "황금 당근"은 두 줄로 접힌다 — 여기서만 짧게 부른다 */}
+                {stage === 'golden' ? '황금' : CROP_LABEL[stage]}
               </span>
             </div>
           </React.Fragment>

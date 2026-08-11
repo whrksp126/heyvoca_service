@@ -53,6 +53,16 @@ const FarmStatusBar = ({
     ? stageToCrop(cropFrom || stageFrom)
     : CROP_STAGES[Math.max(0, cropIndex(cropKey) - 1)];
 
+  /*
+    그림에 넘길 값은 crop 키가 아니라 **visual_stage** 를 먼저 쓴다.
+    씨앗은 crop 키가 하나뿐이라(`seed`) 봉투(안 심음)와 낱알(심음)이 같은 값이 된다.
+    그대로 그리면 첫 정답 — 즉 씨앗을 심는 순간 — 에 전환 연출이 돌면서도 앞뒤 그림이
+    똑같아 아무 일도 안 일어난 것처럼 보인다. 온보딩 첫 학습은 14문항이 전부 이 전환이다.
+    다른 단계는 visual_stage 를 넣어도 같은 그림이라 달라지는 게 없다.
+  */
+  const cropForImage = stage || crop || cropKey;
+  const prevCropForImage = stageFrom || cropFrom || prevCrop;
+
   const isNg = diagnosis || wasCorrect === false;
   const tone = grew ? 'up' : (isNg ? 'ng' : 'primary');
   // 오답은 막대가 늘지 않는다(2절) — 시안 ⑤ 에는 `u`(오른 구간)도 `pc`(+N%)도 없다.
@@ -133,7 +143,7 @@ const FarmStatusBar = ({
                 animate={{ scale: 0.55, y: 5, opacity: 0 }}
                 transition={{ duration: 0.12, ease: 'easeIn' }}
               >
-                <CropImage stage={prevCrop} health={health} size={size} alt="" />
+                <CropImage stage={prevCropForImage} health={health} size={size} alt="" />
               </motion.span>
             )}
             <motion.span
@@ -148,7 +158,7 @@ const FarmStatusBar = ({
                   : { duration: 0.2, ease: 'easeOut' }
               }
             >
-              <CropImage stage={cropKey} health={health} size={size} />
+              <CropImage stage={cropForImage} health={health} size={size} />
             </motion.span>
             {grew && (
               // 자리를 잡고 스파클이 바깥으로 튄다 (280~360ms)

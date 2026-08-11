@@ -40,6 +40,18 @@ export const getFarmPlantsApi = async ({ group, health, limit = 50, cursor } = {
   }
 };
 
+// 홈 아래쪽 "지금 볼 만한 단어" 묶음 (care / rotten / seeds / recent 한 번에)
+export const getFarmHomeFeedApi = async ({ limit = 5 } = {}) => {
+  const url = `${backendUrl}/farm/home-feed`;
+  const method = 'GET';
+  const fetchData = queryParams({ limit });
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('getFarmHomeFeedApi 오류:', error);
+  }
+};
+
 // 썩은 작물 목록 조회 (다시 심기 / 회복제 선택용)
 export const getRottenPlantsApi = async ({ limit = 50, cursor } = {}) => {
   const url = `${backendUrl}/farm/rotten`;
