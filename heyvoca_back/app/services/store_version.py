@@ -18,8 +18,11 @@ store_version.py — 앱 업데이트 안내값(app_ios_version / app_android_ve
      `_cb=<epoch>` 를 붙이면 즉시 최신이 나온다(반복 재현).
   2. **조회 실패는 값을 내리지 않는다.** 실패하면 마지막 성공값 → env → 하드코딩 폴백 순으로 내려가고,
      그 어느 것도 현재보다 낮으면 채택하지 않는다. "모르면 그대로 둔다" 가 항상 안전한 쪽이다.
-  3. **Play 는 공식 공개 조회 API 가 없다.** 상세 페이지의 내장 데이터를 긁는 부서지기 쉬운 경로라,
-     실패하면 조용히 폴백한다(파싱이 깨져도 최악이 "기존 동작 유지").
+  3. **Play 는 공개 조회 API 가 없다 — 서비스계정 API 를 쓴다.** 상세 페이지 스크래핑은 실제로
+     깨졌다(2026-08-12: Play 가 `"141":` 숫자키를 없애 조회가 None → 안내값이 1.0.5 에 묶여
+     1.1.0 게시 후에도 Android 사용자에게 안내가 0건이었다). 그래서 주경로는 인앱결제에 이미 쓰는
+     서비스계정으로 `tracks/production/releases` 를 읽고, 스크래핑은 폴백으로만 남긴다.
+     둘 다 실패하면 조용히 폴백한다(최악이 "기존 동작 유지").
   4. 요청 경로에서 절대 오래 붙잡지 않는다(앱 시작이 느려진다). 짧은 타임아웃 + 캐시.
 """
 import os
@@ -82,14 +85,69 @@ def _fetch_ios():
         return None
 
 
-_PLAY_VERSION_RE = re.compile(r'"141":\[\[\["([0-9.]+)"\]\]')
+# 상세 페이지의 버전 위치. 과거엔 `"141":[[["1.2.3"]]` 였는데 2026-08 에 숫자키가 통째로
+# 사라졌다("141"/"140"/"142" 모두 0회). 지금은 버전 뒤에 타깃 SDK/최소 안드로이드 버전이
+# 붙는 구조라 그걸 앵커로 쓴다:  [[["1.1.0"]],[[[35]],[[[24,"7.0"]]]]]
+# 어차피 부서지기 쉬운 경로이므로 **폴백 전용**이다. 주경로는 아래 서비스계정 API.
+_PLAY_VERSION_RE = re.compile(
+    r'\[\[\["([0-9]+(?:\.[0-9]+)+)"\]\],\[\[\[\d+\]\],\[\[\[\d+,"[0-9.]+"\]\]\]\]'
+)
+
+_PLAY_API = 'https://androidpublisher.googleapis.com/androidpublisher/v3'
+_PLAY_SCOPE = 'https://www.googleapis.com/auth/androidpublisher'
+_PLAY_SA_KEY = os.getenv('GOOGLE_PLAY_SERVICE_ACCOUNT_KEY')
 
 
-def _fetch_android():
+def _fetch_android_api():
     """
-    Play 게시 버전. 공식 공개 API 가 없어 상세 페이지 내장 데이터에서 읽는다.
-    ⚠ 부서지기 쉬운 경로다 — 페이지 구조가 바뀌면 None 이 되고 폴백이 받는다(그게 정상 동작이다).
-       정확한 값이 꼭 필요하면 서비스계정 API(scripts/store/play.mjs)를 쓸 것.
+    Play 게시 버전 — 서비스계정(Play Developer API) 으로 **권위 있는 값**을 읽는다.
+
+    인앱결제 검증에 이미 쓰는 서비스계정 키를 그대로 재사용한다(추가 자격증명 없음).
+    production 트랙의 릴리스 중 PUBLISHED 인 것의 releaseName 이 곧 게시 버전이다.
+
+    ⚠ `tracks/{track}/releases` 는 쿼터가 빡빡해 403 이 날 수 있다. 여기서는 1시간 캐시라
+      하루 24회 수준이지만, 실패하면 조용히 None 을 주고 스크래핑 폴백이 받는다.
+      쿼터 초과도 403 으로 오므로 권한 문제로 오진하지 말 것.
+    """
+    if not _PLAY_SA_KEY:
+        return None
+    try:
+        # import 를 함수 안에 두는 이유: 이 경로를 안 쓰는 환경(키 미설정)에서 import 비용을
+        # 물지 않기 위해서다. google-auth 는 인앱결제 쪽에서 이미 의존하고 있다.
+        import google.auth.transport.requests as google_requests_transport
+        from google.oauth2 import service_account
+
+        creds = service_account.Credentials.from_service_account_file(
+            _PLAY_SA_KEY, scopes=[_PLAY_SCOPE]
+        )
+        creds.refresh(google_requests_transport.Request())
+
+        res = requests.get(
+            f'{_PLAY_API}/applications/{PLAY_PACKAGE}/tracks/production/releases',
+            headers={'Authorization': f'Bearer {creds.token}'},
+            timeout=_HTTP_TIMEOUT,
+        )
+        if res.status_code != 200:
+            return None
+
+        published = [
+            r for r in (res.json() or {}).get('releases') or []
+            if r.get('releaseLifecycleState') == 'RELEASE_LIFECYCLE_STATE_PUBLISHED'
+        ]
+        # 게시 중인 릴리스가 여럿일 일은 없지만(단계적 출시 중이면 있을 수 있다),
+        # 있다면 가장 높은 버전을 택한다 — 안내값은 내려가면 안 되므로.
+        best = None
+        for rel in published:
+            best = _higher(rel.get('releaseName'), best)
+        return best or None
+    except Exception:
+        return None
+
+
+def _fetch_android_scrape():
+    """
+    Play 게시 버전 — 상세 페이지 내장 데이터 스크래핑. **폴백 전용.**
+    페이지 구조가 바뀌면 None 이 되고 상위 폴백이 받는다(그게 정상 동작이다).
     """
     try:
         res = requests.get(
@@ -104,6 +162,11 @@ def _fetch_android():
         return match.group(1) if match else None
     except Exception:
         return None
+
+
+def _fetch_android():
+    """서비스계정 API 우선, 실패 시 스크래핑. 둘 다 실패하면 None → 상위 폴백."""
+    return _fetch_android_api() or _fetch_android_scrape()
 
 
 def _resolve(platform, fetcher, fallback):
