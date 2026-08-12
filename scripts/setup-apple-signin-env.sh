@@ -55,6 +55,16 @@ case "$ENV_NAME" in
   *)    usage ;;
 esac
 
+if [ "$ENV_NAME" != "prod" ]; then
+  cat >&2 <<'WARN'
+!!! 주의: dev/stg 도 prod 와 같은 client_id(com.ghmate.heyvoca)를 쓴다.
+    Apple 은 환경을 구분하지 않으므로, dev/stg 에서 탈퇴 테스트를 하면
+    그 Apple 계정과 "앱" 자체의 연동이 실제로 해제된다(prod 포함).
+    본인/테스트 전용 Apple 계정으로만 탈퇴를 시험할 것.
+
+WARN
+fi
+
 [ -f "$P8_PATH" ] || { echo "오류: .p8 파일을 찾을 수 없습니다: $P8_PATH" >&2; exit 1; }
 grep -q "BEGIN PRIVATE KEY" "$P8_PATH" || {
   echo "오류: PKCS#8 개인키 파일이 아닌 것 같습니다 (BEGIN PRIVATE KEY 없음): $P8_PATH" >&2; exit 1; }
@@ -86,13 +96,26 @@ scp $SSH_OPTS -q "$BLOCK" "$SSH_HOST:/tmp/apple_signin_block"
 ssh $SSH_OPTS "$SSH_HOST" bash -s <<REMOTE
 set -euo pipefail
 cd "$REMOTE_DIR"
-cp "$ENV_FILE" "$ENV_FILE.bak.\$(date +%s)"
+
+BAK="$ENV_FILE.bak.\$(date +%s)"
+cp "$ENV_FILE" "\$BAK"
+# .env 백업은 개인키를 통째로 담게 되므로 소유자 외 읽기를 막는다.
+chmod 600 "\$BAK"
+
 # 기존 키 제거 후 새 블록 append (중복 정의 방지)
 sed -i '/^APPLE_TEAM_ID=/d;/^APPLE_SIGNIN_KEY_ID=/d;/^APPLE_SIGNIN_PRIVATE_KEY=/d' "$ENV_FILE"
 [ -s "$ENV_FILE" ] && [ "\$(tail -c1 "$ENV_FILE")" != "" ] && echo >> "$ENV_FILE"
 cat /tmp/apple_signin_block >> "$ENV_FILE"
 shred -u /tmp/apple_signin_block 2>/dev/null || rm -f /tmp/apple_signin_block
-echo ">>> $ENV_FILE 갱신 완료 (백업: $ENV_FILE.bak.*)"
+
+# 개인키가 들어간 .env 는 664(그룹/타 사용자 읽기 가능)로 두면 안 된다.
+chmod 600 "$ENV_FILE"
+
+# 과거에 만들어진 .env 백업들도 같은 이유로 조인다(이미 시크릿을 담고 있다).
+chmod 600 "$ENV_FILE".bak.* 2>/dev/null || true
+
+echo ">>> $ENV_FILE 갱신 완료 (백업: \$BAK, 둘 다 0600)"
+ls -l "$ENV_FILE" "\$BAK" | awk '{print "    " \$1, \$3":"\$4, \$NF}'
 REMOTE
 
 echo
