@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify,
 from functools import wraps
 from app import db, limiter
 from app.routes import auth_bp
-from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission
+from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission, UserStreak, UserComebackMission, UserFarmItem, UserFarmItemLog, UserFarmSetting, UserFarmMigration, FarmEventLog
 from app.routes.mainpage import update_user_goal
 from app.routes.common import register_gem_log
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
@@ -1252,6 +1252,18 @@ def withdraw():
             # 8-3. UserOnboardingMission 삭제 (온보딩 미션 완료 기록, user.id 참조 FK)
             #      이걸 안 지우면 User 삭제 시 FK 제약 위반(1451)으로 탈퇴가 실패한다.
             db.session.query(UserOnboardingMission).filter(UserOnboardingMission.user_id == user_id).delete()
+
+            # 8-4. 당근 농장 / 스트릭 레이어 삭제.
+            #      전부 user.id를 참조하는 실제 FK라 하나라도 남으면 User 삭제가 1451로 실패한다.
+            #      (기능이 나중에 추가되면서 이 블록이 누락돼 실제로 탈퇴가 500 나던 구간)
+            #      UserFarmItemLog는 지급/차감 이력이라 UserFarmItem보다 먼저 지운다.
+            db.session.query(UserFarmItemLog).filter(UserFarmItemLog.user_id == user_id).delete()
+            db.session.query(UserFarmItem).filter(UserFarmItem.user_id == user_id).delete()
+            db.session.query(FarmEventLog).filter(FarmEventLog.user_id == user_id).delete()
+            db.session.query(UserFarmSetting).filter(UserFarmSetting.user_id == user_id).delete()
+            db.session.query(UserFarmMigration).filter(UserFarmMigration.user_id == user_id).delete()
+            db.session.query(UserComebackMission).filter(UserComebackMission.user_id == user_id).delete()
+            db.session.query(UserStreak).filter(UserStreak.user_id == user_id).delete()
 
             # 9. User 삭제 (사용자 자체)
             db.session.delete(user)
