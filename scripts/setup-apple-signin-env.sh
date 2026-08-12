@@ -40,7 +40,10 @@ TEAM_ID="BB8GGQPRRX"   # heyvoca_app/ios/heyvoca.xcodeproj (DEVELOPMENT_TEAM)
 SSH_OPTS="-i $HOME/.ssh/ghmate_server -p 222"
 SCP_OPTS="-i $HOME/.ssh/ghmate_server -P 222"   # scp 의 포트 옵션은 -P 다 (-p 는 타임스탬프 보존)
 SSH_HOST="ghmate@ghmate.iptime.org"
-REMOTE_DIR="/srv/projects/heyvoca/heyvoca_service/heyvoca_back"
+# 서버는 heyvoca_service 레포 자체를 /srv/projects/heyvoca 로 체크아웃해 둔다.
+# (로컬처럼 heyvoca_service/ 한 겹이 더 있지 않다 — compose 파일도 REMOTE_ROOT 바로 아래)
+REMOTE_ROOT="/srv/projects/heyvoca"
+REMOTE_DIR="$REMOTE_ROOT/heyvoca_back"
 
 usage() {
   echo "사용법: bash scripts/setup-apple-signin-env.sh <dev|stg|prod> <AuthKey_XXX.p8 경로> [KEY_ID]" >&2
@@ -122,7 +125,7 @@ REMOTE
 echo
 echo ">>> 컨테이너 재생성 (env_file 은 restart 로 반영되지 않음)..."
 ssh $SSH_OPTS "$SSH_HOST" \
-  "cd /srv/projects/heyvoca/heyvoca_service && docker compose -p $PROJECT -f $COMPOSE up -d --force-recreate back"
+  "cd $REMOTE_ROOT && docker compose -p $PROJECT -f $COMPOSE up -d --force-recreate back"
 
 echo
 echo ">>> 검증 (값은 출력하지 않고 설정 여부만)..."
