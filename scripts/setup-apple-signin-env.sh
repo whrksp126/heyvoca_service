@@ -129,8 +129,33 @@ ssh $SSH_OPTS "$SSH_HOST" \
 
 echo
 echo ">>> 검증 (값은 출력하지 않고 설정 여부만)..."
-ssh $SSH_OPTS "$SSH_HOST" \
-  "docker exec heyvoca_back_$ENV_NAME bash -c 'for v in APPLE_TEAM_ID APPLE_SIGNIN_KEY_ID APPLE_SIGNIN_PRIVATE_KEY APPLE_CLIENT_ID; do printf \"%-28s %s\n\" \"\\\$v\" \"\\\$([ -n \"\\\${!v}\" ] && echo SET || echo MISSING)\"; done'"
+# 따옴표 중첩을 피하려고 quoted heredoc 으로 보낸다. 환경 이름만 변수로 넘긴다.
+ssh $SSH_OPTS "$SSH_HOST" ENV_NAME="$ENV_NAME" bash -s <<'REMOTE'
+docker exec "heyvoca_back_$ENV_NAME" bash -c '
+for v in APPLE_TEAM_ID APPLE_SIGNIN_KEY_ID APPLE_SIGNIN_PRIVATE_KEY APPLE_CLIENT_ID; do
+  printf "%-28s %s\n" "$v" "$([ -n "${!v}" ] && echo SET || echo MISSING)"
+done
+# 개인키가 개행 복원 가능한 형태로 들어갔는지만 확인(내용은 출력하지 않음)
+case "$APPLE_SIGNIN_PRIVATE_KEY" in
+  *"BEGIN PRIVATE KEY"*) echo "PEM 헤더 확인                OK" ;;
+  *)                     echo "PEM 헤더 확인                실패 — 키 형식을 확인하세요" ;;
+esac
+'
+REMOTE
+
+echo
+echo ">>> 실제 revoke 코드 경로로 최종 확인 (가짜 토큰, 부작용 없음)..."
+ssh $SSH_OPTS "$SSH_HOST" ENV_NAME="$ENV_NAME" bash -s <<'REMOTE'
+docker exec "heyvoca_back_$ENV_NAME" python3 -c '
+from app.routes.auth import _generate_apple_signin_client_secret, _revoke_apple_refresh_token
+cs = _generate_apple_signin_client_secret()
+print("client_secret 생성:", "OK" if cs else "실패(None) — env 미반영")
+if cs:
+    # Apple 의 revoke 는 멱등이라 토큰이 가짜여도 client 인증만 통과하면 성공한다.
+    # 즉 "revoke 성공" 이 뜨면 키/Team ID/client_id 조합이 유효하다는 뜻.
+    _revoke_apple_refresh_token("deliberately-invalid-token-for-verification")
+' 2>&1 | grep -v Warning
+REMOTE
 
 cat <<'DONE'
 
