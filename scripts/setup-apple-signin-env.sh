@@ -38,6 +38,7 @@ KEY_ID="${3:-}"
 TEAM_ID="BB8GGQPRRX"   # heyvoca_app/ios/heyvoca.xcodeproj (DEVELOPMENT_TEAM)
 
 SSH_OPTS="-i $HOME/.ssh/ghmate_server -p 222"
+SCP_OPTS="-i $HOME/.ssh/ghmate_server -P 222"   # scp 의 포트 옵션은 -P 다 (-p 는 타임스탬프 보존)
 SSH_HOST="ghmate@ghmate.iptime.org"
 REMOTE_DIR="/srv/projects/heyvoca/heyvoca_service/heyvoca_back"
 
@@ -91,7 +92,7 @@ BLOCK="$(mktemp)"; trap 'rm -f "$BLOCK"' EXIT
 } > "$BLOCK"
 
 echo ">>> 서버로 전송 후 $ENV_FILE 갱신 (기존 파일은 자동 백업)..."
-scp $SSH_OPTS -q "$BLOCK" "$SSH_HOST:/tmp/apple_signin_block"
+scp $SCP_OPTS -q "$BLOCK" "$SSH_HOST:/tmp/apple_signin_block"
 
 ssh $SSH_OPTS "$SSH_HOST" bash -s <<REMOTE
 set -euo pipefail
