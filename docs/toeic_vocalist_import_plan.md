@@ -52,6 +52,44 @@ Phase 5  dict DB publish → 각 환경 apply
 > `{"type":"http","url":"https://mcp.context7.com/mcp"}` 형태로 설정해야 한다
 > (`command: curl` 형태는 MCP 프로토콜을 못 타서 `-32000 Connection closed`로 실패).
 
+### 1.1 인수인계 체크리스트 — git 푸시만으로는 부족하다
+
+**git으로 전달되는 것**
+
+- [x] 이 문서 + `scripts/analyze_toeic_vocalist.py`
+- [x] `voca_meaning.pos` 관련 4개 파일 (§1 표)
+
+**git으로 전달되지 않는 것 — 별도 조치 필요**
+
+| 항목 | 왜 | 조치 |
+|---|---|---|
+| **소스 JSON 120개** | `.gitignore`에 `dummy_vocalist/` → 레포에 아예 없음 | **파일을 직접 전달** (약 2MB). 받는 사람은 아무 경로에 두고 `--src`로 지정 |
+| `heyvoca_dict` 데이터 | DB는 git에 없음 | 컨테이너 시작 시 `dict_sync.py`가 MinIO에서 자동 동기화 (§9.2). `.env.local`에 `MINIO_DICT_RO_*` 필요 |
+| `.env.local` | `.gitignore`에 `.env` | 별도 전달. `DATABASE_URL_DICT` / `MINIO_DICT_*` / `ANTHROPIC_API_KEY`(pos 라벨링용) |
+| `.mcp.json` | gitignore | 위 참고 |
+
+**아직 안 만들어진 것 — 담당자가 작성해야 함**
+
+- [ ] Phase 0 마이그레이션 (조인 테이블 2개) — §4.3에 DDL 있음
+- [ ] Phase 1 마이그레이션 (`voca.word_type`) — §5.1에 DDL 있음
+- [ ] `scripts/migrate_admin_map_to_ids.py` — §4.5
+- [ ] `scripts/backfill_word_type.py` — §5.1
+- [ ] `scripts/import_toeic_vocalist.py` — §6~8
+
+> **즉, "마이그레이션 해두고 브랜치 푸시하면 끝"이 아니다.**
+> 현재 커밋에는 **계획과 조사 스크립트만** 있고 마이그레이션 파일은 없다.
+> 담당자가 §4.3 / §5.1의 DDL로 마이그레이션을 직접 작성하는 것부터 시작한다.
+> 스키마를 미리 만들어 넘기고 싶다면 그 2개를 먼저 작성해 커밋할 것.
+
+**작업 완료 후 반영 절차** (§9.2 — 여기도 git이 관여한다)
+
+```
+적재 완료 → scripts/dict_publish.py → db/dict/dict_pointer.json 갱신
+         → pointer 커밋 & 푸시 → 각 환경 컨테이너 재시작
+```
+
+`dict_pointer.json` 커밋을 빼먹으면 MinIO에 dump는 올라갔는데 어느 환경도 받지 못한다.
+
 ---
 
 ## 2. 사전 조사 결과 (실측값)
@@ -466,6 +504,13 @@ INSERT INTO bookstore_category (category, sort_order) VALUES ('토익', 150);
 
 → **`scripts/import_toeic_vocalist.py` 신규 스크립트**로 간다.
 
+**참고로 검토했던 기존 API (전부 이번 용도로는 부적합, 현재 라인번호 확인됨)**
+
+| 엔드포인트 | 위치 | 부적합 이유 |
+|---|---|---|
+| `POST /admin/admin_voca_book/from_ai` | `admin.py:599` | 내부에서 `_process_word_into_book`을 쓴다 → 위 4가지 문제 그대로. `examples`를 `{en,ko}`로 받는다 |
+| `POST /admin/voca-books/<id>/words` | `admin_voca_books.py:431` | 단어 1건씩. 5,165행을 HTTP로 넣는 건 비현실적이고 동명이의어 409 분기를 매번 처리해야 함 |
+
 ### 7.3 적재 예상 수치 (실측 기반)
 
 | 테이블 | 기존 id 재사용 | 신규 insert |
@@ -528,6 +573,19 @@ INSERT INTO bookstore_category (category, sort_order) VALUES ('토익', 150);
 - `gem` / `downloads` → **미결정** (§10). 기존 값: 체험판 10, 일반 20
 - **나머지 116개는 `bookstore`에 행을 만들지 않는다** (단어장만 존재)
 
+**기존 API로 등록해도 된다** — `POST /admin/voca-books/<book_id>/bookstore/toggle`
+(`admin_voca_books.py:587`, 핸들러 `toggle_bookstore`)
+
+| 구분 | 필드 |
+|---|---|
+| 신규 생성 시 **필수** | `gem`(int), `category`(str, 50자 절단) — `_BOOKSTORE_REQUIRED_ON_CREATE` (L584) |
+| 선택 (기본값) | `name`(기본 `book.book_nm`, 100자 절단) · `downloads`(0) · `color`(NULL) · `category_id`(NULL) · `level_id`(NULL, 정수여야 함) |
+| 서버가 세팅 | `hide='N'` · `book_id=NULL` · `admin_voca_book_id=book_id` · `created_at`/`updated_at` |
+
+> ⚠️ **이미 `bookstore` 행이 있으면 payload를 전부 무시하고 `hide`만 토글한다** (L638-641).
+> 값을 고치려면 이 API가 아니라 직접 UPDATE해야 한다.
+> 그리고 토글은 엄격한 N↔Y 반전이 아니라 **`'N'` 외의 모든 값(NULL 포함)이 `'N'`(노출)로 바뀐다.**
+
 ---
 
 ## 9. Phase 5 — 환경 반영 (마이그레이션 + publish/apply)
@@ -537,16 +595,46 @@ INSERT INTO bookstore_category (category, sort_order) VALUES ('토익', 150);
 | 대상 | 경로 |
 |---|---|
 | **스키마 변경** (§4.3 조인 테이블, §5.1 `word_type`) | `migrations_dict/` alembic. 컨테이너 시작 시 `flask db upgrade` 자동 실행 |
-| **데이터** (적재 결과) | **MinIO 허브 publish/apply** — `app/services/dict_manage.py` |
+| **데이터** (적재 결과) | **MinIO 허브 publish/sync** — 아래 9.2 |
 
-**데이터는 마이그레이션으로 옮기지 않는다.** 로컬에 적재한 뒤 admin의 **'올리기(publish)'** 를 실행하고,
-각 환경에서 **'내려받기(apply)'** 를 실행해야 dev/stg/prod에 반영된다.
+**데이터는 마이그레이션으로 옮기지 않는다.** git에 SQL을 올리지도 않는다.
 
-### 9.2 마이그레이션
+### 9.2 데이터 전파 — publish 하고 `dict_pointer.json`을 커밋해야 한다
+
+메커니즘이 **두 개** 있다. 혼동하지 말 것.
+
+| 경로 | 트리거 | 파일 |
+|---|---|---|
+| **(A) git 기반 자동 동기화** ← 실제로 쓰는 것 | 컨테이너 시작 시 `docker-entrypoint.sh:6-9`가 자동 호출 | `scripts/dict_publish.py` / `scripts/dict_sync.py` / **`db/dict/dict_pointer.json`** |
+| (B) admin UI publish/apply | 관리자가 화면에서 버튼 클릭 | `app/services/dict_manage.py` |
+
+**(A)의 흐름 — 이 순서를 지켜야 반영된다:**
+
+```
+1. 로컬에 적재 (Phase 0~4)
+2. scripts/dict_publish.py 실행
+     → MinIO에 dump 업로드
+     → db/dict/dict_pointer.json 갱신 (version, sha256)   ← git 추적 대상!
+3. dict_pointer.json 을 커밋 & 푸시                        ← 빼먹으면 아무 환경도 못 받는다
+4. 각 환경 컨테이너 재시작
+     → docker-entrypoint.sh → scripts/dict_sync.py
+     → pointer의 sha256 vs dict_meta 비교 → 다르면 MinIO에서 받아 import & swap
+```
+
+🚨 **`dict_pointer.json` 커밋을 빼먹는 것이 가장 흔한 실수다.** MinIO에 dump는 올라갔지만
+각 환경은 여전히 옛 pointer를 보고 있어 "publish 했는데 반영이 안 된다"가 된다.
+
+- `dict_sync.py`는 **실패 시 컨테이너 부팅을 중단**시킨다 (`docker-entrypoint.sh:9`) → 잘못된 dump를 올리면 배포가 멈춘다
+- prod는 swap 전 자동 백업, 검증 실패 시 복원 (`dict_sync.py` 흐름 4·10)
+- `db/dict/CHANGELOG.md`도 git 추적 대상 → 변경 내역을 남길 것
+- `DICT_AUTO_RESET=false`면 자동 동기화를 건너뛴다 (환경별 토글 확인)
+
+### 9.3 마이그레이션
 
 - 위치: `heyvoca_back/migrations_dict/versions/`
 - **현재 dict DB head: `c1f0a2b3d4e5`** (= `add_pos_to_voca_meaning`)
 - 새 마이그레이션은 `down_revision = 'c1f0a2b3d4e5'`로 체인
+- **아직 작성되지 않았다.** 아래 2개를 직접 만들어야 한다.
 
 | 순서 | 내용 |
 |---|---|
@@ -554,7 +642,8 @@ INSERT INTO bookstore_category (category, sort_order) VALUES ('토익', 150);
 | 2 | `voca.word_type` 추가 + 인덱스 (§5.1) |
 
 데이터 백필/적재는 마이그레이션이 아니라 **`scripts/` 하위 파이썬 스크립트**로 작성
-(기존 `scripts/label_voca.py`, `scripts/label_meaning_pos.py` 관례 — 멱등 + `--dry-run` + `--limit`).
+(레포 루트 `scripts/`. 기존 `label_voca.py`, `label_meaning_pos.py`, `voca_cleanup.py` 관례를 따른다.
+`heyvoca_back/scripts/`는 `bootstrap_user_db.py` / `seed_test_users.py` 2개만 있는 별개 디렉토리다.)
 
 ```
 scripts/migrate_admin_map_to_ids.py    # Phase 0 백필 (멱등, 재실행 안전)
@@ -562,7 +651,15 @@ scripts/backfill_word_type.py          # Phase 1 기존 50,634개 판정
 scripts/import_toeic_vocalist.py       # Phase 2~4 (전처리 + 병합 적재 + 단어장 생성)
 ```
 
-### 9.3 🚨 publish/apply의 함정 — alembic 리비전이 덮어써진다
+**적재 스크립트 안전장치 (전부 필수)**
+
+- `--dry-run` — 집계만 출력하고 커밋하지 않음 (신규/재사용 voca · 신규 뜻 · 신규 예문 · skip 건수)
+- 파일 단위 **단일 트랜잭션**, 실패 시 rollback
+- **같은 `book_nm`의 `admin_voca_book`이 이미 있으면 중단** — 중복 실행 방지. 120개를 순회하므로 중간 실패 후 재실행이 흔하다
+- 생성한 신규 id 전량을 `scripts/out/import_toeic_ids_{timestamp}.json`에 기록 (§11.3 롤백용)
+- 종료 시 요약 리포트 출력
+
+### 9.4 🚨 publish/apply의 함정 — alembic 리비전이 덮어써진다
 
 `dict_manage.py`를 직접 확인한 결과:
 
@@ -679,7 +776,10 @@ docker exec heyvoca_mysql_local bash -c \
 | `notes` | "현재 전부 빈 문자열" | **536개에 내용 있음** (토익 학습 팁 HTML) |
 | 발음 us==uk 비율 | "80.7%" | **16.6%** (199/1,198). us!=uk 435, us만 564 |
 | 영문 예문 태그 | "이미 강조 태그가 있음" | **940/1,336만 있음** (396건 누락) |
-| `TRACKED_TABLES` | "대상 테이블이 전부 포함되어 있다" | 죽은 코드. whole-schema dump라 무관 (§9.3) |
+| `TRACKED_TABLES` | "대상 테이블이 전부 포함되어 있다" | `dict_manage.py`에서는 죽은 코드. whole-schema dump라 무관 (§9.4) |
+| 데이터 전파 방법 | "admin의 올리기(publish)를 실행" | 그건 (B) 경로. 실제 운영은 **(A) `dict_publish.py` + `dict_pointer.json` 커밋 + 컨테이너 재시작**이다 (§9.2) |
+| 스크립트 선례 경로 | "`scripts/`에 `bootstrap_user_db.py` 선례" | 그 둘은 **`heyvoca_back/scripts/`**. 루트 `scripts/`에는 `label_voca.py` 등 14개가 있고 이번 스크립트는 루트로 간다 (§9.3) |
+| `bookstore/toggle` 위치 | `admin_voca_books.py:586` | 현재 **587** (드리프트) |
 | 임포트 범위 (미결) | 팀 논의 대기 | 파일 단위 120개로 확정 |
 | `en`/`ko` 키 (미결) | 신규는 origin/meaning 제안 | 신규 + 기존 3,787행 모두 통일로 확정 |
 | pos 저장 (결정) | "pos는 버리고 text만" | 조인 테이블 전환으로 무관 — pos는 `voca_meaning.pos`에 이미 있음 |
