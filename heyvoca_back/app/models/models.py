@@ -238,6 +238,11 @@ class VocaMeaning(db.Model):
     id = Column(Integer, primary_key=True)
     meaning = Column(String(255), nullable=False)
 
+    # 뜻별 품사 — LLM(Claude)이 단어+뜻 문맥으로 산출한 값.
+    # 한 단어가 뜻마다 품사가 다를 수 있어(book: 책=NOUN / 예약하다=VERB) 뜻 단위로 둔다.
+    # UD 영문 태그(NOUN/VERB/ADJ/ADV…)로 저장 — voca_label.pos(spaCy)/pos_wordnet과 교차검증 가능.
+    pos = Column(String(16), nullable=True, index=True)
+
     # 관계 정의
     voca_meanings = relationship("VocaMeaningMap", back_populates="meaning")
 
