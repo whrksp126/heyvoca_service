@@ -52,23 +52,21 @@ Phase 5  dict DB publish → 각 환경 apply
 > `{"type":"http","url":"https://mcp.context7.com/mcp"}` 형태로 설정해야 한다
 > (`command: curl` 형태는 MCP 프로토콜을 못 타서 `-32000 Connection closed`로 실패).
 
-### 1.1 인수인계 체크리스트 — git 푸시만으로는 부족하다
+### 1.1 인수인계 체크리스트
 
-**git으로 전달되는 것**
+**git으로 전달되는 것 (§1 커밋)**
 
 - [x] 이 문서 + `scripts/analyze_toeic_vocalist.py`
-- [x] `voca_meaning.pos` 관련 4개 파일 (§1 표)
+- [x] `voca_meaning.pos` 관련 4개 파일 — 컨테이너 재시작 시 `flask db upgrade`가 자동 적용
 
-**git으로 전달되지 않는 것 — 별도 조치 필요**
+**이미 각자 갖고 있다고 전제하는 것**
 
-| 항목 | 왜 | 조치 |
-|---|---|---|
-| **소스 JSON 120개** | `.gitignore`에 `dummy_vocalist/` → 레포에 아예 없음 | **파일을 직접 전달** (약 2MB). 받는 사람은 아무 경로에 두고 `--src`로 지정 |
-| `heyvoca_dict` 데이터 | DB는 git에 없음 | 컨테이너 시작 시 `dict_sync.py`가 MinIO에서 자동 동기화 (§9.2). `.env.local`에 `MINIO_DICT_RO_*` 필요 |
-| `.env.local` | `.gitignore`에 `.env` | 별도 전달. `DATABASE_URL_DICT` / `MINIO_DICT_*` / `ANTHROPIC_API_KEY`(pos 라벨링용) |
-| `.mcp.json` | gitignore | 위 참고 |
+- 소스 JSON 120개 (`dummy_vocalist/`는 `.gitignore` 대상이라 레포에 없음.
+  경로가 다르면 `--src`로 지정 — §12)
+- `.env.local` (`DATABASE_URL_DICT` / `MINIO_DICT_*`, pos 라벨링 시 `ANTHROPIC_API_KEY`)
+- `heyvoca_dict` 로컬 데이터 — 컨테이너 시작 시 `dict_sync.py`가 MinIO에서 자동 동기화 (§9.2)
 
-**아직 안 만들어진 것 — 담당자가 작성해야 함**
+**이번 작업으로 새로 만들어야 하는 것 (아직 없음)**
 
 - [ ] Phase 0 마이그레이션 (조인 테이블 2개) — §4.3에 DDL 있음
 - [ ] Phase 1 마이그레이션 (`voca.word_type`) — §5.1에 DDL 있음
@@ -76,10 +74,8 @@ Phase 5  dict DB publish → 각 환경 apply
 - [ ] `scripts/backfill_word_type.py` — §5.1
 - [ ] `scripts/import_toeic_vocalist.py` — §6~8
 
-> **즉, "마이그레이션 해두고 브랜치 푸시하면 끝"이 아니다.**
-> 현재 커밋에는 **계획과 조사 스크립트만** 있고 마이그레이션 파일은 없다.
-> 담당자가 §4.3 / §5.1의 DDL로 마이그레이션을 직접 작성하는 것부터 시작한다.
-> 스키마를 미리 만들어 넘기고 싶다면 그 2개를 먼저 작성해 커밋할 것.
+> 커밋된 `c1f0a2b3d4e5`는 **이전 pos 작업**의 마이그레이션이다.
+> 이번 작업의 마이그레이션 2개는 위 DDL로 새로 작성하는 것부터 시작한다.
 
 **작업 완료 후 반영 절차** (§9.2 — 여기도 git이 관여한다)
 
