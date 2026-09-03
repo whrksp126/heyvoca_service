@@ -14,3 +14,4 @@
 | 20260519-1 | 2026-05-19 | unknown | - | - | - | 온보딩 단어장 재구성: 중/고/대학 100개씩 교체 + 강조 처리 + 사전 예문 18개 추가 (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260523-1 | 2026-05-23 | unknown | - | - | - | bookstore: id=36 가격 1→10, bookstore_category 테이블 추가 (카테고리 정렬) (voca=51259, voca_meaning=133458, voca_book=12773) |
 | 20260604-1 | 2026-06-04 | unknown | - | - | - | voca: aapple 테스트 더미 단어 삭제 (voca=51258, voca_meaning=133457, voca_book=12773) |
+| 20260903-1 | 2026-09-03 | unknown | - | - | - | voca_meaning.pos 품사 라벨링 100% 완료 (131,834건) + 동일 뜻풀이 판정 정합성 통일 (voca=50163, voca_meaning=131834, voca_book=12773) |
