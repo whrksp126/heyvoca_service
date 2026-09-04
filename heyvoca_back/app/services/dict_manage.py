@@ -8,7 +8,7 @@ objectstore(MinIO)를 단일 허브로, 어느 환경에서든 admin에서:
 안전장치:
   - 최신성 가드: 올릴 때 화면에서 본 latest와 실제 objectstore latest가 다르면 409(누가 그새 발행)
   - 버전 불변 이력: 발행마다 full_dict_v<버전>.sql 새 객체 + 인덱스. 최근 RETENTION개만 보관
-  - swap 전 현재 사전 백업(/tmp) → 실패 시 복원
+  - swap 전 현재 사전 백업 → 사용자 로컬 archive에 보관 + 실패 시 복원
   - 내려받기 시 단어수 비교 데이터 제공(UI가 '단어 N개 빠짐' 경고 + 재확인)
 
 이 모듈은 백엔드 컨테이너 안에서 동작(mysql/mysqldump 클라이언트 + DATABASE_URL_DICT + MINIO RW 키).
@@ -29,7 +29,11 @@ TEMP_SCHEMA = 'heyvoca_dict_apply'
 # objectstore 경로
 PREFIX = 'dict'
 INDEX_OBJECT = f'{PREFIX}/dict_index.json'     # 버전 이력 + latest 포인터(허브의 단일 소스)
-RETENTION = 5                                  # 최근 보관 버전 수
+RETENTION = 5                                  # 최근 보관 버전 수(objectstore)
+LOCAL_ARCHIVE_DIR = os.getenv(
+    'DICT_LOCAL_ARCHIVE_DIR', '/app/db/local-dict-archives')
+LOCAL_ARCHIVE_KEEP = int(os.getenv('DICT_LOCAL_ARCHIVE_KEEP', '3'))
+# 내려받기 직전 백업을 각자 로컬에 몇 개까지 남길지. 초과분은 오래된 것부터 자동 삭제.
 
 # 발행 대상 테이블(사전 전체) — bookstore 포함
 TRACKED_TABLES = [
@@ -292,6 +296,42 @@ def publish(message, publisher, expected_latest=None):
             pass
 
 
+def _prune_local_archives():
+    """내려받기 백업(UNUSED_*.sql / UNUSED_*.sql.gz)을 최근 LOCAL_ARCHIVE_KEEP개만 남기고 삭제.
+
+    각 팀원 로컬에 백업이 무한정 쌓이는 것을 막는다. 삭제 실패는 무시한다
+    (보관은 부가 기능이라 여기서 내려받기 전체를 실패시키지 않는다).
+    """
+    removed = []
+    try:
+        # UNUSED_ 접두사만 정리 대상. CURRENT_*는 사용자가 보관 중인 작업 스냅샷이라
+        # 이 함수의 목록에 절대 포함시키면 안 된다.
+        # 확장자는 .sql(비압축, 코드가 만드는 형식)과 .sql.gz(사람이 수동으로 gzip한
+        # 것 포함, db/local-dict-archives/의 실제 백업은 전부 .sql.gz) 둘 다 대상.
+        files = [f for f in os.listdir(LOCAL_ARCHIVE_DIR)
+                 if f.startswith('UNUSED_') and (f.endswith('.sql') or f.endswith('.sql.gz'))]
+    except OSError:
+        return removed
+    # 파일명 포맷이 두 가지 섞여 있다:
+    #   - 코드가 만드는 형식: UNUSED_{YYYYMMDD_HHMMSS}_before_apply_{version}.sql
+    #   - 사람이 수동으로 남긴 형식: UNUSED_{YYYYMMDD}_자유문구.sql.gz (시분초 없음)
+    # 문자열 정렬만으로는 두 포맷이 섞였을 때 순서를 보장할 수 없으므로
+    # 실제 파일 mtime(생성/수정 시각) 기준으로 오래된 것부터 정리한다.
+    def _mtime(name):
+        try:
+            return os.path.getmtime(os.path.join(LOCAL_ARCHIVE_DIR, name))
+        except OSError:
+            return 0
+    files_by_age = sorted(files, key=_mtime, reverse=True)
+    for name in files_by_age[LOCAL_ARCHIVE_KEEP:]:
+        try:
+            os.unlink(os.path.join(LOCAL_ARCHIVE_DIR, name))
+            removed.append(name)
+        except OSError:
+            pass
+    return removed
+
+
 def apply_version(version, publisher):
     """objectstore의 특정 버전을 이 환경 heyvoca_dict에 swap 적용(내려받기/복원)."""
     conn = _conn()
@@ -315,13 +355,15 @@ def apply_version(version, publisher):
         if actual != entry['sha256']:
             raise DictManageError(f"sha256 불일치: 기대 {entry['sha256'][:12]}… 실제 {actual[:12]}…")
 
-        # 2) 현재 사전 백업(롤백용)
+        # 2) 현재 사전 백업(로컬 롤백 + 사용자 기기에 영구 보관)
+        #    백업이 실패하면 전체 교체를 시작하지 않는다.
         ts = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
-        backup_path = f"/tmp/dict_backup_{ts}.sql"
-        try:
-            _dump(conn, backup_path)
-        except Exception:
-            backup_path = None  # 첫 적용 등 — 백업 불가해도 진행
+        os.makedirs(LOCAL_ARCHIVE_DIR, exist_ok=True)
+        backup_path = os.path.join(
+            LOCAL_ARCHIVE_DIR,
+            f"UNUSED_{ts}_before_apply_{entry['version']}.sql",
+        )
+        _dump(conn, backup_path)
 
         # 3) 임시 schema import → 검증 → swap
         _run_sql(conn, f"DROP DATABASE IF EXISTS {TEMP_SCHEMA}; "
@@ -348,7 +390,6 @@ def apply_version(version, publisher):
         _run_sql(conn, f"DROP DATABASE IF EXISTS {TEMP_SCHEMA};")
 
         _set_meta(conn, entry['sha256'], entry['version'])
-        return {'version': entry['version'], 'counts': entry.get('counts', {})}
 
     except Exception as e:
         # 롤백
@@ -365,8 +406,23 @@ def apply_version(version, publisher):
         except Exception:
             pass
         raise DictManageError(str(e))
+    else:
+        # swap이 완전히 성공한 뒤에만 오래된 백업 정리. 정리 실패는 내려받기
+        # 결과에 영향을 주면 안 되므로(부가 기능) 여기서 완전히 흡수한다 —
+        # 위 try/except 블록 안에서 돌리면 정리 실패가 "적용 실패"로 오인되어
+        # 이미 끝난 swap을 불필요하게 롤백해버릴 수 있다.
+        try:
+            pruned = _prune_local_archives()
+        except Exception:
+            pruned = []
+        return {
+            'version': entry['version'],
+            'counts': entry.get('counts', {}),
+            'backup_path': backup_path,
+            'pruned_backups': pruned,
+        }
     finally:
-        for p in (dl_path, backup_path):
+        for p in (dl_path,):
             if p and os.path.exists(p):
                 try:
                     os.unlink(p)
