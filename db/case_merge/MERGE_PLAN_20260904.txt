@@ -1,0 +1,725 @@
+# 중복 단어 병합 계획 — 175그룹 / 단어 177개 흡수
+
+표기: [남길 단어] ← [삭제될 단어]
+      각 줄 아래에 두 단어의 현재 뜻을 함께 적었습니다.
+
+
+======================================================================
+1. 마침표 차이 (약어)  (13건)
+======================================================================
+
+  a.m.  ←  A.M
+      남김: a.m. (단어장3) 뜻: 오전
+      삭제: A.M (단어장1) 뜻: 오전
+
+  ad  ←  A.D.
+      남김: ad (단어장35) 뜻: 서기, 서기 …년, 광고, 기원후
+      삭제: A.D. (단어장1) 뜻: 기원후
+
+  etc  ←  etc.
+      남김: etc (단어장46) 뜻: 등
+      삭제: etc. (단어장2) 뜻: 등등
+
+  give a ride  ←  give ... a ride
+      남김: give a ride (단어장0) 뜻: 태워 주다
+      삭제: give ... a ride (단어장0) 뜻: ~를 태워 주다
+
+  ie  ←  i.e.
+      남김: ie (단어장16) 뜻: 즉 …이다, 다시 말해서, …와 같은
+      삭제: i.e. (단어장1) 뜻: 즉, 다시 말하면
+
+  max  ←  max.
+      남김: max (단어장9) 뜻: 남자 이름, 최대한, 너무 최대한의
+      삭제: max. (단어장1) 뜻: 최대값
+
+  mr  ←  Mr.
+      남김: mr (단어장16) 뜻: …씨, …선생
+      삭제: Mr. (단어장1) 뜻: ~씨
+
+  mrs  ←  mrs.
+      남김: mrs (단어장20) 뜻: …부인, 미세스
+      삭제: mrs. (단어장2) 뜻: ~부인 ~님, ~무인
+
+  ms  ←  Ms.
+      남김: ms (단어장15) 뜻: …씨, 부인, 다발성경화증, 초속 미터, 석사학위
+      삭제: Ms. (단어장1) 뜻: ~씨.  ~선생님
+
+  pm  ←  P.M
+      남김: pm (단어장11) 뜻: 오후, 저녁
+      삭제: P.M (단어장1) 뜻: 오후
+
+  pm  ←  p.m.
+      남김: pm (단어장11) 뜻: 오후, 저녁
+      삭제: p.m. (단어장2) 뜻: 오후
+
+  prep  ←  prep.
+      남김: prep (단어장32) 뜻: 예습, 준비, 준비하다, 예비의, 준비 작업
+      삭제: prep. (단어장1) 뜻: 준비하다
+
+  R.S.V.P  ←  RSVP
+      남김: R.S.V.P (단어장1) 뜻: 회신을 요망합니다.
+      삭제: RSVP (단어장1) 뜻: 참석여부를 알리는] 회답을 하다
+
+======================================================================
+2. 하이픈 유무  (141건)
+======================================================================
+
+  aboveboard  ←  above-board
+      남김: aboveboard (단어장21) 뜻: 분명히, 까놓고, 공명하게
+      삭제: above-board (단어장1) 뜻: 공명정대한 (사실대로의)
+
+  air-conditioner  ←  air conditioner
+      남김: air-conditioner (단어장1) 뜻: 에어컨, 에어콘
+      삭제: air conditioner (단어장0) 뜻: 에어컨
+
+  allround  ←  all-round
+      남김: allround (단어장3) 뜻: 다재다능한, 전반에 걸친, 전면적인
+      삭제: all-round (단어장1) 뜻: 전방적인, 만능의
+
+  antidiabetic  ←  anti-diabetic
+      남김: antidiabetic (단어장1) 뜻: 항당뇨병성의, 항당뇨병제
+      삭제: anti-diabetic (단어장1) 뜻: 항당뇨의
+
+  antipollution  ←  anti-pollution
+      남김: antipollution (단어장9) 뜻: 공해 반대의, 오염을 방지 하기 위한, 공해 방지, 공해방지
+      삭제: anti-pollution (단어장1) 뜻: 공해 방지의
+
+  antislavery  ←  anti-slavery
+      남김: antislavery (단어장1) 뜻: 노예제도 반대
+      삭제: anti-slavery (단어장1) 뜻: 노예제 반대의
+
+  armtwisting  ←  arm-twisting
+      남김: armtwisting (단어장1) 뜻: 강압, 강제, 그러한 압력을 가하기
+      삭제: arm-twisting (단어장1) 뜻: 강요하는, 강제적인
+
+  babysit  ←  baby-sit
+      남김: babysit (단어장24) 뜻: 아기를 보아주다, 돌봐주다
+      삭제: baby-sit (단어장1) 뜻: 아이를 보다
+
+  babysitter  ←  baby-sitter
+      남김: babysitter (단어장16) 뜻: 보모, 베이비시터
+      삭제: baby-sitter (단어장3) 뜻: 아이를 돌봐주는 사람, 보모, 애 돌보는 사람, 아이 돌보기, 베이비시터
+
+  backbreaking  ←  back-breaking
+      남김: backbreaking (단어장30) 뜻: 아주 힘드는, 몹시 힘든
+      삭제: back-breaking (단어장2) 뜻: 등이 휘는, 힘든, 몹시 힘드
+
+  blackout  ←  black-out
+      남김: blackout (단어장39) 뜻: 정전, 소등, 암전, "소등", "정전", "공표를 피하다; (파업 따위로) 방송을 중단하다", "암전",
+      삭제: black-out (단어장3) 뜻: 정전, 등화관제, 기억상실, 보도제한, 보도관제
+
+  bloodcurdling  ←  blood-curdling
+      남김: bloodcurdling (단어장9) 뜻: 등골이 오싹한, 소름이 끼칠 만큼 무서운, 소름이 끼치는
+      삭제: blood-curdling (단어장1) 뜻: 소름 끼치는, 등골이 오싹한
+
+  bonafide  ←  bona-fide
+      남김: bonafide (단어장2) 뜻: 어떤 분야의 숙련가, 진정한
+      삭제: bona-fide (단어장1) 뜻: 진짜의(진실한)
+
+  brand-new  ←  brand new
+      남김: brand-new (단어장6) 뜻: 새것, 아주 새로운, 새로 출시된, 최신의, 완전히 새것인
+      삭제: brand new (단어장0) 뜻: 최신의
+
+  breakup  ←  break-up
+      남김: breakup (단어장19) 뜻: 붕괴, 불화, 이별
+      삭제: break-up (단어장1) 뜻: (관계의) 종말, 붕괴, 해체
+
+  buyout  ←  buy-out
+      남김: buyout (단어장9) 뜻: 매점, 매수
+      삭제: buy-out (단어장1) 뜻: 매입
+
+  ceasefire  ←  cease-fire
+      남김: ceasefire (단어장17) 뜻: 정전, 전투 중지, 사격 중지 구령
+      삭제: cease-fire (단어장1) 뜻: 휴전, 정전협정
+
+  checkup  ←  check-up
+      남김: checkup (단어장48) 뜻: 건강 진단, 점검, 검사, 건강검진, 검진, 검정
+      삭제: check-up (단어장7) 뜻: 검사, 검진, 정기 검사, 건강 검진, 점검, 건강진단, 건강검진, 건강 체크
+
+  co-worker  ←  coworker
+      남김: co-worker (단어장3) 뜻: 동료, 협력자, 직장동료
+      삭제: coworker (단어장2) 뜻: 동료, 협력자, 직장동료, 함께 일하는 사람, 협력자, 동료.
+
+  coed  ←  co-ed
+      남김: coed (단어장13) 뜻: 여학생, 공학의, 남녀공학
+      삭제: co-ed (단어장1) 뜻: 남녀공학제
+
+  coinsurance  ←  Co-insurance
+      남김: coinsurance (단어장2) 뜻: 공동 보험, 피보험자 자기 부담 조항, 공동 보험료
+      삭제: Co-insurance (단어장0) 뜻: 공동 보험, 공동 보험료
+
+  computer-literate  ←  computer literate
+      남김: computer-literate (단어장2) 뜻: 컴퓨터 사용 능력이 있는., 컴퓨터 사용 능력이 있는
+      삭제: computer literate (단어장0) 뜻: 컴퓨터 사용 기술을 가진
+
+  cookie  ←  coo-kie
+      남김: cookie (단어장46) 뜻: 쿠키, 과자, 사람, 비스켓
+      삭제: coo-kie (단어장7) 뜻: 과자, 쿠키, 비스킷
+
+  copayment  ←  Co-payment
+      남김: copayment (단어장2) 뜻: 공동 부담, 추가 비용, 고용인의 부담
+      삭제: Co-payment (단어장0) 뜻: 본인 부담금
+
+  counterculture  ←  counter-culture
+      남김: counterculture (단어장1) 뜻: 반 문화, 대항문화
+      삭제: counter-culture (단어장1) 뜻: 반 문화
+
+  counterproductive  ←  counter-productive
+      남김: counterproductive (단어장51) 뜻: 역효과를 낳는
+      삭제: counter-productive (단어장2) 뜻: 역효과를 낳는
+
+  counterproposal  ←  counter-proposal
+      남김: counterproposal (단어장1) 뜻: 반대 제안, 대안
+      삭제: counter-proposal (단어장1) 뜻: 반대제안
+
+  crosscurrent  ←  cross-current
+      남김: crosscurrent (단어장4) 뜻: 역류, 대립하는 경향
+      삭제: cross-current (단어장1) 뜻: 역류, 대립되는 의견
+
+  crosssectional  ←  cross-sectional
+      남김: crosssectional (단어장4) 뜻: 횡단면의, 단면도의
+      삭제: cross-sectional (단어장1) 뜻: 횡단면의
+
+  diehard  ←  die-hard
+      남김: diehard (단어장28) 뜻: 보수적인, 완고한, 완고한 보수주의자
+      삭제: die-hard (단어장1) 뜻: 쉽게 없어지지 않는
+
+  document  ←  doc-ument
+      남김: document (단어장175) 뜻: 서류, 문서, 문서, 서류, 기록, 자료, 문헌
+      삭제: doc-ument (단어장15) 뜻: 문서, 서류, 문서화하다, 기록, 명] 서류, 동] 문서에 기록하다., [서류로]입증하다, 문서[로 기록하다
+
+  documentation  ←  doc-umentation
+      남김: documentation (단어장32) 뜻: 문서 조사, 참고 문서의 이용, 문서 첨부, 문서화, 서류
+      삭제: doc-umentation (단어장3) 뜻: 문서자료, 문서조사, 문서제공, 서류, 문서화, 기록
+
+  dogleg  ←  dog-leg
+      남김: dogleg (단어장1) 뜻: 급각도로 구부러진 길, 페어웨이의 굴곡부, ㄱ자 모양의
+      삭제: dog-leg (단어장1) 뜻: 도그레그, 개의 뒷다리가 휘어져 있는 것 처럼, 코스의 형태가 굽어져 있는 홀
+
+  double-check  ←  double check
+      남김: double-check (단어장3) 뜻: 재차 확인하다, 재확인하다., 재확인하다
+      삭제: double check (단어장0) 뜻: 재확인하다
+
+  double-park  ←  double park
+      남김: double-park (단어장3) 뜻: 이중 주차하다, 이중 주차하다.
+      삭제: double park (단어장0) 뜻: 이중 주차하다
+
+  dropout  ←  drop-out
+      남김: dropout (단어장29) 뜻: 탈퇴, 낙오, 고등 학교 중퇴자
+      삭제: drop-out (단어장1) 뜻: 중퇴자
+
+  e-mail  ←  email
+      남김: e-mail (단어장1) 뜻: 이메일, 이메일, 전자편지, 이메일을 보내다
+      삭제: email (단어장0) 뜻: 이메일, 전자 우편
+
+  easygoing  ←  easy-going
+      남김: easygoing (단어장60) 뜻: 느긋한, 너그러운, 편안한 걸음걸이의
+      삭제: easy-going (단어장4) 뜻: 느슨한, 느긋한, 태평한, 걱정 없는, 태평스러운, 형용사](성격이) 느긋한
+
+  ecotourism  ←  eco-tourism
+      남김: ecotourism (단어장2) 뜻: 환경관광
+      삭제: eco-tourism (단어장1) 뜻: 에코 투어리즘
+
+  eggbeater  ←  egg-beater
+      남김: eggbeater (단어장1) 뜻: 거품기, 헬리콥터, 프로펠러
+      삭제: egg-beater (단어장1) 뜻: (slang) 프로펠러
+
+  egghead  ←  egg-head
+      남김: egghead (단어장4) 뜻: 지식인, 인텔리, 대머리
+      삭제: egg-head (단어장1) 뜻: 지식인
+
+  extraterrestrial  ←  extra-terrestrial
+      남김: extraterrestrial (단어장52) 뜻: 지구 밖의, 지구 밖의 생물, 우주인
+      삭제: extra-terrestrial (단어장1) 뜻: 외계 생명체
+
+  face-to-face  ←  face to face
+      남김: face-to-face (단어장2) 뜻: 정면으로 맞서서, 직면하여, 대면의
+      삭제: face to face (단어장0) 뜻: 서로 얼굴을 맞대고
+
+  fainthearted  ←  faint-hearted
+      남김: fainthearted (단어장13) 뜻: 소심한, 용기 없는, 겁 많은
+      삭제: faint-hearted (단어장2) 뜻: 소심한, 용기 없는, 겁이 많은, 겁 많은
+
+  fallout  ←  fall-out
+      남김: fallout (단어장58) 뜻: 후유증, 죽음의 재, 부산물, 결과, 불똥, (방사능)낙진
+      삭제: fall-out (단어장1) 뜻: 예기치 않은 결과, 부산물
+
+  first-aid  ←  first aid
+      남김: first-aid (단어장3) 뜻: 응급 치료의
+      삭제: first aid (단어장0) 뜻: 응급처치, 초기 치료
+
+  freestanding  ←  free-standing
+      남김: freestanding (단어장6) 뜻: 독립해 있는, 지주 없이 서 있는, 독립한
+      삭제: free-standing (단어장1) 뜻: 독립되어 서 있는
+
+  fully-equipped  ←  fully equipped
+      남김: fully-equipped (단어장1) 뜻: 완전히 갖추어진
+      삭제: fully equipped (단어장0) 뜻: 시설이 완비된
+
+  fundraiser  ←  fund-raiser
+      남김: fundraiser (단어장16) 뜻: 모금자, 기금 조달자
+      삭제: fund-raiser (단어장1) 뜻: 기금 조달자
+
+  fundraising  ←  fund-raising
+      남김: fundraising (단어장36) 뜻: 자금 조달, 모금
+      삭제: fund-raising (단어장4) 뜻: 모금, 모금 활동, 모금, 자금 조달의
+
+  getatable  ←  get-at-able
+      남김: getatable (단어장1) 뜻: 도달할 수 있는, 입수할 수 있는, 근접하기 쉬운
+      삭제: get-at-able (단어장1) 뜻: 접근하기 쉬운, 이용가능한
+
+  gewgaw  ←  gew-gaw
+      남김: gewgaw (단어장2) 뜻: 겉만 번지르르한, 굴퉁이, 허울만의
+      삭제: gew-gaw (단어장1) 뜻: 겉만 번지르르한(것)
+
+  groundbreaking  ←  ground-breaking
+      남김: groundbreaking (단어장51) 뜻: 획기적인, 착공, 기공식, 신기원을 이룬
+      삭제: ground-breaking (단어장2) 뜻: 획기적인
+
+  half-price  ←  half price
+      남김: half-price (단어장1) 뜻: 반값
+      삭제: half price (단어장0) 뜻: 반값
+
+  halfhearted  ←  half-hearted
+      남김: halfhearted (단어장23) 뜻: 마음이 내키지 않는, 열성이 없는, 냉담한
+      삭제: half-hearted (단어장3) 뜻: 열성이 없는, 건성건성, 대충하는
+
+  handsfree  ←  hands-free
+      남김: handsfree (단어장1) 뜻: 손을 쓸 필요 없는, 핸즈프리, 손으로 조작하지 않아도 되는
+      삭제: hands-free (단어장1) 뜻: 손을 쓸 필요가 없는
+
+  hardworking  ←  hard-working
+      남김: hardworking (단어장33) 뜻: 부지런히 일하는, 근면한
+      삭제: hard-working (단어장3) 뜻: 열심히 일하는, 근면한, 부지런한
+
+  heartrending  ←  heart-rending
+      남김: heartrending (단어장7) 뜻: 몹시 슬픈, 비통한, 가슴이 터질 것 같은
+      삭제: heart-rending (단어장3) 뜻: 가슴이 찢어질 듯한, 비통한, 매우 슬픈, 마음이 찢어지는, 마음을 찢어지게 하는
+
+  highbrow  ←  high-brow
+      남김: highbrow (단어장11) 뜻: 지식인, 지식인의, 지식이나 교양을 뽐내는 사람
+      삭제: high-brow (단어장1) 뜻: 지식/교양이 높은사람
+
+  houseplant  ←  house-plant
+      남김: houseplant (단어장4) 뜻: 실내 화분 재배용 나무
+      삭제: house-plant (단어장1) 뜻: 실내용 화분
+
+  icebreaker  ←  ice-breaker
+      남김: icebreaker (단어장3) 뜻: 쇄빙선, 쇄빙기, 교제에 능한 사람
+      삭제: ice-breaker (단어장1) 뜻: 서먹함을 푸는 것
+
+  in-flight  ←  Inflight
+      남김: in-flight (단어장10) 뜻: 기내의, (명사 앞에만 씀) (항공기가) 운항 중의; 기내의, 운항중의 기내의
+      삭제: Inflight (단어장0) 뜻: 비행 중의, 비행기 내
+
+  inlet  ←  in-let
+      남김: inlet (단어장18) 뜻: 후미, …을 박아 넣다, 작은 만, 주입구
+      삭제: in-let (단어장2) 뜻: 구석, 구석진 곳, 움푹 들어간 곳, 후미진 곳
+
+  leapfrog  ←  leap-frog
+      남김: leapfrog (단어장16) 뜻: 등넘기, 교대 약진, 등넘기식으로 뛰어넘다
+      삭제: leap-frog (단어장1) 뜻: (더 높은 위치, 등급으로) 뛰어 넘다|(놀이) 등 짚고 뛰어넘기
+
+  lifelike  ←  life-like
+      남김: lifelike (단어장12) 뜻: 실물과 똑같은, 살아 있는 듯한, 아주 닮은
+      삭제: life-like (단어장1) 뜻: 진짜같은
+
+  lighthearted  ←  light-hearted
+      남김: lighthearted (단어장22) 뜻: 근심이 없는, 마음 편한, 쾌활한
+      삭제: light-hearted (단어장1) 뜻: 마음이 가벼운
+
+  lineup  ←  line-up
+      남김: lineup (단어장9) 뜻: 라인업, 제품 일람표, 프로그램
+      삭제: line-up (단어장1) 뜻: 일정, 프로그램
+
+  long-haul  ←  longhaul
+      남김: long-haul (단어장1) 뜻: 장기간의 장거리의
+      삭제: longhaul (단어장1) 뜻: 장거리의, 장기적인
+
+  longstanding  ←  long-standing
+      남김: longstanding (단어장20) 뜻: 오래 계속되는, 예전부터의, 여러 해의
+      삭제: long-standing (단어장1) 뜻: 오래된
+
+  makeup  ←  make-up
+      남김: makeup (단어장63) 뜻: 구성, 조립, 화장하다
+      삭제: make-up (단어장4) 뜻: 화장품, 구성, 구조|성질|화장|꾸밈, 화장(분장)을 하다
+
+  markup  ←  mark-up
+      남김: markup (단어장9) 뜻: 가격 인상, 조판 지정, 이윤폭
+      삭제: mark-up (단어장1) 뜻: 마진, 가격책정
+
+  mean-spirited  ←  meanspirited
+      남김: mean-spirited (단어장1) 뜻: 못된, 성질이 나쁜
+      삭제: meanspirited (단어장1) 뜻: 비열한, 천박한, 쩨쩨한
+
+  mid-afternoon  ←  midafternoon
+      남김: mid-afternoon (단어장1) 뜻: 오후 중간쭘에
+      삭제: midafternoon (단어장1) 뜻: 오후 중반
+
+  mindset  ←  mind-set
+      남김: mindset (단어장44) 뜻: 사고방식, 마음가짐, 생각, 마인드셋, 인식, 사고 방식, 어떤 상황에 대한 태도
+      삭제: mind-set (단어장2) 뜻: 사고방식, 심리상태, 마음가짐
+
+  moviegoer  ←  movie-goer
+      남김: moviegoer (단어장13) 뜻: 영화 팬
+      삭제: movie-goer (단어장1) 뜻: 영화관에 자주 가는 사람
+
+  multidisciplinary  ←  multi-disciplinary
+      남김: multidisciplinary (단어장10) 뜻: 종합적인, 여러 전문 분야에 걸친, 여러 학문 분야에 걸친
+      삭제: multi-disciplinary (단어장1) 뜻: 종합적인
+
+  multiethnic  ←  multi-ethnic
+      남김: multiethnic (단어장2) 뜻: 다민족적인, 다민족 공용의, 다민족의
+      삭제: multi-ethnic (단어장1) 뜻: 다민족의
+
+  multifaceted  ←  multi-faceted
+      남김: multifaceted (단어장21) 뜻: 다면의, 많은 측면을 가진, 다재 다능의
+      삭제: multi-faceted (단어장1) 뜻: 많은 면을 가진, 다면적인
+
+  multipurpose  ←  multi-purpose
+      남김: multipurpose (단어장9) 뜻: 다용도의, 다목적의
+      삭제: multi-purpose (단어장2) 뜻: 다목적의
+
+  multitasking  ←  multi-tasking
+      남김: multitasking (단어장5) 뜻: 다중 과업화, 동시에 몇 가지의 일을 하는 것, 멀티태스킹
+      삭제: multi-tasking (단어장1) 뜻: 다중 작업의
+
+  nearsighted  ←  near-sighted
+      남김: nearsighted (단어장18) 뜻: 근시의, 근시안적인, 선견지명이 없는
+      삭제: near-sighted (단어장3) 뜻: 근시의, 근시안적인
+
+  neurobiology  ←  neuro-biology
+      남김: neurobiology (단어장5) 뜻: 신경 생물학
+      삭제: neuro-biology (단어장1) 뜻: 신경생물학
+
+  no-no  ←  nono
+      남김: no-no (단어장1) 뜻: 금물
+      삭제: nono (단어장1) 뜻: 노노
+
+  noncombatant  ←  non-combatant
+      남김: noncombatant (단어장4) 뜻: 비전투원, 비전투원의, 전투에 종사하지 않는
+      삭제: non-combatant (단어장1) 뜻: 비전투요원
+
+  nonfiction  ←  non-fiction
+      남김: nonfiction (단어장24) 뜻: 논픽션, 전기·역사·에세이 등, 논픽션 작품
+      삭제: non-fiction (단어장1) 뜻: 실화
+
+  nonprofit  ←  non-profit
+      남김: nonprofit (단어장19) 뜻: 비영리적인
+      삭제: non-profit (단어장1) 뜻: 비영리
+
+  nonrefundable  ←  non-refundable
+      남김: nonrefundable (단어장2) 뜻: 물어 주지 않는, 차환 불가능한
+      삭제: non-refundable (단어장1) 뜻: 환불되지 않느
+
+  nonstop  ←  Non-stop
+      남김: nonstop (단어장1) 뜻: 논스톱
+      삭제: Non-stop (단어장0) 뜻: 직항, 중간 경유 없는
+
+  nonthreatening  ←  non-threatening
+      남김: nonthreatening (단어장1) 뜻: 협박할 뜻이 없는
+      삭제: non-threatening (단어장1) 뜻: 위협적이지 않은
+
+  northeast  ←  north-east
+      남김: northeast (단어장7) 뜻: 북동, 북동의, 북동으로부터의, 북동에, 북동으로의
+      삭제: north-east (단어장1) 뜻: 북동방향
+
+  Northwest  ←  north-west
+      남김: Northwest (단어장2) 뜻: ① 북서
+      삭제: north-west (단어장1) 뜻: 북서방향
+
+  offbeat  ←  off-beat
+      남김: offbeat (단어장18) 뜻: 색다른, 오프비트, 비정상적인
+      삭제: off-beat (단어장1) 뜻: 색다른
+
+  on time  ←  On-time
+      남김: on time (단어장0) 뜻: 정각에, 제시간에
+      삭제: On-time (단어장0) 뜻: 정시의, 시간 맞춰
+
+  on-duty  ←  on duty
+      남김: on-duty (단어장2) 뜻: 근무 중인, 근무중의
+      삭제: on duty (단어장0) 뜻: 근무 중인
+
+  on-the-spot  ←  on the spot
+      남김: on-the-spot (단어장4) 뜻: 현지의, 현장의, 즉석의; 현장에서는, 그 자리에서, 즉흥적인, 임시변통의
+      삭제: on the spot (단어장0) 뜻: 즉시, 현장에
+
+  online  ←  on-line
+      남김: online (단어장15) 뜻: 온라인의, 접속되어, 인터넷에 접속된, 온라인으로
+      삭제: on-line (단어장1) 뜻: 온라인의
+
+  onlooker  ←  on-looker
+      남김: onlooker (단어장42) 뜻: 방관자, 구경꾼
+      삭제: on-looker (단어장1) 뜻: 목격자
+
+  out-of-date  ←  outofdate
+      남김: out-of-date (단어장3) 뜻: 구식의, 시대에 뒤떨어진, 시대에 뒤떨어진, 촌스러운, 케케묵은
+      삭제: outofdate (단어장1) 뜻: 《서술용법》 구식의[으로], 시대에 뒤진[뒤져]; 무효의[로
+
+  overcome  ←  over-come
+      남김: overcome (단어장294) 뜻: 극복하다, 이겨내다, 해결, 넘는, 회복
+      삭제: over-come (단어장1) 뜻: 극복하다
+
+  overcommit  ←  over-commit
+      남김: overcommit (단어장1) 뜻: 필요 이상으로 언약을 주다, 낭비하다, 지나치게 쓰다
+      삭제: over-commit (단어장1) 뜻: 지나치게 헌신하다
+
+  ozone-layer  ←  ozone layer
+      남김: ozone-layer (단어장1) 뜻: 오존층
+      삭제: ozone layer (단어장0) 뜻: 오존층
+
+  passerby  ←  passer-by
+      남김: passerby (단어장43) 뜻: 통행인, 지나가는 사람
+      삭제: passer-by (단어장6) 뜻: 행인, 통행인
+
+  pigheaded  ←  pig-headed
+      남김: pigheaded (단어장6) 뜻: 완고한, 고집센, 옹고집의
+      삭제: pig-headed (단어장1) 뜻: 고집스런
+
+  pileup  ←  pile-up
+      남김: pileup (단어장22) 뜻: 쌓임, 밀림, 다중 충돌
+      삭제: pile-up (단어장1) 뜻: 연쇄 충돌 사고
+
+  pollution-free  ←  pollutionfree
+      남김: pollution-free (단어장1) 뜻: 오염 없는
+      삭제: pollutionfree (단어장1) 뜻: 무공해의
+
+  postseason  ←  post-season
+      남김: postseason (단어장1) 뜻: 정규 시즌 후의, 포스트 시즌의
+      삭제: post-season (단어장1) 뜻: 공식전 이후
+
+  posttraumatic  ←  post-traumatic
+      남김: posttraumatic (단어장3) 뜻: 외상 후의
+      삭제: post-traumatic (단어장2) 뜻: 외상 후의, (정신적) 외상 후의
+
+  pre-modern  ←  premodern
+      남김: pre-modern (단어장1) 뜻: 근대 이전의, 전근대적인
+      삭제: premodern (단어장1) 뜻: 전근대적, 근세
+
+  preteen  ←  pre-teen
+      남김: preteen (단어장5) 뜻: 10세부터 12세까지의, 로 틴
+      삭제: pre-teen (단어장2) 뜻: 10대 이전의, 십대 초반 청소년[11-12세
+
+  puton  ←  put-on
+      남김: puton (단어장4) 뜻: ①[옷·모자·안경 따위]를 입다[쓰다, 걸치다] ② ~을 가장하다, ~인 체하다 ③ ~을 일하게 하다; (일
+      삭제: put-on (단어장3) 뜻: 입다, 신다, 체중이 늘다, ~인 체하다, 놀리다, ~인 체하는, 겉치레의, 가짜의
+
+  riffraff  ←  riff-raff
+      남김: riffraff (단어장11) 뜻: 하층민, 하층 계급, 하찮은 사람들
+      삭제: riff-raff (단어장1) 뜻: (사회의) 쓰레기들
+
+  right-down  ←  rightdown
+      남김: right-down (단어장1) 뜻: 철저한, 과감한, 대폭적인
+      삭제: rightdown (단어장1) 뜻: 《구어》 솔직하게, 사실대로; 아주, 완전히
+
+  rock-climbing  ←  rock climbing
+      남김: rock-climbing (단어장2) 뜻: 암벽 등반, 암벽등반, 바위타기
+      삭제: rock climbing (단어장0) 뜻: 암벽 등반, 암벽 오르기
+
+  safe deposit box  ←  safe-deposit box
+      남김: safe deposit box (단어장0) 뜻: 금고, 안전 금고
+      삭제: safe-deposit box (단어장0) 뜻: 은행 금고
+
+  secondhand  ←  second-hand
+      남김: secondhand (단어장65) 뜻: 간접의, 중고의, 간접의, 헌
+      삭제: second-hand (단어장3) 뜻: 중고의, (소식)전해들은
+
+  semiarid  ←  semi-arid
+      남김: semiarid (단어장12) 뜻: 반건조한, 반건조 기후인, 비가 매우 적은
+      삭제: semi-arid (단어장1) 뜻: 반 건조의, 비가 매우 적은
+
+  semifinal  ←  semi-final
+      남김: semifinal (단어장18) 뜻: 준결승, 준결승의, 4강, 세미파이널
+      삭제: semi-final (단어장3) 뜻: 준결승, 준결승전
+
+  shortcut  ←  short-cut
+      남김: shortcut (단어장61) 뜻: 지름길
+      삭제: short-cut (단어장1) 뜻: 지름길
+
+  shortsighted  ←  short-sighted
+      남김: shortsighted (단어장2) 뜻: 근시안적인
+      삭제: short-sighted (단어장1) 뜻: 근시안적인
+
+  shortsightedness  ←  short-sightedness
+      남김: shortsightedness (단어장1) 뜻: 근시, 선견지명이 없는 것
+      삭제: short-sightedness (단어장1) 뜻: 근시
+
+  side-effect  ←  side effect
+      남김: side-effect (단어장3) 뜻: 약물 등의] 부작용, 부작용
+      삭제: side effect (단어장0) 뜻: 부작용, 부작용
+
+  smokestack  ←  smoke-stack
+      남김: smokestack (단어장16) 뜻: 굴뚝
+      삭제: smoke-stack (단어장1) 뜻: (공장의)높은 굴뚝
+
+  snaggletooth  ←  snaggle-tooth
+      남김: snaggletooth (단어장5) 뜻: 뻐드렁니, 옥니, 들쭉날쭉한 치열
+      삭제: snaggle-tooth (단어장2) 뜻: (비격식) 뻐드렁니, 덧니, 뻐드렁니
+
+  startup  ←  start-up
+      남김: startup (단어장8) 뜻: 창업, 운전 개시, 시동, 조업 개시의, 초창기, 신생 기업
+      삭제: start-up (단어장1) 뜻: 조업을 개시한, 신생 기업
+
+  stepfather  ←  step-father
+      남김: stepfather (단어장11) 뜻: 의붓아버지, 양아버지, 양부, 계부
+      삭제: step-father (단어장1) 뜻: 의붓아버지
+
+  subcontractor  ←  sub-contractor
+      남김: subcontractor (단어장16) 뜻: 하청업자, 하청 회사, 하청인
+      삭제: sub-contractor (단어장1) 뜻: 하도급자
+
+  sun-drenched  ←  sundrenched
+      남김: sun-drenched (단어장1) 뜻: 햇빛이 강한
+      삭제: sundrenched (단어장1) 뜻: 햇볕이 강한
+
+  takeout  ←  take-out
+      남김: takeout (단어장18) 뜻: 꺼내기, 테이크아웃 음식, 사가지고 갈 수 있는, "들어내다 ② (산책 따위에) ~을 데리고 나가다 ③[얼룩
+      삭제: take-out (단어장5) 뜻: 가지고 가는 [음식, 사 가져가는 [요리, 가지고 가는 음식[을 파는 가게, 싸 가지고 가는, 테이크아웃
+
+  tamperproof  ←  tamper-proof
+      남김: tamperproof (단어장6) 뜻: 부정하게 조작할 수 없게 되어 있는
+      삭제: tamper-proof (단어장3) 뜻: 밀봉의, 쉽게 변경[조작]할 수 없는, 밀봉된
+
+  telltale  ←  tell-tale
+      남김: telltale (단어장33) 뜻: 조짐, 증거, 신호, 전설적인, 고자질쟁이
+      삭제: tell-tale (단어장1) 뜻: 숨길 수 없는
+
+  time-management  ←  Time management
+      남김: time-management (단어장1) 뜻: 시간 관리
+      삭제: Time management (단어장0) 뜻: 시간 관리, 시간 배분
+
+  time-out  ←  timeout
+      남김: time-out (단어장1) 뜻: 휴식, 휴식 시간
+      삭제: timeout (단어장0) 뜻: 타임아웃
+
+  To go  ←  to-go
+      남김: To go (단어장0) 뜻: 포장, 테이크아웃
+      삭제: to-go (단어장0) 뜻: 포장, 테이크아웃
+
+  top-dollar  ←  topdollar
+      남김: top-dollar (단어장2) 뜻: 최고액, 최고 한도액
+      삭제: topdollar (단어장1) 뜻: 최고 한도액
+
+  topnotch  ←  top-notch
+      남김: topnotch (단어장16) 뜻: 일류의, 최고, 제일급의
+      삭제: top-notch (단어장8) 뜻: 최고의, (비격식) 최고의, 아주 뛰어난, 일류의, 최고점, 최고도, 최신의
+
+  ultrasound  ←  ultra-sound
+      남김: ultrasound (단어장17) 뜻: 초음파, 초가청음
+      삭제: ultra-sound (단어장1) 뜻: 초음파
+
+  underachieve  ←  under-achieve
+      남김: underachieve (단어장3) 뜻: 목표에 미달하다, 낮은 학업 성적을 얻다
+      삭제: under-achieve (단어장1) 뜻: 성취도가 낮은
+
+  upside-down  ←  upside down
+      남김: upside-down (단어장3) 뜻: 1 거꾸로, 거꾸로 된, 엉망이 된
+      삭제: upside down (단어장0) 뜻: 거꾸로, 뒤집혀
+
+  warmhearted  ←  warm-hearted
+      남김: warmhearted (단어장10) 뜻: 인정 많은, 마음이 따뜻한
+      삭제: warm-hearted (단어장2) 뜻: 마음이 따뜻한
+
+  waterlogged  ←  water-logged
+      남김: waterlogged (단어장3) 뜻: 물에 잠긴, 물이 배어 무거운, 물로 흥건한
+      삭제: water-logged (단어장1) 뜻: 침윤된, 물에 침착된
+
+  wellspring  ←  well-spring
+      남김: wellspring (단어장8) 뜻: 수원, 원천, 샘
+      삭제: well-spring (단어장1) 뜻: 원천, 수원
+
+======================================================================
+3. 띄어쓰기 차이 (한쪽이 오타)  (23건)
+======================================================================
+
+  as if  ←  asif
+      남김: as if (단어장0) 뜻: 마치 ~인 듯이
+      삭제: asif (단어장1) 뜻: 마치 ~인 것처럼, 흡사 ~와도 같이
+
+  call off  ←  calloff
+      남김: call off (단어장0) 뜻: 취소하다
+      삭제: calloff (단어장1) 뜻: ① ~을 세다, 차례로 소리내어 읽다 ② 《구어》[계획]을 중지하다;[약속·예약 따위]를 취소하다; ~을 포
+
+  deckchair  ←  deck chair
+      남김: deckchair (단어장1) 뜻: 접의자
+      삭제: deck chair (단어장0) 뜻: 덱 의자, 해변 의자
+
+  flowchart  ←  flow chart
+      남김: flowchart (단어장2) 뜻: 생산 작업 공정 일람표, 플로차트, 흐름도
+      삭제: flow chart (단어장0) 뜻: 작업 공정도
+
+  flowerbed  ←  flower bed
+      남김: flowerbed (단어장10) 뜻: 화단, 꽃밭
+      삭제: flower bed (단어장0) 뜻: 화단
+
+  get through  ←  getthrough
+      남김: get through (단어장0) 뜻: 통과하다, (시험 등에) 합격하다
+      삭제: getthrough (단어장1) 뜻: ① ~을 빠져 나가다[나가게 하다], 통과하다[시키다]; ~에게[궁지 따위]를 벗어나게 하다 ②[일 따위]를
+
+  give off  ←  giveoff
+      남김: give off (단어장0) 뜻: (냄새·빛 등을) 내뿜다
+      삭제: giveoff (단어장2) 뜻: ①[증기·빛·냄새 따위]를 내다, 풍기다, 발하다 ②[가지 따위]를 뻗다
+
+  go through  ←  gothrough
+      남김: go through (단어장0) 뜻: 겪다, 거치다
+      삭제: gothrough (단어장1) 뜻: ① ~을 통과하다, 빠져 나가다; ~에 스며들다 ② (법안 따위가) 의회를 통과하다, 가결되다 ③[과정·수속
+
+  highchair  ←  high chair
+      남김: highchair (단어장3) 뜻: 유아용 식사 의자
+      삭제: high chair (단어장0) 뜻: 유아용 의자
+
+  Hold on  ←  holdon
+      남김: Hold on (단어장0) 뜻: 기다리다, 잠시만
+      삭제: holdon (단어장1) 뜻: ① 계속하다, 지속하다 ② 《비유적》 견디다, 지탱하다 ③ 《명령문에서》 (전화를) 끊지 않고 두다[기다리다
+
+  in charge of  ←  inchargeof
+      남김: in charge of (단어장0) 뜻: ~을 맡아서, 담당해서
+      삭제: inchargeof (단어장1) 뜻: ① ~을 맡아서, 담당해서 ② ~에게 맡겨져, 위탁되어
+
+  in rows  ←  inrows
+      남김: in rows (단어장0) 뜻: 줄지어, 여러 줄로
+      삭제: inrows (단어장1) 뜻: 여러 줄로 서서
+
+  legroom  ←  leg room
+      남김: legroom (단어장7) 뜻: 다리를 뻗을 수 있는 공간, 여유
+      삭제: leg room (단어장0) 뜻: (자동차 등에) 다리를 뻗을 수 있는 공간
+
+  minibar  ←  mini bar
+      남김: minibar (단어장1) 뜻: 주류 상비용 소형 냉장고
+      삭제: mini bar (단어장0) 뜻: 미니 바, 냉장고
+
+  on time  ←  ontime
+      남김: on time (단어장0) 뜻: 정각에, 제시간에
+      삭제: ontime (단어장3) 뜻: ① 시간을 어기지 않고, 정각에 ② 《美》 후불로, 할부로
+
+  putaway  ←  put away
+      남김: putaway (단어장2) 뜻: ① ~을 치우다, 간수하다 ② ~을 비축하다 ③[생각·버릇 따위]를 포기하다, 버리다 ④ 《고어》 ~와 이혼
+      삭제: put away (단어장0) 뜻: 치우다, 집어넣다
+
+  putupwith  ←  put up with
+      남김: putupwith (단어장1) 뜻: ~을 참다, 참고 견디다
+      삭제: put up with (단어장0) 뜻: 견디다, ~을 참다
+
+  taillight  ←  tail light
+      남김: taillight (단어장11) 뜻: 미등, 테일라이트
+      삭제: tail light (단어장0) 뜻: 후미등
+
+  takeawalk  ←  take a walk
+      남김: takeawalk (단어장2) 뜻: ① 산책하다 ② 《구어》 갑자기 걸어나가다, 퇴장하다; 파업에 들어가다
+      삭제: take a walk (단어장0) 뜻: 산책하다
+
+  trashcan  ←  trash can
+      남김: trashcan (단어장17) 뜻: 쓰레기통
+      삭제: trash can (단어장0) 뜻: 쓰레기통
+
+  turnin  ←  turn in
+      남김: turnin (단어장1) 뜻: ① ~을 (~에게) 건네다;[보고서 따위]를 제출하다 ② (발가락이) 안쪽으로 굽다; ~을 안으로 굽히다 ③
+      삭제: turn in (단어장0) 뜻: 제출하다, (실적·수익 등을) 올리다
+
+  Voicemail  ←  voice mail
+      남김: Voicemail (단어장0) 뜻: 음성 메일, 보이스메일
+      삭제: voice mail (단어장0) 뜻: 음성 메일
+
+  wineglass  ←  Wine glass
+      남김: wineglass (단어장1) 뜻: 와인잔
+      삭제: Wine glass (단어장0) 뜻: 와인 잔, 와인을 담는 잔
