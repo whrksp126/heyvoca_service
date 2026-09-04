@@ -79,7 +79,6 @@ def get_bookstores():
             'color': b.color,
             'gem': b.gem,
             'hide': b.hide,
-            'level': b.level,
             'level_id': b.level_id,
             'book_id': b.book_id,
             'admin_voca_book_id': b.admin_voca_book_id,
@@ -104,8 +103,7 @@ def create_bookstore():
         color=color,
         hide='N' if data.get('is_visible', True) else 'Y',
         gem=data.get('gem', 0),
-        level=data.get('level_name'),
-        level_id=data['level_id'],
+        level_id=data.get('level_id'),
         book_id=data.get('book_id'),
         admin_voca_book_id=data.get('admin_voca_book_id'),
         category_id=data.get('category_id'),
@@ -741,10 +739,12 @@ def get_voca_list():
     vocas = []
     for v in pagination.items:
         meanings = []
+        meanings_detail = []
         for mm in VocaMeaningMap.query.filter_by(voca_id=v.id).all():
             mo = VocaMeaning.query.get(mm.meaning_id)
             if mo:
                 meanings.append(mo.meaning)
+                meanings_detail.append({'id': mo.id, 'meaning': mo.meaning, 'pos': mo.pos})
         examples = []
         for em in VocaExampleMap.query.filter_by(voca_id=v.id).all():
             eo = VocaExample.query.get(em.example_id)
@@ -756,6 +756,7 @@ def get_voca_list():
             'pronunciation': v.pronunciation,
             'verb_forms': v.verb_forms,
             'meanings': meanings,
+            'meanings_detail': meanings_detail,
             'examples': examples,
         })
 
@@ -792,7 +793,7 @@ def voca_autocomplete():
 def get_voca(voca_id):
     voca = Voca.query.get_or_404(voca_id)
 
-    meanings = [{'id': mm.meaning.id, 'meaning': mm.meaning.meaning} for mm in voca.voca_meanings]
+    meanings = [{'id': mm.meaning.id, 'meaning': mm.meaning.meaning, 'pos': mm.meaning.pos} for mm in voca.voca_meanings]
     examples = [{'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
                 for em in voca.voca_examples]
 
@@ -817,21 +818,61 @@ def update_voca(voca_id):
         voca.level = data.get('level') if data.get('level') else None
 
     if 'meanings' in data:
-        VocaMeaningMap.query.filter_by(voca_id=voca_id).delete()
+        VALID_POS = {'NOUN', 'VERB', 'ADJ', 'ADV', 'PRON', 'DET', 'ADP',
+                     'CCONJ', 'SCONJ', 'NUM', 'INTJ', 'PART', 'AUX', 'PROPN', 'X'}
+
+        # 기존 뜻(voca_meaning)을 텍스트 기준으로 풀링해서 재사용 → pos 소실/불필요한 row 재생성 방지
+        existing_by_text = {}
+        for mm in VocaMeaningMap.query.filter_by(voca_id=voca_id).all():
+            existing_by_text.setdefault(mm.meaning.meaning, []).append(mm.meaning)
+
+        new_meaning_ids = []
         for md in data['meanings']:
-            mt = md.get('meaning', '').strip()
+            # 클라이언트가 문자열 배열(레거시) / 객체 배열({meaning, pos}) 둘 다 보낼 수 있음
+            if isinstance(md, dict):
+                mt = (md.get('meaning') or '').strip()
+                pos_provided = 'pos' in md
+                pos_val = md.get('pos')
+                if isinstance(pos_val, str):
+                    pos_val = pos_val.strip() or None
+            else:
+                mt = (md or '').strip()
+                pos_provided = False
+                pos_val = None
+
             if not mt:
                 continue
-            vm = VocaMeaning(meaning=mt)
-            db.session.add(vm)
-            db.session.flush()
-            db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
+
+            if pos_provided and pos_val is not None and pos_val not in VALID_POS:
+                db.session.rollback()
+                return jsonify({'code': 400, 'message': f'유효하지 않은 pos 값입니다: {pos_val}'}), 400
+
+            candidates = existing_by_text.get(mt)
+            if candidates:
+                vm = candidates.pop(0)
+                if pos_provided:
+                    vm.pos = pos_val
+                # pos가 안 왔으면 기존 값을 그대로 보존
+            else:
+                vm = VocaMeaning(meaning=mt, pos=pos_val if pos_provided else None)
+                db.session.add(vm)
+                db.session.flush()
+
+            new_meaning_ids.append(vm.id)
+
+        VocaMeaningMap.query.filter_by(voca_id=voca_id).delete()
+        db.session.flush()
+        for mid in new_meaning_ids:
+            db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=mid))
 
     if 'examples' in data:
         # 저장 시 강조 안 된 예문 자동 태깅 (spacy/kiwi 1차 → 잔여분 GPT)
         if 'meanings' in data:
-            ex_meanings = [m.get('meaning', '').strip() for m in data.get('meanings', [])
-                           if isinstance(m, dict) and m.get('meaning', '').strip()]
+            ex_meanings = []
+            for m in data.get('meanings', []):
+                mt = (m.get('meaning') or '').strip() if isinstance(m, dict) else (m or '').strip()
+                if mt:
+                    ex_meanings.append(mt)
         else:
             ex_meanings = [mm.meaning.meaning for mm in voca.voca_meanings]
         apply_emphasis(voca.word, ex_meanings, data['examples'], 'exam_en', 'exam_ko')
