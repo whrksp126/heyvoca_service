@@ -1,6 +1,6 @@
 from app import db
 
-from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyConstraint
+from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyConstraint, CheckConstraint
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT, Float
 
@@ -240,8 +240,16 @@ class VocaLabel(db.Model):
 class VocaMeaning(db.Model):
     __tablename__ = 'voca_meaning'
     __bind_key__ = 'dict'
+    __table_args__ = (
+        CheckConstraint(
+            "pos IS NULL OR pos IN ('NOUN','VERB','ADJ','ADV','PRON','DET','ADP',"
+            "'CCONJ','SCONJ','NUM','INTJ','PART','AUX','PROPN','X')",
+            name='ck_voca_meaning_pos',
+        ),
+    )
     id = Column(Integer, primary_key=True)
     meaning = Column(String(255), nullable=False)
+    pos = Column(String(16), nullable=True, index=True)  # 한국어 뜻풀이 기준 UD 품사
 
     # 관계 정의
     voca_meanings = relationship("VocaMeaningMap", back_populates="meaning")
@@ -271,8 +279,8 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
     hide = Column(String(1), nullable=False)
-    level = Column(String(50), nullable=True)
-    level_id = Column(Integer, nullable=False)
+    # 기존 단계별 서점 추천은 폐기됐다. 새 기준 확정 전까지 NULL로 유지한다.
+    level_id = Column(Integer, nullable=True)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
     admin_voca_book_id = Column(Integer, ForeignKey('admin_voca_book.id'), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
@@ -1022,9 +1030,12 @@ class AdminVocaBook(db.Model):
 class AdminVocaBookMap(db.Model):
     __tablename__ = 'admin_voca_book_map'
     __bind_key__ = 'dict'
+    __table_args__ = (
+        UniqueConstraint('book_id', 'voca_id', name='uq_admin_voca_book_map_book_voca'),
+    )
     id = Column(Integer, primary_key=True)
-    voca_id = Column(Integer, ForeignKey('voca.id'))
-    book_id = Column(Integer, ForeignKey('admin_voca_book.id'))
+    voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE'))
+    book_id = Column(Integer, ForeignKey('admin_voca_book.id', ondelete='CASCADE'))
     level = Column(Integer, nullable=True)
     voca_meanings = Column(TEXT, nullable=True)
     voca_examples = Column(TEXT, nullable=True)
