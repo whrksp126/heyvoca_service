@@ -135,6 +135,25 @@ const FarmStatusBar = ({
 
   const radius = compact ? 'rounded-[8px]' : 'rounded-[11px]';
 
+  /*
+    보여줄 게 하나도 없으면 아예 그리지 않는다.
+
+    '내용이 있다'는 아래 넷 중 하나다.
+    - 우측 문구(dayLabel)가 있다
+    - 진화했다(grew) — 진화 연출 자체가 내용이다
+    - 진단(diagnosis) — 삽 그림 + 안내 문구가 뜨는 별도 연출 상태
+    - 막대가 실제로 움직인다(pctTo !== pctFrom) — **늘어나는 것만이 아니라 줄어드는 것도 포함.**
+      오답은 우측 문구를 비우지만(위 주석), FSRS 가 안정성을 깎아 막대가 줄었다면
+      그 자체가 "이 답이 무슨 일을 했는지"를 말하는 유일한 정보라 숨기면 안 된다.
+
+    이 넷이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
+    호출부의 absolute 컨테이너째로 접히도록 null 을 반환한다.
+  */
+  const hasContent = Boolean(diagnosis || dayLabel || grew || pctTo !== pctFrom);
+  if (!hasContent) {
+    return null;
+  }
+
   return (
     <div
       className={`
